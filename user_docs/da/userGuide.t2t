@@ -490,7 +490,7 @@ Hvis du trykker en af de følgende taster ned alene, hopper du til den næste fo
 - e: editfelt
 - b: Knap
 - x: checkboks
-- c: komboboks
+- c: combo boks
 - r: radioknap
 - q: blokcitat
 - s: separator
@@ -705,7 +705,7 @@ Dialogboksen med generelle indstillinger findes i menuen Indstillinger.
 Den indeholder følgende indstillingsmuligheder:
 
 ==== Sprog ====
-Det er en komboboks, hvor sproget på NVDAs brugerflade og meddelelser kan indstilles.
+Det er en combo boks, hvor sproget på NVDAs brugerflade og meddelelser kan indstilles.
 Der er mange sprog. Som standard sættes sproget imidlertid til Windows standardsprog.
 Denne valgmulighed giver NVDA besked på at benytte det sprog, som Windows aktuelt er sat til at bruge.
 
@@ -725,7 +725,7 @@ Når den er slået fra, bliver NVDA afsluttet med det samme.
 Dette er en checkboks, der, når den er slået til, får NVDA til at afspille en lyd ved opstart og afslutning af programmet.
 
 ==== Logningsniveau ====
-Dette er en komboboks, hvor du kan bestemme, hvor meget NVDA skal logge under afvikling.
+Dette er en combo boks, hvor du kan bestemme, hvor meget NVDA skal logge under afvikling.
 Generelt bør det ikke være nødvendigt for brugeren at ændre denne indstilling, idet der ikke logges for meget.
 Det kan imidlertid være en nyttig funktion, hvis du ønsker at give tilbagemelding i forbindelse med fejlfinding til en fejlrapport.
 
@@ -779,12 +779,12 @@ Du kan finde en alternativ, hurtigere måde til styring af taleparametre fra et 
 Dialogboksen Stemmeindstillinger indeholder følgende valgmuligheder:
 
 ==== Stemme ====
-Den første valgmulighed i denne dialog er en komboboks med en liste over alle stemmerne i den aktuelt valgte talesyntese.
+Den første valgmulighed i denne dialog er en combo boks med en liste over alle stemmerne i den aktuelt valgte talesyntese.
 Med piletasterne kan du lytte til de enkelte stemmemuligheder.
 Venstre-pil og Pil-op fører dig opad i listen, mens Højre-pil og Pil-ned flytter nedad i listen.
 
 ==== Variant ====
-Hvis du bruger talesyntesen ESpeak, som følger med NVDA, indeholder denne komboboks en liste hvorfra du kan vælge den variant, som talesyntesen skal tale med.
+Hvis du bruger talesyntesen ESpeak, som følger med NVDA, indeholder denne combo boks en liste hvorfra du kan vælge den variant, som talesyntesen skal tale med.
 eSpeaks Varianter minder om forskellige stemmer, idet de får ESpeak-stemmen til at tale på lidt forskellige måder.
 Nogle varianter lyder som en mand, nogle som en kvinde, andre lyder enddog som en frø.
 
@@ -861,7 +861,7 @@ Hvis du ønsker hurtigt at ændre taleindstillingerne uden først at skulle åbn
 Dialogboksen Punktindstillinger kan nås ved at åbne menuen Indstillinger og derefter gå til Punktindstillinger.
 
 ==== Punktdisplay ====
-Den første valgmulighed du møder i indstillingsdialogen Punktindstillinger er en komboboks, som hedder "Punktdisplay".
+Den første valgmulighed du møder i indstillingsdialogen Punktindstillinger er en combo boks, som hedder "Punktdisplay".
 Her finder du forskellige muligheder alt efter, hvilke punktdisplay-drivere der er tilgængelige på dit system.
 Brug piletasterne til at flytte imellem de forskellige valgmuligheder.
 
@@ -882,13 +882,13 @@ Denne indstilling er ikke tilgængelig, hvis dit display kun understøtter autom
 Se i dokumentationen for dit punktdisplay i afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for at læse om de mulige tilkoblingsmuligheder og tilgængelige porte.
 
 ==== Oversættelsestabel ====
-Den næste indstilling, du kommer til i denne dialogboks, er komboboksen oversættelsestabel.
-I denne komboboks finder du punkttabeller for en lang række sprog, punktstandarder og forkortelsesniveauer.
+Den næste indstilling, du kommer til i denne dialogboks, er combo boksen oversættelsestabel.
+I denne combo boks finder du punkttabeller for en lang række sprog, punktstandarder og forkortelsesniveauer.
 Den valgte tabel vil blive brugt til at oversætte punkt til visning på dit punktdisplay.
 Med piletasterne kan du flytte fra den ene punkttabel til den næste på listen.
 
 ==== Indtastningstabel ====
-Komplementært til den foregående indstilling er Den næste indstilling komboboksen indtastningstabel.
+Komplementært til den foregående indstilling er Den næste indstilling combo boksen indtastningstabel.
 Den valgte tabel vil blive benyttet til at oversatte det, du indtaster på dit Perkins punkttastatur, til tekst.
 NVDA understøtter på nuværende tidspunkt kun 8-punkt computer-braille, så det er kun disse tabeller, der bliver vist.
 Med piletasterne kan du flytte fra den ene punkttabel til den næste på listen.
@@ -944,7 +944,7 @@ Denne dialogboks findes i menuen Indstillinger under punktet Tastaturindstilling
 Den indeholder følgende indstillingsmuligheder:
 
 ==== Tastaturlayout ====
-Denne komboboks giver mulighed for at vælge, hvilken type tastaturlayout NVDA skal benytte. De 2 muligheder, der i øjeblikket er inkluderet i NVDA er Desktop og Laptop.
+Denne combo boks giver mulighed for at vælge, hvilken type tastaturlayout NVDA skal benytte. De 2 muligheder, der i øjeblikket er inkluderet i NVDA er Desktop og Laptop.
 
 ==== Brug Caps Lock som NVDA-tast ====
 Hvis denne checkboks er markeret, kan tasten Caps Lock bruges som NVDA-tast.
@@ -2120,7 +2120,7 @@ For at få plads til så meget som muligt på et punktdisplay bruger NVDA følge
 
 || Forkortelse | felttype |
 | knp | knap |
-| cbo | komboboks |
+| cbo | combo boks |
 | chk | checkboks |
 | dlg | dialog |
 | edt | redigerbart tekstfelt (editfelt) |
