@@ -1572,28 +1572,28 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 			col = rangeObj.Column
 			if self.direction=="next":
 				for collectionItem in items:
-					if ((collectionItem.TopLeftCell.Row==row and collectionItem.TopLeftCell.Column>col) or (collectionItem.TopLeftCell.Row>row)) and not(self.filter(collectionItem)):
+					if ((collectionItem.TopLeftCell.Row==row and collectionItem.TopLeftCell.Column>col) or (collectionItem.TopLeftCell.Row>row)) and self.filter(collectionItem):
 						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj)
 						yield item
 			elif self.direction=="previous":
 				for collectionItem in reversed(items):
-					if (collectionItem.TopLeftCell.Row==row and collectionItem.TopLeftCell.Column<col) or (collectionItem.TopLeftCell.Row<row) and not(self.filter(collectionItem)):
+					if (collectionItem.TopLeftCell.Row==row and collectionItem.TopLeftCell.Column<col) or (collectionItem.TopLeftCell.Row<row) and self.filter(collectionItem):
 						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj )
 						yield item
 		else:
 			for collectionItem in items:
-				if not(self.filter(collectionItem)):
+				if self.filter(collectionItem):
 					item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items,self.treeInterceptorObj )
 					yield item
 
     def filter(self,shape):
 		if shape.Type == msoFormControl:
 			if shape.FormControlType == xlGroupBox or shape.Visible != msoTrue:
-				return True
-			else:
 				return False
+			else:
+				return True
 		else:
-			return True
+			return False
 
 class ExcelFormControlListBox(ExcelFormControl):
 
