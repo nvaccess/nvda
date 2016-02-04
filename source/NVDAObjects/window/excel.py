@@ -388,7 +388,7 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		cellPosition.Select()
 		cellPosition.Activate()
 		eventHandler.executeEvent('gainFocus',obj)
-    
+	
 	def script_moveLeft(self,gesture):
 		self.navigationHelper("left")
 
@@ -1396,6 +1396,12 @@ class ExcelMergedCell(ExcelCell):
 class ExcelFormControl(ExcelBase):
 	isFocusable=True
 
+	def _get_excelControlFormatObject(self):
+		return self.excelFormControlObject.controlFormat
+
+	def _get_excelOLEFormatObject(self):
+		return self.excelFormControlObject.OLEFormat.object
+
 	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
 		self.parent=parent
 		self.excelFormControlObject=excelFormControlObject
@@ -1418,11 +1424,11 @@ class ExcelFormControl(ExcelBase):
 			states.add(controlTypes.STATE_FOCUSED)
 		newState=None
 		if self.role==controlTypes.ROLE_RADIOBUTTON:
-			newState=controlTypes.STATE_CHECKED if self.excelFormControlObject.OLEFormat.Object.Value==checked else None
+			newState=controlTypes.STATE_CHECKED if self.excelOLEFormatObject.Value==checked else None
 		elif self.role==controlTypes.ROLE_CHECKBOX:
-			if self.excelFormControlObject.OLEFormat.Object.Value==checked:
+			if self.excelOLEFormatObject.Value==checked:
 				newState=controlTypes.STATE_CHECKED
-			elif self.excelFormControlObject.OLEFormat.Object.Value==mixed:
+			elif self.excelOLEFormatObject.Value==mixed:
 				newState=controlTypes.STATE_HALFCHECKED
 		if newState:
 			states.add(newState)
@@ -1503,34 +1509,48 @@ class ExcelFormControl(ExcelBase):
 
 class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 
-    def __init__( self , nodeType , document , formControlObject , formControlCollection, treeInterceptorObj ):
+	def __init__( self , nodeType , document , formControlObject , formControlCollection, treeInterceptorObj ):
 		super( ExcelFormControlQuickNavItem ,self).__init__( nodeType , document , formControlObject , formControlCollection )
 		self.formControlObjectIndex = formControlObject.ZOrderPosition
 		self.treeInterceptorObj=treeInterceptorObj
-		if formControlObject.formControlType==xlListBox:
-			self.nvdaObj=ExcelFormControlListBox(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
-		elif formControlObject.formControlType==xlDropDown:
-			self.nvdaObj=ExcelFormControlDropDown(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
-		elif formControlObject.formControlType in (xlScrollBar,xlSpinner):
-			self.nvdaObj=ExcelFormControlScrollBar(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
-		else:
-			self.nvdaObj=ExcelFormControl(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
-		self.nvdaObj.treeInterceptor=self.treeInterceptorObj
-		if formControlObject.AlternativeText:
-			self.label = formControlObject.AlternativeText+" "+formControlObject.Name+" " + formControlObject.TopLeftCell.address(False,False,1,False) + "-" + formControlObject.BottomRightCell.address(False,False,1,False)
-		else:
-			self.label = formControlObject.Name + " " + formControlObject.TopLeftCell.address(False,False,1,False) + "-" + formControlObject.BottomRightCell.address(False,False,1,False)
 
-    def __lt__(self,other):
+	_label=None
+	@property
+	def label(self):
+		if self._label: return self._label
+		alternativeText=self.excelItemObject.AlternativeText
+		if alternativeText: 
+			self._label=alternativeText+" "+self.excelItemObject.Name+" " + self.excelItemObject.TopLeftCell.address(False,False,1,False) + "-" + self.excelItemObject.BottomRightCell.address(False,False,1,False)
+		else:
+			self._label=self.excelItemObject.Name + " " + self.excelItemObject.TopLeftCell.address(False,False,1,False) + "-" + self.excelItemObject.BottomRightCell.address(False,False,1,False)
+		return self._label
+
+	_nvdaObj=None
+	@property
+	def nvdaObj(self):
+		if self._nvdaObj: return self._nvdaObj
+		formControlType=self.excelItemObject.formControlType
+		if formControlType ==xlListBox:
+			self._nvdaObj=ExcelFormControlListBox(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		elif formControlType ==xlDropDown:
+			self._nvdaObj=ExcelFormControlDropDown(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		elif formControlType in (xlScrollBar,xlSpinner):
+			self._nvdaObj=ExcelFormControlScrollBar(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		else:
+			self._nvdaObj=ExcelFormControl(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		self._nvdaObj.treeInterceptor=self.treeInterceptorObj
+		return self._nvdaObj
+
+	def __lt__(self,other):
 		return self.formControlObjectIndex < other.formControlObjectIndex
 
-    def moveTo(self):
+	def moveTo(self):
 		self.excelItemObject.TopLeftCell.Select
 		self.excelItemObject.TopLeftCell.Activate()
 		eventHandler.queueEvent("gainFocus",self.nvdaObj)
 
-    @property
-    def isAfterSelection(self):
+	@property
+	def isAfterSelection(self):
 		activeCell = self.document.Application.ActiveCell
 		if self.excelItemObject.TopLeftCell.row == activeCell.row:
 			if self.excelItemObject.TopLeftCell.column > activeCell.column:
@@ -1540,19 +1560,19 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 		return True
 
 class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
-    quickNavItemClass=ExcelFormControlQuickNavItem
+	quickNavItemClass=ExcelFormControlQuickNavItem
 
-    def __init__(self, itemType , document , direction , includeCurrent,treeInterceptorObj):
+	def __init__(self, itemType , document , direction , includeCurrent,treeInterceptorObj):
 		super(ExcelFormControlQuicknavIterator,self).__init__(itemType , document , direction , includeCurrent)
 		self.treeInterceptorObj=treeInterceptorObj
 
-    def collectionFromWorksheet( self , worksheetObject ):
+	def collectionFromWorksheet( self , worksheetObject ):
 		try:
 			return worksheetObject.Shapes
 		except(COMError):
 			return None
 
-    def iterate(self, position):
+	def iterate(self, position):
 		"""
 		returns a generator that emits L{QuickNavItem} objects for this collection.
 		@param position: an excelRangeObject representing either the TopLeftCell of the currently selected form control
@@ -1561,6 +1581,8 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 		# Returns the Row containing TopLeftCell of an item
 		def topLeftCellRow(item):
 			row=item.TopLeftCell.Row
+			# Cache row on the COM object as we need it later
+			item._comobj.excelRow=row
 			return row
 		items=self.collectionFromWorksheet(self.document)
 		if not items:
@@ -1572,12 +1594,14 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 			col = rangeObj.Column
 			if self.direction=="next":
 				for collectionItem in items:
-					if ((collectionItem.TopLeftCell.Row==row and collectionItem.TopLeftCell.Column>col) or (collectionItem.TopLeftCell.Row>row)) and self.filter(collectionItem):
+					itemRow=collectionItem._comobj.excelRow
+					if (itemRow>row or (itemRow==row and collectionItem.TopLeftCell.Column>col)) and self.filter(collectionItem):
 						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj)
 						yield item
 			elif self.direction=="previous":
 				for collectionItem in reversed(items):
-					if (collectionItem.TopLeftCell.Row==row and collectionItem.TopLeftCell.Column<col) or (collectionItem.TopLeftCell.Row<row) and self.filter(collectionItem):
+					itemRow=collectionItem._comobj.excelRow
+					if (itemRow<row or (itemRow==row and collectionItem.TopLeftCell.Column<col)) and self.filter(collectionItem):
 						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj )
 						yield item
 		else:
@@ -1586,7 +1610,7 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 					item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items,self.treeInterceptorObj )
 					yield item
 
-    def filter(self,shape):
+	def filter(self,shape):
 		if shape.Type == msoFormControl:
 			if shape.FormControlType == xlGroupBox or shape.Visible != msoTrue:
 				return False
@@ -1600,22 +1624,22 @@ class ExcelFormControlListBox(ExcelFormControl):
 	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
 		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
-			self.listSize=int(excelFormControlObject.ControlFormat.ListCount)
+			self.listSize=int(self.excelControlFormatObject.ListCount)
 		except:
 			self.listSize=0
 		try:
-			self.selectedItemIndex= int(excelFormControlObject.ControlFormat.ListIndex)
+			self.selectedItemIndex= int(self.excelControlFormatObject.ListIndex)
 		except:
 			self.selectedItemIndex=0
 		try:
-			self.isMultiSelectable= excelFormControlObject.ControlFormat.multiSelect!=xlNone
+			self.isMultiSelectable= self.excelControlFormatObject.multiSelect!=xlNone
 		except:
 			self.isMultiSelectable=False
 
 	def getChildAtIndex(self,index):
-		name=str(self.excelFormControlObject.OLEFormat.Object.List(index+1))
+		name=str(self.excelOLEFormatObject.List(index+1))
 		states=set([controlTypes.STATE_SELECTABLE])
-		if self.excelFormControlObject.OLEFormat.Object.Selected[index+1]==True:
+		if self.excelOLEFormatObject.Selected[index+1]==True:
 			states.add(controlTypes.STATE_SELECTED)
 		return ExcelDropdownItem(parent=self,name=name,states=states,index=index)
 
@@ -1635,7 +1659,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			self.selectedItemIndex= self.selectedItemIndex - 1
 			if not self.isMultiSelectable:
 				try:
-					self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 				except:
 					pass
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
@@ -1648,7 +1672,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			self.selectedItemIndex= self.selectedItemIndex + 1
 			if not self.isMultiSelectable:
 				try:
-					self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 				except:
 					pass
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
@@ -1659,7 +1683,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 	def doAction(self):
 		if self.isMultiSelectable:
 			try:
-				lb=self.excelFormControlObject.OLEFormat.Object
+				lb=self.excelOLEFormatObject
 				lb.Selected[self.selectedItemIndex] =not lb.Selected[self.selectedItemIndex] 
 			except:
 				return
@@ -1676,31 +1700,31 @@ class ExcelFormControlDropDown(ExcelFormControl):
 	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
 		super(ExcelFormControlDropDown,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
-			self.listSize=excelFormControlObject.ControlFormat.ListCount
+			self.listSize=self.excelControlFormatObject.ListCount
 		except:
 			self.listSize=0
 		try:
-			self.selectedItemIndex=excelFormControlObject.ControlFormat.ListIndex
+			self.selectedItemIndex=self.excelControlFormatObject.ListIndex
 		except:
 			self.selectedItemIndex=0
 
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
-			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 			eventHandler.queueEvent("valueChange",self)
 	script_moveUp.canPropagate=True
 
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
-			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 			eventHandler.queueEvent("valueChange",self)
 	script_moveDown.canPropagate=True
 
 	def _get_value(self):
 		if self.selectedItemIndex < self.listSize:
-			return str(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
+			return str(self.excelOLEFormatObject.List(self.selectedItemIndex))
 
 	__gestures= {
 		"kb:upArrow": "moveUp",
@@ -1712,38 +1736,38 @@ class ExcelFormControlScrollBar(ExcelFormControl):
 	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
 		super(ExcelFormControlScrollBar,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
-			self.minValue=excelFormControlObject.ControlFormat.min
+			self.minValue=self.excelControlFormatObject.min
 		except:
 			self.minValue=0
 		try:
-			self.maxValue=excelFormControlObject.ControlFormat.max
+			self.maxValue=self.excelControlFormatObject.max
 		except:
 			self.maxValue=0
 		try:
-			self.smallChange=excelFormControlObject.ControlFormat.smallChange
+			self.smallChange=self.excelControlFormatObject.smallChange
 		except:
 			self.smallChange=0
 		try:
-			self.largeChange=excelFormControlObject.ControlFormat.largeChange
+			self.largeChange=self.excelControlFormatObject.largeChange
 		except:
 			self.largeChange=0
 
 	def _get_value(self):
 		try:
-			return str(self.excelFormControlObject.controlFormat.value)
+			return str(self.excelControlFormatObject.value)
 		except COMError:
 			return 0
 
 	def moveValue(self,up=False,large=False):
 		try:
-			curValue=self.excelFormControlObject.controlFormat.value
+			curValue=self.excelControlFormatObject.value
 		except COMError:
 			return
 		if up:
 			newValue=min(curValue+(self.largeChange if large else self.smallChange),self.maxValue)
 		else:
 			newValue=max(curValue-(self.largeChange if large else self.smallChange),self.minValue)
-		self.excelFormControlObject.controlFormat.value=newValue
+		self.excelControlFormatObject.value=newValue
 		eventHandler.queueEvent("valueChange",self)
 
 	def script_moveUpSmall(self,gesture):
