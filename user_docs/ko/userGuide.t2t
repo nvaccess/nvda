@@ -762,6 +762,16 @@ NVDA가 지원하는 음성엔진의 대해서는 [지원하는 음성엔진 #Su
 ==== 음성 출력 장치 ====
 이 옵션에서는 선택된 음성엔진이 음성을 출력할 사운드 카드를 선택할 수 있습니다.
 
+%kc:setting
+==== 오디오 도킹 모드 ====
+Key: NVDA+shift+d
+
+윈도우 8 이상 사용시 배경음 볼륨 조절(오디오 도킹) 시기(NVDA 실행 또는 음성 출력)를 본 옵션을 통해 설정할 수 있습니다.
+- 도킹 않함: NVDA 사용중 배경음 볼륨이 도킹되지 않습니다.
+- 음성 및 소리 출력시 도킹: NVDA가 말할때 또는 사운드를 재생시 도킹(음성 엔진이 지원시)이 적용됩니다.
+- 도킹 사용: NVDA 사용시 배경음 볼륨은 항상 도킹됩니다.
+-
+
 +++ 보이스 설정 (NVDA+control+v) +++[VoiceSettings]
 설정 메뉴의 "보이스 설정..."에 속해 있는 보이스 설정 대화상자는 음성의 속성을 변경할 수 있는 옵션들을 제공합니다.
 이와 별도로 어느 곳에서도 음성 매개변수를 제어할 수 있는데 이에 대해서는 [간단 음성엔진 설정 #SynthSettingsRing] 섹션을 참조하세요.
@@ -1654,8 +1664,7 @@ NVDA에서는 [MDV http://www.mdvbologna.it/]에서 출시한 Lilli 디스플레
 -
 Baum에서 제작한 다른 디스플레이는 지원여부가 다를 수 있습니다.
 
-만약 USB로 연결하려면 먼저 회사에서 보급한 USB 드라이버를 설치하십시요.
-만약 APH Refreshabraille 디스플레이를 사용하신다면 USB 연결모드를 시리얼로 변경하십시요.
+만약 USB로 연결하려면 먼저 회사에서 보급한 USB 드라이버를 설치하십시요(VarioUltra, Pronto! 및 Refreshabraille USB HID 모드 제외).
 
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
@@ -1712,7 +1721,7 @@ NVDA에서는  [hedo Reha-Technik http://www.hedo.de/] 에서 출시한 hedo Mob
 
 ++ HumanWare Brailliant BI/B ++
 [HumanWare http://www.humanware.com/]에서 출시한 Brailliant BI/B 디스플레이 (BI 32, BI 40, B 80)를 USB나 블루투스로 연결하여 NVDA와 연동하여 사용할 수 있습니다.
-만약 USB로 연결하려면 회사에서 제공한 USB 드라이버를 설치하십시요.
+만약 휴먼웨어 프로토컬 사용 및 USB로 연결하려면 회사에서 제공한 USB 드라이버를 설치하십시요(OpenBraille 프로토컬 사용시 USB 드라이버 없이도 사용 가능).
 
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
@@ -1739,6 +1748,7 @@ NVDA에서는  [hedo Reha-Technik http://www.hedo.de/] 에서 출시한 hedo Mob
 | alt+tab 키 | 스페이스+2점+3점+4점+5점 (space+t) |
 | 문서 끝까지 읽기 | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
+
 
 ++ HIMS 한소네/브레일 엣지/스마트 비틀 ++
 [Hims http://www.hims-inc.com/]에서 출시한 한소네, 브레일 엣지 및 스마트 비틀을 USB나 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 19:08+1000\n"
-"PO-Revision-Date: 2016-01-13 22:03+0900\n"
+"POT-Creation-Date: 2016-02-01 16:14+1000\n"
+"PO-Revision-Date: 2016-01-31 22:17-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -131,17 +131,17 @@ msgstr "구역"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Gide for details.
 msgid "No ducking"
-msgstr ""
+msgstr "도킹 않함"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Gide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr ""
+msgstr "음성 및 소리 출력시 도킹"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Gide for details.
 msgid "Always duck"
-msgstr ""
+msgstr "도킹 사용"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2928,15 +2928,14 @@ msgid "Document formatting"
 msgstr "문서 서식 알림"
 
 #. Translators: a message when audio ducking is not supported on this machine
-#, fuzzy
 msgid "Audio ducking not supported"
-msgstr "수학 컨텐츠 탐색 불가."
+msgstr "오디오 도킹 사용 불가"
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
-msgstr ""
+msgstr "오디오 도킹 모드(NVDA가 배경음 볼륨을 줄임) 설정을 토글합니다"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -6892,7 +6891,7 @@ msgstr "음성 출력 장치 (&D)"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 msgid "Audio &ducking mode:"
-msgstr ""
+msgstr "오디오 도킹 모드 (&D):"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -8520,7 +8519,7 @@ msgid "comment: {text} by {author} on {date}"
 msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text}; 저자: {author}; 날짜: {date}"
+msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8682,199 +8681,3 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr "차트, 주석 또는 공식이 있는 셀 목록을 보여줍니다"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "기본 색상"
-
-#~ msgid "selecting %s"
-#~ msgstr "%s 선택"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s 선택 해제"
-
-#~ msgid "unrevised"
-#~ msgstr "내용 변경 않됨"
-
-#~ msgid "unknown author"
-#~ msgstr "글쓴이 알 수 없음"
-
-#~ msgid "unknown date"
-#~ msgstr "날짜 알 수 없음"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr ""
-#~ "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "포커스된 객체를 알려줍니다."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#, fuzzy
-#~ msgid "none"
-#~ msgstr "안 함"
-
-#~ msgid "equation"
-#~ msgstr "방정식"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "링크, 헤딩과 랜드마크 목록을 보여줍니다. "
-
-#~ msgid "Slovak"
-#~ msgstr "슬로바키아어"
-
-#~ msgid "grey"
-#~ msgstr "회색"
-
-#~ msgid "navy blue"
-#~ msgstr "남색"
-
-#~ msgid "red"
-#~ msgstr "빨강"
-
-#~ msgid "blue"
-#~ msgstr "파랑"
-
-#~ msgid "teal"
-#~ msgstr "틸"
-
-#~ msgid "aqua"
-#~ msgstr "옥색"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "NvDA 2013.1에서는 사용자 편의를 위해 랩탑 키보드 레이아웃의 여러 명령이 변"
-#~ "경되었습니다.\n"
-#~ "만약 랩탑 키보드 레이아웃을 사용하신다면 변경된 사항 문서를 참조하시기 바"
-#~ "랍니다."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "새 laptop 키보드 레이아웃"
-
-#~ msgid "Read What's New"
-#~ msgstr "변경된 사항 읽기"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Acceleration"
-
-#~ msgid "male 1"
-#~ msgstr "male 1"
-
-#~ msgid "female 1"
-#~ msgstr "female 1"
-
-#~ msgid "male 2"
-#~ msgstr "male 2"
-
-#~ msgid "female 2"
-#~ msgstr "female 2"
-
-#~ msgid "lime"
-#~ msgstr "라임"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "NVDA를 종료하시겠습니까? "
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "NVDA 종료전 경고 알림 (&W)"
-
-#~ msgid "Regexp"
-#~ msgstr "Regexp"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "화면 탐색 객체에 대한 위치 정보 없음"
-
-#~ msgid "No location information for screen"
-#~ msgstr "화면에 대한 위치정보 없음"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "현재  화면 탑색 객체의 폭, 넓이, 위치를 읽어 줍니다. "
-
-#~ msgid "Set column header row"
-#~ msgstr "열 머리말 행 설정"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "열 머리말 행 해제"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "한번 누르면 현재 행을 열 머릿말 행으로 설정합니다. 두번 누르면 이 설정을 "
-#~ "해제합니다. "
-
-#~ msgid "Set row header column"
-#~ msgstr "행 머리말 열 설정"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "한번 누르면 현재 열을 행 머릿말 열로 설정합니다. 두번 누르면 이 설정을 해"
-#~ "제합니다. "
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "취소선"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "수동 적용/편집"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "환경설정 파일에 오류가 있습니다. \n"
-#~ "이 에러를 수정하기 위하여 'Ok'를 누르세요. 만약 설정 파일을 수동으로 수정"
-#~ "하고 싶다면 'Cancel'을 누르세요.오류에 대한 보다 자세한 설명은 로그파일을 "
-#~ "참조하세요.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "자동 주석 없음"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "자동 주석 윈도우 찾을 수 없음"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "자동 주석이 있을 경우 이를  읽어줍니다. "
-
-#~ msgid "Automatic comments:"
-#~ msgstr "자동 주석"
-
-#~ msgid "Translation:"
-#~ msgstr "번역:"
-
-#~ msgid "Comments:"
-#~ msgstr "주석"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "이 객체에 대한 고정 리뷰가 없음"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "고정 리뷰 위치에 객체 없음"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "고정 리뷰 속에 있는 리뷰커서의 위치에서 텍스트에 의해 표상된 객체로 이동합"
-#~ "니다. "
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "다른 NVDA 설정 대화상자를 닫아주세요"

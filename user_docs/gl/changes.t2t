@@ -4,11 +4,12 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+O subliñable desta versión inclúe a capacidade de baixar opcionalmente o volume doutros sons; melloras da saída braille e do soporte de pantallas braille; varias correcións significativas para o soporte de Microsoft Office; e correcións ao modo exploración en iTunes.
 
 == Novas Características ==
 - Novas táboas de transcripción braille: braille polaco computerizado de 8 pontos, mongol. (#5537), #5574)
 - Podes desactivar o cursor braille e cambiar a súa forma usando as novas opcións Amosar cursor e Forma do cursor no diálogo Opcións de Braille. (#5198)
-- NVDA agora pode conectar ca pantalla braille HIMS Smart Beetle  a través do Bluetooth. (#5607)
+- NVDA agora pode conectar coa pantalla braille HIMS Smart Beetle  a través do Bluetooth. (#5607)
 - NVDA pode baixar opcionalmente o volume doutros sons cando se instale en Windows 8 e posteriores. Esto pode configurarse usando a opción Modo de atenuación do audio no diálogo Sintetizador do NVDA ou premendo NVDA+shift+d. (#3830, #5575)
 - Soporte para a APH Refreshabraille en modo HID e para a Baum VarioUltra e a Pronto! cando se conecten a través do USB. (#5609)
 - Soporte para as pantallas braille HumanWare Brailliant BI/B cando o protocolo se pon en OpenBraille. (#5612)
@@ -16,31 +17,39 @@ Que hai de Novo no NVDA
 
 == Cambios ==
 - O anunciado de émfasis agora está deshabilitado por omisión. (#4920)
-- No diálogo Lista de Elementos en Microsoft Excel, o atallo de teclado para Fórmulas foi cambiado a alt+r así é diferente ó atallo de teclado para o Filtro de campos. (#5527)
+- No diálogo Lista de Elementos en Microsoft Excel, o atallo de teclado para Fórmulas foi cambiado a alt+r así é diferente ao atallo de teclado para o Filtro de campos. (#5527)
 - Actualizado o transcriptor braille liblouis a 2.6.5. (#5574)
 - A palabra "texto" xa non se anuncia cando se mova o foco ou o cursor de revisión a obxectos de texto. (#5452)
 
 
 == Corrección de Fallos ==
 - En iTunes 12, o modo exploración agora actualízase correctamente cando se carga unha páxina nova na iTunes Store. (#5191)
-- En Internet Explorer e outros controis  MSHTML, ó se mover ós níveis de cabeceiras específicas ca navegación cunha soa letra agora compórtase como se esperaba cando o nível dunha cabeceira se ignora con propósitos de accesibilidade (específicamente, cando aria-level non fai do nível dunha etiqueta h). (#5434)
+- En Internet Explorer e outros controis  MSHTML, ao se mover ós níveis de cabeceiras específicas ca navegación cunha soa letra agora compórtase como se esperaba cando o nível dunha cabeceira se ignora con propósitos de accesibilidade (específicamente, cando aria-level non fai do nível dunha etiqueta h). (#5434)
 - En Spotify, o foco xa non aterriza de cotío en obxectos "descoñecido". (#5439)
 - O foco agora restáurase correctamente ó voltar ó Spotify dende outra aplicación. (#5439)
-- Ó se conmutar entre modo exploración e modo foco, o modo anúnciase en braille así como en voz. (#5239)
+- Ao se conmutar entre modo exploración e modo foco, o modo anúnciase en braille así como en voz. (#5239)
 - O botón Inicio na Barra de Tareas xa non se anuncia coma unha lista e/ou como selecionado nalgunhas versións de Windows. (#5178)
 - Mensaxes como "insertado" xa non se anuncian cando se creen correos en Microsoft Outlook. (#5486)
-- Cando se utiliza unha pantalla braille e o texto se selecione na liña actual (ex.: ó procurar nun editor de textos para texto que ocurra na mesma liña), a pantalla braille desprazarase se é apropriado. (#5410)
-- NVDA xa non sairá silenciosamente ó se pechar unha consola de ordes de Windows con alt+f4 en Windows 10. (#5343)
+- Cando se utiliza unha pantalla braille e o texto se selecione na liña actual (ex.: ao procurar nun editor de textos para texto que ocurra na mesma liña), a pantalla braille desprazarase se é apropriado. (#5410)
+- NVDA xa non sairá silenciosamente ao se pechar unha consola de ordes de Windows con alt+f4 en Windows 10. (#5343)
 - Na Lista de Elementos en modo exploración, cando cambies o tipo de elemento, agora límpase o campo Filtrar por. (#5511)
 - No texto editable en aplicacións de Mozilla, movendo o rato le de novo a liña, a palabra, etc. apropriada coma se esperaba en cambio de todo o contido. (#5535)
-- Ó se mover o rato en texto editable en aplicacións de Mozilla, a lectura 		xa non se detén en elementos coma ligas dentro da palabra ou liña que se estea a ler. (#2160, #5535)
+- Ao se mover o rato en texto editable en aplicacións de Mozilla, a lectura 		xa non se detén en elementos coma ligas dentro da palabra ou liña que se estea a ler. (#2160, #5535)
 - En Internet Explorer, o sitio web shoprite.com agora pode lerse en modo exploración en lugar de anuncialo coma en branco. (Específicamente, os atributos lang mal formados agora manéllanse graciosamente.) (#5569)
 - No Microsoft Word, o seguemento de cambios como "insertado" xa non se anuncia cando a marca de seguemento de cambios non se amosa. (#5566)
 - Cando se enfoque un botón conmutable , NVDA agora anuncia cando se cambie de premedo a non premedo. (#5441)
 - O anunciado da forma do rato agora funciona novamente como se agardaba. (#5595)
-- Ó se falar a sangría de liña, os espazos de non separación agora trátanse como espazos normais. Con anterioridade, esto podía causar anunciamentos como "espazo espazo espazo" en lugar de "3 espazos". (#5610)
-- Ó se pechar unha lista de métodos candidatos de entrada no Microsoft moderno, o foco restáurase correctamente ou a composición de entrada ou o documento subrayado. (#4145)
-- En Microsoft Office 2013 e posteriores, cando as cintas están configuradas para amosar só pestanas, os elementos na cinta amósanse de novo como se esperaba cando se activa unha pestana. (#5504) 
+- Ao se falar a sangría de liña, os espazos de non separación agora trátanse como espazos normais. Con anterioridade, esto podía causar anunciamentos como "espazo espazo espazo" en lugar de "3 espazos". (#5610)
+- Ao se pechar unha lista de métodos candidatos de entrada no Microsoft moderno, o foco restáurase correctamente ou a composición de entrada ou o documento subrayado. (#4145)
+- No Microsoft Office 2013 e posteriores, cando as cintas están configuradas para amosar só pestanas, os elementos na cinta amósanse de novo como se esperaba cando se activa unha pestana. (#5504) 
+- Correcións e melloras para o ligado e a detección de xestos de pantalla tactil. (#5652)
+- Os Touch screen hovers xa non se anuncian na axuda de entrada. (#5652)
+- NVDA Xa non falla ao listar comentarios na Lista de Elementos para o Microsoft Excel se un comentario está sobre unha celda fusionada. (#5704)
+- Nun caso moi pouco común, NVDA xa non falla ao ler o contido da folla no Microsoft Excel co anunciado de cabeceiras de fila e columna habilitado. (#5705)
+- No Google Chrome, ao navegar dentro dunha Composición de Entrada cando se introducen carácteres do Este Asiático agora funciona coma se esperaba. (#4080)
+- Cando se procura en Apple Music en iTunes, o modo exploración para o documento de resultados da procura agora actualízase coma se esperaba. (#5659)
+- No Microsoft Excel, premendo shift+f11 para crear unha folla nova agora anuncia a túa nova posición en lugar de non anunciar nada. (#5689)
+- Correxidos problemas coa saída da pantalla braille cando se introducen carácteres coreanos. (#5640)
  
  
 == Cambios para Desenvolvedores ==

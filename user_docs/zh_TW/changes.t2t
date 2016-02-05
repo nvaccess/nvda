@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Highlights of this release include the ability to optionally lower the volume of other sounds; improvements to braille output and braille display support; several significant fixes to Microsoft Office support; and fixes to browse mode in iTunes.
 
 == New Features ==
 - New braille translation tables: Polish 8 dot computer braille, Mongolian. (#5537, #5574) 新增了波蘭語電腦點字表與蒙古語點字表
@@ -40,6 +41,15 @@
 - Reporting of mouse shape changes again works as expected. (#5595)
 - When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
 - When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
+- In Microsoft Office 2013 and later, when the ribbon is set to show only tabs, items in the ribbon are again reported as expected when a tab is activated. (#5504)
+- Fixes and improvements to touch screen gesture detection and binding. (#5652)
+- Touch screen hovers are no longer reported in input help. (#5652)
+- NVDA no longer fails to list comments in the Elements List for Microsoft Excel if a comment is  on a merged cell. (#5704)
+- In a very rare case, NVDA no longer fails to read sheet content in Microsoft Excel with reporting of row and column headers enabled. (#5705)
+- In Google Chrome, navigating within an Input composition when entering east Asian characters now works as expected. (#4080)
+- When searching Apple Music in iTunes, browse mode for the search results document is now updated as expected. (#5659)
+- In Microsoft Excel, pressing shift+f11 to create a new sheet now reports your new position instead of reporting nothing. (#5689)
+- Fixed problems with braille display output when entering Korean characters. (#5640)
 
 
 == Changes for Developers ==
@@ -52,6 +62,14 @@
  - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
  - hwIo.Hid provides support for braille displays communicating via USB HID.
  - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+- There are several new properties accessible from touch screen gestures: (#5652)
+ - MultitouchTracker objects now contain a childTrackers property which contains the MultiTouchTrackers the tracker was composed of. For example, 2 finger double tap has child trackers for two 2-finger taps. The 2-finger taps themselves have child trackers for two taps.
+ - MultiTouchTracker objects now also contain a rawSingleTouchTracker property if the tracker was the result of one single finger doing a tap, flick or hover. The SingleTouchTracker allows access to the underlying ID assigned to the finger by the operating system and whether or not the finger is still in contact at the current time.
+ - TouchInputGestures now have x and y properties, removing the need to access the tracker for trivial cases.
+ - TouchInputGesturs now contain a preheldTracker property, which is a MultitouchTracker object representing the other fingers held while this action was being performed.
+- Two new touch screen gestures can be emitted: (#5652)
+ - Plural tap and holds (e.g. double tap and hold)
+ - A generalized identifier with finger count removed for holds (e.g. hold+hover for 1finger_hold+hover).
 
 
 = 2015.4 =

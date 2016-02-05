@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Schwerpunkte dieser Version sind u.a. eine Option zum Reduzieren der Lautstärke anderer Anwendungen zugunsten von NVDA; Verbesserungen bei der Brailleausgabe und der Unterstützung von Braillezeilen; mehrere herausragende Neuerungen in der Unterstützung von Microsoft Office; sowie Fehlerkorrekturen im Lesemodus von Itunes.
+
 
 == neue Funktionen ==
 - neue Braille-Übersetzungstabellen: polnisches 8-Punkt-Computerbraille, mongolisch. (#5537 #5574)
@@ -40,6 +42,12 @@
 - Bei der Ansage von Zeileneinrückungen werden geschützte Leerzeichen nun wie normale Leerzeichen behandelt. Dies führte zuvor zu Ansagen wie "Leerzeichen Leerzeichen Lerzeichen" anstatt von 3 Leerzeichen. (#5610)
 - Beim Schließen der Kandidatenliste bei der Eingabe komplexer Sonderzeichen wird der Fokus korrekt wiederhergestellt. (#4145)
 - Wenn die Menübänder in Office 2013 und neuer so wingestellt werden, dass sie nur Registerkarten anzeigen, werden sie von NVDA wie erwartet dargestellt, wenn eine Registerkarte aktiviert wird. (#5504)
+- Korrekturen und Verbesserungen beim Erkennen und Einbinden von Touch-Screen-Gesten: (#5652)
+- Wischgesten werden in der Eingabehilfe nicht mehr erkannt. (#5652)
+- Wenn sich in Microsoft Excel ein Kommentar auf eine verbundene Zelle bezieht, wird er korrekt erkannt. (#5704)
+- Fehler behoben, wonach NVDA in sehr seltenen Fällen den Inhalt von Tabellenblättern in Excel nicht angezeigt hat. (#5705)
+- Fehler bei der Braille-Anzeige von koreanischen Zeichen behoben. (#5640)
+
 
 == Änderungen für Entwickler ==
 - Sie können die neue Klasse audioDucking.audioDucker verwenden, wenn Sie beim Abspielen von Audiomaterial die Lautstärke anderer Audioquellen reduzieren wollen. (#3830)
@@ -51,6 +59,14 @@
  - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
  - hwIo.Hid provides support for braille displays communicating via USB HID.
  - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+- neue Eigenschaften für Touch-screen-Gesten: (#5652)
+ - Das Objekt MultitouchTracker enthält nun eine Eigenschaft namens childTrackers. Hier werden die einzelnen Teile einer Mehrfachgeste gespeichert. Ein doppeltes Tippen mit zwei Fingern enthält zum Beispiel zwei zweifinger-Tippgesten. Die Zweifinger-Tippgesten enthalten ihrerseits zwei Tippgesten.
+ - MultiTouchTracker Objekte enthalten außerdem eine Eigenschaft rawSingleTouchTracker, falls der Tracker das Ergebnis einer Geste ist, die mit einem Finger ausgeführt wird. Der Tracker gestattet Ihnen den Zugriff auf die vom Betriebssystem zurückgegebene ID des Fingers. Er erlaub Ihnen außerdem festzustellen, ob der Finger momentan (noch) den Bildschirm berührt.
+ - TouchInputGestures enthalten nun X- und Y-Koordinaten. Dadurch ist es nicht länge nötig, auf den Tracker zuzugreifen.
+ - TouchInputGesturs enthalten nun eine Eigenschaft namens preheldTracker.  Diese Eigenschaft gibt über Finger auskunft, die auf dem Bildschirm gehalten werden.
+- es werden zwei neue Touchscreen-Gesten erkannt: (#5652)
+ - mehrfachgesten mit Tippen und Halten (z.B. zweifaches Tippen und Halten). 
+ - die Angabe losgelassener Finger wurde verallgemeinert (z.b. halten+Wischen für ein Halten und Wischen mit einem Finger).
  
 
 = 2015.4 =

@@ -57,9 +57,9 @@ NVDAはGNU 一般公衆利用許諾契約書 (Version 2) によって保護さ�
 
 + システム要件 +
 - オペレーティングシステム: すべての32ビット版および64ビット版Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 および Windows 10 (サーバー用オペレーティングシステムを含む)
-- Windows XP 32ビット版はサービスパック2以降に対応
-- Windows Server 2003 はサービスパック1以降に対応
-- Windows Vista はサービスパック2および[KB2763674 https://support.microsoft.com/en-us/kb/2763674]の更新が必要です。
+ - Windows XP 32ビット版はサービスパック2以降に対応
+ - Windows Server 2003 はサービスパック1以降に対応
+ - Windows Vista はサービスパック2および[KB2763674 https://support.microsoft.com/en-us/kb/2763674]の更新が必要です。
 利用可能な Windows Update がすべて適用されていれば、これらはインストール済みです。
 - メモリー: 256MB以上のRAM
 - プロセッサーのスピード: 1.0GHz以上
@@ -737,9 +737,9 @@ OKボタンを押すとNVDAが再起動します。
 もしユーザー名とパスワードを指定してWindowsにログオンしている場合、このチェックボックスをチェックすると、NVDAをWindows起動時のログオン画面で自動的に開始できます。
 このオプションはインストールされたNVDAでのみ有効です。
 
-==== 現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用 ====
+==== 現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用 (管理者権限が必要) ====
 このボタンを押すと、現在保存されているNVDAのユーザー設定をNVDAのシステムフォルダーにコピーします。この設定は、ログオンやユーザーアクセスコントロール (UAC) 、その他のセキュアスクリーンにおけるNVDAで利用されます。
-すべての設定を確実にコピーするため、最初にNVDA+Ctrl+CまたはNVDAメニュー内の設定情報の保存を実行してください。
+すべての設定を確実にコピーするため、事前にNVDA+Ctrl+CまたはNVDAメニュー内の設定情報の保存を実行してください。
 このオプションはインストールされたNVDAでのみ有効です。
 
 ==== NVDAの更新を自動的に確認 ====
@@ -761,6 +761,16 @@ NVDAでサポートされている音声エンジンの一覧は、[サポート
 
 ==== 出力先デバイス ====
 このオプションでは、NVDAが選択された音声エンジンを使って読み上げを出力するサウンドカードを選択できます。
+
+%kc:setting
+==== 音のダッキング ====
+キー: NVDA+Shift+D
+
+Windows 8 以降では、NVDA の音声やサウンドの出力のときに限って、またはNVDAを実行している間ずっと、他のアプリの音量を低くすることができます。
+- ダッキングなし: NVDA 以外の音量は変化しません。
+- 音声とサウンドの出力時にダッキング: NVDA が音声やサウンドを出力している間だけ、NVDA 以外の音量が低くなります。この選択肢は音声合成エンジンによっては正しく動作しません。
+- 常にダッキング: NVDA を実行している間はずっと、NVDA 以外の音量が低くなります。
+-
 
 +++ 音声設定 (NVDA+Ctrl+V) +++[VoiceSettings]
 設定メニュー内の音声設定ダイアログでは、読み上げ音声に関するオプションが変更できます。
@@ -1648,14 +1658,13 @@ NVDAの点字入力テーブル設定は有効ではありません。
 ++ Baum社/Humanware社/APH社製点字ディスプレイ ++
 USBまたはbluetooth接続されたいくつかの[Baum http://www.baum.de/cms/en/]社、[HumanWare http://www.humanware.com/]社及び[APH http://www.aph.org/]製のディスプレイをサポートしています。
 サポートしているディスプレイには以下のものが含まれます。
-- Baum社: SuperVario, PocketVario, VarioUltra (Bluetooth のみ), Pronto! (Bluetooth のみ)
+- Baum社: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare社: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 その他のいくつかのBaum社製ディスプレイでも動作する可能性がありますが、テストは行っていません。
 
-USBで接続する場合は、製造元が提供するUSBドライバーを最初にインストールしてください。
-APH製のRefreshabrailleを使用する場合、USBモードをシリアルにセットしなければなりません。
+VarioUltra, Pronto!, Refreshabraille 以外の機器を USB 接続する場合で、USB モードを HID に設定するときには、事前に製造元が提供するUSBドライバーをインストールしてください。
 
 以下は、これらのディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -1712,7 +1721,8 @@ APH製のRefreshabrailleを使用する場合、USBモードをシリアルに�
 
 ++ HumanWare製Brailliant BI/Bシリーズ ++
 USBまたはBluetooth接続された[HumanWare http://www.humanware.com/]製の BI 32、BI 40及びB 80を含むBrailliant BI及びBシリーズディスプレーがサポートされました。
-USB接続されている場合、最初に製造元から提供されたUSBドライバーをインストールする必要があります。
+USB接続で HumanWare プロトコルを使用する場合は、事前に製造元から提供されたUSBドライバーをインストールする必要があります。
+プロトコルとして OpenBraille を使用する場合は USB ドライバーは不要です。
 
 以下は、このディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -1740,12 +1750,10 @@ USB接続されている場合、最初に製造元から提供されたUSBド�
 | すべて読み上げ | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS製 Braille Sense/Braille EDGE シリーズ ++
-[HIMS http://www.hims-inc.com/] 社の Braille Sense と Braille EDGE ディスプレイを USB またはブルートゥースで接続すれば NVDA で利用できます。
+++ HIMS製 Braille Sense/Braille EDGE/Smart Beetle シリーズ ++
+[HIMS http://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle ディスプレイを USB またはブルートゥースで接続すれば NVDA で利用できます。
 USB 接続のときは HIMS 社が提供する USB ドライバーをインストールしておく必要があります。
-これは HIMS Resource Center からダウンロードできます: http://www.hims-inc.com/resource-center/
-このページで、お使いの機種を選択して、Window-Eyes のセクションからドライバーをダウンロードしてください。
-このセクションでは Window-Eyes について書かれていますが、提供されている USB ドライバーは汎用的なものであり NVDA で利用できます。
+ダウンロード: http://www.himsintl.com/?c=2/13&uid=2319
 
 NVDA で利用するときのキー割り当ては以下のとおりです。
 キーの場所の説明は点字ディスプレイのマニュアルをお読みください。
