@@ -7,17 +7,66 @@
 
 import locale
 from collections import OrderedDict
+import threading
 import time
 import os
+from ctypes import *
 import comtypes.client
 from comtypes import COMError
 import _winreg
+import audioDucking
+import NVDAHelper
 import globalVars
 import speech
 from synthDriverHandler import SynthDriver,VoiceInfo
 import config
 import nvwave
 from logHandler import log
+
+class FunctionHooker(object):
+
+	def __init__(self,targetDll,importDll,funcName,newFunction):
+		hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(targetDll,importDll,funcName,newFunction)
+		if hook:
+			print "hooked %s"%funcName
+		else:
+			print "could not hook %s"%funcName
+			raise RuntimeError("could not hook %s"%funcName)
+
+	def __del__(self):
+		NVDAHelper.localLib.dllImportTableHooks_unhookSingle(self._hook)
+
+_duckersByHandle={}
+
+@WINFUNCTYPE(windll.winmm.waveOutOpen.restype,*windll.winmm.waveOutOpen.argtypes,use_errno=False,use_last_error=False)
+def waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags):
+	try:
+		res=windll.winmm.waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags) or 0
+	except WindowsError as e:
+		res=e.winerror
+	if res==0 and pWaveOutHandle:
+		h=pWaveOutHandle.contents.value
+		d=audioDucking.AudioDucker()
+		d.enable()
+		_duckersByHandle[h]=d
+	return res
+
+@WINFUNCTYPE(c_long,c_long)
+def waveOutClose(waveOutHandle):
+	try:
+		res=windll.winmm.waveOutClose(waveOutHandle) or 0
+	except WindowsError as e:
+		res=e.winerror
+	if res==0 and waveOutHandle:
+		_duckersByHandle.pop(waveOutHandle,None)
+	return res
+
+_waveOutHooks=[]
+def ensureWaveOutHooks():
+	if not _waveOutHooks and audioDucking.isAudioDuckingSupported():
+		sapiPath=os.path.join(os.path.expandvars("$SYSTEMROOT"),"system32","speech","common","sapi.dll")
+		_waveOutHooks.append(FunctionHooker(sapiPath,"WINMM.dll","waveOutOpen",waveOutOpen))
+		_waveOutHooks.append(FunctionHooker(sapiPath,"WINMM.dll","waveOutClose",waveOutClose))
 
 class constants:
 	SVSFlagsAsync = 1
@@ -46,6 +95,7 @@ class SynthDriver(SynthDriver):
 		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
 		@type _defaultVoiceToken: ISpeechObjectToken
 		"""
+		ensureWaveOutHooks()
 		self._pitch=50
 		self._initTts(_defaultVoiceToken)
 
