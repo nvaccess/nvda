@@ -16,6 +16,8 @@ environment:
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
 
 init:
+ # We don't want Visual Studio 2013, so clobber it.
+ - ps: Remove-ItemProperty hklm:\Software\WOW6432Node\Microsoft\VisualStudio\12.0\Setup\VC ProductDir
  - ps: |
      if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
       # Strip "release-" prefix.
