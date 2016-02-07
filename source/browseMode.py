@@ -688,6 +688,7 @@ class ElementsListDialog(wx.Dialog):
 			parentElements.append(element)
 
 		# Start with no filtering.
+		self.filterEdit.ChangeValue("")
 		self.filter("", newElementType=True)
 
 	def filter(self, filterText, newElementType=False):
@@ -699,14 +700,12 @@ class ElementsListDialog(wx.Dialog):
 
 		# Populate the tree with elements matching the filter text.
 		elementsToTreeItems = {}
-		item = None
 		defaultItem = None
 		matched = False
 		#Do case-insensitive matching by lowering both filterText and each element's text.
 		filterText=filterText.lower()
 		for element in self._elements:
-			if filterText not in element.item.label.lower():
-				item = None
+			if filterText and filterText not in element.item.label.lower():
 				continue
 			matched = True
 			parent = element.parent

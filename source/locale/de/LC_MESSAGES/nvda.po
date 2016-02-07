@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-25 19:10+1000\n"
+"POT-Creation-Date: 2016-01-07 12:47+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -127,6 +127,21 @@ msgstr "Formular"
 msgid "region"
 msgstr "Region"
 
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "nie"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "beim Sprechen und Abspielen von nVDA-Klängen"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "immer"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
@@ -210,7 +225,7 @@ msgstr "Deutsche Kurzschrift"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "britisches 8-Punkt-Computerbraille"
+msgstr "Britisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -404,6 +419,11 @@ msgstr "indische  Vollschrift (Manipuri)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongolisch"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "indische  Vollschrift (Marathi)"
 
@@ -451,6 +471,11 @@ msgstr "nepalesische Vollschrift"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "indische Vollschrift (Oriya)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "polnisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -656,6 +681,18 @@ msgstr "klk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "[ ]"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Punkte 7 und 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punkt 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Alle Punkte"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -1291,7 +1328,7 @@ msgstr "Einige"
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "meiste"
+msgstr "Meiste"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2901,6 +2938,18 @@ msgstr "Eingabe"
 msgid "Document formatting"
 msgstr "Dokumentformatierungen"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Das Reduzieren der Lautstärke wird nicht unterstützt."
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Schaltet zwischen verschiedenen Modi zum Reduzieren der Lautstärke anderer "
+"Audioquellen um."
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "Eingabehilfe ein"
@@ -4023,6 +4072,31 @@ msgstr "Braillezeile gekoppelt an %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Koppelt die Braillezeile wahlweise an den Fokus oder an den NVDA-Cursor."
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Braille-Cursor aus"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Braille-Cursor ein"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Schaltet den Braille-Cursor ein oder aus."
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Braille-Cursor ist ausgeschaltet."
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Braille-Cursor %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Schaltet zwischen den cursor-Varianten um."
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -6953,6 +7027,10 @@ msgstr "&Sprachausgabe:"
 msgid "Output &device:"
 msgstr "&Ausgabegerät:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Lautstärke anderer Audio-Quellen &reduzieren:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7514,9 +7592,17 @@ msgstr "&Eingabetabelle:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Aktuelles &Wort in Computerbraille ausschreiben"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "Cursor &anzeigen"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Cursorblinkfrequenz (in Millisekunden)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Cursor&form:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7739,23 +7825,23 @@ msgstr "Zeigt eine Liste mit verschiedenen Elementen in der Arbeitsmappe an."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Diagramm"
+msgid "&Charts"
+msgstr "&Diagramme"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "k&ommentar"
+msgid "C&omments"
+msgstr "k&ommentare"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "Formel"
+msgid "Fo&rmulas"
+msgstr "Fo&rmeln"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&Arbeitsblatt"
+msgid "&Sheets"
+msgstr "&Arbeitsblätter"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8769,12 +8855,15 @@ msgid "&Annotations"
 msgstr "&Anmerkungen"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE Serien"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "HIMS Braille Sense/Braille EDGE series"
+#~ msgstr "HIMS Braille Sense/Braille EDGE Serien"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"

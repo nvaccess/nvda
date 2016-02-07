@@ -1,5 +1,4 @@
 ﻿Podręcznik Użytkownika - NVDA NVDA_VERSION
-Podręcznik Użytkownika - NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -57,12 +56,14 @@ Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a
 Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Wymagania Systemowe +
-- Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows XP, Windows Vista, Windows 7, Windows 8 i Windows 10 (w tym systemów operacyjnych dla serwerów).
+- Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 i Windows 10 (w tym systemów operacyjnych dla serwerów).
  - Dla 32-bitowego Windows XP, NVDA wymaga Service Pack 2 lub wyższego.
  - Dla Windows Server 2003, NVDA wymaga Service Pack 1 lub wyższego.
+ - Dla Windows Vista, NVDA wymaga Service Pack 2 i poprawki [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ Oba te komponenty powinny być zainstalowane, jeśli zastosowano wszystkie dostępne aktualizacje przez usługę Windows Update.
 - Pamięć operacyjna: przynajmniej 256 MB
 - Procesor: częstotliwość przynajmniej 1.0 GHz
-- Około 50 MB wolnego miejsca na dysku.
+- Około 90 MB wolnego miejsca na dysku.
 -
 
 + Pobieranie i instalacja NVDA +
@@ -88,8 +89,8 @@ Kontynuowanie używania wersji tymczasowej może być przydatne do przedstawieni
 Poza brakiem możliwości automatycznego startu po zalogowaniu do systemu, przenośna i tymczasowa kopia NVDA posiada następujące ograniczenia:
 - Brak obsługi aplikacji uruchomionych z prawami administratora, chyba że NVDA również został uruchomiony z takimi uprawnieniami (niezalecane).
 - Brak odczytu ekranu kontroli konta użytkownika, podczas uruchamiania programu z uprawnieniami administratora.
-- Windows 8: brak obsługi ekranu dotykowego.
-- Windows 8: brak trybu czytania i wypowiadania wpisywanych znaków w aplikacjach Windows Store.
+- Windows 8 i nowsze: brak obsługi ekranu dotykowego.
+- Windows 8 i nowsze: brak trybu czytania i wypowiadania wpisywanych znaków w aplikacjach Windows Store.
 -
 
 ++ Instalacja NVDA ++
@@ -370,7 +371,7 @@ Do przeglądania tekstu są dostępne następujące polecenia:
 | Przechodzi na koniec linii w przeglądzie | shift+numeryczne 3 | NVDA+end | brak | Przenosi punkt przeglądu na koniec aktualnej linii. |
 | Odczytaj wszystko z przeglądu | numeryczny Plus | NVDA+shift+a | machnięcie trzema palcami w dół (tryb tekstowy) | Odczytuje od punktu przeglądu do końca tekstu. |
 | Kopiuj od punktu zaznaczenia | NVDA+f9 | nvda+f9 | brak | Ustawia w aktualnym punkcie przeglądu początek zaznaczenia kopiowanego tekstu. |
-| Kopiuj do punktu zaznaczenia | NVDA+f10 | NVDA+f10 | brak | Kopiuje do schowka tekst od początku zaznaczenia do aktualnego punktu przeglądu. |
+| Kopiuj do punktu zaznaczenia | NVDA+f10 | NVDA+f10 | brak | Kopiuje do systemowego schowka tekst od początku zaznaczenia do aktualnego punktu przeglądu, włączając w to znak, na którym znajduje się punkt przeglądu. |
 | Informacje o formatowaniu | NVDa+f | NVDA+F | brak | odczytuje informacje o formatowaniu tekstu pod kursorem. |
 %kc:endInclude
 
@@ -628,15 +629,15 @@ Podobnie jak na stronach internetowych, NVDA posiada listę elementów dla Micro
 Aby otworzyć listę elementów w Excel, naciśnij NVDA+f7.
 %kc:endInclude
 Różne typy informacji na liście elementów to:
-- Wykres: wymienia wszystkie wykresy w skoroszycie. 
+- Wykresy: wymienia wszystkie wykresy w skoroszycie. 
 Wybranie wykresu i naciśnięcie Enter lub przycisku "idź do" przeniesie punkt uwagi do tego wykresu, umożliwiając nawigację i odczyt strzałkami.
-- komentarz: wszystkie komórki w skoroszycie zawierające komentarze. 
+- komentarze: wszystkie komórki w skoroszycie zawierające komentarze. 
 Są wyświetlanea dres komórki i jej komentarze. 
 Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranej komórki.
-- Formuła: Wymienia wszystkie komórki w skoroszycie, które zawierają formułę. 
+- Formuły: Wymienia wszystkie komórki w skoroszycie, które zawierają formułę. 
 Wyświetlany jest adres komórki, oraz zawarta w niej formuła.
 Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranej komórki.
-- Arkusz: wyświetla wszystkie arkusze w skoroszycie. 
+- Arkusze: wyświetla wszystkie arkusze w skoroszycie. 
 Naciśnięcie F2 na liście arkuszy pozwala zmienić nazwę arkusza. 
 Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranego arkusza.
 -
@@ -712,7 +713,7 @@ Proszę zauważyć, że NVDA musi zostać zrestartowane po zmianie języka.
 Jeśli zmienisz język, NVDA zapyta, czy chcesz zrestartować program.
 Naciśnij Ok, a program uruchomi się ponownie.
 
-==== Zapisz ustawienia przed wyjściem ====
+==== Zapisz ustawienia przy wyjściu ====
 Ta opcja, to pole wyboru. Jeśli jest zaznaczone, to NVDA automatycznie zapisze aktualne ustawienia przy wyjściu z programu.
 
 ==== Pokaż opcje przy wyjściu z NVDA ====
@@ -732,11 +733,11 @@ Jeśli jednak chcesz przesłać zgłoszenie błędu, ta opcja może być użytec
 Jeśli ta opcja jest włączona, NVDA uruchomi się automatycznie zaraz po zalogowaniu się do systemu.
 Opcja jest dostępna tylko dla zainstalowanych kopii NVDA.
 
-==== Użyj NVDA na ekranie logowania windows (wymagane są uprawnienia administratora) ====
+==== Użyj NVDA na ekranie logowania windows (wymaga uprawnień administratora) ====
 Jeśli logujesz się do systemu podając nazwę użytkownika i hasło, to zaznaczenie tej opcji sprawi, że NVDA będzie uruchamiał się automatycznie na ekranie logowania do systemu.
 Ta opcja jest dostępna tylko dla zainstalowanych kopii NVDA.
 
-==== Używaj obecnie zapisanych ustawień na ekranie logowania i innych zabezpieczonych ekranach (wymagane są uprawnienia administratora) ====
+==== Używaj obecnie zapisanych ustawień na ekranie logowania i innych zabezpieczonych ekranach (wymaga uprawnień administratora) ====
 Naciśnięcie przycisku "Używaj zapisanych ustawień NVDA na ekranie logowania i innych zabezpieczonych ekranach" kopiuje  zapisane wcześniej ustawienia użytkownika do katalogu systemowej konfiguracji NVDA, której NVDA używa na ekranie logowania do Windows, ekranie kontroli konta użytkownika (UAC), oraz innych zabezpieczonych ekranach.
 Aby skopiować w ten sposób wszystkie swoje ustawienia, po pierwsze zapisz aktualną konfigurację przy użyciu klawisza skrótu control+NVDA+c albo polecenia menu NVDA "Zapisz ustawienia".
 Ta opcja jest dostępna tylko dla zainstalowanych kopii NVDA.
@@ -760,6 +761,16 @@ Może to być przydatne dla kogoś chcącego używać NVDA tylko z monitorem bra
  
 ==== Urządzenie wyjściowe ====
 Ta opcja pozwala na wybór karty dźwiękowej, przez którą będzie słychać wybrany syntezator NVDA.
+
+%kc:setting
+==== Tryb przyciszania audio ====
+Skrót klawiszowy: NVDA+shift+d
+
+W Windows 8 i nowszych, ta opcja pozwala wybrać, czy NVDA powinien obniżać głośność innych aplikacji, gdy NVDA mówi, albo przez cały czas, gdy NVDA jest uruchomione.
+- Bez przyciszania: NVDA nie będzie nigdy obniżać głośności innych dźwięków. 
+- Przycisz podczas generowania mowy i dźwięku: NVDA obniży głośność innych dźwięków tylko wtedy, gdy NVDA mówi albo generuje dźwięk. Może to nie działać dla wszystkich syntezatorów. 
+- Zawsze przyciszaj: NVDA będzie obniżał głośność innych dźwięków przez cały czas, gdy NVDA jest uruchomione.
+-
 
 +++ Ustawienia Głosu (NVDA+kontrol+v) +++[VoiceSettings]
 Okno dialogowe Ustawienia Głosu znajduje się w menu Ustawienia. Zawiera opcje, które pozwalają zmieniać brzmienie mowy.
@@ -888,8 +899,16 @@ Jeśli wprowadzanie nie jest możliwe na monitorze posiadającym klawiaturę, b�
 ==== Rozwiń słowo pod kursorem do brajla komputerowego ====
 Ta opcja umożliwia wyświetlenie słowa pod kursorem w formie nieskróconego brajla komputerowego.
 
+==== Pokaż kursor ====
+Ta opcja pozwala włączać i wyłączać kursor brajlowski.
+Ma zastosowanie do kursora systemu i kursora przeglądu, ale nie dotyczy oznaczania zaznaczenia.
+
 ==== Tempo migania kursora ====
 Ta opcja jest polem liczbowym, które pozwala zmienić częstotliwość migania kursora wyrażoną w milisekundach.
+
+==== Kształt kursora ====
+Ta opcja pozwala wybrać kształt (wzorzec punktowy) kursora brajlowskiego.
+Opcja nie ma wpływu na znacznik zaznaczania.
 
 ==== Czas wygasania komunikatów ====
 To ustawienie jest polem liczbowym określające w sekundach, jak długo na monitorze brajlowskim są wyświetlane komunikaty programu NVDA.
@@ -1639,14 +1658,13 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 ++ Monitory brajlowskie Baum/Humanware/APH ++
 Kilka monitorów firm [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] i [APH http://www.aph.org/] jest obsługiwanych przez USB i bluetooth.
 Wśród nich:
-- Baum: SuperVario, PocketVario, VarioUltra (tylko Bluetooth), Pronto! (tylko Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Niektóre inne monitory produkowane przez Baum mogą również działać, ale nie zostało to przetestowane.
 
-Aby podłączyć monitor przez USB, musisz najpierw zainstalować sterowniki USB dostarczane przez producenta.
-Dla APH Refreshabraille, tryb USB musi być ustawiony na tryb szeregowy (serial).
+Przy połączeniu przez USB do monitorów innych niż VarioUltra, Pronto! lub Refreshabraille z trybem USB ustawionym na HID, musisz najpierw zainstalować sterowniki USB dostarczone przez producenta.
 
 Poniżej skróty klawiszowe dla tego monitora, które działają w nvda.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
@@ -1703,7 +1721,8 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 
 ++ HumanWare Brailliant BI/B Series ++
 Serie monitorów Brailliant BI i B produkcji [HumanWare http://www.humanware.com/], włącznie z BI 32, BI 40 and B 80, są obsługiwane przy połączeniu przez USB i bluetooth.
-Dla połączenia przez USB, musisz najpierw zainstalować sterowniki USB dostarczane przez producenta.
+Przy połączeniu przez USB z protokołem ustawionym na HumanWare, trzeba najpierw zainstalować sterowniki USB dostarczone przez producenta.
+Sterowniki USB nie są wymagane, jeśli protokół jest ustawiony na OpenBraille.
 
 Poniżej skróty klawiszowe dla tego monitora, które działają w nvda.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
@@ -1731,12 +1750,10 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Czytaj wszystko | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
-NVDA obsługuje monitory Braille Sense i Braille EDGE produkcji [Hims http://www.hims-inc.com/] przy połączeniu przez USB i bluetooth. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
+NVDA obsługuje monitory Braille Sense, Braille EDGE i Smart Beetle produkcji [Hims http://www.hims-inc.com/] przy połączeniu przez USB i bluetooth. 
 Aby korzystać z połączenia USB, musisz zainstalować sterowniki USB HIMS w swoim systemie.
-Możesz je pobrać z Centrum zasobów HIMS: http://www.hims-inc.com/resource-center/
-Na tej stronie, wybierz swoje urządzenie i pobierz sterownik z sekcji Window-eyes.
-Strona wymienia tylko Window-eyes, jest to jednak sterownik USB ogólnego przeznaczenia i będzie pracował również z NVDA.
+Możesz je pobrać z tej strony: http://www.himsintl.com/?c=2/13&uid=2319
 
 Poniżej skróty klawiszowe dla tych monitorów, które działają w nvda.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:

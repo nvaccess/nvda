@@ -21,6 +21,7 @@ import gui
 import globalVars
 from logHandler import log
 import nvwave
+import audioDucking
 import speechDictHandler
 import appModuleHandler
 import queueHandler
@@ -327,6 +328,18 @@ class SynthesizerDialog(SettingsDialog):
 		deviceListSizer.Add(deviceListLabel)
 		deviceListSizer.Add(self.deviceList)
 		settingsSizer.Add(deviceListSizer,border=10,flag=wx.BOTTOM)
+		duckingListSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog 
+		duckingListLabel=wx.StaticText(self,-1,label=_("Audio &ducking mode:"))
+		duckingListID=wx.NewId()
+		self.duckingList=wx.Choice(self,duckingListID,choices=audioDucking.audioDuckingModes)
+		index=config.conf['audio']['audioDuckingMode']
+		self.duckingList.SetSelection(index)
+		duckingListSizer.Add(duckingListLabel)
+		duckingListSizer.Add(self.duckingList)
+		if not audioDucking.isAudioDuckingSupported():
+			self.duckingList.Disable()
+		settingsSizer.Add(duckingListSizer,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.synthList.SetFocus()
@@ -340,6 +353,10 @@ class SynthesizerDialog(SettingsDialog):
 			# synthesizer.
 			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
 			return 
+		if audioDucking.isAudioDuckingSupported():
+			index=self.duckingList.GetSelection()
+			config.conf['audio']['audioDuckingMode']=index
+			audioDucking.setAudioDuckingMode(index)
 		super(SynthesizerDialog, self).onOk(evt)
 
 class SynthSettingChanger(object):
@@ -1400,13 +1417,37 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.expandAtCursorCheckBox.SetValue(config.conf["braille"]["expandAtCursor"])
 		settingsSizer.Add(self.expandAtCursorCheckBox, border=10, flag=wx.BOTTOM)
 
+		# Translators: The label for a setting in braille settings to show the cursor.
+		self.showCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Show cursor"))
+		self.showCursorCheckBox.Bind(wx.EVT_CHECKBOX, self.onShowCursorChange)
+		self.showCursorCheckBox.SetValue(config.conf["braille"]["showCursor"])
+		settingsSizer.Add(self.showCursorCheckBox, border=10, flag=wx.BOTTOM)
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor blink rate (ms)"))
 		sizer.Add(label)
 		self.cursorBlinkRateEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.cursorBlinkRateEdit.SetValue(str(config.conf["braille"]["cursorBlinkRate"]))
+		if not self.showCursorCheckBox.GetValue():
+			self.cursorBlinkRateEdit.Disable()
 		sizer.Add(self.cursorBlinkRateEdit)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to select the cursor shape.
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor &shape:"))
+		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
+		self.shapeList = wx.Choice(self, wx.ID_ANY, choices=[s[1] for s in braille.CURSOR_SHAPES])
+		try:
+			selection = self.cursorShapes.index(config.conf["braille"]["cursorShape"])
+			self.shapeList.SetSelection(selection)
+		except:
+			pass
+		if not self.showCursorCheckBox.GetValue():
+			self.shapeList.Disable()
+		sizer.Add(label)
+		sizer.Add(self.shapeList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1459,12 +1500,14 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
 		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
+		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		try:
 			val = int(self.cursorBlinkRateEdit.GetValue())
 		except (ValueError, TypeError):
 			val = None
 		if 0 <= val <= 2000:
 			config.conf["braille"]["cursorBlinkRate"] = val
+		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
 		try:
 			val = int(self.messageTimeoutEdit.GetValue())
 		except (ValueError, TypeError):
@@ -1500,6 +1543,10 @@ class BrailleSettingsDialog(SettingsDialog):
 		# If no port selection is possible or only automatic selection is available, disable the port selection control
 		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
+
+	def onShowCursorChange(self, evt):
+		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+		self.shapeList.Enable(evt.IsChecked())
 
 class AddSymbolDialog(wx.Dialog):
 

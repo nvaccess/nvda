@@ -4,14 +4,22 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Highlights of this release include the ability to optionally lower the volume of other sounds; improvements to braille output and braille display support; several significant fixes to Microsoft Office support; and fixes to browse mode in iTunes.
 
 == New Features ==
-- New braille translation table: Polish 8 dot computer braille. (#5537)
+- New braille translation tables: Polish 8 dot computer braille, Mongolian. (#5537, #5574)
+- You can turn off the braille cursor and change its shape using the new Show cursor and Cursor shape options in the Braille Settings dialog. (#5198)
+- NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)
+- NVDA can optionally lower the volume of other sounds when installed on Windows 8 and later. This can be configured using the Audio ducking mode option in the NVDA Synthesizer dialog or by pressing NVDA+shift+d. (#3830, #5575)
+- Support for the APH Refreshabraille in HID mode and the Baum VarioUltra and Pronto! when connected via USB. (#5609)
+- Support for HumanWare Brailliant BI/B braille displays when the protocol is set to OpenBraille. (#5612)
 
 
 == Changes ==
 - Reporting of emphasis is now disabled by default. (#4920)
 - In the Elements List dialog in Microsoft Excel, the shortcut for Formulas has been changed to alt+r so that it is different to the shortcut for the Filter field. (#5527)
+- Updated liblouis braille translator to 2.6.5. (#5574)
+- The word "text" is no longer reported when moving the focus or review cursor to text objects. (#5452)
 
 
 == Bug Fixes ==
@@ -24,6 +32,44 @@
 - Messages such as "inserted" are no longer reported when composing messages in Microsoft Outlook. (#5486)
 - When using a braille display and text is selected on the current line (e.g. when searching in a text editor for text which occurs on the same line), the braille display will be scrolled if appropriate. (#5410)
 - NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)
+- In the Elements List in browse mode, when you change the type of element, the Filter by field is now cleared. (#5511)
+- In editable text in Mozilla applications, moving the mouse again reads the appropriate line, word, etc. as expected instead of the entire content. (#5535)
+- When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
+- In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
+- In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)
+- When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
+- Reporting of mouse shape changes again works as expected. (#5595)
+- When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+- When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
+- In Microsoft Office 2013 and later, when the ribbon is set to show only tabs, items in the ribbon are again reported as expected when a tab is activated. (#5504)
+- Fixes and improvements to touch screen gesture detection and binding. (#5652)
+- Touch screen hovers are no longer reported in input help. (#5652)
+- NVDA no longer fails to list comments in the Elements List for Microsoft Excel if a comment is  on a merged cell. (#5704)
+- In a very rare case, NVDA no longer fails to read sheet content in Microsoft Excel with reporting of row and column headers enabled. (#5705)
+- In Google Chrome, navigating within an Input composition when entering east Asian characters now works as expected. (#4080)
+- When searching Apple Music in iTunes, browse mode for the search results document is now updated as expected. (#5659)
+- In Microsoft Excel, pressing shift+f11 to create a new sheet now reports your new position instead of reporting nothing. (#5689)
+- Fixed problems with braille display output when entering Korean characters. (#5640)
+
+
+== Changes for Developers ==
+- The new audioDucking.AudioDucker class allows code which outputs audio to indicate when background audio should be ducked. (#3830)
+- nvwave.WavePlayer's constructor now has a wantDucking keyword argument which specifies whether background audio should be ducked while audio is playing. (#3830)
+ - When this is enabled (which is the default), it is essential that WavePlayer.idle be called when appropriate.
+- Enhanced I/O for braille displays: (#5609)
+ - Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
+ - Data is written to thread-safe braille display drivers in the background, thus improving performance.
+ - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
+ - hwIo.Hid provides support for braille displays communicating via USB HID.
+ - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+- There are several new properties accessible from touch screen gestures: (#5652)
+ - MultitouchTracker objects now contain a childTrackers property which contains the MultiTouchTrackers the tracker was composed of. For example, 2 finger double tap has child trackers for two 2-finger taps. The 2-finger taps themselves have child trackers for two taps.
+ - MultiTouchTracker objects now also contain a rawSingleTouchTracker property if the tracker was the result of one single finger doing a tap, flick or hover. The SingleTouchTracker allows access to the underlying ID assigned to the finger by the operating system and whether or not the finger is still in contact at the current time.
+ - TouchInputGestures now have x and y properties, removing the need to access the tracker for trivial cases.
+ - TouchInputGesturs now contain a preheldTracker property, which is a MultitouchTracker object representing the other fingers held while this action was being performed.
+- Two new touch screen gestures can be emitted: (#5652)
+ - Plural tap and holds (e.g. double tap and hold)
+ - A generalized identifier with finger count removed for holds (e.g. hold+hover for 1finger_hold+hover).
 
 
 = 2015.4 =

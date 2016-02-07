@@ -5,28 +5,33 @@
 #Copyright (C) 2012-2015 NV Access Limited
 
 import os
-import time
 import _winreg
 import itertools
-import wx
 import serial
 import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import hwIo
 
 TIMEOUT = 0.2
 BAUD_RATE = 115200
 PARITY = serial.PARITY_EVEN
-READ_INTERVAL = 50
 
+# Serial
 HEADER = "\x1b"
 MSG_INIT = "\x00"
 MSG_INIT_RESP = "\x01"
 MSG_DISPLAY = "\x02"
 MSG_KEY_DOWN = "\x05"
 MSG_KEY_UP = "\x06"
+
+# HID
+HR_CAPS = "\x01"
+HR_KEYS = "\x04"
+HR_BRAILLE = "\x05"
+HR_POWEROFF = "\x07"
 
 KEY_NAMES = {
 	# Braille keyboard.
@@ -58,7 +63,12 @@ DOT8_KEY = 9
 SPACE_KEY = 10
 
 def _getPorts():
-	# USB.
+	# USB HID.
+	for portInfo in hwPortUtils.listHidDevices():
+		if portInfo.get("usbID") == "VID_1C71&PID_C006":
+			yield "USB HID", portInfo["devicePath"]
+
+	# USB serial.
 	try:
 		rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\Vid_1c71&Pid_c005")
 	except WindowsError:
@@ -73,7 +83,7 @@ def _getPorts():
 					break
 				try:
 					with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-						yield "USB", _winreg.QueryValueEx(paramsKey, "PortName")[0]
+						yield "USB serial", _winreg.QueryValueEx(paramsKey, "PortName")[0]
 				except WindowsError:
 					continue
 
@@ -90,6 +100,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
 	description = _("HumanWare Brailliant BI/B series")
+	isThreadSafe = True
 
 	@classmethod
 	def check(cls):
@@ -105,77 +116,71 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 
 		for portType, port in _getPorts():
+			self.isHid = portType == "USB HID"
 			# Try talking to the display.
 			try:
-				self._ser = serial.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT)
-			except serial.SerialException:
+				if self.isHid:
+					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
+				else:
+					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._serOnReceive)
+			except EnvironmentError:
 				continue
-			# This will cause the number of cells to be returned.
-			self._sendMessage(MSG_INIT)
-			# #5406: With the new USB driver, the first command is ignored after a reconnection.
-			# Worse, if we don't receive a reply,
-			# _handleResponses freezes for some reason despite the timeout.
-			# Send the init message again just in case.
-			self._sendMessage(MSG_INIT)
-			self._handleResponses(wait=True)
-			if not self.numCells:
-				# HACK: When connected via bluetooth, the display sometimes reports communication not allowed on the first attempt.
-				self._sendMessage(MSG_INIT)
-				self._handleResponses(wait=True)
+			if self.isHid:
+				data = self._dev.getFeature(HR_CAPS)
+				self.numCells = ord(data[24])
+			else:
+				# This will cause the number of cells to be returned.
+				self._serSendMessage(MSG_INIT)
+				# #5406: With the new USB driver, the first command is ignored after a reconnection.
+				# Send the init message again just in case.
+				self._serSendMessage(MSG_INIT)
+				self._dev.waitForRead(TIMEOUT)
+				if not self.numCells:
+					# HACK: When connected via bluetooth, the display sometimes reports communication not allowed on the first attempt.
+					self._serSendMessage(MSG_INIT)
+					self._dev.waitForRead(TIMEOUT)
 			if self.numCells:
 				# A display responded.
 				log.info("Found display with {cells} cells connected via {type} ({port})".format(
 					cells=self.numCells, type=portType, port=port))
 				break
+			self._dev.close()
 
 		else:
 			raise RuntimeError("No display found")
 
-		self._readTimer = wx.PyTimer(self._handleResponses)
-		self._readTimer.Start(READ_INTERVAL)
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
 
 	def terminate(self):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
-			self._readTimer.Stop()
-			self._readTimer = None
 		finally:
-			# We absolutely must close the Serial object, as it does not have a destructor.
-			# If we don't, we won't be able to re-open it later.
-			self._ser.close()
+			# Make sure the device gets closed.
+			# If it doesn't, we may not be able to re-open it later.
+			self._dev.close()
 
-	def _sendMessage(self, msgId, payload=""):
+	def _serSendMessage(self, msgId, payload=""):
 		if isinstance(payload, (int, bool)):
 			payload = chr(payload)
-		self._ser.write("{header}{id}{length}{payload}".format(
+		self._dev.write("{header}{id}{length}{payload}".format(
 			header=HEADER, id=msgId,
 			length=chr(len(payload)), payload=payload))
 
-	def _handleResponses(self, wait=False):
-		while wait or self._ser.inWaiting():
-			msgId, payload = self._readPacket()
-			if msgId:
-				self._handleResponse(msgId, payload)
-			wait = False
+	def _serOnReceive(self, data):
+		if data != HEADER:
+			log.debugWarning("Ignoring byte before header: %r" % data)
+			return
+		msgId = self._dev.read(1)
+		length = ord(self._dev.read(1))
+		payload = self._dev.read(length)
+		self._serHandleResponse(msgId, payload)
 
-	def _readPacket(self):
-		# Wait for the header.
-		while True:
-			char = self._ser.read(1)
-			if char == HEADER:
-				break
-		msgId = self._ser.read(1)
-		length = ord(self._ser.read(1))
-		payload = self._ser.read(length)
-		return msgId, payload
-
-	def _handleResponse(self, msgId, payload):
+	def _serHandleResponse(self, msgId, payload):
 		if msgId == MSG_INIT_RESP:
 			if ord(payload[0]) != 0:
 				# Communication not allowed.
-				log.debugWarning("Display at %r reports communication not allowed" % self._ser.port)
+				log.debugWarning("Display at %r reports communication not allowed" % self._dev.port)
 				return
 			self.numCells = ord(payload[2])
 
@@ -187,22 +192,50 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		elif msgId == MSG_KEY_UP:
 			payload = ord(payload)
-			if not self._ignoreKeyReleases and self._keysDown:
-				try:
-					inputCore.manager.executeGesture(InputGesture(self._keysDown))
-				except inputCore.NoInputGestureAction:
-					pass
-				# Any further releases are just the rest of the keys in the combination being released,
-				# so they should be ignored.
-				self._ignoreKeyReleases = True
+			self._handleKeyRelease()
 			self._keysDown.discard(payload)
 
 		else:
 			log.debugWarning("Unknown message: id {id!r}, payload {payload!r}".format(id=msgId, payload=payload))
 
+	def _hidOnReceive(self, data):
+		rId = data[0]
+		if rId == HR_KEYS:
+			keys = data[1:].split("\0", 1)[0]
+			keys = {ord(key) for key in keys}
+			if len(keys) > len(self._keysDown):
+				# Press. This begins a new key combination.
+				self._ignoreKeyReleases = False
+			elif len(keys) < len(self._keysDown):
+				self._handleKeyRelease()
+			self._keysDown = keys
+
+		elif rId == HR_POWEROFF:
+			log.debug("Powering off")
+		else:
+			log.debugWarning("Unknown report: %r" % data)
+
+	def _handleKeyRelease(self):
+		if self._ignoreKeyReleases or not self._keysDown:
+			return
+		try:
+			inputCore.manager.executeGesture(InputGesture(self._keysDown))
+		except inputCore.NoInputGestureAction:
+			pass
+		# Any further releases are just the rest of the keys in the combination being released,
+		# so they should be ignored.
+		self._ignoreKeyReleases = True
+
 	def display(self, cells):
 		# cells will already be padded up to numCells.
-		self._sendMessage(MSG_DISPLAY, "".join(chr(cell) for cell in cells))
+		cells = "".join(chr(cell) for cell in cells)
+		if self.isHid:
+			self._dev.write("{id}"
+				"\x01\x00" # Module 1, offset 0
+				"{length}{cells}"
+			.format(id=HR_BRAILLE, length=chr(self.numCells), cells=cells))
+		else:
+			self._serSendMessage(MSG_DISPLAY, cells)
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {

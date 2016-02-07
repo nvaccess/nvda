@@ -35,7 +35,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.10, 32 bit
+* [Python](http://www.python.org/), version 2.7.11, 32 bit
 * Microsoft Visual Studio 2012 Update 1 or later (Express for Windows Desktop, or Professional)
 	* [Download for Visual Studio Express 2012 (Windows Desktop)](http://www.microsoft.com/en-au/download/details.aspx?id=34673) (does not include updates)
 	* [Download for Visual Studio 2012 latest update package](http://go.microsoft.com/fwlink/?LinkId=301713)
@@ -54,7 +54,7 @@ For reference, the following dependencies are included in Git submodules:
 * [eSpeak NG](http://www.github.com/espeak-ng/espeak-ng/), Commit 0d0bb33
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 2.6.4
+* [liblouis](http://www.liblouis.org/), version 2.6.5
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

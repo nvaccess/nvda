@@ -14,6 +14,7 @@ import winUser
 import textInfos
 import controlTypes
 import IAccessibleHandler
+import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
@@ -115,6 +116,17 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._startObj = self._endObj = tempObj
 			else:
 				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
+		elif isinstance(position, textInfos.Point):
+			startObj = api.getDesktopObject().objectFromPoint(position.x, position.y)
+			while startObj and startObj.role == controlTypes.ROLE_STATICTEXT:
+				# Skip text leaf nodes.
+				startObj = startObj.parent
+			if not startObj:
+				raise LookupError
+			self._startObj = startObj
+			self._start = self._makeRawTextInfo(startObj, position)
+			self._end = self._start
+			self._endObj = self._startObj
 		else:
 			raise NotImplementedError
 
