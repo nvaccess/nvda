@@ -4,14 +4,22 @@ Qué bi ha de Nuevo en o NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+O resinyable d'ista versión inclui a capacidat de baixar opcionalment o volumen d'atros sons, milloras pa la salida de braille y suporte pa linias braille, qualques apanyos significants pa o suporte d'o Microsoft Office y apanyos pa o modo de navegación en l'iTunes.
 
 == Nuevas caracteristicas ==
-- Nueva tabla de transcripción braille: Braille polaco computerizau de 8 puntos. (#5537)
+- Nuevas tablas de transcripción braille: Braille polaco computerizau de 8 puntos, Mongol. (#5537, #5574)
+- Puetz desenchegar o cursor braille y cambiar a suya forma usando as nuevas opcions amostrar o cursor y forma d'o cursor en o dialogo d'opcions de braille. (#5198)
+- O NVDA agora puet connectar-se a una linia braille HIMS Smart Beetle a traviés de bluetooth. (#5607)
+- O NVDA puet opcionalment baixar o volumen d'atros sons si ye instalau en o Windows 8 u superiors. Ixo se puet configurar fendo servir a opción modo d'achiquida d'audio en o dialogo d'o sintetizador d'o NVDA u pretando NVDA+mayus+d. (#3830, #5575)
+- Suporte pa l'APH Refreshabraille en o modo HID y a Baum VarioUltra y Pronto! en que se connecta a traviés d'USB. (#5609)
+- Suporte pa las linias braille HumanWare Brailliant BI/B quan o protocolo s'estableix t'OpenBraille. (#5612)
 
 
 == Cambios ==
 - L'anunciau d'o enfasi agora ye desenchegau por defecto. (#4920)
 - En o dialogo de lista d'elementos en o Microsoft Excel l'alcorz pa Formulas s'ha cambiau a alt+r asinas ye  diferent de  l'alcorz pa lo campo de tresminau. (#5527)
+- Esviellau o transcriptor braille liblouis ta 2.6.5. (#5574)
+- A parola "texto" ya no s'anuncia en mover o foco u lo cursor de revisión t'obchectos de texto. (#5452)
 
 
 == Corrección d'errors ==
@@ -27,6 +35,41 @@ Qué bi ha de Nuevo en o NVDA
 - En a lista d'elementos en o modo de navegación, en cambiar a mena d'elemento, agora s'escosca o campo "tresminar por". (#5511)
 - En texto editable en as aplicacions de Mozilla, mover o churi leye unatra vegada a linia, parola, etc. apropiada como s'aspera en cuenta d'o conteniu entero. (#5535)
 - En mover o churi en texto editable en aplicacions de Mozilla, a lectura ya no atura en elementos tals como vinclos adintro d'a parola u linia que ye estando leyida. (#2160, #5535)
+- En l'Internet Explorer, o puesto web shoprite.com agora se puet leyer en o modo de navegación en cuenta d'anunciar-se como blanco. (especificament, os atributos malformaus d'o luengache agora se maneyan apropiadament.) (#5569)
+- En o Microsoft Word, os cambeos seguius como "ficau" ya no s'anuncia quan no s'amostra a marca de seguimiento de cambeos. (#5566)
+- En que un botón conmutable s'enfoca o NVDA agora anuncia en que cambie de pretau ta no pretau. (#5441)
+- L'anunciau d'os cambeos d'a forma d'o churi torna a marchar como s'aspera. (#5595)
+- En charrar o sangrau de linia os espacios de no crebadura agora se tractan como espacios normals. Anteriorment, ixo podeba causar anuncios tals como "espacio espacio espacio" en cuenta de  "3 espacios". (#5610)
+- En zarrar una lista de metodos candidatos de dentrada de Microsoft moderno lo foco se restaura correctament ya siga t'a redacción de dentrada u t'o documento subchacent. (#4145)
+- En o Microsoft Office 2013 y superiors, quan a cinta ye configurada pa amostrar nomás pestanyas, os elementos d'a cinta s'anuncian unatra vegada como s'aspera en que s'activa una pestanya. (#5504)
+- Apanyos y milloras pa la detección y o enlazau de cenyos de pantalla tactil. (#5652)
+- Os "hovers" d'a pantalla tactil ya no s'anuncia en l'aduya de dentrada. (#5652)
+- O NVDA ya no falla en listar comentarios en a lista d'Elementos pa o Microsoft Excel si un comentario ye  en una celda combinada. (#5704)
+- En un caso muit raro, o NVDA ya no falla en leyer o conteniu d'una fuella en o Microsoft Excel con l'anunciau de capiters de celda y columna enchegau (#5705)
+- En o Google Chrome a navegación adintro d'una redacción de dentrada quan se fica caracters d'Asia de l'este ya no falla con una error. (#4080)
+- En a busca d'Apple Music en l'iTunes o modo de navegación pa o documento d'os resultaus d'a busca agora s'esviella como s'aspera. (#5659)
+- En o Microsoft Excel pretando mayus+f11 pa creyar una nueva fuella agora s'anuncia a tuya nueva posición en cuenta de no anunciar cosa. (#5689)
+- Apanyaus problemas con a salida d'as linias braille en ficar caracters coreans. (#5640)
+
+
+== Cambios pa Desembolicadors ==
+- A nueva clase audioDucking.AudioDucker permit codigo que quita audio pa endicar dó habría d'achiquir-se l'audio de fundo. (#3830)
+- O constructor d'o nvwave.WavePlayer agora tien a parola clau wantDucking como argumento que especifica si l'audio de fondo habría d'achiquir-se entre que se reproduce audio. (#3830)
+ - Quan ixo siga enchegau (lo qual ye predeterminau), ye esencial que WavePlayer.idle se clame quan siga apropiau.
+ - Amillorada la dentrada/salida pa linias braille: (#5609)
+ - Os controladors Thread-safe d'as linias braille pueden declarar-sen como tals fendo servir l'atributo BrailleDisplayDriver.isThreadSafe. Un controlador debe estar thread-safe pa esquimenar-se d'as siguients caracteristicas:
+ - Os datos s'escriben t'o controlador de linias braille thread-safe en segundo plan, amillorando asinas o rendimiento.
+ - hwIo.Serial extendilla pyserial pa clamar un clamable en que os datos se reciben en cuenta de que os controladors haigan de mirar-los.
+ - hwIo.Hid amane suporte pa que as linias braille se comuniquen a traviés d'USB HID.
+ - hwPortUtils y hwIo pueden amanir opcionalment o rechistro detallau de depuración, incluindo os dispositivos trobaus y totz os datos ninviaus y recibius.
+ - Bi ha qualques nuevas propiedatz accesibles en os cenyos de pantallas tactils: (#5652)
+ - Os obchectos MultitouchTracker agora contienen una propiedat childTrackers que contién os MultiTouchTrackers d'os que o rastriador se composa. Por eixemplo, o truco dople con dos didos tien rastriadors fillos pa dos trucos con dos didos. Os trucos con dos didos tienen  rastriadors fillos pa dos trucos.
+ - Os obchectos MultiTouchTracker agora contienen tamién una propiedat rawSingleTouchTracker si o rastriador estió lo resultau d'un solo dido que fa truco , raspiada u "hover". o SingleTouchTracker permit acceso ta l'ID subchacent asignau a lo dido por o sistema operativo y endica si o dido encara ye en contacto en o momento actual u no pas.
+ - TouchInputGestures agora tien as propiedatz x y y, sacando a necesidat d'accedir t'o rastriador pa casos trivials.
+ - TouchInputGestures agora contién una propiedat preheldTracker, que ye un obchecto MultitouchTracker que representa os atros didos mantenius entre que ista acción se ye fendo.
+- Dos nuevos cenyos de pantalla tactil se puet emitir: (#5652)
+ - Trucos plurals y mantener (p. eix. truco dople y mantener)
+ - Un identificador cheneralizau con cuenta de didos borrau pa mantenimientos (p. eix. mantener+"hover" pa 1finger_hold+hover).
 
 
 = 2015.4 =
