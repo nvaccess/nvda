@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Najważniejsze zmiany w tej wersji to opcjonalna możliwość zmniejszenia głośności innych dźwięków; ulepszone wyświetlanie brajla i obsługa monitorów brajlowskich; kilka znaczących poprawek obsługi  Microsoft Office; poprawki trybu czytania w iTunes.
 
 == Nowości ==
 - Nowe tablice brajlowskie: polski 8-punktowy brajl komputerowy, mongolski. (#5537, #5574)
@@ -40,6 +41,14 @@
 - Przy odczytywaniu wcięcia linii, twarde spacje są traktowane jak normalne. Poprzednio mogło to powodować ogłaszanie "spacja spacja spacja" zamiast "3 spacja". (#5610)
 - Przy zamykaniu nowszej metody wprowadzania listy kandydatów, punkt uwagi prawidłowo wraca do pola kompozycji, lub dokumentu. (#4145)
 - W Microsoft Office 2013 i nowszych, gdy wstążka jest ustawiona na pokazywanie tylko zakładek, elementy wstążki są prawidłowo odczytywane, gdy zakładka jest aktywowana. (#5504)
+- Poprawki i ulepszenia wykrywania  i przypisywania gestów na ekranach dotykowych. (#5652)
+- Pojedyncze dotknięcia ekranu dotykowego nie są od teraz zgłaszane w trybie pomocy. (#5652)
+- Rozwiązany problem braku na liście elementów komentarzy, które znajdowały się na połączonych komórkach Excel. (#5704)
+- Naprawiony bardzo rzadki problem, że NVDA nie odczytywało zawartości arkusza Excel przy włączonym odczytywaniu nagłówków tabeli. (#5705)
+- W Google Chrome, nawigacja we wprowadzaniu kompozycji dla znaków wschodnio-azjatyckich  nie powoduje teraz błędu. (#4080)
+- Podczas wyszukiwania w Apple Music w iTunes, tryb czytania dla dokumentu wyników wyszukiwania jest aktualizowany zgodnie z oczekiwaniami. (#5659)
+- W Microsoft Excel, naciśnięcie shift+f11 aby utworzyć nowy arkusz, zgłasza teraz nową pozycję. (#5689)
+- Naprawione problemy z wyświetlaniem brajla na monitorach brajlowskich, podczas wprowadzania znaków koreańskich. (#5640)
 
 
 == Zmiany dla programistów ==
