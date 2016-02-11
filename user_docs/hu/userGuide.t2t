@@ -56,12 +56,14 @@ vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 
 + Rendszerkövetelmények +
 
-- Operációs rendszerek: 32 és 64 bites Windows XP, Windows Vista, Windows 7,  Windows 8, és Windows 10 bármely verziója (beleértve a szerver operációs rendszereket is)
+- Operációs rendszerek: 32 és 64 bites Windows XP, Windows Vista, Windows 7,  Windows 8, Windows 8.1, és Windows 10 bármely verziója (beleértve a szerver operációs rendszereket is)
 - Windows XP 32-bit esetén az NVDA igényli a Szerviz csomag 2 vagy újabb meglétét.
 - Windows Server 2003 esetén az NVDA igényli a Szerviz csomag 1 vagy újabb meglétét.
+- Windows Vista esetén NVDA igényli a szerviz csomag 2 meglétét, és a  [KB2763674 https://support.microsoft.com/en-us/kb/2763674] frissítését.
+Mindkettő automatikusan feltelepítésre kerül,  ha a frissítések engedélyezve vannak.
 - Memória: 256 mb vagy több
 - Processzor sebesség: 1.0 ghz vagy gyorsabb
-- Kb. 50 mb szabad hely a merevlemezen.
+- Kb. 90 mb szabad hely a merevlemezen.
 -
 
 + Az NVDA letöltése és telepítése +
@@ -1449,7 +1451,7 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 ++ Baum/Humanware/APH Braille kijelzők ++
 Néhány [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] és [APH http://www.aph.org/] kijelzővel az NVDA képes együttműködni, ha ezek usb vagy bluetooth kapcsolódással csatlakoznak a számítógéphez.
 A következőket tartalmazzák:
-- Baum: SuperVario, PocketVario, VarioUltra (csak Bluetooth), Pronto! (csak Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -1535,10 +1537,9 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 | Folyamatos olvasás | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE sorozat ++
-Az NVDA támogatja a Braille Sense és Braille EDGE kijelzőket (gyártó: [Hims http://www.hims-inc.com/]), mind USB, mind bluetooth csatlakoztatási módban.
-Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot. Ezt letöltheti a HIMS Resource Centerből: http://www.hims-inc.com/resource-center/
-Válassza ki az eszközét, majd töltse le a hozzátartozó drivert a Window-eyes szekcióból. Ez egy általános usb driver, így a feltelepítés után a kijelző működik az NVDA-val.
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat ++
+Az NVDA támogatja a Braille Sense,  Braille EDGE, és Smart Beetle kijelzőket (gyártó: [Hims http://www.hims-inc.com/]), mind USB, mind bluetooth csatlakoztatási módban.
+Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot. Ezt a következő oldalról töltheti le: http://www.himsintl.com/?c=2/13&uid=2319
 
 Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és a hozzájuk tartozó parancsokat), amiket az NVDA programban használhat. A kijelző dokumentációjában találhatja meg, hogy ezek a billentyűk hol helyezkednek el.
 %kc:beginInclude

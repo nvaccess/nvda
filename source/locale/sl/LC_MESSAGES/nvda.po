@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 19:08+1000\n"
-"PO-Revision-Date: 2016-01-27 22:44+0100\n"
+"POT-Creation-Date: 2016-02-02 19:17+1000\n"
+"PO-Revision-Date: 2016-02-05 02:09+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -3779,13 +3779,18 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Ni informacije o oblikovanju"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Oblika"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
-"Poroča o informaciji oblikovanja znotraj dokumenta glede na trenutni položaj "
-"pregledne utripalke"
+"Sporoča informacijo o obliki znotraj dokumenta glede na trenutni položaj "
+"pregledne utripalke, dvojni pritisk informacijo predstavi v brskalniškem "
+"delovanju."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -4768,11 +4773,6 @@ msgstr "izbor je odstranjen"
 msgid "done dragging"
 msgstr "vlečenje končano"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "nivo %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4796,6 +4796,11 @@ msgstr "ki vsebuje %s stolpcev"
 #, python-format
 msgid "with %s rows"
 msgstr "ki vsebuje %s vrstic"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "nivo %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4965,6 +4970,34 @@ msgstr "poravnava z razmiki znakov"
 msgid "align default"
 msgstr "privzeta poravnava"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "navpična poravnava po zgornjem robu"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "navpična poravnava po sredini"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "navpična poravnava po spodnjem robu"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "navpična poravnava po osnovnici"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "navpična obojestranska poravnava"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "navpična poravnava z razmiki med znaki"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "navpična privzeta poravnava"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "levi zamik"
@@ -4996,34 +5029,6 @@ msgstr "zamik v prvi vrstici"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "brez zamika v prvi vrstici"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "navpična poravnava po zgornjem robu"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "navpična poravnava po sredini"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "navpična poravnava po spodnjem robu"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "navpična poravnava po osnovnici"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "navpična obojestranska poravnava"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "navpična poravnava z razmiki med znaki"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "navpična privzeta poravnava"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -5187,6 +5192,10 @@ msgstr "lebdenje"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "konec lebdenja"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA Sporočilo"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -8820,7 +8829,7 @@ msgstr "{offset:.3g} ciceri"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"
-msgstr "brez komentarja"
+msgstr "ni komentarjev"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
