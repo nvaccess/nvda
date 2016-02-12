@@ -229,8 +229,6 @@ class JAB(Window):
 		return super(JAB,self).TextInfo
 
 	def _isEqual(self,other):
-		if not isinstance(other,JAB):
-			return False
 		try:
 			return self.jabContext==other.jabContext
 		except:
