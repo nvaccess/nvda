@@ -665,6 +665,7 @@ def enterJavaWindow_helper(hwnd):
 		except:
 			return
 	vmID=vmID.value
+	vmIDsToWindowHandles[vmID]=hwnd
 	lastFocus=eventHandler.lastQueuedFocusObject
 	if isinstance(lastFocus,NVDAObjects.JAB.JAB) and lastFocus.windowHandle==hwnd:
 		return
