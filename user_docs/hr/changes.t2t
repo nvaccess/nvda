@@ -4,18 +4,20 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Najvažnije novosti u ovoj inačici uključuju mogućnost neobaveznog smanjivanja glasnoće drugih zvukova; unaprjeđenje brajičnog izlaza i podrške za brajične retke; nekoliko značajnih poboljšanja podrške za Microsoft office; i poboljšanja u načinu pregleda za Itunes.
 
 == Nove značajke ==
 - Nove brajične tablice: poljska kompjutorska brajica, mongolski. (#5537, #5574)
 - Možete isključiti brajični pokazivač i izmjeniti njegov oblik koristeći novu opcije prikaži brajični pokazivač i promjeni izgled kursora u dijaloškom okviru brajične postavke. (#5198)
-- NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)
+- NVDA se sada može povezati sa  HIMS Smart Beetle brajičnim retkom putem bluetooth veze. (#5607)
+- podrška za HumanWare Brailliant BI/B brajične retke kada je protokol postavljen na OpenBraille. (#5612)
 
 
 == Izmjene ==
 - Sada je zadano isključeno izgovaranje isticanja. (#4920)
 - u listi elemenata  u Microsoft excelu, prečac za formule promjenjen je na alt+r tako da je sada različit od prečaca od polja filter (ne važi za hrvatski prijevod). (#5527)
 - nadograđen liblouis brajični prevoditelj na inačicu 2.6.5. (#5574)
-- The word "text" is no longer reported when moving the focus or review cursor to text objects. (#5452)
+- Riječ "text" više se ne izgovara kada se pomiće fokus ili ili pregledni kursor na tekstualne objekte. (#5452)
 
 
 == ispravke grešaka ==
@@ -33,12 +35,20 @@
 - prilikom pomicanja miša u poljima za uređivanje u mozilla aplikacijama, čitanje se ne zaustavlja na elementima poput linkova u riječi ili retku koji je čitan. (#2160, #5535)
 - U internet exploreru, shoprite.com web stranica može se ponovo čitati u načinu pregleda umjesto izgovaranja praznih redova. (točnije, lang atributi se korektno interpretiraju).) (#5569)
 - U Microsoft Wordu, lista promjena poput "umetnuto" više se ne izgovara ako oznaka izmjene nije prikazana. (#5566)
-- When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
-- Reporting of mouse shape changes again works as expected. (#5595)
-- When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
-- NVDA can optionally lower the volume of other sounds when installed on Windows 8 and later. This can be configured using the Audio ducking mode option in the NVDA Synthesizer dialog or by pressing NVDA+shift+d. (#3830, #5575)
-- When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
-- Support for HumanWare Brailliant BI/B braille displays when the protocol is set to OpenBraille. (#5612)
+- kada je preklopni gumb pritisnut, nvda izgovara izmjenu istog od njegova pritiska do otpuštanja pritiska. (#5441)
+- izgovor izgleda pokazivaća miša ponovno radi kako je očekivano. (#5595)
+- kada se izgovara poravnanje teksta, nerazdjeljujući razmaci su sada tretirani kao normalni razmaci. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+- NVDA sada može neobavezno smanjivati glasnoću drugih zvukova kada je instaliran na windowsima 8 i novijim. To može biti konfigurirano koristeći koristeći način manjivanja glasnoće u dijaloškom okviru govorna jedinica ili pritiskom  nvda+shift+d. (#3830, #5575)
+- Prilikom zatvaranja moderne liste za upis istočnoazijskih znakova, fokus se vraća na sastavljanje unosa ili na određeni dokument. (#4145)
+- U microsoft office 2013 i novijem, kada je ribbon prikazan tako da se prikazuju samo kartice, stavke u ribbonu se izgovaraju ponovno kako je to očekivano kada je kartica aktivirana. (#5504)
+-Ispravke u otkrivanju gesti zaslona osjetljivog na dodir. (#5652)
+- prelasci po ekranu osjetljivom na dodir više se ne izgovaraju u pomoći pri unosu. (#5652)
+- Nvda više ne griješi prilikom izlistavanja komentara u listi elemenata za excel ako je komentar na spojenoj ćeliji. (#5704)
+- U vrlo rijetkim slučajevima, nvda više ne neuspjeva čitati sadržaje ćelija u Excelu sa uključenom opcijom izgovaraj zaglavlja redaka i stupaca (#5705)
+- U Google chrome, navigacija unutar sastava unosa za istočnoazijske znakove više ne završava greškom. (#4080)
+- prilikom pretrage Apple music u iTunesu, način pregleda za rezultate pretrage se sada osvježava kako je to očekivano. (#5659)
+- u Microsoft Excelu, pritisak kombinacije shift+f11 za kreiranje nove ćelije sada izgovara vašu novu poziciju umjesto da ne izgovori ništa. (#5689)
+- Ispravljeni problemi sa brajičnim izlazom  prilikom upisivanja korejskih znakova.. (#5640)
 
 
 == Izmjene za razvojne programere ==
