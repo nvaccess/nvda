@@ -3,6 +3,75 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+Le novità di questa versione si concentrano principalmente sulla possibilità di abbassare il volume di altre applicazioni quando la sintesi vocale è in funzione; su un miglioramento della visualizzazione braille; sono stati corretti alcuni errori nell'uso con Microsoft Office e, non da ultimo, miglioramenti della modalità navigazione in Itunes.
+
+== Novità ==
+- Nuove tabelle di traduzione Braille: Polacco computer 8 punti, Mongolo. (#5537, #5574)
+- è possibile modificare l'aspetto del cursore Braille oppure disattivarlo del tutto tramite le due voci di configurazione apposite aggiunte alla finestra di preferenze, braille. (#5198)
+- NVDA ora può connettersi al Display Braille  HIMS Smart Beetle via Bluetooth. (#5607)
+- NVDA è in grado di abbassare il volume di altri suoni quando la sintesi vocale è in funzione grazie ad una nuova caratteristica chiamata attenuazione audio, solo sui sistemi che fanno girare Windows8 o versioni successive. L'attenuazione audio può essere configurata o nella finestra sintetizzatore, oppure premendo la combinazione di tasti NVDA+Shift+d. (#3830, #5575)
+- Supporto per i Display Braille APH Refreshabraille in modalità HID e Baum VarioUltra e Pronto! quando connessi via USB. (#5609)
+- Supporto per i display braille HumanWare Brailliant BI/B quando il protocollo è impostato su  OpenBraille. (#5612)
+
+
+== Cambiamenti ==
+- L'annuncio del testo enfatizzato è ora disattivato da impostazioni predefinite. (#4920)
+- Nella lista elementi di Microsoft Excel, il tasto caldo per le formule è cambiato in alt+r di modo da diversificarlo da quello del filtro. (#5527)
+- Aggiornato liblouis braille translator alla versione 2.6.5. (#5574)
+- La parola "testo" non viene più annunciata quando  si sposta il focus o il cursore di controllo su oggetti di testo. (#5452)
+
+
+== Bug Corretti ==
+- In iTunes 12, la modalità navigazione si aggiorna correttamente quando viene caricata una pagina nuova in Itunes Store (#5191)
+- In Internet Explorer e altri controlli MSHTML, quando il livello di un'intestazione è sostituito per migliorare l'accessibilità, lo spostamento su livelli di intestazioni specifici con le lettere singole  ora si comporta come dovrebbe (nello specifico, se il livello ARIA si sovrappone al livello del tag h).  (#5434)
+- In Spotify, il focus non finisce più in oggetti sconosciuti. (#5439)
+- Il Focus viene ripristinato correttamente quando si ritorna da un'altra applicazione a Spotify. (#5439)
+- Quando si commuta tra modalità focus e navigazione, viene indicato anche in Braille oltre che con la sintesi vocale. (#5239)
+- Il pulsante Start nella barra delle applicazioni non viene più annunciato come un elenco e/o come selezionato in alcune versioni di Windows. (#5178)
+- Non viene più visualizzato il messaggio "inserito" quando si scrive un nuovo messaggio in Microsoft Outlook. (#5486)
+- Se mentre si utilizza un display braille viene selezionato del testo nella riga attuale (per esempio durante una ricerca di testo che compare sulla stessa riga in un editor),il display braille effettuerà uno scorrimento se necessario. (#5410)
+- NVDA non si chiuderà più inaspettatamente quando si esce da una finestra del prompt dei comandi con alt+f4 in Windows10. (#5343)
+- Nell'elenco elementi in modalità navigazione, quando viene modificato il tipo di elemento, il campo "filtra per" viene pulito. (#5511)
+- Nei campi editazione nelle applicazioni Mozilla,  il mouse leggerà di nuovo righe o parole quando lo si sposta, piuttosto che l'intero documento.  (#5535)
+- Quando si sposta il mouse nei campi editazione delle applicazioni Mozilla, la lettura non si interrompe più in presenza di link all'interno di una riga. (#2160, #5535)
+- In Internet Explorer, il sito web shoprite.com viene gestito anche in modalità navigazione.) (#5569)
+- Risolto un bug inerente il tracciamento delle modifiche in Microsoft Word. (#5566)
+- Se viene visualizzato un pulsante ciclico, ora NVDA avvertirà se questo è premuto o non premuto. (#5441)
+- Viene annunciata di nuovo correttamente un eventuale cambiamento della forma del mouse. (#5595)
+- Quando vengono annunciati i rientri riga, è stata migliorata la gestione della lettura degli spazi. (#5610)
+- Sistemato un problema con i metodi candidate list per i caratteri asiatici durante la chiusura. (#4145)
+- In Microsoft Office 2013 e successivi, se un menu ribbon viene impostato per mostrare soltanto le schede, ora gli elementi di quel ribbon saranno di nuovo annunciati  quando una scheda verrà attivata. (#5504)
+- Miglioramenti con i gesti e le assegnazioni degli stessi sui touch screen. (#5652)
+- Touch screen hovers are no longer reported in input help. (#5652)
+- NVDA non commetterà più errori nell'elencare i commenti nell'elenco elementi di Microsoft Excel se un commento appartiene ad una cella unita. (#5704)
+- In casi molto rari, NVDA non commetterà più errori nella lettura del contenuto di fogli in Microsoft Excel quando sono attivate le funzioni di annuncio intestazioni riga/colonna. (#5705)
+- In Google Chrome, la navigazione in un campo candidate per l'immissione di caratteri asiatici ora funziona correttamente. (#4080)
+- Durante la ricerca di musica in Itunes, la modalità navigazione viene aggiornata come dovrebbe. (#5659)
+- In Microsoft Excel, la pressione della combinazione di tasti shift+f11 per creare un nuovo foglio ora annuncia la nuova posizione piuttosto che non dire nulla. (#5689)
+- Sistemato un problema nell'immissione di caratteri coreani in Braille. (#5640)
+
+
+== Cambiamenti per sviluppatori, in inglese ==
+- The new audioDucking.AudioDucker class allows code which outputs audio to indicate when background audio should be ducked. (#3830)
+- nvwave.WavePlayer's constructor now has a wantDucking keyword argument which specifies whether background audio should be ducked while audio is playing. (#3830)
+ - When this is enabled (which is the default), it is essential that WavePlayer.idle be called when appropriate.
+- Enhanced I/O for braille displays: (#5609)
+ - Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
+ - Data is written to thread-safe braille display drivers in the background, thus improving performance.
+ - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
+ - hwIo.Hid provides support for braille displays communicating via USB HID.
+ - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+- There are several new properties accessible from touch screen gestures: (#5652)
+ - MultitouchTracker objects now contain a childTrackers property which contains the MultiTouchTrackers the tracker was composed of. For example, 2 finger double tap has child trackers for two 2-finger taps. The 2-finger taps themselves have child trackers for two taps.
+ - MultiTouchTracker objects now also contain a rawSingleTouchTracker property if the tracker was the result of one single finger doing a tap, flick or hover. The SingleTouchTracker allows access to the underlying ID assigned to the finger by the operating system and whether or not the finger is still in contact at the current time.
+ - TouchInputGestures now have x and y properties, removing the need to access the tracker for trivial cases.
+ - TouchInputGesturs now contain a preheldTracker property, which is a MultitouchTracker object representing the other fingers held while this action was being performed.
+- Two new touch screen gestures can be emitted: (#5652)
+ - Plural tap and holds (e.g. double tap and hold)
+ - A generalized identifier with finger count removed for holds (e.g. hold+hover for 1finger_hold+hover).
+
+
 = 2015.4 =
 Le principali migliorie presenti in questa versione si concentrano su un notevole incremento delle prestazioni in Windows10; nella possibilità di poter scegliere NVDA nel centro accessibilità a partire da Windows8 in poi; grossi miglioramenti in Microsoft Excel, con la possibilità di elencare e rinominare i fogli ed accedere al contenuto delle celle di sola lettura anche in documenti protetti; inoltre, supporto alla modifica per i campi rich text in Mozilla Firefox, Google Chrome e Mozilla Thunderbird.
 
