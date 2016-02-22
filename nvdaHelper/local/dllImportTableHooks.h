@@ -61,6 +61,23 @@ class DllImportTableHooks {
 
 };
 
+/**
+ * Hooks a single imported function in a dll. Uses the DllImportTableHook class.
+ * @param targetDll the name of the dll who has imported the function to be hooked.
+* @param importDll the name of the dll containing the function imported.
+* @param functionName The name of the function to be hooked.
+* @param newFunction the function to be called instead.
+* @return an opaque pointer to the DllImportTableHook class instance that hooked the function.
+*/
+void* dllImportTableHooks_hookSingle(char* targetDll, char* importDll, char* functionName, void* newFunction);
+
+/**
+ * Unhooks a previously hooked function hooked by dllImportTableHooks_hookSingle.
+ * @param hook The opaque pointer returned from a ccessful call to dllImportTableHooks_hookSingle.
+ */
+void dllImportTableHooks_unhookSingle(void* hook);
+
+
 #ifdef __CPLUSCPLUS
 extern "C" {
 #endif

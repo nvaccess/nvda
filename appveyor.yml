@@ -1,0 +1,102 @@
+version: "{branch}-{build}"
+
+branches:
+ only:
+  - master
+  - next
+  - rc
+  - /try-.*/
+  # For tags, branch = tag if GitHub couldn't work out the base branch.
+  - /release-.*/
+
+environment:
+ PY_PYTHON: 2.7-32
+ encFileKey:
+  secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
+
+init:
+ # We don't want Visual Studio 2013, so clobber it.
+ - ps: Remove-ItemProperty hklm:\Software\WOW6432Node\Microsoft\VisualStudio\12.0\Setup\VC ProductDir
+ - ps: |
+     if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
+      # Strip "release-" prefix.
+      $version = $env:APPVEYOR_REPO_TAG_NAME.Substring(8)
+      Set-AppveyorBuildVariable "release" "1"
+      if ($env:APPVEYOR_REPO_TAG_NAME.Contains("rc")) {
+       $versionType = "beta"
+      } else {
+       $versionType = "stable"
+      }
+     } else {
+      $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+      # The version is unique even for rebuilds, so we can use it for the AppVeyor version.
+      Update-AppveyorBuild -Version $version
+      if (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
+       $versionType = "snapshot:$env:APPVEYOR_REPO_BRANCH"
+      }
+     }
+     Set-AppveyorBuildVariable "version" $version
+     if ($versionType) {
+      Set-AppveyorBuildVariable "versionType" $versionType
+     }
+
+clone_depth: 1
+
+install:
+ - cd appveyor
+ # Decrypt files.
+ - openssl enc -aes-256-cbc -d -pass pass:%encFileKey% -in authenticode.pfx.enc -out authenticode.pfx
+ - openssl enc -aes-256-cbc -d -pass pass:%encFileKey% -in ssh_id_rsa.enc -out ssh_id_rsa
+ # Install ssh stuff.
+ - copy ssh_id_rsa %userprofile%\.ssh\id_rsa
+ - type ssh_known_hosts >> %userprofile%\.ssh\known_hosts
+ - cd ..
+ - git submodule update --init
+
+build_script:
+ - ps: |
+     $sconsArgs = "launcher version=$env:version"
+     if ($env:release) {
+      $sconsArgs += " changes userGuide developerGuide release=1"
+     }
+     if ($env:versionType) {
+      $sconsArgs += " updateVersionType=$env:versionType"
+     }
+     $sconsArgs += ' publisher="NV Access"'
+     $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+     # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
+     # It's possible to work around this, but the workarounds have annoying side effects.
+     Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
+ - 'echo scons args: %sconsArgs%'
+ - py scons.py %sconsArgs%
+ # Build symbol store.
+ - ps: |
+     foreach ($syms in "source\*.pdb", "source\lib\*.pdb", "source\lib64\*.pdb", "source\synthDrivers\*.pdb") {
+      & $env:symstore add /s symbols /compress -:NOREFS /t NVDA /f $syms
+     }
+ - cd symbols
+ - 7z a -tzip -r ..\output\symbols.zip *.pd_
+ - cd ..
+
+artifacts:
+ - path: output\*
+ - path: output\*\*
+
+deploy_script:
+ - ps: |
+     if ($env:versionType) {
+      # Not a try build.
+      $exe = Get-ChildItem -Name output\*.exe
+      $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
+      $data = @{
+       jobId=$env:APPVEYOR_JOB_ID;
+       commit=$env:APPVEYOR_REPO_COMMIT;
+       version=$env:version; versionType=$env:versionType;
+       avVersion=$env:APPVEYOR_BUILD_VERSION;
+       branch=$env:APPVEYOR_REPO_BRANCH;
+       exe=$exe; hash=$hash;
+       artifacts=$artifacts
+      }
+      ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+     }

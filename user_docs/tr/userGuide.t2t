@@ -57,12 +57,14 @@ Bu, Özgün ve değiştirilmiş yazılım kopyaları ile, bu kodları kullanan d
 Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistem Gereksinimleri +
-- İşletim Sistemleri: Windows XP, Windows Vista, Windows 7 ve windows 8 (Server işletim sistemleri dahil) işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
+- İşletim Sistemleri: Windows XP, Windows Vista, Windows 7  windows 8 Windows 8.1 ve Windows 10 (Server işletim sistemleri dahil) işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
 - Windows XP 32-bit için, NVDA Service Pack 2 veya daha yüksek bir sürüme ihtiyaç duyar.
 - Windows Server 2003 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
-- Hafıza: 256 mb Veya daha fazla ram
+- Windows Vista için, NVDA Service Pack 2 ve [KB2763674 https://support.microsoft.com/en-us/kb/2763674] güncellemesini gerektirir.
+Eğer Windows update üzerinden tüm güncellemeler uygulandıysa, her ikisinin de yüklenmesi gerekir.
+-- Hafıza: 256 mb Veya daha fazla ram
 - İşlemci Hızı: 1.0 ghz veya yukarısı
-- Yaklaşık 50 MB depolama alanı.
+- Yaklaşık 90 MB depolama alanı.
 -
 
 + NVDA programının Tedariki ve Kurulumu +
@@ -88,8 +90,8 @@ NVDA'nın geçici kopyasını kullanmaya devam etmek de bir seçenek olabilir, �
 Windows'a giriş yaparken ya da giriş sonrasında otomatik olarak çalıştırılamamalarının yanında, taşınabilir ve geçici kopyalar aşağıdaki kısıtlara da sahiptir:
 - Yönetici yetkisiyle çalışan uygulamalarla etkileşim kuramaması, ki NVDA taşınabilir ve geçici kopyaları da yönetici yetkisiyle çalıştırılmaz.
 - Bir uygulama yönetici yetkisi istediğinde karşılaşılan kullanıcı hesap kontrol (UAC) ekranlarının okunamaması.
-- Windows 8: dokunmatik ekranlarda dokunma hareketlerinin çalışmaması.
-- Windows 8: Windows Store apps gibi uygulamalarda, tarama kipi gibi özelliklerin çalışmaması ya da karakter girişlerinin seslendirilmemesi.
+- Windows 8 ve sonrası: dokunmatik ekranlarda dokunma hareketlerinin çalışmaması.
+- Windows 8 ve sonrası: Windows Store apps gibi uygulamalarda, tarama kipi gibi özelliklerin çalışmaması ya da karakter girişlerinin seslendirilmemesi.
 -
 
 ++ NVDA'yı Kurma ++
@@ -628,15 +630,15 @@ Web'de olduğu gibi, NVDA'nın Microsoft Excel için de, farklı bilgi tiplerini
 Excel'de öğe listesine ulaşmak için, NVDA+f7 tuşlarını kullanın.
 %kc:endInclude
 Öğe listesinde ulaşılabilecek farklı türdeki bilgiler şunlardır:
-- Grafik: Bu çalışma kitabındaki tüm grafikleri listeler. 
+- Grafikler: Bu çalışma kitabındaki tüm grafikleri listeler. 
 Grafiği seçip üzerinde enter tuşuna ya da Git düğmesine basarsanız yön tuşlarıyla dolaşmanız ve okumanız için grafik üzerine odaklanmış olursunuz.
-- Açıklama: Bu çalışma kitabındaki açıklama içeren tüm hücreleri listeler. 
+- Açıklamalar: Bu çalışma kitabındaki açıklama içeren tüm hücreleri listeler. 
 Her hücre için adres bilgisiyle birlikte açıklaması gösterilir. 
 Listedeki açıklama üzerinde enter tuşuna ya da Git düğmesine basarsanız ilgili hücreye gidebilirsiniz.
-- Formül: Bu çalışma kitabındaki formül içeren tüm hücreleri listeler. 
+- Formüller: Bu çalışma kitabındaki formül içeren tüm hücreleri listeler. 
 Her hücre için adres bilgisiyle birlikte formül gösterilir.
 Listelenmiş formüllerden birinin üzerinde enter tuşuna ya da Git düğmesine basarsanız ilgili hücreye gidebilirsiniz. 
-- Çalışma sayfası: Bu çalışma kitabındaki tüm sayfaları listeler. 
+- Çalışma sayfaları: Bu çalışma kitabındaki tüm sayfaları listeler. 
 Listeden seçtiğiniz bir sayfa üzerinde f2 tuşuna basarak sayfanın adını değiştirebilirsiniz. 
 Seçili sayfa üzerinde enter tuşuna ya da Git düğmesine basarak ilgili çalışma sayfasına ulaşabilirsiniz.
 -
@@ -736,7 +738,7 @@ Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
 Windowsa kullanıcı adı ve şifre girerek oturum açıyorsanız, bu seçeneği etkinleştirdiğinizde, oturum açma ekranında NVDA da otomatik olarak başlayacaktır.
 Bu seçenek, yalnızca sisteme yüklenmiş olan NVDA kopyalarında mevcuttur.
 
-==== Windows Giriş ve Diğer Güvenli Ekranlarda Mevcut kaydedilmiş Ayarları Kullan ====
+==== Windows Giriş ve Diğer Güvenli Ekranlarda Mevcut kaydedilmiş Ayarları Kullan (Yönetici yetkisi gerekirr) ====
 Bu düğmeye basmak Şu anki NVDA ayarlarınızı NVDA system configuration dizinine kopyalar ve böylece oturum açma, kullanıcı hesapları kontrolü (uac) ve diğer güvenli ekranlarda NVDA bu ayarları kullanır.
 Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce kontrol+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden ayarlarınızı kaydedin.
 Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
@@ -760,6 +762,16 @@ BU, NVDA'yı yalnızca braille ekran ile kullanmak isteyenler ve belki de yalnı
  
 ==== Çıktı Aygıtı ====
 Bu seçenek, NVDA'nın seçilen sentezleyicinin üzerinden konuşacağı ses kartını seçmenizi sağlar.
+
+%kc:setting
+==== Ses Zayıflaması Modu ====
+Kısayol tuşu: NVDA+shift+d
+
+Windows 8 ve sonrası için, bu seçenek NVDA'nın diğer seslerin seviyesini düşürüp düşürmeyeceğini belirlemenizi sağlar.
+- Ses zayıflaması, kapalı: NVDA, hiçbir zaman diğer seslerin seviyesini düşürmez. 
+- Ses zayıflaması açık, konuşurken ya da ses çalarken: NVDA, diğer seslerin seviyesini yalnızca NVDA konuşurken ya da ses çalarken düşürür. Tüm sentezleyiciler desteklemeyebilir. 
+- Ses zayıflaması açık, her zaman : NVDA, NVDA açıkken diğer seslerin seviyesini her zaman düşük tutar.
+-
 
 +++ Ses Ayarları (NVDA+kontrol+v) +++[VoiceSettings]
 Tercihler menüsü içinde bulunan Ses Ayarları iletişim kutusu, konuşma sesini değiştirmenizi sağlayan seçenekler içerir.
@@ -888,8 +900,16 @@ Bu işlev yalnızca, üzerinde klavye bulunan ve sürücüsü bu özelliği dest
 ==== İmleç altındaki sözcüğü bilgisayar braille olarak Genişlet ====
 Bu seçenek, imlecin üzerinde bulunduğu sözcüğün kısaltmasız bilgisayar braille ile gösterilmesini sağlar.
 
-==== İmleç inip Çıkma Hızı ====
+==== İmleci göster ====
+Bu seçenek, brail imlecini açıp kapatmanızı sağlar.
+Sistem imleci ve inceleme imleci için uygulanır; seçimin belirtilmesi için geçerli değildir.
+
+==== İmleç inip çıkma hızı ====
 Bu seçenek, imleç inip çıkma hızının milisaniyede ne kadar hızlı olacağını değiştirmenizi sağlayan rakamsal bir alandır.
+
+==== İmleç Şekli ====
+Bu seçenek, braille imlecin şeklini belirlemenizi sağlar.
+Seçim belirteci bu seçenekle etkilenmez.
 
 ==== Mesaj Zaman Aşımı Saniyesi ====
 Bu seçenek, sistem mesajlarının braille ekranda ne kadar uzun süre gösterileceğini kontrol eden bir rakamsal alandır.
@@ -1639,14 +1659,13 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 ++ Baum/Humanware/APH Braille Ekranlar ++
 Birçok [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] ekran USB veya Bluetooth ile bağlandıklarında desteklenmektedir.
 Bunlardan bazıları şunlardır:
-- Baum: SuperVario, PocketVario, VarioUltra (Bluetooth only), Pronto! (Bluetooth only)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 henüz test edilmemelerine karşın, Baum tarafından desteklenen başka ekranlar da NVDA ile çalışabilir.
 
-Eğer USB ile bağlanılıyorsa, öncelikle üretici tarafından sağlanan sürücüyü yüklemeniz gerekmektedir.
-APH Refreshabraille için USB modu serial olarak ayarlanmalıdır.
+Eğer VarioUltra, Pronto! veya Refreshabraille dışındaki ekranlara USB ile bağlanılıyorsa, öncelikle üretici tarafından sağlanan sürücüyü yüklemeniz gerekmektedir.
 
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
@@ -1703,7 +1722,8 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 
 ++ HumanWare Brailliant BI/B Serisi ++
  Brailliant BI ve B serisi braille ekranlar, [HumanWare http://www.humanware.com/], BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
-USB bağlantısını kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
+USB bağlantısını ve HumanWare protokolünü kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
+OpenBraille protokolü için USB sürücüleri gerekmez.
 
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -1731,12 +1751,10 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
-NVDA USB ya da bluetooth ile bağlandıklarında [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense ve Braille EDGE ekranlarını destekler. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serileri ++
+USB ya da bluetooth üzerinden bağlandıklarında, NVDA [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense, Braille EDGE ve Smart Beetle kabartma ekranları  destekler. 
 USB üzerinden bağlıyorsanız, sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
-Sürücüleri HIMS kaynak merkezinden indirebilirsiniz: http://www.hims-inc.com/resource-center/
-Bu sayfada, cihazınızı seçin ve Window-Eyes bölümündeki sürücüyü indirin.
-Bölümde yalnızca Window Eyes ismi geçmesine karşın, bu NVDA ile de çalışacak genel bir USB sürücüdür.
+Bu sayfadan indirebilirsiniz: http://www.himsintl.com/?c=2/13&uid=2319
  
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.

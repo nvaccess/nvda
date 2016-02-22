@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-26 19:09+1000\n"
-"PO-Revision-Date: 2015-11-27 08:59+0100\n"
-"Last-Translator: jožef gregorc <jozko.gregorc@gmail.com>\n"
+"POT-Creation-Date: 2016-02-12 00:10+1000\n"
+"PO-Revision-Date: 2016-02-12 07:24+0100\n"
+"Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -125,15 +125,18 @@ msgstr "obrazec"
 msgid "region"
 msgstr "območje"
 
-#. Translators: an audio ducking mode for Windows 8 and up
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
 msgstr "Brez stišanja"
 
-#. Translators: an audio ducking mode for Windows 8 and up
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
 msgstr "Stišano, ko NVDA oddaja govor ali lastne zvočne signale"
 
-#. Translators: an audio ducking mode for Windows 8 and up
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
 msgstr "Vedno stišano"
 
@@ -414,6 +417,11 @@ msgstr "Manipurska razvrstitev 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongolska"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Maratska razvrstitev 1"
 
@@ -671,6 +679,18 @@ msgstr "klk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Piki 7 in 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Pika 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Vse pike"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -1201,19 +1221,19 @@ msgstr "ni predhodnega vdelanega predmeta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr "premakne se na naslednjo beležko"
+msgstr "premakne se na naslednjo zabeležko"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "ni naslednje beležke"
+msgstr "ni naslednje zabeležke"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "premakne se na predhodno beležko"
+msgstr "premakne se na predhodno zabeležko"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "ni predhodne beležke"
+msgstr "ni predhodne zabeležke"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2950,14 +2970,13 @@ msgstr "Oblikovanje dokumenta"
 msgid "Audio ducking not supported"
 msgstr "Stišanje ostalih zvokov ni podprto"
 
-#. Translators: input help message for toggleAudioDuckingMode script
+#. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
-"Toggles whether NVDA's speech and sounds should duck other audio, or other "
-"audio should be ducked all the time, or audio should never be ducked"
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
 msgstr ""
-"Stikalo med možnostmi stišanja ostalih zvokov; medtem, ko NVDA govori ali "
-"oddaja svoje zvočne signale, ali pa naj bodo ostali zvoki vedno stišani, ali "
-"pa naj bo tako delovanje izključeno"
+"Kroži med delovanji stišanja zvokov, ki določajo, kdaj in katere zvoke bo "
+"NVDA stišala"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -3728,8 +3747,8 @@ msgid ""
 "cursor, quick navigation keys, etc."
 msgstr ""
 "stikalo med brskalniškim delovanjem in delovanjem žarišča. Ko ste v "
-"delovanju žarišča, bo tipke obravnaval program, kjer ste, ko ste v "
-"brskalniškem delovanju pa boste lahko uporabljali hitre tipke za krmarjenje "
+"delovanju žarišča, bo tipke obravnaval program, kjer ste; ko ste v "
+"brskalniškem delovanju, pa boste lahko uporabljali hitre tipke za krmarjenje "
 "in podobno."
 
 #. Translators: Input help mode message for quit NVDA command.
@@ -3765,8 +3784,8 @@ msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
 msgstr ""
-"Poroča o informaciji oblikovanja znotraj dokumenta glede na trenutni položaj "
-"pregledne utripalke"
+"Sporoča informacijo o obliki znotraj dokumenta glede na trenutni položaj "
+"pregledne utripalke."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -3862,8 +3881,8 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Vključi/izkljuci poročanje o dinamičnih spremembah vsebine kot je novo "
-"besedilo v dos konzoli okn."
+"Vključi/izključi poročanje o dinamičnih spremembah vsebine kot je novo "
+"besedilo v dos konzoli oken."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4070,6 +4089,31 @@ msgstr "omejitev braja na %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "stikalo medomejevanjem braja na žarišče ali na pregled položaja"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Brajeva utripalka izključena"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Brajeva utripalka vključena"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Vključi ali izključi brajevo utripalko"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Brajeva utripalka je izključena"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Brajeva utripalka %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Kroži med oblikami brajeve utripalke"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4707,13 +4751,13 @@ msgstr "%s označeno"
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
 msgid "%s unselected"
-msgstr "%s ni označeno"
+msgstr "%s odoznačeno"
 
 # več po testu
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
 msgid "%s selected instead"
-msgstr "%s izbrano"
+msgstr "%s izbrano namesto"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4921,34 +4965,6 @@ msgstr "poravnava z razmiki znakov"
 msgid "align default"
 msgstr "privzeta poravnava"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "navpična poravnava po zgornjem robu"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "navpična poravnava po sredini"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "navpična poravnava po spodnjem robu"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "navpična poravnava po osnovnici"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "navpična obojestranska poravnava"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "navpična poravnava z razmiki med znaki"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "navpična privzeta poravnava"
-
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "levi zamik"
@@ -4980,6 +4996,34 @@ msgstr "zamik v prvi vrstici"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "brez zamika v prvi vrstici"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "navpična poravnava po zgornjem robu"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "navpična poravnava po sredini"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "navpična poravnava po spodnjem robu"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "navpična poravnava po osnovnici"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "navpična obojestranska poravnava"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "navpična poravnava z razmiki med znaki"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "navpična privzeta poravnava"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -6964,15 +7008,15 @@ msgid "Output &device:"
 msgstr "Izhodna &naprava:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
-msgid "Audio &Ducking mode:"
-msgstr "Delovanje stišanja ostalih &zvokov"
+msgid "Audio &ducking mode:"
+msgstr "Delovanje stišanja &zvokov:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "Ne morem naložiti %s sinteze"
+msgstr "Ne morem naložiti sinteze %s."
 
 msgid "Synthesizer Error"
 msgstr "Napaka sinteze"
@@ -7529,9 +7573,17 @@ msgstr "Tabela za v&nos znakov"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Prikaži besedo, kjer stoji utripalka, v &računalniški brajici"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "&Prikazuj utripalko"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Hitrost utripanja utripalke (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Oblika &utripalke:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7551,7 +7603,7 @@ msgstr "Prepreči deljenje &besed, ko je to mogoče"
 
 #, python-format
 msgid "Could not load the %s display."
-msgstr "Ni mogoče naložiti %s vrstice"
+msgstr "Ni mogoče naložiti %s vrstice."
 
 msgid "Braille Display Error"
 msgstr "Napaka brajeve vrstice"
@@ -8768,7 +8820,7 @@ msgstr "{offset:.3g} ciceri"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"
-msgstr "brez komentarja"
+msgstr "ni komentarjev"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8788,12 +8840,26 @@ msgid "&Annotations"
 msgstr "&Zabeležke"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE serija"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Formatting"
+#~ msgstr "Oblika"
+
+#~ msgid "NVDA Message"
+#~ msgstr "NVDA Sporočilo"
+
+#~ msgid ""
+#~ "Toggles whether NVDA's speech and sounds should duck other audio, or "
+#~ "other audio should be ducked all the time, or audio should never be ducked"
+#~ msgstr ""
+#~ "Stikalo med možnostmi stišanja ostalih zvokov; medtem, ko NVDA govori ali "
+#~ "oddaja svoje zvočne signale, ali pa naj bodo ostali zvoki vedno stišani, "
+#~ "ali pa naj bo tako delovanje izključeno"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"

@@ -7,7 +7,6 @@ Ultimo Aggiornamento del manuale originale: 9 novembre 2015, traduzione a cura d
 
 = Indice =[toc]
 %%toc
-
 + Introduzione +
 NVDA (NonVisual desktop access) è uno screen reader completamente libero e gratuito per i sistemi operativi Windows.
 Il prodotto permette ad un non vedente di interagire con il computer, ricevendo le informazioni attraverso una sintesi vocale o un display braille e permettendo quindi l'accesso al sistema operativo ed a numerose applicazioni di terze parti senza costi aggiuntivi, allo stesso modo delle persone vedenti. 
@@ -57,12 +56,14 @@ Questo si applica a copie originali e modificate del software ed a qualsiasi pro
 Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisiti di sistema +
-- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista,  Windows 7, Windows8 e Windows10 (Incluse le edizioni Server).
+- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista,  Windows 7, Windows8, Windows8.1 e Windows10 (Incluse le edizioni Server).
  - Per Windows XP 32-bit, NVDA richiede Service Pack 2 o superiore.
  - Per Windows Server 2003, NVDA richiede Service Pack 1 o superiore.
+ - Per Windows Vista, NVDA richiede il Service Pack 2 e [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
+ Generalmente questi due componenti sono già installati se sono stati eseguiti tutti gli aggiornamenti di Windows Vista tramite Windows Update.
 - Memoria: 256 mb di Ram o superiore
 - Velocità processore: 1.0 ghz o superiore.
-- Circa 50 Megabytes di spazio disco.
+- Circa 90 Megabytes di spazio disco.
 -
 
 + Scaricare e configurare NVDA +
@@ -88,8 +89,8 @@ Infine, c'è la possibilità di avvalersi  della copia temporanea di NVDA appena
 Oltre al fatto di non poter essere eseguite all'avvio automatico del sistema o dopo la finestra di login, le versioni temporanee o portable di NVDA presentano le seguenti limitazioni:
 - Incapacità di interagire con programmi eseguiti con privilegi di amministratore, a meno che naturalmente lo stesso NVDA non venga eseguito con privilegi amministrativi (non consigliato).
 - Impossibilità di leggere le schermate del controllo Utente (UAC), quando si cerca di avviare un'applicazione con privilegi amministrativi.
-- Windows 8: impossibilità di gestire la scrittura o qualsiasi operazione effettuata tramite Touch Screen.
-- Windows 8: impossibilità di fornire le caratteristiche di ripetizione dei caratteri digitati e l'utilizzo della modalità navigazione in Windows Store.
+- Windows 8 e successivi: impossibilità di gestire la scrittura o qualsiasi operazione effettuata tramite Touch Screen.
+- Windows 8 e successivi: impossibilità di fornire le caratteristiche di ripetizione dei caratteri digitati e l'utilizzo della modalità navigazione in Windows Store.
 -
 
 ++ Installazione di NVDA ++
@@ -588,7 +589,6 @@ Dopo essersi spostati nella prima cella della colonna o della riga che contiene 
 Queste impostazioni saranno memorizzate nel documento come segnalibri, in un formato compatibile con altri screen reader, ad esempio Jaws.
 Ciò significa che se si utilizza un altro screen reader e si apre quel documento successivamente, le intestazioni di righe e colonne saranno già impostate.
 
-
 +++ Modalità navigazione in Microsoft Word+++
 Allo stesso modo delle pagine web, la modalità navigazione può essere utilizzata in Microsoft Word per poter servirsi di funzioni quali la navigazione veloce con tasti rapidi o l'elenco elementi.
 %kc:beginInclude
@@ -629,15 +629,15 @@ Un po' come accade per le pagine web, NVDA è provvisto di un elenco elementi pe
 Per accedere all'elenco elementi in Microsoft Excel, utilizzare NVDA+f7.
 %kc:endInclude
 I vari tipi di informazioni disponibili nell'elenco  elementi sono:
-- Grafico: Elenca tutti i grafici nella cartella di lavoro.
+- Grafici: Elenca tutti i grafici nella cartella di lavoro.
 Selezionando un grafico e premendo invio o utilizzando il bottone Vai evidenzia il grafico per poter essere esplorato con i tasti freccia.
-- Commento: elenca tutte le celle della cartella di lavoro contenenti commenti.
+- Commenti: elenca tutte le celle della cartella di lavoro contenenti commenti.
 Per ciascuna cella sarà mostrato l'indirizzo e i relativi commenti.
 Premendo il tasto Invio o il pulsante Vai in presenza di un commento ci si sposterà a quella determinata cella.
-- Formula: Elenca tutte le celle della cartella di lavoro contenenti formule.
+- Formule: Elenca tutte le celle della cartella di lavoro contenenti formule.
 Per ciascuna cella sarà mostrato l'indirizzo e le relative formule.
 Premendo il tasto Invio o il pulsante Vai in presenza di una formula ci si sposterà a quella determinata cella.
-- Foglio: Elenca tutti i fogli della cartella di lavoro.
+- Fogli: Elenca tutti i fogli della cartella di lavoro.
 Premendo f2 nell'elenco dei fogli permette di rinominare il foglio selezionato.
 Premendo il tasto Invio o il pulsante Vai in presenza di un foglio ci si sposterà a quel determinato foglio.
 -
@@ -761,6 +761,16 @@ Ciò può venir incontro a quegli utenti che preferiscono avvalersi esclusivamen
 
 ==== Periferica audio da utilizzare ====
 Questa opzione permette di selezionare la scheda audio che NVDA utilizzerà per mandare i messaggi al sintetizzatore.
+
+%kc:setting
+==== Modalità attenuazione audio ====
+Tasto: NVDA+shift+d
+
+Questa funzione, disponibile a partire da Windows8 in poi, consente di decidere se NVDA debba abbassare il volume delle altre applicazioni quando NVDA sta parlando, o per tutto il tempo in cui NVDA è in esecuzione.
+- Nessuna attenuazione: NVDA non abbasserà mai il volume di altre applicazioni.
+- Attenua quando vengono riprodotti altri suoni: NVDA abbasserà il volume di altri flussi audio soltanto quando la sintesi vocale sta parlando. Si noti che potrebbe non funzionare per tutti i sintetizzatori.
+- Attenua sempre: NVDA manterrà gli altri flussi audio sempre con un volume più basso per tutto il tempo in cui NVDA è in esecuzione.
+-
 
 +++ Impostazioni voce (NVDA+control+v) +++[VoiceSettings]
 La finestra impostazioni della voce, situata sul menu preferenze, contiene numerose opzioni per modificare il suono della sintesi vocale. 
@@ -889,8 +899,16 @@ Nel caso il display braille che si vuole adoperare sia dotato di tastiera perkin
 ==== Espandi la parola sotto il cursore utilizzando il Braille Computer ====
 Questa opzione permette la visualizzazione della parola sotto il cursore nel formato Computer Braille non contratto.
 
-==== Velocità lampeggio cursore ====
+==== Mostra cursore ====
+Questa opzione permette di attivare o disattivare la visualizzazione del cursore braille.
+Si applica al cursore di sistema e al cursore di controllo, ma non agli indicatori di selezione.
+
+==== Velocità lampeggio cursore (ms) ====
 Si tratta di un campo numerico che permette di modificare la velocità di lampeggio del cursore in millisecondi.
+
+==== Forma cursore ====
+Questa opzione permette di selezionare la forma, in punti braille, del cursore braille.
+L'indicatore della selezione non è affetto da questa funzione.
 
 ==== Timeout dei messaggi(sec) ====
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di NVDA saranno mostrati sul Display Braille.
@@ -1639,14 +1657,13 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 ++ Display Braille Baum/Humanware/APH  ++
 Molti Display Braille della [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] sono supportati sia tramite USB che Bluetooth.
 Essi includono:
-- Baum: SuperVario, PocketVario, VarioUltra (Solo Bluetooth), Pronto! (solo Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Altre barre Braille della Baum potrebbero funzionare, tuttavia non sono stati fatti test in tal senso.
 
-Nel caso di connessione tramite USB, è necessario installare i driver forniti dal produttore.
-Per i modelli APH Refreshabraille, il parametro USB Mode deve essere settato su Serial.
+Nel caso di connessione tramite USB, è necessario installare i driver forniti dal produttore, tranne per i modelli VarioUltra,  Pronto! e Refreshabraille con modalità USB impostata su HID, che funzioneranno autonomamente.
 
 Seguono i tasti che sono stati assegnati con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
@@ -1703,7 +1720,8 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
  
 ++ HumanWare Brailliant BI/B Series ++
 Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare http://www.humanware.com/], comprese BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
-In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
+In caso di connessione tramite USB con protocollo impostato su Humanware, è necessario prima installare i driver sviluppati dal produttore.
+Non è richiesto alcun driver USB invece nel caso in cui il protocollo sia impostato su OpenBraille.
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.

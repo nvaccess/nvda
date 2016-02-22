@@ -8,6 +8,7 @@
 import time
 import itertools
 import tones
+import audioDucking
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -82,6 +83,21 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
+
+	def script_cycleAudioDuckingMode(self,gesture):
+		if not audioDucking.isAudioDuckingSupported():
+			# Translators: a message when audio ducking is not supported on this machine
+			ui.message(_("Audio ducking not supported"))
+			return
+		curMode=config.conf['audio']['audioDuckingMode']
+		numModes=len(audioDucking.audioDuckingModes)
+		nextMode=(curMode+1)%numModes
+		audioDucking.setAudioDuckingMode(nextMode)
+		config.conf['audio']['audioDuckingMode']=nextMode
+		nextLabel=audioDucking.audioDuckingModes[nextMode]
+		ui.message(nextLabel)
+	# Translators: Describes the Cycle audio ducking mode command.
+	script_cycleAudioDuckingMode.__doc__=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds")
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
@@ -1800,13 +1816,13 @@ class GlobalCommands(ScriptableObject):
 
 
 	def script_touch_newExplore(self,gesture):
-		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y,new=True)
+		touchHandler.handler.screenExplorer.moveTo(gesture.x,gesture.y,new=True)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_newExplore.__doc__=_("Reports the object and content directly under your finger")
 	script_touch_newExplore.category=SCRCAT_TOUCH
 
 	def script_touch_explore(self,gesture):
-		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y)
+		touchHandler.handler.screenExplorer.moveTo(gesture.x,gesture.y)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_explore.__doc__=_("Reports the new object or content under your finger if different to where your finger was last")
 	script_touch_explore.category=SCRCAT_TOUCH
@@ -1990,6 +2006,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+p": "activateConfigProfilesDialog",
 
 		# Settings
+		"kb:NVDA+shift+d":"cycleAudioDuckingMode",
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",

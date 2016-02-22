@@ -20,6 +20,9 @@ class ChromeVBuf(GeckoVBuf):
 	def __contains__(self, obj):
 		if obj.windowHandle != self.rootNVDAObject.windowHandle:
 			return False
+		if not isinstance(obj,ia2Web.Ia2Web):
+			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
+			return False
 		accId = obj.IA2UniqueID
 		if accId == self.rootID:
 			return True

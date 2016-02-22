@@ -1,5 +1,4 @@
 NVDA NVDA_VERSION Používateľská príručka
-NVDA NVDA_VERSION Používateľská príručka
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -57,12 +56,14 @@ Týka sa to oboch pôvodných, aj upravených kópií daného software.
 Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
 + Systémové požiadavky +
-- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows XP, Vista, 7, 8, 10 a tiež v serverových edíciách Windows.
+- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows XP, Vista, 7, 8, 8.1, 10 a tiež v serverových edíciách Windows.
 - V 32-bitových  verziách Windows XP musí byť nainštalovaný Service Pack 2 alebo novší.
  - V systémoch Windows Server 2003 musí byť nainštalovaný Service Pack 1 alebo novší.
-- Mali by ste mať najmenej 256 MB operačnej pamäte
+ - V systéme Windows  Vista musí byť nainštalovaný Service Pack 2 a   [Aktualizácia KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ Aktualizácie a Service pack odporúčame nainštalovať po nainštalovaní všetkých dostupných aktualizácií.
+ - Mali by ste mať najmenej 256 MB operačnej pamäte
 - Výkonnosť procesora sa odhaduje na 1 GHZ alebo rýchlejší. Spustíte ho i na pomalších počítačoch, ale štart programu bude pomalý, prejaví sa to najmä na načítaní internetových stránok.
-- Mali by ste mať aspoň 50 MB voľného miesta na disku
+- Mali by ste mať aspoň 90 MB voľného miesta na disku
 -
 
 + Získanie a inštalácia programu NVDA +
@@ -88,9 +89,9 @@ V úvodnom dialógu môžete tiež aktivovať tlačidlo Ponechať spustenú doč
 Okrem toho, že nie je možné automaticky spustiť NVDA počas prihlásenia alebo po ňom, má prenosná verzia a dočasná kópia NVDA tieto obmedzenia:
 - Nemožnosť pracovať s aplikáciami, ktoré bežia správami administrátora, ak spustená verzia NVDA tiež nemá práva administrátora (čo sa však neodporúča).
 - Nemožnosť čítať obrazovku na prepnutie užívateľského účtu (UAC) pri pokuse spustiť aplikáciu s právami administrátora.
-- Nefunguje používanie dotykovej klávesnice v systéme Windows 8.
-- Nie je možné využívať režim prehliadania a čítanie napísaných znakov vo Windows Store v systéme Windows 8.
-
+- Nefunguje používanie dotykovej klávesnice v systéme Windows 8 a novších.
+- Nie je možné využívať režim prehliadania a čítanie napísaných znakov vo Windows Store v systéme Windows od verzie 8.
+-
 
 ++ Inštalácia NVDA ++
 Ak ste si stiahli NVDA a chcete ho nainštalovať, aktivujte tlačidlo Nainštalovať NVDA na úvodnej obrazovke.
@@ -104,7 +105,7 @@ Po zatvorení okna sa NVDA reštartuje.
 
 +++ Spúšťať NVDA pri zobrazení prihlasovacej obrazovky +++
 Umožňuje nastaviť, či sa má NVDA automaticky spustiť pri zobrazení prihlasovacej obrazovky, teda ešte pred tým, ako zadáte svoje heslo.
-
+toto zahŕňa aj obrazovky UAC a iné zabezpečené obrazovky.
 
 +++ Vytvoriť odkaz na pracovnej ploche so skratkou ctrl+alt+n +++
 Môžete sa rozhodnúť, či chcete, aby sa pri inštalácii NVDA vytvoril odkaz na pracovnej ploche.
@@ -630,13 +631,13 @@ Zoznam prvkov v programe MS Excel vyvoláte skratkou NVDA+F7.
 V zozname prvkov si môžete zobraziť tieto časti dokumentu:
 - Grafy: Zobrazuje všetky grafy v dokumente.
 Keď vyberiete graf, stlačíte na ňom enter, alebo aktivujete tlačidlo "prejsť na", fokus sa presunie na požadovaný graf. V grafe sa potom pohybujte šípkami.
-- Komentár: Zobrazí všetky bunky, ktoré obsahujú komentár.
+- Komentáre: Zobrazí všetky bunky, ktoré obsahujú komentár.
 NVDA pre každú bunku prečíta jej súradnice a text komentára.
 Ak stlačíte enter, alebo aktivujete tlačidlo prejsť na, fokus sa presunie na vybratú bunku.
-- Vzore: Zobrazí všetky bunky, ktoré obsahujú vzorec.
+- Vzorce: Zobrazí všetky bunky, ktoré obsahujú vzorec.
 NVDA pre každú bunku prečíta jej súradnice a vzorec.
 Ak stlačíte enter, alebo aktivujete tlačidlo prejsť na, fokus sa presunie na vybratú bunku.
-- Hárok: Zobrazí zoznam hárkov v dokumente.
+- Hárky: Zobrazí zoznam hárkov v dokumente.
 Klávesom F2 môžete premenovať vybratý hárok.
 Klávesom enter, alebo  aktivovaním tlačidla "prejsť na" sa presuniete na požadovaný hárok.
 -
@@ -760,6 +761,16 @@ Toto môže byť užitočné pre niekoho, kto chce používať NVDA len z braill
 
 ==== Výstupné zariadenie ====
 Toto nastavenie umožňuje vybrať zvukovú kartu, cez ktorú bude rozprávať hlasový výstup.
+
+%kc:setting
+==== Režim automatického stíšenia zvuku ====
+Klávesová skratka: NVDA+Shift+D
+
+od verzie Windows 8 môžete určiť, či má NVDA stišovať zvuk ostatných aplikácií, keď rozpráva, alebo konštantne stíšiť zvuk z aplikácií, keď NVDA spustíte.
+- Nestíšiť: NVDA nebude stišovať zvuk z ostatných aplikácií.
+- Stíšiť, keď NVDA hovorí a prehráva zvuky: NVDA bude stišovať zvuk z ostatných programov len vtedy, keď bude čítať alebo oznamovať udalosti zvukom. toto ale nemusí fungovať pre všetky syntézy reči.
+- Vždy stíšiť: NVDA stíši všetky zvuky ostatných programov po štarte   až do ukončenia NVDA.
+-
 
 +++ Nastavenia hlasu (NVDA+ctrl+v) +++
 Dialóg s nastaveniami hlasu v možnostiach programu obsahuje voľby, ktoré vám umožnia nastaviť parametre hlasu.
@@ -888,8 +899,16 @@ Ak má braillovský riadok klávesnicu, ale zadávanie textu nie je podporované
 ==== Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom ====
 Toto začiarkavacie políčko umožní zobrazovať aktuálne slovo v počítačovom braillovom písme, čo v mnohých jazykoch zodpovedá plnopisu. Je to užitočné, ak nechceme aplikovať pravidlá skratkopisu tabuľky vybratej v poli Prekladová tabuľka.
 
-==== Rýchlosť blikania kurzora ====
+==== Zobraziť kurzor ====
+Tu môžete určiť, či chcete alebo nechcete zobrazovať braillovský kurzor.
+toto sa týka systémového kurzora a tiež prezeracieho kurzora. Toto nastavenie neovplyvňuje zobrazenie vybratého textu.
+
+==== Rýchlosť blikania kurzora (ms)====
 Ide o číselnú hodnotu, ktorá určuje frekvenciu blikania kurzora braillovského zobrazovača v milisekundách.
+
+==== Tvar kurzora ====
+toto nastavenie určuje tvar kurzora (teda kombináciu bodov).
+Neovplyvňuje však zobrazenie vybratého textu.
 
 ==== Zobrazovať správy (sek) ====
 Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované správy NVDA.
@@ -1639,14 +1658,13 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 ++ Zobrazovače Baum/Humanware/APH ++
 Podporované sú niektoré riadky od [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] a [APH http://www.aph.org/] pripojené cez USB alebo bluetooth.
 Toto zahŕňa:
-- Baum: SuperVario, PocketVario, VarioUltra (len cez Bluetooth), Pronto! (len cez Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Niektoré ďalšie riadky od Baum by mohli tiež fungovať, no zatiaľ toto nebolo dostatočne odskúšané.
 
-Ak pripájate niektorý z týchto riadkov cez USB, mali by Ste najprv nainštalovať ovládače od výrobcu.
-V prípade APH Refreshabraille, režim USB by mal byť nastavený na serial.
+Ak pripájate niektorý z týchto riadkov cez USB, mali by Ste najprv nainštalovať ovládače od výrobcu. Toto sa netýka zariadení VarioUltra, Pronto! a Refreshabraille, ktoré pripájate v režime HID.
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -1703,7 +1721,8 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 
 ++ HumanWare Brailliant BI/B ++
 Riadky Brailliant BI and B od [HumanWare http://www.humanware.com/], zahŕňajú BI 32, BI 40 a B 80, sú podporované pripojené cez USB alebo bluetooth.
-Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodaný od výrobcu.
+Ak máte riadok pripojený cez USB a protokol nastavený na HumanWare, je potrebné nainštalovať ovládač dodaný od výrobcu.
+ovládače nebudete potrebovať, ak nastavíte protokol na OpenBraille.
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -1731,12 +1750,10 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Plynulé čítanie | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
-NVDA podporuje riadky Braille Sense a Braille EDGE od spoločnosti [Hims http://www.hims-inc.com/]. Je potrebné ich pripájať cez USB alebo bluetooth rozhranie.
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle ++
+NVDA podporuje riadky Braille Sense, Smart Beetle a Braille EDGE od spoločnosti [Hims http://www.hims-inc.com/]. Je potrebné ich pripájať cez USB alebo bluetooth rozhranie.
 Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodávaný HIMS.
-Ovládače si môžete stiahnuť z centra podpory pre zariadenia HIMS http://www.hims-inc.com/resource-center/ (anglicky)
-Na tejto stránke vyberte váš typ zariadenia a stiahnite si ovládač zo sekcie Window-Eyes.
-Hoci sa v tejto časti spomína len program Window-Eyes, ide o všeobecný ovládač, ktorý bude spolupracovať aj s NVDA.
+Ovládače si môžete stiahnuť zo stránky: http://www.himsintl.com/?c=2/13&uid=2319
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie rozmiestnenia klávesov.
