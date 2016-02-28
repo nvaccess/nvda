@@ -1575,8 +1575,8 @@ class TrayClockWClass(IAccessible):
 		if value is None:
 			#On XP there is no value, fall back to using the name.
 			return super(TrayClockWClass, self).name
-		#Strip Unicode left-to-right marks.
-		return value.replace(u'\u200e', '')
+		#Strip Unicode left-to-right and right-to-left marks.
+		return value.replace(u'\u200E','').replace(u'\u200F','')
 
 class OutlineItem(IAccessible):
 
