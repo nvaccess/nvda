@@ -203,6 +203,7 @@ class AppModule(appModuleHandler.AppModule):
 			if role == controlTypes.ROLE_LIST:
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
+			return
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
@@ -220,7 +221,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0,MultitaskingViewFrameWindow)
 			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0, UIProperty)
-			elif obj.windowClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_LISTITEM:
+			elif windowClass=="MultitaskingViewFrame" and role==controlTypes.ROLE_LISTITEM:
 				clsList.insert(0,MultitaskingViewFrameListItem)
 
 	def event_NVDAObject_init(self, obj):
