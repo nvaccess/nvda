@@ -152,6 +152,14 @@ class StartButton(IAccessible):
 		states = super(StartButton, self).states
 		states.discard(controlTypes.STATE_SELECTED)
 		return states
+		
+class UIProperty(UIA):
+	#Used for columns in Windows Explorer Details view.
+	#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+	
+	def _get_value(self):
+		value = super(UIProperty, self).value
+		return value.replace(u'\u200E','').replace(u'\u200F','')
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -210,6 +218,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0,SuggestionListItem)
 			elif uiaClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_WINDOW:
 				clsList.insert(0,MultitaskingViewFrameWindow)
+			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
+				clsList.insert(0, UIProperty)
 			elif obj.windowClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_LISTITEM:
 				clsList.insert(0,MultitaskingViewFrameListItem)
 
