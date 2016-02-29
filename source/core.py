@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -187,6 +187,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing addons system.")
 	addonHandler.initialize()
+	if globalVars.appArgs.disableAddons:
+		log.info("Addons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()

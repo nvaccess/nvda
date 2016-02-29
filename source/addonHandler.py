@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2014 Rui Batista, NV Access Limited, Noelia Ruiz Martínez
+#Copyright (C) 2012-2016 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -48,6 +48,7 @@ def loadState():
 		state = {
 			"pendingRemovesSet":set(),
 			"pendingInstallsSet":set(),
+			"pendingDisableSet":set(),
 		}
 
 def saveState():
@@ -98,12 +99,21 @@ def removeFailedDeletions():
 			if os.path.exists(path):
 				log.error("Failed to delete path %s, try removing manually"%path)
 
+_disabledAddons = set()
+def disableAddonsIfAny():
+	"""Disables add-ons if told to do so by the user from add-ons manager"""
+	# Todo (later): receive list of additional add-ons to be disabled from the command line.
+	global _disabledAddons
+	_disabledAddons = state["pendingDisableSet"]
+
 def initialize():
 	""" Initializes the add-ons subsystem. """
 	loadState()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
+	# I3090: Are there add-ons that are supposed to not run for this session?
+	disableAddonsIfAny()
 	saveState()
 	getAvailableAddons(refresh=True)
 
@@ -137,7 +147,10 @@ def _getAvailableAddonsFromPath(path):
 			log.debug("Loading add-on from %s", addon_path)
 			try:
 				a = Addon(addon_path)
-				log.debug("Found add-on %s", a.manifest['name'])
+				name = a.manifest['name']
+				log.debug("Found add-on %s", name)
+				if a.isDisabled:
+					log.debug("Disabling add-on %s", name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -248,6 +261,9 @@ class Addon(object):
 		@param package: the python module representing the package.
 		@type package: python module.
 		"""
+		# #3090: Don't even think about adding a disabled add-on to package path.
+		if self.isDisabled:
+			return
 		extension_path = os.path.join(self.path, package.__name__)
 		if not os.path.isdir(extension_path):
 			# This addon does not have extension points for this package
@@ -260,7 +276,11 @@ class Addon(object):
 
 	@property
 	def isRunning(self):
-		return not self.isPendingInstall
+		return not (self.isPendingInstall or self.isDisabled)
+
+	@property
+	def isDisabled(self):
+		return self.manifest["name"] in _disabledAddons
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
