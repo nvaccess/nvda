@@ -100,14 +100,16 @@ def removeFailedDeletions():
 				log.error("Failed to delete path %s, try removing manually"%path)
 
 _disabledAddons = set()
+# Records add-ons that should be enabled in the next session.
+_futureEnable = set()
 def disableAddonsIfAny():
 	"""Disables add-ons if told to do so by the user from add-ons manager"""
-	# Todo (later): receive list of additional add-ons to be disabled from the command line.
 	global _disabledAddons
-	try:
-		_disabledAddons = state["pendingDisableSet"]
-	except KeyError:
-		pass
+	if "pendingDisableSet" not in state:
+		state["pendingDisableSet"] = set()
+	# Todo (later): receive list of additional add-ons to be disabled from the command line.
+	_disabledAddons |= state["pendingDisableSet"]
+	state["pendingDisableSet"].clear()
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
@@ -233,6 +235,9 @@ class Addon(object):
 			getAvailableAddons(refresh=True)
 		else:
 			state['pendingRemovesSet'].add(self.name)
+			# There's no point keeping a record of this add-on being disabled now.
+			_disabledAddons.discard(self.name)
+			state['pendingDisableSet'].discard(self.name)
 		saveState()
 
 	def completeRemove(self,runUninstallTask=True):
@@ -280,13 +285,11 @@ class Addon(object):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			_disabledAddons.discard(self.name)
-			if self.name in state["pendingDisableSet"]:
-				# This add-on came from add-on state map.
-				state["pendingDisableSet"].discard(self.name)
+			_futureEnable.add(self.name)
+			state["pendingDisableSet"].discard(self.name)
 		else:
-			_disabledAddons.add(self.name)
 			state["pendingDisableSet"].add(self.name)
+			_futureEnable.discard(self.name)
 		saveState()
 
 	@property
@@ -295,7 +298,15 @@ class Addon(object):
 
 	@property
 	def isDisabled(self):
-		return self.manifest["name"] in _disabledAddons
+		return self.name in _disabledAddons
+
+	@property
+	def isPendingEnable(self):
+		return self.name in _futureEnable
+
+	@property
+	def isPendingDisable(self):
+		return self.name in state["pendingDisableSet"]
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)

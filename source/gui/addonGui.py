@@ -32,7 +32,7 @@ class AddonsDialog(wx.Dialog):
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
-			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. To enable add-ons you must restart NVDA."))
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are currently disabled. To enable add-ons you must restart NVDA."))
 			mainSizer.Add(addonsDisabledLabel)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
@@ -187,7 +187,14 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			return _("remove")
-		elif globalVars.appArgs.disableAddons:
+		# Need to do this here, as 'isDisabled' overrides other flags.
+		elif addon.isPendingEnable:
+			# Translators: The status shown for an addon when its disabled.
+			return _("enable")
+		elif addon.isPendingDisable:
+			# Translators: The status shown for an addon when its disabled.
+			return _("disable")
+		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons been disabled.
 			return _("suspended")
 		else:
@@ -214,13 +221,16 @@ class AddonsDialog(wx.Dialog):
 			self.helpButton.Disable()
 			self.removeButton.Disable()
 
+	def _shouldDisable(self, addon):
+		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable and not addon.isPendingDisable))
+
 	def onListItemSelected(self, evt):
 		index=evt.GetIndex()
 		addon=self.curAddons[index] if index>=0 else None
 		# #3090: Change toggle button label to indicate action to be taken if clicked.
 		if addon is not None:
 			# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-			self.toggleButton.SetLabel(_("Enable add-on") if addon.isDisabled else _("Disable add-on"))
+			self.toggleButton.SetLabel(_("Enable add-on") if not self._shouldDisable(addon) else _("Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.toggleButton.Enable(addon is not None and not addon.isPendingRemove)
@@ -265,14 +275,15 @@ Description: {description}
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
 		addon=self.curAddons[index]
-		enabled = not addon.isDisabled
-		if enabled:
+		shouldDisable = self._shouldDisable(addon)
+		if shouldDisable:
 			# Translators: Presented when attempting to disable the selected add-on.
 			if gui.messageBox(_("You are about to disable the selected add-on. Once disabled, you need to enable this add-on from add-ons manager to use add-on features. Are you sure you wish to continue and disable this add-on?"),
 				# Translators: Title for message asking if the user really wishes to remove the selected Addon.
 				_("Disable Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
-		addon.enable(not enabled)
-		self.toggleButton.SetLabel(_("Enable add-on") if not enabled else _("Disable add-on"))
+		# Counterintuitive, but makes sense when context is taken into account.
+		addon.enable(not shouldDisable)
+		self.toggleButton.SetLabel(_("Enable add-on") if shouldDisable else _("Disable add-on"))
 		self.needsRestart=True
 		self.refreshAddonsList(activeIndex=index)
 
