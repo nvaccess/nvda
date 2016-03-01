@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2014 NV Access Limited, Beqa Gozalishvili
+#Copyright (C) 2012-2016 NV Access Limited, Beqa Gozalishvili, Joseph Lee
 
 import os
 import wx
@@ -60,20 +60,25 @@ class AddonsDialog(wx.Dialog):
 		self.helpButton.Disable()
 		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
 		entryButtonsSizer.Add(self.helpButton)
+		# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+		self.toggleButton=wx.Button(self,label=_("Disable add-on"))
+		self.toggleButton.Disable()
+		self.toggleButton.Bind(wx.EVT_BUTTON,self.onToggle)
+		entryButtonsSizer.Add(self.toggleButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 		self.addButton=wx.Button(self,label=_("&Install..."))
-		self.addButton.Bind(wx.EVT_BUTTON,self.OnAddClick)
+		self.addButton.Bind(wx.EVT_BUTTON,self.onAddClick)
 		entryButtonsSizer.Add(self.addButton)
 		# Translators: The label for a button to remove either:
 		# Remove the selected add-on in Add-ons Manager dialog.
 		# Remove a speech dictionary entry.
 		self.removeButton=wx.Button(self,label=_("&Remove"))
 		self.removeButton.Disable()
-		self.removeButton.Bind(wx.EVT_BUTTON,self.OnRemoveClick)
+		self.removeButton.Bind(wx.EVT_BUTTON,self.onRemoveClick)
 		entryButtonsSizer.Add(self.removeButton)
 		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 		self.getAddonsButton=wx.Button(self,label=_("&Get add-ons..."))
-		self.getAddonsButton.Bind(wx.EVT_BUTTON,self.OnGetAddonsClick)
+		self.getAddonsButton.Bind(wx.EVT_BUTTON,self.onGetAddonsClick)
 		entryButtonsSizer.Add(self.getAddonsButton)
 		settingsSizer.Add(entryButtonsSizer)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
@@ -89,7 +94,7 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.SetFocus()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
-	def OnAddClick(self,evt):
+	def onAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 		fd=wx.FileDialog(self,message=_("Choose Add-on Package File"),
 		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
@@ -162,7 +167,7 @@ class AddonsDialog(wx.Dialog):
 				# The CallLater seems to work around this.
 				wx.CallLater(1, self.Close)
 
-	def OnRemoveClick(self,evt):
+	def onRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
 		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"), _("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
@@ -209,15 +214,20 @@ class AddonsDialog(wx.Dialog):
 	def onListItemSelected(self, evt):
 		index=evt.GetIndex()
 		addon=self.curAddons[index] if index>=0 else None
+		# #3090: Change toggle button label to indicate action to be taken if clicked.
+		if addon is not None:
+			# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+			self.toggleButton.SetLabel(_("Enable add-on") if addon.isDisabled else _("Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
+		self.toggleButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
 		self.Destroy()
 		if self.needsRestart:
-			# Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed. 
-			if gui.messageBox(_("Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
+			# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed. 
+			if gui.messageBox(_("Add-ons have been added, enabled/disabled or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:
@@ -248,7 +258,17 @@ Description: {description}
 		path = self.curAddons[index].getDocFilePath()
 		os.startfile(path)
 
-	def OnGetAddonsClick(self,evt):
+	def onToggle(self, evt):
+		index=self.addonsList.GetFirstSelected()
+		if index<0: return
+		addon=self.curAddons[index]
+		enabled = not addon.isDisabled
+		addon.enable(not enabled)
+		self.toggleButton.SetLabel(_("Enable add-on") if not enabled else _("Disable add-on"))
+		self.needsRestart=True
+		self.refreshAddonsList(activeIndex=index)
+
+	def onGetAddonsClick(self,evt):
 		ADDONS_URL = "http://addons.nvda-project.org"
 		os.startfile(ADDONS_URL)
 

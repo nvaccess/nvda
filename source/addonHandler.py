@@ -274,6 +274,18 @@ class Addon(object):
 		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
+	def enable(self, shouldEnable):
+		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
+		if shouldEnable:
+			_disabledAddons.discard(self.name)
+			if self.name in state["pendingDisableSet"]:
+				# This add-on came from add-on state map.
+				state["pendingDisableSet"].discard(self.name)
+		else:
+			_disabledAddons.add(self.name)
+			state["pendingDisableSet"].add(self.name)
+		saveState()
+
 	@property
 	def isRunning(self):
 		return not (self.isPendingInstall or self.isDisabled)
