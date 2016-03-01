@@ -104,7 +104,10 @@ def disableAddonsIfAny():
 	"""Disables add-ons if told to do so by the user from add-ons manager"""
 	# Todo (later): receive list of additional add-ons to be disabled from the command line.
 	global _disabledAddons
-	_disabledAddons = state["pendingDisableSet"]
+	try:
+		_disabledAddons = state["pendingDisableSet"]
+	except KeyError:
+		pass
 
 def initialize():
 	""" Initializes the add-ons subsystem. """

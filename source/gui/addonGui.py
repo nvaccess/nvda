@@ -170,7 +170,10 @@ class AddonsDialog(wx.Dialog):
 	def onRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
-		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"), _("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
+		# Translators: Presented when attempting to remove the selected add-on.
+		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"),
+			# Translators: Title for message asking if the user really wishes to remove the selected Addon.
+			_("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
 		addon=self.curAddons[index]
 		addon.requestRemove()
 		self.needsRestart=True
@@ -263,6 +266,11 @@ Description: {description}
 		if index<0: return
 		addon=self.curAddons[index]
 		enabled = not addon.isDisabled
+		if enabled:
+			# Translators: Presented when attempting to disable the selected add-on.
+			if gui.messageBox(_("You are about to disable the selected add-on. Once disabled, you need to enable this add-on from add-ons manager to use add-on features. Are you sure you wish to continue and disable this add-on?"),
+				# Translators: Title for message asking if the user really wishes to remove the selected Addon.
+				_("Disable Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
 		addon.enable(not enabled)
 		self.toggleButton.SetLabel(_("Enable add-on") if not enabled else _("Disable add-on"))
 		self.needsRestart=True
