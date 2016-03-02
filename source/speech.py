@@ -1163,6 +1163,18 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
+		backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)
+		oldBackgroundColor=oldBackgroundColor.name if isinstance(oldBackgroundColor,colors.RGB) else unicode(oldBackgroundColor)
+		backgroundColorTwo=attrs.get("background-colorTwo")
+		oldBackgroundColorTwo=attrsCache.get("background-colorTwo") if attrsCache is not None else None
+		if backgroundColorTwo:
+			backgroundColorTwo=backgroundColorTwo.name if isinstance(backgroundColorTwo,colors.RGB) else unicode(backgroundColorTwo)
+			oldBackgroundColorTwo=oldBackgroundColorTwo.name if isinstance(oldBackgroundColorTwo,colors.RGB) else unicode(oldBackgroundColorTwo)
+			backgroundColor=(_("{backgroundColorOne} to {backgroundColorTwo}").format(backgroundColorOne=backgroundColor,backgroundColorTwo=backgroundColorTwo))
+			oldBackgroundColor=(_("{oldBackgroundColorOne} to {oldBackgroundColorTwo}").format(oldBackgroundColorOne=oldBackgroundColor,oldBackgroundColorTwo=oldBackgroundColorTwo))
+		
+		backgroundPattern=attrs.get("background-pattern")
+		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
 		if color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
 			# Translators: Reported when both the text and background colors change.
 			# {color} will be replaced with the text color.
@@ -1178,6 +1190,8 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
+			textList.append(_("{pattern} background pattern").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
