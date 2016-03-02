@@ -44,11 +44,11 @@ void CALLBACK lotusNotesRichTextVBufBackend_t::renderThread_winEventProcHook(HWI
 		return;
 	}
 
-	int docHandle=(int)hwnd;
+	int docHandle=HandleToUlong(hwnd);
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
-		HWND rootWindow=(HWND)((*i)->rootDocHandle);
+		HWND rootWindow=(HWND)UlongToHandle(((*i)->rootDocHandle));
 		if(rootWindow==hwnd) {
 			backend=(*i);
 		}
@@ -154,7 +154,7 @@ int id=accChildID;
 void lotusNotesRichTextVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	DWORD_PTR res=0;
 	//Get an IAccessible by sending WM_GETOBJECT directly to bypass any proxying, to speed things up.
-	if(SendMessageTimeout((HWND)docHandle,WM_GETOBJECT,0,OBJID_CLIENT,SMTO_ABORTIFHUNG,2000,&res)==0||res==0) {
+	if(SendMessageTimeout((HWND)UlongToHandle(docHandle),WM_GETOBJECT,0,OBJID_CLIENT,SMTO_ABORTIFHUNG,2000,&res)==0||res==0) {
 		//Failed to send message or window does not support IAccessible
 		return;
 	}

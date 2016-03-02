@@ -36,9 +36,8 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](http://www.python.org/), version 2.7.11, 32 bit
-* Microsoft Visual Studio 2012 Update 1 or later (Express for Windows Desktop, or Professional)
-	* [Download for Visual Studio Express 2012 (Windows Desktop)](http://www.microsoft.com/en-au/download/details.aspx?id=34673) (does not include updates)
-	* [Download for Visual Studio 2012 latest update package](http://go.microsoft.com/fwlink/?LinkId=301713)
+* Microsoft Visual Studio 2015 (Express for Desktop, or Community with VC++ and Windows SDK 7.1A support):
+	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
@@ -61,7 +60,7 @@ For reference, the following dependencies are included in Git submodules:
 * Adobe FlashAccessibility interface typelib
 * [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 2.3.2
+* [SCons](http://www.scons.org/), version 2.4.1
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0

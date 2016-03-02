@@ -28,16 +28,16 @@ const UINT VBufBackend_t::wmRenderThreadTerminate=RegisterWindowMessage(L"VBufBa
 
 VBufBackendSet_t VBufBackend_t::runningBackends;
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWindowThreadProcessId((HWND)docHandleArg,NULL)), rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtreeList() {
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWindowThreadProcessId((HWND)UlongToHandle(docHandleArg),NULL)), rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtreeList() {
 	LOG_DEBUG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 }
 
 void VBufBackend_t::initialize() {
-	int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
+	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 	LOG_DEBUG(L"Registered hook, sending message...");
-	SendMessage((HWND)rootDocHandle,wmRenderThreadInitialize,(WPARAM)this,0);
+	SendMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadInitialize,(WPARAM)this,0);
 	LOG_DEBUG(L"Message sent, unregistering hook");
 	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 }
@@ -66,7 +66,7 @@ void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID,
 		// Copy the set, as it might be mutated by renderThread_terminate() during iteration.
 		VBufBackendSet_t backends=runningBackends;
 		for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();++i) {
-			if(hwnd==(HWND)((*i)->rootDocHandle)||IsChild(hwnd,(HWND)((*i)->rootDocHandle))) {
+			if(hwnd==(HWND)UlongToHandle(((*i)->rootDocHandle))||IsChild(hwnd,(HWND)UlongToHandle(((*i)->rootDocHandle)))) {
 				LOG_DEBUG(L"Calling renderThread_terminate for backend at "<<*i);
 				(*i)->renderThread_terminate();
 			}
@@ -222,11 +222,11 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::getNodeForNativeHandle(int native
 void VBufBackend_t::terminate() {
 	if(runningBackends.count(this)>0) {
 		LOG_DEBUG(L"Render thread not terminated yet");
-		int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
+		int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 		LOG_DEBUG(L"render threadID "<<renderThreadID);
 		registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 		LOG_DEBUG(L"Registered hook, sending message...");
-		SendMessage((HWND)rootDocHandle,wmRenderThreadTerminate,(WPARAM)this,0);
+		SendMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadTerminate,(WPARAM)this,0);
 		LOG_DEBUG(L"Message sent, unregistering hook");
 		unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 	} else {
