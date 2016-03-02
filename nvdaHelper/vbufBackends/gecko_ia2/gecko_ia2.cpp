@@ -54,7 +54,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IServiceProvider* pserv=NULL;
 	IAccessible2* pacc2=NULL;
 	VARIANT varChild;
-	if(AccessibleObjectFromEvent((HWND)docHandle,OBJID_CLIENT,ID,&pacc,&varChild)!=S_OK) {
+	if(AccessibleObjectFromEvent((HWND)UlongToHandle(docHandle),OBJID_CLIENT,ID,&pacc,&varChild)!=S_OK) {
 		LOG_DEBUG(L"AccessibleObjectFromEvent failed");
 		return NULL;
 	}
@@ -164,7 +164,7 @@ inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTa
 				headerCellPacc->Release();
 				continue;
 			}
-			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
+			headerCellDocHandle = HandleToUlong(findRealMozillaWindow((HWND)UlongToHandle(headerCellDocHandle)));
 			if (headerCellPacc->get_uniqueID((long*)&headerCellID) != S_OK) {
 				headerCellPacc->Release();
 				continue;
@@ -305,7 +305,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		LOG_DEBUG(L"pacc->get_windowHandle failed");
 		return NULL;
 	}
-	docHandle=(int)findRealMozillaWindow((HWND)docHandle);
+	docHandle=HandleToUlong(findRealMozillaWindow((HWND)UlongToHandle(docHandle)));
 	if(!docHandle) {
 		LOG_DEBUG(L"bad docHandle");
 		return NULL;
@@ -833,7 +833,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 }
 
 bool getDocumentFrame(HWND* hwnd, long* childID) {
-	IAccessible2* pacc=IAccessible2FromIdentifier((int)*hwnd,*childID);
+	IAccessible2* pacc=IAccessible2FromIdentifier(HandleToUlong(*hwnd),*childID);
 	if (!pacc)
 		return false;
 
@@ -910,11 +910,11 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		LOG_DEBUG(L"Invalid window");
 		return;
 	}
-	int docHandle=(int)hwnd;
+	int docHandle=HandleToUlong(hwnd);
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
-		HWND rootWindow=(HWND)((*i)->rootDocHandle);
+		HWND rootWindow=(HWND)UlongToHandle(((*i)->rootDocHandle));
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd))
 			backend=(*i);
 		else
@@ -928,7 +928,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		}
 
 		//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
-		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID)
+		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)UlongToHandle(backend->rootDocHandle)&&childID==backend->rootID)
 			return;
 
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
