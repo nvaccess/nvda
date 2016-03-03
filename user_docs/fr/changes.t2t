@@ -3,6 +3,18 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+
+== Nouvelles Fonctionnalités ==
+- en mode navigation sous Internet Explorer et autres contrôles MSHTML, utiliser la navigation par lettre pour se déplacer entre annotations (a et maj+a) ateint maintenant le texte inséré et effacé. (#5691)
+- Sous Microsoft Excel, NVDA annonce maintenant le niveau d'un groupe de cellules, ainsi que s'il est réduit ou développé. (#5690)
+
+
+== Corrections de Bogues ==
+- En mode navigation, quand on essaie d'utiliser la navigation par lettre pour atteindre un élément qui n'est pas suporté dans ce document, NVDA annonce que ceci n'est pas supporté plutôt que d'annoncer qu'il n'y a pas d'élément dans cette direction. (#5691)
+- Quand on liste les feuilles dans la liste d'éléments sous Microsoft Excel, les feuilles ne contenant que des graphiques sont maintenant incluses. (#5698)
+
+
 = 2016.1 =
 Les points forts de cette version incluent la possibilité de baisser optionnellement le volume des autres sources audio ; des amélioration de l'affichage braille et du support des terminaux braille ; plusieurs corrections significatives dans le support de Microsoft Office; et des corrections pour le mode navigation sous iTunes.
 

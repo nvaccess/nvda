@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
+"POT-Creation-Date: 2016-02-26 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
+"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -4758,11 +4758,6 @@ msgstr "Auswahl entfernt."
 msgid "done dragging"
 msgstr "Aktion ausgeführt."
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "Ebene %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4787,6 +4782,11 @@ msgstr "mit %s spalten."
 #, python-format
 msgid "with %s rows"
 msgstr "mit %s Zeilen."
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "Ebene %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -7097,17 +7097,17 @@ msgstr "Stimmeneinstellungen"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "Automatisch Sprache &wechseln (wenn unterstützt)"
+msgstr "Sprache automatisch &wechseln (falls unterstützt)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "Automatisch &Dialekt wechseln (wenn unterstützt)"
+msgstr "&Dialekte automatisch wechseln (falls unterstützt)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
-msgstr "Zeichen/Symbol&ebene:"
+msgstr "Z&eichen- und Symbolebene:"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
@@ -7160,22 +7160,22 @@ msgstr "Einfüge-Taste der &erweiterten Tastatur als NVDA-Taste verwenden"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &characters"
-msgstr "eingegebene &Zeichen sprechen"
+msgstr "&Zeichen ansagen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &words"
-msgstr "geschriebene &Wörter Sprechen"
+msgstr "&Wörter ansagen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for typed characters"
-msgstr "sprache beim Eingeben von Zeichen unterbrechen"
+msgstr "Sprachausgabe bei Eingabe von Zeichen unterbrechen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for Enter key"
-msgstr "Sprache beim Drücken der Eingabetaste unterbrechen"
+msgstr "Sprachausgabe beim Drücken der Eingabetaste unterbrechen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7186,13 +7186,13 @@ msgstr "&Navigation während alles Lesen erlauben"
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
-"signaltöne beim Eingeben von &Kleinbuchstaben abspielen, wenn die "
+"Signaltöne beim Eingeben von &Kleinbuchstaben abspielen, wenn die "
 "Dauergroßschreibung aktiviert ist"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak command &keys"
-msgstr "&Funktionstasten sprechen"
+msgstr "&Funktionstasten ansagen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.

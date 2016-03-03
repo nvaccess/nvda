@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-01 16:14+1000\n"
-"PO-Revision-Date: 2016-02-01 10:08+0200\n"
+"POT-Creation-Date: 2016-02-26 00:10+1000\n"
+"PO-Revision-Date: 2016-02-22 18:01+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -131,17 +131,17 @@ msgid "region"
 msgstr "Περιοχή"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
 msgstr "Χωρίς βύθιση"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
 msgstr "Βύθιση κατά την εκφώνηση και την αναπαραγωγή ήχων"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
 msgstr "Πάντα βύθιση"
 
@@ -1299,7 +1299,7 @@ msgstr "Εμφανίζει την εκτενή περιγραφή σε αυτή 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
 msgid "Not in a container"
-msgstr "Δε βρίσκεστε σε υποδοχέα"
+msgstr "Εκτός υποδοχέα"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
@@ -1322,7 +1322,7 @@ msgstr ""
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "κανένα"
+msgstr "καμία"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1332,12 +1332,12 @@ msgstr "κάποια"
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "αρκετά"
+msgstr "αρκετή"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "all"
-msgstr "όλα"
+msgstr "όλη"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4788,11 +4788,6 @@ msgstr "αφαίρεση επιλογής"
 msgid "done dragging"
 msgstr "ολοκλήρωση μεταφοράς"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "επίπεδο %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4816,6 +4811,11 @@ msgstr "με %s στήλες"
 #, python-format
 msgid "with %s rows"
 msgstr "με %s σειρές"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "επίπεδο %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
