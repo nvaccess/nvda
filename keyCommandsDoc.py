@@ -1,8 +1,9 @@
+# -*- coding: UTF-8 -*-
 #keyCommandsDoc.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010 James Teh <jamie@jantrid.net>
+#Copyright (C) 2010-2015 NV Access Limited, Mesar Hameed
 
 """Utilities related to NVDA Key Commands documents.
 """
@@ -212,6 +213,7 @@ class KeyCommandsMaker(object):
 		self._headings.append(m)
 		self._kcLastHeadingLevel = min(self._kcLastHeadingLevel, level - 1)
 
+	RE_SETTING_SINGLE_KEY = re.compile(ur"^[^|]+?[:：]\s*([^|]+)\s*$")
 	def _handleSetting(self):
 		if not self._settingsHeaderRow:
 			raise KeyCommandsError("%d, setting command cannot be used before settingsSection command" % self._lineNum)
@@ -238,8 +240,9 @@ class KeyCommandsMaker(object):
 		for layout in xrange(self._settingsNumLayouts):
 			line = next(self._ug).strip()
 			self._lineNum += 1
-			if ":" in line:
-				keys.append(line.split(":", 1)[1].strip())
+			m = self.RE_SETTING_SINGLE_KEY.match(line)
+			if m:
+				keys.append(m.group(1))
 				break
 			elif not self.t2tRe["table"].match(line):
 				raise KeyCommandsError("%d, setting command: There must be one table row for each keyboard layout" % self._lineNum)
