@@ -142,6 +142,9 @@ TABLES = (
 	("gu-in-g1.utb", _("Gujarati grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("gr-bb.ctb", _("Koine Greek"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("gr-gr-g1.utb", _("Greek (Greece) grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
