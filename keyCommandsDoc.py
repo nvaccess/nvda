@@ -213,7 +213,7 @@ class KeyCommandsMaker(object):
 		self._headings.append(m)
 		self._kcLastHeadingLevel = min(self._kcLastHeadingLevel, level - 1)
 
-	RE_SETTING_SINGLE_KEY = re.compile(ur"^[^|]+?[:：]\s*([^|]+)\s*$")
+	RE_SETTING_SINGLE_KEY = re.compile(ur"^[^|]+?[:：]\s*(.+?)\s*$")
 	def _handleSetting(self):
 		if not self._settingsHeaderRow:
 			raise KeyCommandsError("%d, setting command cannot be used before settingsSection command" % self._lineNum)
