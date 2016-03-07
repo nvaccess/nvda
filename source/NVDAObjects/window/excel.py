@@ -660,16 +660,17 @@ class ExcelWorksheet(ExcelBase):
 		except COMError:
 			log.debugWarning("Possibly protected sheet")
 			return None
+		minRow=maxRow=minColumn=maxColumn=None
 		if cellRegion.count==1:
-			minRow=maxRow=minColumn=maxColumn=None
-		else:
-			rc=cellRegion.address(True,True,xlRC,False)
-			m=re_absRC.match(rc)
-			if not m:
-				log.debugWarning("address not in rc format: %s"%rc)
-				return None
-			g=[int(x) for x in m.groups()]
-			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
+			return None
+		rc=cellRegion.address(True,True,xlRC,False)
+		m=re_absRC.match(rc)
+		if not m:
+			log.debugWarning("address not in rc format: %s"%rc)
+			return None
+		g=[int(x) for x in m.groups()]
+		minColumn=min(g[1],g[3])
+		maxColumn=max(g[1],g[3])
 		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
