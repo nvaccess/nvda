@@ -3,8 +3,20 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+
+== Nuevas Características ==
+- En modo exploración en Internet Explorer y otros controles MSHTML, utilizando primero la navegación con una sola letra para mover por anotación (a y shift+a) ahora se mueve a texto insertado y eliminado. (#5691)
+- En Microsoft Excel, NVDA ahora anuncia el nivel de un grupo de celdas, así como si está contraído o expandido. (#5690)
+
+ 
+== Corrección de Fallos ==
+- En modo exploración, cuando se intenta utilizar la navegación con una sola letra para moverte a un elemento que no se soporta en el documento, NVDA anuncia que esto no se soporta en lugar de anunciar que no hay elemento en esa dirección. (#5691)
+- Cuando se listan hojas en la lista de elementos en Microsoft Excel, las hojas que contengan sólo gráficos ahora se incluyen. (#5698)
+
+
 = 2016.1 =
-Lo reseñable de esta versión incluye la capacidad de bajar opcionalmente el volumen de otros sonidos; mejoras de la salida braille y del soporte de pantallas braille; varias correcciones significativas para el soporte de Microsoft Office; y correcciones al modo exploración en çiTunes.
+Lo reseñable de esta versión incluye la capacidad de bajar opcionalmente el volumen de otros sonidos; mejoras de la salida braille y del soporte de pantallas braille; varias correcciones significativas para el soporte de Microsoft Office; y correcciones al modo exploración en iTunes.
 
 == Nuevas Características ==
 - Nuevas tablas de transcripción braille: braille polaco computerizado de 8 puntos, mongol. (#5537), #5574) 

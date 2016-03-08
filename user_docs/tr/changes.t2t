@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+
+== New Features ==
+- In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)
+- In Microsoft Excel, NVDA now reports the level of a group of cells, as well as whether it is collapsed or expanded. (#5690)
+
+
+== Bug Fixes ==
+- In browse mode, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)
+- When listing sheets in the Elements List in Microsoft Excel, sheets containing only charts are now included. (#5698)
+
+
 = 2016.1 =
 Highlights of this release include the ability to optionally lower the volume of other sounds; improvements to braille output and braille display support; several significant fixes to Microsoft Office support; and fixes to browse mode in iTunes.
 
