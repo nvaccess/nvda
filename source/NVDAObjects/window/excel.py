@@ -746,7 +746,19 @@ class ExcelWorksheet(ExcelBase):
 		return True
 
 	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
-		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
+		# #4409: cell.currentRegion fails if the worksheet is protected.
+		try:
+			cellRegion=cell.excelCellObject.currentRegion
+		except COMError:
+			log.debugWarning("Possibly protected sheet")
+			return None
+		if cellRegion.count==1:
+			minRow=maxRow=minColumn=maxColumn=None
+		else:
+			rc=cellRegion.address(True,True,xlRC,False)
+			g=[int(x) for x in re_absRC.match(rc).groups()]
+			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
+		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
