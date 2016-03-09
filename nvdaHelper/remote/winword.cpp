@@ -531,10 +531,6 @@ int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int st
 
 void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
-	// #4165: font size is needed to calculate paragraph indenting
-	if(formatConfig&formatConfig_reportParagraphIndentation) {
-		formatConfig|=formatConfig_reportFontSize;
-	}
 	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)&&iVal>0) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
 	}
