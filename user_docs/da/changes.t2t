@@ -4,13 +4,13 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 = 
-I denne udgave af NVDA har du nu mulighed for at dæmpe lyden af andre kilder. Derudover indeholder denne version også forbedringer til punktoversættelse samt forbedret understøttelse af punktdisplays, flere markante fejlrettelser til Microsoft Office og fejlrettelser til gennemsynstilstand i iTunes.
+I denne udgave af NVDA har du nu mulighed for at dæmpe lyden fra andre kilder. Derudover indeholder denne version også forbedringer til punktoversættelse samt forbedret understøttelse af punktdisplays, flere markante fejlrettelser til Microsoft Office og fejlrettelser til gennemsynstilstand i iTunes.
 
 == Nye funktioner ==
 - Nye oversættelsestabeller til punkt: Polsk 8 punkt computer-braille og Mongolsk. (#5537, #5574)
 - Du kan slå punktmarkøren fra, og ændre dens form ved brug af de nye "Vis markør" og "Markørform" indstillinger i dialogen Punktindstillinger. (#5198)
 - NVDA kan nu forbindes med et  HIMS Smart Beetle punktdisplay via Bluetooth. (#5607)
-- NVDA har nu mulighed for at dæmpe lyd hvis installeret på Windows 8 eller senere. Dette kan blive konfigureret ved brug af Lyddæmpningtilstand-indstillingen i dialogen Talesyntese, eller ved brug af kommandoen NVDA+Skift+S. (#3830, #5575)
+- NVDA har nu mulighed for at dæmpe lyd hvis installeret på Windows 8 eller senere. Dette kan blive konfigureret ved brug af Lyddæmpningstilstand-indstillingen i dialogen Talesyntese, eller ved brug af kommandoen NVDA+Skift+S. (#3830, #5575)
 - Understøttelse for APH Refreshabraille i HID-tilstand, Baum VarioUltra og Pronto! når disse forbindes via USB. (#5609)
 - Understøttelse for HumanWare Brailliant BI/B punktdisplays når protokollen er sat til OpenBraille. (#5612)
 
@@ -43,9 +43,9 @@ I denne udgave af NVDA har du nu mulighed for at dæmpe lyden af andre kilder. D
 - Når en moderne indtastningsmetode-kandidatliste lukkes , vil fokus korrekt blive gendannet til enten inputkomposition eller det underlæggende dokument. (#4145)
 - I Microsoft Office 2013 eller senere vil emner nu igen blive korrekt annoncéret, hvis ribbon er sat til kun at vise faner og en fane er aktiveret. (#5504)
 - Forbedringer til detektion af touchskærm-bevægelser og tilknytning. (#5652)
-- Når der holdes nede på touchskærmen, vil dette ikke længere annoncéres i tastaturhjælpen. (#5652)
-- NVDA vil nu korrekt vise kommentarer elementlisten i Microsoft Excel, selv hvis du befinder dig på en kommentar i en flettet celle. (#5704)
-- I et meget sjældent tilfælde vil NVDA ikke længere unlade annoncéring af arkindhold i Microsoft Excel med annoncéring af kolonne- og rækkeoverskrifter slået til. (#5705)
+- Når der holdes nede på touchskærmen, vil dette ikke længere annoncéres når tastaturhjælp er slået til. (#5652)
+- NVDA vil nu korrekt vise kommentarer i elementlisten i Microsoft Excel, selv hvis du befinder dig på en kommentar i en flettet celle. (#5704)
+- I et meget sjældent tilfælde vil NVDA ikke længere undlade annoncéring af arkindhold i Microsoft Excel med annoncéring af kolonne- og rækkeoverskrifter slået til. (#5705)
 - NVDA vil nu korrekt navigere inputkompositioner for østasiatiske tegn i Google Chrome. (#4080)
 - Når du søger gennem Apple Music i iTunes, vil dokumentet med søgeresultater blive opdateret som forventet i gennemsynstilstand. (#5659)
 - Når du trykker Skift+F11 for at oprette et nyt ark i Microsoft Excel, vil NVDA nu annoncérer din nye position i stedet for at annoncérer ingenting. (#5689)

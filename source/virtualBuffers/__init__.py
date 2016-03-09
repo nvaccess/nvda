@@ -474,7 +474,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
-			return iter(())
+			raise NotImplementedError
 		return self._iterNodesByAttribs(attribs, direction, pos,nodeType)
 
 	def _iterNodesByAttribs(self, attribs, direction="next", pos=None,nodeType=None):

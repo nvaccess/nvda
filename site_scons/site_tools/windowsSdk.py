@@ -81,7 +81,7 @@ def generate(env):
 			env.Append(LINKFLAGS=[env['LINKFLAGS'],'/SUBSYSTEM:WINDOWS,5.01'])
 	if not d:
 		common.debug("windowsSdk.py, Generate: No suitable SDK could be used")
-		raise RuntimeError("No usable Windows SDK found")
+		raise RuntimeError("Windows SDK 7.1A could not be found")
 	#msvc.generate(env)
 	for k, v in d.iteritems():
 		env.PrependENVPath(k,v,delete_existing=True)

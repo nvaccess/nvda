@@ -1,5 +1,5 @@
 ﻿ NVDA_VERSION 用戶指南
-（最後更新日期：2015年12月07日）
+（最後更新日期：2016年1月18日）
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION 指令快速參考
@@ -51,17 +51,19 @@ NVDA 提供多語系，通常含括一級與二級點字碼、以及電腦點字
 NVDA 著作權2006-2015 是歸屬於所有參與的開發者。
 
 NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
-只要將此公開授權辦法隨附於軟體，您可以自由地以任何形式分享或改變此軟體，並將所有的原始碼提供給需要的人，這個規則適用於原始發佈的軟體或任何以此軟體修改之後發佈的軟體，以及所有採用此軟體內的程式碼所產生的軟體。
+只要將此公開授權辦法隨附於軟體，您可以自由地以任何形式分享或改變此軟體，並將所有的原始碼提供給需要的人，
+這個規則適用於原始發佈的軟體或任何以此軟體修改之後發佈的軟體，以及所有採用此軟體內的程式碼所產生的軟體。
 更詳細的內容，請上網 [查看完整版授權辦法 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。 
 
-
 + 系統需求 + 
-- 作業系統：32及64位元微軟Windows XP、Windows Vista、Windows 7、Windows 8及Window 10（含伺服器作業系統）
+- 作業系統：32及64位元微軟Windows XP、Windows Vista、Windows 7、Windows 8、Windows 8.1及Window 10（含伺服器作業系統）
  - 使用XP 32位元電腦，作業系統需要安裝SP 2或以上的等級；
  - 使用Windows 2003伺服器則需安裝SP 1或以上的等級。
+ - 使用 Windows Vista：需 SP 2及 [KB2763674 https://support.microsoft.com/en-us/kb/2763674] 更新。
+ 若Windows 有任何適用的更新，前述二項均應隨之更新。  
 - RAM 記憶體：需要 256MB 以上
 - CPU 速度：1.0Ghz或以上
-- 約需要50 MB 的儲存空間
+- 約需要90 MB 的儲存空間
 -
 
 + 取得並設定NVDA +
@@ -87,8 +89,8 @@ NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 除了不能提供在登入過程中或在登入後自動開啟的功能外，可攜式版與暫存版也有以下的限制:
 - 不能與有需要以系統管理員權限執行的應用程式互動，除非也同時允許NVDA以系統管理員權限的身份執行（不建議採用此方式操作）。
 - 當開啟以系統管理員權限執行的應用程式，將無法報讀使用者帳戶控制(UAC)的畫面。
-- Windows 8： 針對觸控螢幕的輸入是不支援的。
-- Windows 8： 在Windows的市集應用程式，有些功能，例如瀏覽模式及	讀出字體名稱等並沒有提供。
+- Windows 8或以後的版本： 針對觸控螢幕的輸入是不支援的。
+- Windows 8或以後的版本： 在Windows的市集應用程式，有些功能，例如瀏覽模式及	讀出字體名稱等並沒有提供。
 -
 
 ++ NVDA安裝版 ++
@@ -369,7 +371,7 @@ NVDA 允許您以逐一字元、字詞及逐行方式讀出在視窗畫面、目
 | 移到行尾 | Shift+數字鍵盤3 | NVDA+end | 無 | 移動瀏覽游標到目前所在行的行尾 |
 | 向下全部報讀 | 數字鍵盤加號 | NVDA+shift+a | 三根手指向下滑動（文字模式） | 從瀏覽游標目前所在位置往下讀出，瀏覽游標跟著移動 |
 | 從瀏覽游標開始複製 | NVDA+F9 | NVDA+F9 | 無 | 將瀏覽游標所在字元設定為複製區段的起點，實際複製的動作將等到結尾位置的設定後才會進行 |
-| 複製到瀏覽游標 | NVDA+f10 | 無 |複製從先前設定的起點到包括目前瀏覽游標所在字元位置之間的字串，並將其存放在剪貼簿內 |
+| 複製到瀏覽游標 | NVDA+f10 | NVDA+f10 | 無 |複製從先前設定的起點到包括目前瀏覽游標所在字元位置之間的字串，並將其存放在剪貼簿內 |
 | 讀出文字的格式資訊 | NVDA+f | NVDA+f | 無 | 讀出目前瀏覽游標所在位置文字的格式資訊 |
 %kc:endInclude
 
@@ -398,13 +400,13 @@ NVDA 允許您以逐一字元、字詞及逐行方式讀出在視窗畫面、目
 而對於其它的物件，則是指其名稱或一些說明文字。
 
 +++ 文件檢閱 +++[DocumentReview]
-當導航器在一個有提供瀏覽模式的文件如網頁或較複雜的文件如 Lotus Symphony等，此文件檢閱模式允許您檢閱此文件內所有的文字。 
+當導航器在一個有提供瀏覽模式的文件如網頁或較複雜的文件如 Lotus Symphony等，
+此文件檢閱模式允許您檢閱此文件內所有的文字。 
 
 當從物件檢閱切換到文件檢閱模式時，瀏覽游標會隨之移到導航器所在文件的位置。
 隨後當以瀏覽指令讀取文件內容時，導航器會自動跟隨瀏覽游標移動到所在的物件上。
 
 附註：當 NVDA 在網頁瀏覽文件時，會自動從物件檢閱切換到文件檢閱模式。 
-
 
 +++ 畫面檢閱 +++[ScreenReview]
 畫面檢閱模式允許您讀取目前應用程式在畫面上呈現，視覺可讀取的內容。
@@ -505,11 +507,11 @@ NVDA 在預設狀況下，會自動切換到焦點模式。
 | 跳過此清單或表格 | , | 跳過此清單或表格  |
 
 %kc:endInclude
-有些網頁應用程式如 Gmail，Twitter 及 Facebook  使用單鍵作為快速鍵，如果您想要使用它們原有的單鍵瀏覽，可將 NVDA提供的「單鍵瀏覽」暫時關閉。
+有些網頁應用程式如 Gmail，Twitter 及 Facebook  使用單鍵作為快速鍵，
+如果您想要使用它們原有的單鍵瀏覽，可將 NVDA提供的「單鍵瀏覽」暫時關閉。
 %kc:beginInclude
 要將NVDA的單鍵瀏覽關閉, 按 NVDA+shift+空格鍵
 %kc:endInclude
-
 
 ++ 元件清單 ++
 
@@ -760,6 +762,16 @@ NVDA 可以支援的語音合成軟體清單，請參見[支援的語音合成�
 ==== 輸出裝置 ====
 這個選項可以讓您選擇 NVDA 語音合成軟體要使用的音效卡。
 
+%kc:setting
+==== 自動音量調整模式 ====
+快速鍵: NVDA+shift+d
+
+在微軟作業系統8以上的版本，此選項允許您選擇在 NVDA 啟動時，是否要降低其它正執行的應用程式之報讀音量，此又可分成當 NVDA 正在報讀時，或只要 NVDA 在執行中均要降低音量。
+- 沒有自動音量調整：NVDA將永不降低其它應用程式的音量。
+- 當有輸出語音或音效時，開啟自動音量調整：僅有當 NVDA報讀或送出音訊時，才降低其它應用程式的音量，此功能並沒有對所有的語音合成軟體均適用。
+- 總是開啟自動音量調整：只要NVDA 啟動時，總是降低其它應用程式的音量。
+-
+
 +++ 語音設定 「NVDA+Ctrl+v」 +++[VoiceSettings]
 「語音設定」對話方塊是「偏好設定」功能表中的一個選項，您可以開啟它來做語音相關設定的變更。
 另一個可以在任何狀況下，快速調整語音參數的方法，請參見 [快速語音設定 #SynthSettingsRing]。
@@ -885,14 +897,22 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 若此點顯器有點字鍵盤，但無法被支援，請參閱 [支援的點字顯示器 #SupportedBrailleDisplays]。
 
 ====將游標所指的文字展開成完整的電腦點字====
-此核取方塊提供是否將游標所在的文字以完整電腦點字顯示。
- 
-====游標閃示率====
+此核取方塊提供了是否將游標所在的文字以完整電腦點字顯示的控制功能。
+
+==== 顯示游標 ====
+此選項提供了是否將點字游標開啟或關閉的控制功能。
+它僅適用於系統游標與瀏覽游標，但不適用於指示器的選擇。
+
+==== 游標閃示率 (毫秒) ====
 此為一個可編輯的數字方塊，設定點字游標閃示的時間長短，以毫秒為單位。
- 
-====訊息顯示的時間====
-此為一個可編輯的數字方塊，可設定NVDA訊息在點字顯示器上呈現的時間長短。
-以秒為單位
+  
+==== 游標型態 ====
+此下拉式選單提供點字游標型態的選擇功能。
+指示器的選擇。並不受此項控制功能的影響。
+
+==== 訊息顯示的時間() ====
+此為一個可編輯的數字方塊，可設定NVDA訊息在點字顯示器上呈現的時間長短，
+以秒為單位。
 
 %kc:setting
 ==== 點字游標跟隨 ====[BrailleTether]
@@ -1638,16 +1658,15 @@ Nuance Vocalizer 是一個商業化的高品質語音合成軟體，它是由 Nu
 ++ Baum/Humanware/APH 點字顯示器 ++
 當透過 USB 或藍芽連接時，一些 [Baum http://www.baum.de/cms/en/]、[HumanWare http://www.humanware.com/] 以及 [APH http://www.aph.org/] 顯示器可以被支援。
 這些包括：
-- Baum: SuperVario, PocketVario, VarioUltra (Bluetooth only), Pronto! (Bluetooth only)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 雖然還沒經過測試，但某些由 Baum 所製造的其他顯示器或許也可以運作。
 
-如果透過 USB 連接，您必須先安裝廠商所提供的 USB驅動程式。
-在APH Refreshabraille此種顯示器上，您必需將USB模式設為「serial」。
+如果用以透過 USB 連接顯示的是非 VarioUltra, Pronto 或帶有將 USB連接設為 HID模式的點顯器， 您首先應先安裝由廠商所提供的 USB 驅動程式。
 
-下列為此顯示器在NVDA的按鍵配置。
+以下是此顯示器在NVDA的按鍵配置。
 這些按鍵的實際位置，請參閱顯示器的說明文件。.
 %kc:beginInclude
 || 名稱 | 按鍵 |
@@ -1701,8 +1720,9 @@ NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點字顯�
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B 系列 ++
-當透過USB或藍牙連接時，NVDA可以支援 [HumanWare http://www.humanware.com/] 公司的 The Brailliant BI 及 B系列點字顯示器，包括 BI 32, BI 40及B 80等。
-如果透過USB連接，您必須先安裝廠商所提供的 USB驅動程式。
+當透過USB或藍牙連接時，NVDA 可以支援 [HumanWare http://www.humanware.com/] 公司的 The Brailliant BI 及 B系列點字顯示器，包括 BI 32, BI 40及B 80等。
+如果以協定透過 USB 連接到 HumanWare 點顯器，您應先使用廠商所提供的驅動程式。 
+如果連接協定的設定是對點顯器開啟，則 USB 驅動程式並非必要。
 
 下列為此顯示器在NVDA的按鍵配置。
 這些按鍵的實際位置，請參閱顯示器的說明文件。
@@ -1730,12 +1750,10 @@ NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點字顯�
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
-NVDA 支援 Braille Sense 和 Braille EDGE displays 從 [Hims http://www.hims-inc.com/] 
-當透過USB做連結，您需要從HIMS下載USB驅動程式並安裝到您的系統。
-您可以從 HIMS 資源中心 http://www.hims-inc.com/resource-center/ 下載。
-從此網頁內的 Window-Eyes 區塊，選取並下載您使用的設備的驅動程式。
-雖然此頁面僅提及 Window-Eyes，但這是一個通用的 USB 驅動程式，也是適用於 NVDA。
+++ HIMS Sense/EDGE/Smart Beetle 點顯器系列 ++
+NVDA 支援 HIMS 點顯器系列，包括 Sense, Braille EDGE and Smart Beetle displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+如果是透過 USB連接，您需要安裝由 HIMS 所提供的驅動程式安裝在您的電腦系統上。 
+您可以從此連結下載: http://www.himsintl.com/?c=2/13&uid=2319 
 
 以下是與 NVDA 相關按鍵的說明，
 請參考此設備的相關參考文件，以瞭解各按鍵的位置。

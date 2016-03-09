@@ -23,6 +23,11 @@ Import(
 	'clientInstallDir',
 )
 
+# We only support compiling with MSVC 14 (2015)
+if not env.get('MSVC_VERSION','').startswith('14.'):
+	raise RuntimeError("Microsoft Visual C++ 14 not found")
+
+
 TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebugFlags']
 release=env['release']
