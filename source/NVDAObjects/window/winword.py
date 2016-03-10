@@ -613,20 +613,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
-		fontSize=field.get("font-size")
-		fontSizePt = float(fontSize[0:-2]) if fontSize and fontSize[-2:] == "pt" and float(fontSize[0:-2]) > 0.0 else None
 		for x in ("first-line-indent","left-indent","right-indent","hanging-indent"):
 			v=field.get(x)
 			if not v: continue
 			v=float(v)
 			if abs(v)<0.001:
 				v=None
-			elif fontSizePt:
-				# translators: the value in characters for a paragraph indenting
-				v=_("%g characters") % (v / fontSizePt)
 			else:
-				# Translators: the value in points for a paragraph indenting
-				v=_("%g pt") % v
+				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
 		return field
 
