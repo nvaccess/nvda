@@ -1,4 +1,5 @@
 ﻿NVDA NVDA_VERSION Uporabniški Vodič
+NVDA NVDA_VERSION Uporabniški Vodič
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -569,25 +570,90 @@ Prosimo, da nadaljne informacije poiščete v dokumentaciji MathPlayerja.
 
 Ko se boste želeli vrniti v dokument, preprosto pritisnite tipko Escape.
 
-+ Posebni NVDA Ukazi za Programe +
-NVDA pozna posebej prirejene ukaze za nekatere programe, da omogoči lažjo izvedbo nekaterih opravil ali pa za oskrbo dostopa do funkcionalnosti, ki drugače niso dostopne uporabnikom bralnikov zaslona.
++ Posebne Zmožnosti v Programih +
+NVDA vsebuje posebej prirejene zmožnosti za nekatere programe, da omogoči lažjo izvedbo nekaterih opravil ali pa za oskrbo dostopa do funkcionalnosti, ki drugače niso dostopne uporabnikom bralnikov zaslona.
 
 ++ Microsoft Word ++
+
++++ Samodejno prebiranje Glav Vrstic in Stolpcev +++
+NVDA lahko samodejno naznanja ustrezne glave vrstic in stolpcev, ko se pomikate po tabelah v Microsoft Wordu.
+Za uporabo te zmožnosti mora biti izbrana zmožnost Sporočanja Glav Vrstic in Stolpcev v Tabelah v NVDA pogovornem oknu Oblikovanja Dokumentov.
+Prav tako mora NVDA vedeti, katera vrstica ali stolpec vsebuje glavo ali čelo tabele.
+Po pomiku v prvo celico stolpca ali vrstice z glavo, uporabite naslednje ukaze:
 %kc:beginInclude
 || Ime | Tipka | Opis |
-| Sporoči trenutni komentar | NVDA+Alt+c | Sporoči besedilo komentarja nad trenutnim položajem Pregledne Utripalke. | 
 | Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica z glavo v vrstici, ki vsebuje glave stolpca; ta bi morala biti samodejno naznanjena, ko se bomo premikali po stolpcih pod to vrstico. Dvojni pritisk bo zbrisal to nastavitev. | 
 | Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica z glavo v stolpcu, ki vsebuje glave vrstice; ta bi morala biti samodejno naznanjena, ko se bomo premikali po vrsticah za tem stolpcem. Dvojni pritisk bo zbrisal to nastavitev. | 
 %kc:endInclude
+Te nastavitve se bodo v dokumentu hranile kot zaznamki, tako da jih bodo lahko uporabljali tudi drugi bralniki zaslonske slike, kot je na primer JAWS.
+To pomeni, da bodo uporabniki drugih bralnikov vedeli, ko bodo odprli ta dokument ob kasnejšem datumu, kje so glave vrstic in stolpcev.
+
++++ Brskalniško Delovanje v Microsoft Wordu +++
+
+Tako kot v spletu, se Brskalniško delovanje lahko uporablja tudi v Microsoft Wordu, zaradi dostopa do zmožnosti, kot je Hitro krmarjenje in Seznam Elementov.
+%kc:beginInclude
+Za vklop in izklop Brskalniškega delovanja v Microsoft Wordu, pritisnite NVDA+preslednica.
+%kc:endInclude
+Za več informacij o Brskalniškem delovanju in Hitrem Krmarjenju, si oglejte [razdelek Brskalniško Delovanje #BrowseMode].
+
+++++ Seznam Elementov ++++
+%kc:beginInclude
+Medtem, ko uporabljate Brskalniško delovanje v Microsoft Wordu, lahko do Seznama Elementov dostopate z ukazom NVDA+f7.
+%kc:endInclude
+Seznam Elementov lahko razvrsti naslove, povezave in zabeležke, kar vključuje komentarje in sledenje spremembam.
+
++++ Sporočanje Komentarjev +++
+%kc:beginInclude
+Za sporočanje katerihkoli komentarjev na trenutnem položaju kazalke, pritisnite NVDA+alt+c.
+%kc:endInclude
+Vsi komentarji v dokumentu se lahko vzporedno z ostalimi sledenji spremembam razvrstijo tudi v NVDA Seznamu Elementov.
 
 ++ Microsoft Excel ++
+
++++ Samodejno prebiranje Glav Vrstic in Stolpcev +++
+NVDA lahko samodejno naznanja ustrezne glave stolpcev in vrstic medtem, ko se premikate po Excelovih preglednicah.
+Za uporabo te zmožnosti mora biti izbrana zmožnost Sporočanja Glav Vrstic in Stolpcev v Tabelah v NVDA pogovornem oknu Oblikovanja Dokumentov.
+Prav tako mora NVDA vedeti, katera vrstica ali stolpec vsebuje glavo ali čelo tabele.
+Po pomiku v prvo celico stolpca ali vrstice z glavo, uporabite naslednje ukaze:
 %kc:beginInclude
 || Ime | Tipka | Opis |
-| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica v vrstici, ki vsebuje glave stolpca. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v spodnjih vrsticah. Dvojni pritisk bo brisal trenutno nastavitev. |
-| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica v stolpcu, ki vsebuje glave vrstice. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v drugih stolpcih. Dvojni pritisk bo brisal trenutno nastavitev. |
-| Sporoči komentar | NVDA+alt+c | Sporoči comentar nad trenutno celico, če obstaja. |
-| pogovorno okno Seznama Elementov | NVDA+f7 | odpre pogovorno okno Seznama Elementov prikazujoč grafikone, celice s komentarji, celice s formulami ali delovne liste. |
+| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica z glavo v vrstici, ki vsebuje glave stolpca; ta bi morala biti samodejno naznanjena, ko se bomo premikali po stolpcih pod to vrstico. Dvojni pritisk bo zbrisal to nastavitev. | 
+| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica z glavo v stolpcu, ki vsebuje glave vrstice; ta bi morala biti samodejno naznanjena, ko se bomo premikali po vrsticah za tem stolpcem. Dvojni pritisk bo zbrisal to nastavitev. | 
 %kc:endInclude
+Te nastavitve se bodo v delovnem zvezku hranile kot določeni imenski odseki, tako da jih bodo lahko uporabljali tudi drugi bralniki zaslonske slike, kot je na primer JAWS, kar pomeni, da bodo uporabniki drugih bralnikov vedeli, ko bodo odprli ta delovni zvezek ob kasnejšem datumu, kje so glave vrstic in stolpcev.
+
++++ Seznam Elementov +++
+
+Tako kot na spletu, ima NVDA Seznam Elementov tudi za Microsoft Excel, kar vam omogoča razvrstitev in lažji dostop do več različnih tipov informacij.
+%kc:beginInclude
+Za dostop do Seznama Elementov v Excelu, pritisnite NVDA+f7.
+%kc:endInclude
+V Seznamu Elementov lahko pridete do teh informacij:
+- Grafikon: Ta razvrsti vse grafikone v delovnem zvezksu
+Izbira grafikona in pritisk tipke Enter ali gumba Premakni se na, v ospredje postavi grafikon, da se lahko pomikate po njem in ga berete s puščicami. 
+- Komentar: Ta izbor razvrsti vse celice v delovnem zvezku s komentarji.
+Naslov celice skupaj s komentarjem se prikazuje za vsako celico.
+Pritisk tipke Enter ali gumba Premakni se na nad izbranim komentarjem, vas bo premaknil na natančno to celico.
+- Formula: Ta izbor razvrsti vse celice v delovnem zvezku, ki vsebujejo formule.
+Naslov celice se prikazuje skupaj s formulo in to velja za vsako celico.
+Pritisk tipke Enter ali gumba Premakni se na, nad izbrano formulo, vas bo pomaknil neposredno v celico s to vsebino.
+- Delovni list: Ta izbor razvrsti vse delovne liste v delovnem zvezku.
+Izbrani list lahko s pritiskom tipke f2 preimenujete.
+Pritisk tipke Enter ali gumba Premakni se na, vas bo pomaknil na ta list.
+-
+
++++ Sporočanje Komentarjev +++
+%kc:beginInclude
+Za sporočanje katerihkoli komentarjev za celico, ki je v središču, pritisnite NVDA+alt+c.
+%kc:endInclude
+Vsi komentarji za delovni zvezek se lahko razvrstijo tudi v NVDA Seznamu Elementov.
+
++++ Prebiranje Zaščitenih Celic +++
+Če prebirate zaščiten delovni zvezek, ne bo mogoče premikati žarišča na izbrane celice, kjer je zaklep onemogočil urejanje.
+%kc:beginInclude
+Za omogočanje premika v zaklenjene celice, preklopite v Brskalniško delovanje s pritiskom kombinacije NVDA+preslednica, in potem uporabljajte standardne Excelove ukaze za premikanje, kot so puščice, ki jih uporabljate za premike med vsemi celicami v trenutnem delovnem listu.
+%kc:endInclude
+
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1575,7 +1641,7 @@ Prosimo, poglejte si dokumentacijo za opis položaja tipk.
 ++ Brajeve Vrstice Baum/Humanware/APH ++
 Precej [Baumovih http://www.baum.de/cms/en/], [HumanWarovih http://www.humanware.com/] in [APH http://www.aph.org/] vrstic je podprtih, ko jih priključimo prek USB ali bluetooth povezave.
 To vključuje:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (samo Bluetooth), Pronto! (samo Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -

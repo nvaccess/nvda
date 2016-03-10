@@ -3,13 +3,26 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+
+== Uudet ominaisuudet ==
+- Pikanavigointinäppäimillä siirtyminen selitteiden mukaan (a ja Shift+a) siirtää nyt lisättyyn ja poistettuun tekstiin selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#5691)
+- NVDA ilmoittaa nyt Microsoft Excelissä soluryhmän tason ja lisäksi sen, onko ryhmä suljettu vai avattu. (#5690)
+
+
+== Korjatut ohjelmavirheet ==
+- Kun selaustilassa yritetään siirtyä pikanavigointinäppäimillä elementtiin, jota ei tueta nykyisessä asiakirjassa, NVDA ilmoittaa, ettei sitä tueta sen sijaan, että ilmoittaisi, ettei elementtiä ole. (#5691)
+- Pelkkiä kaavioita sisältävät laskentataulukot sisällytetään nyt Elementtilistaan Microsoft Excelissä, kun näytettävän elementin tyypiksi on valittu laskentataulukot. (#5698)
+
+
 = 2016.1 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat mahdollisuus valinnaiseen muiden äänien voimakkuuden alentamiseen, parannukset pistekirjoituksen näyttämiseen ja pistenäyttötukeen, useat merkittävät korjaukset Microsoft Office -tukeen sekä korjaukset iTunesin selaustilaan.
 
 == Uudet ominaisuudet ==
 - Uusia pistetaulukoita: puolalainen 8 pisteen tietokonemerkistö, mongoli. (#5537, #5574)
 - Voit poistaa pistekohdistimen käytöstä ja muuttaa sen muotoa uusia Pistekirjoitusasetukset-valintaikkunan Näytä kohdistin- ja Kohdistimen muoto -asetuksia käyttäen. (#5198)
 - NVDA voi nyt yhdistää HIMS Smart Beetle -pistenäyttöön bluetoothin kautta. (#5607)
-- NVDA voi valinnaisesti alentaa muiden äänien voimakkuutta, kun se on asennettuna Windows 8:ssa tai uudemmassa käyttöjärjestelmässä. Tämä voidaan määrittää Syntetisaattorin asetukset -valintaikkunan Taustaäänien vaimennuksen tila -asetusta käyttäen tai painamalla NVDA+Shift+D. (#3830, #5575)
+- NVDA voi valinnaisesti alentaa muiden äänien voimakkuutta, kun se on asennettuna Windows 8:ssa tai uudemmassa käyttöjärjestelmässä. Tämä voidaan määrittää Syntetisaattorin asetukset -valintaikkunan Taustaäänien vaimennus -asetusta käyttäen tai painamalla NVDA+Shift+D. (#3830, #5575)
 - Tuki APH Refreshabraille -pistenäytölle HID-tilassa ja Baum VarioUltralle sekä Pronto!:lle USB:n kautta yhdistettäessä. (#5609)
 - Tuki HumanWare Brailliant BI/B -pistenäytöille, kun protokollaksi on määritetty OpenBraille. (#5612)
 
@@ -38,8 +51,17 @@
 - Jäljitettäviä muutoksia, kuten lisäyksiä, ei enää ilmoiteta Microsoft Wordissa, kun niiden merkintöjä ei näytetä. (#5566)
 - Kun kohdistus on vaihtopainikkeen kohdalla, NVDA ilmoittaa, kun sen tila muuttuu painetusta ei-painetuksi. (#5441)
 - Hiiren muodon muutosten ilmoittaminen toimii taas odotetusti. (#5595)
-- Sitovia välilyöntejä käsitellään nyt tavallisina välilyönteinä rivin sisennystä puhuttaessa. Tämä saattoi aiemmin aiheuttaa sen, että "3 väli" -ilmoituksen asemesta sanottiin jotain sellaista kuin "väli väli väli". (#5610)
+- Sitovat välilyönnit käsitellään nyt tavallisina välilyönteinä rivin sisennystä puhuttaessa. Tämä saattoi aiemmin aiheuttaa sen, että "3 väli" -ilmoituksen asemesta sanottiin jotain sellaista kuin "väli väli väli". (#5610)
 - Kun moderni Microsoftin syöttömenetelmän ehdotuslista suljetaan , kohdistus palautetaan asianmukaisesti joko syöttömenetelmään tai kohdeasiakirjaan. (#4145)
+- Kun Microsoft Office 2013:n ja uudempien valintanauha on määritetty näyttämään pelkät välilehdet, valintanauhan kohteet luetaan taas odotetusti välilehteä aktivoitaessa. (#5504)
+- Korjauksia ja parannuksia kosketusnäyttöeleiden tunnistamiseen ja komentoihin liittämiseen. (#5652)
+- Kosketuseleitä, joissa sormea painetaan ja pidetään näytöllä, ei puhuta syöteohjeessa. (#5652)
+- Kommenttilistan näyttäminen Excelin elementtilistassa ei enää epäonnistu, jos kommentti on yhdistetyssä solussa. (#5704)
+- Laskentataulukon sisällön lukeminen ei enää epäonnistu hyvin harvoissa tapauksissa, kun rivi- ja sarakeotsikoiden ilmoittaminen on käytössä. (#5705)
+- Syöttömenetelmässä liikkuminen toimii nyt odotetusti Google Chromessa Itä-Aasialaisia merkkejä kirjoitettaessa. (#4080)
+- Hakutulosten selaustila-asiakirja päivitetään nyt odotetusti etsittäessä Apple Music -palvelusta iTunesissa. (#5659)
+- Shift+F11-näppäinyhdistelmän painaminen Microsoft Excelissä uuden laskentataulukon luomiseksi ilmoittaa nyt uuden sijainnin; aiemmin ei ilmoitettu mitään. (#5689)
+- Korjattu pistenäyttötulostuksen ongelmia korealaisia merkkejä kirjoitettaessa. (#5640)
 
 
 +== Muutokset kehittäjille (englanniksi) ==
@@ -52,6 +74,14 @@
  - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
  - hwIo.Hid provides support for braille displays communicating via USB HID.
  - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+- There are several new properties accessible from touch screen gestures: (#5652)
+ - MultitouchTracker objects now contain a childTrackers property which contains the MultiTouchTrackers the tracker was composed of. For example, 2 finger double tap has child trackers for two 2-finger taps. The 2-finger taps themselves have child trackers for two taps.
+ - MultiTouchTracker objects now also contain a rawSingleTouchTracker property if the tracker was the result of one single finger doing a tap, flick or hover. The SingleTouchTracker allows access to the underlying ID assigned to the finger by the operating system and whether or not the finger is still in contact at the current time.
+ - TouchInputGestures now have x and y properties, removing the need to access the tracker for trivial cases.
+ - TouchInputGesturs now contain a preheldTracker property, which is a MultitouchTracker object representing the other fingers held while this action was being performed.
+- Two new touch screen gestures can be emitted: (#5652)
+ - Plural tap and holds (e.g. double tap and hold)
+ - A generalized identifier with finger count removed for holds (e.g. hold+hover for 1finger_hold+hover).
 
 
 = 2015.4 =

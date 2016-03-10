@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 19:08+1000\n"
-"PO-Revision-Date: 2016-01-07 19:53+0200\n"
+"POT-Creation-Date: 2016-02-26 00:10+1000\n"
+"PO-Revision-Date: 2016-02-22 18:01+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -131,17 +131,17 @@ msgid "region"
 msgstr "Περιοχή"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
 msgstr "Χωρίς βύθιση"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
 msgstr "Βύθιση κατά την εκφώνηση και την αναπαραγωγή ήχων"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
 msgstr "Πάντα βύθιση"
 
@@ -777,11 +777,11 @@ msgstr "λειτουργία περιήγησης"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Πλοήγηση με βάση ένα χαρακτήρα απενεργοποιημένη"
+msgstr "Πλοήγηση ανά χαρακτήρα απενεργοποιημένη"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Πλοήγηση με βάση ένα χαρακτήρα ενεργοποιημένη"
+msgstr "Πλοήγηση ανά χαρακτήρα ενεργοποιημένη"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -790,10 +790,10 @@ msgid ""
 "keys are passed to the application"
 msgstr ""
 "Πραγματοποιεί εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης της "
-"πλοήγησης με βάση ένα χαρακτήρα. Όταν είναι ενεργοποιημένη, τα πλήκτρα - "
-"χαρακτήρες, στη λειτουργία περιήγησης, πραγματοποιούν μεταπήδηση σε διάφορα "
-"είδη στοιχείων στη σελίδα. Όταν είναι απενεργοποιημένο, αυτά τα πλήκτρα "
-"περνούν στην εφαρμογή."
+"πλοήγησης ανά χαρακτήρα. Όταν είναι ενεργοποιημένη, τα πλήκτρα - χαρακτήρες, "
+"στη λειτουργία περιήγησης, πραγματοποιούν μεταπήδηση σε διάφορα είδη "
+"στοιχείων στη σελίδα. Όταν είναι απενεργοποιημένη, αυτά τα πλήκτρα περνούν "
+"στην εφαρμογή."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -1299,7 +1299,7 @@ msgstr "Εμφανίζει την εκτενή περιγραφή σε αυτή 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
 msgid "Not in a container"
-msgstr "Δε βρίσκεστε σε υποδοχέα"
+msgstr "Εκτός υποδοχέα"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
@@ -1322,7 +1322,7 @@ msgstr ""
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "κανένα"
+msgstr "καμία"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1332,12 +1332,12 @@ msgstr "κάποια"
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "αρκετά"
+msgstr "αρκετή"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "all"
-msgstr "όλα"
+msgstr "όλη"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2171,11 +2171,11 @@ msgstr "ρυθμιζόμενο"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr "ένδειξη προόδου"
+msgstr "γραμμή προόδου"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr "ράβδος κύλισης"
+msgstr "γραμμή κύλισης"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
@@ -2223,7 +2223,7 @@ msgstr "ρολόι"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
-msgstr "διαχωριστής"
+msgstr "διαχωριστικό"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -2261,7 +2261,7 @@ msgstr "παράγραφος"
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr "μπλοκ παράθεσης"
+msgstr "παράθεση αποσπάσματος"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
@@ -2416,7 +2416,7 @@ msgstr "σχήμα"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
-msgstr "περιοχή διαχωρισμού"
+msgstr "περιοχή διαμερισμού"
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
@@ -2709,7 +2709,7 @@ msgid "invalid entry"
 msgstr "μη έγκυρη καταχώρηση"
 
 msgid "modal"
-msgstr "τρόπος"
+msgstr "με βοηθητικό"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
 msgid "has auto complete"
@@ -4788,11 +4788,6 @@ msgstr "αφαίρεση επιλογής"
 msgid "done dragging"
 msgstr "ολοκλήρωση μεταφοράς"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "επίπεδο %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4816,6 +4811,11 @@ msgstr "με %s στήλες"
 #, python-format
 msgid "with %s rows"
 msgstr "με %s σειρές"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "επίπεδο %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format

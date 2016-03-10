@@ -32,11 +32,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define IMEID_VER(dwId)		( ( dwId ) & 0xffff0000 )
 #define IMEID_LANG(dwId)	( ( dwId ) & 0x0000ffff )
 
-#define _CHT_HKL_DAYI				( (HKL)0xE0060404 )	// DaYi
-#define _CHT_HKL_NEW_PHONETIC		( (HKL)0xE0080404 )	// New Phonetic
-#define _CHT_HKL_NEW_CHANG_JIE		( (HKL)0xE0090404 )	// New Chang Jie
-#define _CHT_HKL_NEW_QUICK			( (HKL)0xE00A0404 )	// New Quick
-#define _CHT_HKL_HK_CANTONESE		( (HKL)0xE00B0404 )	// Hong Kong Cantonese
+#define _CHT_HKL_DAYI				( (HKL)(ULONG_PTR)0xE0060404 )	// DaYi
+#define _CHT_HKL_NEW_PHONETIC		( (HKL)(ULONG_PTR)0xE0080404 )	// New Phonetic
+#define _CHT_HKL_NEW_CHANG_JIE		( (HKL)(ULONG_PTR)0xE0090404 )	// New Chang Jie
+#define _CHT_HKL_NEW_QUICK			( (HKL)(ULONG_PTR)0xE00A0404 )	// New Quick
+#define _CHT_HKL_HK_CANTONESE		( (HKL)(ULONG_PTR)0xE00B0404 )	// Hong Kong Cantonese
 #define _CHT_IMEFILENAME	"TINTLGNT.IME"	// New Phonetic
 #define _CHT_IMEFILENAME2	"CINTLGNT.IME"	// New Chang Jie
 #define _CHT_IMEFILENAME3	"MSTCIPHA.IME"	// Phonetic 5.1
@@ -49,7 +49,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define IMEID_CHT_VER60 ( LANG_CHT | MAKEIMEVERSION( 6, 0 ) )	// New(Phonetic/ChanJie)IME6.0 : 6.0.x.x // New IME 6.0(web download)
 #define IMEID_CHT_VER_VISTA ( LANG_CHT | MAKEIMEVERSION( 7, 0 ) )	// All TSF TIP under Cicero UI-less mode: a hack to make GetImeId() return non-zero value
 
-#define _CHS_HKL		( (HKL)0xE00E0804 )	// MSPY
+#define _CHS_HKL		( (HKL)(ULONG_PTR)0xE00E0804 )	// MSPY
 #define _CHS_IMEFILENAME	"PINTLGNT.IME"	// MSPY1.5/2/3
 #define _CHS_IMEFILENAME2	"MSSCIPYA.IME"	// MSPY3 for OfficeXP
 #define IMEID_CHS_VER41	( LANG_CHS | MAKEIMEVERSION( 4, 1 ) )	// MSPY1.5	// SCIME97 or MSPY1.5 (w/Win98, Office97)
@@ -97,7 +97,7 @@ static BOOL (WINAPI* immUnlockIMCC)(HIMCC) = NULL;
 
 DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 	DWORD version=0;
-	switch ((DWORD)kbd_layout) {
+	switch ((DWORD_PTR)kbd_layout) {
 		case _CHT_HKL_NEW_PHONETIC:
 		case _CHT_HKL_NEW_CHANG_JIE:
 		case _CHT_HKL_NEW_QUICK:
@@ -120,7 +120,7 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 			VS_FIXEDFILEINFO FAR* info = (VS_FIXEDFILEINFO FAR*)data;
 			version = (info->dwFileVersionMS & 0x00ff0000) << 8
 					| (info->dwFileVersionMS & 0x000000ff) << 16
-					| (DWORD)kbd_layout & 0xffff;
+					| HandleToUlong(kbd_layout) & 0xffff;
 		}
 	}
 	free(buf);
@@ -157,7 +157,7 @@ typedef UINT (WINAPI* GetReadingString_funcType)(HIMC, UINT, LPWSTR, PINT, BOOL*
 
 void handleOpenStatus(HWND hwnd) {
 	//Only reported for japanese
-	if(((unsigned long)(GetKeyboardLayout(0))&0xff)!=0x11) return;
+	if((HandleToUlong(GetKeyboardLayout(0))&0xff)!=0x11) return;
 	/* Obtain IME context */
 	HIMC imc = ImmGetContext(hwnd);
 	if (!imc)  return;
@@ -275,7 +275,7 @@ void handleIMEConversionModeUpdate(HWND hwnd, bool report) {
 	ImmGetConversionStatus(imc,&flags,NULL);
 	ImmReleaseContext(hwnd, imc);
 	if(report&&flags!=lastConversionModeFlags) {
-		nvdaControllerInternal_inputConversionModeUpdate(lastConversionModeFlags,flags,((unsigned long)GetKeyboardLayout(0))&0xffff);
+		nvdaControllerInternal_inputConversionModeUpdate(lastConversionModeFlags,flags,HandleToUlong(GetKeyboardLayout(0))&0xffff);
 	}
 	lastConversionModeFlags=flags;
 }

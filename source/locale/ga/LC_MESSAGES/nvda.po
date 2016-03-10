@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2016.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 19:08+1000\n"
-"PO-Revision-Date: 2016-01-24 22:00+0000\n"
+"POT-Creation-Date: 2016-02-01 16:14+1000\n"
+"PO-Revision-Date: 2016-02-02 21:05+0000\n"
 "Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -88,6 +88,7 @@ msgid "unknown input method"
 msgstr "Mód ionchuir anaithnid"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -422,7 +423,7 @@ msgstr "Manipuri,  grád 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian"
-msgstr ""
+msgstr "Mongóilis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -720,6 +721,7 @@ msgstr "nach %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} as {total}"
 
@@ -3899,6 +3901,7 @@ msgid "AC power on"
 msgstr "Cumhacht SA ceangailte"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} uair agus {minutes:d} nóiméad fágtha"
 
@@ -4758,6 +4761,7 @@ msgid "column %s"
 msgstr "colún %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "le {rowCount} ró agus {columnCount} colún"
 
@@ -4807,16 +4811,19 @@ msgstr "stíl réamhshocraithe"
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} ar {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "cúlra {backgroundColor}"
 
@@ -5015,6 +5022,7 @@ msgid "out of table"
 msgstr "deireadh an tábla"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tábla ina bhfuil {columnCount} colún agus {rowCount} ró"
 
@@ -5093,22 +5101,27 @@ msgid "object mode"
 msgstr "mód oibiachta"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "{action} singilte"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "{action} dúbalta"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action} tríreach "
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr " {action} ceathrach "
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr " {action} le {numFingers} méar "
 
@@ -5186,6 +5199,7 @@ msgstr "Nuashonrú NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Tá leagan {version} de NVDA ar fáil."
 
@@ -5280,9 +5294,11 @@ msgstr "Rochtain Ríomhaireachta Gan Radharc"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Léitheoir scáileáin saor oscailte le haghaidh Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} Rannpháirtithe NVDA"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5329,6 +5345,7 @@ msgstr ""
 "Féadann tú é seo  a dhéanamh, trí roghnú Bronn as an roghchlár NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5337,6 +5354,7 @@ msgstr ""
 "siúl chun bhreiseáin a shuiteáil"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5348,10 +5366,12 @@ msgstr ""
 "scáileáin."
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol}, cur síos: {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -5506,10 +5526,12 @@ msgid "Waiting for Outlook..."
 msgstr "Ag fanacht le Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "ó {startTime} go {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Coinne {subject}, {time}"
 
@@ -5671,80 +5693,99 @@ msgid "Master Thumbnails"
 msgstr "Máistir-mhionsamhlacha"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Sleamhnán {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "clúdaítear taobh na láimhe clé den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar na láimhe clé den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "clúdaítear barr an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar barr an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "clúdaítear taobh na láimhe dheise den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar na láimhe dheise den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "clúdaítear bun an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar bun an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "clúdaítear {otherShape} "
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "taobh thiar {otherShape} "
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} pointí ó imeall chlé."
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "As an imeall chlé i {distance:.3g} pointí"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} pointí ó barr."
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "As an barr i {distance:.3g} pointí"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} pointí ó imeall deas."
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "As an imeall deas i {distance:.3g} pointí"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} pointí ó imeall an bhunshleamhnáin"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "As imeall an bhunshleamhnáin i {distance:.3g} pointí"
 
@@ -5759,10 +5800,12 @@ msgstr ""
 "amháin an méid atá inléite ag NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Nótaí taispeántais sleamhnán - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Taispeántas sleamhnán - {slideName}"
 
@@ -5847,6 +5890,7 @@ msgstr "Taispeántais Bhraille Baum/HumanWare/APH"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Port Srathach: {portName}"
 
@@ -6336,6 +6380,7 @@ msgid "Choose Add-on Package File"
 msgstr "Roghnaigh Pacáiste Breiseáin"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Pacáiste Breiseáin NVDA (*.{ext})"
 
@@ -6349,6 +6394,7 @@ msgstr ""
 "comhad neamhbhailí"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6421,6 +6467,7 @@ msgid "Restart NVDA"
 msgstr "Atosaigh NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6433,6 +6480,7 @@ msgstr ""
 "Cur Síos: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6698,6 +6746,7 @@ msgid ""
 msgstr "Aimsíodh cóip de NVDA ar do chóras. Nuashonrófar an chóip seo."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7642,6 +7691,7 @@ msgstr "&Scag de réir:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7682,10 +7732,12 @@ msgid "word"
 msgstr "focal"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr ""
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "ag {x}, {y}"
 
@@ -7743,6 +7795,7 @@ msgid "Taskbar"
 msgstr "Tascbharra"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr ""
 
@@ -7793,9 +7846,10 @@ msgstr "foirmlí"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Sheets"
-msgstr ""
+msgstr "bileoga"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "ó {start} go dtí {end}"
 
@@ -7811,18 +7865,22 @@ msgstr ""
 "sa socruithe fhormáidithe na cáipéisí."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Socraigh {address} mar thús ceanntásc cholúin"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Tá {address} socraithe cheana mar thús ceanntásc cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "removed {address}    from column headers"
 msgstr "Tá {address} bainnte ó cheanntásca cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Ní féidir {address} a aimsiú i gceanntásca cholúin."
 
@@ -7833,18 +7891,22 @@ msgid ""
 msgstr "f"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Socraigh {address} mar thús ceanntásc ró."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Tá {address} socraithe cheana mar thús ceanntásc ró."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "removed {address}    from row headers"
 msgstr "Tá {address} bainnte ó cheanntásca ró."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Ní féidir {address} a aimsiú i gceanntásca ró."
 
@@ -7858,9 +7920,11 @@ msgstr ""
 "dhó í chun dearmad a dhéanamh ar an gceanntásc róreatha i gcomhair na cille "
 "seo."
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr ""
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr ""
 
@@ -7873,10 +7937,12 @@ msgid "Reports the comment on the current cell"
 msgstr "Léigh an nóta tráchta ar an gcill reatha"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "ag eagairtheoracht an nóta tráchta ar chill {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} trí {lastAddress} {lastContent}"
 
@@ -8078,17 +8144,17 @@ msgstr "líne"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
-msgstr ""
+msgstr "line le marcóirí"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
-msgstr ""
+msgstr "líne cruachta le marcóirí"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr ""
+msgstr "líne cruachta 100% le marcóirí"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8232,6 +8298,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr ""
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Teideal an chárta  {chartTitle} saghas {chartType}"
 
@@ -8259,6 +8326,7 @@ msgstr "Srath"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr ""
 
@@ -8272,6 +8340,7 @@ msgid "There are total %d series in this chart"
 msgstr "Tá %d srath in iomlán sa chárta seo. "
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "srath {number} {name}"
 
@@ -8296,6 +8365,7 @@ msgstr "pointe sonraí"
 msgid "item"
 msgstr "mír"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Dath an sratha:  {colorName}"
 
@@ -8388,51 +8458,61 @@ msgstr "cruth"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr " Srath {seriesName}  {seriesIndex} as {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr ""
+msgstr "Níl aon athrú on bpointe  {previousIndex}"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr ""
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr ""
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr ""
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr ""
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "Luach {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr ""
 
@@ -8446,10 +8526,12 @@ msgid "Secondary"
 msgstr ""
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr ""
 
@@ -8468,6 +8550,7 @@ msgid " squared "
 msgstr ""
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Teideal an chárta  {chartTitle}"
 
@@ -8476,6 +8559,7 @@ msgid "Untitled chart"
 msgstr "cárta gan teideal"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8486,6 +8570,7 @@ msgid "Chart area "
 msgstr "achar cairte"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8500,20 +8585,22 @@ msgstr "Tús an téacs roghnaithe"
 #. Translators: Indicates the legend in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend"
-msgstr ""
+msgstr "eochair eolais"
 
 #. Translators: Indicates that there is no legend in a Microsoft Excel chart.
 msgid "No legend"
-msgstr ""
+msgstr "nil aon eochair eolais ann."
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 
@@ -8615,9 +8702,11 @@ msgstr "Príomh-cheanntásc"
 msgid "Text frame"
 msgstr "Fráma téacs"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "nóta tráchta: {text} le {author} ar {date}"
 
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {description}:  {text} le {author} ar {date}"
 
@@ -8631,11 +8720,13 @@ msgid "%g pt"
 msgstr ""
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Socraigh ró {rowNumber} cholúin {columnNumber} mar thús ceanntásc cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8643,10 +8734,12 @@ msgstr ""
 "cheanntásca colúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Tá  ró {rowNumber} colún {columnNumber} bainnte ó cheanntásca cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Ní féidir  ró {rowNumber} cholúin {columnNumber} a aimsiú i gceanntásca "
@@ -8663,10 +8756,12 @@ msgstr ""
 "na ciille seo."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "Socraigh ró {rowNumber} colún {columnNumber} mar thús ceanntásc ró."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8674,10 +8769,12 @@ msgstr ""
 "ró."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Tá  ró {rowNumber} colún {columnNumber} bainnte ó cheanntásca ró."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Ní féidir  ró {rowNumber} colún {columnNumber} a aimsiú i  gceanntásca ró."
@@ -8732,35 +8829,43 @@ msgid "Justified"
 msgstr "ailínithe go comhfhadaithe"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "stíl {styleName},  leibhéal imlíneach {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "clófhoireann {size:g} pointe"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "carachtair {offset:.3g} "
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} orlach"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} ceintiméadar"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milliméadar"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pointe"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr ""
 

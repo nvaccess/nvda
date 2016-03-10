@@ -3,6 +3,55 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+Ebben a kiadásban: Az NVDA-n kívüli hangok lehalkíthatósága; fejlesztések a Braille kimenethez és Braille kijelzőkhöz; számos fontos javítás a Microsoft Office támogatás terén; és a böngészőmód javítása iTunes alatt.
+
+== Újdonságok ==
+- Új braille fordító táblák: lengyel 8 pontos számítógépes braille, mongol. (#5537, #5574)
+- Új opciók a Braille kijelző beállításai közt: Most már megváltoztathatja a Braille-kurzor alakját, és ki is kapcsolhatja az új opciók segítségével. Ezek: Mutassa a kurzort, ill. A kurzor alakja. (#5198)
+- Az NVDA már Bluetoothon keresztül is képes kapcsolódni egy HIMS Smart Beetle braille kielzőhöz. (#5607)
+- Az NVDA képes lehalkítani az NVDA-n kívüli hangokat Windows 8 és újabb verziói esetében. Ez az új, Hangerőigazítás opció beállításával lehetséges, ami az NVDA Beszédszintetizátor beállítási párbeszédpanelén, vagy pedig az NVDA+Shift+D billentyűparanccsal állítható. (#3830, #5575)
+- Támogatás a HID módú APH Refreshabraille, a Baum VarioUltra, és Pronto! USB-n csatlakoztatható eszközökhöz. (#5609)
+- Támogatás a HumanWare Brailliant BI/B braille kijelzőkhöz nyíltBraille protokol esetén. (#5612)
+
+
+== Változások ==
+- A Kiemelés jelzése innentől alapértelmezetten ki van kapcsolva. (#4920)
+- Microsoft Excel: Az Elemlista párbeszédpanelén a Képletekhez tartozó gyorsbillentyűt megváltoztatták az alt+r billentyűkombinációra, így már különbözik a szűrőmezőhöz tartozó billentyűparancstól. (#5527)
+- A Liblouis braille fordítót frissítették a 2.6.5 verzióra. (#5574)
+- A "Szöveg" szó már nem hangzik el szöveges elemekre történő navigáláskor, a fókusz és az áttekintő kurzor esetében sem. (#5452)
+
+
+== Hibajavítások ==
+- iTunes 12: A böngészőmód már helyesen frissül amikor az iTunes Storeban új oldal töltődik be. (#5191)
+- Internet Explorer és más MSHTML vezérlők: A meghatározott címsorszinteken történő egykarakteres navigálás ismét az elvártnak megfelelően működik olyankor, amikor a címsor szintjét figyelmen kívül hagyják akadálymentességi megfontolásokból. (Konkrétan az aria-szint erősebb a h-jelölő szintjénél). (#5434)
+- Spotify: a fókusz már nem kerül folyton ismeretlen elemekre. (#5439)
+- Spotify: A program már helyesen őrzi meg a fókusz legutóbbi helyét egy másik alkalmazásból való visszatéréskor. (#5439)
+- A böngészőmód és fókuszmód közti váltást már Braille-ben is bejelenti a program. (#5239)
+- A Windows bizonyos verzióiban a tálca Start gombját már nem jelzi az NVDA listaként és/vagy kijelöltként. (#5178)
+- Microsoft Outlook: "Beszúrt" és hasonló információs üzeneteket már nem közöl az NVDA üzenetírás közben. (#5486)
+- Braille kijelzők: Ha kijelölt szöveg van az aktuális sorban (pl. olyan szöveg keresésekor egy szövegszerkesztőben, ami ugyanabban a sorban található), a braille kijelző továbbgördül, ha szükséges. (#5410)
+- Windows 10: Windows parancssor alt+F4 kombinációval történő bezárásakor már nem záródik be az NVDA hangtalanul. (#5343)
+- Elemlista böngészőmódban: Amennyiben megváltoztatja az elem típusát a szűrőmező tartalma törlődik. (#5511)
+- Mozilla alkalmazások: Szerkeszthető szövegeknél az egérmutató mozgása során ismét a megfelelő sor, vagy szó kerül bejelentésre a szerkesztőmező teljes tartalma helyett. (#5535)
+- Mozilla alkalmazások: Szerkeszthető szövegekben az egérmutató mozgása során az olvasás nem áll le olyan elemeknél, mint az épp felolvasott szón, vagy soron belül található hivatkozás. (#2160, #5535)
+- Internet Explorer: A shoprite.com weboldal már olvasható böngészőmódban, eddig üresként jelentette be az NVDA. (Konkrétan a hibás nyelvi attribútumok kezelése javult.) (#5569)
+- Microsoft Word: A szerkesztői változásokat mint "Beszúrt" az NVDA már csak a szövegszerkesztő korrektúra nézetében mondja be. (#5566)
+- Amikor egy többállapotú gomb fókuszba kerül, az NVDA már bejelenti ha az állapota megváltozik lenyomva-ról, nincs lenyomva-ra. (#5441)
+- Az egérmutató alakjának megváltozásáról ismét helyesen tájékoztat az NVDA. (#5595)
+- Behúzás felolvasása esetén az NVDA a nem törhető szóközöket normál szóközökként kezeli. Ez korábban előidézhette, hogy "szóköz szóköz szóköz" bejelentés hangozzon el a "három szóköz" helyett. (#5610)
+- Egy modern Microsoft beviteli módok közti váltást lehetővé tevő lista bezárásakor a fókusz már helyesen visszatér akár a szerkesztéshez,akár a dokumentumhoz. (#4145)
+- Microsoft Office 2013 és későbbi verziók: Ha a ribbon eszköztár beállítása szerint csak a füleket mutatja, a ribbon elemeit ismét bejelenti az NVDA, amikor egy fül aktiválva van. (#5504)
+- Érintőképernyő: Javítások és fejlesztések az érintési parancsok felismerése terén. (#5652)
+- Az érintőképernyő felderítést már nem jelenti be a beviteli súgó. (#5652)
+- Microsoft Excel: Az NVDA már megjeleníti az elemlistában az olyan megjegyzéseket is, amik egyesített cellákhoz tartoznak. (#5704)
+- Microsoft Excel: Kijavították azt a ritka esetben jelentkező hibát, hogy az NVDA nem olvasta fel bizonyos munkalapok tartalmát a táblázat sor/oszlopfejléceinek bemondása opció bekapcsolt állapotában. (#5705)
+- Google Chrome: Kelet-ázsiai karakterek beírásakor a beviteli mezőben történő navigálás már az elvártaknak megfelelően működik. (#4080)
+- iTunes: Apple zene keresésekor böngészőmódban az elvártaknak megfelelően frissül a keresési találatokat tartalmazó oldal. (#5659)
+- Microsoft Excel: Az új munkalap létrehozására szolgáló billentyűparancs (shift+f11) használatakor a program a fókusz új pozícióját jelenti be, korábban ilyenkor néma maradt. (#5689)
+- Javították a Braille kijelző kimenetével kapcsolatos problémákat, amik koreai karakterek beírásakor léptek fel. (#5640)
+
+
 = 2015.4 =
 Ebben a kiadásban: A Windows 10 kezelésének javítása; Beépülés a könnyű kezelés lehetőségei közé Windows 8 és újabb verziói alatt; Fejlesztések Microsoft Excelhez: A Munkalapok kilistázhatók és átnevezhetők az Elemlistában, navigáció a védett munkalapok zárolt celláin; és a rich text szerkesztés támogatása a Mozilla Firefox, Google Chrome és Mozilla Thunderbird programokban.
 

@@ -629,12 +629,12 @@ Samoin kuin verkkosivuilla, myös Microsoft Exceliä varten on elementtilista, j
 Elementtilista avataan painamalla NVDA+F7.
 %kc:endInclude
 Elementtilistassa ovat saatavilla seuraavat tiedot:
-- Kaaviot: Tämä näyttää listan kaikista työkirjassa olevista kaavioista.
+- Kaaviot: Tämä näyttää listan kaikista aktiivisen työkirjan kaavioista.
 Kaavion valitseminen ja Enterin tai Siirry-painikkeen painaminen siirtää kohdistuksen kyseiseen kaavioon, jolloin sitä on mahdollista selata ja lukea nuolinäppäimillä.
-- Kommentit: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kommentti.
+- Kommentit: Tämä näyttää listan kaikista aktiivisen työkirjan soluista, joissa on kommentti.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kommentit.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kommentin kohdalla siirtää suoraan kyseiseen soluun.
-- Kaavat: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kaava.
+- Kaavat: Tämä näyttää listan kaikista aktiivisen työkirjan soluista, joissa on kaava.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kaavat.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kaavan kohdalla siirtää suoraan kyseiseen soluun.
 - Laskentataulukot: Tämä näyttää listan kaikista työkirjassa olevista laskentataulukoista.
@@ -763,7 +763,7 @@ Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta pelkästä�
 Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
 
 %kc:setting
-==== Taustaäänien vaimennuksen tila ====
+==== Taustaäänien vaimennus ====
 Näppäinkomento: NVDA+Shift+D
 
 Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä valita, alentaako NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
@@ -1524,8 +1524,8 @@ Ajuri tukee kaikkia Freedom Scientificin Focus- ja Pacmate-pistenäyttöjä, vai
 Jos käytät 64-bittistä Windowsia ja ajurit on jo asennettu jonkin toisen ruudunlukuohjelman mukana, edellä mainitun linkin takaa löytyvät ajurit on silti asennettava, sillä muissa ohjelmistoissa ei välttämättä ole kaikkia NVDA:n tarvitsemia tiedostoja.
 
 NVDA tunnistaa oletusarvoisesti pistenäytöt automaattisesti ja voi yhdistää niihin joko USB:n tai bluetoothin kautta.
-Yhteystyypin rajoittamiseksi voidaan kuitenkin myös itse valita USB- tai bluetooth-portti näytön asetuksia määritettäessä.
-Tästä voi olla hyötyä, jos Focus-näyttö halutaan yhdistää NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
+Yhteystyypin rajoittamiseksi voit kuitenkin myös itse valita USB-portin tai bluetoothin näytön asetuksia määritettäessä.
+Tästä voi olla hyötyä, jos haluat yhdistää Focus-näytön  NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1721,7 +1721,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 
 ++ HumanWare Brailliant BI/B ++
 [HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, BI 32, BI 40 ja B 80 mukaan lukien, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetoothilla.
-Mikäli näyttö kytketään USB:n kautta ja kun protokollaksi on määritetty HumanWare, sinun on ensin asennettava valmistajan toimittamat USB-ajurit.
+Mikäli näyttö yhdistetään USB:n kautta ja kun protokollaksi on määritetty HumanWare, sinun on ensin asennettava valmistajan toimittamat USB-ajurit.
 Jos protokollaksi on määritetty OpenBraille, USB-ajureita ei tarvita.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
@@ -1754,8 +1754,6 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense-, Braille EDGE- ja Smart Beetle -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
 USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
 Voit ladata ne täältä: http://www.himsintl.com/?c=2/13&uid=2319
-Valitse sivulta laitteesi ja lataa ajuri Window-Eyes-osiosta.
-Se on USB-yleisajuri, joka toimii myös NVDA:n kanssa, vaikka osiossa mainitaankin vain Window-Eyes.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.

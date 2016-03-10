@@ -299,7 +299,7 @@ When within a table, the following key commands are also available:
 | Move to next row | control+alt+downArrow | Moves the system caret to the next row (staying in the same column) |
 %kc:endInclude
 
-++ Object Navigation ++
+++ Object Navigation ++[ObjectNavigation]
 Most of the time, you will work with applications using commands which move the [focus #SystemFocus] and the [caret #SystemCaret].
 However, sometimes, you may wish to explore the current application or the Operating System without moving the focus or caret.
 You may also wish to work with [objects #Objects] that cannot be accessed normally using the keyboard.
@@ -372,7 +372,7 @@ The following commands are available for reviewing text:
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Copy from review cursor | NVDA+f9 | NVDA+f9 | none | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | none | Copies from the position previously set with Copy from review cursor up to and including the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
-| Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated |
+| Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
@@ -442,7 +442,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 | Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+n | Set the navigator object to the object located at the position of the mouse |
 %kc:endInclude
 
-+ Browse Mode +
++ Browse Mode +[BrowseMode]
 Complex read-only documents such as web pages are browsed in NVDA using browse mode.
 This includes documents in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
 Browse mode is also optionally available for Microsoft Word documents.
@@ -629,12 +629,12 @@ Similar to the web, NVDA has an Elements List for Microsoft Excel that allows yo
 To access the Elements List in Excel, press NVDA+f7.
 %kc:endInclude
 The various types of information available in the Elements List are:
-- Charts: This lists all charts in the workbook. 
+- Charts: This lists all charts in the active worksheet. 
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
-- Comments: This lists all cells in the workbook containing comments. 
+- Comments: This lists all cells in the active worksheet containing comments. 
 The cell address along with its comments are shown for each cell. 
 Pressing Enter or the Move To button when on a listed comment will move directly to that cell.
-- Formulas: This lists all cells in the workbook containing a formula. 
+- Formulas: This lists all cells in the worksheet containing a formula. 
 The cell address along with its formula are shown for each cell.
 Pressing Enter or the Move To button on a listed formula will move directly to that cell. 
 - Sheets: This lists all sheets in the workbook. 
@@ -1113,7 +1113,7 @@ For input methods where the selection can be changed with the arrow keys  (such 
 Note that even with this option off, the review cursor will still be placed on the selected candidate allowing you to use object navigation / review to manually read this or other candidates.
 
 ==== Always include short character descriptions for candidates ====
-This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when its selected or when its automatically read when the candidate list appears.
+This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when it's selected or when it's automatically read when the candidate list appears.
 Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
 This option may be useful for Korean and japanese input methods.
 
@@ -1475,10 +1475,10 @@ There are also many variants which can be chosen to alter the sound of the voice
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 is an older Microsoft standard for software speech synthesizers.
-Many speech synthesizers that comply with this standard may be purchased or downloaded for free from various companies and websites.
-When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settings Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 4 engines found on your system.
+NVDA still supports this for users who already have SAPI 4 synthesizers installed.
+However, Microsoft no longer support this and needed components are no longer available from Microsoft.
 
-If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA's list of synthesizers, please install the SAPI 4.0 runtime binaries, available at http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settings Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 4 engines found on your system.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 is a Microsoft standard for software speech synthesizers.
@@ -2105,7 +2105,7 @@ For displays which have a braille keyboard, BRLTTY currently handles braille inp
 Therefore, NVDA's braille input table setting is not relevant.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/KeyTables/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
