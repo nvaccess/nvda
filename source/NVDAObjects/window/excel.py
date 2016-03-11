@@ -731,12 +731,12 @@ class ExcelWorksheet(ExcelBase):
 		return True
 
 	def _getMaxColumnNumberForHeaderCell(self,excelCell):
-		try:
-			r=excelCell.currentRegion
-		except COMError:
+		if not excelCell.text:
 			return excelCell.column
-		columns=r.columns
-		return columns[columns.count].column+1
+		nextCell=excelCell.offset(0,1)
+		if not nextCell.text:
+			return nextCell.column
+		return excelCell.end(xlToRight).column+1
 
 	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
 		if not isColumnHeader and not isRowHeader: 
