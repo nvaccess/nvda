@@ -423,8 +423,10 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
-	needsReviewCursorTextInfoWrapper=False
-	passThrough=True
+	def __init__(self,rootNVDAObject):
+		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
+		self.passThrough=True
+		browseMode.reportPassThrough.last=True
 
 	def _get_currentNVDAObject(self):
 		obj=api.getFocusObject()
