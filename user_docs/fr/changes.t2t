@@ -8,11 +8,19 @@ Quoi de Neuf dans NVDA
 == Nouvelles Fonctionnalités ==
 - en mode navigation sous Internet Explorer et autres contrôles MSHTML, utiliser la navigation par lettre pour se déplacer entre annotations (a et maj+a) ateint maintenant le texte inséré et effacé. (#5691)
 - Sous Microsoft Excel, NVDA annonce maintenant le niveau d'un groupe de cellules, ainsi que s'il est réduit ou développé. (#5690)
+- Un double appui sur la commande d'annonce de la mise en forme du texte présente l'information en mode navigation pour qu'elle puisse être parcourue. (#4908)
+- Sous Microsoft Excel 2010 et au-delà, la trame et le dégradé d'une cellule est maintenant annoncé. L'annonce automatique est contrôlée par l'option d'annonce des couleurs dans les préférences de formatage de document de NVDA. (#3683)
 
 
 == Corrections de Bogues ==
 - En mode navigation, quand on essaie d'utiliser la navigation par lettre pour atteindre un élément qui n'est pas suporté dans ce document, NVDA annonce que ceci n'est pas supporté plutôt que d'annoncer qu'il n'y a pas d'élément dans cette direction. (#5691)
 - Quand on liste les feuilles dans la liste d'éléments sous Microsoft Excel, les feuilles ne contenant que des graphiques sont maintenant incluses. (#5698)
+- NVDA n'annonce plus d'informations irrelevantes quand on change de fenêtre dans une application Java avec de multiples fenêtres comme IntelliJ oo Android Studio. (#5732)
+
+
+== Changements pour les Développeurs ==
+- Les composants C++ de NVDA sont maintenant construits avec Microsoft Visual Studio 2015. (#5592)
+- Vous pouvez maintenant présenter un texte ou un message HTML à l'utilisateur en mode navigation en utilisant ui.browseableMessage. (#4908)
 
 
 = 2016.1 =
