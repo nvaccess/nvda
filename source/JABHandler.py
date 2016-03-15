@@ -250,6 +250,7 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'getAccessibleContextInfo',c_long,JOBJECT64,POINTER(AccessibleContextInfo),errcheck=True)
 	_fixBridgeFunc(JOBJECT64,'getAccessibleChildFromContext',c_long,JOBJECT64,jint,errcheck=True)
 	_fixBridgeFunc(JOBJECT64,'getAccessibleParentFromContext',c_long,JOBJECT64)
+	_fixBridgeFunc(JOBJECT64,'getParentWithRole',c_long,JOBJECT64,POINTER(c_wchar))
 	_fixBridgeFunc(BOOL,'getAccessibleRelationSet',c_long,JOBJECT64,POINTER(AccessibleRelationSetInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextInfo',c_long,JOBJECT64,POINTER(AccessibleTextInfo),jint,jint,errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextItems',c_long,JOBJECT64,POINTER(AccessibleTextItemsInfo),jint,errcheck=True)
@@ -431,6 +432,13 @@ class JABContext(object):
 
 	def getAccessibleParentFromContext(self):
 		accContext=bridgeDll.getAccessibleParentFromContext(self.vmID,self.accContext)
+		if accContext:
+			return self.__class__(self.hwnd,self.vmID,accContext)
+		else:
+			return None
+
+	def getAccessibleParentWithRole(self, role):
+		accContext=bridgeDll.getParentWithRole(self.vmID,self.accContext, role)
 		if accContext:
 			return self.__class__(self.hwnd,self.vmID,accContext)
 		else:
