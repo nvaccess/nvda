@@ -1,4 +1,4 @@
-import ctypes
+﻿import ctypes
 import re
 import eventHandler
 import keyLabels
@@ -307,16 +307,34 @@ class JAB(Window):
 			return False
 
 	def _get_positionInfo(self):
+		info=super(JAB,self).positionInfo or {}
+
+		# If tree view item, try to retrieve the level via JAB
+		if self.role==controlTypes.ROLE_TREEVIEWITEM:
+			try:
+				tree=self.jabContext.getAccessibleParentWithRole("tree")
+				if tree:
+					treeDepth=tree.getObjectDepth()
+					selfDepth=self.jabContext.getObjectDepth()
+					if selfDepth > treeDepth:
+						info['level']=selfDepth-treeDepth
+			except:
+				pass
+
 		targets=self._getJABRelationTargets('memberOf')
 		for index,target in enumerate(targets):
 			if target==self.jabContext:
-				return {'indexInGroup':index+1,'similarItemsInGroup':len(targets)}
+				info['indexInGroup']=index+1
+				info['similarItemsInGroup']=len(targets)
+				return info;
+
 		parent=self.parent
 		if isinstance(parent,JAB) and self.role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM):
 			index=self._JABAccContextInfo.indexInParent+1
 			childCount=parent._JABAccContextInfo.childrenCount
-			return {'indexInGroup':index,'similarItemsInGroup':childCount}
-		return {}
+			info['indexInGroup']=index
+			info['similarItemsInGroup']=childCount
+		return info
 
 	def _get_activeChild(self):
 		jabContext=self.jabContext.getActiveDescendent()
