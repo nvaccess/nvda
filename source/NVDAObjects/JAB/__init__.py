@@ -1,4 +1,4 @@
-﻿import ctypes
+import ctypes
 import re
 import eventHandler
 import keyLabels
