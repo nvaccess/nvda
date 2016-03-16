@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
-"PO-Revision-Date: 2016-02-15 09:17+0800\n"
+"POT-Creation-Date: 2016-03-11 00:10+1000\n"
+"PO-Revision-Date: 2016-03-09 16:50+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -753,15 +753,17 @@ msgstr "自動偵測"
 
 #. Translators: Reported before braille input in input help mode.
 msgid "braille"
-msgstr "點顯器"
+msgstr "點字"
 
+# 為使整個點顯器按鍵的幫助模式中報讀文字一致，此條目的 dot 未被翻譯。
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
-msgstr "點字 句點並空格"
+msgstr "space 加"
 
+# 為使整個點顯器按鍵的幫助模式中報讀文字一致，此條目不被翻譯，以半形空格替代。
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
-msgstr "點字 句點"
+msgstr " "
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
@@ -2435,7 +2437,7 @@ msgstr "邊界"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "次方號"
+msgstr "插入點"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
@@ -2685,7 +2687,7 @@ msgstr "子功能表"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 msgid "protected"
-msgstr "保密"
+msgstr "受保護"
 
 #. Translators: This is presented when a required form field is encountered.
 msgid "required"
@@ -3096,7 +3098,7 @@ msgstr "讀出字體大小 關"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "讀出字體大小 關"
+msgstr "讀出字體大小 開"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -3168,7 +3170,7 @@ msgstr "讀出文字樣式 關"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "讀出文字樣式 關"
+msgstr "讀出文字樣式 開"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3670,10 +3672,16 @@ msgstr ""
 msgid "No formatting information"
 msgstr "沒有格式資訊"
 
+#. Translators: title for formatting information dialog.
+#, fuzzy
+msgid "Formatting"
+msgstr "文件格式"
+
 #. Translators: Input help mode message for report formatting command.
+#, fuzzy
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr "讀出文件中目前瀏覽游標所在字元的格式資訊。"
 
 #. Translators: Input help mode message for report current focus command.
@@ -4613,11 +4621,6 @@ msgstr "移除所選"
 msgid "done dragging"
 msgstr "拖曳完成"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "第%s級"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4642,6 +4645,11 @@ msgstr "有%s欄"
 #, python-format
 msgid "with %s rows"
 msgstr "有%s列"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "第%s級"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4676,6 +4684,14 @@ msgstr "樣式%s"
 msgid "default style"
 msgstr "預設樣式"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, fuzzy, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color}，背景色為{backgroundColor}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4695,6 +4711,10 @@ msgstr "{color}"
 msgid "{backgroundColor} background"
 msgstr "背景色為{backgroundColor}"
 
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr ""
+
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
 #, python-format
@@ -4703,11 +4723,11 @@ msgstr "第%s行"
 
 #. Translators: Reported when text is marked as having been inserted
 msgid "inserted"
-msgstr "已新增"
+msgstr "已插入"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
-msgstr "沒有新增"
+msgstr "沒有插入"
 
 #. Translators: Reported when text is marked as having been deleted
 msgid "deleted"
@@ -4875,7 +4895,7 @@ msgstr "垂直預設對齊"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "已沒有註解了"
+msgstr "離開註解"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -5040,6 +5060,11 @@ msgstr "移動"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "抬起"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+#, fuzzy
+msgid "NVDA Message"
+msgstr "NVDA已啟動"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -6025,7 +6050,7 @@ msgstr "檢查更新...(&C)"
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
-msgstr "關於...(&A)"
+msgstr "關於..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
@@ -6150,7 +6175,7 @@ msgstr "重新啟動"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
-msgstr "重新啟動附加元件已停用"
+msgstr "重新啟動並停用附加元件"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7287,7 +7312,7 @@ msgstr "讀出頁框(&M)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "讀出可點擊"
+msgstr "讀出可點擊(&C)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7421,7 +7446,7 @@ msgstr "連接點顯器失敗"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
-msgstr "新增"
+msgstr "新增符號"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
 msgid "Symbol:"
@@ -7607,6 +7632,124 @@ msgstr "預設色彩"
 msgid "Unknown color"
 msgstr "未知的色彩"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+#, fuzzy
+msgid "automatic"
+msgstr "自動偵測"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+#, fuzzy
+msgid "checker"
+msgstr "勾選"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+#, fuzzy
+msgid "down"
+msgstr "page down"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+#, fuzzy
+msgid "grid"
+msgstr "資料格"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+#, fuzzy
+msgid "light down"
+msgstr "向下滑動"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+#, fuzzy
+msgid "light horizontal"
+msgstr "亮珊瑚色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+#, fuzzy
+msgid "light up"
+msgstr "亮藍色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+#, fuzzy
+msgid "light vertical"
+msgstr "亮珊瑚色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "沒有"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+#, fuzzy
+msgid "vertical"
+msgstr "置頂垂直對齊"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#, fuzzy
+msgid "linear gradient"
+msgstr "斯洛維尼亞語一級點字"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr ""
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "這個儲存格不可編輯"
@@ -7784,7 +7927,7 @@ msgstr "立體百分比堆疊直條圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr "立體橫條圖"
+msgstr "立體折線圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7819,12 +7962,12 @@ msgstr "圓形圖帶有子橫條圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr "堆疊區域圖"
+msgstr "堆疊橫條圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr "百分比堆疊區域圖"
+msgstr "百分比堆疊橫條圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7849,7 +7992,7 @@ msgstr "堆疊直條圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr "堆疊直條圖"
+msgstr "百分比堆疊直條圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7869,7 +8012,7 @@ msgstr "百分比堆疊水平圓錐圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr "群組圓錐圖"
+msgstr "立體群組圓錐圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7924,7 +8067,7 @@ msgstr "分裂式環圈圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr "橫條圖"
+msgstr "折線圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8649,7 +8792,7 @@ msgstr "沒有註解"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "讀出系統焦點所在的註解文字。"
+msgstr "讀出在系統游標上所加的的註解"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -8718,9 +8861,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} 之 {}"
-
-#~ msgid "none"
-#~ msgstr "沒有"
 
 #~ msgid " trendline {} "
 #~ msgstr " {} 趨勢線"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
+"POT-Creation-Date: 2016-03-11 00:10+1000\n"
 "PO-Revision-Date: 2016-02-04 21:52-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clcaul@live.com>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
@@ -3749,10 +3749,16 @@ msgstr ""
 msgid "No formatting information"
 msgstr "sem informações de formatação"
 
+#. Translators: title for formatting information dialog.
+#, fuzzy
+msgid "Formatting"
+msgstr "Formatação de documentos"
+
 #. Translators: Input help mode message for report formatting command.
+#, fuzzy
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Anuncia informações de formatação na posição atual do cursor de exploração "
 "num documento"
@@ -4731,11 +4737,6 @@ msgstr "seleção removida"
 msgid "done dragging"
 msgstr "sôlto"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "nível %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4760,6 +4761,11 @@ msgstr "com %s colunas"
 #, python-format
 msgid "with %s rows"
 msgstr "com %s linhas"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "nível %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4794,6 +4800,14 @@ msgstr "estilo %s"
 msgid "default style"
 msgstr "estilo padrão"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, fuzzy, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color} sobre {backgroundColor}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4812,6 +4826,10 @@ msgstr "{color}"
 #, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "fundo {backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr ""
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -5158,6 +5176,11 @@ msgstr "exploração"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "Soltar toque de exploração"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+#, fuzzy
+msgid "NVDA Message"
+msgstr "NVDA ativado"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -7782,6 +7805,124 @@ msgstr "cor padrão"
 msgid "Unknown color"
 msgstr "cor desconhecida"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+#, fuzzy
+msgid "automatic"
+msgstr "Automático"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+#, fuzzy
+msgid "checker"
+msgstr "marcado"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+#, fuzzy
+msgid "down"
+msgstr "peije dáun"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+#, fuzzy
+msgid "grid"
+msgstr "grade de dados"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+#, fuzzy
+msgid "light down"
+msgstr "varredura abaixo"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+#, fuzzy
+msgid "light horizontal"
+msgstr "Coral claro"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+#, fuzzy
+msgid "light up"
+msgstr "Azul claro"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+#, fuzzy
+msgid "light vertical"
+msgstr "Coral claro"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "nada"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+#, fuzzy
+msgid "vertical"
+msgstr "alinhamento vertical superior"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#, fuzzy
+msgid "linear gradient"
+msgstr "Esloveno, grau 1"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr ""
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Esta célula não é editável"
@@ -8919,9 +9060,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} de {}"
-
-#~ msgid "none"
-#~ msgstr "nada"
 
 #~ msgid " trendline {} "
 #~ msgstr " linha de tendência {} "
