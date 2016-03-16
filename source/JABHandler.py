@@ -89,6 +89,27 @@ class AccessibleContextInfo(Structure):
 		('accessibleText',BOOL),
 		('accessibleValue',BOOL),
 	]
+	
+	def __eq__(self,other):
+		return (\
+		self.name == other.name and\
+		self.description ==other.description and\
+		self.role == other.role and\
+		self.role_en_US == other.role_en_US and\
+		self.states == other.states and\
+		self.states_en_US == other.states_en_US and\
+		self.indexInParent == other.indexInParent and\
+		self.childrenCount == other.childrenCount and\
+		self.x == other.x and\
+		self.y == other.y and\
+		self.width == other.width and\
+		self.height == other.height and\
+		self.accessibleComponent == other.accessibleComponent and\
+		self.accessibleAction == other.accessibleAction and\
+		self.accessibleSelection == other.accessibleSelection and\
+		self.accessibleText == other.accessibleText and\
+		self.accessibleValue == other.accessibleValue\
+		)
 
 class AccessibleTextInfo(Structure):
 	_fields_=[
@@ -342,14 +363,18 @@ class JABContext(object):
 	def __eq__(self,jabContext):
 		if self.vmID==jabContext.vmID and bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
 			return True
-		else:
-			return False
+		#try to compare using accessibleContextInfo
+		if self.getAccessibleContextInfo() and jabContext.getAccessibleContextInfo():
+			if self.getAccessibleContextInfo() == jabContext.getAccessibleContextInfo():
+				return True
+		return False
 
 	def __ne__(self,jabContext):
-		if self.vmID!=jabContext.vmID or not bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
+		if self.vmID!=jabContext.vmID:
 			return True
-		else:
-			return False
+		elif self.getAccessibleContextInfo() != jabContext.getAccessibleContextInfo():
+			return Treu
+		return False
 
 	def getVersionInfo(self):
 		info=AccessBridgeVersionInfo()
@@ -559,7 +584,7 @@ def event_gainFocus(vmID,accContext,hwnd):
 def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
 	hwnd=getWindowHandleFromAccContext(vmID,source)
 	internalQueueFunction(event_gainFocus,vmID,newDescendant,hwnd)
-	for accContext in [event,oldDescendant]:
+	for accContext in [event,oldDescendant,source]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
 @AccessBridge_PropertyNameChangeFP
