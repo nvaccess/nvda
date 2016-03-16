@@ -973,7 +973,7 @@ class ExcelCell(ExcelBase):
 		elif scriptCount==1:
 			if self.parent.forgetHeaderCell(self,isColumnHeader=True,isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
-				ui.message(_("removed {address}    from column headers").format(address=self.cellCoordsText))
+				ui.message(_("Removed {address}    from column headers").format(address=self.cellCoordsText))
 			else:
 				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
@@ -995,7 +995,7 @@ class ExcelCell(ExcelBase):
 		elif scriptCount==1:
 			if self.parent.forgetHeaderCell(self,isColumnHeader=False,isRowHeader=True):
 				# Translators: a message reported in the SetRowHeader script for Excel.
-				ui.message(_("removed {address}    from row headers").format(address=self.cellCoordsText))
+				ui.message(_("Removed {address}    from row headers").format(address=self.cellCoordsText))
 			else:
 				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(_("Cannot find {address}    in row headers").format(address=self.cellCoordsText))

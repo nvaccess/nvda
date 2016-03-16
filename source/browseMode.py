@@ -47,9 +47,9 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 			nvwave.playWaveFile(sound)
 		else:
 			if treeInterceptor.passThrough:
-				ui.message(_("focus mode"))
+				ui.message(_("Focus mode"))
 			else:
-				ui.message(_("browse mode"))
+				ui.message(_("Browse mode"))
 		reportPassThrough.last = treeInterceptor.passThrough
 reportPassThrough.last = False
 
@@ -303,7 +303,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_activatePosition(self,gesture):
 		self._activatePosition()
 	# Translators: the description for the activatePosition script on browseMode documents.
-	script_activatePosition.__doc__ = _("activates the current object in the document")
+	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
@@ -1465,7 +1465,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			# Translators: a message reported when:
 			# Review cursor is at the bottom line of the current navigator object.
 			# Landing at the end of a browse mode document when trying to jump to the end of the current container. 
-			ui.message(_("bottom"))
+			ui.message(_("Bottom"))
 		self._set_selection(container, reason=REASON_QUICKNAV)
 		if not willSayAllResume(gesture):
 			container.expand(textInfos.UNIT_LINE)
