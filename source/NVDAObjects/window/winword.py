@@ -1197,13 +1197,13 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: (self.WinwordSelectionObject.font.superscript,self.WinwordSelectionObject.font.subscript))
 		if val[0]:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("superscript"))
+			ui.message(_("Superscript"))
 		elif val[1]:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("subscript"))
+			ui.message(_("Subscript"))
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("baseline"))
+			ui.message(_("Baseline"))
 
 	def script_increaseDecreaseOutlineLevel(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
@@ -1283,7 +1283,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 						ui.message(text)
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
-		ui.message(_("no comments"))
+		ui.message(_("No comments"))
 	# Translators: a description for a script
 	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
 
