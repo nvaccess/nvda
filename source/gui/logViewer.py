@@ -30,7 +30,8 @@ class LogViewer(wx.Frame):
 		# Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 		item = menu.Append(wx.ID_ANY, _("Refresh	F5"))
 		self.Bind(wx.EVT_MENU, self.refresh, item)
-		item = menu.Append(wx.ID_SAVEAS)
+		# Translators: The label for a menu item in NVDA log viewer to save log file.
+		item = menu.Append(wx.ID_SAVEAS, _("Save &as...	Ctrl+S"))
 		self.Bind(wx.EVT_MENU, self.onSaveAsCommand, item)
 		menu.AppendSeparator()
 		item = menu.Append(wx.ID_EXIT, _("E&xit"))
