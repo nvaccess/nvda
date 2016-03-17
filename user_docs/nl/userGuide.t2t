@@ -302,7 +302,7 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 | Ga een rij omlaag | control+alt+pijl omlaag | Verplaatst de tekstcursor een rij omlaag(van dezelfde kolom) |
 %kc:endInclude
 
-++ Objectnavigatie ++
+++ Objectnavigatie ++[ObjectNavigation]
 U zult meestal met applicaties werken door middel van de commando's voor het verplaatsen van de [focus #SystemFocus] en de [systeemcursor #SystemCaret].
 Soms kan het echter handig zijn om de huidige applicatie of het besturingssysteem te verkennen zonder de [focus #SystemFocus] of de systeemcursor #SystemCaret] te verplaatsen.
 Ook wilt u soms werken met [objecten #Objects] die niet te bedienen zijn met de TAB-toets van het toetsenbord.
@@ -375,7 +375,7 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+a | Veeg omlaag met 3 vingers (tekstmodus) | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt.  |
 | Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 | geen | Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
 | Tot leescursor kopiëren | NVDA+f10 | NVDA+f10 | geen | Het tekstgebied dat eerder met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 tot en met de huidige positie van de leescursor naar het klembord gekopieerd. |
-| Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt |
+| Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt. Bij tweemaal drukken krijgt u de informatie in bladermodus. |
 %kc:endInclude
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
@@ -445,7 +445,7 @@ Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet geb
 | naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | Verplaats het navigator object naar de muispositie |
 %kc:endInclude
 
-+ Bladermodus +
++ Bladermodus +[Bladermodus]
 In NVDA worden complexe alleen-lezen documenten zoals een webpagina weergegeven in bladermodus.
 Het gaat om documenten in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-berichten in Microsoft Outlook, Google Chrome, Adobe Reader en Adobe Flash.
 Bladermodus is ook optioneel beschikbaar voor Microsoft Word-documenten.
@@ -847,7 +847,7 @@ De meeste synthesizers ondersteunen deze functionaliteit.
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
 +++ Synth settings ring +++[SynthSettingsRing]
-Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “rij/kolomkoppen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
+Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster , kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
 %kc:beginInclude
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Naar volgende synthesizerinstelling gaan | NVDA+control+pijl rechts | NVDA+shift+control+pijl rechts | Hiermee wordt steeds een volgende spraakinstelling gekozen. Na de laatst beschikbare instelling begint u weer vooraan enz. |
@@ -1479,10 +1479,10 @@ De klank van de stemmen kan worden aangepast.
 
 ++ Microsoft Spraak API versie 4 (SAPI 4) ++
 Sapi 4 is een oudere Microsoft standaard voor softwarematige spraaksynthesizers.
-Op het internet zijn veel spraaksynthesizers te koop of gratis te downloaden die compatibel zijn met deze standaard.
-Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
+Voor gebruikers die reeds SAPI 4 synthesizers op hun systeem geïnstalleerd hebben, blijft NVDA deze ondersteunen.
+Microsoft ondersteunt deze standaard echter niet meer en de benodigde componenten worden door Microsoft niet langer beschikbaar gesteld.
 
-Als u Sapi 4 stemmen hebt geïnstalleerd maar de synthesizer hiervoor komt niet voor in de lijst  van beschikbare synthesizers van NVDA, kunt u de SAPI 4.0 runtime binaries installeren die te vinden zijn op http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
 
 ++ Microsoft Spraak API versie 5 (SAPI 5) ++
 Sapi 5 is een Microsoft standaard voor softwarematige spraaksynthesizers.
