@@ -1,0 +1,167 @@
+﻿#locale/ro/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identificator	expresie regulată
+# Sfârșit de frază
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\,(?=\d)
+in-word '	(?<=[^\W_])['’]
+in-word -	(?<=[^\W_])[-]
+negative number	(?<!\w)-(?=[ $£€¥.]?\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punct	all	always	# . sfârșit de propoziție
+! sentence ending	semn de exclamare	# ! sfârșit de propoziție
+? sentence ending	semn de întrebare	all	always	# ? sfârșit de propoziție
+; phrase ending	punct și virgulă	# ; sfârșit de propoziție
+: phrase ending	două puncte	most	always	# : sfârșit de propoziție
+decimal point		# virgulă pentru zecimale
+in-word '	apostrof	# ' în cuvânt
+in-word -	cratimă	all	norep	# - de compunere cuvinte
+negative number	minus	none	norep	# - înaintea unei cifre
+
+# Whitespace
+\0	nul	char	# caracterul vid
+\t	tab
+\n	trecere linie nouă	char
+\f	întrerupere pagină	none
+\r	linie nouă	char
+ 	spațiu	char
+ 	spațiu	char	# spațiu incasabil
+
+# Standard punctuation/symbols
+!	semn exclamare	most	norep
+"	ghilimele	most
+\#	diez	some
+$	dolar	all	norep
+£	liră	all	norep
+€	euro	all	norep
+¢	cent	all	norep
+¥	yen	all	norep
+₹	rupie	some	norep
+%	procent	some
+&	ampersand	some
+'	apostrof vertical	most
+(	paranteză stânga	most	always
+)	paranteză dreapta	most	always
+*	asterisc	some
++	plus	some
+,	virgulă	all	always
+-	cratimă
+.	punct	some
+/	per	some
+:	două puncte	some	norep
+;	punct și virgulă	some
+<	mai mic	some
+>	mai mare	some
+=	egal	some
+?	semn întrebare	most	norep
+@	a rond	some
+[	paranteză pătrată stânga	most
+]	paranteză pătrată dreapta	most
+\\	bară oblică	most
+^	circumflex	most
+_	liniuță joasă	most
+`	accent grav	most
+{	acoladă stânga	most
+}	acoladă dreapta	most
+|	bară verticală	most
+~	tilda	most
+
+# Other characters
+•	bulină	some
+…	puncte de suspensie	all	always
+...	punct punct punct	all	always
+	bulină	some
+“	ghilimele inverse închise	most
+”	ghilimele închise	most
+‘	apostrof invers	most
+’	apostrof	most
+–	cratimă dublă	most	always
+—	linie de dialog	most
+●	cerc negru	most
+¨	tremă	most
+‎	marcaj stânga la dreapta	char
+‏	marcaj dreapta la stânga	char
+■	pătrat negru	some
+▪	pătrat negru	some
+◾	pătrat negru	some
+◦	bulină albă	some
+➔	săgeată dreapta	some
+§	secțiune	all
+°	grade	some
+«	ghilimele unghiulare deschise
+»	ghilimele unghiulare închise
+µ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	marcă înregistrată	some
+™	treid marc	some
+©	drepturi de autor	some
+±	plus sau minus	some
+×	înmulțit	some
+÷	împărțit	some
+←	săgeată stânga	some
+→	săgeată dreapta	some
+✓	bifat	some
+✔	bifat	some
+„	ghilimele deschise	none
+#Mathematical Operators U+2200 to U+220F
+
+∀	oricare ar fi 	none
+∁	Complement	none
+∂	derivată parțială	none
+∃	există	none
+∄	nu există	none
+∅	mulțimea vidă	none
+∆	increment	none
+∇	nabla	none
+∈	aparține lui	none
+∉	nu aparține lui	none
+∊	aparține mic	none
+∋	conține ca element pe	none
+∌	nu conține ca element pe	none
+∍	conține ca element pe mic	none
+∎	q e d	none
+∏	produs	none
+
+# Miscellaneous Mathematical Operators
+
+∑	sumă	none
+√	radical	none
+∛	radical de ordin trei	none
+∜	radical de ordin patru	none
+∝	proporțional cu	none
+∞	infinit	none
+∟	unghi drept	none
+∠	unghi	none
+∥	paralel cu	none
+∦	nu e paralel cu	none
+∧	și logic	none
+∨	sau logic	none
+∩	intersecție	none
+∪	reuniune	none
+∫	integrală	none
+∴	în consecință	none
+∵	deoarece	none
+∶	rație	none
+∷	proporțional	none
+≤	mai mic sau egal cu	none
+≥	mai mare sau egal cu	none
+⊂	submulțime a lui	none
+⊃	superset a lui	none
+⊆	submulțime sau egală cu	none
+⊇	superset sau egal cu	none
