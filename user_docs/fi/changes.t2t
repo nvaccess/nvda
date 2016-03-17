@@ -8,15 +8,19 @@
 == Uudet ominaisuudet ==
 - Pikanavigointinäppäimillä siirtyminen selitteiden mukaan (a ja Shift+a) siirtää nyt lisättyyn ja poistettuun tekstiin selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#5691)
 - NVDA ilmoittaa nyt Microsoft Excelissä soluryhmän tason ja lisäksi sen, onko ryhmä suljettu vai avattu. (#5690)
+- Tekstin muotoilutiedot lukevan komennon kahdesti painaminen näyttää tiedot selaustilassa, jotta niitä voidaan tarkastella. (#4908)
+- Solun sävytys ja liukuväritäyttö ilmoitetaan nyt Microsoft Excel 2010:ssä ja uudemmissa. Automaattista ilmoittamista säädetään Lue värit -asetuksella NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunasta. (#3683)
 
 
 == Korjatut ohjelmavirheet ==
 - Kun selaustilassa yritetään siirtyä pikanavigointinäppäimillä elementtiin, jota ei tueta nykyisessä asiakirjassa, NVDA ilmoittaa, ettei sitä tueta sen sijaan, että ilmoittaisi, ettei elementtiä ole. (#5691)
 - Pelkkiä kaavioita sisältävät laskentataulukot sisällytetään nyt Elementtilistaan Microsoft Excelissä, kun näytettävän elementin tyypiksi on valittu laskentataulukot. (#5698)
+- NVDA ei enää puhu epäolennaista tietoa vaihdettaessa ikkunaa moni-ikkunaisessa Java-sovelluksessa, kuten IntelliJ:ssä tai Android Studiossa. (#5732)
 
 
 == Muutokset kehittäjille (englanniksi) ==
 - NVDA's C++ components are now built with Microsoft Visual Studio 2015. (#5592)
+- You can now present a text or HTML message to the user in browse mode using ui.browseableMessage. (#4908)
 
 
 = 2016.1 =

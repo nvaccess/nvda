@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
-"PO-Revision-Date: 2016-02-11 07:20+0200\n"
+"POT-Creation-Date: 2016-03-11 00:10+1000\n"
+"PO-Revision-Date: 2016-03-12 20:57+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -3756,12 +3756,17 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Ei muotoilutietoja"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Muotoilut"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
-"Lukee asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä sijainnista"
+"Lukee asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä "
+"sijainnista. Kahdesti painettaessa tiedot näytetään selaustilassa."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -4738,11 +4743,6 @@ msgstr "valinta peruttu"
 msgid "done dragging"
 msgstr "vedetty"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "taso %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4767,6 +4767,11 @@ msgstr "jossa %s saraketta"
 #, python-format
 msgid "with %s rows"
 msgstr "jossa %s riviä"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "taso %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4794,19 +4799,27 @@ msgstr "otsikkotaso %d"
 #. %s will be replaced with the name of the style.
 #, python-format
 msgid "style %s"
-msgstr "tyyli: %s, "
+msgstr "tyyli: %s"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "oletustyyli"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} ja {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
 #, python-brace-format
 msgid "{color} on {backgroundColor}"
-msgstr "{color}, taustaväri {backgroundColor}"
+msgstr "tekstin väri: {color}, taustaväri: {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
@@ -4819,6 +4832,10 @@ msgstr "{color}"
 #, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} tausta"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "taustakuvio: {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -5165,6 +5182,10 @@ msgstr "liu'uta"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "liu'uta ylös"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA:n ilmoitus"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -7790,6 +7811,114 @@ msgstr "oletusväri"
 msgid "Unknown color"
 msgstr "Tuntematon väri"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "automaattinen"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "shakkiruutu"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "siksakki"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "alas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "16% harmaa"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "25% harmaa"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "50% harmaa"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "75% harmaa"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "8% harmaa"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "ruudukko"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "vaakasuuntainen"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "kapea alas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "kapea vaakasuuntainen"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "kapea ylös"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "kapea pystysuuntainen"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "ei mitään"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "75% puoliharmaa"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "tasainen"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "ylös"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "pystysuuntainen"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "lineaarinen liukuväri"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "suorakulmainen liukuväri"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Tätä solua ei voi muokata"
@@ -8920,9 +9049,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} / {}"
-
-#~ msgid "none"
-#~ msgstr "ei mitään"
 
 #~ msgid " trendline {} "
 #~ msgstr " suuntaviiva {} "

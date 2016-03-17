@@ -299,7 +299,7 @@ Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 | Siirrä seuraavalle riville | Control+Alt+alanuoli | Siirtää järjestelmäkohdistimen seuraavalle riville pysyen samassa sarakkeessa. |
 %kc:endInclude
 
-++ Objektinavigointi ++[]
+++ Objektinavigointi ++[ObjectNavigation]
 Sovelluksia käytetään enimmäkseen komennoilla, jotka siirtävät [kohdistusta #SystemFocus] ja [kohdistinta #SystemCaret].
 Toisinaan voi kuitenkin olla tarpeen tutkia nykyistä sovellusta tai käyttöjärjestelmää ilman, että kohdistus tai kohdistin liikkuu.
 Saatat myös haluta siirtyä [objekteihin #Objects], joihin ei ole mahdollista päästä normaalisti näppäimistöä käyttäen.
@@ -372,7 +372,7 @@ Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 | Lue kaikki | Numeronäppäimistön plus | NVDA+Shift+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta lähtien siirtäen samalla sitä. |
 | Merkitse kopioitavan tekstin alkukohta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin kopioimisen tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, mihin kopiointi lopetetaan. |
 | Merkitse kopioitavan tekstin loppukohta | NVDA+F10 | NVDA+F10 | Ei mitään | Kopioi tekstin alkukohdan merkitsemiskomennolla asetetusta kohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Kun tätä näppäinyhdistelmää painetaan, teksti kopioidaan leikepöydälle. |
-| Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee järjestelmäkohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. |
+| Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa näyttää tiedot selaustilassa. |
 %kc:endInclude
 
 Huom: Numlockin on oltava pois käytöstä, jotta numeronäppäimistön näppäimet toimisivat oikein.
@@ -442,7 +442,7 @@ Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kos
 | Siirrä hiiren alla olevaan objektiin | NVDA+numeronäppäimistön tähti | NVDA+Shift+N | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
 %kc:endInclude
 
-+ Selaustila +
++ Selaustila +[BrowseMode]
 Monisisältöisiä, ei-muokattavia asiakirjoja kuten verkkosivuja luetaan NVDA:lla selaustilassa.
 Tällaisia ovat Mozilla Firefoxissa, Microsoft Internet Explorerissa, Mozilla Thunderbirdissä, Google Chromessa ja Adobe Readerissa luettavat asiakirjat, Microsoft Outlookin HTML-viestit sekä Flash-sisältö.
 Selaustila on käytettävissä valinnaisesti myös Microsoft Wordissa.
@@ -1113,7 +1113,7 @@ Tämä on tarpeen sellaisissa syöttömenetelmissä, joissa valintaa voidaan muu
 Huomaa, että vaikka tämä asetus ei ole käytössä, niin tarkastelukohdistin sijoitetaan silti valitun ehdotuksen kohdalle, mikä mahdollistaa objektinavigoinnin tai tekstintarkastelukomentojen käyttämisen kyseessä olevan tai muiden ehdotusten lukemiseen.
 
 ==== Ilmoita lyhyet merkkikuvaukset aina ehdotuksia luettaessa ====
-Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotuslistan tullessa näkyviin.
+Tällä asetuksella, joka on oletusarvoisesti käytössä, voit valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotuslistan tullessa näkyviin.
 Huomaa, että asetus ei vaikuta valitun ehdotuksen lisämerkkikuvausten lukemiseen sellaisissa kielissä kuin kiina.
 Tästä saattaa olla hyötyä korean ja japanin syöttömenetelmiä käytettäessä.
 
@@ -1474,11 +1474,11 @@ Tuettuja kieliä on yli 43.
 Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan erilaiselta.
 
 ++ Microsoft Speech API versio 4 (SAPI 4) ++
-SAPI4 on Microsoftin vanhempi ohjelmistopuhesyntetisaattoreiden standardi.
-Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
+SAPI4 on Microsoftin vanha ohjelmistopuhesyntetisaattoreiden standardi.
+NVDA tukee tätä edelleen käyttäjillä, joilla on jo SAPI 4 -syntetisaattoreita asennettuna.
+Microsoft ei kuitenkaan enää tue tätä, eikä tarvittavia komponentteja ole enää saatavilla.
 
-Mikäli SAPI 4 -puheääniä on asennettuna, mutta syntetisaattori ei näy NVDA:n syntetisaattorilistassa, on asennettava SAPI 4.0:n ajonaikaiset binäärit, jotka ovat ladattavissa osoitteesta http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
@@ -2105,7 +2105,7 @@ BRLTTY huolehtii tällä hetkellä itse pistesyötöstä näytöissä, joissa on
 Tämän vuoksi NVDA:n syöttötaulukkoasetuksella ei ole merkitystä.
 
 Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
-Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/KeyTables/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.
+Katso [BRLTTY:n näppäinsidoslistoja http://mielke.cc/brltty/doc/KeyBindings/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.
 %kc:beginInclude
 || Nimi | BRLTTY-komento |
 | Vieritä pistenäyttöä taaksepäin | fwinlt (siirry yksi ikkuna vasemmalle) |
