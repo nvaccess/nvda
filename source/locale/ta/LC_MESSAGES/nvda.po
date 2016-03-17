@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
-"PO-Revision-Date: 2016-02-23 19:39+0530\n"
+"POT-Creation-Date: 2016-03-11 00:10+1000\n"
+"PO-Revision-Date: 2016-03-12 10:51+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -3736,11 +3736,17 @@ msgstr ""
 msgid "No formatting information"
 msgstr "வடிவூட்டத் தகவல் ஏதுமில்லை"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "வடிவூட்டல்"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "ஒரு ஆவணத்தில் சீராய்வுச் சுட்டியின் நிலையிலுள்ள வடிவூட்டத் தகவலை அறிவிக்கும்"
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"ஒரு ஆவணத்தில் சீராய்வுச் சுட்டியின் நிலையிலுள்ள வடிவூட்டத் தகவலை அறிவிக்கும். இரு முறை "
+"அழுத்தினால், தகவலை உலாவும் நிலையில் அளிக்கும்"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -4715,11 +4721,6 @@ msgstr "தெரிவு நீக்கப்பட்டது"
 msgid "done dragging"
 msgstr "இழுக்கப்படுவது முடிந்தது"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "மட்டம் %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4743,6 +4744,11 @@ msgstr "%s நெடுவரிசைகளைக் கொண்டது"
 #, python-format
 msgid "with %s rows"
 msgstr "%s கிடைவரிசைகளைக் கொண்டது"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "மட்டம் %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4777,6 +4783,13 @@ msgstr "பாங்கு %s"
 msgid "default style"
 msgstr "இயல்புப் பாங்கு"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+msgid "{color1} to {color2}"
+msgstr "{color1} முதல் {color2} வரை"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4792,6 +4805,9 @@ msgstr "{color}"
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
 msgstr "பின்னணி {backgroundColor}"
+
+msgid "background pattern {pattern}"
+msgstr "பின்னணி வடிவவிதம் {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -5132,6 +5148,10 @@ msgstr "வட்டமிடுதல்"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "வட்டமிடுதல் விலக்கம்"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "என்விடிஏ தகவல்"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -7734,6 +7754,114 @@ msgstr "இயல்நிறம்"
 msgid "Unknown color"
 msgstr "தெரியாத நிறம்"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "தன்னியக்கம்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "கட்டங்கள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "குறுக்குநெடுக்குக் கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "கீழ்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "சாம்பல் 16"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "சாம்பல் 25"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "சாம்பல் 50"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "சாம்பல் 75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "சாம்பல் 8"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "வலையம்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "அடர் கிடைக் கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "மெல்லியக் கீழ்க் கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "மெல்லியக் கிடைக்கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "மெல்லிய மேற்கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "மெல்லியச் செங்குத்துக்கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "ஏதுமில்லை"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "அரைச் சாம்பல் 75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "திண்மம்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "அடர் மேற்கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "அடர் செங்குத்துக் கோடுகள்"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "நேர்கோட்டுச் சரிவு"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "செவ்வகச் சரிவு"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "இச்சிறுகட்டம் தொகுக்கப்பட இயலாதது"
@@ -8820,9 +8948,6 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 
 #~ msgid " {} {} of {}"
 #~ msgstr "{} {}, மொத்தம் {}"
-
-#~ msgid "none"
-#~ msgstr "ஏதுமில்லை"
 
 #~ msgid " trendline {} "
 #~ msgstr "போக்கு வரிசை {} "

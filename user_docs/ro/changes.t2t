@@ -1,0 +1,23 @@
+Ce este nou în NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2016.2 =
+
+== Noi funcționalități ==
+- În mod exploarare, pentru Internet Explorer și alte controloare MSHTML, acum, folosirea navigației cu prima literă pentru a urma adnotările (a și shift+a), mută la textul inserat și șters. (#5691)
+- În Microsoft Excel, NVDA acum anunță nivelul unui grup de celule, precum și dacă este extins sau restrâns. (#5690)
+- Dubla apăsare a comenzii „Raportează formatul textului” prezintă informația în modul navigare pentru a putea fi examinată. (#4908)
+- În Microsoft Excel 2010 sau mai nou, nuanța și umplerea cu gradient pentru celulă sunt, acum, anunțate. Raportarea automată este controlată de opțiunea „Anunță culori” din preferințele pentru formatarea documentului ale NVDA. (#3683)
+
+
+== Rezolvări defecte ==
+- În modul navigare, la încercarea de a folosi navigarea cu o singură literă pentru a se muta la un element care nu este suportat pentru respectivul document, NVDA anunță că acest lucru nu este suportat, față de precedentul anunț că nu există element în direcția respectivă. (#5691)
+- La listarea foilor de lucru în Lista de elemente pentru Microsoft Excel, sunt acum incluse și foile care conțin doar diagrame. (#5698)
+- NVDA nu mai anunță informații ciudate la comutarea ferestrelor într-o aplicație Java cu ferestre multiple, cum ar fi IntelliJ sau Android Studio. (#5732)
+
+
+== Modificări pentru Dezvoltatori ==
+- componentele C++ ale NVDA sunt acum generate cu Microsoft Visual Studio 2015. (#5592)
+- Acum se poate prezenta utilizatorului un mesaj text sau HTML în mod navigare folosind ui.browseableMessage. (#4908)
