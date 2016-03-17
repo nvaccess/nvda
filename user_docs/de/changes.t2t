@@ -6,17 +6,21 @@
 = 2016.2 =
 
 == Neue Funktionen ==
-- Wenn Sie im Internet Explorer und anderen MSHTML-Dokumenten mit den Schnellnavigationstasten a und Umschalt+A zur nächsten oder vorigen Anmerkung springen, wird auch eingefügter oder gelöschter Text angesprungen. (#5691)
+- Wenn Sie im Internet Explorer und anderen MSHTML-Dokumenten mit den Schnellnavigationstasten A und Umschalt+A zur nächsten oder vorherigen Anmerkung springen, wird auch eingefügter oder gelöschter Text angesprungen. (#5691)
 - In Microsoft Excel wird bei Zellengruppen sowohl die Verschachtelungsebene als auch der Status (erweitert/reduziert) angezeigt. (#5690)
+- Beim zweimaligen Drücken der Tastenkombination für die Ansage der Textformatierungen werden nun die Informationen im Lesemodus angezeigt. (#4908)
+- In Microsoft Excel 2010 und neuer werden nun Zellschattierungen und Rahmen angesagt. Die automatische Ansage hierzu wird von der Einstellung für die Dokumentformatierungen in NVDA gesteuert. (#3683)
 
 
 == Fehlerkorrekturen ==
 - Wenn Sie die Schnellnavigationstasten verwenden, um zu einem Element eines Typs zu navigieren, der im aktuellen Dokument nicht unterstützt wird, wird dies von NVDA ausdrücklich angezeigt. (#5691)
 - Wenn Sie die Liste der Tabellenblätter in Excel aufrufen, werden nun auch Tabellenblätter einbezogen, die nur Diagramme enthalten. (#5698)
+- NVDA gibt nun nicht länger mehr belanglose Informationen beim Fensterwechseln in Java-Anwendungen mit mehrfachen Fenstern wie zum Beispiel in IntelliJ oder Android Studio wieder. (#5732)
 
 
 == Änderungen für Entwickler ==
-- die C++-Komponenten von NVDA werden nun mit Microsoft Visual Studio 2015 erzeugt. (#5592)
+- Die C++-Komponenten von NVDA werden nun mit Microsoft Visual Studio 2015 erzeugt. (#5592)
+- Sie können nun einen Text oder eine HTML-Meldung für den Anwender im Lesemodus darstellen, in dem Sie ui.browseableMessage verwenden. (#4908)
 
 
 = 2016.1 =
