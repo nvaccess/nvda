@@ -20,151 +20,150 @@ thousands separator	(?<=\d)\.(?=\d{3})
 date separator	(?<=\d\d)\.(?=\d\d)
 
 symbols:
-# identifier	replacement[[	level][	preserve]][	# display name]
+# identifier	replacement[[level][preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	Punkt
-! sentence ending	Ausrufezeichen
-? sentence ending	Fragezeichen
-; phrase ending	Semikolon
-: phrase ending	Doppelpunkt
-decimal point	
-in-word '	Apostroph
-negative number	Minus
-thousands separator	Punkt	all	norep
+. Punkt	all	always
+! Ausrufezeichen	all	always
+? Fragezeichen	all	always
+; Semikolon	most	always
+: Doppelpunkt	most	always
+decimal Komma		none	always
+in-word '	Apostroph	all	norep
+negative number	Minus	none	norep
+thousands separator	Punkt	none	norep
 date separator		none	always
 
 # Whitespace
-\0	Leer	# null
+\0	Leer	# Null
 \t	Tab
-\n	Zeilenumbruch
-\f	Seitenumbruch
-\r	Neue Zeile
- 	Leerzeichen
- 	Geschütztes Leerzeichen	# geschütztes Leerzeichen
+\n	Zeilenumbruch	char
+\f	Seitenumbruch	none
+\r	Neue Zeile	char
+ 	Leerzeichen	char
+ 	Geschütztes Leerzeichen	char
 
 # Standard punctuation/symbols
-!	Ausrufezeichen
-"	Anführungszeichen
-\#	Nummernzeichen
-$	Dollar
-£	Pfund
-€	Euro
-¢	Cents
-¥	Yen
-₹	Rupie
-%	Prozent
-&	Und
-'	Apostroph
-(	Runde Klammer auf
-)	runde Klammer zu
-*	Stern
-+	Plus
-,	Komma
--	Bindestrich
-.	Punkt
-/	Schrägstrich
-:	Doppelpunkt
-;	Semikolon
-<	Kleiner Als
->	Größer Als
-=	Gleichheitszeichen
-?	Fragezeichen
-@	Ätt
-[	Eckige Klammer auf
-]	Eckige Klammer zu
-\\	Backslash
-^	Dach
-_	Unterstrich
-`	Graav
-{	Geschweifte Klammer auf
-}	Geschweifte Klammer zu
-|	Senkrechter Strich
-~	Tilde
+!	Ausrufezeichen	all
+"	Anführungszeichen	most
+\#	Nummernzeichen	some
+$	Dollar	all	norep
+£	Pfund	all	norep
+€	Euro	all	norep
+¢	Cent	all	norep
+¥	Yen	all	norep
+₹	Rupie	some	norep
+%	Prozent	some
+&	Und	some
+'	Apostroph	all
+(	Runde Klammer auf	most	always
+)	Runde Klammer zu	most	always
+*	Stern	some
++	Plus	some
+,	Komma	all	always
+-	Bindestrich	most
+.	Punkt	some
+/	Schrägstrich	some
+:	Doppelpunkt	most	norep
+;	Semikolon	most
+<	Kleiner Als	some
+>	Größer Als	some
+=	Gleichheitszeichen	some
+?	Fragezeichen	all
+@	Ät	some
+[	Eckige Klammer auf	most
+]	Eckige Klammer zu	most
+\\	Bäcksläsch	most
+^	Dach	most
+_	Unterstrich	most
+`	Graav	most
+{	Geschweifte Klammer auf	most
+}	Geschweifte Klammer zu	most
+|	Senkrechter Strich	most
+~	Tilde	most
 
 # Other characters
-•	Aufzählungszeichen
-…	Punkt Punkt Punkt
-...	Punkt Punkt Punkt
-	Aufzählungszeichen
-“	Typografisches Anführungszeichen oben links
-”	Typografisches Anführungszeichen oben rechts
-„	Typografisches Anführungszeichen unten rechts
-‘	Apostroph links
-’	Apostroph rechts
-–	Strich
-—	Gedankenstrich
-●	Kreis
-¨	Trema
-‎	Pfeil von links nach rechts
-‏	Pfeil von rechts nach links
-■	großes Schwarzes ausgefülltes Quadrat
-▪	schwarzes Quadrat
-◾	schwarzes Quadrat
-◦	weißes Aufzählungszeichen
-➔	Großer rechtsweisender Pfeil
-§	Paragraf
-°	Grad
+•	Aufzählungszeichen	some
+…	Punkt Punkt Punkt	all	always
+...	Punkt Punkt Punkt	all	always
+	Aufzählungszeichen	some
+“	Typografisches Anführungszeichen nach rechts	most
+”	Anführungszeichen nach rechts	most
+„	Typografisches Anführungszeichen nach links	most
+‘	Apostroph nach links	most
+’	Apostroph nach rechts	most
+–	Strich	most	always
+—	Gedankenstrich	most
+●	Kreis	most
+¨	Trema	most
+‎	Pfeil von links nach rechts	char
+‏	Pfeil von rechts nach links	char
+■	Großes gefülltes, schwarzes Quadrat	some
+▪	Kleines gefülltes, schwarzes Quadrat	some
+◾	Schwarzes, kleines bis mittelgroßes Quadrat	some
+◦	Weißes Aufzählungszeichen	some
+➔	Großer rechtsweisender Pfeil	some
+§	Paragraf	all
+°	Grad	some
 «	Doppelte gewinkelte Klammer auf
 »	Doppelte gewinkelte Klammer zu
-µ	Mü
-¹	Hochgestellte 1
-²	Hochgestellte 2
-³	Hochgestellte 3
-®	Registriertes Warenzeichen
-™	Eingetragenes Warenzeichen
-©	Copyright
-±	Plus Minus
-×	Mal
-÷	Geteilt durch
-←	Pfeil nach links
-→	Pfeil nach rechts
-✓	Häkchen
-✔	Fettes Häkchen
+µ	Mü	some
+¹	Hochgestellte 1	some
+²	Hochgestellte 2	some
+³	Hochgestellte 3	some
+®	Registriertes Warenzeichen	some
+™	Eingetragenes Warenzeichen	some
+©	Copyright	some
+±	Plus Minus	some
+×	Mal	some
+÷	Geteilt Durch	some
+←	Pfeil nach links	some
+→	Pfeil nach rechts	some
+✓	Häkchen	some
+✔	Fettes Häkchen	some
 ℃	Grad Celsius	some
-#Mathematical Operators U+2200 to U+220F
 
-∀	For All
-∁	Complement
-∂	Partial Derivative
-∃	There exists
-∄	There Does Not Exist
-∅	EMPTY SET
-∆	INCREMENT
-∇	NABLA
-∈	ELEMENT OF
-∉	NOT AN ELEMENT OF
-∊	SMALL ELEMENT OF
-∋	CONTAINS AS MEMBER
-∌	DOES NOT CONTAIN AS MEMBER
-∍	SMALL CONTAINS AS MEMBER
-∎	END OF PROOF
-∏	N-ARY PRODUCT
+# Mathematical Operators U+2200 to U+220F
+∀	Für Alles	none
+∁	Komplement	none
+∂	Partielles Differential	none
+∃	Existenzquantor	none
+∄	Es existiert kein	none
+∅	O mit Schrägstrich	none
+∆	Inkrement	none
+∇	Nabla	none
+∈	Elementzeichen	none
+∉	Nicht-Elementzeichen	none
+∊	Kleines Elementzeichen	none
+∋	Umgekehrtes Elementzeichen	none
+∌	Umgekehrtes Nicht-Elementzeichen	none
+∍	Kleines umgekehrtes Elementzeichen	none
+∎	Ende des Beweises	none
+∏	Produktzeichen	none
 
-# verschiedene mathematische Operatoren
-
-∑	N-ARY SUMMATION
-√	Quadratwurzel
-∛	Kubikwurzel
-∜	vierte Wurzel
-∝	PROPORTIONAL zu
-∞	unendlich
-∟	rechter Winkel
-∠	Winkel
-∥	PARALLEL zu
-∦	nicht parallel zu
-∧	LOGICAL AND
-∨	LOGICAL OR
-∩	INTERSECTION
-∪	UNION
-∫	INTEGRAL
-∴	THEREFORE
-∵	BECAUSE
-∶	RATIO
-∷	PROPORTION
-≤	kleiner gleich
-≥	größer gleich
-⊂	Untermenge von
-⊃	übergeordnete Menge von
-⊆	SUBSET OF OR EQUAL TO
-⊇	SUPERSET OF OR EQUAL TO
+# Verschiedene mathematische Operatoren
+∑	Summenzeichen	none
+√	Quadratwurzel	none
+∛	Kubikwurzel	none
+∜	Vierte Wurzel	none
+∝	Proportionalitätszeichen	none
+∞	Unendlich	none
+∟	Rechter Winkel	none
+∠	Ebener Winkel	none
+∥	Parallel zu	none
+∦	Nicht parallel zu	none
+∧	Logisches Und	none
+∨	Logisches Oder	none
+∩	Schnittmengenzeichen	none
+∪	Vereinigungsmengenzeichen	none
+∫	Integralzeichen	none
+∴	Folglich	none
+∵	Pfeil	none
+∶	Verhältniszeichen	none
+∷	Proportionszeichen	none
+≤	Kleiner oder gleich	none
+≥	Größer oder gleich	none
+⊂	Ist Teilmenge von	none
+⊃	Ist Obermenge von	none
+⊆	Teilmenge oder gleich	none
+⊇	Obermenge oder gleich	none

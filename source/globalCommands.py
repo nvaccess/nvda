@@ -1247,7 +1247,8 @@ class GlobalCommands(ScriptableObject):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats==0:
 			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
 			if text:
 				textList.append(text)
@@ -1258,7 +1259,7 @@ class GlobalCommands(ScriptableObject):
 				return
 				
 			ui.message(" ".join(textList))
-		else:
+		elif repeats==1:
 			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
 			if text:
 				textList.append(text)
