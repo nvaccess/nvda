@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 19:08+1000\n"
-"PO-Revision-Date: 2016-01-23 16:26+0200\n"
+"POT-Creation-Date: 2016-03-11 00:10+1000\n"
+"PO-Revision-Date: 2016-03-24 12:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -126,17 +126,17 @@ msgid "region"
 msgstr "منطقة"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
 msgstr "تعطيل خفض الأصوات الأخرى"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
 msgstr "خفض الأصوات الأخرى عند نطق NVDA"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
 msgstr "خفض الأصوات الأخرى دائما"
 
@@ -2641,7 +2641,7 @@ msgstr "مشغول"
 
 #. Translators: This is presented when a button is pressed.
 msgid "pressed"
-msgstr "تم ضغطه"
+msgstr "مضغوط"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
@@ -2669,7 +2669,7 @@ msgstr "خفيِّ"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
-msgstr "مُزار"
+msgstr "تمت زيارته"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
@@ -2819,7 +2819,7 @@ msgstr "خلل بملف خريطة الإشارات"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "جاري تحميل البرنامج. يرجى الانتظار..."
+msgstr "جَارٍ تحميل البرنامج. يرجى الانتظار..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -3690,11 +3690,17 @@ msgstr "بدأ القراءة من عند مؤشر التحرير, حتى نها
 msgid "No formatting information"
 msgstr "لا توجد تنسيقات"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "التنسيق"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "الإعلان عن التنسيق بالموضع الحالي لمؤشر الاستعراض داخل المستند"
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"الإعلان عن التنسيق بالموضع الحالي لمؤشر الاستعراض داخل المستند. بالضغط عليه "
+"مرتين, يقدم المعلومات بطريقة يمكن تصفحها"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -4651,11 +4657,6 @@ msgstr "تم إزالة التحديد"
 msgid "done dragging"
 msgstr "تم السحْب"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "المستوى %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4679,6 +4680,11 @@ msgstr "بِ%s أعمدة"
 #, python-format
 msgid "with %s rows"
 msgstr "بِ%s أسطر"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "المستوى %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4713,6 +4719,13 @@ msgstr "أسلوب %s"
 msgid "default style"
 msgstr "أسلوب تلقائي"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+msgid "{color1} to {color2}"
+msgstr "{color1} إلى {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4728,6 +4741,9 @@ msgstr "{color}"
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} خلفية"
+
+msgid "background pattern {pattern}"
+msgstr "نقش الخلفية {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -5068,6 +5084,10 @@ msgstr "استعراض"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "استعراض لأعلى"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "رسالة من البرنامج"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -6973,7 +6993,7 @@ msgstr "نطق مفا&تيح الاختصارات"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Handle keys from other &applications"
-msgstr "التعامل مع المفا&تيح المصصة للتطبيقات الأخرى"
+msgstr "التعامل مع المفا&تيح المخصصة للتطبيقات الأخرى"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -7199,7 +7219,8 @@ msgstr "تنسيق المستند"
 #. document formatting settings dialog.
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
-"الإعلام عن التغييرات التنسيقية بعد موضع المؤشر (مما قد يسبب بطء في الاستجابة)"
+"الإعلام عن التغييرات التنسيقية بعد موضع المؤشر (مما قد يسبب بُطْءاً في "
+"الاستجابة)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7632,6 +7653,114 @@ msgstr "اللون الافتراضي"
 #. Translators: The background color cannot be detected.
 msgid "Unknown color"
 msgstr "لون غير معروف"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "تلقائي"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "مدقق"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "خطوط متصالبة"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "سفلي"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "رمادي16"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "رمادي25"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "رمادي50"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "رمادي75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "رمادي8"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "شبكة"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "أفقي"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "سفلي فاتح"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "أفقي فاتح"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "علوي فاتح"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "رأسي فاتح"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "لا شيء"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "شبه رمادي75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "متصل"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "علوي"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "رأسي"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "تدرج خطي"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "تدرج مستطيل"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
@@ -8697,9 +8826,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} من {}"
-
-#~ msgid "none"
-#~ msgstr "لا شيء"
 
 #~ msgid ""
 #~ "Chart area height equals {}, width equals {}, top equals {}, left equals "

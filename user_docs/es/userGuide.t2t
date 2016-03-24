@@ -43,7 +43,7 @@ Se puede encontrar información acerca de otros sintetizadores de voz que soport
 
 ++ Soporte Braille ++
 Para usuarios que posean una pantalla de braille efímero, NVDA puede mostrar su información en braille. 
-Por favor mira la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para información acerca de las pantallas braille soportadas.
+Por favor consulta la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para información acerca de las pantallas braille soportadas.
 
 NVDA soporta códigos braille para muchos idiomas, incluyendo códigos braille contraído, no contraído y computerizado para algunos idiomas.
 
@@ -299,7 +299,7 @@ Cuando estés en una tabla, las siguientes teclas de órdenes también están di
 | Moverse a la fila siguiente | control+Alt+Flecha Abajo | Mueve el cursor del sistema a la siguiente fila (permaneciendo en la misma columna) |
 %kc:endInclude
 
-++ Navegación de Objetos ++
+++ Navegación de Objetos ++[ObjectNavigation]
 La mayor parte del tiempo, trabajarás con aplicaciones utilizando  órdenes que muevan [el foco #SystemFocus] y [el cursor #SystemCaret].
 Sin embargo, a veces, podrías querer explorar la aplicación actual o el Sistema Operativo sin mover el foco o el cursor.
 También podrías querer trabajar con [objetos #Objects] que no pueden accederse normalmente utilizando el teclado.
@@ -372,7 +372,7 @@ Las siguientes órdenes están disponibles para revisión de texto:
 | Leer todo con revisión | Más teclado numérico | NVDA+shift+a | deslizar con 3 dedos abajo (modo texto) | Lee desde la posición actual del cursor de revisión, moviéndolo según baja |
 | copiar desde cursor de revisión | NVDA+f9 | NVDA+f9 | no | Comienza el copiado de texto desde la posición actual del cursor de revisión. La copia actual no se lleva a cabo hasta que digas a NVDA dónde copiar |
 | Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia desde la posición fijada anteriormente con Copiar desde cursor de revisión hasta e incluyendo la actual posición del cursor de revisión.  Después de pulsar esta tecla, el texto se copiará al portapapeles de Windows |
-| Anunciar formato del texto | NVDA+f | NVDA+f | no | Informa del formato del texto donde esté situado actualmente el cursor de revisión |
+| Anunciar formato del texto | NVDA+f | NVDA+f | no | Informa del formato del texto donde esté situado actualmente el cursor de revisión. Pulsando dos veces muestra la información en modo exploración |
 %kc:endInclude
 
 nota: las teclas del teclado numérico requieren que la tecla BloqNum sea desactivada para funcionar apropiadamente.
@@ -442,7 +442,7 @@ Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el
 | navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
 %kc:endInclude
 
-+ Modo Exploración +
++ Modo Exploración +[BrowseMode]
 Los documentos complejos de sólo lectura, tales como páginas Web, son representados en NVDA con un Modo Exploración. 
 Esto incluye documentos en Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensajes HTML en Microsoft Outlook, Google Chrome, Adobe Reader y Adobe Flash.
 El modo Exploración también está opcionalmente disponible para documentos de Microsoft Word.
@@ -754,7 +754,7 @@ Si hay un error cargando el sintetizador, un cuadro de mensaje te alertará del 
 ==== Sintetizador ====
 Esta opción te permite elegir el sintetizador  que deseas que utilice NVDA para la salida de voz.
 
-Para una lista de los sintetizadores que soporta NVDA, por favor mira la sección [Sintetizadores de Voz Soportados #SupportedSpeechSynths].
+Para una lista de los sintetizadores que soporta NVDA, por favor consulta la sección [Sintetizadores de Voz Soportados #SupportedSpeechSynths].
 
 Un elemento especial que aparecerá siempre en esta lista es "Sin Voz", que te permite utilizar NVDA sin salida de voz alguna.
 Esto podría ser útil para alguien que desee utilizar sólo NVDA con Braille, o  quizás a desarrolladores videntes que sólo deseen utilizar el Visualizador de Voz.
@@ -774,7 +774,7 @@ En Windows 8 y superiores, esta opción te permite elegir si NVDA debería bajar
 
 +++ Opciones de Voz (NVDA+control+v) +++[VoiceSettings]
 El diálogo Opciones de Voz, que se encuentra en el menú Preferencias, contiene opciones que te permiten modificar el sonido de la voz. 
-Para una forma alternativa rápida de controlar los parámetros de voz desde cualquier lugar, por favor mira la sección [Grupo de Opciones de Sintetizador #SynthSettingsRing].
+Para una forma alternativa rápida de controlar los parámetros de voz desde cualquier lugar, por favor consulta la sección [Grupo de Opciones de Sintetizador #SynthSettingsRing].
 
 El cuadro de diálogo de opciones de voz contiene las siguientes opciones:
 
@@ -867,7 +867,7 @@ Muévete entre estas opciones con las flechas.
 
 Sin braille significa que no estás utilizando braille.
 
-Por favor mira la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para más información acerca de las pantallas braille soportadas.
+Por favor consulta la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para más información acerca de las pantallas braille soportadas.
 
 ==== Puerto ====
 Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la pantalla braille que tengas seleccionada.
@@ -1116,7 +1116,7 @@ Ten en cuenta que aún con esta opción desactivada, el cursor de revisión toda
 Algunos métodos de entrada como Chino Nuevo Fonético y Nuevo ChangJie tienen una cadena de lectura (conocida a veces como una cadena de precomposición).
 Puedes elegir si NVDA debería anunciar caracteres nuevos al ser tecleados en esta cadena de lectura con esta opción.
 Esta opción está activada de manera predeterminada.
-Ten en cuenta que algunos métodos de entrada antiguos tales como Chino ChangJie podrían no utilizar la cadena de lectura para contener los caracteres de precomposición, en su lugar utilizar la cadena de composición directamente. Por favor mira la siguiente opción para configurar el anunciado de la cadena de composición.
+Ten en cuenta que algunos métodos de entrada antiguos tales como Chino ChangJie podrían no utilizar la cadena de lectura para contener los caracteres de precomposición, en su lugar utiliza la cadena de composición directamente. Por favor consulta la siguiente opción para configurar el anunciado de la cadena de composición.
  
 ==== Incluir siempre descripciones cortas de caracteres para los candidatos ====
 Esta Opción, que está activada por omisión, te permite elegir si NVDA debería proporcionar o no una descripción corta para cada carácter en un candidato, o cuando se seleccione o cuando se lea automáticamente cuando aparezca la lista de candidatos.
@@ -1454,14 +1454,14 @@ Para acceder al Administrador de Complementos desde cualquier lugar, por favor a
 
 ++ Consola de Python ++
 La consola de Python de NVDA, encontrada bajo Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
-Para más información, por favor mira la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
+Para más información, por favor consulta la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Recargar plugins ++
 Este elemento, una vez activado, recarga app modules y plugins globales sin reiniciar a NVDA, lo cual es útil para desarrolladores.
 
 + Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
 Esta sección contiene información acerca de los sintetizadores de voz soportados por NVDA.
-Para una lista más extensa de los sintetizadores libres y comerciales que puedes descargar y comprar para utilizar con NVDA, por favor mira la página en [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Para una lista más extensa de los sintetizadores libres y comerciales que puedes descargar y comprar para utilizar con NVDA, por favor consulta la página en [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
 El sintetizador [eSpeak http://espeak.sourceforge.net/] se compila directamente en NVDA y no requiere ningún otro controlador o componentes especiales para instalarse.
@@ -1475,10 +1475,10 @@ También hay muchas variantes que pueden elegirse para alterar el sonido de la v
 
 ++ Microsoft Speech API versión 4 (SAPI 4) ++
 SAPI 4 es un antiguo estándar de Microsoft para sintetizadores de voz software.
-Muchos sintetizadores de voz que cumplen con este estándar podrían ser comprados o descargados gratis en varias compañías y sitios Web.
-Cuando se utiliza este sintetizador con NVDA, las voces disponibles (a las que se acceden desde el [Diálogo Opciones de  Voz #VoiceSettings] o desde el [Grupo de Opciones de Sintetizador #SynthSettingsRing]) contendrán todas las voces de todos los motores SAPI 4 instalados que se encuentren en tu sistema.
+NVDA todavía soporta esto para usuarios que aún tengan sintetizadores SAPI 4 instalados.
+No obstante, Microsoft ya no soporta esto y se necesitan componentes que ya no están disponibles desde Microsoft.
 
-Si tienes voces SAPI 4 instaladas pero el sintetizador no aparece en la lista de sintetizadores de NVDA, por favor  instala los binarios del runtime de SAPI 4.0 , disponible en http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Cuando utilices este sintetizador con NVDA, las voces disponibles (accesibles desde el [diálogo Opciones de Voz #VoiceSettings] o en el [Grupo de Opciones del Sintetizador #SynthSettingsRing]) contendrán todas las voces de todos los motores SAPI 4 instalados que se encuentren en tu sistema.
 
 ++ Microsoft Speech API versión 5 (SAPI 5) ++
 SAPI 5 es un estándar de Microsoft para sintetizadores de voz software.
@@ -1641,7 +1641,7 @@ No necesitas instalar ningún controlador específico para utilizar esta pantall
 Solo enchufa la pantalla y configura NVDA para utilizarla.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
-Porfavor mira la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
+Por favor consulta la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
 %kc:beginInclude
 || Nombre | tecla |
 | Desplazar hacia atrás pantalla braille | LF |
@@ -2022,7 +2022,7 @@ Se soportan los siguientes modelos:
 -
 
 Si tu dispositivo soporta más de un tipo de conexión, cuando conectes tu BrailleNote a NVDA, debes configurar el puerto de la terminal braille en las opciones de terminal braille.
-Por favor mira el manual del BrailleNote para detalles.
+Por favor consulta el manual del BrailleNote para detalles.
 En NVDA, también podrías necesitar configurar el puerto en el diálogo Opciones de Braille.
 Si te estás conectando a través de USB o bluetooth, puedes configurar el puerto a "Automático", "USB" o "Bluetooth", dependiendo de las opciones disponibles.
 Si te estás conectando utilizando un puerto serie (o un conversor de USB a serie) o si no aparece ninguna de las opciones anteriores, debes elegir explícitamente el puerto de comunicación a utilizarse desde la lista de puertos hardware.
@@ -2105,7 +2105,7 @@ Para pantallas que tengan un teclado braille, BRLTTY actualmente maneja la entra
 Por lo tanto, la opción tabla braille de entrada de NVDA es irrelevante.
 
 Seguidamente van las asignaciones a órdenes de BRLTTY para NVDA.
-Por favor consulta [la documentación de tablas de teclas de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] para información acerca de cómo están mapeadas las órdenes de BRLTTY para controlar las líneas braille.
+Por favor consulta las [listas de claves de vínculos de BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para información acerca de cómo se mapean las órdenes de BRLTTY para controlar las pantallas braille.
 %kc:beginInclude
 || Nombre | orden de BRLTTY |
 | Desplazar pantalla braille hacia atrás | fwinlt (va a la izquierda una ventana) |
