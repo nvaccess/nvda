@@ -299,7 +299,7 @@ Cando esteas nunha táboa, as seguintes teclas de ordes tamén están dispoñibl
 | Moverse cara a fila seguinte | control+alt+Frecha Abaixo | Move o cursor do sistema á seguinte fila (permanecendo na mesma columna) |
 %kc:endInclude
 
-++ Navegación de Obxectos ++
+++ Navegación de Obxectos ++[ObjectNavigation]
 A maior parte do tempo, traballarás con aplicacións utilizando ordes que moven o [foco #SystemFocus] e o [cursor #SystemCaret].
 Sen embargo, ás veces, poderías querer explorar a aplicación actual ou o Sistema Operativo sen mover o foco ou o cursor.
 Tamén poderías querer traballar con [obxectos #Objects] que non podan accederse normalmente utilizando o teclado.
@@ -372,7 +372,7 @@ As seguintes ordes están dispoñibles para revisión de texto:
 | Ler todo con revisión | Máis teclado numérico | NVDA+shift+a | deslizar con 3 dedos abaixo (modo texto) | Le dende a posición actual do cursor de revisión, movéndoo segundo baixa |
 | copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | non | Comeza o copiado de texto dende a posición actual do cursor de revisión. A copia actual non se leva a cabo ata que digas ó NVDA onde copiar |
 | Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | non | Copia dende a posición fixada anteriormente con Copiar dende cursor de revisión ate e incluindo a actual posición do cursor de revisión.  Desppois de premer esta tecla, o texto copiarase ó portapapeis de Windows |
-| Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión |
+| Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión. Premendo dúas veces amosa a información en modo exploración |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum sexa desactivada para funcionar apropriadamente.
@@ -442,7 +442,7 @@ Se ben un rato físico ou un trackpad poderíanse utilizar para navegar co rato,
 | navegar ó obxecto baixo o rato | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pon o navegador de obxectos no obxecto localizado na posición do rato |
 %kc:endInclude
 
-+ Modo Navegación +
++ Modo Navegación +[BrowseMode]
 Os documentos complexos de só lectura, como páxinas web, son representados no NVDA cun Modo Navegación. 
 Esto inclúe documentos en Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensaxes HTML en Microsoft Outlook,Google Chrome, Adobe Reader e Adobe Flash.
 O modo Exploración tamén está dispoñible opcionalmente para documentos de Microsoft Word.
@@ -1475,10 +1475,10 @@ Tamén hai moitas variantes que poden escollerse para alterar o son da voz.
 
 ++ Microsoft Speech API versión 4 (SAPI 4) ++
 SAPI 4 é un antigo estándar de Microsoft para sintetizadores de voz software.
-Moitos sintetizadores de voz que cumpren con este estándar poderían comprarse ou descargarse gratis en varias compañías e sitios Web.
-Cando se utiliza este sintetizador co NVDA, as voces dispoñibles (ás que se accede dende o [Diálogo Opcións de  Voz #VoiceSettings] ou dende o [Grupo de Opcións de Sintetizador #SynthSettingsRing]) conterán todas as voces de todos os motores SAPI 4 instalados que se atopen no teu sistema.
+NVDA aínda soporta esto para usuarios que teñan sintetizadores SAPI 4 instalados.
+Non obstante, Microsoft xa non soporta esto e necesítanse compoñentes que xa non están dispoñibles dende Microsoft.
 
-Se tes voces SAPI 4 instaladas pero o sintetizador non aparece na lista de sintetizadores de NVDA, por favor  instala os binarios do runtime de SAPI 4.0 , dispoñible en http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Cando uses este sintetizador co NVDA, as voces dispoñibles (accesibles dende o [diálogo Opcións de Voz #VoiceSettings] ou no [Grupo de Opcións do Sintetizador #SynthSettingsRing]) conterán todas as voces de todos os motores SAPI 4 instalados que se atopen no teu sistema.
 
 ++ Microsoft Speech API versión 5 (SAPI 5) ++
 SAPI 5 é un estándar de Microsoft para sintetizadores de voz software.
@@ -2105,7 +2105,7 @@ Para liñas que teñan un teclado braille, BRLTTY actualmente manexa a entrada b
 Polo tanto, a opción táboa braille de entrada de NVDA é irrelevante.
 
 Seguidamente van as asignacións a ordes BRLTTY para NVDA.
-Por favor mira [a documentación de táboas de teclas de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] para información acerca de cómo están mapeadas as ordes de BRLTTY para controlar as liñas braille.
+Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para información acerca de como se mapean as ordes de BRLTTY para controlar as pantallas braille.
 %kc:beginInclude
 || Nome | orde de BRLTTY |
 | Desprazar liña braille cara atrás | fwinlt (vai á esquerda unha ventá) |
