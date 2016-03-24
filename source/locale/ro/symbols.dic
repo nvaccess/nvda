@@ -4,12 +4,13 @@
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
+# formatul pentru regulă este:
 # identificator	expresie regulată
-# Sfârșit de frază
+# Pentru sfârșit de propoziție
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
+# Pentru delimitări de frază
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
@@ -19,7 +20,8 @@ in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)-(?=[ $£€¥.]?\d)
 
 symbols:
-# identifier	replacement[[	level][	preserve]][	# display name]
+# formatul pentru regulă este:
+# identificator	înlocuire[[	nivel][	păstrează]][	# nume afișat]
 
 # Complex symbols
 . sentence ending	punct	all	always	# . sfârșit de propoziție
@@ -33,135 +35,135 @@ in-word -	cratimă	all	norep	# - de compunere cuvinte
 negative number	minus	none	norep	# - înaintea unei cifre
 
 # Whitespace
-\0	nul	char	# caracterul vid
+\0	nul	# caracterul vid
 \t	tab
-\n	trecere linie nouă	char
-\f	întrerupere pagină	none
-\r	linie nouă	char
- 	spațiu	char
- 	spațiu	char	# spațiu incasabil
+\n	trecere linie nouă
+\f	întrerupere pagină
+\r	linie nouă
+ 	spațiu
+ 	spațiu	# spațiu incasabil
 
 # Standard punctuation/symbols
-!	semn exclamare	most	norep
-"	ghilimele	most
-\#	diez	some
-$	dolar	all	norep
-£	liră	all	norep
-€	euro	all	norep
-¢	cent	all	norep
-¥	yen	all	norep
-₹	rupie	some	norep
-%	procent	some
-&	ampersand	some
-'	apostrof vertical	most
-(	paranteză stânga	most	always
-)	paranteză dreapta	most	always
-*	asterisc	some
-+	plus	some
-,	virgulă	all	always
+!	semn exclamare
+"	ghilimele
+\#	diez
+$	dolar
+£	liră
+€	euro
+¢	cent
+¥	yen
+₹	rupie
+%	procent
+&	ampersand
+'	apostrof vertical
+(	paranteză stânga
+)	paranteză dreapta
+*	asterisc
++	plus
+,	virgulă
 -	cratimă
-.	punct	some
-/	per	some
-:	două puncte	some	norep
-;	punct și virgulă	some
-<	mai mic	some
->	mai mare	some
-=	egal	some
-?	semn întrebare	most	norep
-@	a rond	some
-[	paranteză pătrată stânga	most
-]	paranteză pătrată dreapta	most
-\\	bară oblică	most
-^	circumflex	most
-_	liniuță joasă	most
-`	accent grav	most
-{	acoladă stânga	most
-}	acoladă dreapta	most
-|	bară verticală	most
-~	tilda	most
+.	punct
+/	per
+:	două puncte
+;	punct și virgulă
+<	mai mic
+>	mai mare
+=	egal
+?	semn întrebare
+@	a rond
+[	paranteză pătrată stânga
+]	paranteză pătrată dreapta
+\\	bară oblică
+^	circumflex
+_	liniuță joasă
+`	accent grav
+{	acoladă stânga
+}	acoladă dreapta
+|	bară verticală
+~	tilda
 
 # Other characters
-•	bulină	some
-…	puncte de suspensie	all	always
-...	punct punct punct	all	always
-	bulină	some
-“	ghilimele inverse închise	most
-”	ghilimele închise	most
-‘	apostrof invers	most
-’	apostrof	most
-–	cratimă dublă	most	always
-—	linie de dialog	most
-●	cerc negru	most
-¨	tremă	most
-‎	marcaj stânga la dreapta	char
-‏	marcaj dreapta la stânga	char
-■	pătrat negru	some
-▪	pătrat negru	some
-◾	pătrat negru	some
-◦	bulină albă	some
-➔	săgeată dreapta	some
-§	secțiune	all
-°	grade	some
-«	ghilimele unghiulare deschise
-»	ghilimele unghiulare închise
-µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-®	marcă înregistrată	some
-™	treid marc	some
-©	drepturi de autor	some
-±	plus sau minus	some
-×	înmulțit	some
-÷	împărțit	some
-←	săgeată stânga	some
-→	săgeată dreapta	some
-✓	bifat	some
-✔	bifat	some
-„	ghilimele deschise	none
+•	bulină
+…	puncte de suspensie
+...	punct punct punct
+	bulină
+“	ghilimele inverse închise
+”	ghilimele închise	some
+‘	apostrof invers
+’	apostrof
+–	cratimă dublă
+—	linie de dialog
+●	cerc negru
+¨	tremă
+‎	marcaj stânga la dreapta
+‏	marcaj dreapta la stânga
+■	pătrat negru
+▪	pătrat negru
+◾	pătrat negru
+◦	bulină albă
+➔	săgeată dreapta
+§	secțiune
+°	grade
+«	ghilimele unghiulare deschise	some
+»	ghilimele unghiulare închise	some
+µ	micro
+¹	superscript 1
+²	superscript 2
+³	superscript 3
+®	marcă înregistrată
+™	treid marc
+©	drepturi de autor
+±	plus sau minus
+×	înmulțit
+÷	împărțit
+←	săgeată stânga
+→	săgeată dreapta
+✓	bifat
+✔	bifat
+„	ghilimele deschise	some
 #Mathematical Operators U+2200 to U+220F
 
-∀	oricare ar fi 	none
-∁	Complement	none
-∂	derivată parțială	none
-∃	există	none
-∄	nu există	none
-∅	mulțimea vidă	none
-∆	increment	none
-∇	nabla	none
-∈	aparține lui	none
-∉	nu aparține lui	none
-∊	aparține mic	none
-∋	conține ca element pe	none
-∌	nu conține ca element pe	none
-∍	conține ca element pe mic	none
-∎	q e d	none
-∏	produs	none
+∀	oricare ar fi
+∁	Complement
+∂	derivată parțială
+∃	există
+∄	nu există
+∅	mulțimea vidă
+∆	increment
+∇	nabla
+∈	aparține lui
+∉	nu aparține lui
+∊	aparține mic
+∋	conține ca element pe
+∌	nu conține ca element pe
+∍	conține ca element pe mic
+∎	q e d
+∏	produs
 
 # Miscellaneous Mathematical Operators
 
-∑	sumă	none
-√	radical	none
-∛	radical de ordin trei	none
-∜	radical de ordin patru	none
-∝	proporțional cu	none
-∞	infinit	none
-∟	unghi drept	none
-∠	unghi	none
-∥	paralel cu	none
-∦	nu e paralel cu	none
-∧	și logic	none
-∨	sau logic	none
-∩	intersecție	none
-∪	reuniune	none
-∫	integrală	none
-∴	în consecință	none
-∵	deoarece	none
-∶	rație	none
-∷	proporțional	none
-≤	mai mic sau egal cu	none
-≥	mai mare sau egal cu	none
-⊂	submulțime a lui	none
-⊃	superset a lui	none
-⊆	submulțime sau egală cu	none
-⊇	superset sau egal cu	none
+∑	sumă
+√	radical
+∛	radical de ordin trei
+∜	radical de ordin patru
+∝	proporțional cu
+∞	infinit
+∟	unghi drept
+∠	unghi
+∥	paralel cu
+∦	nu e paralel cu
+∧	și logic
+∨	sau logic
+∩	intersecție
+∪	reuniune
+∫	integrală
+∴	în consecință
+∵	deoarece
+∶	rație
+∷	proporțional
+≤	mai mic sau egal cu
+≥	mai mare sau egal cu
+⊂	submulțime a lui
+⊃	superset a lui
+⊆	submulțime sau egală cu
+⊇	superset sau egal cu
