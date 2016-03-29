@@ -421,7 +421,7 @@ class RowWithFakeNavigation(NVDAObject):
 
 	def _moveToColumn(self, obj):
 		if not obj:
-			ui.message(_("edge of table"))
+			ui.message(_("Edge of table"))
 			return
 		if obj is not self:
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
