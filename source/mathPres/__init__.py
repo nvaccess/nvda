@@ -1,6 +1,6 @@
 #mathPres/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2014 NV Access Limited
+#Copyright (C) 2014-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -75,15 +75,11 @@ def registerProvider(provider, speech=False, braille=False, interaction=False):
 
 def ensureInit():
 	# Register builtin providers if a plugin hasn't registered others.
-	if not speechProvider or not brailleProvider or not interactionProvider:
-		from . import mathPlayer
-		try:
-			provider = mathPlayer.MathPlayer()
-		except:
-			log.warning("MathPlayer 4 not available")
-		else:
-			registerProvider(provider, speech=not speechProvider,
-				braille=not brailleProvider, interaction=not interactionProvider)
+	if not speechProvider or not interactionProvider:
+		from . import sre
+		provider = sre.Sre()
+		registerProvider(provider, speech=not speechProvider,
+			interaction=not interactionProvider)
 
 class MathInteractionNVDAObject(Window):
 	"""Base class for a fake NVDAObject which can be focused while interacting with math.
