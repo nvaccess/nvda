@@ -1,5 +1,4 @@
 ﻿NVDA NVDA_VERSION 用户指南
-NVDA NVDA_VERSION 用户指南
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -60,9 +59,11 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 - 操作系统： 所有32位或者64位的Windows XP、 Windows Vista、 Windows 7、Windows 8和 Windows 10(包括服务器系统)。
 - 对于 Windows XP 32位版本，NVDA 要求 SP2 以上。
 - 对于 Windows Server 2003版本， NVDA 要求 SP1 或者更高。
+- 对于 Windows Vista， NVDA 要求 Service Pack 2 和 [KB2763674 https://support.microsoft.com/en-us/kb/2763674]更新。
+如果这两个更新项目在 Windows Update 军可用，所有的更新都必须执行。
 - 内存：需要 256MB 或以上 
 - 处理器速率：1.0Ghz或以上 
-- 约需要50 MB 的磁盘空间。
+- 约需要90 MB 的磁盘空间。
 -
 
 + 获取和设置 NVDA +
@@ -371,7 +372,7 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 | 导航对象全文朗读 | 小键盘加号 | NVDA+shift+a | 三个手指向下滑动(文本模式) | 从浏览光标所在位置开始朗读并随之移动。 |
 | 拷贝浏览光标从 | NVDA+f9 | NVDA+f9 | 无 | 设定当前浏览光标所在位置为开始点，实际的复制并不会执行，除非您告诉 NVDA 结束点在哪里。 |
 | 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
-| 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息。 |
+| 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息，连按两次可使用浏览模式在格式信息之间导航。
 %kc:endInclude
 
 请注意，数字键盘必须处于关闭状态下按键才能正常工作。
@@ -633,7 +634,7 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 可在元素列表下访问的信息种类有：
 - 图表： 这里列举了工作表的所有图表。
 使用光标键选择一个图表后按下“回车键”或点击“移动到”按钮可聚焦到所选的图表。
-- 这里列举了所有包含注释的单元格。
+-注释：这里列举了所有包含注释的单元格。
 单元格地址和其所属的注释都会被显示在这里。
 按下“回车键”或点击“移动到”按钮可以直接移动到所选注释的单元格内。
 - 公式：这里列举了工作表中所有包含公式的单元格。
@@ -765,6 +766,16 @@ NVDA 支持的合成器列表可以在[支持的语音合成器 #SupportedSpeech
 ==== 输出设备 ====
 此选项允许您选择 NVDA 控制合成气进行语音输出时使用的声卡。
 
+%kc:setting
+==== 音频闪避模式 ====
+按键: NVDA+shift+d
+
+在 Windows 8 或以上版本的操作系统中，此选项允许您选择，是否在 NVDA 朗读时，亦或是在 NVDA 运行时，减小其他程序的声音。
+- 从不闪避： NVDA 将不会减小其他声音的音量。
+- 输出语音或声音时闪避：仅当在 NVDA 朗读或播放声音时减小其他声音的音量。这可能不能作用于所有合成器。
+- 总是闪避：在 NVDA 运行的全过程中，其他音频音量会被保持在一个较低的水平上。
+-
+
 +++ 语音设置 (NVDA+control+v) +++[VoiceSettings]
 在“选项”菜单的“语音设置”对话框，包含着允许您定义语音声音的选项。
 希望在任何地方使用另外一种更快的方式切换语音参数，请查看[循环切换合成器设置 #SynthSettingsRing]章节。
@@ -892,8 +903,17 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 ==== 将光标所在单词转换为电脑点字 ====
 此选项允许把光标下面的单词用没有缩写的电脑盲文点字进行显示。
 
-==== 光标闪烁频率 ====
+==== 显示光标 ====
+此选项允许您对点字光标进行开关
+该设置会应用到系统输入焦点和浏览光标，而并不会作用于选择指示器。
+换言之，此选项对选择指示器无效。
+
+==== 光标闪烁频率(以毫秒为单位) ====
 此选项是一个数字区域，允许您以毫秒为单位更改光标的闪烁速度。
+
+==== 光标形状 ====
+此选项允许您选择点字光标的形状(极点字样式)。
+此选项对选择指示器无效。
 
 ==== 消息显示时间(以秒为单位) ====
 这是一个数字区域，允许您控制 NVDA 的消息在点显器显示的时间长度。
@@ -1643,14 +1663,13 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ Baum/Humanware/APH Braille Displays ++
 Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
 These include:
-- Baum: SuperVario, PocketVario, VarioUltra (Bluetooth only), Pronto! (Bluetooth only)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Some other displays manufactured by Baum may also work, though this has not been tested.
 
-If connecting via USB, you must first install the USB drivers provided by the manufacturer.
-For the APH Refreshabraille, the USB mode must be set to serial.
+If connecting via USB to displays other than the VarioUltra, Pronto! or Refreshabraille with USB mode set to HID, you must first install the USB drivers provided by the manufacturer.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1707,7 +1726,8 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ HumanWare Brailliant BI/B Series ++
 The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
-If connecting via USB, you must first install the USB drivers provided by the manufacturer.
+If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
+USB drivers are not required if the protocol is set to OpenBraille.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1735,12 +1755,11 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
 NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+NVDA supports Braille Sense, Braille EDGE and Smart Beetle displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from the HIMS Resource Center: http://www.hims-inc.com/resource-center/
-On this page, select your device and download the driver in the Window-Eyes section.
-Although the section only mentions Window-Eyes, this is a general USB driver which will work with NVDA as well.
+You can download these from this page: http://www.himsintl.com/?c=2/13&uid=2319
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
