@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-26 00:10+1000\n"
-"PO-Revision-Date: 2016-02-25 16:42+0200\n"
+"POT-Creation-Date: 2016-03-11 00:10+1000\n"
+"PO-Revision-Date: 2016-03-25 16:07+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -3711,11 +3711,17 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Yazı biçimi bilgisi mevcut değil"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Biçim"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "İnceleme imlecinin bulunduğu yerle ilgili yazı biçimi bilgisini verir"
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"İnceleme imlecinin bulunduğu yerle ilgili yazı biçimi bilgisini verir. İki "
+"kez basılırsa, bilgi tarama kipinde sunulur"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -4750,6 +4756,14 @@ msgstr "Stil %s"
 msgid "default style"
 msgstr "Varsayılan stil"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} ve {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4768,6 +4782,10 @@ msgstr "{color}"
 #, python-brace-format
 msgid "{backgroundColor} background"
 msgstr ", arka plan rengi {backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr ""
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -5114,6 +5132,10 @@ msgstr "it"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "yukarı it"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA Mesajı"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -7745,6 +7767,114 @@ msgstr "Varsayılan renk"
 msgid "Unknown color"
 msgstr "Bilinmeyen renk"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "Otomatik"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "hiçbiri"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr ""
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Bu hücre düzenlenebilir değil"
@@ -8847,10 +8977,6 @@ msgstr "HIMS SyncBraille"
 #, fuzzy
 #~ msgid "%s"
 #~ msgstr "b%s"
-
-#, fuzzy
-#~ msgid "none"
-#~ msgstr "hiçbiri"
 
 #~ msgid "equation"
 #~ msgstr "eşitlik"
