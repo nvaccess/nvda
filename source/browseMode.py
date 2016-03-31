@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 NV Access Limited
+#Copyright (C) 2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,7 +9,6 @@ import winsound
 import time
 import weakref
 import wx
-import queueHandler
 from logHandler import log
 import review
 import scriptHandler
