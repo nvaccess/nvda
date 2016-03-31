@@ -37,7 +37,7 @@ Besides English, NVDA has been translated into 47 languages including: Afrikaans
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
 
-NVDA is bundled with [eSpeak http://espeak.sourceforge.net/], a free, open-source, multi-lingual speech synthesizer.
+NVDA is bundled with [eSpeak NG https://github.com/espeak-ng/espeak-ng], a free, open-source, multi-lingual speech synthesizer.
 
 Information about other speech synthesizers that NVDA supports can be found in the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
 
@@ -784,8 +784,8 @@ You can use the arrow keys to listen to all the various choices.
 Left and Up arrow take you up in the list, while right and down arrow move you down in the list.
 
 ==== Variant ====
-If you are using the Espeak synthesizer that is packaged with NVDA, this is a combo box that lets you select the Variant the synthesizer should speak with.
-ESpeak's Variants are rather like voices, as they provide slightly different attributes to the eSpeak voice.
+If you are using the Espeak NG synthesizer that is packaged with NVDA, this is a combo box that lets you select the Variant the synthesizer should speak with.
+ESpeak NG's Variants are rather like voices, as they provide slightly different attributes to the eSpeak NG voice.
 Some variants will sound like a male, some like a female, and some even like a frog.
 
 ==== Rate ====
@@ -800,12 +800,12 @@ It is a slider which goes from 0 to 100, (0 being the lowest pitch and 100 being
 This option is a slider which goes from 0 to 100, (0 being the lowest volume and 100 being the highest).
 
 ==== Inflection ====
-This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak).
+This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak NG).
 
 ==== Automatic Language switching ====
 This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
 This option is enabled by default.
-Currently only the eSpeak synthesizer supports automatic language switching.
+Currently only the eSpeak NG synthesizer supports automatic language switching.
 
 ==== Automatic Dialect switching ====
 This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
@@ -1463,13 +1463,13 @@ This item, once activated, reloads app modules and global plugins without restar
 This section contains information about the speech synthesizers supported by NVDA.
 For an even more extensive list of  free and commercial synthesizers that you can purchase and download for use with NVDA, please see the page at [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-NVDA starts using eSpeak by default.
+++ eSpeak NG ++
+The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
+NVDA starts using eSpeak NG by default.
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
-Each voice that comes with eSpeak speaks a different language.
-There are over 43 different languages supported by eSpeak.
+Each voice that comes with eSpeak NG speaks a different language.
+There are over 43 different languages supported by eSpeak NG.
 
 There are also many variants which can be chosen to alter the sound of the voice.
 

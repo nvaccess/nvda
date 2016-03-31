@@ -193,7 +193,7 @@ class SynthDriver(SynthDriver):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
 			l=v.languages[1:]
-			# For backwards compatibility, voice identifies should always be lowercase
+			# #5783: For backwards compatibility, voice identifies should always be lowercase
 			identifier=os.path.basename(v.identifier).lower()
 			voices[identifier]=VoiceInfo(identifier,v.name,l)
 		return voices
@@ -204,13 +204,13 @@ class SynthDriver(SynthDriver):
 		curVoice = _espeak.getCurrentVoice()
 		if not curVoice:
 			return ""
-		# For backwards compatibility, voice identifies should always be lowercase
+		# #5783: For backwards compatibility, voice identifies should always be lowercase
 		return curVoice.identifier.split('+')[0].lower()
 
 	def _set_voice(self, identifier):
 		if not identifier:
 			return
-		# For backwards compatibility, voice identifies should always be lowercase
+		# #5783: For backwards compatibility, voice identifies should always be lowercase
 		identifier=identifier.lower()
 		if "\\" in identifier:
 			identifier=os.path.basename(identifier)
