@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -803,7 +803,30 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
+	def _reportErrorInPreviousWord(self):
+		try:
+			info = self.makeTextInfo(textInfos.POSITION_CARET)
+		except RuntimeError:
+			return
+		# This gets called for characters which might end a word; e.g. space.
+		# The character before the caret is the word end.
+		# The one before that is the last of the word, which is what we want.
+		info.move(textInfos.UNIT_CHARACTER, -2)
+		info.expand(textInfos.UNIT_CHARACTER)
+		fields = info.getTextWithFields()
+		for command in fields:
+			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
+				break
+		else:
+			# No error.
+			return
+		import nvwave
+		nvwave.playWaveFile(r"waves\textError.wav")
+
 	def event_typedCharacter(self,ch):
+		if config.conf["documentFormatting"]["reportSpellingErrors"] and ch != "\b" and not ch.isalpha():
+			# Reporting of spelling errors is enabled and this character ends a word.
+			self._reportErrorInPreviousWord()
 		speech.speakTypedCharacters(ch)
 		import winUser
 		if config.conf["keyboard"]["beepForLowercaseWithCapslock"] and ch.islower() and winUser.getKeyState(winUser.VK_CAPITAL)&1:

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-11 00:10+1000\n"
-"PO-Revision-Date: 2016-03-09 16:50+0800\n"
+"PO-Revision-Date: 2016-03-28 17:24+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -3673,16 +3673,15 @@ msgid "No formatting information"
 msgstr "沒有格式資訊"
 
 #. Translators: title for formatting information dialog.
-#, fuzzy
 msgid "Formatting"
-msgstr "文件格式"
+msgstr "格式設定"
 
 #. Translators: Input help mode message for report formatting command.
-#, fuzzy
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document. If pressed twice, presents the information in browse mode"
-msgstr "讀出文件中目前瀏覽游標所在字元的格式資訊。"
+msgstr ""
+"讀出文件中目前瀏覽游標所在字元的格式資訊，連按兩次，在瀏覽模式顯示資訊。"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -4688,9 +4687,9 @@ msgstr "預設樣式"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{color1} to {color2}"
-msgstr "{color}，背景色為{backgroundColor}"
+msgstr "{color1} 到 {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
@@ -4713,7 +4712,7 @@ msgstr "背景色為{backgroundColor}"
 
 #, python-brace-format
 msgid "background pattern {pattern}"
-msgstr ""
+msgstr "背景圖案 {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -5062,9 +5061,8 @@ msgid "hover up"
 msgstr "抬起"
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
-#, fuzzy
 msgid "NVDA Message"
-msgstr "NVDA已啟動"
+msgstr "NVDA 訊息"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -7634,86 +7632,78 @@ msgstr "未知的色彩"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
-#, fuzzy
 msgid "automatic"
-msgstr "自動偵測"
+msgstr "自動"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-#, fuzzy
 msgid "checker"
-msgstr "勾選"
+msgstr "檢查工具"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "crisscross"
-msgstr ""
+msgstr "縱橫交錯線"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-#, fuzzy
 msgid "down"
-msgstr "page down"
+msgstr "down"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 16% gray
 msgid "gray16"
-msgstr ""
+msgstr "百分之16灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
 msgid "gray25"
-msgstr ""
+msgstr "百分之25灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
 msgid "gray50"
-msgstr ""
+msgstr "百分之50灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
 msgid "gray75"
-msgstr ""
+msgstr "百分之75灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 8% gray
 msgid "gray8"
-msgstr ""
+msgstr "百分之8灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-#, fuzzy
 msgid "grid"
-msgstr "資料格"
+msgstr "方格"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
 msgid "horizontal"
-msgstr ""
+msgstr "水平線"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-#, fuzzy
 msgid "light down"
-msgstr "向下滑動"
+msgstr "light down"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-#, fuzzy
 msgid "light horizontal"
-msgstr "亮珊瑚色"
+msgstr "淺水平線"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-#, fuzzy
 msgid "light up"
-msgstr "亮藍色"
+msgstr "light up"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#, fuzzy
 msgid "light vertical"
-msgstr "亮珊瑚色"
+msgstr "淺垂直線條"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7723,32 +7713,30 @@ msgstr "沒有"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "semi gray75"
-msgstr ""
+msgstr "百分之75半灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
 msgid "solid"
-msgstr ""
+msgstr "單色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
 msgid "up"
-msgstr ""
+msgstr "up"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#, fuzzy
 msgid "vertical"
-msgstr "置頂垂直對齊"
+msgstr "垂直線條"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#, fuzzy
 msgid "linear gradient"
-msgstr "斯洛維尼亞語一級點字"
+msgstr "線性漸變"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
-msgstr ""
+msgstr "矩形漸變"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"

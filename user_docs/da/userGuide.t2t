@@ -299,7 +299,7 @@ Når du er i en tabel, kan følgende kommandoer også bruges:
 | Flyt til næste række | Ctrl+Alt+Pil-ned | Flytter markøren til næste række (i den samme kolonne) |
 %kc:endInclude
 
-++ Objektbaseret navigering ++
+++ Objektbaseret navigering ++[ObjectNavigation]
 For det meste vil du arbejde med kommandoer der ændrer [fokus #SystemFocus] og [systemmarkøren #SystemCaret].
 Nogle gange kan det imidlertid værre, at du hellere vil udforske den aktuelle applikation eller operativsystemet uden at flytte fokus eller systemmarkøren.
 Du kan også have nytte af at arbejde med [objekter #Objects] der nomalt ikke kan benyttes af tastaturet.
@@ -372,7 +372,7 @@ Følgende tastekommandoer er tilgængelige for gennemsyn af tekst:
 | Sig alt i læsetilstand | Numpad-plus | NVDA+Shift+a | Svirp ned med tre fingre (teksttilstand) | Læser fra læsemarkørens aktuelle position og flytter den under læsningen |
 | Kopier fra læsemarkør | NVDA+f9 | NVDA+f9 | Ingen | Begynder at kopiere tekst fra læsemarkørens aktuelle position. Den faktiske kopiering finder ikke sted, før du fortæller NVDA, hvor teksten skal kopieres hen. |
 | Kopier til læsemarkør | NVDA+f10 | NVDA+f10 | Ingen | Kopierer fra den position, som er blevet sat med funktionen "Kopier fra læsemarkør" til læsemarkørens aktuelle position. Når du trykker på denne tast, bliver teksten kopieret til Windows udklipsholderen. |
-| Sig tekstformatering | NVDA+f | NVDA+f | Ingen | Annoncerer formateringen af teksten ved læsemarkørens position |
+| Sig tekstformatering | NVDA+f | NVDA+f | Ingen | Annoncerer formateringen af teksten ved læsemarkørens position. Trykkes dette to gange vil informationen blive vist i gennemsynstilstand |
 %kc:endInclude
 
 Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Numlock-tasten være slået fra.
@@ -442,7 +442,7 @@ Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen,
 | Flyt til objektet ved musen | NVDA+Numpad-stjerne NVDA+Shift+n | Sætter navigatorobjektet til at være objektet på musens position |
 %kc:endInclude
 
-+ Gennemsynstilstand +
++ Gennemsynstilstand +[BrowseMode]
 Komplekse dokumenter, der ikke kan redigeres, fx. web-sider, bliver præsenteret med NVDA i gennemsynstilstand.
 Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
 Gennemsynstilstand kan også bruges i Microsoft Word-dokumenter.
@@ -629,12 +629,12 @@ Ligesom på webbet har NVDA en elementliste til Microsoft Excel, hvor du kan få
 For at komme til elementlisten i Excel skal du trykke NVDA+f7.
 %kc:endInclude
 De forskellige typer oplysninger, du kan se i elementlisten, er følgende:
-- Diagrammer: Viser alle diagrammer i projektmappen.
+- Diagrammer: Viser alle diagrammer i DET AKTIVE REGNEARK.
 Hvis du vælger et diagram og trykker på Enter eller knappen "Flyt til", får du diagrammet i fokus, så du kan bevæge dig rundt i det og læse det med piletasterne.
-- Kommentarer: Viser en liste over alle celler i projektmappen, som indeholder kommentarer.
+- Kommentarer: Viser en liste over alle celler i REGNEARKET, som indeholder kommentarer.
 For hver celle for du vist adressen og den tilhørende kommentar.
 Hvis du trykker på Enter eller "Flyt til"-knappen på en kommentar i listen, går du direkte til cellen.
-- Formler: Viser en liste med alle celler i projektmappen, som indeholder en formel.
+- Formler: Viser en liste med alle celler i REGNEARKET, som indeholder en formel.
 For hver celle bliver vist celleadressen og formlen.
 Hvis du trykker på Enter eller "Flyt til"-knappen på en formel i listen, kommer du direkte til cellen.
 - Ark: Viser en liste over alle ark i projektmappen.
@@ -1475,7 +1475,9 @@ Der findes også mange forskellige varianter, der kan vælges for at ændre, hvo
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 er en ældre standard fra Microsoft for software-talesynteser.
-Der findes en lang række talesynteser, der opfylder denne standard. De kan enten hentes gratis eller købes fra forskellige firmaer og hjemmesider.
+NVDA understøtter denne talesyntese for brugere, som allerede har SAPI 4 synteser installeret.
+Microsoft understøtter derimod ikke længere talesyntesen og nødvendige komponenter er ikke længere tilgængelige fra Microsoft.
+
 Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via den cirkulære menu Talesyntese-indstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 4 talesynteser, der er installeret på dit system.
 
 Hvis dine installerede SAPI 4 talesynteser ikke fremkommer i NVDAs liste med talesynteser, skal du installere SAPI 4.0 pakkerne (SAPI 4.0 runtime binaries). De kan hentes på http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
@@ -2105,7 +2107,7 @@ BRLTTY håndtere selv indtastning på punkt, hvis det tilkoblede punktdisplay ha
 NVDAs indstilling for oversættelsestabel er derfor ikke relevant.
 
 Dette er tastekombinationerne til BRLTTY til brug med NVDA.
-Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/KeyTables/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.
+Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/KeyBindings/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.
 %kc:beginInclude
 || Navn | BRLTTY command |
 | Rul punktdisplay tilbage | fwinlt (gå et vindue til venstre) |
