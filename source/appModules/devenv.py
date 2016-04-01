@@ -51,6 +51,8 @@ from NVDAObjects.window import DisplayModelEditableText
 
 import appModuleHandler
 
+from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.UIA import UIA
 
 #
 # A few helpful constants
@@ -90,6 +92,20 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
+		log.info("\nObj is:\nName:%s\nRole:%s\nHasFocus:%s\nIs IAccessible:%s\nIsUIA%s\n",obj.name,obj.role,obj.hasFocus,isinstance(obj,IAccessible),isinstance(obj,UIA))
+		if obj.name== "Active Files" and obj.role==4:
+			count=obj.getChild(1).childCount
+			for i in range(0,count):
+				if obj.getChild(1).getChild(i).hasFocus:
+					try:
+						obj.name=obj.getChild(1).getChild(i).name
+						obj.role=obj.getChild(1).getChild(i).role
+					except:
+						pass
+		if (obj.hasFocus is not True) and isinstance(obj,IAccessible):
+			 clsList.insert(0, VsTest)
+		if (obj.hasFocus is not True) and isinstance(obj,UIA):
+			 clsList.insert(0, VsTestOne)
 		if obj.windowClassName == VsTextEditPaneClassName and self._getDTE():
 			try:
 				clsList.remove(DisplayModelEditableText)
@@ -256,6 +272,20 @@ class IVsTextManager(comtypes.IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID('{909F83E3-B3FC-4BBF-8820-64378744B39B}')
 	_idlflags_ = []
+	
+class VsTest(IAccessible):
+	def _get_name(self):
+		return None
+	
+	def _get_role(self):
+		return 0
+	
+class VsTestOne(UIA):
+	def _get_name(self):
+		return None
+	
+	def _get_role(self):
+		return 0
 
 IVsTextManager._methods_ = [
 	COMMETHOD([], HRESULT, 'RegisterView',
