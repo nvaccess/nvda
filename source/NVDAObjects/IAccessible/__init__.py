@@ -1567,7 +1567,7 @@ class TrayClockWClass(IAccessible):
 		return controlTypes.ROLE_CLOCK
 
 	def _get_name(self):
-		#The name contains redundant information that is available either in the role or the value.
+		# #4364: The name contains redundant information that is available either in the role or the value.
 		return None
 
 	def _get_value(self):
@@ -1575,8 +1575,10 @@ class TrayClockWClass(IAccessible):
 		if value is None:
 			#On XP there is no value, fall back to using the name.
 			return super(TrayClockWClass, self).name
-		#Strip Unicode left-to-right and right-to-left marks.
-		return value.replace(u'\u200E','').replace(u'\u200F','')
+		# #5729: Strip Unicode left-to-right and right-to-left marks.
+		value = value.replace(u'\u200E','')
+		value = value.replace(u'\u200F','')
+		return value
 
 class OutlineItem(IAccessible):
 
