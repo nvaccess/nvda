@@ -108,7 +108,7 @@ def getAppModuleFromProcessID(processID):
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			appName=getAppNameFromProcessID(processID)
+			appName=getAppNameFromProcessID(processID).replace(".", "_")
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")
