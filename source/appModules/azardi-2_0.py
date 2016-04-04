@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/azardi-2_0.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 Noelia Ruiz
+#Copyright (C) 2016 Noelia Ruiz Martínez
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
