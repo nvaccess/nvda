@@ -40,7 +40,7 @@ class AzardiTreeViewItem(TreeViewItem):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_GROUPING:
+		if obj.role == controlTypes.ROLE_GROUPING or obj.role == controlTypes.ROLE_FRAME:
 			clsList.insert(0, AzardiDocument)
 		elif obj.role == controlTypes.ROLE_TREEVIEWITEM:
 			clsList.insert(0, AzardiTreeViewItem)
