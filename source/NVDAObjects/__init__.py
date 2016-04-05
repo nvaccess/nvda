@@ -805,15 +805,21 @@ Tries to force this object to take the focus.
 
 	def _reportErrorInPreviousWord(self):
 		try:
-			info = self.makeTextInfo(textInfos.POSITION_CARET)
+			# self might be a descendant of the text control; e.g. Symphony.
+			# We want to deal with the entire text, so use the caret object.
+			info = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+			# This gets called for characters which might end a word; e.g. space.
+			# The character before the caret is the word end.
+			# The one before that is the last of the word, which is what we want.
+			info.move(textInfos.UNIT_CHARACTER, -2)
+			info.expand(textInfos.UNIT_CHARACTER)
+			fields = info.getTextWithFields()
 		except RuntimeError:
 			return
-		# This gets called for characters which might end a word; e.g. space.
-		# The character before the caret is the word end.
-		# The one before that is the last of the word, which is what we want.
-		info.move(textInfos.UNIT_CHARACTER, -2)
-		info.expand(textInfos.UNIT_CHARACTER)
-		fields = info.getTextWithFields()
+		except:
+			# Focus probably moved.
+			log.debugWarning("Error fetching last character of previous word", exc_info=True)
+			return
 		for command in fields:
 			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
 				break
@@ -824,7 +830,10 @@ Tries to force this object to take the focus.
 		nvwave.playWaveFile(r"waves\textError.wav")
 
 	def event_typedCharacter(self,ch):
-		if config.conf["documentFormatting"]["reportSpellingErrors"] and ch != "\b" and not ch.isalpha():
+		if config.conf["documentFormatting"]["reportSpellingErrors"] and (
+			# Non-alpha, non-control.
+			ch.isspace() or (ch >= u" " and ch != u"\x7f" and not ch.isalpha())
+		):
 			# Reporting of spelling errors is enabled and this character ends a word.
 			self._reportErrorInPreviousWord()
 		speech.speakTypedCharacters(ch)
