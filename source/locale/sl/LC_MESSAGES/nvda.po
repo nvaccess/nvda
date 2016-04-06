@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-12 00:10+1000\n"
-"PO-Revision-Date: 2016-02-12 07:24+0100\n"
+"POT-Creation-Date: 2016-03-11 00:10+1000\n"
+"PO-Revision-Date: 2016-03-10 18:08+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -3779,13 +3779,18 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Ni informacije o oblikovanju"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Oblika"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Sporoča informacijo o obliki znotraj dokumenta glede na trenutni položaj "
-"pregledne utripalke."
+"pregledne utripalke. Dvojni pritisk informacijo predstavi v brskalniškem "
+"delovanju."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
@@ -4768,11 +4773,6 @@ msgstr "izbor je odstranjen"
 msgid "done dragging"
 msgstr "vlečenje končano"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "nivo %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4796,6 +4796,11 @@ msgstr "ki vsebuje %s stolpcev"
 #, python-format
 msgid "with %s rows"
 msgstr "ki vsebuje %s vrstic"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "nivo %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4831,6 +4836,13 @@ msgstr "slog %s"
 msgid "default style"
 msgstr "privzet slog"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+msgid "{color1} to {color2}"
+msgstr "{color1} na {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4846,6 +4858,9 @@ msgstr "{color}"
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} ozadje"
+
+msgid "background pattern {pattern}"
+msgstr "vzorec ozadja {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -5187,6 +5202,10 @@ msgstr "lebdenje"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "konec lebdenja"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA Sporočilo"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -7798,6 +7817,115 @@ msgstr "privzeta barva"
 msgid "Unknown color"
 msgstr "Neznana barva"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "samodejno"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "progasto"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "križno"
+
+# pgdn (page down)
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "dol"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "sivo16"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "sivo25"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "sivo50"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "sivo75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "sivo8"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "mrežno"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "vodoravno"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "tanko navzdol"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "tanko vodoravno"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "tanko navzgor"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "tanko navpično"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "brez"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "polovično sivo"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "polno"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "gor"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "navpično"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "iz sredine"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "iz kota"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Ta celica ni namenjena urejanju"
@@ -8847,12 +8975,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "Formatting"
-#~ msgstr "Oblika"
-
-#~ msgid "NVDA Message"
-#~ msgstr "NVDA Sporočilo"
-
 #~ msgid ""
 #~ "Toggles whether NVDA's speech and sounds should duck other audio, or "
 #~ "other audio should be ducked all the time, or audio should never be ducked"
@@ -8932,9 +9054,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr "{} {} od {}"
-
-#~ msgid "none"
-#~ msgstr "brez"
 
 #~ msgid " trendline {} "
 #~ msgstr "Trendna Črta {} "
