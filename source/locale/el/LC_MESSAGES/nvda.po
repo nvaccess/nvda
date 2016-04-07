@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 00:10+1000\n"
-"PO-Revision-Date: 2016-03-18 21:46+0200\n"
+"POT-Creation-Date: 2016-04-01 00:10+1000\n"
+"PO-Revision-Date: 2016-04-01 15:05+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -329,6 +329,11 @@ msgstr "Ιρλανδικά βαθμού 2"
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "Γκουτζεράτι βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Ελληνιστική Κοινή"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -769,11 +774,13 @@ msgstr "κουκίδα"
 msgid "space"
 msgstr "διάστημα"
 
-msgid "focus mode"
-msgstr "λειτουργία εστίασης"
+msgid "Focus mode"
+msgstr "Λειτουργία εστίασης"
 
-msgid "browse mode"
-msgstr "λειτουργία περιήγησης"
+# ?
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "Λειτουργία περιήγησης"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -804,8 +811,8 @@ msgid "Lists various types of elements in this document"
 msgstr "Παραθέτει διάφορους τύπους στοιχείων σε αυτό το έγγραφο"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
-msgstr "ενεργοποιεί το τρέχον αντικείμενο στο έγγραφο"
+msgid "Activates the current object in the document"
+msgstr "Ενεργοποιεί το τρέχον αντικείμενο στο έγγραφο"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1310,8 +1317,9 @@ msgstr ""
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "κάτω μέρος"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
+msgstr "Κάτω μέρος"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -2595,13 +2603,11 @@ msgstr "χρώμα παρασκηνίου"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "εκθέτης"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "δείκτης"
 
@@ -2880,12 +2886,12 @@ msgstr ""
 "την τρέχουσα θέση του δρομέα"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
-msgstr "καμία επισήμανση"
+msgid "No selection"
+msgstr "Καμία επισήμανση"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
-msgstr "αντιγράφηκε στο πρόχειρο"
+msgid "Copied to clipboard"
+msgstr "Αντιγράφηκε στο πρόχειρο"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2994,44 +3000,48 @@ msgstr ""
 "το πλήκτρο δύο φορές θα γίνει εκφώνηση της τρέχουσας γραμμής ανά χαρακτήρα."
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
-msgstr "αριστερό κλικ"
+msgid "Left click"
+msgstr "Αριστερό κλικ"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Πραγματοποιεί απλό αριστερό κλικ στην τρέχουσα θέση του ποντικιού"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
-msgstr "δεξί κλικ"
+msgid "Right click"
+msgstr "Δεξί κλικ"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Πραγματοποιεί απλό δεξί κλικ στην τρέχουσα θέση του ποντικιού"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+msgid "Left mouse button unlock"
 msgstr "Ξεκλείδωμα αριστερού πλήκτρου ποντικιού"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "κλείδωμα αριστερού πλήκτρου ποντικιού"
+msgid "Left mouse button lock"
+msgstr "Κλείδωμα αριστερού πλήκτρου ποντικιού"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "Κλειδώνει ή ξεκλειδώνει το αριστερό πλήκτρο του ποντικιού"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr "ξεκλείδωμα δεξιού πλήκτρου ποντικιού"
+msgid "Right mouse button unlock"
+msgstr "Ξεκλείδωμα δεξιού πλήκτρου ποντικιού"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "κλείδωμα δεξιού πλήκτρου ποντικιού"
+msgid "Right mouse button lock"
+msgstr "Κλείδωμα δεξιού πλήκτρου ποντικιού"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Κλειδώνει ή ξεκλειδώνει το δεξί πλήκτρο του ποντικιού"
+
+#, python-format
+msgid "Selected %s"
+msgstr "Επιλέχθηκε %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3460,8 +3470,8 @@ msgstr ""
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
-msgstr "επίπεδο συμβόλων %s"
+msgid "Symbol level %s"
+msgstr "Επίπεδο συμβόλων %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3471,8 +3481,8 @@ msgstr ""
 "καθορίζουν ποια σύμβολα εκφωνούνται"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "το αντικείμενο δεν έχει πληροφορίες θέσης"
+msgid "Object has no location"
+msgstr "Δε διατίθενται πληροφορίες θέσης για το αντικείμενο"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3517,8 +3527,8 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
-msgstr "δεν υπάρχει αντικείμενο πλοήγησης"
+msgid "No navigator object"
+msgstr "Δεν υπάρχει αντικείμενο πλοήγησης"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -3549,8 +3559,8 @@ msgstr ""
 "περισσότερες πληροφορίες."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "Μετακίνηση σε εστίαση"
+msgid "Move to focus"
+msgstr "Μετακίνηση για εστίαση"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3564,24 +3574,24 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
-msgstr "δεν υπάρχει εστίαση"
+msgid "No focus"
+msgstr "Καμία εστίαση"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "μετακίνηση εστίασης"
+msgid "Move focus"
+msgstr "Μετακίνηση εστίασης"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "δεν υπάρχει κέρσορας"
+msgid "No caret"
+msgstr "Δεν υπάρχει κέρσορας"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Όταν πατηθεί μία φορά θέτει την εστίαση του πληκτρολογίου στο αντικείμενο "
-"πλοήγησης, όταν πατηθεί δύο φορές θέτει τον κέρσορα στη θέση του δρομέα "
+"Αν πατηθεί μία φορά θέτει την εστίαση του πληκτρολογίου στο αντικείμενο "
+"πλοήγησης, αν πατηθεί δύο φορές θέτει τον κέρσορα στη θέση του δρομέα "
 "επανεξέτασης"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -3593,6 +3603,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Μετακινεί το αντικείμενο πλοήγησης στο αντικείμενο που το περιέχει"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Δεν υπάρχει επόμενο"
 
@@ -3601,6 +3612,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Μετακινεί το αντικείμενο πλοήγησης στο επόμενο αντικείμενο"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Δεν υπάρχει προηγούμενο"
 
@@ -3617,8 +3629,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Μετακινεί το αντικείμενο πλοήγησης στο πρώτο αντικείμενο εντός του"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "ενεργοποίηση"
+msgid "Activate"
+msgstr "Ενεργοποίηση"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3633,8 +3645,8 @@ msgstr ""
 "παράδειγμα: το πατάει αν είναι κουμπί)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
-msgstr "κορυφή"
+msgid "Top"
+msgstr "Κορυφή"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3705,8 +3717,9 @@ msgstr ""
 "Μετακινεί το δρομέα επανεξέτασης στην επόμενη λέξη του τρέχοντος "
 "αντικειμένου πλοήγησης και την εκφωνεί"
 
-msgid "left"
-msgstr "αριστερά"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Αριστερά"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3736,8 +3749,9 @@ msgstr ""
 "ή ένα παράδειγμα αυτού του χαρακτήρα. Πατώντας τρεις φορές αναφέρει την "
 "αριθμητική τιμή του χαρακτήρα σε δεκαδικό και δεκαεξαδικό"
 
-msgid "right"
-msgstr "δεξιά"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Δεξιά"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3756,16 +3770,16 @@ msgstr ""
 "βρίσκεται στο τρέχον αντικείμενο πλοήγησης και τον εκφωνεί"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "απενεργοποίηση εκφώνησης"
+msgid "Speech mode off"
+msgstr "Εκφώνηση απενεργοποιημένη"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
-msgstr "λειτουργία εκφώνησης με ήχους μπιπ"
+msgid "Speech mode beeps"
+msgstr "Λειτουργία εκφώνησης με ήχους μπιπ"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
-msgstr "ενεργοποίηση εκφώνησης"
+msgid "Speech mode talk"
+msgstr "Εκφώνηση ενεργοποιημένη"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3808,19 +3822,19 @@ msgstr "Εμφανίζει το μενού του NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"διαβάζει από το δρομέα επανεξέτασης μέχρι το τέλος του τρέχοντος κειμένου, "
+"Διαβάζει από το δρομέα επανεξέτασης μέχρι το τέλος του τρέχοντος κειμένου, "
 "μετακινώντας ταυτόχρονα το δρομέα επανεξέτασης"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
-"διαβάζει από τον κέρσορα μέχρι το τέλος του κειμένου, μετακινώντας τον "
-"κέρσορα καθώς εκφωνεί"
+"Διαβάζει από τον κέρσορα του συστήματος μέχρι το τέλος του κειμένου, "
+"μετακινώντας ταυτόχρονα τον κέρσορα "
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -3840,10 +3854,10 @@ msgstr ""
 "πληροφορίες σε λειτουργία περιήγησης."
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
-"Αναφέρει το αντικείμενο με εστίαση. Αν πατηθεί δύο φορές, εκφωνεί τις "
-"πληροφορίες."
+"Αναφέρει το αντικείμενο με εστίαση. Αν πατηθεί δύο φορές, διαβάζει τις "
+"πληροφορίες ανά γράμμα."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3851,11 +3865,11 @@ msgstr "Δε βρέθηκε γραμμή κατάστασης"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
-"διαβάζει τη γραμμή κατάστασης για την τρέχουσα εφαρμογή και μετακινεί τον "
-"πλοηγό σε αυτή. Αν πατηθεί δύο φορές, εκφωνεί τις πληροφορίες."
+"Διαβάζει τη γραμμή κατάστασης για την τρέχουσα εφαρμογή και μετακινεί τον "
+"πλοηγό σε αυτήν. Αν πατηθεί δύο φορές, διαβάζει τις πληροφορίες ανά γράμμα."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3871,8 +3885,8 @@ msgstr ""
 "Πραγματοποιεί εναλλαγή της αναφοράς πληροφοριών κατά την κίνηση του ποντικιού"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
-msgstr "χωρίς τίτλο"
+msgid "No title"
+msgstr "Χωρίς τίτλο"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3885,8 +3899,8 @@ msgstr ""
 "αντιγράφει τον τίτλο στο πρόχειρο"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
-msgstr "εκφωνεί το τρέχον αντικείμενο στο προσκήνιο"
+msgid "Speaks the current foreground object"
+msgstr "Εκφωνεί το τρέχον αντικείμενο στο προσκήνιο"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3898,20 +3912,20 @@ msgstr ""
 "οι πληροφορίες να μπορούν να εξεταστούν."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
-msgstr "χωρίς ενημερώσεις της γραμμής προόδου"
+msgid "No progress bar updates"
+msgstr "Χωρίς ενημερώσεις της γραμμής προόδου"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
-msgstr "εκφώνηση ενημερώσεων της γραμμής προόδου"
+msgid "Speak progress bar updates"
+msgstr "Εκφώνηση ενημερώσεων της γραμμής προόδου"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
-msgstr "ήχος μπιπ για τις ενημερώσεις της γραμμής προόδου"
+msgid "Beep for progress bar updates"
+msgstr "Ήχος μπιπ για τις ενημερώσεις της γραμμής προόδου"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
-msgstr "ήχος μπιπ και εκφώνηση των ενημερώσεων της γραμμής προόδου"
+msgid "Beep and speak progress bar updates"
+msgstr "Ήχος μπιπ και εκφώνηση των ενημερώσεων της γραμμής προόδου"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3969,8 +3983,8 @@ msgstr ""
 "μετακίνησης του αντικειμένου πλοήγησης λόγω αλλαγών στην εστίαση"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
-msgstr "δεν υπάρχει μπαταρία συστήματος"
+msgid "No system battery"
+msgstr "Δεν υπάρχει μπαταρία συστήματος"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
@@ -3986,9 +4000,9 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "απομένουν {hours:d} ώρες και {minutes:d} λεπτά"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"αναφέρει την κατάσταση μπαταρίας και τον εναπομείναντα χρόνο αν δεν είναι "
+"Αναφέρει την κατάσταση μπαταρίας και τον εναπομείναντα χρόνο, αν δεν είναι "
 "συνδεδεμένο στο εναλλασσόμενο ρεύμα`"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -4273,10 +4287,6 @@ msgstr ""
 "Επαναφορτώνει τα αρθρώματα και τα καθολικά plugins χωρίς να επανεκκινεί το "
 "NVDA, το οποίο μπορεί να είναι χρήσιμο για προγραμματιστές."
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "δεν υπάρχει επόμενο"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4284,10 +4294,6 @@ msgid ""
 msgstr ""
 "Μετακινείται στο επόμενο αντικείμενο σε μία επίπεδη προβολή της ιεραρχίας "
 "πλοήγησης αντικειμένου"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "Δεν υπάρχει προηγούμενο"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4303,7 +4309,7 @@ msgid "%s mode"
 msgstr "λειτουργία %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+msgid "Cycles between available touch modes"
 msgstr "Πραγματοποιεί κυκλική κίνηση μεταξύ των διαθέσιμων λειτουργιών αφής"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4340,11 +4346,6 @@ msgstr "Προσομειωμένα πλήκτρα συστήματος. "
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Διάφορα"
-
-# ?
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Λειτουργία περιήγησης"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -5013,7 +5014,6 @@ msgstr "χωρίς υπογράμμιση"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "γραμμή αναφοράς"
 
@@ -5467,8 +5467,8 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "όριο του πίνακα"
+msgid "Edge of table"
+msgstr "Όριο πίνακα"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5625,8 +5625,8 @@ msgid "Appointment {subject}, {time}"
 msgstr "Γεγονός {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
-msgstr "υπάρχει γεγονός"
+msgid "Has appointment"
+msgstr "Υπάρχει γεγονός"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -5924,6 +5924,12 @@ msgstr "Διακοπή"
 #. Translators: This is the name of a button in sound recorder.
 msgid "Record"
 msgstr "Εγγραφή"
+
+msgid "left"
+msgstr "αριστερά"
+
+msgid "right"
+msgstr "δεξιά"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -6946,6 +6952,10 @@ msgstr "Προβολέας Αρχείου Καταγραφής Συμβάντω�
 msgid "Refresh\tF5"
 msgstr "Ανανέωση\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "Αποθήκευση &ως...\tCtrl+S"
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "Αρχείο Καταγραφής Συμβάντων"
@@ -7838,12 +7848,12 @@ msgid "Refreshes the document content"
 msgstr "Ανανεώνει το περιεχόμενο του εγγράφου"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "ενεργοποίηση χρήσης διάταξης οθόνης"
+msgid "Use screen layout on"
+msgstr "Χρήση διάταξης οθόνης ενεργοποιημένη"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "απενεργοποίηση χρήσης διάταξης οθόνης"
+msgid "Use screen layout off"
+msgstr "Χρήση διάταξης οθόνης απενεργοποιημένη"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
@@ -8064,7 +8074,7 @@ msgid "Already set {address} as start of column headers"
 msgstr "Έχετε είδη ορίσει {address} ως αρχή των κεφαλίδων της στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+msgid "Removed {address}    from column headers"
 msgstr "Αφαιρέθηκε {address} από τις κεφαλίδες της στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -8090,7 +8100,7 @@ msgid "Already set {address} as start of row headers"
 msgstr "Είδι ορίστικε {address} ως αρχή των κεφαλίδων της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+msgid "Removed {address}    from row headers"
 msgstr "Αφαιρέθηκε {address} από τις κεφαλίδες της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -8879,15 +8889,6 @@ msgstr "σχόλιο: {text} από {author} στις {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} από {author} στις {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g χαρακτήρες"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g στιγμές"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8998,6 +8999,18 @@ msgstr "Στοίχιση στα δεξιά"
 msgid "Justified"
 msgstr "Πλήρης στοίχιση"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Εκθέτης"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Δείκτης"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "Γραμμή αναφοράς"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} Στυλ, επίπεδο περιγράμματος {outlineLevel}"
@@ -9032,8 +9045,8 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} πίκας"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "χωρίς σχόλια"
+msgid "No comments"
+msgstr "Χωρίς σχόλια"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -9044,9 +9057,6 @@ msgstr "Αναφέρει το κείμενο του σχολίου στο σημ
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "Εκτός πίνακα"
-
-msgid "Edge of table"
-msgstr "Όριο πίνακα"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -9060,6 +9070,30 @@ msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "browse mode"
+#~ msgstr "λειτουργία περιήγησης"
+
+#~ msgid "activate"
+#~ msgstr "ενεργοποίηση"
+
+#~ msgid "no next"
+#~ msgstr "δεν υπάρχει επόμενο"
+
+#~ msgid "no previous"
+#~ msgstr "Δεν υπάρχει προηγούμενο"
+
+#~ msgid "edge of table"
+#~ msgstr "όριο του πίνακα"
+
+#~ msgid "%g characters"
+#~ msgstr "%g χαρακτήρες"
+
+#~ msgid "%g pt"
+#~ msgstr "%g στιγμές"
+
+#~ msgid "no comments"
+#~ msgstr "χωρίς σχόλια"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"
