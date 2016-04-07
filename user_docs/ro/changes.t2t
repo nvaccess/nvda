@@ -10,14 +10,28 @@ Ce este nou în NVDA
 - În Microsoft Excel, NVDA acum anunță nivelul unui grup de celule, precum și dacă este extins sau restrâns. (#5690)
 - Dubla apăsare a comenzii „Raportează formatul textului” prezintă informația în modul navigare pentru a putea fi examinată. (#4908)
 - În Microsoft Excel 2010 sau mai nou, nuanța și umplerea cu gradient pentru celulă sunt, acum, anunțate. Raportarea automată este controlată de opțiunea „Anunță culori” din preferințele pentru formatarea documentului ale NVDA. (#3683)
+- Nouă tabelă de traducere braille: Koine Greek. (#5393)
+
+- În Vizualizatorul de Jurnale puteți salva jurnalul folosind combinația control+s. (#4532)
+
+
+== Modificări ==
+- În mod navigare și pentru câmpuri text editabile, NVDA acum tratează tasta Enter de pe blocul numeric la fel ca tasta Enter principală. (#5385)
+- NVDA a trecut la sintetizatorul de vorbire eSpeak NG. (#5651)
 
 
 == Rezolvări defecte ==
 - În modul navigare, la încercarea de a folosi navigarea cu o singură literă pentru a se muta la un element care nu este suportat pentru respectivul document, NVDA anunță că acest lucru nu este suportat, față de precedentul anunț că nu există element în direcția respectivă. (#5691)
 - La listarea foilor de lucru în Lista de elemente pentru Microsoft Excel, sunt acum incluse și foile care conțin doar diagrame. (#5698)
 - NVDA nu mai anunță informații ciudate la comutarea ferestrelor într-o aplicație Java cu ferestre multiple, cum ar fi IntelliJ sau Android Studio. (#5732)
+- În editoare bazate pe Scintilla, cum ar fi Notepad++, braille este acum actualizat corect când se mută cursorul folosind un afișaj braille. (#5678)
+- NVDA nu mai are probleme de terminare prematură uneori când se activează ieșirile braille. (#4457)
+- În Microsoft Word, indentația de paragraf este acum anunțată întotdeauna în unitatea de măsură aleasă de utilizator (de ex. centimetri sau inchi). (#5804)
+- Când este folosit un afișaj braille, multe dintre mesajele NVDA care erau doar rostite, acum sunt și afișate braille. (#5557)
+- În aplicații Java accesibilizate, nivelurile elementelor dintr-o structură arborescentă sunt acum anunțate. (#5766)
 
 
 == Modificări pentru Dezvoltatori ==
 - componentele C++ ale NVDA sunt acum generate cu Microsoft Visual Studio 2015. (#5592)
 - Acum se poate prezenta utilizatorului un mesaj text sau HTML în mod navigare folosind ui.browseableMessage. (#4908)
+- În Ghidul Utilizatorului, când este folosită o comandă %kc:setting pentru o setare care are o tastă comună pentru toate formatel, tasta poate fi pusă după un semn două puncte de mărime întreagă (：) precum și după un semn două puncte normal (:). (#5739)
