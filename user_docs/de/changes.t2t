@@ -10,17 +10,31 @@
 - In Microsoft Excel wird bei Zellengruppen sowohl die Verschachtelungsebene als auch der Status (erweitert/reduziert) angezeigt. (#5690)
 - Beim zweimaligen Drücken der Tastenkombination für die Ansage der Textformatierungen werden nun die Informationen im Lesemodus angezeigt. (#4908)
 - In Microsoft Excel 2010 und neuer werden nun Zellschattierungen und Rahmen angesagt. Die automatische Ansage hierzu wird von der Einstellung für die Dokumentformatierungen in NVDA gesteuert. (#3683)
+- neue Braille-Übersetzungstabelle: griechisch (Koine). (#5393)
+- im Protokollbetrachter kann das Protokoll mit der Tastenkombination strg+s gespeichert werden. (#4532)
+
+
+== Änderungen ==
+- im Lesemodus und in Eingabefeldern werden beide Eingabetasten nun gleich behandelt. (#5385)
+- NVDA verwendet nun espeeak NG. (#5651)
 
 
 == Fehlerkorrekturen ==
 - Wenn Sie die Schnellnavigationstasten verwenden, um zu einem Element eines Typs zu navigieren, der im aktuellen Dokument nicht unterstützt wird, wird dies von NVDA ausdrücklich angezeigt. (#5691)
 - Wenn Sie die Liste der Tabellenblätter in Excel aufrufen, werden nun auch Tabellenblätter einbezogen, die nur Diagramme enthalten. (#5698)
 - NVDA gibt nun nicht länger mehr belanglose Informationen beim Fensterwechseln in Java-Anwendungen mit mehrfachen Fenstern wie zum Beispiel in IntelliJ oder Android Studio wieder. (#5732)
+- In Scincilla-basierten Anwendungen wie Notepad++ wird die Brailleanzeige korrekt aktualisiert, wenn Sie den Cursor mit Hilfe der Braillezeile bewegen. (#5678)
+- NVDA wird nun nicht mehr abstürzen, wenn Sie die Brailleausgabe aktivieren. (#4457)
+- in Word wird die Absatzeinrückung immer in der vom Anwender bewählten maßeinheit angezeigt (z.B. Zentimeter). (#5804)
+- Wenn Sie eine Braillezeile verwenden, werden viele meldungen in Braille angezeigt, die zuvor nur gesprochen wurden. (#5557)
+- in zugänglichen Java-Anwendungen wird die Ebene im Baumstrukturen korrekt angezeigt. (#5766)
 
 
 == Änderungen für Entwickler ==
 - Die C++-Komponenten von NVDA werden nun mit Microsoft Visual Studio 2015 erzeugt. (#5592)
 - Sie können nun einen Text oder eine HTML-Meldung für den Anwender im Lesemodus darstellen, in dem Sie ui.browseableMessage verwenden. (#4908)
+- In the User Guide, when a %kc:setting command is used for a setting which has a common key for all layouts, the key may now be placed after a full-width colon (：) as well as the regular colon (:). (#5739)
+
 
 
 = 2016.1 =

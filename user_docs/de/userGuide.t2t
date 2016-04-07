@@ -37,7 +37,7 @@ NVDA wurde bislang in 47 Sprachen übersetzt, darunter sind neben englisch: Afri
 ++ Unterstützung von Sprachausgaben ++
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
 
-NVDA wird standardmäßig mit der freien multilingualen Sprachausgabe [eSpeak http://espeak.sourceforge.net/download.html] ausgeliefert. 
+NVDA wird standardmäßig mit der freien multilingualen Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng], ausgeliefert. 
 
 Informationen über weitere Sprachausgaben, die NVDA unterstützt, können Sie im Abschnitt "[Unterstützte Sprachausgaben #SupportedSpeechSynths]" nachlesen.
 
@@ -784,8 +784,8 @@ Mit Hilfe der Pfeiltasten können Sie sich alle Stimmen anhören.
 Die Pfeiltasten nachlinks beziehungsweise oben wechseln zur vorherigen Stimme, die Pfeiltasten nach rechts beziehungsweise nach unten zur nächsten Stimme.
 
 ==== Variante ====
-Wenn Sie die Sprachausgabe eSpeak verwenden, die zugleich Bestandteil von NVDA ist, können Sie sich in dieser Auswahlliste für eine Stimmvariante entscheiden.
-Die Varianten von ESpeak sind mit Stimmen vergleichbar, weil sie die Eigenschaften von ESpeak verändern.
+Wenn Sie die Sprachausgabe eSpeak NG  verwenden, die zugleich Bestandteil von NVDA ist, können Sie sich in dieser Auswahlliste für eine Stimmvariante entscheiden.
+Die Varianten von ESpeak NG sind mit Stimmen vergleichbar, weil sie die Eigenschaften von ESpeak NG verändern.
 Einige Varianten hören sich weiblich, männlich oder sogar wie ein Frosch an.
 
 ==== Geschwindigkeit ====
@@ -800,12 +800,12 @@ Der Schieberegler reicht von 0 bis 100, wobei der Wert "0" für sehr tief und de
 Diese Option ist ein Schieberegler, mit dem Sie den Wert von 0 bis 100 einstellen können. Der Wert "0" steht hier für sehr leise Aussprache und der Wert "100" steht für eine sehr laute Sprechweise.
 
 ==== Betonung ====
-Diese Option ist ebenfalls ein Schieberegler, mit dem Sie die Betonung festlegen können. Derzeit ist es nur möglich die Werte mit der eSpeak zu verändern.
+Diese Option ist ebenfalls ein Schieberegler, mit dem Sie die Betonung festlegen können. Derzeit ist es nur möglich die Werte mit der eSpeak NG zu verändern.
 
 ==== sprache automatisch wechseln (falls unterstützt) ====
 Dieses Kontrollfeld erlaubt Ihnen einzustellen, ob NVDA die Sprache der Sprachausgabe automatisch passend zur angegebenen Dokumentsprache einstellen soll.
 Diese Option ist standardmäßig aktiviert.
-Momentan unterstützt lediglich Espeak den automatischen Sprachenwechsel.
+Momentan unterstützt lediglich Espeak NG den automatischen Sprachenwechsel.
 
 ==== automatisch Dialekt umschalten (falls unterstützt) ====
 Wenn der automatische Sprachenwechsel aktiviert ist, können Sie NVDA mit dieser option dazu bringen, nicht nur die eigentliche sprache, sondern auch den Dialekt passend zur Dokumentsprache während des Lesens zu ändern.
@@ -1463,12 +1463,12 @@ Dieser Eintrag, einmal aktiviert, lädt alle Anwendungsmodule sowie globale Plug
 Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Sprachausgaben.
 eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter  [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-Die in NVDA fest integrierte [eSpeak http://espeak.sourceforge.net/]-Sprachausgabe erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
+++ eSpeak NG ++
+Die in NVDA fest integrierte [eSpeak NG https://github.com/espeak-ng/espeak-ng],]-Sprachausgabe erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
 Beim Starten von NVDA wird sie als Standard verwendet.
 Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen mit einem USB-Stick ohne weiteres betrieben werden kann.
 
-Jede Stimme, die mit eSpeak ausgeliefert wird, spricht eine andere Sprache.
+Jede Stimme, die mit eSpeak NG ausgeliefert wird, spricht eine andere Sprache.
 Somit werden rund 43 unterschiedliche Sprachen unterstützt.
 
 Es gibt auch eine Vielzahl von Varianten, womit der Klang der Stimme geändert werden kann.
