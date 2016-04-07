@@ -37,7 +37,7 @@ Il est important que chacun, partout dans le monde, quelle que soit sa langue, a
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
 
-NVDA est fourni avec [eSpeak http://espeak.sourceforge.net/], un synthétiseur de parole gratuit, à source ouverte, multilingue.
+NVDA est fourni avec [eSpeak NG https://github.com/espeak-ng/espeak-ng], un synthétiseur de parole gratuit, à source ouverte, multilingue.
 
 Pour des informations concernant les autres synthétiseurs de parole pris en charge par NVDA, reportez-vous à la section [Synthétiseurs de parole pris en charge #SupportedSpeechSynths].
 
@@ -784,9 +784,9 @@ A l'aide des flèches de direction, on peut entendre les différents choix.
 Les flèches gauche et haut permettent de reculer d'un élément, droite et bas d'avancer.
 
 ==== Variante ====
-Une liste déroulante qui permet de choisir la variante utilisée par le synthétiseur. Actuellement, seule eSpeak propose ce paramètre.
-Les variantes eSpeak sont comparables à des voix, dans la mesure où elles modifient significativement les attributs de la voix eSpeak.
-Les variantes sont par exemple homme ou femme.
+Si vous utilisez le synthétiseur Espeak NG fourni avec NVDA, c'est une liste déroulante qui vous permet de choisir la variante avec laquelle le synthétiseur doit parler;
+Les variantes ESpeak NG sont comme des voix, dans la mesure où elles proposent des attributs légèrement différents à la voix ESpeak NG.
+Certaines variantes ressembleront à un homme, d'autres à une femme, d'autres même à une grenouille.
 
 ==== Débit ====
 Cette option vous permet de modifier le débit de la parole.
@@ -800,12 +800,12 @@ C'est un potentiomètre gradué de 0 à 100, (0 pour le son le plus grave et 100
 Cette option est un potentiomètre gradué de 0 à 100 qui permet de modifier le volume de la voix, (0 étant le volume le plus bas et 100 le plus élevé).
 
 ==== Inflexion ====
-Un potentiomètre qui permet de choisir le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser.
+Un potentiomètre qui permet de choisir le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser. Actuellement, le seul synthétiseur présentant cette option est ESpeak NG.
 
 ==== Changement automatique de langue ====
 Cette case à cocher vous permet de choisir si NVDA doit changer de langue à la volée si une balise de langue est présente dans le texte en cours de lecture.
 Par défaut, cette option est activée.
-À l'heure actuelle, seul le synthétiseur eSpeak prend en charge le changement automatique de langue.
+À l'heure actuelle, seul le synthétiseur eSpeak NG prend en charge le changement automatique de langue.
 
 ==== Changement automatique de dialecte ====
 Cette case à cocher vous permet de choisir si les changements de dialecte doivent être pris en compte en plus des changements de langue réels.
@@ -1463,13 +1463,13 @@ Cet élément, quand on l'active, recharge les modules d'applications et les mod
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
 Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-Le synthétiseur [eSpeak http://espeak.sourceforge.net/] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
-Par défaut, NVDA démarre en utilisant eSpeak.
+++ eSpeak NG ++
+Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
+Par défaut, NVDA démarre en utilisant eSpeak NG.
 Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB sur un autre système.
 
-Chaque voix fournie avec eSpeak correspond à une langue différente.
-eSpeak prend en charge plus de 20 langues.
+Chaque voix fournie avec eSpeak NG correspond à une langue différente.
+eSpeak NG prend en charge plus de 43 langues.
 
 Vous disposez également d'un grand choix de variantes, permettant de modifier considérablement le son de la voix.
 

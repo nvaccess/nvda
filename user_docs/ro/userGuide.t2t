@@ -37,7 +37,7 @@ Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, 
 ++ Suport pentru sintetizator de voce ++
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorului să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
 
-NVDA are incorporat [eSpeak http://espeak.sourceforge.net/], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
+NVDA are incorporat [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
 
 Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite în secțiunea [Sintetizatoare de voce suportate #SintetizatoareSuportate].
 
@@ -784,8 +784,8 @@ Puteți folosi săgețile direcționale pentru ascultarea tuturor opțiunilor.
 Săgețile stânga și sus vă duc spre partea de sus a listei, iar săgețile dreapta și jos vă duc spre partea de jos a listei.
 
 ==== Variantă ====
-Dacă folosiți sintetizatorul eSpeak, integrat în NVDA, aceasta este o listă de selecție care vă lasă să alegeți varianta cu care să vorbească sintetizatorul.
-Variantele eSpeak sunt mai degrabă variante de voci, deoarece oferă atribute ușor diferite vocii eSpeak.
+Dacă folosiți sintetizatorul eSpeak NG, integrat în NVDA, aceasta este o listă de selecție care vă lasă să alegeți varianta cu care să vorbească sintetizatorul.
+Variantele eSpeak NG sunt mai degrabă variante de voci, deoarece oferă atribute ușor diferite vocii eSpeak NG.
 Unele variante sună ca voci bărbătești, unele ca voci feminine, iar unele sună chiar ca o broască.
 
 ==== Viteză ====
@@ -800,12 +800,12 @@ Este un glisor cu valori de la 0 la 100 (0 fiind amplitudinea cea mai joasă, 10
 Această opțiune este un glisor cu valori de la 0 la 100 (0 fiind volumul cel mai mic și 100 fiind maximul).
 
 ==== Intonație ====
-Această opțiune este un glisor care vă permite să alegeți câtă intonație (creștere și scădere a amplitudinii) ar trebui să folosească sintetizatorul în vorbire. (Singurul sintetizator care oferă această opțiune în prezent este eSpeak).
+Această opțiune este un glisor care vă permite să alegeți câtă intonație (creștere și scădere a amplitudinii) ar trebui să folosească sintetizatorul în vorbire. (Singurul sintetizator care oferă această opțiune în prezent este eSpeak NG).
 
 ==== Comutare automată a limbii ====
 Această casetă de bifat vă permite să alegeți dacă NVDA ar trebui să schimbe limbile sintetizatorului de vorbire în mod automat, dacă textul citit specifică limba în care a fost scris.
 Opțiunea este activată implicit.
-În momentul de față, doar sintetizatorul eSpeak este compatibil cu schimbarea limbii automat.
+În momentul de față, doar sintetizatorul eSpeak NG este compatibil cu schimbarea limbii automat.
 
 ==== Comutare automată a dialectului ====
 Această casetă de bifat vă permite să alegeți dacă sau nu ar trebui făcute schimbări de dialect, mai degrabă decât doar schimbări de limbă.
@@ -1463,13 +1463,13 @@ Această opțiune, odată activată, reîncarcă module de aplicație și extens
 Această secțiune conține informații despre sintetizatoarele de vorbire compatibile cu NVDA.
 Pentru o listă extinsă cu sintetizatoare gratuite și comerciale care pot fi achiziționate și descărcate pentru a fi folosite cu NVDA, accesați pagina [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-Sintetizatorul [eSpeak http://espeak.sourceforge.net/] este integrat direct în NVDA și nu necesită instalarea unor drivere sau componente speciale.
-NVDA pornește folosind eSpeak implicit.
+++ eSpeak NG ++
+Sintetizatorul [eSpeak NG https://github.com/espeak-ng/espeak-ng] este integrat direct în NVDA și nu necesită instalarea unor drivere sau componente speciale.
+NVDA pornește folosind eSpeak NG implicit.
 Acest sintetizator fiind integrat în NVDA, e o alegere excelentă când rulați NVDA de pe un stick USB sau CD pe alte sisteme.
 
 Fiecare voce din eSpeak vorbește o limbă diferită.
-Peste 43 de voci diferite sunt suportate de eSpeak.
+Peste 43 de voci diferite sunt suportate de eSpeak NG.
 
 Există și multe variante care pot fi alese pentru a modifica sunetul vocii.
 

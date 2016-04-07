@@ -37,7 +37,7 @@ Behalve de Engelse versie van NVDA is het programma beschikbaar in 47 talen, waa
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal  als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
 
-De gratis, open source spraakmodule eSpeak [eSpeak http://espeak.sourceforge.net/], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen. 
+De gratis, open source spraakmodule [eSpeak NG https://github.com/espeak-ng/espeak-ng], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen. 
 
 Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden onder [Ondersteunde spraaksynthesizers#SupportedSpeechSynths].
 
@@ -786,7 +786,7 @@ Met de pijltoetsen kunt u alle keuzemogelijkheden beluisteren.
 Met pijl links en pijl omhoog gaat u naar het begin van de lijst en met pijl rechts en pijl omlaag naar het einde.
 
 ==== Variant ====
-Als u gebruik maakt van de eSpeak synthesizer, die standaard is opgenomen in NVDA, kunt u via een vervolgkeuzelijst een stemvariant kiezen.
+Als u gebruik maakt van de eSpeak NG synthesizer, die standaard is opgenomen in NVDA, kunt u via een vervolgkeuzelijst een stemvariant kiezen.
 Met de stemvarianten kunt u stemeigenschappen enigszins aanpassen.
 Er zijn varianten die als een mannen- of vrouwenstem klinken of zelfs als een kikker.
 
@@ -802,12 +802,12 @@ De schuifregelaar gaat van 0 tot 100 ( bij 0 klinkt de stem het laagst en op 100
 Met de schuifregelaar kunt u het volume van de stem instellen waarbij 0 het laagste en 100 het hoogste volume is. 
 
 ==== Intonatie ====
-Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak.
+Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak NG.
 
 ==== Automatisch van taal wisselen ====
 Met dit selectievakje bepaalt u of NVDA automatisch naar een andere spraaksynthesizertaal moet overschakelen als het te lezen document is voorzien van taalcodes, zoals NL voor Nederlands.
 Deze optie is standaard ingeschakeld.
-Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak synthesizer ondersteund.
+Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak NG synthesizer ondersteund.
 
 ==== Automatisch naar een andere variant van een taal  overschakelen ====
 Indien automatisch van taal wisselen is ingeschakeld, kan deze optie gebruikt worden om aan te geven dat ernaar een andere taalvariant  moet wordenovergeschakeld  in plaats van enkel taalwisselingen. Als een tekst bijvoorbeeld als Brits Engels is gemarkeerd zal de synthesizer een Britse variant van het Engels  gebruiken als deze optie is ingeschakeld.
@@ -1467,13 +1467,13 @@ Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins o
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
 Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-De [eSpeak http://espeak.sourceforge.net/] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
-NVDA start standaard op met de eSpeak spraaksynthesizer.
-Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak synthesizer de ideale optie.
+++ eSpeak NG ++
+De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
+NVDA start standaard op met de eSpeak NG spraaksynthesizer.
+Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak NG synthesizer de ideale optie.
 
-Voor elk van de stemmen die in eSpeak is opgenomen, is een andere taal beschikbaar.
-Er worden meer dan 43 talen door eSpeak ondersteund.
+Voor elk van de stemmen die in eSpeak NG is opgenomen, is een andere taal beschikbaar.
+Er worden meer dan 43 talen door eSpeak NG ondersteund.
 
 De klank van de stemmen kan worden aangepast.
 

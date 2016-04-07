@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-11 00:10+1000\n"
-"PO-Revision-Date: 2016-03-12 20:57+0200\n"
+"POT-Creation-Date: 2016-04-01 00:10+1000\n"
+"PO-Revision-Date: 2016-04-01 09:42+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -37,35 +37,35 @@ msgstr "Puolikkaat merkit"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
-msgstr "puoliksi aakkosnumeerinen"
+msgstr "Puoliksi aakkosnumeerinen"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "puolikas katakana"
+msgstr "Puolikas katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
-msgstr "aakkosnumeerinen"
+msgstr "Aakkosnumeerinen"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 msgid "hiragana"
-msgstr "hiragana"
+msgstr "Hiragana"
 
 #. Translators: For Japanese character input: Katacana input mode.
 msgid "katakana"
-msgstr "katakana"
+msgstr "Katakana"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
 msgid "half katakana roman"
-msgstr "puolikas latinalainen katakana"
+msgstr "Puolikas latinalainen katakana"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 msgid "hiragana roman"
-msgstr "latinalainen hiragana"
+msgstr "Latinalainen hiragana"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 msgid "katakana roman"
-msgstr "latinalainen katakana"
+msgstr "Latinalainen katakana"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
@@ -77,11 +77,11 @@ msgstr "Kirjoitustuki suljettu"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
-msgstr "tuntematon kieli"
+msgstr "Tuntematon kieli"
 
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
-msgstr "tuntematon syöttömenetelmä"
+msgstr "Tuntematon syöttömenetelmä"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
 #, python-brace-format
@@ -95,36 +95,36 @@ msgstr "Virhe sovellusmoduulissa %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
-msgstr "mainospalkki"
+msgstr "Mainospalkki"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgid "complementary"
-msgstr "täydentävä"
+msgstr "Täydentävä"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 msgid "content info"
-msgstr "sisällön tiedot"
+msgstr "Sisältötiedot"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 msgid "main"
-msgstr "pääsisältö"
+msgstr "Pääsisältö"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
 msgid "navigation"
-msgstr "navigaatio"
+msgstr "Navigaatio"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
 msgid "search"
-msgstr "haku"
+msgstr "Haku"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
-msgstr "lomake"
+msgstr "Lomake"
 
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
-msgstr "alue"
+msgstr "Alue"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -134,7 +134,7 @@ msgstr "Ei vaimennusta"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Vaimenna puhuttaessa ja ääniä toistettaessa"
+msgstr "Vaimenna puhuttaessa ja ääntä toistettaessa"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -325,6 +325,11 @@ msgstr "iiri, taso 2"
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "gujarati, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Koinee-kreikka"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -766,11 +771,12 @@ msgstr "piste"
 msgid "space"
 msgstr "väli"
 
-msgid "focus mode"
-msgstr "vuorovaikutustila"
+msgid "Focus mode"
+msgstr "Vuorovaikutustila"
 
-msgid "browse mode"
-msgstr "selaustila"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "Selaustila"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -800,8 +806,8 @@ msgid "Lists various types of elements in this document"
 msgstr "Näyttää listan tämän asiakirjan elementeistä."
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
-msgstr "Aktivoi asiakirjassa kohdalla olevan objektin"
+msgid "Activates the current object in the document"
+msgstr "Aktivoi asiakirjassa nykyisen objektin."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1305,8 +1311,9 @@ msgstr "Siirtää säilöelementin, kuten listan tai taulukon, alkuun."
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "alareuna"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
+msgstr "Alareuna"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -2587,13 +2594,11 @@ msgstr "taustaväri"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "yläindeksi"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "alaindeksi"
 
@@ -2869,12 +2874,12 @@ msgstr ""
 "paikasta lähtien"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
-msgstr "ei valintaa"
+msgid "No selection"
+msgstr "Ei valintaa"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
-msgstr "kopioitu leikepöydälle"
+msgid "Copied to clipboard"
+msgstr "Kopioitu leikepöydälle"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2981,8 +2986,8 @@ msgstr ""
 "painaminen tavaa sen."
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
-msgstr "vasen napsautus"
+msgid "Left click"
+msgstr "Vasen napsautus"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
@@ -2990,8 +2995,8 @@ msgstr ""
 "Napsauttaa kerran hiiren vasenta painiketta hiiren nykyisessä sijainnissa"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
-msgstr "oikea napsautus"
+msgid "Right click"
+msgstr "Oikea napsautus"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
@@ -2999,28 +3004,32 @@ msgstr ""
 "Napsauttaa kerran hiiren oikeaa painiketta hiiren nykyisessä sijainnissa"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
-msgstr "vasen hiiripainike vapautettu"
+msgid "Left mouse button unlock"
+msgstr "Vasen hiiripainike vapautettu"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "vasen hiiripainike lukittu"
+msgid "Left mouse button lock"
+msgstr "Vasen hiiripainike lukittu"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "Lukitsee tai vapauttaa vasemman hiiripainikkeen"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr "oikea hiiripainike vapautettu"
+msgid "Right mouse button unlock"
+msgstr "Oikea hiiripainike vapautettu"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "oikea hiiripainike lukittu"
+msgid "Right mouse button lock"
+msgstr "Oikea hiiripainike lukittu"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Lukitsee tai vapauttaa oikean hiiripainikkeen"
+
+#, python-format
+msgid "Selected %s"
+msgstr "Valittu %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3403,8 +3412,8 @@ msgstr ""
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
-msgstr "symbolitaso %s"
+msgid "Symbol level %s"
+msgstr "Symbolitaso %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3412,8 +3421,8 @@ msgid ""
 msgstr "Vaihtaa symbolitasoa, joka määrittää, mitkä symbolit puhutaan"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "objektilla ei ole sijaintia"
+msgid "Object has no location"
+msgstr "Objektilla ei ole sijaintia"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3455,8 +3464,8 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
-msgstr "ei navigointiobjektia"
+msgid "No navigator object"
+msgstr "Ei navigointiobjektia"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -3485,8 +3494,8 @@ msgstr ""
 "sijaintitiedot. Kahdesti painaminen antaa lisätietoja."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "siirrä kohdistukseen"
+msgid "Move to focus"
+msgstr "Siirrä kohdistukseen"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3499,24 +3508,24 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
-msgstr "ei kohdistusta"
+msgid "No focus"
+msgstr "Ei kohdistusta"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "siirrä kohdistus"
+msgid "Move focus"
+msgstr "Siirrä kohdistus"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "ei kohdistinta"
+msgid "No caret"
+msgstr "Ei kohdistinta"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Siirtää kerran painettaessa kohdistuksen navigointiobjektiin, kahdesti "
-"painettaessa siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle"
+"Siirtää kerran painettaessa kohdistuksen navigointiobjektiin ja kahdesti "
+"painettaessa järjestelmäkohdistimen tarkastelukohdistimen kohdalle."
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3527,6 +3536,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Siirtää navigointiobjektin sen itsensä sisältävään objektiin"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Ei seuraavaa"
 
@@ -3535,6 +3545,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Siirtää navigointiobjektin seuraavaan objektiin"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Ei edellistä"
 
@@ -3551,8 +3562,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Siirtää navigointiobjektin ensimmäiseen sen sisällä olevaan objektiin"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "aktivoi"
+msgid "Activate"
+msgstr "Aktivoi"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3567,8 +3578,8 @@ msgstr ""
 "esimerkiksi painiketta)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
-msgstr "yläreuna"
+msgid "Top"
+msgstr "Yläreuna"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3638,8 +3649,9 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan "
 "kohdalle ja lukee sen"
 
-msgid "left"
-msgstr "vasen"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Vasen reuna"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3669,8 +3681,9 @@ msgstr ""
 "kyseisestä merkistä. Kolmesti painettaessa luetaan merkin numeerinen arvo "
 "desimaaleina ja heksadesimaaleina."
 
-msgid "right"
-msgstr "oikea"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Oikea reuna"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3689,16 +3702,16 @@ msgstr ""
 "nykyisessä navigointiobjektissa ja lukee sen"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "ei puhetta"
+msgid "Speech mode off"
+msgstr "Ei puhetta"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
-msgstr "äänimerkit"
+msgid "Speech mode beeps"
+msgstr "Äänimerkit"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
-msgstr "puhe käytössä"
+msgid "Speech mode talk"
+msgstr "Puhe käytössä"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3738,19 +3751,19 @@ msgstr "Avaa NVDA-valikon"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien "
-"siirtäen samalla sitä"
+"siirtäen samalla sitä."
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "Lukee nykyisen tekstin loppuun saakka järjestelmäkohdistimesta lähtien "
-"siirtäen samalla sitä"
+"siirtäen samalla sitä."
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -3769,8 +3782,8 @@ msgstr ""
 "sijainnista. Kahdesti painettaessa tiedot näytetään selaustilassa."
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
-msgstr "Lukee aktiivisen objektin. Kahdesti painettaessa tiedot tavataan."
+msgid "Reports the object with focus. If pressed twice, spells the information"
+msgstr "Puhuu aktiivisen objektin. Kahdesti painettaessa tiedot tavataan."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3778,7 +3791,7 @@ msgstr "Tilariviä ei löydy"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointiobjektin sen "
@@ -3798,8 +3811,8 @@ msgstr ""
 "Ottaa käyttöön tai poistaa käytöstä tietojen lukemisen hiiren liikkuessa"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
-msgstr "ei otsikkoa"
+msgid "No title"
+msgstr "Ei otsikkoa"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3812,8 +3825,8 @@ msgstr ""
 "leikepöydälle."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
-msgstr "ilmoittaa nykyisen objektin"
+msgid "Speaks the current foreground object"
+msgstr "Ilmoittaa nykyisen objektin"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3825,20 +3838,20 @@ msgstr ""
 "tutkia."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
-msgstr "ei edistymispalkkien päivityksiä"
+msgid "No progress bar updates"
+msgstr "Ei edistymispalkkien päivityksiä"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
-msgstr "lue edistymispalkkien päivitykset"
+msgid "Speak progress bar updates"
+msgstr "Puhu edistymispalkkien päivitykset"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
-msgstr "äänimerkki edistymispalkkien päivityksille"
+msgid "Beep for progress bar updates"
+msgstr "Äänimerkki edistymispalkkien päivityksille"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
-msgstr "anna äänimerkki ja lue edistymispalkkien päivitykset"
+msgid "Beep and speak progress bar updates"
+msgstr "Anna äänimerkki ja puhu edistymispalkkien päivitykset"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3895,8 +3908,8 @@ msgstr ""
 "kohdistusmuutosten mukaan"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
-msgstr "järjestelmässä ei akkua"
+msgid "No system battery"
+msgstr "Järjestelmässä ei akkua"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
@@ -3913,9 +3926,10 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} tuntia ja {minutes:d} minuuttia jäljellä"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä"
+"Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole "
+"käytössä."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -4186,20 +4200,12 @@ msgstr ""
 "Lataa uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n "
 "uudelleenkäynnistystä, josta voi olla hyötyä kehittäjille"
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "ei seuraavaa"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
 "Siirtää seuraavaan objektiin objektinavigointihierarkian kokonaisnäkymässä"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "Ei edellistä"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4214,8 +4220,8 @@ msgid "%s mode"
 msgstr "%s-tila"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
-msgstr "Vaihtaa käytettävissä olevien kosketustilojen välillä"
+msgid "Cycles between available touch modes"
+msgstr "Vaihtaa käytettävissä olevien kosketustilojen välillä."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4249,10 +4255,6 @@ msgstr "Näppäimistön jäljitellyt näppäimet"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Sekalaiset"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Selaustila"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4925,7 +4927,6 @@ msgstr "ei alleviivausta"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "perusviiva"
 
@@ -5388,8 +5389,8 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "taulukon reuna"
+msgid "Edge of table"
+msgstr "Taulukon reuna"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5547,8 +5548,8 @@ msgid "Appointment {subject}, {time}"
 msgstr "Tapaaminen {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
-msgstr "tapaaminen"
+msgid "Has appointment"
+msgstr "Tapaaminen"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -5868,6 +5869,12 @@ msgstr "Pysäytä"
 #. Translators: This is the name of a button in sound recorder.
 msgid "Record"
 msgstr "Nauhoita"
+
+msgid "left"
+msgstr "vasen"
+
+msgid "right"
+msgstr "oikea"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -6865,6 +6872,10 @@ msgstr "Lokin tarkastelu"
 msgid "Refresh\tF5"
 msgstr "Päivitä\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "Tallenna &nimellä...\tCtrl+S"
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "Loki"
@@ -7746,12 +7757,12 @@ msgid "Refreshes the document content"
 msgstr "Päivittää asiakirjan sisällön"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "ruutuasettelu käytössä"
+msgid "Use screen layout on"
+msgstr "Ruutuasettelu käytössä"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "ruutuasettelu pois"
+msgid "Use screen layout off"
+msgstr "Ruutuasettelu pois"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
@@ -7975,8 +7986,8 @@ msgstr "Solu {address} on jo määritetty sarakeotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
-msgid "removed {address}    from column headers"
-msgstr "solu {address} poistettu sarakeotsikoista"
+msgid "Removed {address}    from column headers"
+msgstr "Solu {address} poistettu sarakeotsikoista"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -8004,7 +8015,7 @@ msgstr "Solu {address} on jo määritetty riviotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
-msgid "removed {address}    from row headers"
+msgid "Removed {address}    from row headers"
 msgstr "Solu {address} poistettu riviotsikoista"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -8812,15 +8823,6 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g merkkiä"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g pistettä"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8929,6 +8931,18 @@ msgstr "Tasattu oikealle"
 msgid "Justified"
 msgstr "Tasattu molempiin reunoihin"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Yläindeksi"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Alaindeksi"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "Perusviiva"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -8971,8 +8985,8 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picaa"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "ei kommentteja"
+msgid "No comments"
+msgstr "Ei kommentteja"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8982,9 +8996,6 @@ msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "Ei taulukossa"
-
-msgid "Edge of table"
-msgstr "Taulukon reuna"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8998,6 +9009,30 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "browse mode"
+#~ msgstr "selaustila"
+
+#~ msgid "activate"
+#~ msgstr "aktivoi"
+
+#~ msgid "no next"
+#~ msgstr "ei seuraavaa"
+
+#~ msgid "no previous"
+#~ msgstr "Ei edellistä"
+
+#~ msgid "edge of table"
+#~ msgstr "taulukon reuna"
+
+#~ msgid "%g characters"
+#~ msgstr "%g merkkiä"
+
+#~ msgid "%g pt"
+#~ msgstr "%g pistettä"
+
+#~ msgid "no comments"
+#~ msgstr "ei kommentteja"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"
