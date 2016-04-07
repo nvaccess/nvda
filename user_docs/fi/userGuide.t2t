@@ -37,7 +37,7 @@ NVDA on saatavilla englannin lisäksi seuraavilla 47 kielellä: afrikaans, alban
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
 
-NVDA:n mukana toimitetaan [eSpeak http://espeak.sourceforge.net/], monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori.
+NVDA:n mukana toimitetaan [eSpeak NG https://github.com/espeak-ng/espeak-ng], monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori.
 
 Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleesta.
 
@@ -768,7 +768,7 @@ Näppäinkomento: NVDA+Shift+D
 
 Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä valita, alentaako NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
 - Ei vaimennusta: NVDA ei koskaan alenna muiden äänien voimakkuutta.
-- Vaimenna puhuttaessa ja ääniä toistettaessa: NVDA alentaa muiden äänien voimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
+- Vaimenna puhuttaessa ja ääntä toistettaessa: NVDA alentaa muiden äänien voimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
 - Vaimenna aina: NVDA alentaa muiden äänien voimakkuutta koko ajan käynnissä ollessaan.
 -
 
@@ -784,28 +784,28 @@ Vaihtoehtoja voidaan selata nuolinäppäimillä.
 Vasen ja ylänuoli siirtävät ylöspäin listassa, kun taas oikea ja alanuoli siirtävät alas.
 
 ==== Muunnelma ====
-Jos käytetään NVDA:n mukana tulevaa eSpeak-puhesyntetisaattoria, tästä yhdistelmäruudusta voidaan valita käytettävä muunnelma.
+Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
 Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa puheäänille hieman eri määreitä.
 Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
 
 ==== Nopeus ====
-Tällä liukusäätimellä voidaan muuttaa puheen nopeutta.
+Tällä liukusäätimellä voit muuttaa puheen nopeutta.
 Arvot 0 - 100 ovat mahdollisia (0=hitain ja 100=nopein).
 
 ==== Korkeus ====
-Tällä liukusäätimellä voidaan muuttaa puheen korkeutta.
+Tällä liukusäätimellä voit muuttaa puheen korkeutta.
 Arvot 0 - 100 ovat mahdollisia (0=matalin ja 100=korkein).
 
 ==== Voimakkuus ====
-Tällä liukusäätimellä voidaan muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
+Tällä liukusäätimellä voit muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
 
 ==== Sävy ====
-Tällä liukusäätimellä voidaan muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
+Tällä liukusäätimellä voit muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak NG on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
 
 ==== Vaihda kieltä automaattisesti (jos mahdollista) ====
 Tällä valintaruudulla voit vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritelty asianmukaisesti.
 Asetus on oletusarvoisesti käytössä.
-Tällä hetkellä vain eSpeak-syntetisaattori tukee automaattista kielen vaihtamista.
+Tällä hetkellä vain eSpeak NG -syntetisaattori tukee automaattista kielen vaihtamista.
 
 ==== Vaihda murretta automaattisesti (jos mahdollista) ====
 Tällä valintaruudulla voit määrittää, vaihdetaanko pelkän kielen lisäksi myös murretta.
@@ -1463,12 +1463,12 @@ Tällä voidaan ladata uudelleen sovellusmoduulit ja yleisliitännäiset ilman N
 Tässä kappaleessa on tietoja NVDA:n tukemista puhesyntetisaattoreista.
 Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on mahdollista ostaa ja ladata NVDA:lla käytettäväksi, on osoitteessa [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-[eSpeak http://espeak.sourceforge.net/]-puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
-NVDA käyttää ESpeakia oletusarvoisesti.
-Tämä syntetisaattori on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
+++ eSpeak NG ++
+[ESpeak NG https://github.com/espeak-ng/espeak-ng] -puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
+NVDA käyttää oletusarvoisesti tätä syntetisaattoria.
+Tämä on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
 
-Jokainen eSpeakin mukana tuleva puheääni puhuu eri kieltä.
+Jokainen eSpeak NG:n mukana tuleva puheääni puhuu eri kieltä.
 Tuettuja kieliä on yli 43.
 
 Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan erilaiselta.
