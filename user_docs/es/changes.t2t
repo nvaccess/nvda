@@ -10,17 +10,30 @@ Qué hay de Nuevo en NVDA
 - En Microsoft Excel, NVDA ahora anuncia el nivel de un grupo de celdas, así como si está contraído o expandido. (#5690)
 - Al pulsar la orden Anunciar formato de texto dos veces presenta la información en modo exploración para que se pueda revisar. (#4908)
 - En Microsoft Excel 2010 y posterior, el sombreado y el degradado de relleno de celda ahora se anuncia. El anunciado automático se controla por la opción Anunciar colores en las preferencias de Formateado de Documentos de NVDA. (#3683)
+- Nueva tabla de transcripción braille: Griego koiné. (#5393)
+- En el Visualizador de Registro, ahora puedes guardar el registro utilizando el atajo de teclado control+s. (#4532)
 
  
+== Cambios ==
+- En modo exploración y en campos de texto editables, NVDA ahora trata al intro del teclado numérico del mismo modo que la tecla intro principal. (#5385)
+- NVDA ha cambiado al sintetizador de voz eSpeak NG. (#5651)
+
+
 == Corrección de Fallos ==
 - En modo exploración, cuando se intenta utilizar la navegación con una sola letra para moverte a un elemento que no se soporta en el documento, NVDA anuncia que esto no se soporta en lugar de anunciar que no hay elemento en esa dirección. (#5691)
 - Cuando se listan hojas en la lista de elementos en Microsoft Excel, las hojas que contengan sólo gráficos ahora se incluyen. (#5698)
 - NVDA ya no anuncia información extraña cuando se cambie entre ventanas en una aplicación Java con múltiples ventanas tales como IntelliJ o Android Studio. (#5732)
+- En editores basados en Scintilla tales como Notepad++, el braille ahora se actualiza correctamente al mover el cursor utilizando una pantalla braille. (#5678)
+- NVDA ya no se cuelga a veces al habilitar la salida braille. (#4457)
+- En Microsoft Word, la sangría de párafo ahora siempre se anuncia en la unidad de medida elegida por el usuario (ej.: centímetros o pulgadas). (#5804)
+- Al utilizar una pantalla braille, muchos mensajes de NVDA que anteriormente sólo se verbalizaban ahora se braillifican también. (#5557)
+- En aplicaciones Java accesibles, el nivel de los elementos de la vista en árbol ahora se anuncia. (#5766)
 
 
 == Cambios para Desarrolladores ==
 - Los componentes c++ de NVDA ahora se compilan con Microsoft Visual Studio 2015. (#5592)
 - Ahora puedes presentar un texto o mensaje HTML al usuario en modo exploración utilizando ui.browseableMessage. (#4908)
+- En la Guía del Usuario, cuando se utiliza una orden %kc:setting para una opción que tiene una tecla común para todas las distribuciones, la tecla ahora podrá colocarse después de un dos puntos de ancho completo (：) así como los dos puntos regulares (:). (#5739)
 
 
 = 2016.1 =

@@ -37,7 +37,7 @@ Actualmente NVDA ha sido traducido a 47 idiomas además del idioma inglés inclu
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
 
-NVDA está integrado con [eSpeak http://espeak.sourceforge.net/], un sintetizador de voz multilingüe, libre, de código abierto.
+NVDA viene integrado con [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizador de voz multilingüe, libre, de código abierto.
 
 Se puede encontrar información acerca de otros sintetizadores de voz que soporta NVDA en la sección [Sintetizadores de Voz soportados #SupportedSpeechSynths].
 
@@ -784,8 +784,8 @@ Puedes utilizar las teclas de cursor para escuchar todas las varias elecciones.
 Las flechas izquierda y arriba suben por la lista, mientras que las flechas derecha y abajo bajan por la lista.
 
 ==== Variante ====
-Si estás utilizando el sintetizador Espeak empaquetado junto con NVDA, este es un cuadro combinado que te permite seleccionar la variante con la que el sintetizador debería hablar. 
-Las variantes de Espeak son bastante parecidas a las voces, pero proporcionan atributos ligeramente diferentes para la voz de ESpeak. 
+Si estás utilizando el sintetizador Espeak NG empaquetado junto con NVDA, este es un cuadro combinado que te permite seleccionar la variante con la que el sintetizador debería hablar. 
+Las variantes de Espeak NG son bastante parecidas a las voces, pero proporcionan atributos ligeramente diferentes para la voz de ESpeak NG. 
 Algunas variantes sonarán como un hombre, algunas como una mujer, y algunas como si tuvieran carraspera.
 
 ==== Velocidad ====
@@ -800,12 +800,12 @@ Esta es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 el tono 
 Esta opción es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 el volumen más bajo y siendo 100 el más alto).
 
 ==== Entonación ====
-Esta opción es una barra de desplazamiento que te permite elegir cuánta entonación (subida y caída en el tono) el sintetizador debería utilizar para hablar. (Solamente el sintetizador Espeak proporciona esta opción actualmente).
+Esta opción es una barra de desplazamiento que te permite elegir cuánta entonación (subida y caída en el tono) el sintetizador debería utilizar para hablar. (Solamente el sintetizador Espeak NG proporciona esta opción actualmente).
 
 ==== Cambio Automático de Idioma ====
 Esta casilla de verificación te permite activar o desactivar si NVDA debería cambiar automáticamente los idiomas del sintetizador de voz si el texto a leer lo especifica .
 Esta opción está activada de manera predeterminada.
-Actualmente sólo el sintetizador eSpeak sopporta el cambio automático de idioma.
+Actualmente sólo el sintetizador eSpeak NG sopporta el cambio automático de idioma.
 
 ==== Cambio Automático de Dialecto ====
 Esta casilla de verificación te permite activar o desactivar  si los cambios de dialecto se deberían hacer, en lugar de sólo cambiar el idioma actual. 
@@ -1463,13 +1463,13 @@ Este elemento, una vez activado, recarga app modules y plugins globales sin rein
 Esta sección contiene información acerca de los sintetizadores de voz soportados por NVDA.
 Para una lista más extensa de los sintetizadores libres y comerciales que puedes descargar y comprar para utilizar con NVDA, por favor consulta la página en [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-El sintetizador [eSpeak http://espeak.sourceforge.net/] se compila directamente en NVDA y no requiere ningún otro controlador o componentes especiales para instalarse.
-NVDA se inicia utilizando eSpeak de forma predeterminada.
+++ eSpeak NG ++
+El sintetizador [Espeak NG https://github.com/espeak-ng/espeak-ng] se compila directamente en NVDA y no requiere ningún otro controlador o componentes especiales para instalarse.
+NVDA se inicia utilizando Espeak NG de forma predeterminada.
 Como este sintetizador se compiló en NVDA, es una gran elección para cuando se ejecuta NVDA en  una memoria USB o en un CD en otros sistemas.
 
-Cada voz que viene con eSpeak habla un idioma diferente.
-Hay sobre 43 idiomas diferentes soportados por eSpeak.
+Cada voz que viene con Espeak NG habla un idioma diferente.
+Hay sobre 43 idiomas diferentes soportados por Espeak NG.
 
 También hay muchas variantes que pueden elegirse para alterar el sonido de la voz.
 
