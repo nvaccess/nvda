@@ -91,9 +91,7 @@ SB_VERT = 1
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
-		# as it will not work otherwise.
-		log.debugWarning("class name: {}".format( obj.__class__))
+		#Added to provide breakpoint handling
 		if isinstance(obj,UIA):
 			UIAClassName=obj.UIAElement.cachedClassName
 			if UIAClassName=="WpfTextView":
@@ -102,6 +100,8 @@ class AppModule(appModuleHandler.AppModule):
 				except ValueError:
 					pass
 				clsList.insert(0, WpfTextViewForVisualStudio)
+		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
+		# as it will not work otherwise.
 		elif obj.windowClassName == VsTextEditPaneClassName and self._getDTE():
 			try:
 				clsList.remove(DisplayModelEditableText)
@@ -124,7 +124,6 @@ class AppModule(appModuleHandler.AppModule):
 		for mon in ROT:
 		# Test for the strings Visual Studio may have registered with.
 			displayName = mon.GetDisplayName(bctx, None)
-			log.debugWarning("vs version: {}".format(displayName)) 
 			if "!VisualStudio.DTE.9.0:%d"%self.processID==displayName:
 				DTEVersion=VsVersion_2008
 			elif "!VisualStudio.DTE.8.0:%d"%self.processID==displayName:
@@ -488,31 +487,29 @@ IVsTextView._methods_ = [
 ]
 
 class UIATextInfoForVisualStudio( UIATextInfo):
+	digitsAtStartOfLineMatch = re.compile(r"^[\d]+\s")
 
 	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfoForVisualStudio,self).__init__(obj,position,_rangeObj)
-		self.digitsAtStartOfLineMatch = re.compile(r"^[\d]+\s")
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField = super( UIATextInfoForVisualStudio , self)._getFormatFieldAtRange(range,formatConfig)
-		currentElement = self.NVDAObjectAtStart
 		isLineNumberAtStart = self.digitsAtStartOfLineMatch.match(range.GetText(-1))
 		if isLineNumberAtStart: 
 			currentLineNumber = int(isLineNumberAtStart.group() )
-			breakPoint = self._getBreakPointAtLine( currentLineNumber , currentElement )
+			breakPoint = self._getBreakPointAtLine( currentLineNumber , self.NVDAObjectAtStart )
 			if breakPoint: 
 				formatField.field["breakpoint"] = breakPoint
 		return formatField 
 
 	def _getBreakPointAtLine(self,line,textObject):
 		if textObject and textObject.next and textObject.next.name == "Glyph Margin Grid":
-			currentBreakPoint = textObject.next.firstChild 
-			while currentBreakPoint: 
-				currentUIAutomationId = currentBreakPoint.UIAElement.currentAutomationID
-				currentLineNumber = int(currentUIAutomationId.split(';')[1])
+			allBreakPoints = textObject.next.children
+			for currentBreakPoint in allBreakPoints: 
+				currentUIAutomationID = currentBreakPoint.UIAElement.cachedAutomationID 
+				currentLineNumber = int(currentUIAutomationID.split(';')[1])
 				if currentLineNumber == line: return currentBreakPoint.name.split(';')[0]
-				currentBreakPoint = currentBreakPoint.next 
-
+				
 class WpfTextViewForVisualStudio(WpfTextView):
 
 	def _get_TextInfo(self):
