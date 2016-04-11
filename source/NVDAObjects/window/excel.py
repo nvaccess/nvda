@@ -731,12 +731,12 @@ class ExcelWorksheet(ExcelBase):
 		return True
 
 	def _getMaxColumnNumberForHeaderCell(self,excelCell):
-		if not excelCell.text:
+		try:
+			r=excelCell.currentRegion
+		except COMError:
 			return excelCell.column
-		nextCell=excelCell.offset(0,1)
-		if not nextCell.text:
-			return nextCell.column
-		return excelCell.end(xlToRight).column+1
+		columns=r.columns
+		return columns[columns.count].column+1
 
 	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
 		if not isColumnHeader and not isRowHeader: 
@@ -757,6 +757,12 @@ class ExcelWorksheet(ExcelBase):
 		return True
 
 	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
+		# #4409: cell.currentRegion fails if the worksheet is protected.
+		try:
+			cellRegion=cell.excelCellObject.currentRegion
+		except COMError:
+			log.debugWarning("Possibly protected sheet")
+			return None
 		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
