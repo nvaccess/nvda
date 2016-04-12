@@ -6,13 +6,21 @@
 = 2016.2 =
 
 == Neue Funktionen ==
-- Wenn Sie im Internet Explorer und anderen MSHTML-Dokumenten mit den Schnellnavigationstasten a und Umschalt+A zur nächsten oder vorigen Anmerkung springen, wird auch eingefügter oder gelöschter Text angesprungen. (#5691)
+- Wenn Sie im Internet Explorer und anderen MSHTML-Dokumenten mit den Schnellnavigationstasten A und Umschalt+A zur nächsten oder vorherigen Anmerkung springen, wird auch eingefügter oder gelöschter Text angesprungen. (#5691)
 - In Microsoft Excel wird bei Zellengruppen sowohl die Verschachtelungsebene als auch der Status (erweitert/reduziert) angezeigt. (#5690)
+- Beim zweimaligen Drücken der Tastenkombination für die Ansage der Textformatierungen werden nun die Informationen im Lesemodus angezeigt. (#4908)
+- In Microsoft Excel 2010 und neuer werden nun Zellschattierungen und Rahmen angesagt. Die automatische Ansage hierzu wird von der Einstellung für die Dokumentformatierungen in NVDA gesteuert. (#3683)
 
 
 == Fehlerkorrekturen ==
 - Wenn Sie die Schnellnavigationstasten verwenden, um zu einem Element eines Typs zu navigieren, der im aktuellen Dokument nicht unterstützt wird, wird dies von NVDA ausdrücklich angezeigt. (#5691)
 - Wenn Sie die Liste der Tabellenblätter in Excel aufrufen, werden nun auch Tabellenblätter einbezogen, die nur Diagramme enthalten. (#5698)
+- NVDA gibt nun nicht länger mehr belanglose Informationen beim Fensterwechseln in Java-Anwendungen mit mehrfachen Fenstern wie zum Beispiel in IntelliJ oder Android Studio wieder. (#5732)
+
+
+== Änderungen für Entwickler ==
+- Die C++-Komponenten von NVDA werden nun mit Microsoft Visual Studio 2015 erzeugt. (#5592)
+- Sie können nun einen Text oder eine HTML-Meldung für den Anwender im Lesemodus darstellen, in dem Sie ui.browseableMessage verwenden. (#4908)
 
 
 = 2016.1 =
@@ -59,10 +67,10 @@ Schwerpunkte dieser Version sind unter anderem eine Option zum Reduzieren der La
 - Wenn sich in Microsoft Excel ein Kommentar auf eine verbundene Zelle bezieht, wird er korrekt erkannt. (#5704)
 - Fehler behoben, wonach NVDA in sehr seltenen Fällen den Inhalt von Tabellenblättern in Excel nicht angezeigt hat, während die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" aktiviert ist. (#5705)
 - Fehler bei der Braille-Anzeige von koreanischen Zeichen behoben. (#5640)
-- (en) In Google Chrome, navigating within an Input composition when entering east Asian characters now works as expected. (#4080)
-- (en) When searching Apple Music in iTunes, browse mode for the search results document is now updated as expected. (#5659)
-- (en) In Microsoft Excel, pressing shift+f11 to create a new sheet now reports your new position instead of reporting nothing. (#5689)
-- (en) Fixed problems with braille display output when entering Korean characters. (#5640)
+- Die Eingabe von asiatischen Sonderzeichen in Google Chrome funktioniert nun erwartungsgemäß. (#4080)
+- Beim Durchsuchen von Apple Music im Itunes Store wird der Lesemodus korekt aktualisiert. (#5659)
+- Wenn Sie in Microsoft Excel mit Umschalt+F11 ein neues Tabellenblatt erstellen, wird diCursorposition im Tabellenblatt korrekt angezeigt. (#5689)
+
 
 
 == Änderungen für Entwickler ==

@@ -614,20 +614,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
-		fontSize=field.get("font-size")
-		fontSizePt = float(fontSize[0:-2]) if fontSize and fontSize[-2:] == "pt" and float(fontSize[0:-2]) > 0.0 else None
 		for x in ("first-line-indent","left-indent","right-indent","hanging-indent"):
 			v=field.get(x)
 			if not v: continue
 			v=float(v)
 			if abs(v)<0.001:
 				v=None
-			elif fontSizePt:
-				# translators: the value in characters for a paragraph indenting
-				v=_("%g characters") % (v / fontSizePt)
 			else:
-				# Translators: the value in points for a paragraph indenting
-				v=_("%g pt") % v
+				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
 		return field
 
@@ -1203,13 +1197,13 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: (self.WinwordSelectionObject.font.superscript,self.WinwordSelectionObject.font.subscript))
 		if val[0]:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("superscript"))
+			ui.message(_("Superscript"))
 		elif val[1]:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("subscript"))
+			ui.message(_("Subscript"))
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("baseline"))
+			ui.message(_("Baseline"))
 
 	def script_increaseDecreaseOutlineLevel(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
@@ -1289,7 +1283,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 						ui.message(text)
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
-		ui.message(_("no comments"))
+		ui.message(_("No comments"))
 	# Translators: a description for a script
 	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
 

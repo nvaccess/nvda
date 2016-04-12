@@ -1,6 +1,6 @@
 #ui.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2008-2016 NV Access Limited, Dinesh Kaushal, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -65,3 +65,13 @@ def message(text):
 	"""
 	speech.speakMessage(text)
 	braille.handler.message(text)
+
+def reviewMessage(text):
+	"""Present a message from review or object navigation to the user.
+	The message will always be presented in speech, and also in braille if it is tethered to review.
+	@param text: The text of the message.
+	@type text: str
+	"""
+	speech.speakMessage(text)
+	if braille.handler.tether == braille.handler.TETHER_REVIEW:
+		braille.handler.message(text)
