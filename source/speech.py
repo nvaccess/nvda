@@ -1450,6 +1450,19 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				text=""
 			if text:
 				textList.append(text)
+		invalidGrammar=attrs.get("invalid-grammar")
+		oldInvalidGrammar=attrsCache.get("invalid-grammar") if attrsCache is not None else None
+		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar!=oldInvalidGrammar:
+			if invalidGrammar:
+				# Translators: Reported when text contains a grammar error.
+				text=_("grammar error")
+			elif extraDetail:
+				# Translators: Reported when moving out of text containing a grammar error.
+				text=_("out of grammar error")
+			else:
+				text=""
+			if text:
+				textList.append(text)
 	if unit in (textInfos.UNIT_LINE,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH,textInfos.UNIT_READINGCHUNK):
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:

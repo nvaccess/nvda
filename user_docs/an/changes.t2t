@@ -3,6 +3,25 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+
+== Nuevas caracteristicas ==
+- En o modo de navegación en l'Internet Explorer y atros controls MSHTML, fendo servir a navegación con a primer letra pa mover-se-ne por as anotacións (a y mayus+a) agora se'n mueve t'o texto ficau y borrau. (#5691)
+- En o Microsoft Excel, o NVDA agora anuncia o libel d'un grupo de celdas, asinas como si ye plegau u desplegau. (#5690)
+- En pretar dos vegadas o comando d'anunciar o formato de texto se presienta la información en o modo de navegación y asinas se puet revisar. (#4908)
+- En o Microsoft Excel 2010 y posteriors agora s'anuncia o uembrau de celdas y o degradau de repleno. L'anunciau automatico se controla con a opción d'anunciar as colors en as preferencias de Formatiau de Documentos d'o NVDA. (#3683)
+ 
+ 
+== Corrección d'errors ==
+- En o modo de navegación, quan se mira de fer servir a navegación con una sola letra pa mover-se-ne ta un elemento que no se suporta en o documento, o NVDA anuncia que ixo no se suporta en cuenta de anunciar que no bi ha elemento en ixa adreza. (#5691)
+- Quan se lista fuellas en a lista d'elementos en o Microsoft Excel, agora s'inclui as fuellas que nomás contiengan graficos. (#5698)
+- O NVDA ya no anuncia información rara quan se cambie entre finestras en una aplicación Java con qualques finestras tals como l'IntelliJ u l'Android Studio. (#5732)
+ 
+ 
+== Cambios pa Desembolicadors ==
+- Os components de c++ d'o NVDA agora se compilan con o Microsoft Visual Studio 2015. (#5592)
+
+
 = 2016.1 =
 O resinyable d'ista versión inclui a capacidat de baixar opcionalment o volumen d'atros sons, milloras pa la salida de braille y suporte pa linias braille, qualques apanyos significants pa o suporte d'o Microsoft Office y apanyos pa o modo de navegación en l'iTunes.
 
