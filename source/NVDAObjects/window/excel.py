@@ -482,7 +482,7 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		cellPosition.Select()
 		cellPosition.Activate()
 		eventHandler.executeEvent('gainFocus',obj)
-	
+
 	def script_moveLeft(self,gesture):
 		self.navigationHelper("left")
 
@@ -506,19 +506,6 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def script_endOfColumn(self,gesture):
 		self.navigationHelper("endcol")
-
-	def oldscript_activatePosition(self,gesture):
-		excelApplicationObject = self.rootNVDAObject.excelWorksheetObject.Application
-		if excelApplicationObject.ActiveSheet.ProtectContents and excelApplicationObject.activeCell.Locked:
-			# Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-			ui.message(_("This cell is non-editable"))
-			return
-		# Toggle browse mode pass-through.
-		self.passThrough = True
-		browseMode.reportPassThrough(self)
-	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-	oldscript_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
-	oldscript_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
