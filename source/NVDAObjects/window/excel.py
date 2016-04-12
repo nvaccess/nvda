@@ -1671,6 +1671,9 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 	def moveTo(self):
 		self.excelItemObject.TopLeftCell.Select
 		self.excelItemObject.TopLeftCell.Activate()
+		if self.treeInterceptorObj.passThrough:
+			self.treeInterceptorObj.passThrough=False
+			browseMode.reportPassThrough(self.treeInterceptorObj)
 		eventHandler.queueEvent("gainFocus",self.nvdaObj)
 
 	@property
