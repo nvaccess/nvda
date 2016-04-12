@@ -13,17 +13,17 @@ function escapeKeyPress(e) {
 };
 
 function windowOnLoad() {
-	var strArgs = window.dialogArguments;
-	var args = new Array();
-	if (strArgs)
-		args = strArgs.split(";",3);
-	if (args.length == 3){
-		document.title= args[1];
-		if ( args[0] == "true") {
-			messageID.innerHTML= args[2];
+	// #5875: string.prototype.split strips the tail when a limit is supplied,
+	// so use a regexp instead.
+	var args = window.dialogArguments.match(/^(.*?);(.*?);([\s\S]*)$/);
+	// args[0] is the whole string.
+	if (args && args.length == 4){
+		document.title= args[2];
+		if ( args[1] == "true") {
+			messageID.innerHTML= args[3];
 		}
-		else if ( args[0] == "false") {
-			textID.innerText= args[2];
+		else if ( args[1] == "false") {
+			textID.innerText= args[3];
 		}
 	}
 } 
