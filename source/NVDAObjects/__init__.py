@@ -831,8 +831,8 @@ Tries to force this object to take the focus.
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and (
-			# Non-alpha, non-control.
-			ch.isspace() or (ch >= u" " and ch != u"\x7f" and not ch.isalpha())
+			# Not alpha, apostrophe or control.
+			ch.isspace() or (ch >= u" " and ch not in u"'\x7f" and not ch.isalpha())
 		):
 			# Reporting of spelling errors is enabled and this character ends a word.
 			self._reportErrorInPreviousWord()
