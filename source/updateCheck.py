@@ -294,7 +294,10 @@ class UpdateDownloader(object):
 			try:
 				self._download(url)
 			except:
-				log.debugWarning("Error downloading %s" % url, exc_info=True)
+				# #5871: If there's more than one URL, don't log as an error,
+				# as it's not an error if a subsequent URL succeeds.
+				(log.debugWarning if len(self.urls) > 1 else log.error)(
+					"Error downloading %s" % url, exc_info=True)
 			else: #Successfully downloaded or canceled
 				if not self._shouldCancel:
 					success=True
