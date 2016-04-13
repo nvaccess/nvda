@@ -119,13 +119,13 @@ class GeneralSettingsDialog(SettingsDialog):
 	title = _("General Settings")
 	LOG_LEVELS = (
 		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
-		(log.INFO, _("info")),
+		(log.INFO, _("Info")),
 		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
-		(log.DEBUGWARNING, _("debug warning")),
+		(log.DEBUGWARNING, _("Debug warning")),
 		# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
-		(log.IO, _("input/output")),
+		(log.IO, _("Input/Output")),
 		# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
-		(log.DEBUG, _("debug"))
+		(log.DEBUG, _("Debug"))
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -750,7 +750,7 @@ class MouseSettingsDialog(SettingsDialog):
 		import textInfos
 		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
 		# Translators: This is the name of a combobox in the mouse settings dialog.
-		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("text reporting unit"),choices=[textInfos.unitLabels[x] for x in self.textUnits])
+		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("Text reporting unit"),choices=[textInfos.unitLabels[x] for x in self.textUnits])
 		try:
 			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
 		except:
@@ -872,7 +872,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		# Translators: An option for progress bar output in the Object Presentation dialog
 		# which disables reporting of progress bars.
 		# See Progress bar output in the Object Presentation Settings section of the User Guide.
-		("off", _("off")),
+		("off", _("Off")),
 		# Translators: An option for progress bar output in the Object Presentation dialog
 		# which reports progress bar updates by speaking.
 		# See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -1281,10 +1281,10 @@ class DictionaryDialog(SettingsDialog):
 		# Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 		self.dictList.InsertColumn(2,_("Replacement"),width=150)
 		# Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
-		self.dictList.InsertColumn(3,_("case"),width=50)
+		self.dictList.InsertColumn(3,_("Case"),width=50)
 		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 		self.dictList.InsertColumn(4,_("Type"),width=50)
-		self.offOn = (_("off"),_("on"))
+		self.offOn = (_("Off"),_("On"))
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
@@ -1476,7 +1476,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille tethered to:"))
-		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
+		self.tetherValues=[("focus",_("Focus")),("review",_("Review"))]
 		self.tetherList = wx.Choice(self, wx.ID_ANY, choices=[x[1] for x in self.tetherValues])
 		tetherConfig=braille.handler.tether
 		selection = (x for x,y in enumerate(self.tetherValues) if y[0]==tetherConfig).next()  

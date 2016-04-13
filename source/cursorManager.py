@@ -147,7 +147,7 @@ class CursorManager(baseObject.ScriptableObject):
 		d.Show()
 		gui.mainFrame.postPopup()
 	# Translators: Input help message for NVDA's find command.
-	script_find.__doc__ = _("find a text string from the current cursor position")
+	script_find.__doc__ = _("Find a text string from the current cursor position")
 
 	def script_findNext(self,gesture):
 		if not self._lastFindText:
@@ -155,7 +155,7 @@ class CursorManager(baseObject.ScriptableObject):
 			return
 		self.doFindText(self._lastFindText)
 	# Translators: Input help message for find next command.
-	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
+	script_findNext.__doc__ = _("Find the next occurrence of the previously entered text string from the current cursor's position")
 
 	def script_findPrevious(self,gesture):
 		if not self._lastFindText:
@@ -163,7 +163,7 @@ class CursorManager(baseObject.ScriptableObject):
 			return
 		self.doFindText(self._lastFindText,reverse=True)
 	# Translators: Input help message for find previous command.
-	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
+	script_findPrevious.__doc__ = _("Find the previous occurrence of the previously entered text string from the current cursor's position")
 
 	def script_moveByPage_back(self,gesture):
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)

@@ -175,16 +175,16 @@ class AddonsDialog(wx.Dialog):
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
-			return _("install")
+			return _("Install")
 		elif addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-			return _("remove")
+			return _("Remove")
 		elif globalVars.appArgs.disableAddons:
 			# Translators: The status shown for an addon when its currently suspended do to addons been disabled.
-			return _("suspended")
+			return _("Suspended")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
-			return _("running")
+			return _("Running")
 
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
