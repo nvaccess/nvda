@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2015 NV Access Limited
+#Copyright (C) 2012-2016 NV Access Limited
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -25,6 +25,7 @@ import tempfile
 import hashlib
 import ctypes.wintypes
 import ssl
+import re
 import wx
 import languageHandler
 import gui
@@ -69,17 +70,7 @@ def checkForUpdate(auto=False):
 		"installed": config.isInstalledCopy(),
 	}
 	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
-	try:
-		res = urllib.urlopen(url)
-	except IOError as e:
-		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
-			# #4803: Windows fetches trusted root certificates on demand.
-			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
-			_updateWindowsRootCertificates()
-			# and then retry the update check.
-			res = urllib.urlopen(url)
-		else:
-			raise
+	res = _urlopen(url)
 	if res.code != 200:
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
 	info = {}
@@ -303,7 +294,10 @@ class UpdateDownloader(object):
 			try:
 				self._download(url)
 			except:
-				log.debugWarning("Error downloading %s" % url, exc_info=True)
+				# #5871: If there's more than one URL, don't log as an error,
+				# as it's not an error if a subsequent URL succeeds.
+				(log.debugWarning if len(self.urls) > 1 else log.error)(
+					"Error downloading %s" % url, exc_info=True)
 			else: #Successfully downloaded or canceled
 				if not self._shouldCancel:
 					success=True
@@ -321,7 +315,7 @@ class UpdateDownloader(object):
 		self._guiExec(self._downloadSuccess)
 
 	def _download(self, url):
-		remote = urllib.urlopen(url)
+		remote = _urlopen(url)
 		if remote.code != 200:
 			raise RuntimeError("Download failed with code %d" % remote.code)
 		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
@@ -506,11 +500,14 @@ class CERT_CHAIN_PARA(ctypes.Structure):
 		("dwStrongSignFlags", ctypes.wintypes.DWORD),
 	)
 
-def _updateWindowsRootCertificates():
+RE_ROOT_URL = re.compile(r"^.*?://.*?(?:/|$)")
+def _updateWindowsRootCertificates(url):
+	# The url might be a mutating request, so use the root.
+	url = RE_ROOT_URL.match(url).group(0)
 	crypt = ctypes.windll.crypt32
 	# Get the server certificate.
 	sslCont = ssl._create_unverified_context()
-	u = urllib.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
+	u = urllib.urlopen(url, context=sslCont)
 	cert = u.fp._sock.getpeercert(True)
 	u.close()
 	# Convert to a form usable by Windows.
@@ -527,3 +524,18 @@ def _updateWindowsRootCertificates():
 		ctypes.byref(chainCont))
 	crypt.CertFreeCertificateChain(chainCont)
 	crypt.CertFreeCertificateContext(certCont)
+
+def _urlopen(*args, **kwargs):
+	"""Wrapped urllib.urlopen which fetches trusted root SSL certificates if necessary.
+	"""
+	try:
+		return urllib.urlopen(*args, **kwargs)
+	except IOError as e:
+		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
+			# #4803, #5871: Windows fetches trusted root certificates on demand.
+			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
+			_updateWindowsRootCertificates(url)
+			# and then retry the request.
+			return urllib.urlopen(url)
+		else:
+			raise
