@@ -37,7 +37,7 @@ Udover Engelsk er NVDA blevet oversat til 47 sprog herunder: Afrikaans, albansk,
 ++ Understøttelse af 	talesynteser ++
 Udover at programmets meddelelser og brugerflade findes på flere sprog, kan NVDA også sætte brugeren i stand til at læse tekster på alle sprog, så længe de har en talesyntese, der kan tale det pågældende sprog.
 
-NVDA leveres med [eSpeak http://espeak.sourceforge.net/], en gratis, open-source, flersproget talesyntese.
+NVDA leveres med [eSpeak NG https://github.com/espeak-ng/espeak-ng], en gratis, open-source, flersproget talesyntese.
 
 Oplysninger om andre talesynteser som NVDA understøtter kan findes i afsnittet [Understøttede Talesynteser #SupportedSpeechSynths].
 
@@ -784,8 +784,8 @@ Med piletasterne kan du lytte til de enkelte stemmemuligheder.
 Venstre-pil og Pil-op fører dig opad i listen, mens Højre-pil og Pil-ned flytter nedad i listen.
 
 ==== Variant ====
-Hvis du bruger talesyntesen ESpeak, som følger med NVDA, indeholder denne combo boks en liste hvorfra du kan vælge den variant, som talesyntesen skal tale med.
-eSpeaks Varianter minder om forskellige stemmer, idet de får ESpeak-stemmen til at tale på lidt forskellige måder.
+Hvis du bruger talesyntesen ESpeak NG, som følger med NVDA, indeholder denne combo boks en liste hvorfra du kan vælge den variant, som talesyntesen skal tale med.
+eSpeak NGs Varianter minder om forskellige stemmer, idet de får ESpeak NG-stemmen til at tale på lidt forskellige måder.
 Nogle varianter lyder som en mand, nogle som en kvinde, andre lyder enddog som en frø.
 
 ==== Hastighed ====
@@ -800,12 +800,12 @@ Det er en skyderkontrol, der går fra 0 til 100, (med 0 som det laveste toneleje
 Det er en skyderkontrol, der går fra 0 til 100, (med 0 som den laveste lydstyrke og 100 som den højeste).
 
 ==== Udsving ====
-Denne indstilling er en skyder, som giver mulighed for at bestemme, hvor stort udsving (stigning og fald i tonehøjde) den pågældende talesyntese skal bruge under oplæsning. (Den eneste talesyntese, der p.t. understøtter denne funktion, er eSpeak).
+Denne indstilling er en skyder, som giver mulighed for at bestemme, hvor stort udsving (stigning og fald i tonehøjde) den pågældende talesyntese skal bruge under oplæsning. (Den eneste talesyntese, der p.t. understøtter denne funktion, er eSpeak NG).
 
 ==== Automatisk skift af sprog ====
 Med denne checkboks kan du vælge, om NVDA skal skifte sprog for talesyntesen automatisk, hvis den tekst, der bliver læst op, rummer information om sproget.
 Denne indstilling er slået til som standard.
-På nuværende tidspunkt er det kun eSpeak talesyntesen der understøtter automatisk skift af sprog.
+På nuværende tidspunkt er det kun eSpeak NG talesyntesen der understøtter automatisk skift af sprog.
 
 ==== Automatisk skift af dialekt ====
 Med denne checkboks kan du vælge, om NVDA også skal skifte dialekt automatisk i stedet for bare at skifte sprog.
@@ -1463,13 +1463,13 @@ Denne indstilling vil genindlæse alle app moduler og globale tilføjelsesprogra
 Dette afsnit indeholder informationer om de talesynteser, som NVDA understøtter.
 For en endnu mere omfattende list over gratis og kommercielt tilgængelige synteser, som du kan bruge med NVDA, besøg venligst denne side [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-Talesyntesen [eSpeak http://espeak.sourceforge.net/] er bygget direkte ind i NVDA og kræver ingen installation af særskilte drivere eller komponenter for at fungere.
-NVDA bruger som standard eSpeak ved opstart.
+++ eSpeak NG ++
+Talesyntesen [eSpeak NG https://github.com/espeak-ng/espeak-ng] er bygget direkte ind i NVDA og kræver ingen installation af særskilte drivere eller komponenter for at fungere.
+NVDA bruger som standard eSpeak NG ved opstart.
 Eftersom denne talesyntese er bygget ind i NVDA, er den et godt valg til de situationer, hvor NVDA skal afvikles fra en USB-pen eller fra en cd på flere forskellige systemer.
 
-Hver af de stemmer, som følger med eSpeak, taler forskellige sprog. 
-Der findes mere end 43 forskellige sprog i eSpeak.
+Hver af de stemmer, som følger med eSpeak NG, taler forskellige sprog. 
+Der findes mere end 43 forskellige sprog i eSpeak NG.
 
 Der findes også mange forskellige varianter, der kan vælges for at ændre, hvordan den enkelte stemme lyder. 
 

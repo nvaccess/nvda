@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-03-31 18:47+0100\n"
+"PO-Revision-Date: 2016-04-13 22:04+0200\n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
 "projects/p/nvda/language/nl/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -332,7 +332,7 @@ msgstr "Gujarati graad 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Koine Greek"
-msgstr ""
+msgstr "Koinè Grieks"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1316,7 +1316,7 @@ msgstr ""
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 msgid "Bottom"
-msgstr ""
+msgstr "Onderaan"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -3011,11 +3011,11 @@ msgstr ""
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
-msgstr ""
+msgstr "Linker muisknop loslaten"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 msgid "Left mouse button lock"
-msgstr ""
+msgstr "Linker muisknop vasthouden"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
@@ -3023,11 +3023,11 @@ msgstr "Vasthouden of loslaten van de linker muisknop"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
-msgstr ""
+msgstr "Rechter muisknop loslaten"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
-msgstr ""
+msgstr "Rechter muisknop vasthouden"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
@@ -3516,17 +3516,16 @@ msgstr "Verplaats focus"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 msgid "No caret"
-msgstr ""
+msgstr "Geen focus"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
-#, fuzzy
 msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "Eenmaal drukken, verplaatst de toetsenbordfocus naar het navigatorobject, "
 "tweemaal drukken, verplaatst de systeemcursor naar de positie van de "
-"leescursor."
+"leescursor"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3580,7 +3579,7 @@ msgstr ""
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
-msgstr ""
+msgstr "Bovenkant"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3652,7 +3651,7 @@ msgstr ""
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
-msgstr ""
+msgstr "Links"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3684,7 +3683,7 @@ msgstr ""
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 msgid "Right"
-msgstr ""
+msgstr "Rechts"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3750,22 +3749,20 @@ msgid "Shows the NVDA menu"
 msgstr "Toont het NVDA menu"
 
 #. Translators: Input help mode message for say all in review cursor command.
-#, fuzzy
 msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "Leest vanaf de leescursor tot aan het einde van het document, waarbij de "
-"leescursor tegelijkertijd verplaatst zal worden"
+"leescursor tegelijkertijd verplaatst wordt"
 
 #. Translators: Input help mode message for say all with system caret command.
-#, fuzzy
 msgid ""
 "Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "Leest vanaf de systeemcursor tot aan het einde van het document, waarbij de "
-"systeemcursor verplaatst zal worden"
+"systeemcursor verplaatst wordt"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -3776,16 +3773,14 @@ msgid "Formatting"
 msgstr "Opmaak"
 
 #. Translators: Input help mode message for report formatting command.
-#, fuzzy
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Geeft informatie weer over de opmaak op de huidige leescursor positie binnen "
-"het document"
+"het document. Tweemaal drukken geeft de informatie weer in bladermodus"
 
 #. Translators: Input help mode message for report current focus command.
-#, fuzzy
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "Meldt het object dat de focus heeft. Tweemaal drukken spelt de informatie"
@@ -3795,7 +3790,6 @@ msgid "No status line found"
 msgstr "Geen statusregel gevonden"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
@@ -4848,7 +4842,7 @@ msgstr "achtergrond {backgroundColor}"
 
 #, python-brace-format
 msgid "background pattern {pattern}"
-msgstr ""
+msgstr "Achtergrondpatroon {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
