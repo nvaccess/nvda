@@ -830,7 +830,7 @@ Tries to force this object to take the focus.
 		nvwave.playWaveFile(r"waves\textError.wav")
 
 	def event_typedCharacter(self,ch):
-		if config.conf["documentFormatting"]["reportSpellingErrors"] and (
+		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
 			# Not alpha, apostrophe or control.
 			ch.isspace() or (ch >= u" " and ch not in u"'\x7f" and not ch.isalpha())
 		):
