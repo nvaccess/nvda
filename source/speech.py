@@ -1424,6 +1424,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				text=""
 			if text:
 				textList.append(text)
+	if formatConfig["reportGrammarErrors"]:
 		invalidGrammar=attrs.get("invalid-grammar")
 		oldInvalidGrammar=attrsCache.get("invalid-grammar") if attrsCache is not None else None
 		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar!=oldInvalidGrammar:
