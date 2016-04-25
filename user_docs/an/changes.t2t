@@ -9,17 +9,31 @@ Qué bi ha de Nuevo en o NVDA
 - En o modo de navegación en l'Internet Explorer y atros controls MSHTML, fendo servir a navegación con a primer letra pa mover-se-ne por as anotacións (a y mayus+a) agora se'n mueve t'o texto ficau y borrau. (#5691)
 - En o Microsoft Excel, o NVDA agora anuncia o libel d'un grupo de celdas, asinas como si ye plegau u desplegau. (#5690)
 - En pretar dos vegadas o comando d'anunciar o formato de texto se presienta la información en o modo de navegación y asinas se puet revisar. (#4908)
-- En o Microsoft Excel 2010 y posteriors agora s'anuncia o uembrau de celdas y o degradau de repleno. L'anunciau automatico se controla con a opción d'anunciar as colors en as preferencias de Formatiau de Documentos d'o NVDA. (#3683)
- 
- 
+- En o Microsoft Excel 2010 y posteriors agora s'anuncia o uembrau de celdas y o degradau de repleno. L'anunciau automatico se controla con a opción d'anunciar as colors en as preferencias de Formatiau de Documentos d'o NVDA. F(#3683)
+- Nueva tabla de transcripción braille: Griego Koiné. (#5393)
+- En o visor d'o rechistro agora puetz alzar o rechistro fendo servir l'alcorce de teclau control+s. (#4532)
+
+
+== Cambeos ==
+- En o modo de navegación y os campos de texto editable o NVDA agora tracta l'intro d'o teclau numerico igual como a tecla intro prencipal. (#5385)
+- O NVDA ha cambiau t'o sintetizador de voz eSpeak NG. (#5651)
+
+
 == Corrección d'errors ==
 - En o modo de navegación, quan se mira de fer servir a navegación con una sola letra pa mover-se-ne ta un elemento que no se suporta en o documento, o NVDA anuncia que ixo no se suporta en cuenta de anunciar que no bi ha elemento en ixa adreza. (#5691)
 - Quan se lista fuellas en a lista d'elementos en o Microsoft Excel, agora s'inclui as fuellas que nomás contiengan graficos. (#5698)
 - O NVDA ya no anuncia información rara quan se cambie entre finestras en una aplicación Java con qualques finestras tals como l'IntelliJ u l'Android Studio. (#5732)
- 
- 
+- En os editors basaus en Scintilla tals como lo Notepad++ o braille agora s'esviella correctament en mover o cursor fendo servir una linia braille. (#5678)
+- O NVDA ya no peta de cabo ta quan en enchegar a salida braille. (#4457)
+- En o Microsoft Word, a sangría de paragrafo agora s'anuncia siempre en a unidat de mida esleyida por l'usuario (p.eix. centimetros u pulgadas). (#5804)
+- En usar una linia braille muitos mensaches d'o NVDA que antis nomás se charraban agora se meten en braille como cal. (#5557)
+- En as aplicacions Java accesibles agora s'anuncia o libel d'os elementos d'as anvistas d'arbol. (#5766)
+
+
 == Cambios pa Desembolicadors ==
 - Os components de c++ d'o NVDA agora se compilan con o Microsoft Visual Studio 2015. (#5592)
+- Agora puetz presentar un texto u mensache HTML a l'usuario en o modo de navegación fendo servir ui.browseableMessage. (#4908)
+- En a guida de l'usuario, quan s'emplega una opción %kc command pa una opción que tien una tecla común pa todas as distribucions, a tecla agora se puet meter dimpués de dos puntos d'amplo completo (：) asinas como os dos puntos normals (:). (#5739)
 
 
 = 2016.1 =

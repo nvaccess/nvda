@@ -35,9 +35,9 @@ Ye important que qualsiquier persona en o mundo, sin importar qué idioma charre
 Actualment o NVDA ye estau traduciu en 47 idiomas amás de l'idioma anglés incluindo: Afrikaans, albanés, amárico, arabe, aragonés, portugués brasilenyo, bulgaro, catalán, crovata, checo, danés, holandés, farsi, finlandés, francés, gallego, griego, Cheorchiano, alemán, hebreu, hindi, hungaro, islandés, irlandés, italián , chaponés, coreán, nepalí, noruego, polaco, portugués, panyabí, rumano, ruso, serbio, eslovaco, esloveno, espanyol, espanyol de colombia, sueco, tamil, tailandés, chino tradicional y simplificau, turco, ucrainés y vietnamita.
 
 ++ Suporte de Sintesi de Voz ++
-Amás de proporcionar os suyos mensaches y interficie en quantos idiomas, o NVDA tamién puet posibilitar a l'usuario pa leyer contenius en qualsiquier idioma, malas que tiengan un sintetizador de voz que pueda charrar ixe idioma en particular. 
+Amás de furnir os suyos mensaches y interficie en quantos idiomas, o NVDA tamién puet posibilitar a l'usuario pa leyer contenius en qualsiquier idioma, malas que tiengan un sintetizador de voz que pueda charrar ixe idioma en particular. 
 
-O NVDA ye integrau con [eSpeak http://espeak.sourceforge.net/], un sintetizador de voz multilingüe, libre, de codigo ubierto.
+O NVDA ye equipau con [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizador de voz multilingüe, libre, de codigo ubierto.
 
 Se puet trobar información sobre atros sintetizadors de voz que suporta lo NVDA en a sección [Sintetizadors de Voz suportaus #SupportedSpeechSynths].
 
@@ -299,7 +299,7 @@ Quan sigas en una tabla, as siguients teclas d'ordens tamién son disponibles:
 | Mover-se-ne t'a ringlera siguient | control+Alt+Flecha Abaixo | Mueve o cursor d'o sistema t'a siguient ringlera (remanindo en a mesma columna) |
 %kc:endInclude
 
-++ Navegación d'Obchectos ++
+++ Navegación d'Obchectos ++[ObjectNavigation]
 A mayor parti d'o tiempo, treballarás con aplicacions emplegando  ordens que muevan [o foco #SystemFocus] y [o cursor #SystemCaret].
 Manimenos, a vegadas, podrías querer explorar l'aplicación actual u lo Sistema Operativo sin mover o foco u lo cursor.
 Tamién podrías querer treballar con [obchectos #Objects] que no pueden accedir-se normalment emplegando lo teclau.
@@ -372,7 +372,7 @@ As siguients ordens son disponibles ta revisión de texto:
 | Leyer-lo tot con revisión | Mas teclau numerico | NVDA+mayus+Flecha abaixo | eslizar con 3 didos enta abaixo (modo de texto) | Leye dende a posición actual d'o cursor de revisión, movendo-lo seguntes baixa |
 | copiar dende o cursor de revisión | NVDA+f9 | NVDA+f9 | no | Prencipia o copiau de texto dende a posición actual d'o cursor de revisión. La copia actual no se leva a cabo dica que digas a NVDA do copiar-ne |
 | Copiar en o cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia dende a posición previament  fixada con Copiar dende o cursor de revisión dica la posición actual d'o cursor de revisión incluindo-la.  Dimpués de pretar ista tecla o texto se copiará en o portafuellas d'o Windows |
-| Anunciar o formato d'o texto | NVDA+f | NVDA+f | no | Informa d'o formato d'o texto an siga situau actualment o cursor de revisión |
+| Anunciar o formato d'o texto | NVDA+f | NVDA+f | no | Informa d'o formato d'o texto an siga situau actualment o cursor de revisión. Pretando-lo dos vegadas amuestra a información en o modo de navegación |
 %kc:endInclude
 
 nota: as teclas d'o teclau numerico requieren que a tecla BloqNum siga desactivada ta funcionar apropiadament.
@@ -442,7 +442,7 @@ Si bien un churi fisico u un trackpad se podrían emplegar ta navegar con o chur
 | navegar ta l'obchecto baixo o churi | NVDA+Multiplicar teclau numerico | NVDA+mayus+f10 | Mete o navegador d'obchectos en l'obchecto localizau en a posición d'o churi |
 %kc:endInclude
 
-+ Modo de navegación +
++ Modo de navegación +[BrowseMode]
 Os documentos complexos de nomás lectura, tals como as pachinas Web, son representaus en o NVDA con un modo de navegación. 
 Ixo inclui documentos en o Mozilla Firefox, o Microsoft Internet Explorer, o Mozilla Thunderbird, os mensaches HTML d'o Microsoft Outlook, o Google Chrome, l'Adobe Reader y l'Adobe Flash.
 O modo de navegación tamién ye disponible opcionalment t'os documentos d'o Microsoft Word.
@@ -626,15 +626,15 @@ Ixo significa que atros usuarios de lectors de pantalla qui ubran ixe libro de t
 +++ A lista d'elementos +++
 Igual como en a  web, o NVDA tien una lista d'elementos t'o Microsoft Excel que te permit  listar y accedir ta quantas menas diferents d'información.
 %kc:beginInclude
-P'accedir t'a lista d'elementos en l'Excel preta NVDA+f7.
+Pa accedir t'a lista d'elementos en l'Excel preta NVDA+f7.
 %kc:endInclude
 As diferents menas d'información disponibles en a lista d'elementos son:
-- Graficos: Isto lista totz os graficos en o libro de treballo. 
+- Graficos: Isto lista totz os graficos en a fuella de treballo activa. 
 Seleccionando un grafico y pretando l'intro u o botón mover ta enfoca o grafico ta navegar y leyer-lo con as teclas de flecha.
-- Comentarios: Isto lista todas as celdas en o libro de treballo que contienen comentarios. 
+- Comentarios: Isto lista todas as celdas en a fuella de treballo activa que contiengan comentarios. 
 S'amuestra l'adreza d'a celda de conchunta con os suyos comentarios ta cada celda. 
 Pretando l'intro u lo botón mover ta en estar en un comentario listau se'n moverá dreitament t'a ixa celda.
-- Formulas: Isto lista todas as celdas en o libro de treballo que contienen una formula. 
+- Formulas: Isto lista todas as celdas en a fuella de treballo que contiengan una formula. 
 S'amuestra l'adreza d'a celda de conchunta con a suya formula ta cada celda.
 Pretando l'intro u lo botón mover ta en una formula listada se'n moverá dreitament t'a ixa celda. 
 - Fuellas: Isto lista todas as fuellas en o libro de treballo. 
@@ -784,8 +784,8 @@ Puetz emplegar as teclas de cursor ta escuitar todas as varias eslecions.
 As flechas cucha y alto puyan por a lista, mientras que as flechas dreita y abaixo en baixan.
 
 ==== Variant ====
-Si yes emplegando o sintetizador Espeak empaquetau de conchunta con o NVDA, Iste ye un quadro combinau que te permite seleccionar a variant con a quala o sintetizador habría de charrar. 
-As variants d'Espeak son prou pareixidas a las voces, pero proporcionan atributos licherament diferents t'a voz d'ESpeak. 
+Si yes emplegando lo sintetizador Espeak NG empaquetau de conchunta con o NVDA, Iste ye un quadro combinau que te permite seleccionar a variant con a que o sintetizador habría de charrar. 
+As variants d'o Espeak NG son prou parellanas a las voces, pero furnen atributos licherament diferents a la voz d'o ESpeak NG. 
 Qualques variants sonarán como un hombre, qualques como una muller, y qualques como si tenesen carraspera.
 
 ==== Velocidat ====
@@ -800,12 +800,12 @@ Ista ye una barra de desplazamiento que va dende 0 dica 100, (estando 0 o ton ma
 Ista opción ye una barra de desplazamiento que va dende 0 dica 100, (estando 0 o volumen mas baixo y estando 100 o mas alto).
 
 ==== Entonación ====
-Ista opción ye una barra de desplazamiento que te permite trigar quánta entonación (puyada y caita en o ton) o sintetizador habría d'emplegar ta charrar. (Solament o sintetizador Espeak proporciona ista opción actualment).
+Ista opción ye una barra de desplazamiento que te permite trigar quánta entonación (puyada y caita en o ton) habría d'emplegar o sintetizador pa charrar. (O solo sintetizador que furne ista opción actualment ye o Espeak NG).
 
 ==== Cambeo Automatico d'Idioma ====
 Ista caixeta de verificación te permite activar u desactivar si o NVDA habría de cambiar os idiomas d'o sintetizador de voz automaticament sio texto a leyer especifica o suyo idioma.
 Ista opción ye activada de traza predeterminada.
-Actualment solament o sintetizador eSpeak suporta o cambeo automatico d'idioma.
+Actualment nomás o sintetizador eSpeak NG suporta o cambeo automatico d'idioma.
 
 ==== Cambeo Automatico de Dialecto ====
 Ista caixeta de verificación te permite activar u desactivar  si os cambeos de dialecto s'habrían de fer, en cuenta de nomás cambiar l'idioma actual.
@@ -1113,7 +1113,7 @@ T'os metodos de dentrada an a selección se puet cambiar con as teclas de flecha
 Para cuenta que agún con ista opción desactivada, o cursor de revisión encara se colocará sobre o candidato seleccionau permitindo-te emplegar a navegación d'obchectos ta revisar-ne manualment ta leyer iste u atros candidatos.
 
 ==== Incluir siempre una descripción curta d'o caracter quan s'anuncien candidatos ====
-Ista Opción, que'n ye activada por omisión, te permite trigar si o NVDA habría de proporcionar u no pas una descripción curta ta cada caracter en un candidato, u en que se seleccione u en que  se leiga automaticament en que amaneixca la lista de candidatos.
+Ista Opción, que ye enchegada por defecto, te permite trigar si o NVDA habría de furnir u no pas una descripción curta pa cada caracter en un candidato, u en que se seleccione u en que  se leiga automaticament en que amaneixca la lista de candidatos.
 Para cuenta que ta localizacions tals como lo Chino, l'anunciau de descripcions extra de caracters t'o candidato seleccionau no ye afectau por ista opción.
 Ista opción podría estar util t'os metodos de dentrada Coreán y chaponés.
 
@@ -1461,24 +1461,24 @@ Iste elemento, una vegada activau, recarga os modulos d'aplicación y os plugins
 
 + Sintetizadors de Voz Suportaus +[SupportedSpeechSynths]
 Ista sección contién información sobre os sintetizadors de voz suportaus por o NVDA.
-Ta una lista mas extensa d'os sintetizadors libres y comercials que puetz descargar y mercar ta emplegar con o NVDA, por favor mira a pachina en [http://www.nvda-project.org/wiki/extravoices http://www.nvda-project.org/wiki/extravoices].
+Pa una lista mas extensa d'os sintetizadors libres y comercials que puetz descargar y mercar pa emplegar con o NVDA, por favor mira a pachina en [http://www.nvda-project.org/wiki/extravoices http://www.nvda-project.org/wiki/extravoices].
 
-++ eSpeak ++
-O sintetizador [eSpeak http://espeak.sourceforge.net/] se compila dreitament en o NVDA y no requier garra atro controlador u components especials ta instalar-se.
-O NVDA s'encieta emplegando o eSpeak de traza predeterminada.
-Como iste sintetizador se compiló en o NVDA, ye una gran esleción ta quan s'executa lo NVDA en  una memoria USB u en un CD en atros sistemas.
+++ eSpeak NG ++
+O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng/] se construi dreitament en o NVDA y no requier garra atro controlador u components especials ta instalar-se.
+O NVDA s'encieta emplegando o eSpeak NG de traza predeterminada.
+Como iste sintetizador ye integrau en o NVDA, ye una gran esleción ta quan s'executa lo NVDA en  una memoria USB u en un CD en atros sistemas.
 
-Cada voz que vien con o eSpeak charra un idioma diferent.
-Bi ha sobre 43 idiomas diferents suportaus por  o eSpeak.
+Cada voz que vien con o eSpeak NG charra un idioma diferent.
+Bi ha sobre 43 idiomas diferents suportaus por  o eSpeak NG.
 
 Tamién bi ha muitas variants que pueden trigar-se ta alterar o son d'a voz.
 
 ++ Microsoft Speech API versión 4 (SAPI 4) ++
-SAPI 4 ye un antigo estandar de Microsoft ta software sintetizadors de voz.
-Muitos sintetizadors de voz que cumplen con iste estandar podrían estar mercaus u descargaus de baldes en quantas companyías y puestos Web.
-Quan s'utiliza iste sintetizador con o NVDA as voces disponibles (a las qualas s'accedeixen dende o [Dialogo Opcions de  Voz #VoiceSettings] u dende o [Grupo d'Opcions de Sintetizador #SynthSettingsRing]) contendrán todas as voces de totz os motors SAPI 4 instalaus que se troben en o tuyo sistema.
+SAPI 4 ye un antigo estandar de Microsoft pa software sintetizador de voz.
+O NVDA encara suporta ixo pa usuarios que agún tiengan sintetizadors SAPI 4 instalaus.
+Manimenos Microsoft ya no suporta ixo y cal components que ya no son disponibles dende Microsoft.
 
-Si tiens voces SAPI 4 instaladas pero o sintetizador no amaneix en a lista de sintetizadors d'o NVDA, por favor  instala os binarios d'o runtime de SAPI 4.0 , disponible en http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Quan s'utiliza iste sintetizador con o NVDA as voces disponibles (accesibles dende o [Dialogo d'opcions de  Voz #VoiceSettings] u dende o [Grupo d'Opcions de Sintetizador #SynthSettingsRing]) contendrán todas as voces de totz os motors SAPI 4 instalaus que se trobe en o tuyo sistema.
 
 ++ Microsoft Speech API versión 5 (SAPI 5) ++
 SAPI 5 ye un estandar de Microsoft ta software sintetizadors de voz.
@@ -2105,7 +2105,7 @@ Ta linias que tiengan un teclau braille, BRLTTY actualment manea a dentrada brai
 Por tanto, a opción tabla braille de dentrada d'o NVDA ye irrelevant.
 
 Seguidament van as asignacions a ordens BRLTTY ta NVDA.
-Por favor mira-te [a documentación de tablas de teclas de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] ta información sobre cómo se mapeyan as ordens de BRLTTY ta controlar as linias braille.
+Por favor mira-te [as [listas de vinclos de teclas de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] pa información sobre cómo se mapeyan as ordens de BRLTTY pa controlar as linias braille.
 %kc:beginInclude
 || Nombre | orden de BRLTTY |
 | Desplazar a linia braille enta zaga | fwinlt (va t'a cucha una finestra) |
