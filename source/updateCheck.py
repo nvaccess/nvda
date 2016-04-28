@@ -536,6 +536,6 @@ def _urlopen(*args, **kwargs):
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates(url)
 			# and then retry the request.
-			return urllib.urlopen(url)
+			return urllib.urlopen(*args, **kwargs)
 		else:
 			raise
