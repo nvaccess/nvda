@@ -72,7 +72,7 @@ For reference, the following dependencies are included in Git submodules:
 * SyncBraille.dll, version 1.0.0.1
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
-* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.46
+* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51
 * [NSIS UAC plug-in](http://nsis.sourceforge.net/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
