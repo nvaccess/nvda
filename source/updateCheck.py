@@ -525,17 +525,17 @@ def _updateWindowsRootCertificates(url):
 	crypt.CertFreeCertificateChain(chainCont)
 	crypt.CertFreeCertificateContext(certCont)
 
-def _urlopen(*args, **kwargs):
+def _urlopen(url, *args, **kwargs):
 	"""Wrapped urllib.urlopen which fetches trusted root SSL certificates if necessary.
 	"""
 	try:
-		return urllib.urlopen(*args, **kwargs)
+		return urllib.urlopen(url, *args, **kwargs)
 	except IOError as e:
 		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803, #5871: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates(url)
 			# and then retry the request.
-			return urllib.urlopen(*args, **kwargs)
+			return urllib.urlopen(url, *args, **kwargs)
 		else:
 			raise
