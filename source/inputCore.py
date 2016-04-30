@@ -23,6 +23,7 @@ import api
 import speech
 import characterProcessing
 import config
+from fileUtils import FaultTolerantFile
 import watchdog
 from logHandler import log
 import globalVars
@@ -360,7 +361,8 @@ class GlobalGestureMap(object):
 					else:
 						outSect[script] = [outVal, gesture]
 
-		out.write()
+		with FaultTolerantFile(out.filename) as f:
+			out.write(f)
 
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
