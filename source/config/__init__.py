@@ -6,6 +6,7 @@ import _winreg
 import ctypes
 import ctypes.wintypes
 import os
+import osreplace
 import sys
 from cStringIO import StringIO
 import itertools
@@ -17,6 +18,7 @@ from logHandler import log
 import shlobj
 import baseObject
 import easeOfAccess
+from fileUtils import FaultTolerantFile
 import winKernel
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
@@ -641,10 +643,12 @@ class ConfigManager(object):
 			# Never save the config if running securely.
 			return
 		try:
-			self.profiles[0].write()
+			with FaultTolerantFile(self.profiles[0].filename) as f:
+				self.profiles[0].write(f)
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
-				self._profileCache[name].write()
+				with FaultTolerantFile(self._profileCache[name].filename) as f:
+					self._profileCache[name].write(f)
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except Exception as e:
@@ -741,7 +745,7 @@ class ConfigManager(object):
 		if oldName.lower() != newName.lower() and os.path.isfile(newFn):
 			raise ValueError("A profile with the same name already exists: %s" % newName)
 
-		os.rename(oldFn, newFn)
+		osreplace.replace(oldFn, newFn)
 		# Update any associated triggers.
 		allTriggers = self.triggersToProfiles
 		saveTrigs = False
