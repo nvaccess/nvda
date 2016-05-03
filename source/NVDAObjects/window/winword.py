@@ -1487,7 +1487,7 @@ class WordChart(Window):
 					key=key+"Trendline"
 					self.chartElements[key]=(self.focusSeriesTrendline,i+1)
 					self.keyList.append(key)
-		self.chartElements['otherElements']=(self.focusChartElement, None)
+		self.chartElements['otherElements']=(self.focusChartElements, None)
 		self.keyList.append('otherElements')
 		self.elementsCount=len(self.keyList)
 		super(WordChart,self).__init__(windowHandle=windowHandle)
@@ -1502,7 +1502,7 @@ class WordChart(Window):
 		self.wordChartObject.SeriesCollection(self.currentSeriesIndex).Select()
 		eventHandler.queueEvent('gainFocus',obj)
 
-	def focusChartElement(self):
+	def focusChartElements(self):
 		obj=WordChartElement(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex)
 		eventHandler.queueEvent('gainFocus',obj)
 
@@ -1561,35 +1561,33 @@ class WordChart(Window):
 			text=_("item")
 		return text
 
-	def script_reportNextChartElement(self,gesture):
+	def invokeChartElement(self, keyIndex):
+		val=self.chartElements[self.keyList[keyIndex]]
+		func=val[0]
+		arg=val[1]
+		if arg==None:
+			func()
+		else:
+			func(arg)
+		
+	def script_nextChartElement(self,gesture):
 		if self.keyIndex == self.elementsCount-1:
 			self.keyIndex=0
 		else:
 			self.keyIndex=self.keyIndex+1
-		val=self.chartElements[self.keyList[self.keyIndex]]
-		func=val[0]
-		index=val[1]
-		if index==None:
-			func()
-		else:
-			func(index)
-	script_reportNextChartElement.canPropagate=True
+		self.invokeChartElement(self.keyIndex)
+	script_nextChartElement.canPropagate=True
 
-	def script_reportPreviousChartElement(self,gesture):
+	def script_previousChartElement(self,gesture):
 		if self.keyIndex == 0:
 			self.keyIndex=self.elementsCount-1
 		else:
 			self.keyIndex=self.keyIndex-1
-		val=self.chartElements[self.keyList[self.keyIndex]]
-		func=val[0]
-		index=val[1]
-		if index==None:
-			func()
-		else:
-			func(index)
-	script_reportPreviousChartElement.canPropagate=True
+		self.invokeChartElement(self.keyIndex)
+	script_previousChartElement.canPropagate=True
 
 	def script_activatePosition(self,gesture):
+		self.rangeStart=self.wordApplicationObject.ActiveDocument.Range().Start
 		# Toggle browse mode pass-through.
 		self.passThrough = True
 		self.ignoreTreeInterceptorPassThrough=False
@@ -1599,17 +1597,18 @@ class WordChart(Window):
 	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def script_disablePassThrough(self, gesture):
+		self.wordApplicationObject.ActiveDocument.Range(self.rangeStart, self.rangeStart).Select()
 		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
 
 	__gestures = {
-				"kb(laptop):upArrow":"reportNextChartElement",
-				"kb(desktop):upArrow":"reportNextChartElement",
-				"kb(laptop):downArrow":"reportPreviousChartElement",
-				"kb(desktop):downArrow":"reportPreviousChartElement",
-				"kb(desktop):leftArrow":"reportPreviousChartElement",
-				"kb(laptop):leftArrow":"reportPreviousChartElement",
-				"kb(desktop):rightarrow":"reportNextChartElement",
-				"kb(laptop):rightArrow":"reportNextChartElement",
+				"kb(laptop):upArrow":"nextChartElement",
+				"kb(desktop):upArrow":"nextChartElement",
+				"kb(laptop):downArrow":"previousChartElement",
+				"kb(desktop):downArrow":"previousChartElement",
+				"kb(desktop):leftArrow":"previousChartElement",
+				"kb(laptop):leftArrow":"previousChartElement",
+				"kb(desktop):rightarrow":"nextChartElement",
+				"kb(laptop):rightArrow":"nextChartElement",
 				"kb:enter": "activatePosition",
 				"kb(desktop):numpadEnter":"activatePosition",
 				"kb:space": "activatePosition",
@@ -1651,15 +1650,18 @@ class WordChartSeriesTrendline(WordChart):
 	def _get_role(self):
 		return controlTypes.ROLE_UNKNOWN
 
+	def invokeTrendline(self, trendlineIndex):
+		obj=WordChartSeriesTrendline(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, trendlineIndex=trendlineIndex)
+		self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Select()
+		eventHandler.queueEvent('gainFocus',obj)
+
 	def script_previousTrendline(self, gesture):
 		if self.trendlinesCount > 1:
 			if self.trendlineIndex==1:
 				self.trendlineIndex=self.trendlinesCount
 			else:
 				self.trendlineIndex=self.trendlineIndex-1
-			obj=WordChartSeriesTrendline(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, trendlineIndex=self.trendlineIndex)
-			self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Select()
-			eventHandler.queueEvent('gainFocus',obj)
+			self.invokeTrendline(self.trendlineIndex)
 
 	def script_nextTrendline(self, gesture):
 		if self.trendlinesCount > 1:
@@ -1667,9 +1669,7 @@ class WordChartSeriesTrendline(WordChart):
 				self.trendlineIndex=1
 			else:
 				self.trendlineIndex=self.trendlineIndex+1
-			obj=WordChartSeriesTrendline(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, trendlineIndex=self.trendlineIndex)
-			self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Select()
-			eventHandler.queueEvent('gainFocus',obj)
+			self.invokeTrendline(self.trendlineIndex)
 
 	__gestures = {
 				"kb(laptop):leftArrow":"previousTrendline",
@@ -1685,37 +1685,28 @@ class WordChartElement(WordChart):
 		self.elementIndex=elementIndex
 		self.keyIndex=keyIndex
 		self.wordChartObject=wordChartObject
-		self.otherChartElements={}
 		self.elementKeyList=[]
-		# Translators: Identifyting Axes in Charts based on axisType and axisGroup
 		self._axisMap={chartConstants.xlCategory: {chartConstants.xlPrimary: 'Primary Category Axis', chartConstants.xlSecondary: 'Secondary Category Axis'},
 					chartConstants.xlValue: {chartConstants.xlPrimary: 'Primary Value Axis', chartConstants.xlSecondary: 'Secondary Value Axis'},
 					chartConstants.xlSeriesAxis: {chartConstants.xlPrimary: 'Primary Series Axis', chartConstants.xlSecondary: 'Secondary Series Axis'}
 		}
 		if self.wordChartObject.HasTitle:
-			self.otherChartElements['chartTitle']=(self.focusChartTitle, None)
 			self.elementKeyList.append('chartTitle')
 		# Enumerations for chart object in Excel and Word are same
 		for axisType in [chartConstants.xlCategory, chartConstants.xlValue, chartConstants.xlSeriesAxis]:
 			for axisGroup in [chartConstants.xlPrimary, chartConstants.xlSecondary]:
 				if self.wordChartObject.HasAxis(axisType, axisGroup):
-					self.otherChartElements[self._axisMap[axisType][axisGroup]]=(self.focusAxis, axisType, axisGroup)
 					self.elementKeyList.append(self._axisMap[axisType][axisGroup])
 					if self.wordChartObject.Axes(axisType, axisGroup).HasTitle:
-						self.otherChartElements[self._axisMap[axisType][axisGroup]+'Title']=(self.focusAxisTitle, axisType, axisGroup)
-						self.elementKeyList.append(self._axisMap[axisType][axisGroup]+'Title')
-		self.otherChartElements['chartArea']=(self.focusChartArea, None)
+						self.elementKeyList.append(self._axisMap[axisType][axisGroup]+' Title')
 		self.elementKeyList.append('chartArea')
 		
-		self.otherChartElements['plotArea']=(self.focusPlotArea, None)
 		self.elementKeyList.append('plotArea')
 
 		if self.wordChartObject.HasLegend:
-			self.otherChartElements['legend']=(self.focusLegend, None)
 			self.elementKeyList.append('legend')
 
 		if self.wordChartObject.HasDataTable:
-			self.otherChartElements['dataTable']=(self.focusDataTable, None)
 			self.elementKeyList.append('dataTable')
 
 		self.chartElementsCount=len(self.elementKeyList)
@@ -1728,39 +1719,40 @@ class WordChartElement(WordChart):
 	def _get_role(self):
 		return controlTypes.ROLE_UNKNOWN
 
-	def focusChartTitle(self):
-		obj=WordChartTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
-		self.wordChartObject.ChartTitle.Select()
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusAxis(self, axisType, axisGroup):
-		obj=WordChartAxis(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
-		self.wordChartObject.Axes(axisType, axisGroup).Select()
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusAxisTitle(self, axisType, axisGroup):
-		obj=WordChartAxisTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
-		self.wordChartObject.Axes(axisType, axisGroup).AxisTitle.Select()
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusChartArea(self):
-		obj=WordChartArea(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
-		self.wordChartObject.ChartArea.Select()
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusPlotArea(self):
-		obj=WordChartPlotArea(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
-		self.wordChartObject.PlotArea.Select()
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusLegend(self):
-		obj=WordChartLegend(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
-		self.wordChartObject.Legend.Select()
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusDataTable(self):
-		obj=WordChartDataTable(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
-		self.wordChartObject.DataTable.Select()
+	def focusChartElement(self, key):
+		if 'Axis' in key:
+			splitKey=key.split()
+			if splitKey[0]=='Primary':
+				axisGroup=chartConstants.xlPrimary
+			elif splitKey[0]=='Secondary':
+				axisGroup=chartConstants.xlSecondary
+			if splitKey[1]=='Category':
+				axisType=chartConstants.xlCategory
+			elif splitKey[1]=='Value':
+				axisType=chartConstants.xlValue
+			elif splitKey[1]=='Series':
+				axisType=chartConstants.xlSeriesAxis
+			if 'Axis Title' in key:
+				obj=WordChartAxisTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+				self.wordChartObject.Axes(axisType, axisGroup).AxisTitle.Select()
+			else:
+				obj=WordChartAxis(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+				self.wordChartObject.Axes(axisType, axisGroup).Select()
+		elif key=='chartTitle':
+			obj=WordChartTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.ChartTitle.Select()
+		elif key=='chartArea':
+			obj=WordChartArea(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.ChartArea.Select()
+		elif key=='plotArea':
+			obj=WordChartPlotArea(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.PlotArea.Select()
+		elif key=='legend':
+			obj=WordChartLegend(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.Legend.Select()
+		elif key=='dataTable':
+			obj=WordChartDataTable(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.DataTable.Select()
 		eventHandler.queueEvent('gainFocus',obj)
 
 	def script_previousElement(self,gesture):
@@ -1769,12 +1761,7 @@ class WordChartElement(WordChart):
 		else:
 			self.elementIndex=self.elementIndex-1
 		key=self.elementKeyList[self.elementIndex]
-		val=self.otherChartElements[key]
-		func=val[0]
-		if 'Axis' in key or 'Axis Title' in key:
-			func(val[1], val[2])
-		else:
-			func()
+		self.focusChartElement(key)
 	script_previousElement.canPropagate=True
 
 	def script_nextElement(self,gesture):
@@ -1783,12 +1770,7 @@ class WordChartElement(WordChart):
 		else:
 			self.elementIndex=self.elementIndex+1
 		key=self.elementKeyList[self.elementIndex]
-		val=self.otherChartElements[key]
-		func=val[0]
-		if 'Axis' in key or 'Axis Title' in key:
-			func(val[1], val[2])
-		else:
-			func()
+		self.focusChartElement(key)
 	script_nextElement.canPropagate=True
 
 	__gestures = {
@@ -1895,18 +1877,18 @@ class WordChartSeries(WordChart):
 					self.currentPointIndex=self.currentPointIndex+1
 		return self.currentPointIndex
 
+	def invokePoint(self, pointIndex):
+		point=WordChartPoint(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, pointIndex=pointIndex)
+		self.wordChartObject.SeriesCollection(self.seriesIndex).Points(pointIndex).Select()
+		eventHandler.queueEvent("gainFocus", point )
+		
 	def script_previousPoint(self,gesture):
 		self.currentPointIndex=self.getPointIndex("previous")
-		point=WordChartPoint(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, pointIndex=self.currentPointIndex)
-		self.wordChartObject.SeriesCollection(self.seriesIndex).Points(self.currentPointIndex).Select()
-		eventHandler.queueEvent("gainFocus", point )
+		self.invokePoint(self.currentPointIndex)
 	script_previousPoint.canPropagate=True
 
 	def script_nextPoint(self,gesture):
 		self.currentPointIndex=self.getPointIndex("next")
-		point=WordChartPoint(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, pointIndex=self.currentPointIndex)
-		self.wordChartObject.SeriesCollection(self.seriesIndex).Points(self.currentPointIndex).Select()
-		eventHandler.queueEvent("gainFocus", point )
 	script_nextPoint.canPropagate=True
 
 	def script_reportColor(self, gesture):
