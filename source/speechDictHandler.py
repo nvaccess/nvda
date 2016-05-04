@@ -1,14 +1,14 @@
 #speechDictHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2016 NVDA Contributors <http://www.nvaccess.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import re
-import globalVars
-from logHandler import log
 import os
 import codecs
+import globalVars
+from logHandler import log
 import api
 import config
 
@@ -20,6 +20,11 @@ speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechDicts")
 ENTRY_TYPE_ANYWHERE = 0 # String can match anywhere
 ENTRY_TYPE_WORD = 2 # String must have word boundaries on both sides to match
 ENTRY_TYPE_REGEXP = 1 # Regular expression
+
+#Types of regexp for parsing numbers:
+RE_SINGLE_DIGITS = re.compile(r"(\d)(?=\d+(\D|\b))")
+RE_DOUBLE_DIGITS = re.compile(r"(\d{1,2})(?=(\d{2})+(\D|\b))")
+RE_TRIPLE_DIGITS = re.compile(r"(\d{1,3})(?=(\d{3})+(\D|\b))")
 
 class SpeechDictEntry:
 
@@ -96,10 +101,17 @@ class SpeechDict(list):
 		return text
 
 def processText(text):
-	if not globalVars.speechDictionaryProcessing:
-		return text
-	for type in dictTypes:
-		text=dictionaries[type].sub(text)
+	if globalVars.speechDictionaryProcessing:
+		for type in dictTypes:
+			text=dictionaries[type].sub(text)
+	numberSetting = config.conf["speech"]["readNumbersAs"]
+	#0: processes default behavior. 1-3: splits on single-triple digits.
+	if numberSetting == 1:
+		text = RE_SINGLE_DIGITS.sub(r"\1 ", text)
+	if numberSetting == 2:
+		text = RE_DOUBLE_DIGITS.sub(r"\1 ", text)
+	if numberSetting == 3:
+		text = RE_TRIPLE_DIGITS.sub(r"\1 ", text)
 	return text
 
 def initialize():
