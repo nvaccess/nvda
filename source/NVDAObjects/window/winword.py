@@ -1587,7 +1587,6 @@ class WordChart(Window):
 	script_previousChartElement.canPropagate=True
 
 	def script_activatePosition(self,gesture):
-		self.rangeStart=self.wordApplicationObject.ActiveDocument.Range().Start
 		# Toggle browse mode pass-through.
 		self.passThrough = True
 		self.ignoreTreeInterceptorPassThrough=False
@@ -1597,7 +1596,8 @@ class WordChart(Window):
 	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def script_disablePassThrough(self, gesture):
-		self.wordApplicationObject.ActiveDocument.Range(self.rangeStart, self.rangeStart).Select()
+		rangeStart=self.wordApplicationObject.ActiveDocument.Range().Start
+		self.wordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
 		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
 
 	__gestures = {
@@ -1889,6 +1889,7 @@ class WordChartSeries(WordChart):
 
 	def script_nextPoint(self,gesture):
 		self.currentPointIndex=self.getPointIndex("next")
+		self.invokePoint(self.currentPointIndex)
 	script_nextPoint.canPropagate=True
 
 	def script_reportColor(self, gesture):
