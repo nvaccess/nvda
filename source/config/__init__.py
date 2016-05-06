@@ -19,37 +19,6 @@ import baseObject
 import easeOfAccess
 import winKernel
 
-def validateConfig(configObj,validator,validationResult=None,keyList=None):
-	"""
-	@deprecated: Add-ons which need this should provide their own implementation.
-	"""
-	import warnings
-	warnings.warn("config.validateConfig deprecated. Callers should provide their own implementation.",
-		DeprecationWarning, 2)
-	if validationResult is None:
-		validationResult=configObj.validate(validator,preserve_errors=True)
-	if validationResult is True:
-		return None #No errors
-	if validationResult is False:
-		return "Badly formed configuration file"
-	errorStrings=[]
-	for k,v in validationResult.iteritems():
-		if v is True:
-			continue
-		newKeyList=list(keyList) if keyList is not None else []
-		newKeyList.append(k)
-		if isinstance(v,dict):
-			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
-		else:
-			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
-			defaultValue=validator.get_default_value(configObj.configspec[k])
-			configObj[k]=defaultValue
-			if k not in configObj.defaults:
-				configObj.defaults.append(k)
-			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
-	return errorStrings
-
-#: @deprecated: Use C{conf.validator} instead.
 val = Validator()
 
 #: The configuration specification
