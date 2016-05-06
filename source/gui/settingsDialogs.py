@@ -532,7 +532,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
 		speakDigitsSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: Label for a combo box for setting how nvda speaks numbers.
-		digitsLabel=wx.StaticText(self, wx.ID_ANY, label=_("Speak &numbers as"))
+		digitsLabel=wx.StaticText(self, wx.ID_ANY, label=_("Speak &Numbers as"))
 		speakDigitsSizer.Add(digitsLabel)
 		self.digitsCombo = wx.Choice(self, wx.NewId(), choices=config.digitChoices)
 		self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
