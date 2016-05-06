@@ -1519,6 +1519,7 @@ class ExcelMergedCell(ExcelCell):
 
 class ExcelFormControl(ExcelBase):
 	isFocusable=True
+	_roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_COMBOBOX, xlEditBox:controlTypes.ROLE_EDITABLETEXT, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LIST, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
 
 	def _get_excelControlFormatObject(self):
 		return self.excelFormControlObject.controlFormat
@@ -1529,7 +1530,6 @@ class ExcelFormControl(ExcelBase):
 	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
 		self.parent=parent
 		self.excelFormControlObject=excelFormControlObject
-		self._roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_COMBOBOX, xlEditBox:controlTypes.ROLE_EDITBOX, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LIST, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
 		super(ExcelFormControl,self).__init__(windowHandle=windowHandle)
 
 	def _get_role(self):
