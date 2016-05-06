@@ -1616,18 +1616,20 @@ class WordChart(Window):
 	}
 
 class WordChartSeriesTrendline(WordChart):
+	_trendlineTypeMap = {chartConstants.xlExponential: 'Exponential',
+								chartConstants.xlLinear: 'Linear',
+								chartConstants.xlLogarithmic: 'Logarithmic',
+								chartConstants.xlMovingAvg: 'Moving Average',
+								chartConstants.xlPolynomial: 'Polynomial',
+								chartConstants.xlPower: 'Power' 
+	}
+
 	def __init__(self, windowHandle, wordApplicationObject, wordChartObject, keyIndex, seriesIndex, trendlineIndex=1):
 		self.windowHandle=windowHandle
 		self.wordApplicationObject=wordApplicationObject
 		self.seriesIndex=seriesIndex
 		self.trendlineIndex=trendlineIndex
 		self.trendlinesCount=wordChartObject.SeriesCollection(self.seriesIndex).Trendlines().Count
-		self._trendlineTypeMap = {chartConstants.xlExponential: 'Exponential',
-								chartConstants.xlLinear: 'Linear',
-								chartConstants.xlLogarithmic: 'Logarithmic',
-								chartConstants.xlMovingAvg: 'Moving Average',
-								chartConstants.xlPolynomial: 'Polynomial',
-								chartConstants.xlPower: 'Power' }
 		super(WordChartSeriesTrendline, self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordChartObject=wordChartObject, keyIndex=keyIndex)
 
 	def _get_name(self):
@@ -1679,6 +1681,11 @@ class WordChartSeriesTrendline(WordChart):
 	}
 
 class WordChartElement(WordChart):
+	_axisMap={chartConstants.xlCategory: {chartConstants.xlPrimary: 'Primary Category Axis', chartConstants.xlSecondary: 'Secondary Category Axis'},
+				chartConstants.xlValue: {chartConstants.xlPrimary: 'Primary Value Axis', chartConstants.xlSecondary: 'Secondary Value Axis'},
+				chartConstants.xlSeriesAxis: {chartConstants.xlPrimary: 'Primary Series Axis', chartConstants.xlSecondary: 'Secondary Series Axis'}
+	}
+
 	def __init__(self,windowHandle, wordApplicationObject, wordChartObject, keyIndex, elementIndex=0):
 		self.windowHandle=windowHandle
 		self.wordApplicationObject=wordApplicationObject
@@ -1686,10 +1693,6 @@ class WordChartElement(WordChart):
 		self.keyIndex=keyIndex
 		self.wordChartObject=wordChartObject
 		self.elementKeyList=[]
-		self._axisMap={chartConstants.xlCategory: {chartConstants.xlPrimary: 'Primary Category Axis', chartConstants.xlSecondary: 'Secondary Category Axis'},
-					chartConstants.xlValue: {chartConstants.xlPrimary: 'Primary Value Axis', chartConstants.xlSecondary: 'Secondary Value Axis'},
-					chartConstants.xlSeriesAxis: {chartConstants.xlPrimary: 'Primary Series Axis', chartConstants.xlSecondary: 'Secondary Series Axis'}
-		}
 		if self.wordChartObject.HasTitle:
 			self.elementKeyList.append('chartTitle')
 		# Enumerations for chart object in Excel and Word are same
