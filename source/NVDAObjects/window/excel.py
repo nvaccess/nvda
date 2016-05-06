@@ -690,6 +690,8 @@ class ExcelWorksheet(ExcelBase):
 				if maxCell:
 					maxRowNumber=maxCell.row
 					maxColumnNumber=maxCell.column
+			if maxColumnNumber is None:
+				maxColumnNumber=self._getMaxColumnNumberForHeaderCell(headerCell)
 			headerCellTracker.addHeaderCellInfo(rowNumber=headerCell.row,columnNumber=headerCell.column,rowSpan=headerCell.rows.count,colSpan=headerCell.columns.count,minRowNumber=minRowNumber,maxRowNumber=maxRowNumber,minColumnNumber=minColumnNumber,maxColumnNumber=maxColumnNumber,name=fullName,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
 
 	def _get_headerCellTracker(self):
@@ -723,9 +725,18 @@ class ExcelWorksheet(ExcelBase):
 			self.excelWorksheetObject.parent.names(oldInfo.name).delete()
 			oldInfo.name=name
 		else:
-			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+			maxColumnNumber=self._getMaxColumnNumberForHeaderCell(cell.excelCellObject)
+			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,maxColumnNumber=maxColumnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
 		self.excelWorksheetObject.parent.names.add(name,cell.excelRangeObject)
 		return True
+
+	def _getMaxColumnNumberForHeaderCell(self,excelCell):
+		try:
+			r=excelCell.currentRegion
+		except COMError:
+			return excelCell.column
+		columns=r.columns
+		return columns[columns.count].column+1
 
 	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
 		if not isColumnHeader and not isRowHeader: 
@@ -752,17 +763,7 @@ class ExcelWorksheet(ExcelBase):
 		except COMError:
 			log.debugWarning("Possibly protected sheet")
 			return None
-		if cellRegion.count==1:
-			minRow=maxRow=minColumn=maxColumn=None
-		else:
-			rc=cellRegion.address(True,True,xlRC,False)
-			m=re_absRC.match(rc)
-			if not m:
-				log.debugWarning("address not in rc format: %s"%rc)
-				return None
-			g=[int(x) for x in m.groups()]
-			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
-		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
+		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 

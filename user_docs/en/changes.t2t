@@ -17,6 +17,8 @@
 == Changes ==
 - In browse mode and editable text fields, NVDA now treats numpadEnter the same as the main enter key. (#5385)
 - NVDA has switched to the eSpeak NG speech synthesizer. (#5651)
+- In Microsoft Excel, NVDA no longer ignores a column header for a cell when there is a blank row between the cell and the header. (#5396)
+- In Microsoft Excel, coordinates are now announced before headers to eliminate ambiguity between headers and content. (#5396)
 
 
 == Bug Fixes ==
