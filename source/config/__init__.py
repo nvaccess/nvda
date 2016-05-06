@@ -1,6 +1,6 @@
 #config\__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NVDA Contributors <http://www.nvaccess.org/>
+#Copyright (C) 2006-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -24,6 +24,18 @@ import shlobj
 import baseObject
 import easeOfAccess
 import winKernel
+
+#Choices for numbers combo box in Voice settings.
+
+digitChoices=[
+	# Translators: Choice in a combo box for speaking numbers by word.
+	"Words",
+	# Translators: Choice in a combo box for speaking numbers as digits.
+	"Digits",
+	# Translators: Choice in a combo box for speaking numbers as double digits.
+	"Double Digits",
+	# Translators: Choice in a combo box for speaking numbers as triple digits.
+	"Triple Digits"]
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	"""

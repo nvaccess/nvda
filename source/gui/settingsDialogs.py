@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -530,6 +530,14 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.beepForCapsCheckBox = wx.CheckBox(self, wx.NewId(), label = _("&Beep for capitals"))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
+		speakDigitsSizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: Label for a combo box for setting how nvda speaks numbers.
+		digitsLabel=wx.StaticText(self, wx.ID_ANY, label=_("Speak &numbers as"))
+		speakDigitsSizer.Add(digitsLabel)
+		self.digitsCombo = wx.Choice(self, wx.NewId(), choices=config.digitChoices)
+		self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
+		speakDigitsSizer.Add(self.digitsCombo)
+		settingsSizer.Add(speakDigitsSizer,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# voice settings dialog.
 		self.useSpellingFunctionalityCheckBox = wx.CheckBox(self, wx.NewId(), label = _("Use &spelling functionality if supported"))
@@ -610,6 +618,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"][getSynth().name]["capPitchChange"]=min(max(capPitchChange,-100),100)
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
+		config.conf["speech"]["readNumbersAs"]=self.digitsCombo.GetSelection()
 		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		super(VoiceSettingsDialog, self).onOk(evt)
 
