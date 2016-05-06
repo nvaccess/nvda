@@ -8,11 +8,31 @@
 == New Features ==
 - In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)
 - In Microsoft Excel, NVDA now reports the level of a group of cells, as well as whether it is collapsed or expanded. (#5690)
+- Pressing the Report text formatting command twice presents the information in browse mode so it can be reviewed. (#4908)
+- In Microsoft Excel 2010 and later, cell shading and gradient fill is now reported. Automatic reporting is controlled by the Report colors option in NVDA's Document Formatting preferences. (#3683)
+- New braille translation table: Koine Greek. (#5393)
+- In the Log Viewer, you can now save the log using the shortcut key control+s. (#4532)
+
+
+== Changes ==
+- In browse mode and editable text fields, NVDA now treats numpadEnter the same as the main enter key. (#5385)
+- NVDA has switched to the eSpeak NG speech synthesizer. (#5651)
 
 
 == Bug Fixes ==
 - In browse mode, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)
 - When listing sheets in the Elements List in Microsoft Excel, sheets containing only charts are now included. (#5698)
+- NVDA no longer reports extraneous information when switching windows in a Java application with multiple windows such as IntelliJ or Android Studio. (#5732)
+- In Scintilla based editors such as Notepad++, braille is now updated correctly when moving the cursor using a braille display. (#5678)
+- NVDA no longer sometimes crashes when enabling braille output. (#4457)
+- In Microsoft Word, paragraph indentation is now always reported in the measurement unit chosen by the user (e.g. centimeters or inches). (#5804)
+- When using a braille display, many NVDA messages that were previously only spoken are now brailled as well. (#5557)
+- In accessible Java applications, the level of tree view items is now reported. (#5766)
+
+
+== Izmjene za razvojne programere ==
+Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
+
 
 = 2016.1 =
 Najvažnije novosti u ovoj inačici uključuju mogućnost neobaveznog smanjivanja glasnoće drugih zvukova; unaprjeđenje brajičnog izlaza i podrške za brajične retke; nekoliko značajnih poboljšanja podrške za Microsoft office; i poboljšanja u načinu pregleda za Itunes.

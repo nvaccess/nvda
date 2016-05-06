@@ -3,53 +3,31 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2016.1 = 
-I denne udgave af NVDA har du nu mulighed for at dæmpe lyden fra andre kilder. Derudover indeholder denne version også forbedringer til punktoversættelse samt forbedret understøttelse af punktdisplays, flere markante fejlrettelser til Microsoft Office og fejlrettelser til gennemsynstilstand i iTunes.
+= 2016.2 = 
 
-== Nye funktioner ==
-- Nye oversættelsestabeller til punkt: Polsk 8 punkt computer-braille og Mongolsk. (#5537, #5574)
-- Du kan slå punktmarkøren fra, og ændre dens form ved brug af de nye "Vis markør" og "Markørform" indstillinger i dialogen Punktindstillinger. (#5198)
-- NVDA kan nu forbindes med et  HIMS Smart Beetle punktdisplay via Bluetooth. (#5607)
-- NVDA har nu mulighed for at dæmpe lyd hvis installeret på Windows 8 eller senere. Dette kan blive konfigureret ved brug af Lyddæmpningstilstand-indstillingen i dialogen Talesyntese, eller ved brug af kommandoen NVDA+Skift+S. (#3830, #5575)
-- Understøttelse for APH Refreshabraille i HID-tilstand, Baum VarioUltra og Pronto! når disse forbindes via USB. (#5609)
-- Understøttelse for HumanWare Brailliant BI/B punktdisplays når protokollen er sat til OpenBraille. (#5612)
+== Nye Funktioner ==
+- Når der flyttes til annotationer ved brug af gennemsynstilstand i Internet Explorer samt andre MSHTML kontroller (A og skift+A) vil disse taster nu flytte til indsat og slettet tekst. (#5691)
+- NVDA vil nu annoncérer niveauet på en gruppe af celler, samt om de er udvidede eller sammenfoldede i Microsoft Excel. (#5690)
+- Ved et dobbelttryk af kommandoen til annoncéring af tekstformatering vil denne information blive vist i gennemsynstilstand til læsning. (#4908)
+- I Microsoft Excel 2010 eller senere vil gradueringsfyld og celleskygge nu blive annoncéret. Automatisk annoncéring er kontrolleret af "Annoncér Farver" indstillingen i NVDAs dokumentformateringsindstillinger. (#3683)
+- Ny punktoversættelsestabel: Koiné Græsk. (#5393)
+- I log fremviseren kan du nu gemme loggen med genvejstasten kontrol+S. (#4532)
 
 
 == Ændringer ==
-- Annoncéring af fremhævelse er som standard slået fra. (#4920)
-- Genvejstasten for formler i Microsoft Excel når dialogen elementliste benyttes er ændret til ALT+R således, at der ikke dannes konflikter mellem genvejstasten for filtréringsfeltet. (#5527)
-- Opdaterede liblouis punktoversætter til 2.6.5. (#5574)
-- Ordet "tekst" er ikke længere annoncéret, når fokus- eller læsemarkøren flyttes til et tekstobjekt. (#5452)
+- I gennemsynstilstand samt redigerbare tekstfelter vil NVDA nu behandle numerisk enter som den primære enter-tast på tastaturet. (#5385)
+- NVDA har nu skiftet til eSpeak NG talesyntesen. (#5651)
 
 
 == Fejlrettelser ==
-- Gennemsynstilstand opdateres korrekt i iTunes 12, når en ny side indlæses i iTunes Butik. (#5191)
-- Navigation mellem specifikke overskriftsniveauer i Internet Explorer og andre MSHTML kontroller virker nu som forventet, når bogstavnavigation benyttes og overskriftsniveauet er tilsidesat for tilgængelighedsformål (specifikt, når aria-level tilsidesætter niveauet af et h tag). (#5434)
-- Fokus lander ikke længere hyppigt på "ukendte" objekter i Spotify. (#5439)
-- Fokus gendannes nu korrekt når du vender tilbage til Spotify fra et andet program. (#5439)
-- Når der skiftes mellem fokustilstand og gennemsynstilstand vil dette nu blive annoncéret i punkt såvel som tale. (#5239)
-- Knappen start er ikke længere annoncéret som en list eller som valgt i nogle versioner af Windows. (#5178)
-- Beskeder som "indsat" er ikke længere annoncéret, når der skrives en meddelelse i Microsoft Outlook. (#5486)
-- Når der bruges et punktdisplay, og tekst er valgt på den aktuelle linje (f.eks. hvis der søges efter tekst i en teksteditor der forekommer på samme linje), vil punktdisplayet rulle hvis nødvendigt. (#5410)
-- Når du lukker et Windows kommandokonsolvindue med ALT+F4, vil NVDA ikke længere afslutte lydløst i Windows 10. (#5343)
-- Filtreringsfeltet i elementlisten vil nu blive ryddet, når elementtypen ændres, og gennemsynstilstand benyttes. (#5511)
-- Musebevægelser i redigerbart indhold i Mozilla applikationer vil nu igen læse den passende linje, det passende ord, osv. som forvented i stedet for alt indhold. (#5535)
-- Oplæsning vil ikke længere ophøre, når du bevæger musen i redigerbart tekst i Mozilla applikationer hvori elementer såsom links i det oplæste ord eller den oplæste linje fremkommer. (#2160, #5535)
-- shoprite.com hjemmesiden kan nu blive læst ved hjælp af Internet Explorer i stedet for at annoncére siden som blank. (Specifikt, misdannede lang attributter bliver nu håndteret mere elegant.) (#5569)
-- Spor ændringer i Microsoft Word som "indsat" vil ikke længere blive annoncéret, hvis fremhævning af spor ændringer ikke vises. (#5566)
-- Når der er bragt fokus til en skifteknap vil NVDA nu annoncérer når den skiftes fra trykket til ikke trykket. (#5441)
-- Annoncéring af ændringer af museformen virker nu som forventet. (#5595)
-- Når linjeindrykning udtales vil hårde mellemrum nu blive behandlet som normale mellemrum. Tidligere ville disse mellemrum blive annoncéres som  "mellemrum mellemrum mellemrum" i stedet for "3 mellemrum". (#5610)
-- Når en moderne indtastningsmetode-kandidatliste lukkes , vil fokus korrekt blive gendannet til enten inputkomposition eller det underlæggende dokument. (#4145)
-- I Microsoft Office 2013 eller senere vil emner nu igen blive korrekt annoncéret, hvis ribbon er sat til kun at vise faner og en fane er aktiveret. (#5504)
-- Forbedringer til detektion af touchskærm-bevægelser og tilknytning. (#5652)
-- Når der holdes nede på touchskærmen, vil dette ikke længere annoncéres når tastaturhjælp er slået til. (#5652)
-- NVDA vil nu korrekt vise kommentarer i elementlisten i Microsoft Excel, selv hvis du befinder dig på en kommentar i en flettet celle. (#5704)
-- I et meget sjældent tilfælde vil NVDA ikke længere undlade annoncéring af arkindhold i Microsoft Excel med annoncéring af kolonne- og rækkeoverskrifter slået til. (#5705)
-- NVDA vil nu korrekt navigere inputkompositioner for østasiatiske tegn i Google Chrome. (#4080)
-- Når du søger gennem Apple Music i iTunes, vil dokumentet med søgeresultater blive opdateret som forventet i gennemsynstilstand. (#5659)
-- Når du trykker Skift+F11 for at oprette et nyt ark i Microsoft Excel, vil NVDA nu annoncérer din nye position i stedet for at annoncérer ingenting. (#5689)
-- Rettede problemer angående punktoversættelse på punktdisplays når der indtastes koreanske tegn med punkt. (#5640)
+- Hvis der forsøges at benytte bogstavnavigation til at flytte til et element, der ikke er understøttet i det aktuelle dokument, vil NVDA nu annoncérer dette i stedet for at annoncérer at der ikke befinder sig et element i den givende retning. (#5691)
+- Når der vises en list over ark i elementlisten i Microsoft Excel, vil ark der kun indeholder diagrammer være inkluderet. (#5698)
+- NVDA vil ikke længere rapportere uvedkommende information når der skiftes vinduer i en Java-applikation med flere vinduer, såsom IntelliJ eller Android Studio. (#5732)
+- I  Scintilla-baserede applikationer såsom Notepad++ vil punkt nu blive korrekt opdateret når markøren flyttes ved brug af et punktdisplay. (#5678)
+- NVDA vil ikke længere nogle gange gå ned hvis punktoutput slåes til. (#4457)
+- Afsnitsindrykning vil nu altid blive annoncéret i den valgte enhed som valgt af brugeren i Microsoft Word (f.eks. centimeter eller tommer). (#5804)
+- Når der benyttes et punktdisplay vil beskeder, der tidligere kun var leveret på tale, nu også angives på punkt. (#5557)
+- I tilgængelige Java-applikationer vil niveauet i trævisninger nu blive rapporteret. (#5766)
 
 === Ændringer for udviklere ===
 For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
