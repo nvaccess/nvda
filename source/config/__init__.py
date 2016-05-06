@@ -25,18 +25,6 @@ import baseObject
 import easeOfAccess
 import winKernel
 
-#Choices for numbers combo box in Voice settings.
-
-digitChoices=[
-	# Translators: Choice in a combo box for speaking numbers by word.
-	"Words",
-	# Translators: Choice in a combo box for speaking numbers as digits.
-	"Digits",
-	# Translators: Choice in a combo box for speaking numbers as double digits.
-	"Double Digits",
-	# Translators: Choice in a combo box for speaking numbers as triple digits.
-	"Triple Digits"]
-
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	"""
 	@deprecated: Add-ons which need this should provide their own implementation.
