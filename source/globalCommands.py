@@ -433,11 +433,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportGrammarErrors(self,gesture):
 		if config.conf["documentFormatting"]["reportGrammarErrors"]:
 			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors off")
+			state = _("Report grammar errors off")
 			config.conf["documentFormatting"]["reportGrammarErrors"]=False
 		else:
 			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors on")
+			state = _("Report grammar errors on")
 			config.conf["documentFormatting"]["reportGrammarErrors"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report grammar errors command.
