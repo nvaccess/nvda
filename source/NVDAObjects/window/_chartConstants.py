@@ -1,4 +1,4 @@
-#NVDAObjects/window/chartConstants.py
+#NVDAObjects/window/_chartConstants.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2014-2015 James Teh, Michael Curren, NV Access Limited
 #This file is covered by the GNU General Public License.

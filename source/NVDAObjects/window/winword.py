@@ -42,7 +42,7 @@ from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
-from . import chartConstants 
+from . import _chartConstants 
 #Word constants
 
 # wdMeasurementUnits
@@ -1513,7 +1513,7 @@ class WordChart(Window):
 			name=self.wordChartObject.Name
 		#find the type of the chart
 		chartType = self.wordChartObject.ChartType
-		chartTypeText = chartConstants.chartTypeDict.get(chartType,
+		chartTypeText = _chartConstants.chartTypeDict.get(chartType,
                 # Translators: Reported when the type of a chart is not known.
                                 _("unknown"))
 		# Translators: Message reporting the title and type of a chart.
@@ -1547,13 +1547,13 @@ class WordChart(Window):
 
 	def getChartSegment(self):
 		chartType = self.wordChartObject.ChartType
-		if chartType in (chartConstants.xl3DPie, chartConstants.xl3DPieExploded, chartConstants.xlPie, chartConstants.xlPieExploded, chartConstants.xlPieOfPie):
+		if chartType in (_chartConstants.xl3DPie, _chartConstants.xl3DPieExploded, _chartConstants.xlPie, _chartConstants.xlPieExploded, _chartConstants.xlPieOfPie):
 			# Translators: A slice in a pie chart.
 			text=_("slice")
-		elif chartType in (chartConstants.xl3DColumn, chartConstants.xl3DColumnClustered, chartConstants.xl3DColumnStacked, chartConstants.xl3DColumnStacked100, chartConstants.xlColumnClustered, chartConstants.xlColumnStacked100, chartConstants.xlColumnStacked):
+		elif chartType in (_chartConstants.xl3DColumn, _chartConstants.xl3DColumnClustered, _chartConstants.xl3DColumnStacked, _chartConstants.xl3DColumnStacked100, _chartConstants.xlColumnClustered, _chartConstants.xlColumnStacked100, _chartConstants.xlColumnStacked):
 			# Translators: A column in a column chart.
 			text=pgettext('chart','column')
-		elif chartType in (chartConstants.xl3DLine, chartConstants.xlLine, chartConstants.xlLineMarkers, chartConstants.xlLineMarkersStacked, chartConstants.xlLineMarkersStacked100, chartConstants.xlLineStacked, chartConstants.xlLineStacked100):
+		elif chartType in (_chartConstants.xl3DLine, _chartConstants.xlLine, _chartConstants.xlLineMarkers, _chartConstants.xlLineMarkersStacked, _chartConstants.xlLineMarkersStacked100, _chartConstants.xlLineStacked, _chartConstants.xlLineStacked100):
 			# Translators: A data point in a line chart.
 			text=_("data point")
 		else:
@@ -1616,12 +1616,12 @@ class WordChart(Window):
 	}
 
 class WordChartSeriesTrendline(WordChart):
-	_trendlineTypeMap = {chartConstants.xlExponential: 'Exponential',
-								chartConstants.xlLinear: 'Linear',
-								chartConstants.xlLogarithmic: 'Logarithmic',
-								chartConstants.xlMovingAvg: 'Moving Average',
-								chartConstants.xlPolynomial: 'Polynomial',
-								chartConstants.xlPower: 'Power' 
+	_trendlineTypeMap = {_chartConstants.xlExponential: 'Exponential',
+								_chartConstants.xlLinear: 'Linear',
+								_chartConstants.xlLogarithmic: 'Logarithmic',
+								_chartConstants.xlMovingAvg: 'Moving Average',
+								_chartConstants.xlPolynomial: 'Polynomial',
+								_chartConstants.xlPower: 'Power' 
 	}
 
 	def __init__(self, windowHandle, wordApplicationObject, wordChartObject, keyIndex, seriesIndex, trendlineIndex=1):
@@ -1681,9 +1681,9 @@ class WordChartSeriesTrendline(WordChart):
 	}
 
 class WordChartElement(WordChart):
-	_axisMap={chartConstants.xlCategory: {chartConstants.xlPrimary: 'Primary Category Axis', chartConstants.xlSecondary: 'Secondary Category Axis'},
-				chartConstants.xlValue: {chartConstants.xlPrimary: 'Primary Value Axis', chartConstants.xlSecondary: 'Secondary Value Axis'},
-				chartConstants.xlSeriesAxis: {chartConstants.xlPrimary: 'Primary Series Axis', chartConstants.xlSecondary: 'Secondary Series Axis'}
+	_axisMap={_chartConstants.xlCategory: {_chartConstants.xlPrimary: 'Primary Category Axis', _chartConstants.xlSecondary: 'Secondary Category Axis'},
+				_chartConstants.xlValue: {_chartConstants.xlPrimary: 'Primary Value Axis', _chartConstants.xlSecondary: 'Secondary Value Axis'},
+				_chartConstants.xlSeriesAxis: {_chartConstants.xlPrimary: 'Primary Series Axis', _chartConstants.xlSecondary: 'Secondary Series Axis'}
 	}
 
 	def __init__(self,windowHandle, wordApplicationObject, wordChartObject, keyIndex, elementIndex=0):
@@ -1696,8 +1696,8 @@ class WordChartElement(WordChart):
 		if self.wordChartObject.HasTitle:
 			self.elementKeyList.append('chartTitle')
 		# Enumerations for chart object in Excel and Word are same
-		for axisType in [chartConstants.xlCategory, chartConstants.xlValue, chartConstants.xlSeriesAxis]:
-			for axisGroup in [chartConstants.xlPrimary, chartConstants.xlSecondary]:
+		for axisType in [_chartConstants.xlCategory, _chartConstants.xlValue, _chartConstants.xlSeriesAxis]:
+			for axisGroup in [_chartConstants.xlPrimary, _chartConstants.xlSecondary]:
 				if self.wordChartObject.HasAxis(axisType, axisGroup):
 					self.elementKeyList.append(self._axisMap[axisType][axisGroup])
 					if self.wordChartObject.Axes(axisType, axisGroup).HasTitle:
@@ -1726,15 +1726,15 @@ class WordChartElement(WordChart):
 		if 'Axis' in key:
 			splitKey=key.split()
 			if splitKey[0]=='Primary':
-				axisGroup=chartConstants.xlPrimary
+				axisGroup=_chartConstants.xlPrimary
 			elif splitKey[0]=='Secondary':
-				axisGroup=chartConstants.xlSecondary
+				axisGroup=_chartConstants.xlSecondary
 			if splitKey[1]=='Category':
-				axisType=chartConstants.xlCategory
+				axisType=_chartConstants.xlCategory
 			elif splitKey[1]=='Value':
-				axisType=chartConstants.xlValue
+				axisType=_chartConstants.xlValue
 			elif splitKey[1]=='Series':
-				axisType=chartConstants.xlSeriesAxis
+				axisType=_chartConstants.xlSeriesAxis
 			if 'Axis Title' in key:
 				obj=WordChartAxisTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
 				self.wordChartObject.Axes(axisType, axisGroup).AxisTitle.Select()
@@ -1896,7 +1896,7 @@ class WordChartSeries(WordChart):
 	script_nextPoint.canPropagate=True
 
 	def script_reportColor(self, gesture):
-		if self.wordChartObject.ChartType in (chartConstants.xlPie, chartConstants.xlPieExploded, chartConstants.xlPieOfPie):
+		if self.wordChartObject.ChartType in (_chartConstants.xlPie, _chartConstants.xlPieExploded, _chartConstants.xlPieOfPie):
 			#Translators: Message to be spoken to report Slice Color in Pie Chart
 			ui.message ( _( "Slice color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.wordChartObject.SeriesCollection( self.seriesIndex ).Points(self.currentPointIndex).Format.Fill.ForeColor.RGB) ).name  ) )
 		else:
@@ -1924,7 +1924,7 @@ class WordChartPoint(WordChartSeries):
 		else:
 			excelSeriesXValue = self.wordChartObject.SeriesCollection(self.seriesIndex).XValues[self.pointIndex-1]
 		output=""
-		if self.wordChartObject.ChartType in (chartConstants.xlLine, chartConstants.xlLineMarkers , chartConstants.xlLineMarkersStacked, chartConstants.xlLineMarkersStacked100, chartConstants.xlLineStacked, chartConstants.xlLineStacked100):
+		if self.wordChartObject.ChartType in (_chartConstants.xlLine, _chartConstants.xlLineMarkers , _chartConstants.xlLineMarkersStacked, _chartConstants.xlLineMarkersStacked100, _chartConstants.xlLineStacked, _chartConstants.xlLineStacked100):
 			if self.pointIndex > 1:
 				if self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] == self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex - 2]:
 					# Translators: For line charts, indicates no change from the previous data point on the left
@@ -1935,25 +1935,25 @@ class WordChartPoint(WordChartSeries):
 				else:
 					# Translators: For line charts, indicates a decrease from the previous data point on the left
 					output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-2] - self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] , previousIndex = self.pointIndex-1 )
-		if self.wordChartObject.HasAxis(chartConstants.xlCategory) and self.wordChartObject.Axes(chartConstants.xlCategory).HasTitle:
+		if self.wordChartObject.HasAxis(_chartConstants.xlCategory) and self.wordChartObject.Axes(_chartConstants.xlCategory).HasTitle:
 			# Translators: Specifies the category of a data point.
 			# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 			# {categoryAxisData} will be replaced with the category itself; e.g. "January".
-			output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.wordChartObject.Axes(chartConstants.xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue )
+			output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.wordChartObject.Axes(_chartConstants.xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue )
 		else:
 			# Translators: Specifies the category of a data point.
 			# {categoryAxisData} will be replaced with the category itself; e.g. "January".
 			output += _( "Category {categoryAxisData}: ").format( categoryAxisData = excelSeriesXValue )
-		if self.wordChartObject.HasAxis(chartConstants.xlValue) and self.wordChartObject.Axes(chartConstants.xlValue).HasTitle:
+		if self.wordChartObject.HasAxis(_chartConstants.xlValue) and self.wordChartObject.Axes(_chartConstants.xlValue).HasTitle:
 			# Translators: Specifies the value of a data point.
 			# {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
-			output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.wordChartObject.Axes(chartConstants.xlValue).AxisTitle.Text , valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
+			output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.wordChartObject.Axes(_chartConstants.xlValue).AxisTitle.Text , valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
 		else:
 			# Translators: Specifies the value of a data point.
 			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
 			output +=  _( "value {valueAxisData}").format( valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
-		if self.wordChartObject.ChartType in (chartConstants.xlPie, chartConstants.xlPieExploded, chartConstants.xlPieOfPie):
+		if self.wordChartObject.ChartType in (_chartConstants.xlPie, _chartConstants.xlPieExploded, _chartConstants.xlPieOfPie):
 			import math
 			total = math.fsum( self.wordChartObject.SeriesCollection(self.seriesIndex).Values )
 			# Translators: Details about a slice of a pie chart.
