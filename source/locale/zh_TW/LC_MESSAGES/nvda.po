@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-19 09:32+0800\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-12 09:07+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -3197,6 +3197,18 @@ msgstr "讀出拼錯字 開"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "切換讀出拼錯字的開關"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "關閉讀出文法錯誤"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "開啟讀出文法錯誤"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "切換讀出報告文法錯誤的開關"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "讀出頁碼 關"
@@ -4902,6 +4914,14 @@ msgstr "拼錯字"
 msgid "out of spelling error"
 msgstr "離開拼錯字"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "文法錯誤"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "離開文法錯誤"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "離開表格"
@@ -6000,11 +6020,12 @@ msgid "Python console"
 msgstr "Python主控台"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "管理附加元件(&A)"
+msgid "Manage &add-ons..."
+msgstr "管理附加元件 (&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+#, fuzzy
+msgid "Create portable copy..."
 msgstr "建立可攜式版..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6043,8 +6064,8 @@ msgid "C&ontributors"
 msgstr "貢獻者(&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "歡迎視窗(&L)"
+msgid "We&lcome dialog..."
+msgstr "歡迎視窗 (&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6976,6 +6997,11 @@ msgstr "讀出指令鍵(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "拼錯字時播放聲音 (&S)"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "處理其它應用程式的按鍵設定"
 
@@ -7248,6 +7274,11 @@ msgstr "讀出文字樣式(&Y)"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "讀出拼錯字 (&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "讀出文法錯誤 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
