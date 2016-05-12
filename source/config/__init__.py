@@ -214,6 +214,7 @@ confspec = ConfigObj(StringIO(
 
 [debugLog]
 	hwIo = boolean(default=false)
+	audioDucking = boolean(default=false)
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)

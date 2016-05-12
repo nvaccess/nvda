@@ -1,6 +1,6 @@
 #audioDucking.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 NV Access Limited 
+#Copyright (C) 2015-2016 NV Access Limited 
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,6 +9,9 @@ from ctypes import *
 import time
 import config
 from logHandler import log
+
+def _isDebug():
+	return config.conf["debugLog"]["audioDucking"]
 
 class AutoEvent(wintypes.HANDLE):
 
@@ -63,7 +66,8 @@ def _ensureDucked():
 	global _duckingRefCount
 	with _duckingRefCountLock:
 		_duckingRefCount+=1
-		log.debug("Increased ref count, _duckingRefCount=%d"%_duckingRefCount)
+		if _isDebug():
+			log.debug("Increased ref count, _duckingRefCount=%d"%_duckingRefCount)
 		if _duckingRefCount==1  and _audioDuckingMode!=AUDIODUCKINGMODE_NONE:
 			_setDuckingState(True)
 			delta=0
@@ -75,12 +79,14 @@ def _unensureDucked(delay=True):
 	global _duckingRefCount
 	if delay:
 		import core
-		log.debug("Queuing _unensureDucked")
+		if _isDebug():
+			log.debug("Queuing _unensureDucked")
 		core.callLater(1000,_unensureDucked,False)
 		return
 	with _duckingRefCountLock:
 		_duckingRefCount-=1
-		log.debug("Decreased  ref count, _duckingRefCount=%d"%_duckingRefCount)
+		if _isDebug():
+			log.debug("Decreased  ref count, _duckingRefCount=%d"%_duckingRefCount)
 		if _duckingRefCount==0 and _audioDuckingMode!=AUDIODUCKINGMODE_NONE:
 			_setDuckingState(False)
 
@@ -95,7 +101,8 @@ def setAudioDuckingMode(mode):
 		_audioDuckingMode=mode
 		if _modeChangeEvent: windll.kernel32.SetEvent(_modeChangeEvent)
 		_modeChangeEvent=AutoEvent()
-		log.debug("Switched modes from %s, to %s"%(oldMode,mode))
+		if _isDebug():
+			log.debug("Switched modes from %s, to %s"%(oldMode,mode))
 		if oldMode==AUDIODUCKINGMODE_NONE and mode!=AUDIODUCKINGMODE_NONE and _duckingRefCount>0:
 			_setDuckingState(True)
 		elif oldMode!=AUDIODUCKINGMODE_NONE and mode==AUDIODUCKINGMODE_NONE and _duckingRefCount>0:
@@ -144,25 +151,32 @@ class AudioDucker(object):
 		It is safe to call this method more than once.
 		@ returns: True if ducking was enabled, false if ducking was subsiquently disabled while waiting for the background audio to drop.
 		"""
+		debug = _isDebug()
 		with self._lock:
 			if self._enabled:
-				log.debug("ignoring duplicate enable")
+				if debug:
+					log.debug("ignoring duplicate enable")
 				return True
 			self._enabled=True
-			log.debug("enabling")
+			if debug:
+				log.debug("enabling")
 			whenWasDucked,modeChangeEvent=_ensureDucked()
 			deltaMS=int((INITIAL_DUCKING_DELAY-whenWasDucked)*1000)
 			disableEvent=self._disabledEvent=AutoEvent()
-			log.debug("whenWasDucked %s, deltaMS %s"%(whenWasDucked,deltaMS))
+			if debug:
+				log.debug("whenWasDucked %s, deltaMS %s"%(whenWasDucked,deltaMS))
 			if deltaMS<=0 or _audioDuckingMode==AUDIODUCKINGMODE_NONE:
 				return True
 		import NVDAHelper
 		if not NVDAHelper.localLib.audioDucking_shouldDelay():
-			log.debug("No background audio, not delaying")
+			if debug:
+				log.debug("No background audio, not delaying")
 			return True
-		log.debug("waiting %s ms or mode change"%deltaMS)
+		if debug:
+			log.debug("waiting %s ms or mode change"%deltaMS)
 		wasCanceled=windll.kernel32.WaitForMultipleObjects(2,(wintypes.HANDLE*2)(disableEvent,modeChangeEvent),False,deltaMS)!=WAIT_TIMEOUT
-		log.debug("Wait canceled" if wasCanceled else "timeout exceeded")
+		if debug:
+			log.debug("Wait canceled" if wasCanceled else "timeout exceeded")
 		return not wasCanceled
 
 	def disable(self):
@@ -172,10 +186,12 @@ class AudioDucker(object):
 		"""
 		with self._lock:
 			if not self._enabled:
-				log.debug("Ignoring duplicate disable")
+				if _isDebug():
+					log.debug("Ignoring duplicate disable")
 				return True
 			self._enabled=False
-			log.debug("disabling")
+			if _isDebug():
+				log.debug("disabling")
 			_unensureDucked()
 			windll.kernel32.SetEvent(self._disabledEvent)
 			return True

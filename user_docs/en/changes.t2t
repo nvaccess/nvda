@@ -4,11 +4,12 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.2 =
+Highlights of this release include the ability to indicate spelling errors while typing; support for reporting grammar errors in Microsoft Word; and improvements and fixes to Microsoft Office support.
 
 == New Features ==
 - In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)
 - In Microsoft Excel, NVDA now reports the level of a group of cells, as well as whether it is collapsed or expanded. (#5690)
-- Pressing the Report text formatting command twice presents the information in browse mode so it can be reviewed. (#4908)
+- Pressing the Report text formatting command (NVDA+f) twice presents the information in browse mode so it can be reviewed. (#4908)
 - In Microsoft Excel 2010 and later, cell shading and gradient fill is now reported. Automatic reporting is controlled by the Report colors option in NVDA's Document Formatting preferences. (#3683)
 - New braille translation table: Koine Greek. (#5393)
 - In the Log Viewer, you can now save the log using the shortcut key control+s. (#4532)
