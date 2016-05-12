@@ -345,7 +345,7 @@ class CalendarView(IAccessible):
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
 				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
-				speech.speakMessage(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
+				ui.message(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
 			else:
 				v=e.currentView
 				try:
@@ -362,8 +362,8 @@ class CalendarView(IAccessible):
 				i.IncludeRecurrences =True
 				if i.find(query):
 					# Translators: a message when the current time slot on an Outlook Calendar has an appointment
-					timeSlotText=_("has appointment")+" "+timeSlotText
-				speech.speakMessage(timeSlotText)
+					timeSlotText=_("Has appointment")+" "+timeSlotText
+				ui.message(timeSlotText)
 		else:
 			self.event_valueChange()
 
@@ -506,3 +506,5 @@ class OutlookWordDocument(WordDocument):
 
 	def _get_role(self):
 		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
+
+	ignoreEditorRevisions=True

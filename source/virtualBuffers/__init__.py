@@ -79,19 +79,16 @@ def _prepareForFindByAttributes(attribs):
 			elif values[0] is VBufStorage_findMatch_notEmpty:
 				# There must be a value for this attribute.
 				optRegexp.append(r"(?:\\;|[^;])+;")
-			elif values[0] is None:
-				# There must be no value for this attribute.
-				optRegexp.append(r";")
 			elif isinstance(values[0], VBufStorage_findMatch_word):
 				# Assume all are word matches.
 				optRegexp.append(r"(?:\\;|[^;])*\b(?:")
 				optRegexp.append("|".join(escape(val) for val in values))
 				optRegexp.append(r")\b(?:\\;|[^;])*;")
 			else:
-				# Assume all are exact matches.
-				optRegexp.append("(?:")
-				optRegexp.append("|".join(escape(val) for val in values))
-				optRegexp.append(");")
+				# Assume all are exact matches or None (must not exist).
+				optRegexp.append("(?:" )
+				optRegexp.append("|".join((escape(val)+u';') if val is not None else u';' for val in values))
+				optRegexp.append(")")
 		regexp.append("".join(optRegexp))
 	return u" ".join(reqAttrs), u"|".join(regexp)
 
@@ -388,7 +385,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			# Translators: Reported when a page reloads (example: after refreshing a webpage).
-			speech.speakMessage(_("Refreshed"))
+			ui.message(_("Refreshed"))
 		if api.getFocusObject().treeInterceptor == self:
 			self.event_treeInterceptor_gainFocus()
 
@@ -464,10 +461,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		if config.conf["virtualBuffers"]["useScreenLayout"]:
 			# Translators: Presented when use screen layout option is toggled.
-			speech.speakMessage(_("use screen layout on"))
+			ui.message(_("Use screen layout on"))
 		else:
 			# Translators: Presented when use screen layout option is toggled.
-			speech.speakMessage(_("use screen layout off"))
+			ui.message(_("Use screen layout off"))
 	# Translators: the description for the toggleScreenLayout script on virtualBuffers.
 	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
@@ -477,7 +474,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
-			return iter(())
+			raise NotImplementedError
 		return self._iterNodesByAttribs(attribs, direction, pos,nodeType)
 
 	def _iterNodesByAttribs(self, attribs, direction="next", pos=None,nodeType=None):
@@ -612,7 +609,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		except LookupError:
 			# Translators: The message reported when a user attempts to use a table movement command
 			# but the cursor can't be moved in that direction because it is at the edge of the table.
-			ui.message(_("edge of table"))
+			ui.message(_("Edge of table"))
 			# Retrieve the cell on which we started.
 			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))
 

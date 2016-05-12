@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-21 11:28+0900\n"
+"POT-Creation-Date: 2016-04-01 00:10+1000\n"
+"PO-Revision-Date: 2016-03-31 17:03-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -127,6 +127,21 @@ msgstr "form"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "구역"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "도킹 않함"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "음성 및 소리 출력시 도킹"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "도킹 사용"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -315,6 +330,11 @@ msgstr "구자라트어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Koine Greek"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece) grade 1"
 msgstr "그리스어 (그리스) 1종"
 
@@ -405,6 +425,11 @@ msgstr "마니푸리어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "몽골리아어"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "마라타어 1종"
 
@@ -452,6 +477,11 @@ msgstr "네팔어 1종"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "오리야어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "폴란드어 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -658,6 +688,18 @@ msgstr "clk"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "7-8점"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "8점"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "점자 셀 전체"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -730,10 +772,11 @@ msgstr "dot"
 msgid "space"
 msgstr "스페이스"
 
-msgid "focus mode"
+msgid "Focus mode"
 msgstr "포커스 모드"
 
-msgid "browse mode"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
 msgstr "브라우즈 모드"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
@@ -762,7 +805,7 @@ msgid "Lists various types of elements in this document"
 msgstr "문서에 포함된 여러 요소를 보여줍니다"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+msgid "Activates the current object in the document"
 msgstr "현재 문서에서 포커스된 객체를 실행합니다."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1119,19 +1162,19 @@ msgstr "이전 그래픽 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "다음 블럭퀕으로 이동합니다"
+msgstr "다음 인용문으로 이동합니다"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
-msgstr "다음 블럭퀕 없음"
+msgstr "다음 인용문 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "이전 블럭퀕으로 이동합니다."
+msgstr "이전 인용문으로 이동합니다."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
-msgstr "이전 블럭퀕 없음"
+msgstr "이전 인용문 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
@@ -1214,18 +1257,18 @@ msgstr "랜드마크 (&D)"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
-msgstr "구성요소 목록"
+msgstr "요소 목록"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Type:"
-msgstr "구성요소"
+msgstr "유형"
 
 # Translation: "Find from elements list".
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "&Filter by:"
-msgstr "특정 구성요소 이름 검색 (&F)"
+msgstr "특정 요소 이름 검색 (&F)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1267,7 +1310,8 @@ msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 앞으�
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
 msgstr "밑"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -1354,7 +1398,7 @@ msgstr "베이지"
 #. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Bisque"
-msgstr ""
+msgstr "회분홍"
 
 #. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1374,7 +1418,7 @@ msgstr "파랑"
 #. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Blue Violet"
-msgstr ""
+msgstr "블루 바이올렛"
 
 #. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1394,12 +1438,12 @@ msgstr ""
 #. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Chartreuse"
-msgstr ""
+msgstr "흐린 연두"
 
 #. Translators: the color Chocolate (RGB 210, 105, 30) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Chocolate"
-msgstr ""
+msgstr "흑갈색"
 
 #. Translators: the color Coral (RGB 255, 127, 80) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1414,22 +1458,22 @@ msgstr ""
 #. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cornsilk"
-msgstr ""
+msgstr "콘실크"
 
 #. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Crimson"
-msgstr "크림슨색"
+msgstr "진한빨강"
 
 #. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cyan"
-msgstr "시안색"
+msgstr "밝은 파랑"
 
 #. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Blue"
-msgstr "군청색"
+msgstr "어두운 파랑"
 
 #. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1444,12 +1488,12 @@ msgstr ""
 #. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Gray"
-msgstr ""
+msgstr "어두운 회색"
 
 #. Translators: the color Dark Green (RGB 0, 100, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Green"
-msgstr "짙은 녹색"
+msgstr "탁한 초록"
 
 #. Translators: the color Dark Khaki (RGB 189, 183, 107) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1464,7 +1508,7 @@ msgstr ""
 #. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Olive Green"
-msgstr ""
+msgstr "어두운 초록"
 
 #. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1479,7 +1523,7 @@ msgstr ""
 #. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Red"
-msgstr "흐린 빨강"
+msgstr "탁한 빨강"
 
 #. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1509,12 +1553,12 @@ msgstr ""
 #. Translators: the color Dark Violet (RGB 148, 0, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Violet"
-msgstr ""
+msgstr "어두운 보라"
 
 #. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Deep Pink"
-msgstr ""
+msgstr "진한 분홍"
 
 #. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1589,7 +1633,7 @@ msgstr "귤색"
 #. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Honeydew"
-msgstr ""
+msgstr "밝은 빨간 주황"
 
 #. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1609,7 +1653,7 @@ msgstr "남색"
 #. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Ivory"
-msgstr "상아색"
+msgstr "흰 노랑"
 
 #. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1619,7 +1663,7 @@ msgstr "카키색"
 #. Translators: the color Lavender (RGB 230, 230, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lavender"
-msgstr ""
+msgstr "연한 보라"
 
 #. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1639,7 +1683,7 @@ msgstr ""
 #. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Blue"
-msgstr "밝은 파란색"
+msgstr "흐린 파랑"
 
 #. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1659,7 +1703,7 @@ msgstr ""
 #. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Green"
-msgstr "밝은 녹색"
+msgstr "흐린 초록"
 
 #. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1669,7 +1713,7 @@ msgstr "밝은 회색"
 #. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Pink"
-msgstr "밝은 분홍색"
+msgstr "흐린 분홍"
 
 #. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1719,7 +1763,7 @@ msgstr ""
 #. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Magenta"
-msgstr "마젠타색"
+msgstr "마젠타"
 
 #. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1774,7 +1818,7 @@ msgstr ""
 #. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Midnight Blue"
-msgstr ""
+msgstr "파란 검정"
 
 #. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1829,7 +1873,7 @@ msgstr "다홍색"
 #. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Orchid"
-msgstr ""
+msgstr "흐린 자줏빛 분홍"
 
 #. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1994,7 +2038,7 @@ msgstr ""
 #. Translators: the color Violet (RGB 238, 130, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Violet"
-msgstr ""
+msgstr "바이올렛"
 
 #. Translators: the color Wheat (RGB 245, 222, 179) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -2019,7 +2063,7 @@ msgstr "노랑"
 #. Translators: the color Yellow Green (RGB 154, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Yellow Green"
-msgstr "연두색"
+msgstr "연두"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2036,7 +2080,7 @@ msgstr "제목 표시줄"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr "pane"
+msgstr "창"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
@@ -2064,7 +2108,7 @@ msgstr "버튼"
 
 #. Translators: Text used to identify menu bar of a program.
 msgid "menu bar"
-msgstr "메뉴바"
+msgstr "메뉴 모음"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 msgid "menu item"
@@ -2093,11 +2137,11 @@ msgstr "그래픽"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "help balloon"
+msgstr "도움말 풍선"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr "툴팁"
+msgstr "도구 설명"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
@@ -2118,11 +2162,11 @@ msgstr "탭"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "tab control"
+msgstr "탭 컨트롤"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
-msgstr "slider"
+msgstr "슬라이더"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
@@ -2130,7 +2174,7 @@ msgstr "진행률 막대"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr "스크롤바"
+msgstr "스크롤 막대"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
@@ -2158,7 +2202,7 @@ msgstr "프레임"
 
 #. Translators: Identifies a tool bar.
 msgid "tool bar"
-msgstr "툴바"
+msgstr "도구 모음"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
@@ -2170,7 +2214,7 @@ msgstr "행 머리말"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "펼침 버튼"
+msgstr "드롭다운 단추"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -2178,7 +2222,7 @@ msgstr "시계"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
-msgstr "수평 줄"
+msgstr "구분 기호"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -2216,7 +2260,7 @@ msgstr "문단"
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr "인용구역"
+msgstr "인용문"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
@@ -2236,7 +2280,7 @@ msgstr "문서"
 
 #. Translators: Identifies an animation in a document or a webpage.
 msgid "animation"
-msgstr "에니메이션"
+msgstr "애니메이션"
 
 #. Translators: Identifies an application in webpages.
 msgid "application"
@@ -2264,7 +2308,7 @@ msgstr "캡션"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr "체크메뉴 항목"
+msgstr "체크 메뉴 항목"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
@@ -2276,7 +2320,7 @@ msgstr "아이콘"
 
 #. Translators: Identifies a directory pane.
 msgid "directory pane"
-msgstr "directory pane"
+msgstr "디렉토리 창"
 
 #. Translators: Identifies an embedded object such as flash content on webpages.
 msgid "embedded object"
@@ -2313,7 +2357,7 @@ msgstr "입력창"
 
 #. Translators: Identifies a label.
 msgid "label"
-msgstr "label"
+msgstr "레이블"
 
 #. Translators: Identifies a note field.
 msgid "note"
@@ -2325,11 +2369,11 @@ msgstr "페이지"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr "라디오 메뉴"
+msgstr "라디오 메뉴 항목"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
-msgstr "layered pane"
+msgstr "레이어드 창"
 
 #. Translators: Identifies a redundant object.
 msgid "redundant object"
@@ -2337,7 +2381,7 @@ msgstr "redundant object"
 
 #. Translators: Identifies a root pane.
 msgid "root pane"
-msgstr "root pane"
+msgstr "루트 창"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
@@ -2354,11 +2398,11 @@ msgstr "rich 편집창"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
-msgstr "ruler"
+msgstr "눈금자"
 
 #. Translators: Identifies a scroll pane.
 msgid "scroll pane"
-msgstr "scroll pane"
+msgstr "스크롤 창"
 
 #. Translators: Identifies a section of text.
 msgid "section"
@@ -2366,11 +2410,11 @@ msgstr "section"
 
 #. Translators: Identifies a shape.
 msgid "shape"
-msgstr "shape"
+msgstr "도형"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
-msgstr "split pane"
+msgstr "분할 창"
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
@@ -2413,7 +2457,7 @@ msgstr "커서"
 
 #. Translators: Identifies a diagram (seen on some websites and on Office documents).
 msgid "diagram"
-msgstr "diagram"
+msgstr "다이어그램"
 
 #. Translators: Identifies a dial object.
 msgid "dial"
@@ -2425,7 +2469,7 @@ msgstr "drop list"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
-msgstr "split button"
+msgstr "분할 버튼"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 msgid "menu button"
@@ -2445,15 +2489,15 @@ msgstr "grip"
 
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 msgid "hot key field"
-msgstr "핫키 입력"
+msgstr "바로 가기 키 필드"
 
 #. Translators: Identifies an indicator control.
 msgid "indicator"
-msgstr "indicator"
+msgstr "표시기"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr "spin button"
+msgstr "스핀 버튼"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
@@ -2482,7 +2526,7 @@ msgstr "경고"
 
 #. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
 msgid "IFrame"
-msgstr "가상프레임"
+msgstr "IFrame"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2549,13 +2593,11 @@ msgstr "배경 색상"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superscript"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subscript"
 
@@ -2603,11 +2645,11 @@ msgstr "선택됨"
 
 #. Translators: This is presented when a document is busy.
 msgid "busy"
-msgstr "busy"
+msgstr "작업 중"
 
 #. Translators: This is presented when a button is pressed.
 msgid "pressed"
-msgstr "선택됨"
+msgstr "눌림"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
@@ -2699,7 +2741,7 @@ msgid "checkable"
 msgstr "체크가능"
 
 msgid "draggable"
-msgstr "드래깅 가능"
+msgstr "끌기 가능"
 
 msgid "dragging"
 msgstr "드래그 중"
@@ -2829,11 +2871,11 @@ msgstr "찾고싶은 문자열을 현재커서부터 이전으로 이어서 찾�
 
 # Literally means, "no contents selcted".
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
-msgstr "선택된 내용이 없습니다."
+msgid "No selection"
+msgstr "선택된 내용 없음"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+msgid "Copied to clipboard"
 msgstr "클립보드에 복사됨"
 
 #. Translators: The name of a category of NVDA commands.
@@ -2890,6 +2932,16 @@ msgstr "명령 실행"
 msgid "Document formatting"
 msgstr "문서 서식 알림"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "오디오 도킹 사용 불가"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr "오디오 도킹 모드(NVDA가 배경음 볼륨을 줄임) 설정을 토글합니다"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "입력 도움말 모드 시작"
@@ -2934,7 +2986,7 @@ msgstr ""
 "를 읽어줍니다. "
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+msgid "Left click"
 msgstr "왼쪽 버튼 클릭"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2942,7 +2994,7 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "현재 마우스 위치에서 왼쪽 마우스 버튼을 한번 클릭합니다"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+msgid "Right click"
 msgstr "오른쪽 버튼 클릭"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2950,28 +3002,32 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "현재 마우스 위치에서 오른쪽 마우스 버튼을 한번 클릭합니다"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
-msgstr "왼쪽 마우스 버튼 클릭 잠금 해제"
+msgid "Left mouse button unlock"
+msgstr "왼쪽 마우스 버튼 잠금 해제"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "왼쪽 마우스 버튼 클릭 잠김"
+msgid "Left mouse button lock"
+msgstr "왼쪽 마우스 버튼 잠김"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "왼쪽 마우스버튼을 클릭상태로 유지하거나 해제합니다. "
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr "오른쪽 마우스 버튼 클릭 잠금 해제"
+msgid "Right mouse button unlock"
+msgstr "오른쪽 마우스 버튼 잠금 해제"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "오른쪽 마우스 버튼 클릭 잠김"
+msgid "Right mouse button lock"
+msgstr "오른쪽 마우스 버튼 잠김"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "오른쪽 마우스를 클릭상태로 유지하거나 해제합니다. "
+
+#, python-format
+msgid "Selected %s"
+msgstr "%s 선택됨"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3227,15 +3283,15 @@ msgstr "표 행 및 열의 머릿말 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "현재 표 셀의 좌표 알림 해제"
+msgstr "현재 표 셀의 위치 알림 해제"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "현재 표 셀의 좌표 알림"
+msgstr "현재 표 셀의 위치 알림"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "표 셀의 좌표 알림을 토글합니다"
+msgstr "표 셀의 위치 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3287,15 +3343,15 @@ msgstr "헤딩 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "인용구역 알림 해제"
+msgstr "인용문 알림 해제"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "인용구역 알림"
+msgstr "인용문 알림"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
-msgstr "인용구역 알림을 토글합니다"
+msgstr "인용문 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
@@ -3337,7 +3393,7 @@ msgstr "클릭 가능 요소 알림을 토글합니다"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
+msgid "Symbol level %s"
 msgstr "기호 발음: %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
@@ -3346,7 +3402,7 @@ msgid ""
 msgstr "구두점 및 기호 출력 설정값을 변경합니다. "
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+msgid "Object has no location"
 msgstr "위치 없는 객체"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3389,7 +3445,7 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+msgid "No navigator object"
 msgstr "탐색 객체 없음"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3419,7 +3475,7 @@ msgstr ""
 "ㅜ이치 정보를 더 자세하게 알려줍니다."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
+msgid "Move to focus"
 msgstr "포커스된 객체로 이동"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
@@ -3433,24 +3489,25 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
+msgid "No focus"
 msgstr "포커스된 객체 없음"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "포커스를 탐색객체로 이동"
+msgid "Move focus"
+msgstr "포커스 이동"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "현 위치에 캐럿 없음"
+msgid "No caret"
+msgstr "캐럿 없음"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
+#, fuzzy
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"한번 누르면 키보드 포커스를 네비게이터 객체로 이동하고, 두번 누르면 시스템 캐"
-"럿을 리뷰 커서의 위치로 이동합니다. "
+"한번 누르면 키보드 포커스를 탐색 객체로 이동하고, 두번 누르면 시스템 캐럿을 "
+"리뷰 커서의 위치로 이동합니다. "
 
 # In this case, no container means no higher level objects.
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -3463,6 +3520,7 @@ msgstr "화면 탐색 객체의 상위 갯체로 이동합니다. "
 
 # Translation reads, "cannot find next screen object".
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "다음 객체 없음"
 
@@ -3472,6 +3530,7 @@ msgstr "화면 탐색 객체를 다음 객체로 이동합니다. "
 
 # Reads, "no previous screen object."
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "이전 객체 없음"
 
@@ -3490,8 +3549,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "화면 탐색 객체의 첫 하위객체로 이동합니다. "
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "바로가기"
+msgid "Activate"
+msgstr "활성됨"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3506,7 +3565,7 @@ msgstr ""
 "을 누르게 됩니다.)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+msgid "Top"
 msgstr "위"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3566,8 +3625,9 @@ msgid ""
 msgstr ""
 "리뷰커서를 현재 화면 탐색 객체의 다음 단어로 옮기고 그 단어를 읽습니다. "
 
-msgid "left"
-msgstr "왼쪽"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr ""
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3595,7 +3655,8 @@ msgstr ""
 "의 뜻이나 풀이를 알려주고 세번 누르면 글자의 ASCII값과 16진수의 값을 알 수 있"
 "습니다. "
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
 msgstr "오른쪽"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3614,15 +3675,15 @@ msgstr ""
 "고 그 글자를 읽습니다. "
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
+msgid "Speech mode off"
 msgstr "음성 출력 모드: 출력 안함"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+msgid "Speech mode beeps"
 msgstr "음성 출력 모드: 비프음 출력"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+msgid "Speech mode talk"
 msgstr "음성 출력 모드: 음성 출력"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3660,7 +3721,7 @@ msgstr "NVDA 메뉴를 보여줍니다"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "리뷰 커서의 현재 위치부터 모든 내용을 읽습니다. 점차 읽으면서 리뷰 커서도 따"
@@ -3668,7 +3729,7 @@ msgstr ""
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "현재 케럿 위치부터 텍스트 끝까지 일거줍니다. 이때 케럿도 함께 움직입니다."
@@ -3677,14 +3738,20 @@ msgstr ""
 msgid "No formatting information"
 msgstr "서식 정보 없음"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "문서 서식"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "현재 리뷰 커서 위치의 서식 정보를 알려줍니다. "
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"현재 리뷰 커서 위치의 서식 정보를 알려줍니다. 두번 누르면 서식 정보창을 보여"
+"줍니다"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr "포커스된 객체를 알려줍니다. 두번 누르면 포커스 정보를 발음합니다."
 
 #. Translators: Reported when there is no status line for the current program or window.
@@ -3693,7 +3760,7 @@ msgstr "표시줄을 찾을 수 없음"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "현재 응용프로그램의 상태 표시줄을 읽고 탐색 객체를 그곳으로 이동합니다. 두번 "
@@ -3712,7 +3779,7 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "마우스 이동에 따라 정보 읽기 여부를 토글합니다. "
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+msgid "No title"
 msgstr "제목 없음"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3725,7 +3792,7 @@ msgstr ""
 "음하고 세번 누르면 제목을 클립보드에 복사합니다"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+msgid "Speaks the current foreground object"
 msgstr "현재 포그라운드에 위치한 객체를 알려 줍니다."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3737,19 +3804,19 @@ msgstr ""
 "여줍니다. "
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+msgid "No progress bar updates"
 msgstr "진행률 알리지 않기"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+msgid "Speak progress bar updates"
 msgstr "진행률 업데이트 출력"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+msgid "Beep for progress bar updates"
 msgstr "경고음으로 진행률 알림"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+msgid "Beep and speak progress bar updates"
 msgstr "경고음과 음성 출력으로 진행률 알림"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3801,7 +3868,7 @@ msgid ""
 msgstr "포커스의 변화로 인한  화면 탐색 객체의 이동 여부를 토글합니다. "
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+msgid "No system battery"
 msgstr "배터리 없음"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3818,7 +3885,7 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d}시간 {minutes:d}분 남음"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "AC 전원을 사용하지 않을 때, 배터리 상태와 남은 시간을 알려줍니다."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -3968,6 +4035,31 @@ msgstr "점자와 %s 커서 연계됨"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "점자디스플레이가 포커스 또는 리뷰 위치를 딸아갈 것인지 토글합니다. "
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "점자 커서 해제"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "점자 커서 출력"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "점자 커서를 토글합니다"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "점자 커서 꺼져있음"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "점자 커서 %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "점자 커서 모양을 토글합니다"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "클립보드내 내용 없음"
@@ -4003,7 +4095,7 @@ msgstr "시작 마크는 같은 객체안에서 설정해야 합니다. "
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
-msgstr "클립보드안의 내용을 확인합니다. "
+msgstr "선택된 리뷰 문장 복사됨"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
@@ -4053,21 +4145,11 @@ msgstr ""
 "NVDA 개발때 편리하도록 NVDA를 재시작하지 않고도 플러그인과 프로그램 환경을 불"
 "러옵니다. "
 
-# Translation reads, "cannot find next screen object".
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "다음 객체 없음"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "다음 갯체로 이동합니다. "
-
-# Reads, "no previous screen object."
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "이전 객체 없음"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4081,7 +4163,7 @@ msgid "%s mode"
 msgstr "%s 모드"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+msgid "Cycles between available touch modes"
 msgstr "터치 모드를 전환합니다."
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4117,10 +4199,6 @@ msgstr "키보드에서 시스템 키를 누른 것과 동일하게 작동합니
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "기타"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "브라우즈 모드"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4610,11 +4688,6 @@ msgstr "선택 해제됨"
 msgid "done dragging"
 msgstr "드래그 마침"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "레벨 %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4638,6 +4711,11 @@ msgstr "%s 열"
 #, python-format
 msgid "with %s rows"
 msgstr "%s 행"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "레벨 %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4672,6 +4750,14 @@ msgstr "%s 스타일"
 msgid "default style"
 msgstr "default style"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, fuzzy
+msgid "{color1} to {color2}"
+msgstr "{backgroundColor} 바탕에 {color}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4687,6 +4773,9 @@ msgstr "{color}"
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} 배경 색상"
+
+msgid "background pattern {pattern}"
+msgstr ""
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4776,7 +4865,6 @@ msgstr "및줄 없음"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "baseline"
 
@@ -5028,6 +5116,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "약간 올리기"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA 메시지"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "업데이트 확인중"
@@ -5218,7 +5310,7 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
+msgid "Edge of table"
 msgstr "테이블 가장자리"
 
 #. Translators: The description of an NVDA command.
@@ -5375,7 +5467,7 @@ msgid "Appointment {subject}, {time}"
 msgstr "일정 {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
+msgid "Has appointment"
 msgstr "일정 있음"
 
 #. Translators: the email is a meeting request
@@ -5671,6 +5763,12 @@ msgstr "정지"
 #. Translators: This is the name of a button in sound recorder.
 msgid "Record"
 msgstr "녹음"
+
+msgid "left"
+msgstr "왼쪽"
+
+msgid "right"
+msgstr "오른쪽"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -6657,6 +6755,10 @@ msgstr "NVDA 로그 뷰어"
 msgid "Refresh\tF5"
 msgstr "Refresh\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "저장 ...\tCtrl+S (&A)"
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "Log"
@@ -6817,6 +6919,10 @@ msgstr "음성 엔진 (&S):"
 msgid "Output &device:"
 msgstr "음성 출력 장치 (&D)"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "오디오 도킹 모드 (&D):"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -6886,7 +6992,7 @@ msgstr "키보드 배열"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "numpad Insert를 NVDA 기능키로 사용"
+msgstr "숫자 키패드 Insert를 NVDA 기능키로 사용"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7055,12 +7161,12 @@ msgstr "경고음 및 말하기"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &tooltips"
-msgstr "툴팁 알림 (&T)"
+msgstr "도구 설명 알림 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &help balloons"
-msgstr "풍선 도움말 알림 (&H)"
+msgstr "도움말 풍선 알림 (&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -7131,7 +7237,7 @@ msgstr "페이지 열리면 자동으로 읽기 (&S)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "구조 테이블 인식 (&A)"
+msgstr "레이아웃 테이블 인식 (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7241,7 +7347,7 @@ msgstr "표 행 및 열의 머릿말 알림 (&E)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "현재 표 셀의 좌표 알림 (&O)"
+msgstr "현재 표 셀의 위치 알림 (&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7373,9 +7479,17 @@ msgstr "점자 입력 표기법 (&I)"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "커서 위치의 점자 단어 풀이 (&X)"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "점자 커서 출력 (&S)"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "커서 깜박이 시간 (ms) (&C)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "커서 모양: (&S)"
 
 # The translation literally reads, "message alert display time". Borrowed from
 # Braille Sense user guide.
@@ -7525,11 +7639,11 @@ msgid "Refreshes the document content"
 msgstr "문서 내용을 새로 고칩니다"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
+msgid "Use screen layout on"
 msgstr "화면 레이아웃 사용"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
+msgid "Use screen layout off"
 msgstr "화면 레이아웃 사용 않함"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -7582,33 +7696,156 @@ msgstr "바탕 화면"
 msgid "default color"
 msgstr "기본 색상"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "알 수 없는 색상"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "자동 연결"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+#, fuzzy
+msgid "checker"
+msgstr "선택됨"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+#, fuzzy
+msgid "down"
+msgstr "page down"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+#, fuzzy
+msgid "grid"
+msgstr "data grid"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+#, fuzzy
+msgid "light down"
+msgstr "쓸어내리기"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+#, fuzzy
+msgid "light horizontal"
+msgstr "오른쪽 control"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+#, fuzzy
+msgid "light up"
+msgstr "흐린 파랑"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+#, fuzzy
+msgid "light vertical"
+msgstr "오른쪽 alt"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+#, fuzzy
+msgid "none"
+msgstr "안 함"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+#, fuzzy
+msgid "vertical"
+msgstr "세로 정렬(상단)"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#, fuzzy
+msgid "linear gradient"
+msgstr "슬라브어 1종"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr ""
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "읽기 전용 셀"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "차트, 주석 또는 공식이 있는 셀 목록을 보여줍니다"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Spreadsheet에 포함된 여러 요소를 보여줍니다"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+msgid "&Charts"
 msgstr "차트 (&C)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
+msgid "C&omments"
 msgstr "주석 (&O)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "수식 (&F)"
+msgid "Fo&rmulas"
+msgstr "수식 (&R)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&Sheet"
+msgid "&Sheets"
+msgstr "Sheets (&S)"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7634,7 +7871,8 @@ msgid "Already set {address} as start of column headers"
 msgstr "이미 {address}을 열 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+#, fuzzy
+msgid "Removed {address}    from column headers"
 msgstr "{address}를 열 머릿말에서 제외"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -7658,7 +7896,8 @@ msgid "Already set {address} as start of row headers"
 msgstr "이미 {address}을 행 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+#, fuzzy
+msgid "Removed {address}    from row headers"
 msgstr "{address}를 행 머릿말에서 제외"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -8337,11 +8576,11 @@ msgstr "내용 삭제"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 msgid "property"
-msgstr "내용 속성 변경"
+msgstr "속성"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
-msgstr "문단 수 변경"
+msgstr "단락 번호"
 
 #. Translators: a Microsoft Word revision type (display field)
 msgid "display field"
@@ -8361,15 +8600,15 @@ msgstr "내용 수정"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
-msgstr "문단 속성 변경"
+msgstr "단락 속성"
 
 #. Translators: a Microsoft Word revision type (table)
 msgid "table property"
-msgstr "표 속성 변경"
+msgstr "표 속성"
 
 #. Translators: a Microsoft Word revision type (section property)
 msgid "section property"
-msgstr "섹션 속성 변경"
+msgstr "구역 속성"
 
 #. Translators: a Microsoft Word revision type (style definition)
 msgid "style definition"
@@ -8430,16 +8669,7 @@ msgid "comment: {text} by {author} on {date}"
 msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text}; 저자: {author}; 날짜: {date}"
-
-#, python-format
-msgid "%g characters"
-msgstr "%g 글자"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g pt"
+msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8517,19 +8747,34 @@ msgstr "밑줄 끝"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
-msgstr "문자 배치 왼쪽"
+msgstr "왼쪽 맞춤"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "centered"
-msgstr "문자 배치 중앙"
+msgstr "가운데 맞춤"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Right aligned"
-msgstr "문자 배치 오른쪽"
+msgstr "오른쪽 맞춤"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Justified"
-msgstr "배치"
+msgstr "양쪽 맞춤"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Superscript"
+msgstr "superscript"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Subscript"
+msgstr "subscript"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Baseline"
+msgstr "baseline"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -8565,7 +8810,7 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 피카"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
+msgid "No comments"
 msgstr "주석 없음"
 
 #. Translators: a description for a script
@@ -8577,214 +8822,21 @@ msgstr "시스템 케럿 위치에 주석이 존재할 경우 이를 알려줍�
 msgid "Not in table"
 msgstr "테이블 아님"
 
-msgid "Edge of table"
-msgstr "테이블 가장자리"
-
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "주석 (&A)"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS 한소네/브레일 에지"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
 
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "기본 색상"
+#~ msgid "browse mode"
+#~ msgstr "브라우즈 모드"
 
-#, fuzzy
-#~ msgid "Unknown color"
-#~ msgstr "알 수 없는 색상"
-
-#~ msgid "selecting %s"
-#~ msgstr "%s 선택"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s 선택 해제"
-
-#~ msgid "unrevised"
-#~ msgstr "내용 변경 않됨"
-
-#~ msgid "unknown author"
-#~ msgstr "글쓴이 알 수 없음"
-
-#~ msgid "unknown date"
-#~ msgstr "날짜 알 수 없음"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr ""
-#~ "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "포커스된 객체를 알려줍니다."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#, fuzzy
-#~ msgid "none"
-#~ msgstr "안 함"
-
-#~ msgid "equation"
-#~ msgstr "방정식"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "링크, 헤딩과 랜드마크 목록을 보여줍니다. "
-
-#~ msgid "Slovak"
-#~ msgstr "슬로바키아어"
-
-#~ msgid "grey"
-#~ msgstr "회색"
-
-#~ msgid "navy blue"
-#~ msgstr "남색"
-
-#~ msgid "red"
-#~ msgstr "빨강"
-
-#~ msgid "blue"
-#~ msgstr "파랑"
-
-#~ msgid "teal"
-#~ msgstr "틸"
-
-#~ msgid "aqua"
-#~ msgstr "옥색"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "NvDA 2013.1에서는 사용자 편의를 위해 랩탑 키보드 레이아웃의 여러 명령이 변"
-#~ "경되었습니다.\n"
-#~ "만약 랩탑 키보드 레이아웃을 사용하신다면 변경된 사항 문서를 참조하시기 바"
-#~ "랍니다."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "새 laptop 키보드 레이아웃"
-
-#~ msgid "Read What's New"
-#~ msgstr "변경된 사항 읽기"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Acceleration"
-
-#~ msgid "male 1"
-#~ msgstr "male 1"
-
-#~ msgid "female 1"
-#~ msgstr "female 1"
-
-#~ msgid "male 2"
-#~ msgstr "male 2"
-
-#~ msgid "female 2"
-#~ msgstr "female 2"
-
-#~ msgid "lime"
-#~ msgstr "라임"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "NVDA를 종료하시겠습니까? "
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "NVDA 종료전 경고 알림 (&W)"
-
-#~ msgid "Regexp"
-#~ msgstr "Regexp"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "화면 탐색 객체에 대한 위치 정보 없음"
-
-#~ msgid "No location information for screen"
-#~ msgstr "화면에 대한 위치정보 없음"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "현재  화면 탑색 객체의 폭, 넓이, 위치를 읽어 줍니다. "
-
-#~ msgid "Set column header row"
-#~ msgstr "열 머리말 행 설정"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "열 머리말 행 해제"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "한번 누르면 현재 행을 열 머릿말 행으로 설정합니다. 두번 누르면 이 설정을 "
-#~ "해제합니다. "
-
-#~ msgid "Set row header column"
-#~ msgstr "행 머리말 열 설정"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "한번 누르면 현재 열을 행 머릿말 열로 설정합니다. 두번 누르면 이 설정을 해"
-#~ "제합니다. "
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "취소선"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "수동 적용/편집"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "환경설정 파일에 오류가 있습니다. \n"
-#~ "이 에러를 수정하기 위하여 'Ok'를 누르세요. 만약 설정 파일을 수동으로 수정"
-#~ "하고 싶다면 'Cancel'을 누르세요.오류에 대한 보다 자세한 설명은 로그파일을 "
-#~ "참조하세요.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "자동 주석 없음"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "자동 주석 윈도우 찾을 수 없음"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "자동 주석이 있을 경우 이를  읽어줍니다. "
-
-#~ msgid "Automatic comments:"
-#~ msgstr "자동 주석"
-
-#~ msgid "Translation:"
-#~ msgstr "번역:"
-
-#~ msgid "Comments:"
-#~ msgstr "주석"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "이 객체에 대한 고정 리뷰가 없음"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "고정 리뷰 위치에 객체 없음"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "고정 리뷰 속에 있는 리뷰커서의 위치에서 텍스트에 의해 표상된 객체로 이동합"
-#~ "니다. "
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "다른 NVDA 설정 대화상자를 닫아주세요"
+#~ msgid "activate"
+#~ msgstr "바로가기"

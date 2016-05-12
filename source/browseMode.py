@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 NV Access Limited
+#Copyright (C) 2007-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,7 +9,6 @@ import winsound
 import time
 import weakref
 import wx
-import queueHandler
 from logHandler import log
 import review
 import scriptHandler
@@ -47,9 +46,9 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 			nvwave.playWaveFile(sound)
 		else:
 			if treeInterceptor.passThrough:
-				speech.speakMessage(_("focus mode"))
+				ui.message(_("Focus mode"))
 			else:
-				speech.speakMessage(_("browse mode"))
+				ui.message(_("Browse mode"))
 		reportPassThrough.last = treeInterceptor.passThrough
 reportPassThrough.last = False
 
@@ -239,8 +238,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@ type direction: string
 		@param pos: the position in the document from where to seart the search.
 		@type pos: Usually an L{textInfos.TextInfo} 
+		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
 		"""
-		return iter(())
+		raise NotImplementedError
 
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
@@ -302,11 +302,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_activatePosition(self,gesture):
 		self._activatePosition()
 	# Translators: the description for the activatePosition script on browseMode documents.
-	script_activatePosition.__doc__ = _("activates the current object in the document")
+	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
 		"kb:enter": "activatePosition",
+		"kb:numpadEnter": "activatePosition",
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 	}
@@ -688,6 +689,7 @@ class ElementsListDialog(wx.Dialog):
 			parentElements.append(element)
 
 		# Start with no filtering.
+		self.filterEdit.ChangeValue("")
 		self.filter("", newElementType=True)
 
 	def filter(self, filterText, newElementType=False):
@@ -699,14 +701,12 @@ class ElementsListDialog(wx.Dialog):
 
 		# Populate the tree with elements matching the filter text.
 		elementsToTreeItems = {}
-		item = None
 		defaultItem = None
 		matched = False
 		#Do case-insensitive matching by lowering both filterText and each element's text.
 		filterText=filterText.lower()
 		for element in self._elements:
-			if filterText not in element.item.label.lower():
-				item = None
+			if filterText and filterText not in element.item.label.lower():
 				continue
 			matched = True
 			parent = element.parent
@@ -1464,7 +1464,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			# Translators: a message reported when:
 			# Review cursor is at the bottom line of the current navigator object.
 			# Landing at the end of a browse mode document when trying to jump to the end of the current container. 
-			ui.message(_("bottom"))
+			ui.message(_("Bottom"))
 		self._set_selection(container, reason=REASON_QUICKNAV)
 		if not willSayAllResume(gesture):
 			container.expand(textInfos.UNIT_LINE)

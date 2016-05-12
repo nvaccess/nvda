@@ -411,7 +411,7 @@ RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
 def getIndentationSpeech(indentation):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
-	@type indentation: basestring
+	@type indentation: unicode
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
@@ -421,6 +421,8 @@ def getIndentationSpeech(indentation):
 		# Translators: This is spoken when the given line has no indentation.
 		return _("no indent")
 
+	#The non-breaking space is semantically a space, so we replace it here.
+	indentation = indentation.replace(u"\xa0", u" ")
 	res = []
 	locale=languageHandler.getLanguage()
 	for m in RE_INDENTATION_CONVERT.finditer(indentation):
@@ -944,23 +946,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
 		textList.append(propertyValues['keyboardShortcut'])
-	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
-	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
-	if 0<indexInGroup<=similarItemsInGroup:
-		# Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-		# {number} is replaced with the number of the item in the group.
-		# {total} is replaced with the total number of items in the group.
-		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
-	if 'positionInfo_level' in propertyValues:
-		level=propertyValues.get('positionInfo_level',None)
-		role=propertyValues.get('role',None)
-		if level is not None:
-			if role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM) and level!=oldTreeLevel:
-				textList.insert(0,_("level %s")%level)
-				oldTreeLevel=level
-			else:
-				# Translators: Speaks the item level in treeviews (example output: level 2).
-				textList.append(_('level %s')%propertyValues['positionInfo_level'])
+	if includeTableCellCoords and cellCoordsText:
+		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
@@ -984,8 +971,6 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 				# Translators: Speaks current column number (example output: column 3).
 				textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
-	if includeTableCellCoords and cellCoordsText:
-		textList.append(cellCoordsText)
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
@@ -1000,6 +985,23 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
+	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
+	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
+	if 0<indexInGroup<=similarItemsInGroup:
+		# Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+		# {number} is replaced with the number of the item in the group.
+		# {total} is replaced with the total number of items in the group.
+		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
+	if 'positionInfo_level' in propertyValues:
+		level=propertyValues.get('positionInfo_level',None)
+		role=propertyValues.get('role',None)
+		if level is not None:
+			if role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM) and level!=oldTreeLevel:
+				textList.insert(0,_("level %s")%level)
+				oldTreeLevel=level
+			else:
+				# Translators: Speaks the item level in treeviews (example output: level 2).
+				textList.append(_('level %s')%propertyValues['positionInfo_level'])
 	return CHUNK_SEPARATOR.join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
@@ -1103,7 +1105,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False , separator=CHUNK_SEPARATOR):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -1161,21 +1163,36 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
-		if color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
+		backgroundColor2=attrs.get("background-color2")
+		oldBackgroundColor2=attrsCache.get("background-color2") if attrsCache is not None else None
+		bgColorChanged=backgroundColor!=oldBackgroundColor or backgroundColor2!=oldBackgroundColor2
+		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)
+		if backgroundColor2:
+			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else unicode(backgroundColor2)
+			# Translators: Reported when there are two background colors.
+			# This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+			# {color1} will be replaced with the first background color.
+			# {color2} will be replaced with the second background color.
+			bgColorText=_("{color1} to {color2}").format(color1=bgColorText,color2=bg2Name)
+		if color and backgroundColor and color!=oldColor and bgColorChanged:
 			# Translators: Reported when both the text and background colors change.
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{color} on {backgroundColor}").format(
 				color=color.name if isinstance(color,colors.RGB) else unicode(color),
-				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+				backgroundColor=bgColorText))
 		elif color and color!=oldColor:
 			# Translators: Reported when the text color changes (but not the background color).
 			# {color} will be replaced with the text color.
 			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
-		elif backgroundColor and backgroundColor!=oldBackgroundColor:
+		elif backgroundColor and bgColorChanged:
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
-			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorText))
+		backgroundPattern=attrs.get("background-pattern")
+		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
+		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
+			textList.append(_("background pattern {pattern}").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
@@ -1407,6 +1424,20 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				text=""
 			if text:
 				textList.append(text)
+	if formatConfig["reportGrammarErrors"]:
+		invalidGrammar=attrs.get("invalid-grammar")
+		oldInvalidGrammar=attrsCache.get("invalid-grammar") if attrsCache is not None else None
+		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar!=oldInvalidGrammar:
+			if invalidGrammar:
+				# Translators: Reported when text contains a grammar error.
+				text=_("grammar error")
+			elif extraDetail:
+				# Translators: Reported when moving out of text containing a grammar error.
+				text=_("out of grammar error")
+			else:
+				text=""
+			if text:
+				textList.append(text)
 	if unit in (textInfos.UNIT_LINE,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH,textInfos.UNIT_READINGCHUNK):
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:
@@ -1414,7 +1445,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
-	return CHUNK_SEPARATOR.join(textList)
+	return separator.join(textList)
 
 def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if tableInfo is None and oldTableInfo is None:

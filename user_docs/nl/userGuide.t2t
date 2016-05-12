@@ -37,7 +37,7 @@ Behalve de Engelse versie van NVDA is het programma beschikbaar in 47 talen, waa
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal  als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
 
-De gratis, open source spraakmodule eSpeak [eSpeak http://espeak.sourceforge.net/], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen. 
+De gratis, open source spraakmodule [eSpeak NG https://github.com/espeak-ng/espeak-ng], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen. 
 
 Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden onder [Ondersteunde spraaksynthesizers#SupportedSpeechSynths].
 
@@ -56,12 +56,14 @@ Dit is van toepassing voor zowel originele als aangepaste kopieën van de softwa
 Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systeemvereisten +
-- Besturingssysteem: alle 32-bit en 64-bit versies van Windows XP, Windows  Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
+- Besturingssysteem: alle 32-bit en 64-bit edities van Windows XP, Windows  Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
 - Voor Windows XP 32-bit heeft NVDA Service Pack 2 of hoger nodig.
 - Voor Windows Server 2003 heeft NVDA Service Pack 1 of hoger nodig.
+- Voor Windows Vista heeft NVDA service pack 2 nodig alsmede update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+- Deze moeten allebei worden geïnstalleerd als alle beschikbare updates zijn toegepast via Windows Update.
 - Geheugen: 256 MB RAM of meer.
 - Processorsnelheid: 1.0 ghz of hoger.
-- Opslagcapaciteit: ongeveer 50 MB vrije ruimte.
+- Opslagcapaciteit: ongeveer 90 MB vrije ruimte.
 -
 
 + NVDA downloaden en uitvoeren +
@@ -87,8 +89,8 @@ De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het pr
 Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het programma niet automatisch gestart kan worden tijdens en / of na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
 - Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
 - UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
-- Windows 8: Geen ondersteuning voor invoer via het aanraakscherm,
-- Windows 8: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
+- Windows 8 en later: Geen ondersteuning voor invoer via het aanraakscherm,
+- Windows 8 en later: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
 -
 
 ++ NVDA installeren ++
@@ -300,7 +302,7 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 | Ga een rij omlaag | control+alt+pijl omlaag | Verplaatst de tekstcursor een rij omlaag(van dezelfde kolom) |
 %kc:endInclude
 
-++ Objectnavigatie ++
+++ Objectnavigatie ++[ObjectNavigation]
 U zult meestal met applicaties werken door middel van de commando's voor het verplaatsen van de [focus #SystemFocus] en de [systeemcursor #SystemCaret].
 Soms kan het echter handig zijn om de huidige applicatie of het besturingssysteem te verkennen zonder de [focus #SystemFocus] of de systeemcursor #SystemCaret] te verplaatsen.
 Ook wilt u soms werken met [objecten #Objects] die niet te bedienen zijn met de TAB-toets van het toetsenbord.
@@ -373,7 +375,7 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+a | Veeg omlaag met 3 vingers (tekstmodus) | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt.  |
 | Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 | geen | Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
 | Tot leescursor kopiëren | NVDA+f10 | NVDA+f10 | geen | Het tekstgebied dat eerder met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 tot en met de huidige positie van de leescursor naar het klembord gekopieerd. |
-| Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt |
+| Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt. Bij tweemaal drukken krijgt u de informatie in bladermodus. |
 %kc:endInclude
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
@@ -443,7 +445,7 @@ Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet geb
 | naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | Verplaats het navigator object naar de muispositie |
 %kc:endInclude
 
-+ Bladermodus +
++ Bladermodus +[Bladermodus]
 In NVDA worden complexe alleen-lezen documenten zoals een webpagina weergegeven in bladermodus.
 Het gaat om documenten in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-berichten in Microsoft Outlook, Google Chrome, Adobe Reader en Adobe Flash.
 Bladermodus is ook optioneel beschikbaar voor Microsoft Word-documenten.
@@ -630,15 +632,15 @@ Evenals voor op het Web heeft NVDA een Elementenlijst voor Microsoft Excel, waar
 Om toegank te krijgen tot de Elementenlijst in Excel, drukt u op NVDA+f7.
 %kc:endInclude
 De volgende types informatie zijn in de Elementenlijst beschikbaar
-- Grafiek: Voor het weergeven van alle grafieken in de werkmap
+- Grafieken: Voor het weergeven van alle grafieken op het actieve werkblad
 Door een grafiek te selecteren en op enter of de knop Ga naar te  drukken krijgt de grafiek de focus voor navigatie en lezen met de pijltjestoetsen.
-- Opmerking: Voor het weergeven van cellen in de werkmap die opmerkingen  bevatten. 
+- Opmerkingen: Voor het weergeven van cellen op het actieve werkblad dat opmerkingen  bevat. 
 Het celadres samen met de opmerkingen erin worden voor elke cel weergegeven. 
 Door op Enter of de knop Ga Naar  te drukken wanneer u op een weergegeven opmerking staat, gaat u direct naar die cel.
-- Formule: Voor het weergeven van alle cellen in de werkmap waar een formule in staat. 
+- Formules: Voor het weergeven van alle cellen op het werkblad waar een formule in staat. 
 Het celadres samen met bijbehorende formule worden voor elke cel getoond.
 Door op Enter of de knop Ga Naar te drukken wanneer u zich op een weergegeven formule bevindt,  gaat u direct naar die cel. 
-- Blad: Voor het weergeven van alle bladen in de werkmap. 
+- Bladen: Voor het weergeven van alle bladen in de werkmap. 
 Door f2 te drukken wanneer u zich op een weergegeven blad bevindt, kunt u de naam van het desbetreffende blad wijzigen. 
 Een druk op de Enter- of de Ga Naar-knop terwijl u zich op een weergegeven blad bevindt, brengt u naar dat blad.
 -
@@ -706,7 +708,7 @@ Het dialoogvenster met “Algemene instellingen” vindt u in het NVDA-menu onde
 U vindt hier de volgende onderdelen:
 
 ==== Taal ====
-In de vervolgkeuzelijst kiest u de taal van de gebruikersinterface en de meldingen van NVDA.
+Dit is een vervolgkeuzelijst waarmee u de taal van de gebruikersinterface en de meldingen van NVDA kunt kiezen. 
 Er is een groot aantal talen waaruit gekozen kan worden, maar de standaardinstelling is “User default, Windows”.
 Hiermee wordt bewerkstelligt dat NVDA de taal gebruikt die standaard op uw PC is ingesteld.
 
@@ -733,13 +735,13 @@ Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma ka
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij  Windows aanmeldt.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== NVDA gebruiken bij Windows aanmelding(administratieve rechten vereist) ====
+==== NVDA gebruiken bij Windows aanmelding(administratorrechten vereist) ====
 Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje inschakelen.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen ====
+==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen (administratorrechten vereist) ====
 Met deze knop kopieert u uw huidige opgeslagen configuratie naar de systeemconfiguratiemap van NVDA, zodat de instellingen worden gebruikt bij het aanmeldscherm, gebruikersaccountbeheerscherm (UAC) en andere beveiligde Windowsschermen.
-Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat uw configuratie is opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
+Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat u eerst uw configuratie hebt opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== Automatisch controleren of updates beschikbaar zijn ====
@@ -761,6 +763,16 @@ Dit kan nuttig zijn voor iemand die NVDA uitsluitend met braille wil gebruiken o
 
 ==== Uitvoerapparaat ====
 Hiermee kunt u de geluidskaart kiezen die NVDA moet aansturen voor de spraakuitvoer.
+
+%kc:setting
+==== Gedifferentieerde geluidsniveau-modus ====
+Toets: NVDA+shift+d
+
+Als u Windows 8 of  hoger gebruikt, kunt u, met deze optie bepalen of NVDA het volume van andere applicaties moet verlagen zodra en zolang NVDA aan het spreken  is of gedurende de hele tijd dat NVDA actief is.
+- Geluidsniveau niet verlagen: NVDA zal het volume van andere audiobronnen niet verlagen. 
+- Geluidsniveau verlagen bij uitvoer van spraak en geluiden: NVDA zal alleen het volume van andere audiobronnen verlagen wanneer  NVDA aan het spreken is of geluiden afspeelt. Mogelijk dat dit niet bij alle synthesizers werkt. 
+- Altijd geluidsniveau verlagen: NVDA zal het volume van andere audiobronnen  steeds op een lager niveau houden zolang NVDA actief is.
+-
  
 +++ Stem (NVDA+control+v) +++[VoiceSettings]
 Onder “Opties” in het NVDA-menu gaat u naar “Stem”  om instellingen aan te passen die te maken hebben met de gebruikte stem(men).
@@ -774,7 +786,7 @@ Met de pijltoetsen kunt u alle keuzemogelijkheden beluisteren.
 Met pijl links en pijl omhoog gaat u naar het begin van de lijst en met pijl rechts en pijl omlaag naar het einde.
 
 ==== Variant ====
-Als u gebruik maakt van de eSpeak synthesizer, die standaard is opgenomen in NVDA, kunt u via een vervolgkeuzelijst een stemvariant kiezen.
+Als u gebruik maakt van de eSpeak NG synthesizer, die standaard is opgenomen in NVDA, kunt u via een vervolgkeuzelijst een stemvariant kiezen.
 Met de stemvarianten kunt u stemeigenschappen enigszins aanpassen.
 Er zijn varianten die als een mannen- of vrouwenstem klinken of zelfs als een kikker.
 
@@ -790,12 +802,12 @@ De schuifregelaar gaat van 0 tot 100 ( bij 0 klinkt de stem het laagst en op 100
 Met de schuifregelaar kunt u het volume van de stem instellen waarbij 0 het laagste en 100 het hoogste volume is. 
 
 ==== Intonatie ====
-Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak.
+Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak NG.
 
 ==== Automatisch van taal wisselen ====
 Met dit selectievakje bepaalt u of NVDA automatisch naar een andere spraaksynthesizertaal moet overschakelen als het te lezen document is voorzien van taalcodes, zoals NL voor Nederlands.
 Deze optie is standaard ingeschakeld.
-Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak synthesizer ondersteund.
+Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak NG synthesizer ondersteund.
 
 ==== Automatisch naar een andere variant van een taal  overschakelen ====
 Indien automatisch van taal wisselen is ingeschakeld, kan deze optie gebruikt worden om aan te geven dat ernaar een andere taalvariant  moet wordenovergeschakeld  in plaats van enkel taalwisselingen. Als een tekst bijvoorbeeld als Brits Engels is gemarkeerd zal de synthesizer een Britse variant van het Engels  gebruiken als deze optie is ingeschakeld.
@@ -835,7 +847,7 @@ De meeste synthesizers ondersteunen deze functionaliteit.
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
 +++ Synth settings ring +++[SynthSettingsRing]
-Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “rij/kolomkoppen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
+Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster , kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
 %kc:beginInclude
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Naar volgende synthesizerinstelling gaan | NVDA+control+pijl rechts | NVDA+shift+control+pijl rechts | Hiermee wordt steeds een volgende spraakinstelling gekozen. Na de laatst beschikbare instelling begint u weer vooraan enz. |
@@ -885,8 +897,16 @@ Als invoer niet wordt ondersteund door een leesregel  die is uitgerust met een b
 ==== woord onder cursor uitbreiden naar computerbraille ====
 Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven in onverkort computerbraille.
 
+==== Cursor Tonen ====
+Met deze optie kunt u de braillecursor in- en uitschakelen.
+Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectieaanwijzer.
+
 ==== Knippersnelheid cursor ====
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.
+
+==== Cursorvorm ====
+Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen.
+Deze optie heeft geen betrekking op de selectieaanwijzer.
 
 ==== Time-out voor berichten (sec.) ====
 In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-berichten in het uitleesvenster worden weergegeven.
@@ -1447,22 +1467,22 @@ Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins o
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
 Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-De [eSpeak http://espeak.sourceforge.net/] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
-NVDA start standaard op met de eSpeak spraaksynthesizer.
-Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak synthesizer de ideale optie.
+++ eSpeak NG ++
+De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
+NVDA start standaard op met de eSpeak NG spraaksynthesizer.
+Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak NG synthesizer de ideale optie.
 
-Voor elk van de stemmen die in eSpeak is opgenomen, is een andere taal beschikbaar.
-Er worden meer dan 43 talen door eSpeak ondersteund.
+Voor elk van de stemmen die in eSpeak NG is opgenomen, is een andere taal beschikbaar.
+Er worden meer dan 43 talen door eSpeak NG ondersteund.
 
 De klank van de stemmen kan worden aangepast.
 
 ++ Microsoft Spraak API versie 4 (SAPI 4) ++
 Sapi 4 is een oudere Microsoft standaard voor softwarematige spraaksynthesizers.
-Op het internet zijn veel spraaksynthesizers te koop of gratis te downloaden die compatibel zijn met deze standaard.
-Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
+Voor gebruikers die reeds SAPI 4 synthesizers op hun systeem geïnstalleerd hebben, blijft NVDA deze ondersteunen.
+Microsoft ondersteunt deze standaard echter niet meer en de benodigde componenten worden door Microsoft niet langer beschikbaar gesteld.
 
-Als u Sapi 4 stemmen hebt geïnstalleerd maar de synthesizer hiervoor komt niet voor in de lijst  van beschikbare synthesizers van NVDA, kunt u de SAPI 4.0 runtime binaries installeren die te vinden zijn op http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
 
 ++ Microsoft Spraak API versie 5 (SAPI 5) ++
 Sapi 5 is een Microsoft standaard voor softwarematige spraaksynthesizers.
@@ -1640,16 +1660,15 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ Brailleleesregels van Baum/HumanWare/APH ++
-Enkele brailleleesregels van [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] en [APH http://www.aph.org/] worden ondersteund, voor zover deze  via usb of Bluetooth verbonden worden.
+Verscheidene brailleleesregels van [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] en [APH http://www.aph.org/] worden ondersteund, voor zover deze  via usb of Bluetooth verbonden worden.
 dit geldt o.a. voor:
-- Baum: SuperVario, PocketVario, VarioUltra (Alleen Bluetooth), Pronto! (Alleen Bluetooth )
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Enkele andere Baum-leesregels zouden wellicht ook  kunnen werken, maar dit is nog niet getest.
 
-Als de leesregel  via een usb-kabel aangesloten wordt, moet u eerst de voor de leesregel bestemde driver van de fabrikant installeren.
-Bij de Aph Refreshabraille moet de usb-Modus op "serieel" gezet worden.
+Als u andere leesregels dan de  VarioUltra, Pronto! of Refreshabraille via USB aansluit waarbij de USB-modus op HID moet staan, moett u eerst de USB drivers installeren die door de fabrikant beschikbaar worden gesteld.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
@@ -1706,7 +1725,8 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 
 ++ HumanWare Brailliant BI/B-Serie ++
 De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.de/], waaronder  de BI 32, BI 40 en de B 80, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
-Als u de leesregels met een usb-kabel wilt aansluiten, moet u eerst de usb-driver van de fabrikant installeren.
+Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
+USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
@@ -1734,13 +1754,10 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Alles lezen | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Serie ++
-NVDA ondersteunt de leesregelmodellen Braile Sense en Braille Edge van [Hims http://www.hims-inc.com/], die via USB of Bluetooth kunnen worden aangesloten. 
-Als u  voor de USB-aansluiting kiest, moet u wel eerst de USB-driver van HIMS op uw Systeem installeren.
-Via :http://www.hims-inc.com/resource-center/ , het Resource Center van HIMS, zijn de drivers te downloaden.
-Selecteer hier uw apparaat en download de driver in de rubriek Window Eyes. 
-Hoewel hier alleen Window Eyes wordt vermeld, betreft dit een algemene usb-driver die ook met NVDA werkt.
-
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serie ++
+NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE en Smart Beetle van [Hims http://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
+Als u voor de USB-aansluiting kiest, moet u wel eerst de USB-drivers van HIMS op uw Systeem installeren. 
+U kunt deze downloaden van : http://www.himsintl.com/?c=2/13&uid=2319.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)

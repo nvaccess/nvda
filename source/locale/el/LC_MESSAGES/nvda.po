@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-02 14:13+0200\n"
+"POT-Creation-Date: 2016-04-01 00:10+1000\n"
+"PO-Revision-Date: 2016-04-01 15:05+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -130,6 +130,21 @@ msgstr "φόρμα"
 msgid "region"
 msgstr "Περιοχή"
 
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "Χωρίς βύθιση"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Βύθιση κατά την εκφώνηση και την αναπαραγωγή ήχων"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "Πάντα βύθιση"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
@@ -158,12 +173,12 @@ msgstr "Βουλγάρικο οκτάστιγμο braille"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Welsh grade 1"
-msgstr "Ουαλέζικα βαθμού 1"
+msgstr "Ουαλικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Welsh grade 2"
-msgstr "Ουαλέζικα βαθμού 2"
+msgstr "Ουαλικά βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -213,7 +228,7 @@ msgstr "Γερμανικά βαθμού 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "Αγγλικά (Ηνωμένο Βασίλειο) οκτάστιγμο braille"
+msgstr "Αγγλικό (Ηνωμένο Βασίλειο) οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -303,17 +318,22 @@ msgstr "Γαλλικά (Καναδά) βαθμού 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Irish grade 1"
-msgstr "Ιρλανδικό βαθμού 1"
+msgstr "Ιρλανδικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Irish grade 2"
-msgstr "Ιρλανδικό βαθμού 2"
+msgstr "Ιρλανδικά βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "Γκουτζεράτι βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Ελληνιστική Κοινή"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -368,22 +388,22 @@ msgstr "Κάναντα βαθμού 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1 (2006)"
-msgstr "Κορεάτικα βαθμού 1 (2006)"
+msgstr "Κορεατικά βαθμού 1 (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 2 (2006)"
-msgstr "Κορεάτικα βαθμού 2 (2006)"
+msgstr "Κορεατικά βαθμού 2 (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1"
-msgstr "Κορεάτικα βαθμού 1"
+msgstr "Κορεατικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 2"
-msgstr "Κορεάτικα βαθμού 2"
+msgstr "Κορεατικά βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -407,6 +427,11 @@ msgstr "Μανίπιουρι βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Μογγολικά"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Μαράθι βαθμού 1"
 
@@ -418,7 +443,7 @@ msgstr "Ολλανδικά (Βελγίου) βαθμού 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Netherlands) grade 1"
-msgstr "Ολλανδικό (Ολλανδίας) βαθμού 1"
+msgstr "Ολλανδικά (Ολλανδίας) βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -454,6 +479,11 @@ msgstr "Νεπάλι βαθμού 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Όρια βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Πολωνικό οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -503,17 +533,17 @@ msgstr "Σουηδικά βαθμού 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovak grade 1"
-msgstr "Σλοβενικά βαθμού 1"
+msgstr "Σλοβακικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovene grade 1"
-msgstr "Σλοβένικα βαθμού 1"
+msgstr "Σλοβενικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Serbian grade 1"
-msgstr "Σέρβικα βαθμού 1"
+msgstr "Σερβικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -533,12 +563,12 @@ msgstr "Τουρκικά βαθμού 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "Κώδικας Braiile Ενοποιημένων Αγγλικών βαθμού 1"
+msgstr "Αγγλικός Ενοποιημένος Κώδικας Braille βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 2"
-msgstr "Κώδικας Braiile Ενοποιημένων Αγγλικών βαθμού 2"
+msgstr "Αγγλικός Ενοποιημένος Κώδικας Braille βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -660,6 +690,18 @@ msgstr "clk"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Κουκκίδες 7 και 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Κουκκίδα 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Εξάστιγμο"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -732,19 +774,21 @@ msgstr "κουκίδα"
 msgid "space"
 msgstr "διάστημα"
 
-msgid "focus mode"
-msgstr "λειτουργία εστίασης"
+msgid "Focus mode"
+msgstr "Λειτουργία εστίασης"
 
-msgid "browse mode"
-msgstr "λειτουργία περιήγησης"
+# ?
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "Λειτουργία περιήγησης"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Πλοήγηση με βάση ένα χαρακτήρα απενεργοποιημένη"
+msgstr "Απενεργοποίηση πλοήγησης χαρακτήρα"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Πλοήγηση με βάση ένα χαρακτήρα ενεργοποιημένη"
+msgstr "Ενεργοποίηση πλοήγησης χαρακτήρα"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -752,11 +796,11 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Πραγματοποιεί εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης της "
-"πλοήγησης με βάση ένα χαρακτήρα. Όταν είναι ενεργοποιημένη, τα πλήκτρα - "
-"χαρακτήρες, στη λειτουργία περιήγησης, πραγματοποιούν μεταπήδηση σε διάφορα "
-"είδη στοιχείων στη σελίδα. Όταν είναι απενεργοποιημένο, αυτά τα πλήκτρα "
-"περνούν στην εφαρμογή."
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"πλοήγησης χαρακτήρα. Όταν είναι ενεργοποιημένη, τα πλήκτρα - χαρακτήρες, στη "
+"λειτουργία περιήγησης, πραγματοποιούν μεταπήδηση σε διάφορα είδη στοιχείων "
+"στη σελίδα. Όταν είναι απενεργοποιημένη, αυτά τα πλήκτρα περνούν στην "
+"εφαρμογή."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -767,8 +811,8 @@ msgid "Lists various types of elements in this document"
 msgstr "Παραθέτει διάφορους τύπους στοιχείων σε αυτό το έγγραφο"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
-msgstr "ενεργοποιεί το τρέχον αντικείμενο στο έγγραφο"
+msgid "Activates the current object in the document"
+msgstr "Ενεργοποιεί το τρέχον αντικείμενο στο έγγραφο"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1229,7 +1273,7 @@ msgstr "Τύπος:"
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "&Filter by:"
-msgstr "&Εφαρμογή φίλτρου κατά:"
+msgstr "&Φιλτράρισμα ανά:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1262,7 +1306,7 @@ msgstr "Εμφανίζει την εκτενή περιγραφή σε αυτή 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
 msgid "Not in a container"
-msgstr "Δε βρίσκεστε σε υποδοχέα"
+msgstr "Εκτός υποδοχέα"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
@@ -1273,8 +1317,9 @@ msgstr ""
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "κάτω μέρος"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
+msgstr "Κάτω μέρος"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -1285,7 +1330,7 @@ msgstr ""
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "κανένα"
+msgstr "καμία"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1295,12 +1340,12 @@ msgstr "κάποια"
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "αρκετά"
+msgstr "αρκετή"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "all"
-msgstr "όλα"
+msgstr "όλη"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1332,22 +1377,22 @@ msgstr "άγνωστο χρώμα"
 #. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Alice Blue"
-msgstr "Alice Μπλε"
+msgstr "Σιέλ"
 
 #. Translators: the color Antique White (RGB 250, 235, 215) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Antique White"
-msgstr "Antique Λευκό"
+msgstr "Υπόλευκο"
 
 #. Translators: the color Aqua (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Aqua"
-msgstr "Aqua"
+msgstr "Θαλασσί"
 
 #. Translators: the color Aquamarine (RGB 127, 255, 212) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Aquamarine"
-msgstr "Γκριζογάλανο"
+msgstr "Γαλαζοπράσινο"
 
 #. Translators: the color Azure (RGB 240, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1362,7 +1407,7 @@ msgstr "Μπεζ"
 #. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Bisque"
-msgstr "Μπισκ"
+msgstr "Σκούρο Κρεμ"
 
 #. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1372,7 +1417,7 @@ msgstr "Μαύρο"
 #. Translators: the color Blanched Almond (RGB 255, 235, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Blanched Almond"
-msgstr "Αμύγδαλο"
+msgstr "Κρεμ"
 
 #. Translators: the color Blue (RGB 0, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1382,7 +1427,7 @@ msgstr "Μπλε"
 #. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Blue Violet"
-msgstr "Μπλε Βιολετί"
+msgstr "Μπλε-Βιολετί"
 
 #. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1392,12 +1437,12 @@ msgstr "Καφέ"
 #. Translators: the color Burly Wood (RGB 222, 184, 135) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Burly Wood"
-msgstr "Καφέ Ξύλου"
+msgstr "Αχνό Καφέ"
 
 #. Translators: the color Cadet Blue (RGB 95, 158, 160) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cadet Blue"
-msgstr "Καντέτ Μπλε"
+msgstr "Βεραμάν"
 
 #. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1417,22 +1462,22 @@ msgstr "Κοραλί"
 #. Translators: the color Cornflower Blue (RGB 100, 149, 237) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cornflower Blue"
-msgstr "Cornflower Μπλε"
+msgstr "Παλ Μπλε"
 
 #. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cornsilk"
-msgstr "Εκρού"
+msgstr "Ασημί Καλαμποκιού"
 
 #. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Crimson"
-msgstr "Βυσσινί"
+msgstr "Βαθύ Κόκκινο"
 
 #. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cyan"
-msgstr "Cyan"
+msgstr "Κυανό"
 
 #. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1442,12 +1487,12 @@ msgstr "Σκούρο Μπλε"
 #. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Cyan"
-msgstr "Σκούρο Cyan"
+msgstr "Σκούρο Κυανό"
 
 #. Translators: the color Dark Goldenrod (RGB 184, 134, 11) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Goldenrod"
-msgstr "Σκούρο Χρυσοπράσινο"
+msgstr "Σκούρο Χρυσαφί"
 
 #. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1467,22 +1512,22 @@ msgstr "Σκούρο Χακί"
 #. Translators: the color Dark Magenta (RGB 139, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Magenta"
-msgstr "σκούρο βαθυπόρφυρο"
+msgstr "Σκούρο Βαθυπόρφυρο"
 
 #. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Olive Green"
-msgstr "Σκούρο Πράσινο"
+msgstr "Σκούρο Λαδί"
 
 #. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Orange"
-msgstr "Σκούρο Κόκκινο"
+msgstr "Σκούρο Πορτοκαλί"
 
 #. Translators: the color Dark Orchid (RGB 153, 50, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Orchid"
-msgstr "Σκούρο Κόκκινο"
+msgstr "Σκούρο Πορφυρό"
 
 #. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1492,12 +1537,12 @@ msgstr "Σκούρο Κόκκινο"
 #. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Salmon"
-msgstr "Σκούρο Ροδοκίτρινο"
+msgstr "Σκούρο Σομόν"
 
 #. Translators: the color Dark Sea Green (RGB 143, 188, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Sea Green"
-msgstr "Σκούρο Πράσινο"
+msgstr "Σκούρο Πράσινο Της Θάλασσας"
 
 #. Translators: the color Dark Slate Blue (RGB 72, 61, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1507,7 +1552,7 @@ msgstr "Σκούρο Γκριζογάλανο"
 #. Translators: the color Dark Slate Gray (RGB 47, 79, 79) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Slate Gray"
-msgstr "Σκούρο Γκρι"
+msgstr "Σκούρο Γκριζογάλανο"
 
 #. Translators: the color Dark Turquoise (RGB 0, 206, 209) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1527,17 +1572,17 @@ msgstr "Βαθύ Ροζ"
 #. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Deep Sky Blue"
-msgstr "Βαθύ Μπλε Ουρανού"
+msgstr "Βαθύ Ουρανί"
 
 #. Translators: the color Dim Gray (RGB 105, 105, 105) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dim Gray"
-msgstr "Μουντό Γκρι"
+msgstr "Αχνό Γκρι"
 
 #. Translators: the color Dodger Blue (RGB 30, 144, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dodger Blue"
-msgstr "Dodger Μπλε"
+msgstr "Σκούρο Ελεκτρίκ"
 
 #. Translators: the color Fire Brick (RGB 178, 34, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1547,12 +1592,12 @@ msgstr "Κεραμιδί"
 #. Translators: the color Floral White (RGB 255, 250, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Floral White"
-msgstr "Λουλουδένιο Λευκό"
+msgstr "Φωτεινό Λευκό"
 
 #. Translators: the color Forest Green (RGB 34, 139, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Forest Green"
-msgstr "Σκούρο Πράσινο"
+msgstr "Πράσινο Του Δάσους"
 
 #. Translators: the color Fuchsia (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1562,22 +1607,22 @@ msgstr "Φούξια"
 #. Translators: the color Gainsboro (RGB 220, 220, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Gainsboro"
-msgstr "Gainsboro"
+msgstr "Γκρι Σιέλ"
 
 #. Translators: the color Ghost White (RGB 248, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Ghost White"
-msgstr "Άσπρο"
+msgstr "Λευκόγκριζο"
 
 #. Translators: the color Gold (RGB 255, 215, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Gold"
-msgstr "Χρυσαφί"
+msgstr "Χρυσό"
 
 #. Translators: the color Goldenrod (RGB 218, 165, 32) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Goldenrod"
-msgstr "Χρυσοπράσινο"
+msgstr "Χρυσαφί"
 
 #. Translators: the color Gray (RGB 128, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1592,7 +1637,7 @@ msgstr "Πράσινο"
 #. Translators: the color Green Yellow (RGB 173, 255, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Green Yellow"
-msgstr "Πράσινο"
+msgstr "Πρασινοκίτρινο"
 
 #. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1602,12 +1647,12 @@ msgstr "Μελί"
 #. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Hot Pink"
-msgstr "Ζεστό ροζ"
+msgstr "Έντονο Ροζ"
 
 #. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Indian Red"
-msgstr "Ινδιάνικο Κόκκινο"
+msgstr "Κεραμιδοκόκκινο"
 
 #. Translators: the color Indigo (RGB 75, 0, 130) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1617,7 +1662,7 @@ msgstr "Λουλακί"
 #. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Ivory"
-msgstr "Ιβουάρ"
+msgstr "Κρεμ"
 
 #. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1632,7 +1677,7 @@ msgstr "Ανοιχτό μωβ"
 #. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lavender Blush"
-msgstr "Κοκκινοπόρφυορ"
+msgstr "Λιλά"
 
 #. Translators: the color Lawn Green (RGB 124, 252, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1642,7 +1687,7 @@ msgstr "Σκούρο Πράσινο"
 #. Translators: the color Lemon Chiffon (RGB 255, 250, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lemon Chiffon"
-msgstr "Κίτρινο Σιφόν"
+msgstr "Λεμονί"
 
 #. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1662,17 +1707,17 @@ msgstr "Ανοιχτό Κυανό"
 #. Translators: the color Light Goldenrod Yellow (RGB 250, 250, 210) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Goldenrod Yellow"
-msgstr "Ανοιχτό Χρυσοπράσινο"
+msgstr "Ανοιχτό Χρυσοκίτρινο"
 
 #. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Green"
-msgstr "Ανοικτό Πράσινο"
+msgstr "Ανοιχτό Πράσινο"
 
 #. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Grey"
-msgstr "Ανοικτό Γκρι"
+msgstr "Ανοιχτό Γκρι"
 
 #. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1687,17 +1732,17 @@ msgstr "Ανοιχτό Σομόν"
 #. Translators: the color Light Sea Green (RGB 32, 178, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Sea Green"
-msgstr "Ανοιχτό Πράσινο Θάλασσας"
+msgstr "Ανοιχτό Πράσινο Της Θάλασσας"
 
 #. Translators: the color Light Sky Blue (RGB 135, 206, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Sky Blue"
-msgstr "Ανοιχτό Γαλάζιο Ουρανού"
+msgstr "Ανοιχτό Ουρανί"
 
 #. Translators: the color Light Slate Gray (RGB 119, 136, 153) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Slate Gray"
-msgstr "Ανοιχτό Γκρι"
+msgstr "Ανοιχτό Μολυβί"
 
 #. Translators: the color Light Steel Blue (RGB 176, 196, 222) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1712,7 +1757,7 @@ msgstr "Ανοιχτό Κίτρινο"
 #. Translators: the color Lime (RGB 0, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lime"
-msgstr "Lime"
+msgstr "Λαχανί"
 
 #. Translators: the color Lime Green (RGB 50, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1722,12 +1767,12 @@ msgstr "Ανοιχτό Πράσινο"
 #. Translators: the color Linen (RGB 250, 240, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Linen"
-msgstr "Λευκό"
+msgstr "Λινό"
 
 #. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Magenta"
-msgstr "Βαθύ μωβ"
+msgstr "Βαθυπόρφυρο"
 
 #. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1737,47 +1782,47 @@ msgstr "Καστανοκόκκινο"
 #. Translators: the color Medium Aquamarine (RGB 102, 205, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Aquamarine"
-msgstr "Κανονικό Γκριζογάλανο"
+msgstr "Ενδιάμεσο Κυανοπράσινο"
 
 #. Translators: the color Medium Blue (RGB 0, 0, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Blue"
-msgstr "Κανονικό Μπλε"
+msgstr "Ενδιάμεσο Μπλε"
 
 #. Translators: the color Medium Orchid (RGB 186, 85, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Orchid"
-msgstr "Μωβ"
+msgstr "Ενδιάμεσο Πορφυρό"
 
 #. Translators: the color Medium Purple (RGB 147, 112, 219) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Purple"
-msgstr "Κανονικό Μωβ"
+msgstr "Ενδιάμεσο Μωβ"
 
 #. Translators: the color Medium Sea Green (RGB 60, 179, 113) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Sea Green"
-msgstr "Κανονικό Πράσινο Θάλασσας"
+msgstr "Ενδιάμεσο Πράσινο Της Θάλασσας"
 
 #. Translators: the color Medium Slate Blue (RGB 123, 104, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Slate Blue"
-msgstr "Κανονικό Γκριζογάλανο"
+msgstr "Ενδιάμεσο Γκριζογάλανο"
 
 #. Translators: the color Medium Spring Green (RGB 0, 250, 154) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Spring Green"
-msgstr "Ήπιο Λαχανί"
+msgstr "Ενδιάμεσο Φωτεινό Πράσινο"
 
 #. Translators: the color Medium Turquoise (RGB 72, 209, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Turquoise"
-msgstr "Κανονικό Τυρκουάζ"
+msgstr "Ενδιάμεσο Τυρκουάζ"
 
 #. Translators: the color Medium Violet Red (RGB 199, 21, 133) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Violet Red"
-msgstr "Κανονικό Κόκκινο Βιολετί"
+msgstr "Ενδιάμεσο Κόκκινο Βιολετί"
 
 #. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1787,32 +1832,32 @@ msgstr "Βαθύ Μπλε"
 #. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Mint Cream"
-msgstr "Φυστικί"
+msgstr "Βεραμάν"
 
 #. Translators: the color Misty Rose (RGB 255, 228, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Misty Rose"
-msgstr "Απαλό Ροζ"
+msgstr "Τριανταφυλλί"
 
 #. Translators: the color Moccasin (RGB 255, 228, 181) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Moccasin"
-msgstr "Χρώμα Της Άμμου"
+msgstr "Αχνό Καφέ"
 
 #. Translators: the color Navajo White (RGB 255, 222, 173) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Navajo White"
-msgstr "Χρώμα Του Πάγου"
+msgstr "Αχνό Κεραμιδί"
 
 #. Translators: the color Navy (RGB 0, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Navy"
-msgstr "Ναυτικό Μπλε"
+msgstr "Σκούρο Μπλε"
 
 #. Translators: the color Old Lace (RGB 253, 245, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Old Lace"
-msgstr "Ανοιχτό Μπεζ"
+msgstr "Εκρού"
 
 #. Translators: the color Olive (RGB 128, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1822,7 +1867,7 @@ msgstr "Λαδί"
 #. Translators: the color Olive Drab (RGB 107, 142, 35) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Olive Drab"
-msgstr "Βαθύ Πράσινο"
+msgstr "Φαιοπράσινο"
 
 #. Translators: the color Orange (RGB 255, 165, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1832,47 +1877,47 @@ msgstr "Πορτοκαλί"
 #. Translators: the color Orange Red (RGB 255, 69, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Orange Red"
-msgstr "Πορτοκαλί"
+msgstr "Βαθύ Πορτοκαλί"
 
 #. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Orchid"
-msgstr "Φούξια"
+msgstr "Ανοιχτό Πορφυρό"
 
 #. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Goldenrod"
-msgstr "Ανοιχτό Χρυσοπράσινο"
+msgstr "Παλ Χρυσοκίτρινο"
 
 #. Translators: the color Pale Green (RGB 152, 251, 152) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Green"
-msgstr "Σκούρο Πράσινο"
+msgstr "Παλ Πράσινο"
 
 #. Translators: the color Pale Turquoise (RGB 175, 238, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Turquoise"
-msgstr "Ανοιχτό Τυρκουάζ"
+msgstr "Παλ Τυρκουάζ"
 
 #. Translators: the color Pale Violet Red (RGB 219, 112, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Violet Red"
-msgstr "Ωχρό Κόκκινο Βιολετί"
+msgstr "Παλ Κόκκινο Βιολετί"
 
 #. Translators: the color Papaya Whip (RGB 255, 239, 213) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Papaya Whip"
-msgstr "Ανοιχτό Ροδακινί"
+msgstr "Πορτοκαλοκόκκινο"
 
 #. Translators: the color Peach Puff (RGB 255, 218, 185) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Peach Puff"
-msgstr "Ροδακινί"
+msgstr "Αχνό Ροδακινί"
 
 #. Translators: the color Peru (RGB 205, 133, 63) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Peru"
-msgstr "Χρώμα Του Πούρου"
+msgstr "Περού"
 
 #. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1882,12 +1927,12 @@ msgstr "Ροζ"
 #. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Plum"
-msgstr "Ανοιχτό Μωβ"
+msgstr "Δαμασκηνί"
 
 #. Translators: the color Powder Blue (RGB 176, 224, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Powder Blue"
-msgstr "Ανοιχτό Θαλασσί"
+msgstr "Αχνό Γαλάζιο"
 
 #. Translators: the color Purple (RGB 128, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1902,17 +1947,17 @@ msgstr "Κόκκινο"
 #. Translators: the color Rosy Brown (RGB 188, 143, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Rosy Brown"
-msgstr "Ροζ-Καφέ"
+msgstr "Καφέ Ροζ"
 
 #. Translators: the color Royal Blue (RGB 65, 105, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Royal Blue"
-msgstr "Μπλε Ηλεκτρίκ"
+msgstr "Μπλε Ρουαγιάλ"
 
 #. Translators: the color Saddle Brown (RGB 139, 69, 19) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Saddle Brown"
-msgstr "Καφέ"
+msgstr "Ταμπά"
 
 #. Translators: the color Salmon (RGB 250, 128, 114) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1922,22 +1967,22 @@ msgstr "Σομόν"
 #. Translators: the color Sandy Brown (RGB 244, 164, 96) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sandy Brown"
-msgstr "Καφέ Άμμου"
+msgstr "Μπεζ Της Άμμου"
 
 #. Translators: the color Sea Green (RGB 46, 139, 87) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sea Green"
-msgstr "Σκούρο Πράσινο"
+msgstr "Πράσινο Της Θάλασσας"
 
 #. Translators: the color Seashell (RGB 255, 245, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Seashell"
-msgstr "Λευκό-Γκρι"
+msgstr "Ιβουάρ"
 
 #. Translators: the color Sienna (RGB 160, 82, 45) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sienna"
-msgstr "Ανοιχτό Κεραμιδί"
+msgstr "Σιένα"
 
 #. Translators: the color Silver (RGB 192, 192, 192) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1947,7 +1992,7 @@ msgstr "Ασημί"
 #. Translators: the color Sky Blue (RGB 135, 206, 235) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sky Blue"
-msgstr "Γαλάζιο Ουρανού"
+msgstr "Ουρανοί"
 
 #. Translators: the color Slate Blue (RGB 106, 90, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1957,12 +2002,12 @@ msgstr "Γκριζογάλανο"
 #. Translators: the color Slate Gray (RGB 112, 128, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Slate Gray"
-msgstr "Σκούρο Γκρι"
+msgstr "Μολυβί"
 
 #. Translators: the color Snow (RGB 255, 250, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Snow"
-msgstr "Λευκό"
+msgstr "Έντονο Λευκό"
 
 #. Translators: the color Spring Green (RGB 0, 255, 127) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1977,17 +2022,17 @@ msgstr "Μεταλλικό Μπλε"
 #. Translators: the color Tan (RGB 210, 180, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Tan"
-msgstr "Σκούρο Μπεζ"
+msgstr "Ώχρα"
 
 #. Translators: the color Teal (RGB 0, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Teal"
-msgstr "Κυπαρισσί"
+msgstr "Πετρόλ"
 
 #. Translators: the color Thistle (RGB 216, 191, 216) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Thistle"
-msgstr "Ροζ-Μωβ"
+msgstr "Σικλαμέν"
 
 #. Translators: the color Tomato (RGB 255, 99, 71) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -2017,7 +2062,7 @@ msgstr "Λευκό"
 #. Translators: the color White Smoke (RGB 245, 245, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "White Smoke"
-msgstr "Ασημί"
+msgstr "Σταχτί"
 
 #. Translators: the color Yellow (RGB 255, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -2048,7 +2093,7 @@ msgstr "περιοχή"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
-msgstr "παράθυρο διαλόγου"
+msgstr "πλαίσιο διαλόγου"
 
 #. Translators: The text used to identify check boxes such as select check box.
 msgid "check box"
@@ -2134,11 +2179,11 @@ msgstr "ρυθμιζόμενο"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr "ένδειξη προόδου"
+msgstr "γραμμή προόδου"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr "ράβδος κύλισης"
+msgstr "γραμμή κύλισης"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
@@ -2186,7 +2231,7 @@ msgstr "ρολόι"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
-msgstr "διαχωριστής"
+msgstr "διαχωριστικό"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -2224,7 +2269,7 @@ msgstr "παράγραφος"
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr "μπλοκ παράθεσης"
+msgstr "παράθεση αποσπάσματος"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
@@ -2379,7 +2424,7 @@ msgstr "σχήμα"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
-msgstr "περιοχή διαχωρισμού"
+msgstr "περιοχή διαμερισμού"
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
@@ -2554,17 +2599,15 @@ msgstr "χρώμα προσκηνίου"
 
 #. Translators: Describes text formatting.
 msgid "background color"
-msgstr "χρώμα υποβάθρου"
+msgstr "χρώμα παρασκηνίου"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "εκθέτης"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "δείκτης"
 
@@ -2672,7 +2715,7 @@ msgid "invalid entry"
 msgstr "μη έγκυρη καταχώρηση"
 
 msgid "modal"
-msgstr "τρόπος"
+msgstr "με βοηθητικό"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
 msgid "has auto complete"
@@ -2843,12 +2886,12 @@ msgstr ""
 "την τρέχουσα θέση του δρομέα"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
-msgstr "καμία επισήμανση"
+msgid "No selection"
+msgstr "Καμία επισήμανση"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
-msgstr "αντιγράφηκε στο πρόχειρο"
+msgid "Copied to clipboard"
+msgstr "Αντιγράφηκε στο πρόχειρο"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2904,6 +2947,18 @@ msgstr "Είσοδος"
 msgid "Document formatting"
 msgstr "Μορφοποίηση εγγράφου"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Η βύθιση ήχου δεν υποστηρίζεται"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Πραγματοποιεί κυκλική κίνηση μεταξύ των λειτουργιών βύθισης ήχου, "
+"καθορίζοντας πότε το NVDA χαμηλώνει την ένταση των άλλων ήχων"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "ενεργοποίηση βοήθειας εισόδου"
@@ -2917,10 +2972,10 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί τη βοήθεια εισόδου. Όταν είναι ενεργοποιημένη, "
-"οποιαδήποτε ενέργεια εισόδου, όπως το πάτημα ενός πλήκτρου στο πληκτρολόγιο, "
-"θα αναγγείλλει ποιός κανόνας συμπεριφοράς (script) συνδέεται με αυτή την "
-"είσοδο, αν υπάρχει."
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"βοήθειας εισόδου. Όταν είναι ενεργοποιημένη, οποιαδήποτε ενέργεια εισόδου, "
+"όπως το πάτημα ενός πλήκτρου στο πληκτρολόγιο, θα αναγγείλλει ποιός κανόνας "
+"συμπεριφοράς (script) συνδέεται με αυτή την είσοδο, αν υπάρχει."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -2933,7 +2988,8 @@ msgstr "Ενεργοποίηση λειτουργίας ύπνου"
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί τη λειτουργία ύπνου για την ενεργή εφαρμογή."
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"λειτουργίας ύπνου για την ενεργή εφαρμογή."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -2941,47 +2997,51 @@ msgid ""
 "twice will spell the current line"
 msgstr ""
 "Αναφέρει την τρέχουσα γραμμή κάτω από το δρομέα της εφαρμογής. Πατώντας αυτό "
-"το πλήκτρο δύο φορές θα εκφωνήσει ανά χαρακτήρα την τρέχουσα γραμμή"
+"το πλήκτρο δύο φορές θα γίνει εκφώνηση της τρέχουσας γραμμής ανά χαρακτήρα."
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
-msgstr "αριστερό κλικ"
+msgid "Left click"
+msgstr "Αριστερό κλικ"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Πραγματοποιεί αριστερό κλικ στην τρέχουσα θέση του ποντικιού"
+msgstr "Πραγματοποιεί απλό αριστερό κλικ στην τρέχουσα θέση του ποντικιού"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
-msgstr "δεξί κλικ"
+msgid "Right click"
+msgstr "Δεξί κλικ"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Πραγματοποιεί δεξί κλικ στην τρέχουσα θέση του ποντικιού"
+msgstr "Πραγματοποιεί απλό δεξί κλικ στην τρέχουσα θέση του ποντικιού"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+msgid "Left mouse button unlock"
 msgstr "Ξεκλείδωμα αριστερού πλήκτρου ποντικιού"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "κλείδωμα αριστερού πλήκτρου ποντικιού"
+msgid "Left mouse button lock"
+msgstr "Κλείδωμα αριστερού πλήκτρου ποντικιού"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "Κλειδώνει ή ξεκλειδώνει το αριστερό πλήκτρο του ποντικιού"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr "ξεκλείδωμα δεξιού πλήκτρου ποντικιού"
+msgid "Right mouse button unlock"
+msgstr "Ξεκλείδωμα δεξιού πλήκτρου ποντικιού"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "κλείδωμα δεξιού πλήκτρου ποντικιού"
+msgid "Right mouse button lock"
+msgstr "Κλείδωμα δεξιού πλήκτρου ποντικιού"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Κλειδώνει ή ξεκλειδώνει το δεξί πλήκτρο του ποντικιού"
+
+#, python-format
+msgid "Selected %s"
+msgstr "Επιλέχθηκε %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3036,8 +3096,8 @@ msgstr "ενεργοποίηση εκφώνησης χαρακτήρων κατ�
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"εκφώνησης των χαρακτήρων κατά την πληκτρολόγηση"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -3050,7 +3110,8 @@ msgstr "ενεργοποίηση εκφώνησης λέξεων κατά την
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"εκφώνησης των λέξεων κατά την πληκτρολόγηση"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -3065,8 +3126,9 @@ msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση πλήκτρων που πατιούνται και δεν "
-"αντιστοιχούν σε συγκεκριμένους χαρακτήρες"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"εκφώνησης πλήκτρων που πατιούνται και δεν αντιστοιχούν σε συγκεκριμένους "
+"χαρακτήρες"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3079,7 +3141,8 @@ msgstr "ενεργοποίηση αναφοράς ονόματος γραμμα�
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των αλλαγών στη γραμματοσειρά"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"εκφώνησης των αλλαγών στη γραμματοσειρά"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -3092,7 +3155,8 @@ msgstr "ενεργοποίηση Αναφοράς μεγέθους γραμμα�
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των αλλαγών στη γραμματοσειρά"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"εκφώνησης των αλλαγών στο μέγεθος της γραμματοσειράς"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
@@ -3105,21 +3169,22 @@ msgstr "ενεργοποίση αναφοράς χαρακτηριστικών �
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτηριστικών της "
-"γραμματοσειράς"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"εκφώνησης των χαρακτηριστικών της γραμματοσειράς"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "απενεργοποίηση αναφοράς αναθεωρήσεων συντάκτη"
+msgstr "απενεργοποίηση αναφοράς αναθεωρήσεων"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "ενεργοποίηση Αναφοράς αναθεωρήσεων συντάκτη"
+msgstr "ενεργοποίηση Αναφοράς αναθεωρήσεων"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την αναφορά των αναθεωρήσεων του συντάκτη"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς αναθεωρήσεων"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -3132,7 +3197,8 @@ msgstr "ενεργοποίηση αναφοράς έμφασης"
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
 msgstr ""
-"εναλλάσσει μεταξύ της ενεργοποίησης και της απενεργοποίησης της έμφασης"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς έμφασης"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3144,7 +3210,9 @@ msgstr "ενεργοποίηση Αναφοράς χρωμάτων"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά χρωμάτων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς χρωμάτων"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
@@ -3156,7 +3224,9 @@ msgstr "ενεργοποίηση αναφοράς στοίχισης"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά στοίχισης"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς στοίχισης"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -3168,7 +3238,9 @@ msgstr "ενεργοποίηση αναφοράς στυλ"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά των αλλαγών στιλ"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς των αλλαγών στο στιλ"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -3180,7 +3252,9 @@ msgstr "ενεργοποίηση αναφοράς ορθογραφικών λα�
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά ορθογραφικών λαθών"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς ορθογραφικών λαθών"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -3192,7 +3266,9 @@ msgstr "ενεργοποίηση αναφοράς σελίδων"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά σελίδων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς σελίδων"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -3204,7 +3280,9 @@ msgstr "ενεργοποίηση αναφοράς αρίθμησης γραμμ�
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά της αρίθμησης γραμμών"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς αρίθμησης γραμμών"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
@@ -3216,7 +3294,9 @@ msgstr "ενεργοποίηση αναφοράς εσοχής γραμμής"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά της εσοχής της γραμμής"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς εσοχής της γραμμής"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3228,7 +3308,9 @@ msgstr "ενεργοποίηση αναφοράς εσοχής παραγράφ�
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά της εσοχής της παραγράφου"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς εσοχής της παραγράφου"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3240,7 +3322,9 @@ msgstr "ενεργοποίηση αναφοράς πινάκων"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά πινάκων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς πινάκων"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
@@ -3253,8 +3337,8 @@ msgstr "ενεργοποίηση αναφοράς κεφαλίδων γραμμ�
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την αναφορά των κεφαλίδων των γραμμών και των "
-"στηλών των πινάκων"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς κεφαλίδων των γραμμών και των στηλών των πινάκων"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
@@ -3267,8 +3351,8 @@ msgstr "ενεργοποίηση αναφοράς συντεταγμένων κ�
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την αναφορά των συντεταγμένων του κελιού του "
-"πίνακα"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς συντεταγμένων του κελιού του πίνακα"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3280,7 +3364,9 @@ msgstr "ενεργοποίηση αναφοράς συνδέσμων"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά συνδέσμων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς συνδέσμων"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
@@ -3292,7 +3378,9 @@ msgstr "ενεργοποίηση αναφοράς σχολίων"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά σχολίων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς σχολίων"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
@@ -3304,7 +3392,9 @@ msgstr "ενεργοποίηση αναφοράς λιστών"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά λιστών"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς λιστών"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
@@ -3316,19 +3406,23 @@ msgstr "ενεργοποίηση αναφοράς επικεφαλίδων"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά επικεφαλίδων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς επικεφαλίδων"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "απενεργοποίηση αναφοράς μπλοκ παράθεσης"
+msgstr "απενεργοποίηση αναφοράς παράθεσης αποσπάσματος"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "ενεργοποίηση αναφοράς μπλοκ παράθεσης"
+msgstr "ενεργοποίηση αναφοράς παράθεσης αποσπάσματος"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά μπλοκ παράθεσης"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς παράθεσης αποσπάσματος"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
@@ -3340,7 +3434,9 @@ msgstr "ενεργοποίηση αναφοράς οροσήμων"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά οροσήμων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς οροσήμων"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3352,26 +3448,30 @@ msgstr "ενεργοποίηση αναφοράς πλαισίων"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά πλαισίων"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς πλαισίων"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "απενεργοποίηση αναφοράς αν δύναται να γίνει κλικ"
+msgstr "απενεργοποίηση αναφοράς της δυνατότητας κλικ"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "ενεργοποίηση αναφοράς αν δύναται να γίνει κλικ"
+msgstr "ενεργοποίηση αναφοράς της δυνατότητας κλικ"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
-msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά αν δύναται να γίνει κλικ"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς δυνατότητας κλικ"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
-msgstr "επίπεδο συμβόλων %s"
+msgid "Symbol level %s"
+msgstr "Επίπεδο συμβόλων %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3381,8 +3481,8 @@ msgstr ""
 "καθορίζουν ποια σύμβολα εκφωνούνται"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "το αντικείμενο δεν έχει πληροφορίες θέσης"
+msgid "Object has no location"
+msgstr "Δε διατίθενται πληροφορίες θέσης για το αντικείμενο"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3427,8 +3527,8 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
-msgstr "δεν υπάρχει αντικείμενο πλοήγησης"
+msgid "No navigator object"
+msgstr "Δεν υπάρχει αντικείμενο πλοήγησης"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -3459,8 +3559,8 @@ msgstr ""
 "περισσότερες πληροφορίες."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "Μετακίνηση σε εστίαση"
+msgid "Move to focus"
+msgstr "Μετακίνηση για εστίαση"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3474,24 +3574,24 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
-msgstr "δεν υπάρχει εστίαση"
+msgid "No focus"
+msgstr "Καμία εστίαση"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "μετακίνηση εστίασης"
+msgid "Move focus"
+msgstr "Μετακίνηση εστίασης"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "δεν υπάρχει κέρσορας"
+msgid "No caret"
+msgstr "Δεν υπάρχει κέρσορας"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Όταν πατηθεί μία φορά θέτει την εστίαση του πληκτρολογίου στο αντικείμενο "
-"πλοήγησης, όταν πατηθεί δύο φορές θέτει τον κέρσορα στη θέση του δρομέα "
+"Αν πατηθεί μία φορά θέτει την εστίαση του πληκτρολογίου στο αντικείμενο "
+"πλοήγησης, αν πατηθεί δύο φορές θέτει τον κέρσορα στη θέση του δρομέα "
 "επανεξέτασης"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -3503,6 +3603,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Μετακινεί το αντικείμενο πλοήγησης στο αντικείμενο που το περιέχει"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Δεν υπάρχει επόμενο"
 
@@ -3511,6 +3612,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Μετακινεί το αντικείμενο πλοήγησης στο επόμενο αντικείμενο"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Δεν υπάρχει προηγούμενο"
 
@@ -3527,8 +3629,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Μετακινεί το αντικείμενο πλοήγησης στο πρώτο αντικείμενο εντός του"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "ενεργοποίηση"
+msgid "Activate"
+msgstr "Ενεργοποίηση"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3543,8 +3645,8 @@ msgstr ""
 "παράδειγμα: το πατάει αν είναι κουμπί)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
-msgstr "κορυφή"
+msgid "Top"
+msgstr "Κορυφή"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3615,8 +3717,9 @@ msgstr ""
 "Μετακινεί το δρομέα επανεξέτασης στην επόμενη λέξη του τρέχοντος "
 "αντικειμένου πλοήγησης και την εκφωνεί"
 
-msgid "left"
-msgstr "αριστερά"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Αριστερά"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3646,8 +3749,9 @@ msgstr ""
 "ή ένα παράδειγμα αυτού του χαρακτήρα. Πατώντας τρεις φορές αναφέρει την "
 "αριθμητική τιμή του χαρακτήρα σε δεκαδικό και δεκαεξαδικό"
 
-msgid "right"
-msgstr "δεξιά"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Δεξιά"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3666,16 +3770,16 @@ msgstr ""
 "βρίσκεται στο τρέχον αντικείμενο πλοήγησης και τον εκφωνεί"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "απενεργοποίηση εκφώνησης"
+msgid "Speech mode off"
+msgstr "Εκφώνηση απενεργοποιημένη"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
-msgstr "λειτουργία εκφώνησης με ήχους μπιπ"
+msgid "Speech mode beeps"
+msgstr "Λειτουργία εκφώνησης με ήχους μπιπ"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
-msgstr "ενεργοποίηση εκφώνησης"
+msgid "Speech mode talk"
+msgstr "Εκφώνηση ενεργοποιημένη"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3718,37 +3822,42 @@ msgstr "Εμφανίζει το μενού του NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"διαβάζει από το δρομέα επανεξέτασης μέχρι το τέλος του τρέχοντος κειμένου, "
+"Διαβάζει από το δρομέα επανεξέτασης μέχρι το τέλος του τρέχοντος κειμένου, "
 "μετακινώντας ταυτόχρονα το δρομέα επανεξέτασης"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
-"διαβάζει από τον κέρσορα μέχρι το τέλος του κειμένου, μετακινώντας τον "
-"κέρσορα καθώς εκφωνεί"
+"Διαβάζει από τον κέρσορα του συστήματος μέχρι το τέλος του κειμένου, "
+"μετακινώντας ταυτόχρονα τον κέρσορα "
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
 msgstr "Δεν υπάρχουν πληροφορίες μορφοποίησης"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Μορφοποίηση"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Αναφέρει πληροφορίες μορφοποίησης για την τρέχουσα θέση του δρομέα "
-"επανεξέτασης μέσα σε ένα έγγραφο"
+"επανεξέτασης μέσα σε ένα έγγραφο. Αν πατηθεί δυο φορές, παρουσιάζει τις "
+"πληροφορίες σε λειτουργία περιήγησης."
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
-"Αναφέρει το αντικείμενο στο οποίο έχουμε εστιάσει. Αν πατηθεί δύο φορές, "
-"εκφωνεί τις πληροφορίες."
+"Αναφέρει το αντικείμενο με εστίαση. Αν πατηθεί δύο φορές, διαβάζει τις "
+"πληροφορίες ανά γράμμα."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3756,11 +3865,11 @@ msgstr "Δε βρέθηκε γραμμή κατάστασης"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
-"διαβάζει τη γραμμή κατάστασης για την τρέχουσα εφαρμογή και μετακινεί τον "
-"πλοηγό σε αυτή. Αν πατηθεί δύο φορές, εκφωνεί τις πληροφορίες."
+"Διαβάζει τη γραμμή κατάστασης για την τρέχουσα εφαρμογή και μετακινεί τον "
+"πλοηγό σε αυτήν. Αν πατηθεί δύο φορές, διαβάζει τις πληροφορίες ανά γράμμα."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3776,8 +3885,8 @@ msgstr ""
 "Πραγματοποιεί εναλλαγή της αναφοράς πληροφοριών κατά την κίνηση του ποντικιού"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
-msgstr "χωρίς τίτλο"
+msgid "No title"
+msgstr "Χωρίς τίτλο"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3790,8 +3899,8 @@ msgstr ""
 "αντιγράφει τον τίτλο στο πρόχειρο"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
-msgstr "εκφωνεί το τρέχον αντικείμενο στο προσκήνιο"
+msgid "Speaks the current foreground object"
+msgstr "Εκφωνεί το τρέχον αντικείμενο στο προσκήνιο"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3803,20 +3912,20 @@ msgstr ""
 "οι πληροφορίες να μπορούν να εξεταστούν."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
-msgstr "χωρίς ενημερώσεις της ένδειξης προόδου"
+msgid "No progress bar updates"
+msgstr "Χωρίς ενημερώσεις της γραμμής προόδου"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
-msgstr "εκφώνηση ενημερώσεων της ένδειξης προόδου"
+msgid "Speak progress bar updates"
+msgstr "Εκφώνηση ενημερώσεων της γραμμής προόδου"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
-msgstr "ήχος μπιπ για τις ενημερώσεις της ένδειξης προόδου"
+msgid "Beep for progress bar updates"
+msgstr "Ήχος μπιπ για τις ενημερώσεις της γραμμής προόδου"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
-msgstr "ήχος μπιπ και εκφώνηση των ενημερώσεων της ένδειξης προόδου"
+msgid "Beep and speak progress bar updates"
+msgstr "Ήχος μπιπ και εκφώνηση των ενημερώσεων της γραμμής προόδου"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3824,7 +3933,7 @@ msgid ""
 "progress bar updates"
 msgstr ""
 "Πραγματοποιεί εναλλαγή μεταξύ ήχων μπιπ, εκφώνησης, ήχων μπιπ και εκφώνησης "
-"και χωρίς ενημερώσεις για την ένδειξη προόδου"
+"και χωρίς ενημερώσεις για τη γραμμή προόδου"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -3839,8 +3948,9 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την αναφορά αλλαγών δυναμικού περιεχομένου, "
-"όπως ένα νέο κείμενο σε παράθυρο κονσόλας dos"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς αλλαγών δυναμικού περιεχομένου, όπως ένα νέο κείμενο σε παράθυρο "
+"κονσόλας dos"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -3854,8 +3964,8 @@ msgstr "ενεργοποίηση μετακίνησης του δρομέα επ
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την κίνηση του δρομέα επανεξέτασης λόγω της "
-"κίνησης του κέρσορα."
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"κίνησης του δρομέα επανεξέτασης λόγω της κίνησης του κέρσορα."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3869,12 +3979,12 @@ msgstr "ενεργοποίηση μετακίνησης του αντικειμ�
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί τη μετακίνηση του αντικειμένου πλοήγησης λόγω "
-"αλλαγών στην εστίαση"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"μετακίνησης του αντικειμένου πλοήγησης λόγω αλλαγών στην εστίαση"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
-msgstr "δεν υπάρχει μπαταρία συστήματος"
+msgid "No system battery"
+msgstr "Δεν υπάρχει μπαταρία συστήματος"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
@@ -3890,9 +4000,9 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "απομένουν {hours:d} ώρες και {minutes:d} λεπτά"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"αναφέρει την κατάσταση μπαταρίας και τον εναπομείναντα χρόνο αν δεν είναι "
+"Αναφέρει την κατάσταση μπαταρίας και τον εναπομείναντα χρόνο, αν δεν είναι "
 "συνδεδεμένο στο εναλλασσόμενο ρεύμα`"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -3905,7 +4015,7 @@ msgid ""
 "passed directly through to Windows."
 msgstr ""
 "Το επόμενο πλήκτρο που θα πατηθεί, δε θα αντιμετωπιστεί από το NVDA αλλά θα "
-"περάσει άμεσα στα Windows"
+"περάσει απευθείας στα Windows"
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -3931,74 +4041,74 @@ msgstr ""
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των γενικών ρυθμίσεων του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου των γενικών ρυθμίσεων του NVDA"
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου του συνθέτη φωνής του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου του συνθέτη φωνής του NVDA"
 
 #. Translators: Input help mode message for go to voice settings dialog command.
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων φωνής του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων φωνής του NVDA"
 
 #. Translators: Input help mode message for go to braille settings dialog command.
 msgid "Shows the NVDA braille settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων braille του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων braille του NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων πληκτρολογίου του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων πληκτρολογίου του NVDA"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
 msgid "Shows the NVDA review cursor settings dialog"
 msgstr ""
-"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων του δρομέα επανεξέτασης του NVDA"
+"Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων του δρομέα επανεξέτασης του NVDA"
 
 #. Translators: Input help mode message for go to input composition dialog.
 msgid "Shows the NVDA input composition settings dialog"
 msgstr ""
-"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων της εισόδου κειμένου του NVDA"
+"Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων της εισόδου κειμένου του NVDA"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr ""
-"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων του αντικειμένου παρουσίασης "
-"του NVDA"
+"Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων του αντικειμένου παρουσίασης του "
+"NVDA"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr ""
-"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων της λειτουργίας περιήγησης του "
+"Εμφανίζει το πλαίσιο διαλόγου των ρυθμίσεων της λειτουργίας περιήγησης του "
 "NVDA"
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου της μορφοποίησης εγγράφου του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου της μορφοποίησης εγγράφου του NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου του προεπιλεγμένου λεξικού του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου του προεπιλεγμένου λεξικού του NVDA"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 msgid "Shows the NVDA voice-specific dictionary dialog"
 msgstr ""
-"Εμφανίζει το παράθυρο διαλόγου του εξειδικευμένου λεξικού φωνής του NVDA"
+"Εμφανίζει το πλαίσιο διαλόγου του εξειδικευμένου λεξικού φωνής του NVDA"
 
 #. Translators: Input help mode message for opening temporary dictionary.
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου του προσωρινού λεξικού του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου του προσωρινού λεξικού του NVDA"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου της προφοράς συμβόλων του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου της προφοράς συμβόλων του NVDA"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των χειρονομιών εισόδου του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου των χειρονομιών εισόδου του NVDA"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -4010,7 +4120,7 @@ msgid ""
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
 "Πατώντας μία φορά, επαναφέρει την τρέχουσα διαμόρφωση στην κατάσταση της πιο "
-"πρόσφατα αποθηκευμένης. Πατώντας τρεις φορές, επαναφέρει στις εργοστασιακές "
+"πρόσφατα αποθηκευμένης. Πατώντας τρεις φορές, επαναφέρει τις εργοστασιακές "
 "ρυθμίσεις."
 
 #. Translators: Input help mode message for activate python console command.
@@ -4039,8 +4149,8 @@ msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Πραγματοποιεί εναλλαγή του προβολέα φωνής του NVDA, ένα κινούμενο παράθυορ "
-"που σας επιτρέπει να βλέπετε το κείμενο που εκφωνεί το NVDA"
+"Πραγματοποιεί εναλλαγή του προβολέα εκφώνησης του NVDA, ενός κινούμενου "
+"παραθύρου που σας επιτρέπει να βλέπετε το κείμενο που εκφωνεί το NVDA"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -4060,6 +4170,33 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Πραγματοποιεί εναλλαγή της πρόσδεσης του braille μεταξύ της θέσης εστίασης "
 "και θέσης επανεξέτασης"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Απενεργοποίηση δρομέα braille"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Ενεργοποίηση δρομέα braille"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης του "
+"δρομέα braille"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Ο δρομέας braille έχει απενεργοποιηθεί"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Δρομέας braille %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Κυκλική κίνηση μεταξύ των σχημάτων δρομέα braille"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4150,10 +4287,6 @@ msgstr ""
 "Επαναφορτώνει τα αρθρώματα και τα καθολικά plugins χωρίς να επανεκκινεί το "
 "NVDA, το οποίο μπορεί να είναι χρήσιμο για προγραμματιστές."
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "δεν υπάρχει επόμενο"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4161,10 +4294,6 @@ msgid ""
 msgstr ""
 "Μετακινείται στο επόμενο αντικείμενο σε μία επίπεδη προβολή της ιεραρχίας "
 "πλοήγησης αντικειμένου"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "Δεν υπάρχει προηγούμενο"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4180,8 +4309,8 @@ msgid "%s mode"
 msgstr "λειτουργία %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
-msgstr "Πραγματοποιεί εναλλαγή μεταξύ των διαθέσιμων λειτουργιών αφής"
+msgid "Cycles between available touch modes"
+msgstr "Πραγματοποιεί κυκλική κίνηση μεταξύ των διαθέσιμων λειτουργιών αφής"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4199,7 +4328,7 @@ msgstr ""
 # "προφίλς"?
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των Προφίλ διαμόρφωσης του NVDA"
+msgstr "Εμφανίζει το πλαίσιο διαλόγου των Προφίλ διαμόρφωσης του NVDA"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4208,7 +4337,7 @@ msgstr "όχι μαθηματικά"
 
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
-msgstr "Αρχίζει αλληλεπίδραση με μαθηματικό περιεχόμενο"
+msgstr "Έναρξη αλληλεπίδρασης με μαθηματικό περιεχόμενο"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4217,11 +4346,6 @@ msgstr "Προσομειωμένα πλήκτρα συστήματος. "
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Διάφορα"
-
-# ?
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Λειτουργία περιήγησης"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4485,43 +4609,43 @@ msgstr "αριθμητικό insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr "αριθμητικό 0"
+msgstr "κλειδωμένο αριθμητικό 0"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 1"
-msgstr "αριθμητικό 1"
+msgstr "κλειδωμένο αριθμητικό 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 2"
-msgstr "αριθμητικό 2"
+msgstr "κλειδωμένο αριθμητικό 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 3"
-msgstr "αριθμητικό 3"
+msgstr "κλειδωμένο αριθμητικό 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 4"
-msgstr "αριθμητικό 4"
+msgstr "κλειδωμένο αριθμητικό 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 5"
-msgstr "αριθμητικό 5"
+msgstr "κλειδωμένο αριθμητικό 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 6"
-msgstr "αριθμητικό 6"
+msgstr "κλειδωμένο αριθμητικό 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 7"
-msgstr "αριθμητικό 7"
+msgstr "κλειδωμένο αριθμητικό 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 8"
-msgstr "αριθμητικό 8"
+msgstr "κλειδωμένο αριθμητικό 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 9"
-msgstr "αριθμητικό 9"
+msgstr "κλειδωμένο αριθμητικό 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
@@ -4641,8 +4765,8 @@ msgid ""
 "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
 "screens."
 msgstr ""
-"Επιτρέπει στο NVDA να εκτελείται κατά την οθόνη σύνδεσης στα Windows, την "
-"οθόνη UAC και σε άλλες ασφαλείς οθόνες"
+"Επιτρέπει στο NVDA να εκτελείται στην οθόνη σύνδεσης στα Windows, την οθόνη "
+"UAC και σε άλλες ασφαλείς οθόνες"
 
 msgid "Type help(object) to get help about object."
 msgstr ""
@@ -4693,31 +4817,26 @@ msgstr "%d χαρακτήρες"
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
 msgid "%s selected"
-msgstr "%s επιλέχθηκε"
+msgstr "%s με επισήμανση"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
 msgid "%s unselected"
-msgstr "%s αποεπιλέχθηκε"
+msgstr "%s χωρίς επισήμανση"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
 msgid "%s selected instead"
-msgstr "νέα επιλογή %s"
+msgstr "νέα επισήμανση %s"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
-msgstr "αφαίρεση επιλογής"
+msgstr "αφαίρεση επισήμανσης"
 
 #. Translators: Reported when drag and drop is finished.
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "ολοκλήρωση μεταφοράς"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "επίπεδο %s"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -4742,6 +4861,11 @@ msgstr "με %s στήλες"
 #, python-format
 msgid "with %s rows"
 msgstr "με %s σειρές"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "επίπεδο %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4776,6 +4900,13 @@ msgstr "στυλ %s"
 msgid "default style"
 msgstr "προεπιλεγμένο στυλ"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+msgid "{color1} to {color2}"
+msgstr "{color1} σε {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4790,7 +4921,10 @@ msgstr "{color}"
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
-msgstr "χρώμα υποβάθρου {backgroundColor}"
+msgstr "παρασκήνιο {backgroundColor}"
+
+msgid "background pattern {pattern}"
+msgstr "μοτίβο παρασκηνίου {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4834,11 +4968,11 @@ msgstr "μη επισημασμένο"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
-msgstr "έντονο"
+msgstr "έντονα"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
 msgid "not strong"
-msgstr "όχι έντονο"
+msgstr "όχι έντονα"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
@@ -4880,7 +5014,6 @@ msgstr "χωρίς υπογράμμιση"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "γραμμή αναφοράς"
 
@@ -4928,7 +5061,7 @@ msgstr "χωρίς εσοχή στα δεξιά"
 
 #. Translators: the label for paragraph format hanging indent
 msgid "hanging indent"
-msgstr "Εσοχή κρεμαστή"
+msgstr "κρεμαστή εσοχή"
 
 #. Translators: the message when there is no paragraph format hanging indent
 msgid "no hanging indent"
@@ -4976,11 +5109,11 @@ msgstr "Εκτός σχολίου"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "ορθογραφικό λάθος"
+msgstr "ανορθόγραφο"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "εκτός ορθογραφικού λάθους"
+msgstr "εκτός ανορθόγραφου"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -5136,13 +5269,17 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "Διακοπή αγγίγματος"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "Μήνυμα Του NVDA"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
-msgstr "Γίνεται έλεγχος για ενημερωμένη έκδοση..."
+msgstr "Έλεγχος για ενημερωμένη έκδοση σε εξέλιξη..."
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "Γίνεται έλεγχος για ενημερωμένη έκδοση..."
+msgstr "Έλεγχος για ενημερωμένη έκδοση σε εξέλιξη..."
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
@@ -5232,7 +5369,7 @@ msgstr ""
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
-msgstr "Παρακαλώ κάντε Δωρεά"
+msgstr "Παρακαλώ κάνετε Δωρεά"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
@@ -5253,8 +5390,7 @@ msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr ""
-"Ένας ελεύθερος αναγνώστης οθόνης ανοικτού κώδικα για τα Micorsoft Windows"
+msgstr "Ένας δωρεάν αναγνώστης οθόνης ανοικτού κώδικα για τα Microsoft Windows"
 
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} Συντελεστές NVDA"
@@ -5331,8 +5467,8 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "όριο του πίνακα"
+msgid "Edge of table"
+msgstr "Όριο πίνακα"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5486,15 +5622,15 @@ msgstr "{startTime} έως {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
 msgid "Appointment {subject}, {time}"
-msgstr "Συνάντηση {subject}, {time}"
+msgstr "Γεγονός {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
-msgstr "Υπάρχει συνάντηση"
+msgid "Has appointment"
+msgstr "Υπάρχει γεγονός"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
-msgstr "Αίτημα για συνάντηση"
+msgstr "αίτημα για συνάντηση"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -5601,11 +5737,11 @@ msgstr "Δεσμευτικό θέσης Εικόνας"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
-msgstr "Προβολή διαφάνειας"
+msgstr "Προβολή διαφανειών"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Master view"
-msgstr "Προβολή Διαφάνειας Master"
+msgstr "Προβολή Υποδείγματος Διαφανειών"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes page"
@@ -5614,11 +5750,11 @@ msgstr "Σελίδα σημειώσεων"
 # ???
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Handout Master view"
-msgstr "Προβολή Σημειώσεων για Διανομή Master"
+msgstr "Προβολή Υποδείγματος Γραπτών Σημειώσεων"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes Master view"
-msgstr "Προβολή Σημειώσεων Master"
+msgstr "Προβολή Υποδείγματος Σημειώσεων"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Outline view"
@@ -5630,11 +5766,11 @@ msgstr "Προβολή Ταξινόμησης Διαφανειών"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Title Master view"
-msgstr "Προβολή Τίτλου Master"
+msgstr "Προβολή Υποδείγματος Τίτλου"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Normal view"
-msgstr "Κανονική προβολή"
+msgstr "Κανονική Προβολή"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Print Preview"
@@ -5646,7 +5782,7 @@ msgstr "Μικρογραφίες"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Master Thumbnails"
-msgstr "Μικρογραφίες του Master"
+msgstr "Μικρογραφίες Υποδείγματος"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
@@ -5730,20 +5866,21 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"Πραγματοποιεί εναλλαγή μεταξύ αναφοράς των προσωπικών σημειώσεων του ομιλητή "
-"ή τουπεριεχομένου της παρουσίασης."
+"Πραγματοποιεί εναλλαγή μεταξύ της αναφοράς των προσωπικών σημειώσεων του "
+"ομιλητή ή τουπεριεχομένου της παρουσίασης. Αυτό δεν επηρεάζει ό,τι είναι "
+"ορατό στην οθόνη, αλλά μόνο αυτά που μπορεί να διαβάσει ο χρήστης με το NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show notes - {slideName}"
-msgstr "Προβολή σημειώσεων διαφάνειας - {slideName}"
+msgstr "Προβολή σημειώσεων παρουσίασης - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show - {slideName}"
-msgstr "Προβολή διαφανειών - {slideName}"
+msgstr "Προβολή παρουσίασης - {slideName}"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 msgid "Slide Show - complete"
-msgstr "Προβολή διαφανειών - ολοκληρώθηκε"
+msgstr "Προβολή Παρουσίασης - Ολοκληρωμένη"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
@@ -5762,7 +5899,7 @@ msgid "Skype"
 msgstr "Skype"
 
 msgid "Reports and moves the review cursor to a recent message"
-msgstr "Αναφέρει και μετακηνεί το δρομέα εξέτασης σε ένα πρόσφατο μήνυμα"
+msgstr "Αναφέρει και μετακηνεί το δρομέα επανεξέτασης σε ένα πρόσφατο μήνυμα"
 
 #. Translators: Indicates that a contact stopped typing.
 msgid "Typing stopped"
@@ -5787,6 +5924,12 @@ msgstr "Διακοπή"
 #. Translators: This is the name of a button in sound recorder.
 msgid "Record"
 msgstr "Εγγραφή"
+
+msgid "left"
+msgstr "αριστερά"
+
+msgid "right"
+msgstr "δεξιά"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -5905,8 +6048,8 @@ msgstr ""
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
-"Ένα παράθυρο διαλόγου ρυθμίσεων του NVDA είναι ήδη ανοικτό. Παρακαλούμε "
-"πρώτα να το κλείσετε."
+"Ένα πλαίσιο διαλόγου ρυθμίσεων του NVDA είναι ήδη ανοικτό. Παρακαλώ πρώτα να "
+"το κλείσετε."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -5923,7 +6066,7 @@ msgstr "Προσωρινό λεξικό"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
-msgstr "Σχετικά με το NVDA"
+msgstr "Πληροφορίες για το NVDA"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
@@ -6019,7 +6162,7 @@ msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
 msgstr ""
-"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε προεπιλεγμένο λεξικό με την "
+"Πλαίσιο διαλόγου όπου μπορείτε να ορίσετε προεπιλεγμένο λεξικό με την "
 "προσθήκη καταχωρήσεων λεξικού στη λίστα"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
@@ -6030,7 +6173,7 @@ msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
-"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε λεξικό ειδικό για τη φωνή με την "
+"Πλαίσιο διαλόγου όπου μπορείτε να ορίσετε λεξικό ειδικό για τη φωνή με την "
 "προσθήκη καταχωρήσεων λεξικού στη λίστα"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
@@ -6041,7 +6184,7 @@ msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
-"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε προσωρινό λεξικό με την προσθήκη "
+"Πλαίσιο διαλόγου όπου μπορείτε να ορίσετε προσωρινό λεξικό με την προσθήκη "
 "καταχωρήσεων λεξικού στο πλαίσιο επεξεργασίας κειμένου"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
@@ -6086,7 +6229,7 @@ msgstr "&Εγκατάσταση του NVDA"
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "Επαναφόρτωση plugins"
+msgstr "Επαναφόρτωση plugin"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
@@ -6105,27 +6248,27 @@ msgid "What's &new"
 msgstr "Τι &νέο υπάρχει"
 
 msgid "NVDA &web site"
-msgstr "Ιστοσελίδα του NVDA"
+msgstr "&Ιστοσελίδα του NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
-msgstr "Άδεια"
+msgstr "&Άδεια"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
-msgstr "Συντελεστές"
+msgstr "&Συντελεστές"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog"
-msgstr "Παράθυρο Διαλόγου &Καλωσορίσματος"
+msgstr "Πλαίσιο Διαλόγου &Καλωσορίσματος"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "Έλεγχος για ενημερωμένη έκδοση..."
+msgstr "Έλεγχος για &ενημερωμένη έκδοση..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
-msgstr "Σχετικά..."
+msgstr "Πληροφορίες..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
@@ -6134,11 +6277,11 @@ msgstr "&Βοήθεια"
 # Το "προφίλς" δεν είναι δόκιμο. Πρέπει όμως να φαίνεται ο πληθυντικός...
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "Προφίλ διαμόρφωσης..."
+msgstr "&Προφίλ διαμόρφωσης..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "&Επαναφορά της αποθηκευμένης διαμόρφωσης"
+msgstr "&Επαναφορά στην αποθηκευμένη διαμόρφωση"
 
 msgid "Reset all settings to saved state"
 msgstr "Επαναφορά όλων των ρυθμίσεων στις αποθηκευμένες τιμές"
@@ -6189,7 +6332,7 @@ msgstr ""
 "Κλείδωμα Κεφαλαίων (Caps Lock) ως πλήκτρο NVDA.\n"
 "Πατήστε NVDA+n οποιαδήποτε στιγμή για να ενεργοποιήσετε το μενού του NVDA.\n"
 "Από αυτό το μενού, μπορείτε να διαμορφώσετε το NVDA, να λάβετε βοήθεια και "
-"να προσπελάσετε άλλες λειτουργίες του NVDA.\n"
+"να αποκτήσετε πρόσβαση σε άλλες λειτουργίες του NVDA.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -6212,7 +6355,7 @@ msgstr "&Αυτόματη εκκίνηση του NVDA μετά τη σύνδε�
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
-msgstr "Εμφάνιση αυτού του παραθύρου διαλόγου κατά την εκκίνηση του NVDA"
+msgstr "Εμφάνιση αυτού του πλαισίου διαλόγου κατά την εκκίνηση του NVDA"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -6290,15 +6433,15 @@ msgstr "Έκδοση"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
 msgid "Author"
-msgstr "Συγγραφέας"
+msgstr "Συντάκτης"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "Σχετικά με το πρόσθετο..."
+msgstr "&Πληροφορίες για το πρόσθετο..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "Βοήθεια &πρόσθετου"
+msgstr "&Βοήθεια πρόσθετου"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6329,8 +6472,8 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Απέτυχε το άνοιγμα του πακέτου αρχείου του πρόσθετου %s - απουσία αρχείου ή "
-"άκυρη μορφή αρχείου"
+"Αποτυχία ανοίγματος του πακέτου αρχείου του πρόσθετου %s - απουσία αρχείου ή "
+"μη έγκυρη μορφή αρχείου"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 msgid ""
@@ -6367,7 +6510,7 @@ msgstr "Παρακαλώ περιμένετε όσο εγκαθίσταται τ
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "Απέτυχε η εγκατάσταση του πρόσθετου από %s"
+msgstr "Αποτυχία εγκατάστασης του πρόσθετου από %s"
 
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr ""
@@ -6413,7 +6556,7 @@ msgid ""
 msgstr ""
 "{summary} ({name})\n"
 "Έκδοση: {version}\n"
-"Συγγραφέας: {author}\n"
+"Συντάκτης: {author}\n"
 "Περιγραφή: {description}\n"
 
 #. Translators: the url part of the About Add-on information
@@ -6683,7 +6826,7 @@ msgid ""
 "updated."
 msgstr ""
 "Βρέθηκε ένα προηγούμενο αντίγραφο του NVDA στον υπολογιστή σας. Θα γίνει "
-"ενημέρωση του αντιγράφου."
+"ενημέρωση αυτού του αντιγράφου."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 msgid ""
@@ -6724,15 +6867,15 @@ msgid ""
 "should first cancel this installation and completely uninstall NVDA before "
 "installing the earlier version."
 msgstr ""
-"Επιχειρείτε να εγκαταστήσετε μια νεότερη έκδοση του NVDA από την ήδη "
-"εγκατεστημένη. Αν όντως επιθυμείτε να αλλάξετε σε νεότερη έκδοση, θα πρέπει "
-"πρώτα να ακυρώσετε αυτή την εγκατάσταση και να απεγκαταστήσετε πλήρως το "
-"NVDA πριν εγκατστήσετε τη νεότερη έκδοση."
+"Επιχειρείτε να εγκαταστήσετε μια προηγούμενη έκδοση του NVDA από την ήδη "
+"εγκατεστημένη. Αν όντως επιθυμείτε να αλλάξετε σε προηγούμενη έκδοση, θα "
+"πρέπει πρώτα να ακυρώσετε αυτήν την εγκατάσταση και να απεγκαταστήσετε "
+"πλήρως το NVDA πριν εγκαταστήσετε την προηγούμενη έκδοση."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
 msgid "&Proceed with installation (not recommended)"
-msgstr "&Προχωρήστε στην εγκατάσταση (δε προτείνεται)"
+msgstr "&Προχωρήστε στην εγκατάσταση (δε συστήνεται)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6793,7 +6936,7 @@ msgstr "Το NVDA αδυνατεί να αφαιρέσει ή να αντικα�
 #. %s will be replaced with the specific error message.
 #, python-format
 msgid "Failed to create portable copy: %s"
-msgstr "Απέτυχε η δημιουργία φορητού αντιγράφου: %s"
+msgstr "Αποτυχία δημιουργίας φορητού αντιγράφου: %s"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
@@ -6808,6 +6951,10 @@ msgstr "Προβολέας Αρχείου Καταγραφής Συμβάντω�
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
 msgstr "Ανανέωση\tF5"
+
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "Αποθήκευση &ως...\tCtrl+S"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
@@ -6887,7 +7034,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "Αυτόματος έλεγχος ενημερωμένων εκδόσεων του NVDA"
+msgstr "Αυτόματος έλεγχος για &ενημερωμένες εκδόσεις του NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -6974,6 +7121,10 @@ msgstr "&Συνθέτης φωνής:"
 msgid "Output &device:"
 msgstr "&Συσκευή εξόδου:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Λειτουργία &βύθισης ήχου:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7044,9 +7195,7 @@ msgstr "Διάταξη πληκτρολογίου"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr ""
-"Χρήση του Insert του αριθμητικού πληκτρολογίου ως πλήκτρου τροποποίησης του "
-"NVDA"
+msgstr "Χρήση του αριθμητικού Insert ως πλήκτρου τροποποίησης του NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7247,17 +7396,17 @@ msgstr "Αναφορά &περιγραφών αντικειμένου"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 msgid "Progress &bar output:"
-msgstr "Αναπαράσταση &ένδειξης προόδου"
+msgstr "Αναπαράσταση &γραμμής προόδου"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
 msgid "Progress bar output"
-msgstr "Αναπαράσταση ένδειξης προόδου"
+msgstr "Αναπαράσταση γραμμής προόδου"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "Αναφορά ενδείξεων προόδου υποβάθρου"
+msgstr "Αναφορά γραμμών προόδου στο υπόβαθρο"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -7427,7 +7576,7 @@ msgstr "Αναφορά &λιστών"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report block &quotes"
-msgstr "Αναφορά μπλοκ &παράθεσης"
+msgstr "Αναφορά &παράθεσης αποσπασμάτων"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7442,7 +7591,7 @@ msgstr "Αναφορά &πλαισίων"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "Αναφορά αν δύναται να γίνει κλικ"
+msgstr "Αναφορά της δυνατότητας &κλικ"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7495,7 +7644,7 @@ msgstr "Αντικατάσταση"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
-msgstr "περίπτωση"
+msgstr "διάκριση πεζών-κεφαλαίων"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
@@ -7540,9 +7689,17 @@ msgid "E&xpand to computer braille for the word at the cursor"
 msgstr ""
 "&Επέκταση σε κώδικα υπολογιστών για τη λέξη στην οποία βρίσκεται ο δρομέας"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "&Εμφάνιση δρομέα"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Ρυθμός εναλλαγής φωτεινότητας δρομέα (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Σχήμα &δρομέα:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7558,7 +7715,7 @@ msgstr "Ανάγνωση κατά &παράγραφο"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "Αποφυγή διαχωρισμού &λέξεων όταν είναι δυνατό"
+msgstr "Αποφυγή διαμοιρασμού &λέξεων όταν είναι δυνατό"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -7641,8 +7798,8 @@ msgstr "Εισάγετε χειρονομία εισόδου"
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Σφάλμα κατά την αποθήκευση των χειρονομιών - πιθανώς το αρχείο συστήματος "
-"είναι μόνο για ανάγνωση"
+"Σφάλμα κατά την αποθήκευση των χειρονομιών που ορίστηκαν από το χρήστη - "
+"πιθανώς το αρχείο συστήματος είναι μόνο για ανάγνωση"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -7651,7 +7808,7 @@ msgstr "Έξοδος από αλληλεπίδραση με μαθηματικά
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr "Δεν υποστηρίζεται αλληλεπίδραση με μαθηματικά."
+msgstr "Δεν υποστηρίζεται η αλληλεπίδραση με μαθηματικά."
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -7691,20 +7848,21 @@ msgid "Refreshes the document content"
 msgstr "Ανανεώνει το περιεχόμενο του εγγράφου"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "ενεργοποίηση χρήσης διάταξης οθόνης"
+msgid "Use screen layout on"
+msgstr "Χρήση διάταξης οθόνης ενεργοποιημένη"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "απενεργοποίηση χρήσης διάταξης οθόνης"
+msgid "Use screen layout off"
+msgstr "Χρήση διάταξης οθόνης απενεργοποιημένη"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί τη διατήρηση της διάταξης της οθόνης ενόσω "
-"αποδίδεται το περιεχόμενο του εγγράφου"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"διατήρησης της διάταξης της οθόνης ενόσω αποδίδεται το περιεχόμενο του "
+"εγγράφου"
 
 # check
 #. Translators: The message reported when a user attempts to use a table movement command
@@ -7746,36 +7904,151 @@ msgstr "κλήση"
 msgid "Desktop"
 msgstr "Επιφάνεια Εργασίας"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "προεπιλεγμένο χρώμα"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Άγνωστο χρώμα"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "αυτόματο"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "σκακιέρα"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "σταυροειδές"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "καθοδικό"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "γκρι16"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "γκρι25"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "γκρι50"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "γκρι75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "γκρι8"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "πλέγμα"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "οριζόντιο"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "ανοιχτόχρωμο καθοδικό"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "ανοιχτόχρωμο οριζόντιο"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "ανοιχτόχρωμο ανοδικό"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "ανοιχτόχρωμο κατακόρυφο"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "χωρίς τύπο"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "ημι-γκρι75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "αμιγές"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "ανοδικό"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "κατακόρυφο"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "γραμμική διαβάθμιση"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "παραλληλόγραμμο ντεγκραντέ"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Μη δυνατή επεξεργασία κελιού"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Παρουσιάζει μια λίστα γραφημάτων, κελιά με σχόλια και κελιά με τύπους"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Παραθέτει διαφόρους τύπους στοιχείων σε αυτό το φύλλο"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Διάγραμμα"
+msgid "&Charts"
+msgstr "&Διαγράμματα"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "Σ&χόλιο"
+msgid "C&omments"
+msgstr "Σ&χόλιας"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Τύπος"
+msgid "Fo&rmulas"
+msgstr "&Τύποι"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&Φύλλο"
+msgid "&Sheets"
+msgstr "&Φύλλα"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7801,7 +8074,7 @@ msgid "Already set {address} as start of column headers"
 msgstr "Έχετε είδη ορίσει {address} ως αρχή των κεφαλίδων της στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+msgid "Removed {address}    from column headers"
 msgstr "Αφαιρέθηκε {address} από τις κεφαλίδες της στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -7827,7 +8100,7 @@ msgid "Already set {address} as start of row headers"
 msgstr "Είδι ορίστικε {address} ως αρχή των κεφαλίδων της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+msgid "Removed {address}    from row headers"
 msgstr "Αφαιρέθηκε {address} από τις κεφαλίδες της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -7856,7 +8129,7 @@ msgstr "Χωρίς σχόλιο"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the comment on the current cell"
-msgstr "Αναφορά σχολίου στο τρέχον κελί"
+msgstr "Αναφέρει το σχόλιο στο τρέχον κελί"
 
 #. Translators: Dialog text for
 msgid "Editing comment for cell {address}"
@@ -8249,12 +8522,12 @@ msgstr "{axisName} Άξονας είναι {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
-msgstr "Υπάρχει 1 σειρά στο διάγραμμα"
+msgstr "Υπάρχει 1 σειρά σε αυτό το διάγραμμα"
 
 #. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
-msgstr "Υπάρχουν %d σειρές σε αυτό το γράφημα"
+msgstr "Υπάρχουν %d σειρές σε αυτό το διάγραμμα"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 msgid "series {number} {name}"
@@ -8432,15 +8705,16 @@ msgstr "Δευτερεύον"
 #. Translators: Details about an axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
-"Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: {axisTitle}"
+"Άξονας διαγράμματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: "
+"{axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}"
+msgstr "Άξονας διαγράμματος, τύπος: {axisType}, ομάδα: {axisGroup}"
 
 #. Translators: Indicates a chart axis title in Microsoft Excel.
 msgid "Chart axis title"
-msgstr "Τίτλος άξονα γραφήματος"
+msgstr "Τίτλος άξονα διαγράμματος"
 
 #. Translators: Indicates a trendline in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
@@ -8453,7 +8727,7 @@ msgstr " τετραγωνισμένο"
 
 #. Translators: Details about a chart title in Microsoft Excel.
 msgid "Chart title: {chartTitle}"
-msgstr "Τίτλος γραφήματος: {chartTitle}"
+msgstr "Τίτλος διαγράμματος: {chartTitle}"
 
 #. Translators: Indicates an untitled chart in Microsoft Excel.
 msgid "Untitled chart"
@@ -8464,7 +8738,7 @@ msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
-"Περιοχή γραφήματος, ύψος: {chartAreaHeight}, πλάτος: {chartAreaWidth}, "
+"Περιοχή διαγράμματος, ύψος: {chartAreaHeight}, πλάτος: {chartAreaWidth}, "
 "κορυφή: {chartAreaTop}, αριστερά: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
@@ -8534,7 +8808,7 @@ msgstr "Συνεισφορά"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
 msgid "conflict"
-msgstr "αντίθεση"
+msgstr "διένεξη"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
@@ -8614,15 +8888,6 @@ msgstr "σχόλιο: {text} από {author} στις {date}"
 
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} από {author} στις {date}"
-
-#, python-format
-msgid "%g characters"
-msgstr "%g χαρακτήρες"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g στιγμές"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8734,6 +8999,18 @@ msgstr "Στοίχιση στα δεξιά"
 msgid "Justified"
 msgstr "Πλήρης στοίχιση"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Εκθέτης"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Δείκτης"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "Γραμμή αναφοράς"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} Στυλ, επίπεδο περιγράμματος {outlineLevel}"
@@ -8768,8 +9045,8 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} πίκας"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "Δεν υπάρχουν σχόλια"
+msgid "No comments"
+msgstr "Χωρίς σχόλια"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8781,21 +9058,51 @@ msgstr "Αναφέρει το κείμενο του σχολίου στο σημ
 msgid "Not in table"
 msgstr "Εκτός πίνακα"
 
-msgid "Edge of table"
-msgstr "Όριο πίνακα"
-
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Σημειώσεις"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE series"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "browse mode"
+#~ msgstr "λειτουργία περιήγησης"
+
+#~ msgid "activate"
+#~ msgstr "ενεργοποίηση"
+
+#~ msgid "no next"
+#~ msgstr "δεν υπάρχει επόμενο"
+
+#~ msgid "no previous"
+#~ msgstr "Δεν υπάρχει προηγούμενο"
+
+#~ msgid "edge of table"
+#~ msgstr "όριο του πίνακα"
+
+#~ msgid "%g characters"
+#~ msgstr "%g χαρακτήρες"
+
+#~ msgid "%g pt"
+#~ msgstr "%g στιγμές"
+
+#~ msgid "no comments"
+#~ msgstr "χωρίς σχόλια"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Παρουσιάζει μια λίστα γραφημάτων, κελιά με σχόλια και κελιά με τύπους"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "προεπιλεγμένο χρώμα"
 
 #~ msgid "selecting %s"
 #~ msgstr "επιλογή %s"
@@ -8835,9 +9142,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} από {}"
-
-#~ msgid "none"
-#~ msgstr "χωρίς τύπο"
 
 #~ msgid " trendline {} "
 #~ msgstr " γραμμή τάσης {} "

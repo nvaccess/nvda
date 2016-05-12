@@ -38,6 +38,7 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  * A callback to manage Initialize and termination of code in the render thread of backends.
  */
 	static LRESULT CALLBACK renderThread_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
+static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
 
 /**
  * The ID of the current timer for this backend.

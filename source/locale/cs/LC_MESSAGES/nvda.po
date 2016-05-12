@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-02 14:03+0100\n"
+"POT-Creation-Date: 2016-04-01 00:10+1000\n"
+"PO-Revision-Date: 2016-05-01 16:23+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -125,6 +125,21 @@ msgstr "formulář"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "oblast"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "Bez tlumení"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Tlumit pro řeč a zvuky"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "Tlumit vždy"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -313,6 +328,11 @@ msgstr "Gudžarátský plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Koinská řečtina"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece) grade 1"
 msgstr "Řecký plnopis"
 
@@ -403,6 +423,11 @@ msgstr "Manipurský plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongolština"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Maráthský plnopis"
 
@@ -450,6 +475,11 @@ msgstr "Nepálský plnopis"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Urijský plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polské 8-bodové počítačové písmo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -656,6 +686,18 @@ msgstr "klk"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Body 7 a 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Bod 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Všechny body"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -728,11 +770,12 @@ msgstr "bod"
 msgid "space"
 msgstr "mezera"
 
-msgid "focus mode"
-msgstr "formulářový režim"
+msgid "Focus mode"
+msgstr "Formulářový režim"
 
-msgid "browse mode"
-msgstr "režim prohlížení"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "Režim prohlížení"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -761,8 +804,8 @@ msgid "Lists various types of elements in this document"
 msgstr "Uvádí různé typy prvků v tomto dokumentu"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
-msgstr "aktivuje aktuální objekt v dokumentu"
+msgid "Activates the current object in the document"
+msgstr "Aktivuje aktuální objekt v dokumentu"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1265,8 +1308,9 @@ msgstr "Přejde na začátek skupiny prvků, např. seznamu nebo tabulky"
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "spodek"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
+msgstr "Spodek"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -2547,13 +2591,11 @@ msgstr "barva pozadí"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "horní index"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "dolní index"
 
@@ -2826,12 +2868,12 @@ msgid ""
 msgstr "najde předchozí výskyt hledaného textu od aktuální pozice kurzoru"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
-msgstr "žádný výběr"
+msgid "No selection"
+msgstr "Žádný výběr"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
-msgstr "zkopírováno do schránky"
+msgid "Copied to clipboard"
+msgstr "Zkopírováno do schránky"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2887,6 +2929,18 @@ msgstr "Vstup"
 msgid "Document formatting"
 msgstr "Ohlašování formátování dokumentu"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Tlumení audia není podporováno"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Přepíná mezi režimy tlumení audia určujícími, kdy má NVDA snížit hlasitost "
+"jiných zvuků"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "výukový režim zapnut"
@@ -2924,44 +2978,48 @@ msgstr ""
 "dvakrát za sebou, řádek bude vyhláskován."
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
-msgstr "levý klik"
+msgid "Left click"
+msgstr "Levý klik"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Klikne levým tlačítkem myši na její aktuální pozici"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
-msgstr "pravý klik"
+msgid "Right click"
+msgstr "Pravý klik"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Klikne pravým tlačítkem myši na její aktuální pozici"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
-msgstr "levé tlačítko myši odemknuto"
+msgid "Left mouse button unlock"
+msgstr "Levé tlačítko myši odemknuto"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "levé tlačítko myši uzamknuto"
+msgid "Left mouse button lock"
+msgstr "Levé tlačítko myši uzamknuto"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "Uzamkne nebo odemkne levé tlačítko myši"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr "pravé tlačítko myši odemknuto"
+msgid "Right mouse button unlock"
+msgstr "Pravé tlačítko myši odemknuto"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "pravé tlačítko myši uzamknuto"
+msgid "Right mouse button lock"
+msgstr "Pravé tlačítko myši uzamknuto"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Uzamkne nebo odemkne pravé tlačítko myši"
+
+#, python-format
+msgid "Selected %s"
+msgstr "Vybráno %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3333,8 +3391,8 @@ msgstr "Zapíná a vypíná hlášení kliknutelných položek"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
-msgstr "interpunkce %s"
+msgid "Symbol level %s"
+msgstr "Interpunkce %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3342,8 +3400,8 @@ msgid ""
 msgstr "Přepíná mezi několika úrovněmi vyslovování interpunkce"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "objekt nemá informaci o pozici"
+msgid "Object has no location"
+msgstr "Objekt nemá informaci o pozici"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3385,8 +3443,8 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
-msgstr "žádný prohlížený objekt"
+msgid "No navigator object"
+msgstr "Žádný prohlížený objekt"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -3415,8 +3473,8 @@ msgstr ""
 "li se dvakrát, poskytne další podrobnosti."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "přesunout na fokus"
+msgid "Move to focus"
+msgstr "Přesunout na fokus"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3429,24 +3487,24 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
-msgstr "bez zaměření"
+msgid "No focus"
+msgstr "Bez zaměření"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "přesunout  fokus na prohlížený objekt"
+msgid "Move focus"
+msgstr "Přesunout  fokus na prohlížený objekt"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "žádný kurzor"
+msgid "No caret"
+msgstr "Žádný kurzor"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Stiskne-li se jednou, nastaví fokus na prohlížený objekt. Dvojitý stisk "
-"přesune textový kurzor na pozici čtecího kurzoru."
+"Stiskne-li se jednou, nastaví fokus na prohlížený objekt, dvojitý stisk "
+"přesune textový kurzor na pozici čtecího kurzoru"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3457,6 +3515,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Přejde na nadřazený objekt"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Nenalezen"
 
@@ -3465,6 +3524,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Přejde na následující objekt"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Nenalezen"
 
@@ -3481,8 +3541,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Přejde na podřazený objekt"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "aktivovat"
+msgid "Activate"
+msgstr "Aktivovat"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3497,8 +3557,8 @@ msgstr ""
 "pak jej stiskne)."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
-msgstr "vršek"
+msgid "Top"
+msgstr "Vršek"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3566,8 +3626,9 @@ msgstr ""
 "Přesune čtecí kurzor na následující slovo právě prohlíženého objektu a "
 "přečte ho"
 
-msgid "left"
-msgstr "vlevo"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Vlevo"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3595,8 +3656,9 @@ msgstr ""
 "Stiskne-li se dvakrát za sebou, bude znak ohlášen pomocí hláskovací tabulky "
 "a trojitý stisk ohlásí jeho ascii a hexadecimální hodnotu."
 
-msgid "right"
-msgstr "vpravo"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Vpravo"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3615,16 +3677,16 @@ msgstr ""
 "objektu a přečte ho"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "režim řeči vypnuto"
+msgid "Speech mode off"
+msgstr "Režim řeči vypnuto"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
-msgstr "režim řeči pípání"
+msgid "Speech mode beeps"
+msgstr "Režim řeči pípání"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
-msgstr "režim řeči mluvení"
+msgid "Speech mode talk"
+msgstr "Režim řeči mluvení"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3662,36 +3724,40 @@ msgstr "Zobrazí nabídku NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"přečte text od pozice čtecího kurzoru do konce, přičemž se čtecí kurzor "
+"Přečte text od pozice čtecího kurzoru do konce, přičemž se čtecí kurzor "
 "plynule posouvá po řádcích"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
-"přečte text od polohy textového kurzoru do konce, přičemž se textový kurzor "
+"Přečte text od polohy textového kurzoru do konce, přičemž se textový kurzor "
 "plynule posouvá po řádcích"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
 msgstr "Žádné informace o formátování"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Formátování"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "V dokumentu ohlašuje informace o formátování na aktuální pozici čtecího "
 "kurzoru"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
-"ohlásí zaměřený objekt. Stiskne-li se dvakrát za sebou, bude vyhláskován"
+"Ohlásí zaměřený objekt. Stiskne-li se dvakrát za sebou, bude vyhláskován"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3699,10 +3765,10 @@ msgstr "Stavový řádek nenalezen"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
-"přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem. "
+"Přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem. "
 "Stiskne-li se dvakrát za sebou, bude vyhláskován"
 
 #. Translators: presented when the mouse tracking is toggled.
@@ -3718,8 +3784,8 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Zapíná a vypíná ohlašování objektů pod kurzorem myši"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
-msgstr "bez názvu"
+msgid "No title"
+msgstr "Bez názvu"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3731,8 +3797,8 @@ msgstr ""
 "stisku bude titulek vyhláskován a po trojitém bude zkopírován do schránky."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
-msgstr "ohlásí aktuální objekt na popředí"
+msgid "Speaks the current foreground object"
+msgstr "Ohlásí aktuální objekt na popředí"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3743,20 +3809,20 @@ msgstr ""
 "pro vývojáře, a zobrazí je v Prohlížeči logu."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
-msgstr "neohlašovat aktualizaci indikátoru průběhu"
+msgid "No progress bar updates"
+msgstr "Neohlašovat aktualizaci indikátoru průběhu"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
-msgstr "ohlašovat aktualizaci indikátoru průběhu"
+msgid "Speak progress bar updates"
+msgstr "Ohlašovat aktualizaci indikátoru průběhu"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
-msgstr "pípat při aktualizaci indikátoru průběhu"
+msgid "Beep for progress bar updates"
+msgstr "Pípat při aktualizaci indikátoru průběhu"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
-msgstr "pípat a ohlašovat aktualizaci indikátoru průběhu"
+msgid "Beep and speak progress bar updates"
+msgstr "Pípat a ohlašovat aktualizaci indikátoru průběhu"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3809,8 +3875,8 @@ msgid ""
 msgstr "Zapíná a vypíná změnu prohlíženého objektu při změně fokusu"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
-msgstr "žádná baterie není k dispozici"
+msgid "No system battery"
+msgstr "Žádná baterie není k dispozici"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
@@ -3826,9 +3892,9 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "zbývá {hours:d} hodin a {minutes:d} minut"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"oznámí stav baterie a zbývající čas provozu, je-li odpojeno napájení ze sítě"
+"Oznámí stav baterie a zbývající čas provozu, je-li odpojeno napájení ze sítě"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -3987,6 +4053,31 @@ msgstr ""
 "Přepíná propojení braillského kurzoru mezi pozicí systémového fokusu nebo "
 "čtecího kurzoru"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Braillský kurzor vypnut"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Braillský kurzor zapnut"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Zapíná a vypíná braillský kurzor"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Braillský kurzor je vypnut"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Braillský kurzor %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Přepíná mezi tvary braillského kurzoru"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "Žádný text ve schránce"
@@ -4074,20 +4165,12 @@ msgstr ""
 "Znovu načte aplikační a zásuvné moduly bez nutnosti restartovat NVDA. To "
 "Může být užitečné pro vývojáře."
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "Nenalezen"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
 "Přejde na další objekt v plošném zobrazení hierarchie objektové navigace"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "nenalezen"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4102,8 +4185,8 @@ msgid "%s mode"
 msgstr "Režim %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
-msgstr "přepíná mezi dostupnými dotykovými režimy"
+msgid "Cycles between available touch modes"
+msgstr "Přepíná mezi dostupnými dotykovými režimy"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4137,10 +4220,6 @@ msgstr "Emulované klávesy na systémové klávesnici"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Různé"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Režim prohlížení"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4631,11 +4710,6 @@ msgstr "výběr odstraněn"
 msgid "done dragging"
 msgstr "tažení ukončeno"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "úroveň %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4659,6 +4733,11 @@ msgstr "s %s odstavci"
 #, python-format
 msgid "with %s rows"
 msgstr "s %s řádky"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "úroveň %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4693,6 +4772,13 @@ msgstr "styl %s"
 msgid "default style"
 msgstr "výchozí styl"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+msgid "{color1} to {color2}"
+msgstr "{color1} na {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4708,6 +4794,9 @@ msgstr "{color}"
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} pozadí"
+
+msgid "background pattern {pattern}"
+msgstr "Vzor pozadí {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4797,7 +4886,6 @@ msgstr "není podtržené"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "bez indexů"
 
@@ -5049,6 +5137,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "přemístění nahoru"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "Zpráva NVDA"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Kontrola aktualizací"
@@ -5243,8 +5335,8 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "okraj tabulky"
+msgid "Edge of table"
+msgstr "Okraj tabulky"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5400,8 +5492,8 @@ msgid "Appointment {subject}, {time}"
 msgstr "Schůzka {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
-msgstr "schůzka"
+msgid "Has appointment"
+msgstr "Schůzka"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -5695,6 +5787,12 @@ msgstr "Zastavit"
 #. Translators: This is the name of a button in sound recorder.
 msgid "Record"
 msgstr "Nahrát"
+
+msgid "left"
+msgstr "vlevo"
+
+msgid "right"
+msgstr "vpravo"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -6685,6 +6783,10 @@ msgstr "Prohlížeč Logu NVDA"
 msgid "Refresh\tF5"
 msgstr "Obnovit\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "Uložit &jako...\tCtrl+S"
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "Log"
@@ -6847,6 +6949,10 @@ msgstr "&Hlasové výstupy:"
 #. headphones, etc.
 msgid "Output &device:"
 msgstr "&Výstupní zařízení:"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Režim tlumení audia"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -7402,9 +7508,17 @@ msgstr "Vstupní tabulka:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Slovo, na kterém je kurzor, zobrazit počítačovým braillovým písmem"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "Zobrazit kurzor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Rychlost blikání kurzoru v milisekundách"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Tvar kurzoru"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7552,12 +7666,12 @@ msgid "Refreshes the document content"
 msgstr "Znovu načte obsah dokumentu"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "zachovat stejný vzhled jako na obrazovce zapnuto"
+msgid "Use screen layout on"
+msgstr "Zachovat stejný vzhled jako na obrazovce zapnuto"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "zachovat stejný vzhled jako na obrazovce vypnuto"
+msgid "Use screen layout off"
+msgstr "Zachovat stejný vzhled jako na obrazovce vypnuto"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
@@ -7604,36 +7718,151 @@ msgstr "propojeno"
 msgid "Desktop"
 msgstr "Plocha"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "výchozí barva"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Neznámá barva"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "automatický"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "šachovnice"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "cik cak"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "dolů"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "16% šedý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "25% šedý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "50% šedý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "75% šedý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "8% šedý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "datová mřížka"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "vodorovný"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "světlý dolů"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "světlý vodorovný"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "světlý nahoru"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "světlý svislý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "žádný"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "75% pološedý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "plný"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "nahoru"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "svislý"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "lineární přechod"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "obdélníkový přechod"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Tuto buňku nelze upravit"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Představuje seznam grafů, buněk s komentáři a buněk se vzorci"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Uvádí různé typy prvků v této tabulce"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Graf"
+msgid "&Charts"
+msgstr "&Grafy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "K&omentář"
+msgid "C&omments"
+msgstr "K&omentáře"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Vzorec"
+msgid "Fo&rmulas"
+msgstr "&Vzorce"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&List"
+msgid "&Sheets"
+msgstr "&Listy"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7659,7 +7888,7 @@ msgid "Already set {address} as start of column headers"
 msgstr "{address} již nastaveno jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+msgid "Removed {address}    from column headers"
 msgstr "{address}    odstraněno ze záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -7683,7 +7912,7 @@ msgid "Already set {address} as start of row headers"
 msgstr "{address} již nastaveno jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+msgid "Removed {address}    from row headers"
 msgstr "{address}    odstraněno ze záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -8459,15 +8688,6 @@ msgstr "komentář: {text} od {author} dne {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dne {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g znaků"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g bodů"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8566,6 +8786,18 @@ msgstr "Zarovnáno vpravo"
 msgid "Justified"
 msgstr "Zarovnáno do bloku"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Horní index"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Dolní index"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "Bez indexů"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "styl {styleName}, úroveň zobrazení {outlineLevel}"
@@ -8600,8 +8832,8 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pící"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "bez komentářů"
+msgid "No comments"
+msgstr "Žádný komentář"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8612,21 +8844,50 @@ msgstr "Přečte text komentáře, kde je umístěn textový kurzor."
 msgid "Not in table"
 msgstr "Mimo tabulku"
 
-msgid "Edge of table"
-msgstr "Okraj tabulky"
-
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "anotace"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "browse mode"
+#~ msgstr "režim prohlížení"
+
+#~ msgid "activate"
+#~ msgstr "aktivovat"
+
+#~ msgid "no next"
+#~ msgstr "Nenalezen"
+
+#~ msgid "no previous"
+#~ msgstr "nenalezen"
+
+#~ msgid "edge of table"
+#~ msgstr "okraj tabulky"
+
+#~ msgid "%g characters"
+#~ msgstr "%g znaků"
+
+#~ msgid "%g pt"
+#~ msgstr "%g bodů"
+
+#~ msgid "no comments"
+#~ msgstr "bez komentářů"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "Představuje seznam grafů, buněk s komentáři a buněk se vzorci"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "výchozí barva"
 
 #~ msgid "selecting %s"
 #~ msgstr "vybráno %s"
@@ -8666,9 +8927,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} z {}"
-
-#~ msgid "none"
-#~ msgstr "žádný"
 
 #~ msgid " trendline {} "
 #~ msgstr " spojnice trendu {} "

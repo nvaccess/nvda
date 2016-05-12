@@ -3,6 +3,59 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+Hoogtepunten in deze versie zijn de mogelijkheid om het volume van andere geluiden te verlagen; verbeteringen aan braille-uitvoer en ondersteuning voor brailleleesregels; verschillende belangirjke correcties aan Microsoft Office ondersteuning; en correcties aan bladermodus in iTunes.
+
+== Nieuwe Functies ==
+- Nieuwe brailletabellen: Pools 8 punts computer braille, Mongools. (#5537, #5574)
+- U kan de braillecursor uitschakelen en zijn vorm veranderen via de nieuwe opties Cursor weergeven en Cursorvorm in het dialoogvenster Braille-instelllingen. (#5198)
+- NVDA kan nu via Bluetooth verbinden met een HIMS Smart Beetle brailleleesregel. (#5607)
+- NVDA kan het volume verlagen van andere geluiden als het is geïnstalleerd op Windows 8 en hoger. U kunt deze audio-onderdrukkingsmodus instellen in de Synthesizer-instellingen of door NVDA+shift+d te drukken. (#3830, #5575)
+- Ondersteuning voor de APH Refreshabraille in HID mode en de Baum VarioUltra and Pronto! via een USB-verbinding. (#5609)
+- Ondersteuning voor HumanWare Brailliant BI/B braille leesregels met het protocol ingesteld als OpenBraille. (#5612)
+
+
+== Veranderingen ==
+- Melden van nadruk is nu standaard uitgeschakeld. (#4920)
+- In het dialoogvenster Elementenlijst in Microsoft Excel is de sneltoets voor Formules gewijzigd naar alt+r zodat hij verschilt van de sneltoets voor het Filterveld. (#5527)
+- liblouis braillevertaler bijgewerkt naar 2.6.5. (#5574)
+- Het woord "tekst" wordt niet langer gemeld als de focus of de leescursor naar tekstobjecten beweegt. (#5452)
+
+
+== Opgeloste problemen ==
+- In iTunes 12 update bladermodus nu correct als een nieuwe pagina laadt in de iTunes Store. (#5191)
+- In Internet Explorer en andere MSHTML controls, moving to specific heading levels with single letter navigation now behaves as expected when the level of a heading is overridden for accessibility purposes (specificiek als aria-level het niveau overschrijft van een h tag). (#5434)
+- In Spotify, focus no longer frequently lands on "unknown" objects. (#5439)
+- Focus is now restored correctly when returning to Spotify from another application. (#5439)
+- When toggling between browse mode and focus mode, the mode is reported in braille as well as speech. (#5239)
+- The Start buttn on the Taskbar is no longer reported as a list and/or as selected in some versions of Windows. (#5178)
+- Messages such as "inserted" are no longer reported when composing messages in Microsoft Outlook. (#5486)
+- When using a braille display and text is selected on the current line (e.g. when searching in a text editor for text which occurs on the same line), the braille display will be scrolled if appropriate. (#5410)
+- NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)
+- In the Elements List in browse mode, when you change the type of element, the Filter by field is now cleared. (#5511)
+- In editable text in Mozilla applications, moving the mouse again reads the appropriate line, word, etc. as expected instead of the entire content. (#5535)
+- When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
+- In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
+- In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)
+- When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
+- Reporting of mouse shape changes again works as expected. (#5595)
+- When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+- When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
+- In Microsoft Office 2013 and later, when the ribbon is set to show only tabs, items in the ribbon are again reported as expected when a tab is activated. (#5504)
+- Fixes and improvements to touch screen gesture detection and binding. (#5652)
+- Touch screen hovers are no longer reported in input help. (#5652)
+- NVDA no longer fails to list comments in the Elements List for Microsoft Excel if a comment is  on a merged cell. (#5704)
+- In a very rare case, NVDA no longer fails to read sheet content in Microsoft Excel with reporting of row and column headers enabled. (#5705)
+- In Google Chrome, navigating within an Input composition when entering east Asian characters now works as expected. (#4080)
+- When searching Apple Music in iTunes, browse mode for the search results document is now updated as expected. (#5659)
+- In Microsoft Excel, pressing shift+f11 to create a new sheet now reports your new position instead of reporting nothing. (#5689)
+- Fixed problems with braille display output when entering Korean characters. (#5640)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2015.4 =
 Hoogtepunten in deze versie zijn performantieverbeteringen in Windows 10; opname in het Toegankelijkheidscentrum in Windows 8 en hoger; verbeteringen voor Microsoft Excel, zoals een lijst van werkbladen en het hernoemen ervan, en toegang tot vergrendelde cellen in beveiligde werkbladen; en ondersteuning voor het bewerken van rich text in Mozilla Firefox, Google Chrome en Mozilla Thunderbird.
 
