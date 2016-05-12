@@ -126,6 +126,16 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					review.setCurrentMode('document',True)
 			braille.handler.handleGainFocus(self)
 
+	def _get_isSelectionAnchoredAtStart(self):
+		"""Determine if the selection is anchored at the start.
+		If the selection is anchored at the end or there is no information this is C{False}.
+		@return: C{True} if the selection is anchored at the start else C{False}
+		@rtype: bool
+		"""
+		if hasattr(self, '_isSelectionAnchoredAtStart'):
+			return self._isSelectionAnchoredAtStart
+		return False
+
 	_cache_shouldPrepare=True
 	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
 

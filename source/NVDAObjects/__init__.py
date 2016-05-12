@@ -803,6 +803,16 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
+	def _get_isSelectionAnchoredAtStart(self):
+		"""Determine if the selection is anchored at the start.
+		If the selection is anchored at the end or there is no information this is C{False}.
+		@return: C{True} if the selection is anchored at the start else C{False}
+		@rtype: bool
+		"""
+		if hasattr(self, '_isSelectionAnchoredAtStart'):
+			return self._isSelectionAnchoredAtStart
+		return False
+
 	def _reportErrorInPreviousWord(self):
 		try:
 			# self might be a descendant of the text control; e.g. Symphony.

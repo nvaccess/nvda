@@ -988,6 +988,7 @@ class TextInfoRegion(Region):
 			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
+		# The selection end doesn't have to be checked, Region.update() makes sure brailleSelectionEnd is valid.
 
 		# If this is not the start of the object, hide all previous regions.
 		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
@@ -1643,10 +1644,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1678,14 +1676,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
+
+	def scrollToCursorOrSelection(self, region):
+		if region.brailleCursorPos is not None:
+			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif not hasattr(region, "obj") or not region.obj.isSelectionAnchoredAtStart:
+			# It is unknown where the selection is anchored, or it is anchored at the end.
+			if region.brailleSelectionStart is not None:
+				self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		elif region.brailleSelectionEnd is not None:
+			# The selection is anchored at the start.
+			self.mainBuffer.scrollTo(region, region.brailleSelectionEnd - 1)
 
 	def handleUpdate(self, obj):
 		if not self.enabled:
