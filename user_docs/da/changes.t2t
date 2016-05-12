@@ -28,6 +28,11 @@
 - Afsnitsindrykning vil nu altid blive annoncéret i den valgte enhed som valgt af brugeren i Microsoft Word (f.eks. centimeter eller tommer). (#5804)
 - Når der benyttes et punktdisplay vil beskeder, der tidligere kun var leveret på tale, nu også angives på punkt. (#5557)
 - I tilgængelige Java-applikationer vil niveauet i trævisninger nu blive rapporteret. (#5766)
+/ I nogle situationer skulle Adobe Flash i Mozilla Firefox ikke længere gå ned. (#5367)
+- I Google Chrome og Chrome-baserede browsere kan dokumenter indeni dialoger eller applikationer nu læses i gennemsynstilstand. (#5818)
+- Du kan nu tvinge NVDA til at skifte til gennemsynstilstand i webdialoger eller applikationer når du benytter Google Chrome eller en Chrome-baseret browser. (#5818)
+- Når fokus flyttes til bestemte kontroller i Internet Explorer eller andre MSHTML kontroller (specifikt når aria-activedescendant benyttes) vil NVDA ikke længere ukorrekt skifte til gennemsynstilstand. Dette skete f.eks. når der flyttes til forslag i adressefeltet når du var ved at skrive en besked i Gmail. (#5676)
+
 
 === Ændringer for udviklere ===
 For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
