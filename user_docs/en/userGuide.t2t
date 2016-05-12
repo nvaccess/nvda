@@ -2100,6 +2100,71 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 | Toggle braille tethered to | A |
 %kc:endInclude
 
+++ BP12 and EL12 series ++
+The BraillePen 12 and BraillePen 12 Touch from [Harpo http://int.harpo.com.pl/] also EasyLink 12 and EasyLink 12 Touch from Optelec are supported when connected via Bluetooth.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left scroll |
+| Scroll braille display forward | right scroll |
+| Route to braille cell | routing keys |
+| upArrow key | joystick up |
+| downArrow key | joystick down |
+| leftArrow key | joystick left |
+| rightArrow key | joystick right |
+| enter key | space+dot8 |
+| backspace key | space+dot7 |
+| delete key | space+dot1+dot4+dot5 |
+| windows key | space+dot3+dot4 |
+| alt key | space+dot1+dot3+dot4 |
+| escape key | space+dot1+dot5 |
+| Move braille display to previous line | joystick up+space |
+| Move braille display to next line | joystick down+space |
+| shift+tab key | space+joystick left |
+| tab key | space+joystick right |
+| Report next word in review | space+dot5 |
+| Report previous word in review | space+dot2 |
+| Report next line in review | space+dot4 |
+| Report previous line in review | space+dot1 |
+| Report next character in review | space+dot6 |
+| Report previous character in review | space+dot3 |
+| Toggle input help | space+dot3+dot6+dot7 |
+| Toggle braille tethered | space+dot1+dot2+dot6 |
+| home key | space+dot2+dot3 |
+| end key | space+dot5+dot6 |
+| Move review cursor to the top | space+dot1+dot2+dot3 |
+| Move review cursor to the bottom | space+dot4+dot5+dot6 |
+| Say all | space+dot1+dot2+dot4+dot5+dot6 |
+| Report current character in review | space+dot3+dot6 |
+| Report current word in review | space+dot2+dot5 |
+| Report current line in review | space+dot1+dot4 |
+| reports the current time | space+dot2+dot3+dot4 |
+| Report current Selection | space+dot1+dot2+dot4+dot5+dot6+dot7 |
+| NVDA Menu | space+dot1+dot2+dot4+dot5 |
+| alt+tab key | space+dot1+dot3+dot5 |
+| Report battery status | space+dot1+dot2+dot7 |
+| mark start position for copy | space+dot1+dot4+dot7 |
+| copy text to the clipboard | space+dot1+dot4+dot8 |
+| Reports text on the clipboard | space+dot1+dot2+dot3+dot6+dot8 |
+| control+v key | space+dot1+dot2+dot3+dot6+dot7 |
+| Say all in review | space+dot1+dot3+dot4+dot5+dot6 |
+| Switch to next review mode | space+joystick right+dot7 |
+| Switch to previous review mode | space+joystick left+dot7 |
+| Activate current navigator object | joystick action+space |
+| Report title | space+dot2+dot3+dot4+dot5 |
+| Reports object with focus | space+dot1+dot2+dot4+dot7 |
+| Report Status Bar | space+dot2+dot3+dot4+dot7 |
+| Speaks the foreground object | space+dot1+dot2+dot4+dot5+dot7 |
+| Toggle reporting of dynamic content changes | joystick action+space+dot7 |
+| control+leftArrow key | space+joystick left+dot8 |
+| control+rightArrow key | space+joystick right+dot8 |
+| control+home key | space+joystick up+dot8 |
+| control+end key | space+joystick down+dot8 |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].

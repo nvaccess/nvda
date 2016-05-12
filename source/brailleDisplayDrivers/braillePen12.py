@@ -20,8 +20,6 @@ READ_INTERVAL = 50
 
 BP12_KEYCALLBACKHANDLE = WINFUNCTYPE(None,c_ubyte,c_ubyte,c_ubyte,c_ubyte,c_ubyte,c_ubyte,c_ubyte,c_ubyte)
 
-
-
 BP12_BRAILLE_KEYS = ("dot1", "dot2", "dot3", "dot4", "dot5", "dot6", "dot7", "dot8")
 BP12_CONTROL_KEYS=("leftScroll","joyAction","joyLeft","joyUp","joyDown","joyRight","space", "rightScroll")
 
@@ -42,33 +40,28 @@ def _findPorts():
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "braillePen12"
+	# Translators: The name of a series of braille displays.
 	description = _("BP12 and EL12 series")
-
+	isThreadSafe = True
+	
 	@classmethod
 	def check(cls):
 		return bool(BP12Lib)
 
 	def __init__(self):
 		super(BrailleDisplayDriver,self).__init__()
-		self.numCells = 12
-		
-		
+		self.numCells = 12	
 		for port in _findPorts():
-		
 			if not port:
 				raise RuntimeError("No BP12 display found")
 				continue
-		
 			portName=u"{port}".format(port=port)
 			self._keyCallbackInst = BP12_KEYCALLBACKHANDLE(self._keyCallback)
-			
 			result=0
-			
 			try:
 				result=BP12Lib.open(portName,self._keyCallbackInst)
 			except:
 				result=0
-		
 			if result >0:
 				self._connectedState=True
 				break
@@ -169,30 +162,21 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, brailleKeys,controlKeys,routingKey):
-		super(InputGesture, self).__init__()
-		
+		super(InputGesture, self).__init__()	
 		brailleKeysList=[BP12_BRAILLE_KEYS[num] for num in xrange(8) if (brailleKeys>>num)&1]
 		controlKeysList=[BP12_CONTROL_KEYS[num] for num in xrange(8) if (controlKeys>>num)&1]
 		routingKeyList = ["routing"]
-		
 		if routingKey==0:
 			selectedKeys=controlKeysList+brailleKeysList
 		else:
 			selectedKeys=controlKeysList+brailleKeysList+routingKeyList
-		
 		self.id="+".join(set(selectedKeys))
 		self.keys = set(selectedKeys)
-			
-		
 		self.keyNames = names = set()
-		
 		if brailleKeys!=0 and controlKeys==0 and routingKey==0:
 			self.dots =brailleKeys
-		
 		if brailleKeys==0 and controlKeys==64 and routingKey==0:
 			self.space = True
-			
 		if routingKey !=0:
 			self.routingIndex = routingKey -1
-		
 		log.info(self.id)
