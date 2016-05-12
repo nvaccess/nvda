@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-13 22:04+0200\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-11 22:20+0100\n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
 "projects/p/nvda/language/nl/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.7.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3221,6 +3221,18 @@ msgstr "Spelfouten melden"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Schakelt het uitspreken van spelfouten in en uit"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "Grammaticafouten niet melden"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "Grammaticafouten melden"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Schakelt het uitspreken van grammaticafouten in en uit"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "paginanummers niet melden"
@@ -5033,6 +5045,14 @@ msgstr "spelfout"
 msgid "out of spelling error"
 msgstr "buiten spelfout"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Grammaticafout"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "buiten grammatciafout"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "buiten de tabel"
@@ -6157,11 +6177,11 @@ msgid "Python console"
 msgstr "Python console"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Add-ons &beheren"
+msgid "Manage &add-ons..."
+msgstr "&Add-ons beheren"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Draagbare versie aanmaken..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6200,8 +6220,8 @@ msgid "C&ontributors"
 msgstr "&Vrijwilligers"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Wel&kom dialoog"
+msgid "We&lcome dialog..."
+msgstr "Wel&kom dialoogvenster"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7174,6 +7194,11 @@ msgstr "&Commando-toetsen uitspreken"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Geluid bij &spelfouten tijdens typen"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Behandel toetsen van andere toepassingen"
 
@@ -7453,6 +7478,11 @@ msgstr "&Stijl melden"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "Spel&fouten melden"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "&Grammaticafouten melden"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
