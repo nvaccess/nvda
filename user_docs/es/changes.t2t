@@ -28,6 +28,10 @@ Qué hay de Nuevo en NVDA
 - En Microsoft Word, la sangría de párafo ahora siempre se anuncia en la unidad de medida elegida por el usuario (ej.: centímetros o pulgadas). (#5804)
 - Al utilizar una pantalla braille, muchos mensajes de NVDA que anteriormente sólo se verbalizaban ahora se braillifican también. (#5557)
 - En aplicaciones Java accesibles, el nivel de los elementos de la vista en árbol ahora se anuncia. (#5766)
+- Corregidos cuelgues en Adobe Flash en Mozilla Firefox en algunos casos. (#5367)
+- En Google Chrome y navegadores basados en Chrome, los documentos dentro de diálogos o aplicaciones ahora pueden leerse en modo exploración. (#5818)
+- En Google Chrome y navegadores basados en Chrome, ahora puedes forzar a NVDA para cambiar a modo exploración en diálogos web o aplicaciones. (#5818)
+- En Internet Explorer y otros controles MSHTML, al mover el foco a ciertos controles (específicamente, donde se utilice aria-activedescendant) ya no cambia incorrectamente a modo exploración. Esto ocurría, por ejemplo, al moverse a sugerencias en campos de dirección cuando se compone un mensaje en Gmail. (#5676)
 
 
 == Cambios para Desarrolladores ==
