@@ -4,8 +4,10 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012 NV Access Limited
 
+import threading
 import time
 from collections import OrderedDict
+from logHandler import log
 
 #Possible actions (single trackers)
 action_tap="tap"
@@ -54,16 +56,41 @@ class SingleTouchTracker(object):
 	"""
 	Represents the lifetime of one single finger while its in contact with the touch device, tracking start and current coordinates, start and end times, and whether its complete (broken contact yet).
 	It also calculates what kind of single action (tap, flick, hover) this finger is performing, once it has enough data.
+	@ivar ID: the ID this finger has been assigned by the Operating System.
+	@type ID: int
+	@ivar x: The last known x screen coordinate of this finger
+	@type x: int
+	@ivar y: The last known y screen coordinate of this finger
+	@type y: int
+	@ivar startX: The x screen coordinate  where the finger first made contact
+	@type startX: int
+	@ivar startY: The y screen coordinate  where the finger first made contact
+	@type startY: int
+	@ivar startTime: the time at which the finger first made contact
+	@type startTime: float
+	@ivar endTime: the time at which the finger broke contact. Before breaking contact the value is -1
+	@type endTime: float
+	@ivar maxAbsDeltaX: the maximum distance this finger has traveled on the x access while making contact
+	@type maxAbsDeltaX: int
+	@ivar maxAbsDeltaY: the maximum distance this finger has traveled on the y access while making contact
+	@type maxAbsDeltaY: int
+	@ivar action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc). If not enough data has been collected yet the action will be unknown. 
+	@type action: string
+	@ivar complete: If true then this finger has broken contact
+	@type complete: bool
 	"""
+	__slots__=['ID','x','y','startX','startY','startTime','endTime','maxAbsDeltaX','maxAbsDeltaY','action','complete']
 
 	def __init__(self,ID,x,y):
 		self.ID=ID
 		self.x=self.startX=x
 		self.y=self.startY=y
 		self.startTime=time.time()
+		self.endTime=-1
 		self.maxAbsDeltaX=0
 		self.maxAbsDeltaY=0
 		self.action=action_unknown
+		self.complete=False
 
 	def update(self,x,y,complete=False):
 		"""Called to alert this single tracker that the finger has moved or broken contact."""
@@ -75,7 +102,8 @@ class SingleTouchTracker(object):
 		absDeltaY=abs(deltaY)
 		self.maxAbsDeltaX=max(absDeltaX,self.maxAbsDeltaX)
 		self.maxAbsDeltaY=max(absDeltaY,self.maxAbsDeltaY)
-		deltaTime=time.time()-self.startTime
+		curTime=time.time()
+		deltaTime=curTime-self.startTime
 		if deltaTime<multitouchTimeout: #not timed out yet
 			if complete and self.maxAbsDeltaX<maxAccidentalDrift and self.maxAbsDeltaY<maxAccidentalDrift:
 				#The completed quick touch never drifted too far from its initial contact point therefore its a tap
@@ -94,11 +122,35 @@ class SingleTouchTracker(object):
 					self.action=action_flickUp
 		else: #timeout exceeded, must be a kind of hover
 			self.action=action_hover
+		self.complete=complete
+		if complete:
+			self.endTime=curTime
 
 class MultiTouchTracker(object):
-	"""Represents an action joinly performed by 1 or more fingers."""
+	"""Represents an action jointly performed by 1 or more fingers.
+	@ivar action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc).
+	@type action: string
+	@ivar x: the x screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
+	@type x: int
+	@ivar y: the y screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
+	@type y: int
+	@ivar startTime: the time the action began
+	@type startTime: float
+	@ivar endTime: the time the action was complete 
+	@type endTime: float
+	@ivar numFingers: the number of fingers that performed this action
+	@type numFingers: int
+	@ivar actionCount: the number of times this action was performed in quick succession (E.g. 2 for a double tap)
+	@ivar childTrackers: a list of L{MultiTouchTracker} objects which represent the direct sub-actions of this action. E.g. a 2-finger tripple tap's childTrackers will contain 3 2-finger taps. Each of the 2-finger taps' childTrackers will contain 2 taps.
+	@type childTrackers: list of L{MultiTouchTracker} objeccts
+	@ivar rawSingleTouchTracker: if this tracker represents a 1-fingered non-plural action then this will be the L{SingleTouchTracker} object for that 1 finger. If not then it is None.
+	@type rawSingleTouchTracker: L{SingleTouchTracker}
+	@ivar pluralTimeout: the time at which this tracker could no longer possibly be merged with another to be pluralized, thus it is aloud to be emitted
+	@type pluralTimeout: float
+	"""
+	__slots__=['action','x','y','startTime','endTime','numFingers','actionCount','childTrackers','rawSingleTouchTracker','pluralTimeout']
 
-	def __init__(self,action,x,y,startTime,endTime,numFingers,actionCount,numHeldFingers):
+	def __init__(self,action,x,y,startTime,endTime,numFingers=1,actionCount=1,rawSingleTouchTracker=None,pluralTimeout=None):
 		self.action=action
 		self.x=x
 		self.y=y
@@ -106,10 +158,30 @@ class MultiTouchTracker(object):
 		self.endTime=endTime
 		self.numFingers=numFingers
 		self.actionCount=actionCount
-		self.numHeldFingers=numHeldFingers
+		self.childTrackers=[]
+		self.rawSingleTouchTracker=rawSingleTouchTracker
+		# We only allow pluralizing of taps, no other action.
+		if pluralTimeout is None and action==action_tap:
+			pluralTimeout=startTime+multitouchTimeout
+		self.pluralTimeout=pluralTimeout
+
+	def iterAllRawSingleTouchTrackers(self):
+		if self.rawSingleTouchTracker: yield self.rawSingleTouchTracker
+		for child in self.childTrackers:
+			for i in child.iterAllRawSingleTouchTrackers():
+				yield i
 
 	def __repr__(self):
-		return "<MultiTouchTracker {numFingers}finger {action} {actionCount} times at position {x},{y} with {numHeldFingers} extra fingers held>".format(action=self.action,x=self.x,y=self.y,numFingers=self.numFingers,actionCount=self.actionCount,numHeldFingers=self.numHeldFingers)
+		return "<MultiTouchTracker {numFingers}finger {action} {actionCount} times at position {x},{y}>".format(action=self.action,x=self.x,y=self.y,numFingers=self.numFingers,actionCount=self.actionCount)
+
+	def getDevInfoString(self):
+		msg="%s\n"%self
+		if self.childTrackers:
+			msg+="--- made of ---\n"
+			for t in self.childTrackers:
+				msg+=t.getDevInfoString()
+			msg+="--- end ---\n"
+		return msg
 
 class TrackerManager(object):
 	"""
@@ -119,83 +191,107 @@ class TrackerManager(object):
 	def __init__(self):
 		self.singleTouchTrackersByID=OrderedDict()
 		self.multiTouchTrackers=[]
-		self.numHeldFingers=0
+		self.curHoverStack=[]
+		self.numUnknownTrackers=0
+		self._lock=threading.Lock()
+
+	def makePreheldTrackerFromSingleTouchTrackers(self,trackers):
+		childTrackers=[MultiTouchTracker(action_hold,tracker.x,tracker.y,tracker.startTime,time.time()) for tracker in trackers if tracker.action==action_hover]
+		numFingers=len(childTrackers)
+		if numFingers==0: return
+		if numFingers==1: return childTrackers[0]
+		avgX=sum(t.x for t in childTrackers)/numFingers
+		avgY=sum(t.y for t in childTrackers)/numFingers
+		tracker=MultiTouchTracker(action_hold,avgX,avgY,childTrackers[0].startTime,time.time(),numFingers)
+		tracker.childTrackers=childTrackers
+		return tracker
+
+	def makePreheldTrackerForTracker(self,tracker):
+		curHoverSet={x for x in self.singleTouchTrackersByID.itervalues() if x.action==action_hover}
+		excludeHoverSet={x for x in tracker.iterAllRawSingleTouchTrackers() if x.action==action_hover}
+		return self.makePreheldTrackerFromSingleTouchTrackers(curHoverSet-excludeHoverSet)
 
 	def update(self,ID,x,y,complete=False):
 		"""
 		Called to Alert the multiTouch tracker of a new, moved or completed contact (finger touch).
 		It creates new single trackers or updates existing ones, and queues/processes multi trackers for later emition.
 		""" 
-		#See if we know about this finger
-		tracker=self.singleTouchTrackersByID.get(ID)
-		if not tracker:
-			if not complete:
-				#This is a new contact (finger) so start tracking it
-				self.singleTouchTrackersByID[ID]=SingleTouchTracker(ID,x,y)
-			return
-		#We already know about this finger
-		#Update its position and completion status
-		#But also find out its action before and after the update to decide what to do with it
-		oldAction=tracker.action
-		tracker.update(x,y,complete)
-		newAction=tracker.action
-		if complete: #This finger has broken contact
-			#Forget about this finger
-			del self.singleTouchTrackersByID[ID]
-			#A completed hover should be a hoverUp
-			if newAction==action_hover:
-				newAction=action_hoverUp
-		#if the action changed and its not unknown, then we will be queuing it
-		if newAction!=oldAction and newAction!=action_unknown:
-			if newAction==action_hover:
-				#New hovers must be queued as hover down
-				newAction=action_hoverDown
-			#for most  gestures the start coordinates are what we want to emit with trackers 
-			#But hovers should always use their current coordinates
-			x,y=(tracker.x,tracker.y) if newAction in hoverActions else (tracker.startX,tracker.startY)
-			#We keep a count of held fingers as a modification  for gesutres.
-			#We must decrement the count before queuing a hover up, but incrementing for hoverDown happens after queuing.
-			#Otherwize hoverDowns and hoverUps would accidently get their own heldFinger modifiers.
-			if oldAction==action_hover and newAction==action_hoverUp:
-				self.numHeldFingers-=1
-			#Queue the tracker for processing or emition
-			self.addMultiTouchTracker(MultiTouchTracker(newAction,x,y,tracker.startTime,time.time(),1,1,self.numHeldFingers))
-			if newAction==action_hoverDown:
-				self.numHeldFingers+=1
+		with self._lock:
+			#See if we know about this finger
+			tracker=self.singleTouchTrackersByID.get(ID)
+			if not tracker:
+				if not complete:
+					#This is a new contact (finger) so start tracking it
+					self.singleTouchTrackersByID[ID]=SingleTouchTracker(ID,x,y)
+					self.numUnknownTrackers+=1
+				return
+			#We already know about this finger
+			#Update its position and completion status
+			#But also find out its action before and after the update to decide what to do with it
+			oldAction=tracker.action
+			tracker.update(x,y,complete)
+			newAction=tracker.action
+			if (oldAction==action_unknown and newAction!=action_unknown):
+				self.numUnknownTrackers-=1
+			if complete: #This finger has broken contact
+				#Forget about this finger
+				del self.singleTouchTrackersByID[ID]
+				if tracker.action==action_unknown:
+					self.numUnknownTrackers-=1
+			#if the action changed and its not unknown, then we will be queuing it
+			if newAction!=oldAction and newAction!=action_unknown:
+				if newAction==action_hover:
+					#New hovers must be queued as holds 
+					newAction=action_hold
+				#for most  gestures the start coordinates are what we want to emit with trackers 
+				#But hovers should always use their current coordinates
+				x,y=(tracker.x,tracker.y) if newAction in hoverActions else (tracker.startX,tracker.startY)
+				#Queue the tracker for processing or emition
+				self.processAndQueueMultiTouchTracker(MultiTouchTracker(newAction,x,y,tracker.startTime,time.time(),rawSingleTouchTracker=tracker))
 
-	def addMultiTouchTracker(self,tracker):
+	def makeMergedTrackerIfPossible(self,oldTracker,newTracker):
+		if newTracker.action==oldTracker.action and  newTracker.startTime<oldTracker.endTime and oldTracker.startTime<newTracker.endTime and oldTracker.actionCount==newTracker.actionCount==1:
+			#The old and new tracker are the same kind of action, they are not themselves plural actions, and their start and end times overlap
+			#Therefore they should be treeted as one multiFingered action
+			childTrackers=[]
+			childTrackers.extend(oldTracker.childTrackers) if oldTracker.numFingers>1 else childTrackers.append(oldTracker)
+			childTrackers.extend(newTracker.childTrackers) if newTracker.numFingers>1 else childTrackers.append(newTracker)
+			numFingers=oldTracker.numFingers+newTracker.numFingers
+			avgX=sum(t.x for t in childTrackers)/numFingers
+			avgY=sum(t.y for t in childTrackers)/numFingers
+			mergedTracker=MultiTouchTracker(newTracker.action,avgX,avgY,oldTracker.startTime,newTracker.endTime,numFingers,newTracker.actionCount,pluralTimeout=newTracker.pluralTimeout)
+			mergedTracker.childTrackers=childTrackers
+		elif self.numUnknownTrackers==0 and newTracker.pluralTimeout is not None and newTracker.startTime>=oldTracker.endTime and newTracker.startTime<oldTracker.pluralTimeout and newTracker.action==oldTracker.action and oldTracker.numFingers==newTracker.numFingers:
+			#The new and old action are   the same and allow pluralising and have the same number of fingers and there are no other unknown trackers left and they do not overlap in time
+			#Therefore they should be treeted as 1 plural action (e.g. double tap)
+			mergedTracker=MultiTouchTracker(newTracker.action,oldTracker.x,oldTracker.y,oldTracker.startTime,newTracker.endTime,newTracker.numFingers,oldTracker.actionCount+newTracker.actionCount,pluralTimeout=newTracker.pluralTimeout)
+			mergedTracker.childTrackers.extend(oldTracker.childTrackers) if oldTracker.actionCount>1 else mergedTracker.childTrackers.append(oldTracker)
+			mergedTracker.childTrackers.extend(newTracker.childTrackers) if newTracker.actionCount>1 else mergedTracker.childTrackers.append(newTracker)
+		elif self.numUnknownTrackers==0 and newTracker.action==action_hold and oldTracker.action==action_tap and newTracker.numFingers==oldTracker.numFingers and newTracker.startTime>oldTracker.endTime:
+			#A tap and then a hover down  is a tapAndHold
+			mergedTracker=MultiTouchTracker(action_tapAndHold,oldTracker.x,oldTracker.y,oldTracker.startTime,newTracker.endTime,newTracker.numFingers,oldTracker.actionCount,pluralTimeout=newTracker.pluralTimeout)
+			mergedTracker.childTrackers.append(oldTracker)
+			mergedTracker.childTrackers.append(newTracker)
+		else: #They don't match, go to the next one
+			return
+		return mergedTracker
+
+	def processAndQueueMultiTouchTracker(self,tracker):
 		"""Queues the given tracker, replacing old trackers with a multiFingered plural action where possible"""
 		#Reverse iterate through the existing queued trackers comparing the given tracker to each of them
 		#as L{emitTrackers} constantly dequeues, the queue only contains trackers newer than multiTouchTimeout, though may contain more if there are still unknown singleTouchTrackers around.
 		for index in xrange(len(self.multiTouchTrackers)):
-			index=-1-index
+			index=len(self.multiTouchTrackers)-1-index
 			delayedTracker=self.multiTouchTrackers[index]
-			#We never want to merge actions if the held fingers modifier has changed at all\
-			if tracker.numHeldFingers==delayedTracker.numHeldFingers:
-				if tracker.action==delayedTracker.action and delayedTracker.startTime<=tracker.startTime<delayedTracker.endTime and delayedTracker.actionCount==tracker.actionCount==1:
-					#The old and new tracker are the same kind of action, they are not themselves plural actions, and their start and end times overlap
-					#Therefore they should be treeted as one multiFingered action
-					delayedTracker.numFingers+=tracker.numFingers
-				elif tracker.action==action_tap==delayedTracker.action and delayedTracker.numFingers==tracker.numFingers:
-					#The new and old action are  both tap and have the same number of fingers, but they do not overlap in time
-					#Therefore they should be treeted as 1 plural action (e.g. double tap)
-					delayedTracker.actionCount+=tracker.actionCount
-				elif tracker.action==action_hoverDown and delayedTracker.action==action_tap and tracker.numFingers==delayedTracker.numFingers:
-					#A tap and then a hover down is a tapAndHold
-					delayedTracker.action=action_tapAndHold
-				else: #They don't match, go to the next one
-					continue
-				#The old tracker's finger count or repete count was affected by the new tracker, therefore
-				#Update the old tracker's times to match the new tracker, and remove an requeue the old action for further processing
-				#Its necessary to reprocess to catch certain plural trackers (e.g. 1 finger tap turns to 2 finger tap, but later can match a previous 2 finger tap which makes a 2 finger double tap).
+			mergedTracker=self.makeMergedTrackerIfPossible(delayedTracker,tracker)
+			if mergedTracker:
+				# The trackers were successfully merged
+				# remove the old one from the queue, and queue the merged one for possible further matching
 				del self.multiTouchTrackers[index]
-				delayedTracker.startTime=tracker.startTime
-				delayedTracker.endTime=tracker.endTime
-				self.addMultiTouchTracker(delayedTracker)
-				break
-		else: #The new tracker did not affect any old tracker, so really queue it. 
-			if tracker.action!=action_hoverDown:
-				self.multiTouchTrackers.append(tracker)
+				self.processAndQueueMultiTouchTracker(mergedTracker)
+				return
+		else:
+			self.multiTouchTrackers.append(tracker)
 
 	pendingEmitInterval=None #: If set: how long to wait before calling emitTrackers again as trackers are still in the queue 
 	def emitTrackers(self):
@@ -204,28 +300,48 @@ class TrackerManager(object):
 		A part from a timeout, trackers are also not emitted if there are other fingers touching that still have an unknown action. 
 		If there are no queued trackers to yield but there is a hover tracker, a hover action is yielded instead.
 		"""
-		self.pendingEmitInterval=None
-		t=time.time()
-		hasUnknownTrackers=False
-		lastHoverTracker=None
-		#Check to see if there are any unknown trackers, and also find the most recent hover tracker if any.
-		for tracker in self.singleTouchTrackersByID.itervalues():
-			if tracker.action==action_hover:
-				lastHoverTracker=tracker
-			if tracker.action==action_unknown:
-				hasUnknownTrackers=True
-		foundTrackers=False
-		#Only emit trackers if there are not unknown actions
-		if not hasUnknownTrackers:
-			for tracker in list(self.multiTouchTrackers):
-				#All trackers can be emitted with no delay except for tap which must wait for the timeout (to detect plural taps)
-				trackerTimeout=(tracker.startTime+multitouchTimeout)-t if tracker.action==action_tap else 0 
-				if trackerTimeout<=0: 
-					self.multiTouchTrackers.remove(tracker)
-					foundTrackers=True
-					yield tracker
-				else:
-					self.pendingEmitInterval=min(self.pendingEmitInterval,trackerTimeout) if self.pendingEmitInterval else trackerTimeout
-		#If no tracker could be emitted, at least emit the most recent  hover tracker if there is one
-		if not foundTrackers and lastHoverTracker:
-			yield MultiTouchTracker(lastHoverTracker.action,lastHoverTracker.x,lastHoverTracker.y,lastHoverTracker.startTime,t,1,1,self.numHeldFingers-1)
+		with self._lock:
+			self.pendingEmitInterval=None
+			t=time.time()
+			# yield hover ups for complete hovers from most recent backwards
+			for singleTouchTracker in list(self.curHoverStack): 
+				if singleTouchTracker.complete:
+					self.curHoverStack.remove(singleTouchTracker)
+					tracker=MultiTouchTracker(action_hoverUp,singleTouchTracker.x,singleTouchTracker.y,singleTouchTracker.startTime,time.time())
+					preheldTracker=self.makePreheldTrackerFromSingleTouchTrackers(self.curHoverStack)
+					yield preheldTracker,tracker
+			#Only emit trackers if there are not unknown actions
+			hasUnknownTrackers=self.numUnknownTrackers
+			if not hasUnknownTrackers:
+				for tracker in list(self.multiTouchTrackers):
+					# isolated holds can be dropped as we only care when they are tapAndHolds (and preheld is handled later)
+					#All trackers can be emitted with no delay except for tap which must wait for the timeout (to detect plural taps)
+					trackerTimeout=tracker.pluralTimeout-t if tracker.pluralTimeout is not None else 0 
+					if trackerTimeout<=0: 
+						self.multiTouchTrackers.remove(tracker)
+						# isolated holds should not be emitted as they are covered by hover downs later
+						if tracker.action==action_hold:
+							continue
+						preheldTracker=self.makePreheldTrackerFromSingleTouchTrackers(self.curHoverStack)
+						# If this tracker was made up of any new hovers (e.g. a tapAndHold) they should be quietly added to the current hover stack so that hover downs are not produced
+						for singleTouchTracker in tracker.iterAllRawSingleTouchTrackers():
+							if singleTouchTracker.action==action_hover and singleTouchTracker not in self.curHoverStack:
+								self.curHoverStack.append(singleTouchTracker)
+						yield preheldTracker,tracker
+					else:
+						self.pendingEmitInterval=min(self.pendingEmitInterval,trackerTimeout) if self.pendingEmitInterval else trackerTimeout
+			# yield hover downs for any new hovers
+			# But only once  there are no more trackers in the queue waiting to timeout (E.g. a hold for a tapAndHold)
+			if len(self.multiTouchTrackers)==0:
+				for singleTouchTracker in self.singleTouchTrackersByID.itervalues():
+					if singleTouchTracker.action==action_hover and singleTouchTracker not in self.curHoverStack:
+						self.curHoverStack.append(singleTouchTracker)
+						tracker=MultiTouchTracker(action_hoverDown,singleTouchTracker.x,singleTouchTracker.y,singleTouchTracker.startTime,time.time())
+						preheldTracker=self.makePreheldTrackerFromSingleTouchTrackers(self.curHoverStack[:-1])
+						yield preheldTracker,tracker
+			# yield a hover for the most recent hover
+			if len(self.curHoverStack)>0:
+				singleTouchTracker=self.curHoverStack[-1]
+				tracker=MultiTouchTracker(action_hover,singleTouchTracker.x,singleTouchTracker.y,singleTouchTracker.startTime,time.time())
+				preheldTracker=self.makePreheldTrackerFromSingleTouchTrackers(self.curHoverStack[:-1])
+				yield preheldTracker,tracker

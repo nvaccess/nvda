@@ -154,6 +154,7 @@ class EditableText(editableText.EditableText, NVDAObject):
 		# As Pressing enter on an edit field can cause modal dialogs to appear, yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze. 
 		if self.announceNewLineText and self.processID!=os.getpid():
 			self.bindGesture("kb:enter","caret_newLine")
+			self.bindGesture("kb:numpadEnter","caret_newLine")
 
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
@@ -421,7 +422,7 @@ class RowWithFakeNavigation(NVDAObject):
 
 	def _moveToColumn(self, obj):
 		if not obj:
-			ui.message(_("edge of table"))
+			ui.message(_("Edge of table"))
 			return
 		if obj is not self:
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.

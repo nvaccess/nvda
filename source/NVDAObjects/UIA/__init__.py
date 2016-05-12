@@ -495,7 +495,14 @@ class UIA(Window):
 
 	def _get_role(self):
 		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
+		if role==controlTypes.ROLE_BUTTON:
+			try:
+				s=self.UIACachedStatesElement.getCachedPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
+			except COMError:
+				s=UIAHandler.handler.reservedNotSupportedValue
+			if s!=UIAHandler.handler.reservedNotSupportedValue:
+				role=controlTypes.ROLE_TOGGLEBUTTON
+		elif role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
 			superRole=super(UIA,self).role
 			if superRole!=controlTypes.ROLE_WINDOW:
 				role=superRole
@@ -565,7 +572,7 @@ class UIA(Window):
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
-			if role==controlTypes.ROLE_BUTTON:
+			if role==controlTypes.ROLE_TOGGLEBUTTON:
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_PRESSED)
 			else:
@@ -640,7 +647,11 @@ class UIA(Window):
 	def _get_children(self):
 		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		try:
+			cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		except COMError as e:
+			log.debugWarning("Could not fetch cached children from UIA element: %s"%e)
+			return super(UIA,self).children
 		children=[]
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.

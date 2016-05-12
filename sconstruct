@@ -73,7 +73,7 @@ vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you 
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
 #Base environment for this and sub sconscripts
-env = Environment(variables=vars,HOST_ARCH='x86',tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
+env = Environment(variables=vars,HOST_ARCH='x86',tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen','recursiveInstall'])
 
 # speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')

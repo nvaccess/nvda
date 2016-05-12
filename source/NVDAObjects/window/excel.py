@@ -72,6 +72,98 @@ xlCellTypeSameFormatConditions=-4173      # from enum XlCellType
 xlCellTypeSameValidation      =-4175      # from enum XlCellType
 xlCellTypeVisible             =12         # from enum XlCellType
 
+#Excel Cell Patterns (from enum XlPattern)
+xlPatternAutomatic = -4105
+xlPatternChecker = 9
+xlPatternCrissCross = 16
+xlPatternDown = -4121
+xlPatternGray16 = 17
+xlPatternGray25 = -4124
+xlPatternGray50 = -4125
+xlPatternGray75 = -4126
+xlPatternGray8 = 18
+xlPatternGrid = 15
+xlPatternHorizontal = -4128
+xlPatternLightDown = 13
+xlPatternLightHorizontal = 11
+xlPatternLightUp = 14
+xlPatternLightVertical = 12
+xlPatternNone = -4142
+xlPatternSemiGray75 = 10
+xlPatternSolid = 1
+xlPatternUp = -4162
+xlPatternVertical = -4166
+xlPatternLinearGradient = 4000
+xlPatternRectangularGradient = 4001
+
+backgroundPatternLabels={
+		# See https://msdn.microsoft.com/en-us/library/microsoft.office.interop.excel.xlpattern.aspx
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Excel controls the pattern.
+		xlPatternAutomatic:_("automatic"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Checkerboard
+		xlPatternChecker:_("checker"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Criss-cross lines
+		xlPatternCrissCross:_("crisscross"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark diagonal lines running from the upper left to the lower right
+		xlPatternDown:_("down"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 16% gray
+		xlPatternGray16:_("gray16"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 25% gray
+		xlPatternGray25:_("gray25"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 50% gray
+		xlPatternGray50:_("gray50"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 75% gray
+		xlPatternGray75:_("gray75"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 8% gray
+		xlPatternGray8:_("gray8"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Grid
+		xlPatternGrid:_("grid"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark horizontal lines
+		xlPatternHorizontal:_("horizontal"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light diagonal lines running from the upper left to the lower right
+		xlPatternLightDown:_("light down"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light horizontal lines
+		xlPatternLightHorizontal:_("light horizontal"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light diagonal lines running from the lower left to the upper right
+		xlPatternLightUp:_("light up"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light vertical bars
+		xlPatternLightVertical:_("light vertical"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# No pattern
+		xlPatternNone:_("none"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 75% dark moire
+		xlPatternSemiGray75:_("semi gray75"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Solid color
+		xlPatternSolid:_("solid"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark diagonal lines running from the lower left to the upper right
+		xlPatternUp:_("up"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark vertical bars
+		xlPatternVertical:_("vertical"),
+		# Translators: A type of background pattern in Microsoft Excel.
+		xlPatternLinearGradient:_("linear gradient"),
+		# Translators: A type of background pattern in Microsoft Excel.
+		xlPatternRectangularGradient:_("rectangular gradient"),
+	}
+
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
 
@@ -173,7 +265,8 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 	def __init__( self , nodeType , document , commentObject , commentCollection ):
-		self.label = commentObject.address(False,False,1,False) + " " + commentObject.Comment.Text()
+		self.comment=commentObject.comment
+		self.label = commentObject.address(False,False,1,False) + " " + (self.comment.Text() if self.comment else "")
 		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
 
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
@@ -240,8 +333,10 @@ class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 		try:
 			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
 		except(COMError):
-
 			return None
+
+	def filter(self,item):
+		return item is not None and item.comment is not None
 
 class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
@@ -291,7 +386,7 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelSheetQuickNavItem#: the QuickNavItem class that should be instantiated and emitted. 
 	def collectionFromWorksheet( self , worksheetObject ):
 		try:
-			return worksheetObject.Application.ActiveWorkbook.Worksheets
+			return worksheetObject.Application.ActiveWorkbook.sheets
 		except(COMError):
 			return None
 
@@ -442,16 +537,16 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 	ELEMENT_TYPES=(
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("chart", _("&Chart")),
+		("chart", _("&Charts")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("comment", _("C&omment")),
+		("comment", _("C&omments")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("formula", _("&Formula")),
+		("formula", _("Fo&rmulas")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("sheet", _("&Sheet")),
+		("sheet", _("&Sheets")),
 	)
 
 class ExcelBase(Window):
@@ -595,6 +690,8 @@ class ExcelWorksheet(ExcelBase):
 				if maxCell:
 					maxRowNumber=maxCell.row
 					maxColumnNumber=maxCell.column
+			if maxColumnNumber is None:
+				maxColumnNumber=self._getMaxColumnNumberForHeaderCell(headerCell)
 			headerCellTracker.addHeaderCellInfo(rowNumber=headerCell.row,columnNumber=headerCell.column,rowSpan=headerCell.rows.count,colSpan=headerCell.columns.count,minRowNumber=minRowNumber,maxRowNumber=maxRowNumber,minColumnNumber=minColumnNumber,maxColumnNumber=maxColumnNumber,name=fullName,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
 
 	def _get_headerCellTracker(self):
@@ -628,9 +725,18 @@ class ExcelWorksheet(ExcelBase):
 			self.excelWorksheetObject.parent.names(oldInfo.name).delete()
 			oldInfo.name=name
 		else:
-			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+			maxColumnNumber=self._getMaxColumnNumberForHeaderCell(cell.excelCellObject)
+			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,maxColumnNumber=maxColumnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
 		self.excelWorksheetObject.parent.names.add(name,cell.excelRangeObject)
 		return True
+
+	def _getMaxColumnNumberForHeaderCell(self,excelCell):
+		try:
+			r=excelCell.currentRegion
+		except COMError:
+			return excelCell.column
+		columns=r.columns
+		return columns[columns.count].column+1
 
 	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
 		if not isColumnHeader and not isRowHeader: 
@@ -657,13 +763,7 @@ class ExcelWorksheet(ExcelBase):
 		except COMError:
 			log.debugWarning("Possibly protected sheet")
 			return None
-		if cellRegion.count==1:
-			minRow=maxRow=minColumn=maxColumn=None
-		else:
-			rc=cellRegion.address(True,True,xlRC,False)
-			g=[int(x) for x in re_absRC.match(rc).groups()]
-			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
-		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
+		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
@@ -781,13 +881,18 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+pageDown",
 		"kb:control+a",
 		"kb:control+v",
+		"kb:shift+f11",
 	)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
-		fontObj=self.obj.excelCellObject.font
+		if (self.obj.excelCellObject.Application.Version > "12.0"):
+			cellObj=self.obj.excelCellObject.DisplayFormat
+		else:
+			cellObj=self.obj.excelCellObject
+		fontObj=cellObj.font
 		if formatConfig['reportAlignment']:
 			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
 			if value:
@@ -817,7 +922,13 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			except COMError:
 				pass
 			try:
-				formatField['background-color']=colors.RGB.fromCOLORREF(int(self.obj.excelCellObject.interior.color))
+				pattern = cellObj.Interior.Pattern
+				formatField['background-pattern'] = backgroundPatternLabels.get(pattern)
+				if pattern in (xlPatternLinearGradient, xlPatternRectangularGradient):
+					formatField['background-color']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(1).Color)))
+					formatField['background-color2']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(2).Color)))
+				else:
+					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)
@@ -868,7 +979,7 @@ class ExcelCell(ExcelBase):
 		elif scriptCount==1:
 			if self.parent.forgetHeaderCell(self,isColumnHeader=True,isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
-				ui.message(_("removed {address}    from column headers").format(address=self.cellCoordsText))
+				ui.message(_("Removed {address}    from column headers").format(address=self.cellCoordsText))
 			else:
 				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
@@ -890,7 +1001,7 @@ class ExcelCell(ExcelBase):
 		elif scriptCount==1:
 			if self.parent.forgetHeaderCell(self,isColumnHeader=False,isRowHeader=True):
 				# Translators: a message reported in the SetRowHeader script for Excel.
-				ui.message(_("removed {address}    from row headers").format(address=self.cellCoordsText))
+				ui.message(_("Removed {address}    from row headers").format(address=self.cellCoordsText))
 			else:
 				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(_("Cannot find {address}    in row headers").format(address=self.cellCoordsText))
@@ -968,8 +1079,27 @@ class ExcelCell(ExcelBase):
 	def _get_name(self):
 		return self.excelCellObject.Text
 
+	def _getCurSummaryRowState(self):
+		try:
+			row=self.excelCellObject.rows[1]
+			if row.summary:
+				return controlTypes.STATE_EXPANDED if row.showDetail else controlTypes.STATE_COLLAPSED
+		except COMError:
+			pass
+
+	def _getCurSummaryColumnState(self):
+		try:
+			col=self.excelCellObject.columns[1]
+			if col.summary:
+				return controlTypes.STATE_EXPANDED if col.showDetail else controlTypes.STATE_COLLAPSED
+		except COMError:
+			pass
+
 	def _get_states(self):
 		states=super(ExcelCell,self).states
+		summaryCellState=self._getCurSummaryRowState() or self._getCurSummaryColumnState()
+		if summaryCellState:
+			states.add(summaryCellState)
 		if self.excelCellObject.HasFormula:
 			states.add(controlTypes.STATE_HASFORMULA)
 		try:
@@ -1134,6 +1264,20 @@ class ExcelCell(ExcelBase):
 			return _("Input Message is {message}").format( message = inputMessage)
 		else:
 			return None
+
+	def _get_positionInfo(self):
+		try:
+			level=int(self.excelCellObject.rows[1].outlineLevel)-1
+		except COMError:
+			level=None
+		if level==0:
+			try:
+				level=int(self.excelCellObject.columns[1].outlineLevel)-1
+			except COMError:
+				level=None
+		if level==0:
+			level=None
+		return {'level':level}
 
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment

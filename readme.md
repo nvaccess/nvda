@@ -35,10 +35,9 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.10, 32 bit
-* Microsoft Visual Studio 2012 Update 1 or later (Express for Windows Desktop, or Professional)
-	* [Download for Visual Studio Express 2012 (Windows Desktop)](http://www.microsoft.com/en-au/download/details.aspx?id=34673) (does not include updates)
-	* [Download for Visual Studio 2012 latest update package](http://go.microsoft.com/fwlink/?LinkId=301713)
+* [Python](http://www.python.org/), version 2.7.11, 32 bit
+* Microsoft Visual Studio 2015 (Express for Desktop, or Community with VC++ and Windows SDK 7.1A support):
+	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
@@ -51,17 +50,18 @@ For reference, the following dependencies are included in Git submodules:
 * [comtypes](http://sourceforge.net/projects/comtypes/), version 0.6.2
 * [wxPython](http://www.wxpython.org/), version 3.0.2.0
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
-* [eSpeak](http://espeak.sourceforge.net/), version 1.48.04
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
+* [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 2.6.4
+* [liblouis](http://www.liblouis.org/), version 2.6.5
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
 * [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 2.3.2
+* [SCons](http://www.scons.org/), version 2.4.1
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
@@ -72,7 +72,7 @@ For reference, the following dependencies are included in Git submodules:
 * SyncBraille.dll, version 1.0.0.1
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
-* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.46
+* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51
 * [NSIS UAC plug-in](http://nsis.sourceforge.net/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303

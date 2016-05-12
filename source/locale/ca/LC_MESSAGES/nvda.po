@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"POT-Creation-Date: 2016-02-05 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Mireia Ribera <ribera@ub.edu>\n"
+"Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
 "Alcaraz<rubenalcarazmartinez@gmail.com>, Santi Moese <santispock@gmail.com> "
 "i Marina Salse <salse@ub.edu>.Grup de Recerca Adaptabit de la Universitat de "
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.6.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -87,6 +87,7 @@ msgid "unknown input method"
 msgstr "mètode d'entrada desconegut"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -127,6 +128,21 @@ msgstr "formulari"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "regió"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "Sense atenuació"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Atenua en emetre veu i sons"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "Atenua sempre"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -410,6 +426,11 @@ msgstr "Manipuri grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongol"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Marathi grau 1"
 
@@ -458,6 +479,12 @@ msgstr "Nepalès grau 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Polish 8 dot computer braille"
+msgstr "Braille d'ordinador espanyol de 8 punts"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -664,6 +691,18 @@ msgstr "permet fer clic"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "7 i 8 punts"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "8 punts"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Tots els punts"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -688,6 +727,7 @@ msgstr "no %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} de {total}"
 
@@ -1306,6 +1346,25 @@ msgstr "tots"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "caràcter"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "mai"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "sempre"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+#, fuzzy
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "nivell de símbol %s"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2737,6 +2796,11 @@ msgstr "retallat"
 msgid "overflowing"
 msgstr "desbordament"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+#, fuzzy
+msgid "unlocked"
+msgstr "sense activar"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "sense seleccionar"
@@ -2880,6 +2944,18 @@ msgstr "Entrada"
 #, fuzzy
 msgid "Document formatting"
 msgstr "Formatació de documents"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "No es soporta l'atenuació"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Avança entre els modes d'atenuació de l'àudio que determinen quan NVDA "
+"redueix el volum de la resta de sons"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -3089,19 +3165,16 @@ msgid "Toggles on and off the reporting of revisions"
 msgstr "Activa i desactiva la verbalització de les revisions"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis off"
-msgstr "Desactiva l'informe de les pàgines"
+msgstr "Desactiva l'informe de l'èmfasi"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis on"
-msgstr "Activa l'informe de les pàgines"
+msgstr "Activa l'informe de l'èmfasi"
 
 #. Translators: Input help mode message for toggle report emphasis command.
-#, fuzzy
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Activa i desactiva la verbalització de les pàgines"
+msgstr "Activa i desactiva l'informe de l'èmfasi"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3856,6 +3929,7 @@ msgid "AC power on"
 msgstr "font d'alimentació activada"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} hores i {minutes:d} minuts restants"
 
@@ -4022,6 +4096,31 @@ msgstr ""
 "Commuta entre l’activació i la desactivació del seguiment del braille entre "
 "el focus i la posició de revisió"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Cursor braille desactivat"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Cursor braille activat"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Commuta entre l’activació i la desactivació del cursor braille"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "El cursor braille s'ha aturat"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, fuzzy, python-format
+msgid "Braille cursor %s"
+msgstr "El braille segueix a %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Mou-te per les formes del cursor braille"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "No hi ha text al porta-retalls"
@@ -4121,6 +4220,11 @@ msgid ""
 msgstr ""
 "Salta a l’objecte posterior en una vista plana de la jerarquia d’objectes de "
 "navegació"
+
+#. Translators: a message when there is no previous object when navigating
+#, fuzzy
+msgid "no previous"
+msgstr "Aquest és el primer"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4651,15 +4755,20 @@ msgstr "sense sagnat"
 msgid "%d characters"
 msgstr "%d caràcters"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-#, python-format
-msgid "selecting %s"
-msgstr "selecció de %s en curs"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
+#, fuzzy, python-format
+msgid "%s selected"
+msgstr "seleccionat"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-#, python-format
-msgid "unselecting %s"
-msgstr "%s no seleccionat"
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, fuzzy, python-format
+msgid "%s unselected"
+msgstr "seleccionat"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, fuzzy, python-format
+msgid "%s selected instead"
+msgstr "%s seleccionat"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4686,6 +4795,7 @@ msgid "column %s"
 msgstr "columna %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "amb {rowCount} files i {columnCount} columnes"
 
@@ -4735,16 +4845,19 @@ msgstr "estil per defecte"
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} sobre {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "fons {backgroundColor}"
 
@@ -4755,24 +4868,20 @@ msgid "line %s"
 msgstr "línia %s"
 
 #. Translators: Reported when text is marked as having been inserted
-#, fuzzy
 msgid "inserted"
-msgstr "inserció"
+msgstr "inserit"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
-#, fuzzy
 msgid "not inserted"
-msgstr "sense seleccionar"
+msgstr "sense inserir"
 
 #. Translators: Reported when text is marked as having been deleted
-#, fuzzy
 msgid "deleted"
-msgstr "Supr"
+msgstr "eliminat"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
-#, fuzzy
 msgid "not deleted"
-msgstr "sense seleccionar"
+msgstr "sense eliminar"
 
 #. Translators: Reported when text is revised.
 #, python-format
@@ -4780,36 +4889,33 @@ msgid "revised %s"
 msgstr "%s revisat"
 
 #. Translators: Reported when text is not revised.
-#, fuzzy, python-format
+#, python-format
 msgid "no revised %s"
-msgstr "%s revisat"
+msgstr "%s no revisat"
 
 #. Translators: Reported when text is marked
-#, fuzzy
 msgid "marked"
-msgstr "Inici del marcat"
+msgstr "marcat"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not marked"
-msgstr "Inici del marcat"
+msgstr "sense marcar"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
-msgstr ""
+msgstr "negreta"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
-#, fuzzy
 msgid "not strong"
-msgstr "no %s"
+msgstr "sense negreta"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
-msgstr ""
+msgstr "èmfasi"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
-msgstr ""
+msgstr "sense èmfasi"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -4950,6 +5056,7 @@ msgid "out of table"
 msgstr "fora de la taula"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "taula amb {columnCount} columnes i {rowCount} files"
 
@@ -5030,22 +5137,27 @@ msgid "object mode"
 msgstr "mode d'objecte"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "simple {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "doble {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "triple {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "quàdruple {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} amb {numFingers} dits "
 
@@ -5123,6 +5235,7 @@ msgstr "Actualització de NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Versió {version} de NVDA disponible."
 
@@ -5218,9 +5331,11 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Un lector de pantalla gratuït i de codi obert per a Microsoft Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} col·laboradors de NVDA"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5265,6 +5380,7 @@ msgstr ""
 "Access. Ho pots fer seleccionant Fes una donació des del menú NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5273,6 +5389,7 @@ msgstr ""
 "Has d’estar executant NVDA per poder instal•lar complements."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5284,10 +5401,12 @@ msgstr ""
 "cent de la pantalla"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} com a {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -5442,10 +5561,12 @@ msgid "Waiting for Outlook..."
 msgstr "S'està esperant a l'Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} fins a {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Cita {subject}, {time}"
 
@@ -5607,78 +5728,97 @@ msgid "Master Thumbnails"
 msgstr "Patró de miniatures"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Diapositiva {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "davant a l'esquerra de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "darrere a l'esquerra de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "davant a sobre de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "darrere a sobre de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "davant a la dreta de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "darrere a la dreta de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "davant a sota de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "darrere a sota de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "cobreix  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "darrere {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} punts des de la vora esquerra de la diapositiva"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Fora de la vora esquerra de la diapositiva per {distance:.3g} punts"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "a {distance:.3g} punts de la vora superior de la diapositiva"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Fora de la vora superior de la diapositiva per {distance:.3g} punts"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "a {distance:.3g} punts des de la vora dreta de la diapositiva"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Fora de la vora dreta de la diapositiva per {distance:.3g} punts"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "a {distance:.3g} punts des de la vora inferior de la diapositiva"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Fora de la vora inferior de la diapositiva per {distance:.3g} punts"
 
@@ -5693,10 +5833,12 @@ msgstr ""
 "l'usuari pot llegir amb NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Notes de la presentació de diapositives - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Presentació de diapositives - {slideName}"
 
@@ -5780,6 +5922,7 @@ msgstr "Línies braille Baum/HumanWare/APH"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Sèrie: {portName}"
 
@@ -5792,9 +5935,8 @@ msgid "HumanWare Brailliant BI/B series"
 msgstr "sèries HumanWare Brailliant BI/B"
 
 #. Translators: The name of a braille display.
-#, fuzzy
 msgid "EcoBraille displays"
-msgstr "Línia EcoBraille"
+msgstr "Terminal EcoBraille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -6271,6 +6413,7 @@ msgid "Choose Add-on Package File"
 msgstr "Tria el fitxer del complement"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Complement per a NVDA (*.{ext})"
 
@@ -6284,6 +6427,7 @@ msgstr ""
 "format no és el correcte"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6354,6 +6498,7 @@ msgid "Restart NVDA"
 msgstr "Reinicia NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6366,6 +6511,7 @@ msgstr ""
 "Descripció: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6629,6 +6775,7 @@ msgid ""
 msgstr "S'ha trobat una còpia anterior de NVDA al teu sistema. S'actualitzarà."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6909,6 +7056,10 @@ msgstr "&Sintetitzador:"
 #. headphones, etc.
 msgid "Output &device:"
 msgstr "Dispositiu de &sortida:"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Mode &d'atenuació de l'àudio:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -7477,9 +7628,18 @@ msgstr "Taula d'&entrada:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "E&xpandeix a braille d'ordinador la paraula sota el cursor"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+#, fuzzy
+msgid "&Show cursor"
+msgstr "cursor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Freqüència de parpelleig del cursor (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Forma del cur&sor:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7530,6 +7690,11 @@ msgstr "Símbol"
 msgid "Level"
 msgstr "Nivell"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Preserva"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Canvia el símbol"
@@ -7537,6 +7702,10 @@ msgstr "Canvia el símbol"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Nivell"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Envia el símbol actual al sintetitzador"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7560,6 +7729,7 @@ msgstr "&Filtra per:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7600,10 +7770,12 @@ msgid "word"
 msgstr "paraula"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "a {x}, {y}"
 
@@ -7661,6 +7833,7 @@ msgid "Taskbar"
 msgstr "Barra de tasques"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB vermell {rgb.red}, verd {rgb.green}, blau {rgb.blue}"
 
@@ -7674,30 +7847,51 @@ msgstr "crida"
 msgid "Desktop"
 msgstr "Escriptori"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "color predeterminat"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+#, fuzzy
+msgid "Unknown color"
+msgstr "color desconegut"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Aquesta cel·la no és editable"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Presenta una llista de gràfics, cel·les amb comentaris i cel·les amb fórmules"
+#, fuzzy
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Llista els tipus d'elements en aquest document"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+#, fuzzy
+msgid "&Charts"
 msgstr "&Gràfic"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
+#, fuzzy
+msgid "C&omments"
 msgstr "C&omentari"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
+#, fuzzy
+msgid "Fo&rmulas"
 msgstr "&Fórmula"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheets"
+msgstr "&Full"
+
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} fins a {end}"
 
@@ -7713,18 +7907,22 @@ msgstr ""
 "a la Configuració de formatació de document"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Estableix {address} com a inici de les capçaleres de columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Ja s'ha establert {address} com a inici de les capçaleres de columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "removed {address}    from column headers"
 msgstr "S'ha eliminat {address}    de les capÃ§aleres de columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "No s'ha trobat {address}    a les capçaleres de columna"
 
@@ -7739,18 +7937,22 @@ msgstr ""
 "cel·la com a capçalera de la columna."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Estableix {address} com a inici de les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Ja s'ha establert {address} com a inici de les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "removed {address}    from row headers"
 msgstr "S'ha eliminat {address}    de les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "No s'ha trobat {address}    en les capçaleres de les files"
 
@@ -7764,6 +7966,14 @@ msgstr ""
 "dreta. Si es prem dues vegades s'ometrà la configuració d'aquesta cel·la com "
 "a capçalera de fila."
 
+#, python-brace-format
+msgid "Input Message is {title}: {message}"
+msgstr "El missatge d'entrada és {title}: {message}"
+
+#, python-brace-format
+msgid "Input Message is {message}"
+msgstr "El missatge d'entrada és {message}"
+
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
 msgstr "No et trobes dins un comentari"
@@ -7773,10 +7983,12 @@ msgid "Reports the comment on the current cell"
 msgstr "Informa del comentari a la cel·la actual"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "S'està editant el comentari per a la cel·la {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} fins a {lastAddress} {lastContent}"
 
@@ -8131,6 +8343,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Dispersió amb línies suavitzades i sense marcadors de dades"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "El títol del gràfic és: {chartTitle} i el tipus és: {chartType}"
 
@@ -8158,6 +8371,7 @@ msgstr "Sèries"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "l'eix {axisName} és {axisTitle}"
 
@@ -8171,6 +8385,7 @@ msgid "There are total %d series in this chart"
 msgstr "Hi ha un total de %d sèries en aquest gràfic"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "sèries {number} {name}"
 
@@ -8196,6 +8411,7 @@ msgstr "punt de dades"
 msgid "item"
 msgstr "ítem"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Color de les sèries: {colorName} "
 
@@ -8285,51 +8501,61 @@ msgstr "Forma"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "sèrie {seriesName} {seriesIndex} de {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "no canvia des del punt {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Incrementat per {incrementValue} des del punt {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "Disminuït per {decrementValue} des del punt {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Categoria {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "valor {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " fracció {fractionValue:.2f} Percentatge {pointIndex} de {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} de {pointCount}"
 
@@ -8342,12 +8568,14 @@ msgid "Secondary"
 msgstr "Secundari"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Eix del gràfic, tipus igual {axisType}, grup igual {axisGroup}, Títol igual "
 "{axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Tipus de gràfic: {axisType}, grup: {axisGroup}"
 
@@ -8357,16 +8585,15 @@ msgstr "Títol de l'eix del gràfic"
 
 #. Translators: Indicates a trendline in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, fuzzy
 msgid "trendline"
-msgstr "Línia de tendència"
+msgstr "línia de tendència"
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-#, fuzzy
 msgid " squared "
-msgstr "Quadrat "
+msgstr "quadrat "
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "El títol del gràfic és {chartTitle}"
 
@@ -8375,6 +8602,7 @@ msgid "Untitled chart"
 msgstr "Gràfic sense títol"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8387,6 +8615,7 @@ msgid "Chart area "
 msgstr "Área del gràfic "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8413,6 +8642,7 @@ msgstr "Sense llegenda"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Entrada de la llegenda per les sèries {seriesName}, {seriesIndex} de "
@@ -8421,6 +8651,7 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Llegenda per les sèries  {seriesName} {seriesIndex} de {seriesCount}"
 
@@ -8522,10 +8753,11 @@ msgstr "Capçalera principal"
 msgid "Text frame"
 msgstr "Marc de text"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "comentari: {text} per {author} el {date}"
 
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text} per {author} el dia {date}"
 
@@ -8539,12 +8771,14 @@ msgid "%g pt"
 msgstr "%g pt"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Estableix la fila {rowNumber} columna {columnNumber}, com a inici de les "
 "capçaleres de columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8552,12 +8786,14 @@ msgstr ""
 "les capçaleres de la columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "S'ha eliminat fila {rowNumber}, columna {columnNumber} de les capçaleres de "
 "columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "No s'ha pogut trobar la fila {rowNumber} column {columnNumber} a les "
@@ -8574,12 +8810,14 @@ msgstr ""
 "cel·la com a capçalera de columna."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Estableix la fila {rowNumber} columna {columnNumber} com a inici de les "
 "capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8587,12 +8825,14 @@ msgstr ""
 "les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "S'ha eliminat fila {rowNumber}, columna {columnNumber} de les capçaleres de "
 "fila"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "No s'ha pogut trobar la fila {rowNumber} columna {columnNumber}  a les "
@@ -8649,35 +8889,43 @@ msgid "Justified"
 msgstr "Justificat"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "estil {styleName}, nivell d'esquema {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "tipus de lletra de {size:g} punts"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} caràcters"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} polzades"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centímetres"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} mil·límetres"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} punts"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} piques"
 
@@ -8703,12 +8951,29 @@ msgid "&Annotations"
 msgstr "&Anotacions"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
+#, fuzzy
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "sèries HIMS Braille Sense/Braille EDGE"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Presenta una llista de gràfics, cel·les amb comentaris i cel·les amb "
+#~ "fórmules"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "color predeterminat"
+
+#~ msgid "selecting %s"
+#~ msgstr "selecció de %s en curs"
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s no seleccionat"
 
 #~ msgid "unrevised"
 #~ msgstr "sense revisar"

@@ -224,16 +224,17 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if not windowHandle:
 		# We can't filter without a window handle.
 		return True
+	wClass = winUser.getClassName(windowHandle)
 	key = (eventName,
 		winUser.getWindowThreadProcessID(windowHandle)[0],
-		winUser.getClassName(windowHandle))
+		wClass)
 	if key in _acceptEvents:
 		return True
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
 	if eventName == "show":
 		# Only accept 'show' events for specific cases, as otherwise we get flooded.
-		return winUser.getClassName(windowHandle) in (
+		return wClass in (
 			"Frame Notification Bar", # notification bars
 			"tooltips_class32", # tooltips
 			"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate", # IMM candidates
@@ -241,7 +242,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		)
 	if eventName == "reorder":
 		# Prevent another flood risk.
-		return winUser.getClassName(windowHandle) == "TTrayAlert" # #4841: Skype
+		return wClass == "TTrayAlert" # #4841: Skype
 	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
 		# Toast notifications.
 		return True
@@ -251,8 +252,19 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# Platform API handlers will translate these events to focus events anyway,
 		# so we must allow them here.
 		return True
+	if windowHandle == winUser.getDesktopWindow():
+		# #5595: Events for the cursor get mapped to the desktop window.
+		return True
 
 	fg = winUser.getForegroundWindow()
+	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":
+		# #5504: In Office >= 2013 with the ribbon showing only tabs,
+		# when a tab is expanded, the window we get from the focus object is incorrect.
+		# This window isn't beneath the foreground window,
+		# so our foreground application checks fail.
+		# Just compare the root owners.
+		if winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER) == winUser.getAncestor(fg, winUser.GA_ROOTOWNER):
+			return True
 	if (winUser.isDescendantWindow(fg, windowHandle)
 			# #3899, #3905: Covers cases such as the Firefox Page Bookmarked window and OpenOffice/LibreOffice context menus.
 			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):

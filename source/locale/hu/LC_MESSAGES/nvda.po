@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-03 22:33+0100\n"
-"Last-Translator: OAron <oaron@nvda.hu>\n"
+"POT-Creation-Date: 2016-04-01 00:10+1000\n"
+"PO-Revision-Date: 2016-04-11 11:32+0100\n"
+"Last-Translator: OAron <info@o-soft.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,7 @@ msgid "unknown input method"
 msgstr "Ismeretlen beviteli mód"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -124,6 +125,21 @@ msgstr "űrlap"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "Terület"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "Soha"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Csak amikor a beszéd és a hangok egyszerre"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "Mindig"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -312,6 +328,11 @@ msgstr "Gudzsaráti, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Koiné Görög"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece) grade 1"
 msgstr "Görög, rövidítési fokozat 1"
 
@@ -402,6 +423,11 @@ msgstr "Manipuri, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongol"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "marathi, rövidítési fokozat 1"
 
@@ -449,6 +475,11 @@ msgstr "Nepáli, rövidítési fokozat 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Lengyel 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -655,6 +686,18 @@ msgstr "kat"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "7. és 8. pont"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "8. pont"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Minden pont"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -679,6 +722,7 @@ msgstr "nincs %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} per {total}"
 
@@ -727,11 +771,12 @@ msgstr "pont"
 msgid "space"
 msgstr "szóköz"
 
-msgid "focus mode"
+msgid "Focus mode"
 msgstr "Interaktív mód"
 
-msgid "browse mode"
-msgstr "böngésző mód"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "Böngésző mód"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -760,7 +805,7 @@ msgid "Lists various types of elements in this document"
 msgstr "Listázza a különböző típusú elemeket ebben a dokumentumban."
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+msgid "Activates the current object in the document"
 msgstr "Aktiválja az aktuális elemet a dokumentumban."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1266,8 +1311,9 @@ msgstr "Egy elemblokk (pl. lista vagy táblázat) elejéhez lép"
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "vége"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
+msgstr "Alja"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -2548,13 +2594,11 @@ msgstr "háttérszín"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "felső index"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "alsó index"
 
@@ -2830,11 +2874,11 @@ msgstr ""
 "pozíciójától."
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
+msgid "No selection"
 msgstr "nincs kijelölés"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+msgid "Copied to clipboard"
 msgstr "A vágólapra másolva."
 
 #. Translators: The name of a category of NVDA commands.
@@ -2891,6 +2935,18 @@ msgstr "Bevitel"
 msgid "Document formatting"
 msgstr "Dokumentum formázás"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "A hangerőigazítás nem támogatott."
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Váltogat a hangerőigazítás módjai közt, amivel meghatározható, hogy mikor "
+"halkítsa le az NVDA a többi hangot."
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "Bevitelsúgó bekapcsolva"
@@ -2927,7 +2983,7 @@ msgid ""
 msgstr "Felolvassa a kurzor alatti sort. Kétszer gyorsan megnyomva betűzi ezt."
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+msgid "Left click"
 msgstr "bal egérkattintás"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2935,7 +2991,7 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Egyszeri bal egérkattintást végez az egérmutatónál"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+msgid "Right click"
 msgstr "jobb egérkattintás"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2943,11 +2999,11 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Egyszeri jobb egérkattintást végez az egérmutatónál"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+msgid "Left mouse button unlock"
 msgstr "bal egérgomb felengedve"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
+msgid "Left mouse button lock"
 msgstr "bal egérgomb lenyomva"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
@@ -2955,17 +3011,21 @@ msgid "Locks or unlocks the left mouse button"
 msgstr "A bal egérgomb lenyomva tartása, vagy felengedése"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
+msgid "Right mouse button unlock"
 msgstr "jobb egérgomb felengedve"
 
 # ezt a típusú változtatást máshol már indokoltam
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
+msgid "Right mouse button lock"
 msgstr "jobb egérgomb lenyomva"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "A jobb egérgomb lenyomva tartása, vagy felengedése"
+
+#, python-format
+msgid "Selected %s"
+msgstr "%s Kijelölve"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3341,7 +3401,7 @@ msgstr "Ki- vagy bekapcsolja a kattintható állapot jelzését"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
+msgid "Symbol level %s"
 msgstr "Írásjelszint: %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
@@ -3352,7 +3412,7 @@ msgstr ""
 "hangozzanak el"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+msgid "Object has no location"
 msgstr "az elem helye nem ismert"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3395,7 +3455,7 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+msgid "No navigator object"
 msgstr "Nincs elem a navigátor kurzornál"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3426,8 +3486,8 @@ msgstr ""
 "információkat. Kétszeri gyors megnyomásra további információ hangzik el."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "áthelyezés az aktív elemhez"
+msgid "Move to focus"
+msgstr "a kurzor áthelyezése"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3440,20 +3500,20 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
-msgstr "nincs aktív elem"
+msgid "No focus"
+msgstr "aktív elem"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
+msgid "Move focus"
 msgstr "a kurzor áthelyezése"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
+msgid "No caret"
 msgstr "A kurzor nem található"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "Egyszeri megnyomásra a navigátorkurzornál lévő elem válik aktívvá, kétszeri "
@@ -3472,6 +3532,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "A navigátor kurzort az aktív elemet tartalmazó elemhez helyezi"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Nincs következő elem."
 
@@ -3480,6 +3541,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "A navigátor kurzort a következő elemhez helyezi"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Nincs előző elem."
 
@@ -3496,8 +3558,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "A navigátor kurzort az aktív elemben található első elemhez helyezi"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "aktiválás"
+msgid "Activate"
+msgstr "Aktiválás"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3512,8 +3574,8 @@ msgstr ""
 "Pl. megnyomja a gombot."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
-msgstr "eleje"
+msgid "Top"
+msgstr "Teteje"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3579,8 +3641,9 @@ msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem következő szavához "
 "helyezi"
 
-msgid "left"
-msgstr "bal"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Bal"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3609,7 +3672,8 @@ msgstr ""
 "karakter leírása, vagy magyarázata hallható, háromszori leütésre pedig a "
 "karakter ascii és hexadecimális értéke hangzik el"
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
 msgstr "jobb"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3629,15 +3693,15 @@ msgstr ""
 "végére helyezi"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "nincs beszéd"
+msgid "Speech mode off"
+msgstr "Beszéd kikapcsolva"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+msgid "Speech mode beeps"
 msgstr "beszéd helyett hangjelzés"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+msgid "Speech mode talk"
 msgstr "beszéd"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3678,7 +3742,7 @@ msgstr "Megnyitja az NVDA menüjét."
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "Az áttekintő kurzor pozíciójától a szöveg végéig olvas, az áttekintőkurzor "
@@ -3686,7 +3750,7 @@ msgstr ""
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "A kurzor jelenlegi pozíciójától a szöveg végéig olvas, a kurzor mozgatásával"
@@ -3695,14 +3759,20 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Nincs formázási információ"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Formázási információk"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "Bemondja az áttekintő kurzornál lévő szöveg formázási paramétereit."
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"Bemondja az áttekintő kurzornál lévő szöveg formázási paramétereit. Kétszeri "
+"lenyomásra ezeket az információkat böngészőmódban teszi elérhetővé."
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "Bemondja az aktuális fókuszban lévő vezérlőelemet, vagy objektumot, kétszeri "
 "lenyomásra betűzi."
@@ -3713,7 +3783,7 @@ msgstr "Az állapotsor nem található."
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "Bemondja az aktív alkalmazás állapotsorát és a navigátor kurzort is oda "
@@ -3732,7 +3802,7 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Be- és kikapcsolja az elemek bemondását az egérmutató mozgása közben."
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+msgid "No title"
 msgstr "Nincs cím"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3745,7 +3815,7 @@ msgstr ""
 "háromszori lenyomásra a vágólapra másolja."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+msgid "Speaks the current foreground object"
 msgstr "felolvassa az előtérben lévő elemet"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3758,19 +3828,19 @@ msgstr ""
 "adatokat."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+msgid "No progress bar updates"
 msgstr "Nem jelzi a folyamatjelzők változását"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
-msgstr "A folyamatjelzők változásának jelzése beszéddel"
+msgid "Speak progress bar updates"
+msgstr "Jelzi a folyamatjelzők változását"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+msgid "Beep for progress bar updates"
 msgstr "A folyamatjelzők változásának jelzése hangjelzéssel"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+msgid "Beep and speak progress bar updates"
 msgstr "A folyamatjelzők változásának jelzése hangjelzéssel és beszéddel"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3824,7 +3894,7 @@ msgid ""
 msgstr "Be és kikapcsolja az aktív elem követését a navigátor kurzorral."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+msgid "No system battery"
 msgstr "Nincs akkumulátor."
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3837,11 +3907,12 @@ msgid "AC power on"
 msgstr "Hálózatról üzemel"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} óra és {minutes:d} perc van hátra"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Akkumulátor használatakor bemondja az akkumulátor töltöttségi szintjét, és a "
 "hátralévő időt."
@@ -4003,6 +4074,31 @@ msgstr ""
 "Váltás az áttekintő kurzor és a kurzor követése között egy braille kijelző "
 "használatakor"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Braille kurzor ki"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Braille kurzor be"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "A Braille kurzor be- és kikapcsolása."
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "A Braille kurzor kikapcsolva."
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Braille kurzor %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Váltogatás A Braille kurzor megjelenési formái közt."
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "Nincs szöveg a vágólapon."
@@ -4089,19 +4185,11 @@ msgstr ""
 "Újratölti az NVDA szkripteket és bővítményeket az NVDA újraindítása nélkül, "
 "mely a fejlesztőknek lehet hasznos"
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "Nincs következő elem."
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "A következő elemre lép síkáttekintés módban"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "Nincs előző elem."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4115,7 +4203,7 @@ msgid "%s mode"
 msgstr "%s mód"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+msgid "Cycles between available touch modes"
 msgstr "Vált a lehetséges érintési módok között"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4152,10 +4240,6 @@ msgstr "A rendszerbillentyűzet lenyomásának emulálása"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Egyéb"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Böngésző mód"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4649,11 +4733,6 @@ msgstr "a kijelölés törölve"
 msgid "done dragging"
 msgstr "A mozgatás befejezve"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "%s. szint"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4665,6 +4744,7 @@ msgid "column %s"
 msgstr "Oszlop %s."
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "{rowCount} sorral és {columnCount} oszloppal"
 
@@ -4677,6 +4757,11 @@ msgstr "%s oszloppal"
 #, python-format
 msgid "with %s rows"
 msgstr "%s sorral"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "%s. szint"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4711,21 +4796,36 @@ msgstr "%s stílus"
 msgid "default style"
 msgstr "alapértelmezett stílus"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} és {color2} közt"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{backgroundColor} alapon {color}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} háttér"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "Háttér mintázata {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4815,7 +4915,6 @@ msgstr "nincs aláhúzva"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "alapvonal"
 
@@ -4922,6 +5021,7 @@ msgid "out of table"
 msgstr "a táblázat vége"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "{columnCount} oszlopból és {rowCount} sorból álló táblázat"
 
@@ -4998,22 +5098,27 @@ msgid "object mode"
 msgstr "elem mód"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "egyszeri {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "dupla  {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "Háromszori {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "Négyszeres {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} ujjas {action}"
 
@@ -5067,6 +5172,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "felderítés vége"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA üzenet"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Frissítés ellenőrzése"
@@ -5091,6 +5200,7 @@ msgstr "NVDA frissítés"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Az NVDA {version} verziója elérhető"
 
@@ -5187,9 +5297,11 @@ msgstr ""
 "Microsoft Windows operációs rendszer alatt működő ingyenes és nyílt "
 "forráskódú képernyőolvasó"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Közreműködők"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5241,6 +5353,7 @@ msgstr ""
 "menüpontjával érheti el."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5249,6 +5362,7 @@ msgstr ""
 "Futnia kell az NVDA programnak ahhoz, hogy kiegészítőket telepíthessen."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5259,16 +5373,18 @@ msgstr ""
 "{height:.1f} százaléka a képernyőnek"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} mint {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
+msgid "Edge of table"
 msgstr "a táblázat széle"
 
 #. Translators: The description of an NVDA command.
@@ -5421,15 +5537,17 @@ msgid "Waiting for Outlook..."
 msgstr "Várakozás az Outlook-ra..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime}-tól {endTime}-ig"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Esemény {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
+msgid "Has appointment"
 msgstr "Esemény"
 
 #. Translators: the email is a meeting request
@@ -5586,78 +5704,97 @@ msgid "Master Thumbnails"
 msgstr "Fő miniatűrök"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Fólia {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} felett balról {distance:.3g} pont"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} alatt balról {distance:.3g} pont"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} felett a tetejétől {distance:.3g} pont"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} alatt a tetejétől {distance:.3g} pont"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} felett jobbról {distance:.3g} pont"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} alatt jobbról {distance:.3g} pont"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} felett az aljától {distance:.3g} pont"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} alatt az aljától {distance:.3g} pont"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "{otherShape} felett"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "{otherShape} alatt"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "A fólia bal szélétől {distance:.3g} pont"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "A fólia bal szélén kívül {distance:.3g} pont"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "A fólia tetejétől {distance:.3g} pont"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "A fólia tetején kívül {distance:.3g} pont"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "A fólia jobb szélétől {distance:.3g} pont"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "A fólia jobb szélén kívül {distance:.3g} pont"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "A fólia aljától {distance:.3g} pont"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "A fólia alján kívül {distance:.3g} pont"
 
@@ -5671,10 +5808,12 @@ msgstr ""
 "tartalma nem változik, de a felhasználó felolvastathatja az NVDA-val."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Vetítés jegyzetek - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Vetítés - {slideName}"
 
@@ -5725,6 +5864,12 @@ msgstr "Leállítás"
 msgid "Record"
 msgstr "Felvétel"
 
+msgid "left"
+msgstr "bal"
+
+msgid "right"
+msgstr "jobb"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -5757,6 +5902,7 @@ msgstr "Baum/HumanWare/APH braille kijelzők"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Soros: {portName}"
 
@@ -6242,6 +6388,7 @@ msgid "Choose Add-on Package File"
 msgstr "Válasszon ki egy bővítmény fájlt"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA bővítmény Csomag (*.{ext})"
 
@@ -6255,6 +6402,7 @@ msgstr ""
 "fájlformátum."
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6326,6 +6474,7 @@ msgid "Restart NVDA"
 msgstr "Az NVDA újraindítása"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6338,6 +6487,7 @@ msgstr ""
 "Leírás: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "Link: {url}"
 
@@ -6599,6 +6749,7 @@ msgstr ""
 "Az NVDA egyik korábbi verziója van a számítógépen, mely frissítve lesz."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6717,6 +6868,10 @@ msgstr "Az NVDA napló megtekintése"
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
 msgstr "Frissítés\tF5"
+
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "&Mentés másként...\tCtrl+S"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
@@ -6879,6 +7034,10 @@ msgstr "Beszéd&szintetizátor:"
 #. headphones, etc.
 msgid "Output &device:"
 msgstr "Kimeneti &hangeszköz"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Hangerőigazítás"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -7439,9 +7598,17 @@ msgstr "&Beviteli tábla:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "A kurzornál lévő szó átalakítása &számítógépes braille jelekké"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "Kurzor &mutatása"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&A kurzor villogási sebessége (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "A kurzor alakja"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7530,6 +7697,7 @@ msgstr "&Szűrés:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7570,10 +7738,12 @@ msgid "word"
 msgstr "szó"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "pozíció: {x}; {y}"
 
@@ -7590,11 +7760,11 @@ msgid "Refreshes the document content"
 msgstr "Frissíti a dokumentum tartalmát"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "a képernyőelrendezés használata bekapcsolva"
+msgid "Use screen layout on"
+msgstr "a képernyőelrendezés használata kikapcsolva"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
+msgid "Use screen layout off"
 msgstr "a képernyőelrendezés használata kikapcsolva"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -7631,6 +7801,7 @@ msgid "Taskbar"
 msgstr "tálca"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB vörös {rgb.red}, zöld {rgb.green}, kék {rgb.blue}"
 
@@ -7649,37 +7820,149 @@ msgstr "Asztal"
 msgid "default color"
 msgstr "alapértelmezett Szín"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "ismeretlen szín"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "Automatikus"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "Átló Keresztmintás"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "Vékony Átló Keresztmintás"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "Elfordított átló Vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "12,5 százalékos szürke"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "25 százalékos szürke"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "50 százalékos szürke"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "75 százalékos szürke"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "6,25 százalékos szürke"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "Vékony Vízszintes Keresztmintás"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "vízszintes vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "vékony Elfordított átló Vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "vékony vízszintes vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "vékony átló Vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "vékony függőlegesen vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "nincs"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "Vastag átló Keresztmintás"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "tömör"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "átló Vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "függőlegesen vonalas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "Lineáris színátmenet"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "Sugárirányú színátmenet"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Ez a cella nem szerkeszthető"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Megjeleníti a diagramok, a megjegyzéssel ellátott cellák, és a képletet "
-"tartalmazó cellák listáját."
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Listázza a különböző típusú elemeket ebben a munkafüzetben."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Diagram"
+msgid "&Charts"
+msgstr "&Diagramok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "Me&gjegyzés"
+msgid "C&omments"
+msgstr "Meg&jegyzések"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Képlet"
+msgid "Fo&rmulas"
+msgstr "&Képletek"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&Munkalap"
+msgid "&Sheets"
+msgstr "&Munkalapok"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start}; {end} egyesített cellák"
 
@@ -7695,18 +7978,22 @@ msgstr ""
 "fejléceinek bemondását a dokumentum formázás párbeszédpanelen."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "{address} beállítása oszlopfejlécként"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Már be van állítva a(z) {address} az oszlopfejekre."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+#, python-brace-format
+msgid "Removed {address}    from column headers"
 msgstr "{address} eltávolítva az oszlopfejlécek közül"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Nem található a(z) {address} az oszlopfejben"
 
@@ -7720,18 +8007,22 @@ msgstr ""
 "megnyomva törli a beállítást."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Beállítja a(z) {address}-t sorfejnek"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Már be van állítva a(z) {address} a sorfejekre."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+#, python-brace-format
+msgid "Removed {address}    from row headers"
 msgstr "A(z) {address} törölve a sorfejből"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "A(z) {address} nem található a sorfejben"
 
@@ -7744,9 +8035,11 @@ msgstr ""
 "sorfejként, a többi tőle jobbra és lefelé értendő. Kétszer gyorsan megnyomva "
 "törli a beállítást."
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "A beviteli üzenet a(z)  {title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "A beviteli üzenet a következő: {message}"
 
@@ -7759,10 +8052,12 @@ msgid "Reports the comment on the current cell"
 msgstr "Felolvassa az aktuális cellához tartozó megjegyzést "
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Megjegyzés írása a(z) {address} cellához"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} től {lastAddress} {lastContent} ig"
 
@@ -8117,6 +8412,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Pont görbített vonalakkal"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Diagram címe: {chartTitle}, típusa: {chartType}"
 
@@ -8144,6 +8440,7 @@ msgstr "Adatsor"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} tengely {axisTitle}"
 
@@ -8157,6 +8454,7 @@ msgid "There are total %d series in this chart"
 msgstr "Összesen %d adatsor található ezen a diagramon."
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "adatsor {number} {name}"
 
@@ -8181,6 +8479,7 @@ msgstr "Adatpont"
 msgid "item"
 msgstr "elem"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Adatsor színe: {colorName} "
 
@@ -8270,45 +8569,54 @@ msgstr "Alakzat"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} adatsor {seriesIndex} per {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "Nincs változás a {previousIndex}. adatponthoz képest"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "A növekedés {incrementValue} a {previousIndex}. adatponthoz képest"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "A csökkenés {decrementValue} a {previousIndex}. adatponthoz képest "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Kategória {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "érték {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8316,6 +8624,7 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} per {pointCount}"
 
@@ -8328,11 +8637,13 @@ msgid "Secondary"
 msgstr "Másodlagos"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Diagramtengely, típusa: {axisType}, csoport: {axisGroup}, címe: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Diagramtengely, típusa: {axisType}, csoport: {axisGroup}"
 
@@ -8350,6 +8661,7 @@ msgid " squared "
 msgstr " négyzet "
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Diagram címe: {chartTitle}"
 
@@ -8358,6 +8670,7 @@ msgid "Untitled chart"
 msgstr "Névtelen diagram"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8370,6 +8683,7 @@ msgid "Chart area "
 msgstr "Diagram terület"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8394,6 +8708,7 @@ msgstr "Nincs jelmagyarázat"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Jelmagyarázat bejegyzés {seriesName} adatsor {seriesIndex} per {seriesCount}"
@@ -8401,6 +8716,7 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Jelmagyarázat jelölő: {seriesName} adatsor {seriesIndex} per {seriesCount}"
@@ -8503,26 +8819,21 @@ msgstr "elsődleges fejléc"
 msgid "Text frame"
 msgstr "szövegkeret"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "megjegyzés: {text}, {author} által, {date}"
 
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} {author} által {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g karakter"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g pt"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "{rowNumber}. sor és {columnNumber}. beállítása oszlopfejlécként"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8530,12 +8841,14 @@ msgstr ""
 "oszlopfejlécként"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "{rowNumber}. sor és {columnNumber}. oszlop eltávolítva az oszlopfejlécek "
 "közül"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "{rowNumber}. sor és {columnNumber}. oszlop nem található az oszlopfejlécek "
@@ -8552,21 +8865,25 @@ msgstr ""
 "oszlopfejléc."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "{rowNumber}. sor és {columnNumber}. beállítása sorfejlécként"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "{rowNumber}. sor és {columnNumber}. oszlop már be lett állítva sorfejlécként"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "{rowNumber}. sor és {columnNumber}. oszlop eltávolítva a sorfejlécek közül"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "{rowNumber}. sor és {columnNumber}. oszlop nem található a sorfejlécek "
@@ -8621,42 +8938,62 @@ msgstr "Jobbra zárt"
 msgid "Justified"
 msgstr "Sorkizárt"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "felső index"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "alsó index"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "alapvonal"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} stílus, behúzási szint {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} pont betűtipus"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} karakter"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} hüvelyk"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centiméter"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milliméter"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pont"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pika"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "Nincs megjegyzés."
+msgid "No comments"
+msgstr "Nincs megjegyzés"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8667,29 +9004,52 @@ msgstr "Felolvassa a rendszerkurzornál található megjegyzést."
 msgid "Not in table"
 msgstr "csak táblázatban használható"
 
-msgid "Edge of table"
-msgstr "a táblázat széle"
-
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Mellékszövegek"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE sorozat"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid "browse mode"
+#~ msgstr "böngésző mód"
+
+#~ msgid "activate"
+#~ msgstr "aktiválás"
+
+#~ msgid "no next"
+#~ msgstr "Nincs következő elem."
+
+#~ msgid "no previous"
+#~ msgstr "Nincs előző elem."
+
+#~ msgid "edge of table"
+#~ msgstr "a táblázat széle"
+
+#~ msgid "%g characters"
+#~ msgstr "%g karakter"
+
+#~ msgid "%g pt"
+#~ msgstr "%g pt"
+
+#~ msgid "no comments"
+#~ msgstr "Nincs megjegyzés."
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Megjeleníti a diagramok, a megjegyzéssel ellátott cellák, és a képletet "
+#~ "tartalmazó cellák listáját."
+
 #, fuzzy
 #~ msgid "Default color"
 #~ msgstr "alapértelmezett Szín"
-
-#, fuzzy
-#~ msgid "Unknown color"
-#~ msgstr "ismeretlen szín"
 
 #~ msgid "selecting %s"
 #~ msgstr "%s. Kijelölve"
@@ -8729,9 +9089,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} per {}"
-
-#~ msgid "none"
-#~ msgstr "nincs"
 
 #~ msgid " trendline {} "
 #~ msgstr " trendvonal {} "

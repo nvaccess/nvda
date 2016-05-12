@@ -264,7 +264,14 @@ class MSHTML(VirtualBuffer):
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
 				attrs["table-layout"]=[None]
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
-			attrs = [{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]},{"HTMLAttrib::role":["heading"],"HTMLAttrib::aria-level":[nodeType[7:]]}]
+			attrs = [
+				# the correct heading level tag, with no overriding aria-level.
+				{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]],"HTMLAttrib::aria-level":['0',None]},
+				# any tag with a role of heading, and the correct aria-level
+				{"HTMLAttrib::role":["heading"],"HTMLAttrib::aria-level":[nodeType[7:]]},
+				# Any heading level tag, with a correct overriding aria-level
+				{"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"],"HTMLAttrib::aria-level":[nodeType[7:]]},
+			]
 		elif nodeType == "heading":
 			attrs = [{"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]},{"HTMLAttrib::role":["heading"]}]
 		elif nodeType == "list":
@@ -273,6 +280,8 @@ class MSHTML(VirtualBuffer):
 			attrs = {"IHTMLDOMNode::nodeName": ["LI","DD","DT"]}
 		elif nodeType == "blockQuote":
 			attrs = {"IHTMLDOMNode::nodeName": ["BLOCKQUOTE"]}
+		elif nodeType == "annotation":
+			attrs = {"IHTMLDOMNode::nodeName": ["INS","DEL"]}
 		elif nodeType == "graphic":
 			attrs = [{"IHTMLDOMNode::nodeName": ["IMG"]},{"HTMLAttrib::role":["img"]}]
 		elif nodeType == "frame":

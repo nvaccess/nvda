@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2011 NV Access Inc
+Copyright 2011-2015 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -29,7 +29,7 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	// We want to bypass oleacc proxying,
 	// so retrieve the IAccessible directly rather than using AccessibleObjectFromEvent.
 	LRESULT lres;
-	if (!(lres = SendMessage((HWND)docHandle, WM_GETOBJECT, 0, OBJID_CLIENT)))
+	if (!(lres = SendMessage((HWND)UlongToHandle(docHandle), WM_GETOBJECT, 0, OBJID_CLIENT)))
 		return NULL;
 	IAccessible* root = NULL;
 	if (ObjectFromLresult(lres, IID_IAccessible, 0, (void**)&root) != S_OK)
@@ -219,6 +219,7 @@ void CALLBACK WebKitVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK h
 	switch (eventID) {
 		case EVENT_OBJECT_VALUECHANGE:
 		case EVENT_OBJECT_STATECHANGE:
+		case EVENT_OBJECT_REORDER:
 			break;
 		default:
 			return;
@@ -226,7 +227,7 @@ void CALLBACK WebKitVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK h
 
 	WebKitVBufBackend_t* backend = NULL;
 	for (VBufBackendSet_t::iterator it = runningBackends.begin(); it != runningBackends.end(); ++it) {
-		HWND rootWindow = (HWND)(*it)->rootDocHandle;
+		HWND rootWindow = (HWND)UlongToHandle((*it)->rootDocHandle);
 		if (hwnd == rootWindow || IsChild(rootWindow, hwnd)) {
 			backend = static_cast<WebKitVBufBackend_t*>(*it);
 			break;
@@ -235,7 +236,7 @@ void CALLBACK WebKitVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK h
 	if (!backend)
 		return;
 
-	IAccessible* acc = IAccessibleFromIdentifier((int)hwnd, childID);
+	IAccessible* acc = IAccessibleFromIdentifier(HandleToUlong(hwnd), childID);
 	if (!acc)
 		return;
 	acc->Release();
@@ -278,7 +279,7 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 		*(LRESULT*)pcwp->lParam = LresultFromObject(IID_IAccessible, 0,
 			(IUnknown*)pcwp->wParam);
 	} else if (pcwp->message == WM_IACCESSIBLE_FROM_CHILDID) {
-		IAccessible* acc = IAccessibleFromIdentifier((int)pcwp->hwnd, (int)pcwp->wParam);
+		IAccessible* acc = IAccessibleFromIdentifier(HandleToUlong(pcwp->hwnd), (int)pcwp->wParam);
 		if (acc) {
 			acc->Release();
 		}
@@ -294,7 +295,7 @@ int WebKitVBufBackend_t::getNativeHandleForNode(VBufStorage_controlFieldNode_t* 
 	// This method will be called in an RPC thread.
 	// LresultFromObject must be called in the thread in which the object was created.
 	registerWindowsHook(WH_CALLWNDPROC, callWndProcHook);
-	SendMessage((HWND)rootDocHandle, WM_LRESULT_FROM_IACCESSIBLE,
+	SendMessage((HWND)UlongToHandle(rootDocHandle), WM_LRESULT_FROM_IACCESSIBLE,
 		(WPARAM)static_cast<WebKitVBufStorage_controlFieldNode_t*>(node)->accessibleObj, (LPARAM)&res);
 	unregisterWindowsHook(WH_CALLWNDPROC, callWndProcHook);
 	if (res <= 0)
@@ -308,7 +309,7 @@ VBufStorage_controlFieldNode_t* WebKitVBufBackend_t::getNodeForNativeHandle(int 
 	// This method will be called in an RPC thread.
 	// IAccessibleFromIdentifier must be called in the thread in which the object was created.
 	registerWindowsHook(WH_CALLWNDPROC, callWndProcHook);
-	SendMessage((HWND)rootDocHandle, WM_IACCESSIBLE_FROM_CHILDID,
+	SendMessage((HWND)UlongToHandle(rootDocHandle), WM_IACCESSIBLE_FROM_CHILDID,
 		(WPARAM)nativeHandle, (LPARAM)&acc);
 	unregisterWindowsHook(WH_CALLWNDPROC, callWndProcHook);
 	if (!acc)
