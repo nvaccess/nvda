@@ -2100,6 +2100,46 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 | Toggle braille tethered to | A |
 %kc:endInclude
 
+++ BraillePen Slim ++
+BraillePen Slim from [Harpo http://int.harpo.com.pl/] and EasyLink are supported when connected via Bluetooth.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+
+%kc:beginInclude
+|| Name | Key |
+| upArrow key | space+dot1 |
+| downArrow key | space+dot4 |
+| leftArrow key | space+dot3 |
+| rightArrow key | space+dot6 |
+| enter key | space+dot8 |
+| backspace key | space+dot7 |
+| delete key | space+dot1+dot4+dot5 |
+| windows key | space+dot3+dot4 |
+| alt key | space+dot1+dot3+dot4 |
+| escape key | space+dot1+dot5 |
+| shift+tab key | space+dot2+dot3+dot4+dot5+dot8 |
+| tab key  | space+dot2+dot3+dot4+dot5+dot7 |
+| Toggle input help | space+dot3+dot6+dot7 |
+| Toggle braille tethered | space+dot1+dot2+dot6 |
+| home key | space+dot2+dot3 |
+| end key | space+dot5+dot6 |
+| Say all | space+dot1+dot2+dot4+dot5+dot6 |
+| Report the current time | space+dot2+dot3+dot4 |
+| Report current Selection | space+dot1+dot2+dot4+dot5+dot6+dot7 |
+| NVDA Menu | space+dot1+dot2+dot4+dot5 |
+| alt+tab key | space+dot1+dot3+dot5 |
+| Report battery status | space+dot1+dot2+dot7 |
+| Report title | space+dot2+dot3+dot4+dot5 |
+| Reports object with focus | space+dot1+dot2+dot4+dot7 |
+| Report Status Bar | space+dot2+dot3+dot4+dot7 |
+| Speak the foreground object | space+dot1+dot2+dot4+dot5+dot7 |
+| control+leftArrow key | space+dot2 |
+| control+rightArrow key | space+dot5 |
+| control+home key  | space+dot2+dot3+dot7 |
+| control+end key | space+dot5+dot6+dot7 |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].

@@ -15,16 +15,12 @@ import inputCore
 import hwPortUtils
 import brailleInput
 import wx
-import serial
+import hwIo
 
-READ_INTERVAL = 50
 BAUD_RATE = 115200
 TIMEOUT = 0.1
 
 BP12_BRAILLE_KEYS = ("dot1", "dot2", "dot3", "dot4", "dot5", "dot6","dot7","dot8" )
-
-
-
 
 def _findPorts():
 	for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
@@ -37,70 +33,50 @@ def _findPorts():
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "braillePen"
+	# Translators: Names of braille displays.
 	description = _("BraillePen Slim")
+	isThreadSafe = True
 
 	@classmethod
 	def check(cls):
 		return True
 
 	def __init__(self):
-		super(BrailleDisplayDriver,self).__init__()
+		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
-		self._ser = None
-		
 		for port in _findPorts():
 			try:
-				self._ser = serial.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, parity=serial.PARITY_NONE)
-			except serial.SerialException:
+				self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._serOnReceive)
+			except EnvironmentError:
 				log.info("BraillePen open port error")
-				continue
-			
+				continue			
 			break
 		else:
 			raise RuntimeError("BraillePen not found")
-		
-		self._readTimer = wx.PyTimer(self.handleResponses)
-		self._readTimer.Start(READ_INTERVAL)
-
+				
 	def terminate(self):
 		try:
-			self._readTimer.Stop()
-			self._readTimer = None
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
-			self._ser.close()
+			self._dev.close()
 		
-
-	def handleResponses(self):
-		try:
-		   while self._ser is not None and self._ser.inWaiting():
-				braille, command = self._readPacket()
-				if braille is not None and command is not None:
-					try:
-						inputCore.manager.executeGesture(InputGesture(braille, command))
-					except inputCore.NoInputGestureAction:
-						pass
-					
-		except serial.SerialException:
-			#self._closeComPort()
-			raise
-		pass
-
-	def _readPacket(self):		
+	def _serOnReceive(self,data):
 		braille=None
 		command=None
-		
-		braille=self._ser.read(1)
-		
-		if braille is not None:
-			command=self._ser.read(1)
-		
-		return braille, command
+		braille=data
+		command=self._dev.read(1)
+		self._serHandleResponse(braille, command)
+
+	def _serHandleResponse(self,braille,command):		
+		if braille is not None and command is not None:
+			try:
+				inputCore.manager.executeGesture(InputGesture(braille, command))
+			except inputCore.NoInputGestureAction:
+				pass
 	
 	def display(self, cells):
 		pass
 
-		
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
 			"kb:upArrow": ("br(braillePen):space+dot1",),
@@ -142,41 +118,26 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, brailleKeys,controlKeys):
 		super(InputGesture, self).__init__()
-		
 		spaceKey=False
-		
 		brailleKeysExtended = ord(brailleKeys)
 		controlKeysExtended = ord(controlKeys)
-		
 		if controlKeysExtended & 1 >0:
 			spaceKey=True
-		
 		if controlKeysExtended & 2 >0:
 			brailleKeysExtended = brailleKeysExtended | 0x40
-		
 		if controlKeysExtended & 4 >0:
 			brailleKeysExtended = brailleKeysExtended | 0x80
-		
 		brailleKeysList=[BP12_BRAILLE_KEYS[num] for num in xrange(8) if (brailleKeysExtended>>num)&1]
 		spaceKeyList = ["space"]
-
-		
 		if spaceKey:
 			selectedKeys=spaceKeyList+brailleKeysList
 		else:
 			selectedKeys=brailleKeysList
-		
 		self.id="+".join(set(selectedKeys))
 		self.keys = set(selectedKeys)
-			
-		
 		self.keyNames = names = set()
-		
 		if brailleKeysExtended!=0 and spaceKey==False:
-			self.dots =brailleKeysExtended
-		
+			self.dots =brailleKeysExtended		
 		if brailleKeysExtended==0 and spaceKey==True:
 			self.space = True
-			
-		
 		log.info(self.id)
