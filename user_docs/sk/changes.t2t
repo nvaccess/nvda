@@ -3,6 +3,45 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+Medzi prednosti tejto verzie patrí zvukové oznamovanie pravopisných chýb pri písaní; oznamovanie gramatických chýb v programe MS Word; opravy chýb v podpore pre balík MS Office.
+
+== Nové vlastnosti ==
+- V prehliadači Internet Explorer a ostatných MSHTML prvkoch skratky a a shift+a presúvajú kurzor na doplnený a odstránený text. (#5691)
+- V tabuľkách programu MS Excel NVDA oznamuje úroveň skupiny buniek a tiež oznamuje, či sú zbalené alebo rozbalené. (#5690)
+- odteraz môžete informáciu o formátovaní zobraziť v režime prehliadania. Stačí dvakrát rýchlo za sebou stlačiť príslušnú klávesovú skratku. (#4908)
+- V programe MS Excel od verzie 2010 NVDA dokáže oznámiť tvar a výplň v bunkách tabuľky. Automatické oznamovanie docielite tak, že začiarknete oznamovanie farieb v nastaveniach čítania textu. (#3683)
+- Nová braillovská prekladová tabuľka: Koinská Gréčtina. (#5393)
+- V zobrazovači logu môžete aktuálny log uložiť skratkou ctrl+s. (#4532)
+- NVDA dokáže zvukom oznamovať pravopisné chyby počas písania. Zobrazenie pravopisných chýb musí byť podporované v editačnom poli. V NVDA musíte začiarknuť oznamovanie pravopisných chýb v nastaveniach čítania textu a tiež zvukové oznamovanie pravopisných chýb počas písania. (#2024)
+- NVDA dokáže okrem pravopisných chýb hlásiť aj gramatické chyby v programe MS Word. Oznamovanie zapnete v nastaveniach  čítania textu. (#5877)
+
+
+== Zmeny ==
+- V režime prehliadania a editačných poliach NVDA spracuje enter rovnako ako numerický enter. (#5385)
+- NVDA odteraz  používa syntézu eSpeak NG. (#5651)
+- NVDA viac neignoruje hlavičku stĺpca v tabuľkách MS Excel, ak je medzi aktuálnym stĺpcom a riadkom s hlavičkou ešte jeden prázdny riadok. (#5396)
+- Odteraz sú súradnice buniek v tabuľkách MS Excel oznamované medzi hlavičkou a aktuálnou bunkou, aby bolo možné odlíšiť hlavičku od aktuálneho stĺpca. (#5396)
+
+
+== Opravy ==
+- ak sa v režime prehliadania pokúsite pomocou rýchlej navigácie dostať na prvok, ktorý nie je podporovaný, NVDA správne oznámi, že prvok nie je podporovaný namiesto toho, že prvok neexistuje. (#5691)
+- V zozname hárkov v programe MS Excel sa odteraz zobrazujú aj hárky, ktoré obsahujú len grafy. (#5698)
+- NVDA viac neoznamuje nadbytočné informácie, ak sa prepínate medzi viacerými oknami v Java aplikáciách (IntelliJ alebo Android Studio). (#5732)
+- V Scintilla editoroch (napríklad Notepad++) sa pri pohybe kurzorom pomocou braillovského riadku správne presúva zobrazenie na braillovskom riadku. (#5678)
+- NVDA viac nezamrzne po zapnutí  braillovského výstupu. (#4457)
+- V programe MS Word je odsadenie odsekov hlásené v jednotkách, ktoré nastavil používateľ v dokumente (napríklad palce alebo centimetre) (#5804)
+- Pridané hlásenia NVDA, ktoré NVDA nie len vyslovuje, ale aj zobrazuje na braillovskom riadku. (#5557)
+- V prístupných Java aplikáciách je správne oznamovaná úroveň položiek v stromovom zobrazení. (#5766)
+- Opravená chyba, pri ktorej nečakane pri spustenom NVDA zamrzol Adobe Flash. (#5367).
+- dialógy a aplikácie môžete odteraz zobraziť v režime prehliadania aj v prehliadačoch Google Chrome a prehliadačoch postavených na prvkoch chrome. (#5818)
+- Takisto môžete takéto aplikácie prinútiť, aby sa zobrazili v režime prehliadania. (#5818)
+- V prehliadači Internet Explorer a MSHTML prvkoch sa pri presúvaní na niektoré prvky neaktivuje režim prehliadania. Ide o prvky, pri ktorých sa používa príkaz aria-activedescendant. Toto sa dialo napríklad pri písaní správy vo webovom rozhraní Gmailu pri prechode na zoznam navrhovaných adries. (#5676)
+- NVDA viac nemrzne v dokumentoch  MS Word vo väčších tabuľkách, ak je aktivované oznamovanie hlavičiek riadkov / stĺpcov. (#5878)
+- v dokumentoch MS Word NVDA viac neoznamuje text s úrovňou prehľadu ako text s nadpisom. (#5186)
+- ak prezeráte dokumenty MS Word v režime prehliadania, odteraz fungujú skratky čiarka a shift+čiarka na preskakovanie skupín prvkov. (#5883)
+
+
 = 2016.1 =
 Prednosti tejto verzie zahŕňajú možnosť stíšiť zvuk ostatných aplikácií, vylepšenia pre Braillovské riadky a Braillovský výstup, opravy pre MS office a opravené chyby v režime prehliadania pre Itunes.
 
