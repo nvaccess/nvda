@@ -646,7 +646,7 @@ Presser sur la touche Entrer ou le bouton Aller à  sur une feuille de la liste 
 %kc:beginInclude
 Pour annoncer tout commentaire pour la cellule actuellement en focus, pressez NVDA+alt+c.
 %kc:endInclude
-Tous les commentaires du classeur peuvent aussi être listés dans la liste d'éléments de NVDA.
+Tous les commentaires de la feuille de calcul peuvent aussi être listés dans la liste d'éléments de NVDA.
 
 +++ Lire des Cellules Protégées +++
 Si un classeur a été protégé, il peut être impossible d'amener le focus à certaines cellules ayant été protégées en écriture.
@@ -991,6 +991,10 @@ Raccourci clavier : NVDA+4
 
 Quand cette case est cochée, NVDA annonce, lors de leur frappe, toutes les touches ne correspondant pas à des caractères. Ceci inclut les combinaisons de touches telles que "contrôle" plus une autre lettre.
 
+==== Jouer un son pour les fautes d'orthographe durant la frappe ====
+Quand cette option est activée, un court son de vibreur sera émis quand un mot que vous frappez contient une faute d'orthographe.
+Cette option n'est disponible que si l'annonce des fautes d'orthographe est activée dans le dialogue [Mise en Forme des Documents #DocumentFormattingSettings] de NVDA.
+
 ==== Exécuter les touches d'autres applications ====
 Cette option permet à l'utilisateur de choisir si les combinaisons de touches générées par des applications telles que les claviers à l'écran et les logiciels de reconnaissance vocale doivent être traitées par NVDA.
 Cette option est activée par défaut, mais certains utilisateurs peuvent souhaiter désactiver cette fonction, comme ceux tapant en vietnamien avec le logiciel de dactylographie Unikey, car cela causerait la saisie de caractères incorrects.
@@ -1190,6 +1194,7 @@ On peut configurer les annonces suivantes :
 - emphase
 - style du texte,
 - fautes d'orthographe,
+- erreurs grammaticales,
 - numéro de page,
 - numéro de ligne,
 - retrait de ligne,

@@ -4,19 +4,24 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.2 =
+Les points forts de cette version incluent la possibilité d'indiquer les fautes d'orthographe durant la frappe; le support de l'annonce des erreurs grammaticales sous Microsoft Word; et des améliorations et corrections dans le support de Microsoft Office.
 
 == Nouvelles Fonctionnalités ==
 - en mode navigation sous Internet Explorer et autres contrôles MSHTML, utiliser la navigation par lettre pour se déplacer entre annotations (a et maj+a) ateint maintenant le texte inséré et effacé. (#5691)
 - Sous Microsoft Excel, NVDA annonce maintenant le niveau d'un groupe de cellules, ainsi que s'il est réduit ou développé. (#5690)
-- Un double appui sur la commande d'annonce de la mise en forme du texte présente l'information en mode navigation pour qu'elle puisse être parcourue. (#4908)
+- Un double appui sur la commande d'annonce de la mise en forme du texte (NVDA+f) présente l'information en mode navigation pour qu'elle puisse être parcourue. (#4908)
 - Sous Microsoft Excel 2010 et au-delà, la trame et le dégradé d'une cellule est maintenant annoncé. L'annonce automatique est contrôlée par l'option d'annonce des couleurs dans les préférences de formatage de document de NVDA. (#3683)
 - Nouvelle table de conversion braille : Grec Alexandrin. (#5393)
 - Dans la visionneuse du Journal, vous pouvez maintenant sauvegarder le journal en utilisant le raccourci Contrôle+s. (#4532)
+- Si l'annonce des fautes d'orthographe est activée et supportée par le contrôle en focus,, NVDA émettra un son pour vous avertir d'une faute d'orthographe commise durant la frappe. Ceci peut être désactivé en utilisant la nouvelle option "Jouer un son pour les fautes d'orthographe durant la frappe" dans le dialogue Paramètres Clavier de NVDA. (#2024)
+- Les erreurs grammaticales sont maintenant annoncées sous Microsoft Word. Ceci peut être désactivé en utilisant la nouvelle option "Annoncer les erreurs grammaticales" dans le dialogue "Mise en forme des documents" de NVDA. (#5877)
 
 
 == Changements ==
 - En mode navigation et dans les champs de saisie, NVDA traite maintenant la touche Entrer du pavé numérique de la même manière que la touche Entrer principale. (#5385)
 - NVDA est passé au synthétiseur de parole eSpeak NG. (#5651)
+- Sous Microsoft Excel, NVDA n'ignore plus l'en-tête de colonne pour une cellule quand il y a une ligne blanche entre la cellule et le titre. (#5396)
+- Sous Microsoft Excel, les coordonnées sont maintenant annoncées avant les en-têtes pour éliminer les ambiguïtés entre les en-têtes et le contenu. (#5396)
 
 
 == Corrections de Bogues ==
@@ -28,6 +33,13 @@ Quoi de Neuf dans NVDA
 - Sous Microsoft Word, le retrait des paragraphes est maintenant toujours annoncé dans l'unité de mesure choisie par l'utilisateur (ex : centimètres ou pouces). (#5804)
 - Quand on utilise un afficheur braille, Beaucoup de messages de NVDA qui jusque là n'étaient que parlés sont maintenant également affichés en Braille. (#5557)
 - Dans les applications Java accessibles, le niveau des éléments d'arborescence est maintenant annoncé. (#5766)
+- Correction de plantages d'Adobe Flash sous Mozilla Firefox dans certains cas. (#5367)
+- Sous Google Chrome et les navigateurs basés sur Chrome, les documents dans les dialogues ou les applications peuvent maintenant être lus en mode navigation. (#5818)
+- Sous Google Chrome et les navigateurs basés sur Chrome, vous pouvez maintenant forcer NVDA à passer en mode navigation dans les dialogues ou applications web. (#5818)
+- Sous Internet Explorer et autres contrôles MSHTML, amener le focus à certains contrôles (spécifiquement, quand aria-activedescendant est utilisé) ne passe plus incorrectement en mode navigation. Ceci arrivait, par exemple, quand on allait aux suggestions dans les champs d'adresse en composant un message sous Gmail. (#5676)
+- Sous Microsoft Word, NVDA ne se bloque plus dans les grands tableaux quand l'annonce des en-têtes de lignes et collones de tableau est activée. (#5878)
+- Sous Microsoft word, NVDA n'annonce plus incorrectement un texte avec un niveau hiérarchique (mais sans style d'en-tête défini) comme un titre. (#5186)
+- En mode navigation sous Microsoft Word, les commandes aller après la fin ou avant le début d'un conteneur (virgule et maj+virgule) fonctionnent maintenant pour les tableaux. (#5883)
 
 
 == Changements pour les Développeurs ==
