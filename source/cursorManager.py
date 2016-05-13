@@ -246,12 +246,16 @@ class CursorManager(baseObject.ScriptableObject):
 			else:
 				newInfo.move(unit,direction,endPoint="end")
 		self.selection = newInfo
-		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
+		# _lastSelectionMovedStart is not the same as _isSelectionAnchoredAtStart,
+		# i.e. their default values are opposite and _isSelectionAnchoredAtStart is only updated if the selection has changed.
+		startToStart=newInfo.compareEndPoints(oldInfo,"startToStart")
+		endToEnd=newInfo.compareEndPoints(oldInfo,"endToEnd")
+		if startToStart!=0 and endToEnd==0:
 			self._lastSelectionMovedStart=True
 		else:
 			self._lastSelectionMovedStart=False
-		if newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
-			self._lastSelectionMovedStart=False
+		if startToStart!=0 or endToEnd!=0:
+			self._isSelectionAnchoredAtStart=not self._lastSelectionMovedStart
 		speech.speakSelectionChange(oldInfo,newInfo)
 
 	def script_selectCharacter_forward(self,gesture):
