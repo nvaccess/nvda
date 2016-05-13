@@ -930,10 +930,7 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		unit = self._getReadingUnit()
-		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
-		# so use the original cursor TextInfo for line and copy for cursor.
 		self._readingInfo = readingInfo = self._getCursor()
-		cursor = readingInfo.copy()
 		# Get the reading unit at the cursor.
 		readingInfo.expand(unit)
 		# Get the selection.
@@ -991,7 +988,7 @@ class TextInfoRegion(Region):
 		# The selection end doesn't have to be checked, Region.update() makes sure brailleSelectionEnd is valid.
 
 		# If this is not the start of the object, hide all previous regions.
-		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		start = readingInfo.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
