@@ -646,7 +646,7 @@ Seçili sayfa üzerinde enter tuşuna ya da Git düğmesine basarak ilgili çal�
 %kc:beginInclude
 Üzerinde bulunduğunuz hücreyle ilgili açıklamayı dinlemek için NVDA+alt+c tuşlarını kullanın.
 %kc:endInclude
-Tüm açıklamalar NVDA öğe listesinde de gösterilebilir.
+Çalışma sayfasındaki tüm açıklamalar NVDA öğe listesinde de gösterilebilir.
 
 +++ Korunmuş Hücreleri Okuma +++
 Bir çalışma kitabı korunuyorsa, düzenleme için kilitlenmiş hücrelere ulaşmak mümkün olmayabilir.
@@ -991,6 +991,10 @@ Kısayol tuşu: NVDA+4
 
 Etkinleştirildiğinde, NVDA bastığınız karakter olmayan (örnek, kontrol, Şift VS.) her tuşu söyleyecektir. Buna kontrolle birlikte basılan harflerden oluşan tuş kombinasyonları da dahildir.
 
+==== Yazarken yazım hataları için ses çal ====
+Etkinleştirildiğinde, yazmakta olduğunuz kelime hatalı olarak yazılıyorsa, Kısa bir zil sesi çalınır.
+Bu seçenek, yalnızca NVDA'nın [Belge format ayarları #DocumentFormattingSettings] iletişim kutusundaki Yazım hatalarının bildirimi açıksa geçerlidir.
+
 ==== Diğer uygulamaların kullandığı tuşları işle ====
 Bu seçenek kullanıcının ekran klavyeleri ve konuşma tanıma uygulamaları  gibi yazılımların tuşlarının NVDA tarafından işlenip işlenmeyeceğini kontrol etmesini sağlar. 
 Bu seçenek varsayılan olarak etkindir, bazı kullanıcılar bunu kapatmak isteyebilir, örneğin  Vietnamca  yazmak için Unikey yazma programı kullananlar.
@@ -1190,6 +1194,7 @@ Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür 
 - Vurgu
 - Metin sitilleri
 - Yazım hataları
+- Gramer hataları
 - Sayfa numaraları
 - Satır numaraları
 - Satır girintisi

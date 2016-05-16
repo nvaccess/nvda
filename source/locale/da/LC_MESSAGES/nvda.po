@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-29 10:27-0400\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-11 16:20-0400\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <bue@vester-andersen.dk>\n"
 "Language: da_DK\n"
@@ -3218,6 +3218,18 @@ msgstr "Annoncér stavefejl til"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Slår annoncering af stavefejl til og fra"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "Annoncér gramatikfejl fra"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "Annoncér gramatikfejl til"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Slår annoncering af gramatikfejl til og fra"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Annoncér sider fra"
@@ -5017,6 +5029,14 @@ msgstr "stavefejl"
 msgid "out of spelling error"
 msgstr "forlader stavefejl"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "gramatikfejl"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "forlader gramatikfejl"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "forlader tabel"
@@ -6137,11 +6157,11 @@ msgid "Python console"
 msgstr "Python-konsol"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "Administrer &tilføjelsesprogrammer"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Opret en flytbar kopi..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6180,7 +6200,7 @@ msgid "C&ontributors"
 msgstr "&Bidragydere"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "Ve&lkommen dialog"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -7151,6 +7171,11 @@ msgstr "Oplæs &funktionstaster"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Afspil lyd for &stavefejl ved skrivning"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Håndter tastetryk fra andre &programmer"
 
@@ -7284,17 +7309,17 @@ msgstr "Oplæs &hjælpeballoner"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object shortcut &keys"
-msgstr "Oplæs objekt genvejs&taster"
+msgstr "Oplæs objektets genvejs&taster"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "Oplæs information om objekts &placering"
+msgstr "Oplæs information om objektets &placering"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "Gæt object &positionsinformation når utilgængelig"
+msgstr "Gæt objektets &positionsinformation når utilgængelig"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -7363,7 +7388,7 @@ msgstr "Automatisk fokustilstand ved flytning af systemmarkør"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "&Lydindikering af fokustilstand og gennemsynstilstand"
+msgstr "&Lydindikering af fokus- og gennemsynstilstand"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7423,6 +7448,11 @@ msgstr "Oplæs typo&grafi"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "Annoncér stavefe&jl"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "Annoncér &gramatikfejl"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.

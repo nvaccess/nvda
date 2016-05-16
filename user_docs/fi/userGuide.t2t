@@ -629,12 +629,12 @@ Samoin kuin verkkosivuilla, myös Microsoft Exceliä varten on elementtilista, j
 Elementtilista avataan painamalla NVDA+F7.
 %kc:endInclude
 Elementtilistassa ovat saatavilla seuraavat tiedot:
-- Kaaviot: Tämä näyttää listan kaikista aktiivisen työkirjan kaavioista.
+- Kaaviot: Tämä näyttää listan kaikista aktiivisen laskentataulukon kaavioista.
 Kaavion valitseminen ja Enterin tai Siirry-painikkeen painaminen siirtää kohdistuksen kyseiseen kaavioon, jolloin sitä on mahdollista selata ja lukea nuolinäppäimillä.
-- Kommentit: Tämä näyttää listan kaikista aktiivisen työkirjan soluista, joissa on kommentti.
+- Kommentit: Tämä näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kommentti.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kommentit.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kommentin kohdalla siirtää suoraan kyseiseen soluun.
-- Kaavat: Tämä näyttää listan kaikista aktiivisen työkirjan soluista, joissa on kaava.
+- Kaavat: Tämä näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kaava.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kaavat.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kaavan kohdalla siirtää suoraan kyseiseen soluun.
 - Laskentataulukot: Tämä näyttää listan kaikista työkirjassa olevista laskentataulukoista.
@@ -646,12 +646,12 @@ Enterin tai Siirry-painikkeen painaminen jonkin listassa olevan laskentataulukon
 %kc:beginInclude
 Lue mikä tahansa kommentti aktiivisesta solusta painamalla NVDA+Alt+C.
 %kc:endInclude
-Kaikki työkirjassa olevat kommentit voidaan näyttää myös Elementtilistassa.
+Kaikki laskentataulukossa olevat kommentit voidaan näyttää myös Elementtilistassa.
 
 +++ Suojattujen solujen lukeminen +++
 Mikäli työkirja on suojattu, kohdistuksen siirtäminen ei ehkä ole mahdollista sellaisiin soluihin, joiden muokkaaminen on estetty.
 %kc:beginInclude
-Lukittuihin soluihin siirtyminen on mahdollista selaustilassa, joka otetaan käyttöön painamalla NVDA+Väli, ja käyttämällä standardinmukaisia Excel-komentoja, kuten nuolinäppäimiä nykyisen työkirjan soluissa liikkumiseen.
+Lukittuihin soluihin siirtyminen on mahdollista selaustilassa, joka otetaan käyttöön painamalla NVDA+Väli, ja käyttämällä standardinmukaisia Excel-komentoja, kuten nuolinäppäimiä nykyisen laskentataulukon soluissa liikkumiseen.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -991,6 +991,10 @@ Pikanäppäin: NVDA+4
 
 Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jotka eivät ole merkkejä. Näitä ovat sellaiset näppäinyhdistelmät kuin Control+jokin muu kirjain.
 
+==== Ilmaise kirjoitusvirheet kirjoitettaessa toistamalla ääni ====
+Tämän asetuksen ollessa käytössä toistetaan lyhyt summeriääni, kun kirjoittamassasi sanassa on kirjoitusvirhe.
+Asetus on käytettävissä vain, jos kirjoitusvirheiden lukeminen on otettu käyttöön NVDA:n [Asiakirjojen muotoiluasetukset #DocumentFormattingSettings] -valintaikkunasta.
+
 ==== Käsittele muiden sovellusten näppäinpainallukset ====
 Tällä asetuksella käyttäjä voi säätää, käsitteleekö NVDA sellaisten sovellusten kuin näyttönäppäimistöjen ja puheentunnistusohjelmistojen tuottamat näppäinpainallukset. 
 Asetus on oletusarvoisesti käytössä, vaikka tietyt käyttäjät (esim. vietnaminkielistä tekstiä Unikey-kirjoitusohjelmistolla kirjoittavat) saattavat haluta poistaa sen käytöstä, sillä se aiheuttaa väärien nmerkkien syöttämistä.
@@ -1190,6 +1194,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Korostus
 - Tekstityyli
 - Kirjoitusvirheet
+- Kielioppivirheet
 - Sivunumerot
 - Rivinumerot
 - Rivien sisennykset

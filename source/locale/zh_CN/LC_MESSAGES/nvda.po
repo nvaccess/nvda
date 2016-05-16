@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-30 17:19+0800\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-12 11:29+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -2953,11 +2953,11 @@ msgstr "切换输入帮助的开关，当开关打开时，按下按键会读出
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr "开启睡眠模式"
+msgstr "关闭睡眠模式"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "关闭睡眠模式"
+msgstr "打开睡眠模式"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
@@ -3190,6 +3190,18 @@ msgstr "读出拼写错误"
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "切换拼写错误朗读的开关"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "不读语法错误"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "读出语法错误"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "切换语法错误朗读的开关"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -4914,6 +4926,14 @@ msgstr "拼写错误"
 msgid "out of spelling error"
 msgstr "离开拼写错误"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "语法错误"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "离开语法错误"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "离开表格"
@@ -5260,7 +5280,7 @@ msgstr "{description}"
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 #, python-brace-format
 msgid "{number} {candidate}"
-msgstr "{candidate}{number} "
+msgstr "{candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -6012,12 +6032,12 @@ msgid "Python console"
 msgstr "Python 控制台(&P)"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "插件管理器(&A)"
+msgid "Manage &add-ons..."
+msgstr "插件管理器(&A)..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
-msgstr "创建便携版本(&C)"
+msgid "Create portable copy..."
+msgstr "创建便携版本(&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -6055,8 +6075,8 @@ msgid "C&ontributors"
 msgstr "贡献者名单(&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "欢迎窗口(&L)"
+msgid "We&lcome dialog..."
+msgstr "欢迎对话框(&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6984,6 +7004,11 @@ msgstr "读出 NVDA 快捷键(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "输入时播放拼写错误提示音"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "从其他应用程序获取键盘控制权(&A)"
 
@@ -7256,6 +7281,11 @@ msgstr "朗读文本样式(&Y)"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "朗读拼写错误(&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "朗读语法错误(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.

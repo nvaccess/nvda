@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-18 13:25+0400\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-11 22:54+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3202,15 +3202,27 @@ msgstr "Включает и выключает объявление измене
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "чтение граматических ошибок выключено"
+msgstr "чтение орфографических ошибок выключено"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "чтение граматических ошибок включено"
+msgstr "чтение орфографических ошибок включено"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Включает и выключает объявление граматических ошибок"
+msgstr "Включает и выключает объявление орфографических ошибок"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "чтение грамматических ошибок выключено"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "чтение грамматических ошибок включено"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Включает и выключает объявление грамматических ошибок"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -4696,7 +4708,7 @@ msgstr "Эмулирует нажатие %s на клавиатуре"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "чисто"
+msgstr "пусто"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -5013,11 +5025,19 @@ msgstr "Больше нет примечания."
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "Граматическая ошибка"
+msgstr "орфографическая ошибка"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "Вне граматической ошибки"
+msgstr "вне орфографической ошибки"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "грамматическая ошибка"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "вне грамматической ошибки"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -6146,11 +6166,11 @@ msgid "Python console"
 msgstr "Консоль Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "Управление &дополнениями..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Создать переносную копию..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6189,7 +6209,7 @@ msgid "C&ontributors"
 msgstr "С&писок разработчиков"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "Диалог &Добро Пожаловать"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -7163,6 +7183,11 @@ msgstr "Читать &командные клавиши"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Воспроизводить звук для &орфографических ошибок при наборе текста"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Обрабатывать клавиши из &других приложений"
 
@@ -7436,7 +7461,12 @@ msgstr "Читать &Стиль"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
-msgstr "Читать &граматические ошибки"
+msgstr "Читать ор&фографические ошибки"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "Читать &грамматические ошибки"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.

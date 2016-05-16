@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-05-01 13:25+0300\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-12 15:04+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -3201,6 +3201,18 @@ msgstr "Yazım hatalarını bildir"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Yazım hatalarının bildirimini açıp kapatır"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "Gramer hatalarını Bildirme"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "Gramer hatalarını Bildir"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Gramer hatası bildirimini açıp kapatır"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Sayfa değişikliklerini bildirme"
@@ -4977,6 +4989,14 @@ msgstr "Yazım hatası"
 msgid "out of spelling error"
 msgstr "yazım hatası dışı"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "gramer hatası"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "Gramer hatası dışı"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "tablo dışı"
@@ -6100,12 +6120,12 @@ msgid "Python console"
 msgstr "Python konsolu"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "&Eklentileri yönet"
+msgid "Manage &add-ons..."
+msgstr "&Eklentileri yönet..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
-msgstr "Taşınabilir kopya oluştur"
+msgid "Create portable copy..."
+msgstr "Taşınabilir kopya oluştur..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -6143,8 +6163,8 @@ msgid "C&ontributors"
 msgstr "&Katkıda bulunanlar"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "&Hoşgeldiniz iletişim kutusu"
+msgid "We&lcome dialog..."
+msgstr "Ho&şgeldiniz iletişim kutusu"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7109,6 +7129,11 @@ msgstr "K&omut tuşlarını seslendir"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Yazarken yazım hataları için &ses çal"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "B&aşka uygulamaların tuşlarını işle"
 
@@ -7383,6 +7408,11 @@ msgstr "stilleri b&ildir"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "&Yazım hatalarını bildir"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "&Gramer hatalarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
