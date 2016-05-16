@@ -519,3 +519,14 @@ class EdgeHTMLRoot(EdgeNode):
 		if role==controlTypes.ROLE_PANE:
 			role=controlTypes.ROLE_DOCUMENT
 		return role
+
+class EdgePDFTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
+	pass
+
+class EdgePDFTreeInterceptor(EdgeHTMLTreeInterceptor):
+
+	TextInfo=EdgePDFTreeInterceptorTextInfo
+
+class EdgePDFRoot(UIA):
+
+	treeInterceptorClass=EdgePDFTreeInterceptor
