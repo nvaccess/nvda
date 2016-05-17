@@ -160,6 +160,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _set__rangeObj(self,r):
 		self.innerTextInfo._rangeObj=r
 
+	def copyToClipboard(self):
+		return self.innerTextInfo.copyToClipboard()
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)
 
