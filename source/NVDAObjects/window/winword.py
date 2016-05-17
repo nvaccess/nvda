@@ -409,6 +409,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			unit=textInfos.UNIT_SENTENCE
 		return unit
 
+	def copyToClipboard(self):
+		self._rangeObj.copy()
+		return True
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		f=self._rangeObj.find
 		f.text=text
