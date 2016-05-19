@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.2 =
-Schwerpunkte sind u. a. die Anzeige von Rechtschreib- und Grammatikfehlern; sowie Verbesserungen inder Unterstützung von Microsoft Office.
+Schwerpunkte sind u. a. die Ausgabe von Rechtschreibfehlern beim schreiben, die Ausgabe von  Grammatikfehlern in Microsoft Word; sowie Verbesserungen und Fehlerbehebungen in der Unterstützung von Microsoft Office.
 
 == Neue Funktionen ==
 - Wenn Sie im Internet Explorer und anderen MSHTML-Dokumenten mit den Schnellnavigationstasten A und Umschalt+A zur nächsten oder vorherigen Anmerkung springen, wird auch eingefügter oder gelöschter Text angesprungen. (#5691)
@@ -13,15 +13,15 @@ Schwerpunkte sind u. a. die Anzeige von Rechtschreib- und Grammatikfehlern; sowi
 - In Microsoft Excel 2010 und neuer werden nun Zellschattierungen und Rahmen angesagt. Die automatische Ansage hierzu wird von der Einstellung für die Dokumentformatierungen in NVDA gesteuert. (#3683)
 - neue Braille-Übersetzungstabelle: griechisch (Koine). (#5393)
 - im Protokollbetrachter kann das Protokoll mit der Tastenkombination strg+s gespeichert werden. (#4532)
-- Über eine neue Option in den Tastatureinstellungen kann nun festgelegt werden, ob ein Signalton bei Rechtschreibfehlern während der Eingabe abgespielt werden soll. (#2024)
-- Die Anzeige von Grammatikfehlern in Microsoft Word kann nun in den Einstellungen für Dokumentformatierung von NVDA ein- oder ausgeschaltet werden. (#5877)
+- Über eine neue Option in den Tastatureinstellungen kann nun festgelegt werden, ob ein Signalton bei Rechtschreibfehlern während der Eingabe abgespielt werden soll. Dies gillt, sofern die Ausgabe von Rechtschreibfehlern aktiviert ist und im aktuellen Feld unterstützt wird. (#2024)
+- Die Ausgabe von Grammatikfehlern in Microsoft Word kann nun in den Einstellungen für Dokumentformatierung von NVDA ein- oder ausgeschaltet werden. (#5877)
 
 
 == Änderungen ==
 - im Lesemodus und in Eingabefeldern werden beide Eingabetasten nun gleich behandelt. (#5385)
 - NVDA verwendet nun espeeak NG. (#5651)
 - in Microsoft Excel wird die Spaltenüberschrift korrekt erkannt, wenn sich zwischen der aktuellen Zelle und der Spaltenüberschrift eine leere Zeile befindet. (#5396)
-- In Microsoft Excel werden die Zellkoordinaten nun vor den Überschriften angezeigt. (#5396)
+- In Microsoft Excel werden die Zellkoordinaten nun vor den Überschriften angesagt. (#5396)
 
 
 == Fehlerkorrekturen ==
@@ -37,7 +37,7 @@ Schwerpunkte sind u. a. die Anzeige von Rechtschreib- und Grammatikfehlern; sowi
 - In Google Chrome und Chrome-basierten Browsern können Dokumente, die sich innerhalb von Web-Anwendungen befinden, im Lesemodus gelesen werden. (#5818)
 - In Google Chrome und Chrome-basierten Browsern können Sie NVDA in den Lesemodus zwingen, während Sie sich in Web-Anwendungen befinden. (#5818)
 - im Internet Explorer schaltet NVDA nicht mehr irrtümlich in den Lesemodus um, wenn der Fokus auf ein Element bewegt wird, dessen Eigenschaft Aria-ActivateDescendant verwendet wird. Dies betrifft beispielsweise die Vorschlagsliste im Adressfeld beim Erstellen einer Nachricht in Gmail. (#5676)
-- In Microsoft Word-Dokumenten mit großen Tabellen wird NVDA nun nicht mehr abstürzen, wenn die Anzeige von Reihen-/Spaltenüberschriften aktiviert ist. (#5878)
+- In Microsoft Word-Dokumenten mit großen Tabellen wird NVDA nun nicht mehr abstürzen, wenn die Ausgabe von Reihen-/Spaltenüberschriften aktiviert ist. (#5878)
 - In Microsoft Word wird NVDA Text nicht mehr länger als Überschrift anzeigen, wenn er zwar eine Gliederungsebene besitzt, nicht jedoch mit einer der integrierten Vorlagen für Überschriften formatiert wurde. (#5186)
 - Im Lesemodus für Microsoft Word funktionieren die Befehle zum Navigieren in/aus Containerobjekten auch für Tabellen. (#5883)
 
