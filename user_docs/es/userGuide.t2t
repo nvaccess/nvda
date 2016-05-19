@@ -646,7 +646,7 @@ Pulsando Intro o el botón Mover A mientras se esté sobre la hoja listada cambi
 %kc:beginInclude
 Para anunciar cualquier comentario para la celda actualmente enfocada, pulsa NVDA+alt+c.
 %kc:endInclude
-Todos los comentarios para el libro de trabajo también pueden listarse en la Lista de Elementos de NVDA.
+Todos los comentarios para la hoja de trabajo también pueden listarse en la Lista de Elementos de NVDA.
 
 +++ Leyendo Celdas Protegidas +++
 Si un libro de trabajo ha sido protegido, podría no ser posible mover el foco a celdas en particular que hayan sido bloqueadas para edición.
@@ -991,6 +991,10 @@ Tecla: NVDA+4
 
 Cuando está marcada significa que NVDA anunciará todas las teclas que no sean carácteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. 
 
+==== Reproducir sonido para Errores de Ortografía mientras se escribe ====
+Al habilitarse, se reproducirá una breve señal acústica cuando una palabra que estés escribiendo contenga un error de ortografía.
+Esta opción sólo está disponible si el anunciado de errores de ortografía está habilitado en el diálogo de NVDA [Opciones de Formateado de Documento #DocumentFormattingSettings].
+
 ==== Manejar teclas desde otras aplicaciones ====
 Esta opción permite al usuario controlar si la pulsación de las teclas generada por aplicaciones tales como teclados en pantalla y por el software de reconocimiento de voz debería procesarse por NVDA. 
 Esta opción está activada por defecto, aunque algunos usuarios podrían desear deshabilitarla, tales como aquellos que escriban en vietnamita con el programa de escritura Unikey ya que hará que la entrada de caracteres sea incorrecta.
@@ -1190,6 +1194,7 @@ Puedes configurar el anunciado de:
 - Énfasis
 - Estilo del texto
 - Errores de ortografía
+- Errores gramaticales
 - Números de página
 - Números de línea
 - Sangría de línea

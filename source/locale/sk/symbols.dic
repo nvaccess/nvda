@@ -6,7 +6,7 @@
 complexSymbols:
 # identifier	regexp
 # Others
-decimal point	(?<![^\d -])\.(?=\d)
+decimal point	(?<![^\d -])[\.,](?=\d)
 negative number	(?<!\w)-(?=[$┬úÔéČ┬ą.]?\d)
 
 symbols:
@@ -18,7 +18,7 @@ symbols:
 ? sentence ending	otáznik	all	always	# otáznik na konci vety
 ; phrase ending	bodkočiarka	most	always	# bodkočiarka v prostriedku vety
 : phrase ending	dvojbodka	most	always	# dvojbodka v prostriedku vety
-decimal point		none	always	# desatinná čiarka
+decimal point		none	always	#desatinné číslo
 in-word '	apostrof	all	norep	# apostrof vo vnútri slova
 negative number	mínus	none	norep	# záporné číslo
 
