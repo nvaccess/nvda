@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-03-31 22:01+0100\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-13 16:09+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ó Galego <oprisniki@gmail.com>\n"
 "Language: gl_ES\n"
@@ -3216,6 +3216,18 @@ msgstr "Anunciar erros de ortografía activado"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Activa e desactiva o anunciado dos erros de ortografía"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "Anunciar erros gramaticais desativado"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "Anunciar erros gramaticais ativado"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Activa e desactiva o anunciado dos erros gramaticais"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Anunciar páxinas desactivado"
@@ -5025,6 +5037,14 @@ msgstr "erro de ortografía"
 msgid "out of spelling error"
 msgstr "Fóra do erro de ortografía"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "erro gramatical"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "Fóra do erro gramatical"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "fora da táboa"
@@ -6148,12 +6168,12 @@ msgid "Python console"
 msgstr "Consola de Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Administrador de &complementos"
+msgid "Manage &add-ons..."
+msgstr "Administrador de &complementos..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
-msgstr "Criar copia Portable..."
+msgid "Create portable copy..."
+msgstr "Crear copia Portable..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -6191,8 +6211,8 @@ msgid "C&ontributors"
 msgstr "&Colaboradores"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Diálogo &Benvido"
+msgid "We&lcome dialog..."
+msgstr "Diálogo de &Benvida..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7159,6 +7179,11 @@ msgstr "falar &teclas de ordes"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Reproducir son para erros de &ortografía mentres se escrebe"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Manexar teclas dende outras &aplicacións"
 
@@ -7435,6 +7460,11 @@ msgstr "Anunciar e&stilo"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "Anunciar &erros de ortografía"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "Anunciar erros &gramaticais"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.

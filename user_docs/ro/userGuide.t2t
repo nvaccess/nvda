@@ -646,7 +646,7 @@ Apăsând „Enter” sau butonul „Mută la”, când aveți selectată o foai
 %kc:beginInclude
 Pentru a anunța toate comentariile pentru celula aflată curent sub focus, apăsați NVDA+alt+c.
 %kc:endInclude
-Toate comentariile pentru Registrul de lucru pot fi afișate și în Lista de elemente NVDA.
+Toate comentariile pentru foaia de lucru pot fi afișate și în Lista de elemente NVDA.
 
 +++ Citirea celulelor protejate +++
 Dacă un registru de lucru a fost protejat, s-ar putea ca mutarea focalizării la o anumită celulă, care a fost blocată pentru editare, să nu fie posibilă.
@@ -991,6 +991,10 @@ Tastă: NVDA+4
 
 Când e activat, NVDA va pronunța toate tastele necaractere tastate pe tastatură. Asta include combinații de taste cum ar fi Control plus altă literă.
 
+==== Redare sunete pentru erorile de ortografi în timpul tastării ====
+Când este activată opțiunea, se emite un scurt sunet de alertă atunci când cuvântul tastat conține o eroare de ortografie. 
+Această opțiune este disponibilă doar dacă raportarea erorilor de ortografie este activată în fereastra de dialog NVDA pentru [setările formatării documentului #FormatareDocument]
+
 ==== Tratează taste din alte aplicații ====
 Acestă opțiune permite utilizatorului să controleze dacă apăsările de tastă generate de aplicații, cum ar fi tastaturi pe ecran și aplicații de recunoaștere a vorbirii, ar trebui să fie procesate de NVDA. 
 Opțiunea este activată implcit, deși anumiți utilizatori vor dori să o dezactiveze, cum ar fi cei care tastează în Vietnameză cu software-ul de tastare Unikey, pentru care se vor produce intrări de caractere incorecte.
@@ -1190,6 +1194,7 @@ Puteți configura anunțarea pentru:
 - accentuare
 - stil text
 - erori de ortografie
+- erori gramaticale
 - număr de pagină
 - număr de rând
 - indentație rând

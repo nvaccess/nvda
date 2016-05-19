@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-14 16:52+0100\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-14 15:44+0100\n"
 "Last-Translator: zwonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -3220,6 +3220,18 @@ msgstr "Izvijesti o pravopisnim pogreškama uključeno"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Uključuje i isključuje izgovor pravopisnih pogrešaka"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "Izvijesti o gramatičkim pogreškama isključeno"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "izvjesti o gramatičkim pogreškama uključeno"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Uključuje i isključuje izgovor gramatičkih pogrešaka"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Izvijesti o stranicama isključeno"
@@ -5028,6 +5040,14 @@ msgstr "pravopisna pogreška"
 msgid "out of spelling error"
 msgstr "izvan pravopisne pogreške"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Gramatička greška"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "izvan gramatičke greške"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "izvan tablice"
@@ -6151,11 +6171,11 @@ msgid "Python console"
 msgstr "Python konzola"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "Upravljanje &dodacima"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Stvori prijenosnu kopiju..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6194,7 +6214,7 @@ msgid "C&ontributors"
 msgstr "D&oprinositelji"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "Dijaloški okvir &dobrodošlice"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -7166,6 +7186,11 @@ msgstr "Izgovori naredbene &tipke"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "reproduciraj zvuk za pravopisne pogreške prilikom pisanja"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Rukovanje tipkama iz drugih &aplikacija"
 
@@ -7440,6 +7465,11 @@ msgstr "Izvijesti o stil&u"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "Izvijesti o pravopisnim &pogreškama"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "Izvijesti o &gramatičkim pogreškama"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
