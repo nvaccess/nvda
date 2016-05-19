@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 00:10+1000\n"
-"PO-Revision-Date: 2016-04-14 20:16+0530\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-15 22:05+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -694,7 +694,7 @@ msgstr "புள்ளி 8"
 
 #. Translators: The description of a braille cursor shape.
 msgid "All dots"
-msgstr "எல்லா புள்ளிகளும்"
+msgstr "எல்லாப் புள்ளிகளும்"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -3210,6 +3210,18 @@ msgstr "எழுத்துப் பிழைகளை அறிவிக்�
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "எழுத்துப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "இலக்கணப் பிழைகளை அறிவிக்காது"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "இலக்கணப் பிழைகளை அறிவிக்கும்"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "இலக்கணப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "பக்கங்களை அறிவிக்காது"
@@ -4999,6 +5011,14 @@ msgstr "எழுத்துப் பிழை"
 msgid "out of spelling error"
 msgstr "எழுத்துப் பிழைக்கு வெளியே"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "இலக்கணப் பிழை"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "இலக்கணப் பிழைக்கு வெளியே"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "அட்டவணைக்கு வெளியே"
@@ -6092,11 +6112,11 @@ msgid "Python console"
 msgstr "பைத்தன் கட்டுப்பாட்டு மையம் (&P)"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "கூட்டுறுப்பு மேலாண்மை (&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "பெயர்த்தகு படியை உருவாக்குக... (&C)"
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6135,7 +6155,7 @@ msgid "C&ontributors"
 msgstr "பங்களிப்பாளர்கள் (&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "வரவேற்பு உரையாடல் (&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -7099,6 +7119,11 @@ msgstr "கட்டளை விசைகளைப் பேசுக (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "தட்டச்சிடும்பொழுது ஏற்படும் எழுத்துப் பிழைகளை அறிவிக்க ஒலியை எழுப்பவும் (&S)"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "பிற பயன்பாடுகளின் விசைகளைக் கையாள்க (&A)"
 
@@ -7374,6 +7399,11 @@ msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும் (&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "இலக்கணப் பிழைகளை அறிவிக்கவும் (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
