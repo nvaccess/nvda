@@ -119,27 +119,28 @@ def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attr
 	if not position:
 		position=document.makeTextInfo(textInfos.POSITION_ALL)
 		includeCurrent=True
-	elif direction=="previous":
-		position.expand(textInfos.UNIT_CHARACTER)
-		# Hack: IUIAutomationTextRange::FindAttribute breaks after expand. copy to fix.
-		position=position.copy()
-		position.setEndPoint(document.TextInfo(document,textInfos.POSITION_ALL),"startToStart")
-	else:
-		position.setEndPoint(document.TextInfo(document,textInfos.POSITION_ALL),"endToEnd")
+	curPosition=position
 	while True:
+		print "curPosition text: %s"%curPosition.text
 		try:
-			newRange=position._rangeObj.findAttribute(attributeID,attributeValue,direction=="previous")
+			newRange=curPosition._rangeObj.findAttribute(attributeID,attributeValue,direction=="previous")
 		except COMError:
 			newRange=None
 		if not newRange:
 			return
-		if includeCurrent or newRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+		print "newRange text: %s"%newRange.getText(-1)
+		newPosition=curPosition.copy()
+		newPosition._rangeObj=newRange
+		print "newPosition text: %s"%newPosition.text
+		if includeCurrent or not newPosition.isOverlapping(position):
 			yield ItemClass(itemType,document,newRange)
-			includeCurrent=True
+		curPosition=newPosition
 		if direction=="previous":
-			position._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,newRange,UIAHandler.TextPatternRangeEndpoint_Start)
+			curPosition.collapse()
+			if curPosition.move(textInfos.UNIT_CHARACTER,-1)==0:
+				return
 		else:
-			position._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,newRange,UIAHandler.TextPatternRangeEndpoint_End)
+			curPosition.collapse(True)
 
 def UIATextRangeFromElement(documentTextPattern,element):
 	try:
