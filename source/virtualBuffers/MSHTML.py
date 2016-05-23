@@ -76,15 +76,25 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
 		if ariaDescribedBy:
-			try:
-				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
-			except (COMError,NameError):
-				descNode=None
-			if descNode:
+			ariaDescribedByIds=ariaDescribedBy.split(" ")
+			for ariaDescribedById in ariaDescribedByIds:
+				descNode=None				
 				try:
-					description=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
-				except:
+					descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
+				except (COMError,NameError):
+					descNode=None	
+				if descNode:
 					pass
+				elif:
+					try:
+						descNode=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.obj.rootNVDAObject.HTMLNode.document, ariaDescribedById)
+					except (COMError,NameError):
+						descNode=None
+				if descNode:
+					try:
+						description=description+" "+self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
+					except:
+						pass
 		ariaSort=attrs.get('HTMLAttrib::aria-sort')
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
