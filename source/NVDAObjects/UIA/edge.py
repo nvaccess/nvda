@@ -121,17 +121,13 @@ def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attr
 		includeCurrent=True
 	curPosition=position
 	while True:
-		print "curPosition text: %s"%curPosition.text
 		try:
 			newRange=curPosition._rangeObj.findAttribute(attributeID,attributeValue,direction=="previous")
 		except COMError:
 			newRange=None
 		if not newRange:
 			return
-		print "newRange text: %s"%newRange.getText(-1)
-		newPosition=curPosition.copy()
-		newPosition._rangeObj=newRange
-		print "newPosition text: %s"%newPosition.text
+		newPosition=document.TextInfo(document,None,_rangeObj=newRange)
 		if includeCurrent or not newPosition.isOverlapping(position):
 			yield ItemClass(itemType,document,newRange)
 		curPosition=newPosition
