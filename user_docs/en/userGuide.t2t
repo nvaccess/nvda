@@ -2034,6 +2034,9 @@ If connecting using a legacy serial port (or a USB to serial converter) or if no
 
 Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
 
+On the BrailleNote Apex BT, you can use the scroll wheel located between dots 1 and 4 for various NVDA commands.
+The wheel consists of four directional dots, a center click button, and a wheel that spins clockwise or counterclockwise.
+
 Following are the BrailleNote command assignments for NVDA.
 Please check your BrailleNote's documentation to find where these keys are located.
 
@@ -2063,6 +2066,17 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+
+Following are commands assigned to the scroll wheel:
+%kc:beginInclude
+|| Name | Key |
+| Up arrow key | up arrow |
+| Down arrow key | down arrow |
+| Left Arrow key | left arrow |
+| Right arrow key | right arrow |
+| Enter key | center button |
+| Tab key | scroll wheel clockwise |
+| Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
 
 ++ EcoBraille ++

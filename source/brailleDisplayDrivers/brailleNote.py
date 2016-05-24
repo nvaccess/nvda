@@ -2,11 +2,11 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-# Copyright (C) 2011, 2012  Rui Batista <ruiandrebatista@gmail.com>
+# Copyright (C) 2011-2016 NV access Limited, Rui Batista, Joseph Lee
 
 """ Braille Display driver for the BrailleNote notetakers in terminal mode.
 USB, serial and bluetooth communications are supported.
-QWERTY keyboard input and scroll weels are not yet supported.
+QWERTY keyboard input and scroll weels support in progress.
 """
 from collections import OrderedDict
 import itertools
@@ -31,7 +31,7 @@ BAUD_RATE = 38400
 TIMEOUT = 0.1
 READ_INTERVAL = 50
 
-# Tags sent by the braillenote
+# Tags sent by the BrailleNote
 # Combinations of dots 1...6
 DOTS_TAG = 0x80
 # combinations of dots 1...6 plus the space bar
@@ -40,12 +40,14 @@ DOTS_SPACE_TAG = 0x81
 DOTS_BACKSPACE_TAG = 0x82
 # Combinations of dots 1..6 plus space bar and enter
 DOTS_ENTER_TAG = 0x83
-# Combinations of one or two Thunb keys
-THUNB_KEYS_TAG = 0x84
+# Combinations of one or two Thumb keys
+THUMB_KEYS_TAG = 0x84
 # Cursor Routing keys
 CURSOR_KEY_TAG = 0x85
-# Status 
+# Status
 STATUS_TAG = 0x86
+# Scroll Wheel (Apex BT)
+SCROLL_WHEEL_TAG = 0x8B
 
 DESCRIBE_TAG = "\x1B?"
 DISPLAY_TAG = "\x1bB"
@@ -61,7 +63,7 @@ DOT_6 = 0x20
 DOT_7 = 0x40
 DOT_8 = 0x80
 
-# Thumb keys
+# Thumb-keys
 THUMB_PREVIOUS = 0x01
 THUMB_BACK = 0x02
 THUMB_ADVANCE = 0x04
@@ -74,6 +76,9 @@ _keyNames = {
 	THUMB_NEXT : "tnext",
 	0 : "space"
 }
+
+# Scroll wheel components (Apex BT)
+_scrWheel = ("wcounterclockwise", "wclockwise", "wup", "wdown", "wleft", "wright", "wcenter")
 
 # Dots:
 # Backspace is dot7 and enter dot8
@@ -218,17 +223,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		command, arg = ord(self._buffer[0]), ord(self._buffer[1])
 		self._buffer = ""
 		return command, arg
+
 	def _dispatch(self, command, arg):
 		space = False
-		if command == THUNB_KEYS_TAG :
+		print command
+		print arg
+		# Certain scroll wheel assignments interfere with thumb-keys.
+		if command == THUMB_KEYS_TAG:
 			gesture = InputGesture(keys=arg)
+		elif command == SCROLL_WHEEL_TAG:
+			gesture = InputGesture(wheel=arg)
 		elif command == CURSOR_KEY_TAG:
 			gesture = InputGesture(routing=arg)
 		elif command in (DOTS_TAG, DOTS_SPACE_TAG, DOTS_ENTER_TAG, DOTS_BACKSPACE_TAG):
 			if command != DOTS_TAG:
 				space = True
 			if command == DOTS_ENTER_TAG:
-				# Stuppid bug in the implementation
+				# Stupid bug in the implementation
 				# Force dot8 here, although it should be already there
 				arg |= DOT_8
 			gesture = InputGesture(dots=arg, space=space)
@@ -261,9 +272,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_routeTo": ("br(braillenote):routing",),
 			"braille_toggleTether": ("br(braillenote):tprevious+tnext",),
 			"kb:upArrow": ("br(braillenote):space+d1",),
+			"kb:upArrow": ("br(braillenote):wup",),
 			"kb:downArrow": ("br(braillenote):space+d4",),
+			"kb:downArrow": ("br(braillenote):wdown",),
 			"kb:leftArrow": ("br(braillenote):space+d3",),
+			"kb:leftArrow": ("br(braillenote):wleft",),
 			"kb:rightArrow": ("br(braillenote):space+d6",),
+			"kb:rightArrow": ("br(braillenote):wright",),
 			"kb:pageup": ("br(braillenote):space+d1+d3",),
 			"kb:pagedown": ("br(braillenote):space+d4+d6",),
 			"kb:home": ("br(braillenote):space+d1+d2",),
@@ -271,8 +286,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:control+home": ("br(braillenote):space+d1+d2+d3",),
 			"kb:control+end": ("br(braillenote):space+d4+d5+d6",),
 			"kb:enter": ("br(braillenote):space+d8",),
+			"kb:enter": ("br(braillenote):wcenter",),
 			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6",),
+			"kb:shift+tab": ("br(braillenote):wcounterclockwise",),
 			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5",),
+			"kb:tab": ("br(braillenote):wclockwise",),
 			"kb:backspace": ("br(braillenote):space+d7",),
 			"showGui": ("br(braillenote):space+d1+d3+d4+d5",),
 			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6",),
@@ -284,13 +302,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys=None, dots=None, space=False, routing=None):
+	def __init__(self, keys=None, dots=None, space=False, routing=None, wheel=None):
 		super(braille.BrailleDisplayGesture, self).__init__()
-		# see what thumb keys are pressed:
+		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).
 		names = set()
 		if keys is not None:
-			names.update(_keyNames[1 << i] for i in xrange(4)
-					if (1 << i) & keys)
+			names.update(_keyNames[1 << i] for i in xrange(4) if (1 << i) & keys)
+		if wheel is not None:
+			names.add(_scrWheel[wheel])
 		elif dots is not None:
 		# now the dots
 			self.dots = dots
