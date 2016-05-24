@@ -1224,6 +1224,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
+	def script_caret_moveByCell(self,gesture):
+		gesture.send()
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable=info._rangeObj.tables.count>0
+		isCollapsed=info.isCollapsed
+		if inTable:
+			info.expand(textInfos.UNIT_CELL)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+
 	def script_tab(self,gesture):
 		gesture.send()
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -1404,6 +1413,14 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+downArrow":"nextParagraph",
 		"kb:control+upArrow":"previousParagraph",
+		"kb:alt+home":"caret_moveByCell",
+		"kb:alt+end":"caret_moveByCell",
+		"kb:alt+pageUp":"caret_moveByCell",
+		"kb:alt+pageDown":"caret_moveByCell",
+		"kb:alt+shift+home":"caret_changeSelection",
+		"kb:alt+shift+end":"caret_changeSelection",
+		"kb:alt+shift+pageUp":"caret_changeSelection",
+		"kb:alt+shift+pageDown":"caret_changeSelection",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 		"kb:NVDA+alt+c":"reportCurrentComment",
