@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-11 11:32+0100\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-14 13:31+0100\n"
 "Last-Translator: OAron <info@o-soft.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -3213,6 +3213,18 @@ msgstr "Helyesírási hibák jelzése bekapcsolva"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Ki- vagy bekapcsolja a Helyesírási hibák jelzését"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "Nyelvhelyességi hibák jelzése kikapcsolva"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "Nyelvhelyességi hibák jelzése bekapcsolva"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Ki- vagy bekapcsolja a Nyelvhelyességi hibák jelzését"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Oldalszámok bemondása kikapcsolva"
@@ -5016,6 +5028,14 @@ msgstr "Hibás szó"
 msgid "out of spelling error"
 msgstr "A hibás szón kívül"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Hibás rész"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "Hibás részen kívül"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "a táblázat vége"
@@ -5282,7 +5302,7 @@ msgstr "&Adományozás"
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
 msgid "&Not now"
-msgstr "&Most nem"
+msgstr "Most &nem"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
@@ -6146,11 +6166,11 @@ msgid "Python console"
 msgstr "Python konzol"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "Bővítmények &kezelése"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Hordozható verzió készítése..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6189,8 +6209,8 @@ msgid "C&ontributors"
 msgstr "&Közreműködők"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "ü&dvözlőképernyő"
+msgid "We&lcome dialog..."
+msgstr "Ü&dvözlőképernyő"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7153,6 +7173,11 @@ msgstr "&Parancsbillentyűk bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Hangjelzés &gépelési hibánál"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "&Alkalmazások billentyűleütéseinek kezelése"
 
@@ -7429,6 +7454,11 @@ msgstr "st&ílus bemondása"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "Helyesírási hi&bák jelzése"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "&Nyelvhelyességi hibák jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.

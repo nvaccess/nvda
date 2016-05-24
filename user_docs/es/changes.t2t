@@ -4,19 +4,24 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.2 =
+Lo subrayable de esta versión incluye la capacidad para indicar errores de ortografía mientras se escribe; el soporte para el anunciado de errores gramaticales en Microsoft Word; y mejoras y correcciones para el soporte de Microsoft Office.
 
 == Nuevas Características ==
 - En modo exploración en Internet Explorer y otros controles MSHTML, utilizando primero la navegación con una sola letra para mover por anotación (a y shift+a) ahora se mueve a texto insertado y eliminado. (#5691)
 - En Microsoft Excel, NVDA ahora anuncia el nivel de un grupo de celdas, así como si está contraído o expandido. (#5690)
-- Al pulsar la orden Anunciar formato de texto dos veces presenta la información en modo exploración para que se pueda revisar. (#4908)
+- Al pulsar la orden Anunciar formato de texto (NVDA+f) dos veces presenta la información en modo exploración para que se pueda revisar. (#4908)
 - En Microsoft Excel 2010 y posterior, el sombreado y el degradado de relleno de celda ahora se anuncia. El anunciado automático se controla por la opción Anunciar colores en las preferencias de Formateado de Documentos de NVDA. (#3683)
 - Nueva tabla de transcripción braille: Griego koiné. (#5393)
 - En el Visualizador de Registro, ahora puedes guardar el registro utilizando el atajo de teclado control+s. (#4532)
-
+- Si el anunciado de errores de ortografía está habilitado y se soporta en el control enfocado, NVDA reproducirá un sonido para alertarte de un error de ortografía cometido mientras tecleas. Esto puede deshabilitarse utilizando la nueva opción "Reproducir sonido para errores de ortografía mientras se escribe" en el diálogo Opciones de teclado de NVDA. (#2024)
+- Ahora se anuncian errores gramaticales en Microsoft Word. Esto puede deshabilitarse utilizando la nueva opción "Anunciar errores gramaticales" en el diálogo Formateado de Documentos de NVDA. (#5877)
  
+
 == Cambios ==
 - En modo exploración y en campos de texto editables, NVDA ahora trata al intro del teclado numérico del mismo modo que la tecla intro principal. (#5385)
 - NVDA ha cambiado al sintetizador de voz eSpeak NG. (#5651)
+- En Microsoft Excel, NVDA ya no ignora un encabezado de columna de una celda cuando haya una fila en blanco entre la celda y el encabezado. (#5396)
+- En Microsoft Excel, las coordenadas ahora se anuncian después de los encabezados para eliminar la ambigüedad entre los encabezados y el contenido. (#5396)
 
 
 == Corrección de Fallos ==
@@ -32,6 +37,9 @@ Qué hay de Nuevo en NVDA
 - En Google Chrome y navegadores basados en Chrome, los documentos dentro de diálogos o aplicaciones ahora pueden leerse en modo exploración. (#5818)
 - En Google Chrome y navegadores basados en Chrome, ahora puedes forzar a NVDA para cambiar a modo exploración en diálogos web o aplicaciones. (#5818)
 - En Internet Explorer y otros controles MSHTML, al mover el foco a ciertos controles (específicamente, donde se utilice aria-activedescendant) ya no cambia incorrectamente a modo exploración. Esto ocurría, por ejemplo, al moverse a sugerencias en campos de dirección cuando se compone un mensaje en Gmail. (#5676)
+- En Microsoft Word, NVDA ya no se cuelga en tablas largas cuando el anunciado de encabezados de fila o columna de tabla esté habilitado. (#5878)
+- En Microsoft word, NVDA ya no anuncia incorrectamente texto con un nivel fuera de línea (pero no un estilo de encabezados integrados) como un encabezado. (#5186)
+- En modo exploración en Microsoft Word, las órdenes Mover pasando de fin o a inicio de contenedor (coma y shift+coma) ahora funcionan para tablas. (#5883)
 
 
 == Cambios para Desarrolladores ==
