@@ -84,6 +84,8 @@ using namespace std;
 #define wdDISPID_FONT_BOLD 130
 #define wdDISPID_FONT_ITALIC 131
 #define wdDISPID_FONT_UNDERLINE 140
+#define wdDISPID_FONT_STRIKETHROUGH 135
+#define wdDISPID_FONT_DOUBLESTRIKETHROUGH 136
 #define wdDISPID_FONT_NAME 142
 #define wdDISPID_FONT_SIZE 141
 #define wdDISPID_FONT_SUBSCRIPT 138
@@ -699,6 +701,11 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					formatAttribsStream<<L"text-position=\"super\" ";
 				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"text-position=\"sub\" ";
+				}
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_STRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"1\" ";
+				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_DOUBLESTRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"double\" ";
 				}
 			}
 		}
