@@ -1232,6 +1232,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		if inTable:
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			braille.handler.handleCaretMove(self)
 
 	def script_tab(self,gesture):
 		gesture.send()
