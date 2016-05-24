@@ -453,6 +453,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.
