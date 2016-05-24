@@ -2026,6 +2026,9 @@ The following models are supported:
 - BrailleNote Apex (USB and Bluetooth connections)
 -
 
+Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
+For BrailleNote QT, PC keyboard emulation isn't supported.
+
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
 In NVDA, you may also need to set the port in the Braille Settings dialog.
@@ -2047,6 +2050,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
+| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2066,6 +2070,28 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+
+Following are commands assigned to BrailleNote QT.
+%kc:beginInclude
+|| Name | Key |
+| NvDA menu | read+n |
+| Up arrow key | up arrow |
+| Down arrow key | down arrow |
+| Left Arrow key | left arrow|
+| Right arrow key | right arrow |
+| Page up key | function+up arrow |
+| Page down key | function+down arrow |
+| Home key | function+left arrow |
+| End key | function+right arrow |
+| Control+home keys | read+t |
+| Control+end keys | read+b |
+| Enter key | enter |
+| Backspace key | backspace |
+| Tab key | tab |
+| Shift+tab keys | shift+tab |
+| Windows key | read+w |
+| Alt key | read+m |
+| Toggle input help | read+1 |
 
 Following are commands assigned to the scroll wheel:
 %kc:beginInclude

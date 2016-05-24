@@ -48,6 +48,14 @@ CURSOR_KEY_TAG = 0x85
 STATUS_TAG = 0x86
 # Scroll Wheel (Apex BT)
 SCROLL_WHEEL_TAG = 0x8B
+# QWERTY keyboard
+QT_LETTER_TAG = 0x8C
+QT_MOD_TAG = 0x8D
+QT_LETTER = 0x0
+QT_FN = 0x1
+QT_SHIFT = 0x2
+QT_CTRL = 0x4
+QT_READ = 0x8 #Alt key
 
 DESCRIBE_TAG = "\x1B?"
 DISPLAY_TAG = "\x1bB"
@@ -86,6 +94,32 @@ _dotNames = {}
 for i in xrange(1,9):
 	key = globals()["DOT_%d" % i]
 	_dotNames[key] = "d%d" % i
+
+# QT keys
+_qtKeyNames={
+	QT_FN : "qfunction",
+	QT_SHIFT : "qshift",
+	QT_CTRL : "qctrl",
+	QT_READ : "qread"
+}
+
+# QT uses various ASCII characters for special keys.
+_qtKeys= {
+	8:"backspace",
+	9:"tab",
+	13:"enter",
+	32:"space",
+	37:"leftArrow",
+	38:"upArrow",
+39:"rightArrow",
+40:"downArrow",
+}
+
+def _getQTKeys(key):
+	if key in _qtKeys:
+		return _qtKeys[key]
+	elif 65 <= key <= 90:
+		return chr(key)
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -210,7 +244,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			while self._serial is not None and self._serial.inWaiting():
 				command, arg = self._readPacket()
 				if command:
-					self._dispatch(command, arg)
+					# BrailleNote QT sends another two bytes to let the receiver know it is a QT letter.
+					letter = self._readPacket()[1] if command == QT_MOD_TAG else None
+					self._dispatch(command, arg, data=letter)
 		except serial.SerialException:
 			self._closeComPort()
 			# Reraise to be logged
@@ -224,11 +260,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._buffer = ""
 		return command, arg
 
-	def _dispatch(self, command, arg):
+	# Data is invoked if we're dealing with a BrailleNote QT.
+	def _dispatch(self, command, arg, data=None):
 		space = False
-		print command
-		print arg
-		# Certain scroll wheel assignments interfere with thumb-keys.
 		if command == THUMB_KEYS_TAG:
 			gesture = InputGesture(keys=arg)
 		elif command == SCROLL_WHEEL_TAG:
@@ -243,6 +277,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Force dot8 here, although it should be already there
 				arg |= DOT_8
 			gesture = InputGesture(dots=arg, space=space)
+		elif command == QT_MOD_TAG and data is not None:
+			# BrailleNote QT.
+			gesture = InputGesture(qtMod=arg, qtData=data)
 		else:
 			log.debugWarning("Unknown command")
 			return
@@ -273,36 +310,54 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_toggleTether": ("br(braillenote):tprevious+tnext",),
 			"kb:upArrow": ("br(braillenote):space+d1",),
 			"kb:upArrow": ("br(braillenote):wup",),
+			"kb:upArrow": ("br(braillenote):upArrow",),
 			"kb:downArrow": ("br(braillenote):space+d4",),
 			"kb:downArrow": ("br(braillenote):wdown",),
+			"kb:downArrow": ("br(braillenote):downArrow",),
 			"kb:leftArrow": ("br(braillenote):space+d3",),
 			"kb:leftArrow": ("br(braillenote):wleft",),
+			"kb:leftArrow": ("br(braillenote):leftArrow",),
 			"kb:rightArrow": ("br(braillenote):space+d6",),
 			"kb:rightArrow": ("br(braillenote):wright",),
+			"kb:rightArrow": ("br(braillenote):rightArrow",),
 			"kb:pageup": ("br(braillenote):space+d1+d3",),
+			"kb:pageup": ("br(braillenote):qfunction+upArrow",),
 			"kb:pagedown": ("br(braillenote):space+d4+d6",),
+			"kb:pagedown": ("br(braillenote):qfunction+downArrow",),
 			"kb:home": ("br(braillenote):space+d1+d2",),
+			"kb:home": ("br(braillenote):qfunction+leftArrow",),
 			"kb:end": ("br(braillenote):space+d4+d5",),
+			"kb:end": ("br(braillenote):qfunction+rightArrow",),
 			"kb:control+home": ("br(braillenote):space+d1+d2+d3",),
+			"kb:control+home": ("br(braillenote):qread+T",),
 			"kb:control+end": ("br(braillenote):space+d4+d5+d6",),
+			"kb:control+end": ("br(braillenote):qread+B",),
 			"kb:enter": ("br(braillenote):space+d8",),
 			"kb:enter": ("br(braillenote):wcenter",),
+			"kb:enter": ("br(braillenote):enter",),
 			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6",),
 			"kb:shift+tab": ("br(braillenote):wcounterclockwise",),
+			"kb:shift+tab": ("br(braillenote):qshift+tab",),
 			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5",),
 			"kb:tab": ("br(braillenote):wclockwise",),
+			"kb:tab": ("br(braillenote):tab",),
 			"kb:backspace": ("br(braillenote):space+d7",),
+			"kb:backspace": ("br(braillenote):backspace",),
 			"showGui": ("br(braillenote):space+d1+d3+d4+d5",),
+			"showGui": ("br(braillenote):qread+N",),
 			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6",),
+			"kb:windows": ("br(braillenote):qread+W",),
 			"kb:alt": ("br(braillenote):space+d1+d3+d4",),
+			"kb:alt": ("br(braillenote):qread+M",),
 			"toggleInputHelp": ("br(braillenote):space+d2+d3+d6",),
+			"toggleInputHelp": ("br(braillenote):qread+1",),
 		},
 	})
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys=None, dots=None, space=False, routing=None, wheel=None):
+	def __init__(self, keys=None, dots=None, space=False, routing=None, wheel=None, qtData=None, qtMod=None):
 		super(braille.BrailleDisplayGesture, self).__init__()
 		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).
 		names = set()
@@ -316,9 +371,15 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if space:
 				self.space = space
 				names.add(_keyNames[0])
-			names.update(_dotNames[1 << i] for i in xrange(8)
-					if (1 << i) & dots)
+			names.update(_dotNames[1 << i] for i in xrange(8) if (1 << i) & dots)
 		elif routing is not None:
 			self.routingIndex = routing
 			names.add('routing')
-		self.id = "+".join(names)
+		elif qtMod is not None and qtData is not None:
+			names.update(_qtKeyNames[1 << i] for i in xrange(4) if (1 << i) & qtMod)
+		# Make sure to display QT identifiers in mod+char format if this is such a case.
+		if qtData is None:
+			self.id = "+".join(names)
+		else:
+			print qtData
+			self.id = _getQTKeys(qtData) if qtMod == 0 else "+".join(("+".join(names), _getQTKeys(qtData)))
