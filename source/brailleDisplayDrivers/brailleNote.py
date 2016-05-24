@@ -6,7 +6,7 @@
 
 """ Braille Display driver for the BrailleNote notetakers in terminal mode.
 USB, serial and bluetooth communications are supported.
-QWERTY keyboard input and scroll weels support in progress.
+QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and scroll wheel are supported.
 """
 from collections import OrderedDict
 import itertools
@@ -97,13 +97,13 @@ for i in xrange(1,9):
 
 # QT keys
 _qtKeyNames={
-	QT_FN : "qfunction",
-	QT_SHIFT : "qshift",
-	QT_CTRL : "qctrl",
-	QT_READ : "qread"
+	QT_FN : "function",
+	QT_SHIFT : "shift",
+	QT_CTRL : "ctrl",
+	QT_READ : "read"
 }
 
-# QT uses various ASCII characters for special keys.
+# QT uses various ASCII characters for special keys, akin to scancodes.
 _qtKeys= {
 	8:"backspace",
 	9:"tab",
@@ -111,14 +111,26 @@ _qtKeys= {
 	32:"space",
 	37:"leftArrow",
 	38:"upArrow",
-39:"rightArrow",
-40:"downArrow",
+	39:"rightArrow",
+	40:"downArrow",
+	46:"delete",
+	186:"semi",
+	187:"equals",
+	188:"comma",
+	189:"hyphen",
+	190:"period",
+	191:"slash",
+	192:"graav",
+	219:"leftBracket",
+	220:"backslash",
+	221:"rightBracket",
+	222:"tick",
 }
 
 def _getQTKeys(key):
 	if key in _qtKeys:
-		return _qtKeys[key]
-	elif 65 <= key <= 90:
+	 return _qtKeys[key]
+	else:
 		return chr(key)
 
 
@@ -277,8 +289,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Force dot8 here, although it should be already there
 				arg |= DOT_8
 			gesture = InputGesture(dots=arg, space=space)
-		elif command == QT_MOD_TAG and data is not None:
-			# BrailleNote QT.
+		elif command == QT_MOD_TAG:
+			# BrailleNote QT
 			gesture = InputGesture(qtMod=arg, qtData=data)
 		else:
 			log.debugWarning("Unknown command")
@@ -308,65 +320,41 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_nextLine": ("br(braillenote):tnext",),
 			"braille_routeTo": ("br(braillenote):routing",),
 			"braille_toggleTether": ("br(braillenote):tprevious+tnext",),
-			"kb:upArrow": ("br(braillenote):space+d1",),
-			"kb:upArrow": ("br(braillenote):wup",),
-			"kb:upArrow": ("br(braillenote):upArrow",),
-			"kb:downArrow": ("br(braillenote):space+d4",),
-			"kb:downArrow": ("br(braillenote):wdown",),
-			"kb:downArrow": ("br(braillenote):downArrow",),
-			"kb:leftArrow": ("br(braillenote):space+d3",),
-			"kb:leftArrow": ("br(braillenote):wleft",),
-			"kb:leftArrow": ("br(braillenote):leftArrow",),
-			"kb:rightArrow": ("br(braillenote):space+d6",),
-			"kb:rightArrow": ("br(braillenote):wright",),
-			"kb:rightArrow": ("br(braillenote):rightArrow",),
-			"kb:pageup": ("br(braillenote):space+d1+d3",),
-			"kb:pageup": ("br(braillenote):qfunction+upArrow",),
-			"kb:pagedown": ("br(braillenote):space+d4+d6",),
-			"kb:pagedown": ("br(braillenote):qfunction+downArrow",),
-			"kb:home": ("br(braillenote):space+d1+d2",),
-			"kb:home": ("br(braillenote):qfunction+leftArrow",),
-			"kb:end": ("br(braillenote):space+d4+d5",),
-			"kb:end": ("br(braillenote):qfunction+rightArrow",),
-			"kb:control+home": ("br(braillenote):space+d1+d2+d3",),
-			"kb:control+home": ("br(braillenote):qread+T",),
-			"kb:control+end": ("br(braillenote):space+d4+d5+d6",),
-			"kb:control+end": ("br(braillenote):qread+B",),
-			"kb:enter": ("br(braillenote):space+d8",),
-			"kb:enter": ("br(braillenote):wcenter",),
-			"kb:enter": ("br(braillenote):enter",),
-			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6",),
-			"kb:shift+tab": ("br(braillenote):wcounterclockwise",),
-			"kb:shift+tab": ("br(braillenote):qshift+tab",),
-			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5",),
-			"kb:tab": ("br(braillenote):wclockwise",),
-			"kb:tab": ("br(braillenote):tab",),
-			"kb:backspace": ("br(braillenote):space+d7",),
-			"kb:backspace": ("br(braillenote):backspace",),
-			"showGui": ("br(braillenote):space+d1+d3+d4+d5",),
-			"showGui": ("br(braillenote):qread+N",),
-			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6",),
-			"kb:windows": ("br(braillenote):qread+W",),
-			"kb:alt": ("br(braillenote):space+d1+d3+d4",),
-			"kb:alt": ("br(braillenote):qread+M",),
-			"toggleInputHelp": ("br(braillenote):space+d2+d3+d6",),
-			"toggleInputHelp": ("br(braillenote):qread+1",),
+			"kb:upArrow": ("br(braillenote):space+d1", "br(braillenote):wup", "br(braillenote):upArrow",),
+			"kb:downArrow": ("br(braillenote):space+d4", "br(braillenote):wdown","br(braillenote):downArrow",),
+			"kb:leftArrow": ("br(braillenote):space+d3","br(braillenote):wleft","br(braillenote):leftArrow",),
+			"kb:rightArrow": ("br(braillenote):space+d6","br(braillenote):wright","br(braillenote):rightArrow",),
+			"kb:pageup": ("br(braillenote):space+d1+d3","br(braillenote):function+upArrow",),
+			"kb:pagedown": ("br(braillenote):space+d4+d6","br(braillenote):function+downArrow",),
+			"kb:home": ("br(braillenote):space+d1+d2","br(braillenote):function+leftArrow",),
+			"kb:end": ("br(braillenote):space+d4+d5","br(braillenote):function+rightArrow",),
+			"kb:control+home": ("br(braillenote):space+d1+d2+d3","br(braillenote):read+T",),
+			"kb:control+end": ("br(braillenote):space+d4+d5+d6","br(braillenote):read+B",),
+			"kb:enter": ("br(braillenote):space+d8","br(braillenote):wcenter","br(braillenote):enter",),
+			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6","br(braillenote):wcounterclockwise","br(braillenote):shift+tab",),
+			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5","br(braillenote):wclockwise","br(braillenote):tab",),
+			"kb:backspace": ("br(braillenote):space+d7","br(braillenote):backspace",),
+			"showGui": ("br(braillenote):space+d1+d3+d4+d5","br(braillenote):read+N",),
+			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6","br(braillenote):read+W",),
+			"kb:alt": ("br(braillenote):space+d1+d3+d4","br(braillenote):read+M",),
+			"toggleInputHelp": ("br(braillenote):space+d2+d3+d6","br(braillenote):read+1",),
 		},
 	})
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys=None, dots=None, space=False, routing=None, wheel=None, qtData=None, qtMod=None):
+	def __init__(self, keys=None, dots=None, space=False, routing=None, wheel=None, qtMod=None, qtData=None):
 		super(braille.BrailleDisplayGesture, self).__init__()
+		# Denotes if we're dealing with a QT model.
+		self.qt = qtMod is not None
 		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).
 		names = set()
 		if keys is not None:
 			names.update(_keyNames[1 << i] for i in xrange(4) if (1 << i) & keys)
-		if wheel is not None:
+		elif wheel is not None:
 			names.add(_scrWheel[wheel])
 		elif dots is not None:
-		# now the dots
 			self.dots = dots
 			if space:
 				self.space = space
@@ -375,11 +363,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		elif routing is not None:
 			self.routingIndex = routing
 			names.add('routing')
-		elif qtMod is not None and qtData is not None:
-			names.update(_qtKeyNames[1 << i] for i in xrange(4) if (1 << i) & qtMod)
+		elif qtMod is not None:
+			names.update(_qtKeyNames[1 << i] for i in xrange(4)
+				if (1 << i) & qtMod)
 		# Make sure to display QT identifiers in mod+char format if this is such a case.
-		if qtData is None:
-			self.id = "+".join(names)
-		else:
-			print qtData
+		if self.qt:
 			self.id = _getQTKeys(qtData) if qtMod == 0 else "+".join(("+".join(names), _getQTKeys(qtData)))
+		else:
+			self.id = "+".join(names)
