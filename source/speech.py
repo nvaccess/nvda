@@ -1275,12 +1275,17 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		strikethrough=attrs.get("strikethrough")
 		oldStrikethrough=attrsCache.get("strikethrough") if attrsCache is not None else None
 		if (strikethrough or oldStrikethrough is not None) and strikethrough!=oldStrikethrough:
-			# Translators: Reported when text is formatted with strikethrough.
-			# See http://en.wikipedia.org/wiki/Strikethrough
-			text=(_("strikethrough") if strikethrough
+			if strikethrough:
+				# Translators: Reported when text is formatted with double strikethrough.
+				# See http://en.wikipedia.org/wiki/Strikethrough
+				text=(_("double strikethrough") if strikethrough=="double"
+				# Translators: Reported when text is formatted with strikethrough.
+				# See http://en.wikipedia.org/wiki/Strikethrough
+				else _("strikethrough"))
+			else:
 				# Translators: Reported when text is formatted without strikethrough.
 				# See http://en.wikipedia.org/wiki/Strikethrough
-				else _("no strikethrough"))
+				text=_("no strikethrough")
 			textList.append(text)
 		underline=attrs.get("underline")
 		oldUnderline=attrsCache.get("underline") if attrsCache is not None else None
