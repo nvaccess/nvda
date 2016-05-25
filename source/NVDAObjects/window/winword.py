@@ -562,6 +562,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
+		if role==controlTypes.ROLE_TABLE and field.get('longdescription'):
+			field['states']=set([controlTypes.STATE_HASLONGDESC])
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
@@ -801,6 +803,11 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
+
+	def _activateLongDesc(self,controlField):
+		longDesc=controlField.get('longdescription')
+		# Translators: the title of the message dialog desplaying an MS Word table description.
+		ui.browseableMessage(longDesc,_("Table description"))
 
 	def _get_isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
