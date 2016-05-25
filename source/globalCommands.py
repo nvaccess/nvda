@@ -500,6 +500,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportParagraphIndentation.__doc__=_("Toggles on and off the reporting of paragraph indentation")
 	script_toggleReportParagraphIndentation.category=SCRCAT_DOCUMENTFORMATTING
 
+	def script_toggleReportLineSpacing(self,gesture):
+		if config.conf["documentFormatting"]["reportLineSpacing"]:
+			# Translators: The message announced when toggling the report line spacing document formatting setting.
+			state = _("report line spacing off")
+			config.conf["documentFormatting"]["reportLineSpacing"]=False
+		else:
+			# Translators: The message announced when toggling the report line spacing document formatting setting.
+			state = _("report line spacing on")
+			config.conf["documentFormatting"]["reportLineSpacing"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report line spacing command.
+	script_toggleReportLineSpacing.__doc__=_("Toggles on and off the reporting of line spacing")
+	script_toggleReportLineSpacing.category=SCRCAT_DOCUMENTFORMATTING
+
 	def script_toggleReportTables(self,gesture):
 		if config.conf["documentFormatting"]["reportTables"]:
 			# Translators: The message announced when toggling the report tables document formatting setting.
@@ -1241,7 +1255,7 @@ class GlobalCommands(ScriptableObject):
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,"reportGrammarErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
+			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 		}

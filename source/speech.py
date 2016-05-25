@@ -1392,6 +1392,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text has reverted to default vertical alignment.
 				text=_("vertical align default")
 			textList.append(text)
+	if formatConfig["reportLineSpacing"]:
+		lineSpacing=attrs.get("line-spacing")
+		oldLineSpacing=attrsCache.get("line-spacing") if attrsCache is not None else None
+		if (lineSpacing or oldLineSpacing is not None) and lineSpacing!=oldLineSpacing:
+			# Translators: a type of line spacing (E.g. single line spacing)
+			textList.append(_("line spacing %s")%lineSpacing)
 	if  formatConfig["reportLinks"]:
 		link=attrs.get("link")
 		oldLink=attrsCache.get("link") if attrsCache is not None else None
