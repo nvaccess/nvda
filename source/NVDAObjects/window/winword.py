@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Manish Agrawal
+#Copyright (C) 2006-2016 NV Access Limited, Manish Agrawal, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
