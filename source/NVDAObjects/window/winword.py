@@ -1323,7 +1323,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	# Translators: a description for a script
 	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
 
-	def script_lineSpacing(self,gesture):
+	def script_changeLineSpacing(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda:self.WinwordSelectionObject.ParagraphFormat.LineSpacingRule)
 		if val == wdLineSpaceSingle:
 			# Translators: a message when switching to single space  in Microsoft word
@@ -1331,8 +1331,6 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		elif val == wdLineSpaceDouble:
 			# Translators: a message when switching to double space  in Microsoft word
 			ui.message(_("Double Spaced"))
-	# Translators: Input help mode text for a command available in Microsoft word.
-	script_reportCurrentComment.__doc__=_("changes the line spacing of the currently selected text.")
 		
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -1432,8 +1430,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+1":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+2":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+3":"increaseDecreaseOutlineLevel",
-		"kb:control+1":"lineSpacing",
-		"kb:control+2":"lineSpacing",
+		"kb:control+1":"changeLineSpacing",
+		"kb:control+2":"changeLineSpacing",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:NVDA+shift+c":"setColumnHeader",
