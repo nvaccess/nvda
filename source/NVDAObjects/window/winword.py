@@ -637,7 +637,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
-			field['color']=colors.RGB.fromCOLORREF(int(color))		
+			field['color']=colors.RGB.fromCOLORREF(int(color))
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
@@ -1323,6 +1323,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	# Translators: a description for a script
 	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
 
+	def script_lineSpacing(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda:self.WinwordSelectionObject.ParagraphFormat.LineSpacingRule)
+		if val == wdLineSpaceSingle:
+			# Translators: a message when switching to single space  in Microsoft word
+			ui.message(_("Single Spaced"))
+		elif val == wdLineSpaceDouble:
+			# Translators: a message when switching to double space  in Microsoft word
+			ui.message(_("Double Spaced"))
+		
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1421,6 +1430,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+1":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+2":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+3":"increaseDecreaseOutlineLevel",
+		"kb:control+1":"lineSpacing",
+		"kb:control+2":"lineSpacing",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:NVDA+shift+c":"setColumnHeader",
