@@ -1035,11 +1035,25 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			textList=[]
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
-					headerCell=table.cell(headerRowNumber,columnNumber)
+					tempColumnNumber=columnNumber
+					while tempColumnNumber>=1:
+						try:
+							headerCell=table.cell(headerRowNumber,tempColumnNumber)
+						except COMError:
+							tempColumnNumber-=1
+							continue
+						break
 					textList.append(headerCell.range.text)
 			else:
 				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
-					headerCell=table.cell(rowNumber,headerColumnNumber)
+					tempRowNumber=rowNumber
+					while tempRowNumber>=1:
+						try:
+							headerCell=table.cell(tempRowNumber,headerColumnNumber)
+						except COMError:
+							tempRowNumber-=1
+							continue
+						break
 					textList.append(headerCell.range.text)
 			text=" ".join(textList)
 			if text:
