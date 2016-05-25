@@ -1331,6 +1331,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		elif val == wdLineSpaceDouble:
 			# Translators: a message when switching to double space  in Microsoft word
 			ui.message(_("Double Spaced"))
+	# Translators: Input help mode text for a command available in Microsoft word.
+	script_reportCurrentComment.__doc__=_("changes the line spacing of the currently selected text.")
 		
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
