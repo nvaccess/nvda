@@ -1210,6 +1210,37 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Baseline"))
 
+	def script_moveParagraphDown(self,gesture):
+		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		gesture.send()
+		if self._hasCaretMoved(oldBookmark)[0]:
+			info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+			info.collapse()
+			info.move(textInfos.UNIT_PARAGRAPH,-1,endPoint="start")
+			lastParaText=info.text.strip()
+			if lastParaText:
+				# Translators: a message reported when a paragraph is moved below another paragraph
+				ui.message(_("Moved below %s")%lastParaText)
+			else:
+				# Translators: a message reported when a paragraph is moved below a blank paragraph 
+				ui.message(_("Moved below blank paragraph"))
+
+	def script_moveParagraphUp(self,gesture):
+		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		gesture.send()
+		if self._hasCaretMoved(oldBookmark)[0]:
+			info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+			info.collapse()
+			info.move(textInfos.UNIT_PARAGRAPH,1)
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			lastParaText=info.text.strip()
+			if lastParaText:
+				# Translators: a message reported when a paragraph is moved above another paragraph
+				ui.message(_("Moved above %s")%lastParaText)
+			else:
+				# Translators: a message reported when a paragraph is moved above a blank paragraph 
+				ui.message(_("Moved above blank paragraph"))
+
 	def script_increaseDecreaseOutlineLevel(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
 		style=self.WinwordSelectionObject.style.nameLocal
@@ -1384,6 +1415,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+e":"toggleAlignment",
 		"kb:control+r":"toggleAlignment",
 		"kb:control+j":"toggleAlignment",
+		"kb:alt+shift+downArrow":"moveParagraphDown",
+		"kb:alt+shift+upArrow":"moveParagraphUp",
 		"kb:alt+shift+rightArrow":"increaseDecreaseOutlineLevel",
 		"kb:alt+shift+leftArrow":"increaseDecreaseOutlineLevel",
 		"kb:control+shift+n":"increaseDecreaseOutlineLevel",
