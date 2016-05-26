@@ -3,6 +3,49 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+Hoogtepunten in deze versie zijn de mogelijkheid om spelfouten aan te geven tijdens het typen; ondersteuning voor melden van grammaticafouten in Microsoft Word; en verbeteringen en correcties aan de Microsoft Office ondersteuning.
+
+== Nieuwe Functies ==
+- In bladermodus in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)
+- In Microsoft Excel, NVDA now reports the level of a group of cells, as well as whether it is collapsed or expanded. (#5690)
+- Pressing the Report text formatting command (NVDA+f) twice presents the information in bladermodus so it can be reviewed. (#4908)
+- In Microsoft Excel 2010 and later, cell shading and gradient fill is now reported. Automatic reporting is controlled by the Report colors option in NVDA's Document Formatting preferences. (#3683)
+- New braille translation table: Koine Greek. (#5393)
+- In the Log Viewer, you can now save the log using the shortcut key control+s. (#4532)
+- If reporting of spelling errors is enabled and supported in the focused control, NVDA will play a sound to alert you of a spelling error made while typing. This can be disabled using the new "Play sound for spelling errors while typing" option in NVDA's Keyboard Settings dialog. (#2024)
+- Grammar errors are now reported in Microsoft Word. This can be disabled using the new "Report grammar errors" option in NVDA's Document Formatting preferences dialog. (#5877)
+
+
+== Veranderingen ==
+- In bladermodus and editable text fields, NVDA now treats numpadEnter the same as the main enter key. (#5385)
+- NVDA has switched to the eSpeak NG speech synthesizer. (#5651)
+- In Microsoft Excel, NVDA no longer ignores a column header for a cell when there is a blank row between the cell and the header. (#5396)
+- In Microsoft Excel, coordinates are now announced before headers to eliminate ambiguity between headers and content. (#5396)
+
+
+== Opgeloste Problemen ==
+- In bladermodus, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)
+- When listing sheets in the Elements List in Microsoft Excel, sheets containing only charts are now included. (#5698)
+- NVDA no longer reports extraneous information when switching windows in a Java application with multiple windows such as IntelliJ or Android Studio. (#5732)
+- In Scintilla based editors such as Notepad++, braille is now updated correctly when moving the cursor using a braille display. (#5678)
+- NVDA no longer sometimes crashes when enabling braille output. (#4457)
+- In Microsoft Word, paragraph indentation is now always reported in the measurement unit chosen by the user (e.g. centimeters or inches). (#5804)
+- When using a braille display, many NVDA messages that were previously only spoken are now brailled as well. (#5557)
+- In accessible Java applications, the level of tree view items is now reported. (#5766)
+- Fixed crashes in Adobe Flash in Mozilla Firefox in some cases. (#5367)
+- In Google Chrome and Chrome-based browsers, documents within dialogs or applications can now be read in bladermodus. (#5818)
+- In Google Chrome and Chrome-based browsers, you can now force NVDA to switch to bladermodus in web dialogs or applications. (#5818)
+- In Internet Explorer and other MSHTML controls, moving focus to certain controls (specifically, where aria-activedescendant is used) no longer incorrectly switches to bladermodus. This occurred, for example, when moving to suggestions in address fields when composing a message in Gmail. (#5676)
+- In Microsoft Word, NVDA no longer freezes in large tables when reporting of table row/column headers is enabled. (#5878)
+- In Microsoft word, NVDA no longer incorrectly reports text with an outline level (but not a built-in heading style) as a heading. (#5186)
+- In bladermodus in Microsoft Word, the Move past end/to start of container commands (comma and shift+comma) now work for tables. (#5883)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2016.1 =
 Hoogtepunten in deze versie zijn de mogelijkheid om het volume van andere geluiden te verlagen; verbeteringen aan braille-uitvoer en ondersteuning voor brailleleesregels; verschillende belangirjke correcties aan Microsoft Office ondersteuning; en correcties aan bladermodus in iTunes.
 
@@ -27,15 +70,15 @@ Hoogtepunten in deze versie zijn de mogelijkheid om het volume van andere geluid
 - In Internet Explorer en andere MSHTML controls, moving to specific heading levels with single letter navigation now behaves as expected when the level of a heading is overridden for accessibility purposes (specifiek als aria-level het niveau overschrijft van een h tag). (#5434)
 - In Spotify landt de focus minder vaak op "unbekende" objecten. (#5439)
 - Focus wordt nu correct teruggezet bij het terugkeren naar Spotify vanuit een andere toepassing. (#5439)
-- When toggling between browse mode and focus mode, the mode is reported in braille as well as speech. (#5239)
+- When toggling between bladermodus and focus mode, the mode is reported in braille as well as speech. (#5239)
 - The Start buttn on the Taskbar is no longer reported as a list and/or as selected in some versions of Windows. (#5178)
 - Messages such as "inserted" are no longer reported when composing messages in Microsoft Outlook. (#5486)
 - When using a braille display and text is selected on the current line (e.g. when searching in a text editor for text which occurs on the same line), the braille display will be scrolled if appropriate. (#5410)
 - NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)
-- In the Elements List in browse mode, when you change the type of element, the Filter by field is now cleared. (#5511)
+- In the Elements List in bladermodus, when you change the type of element, the Filter by field is now cleared. (#5511)
 - In editable text in Mozilla applications, moving the mouse again reads the appropriate line, word, etc. as expected instead of the entire content. (#5535)
 - When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
-- In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
+- In Internet Explorer, the shoprite.com website can now be read in bladermodus instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
 - In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)
 - When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
 - Reporting of mouse shape changes again works as expected. (#5595)
@@ -47,7 +90,7 @@ Hoogtepunten in deze versie zijn de mogelijkheid om het volume van andere geluid
 - NVDA no longer fails to list comments in the Elements List for Microsoft Excel if a comment is  on a merged cell. (#5704)
 - In a very rare case, NVDA no longer fails to read sheet content in Microsoft Excel with reporting of row and column headers enabled. (#5705)
 - In Google Chrome, navigating within an Input composition when entering east Asian characters now works as expected. (#4080)
-- When searching Apple Music in iTunes, browse mode for the search results document is now updated as expected. (#5659)
+- When searching Apple Music in iTunes, bladermodus for the search results document is now updated as expected. (#5659)
 - In Microsoft Excel, pressing shift+f11 to create a new sheet now reports your new position instead of reporting nothing. (#5689)
 - Fixed problems with braille display output when entering Korean characters. (#5640)
 
@@ -340,7 +383,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 - Microsoft Word: tabben naar een lege cel in een tabel kondigt niet langer foutief aan dat de tabel wordt verlaten. (#4151)
 - Microsoft Word: het eerste teken na het einde van een tabel (inclusief een nieuwe lege regel) wordt niet langer foutief als onderdeel van de tabel beschouwd. (#4152)
 - Microsoft Word 2010 spell check dialog: The actual misspelled word is reported rather than inappropriately reporting just the first bold word. (#3431)
-- In browse mode in Internet Explorer and other MSHTML controls, tabbing or using single letter navigation to move to form fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
+- In bladermodus in Internet Explorer and other MSHTML controls, tabbing or using single letter navigation to move to form fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
 - Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
 - Navigation of certain dialogs in MS Office products such as Word, Excel and Outlook has been improved by niet langer reporting particular control container toolbars which are not useful to the user. (#4198) 
 - Task panes such as clipboard manager or File recovery niet langer accidentilly seem to gain focus when opening an application such as Microsoft Word or Excel, which was sometimes causing the user to have to switch away and back to the application to use the document or spreadsheet. (#4199)
