@@ -17,7 +17,6 @@ import comtypes
 import winUser
 import winKernel
 from logHandler import log
-import NVDAHelper
 import globalVars
 import core
 import NVDAHelper
