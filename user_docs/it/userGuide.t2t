@@ -1,6 +1,6 @@
 ﻿NVDA NVDA_VERSION Manuale utente
 NVDA NVDA_VERSION Manuale utente
-Ultimo Aggiornamento del manuale originale: 9 novembre 2015, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 23 maggio 2016, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -37,7 +37,7 @@ Oltre all'inglese, NVDA è stato tradotto in 45 lingue ossia Afrikaans, Albanese
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
 
-NVDA viene distribuito con [eSpeak http://espeak.sourceforge.net/], una sintesi vocale gratuita, opensource e multilingue.
+NVDA viene distribuito con [eSpeak NG https://github.com/espeak-ng/espeak-ng], una sintesi vocale gratuita, opensource e multilingue.
 
 Per informazioni sul funzionamento di altre Sintesi Vocali con NVDA si veda la sezione [Sintesi Vocali Supportate #SupportedSpeechSynths].
 
@@ -299,7 +299,7 @@ Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
 | Spostarsi alla riga successiva | control+alt+Freccia Giù | Sposta il cursore di sistema alla riga successiva (Rimanendo nella stessa colonna) |
 %kc:endInclude
 
-++ Navigazione ad oggetti ++
+++ Navigazione ad oggetti ++[ObjectNavigation]
 Il più delle volte, l'utente interagisce con l'applicazione utilizzando comandi che spostano direttamente il [focus #SystemFocus] e il [cursore #SystemCaret].
 Vi sono però alcune circostanze nelle quali può essere utile esaminare l'applicazione corrente o il sistema operativo senza però spostare il focus o il cursore.
 Inoltre potrebbe essere necessario lavorare con [oggetti #Objects] che non possono essere normalmente raggiunti utilizzando la tastiera.
@@ -372,7 +372,7 @@ Sono disponibili i seguenti tasti caldi per esplorare il testo:
 | Dire tutto, modalità esplorazione | Più del tastierino numerico | NVDA+shift+a | Scorrimento in basso con tre dita (modo testo) | Legge il testo dalla posizione attuale del cursore di controllo, spostando tale cursore man mano che la lettura continua |
 | Copiare dalla posizione  del cursore di controllo | NVDA+f9 | NVDA+f9 | Nessuno | Marca il punto di inizio del testo da copiare, partendo dalla posizione attuale del cursore di controllo. Si noti che NVDA non effettuerà alcuna operazione fino a quando non verrà specificato il punto di fine |
 | Copiare fino al cursore di controllo | NVDA+f10 | NVDA+f10 | Nessuno | Copia il testo dalla posizione marcata in precedenza con NVDA+f9 fino alla posizione attuale del cursore di controllo. Una volta effettuata questa operazione, il testo verrà copiato negli appunti |
-| Annuncia formattazione del testo | NVDA+f | | Nessuno Annuncia la formattazione del testo sul quale è posizionato il cursore di controllo |
+| Annuncia formattazione del testo | NVDA+f | | Nessuno Annuncia la formattazione del testo sul quale è posizionato il cursore di controllo. Una doppia pressione mostrerà le informazioni in modalità navigazione
 %kc:endInclude
  
 Si noti che per un corretto funzionamento il tasto Numlock del tastierino numerico deve essere impostato su spento.
@@ -442,7 +442,7 @@ Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo sc
 | Spostare il navigatore ad oggetti sul mouse | NVDA+Asterisco del tastierino numerico | NVDA+Shift+n | Sposta il navigatore ad oggetti sull'oggetto situato nella posizione del mouse |
 %kc:endInclude
 
-+ Modalità navigazione +
++ Modalità navigazione +[BrowseMode]
 NVDA si serve della modalità navigazione per presentare all'utente documenti complessi di sola lettura, come ad esempio le pagine web.
 Essa viene utilizzata nei doccumenti di Mozilla Firefox, Microsoft Internet Explorer, messaggi html in Microsoft Outlook, Mozilla Thunderbird, Google Chrome, Adobe Reader e Adobe Flash.
 Inoltre, la modalità navigazione risulta disponibile anche per la gestione dei documenti in Microsoft Word.
@@ -623,18 +623,18 @@ Dopo essersi spostati nella prima cella della colonna o della riga che contiene 
 Queste impostazioni saranno memorizzate nel documento come segnalibri, in un formato compatibile con altri screen reader, ad esempio Jaws.
 Ciò significa che se si utilizza un altro screen reader e si apre quel foglio di lavoro successivamente, le intestazioni di righe e colonne saranno già impostate.
 
-++++ L'elenco elementi ++++
++++ L'elenco elementi +++
 Un po' come accade per le pagine web, NVDA è provvisto di un elenco elementi per Microsoft Excel che permette di accedere ad un molteplice numero di informazioni.
 %kc:beginInclude
 Per accedere all'elenco elementi in Microsoft Excel, utilizzare NVDA+f7.
 %kc:endInclude
 I vari tipi di informazioni disponibili nell'elenco  elementi sono:
-- Grafici: Elenca tutti i grafici nella cartella di lavoro.
+- Grafici: Elenca tutti i grafici nel foglio di lavoro attivo.
 Selezionando un grafico e premendo invio o utilizzando il bottone Vai evidenzia il grafico per poter essere esplorato con i tasti freccia.
-- Commenti: elenca tutte le celle della cartella di lavoro contenenti commenti.
+- Commenti: elenca tutte le celle del foglio di lavoro contenenti commenti.
 Per ciascuna cella sarà mostrato l'indirizzo e i relativi commenti.
 Premendo il tasto Invio o il pulsante Vai in presenza di un commento ci si sposterà a quella determinata cella.
-- Formule: Elenca tutte le celle della cartella di lavoro contenenti formule.
+- Formule: Elenca tutte le celle del foglio di lavoro contenenti formule.
 Per ciascuna cella sarà mostrato l'indirizzo e le relative formule.
 Premendo il tasto Invio o il pulsante Vai in presenza di una formula ci si sposterà a quella determinata cella.
 - Fogli: Elenca tutti i fogli della cartella di lavoro.
@@ -646,7 +646,7 @@ Premendo il tasto Invio o il pulsante Vai in presenza di un foglio ci si sposter
 %kc:beginInclude
 Per far in modo che NVDA legga i commenti della cella evidenziata, premere NVDA+alt+c.
 %kc:endInclude
-Si noti che tutti i commenti della cartella di lavoro possono essere raggiunti anche dall'elenco elementi.
+Si noti che tutti i commenti del foglio di lavoro possono essere raggiunti anche dall'elenco elementi.
 
 +++ Lettura di celle protette +++
 Se una cartella di lavoro è stata protetta, potrebbe non essere possibile portare il focus in alcune celle che non possono essere modificate.
@@ -785,7 +785,7 @@ In particolare la freccia giù e la freccia sinistra sposteranno verso il basso 
 
 ==== Variante ====
 Una casella combinata che permette di selezionare con quale variante il sintetizzatore debba parlare. 
-Al momento, soltanto Espeak supporta questa impostazione. 
+Al momento, soltanto Espeak NG supporta questa impostazione. 
 Le varianti in Espeak sono simili alle voci, esse modificano i parametri e gli attributi della voce originale, per cui ad esempio potremmo avere voci simili a quelle maschili o femminili.
 
 ==== Velocità ====
@@ -800,12 +800,12 @@ Si tratta di un  controllo che va da 0 a 100, (0 rappresenta l'altezza minima, 1
 Un controllo che va da 0 a 100, (0 indica il volume più basso, 100 il più alto).
 
 ==== Inflessione ====
-Un controllo che permette di selezionare con quanta inflessione (aumento e decadimento del pitch) la sintesi vocale debba parlare.  Al momento soltanto Espeak fornisce questa funzionalità.
+Un controllo che permette di selezionare con quanta inflessione (aumento e decadimento del pitch) la sintesi vocale debba parlare.  Al momento soltanto Espeak NG fornisce questa funzionalità.
 
 ==== Cambio automatico della lingua ====
 Questa casella di controllo permette di stabilire se NVDA debba cambiare al volo la lingua con cui parla, nel caso all'interno del testo che si sta leggendo siano presenti i marcatori appositi.
 Questa opzione risulta abilitata di default.
-Inoltre, si ricorda che soltanto Espeak al momento supporta questa funzionalità.
+Inoltre, si ricorda che soltanto Espeak NG al momento supporta questa funzionalità.
 
 ==== cambiamento automatico dialetti (quando supportato) ====
 Se l'impostazione cambio automatico della lingua è attiva, questa casella di controllo farà in modo che NVDA modifichi anche il dialetto della lingua in uso. Ad esempio, potrebbe essere possibile passare da un "american English" ad un "british English".
@@ -990,6 +990,10 @@ In ogni caso, può essere d'aiuto saperlo.
 Tasto: NVDA+4
 
 Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutte le combinazioni di tasti che non siano singoli caratteri che vengono digitati, ad esempio premendo il tasto control seguito da una lettera.
+
+==== Riproduci un suono in caso di errori di ortografia mentre si scrive ====
+Se attivata, verrà emesso un segnale acustico nel caso in cui la parola che si è terminato di scrivere contenga un errore di ortografia.
+Questa funzione risulta disponibile soltanto se l'opzione Leggi errori di ortografia è attivata nella finestra di NVDA [Impostazioni formattazione documento #DocumentFormattingSettings].
 
 ==== Gestisci tasti da altre applicazioni ====
 	Quest'opzione permette all'utente di controllare se le pressioni di tasti, generate da programmi che si basano sul riconoscimento vocale o sulle tastiere a schermo, debbano essere processate da NVDA.
@@ -1190,6 +1194,7 @@ Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA 
 - Testo enfatizzato
 - stile del testo
 - Errori ortografici
+- Errori grammaticali
 - Numeri di pagina
 - Numeri di riga
 - Rientro righe
@@ -1257,9 +1262,9 @@ Si noti che questa finestra di dialogo rispetta le impostazioni dell'opzione "Co
 
 Per modificare un simbolo, dapprima selezionarlo nell'elenco simboli.
 
-Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
-Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
-Il campo invia questo simbolo al sintetizzatore specifica le condizioni per cui  lo stesso simbolo debba essere processato dalla sintesi vocale, non tenendo conto quindi del testo in sostituzione.
+- Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
+- Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
+- Il campo invia questo simbolo al sintetizzatore specifica le condizioni per cui  lo stesso simbolo debba essere processato dalla sintesi vocale, non tenendo conto quindi del testo in sostituzione.
 Ciò risulta utile nel caso in cui il simbolo provochi una pausa o un'inflessione nella voce del sintetizzatore.
 Ad esempio, una virgola provoca una pausa nel sintetizzatore.
 Ci sono tre opzioni:
@@ -1268,6 +1273,7 @@ Ci sono tre opzioni:
  - Soltanto al di sotto del livello simboli: invia il simbolo solo se il livello configurato per i simboli è al di sotto di quello settato per il simbolo attuale.
  Ad esempio, si potrebbe fare in modo che il simbolo venga gestito con la propria sostituzione, quindi senza pause, per i livelli più alti, mentre verranno effettuate pause per i livelli inferiori.
  -
+-
 
 è possibile aggiungere un nuovo simbolo servendosi del pulsante Aggiungi.
 Nella finestra di dialogo che appare, inserire il simbolo e premere il pulsante Ok.
@@ -1462,22 +1468,22 @@ Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici pe
 Questa sezione contiene informazioni sui sintetizzatori vocali supportati da NVDA.
 Per una panoramica esaustiva dei sintetizzatori compatibili, sia gratuiti che a pagamento, si veda la pagina in inglese all'indirizzo [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ Espeak ++
-La sintesi vocale [eSpeak http://espeak.sourceforge.net/]  è incorporata direttamente in NVDA, per cui non è necessario alcun driver o componente per farla funzionare. 
-Da impostazioni predefinite NVDA si avvia utilizzando Espeak. 
+++ Espeak NG ++
+La sintesi vocale [eSpeak NG https://github.com/espeak-ng/espeak-ng] è incorporata direttamente in NVDA, per cui non è necessario alcun driver o componente per farla funzionare. 
+Da impostazioni predefinite NVDA si avvia utilizzando Espeak NG.
 Poiché questa sintesi è incorporata in NVDA, risulta molto comoda per utilizzare il prodotto da una chiavetta USB o in altri sistemi.
 
-Ciascuna voce presente in Espeak parla una lingua diversa.
+Ciascuna voce presente in Espeak NG parla una lingua diversa.
 Sono oltre 43 le lingue supportate da questa sintesi vocale.
 
 Vi sono anche numerose varianti che possono essere usate per modificare il timbro della voce.
 
 ++ Microsoft Speech API versione 4 (SAPI 4) ++
 Sapi4 è una vecchia tecnologia Microsoft da usare nei programmi di sintesi vocale.
-Molti di questi sintetizzatori possono essere acquistati o scaricati liberamente da varie aziende o siti web.
-Quando si utilizzano queste sintesi vocali con NVDA le scelte disponibili (a cui si accede attraverso la [finestra impostazioni voce #VoiceSettings] o modificando le [impostazioni al volo del sintetizzatore #SynthSettingsRing]) conterranno tutte le voci di tutte le tecnologie Sapi4 installate nel sistema.
+NVDA supporta ancora questo tipo di sintetizzatore nel caso l'utente disponga di uno di questi.
+Tuttavia, è importante sottolineare che Microsoft non supporta più questa tecnologia e che i componenti necessari non sono più resi disponibili dall'azienda.
 
-Se si possiedono delle voci Sapi4 installate ma non appaiono nell'elenco di sintetizzatori di NVDA, si prega di installare Sapi4.0 RunTime binaries, scaricabili da http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Quando vengono utilizzate queste sintesi vocali con NVDA, le voci disponibili (accessibili attraverso [la finestra impostazioni voce #VoiceSettings] oppure con le [modifiche al volo dei parametri del sintetizzatore #SynthSettingsRing]) conterranno tutte le voci installate dalle tecnologie Sapi4 individuate nel proprio pc.
 
 ++ Microsoft Speech API versione 5 (SAPI 5) ++
 Sapi5 è uno standard Microsoft da usare nei programmi di sintesi vocale.
@@ -2106,7 +2112,7 @@ Per i display che possiedono già una tastiera braille, Brltty gestisce autonoma
 Pertanto, le impostazioni tabella braille di immissione non sono rilevanti.
 
 Seguono i tasti che sono stati assegnati con NVDA a Brltty.
-Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyTables] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
+Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyBindings/] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
 %kc:beginInclude
 || Nome | comando BRLTTY  |
 | Scorre Display Braille indietro | fwinlt (go left one window) |
