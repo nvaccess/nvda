@@ -6,27 +6,27 @@
 Tradução de Rui Fontes, a partir da versão 2015.1, adaptação por Rui Batista e Rui Fontes da tradução brasileira nas versões anteriores.
 
 = 2016.2 =
-Highlights of this release include the ability to indicate spelling errors while typing; support for reporting grammar errors in Microsoft Word; and improvements and fixes to Microsoft Office support.
+Os destaques desta versão incluem a funcionalidade de anunciar os erros ortográficos, à medida que se escreve, e a possibilidade de reportar os erros gramaticais  no Microsoft Word, bem como várias melhorias e correcções  no suporte ao Microsoft Office.
 
-== New Features ==
-- In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)
-- In Microsoft Excel, NVDA now reports the level of a group of cells, as well as whether it is collapsed or expanded. (#5690)
-- Pressing the Report text formatting command (NVDA+f) twice presents the information in browse mode so it can be reviewed. (#4908)
-- In Microsoft Excel 2010 and later, cell shading and gradient fill is now reported. Automatic reporting is controlled by the Report colors option in NVDA's Document Formatting preferences. (#3683)
-- New braille translation table: Koine Greek. (#5393)
-- In the Log Viewer, you can now save the log using the shortcut key control+s. (#4532)
-- If reporting of spelling errors is enabled and supported in the focused control, NVDA will play a sound to alert you of a spelling error made while typing. This can be disabled using the new "Play sound for spelling errors while typing" option in NVDA's Keyboard Settings dialog. (#2024)
-- Grammar errors are now reported in Microsoft Word. This can be disabled using the new "Report grammar errors" option in NVDA's Document Formatting preferences dialog. (#5877)
+== Novas Funcionalidades ==
+- No modo de navegação no  Internet Explorer e outros controlos MSHTML, usando a navegação por caracter, mover por anotações (a e shift+a) agora também move para texto inserido e apagado. (#5691)
+- No Microsoft Excel, o NVDA agora anuncia o nível de um grupo de células, bem como se estão expandidas ou recolhidas. (#5690)
+- Ao pressionar, duas vezes, o comando para anunciar a formatação do texto (NVDA+f), é apresentado um diálogo, em modo de navegação, com a informação de modo a poder ser revista. (#4908)
+- No Microsoft Excel 2010 e seguintes, o sombreado e o gradiente das células é agora anunciado. O anúncio automático é controlado pela opção Anunciar cores nas preferências do NVDA, Formatação de documentos. (#3683)
+- Nova tabela Braille: Grego Koine. (#5393)
+- No Visualizador de registo é agora possível gravar o documento usando o comando Control+s. (#4532)
+- Se o anúncio de erros ortográficos estiver activado, e se for suportado pelo campo de edição em uso, o NVDA reproduzirá um som para alertar de um erro ortográfico cometido ao escrever. Isto pode ser desactivado com a nova opção "Tocar som para erros ortográficos ao escrever" nas Opções de Teclado do  NVDA. (#2024)
+- Os erros gramaticais são agora anunciados no Microsoft Word. Isto pode ser desactivado na nova opção "Anunciar erros gramaticais" na Formatação de documentos das preferências do NVDA. (#5877)
 
 
-== Changes ==
+== Alterações ==
 - In browse mode and editable text fields, NVDA now treats numpadEnter the same as the main enter key. (#5385)
-- NVDA has switched to the eSpeak NG speech synthesizer. (#5651)
+1- NVDA has switched to the eSpeak NG speech synthesizer. (#5651)
 - In Microsoft Excel, NVDA no longer ignores a column header for a cell when there is a blank row between the cell and the header. (#5396)
 - In Microsoft Excel, coordinates are now announced before headers to eliminate ambiguity between headers and content. (#5396)
 
 
-== Bug Fixes ==
+== Correcção de falhas ==
 - In browse mode, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)
 - When listing sheets in the Elements List in Microsoft Excel, sheets containing only charts are now included. (#5698)
 - NVDA no longer reports extraneous information when switching windows in a Java application with multiple windows such as IntelliJ or Android Studio. (#5732)
@@ -44,7 +44,7 @@ Highlights of this release include the ability to indicate spelling errors while
 - In browse mode in Microsoft Word, the Move past end/to start of container commands (comma and shift+comma) now work for tables. (#5883)
 
 
-== Changes for Developers ==
+== Alterações para Desenvolvedores ==
 - NVDA's C++ components are now built with Microsoft Visual Studio 2015. (#5592)
 - You can now present a text or HTML message to the user in browse mode using ui.browseableMessage. (#4908)
 - In the User Guide, when a %kc:setting command is used for a setting which has a common key for all layouts, the key may now be placed after a full-width colon (：) as well as the regular colon (:). (#5739)
