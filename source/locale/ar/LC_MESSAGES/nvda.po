@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-22 00:10+1000\n"
-"PO-Revision-Date: 2016-04-21 16:36+0200\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-20 12:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -1196,7 +1196,7 @@ msgstr "الانتقال لعلامة دليلية التالية"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
-msgstr "لا توجد المزيد من العلامات الدليلية"
+msgstr "لا يوجد المزيد من العلامات الدليلية"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
@@ -1228,15 +1228,15 @@ msgstr "الانتقال للملحوظة التالية"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "لا توجد المزيد من الملاحظات"
+msgstr "لا يوجد المزيد من التعليقات التوضيحية"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "الانتقال للملحوظة السابقة"
+msgstr "الانتقال للتعليق التوضيحي السابق"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "لا توجد ملحوظة سابقة"
+msgstr "لا يوجد تعليق توضيحي سابقة"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2634,7 +2634,7 @@ msgstr "غير متاح"
 
 #. Translators: This is presented when a control has focus.
 msgid "focused"
-msgstr "مستعرض"
+msgstr "نشط"
 
 #. Translators: This is presented when the control is selected.
 msgid "selected"
@@ -3197,6 +3197,18 @@ msgstr "الإعلان عن الأخطاء الهجائِية تشغيل"
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الأخطاء الهجائية"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "الإعلان عن الأخطاء النحوية تعطيل"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "الإعلان عن الأخطاء النحوية تشغيل"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الأخطاء النحوية"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -4935,6 +4947,14 @@ msgstr "خطأ هجائِي"
 msgid "out of spelling error"
 msgstr "خارج الخطأ الهجائِي"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "خطأ نحوي"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "خارج الخطأ النحوي"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "خارج الجدول"
@@ -5697,7 +5717,7 @@ msgstr "اختتام العرض التقديمي"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
-msgstr "لا توجد ملاحظات جانبية بهذه الشريحة"
+msgstr "لا يوجد ملاحظات جانبية بهذه الشريحة"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
@@ -6012,11 +6032,11 @@ msgid "Python console"
 msgstr "بوابة لغة بايثون"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "إ&دارة الإضافات البرمجية"
+msgid "Manage &add-ons..."
+msgstr "إ&دارة الإضافات البرمجية..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "إنشاء نسخة محمولة..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6055,8 +6075,8 @@ msgid "C&ontributors"
 msgstr "أ&سماء فريق العمل"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "رسالة استهلالية"
+msgid "We&lcome dialog..."
+msgstr "رسالة ال&ترحيب"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7002,6 +7022,11 @@ msgstr "نطق مفا&تيح الاختصارات"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "إصدار &صوت عند الوقوع في أخطاء هجائية أثناء الكتابة"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "التعامل مع المفا&تيح المخصصة للتطبيقات الأخرى"
 
@@ -7276,6 +7301,11 @@ msgstr "الإعلان عن الأس&لوب"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "الإعلان عن الأخ&طاء الهجائِية"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "الإعلان عن الأخطاء الن&حوِية"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -8780,7 +8810,7 @@ msgstr "خارج جدول"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "&ملاحظاتمعلومات حول الإضافة البرمجية"
+msgstr "&تعليقات توضيحية"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-01 15:05+0200\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-25 00:17+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -89,6 +89,7 @@ msgid "unknown input method"
 msgstr "άγνωστη μέθοδος εισόδου"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -726,6 +727,7 @@ msgstr "μη %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} από {total}"
 
@@ -3256,6 +3258,20 @@ msgstr ""
 "Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
 "αναφοράς ορθογραφικών λαθών"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "Η αναφορά γραμματικών σφαλμάτων είναι απενεργοποιημένη"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "Η αναφορά γραμματικών σφαλμάτων είναι ενεργοποιημένη"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς γραμματικών σφαλμάτων"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "απενεργοποίηση αναφοράς σελίδων"
@@ -3996,6 +4012,7 @@ msgid "AC power on"
 msgstr "Τροφοδοσία ρεύματος ανοικτή"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "απομένουν {hours:d} ώρες και {minutes:d} λεπτά"
 
@@ -4849,6 +4866,7 @@ msgid "column %s"
 msgstr "στήλη %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "με {rowCount} σειρές και {columnCount} στήλες"
 
@@ -4904,25 +4922,30 @@ msgstr "προεπιλεγμένο στυλ"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
+#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} σε {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} σε {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "παρασκήνιο {backgroundColor}"
 
+#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "μοτίβο παρασκηνίου {pattern}"
 
@@ -5115,11 +5138,20 @@ msgstr "ανορθόγραφο"
 msgid "out of spelling error"
 msgstr "εκτός ανορθόγραφου"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Γραμματικό σφάλμα"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "εκτός γραμματικού σφάλματος"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "εκτός πίνακα"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "πίνακας με {columnCount} στήλες και {rowCount} σειρές"
 
@@ -5196,22 +5228,27 @@ msgid "object mode"
 msgstr "λειτουργία αντικειμένου"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "Απλό {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "διπλό {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "Τριπλό {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "Τετραπλό {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} Δάχτυλο {action}"
 
@@ -5297,6 +5334,7 @@ msgstr "Νέα έκδοση του NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Η έκδοση {version} του NVDA είναι διαθέσιμη"
 
@@ -5392,9 +5430,11 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Ένας δωρεάν αναγνώστης οθόνης ανοικτού κώδικα για τα Microsoft Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} Συντελεστές NVDA"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5439,6 +5479,7 @@ msgstr ""
 "menu."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5447,6 +5488,7 @@ msgstr ""
 "Πρέπει να είναι ενεργοποιημένο το NVDA για να εγκαταστήσετε πρόσθετα."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5458,10 +5500,12 @@ msgstr ""
 "{height:.1f} τοις εκατό του ύψους οθόνης"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} όπως στο {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -5617,10 +5661,12 @@ msgid "Waiting for Outlook..."
 msgstr "Αναμονή για το outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} έως {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Γεγονός {subject}, {time}"
 
@@ -5785,78 +5831,97 @@ msgid "Master Thumbnails"
 msgstr "Μικρογραφίες Υποδείγματος"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Διαφάνεια {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "Καλύπτει στα αριστερά από {otherShape} για {distance:.3g} στιγμές"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "Πίσω αριστερά από {otherShape} για {distance:.3g} στιγμές"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "Καλύπτει την κορυφή από {otherShape} για {distance:.3g} <στιγμές"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "Πίσω κορυφή από {otherShape} για {distance:.3g} στιγμές"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "Καλύπτει στα δεξιά από {otherShape} για {distance:.3g} στιγμές"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "Πίσω δεξιά από {otherShape} για {distance:.3g} στιγμές"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "Καλύπτει το τέλος από {otherShape} για {distance:.3g} στιγμές"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "Πίσω από τέλος {otherShape} για {distance:.3g} στιγμές"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "Καλύπτει  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "Πίσω από {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} στιγμές από αριστερό άκρο διαφάνειας"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Στα αριστερά από άκρο διαφάνειας για {distance:.3g} στιγμές"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} στιγμές από την κορυφή του άκρου της διαφάνειας"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Κορυφή του άκρου της διαφάνειας για {distance:.3g} στιγμές"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} στιγμές από το δεξί άκρο της διαφάνειας"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Δεξί άκρο της διαφάνειας για {distance:.3g} στιγμές"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} στιγμές από το κάτω άκρος της διαφάνειας"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Κάτω άκρο της διαφάνειας για {distance:.3g} στιγμές"
 
@@ -5871,10 +5936,12 @@ msgstr ""
 "ορατό στην οθόνη, αλλά μόνο αυτά που μπορεί να διαβάσει ο χρήστης με το NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Προβολή σημειώσεων παρουσίασης - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Προβολή παρουσίασης - {slideName}"
 
@@ -5963,6 +6030,7 @@ msgstr "οθόνες braille Baum/HumanWare/APH"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Σειριακή θύρα: {portName}"
 
@@ -6216,11 +6284,11 @@ msgid "Python console"
 msgstr "Python console"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Διαχείριση &πρόσθετων"
+msgid "Manage &add-ons..."
+msgstr "Διαχείριση &πρόσθετων..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Δημιουργία Φορητού αντιγράφου..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6259,8 +6327,8 @@ msgid "C&ontributors"
 msgstr "&Συντελεστές"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Πλαίσιο Διαλόγου &Καλωσορίσματος"
+msgid "We&lcome dialog..."
+msgstr "Διάλογος καλωσορίσματος..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6463,6 +6531,7 @@ msgid "Choose Add-on Package File"
 msgstr "Επιλογή αρχείου πακέτου Πρόσθετων"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Πακέτο Πρόσθετου του NVDA (*.{ext})"
 
@@ -6476,6 +6545,7 @@ msgstr ""
 "μη έγκυρη μορφή αρχείου"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6548,6 +6618,7 @@ msgid "Restart NVDA"
 msgstr "Επανεκκίνηση του NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6560,6 +6631,7 @@ msgstr ""
 "Περιγραφή: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6829,6 +6901,7 @@ msgstr ""
 "ενημέρωση αυτού του αντιγράφου."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7241,6 +7314,11 @@ msgstr "Εκφώνηση &πλήκτρων εντολών"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Να παίζει ήχος για ορθογραφικά &σφάλματα κατά το γράψιμο"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Διαχείριση εντολών από άλλες εφαρμογές"
 
@@ -7524,6 +7602,11 @@ msgstr "Αναφορά ορθογραφικών &λαθών"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "Αναφορά &ορθογραφικών λαθών"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "Αναφορά &σελίδων"
 
@@ -7788,6 +7871,7 @@ msgstr "&Εφαρμογή φίλτρου κατά:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7828,10 +7912,12 @@ msgid "word"
 msgstr "λέξη"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "σε {x}, {y}"
 
@@ -7891,6 +7977,7 @@ msgid "Taskbar"
 msgstr "Γραμμή Εργασιών"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB κόκκινο {rgb.red}, πράσινο {rgb.green}, μπλε {rgb.blue}"
 
@@ -8051,6 +8138,7 @@ msgid "&Sheets"
 msgstr "&Φύλλα"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} εως {end}"
 
@@ -8066,18 +8154,22 @@ msgstr ""
 "λειτουργία αναφοράς κεφαλίδων πίνακα στις Ρυθμίσεις Μορφοποίησης Εγγράφου"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Ορισμός {address} ως αρχής των κεφαλίδων της στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Έχετε είδη ορίσει {address} ως αρχή των κεφαλίδων της στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "Αφαιρέθηκε {address} από τις κεφαλίδες της στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Δεν ήταν δυνατή η εύρεση {address} στις κεφαλίδες της στήλης"
 
@@ -8092,18 +8184,22 @@ msgstr ""
 "αυτό το κελί"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Ορισμός {address} ως αρχής των κεφαλίδων της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Είδι ορίστικε {address} ως αρχή των κεφαλίδων της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "Αφαιρέθηκε {address} από τις κεφαλίδες της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Δεν ήταν δυνατή η εύρεση {address} στις κεφαλίδες της σειράς"
 
@@ -8117,9 +8213,11 @@ msgstr ""
 "περιοχής. Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της σειράς για "
 "αυτό το κελί"
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Μήνυμα εισόδου είναι {title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Μήνυμα εισόδου είναι {message}"
 
@@ -8132,10 +8230,12 @@ msgid "Reports the comment on the current cell"
 msgstr "Αναφέρει το σχόλιο στο τρέχον κελί"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Επεξεργασία σχολίου για {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} έως {lastAddress} {lastContent}"
 
@@ -8490,6 +8590,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Διασπορά Με Ομαλές Γραμμές Χωρίς Δείκτες Δεδομένων"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Τίτλος γραφήματος: {chartTitle}, τύπος: {chartType}"
 
@@ -8517,6 +8618,7 @@ msgstr "Σειρά"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} Άξονας είναι {axisTitle}"
 
@@ -8530,6 +8632,7 @@ msgid "There are total %d series in this chart"
 msgstr "Υπάρχουν %d σειρές σε αυτό το διάγραμμα"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "σειρά {number} {name}"
 
@@ -8554,6 +8657,7 @@ msgstr "σημείο δεδομένων"
 msgid "item"
 msgstr "στοιχείο"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Χρώμα σειράς: {colorName} "
 
@@ -8644,45 +8748,54 @@ msgstr "Σχήμα"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} σειρά {seriesIndex} από {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "καμία αλλαγή από σημείο {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Αυξημένο κατά {incrementValue} από σημείο {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "μειωμένο κατά {decrementValue} από σημείο {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Κατηγορία {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "τιμή {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8691,6 +8804,7 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} από {pointCount}"
 
@@ -8703,12 +8817,14 @@ msgid "Secondary"
 msgstr "Δευτερεύον"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Άξονας διαγράμματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: "
 "{axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Άξονας διαγράμματος, τύπος: {axisType}, ομάδα: {axisGroup}"
 
@@ -8726,6 +8842,7 @@ msgid " squared "
 msgstr " τετραγωνισμένο"
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Τίτλος διαγράμματος: {chartTitle}"
 
@@ -8734,6 +8851,7 @@ msgid "Untitled chart"
 msgstr "Διάγραμμα χωρίς τίτλο"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8746,6 +8864,7 @@ msgid "Chart area "
 msgstr "Περιοχή διαγράμματος"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8770,6 +8889,7 @@ msgstr "Χωρίς υπόμνημα"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Καταχώρηση υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
@@ -8777,6 +8897,7 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Κλειδί υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
@@ -8883,19 +9004,23 @@ msgstr "Πρωτεύουσα κεφαλίδα"
 msgid "Text frame"
 msgstr "Πλαίσιο κειμένου"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "σχόλιο: {text} από {author} στις {date}"
 
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} από {author} στις {date}"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Ορισμός σειράς {rowNumber} στήλης {columnNumber} ως αρχής των κεφαλίδων της "
 "στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8903,12 +9028,14 @@ msgstr ""
 "στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "Αφαιρέθηκε σειρά {rowNumber} στήλης {columnNumber} από την κεφαλίδα της "
 "στήλης"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Δεν ήταν δυνατή η εύρεση της σειράς {rowNumber} στήλη {columnNumber} στην "
@@ -8925,12 +9052,14 @@ msgstr ""
 "κελί"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Ορισμός σειράς {rowNumber} στήλης {columnNumber} ως αρχής των κεφαλίδων της "
 "σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8938,12 +9067,14 @@ msgstr ""
 "της σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "Αφαιρέθηκε σειρά {rowNumber} στήλης {columnNumber} από τις κεφαλίδες της "
 "σειράς"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Δεν ήταν δυνατή η εύρεση της σειράς {rowNumber} στήλη {columnNumber} στις "
@@ -9012,35 +9143,43 @@ msgid "Baseline"
 msgstr "Γραμμή αναφοράς"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} Στυλ, επίπεδο περιγράμματος {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} στιγμές"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} χαρακτήρες"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} ίντσες"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} Εκατοστά"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} χιλιοστά"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} στιγμές"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} πίκας"
 
