@@ -13,6 +13,7 @@ import uuid
 import operator
 import locale
 import collections
+import colorsys
 import sayAllHandler
 import eventHandler
 import braille
@@ -155,6 +156,59 @@ wdRevisionMovedTo=15
 wdRevisionCellInsertion=16
 wdRevisionCellDeletion=17
 wdRevisionCellMerge=18
+
+# MsoThemeColorSchemeIndex 
+msoThemeAccent1=5
+msoThemeAccent2=6
+msoThemeAccent3=7
+msoThemeAccent4=8
+msoThemeAccent5=9
+msoThemeAccent6=10
+msoThemeDark1=1
+msoThemeDark2=3
+msoThemeFollowedHyperlink=12
+msoThemeHyperlink=11
+msoThemeLight1=2
+msoThemeLight2=4
+
+# WdThemeColorIndex 
+wdNotThemeColor=-1
+wdThemeColorAccent1=4
+wdThemeColorAccent2=5
+wdThemeColorAccent3=6
+wdThemeColorAccent4=7
+wdThemeColorAccent5=8
+wdThemeColorAccent6=9
+wdThemeColorBackground1=12
+wdThemeColorBackground2=14
+wdThemeColorHyperlink=10
+wdThemeColorHyperlinkFollowed=11
+wdThemeColorMainDark1=0
+wdThemeColorMainDark2=2
+wdThemeColorMainLight1=1
+wdThemeColorMainLight2=3
+wdThemeColorText1=13
+wdThemeColorText2=15
+
+# Mapping from http://www.wordarticles.com/Articles/Colours/2007.php#UIConsiderations
+WdThemeColorIndexToMsoThemeColorSchemeIndex={
+	wdThemeColorMainDark1:msoThemeDark1,
+	wdThemeColorMainLight1:msoThemeLight1,
+	wdThemeColorMainDark2:msoThemeDark2,
+	wdThemeColorMainLight2:msoThemeLight2,
+	wdThemeColorAccent1:msoThemeAccent1,
+	wdThemeColorAccent2:msoThemeAccent2,
+	wdThemeColorAccent3:msoThemeAccent3,
+	wdThemeColorAccent4:msoThemeAccent4,
+	wdThemeColorAccent5:msoThemeAccent5,
+	wdThemeColorAccent6:msoThemeAccent6,
+	wdThemeColorHyperlink:msoThemeHyperlink,
+	wdThemeColorHyperlinkFollowed:msoThemeFollowedHyperlink,
+	wdThemeColorBackground1:msoThemeLight1,
+	wdThemeColorText1:msoThemeDark1,
+	wdThemeColorBackground2:msoThemeLight2,
+	wdThemeColorText2:msoThemeDark2,
+}
 
 wdRevisionTypeLabels={
 	# Translators: a Microsoft Word revision type (inserted content) 
@@ -642,7 +696,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
-			field['color']=colors.RGB.fromCOLORREF(int(color))
+			field['color']=self.obj.winwordColorToNVDAColor(int(color))
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
@@ -933,6 +987,34 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	treeInterceptorClass=WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
+
+	def winwordColorToNVDAColor(self,val):
+		if val>0:
+			# normal RGB value
+			return colors.RGB.fromCOLORREF(val).name
+		elif (val&0xffffffff)==0xff000000:
+			# Translators: the default (automatic) color in Microsoft Word
+			return _("default color")
+		elif ((val>>28)&0xf)==0xd and ((val>>16)&0xff)==0x00:
+			# An MS word color index Plus intencity
+			# Made up of MS Word Theme Color index, hsv value ratio (MS Word darker percentage) and hsv saturation ratio (MS Word lighter percentage)
+			# Info: http://www.wordarticles.com/Articles/Colours/2007.php#UIConsiderations
+			saturationRatio=(val&0xff)/255.0
+			valueRatio=((val>>8)&0xff)/255.0
+			themeColorIndex=(val>>24)&0x0f
+			# Convert the MS Word theme color index to an MS Office color scheme index
+			schemeColorIndex=WdThemeColorIndexToMsoThemeColorSchemeIndex[themeColorIndex]
+			# Lookup the  rgb value for the MS Office scheme color index based on the current theme
+			colorref=self.WinwordDocumentObject.documentTheme.themeColorScheme(schemeColorIndex).rgb
+			# Convert the rgb value to hsv and apply the saturation and value ratios
+			rgb=tuple(x/255.0 for x in colors.RGB.fromCOLORREF(colorref))
+			hsv=colorsys.rgb_to_hsv(*rgb)
+			hsv=(hsv[0],hsv[1]*saturationRatio,hsv[2]*valueRatio)
+			rgb=colorsys.hsv_to_rgb(*hsv)
+			name=colors.RGB(rgb[0]*255,rgb[1]*255,rgb[2]*255).name
+			return name
+		else:
+			raise ValueError("Unknown color format %x %x %x %x"%((val>>24)&0xff,(val>>16)&0xff,(val>>8)&0xff,val&0xff))
 
 	def _get_ignoreEditorRevisions(self):
 		try:
