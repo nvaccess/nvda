@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2011 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
+#Copyright (C) 2009-2016 NV Access Limited, Joseph Lee
 
 import speech
 import api
@@ -39,6 +39,7 @@ if UIAHandler.isUIAAvailable:
 	class Win8PasswordField(UIA):
 
 		#This UIA object has no invoke pattern, at least set focus.
+		# #6024: Affects both Windows 8.x and 10.
 		def doAction(self,index=None):
 			if not index:
 				self.setFocus()
@@ -82,7 +83,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowClass = obj.windowClassName
 
 		if UIAHandler.isUIAAvailable:
-			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName=="TouchEditInner" and obj.role==controlTypes.ROLE_EDITABLETEXT:
+			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox") and obj.role==controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0,Win8PasswordField)
 		if windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent:
 			clsList.insert(0, LogonDialog)
