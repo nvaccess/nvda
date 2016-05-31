@@ -948,7 +948,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	TextInfo=WordDocumentTextInfo
 
 	def winwordColorToNVDAColor(self,val):
-		if val>0:
+		if val>=0:
 			# normal RGB value
 			return colors.RGB.fromCOLORREF(val).name
 		elif (val&0xffffffff)==0xff000000:
