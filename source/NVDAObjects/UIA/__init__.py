@@ -515,10 +515,19 @@ class UIA(Window):
 			return ""
 
 	def _get_keyboardShortcut(self):
+		ret = ""
 		try:
-			return self.UIAElement.currentAccessKey
+			ret += self.UIAElement.currentAccessKey
 		except COMError:
-			return None
+			pass
+		if ret != "":
+			#add a double space to the end of the string
+			ret +="  "
+		try:
+			ret += self.UIAElement.currentAcceleratorKey
+		except COMError:
+			pass
+		return ret
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
