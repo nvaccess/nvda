@@ -39,6 +39,7 @@ if UIAHandler.isUIAAvailable:
 	class Win8PasswordField(UIA):
 
 		#This UIA object has no invoke pattern, at least set focus.
+		# #6024: Affects both Windows 8.x and 10.
 		def doAction(self,index=None):
 			if not index:
 				self.setFocus()
@@ -82,7 +83,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowClass = obj.windowClassName
 
 		if UIAHandler.isUIAAvailable:
-			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName=="TouchEditInner" and obj.role==controlTypes.ROLE_EDITABLETEXT:
+			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox") and obj.role==controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0,Win8PasswordField)
 		# #6010: Allow Windows 10 version to be recognized as well.
 		if ((windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent)
