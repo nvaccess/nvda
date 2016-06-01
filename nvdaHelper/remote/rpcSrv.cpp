@@ -17,6 +17,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <rpc.h>
 #include <sddl.h>
 #include <DbgHelp.h>
+#include <objbase.h>
+#include <objidl.h>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
 #include "vbufRemote.h"
@@ -155,5 +157,14 @@ error_status_t nvdaInProcUtils_dumpOnCrash(handle_t bindingHandle, const wchar_t
 		return E_FAIL;
 	minidumpPath = path;
 	SetUnhandledExceptionFilter(crashHandler);
+	// #6027: ensure that exceptions within COM calls are not caught and hidden by the COM framework
+	IGlobalOptions* pGlobalOptions=NULL;
+	HRESULT hr=CoCreateInstance(CLSID_GlobalOptions,NULL,CLSCTX_INPROC_SERVER,IID_IGlobalOptions,(void**)&pGlobalOptions);
+	if(hr==S_OK) {
+		pGlobalOptions->Set(COMGLB_EXCEPTION_HANDLING,COMGLB_EXCEPTION_DONOT_HANDLE);
+		pGlobalOptions->Release();
+	} else {
+		LOG_DEBUGWARNING(L"Could not create GlobalOptions COM object, code "<<hr);
+	}
 	return S_OK;
 }
