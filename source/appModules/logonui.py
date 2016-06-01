@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2011 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
+#Copyright (C) 2009-2016 NV Access Limited, Joseph Lee
 
 import speech
 import api
@@ -84,7 +84,9 @@ class AppModule(appModuleHandler.AppModule):
 		if UIAHandler.isUIAAvailable:
 			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName=="TouchEditInner" and obj.role==controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0,Win8PasswordField)
-		if windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent:
+		# #6010: Allow Windows 10 version to be recognized as well.
+		if ((windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent)
+		or (windowClass == "LogonUI Logon Window" and obj.UIAIsWindowElement)):
 			clsList.insert(0, LogonDialog)
 			return
 
@@ -95,9 +97,10 @@ class AppModule(appModuleHandler.AppModule):
 				return
 
 	def event_gainFocus(self,obj,nextHandler):
-		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_BUTTON and not obj.next:
+		# #6010: Windows 10 version uses a different window class name.
+		if obj.windowClassName in ("DirectUIHWND", "LogonUI Logon Window") and obj.role==controlTypes.ROLE_BUTTON and not obj.next:
 			prev=obj.previous
-			if prev and prev.role==controlTypes.ROLE_STATICTEXT:
+			if prev and prev.role in (controlTypes.ROLE_STATICTEXT, controlTypes.ROLE_PANE):
 				# This is for a popup message in the logon dialog.
 				# Present the dialog again so the message will be reported.
 				speech.speakObjectProperties(api.getForegroundObject(),name=True,role=True,description=True)
