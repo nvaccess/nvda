@@ -1,14 +1,170 @@
 ﻿#locale/ZH-TW/symbols.dic
-#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2016/2/22
+#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2016/6/1
 # 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
+
 symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	dot	all	always
+! sentence ending	半形驚歎號	all	always
+? sentence ending	半形問號	all	always
+; phrase ending	semi	most	always
+: phrase ending	colon	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+negative number	負	none	norep
+
+# Whitespace
+\0	blank	char	# null
+\t	tab
+\n	航尾	char	#取行尾同音
+\f	page break	none
+\r	carriage return	char
+ 	空格	char
+ 	space	char	# no-break space
+
+# Standard punctuation/symbols
+!	半形驚歎號	all
+"	quote	most
+\#	number	some
+$	錢號	all	norep
+£	英鎊	all	norep
+€	歐元	all	norep
+¢	分	all	norep
+¥	日圓	all	norep
+₹	盧比	some	norep
+%	percent	some
+&	and	some
+'	tick	all
+(	半形左括號	most	always
+)	半形右括號	most	always
+*	star	some
++	plus	some
+,	comma	all	always
+-	dash	most
+.	dot	some
+/	slash	some
+:	colon	most	norep
+;	semi	most
+<	less	some
+>	greater	some
+=	equals	some
+?	question	all
+@	小老鼠	some
+[	半形左中括號	most
+]	半形右中括號	most
+\\	backslash	most
+^	caret	most
+_	半形底線	most
+`	graav	most
+{	半形左大括號	most
+}	半形右大括號	most
+|	bar	most
+~	半形波浪號	most
+
+# Other characters
+•	bullet	most
+…	dot dot dot	all	always
+...	dot dot dot	all	always
+	bullet	most
+“	左雙引號	most
+”	右雙引號	most
+‘	left tick	most
+’	right tick	most
+–	en dash	most	always
+—	破折號	most
+●	實心圓	most
+¨	diaeresis	most
+‎	left to right mark	char
+‏	right to left mark	char
+■	實心方形	some
+▪	實心小方形	most
+◾	空心小方形	most
+◦	white bullet	most
+➔	粗右箭頭	some
+§	章節符號	all
+°	度	some
+«	double left pointing angle bracket
+»	double right pointing angle bracket
+µ	micro	some
+¹	上標1	some
+²	上標2	some
+³	上標3	some
+®	註冊商標	some
+™	商標	some
+©	Copyright	some
+±	正負號	some
+×	乘號	some
+÷	除號	some
+←	左箭頭	some
+→	右箭頭	some
+✓	勾選	some
+✔	勾選	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	For All 	none
+∁	補集	none
+∂	偏微分	none
+∃	存在有	none
+∄	不存在有	none
+∅	空集合	none
+∆	增量符號	none
+∇	NABLA	none
+∈	屬於	none
+∉	不屬於	none
+∊	SMALL ELEMENT OF	none
+∋	CONTAINS AS MEMBER	none
+∌	DOES NOT CONTAIN AS MEMBER	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	證明完畢	none
+∏	N-ARY PRODUCT	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ARY SUMMATION	none
+√	開根號	some
+∛	開立方根號	none
+∜	開四次方根號	none
+∝	正比於	none
+∞	無窮大	some
+∟	直角	none
+∠	角	none
+∥	平行	none
+∦	不平型	none
+∧	邏輯「與」	none
+∨	邏輯「或」	none
+∩	交集	none
+∪	聯集	none
+∫	積分	none
+∵	因為	none
+∴	所以	none
+∶	比	none
+∷	PROPORTION	none
+≤	小於等於	none
+≥	大於等於	none
+⊂	包含於	none
+⊃	包含	none
+⊆	包含於等於	none
+⊇	包含等於	none
+
 　	全形空格	all
 \r	航尾	char
 negative number	負
-(	半形左括號	most
-)	半形右括號	most
-!	半形驚歎號	all
-?	半形問號	all
 ·	間隔號	most
 ，	逗號	all
 、	頓號	all
@@ -18,15 +174,12 @@ negative number	負
 ？	問號	all
 ！	驚嘆號	all
 ：	冒號	all
-~	半形波浪號	some
 …	省略號	most
 ‥	刪節號	most
 ︱	直破折號	most
-—	破折號	most
 ─	破折號	most
 ︳	直底線	most
 ╴	左邊直線框	most
-_	半形底線	most
 ＿	底線	most
 ︴	直波浪號	some
 （	左括號	most
@@ -63,8 +216,6 @@ _	半形底線	most
 ﹜	右大括號	most
 ﹝	左中括號	most
 ﹞	右中括號	most
-“	左雙引號	most
-”	右雙引號	most
 ＃	井字號	most
 ＆	連接號	most
 ＊	星號	most
@@ -72,82 +223,56 @@ _	半形底線	most
 §	章節符號	most
 〃	同上符號	most
 ○	0	none
-●	實心圓	most
 △	三角形	some
-▲	實心三角形	most
+▲	實心三角形	some
 ◎	雙圓圈	most
 ☆	空心星號	most
 ★	實心星號	most
 ◇	空心菱形	most
 ◆	實心菱形	most
 □	空心方形	most
-■	實心方形	most
 ▽	空心下三角形	most
-▼	實心下三角形	most
+▼	實心下三角形	some
 ㊣	正字標記	none
 ＋	加號	some
 －	減號	some
-×	乘號	some
-÷	除號	some
-±	正負號	some
-√	開根號	some
 ＜	小於	some
 ＞	大於	some
 ＝	等於	some
 ≦	小於等於	some
 ≧	大於等於	some
 ≠	不等於	some
-∞	無窮大	some
 ≒	約等於	some
 ≌	全等於	some
 ﹢	正號	some
 ﹣	負號	some
 ～	波浪號	some
-∩	交集	some
-∪	聯集	some
 ⊥	垂直	some
-∠	角	some
 ∟	直角	some
 ⊿	直角三角形	some
 ㏒	常用對數	some
 ㏑	自然對數	some
-∫	積分	some
 ∮	線積分	some
-∵	因為	some
-∴	所以	some
 ♀	女性符號	some
 ♂	男性符號	some
 ⊕	十字圓	most
 ⊙	中心點圓	most
 ↑	上箭頭	some
 ↓	下箭頭	some
-←	左箭頭	some
-→	右箭頭	some
 ↖	左上箭頭	most
 ↗	右上箭頭	most
 ↙	左下箭頭	most
 ↘	右下箭頭	most
-∥	平行	some
 ∣	直線	some
 ／	斜線	some
 ＼	反斜線	some
 ￥	人民幣	none
 ￡	英鎊	none
-£	英鎊	all	norep
-€	歐元	all	norep
 ％	趴	some
 ＠	全形小老鼠	some
-@	小老鼠	some
 ℃	度C	none
 ℉	度F	none
 ∘	度	none
-¹	上標1	some
-²	上標2	some
-³	上標3	some
-®	註冊商標	some
-™	商標	some
-✓	勾選	some
-✔	勾選	some
 ㏕	百分之一英吋	none
 ㎜	毫米	none
 ㎝	公分	none
