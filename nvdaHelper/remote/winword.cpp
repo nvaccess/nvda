@@ -363,8 +363,10 @@ bool collectSpellingGrammarErrorOffsets(int spellingGrammarErrorsDispId, IDispat
 	return !errorVector.empty();
 }
 
+// #6033: This must not be a static variable inside the function
+// because that causes crashes on Windows XP (Visual Studio bug 1941836).
+vector<wstring> headingStyleNames;
 int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
-	static vector<wstring> headingNames;
 	IDispatchPtr pDispatchStyle=NULL;
 	// fetch the localized style name for the given paragraph
 	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_STYLE,VT_DISPATCH,&pDispatchStyle)!=S_OK||!pDispatchStyle) {
@@ -376,7 +378,7 @@ int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
 		return 0;
 	}
 	// If not fetched already, fetch all builtin heading style localized names (1 through 9).
-	if(headingNames.empty()) {
+	if(headingStyleNames.empty()) {
 		IDispatchPtr pDispatchDocument=NULL;
 		IDispatchPtr pDispatchStyles=NULL;
 		if(_com_dispatch_raw_propget(pDispatchStyle,wdDISPID_STYLE_PARENT,VT_DISPATCH,&pDispatchDocument)==S_OK&&pDispatchDocument&&_com_dispatch_raw_propget(pDispatchDocument,wdDISPID_DOCUMENT_STYLES,VT_DISPATCH,&pDispatchStyles)==S_OK&&pDispatchStyles) {
@@ -387,7 +389,7 @@ int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
 					BSTR builtinNameLocal=NULL;
 					_com_dispatch_raw_propget(pDispatchBuiltinStyle,wdDISPID_STYLE_NAMELOCAL,VT_BSTR,&builtinNameLocal);
 					if(!builtinNameLocal) continue;
-					headingNames.push_back(builtinNameLocal);
+					headingStyleNames.push_back(builtinNameLocal);
 					SysFreeString(builtinNameLocal);
 				}
 			}
@@ -396,7 +398,7 @@ int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
 	int level=0;
 	int count=1;
 	// See if the style name matches one of the builtin heading styles
-	for(auto i=headingNames.cbegin();i!=headingNames.cend();++i) {
+	for(auto i=headingStyleNames.cbegin();i!=headingStyleNames.cend();++i) {
 		if(i->compare(nameLocal)==0) {
 			level=count;
 			break;
