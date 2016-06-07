@@ -62,6 +62,8 @@ class EditableText(ScriptableObject):
 			api.processPendingEvents(processEventQueue=False)
 			if eventHandler.isPendingEvents("gainFocus"):
 				return (True,None)
+			if eventHandler.isPendingEvents("caret"):
+				return (True,None)
 			#The caret may stop working as the focus jumps, we want to stay in the while loop though
 			try:
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
