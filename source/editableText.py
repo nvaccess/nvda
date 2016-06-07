@@ -259,6 +259,12 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	This should be used when an object does not notify of selection changes.
 	"""
 
+	def waitForAndSpeakSelectionChange(self, oldTextInfo):
+		api.processPendingEvents(processEventQueue=False)
+		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		speech.speakSelectionChange(oldTextInfo,newInfo)
+		braille.handler.handleCaretMove(self)
+
 	def script_caret_changeSelection(self,gesture):
 		try:
 			oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -268,13 +274,10 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 		gesture.send()
 		if isScriptWaiting() or eventHandler.isPendingEvents("gainFocus"):
 			return
-		api.processPendingEvents(processEventQueue=False)
 		try:
-			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+			waitForAndSpeakSelectionChange(oldInfo)
 		except:
 			return
-		speech.speakSelectionChange(oldInfo,newInfo)
-		braille.handler.handleCaretMove(self)
 
 	__changeSelectionGestures = (
 		"kb:shift+upArrow",

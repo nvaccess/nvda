@@ -1703,35 +1703,92 @@ class GlobalCommands(ScriptableObject):
 	script_reportClipboardText.category=SCRCAT_SYSTEM
 
 	def script_review_markStartForCopy(self, gesture):
-		self._copyStartMarker = api.getReviewPosition().copy()
+		reviewPos = api.getReviewPosition()
+		startMark = reviewPos.copy()
+		reviewPos.obj._copyStartMarker = startMark # represents the start location
+		reviewPos.obj._selectThenCopyRange = None # we may be part way through a select, reset the copy range.
 		# Translators: Indicates start of review cursor text to be copied to clipboard.
 		ui.message(_("Start marked"))
-	# Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
-	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be copied")
+	# Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be selected or copied")
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
 	def script_review_copy(self, gesture):
-		if not getattr(self, "_copyStartMarker", None):
+		pos = api.getReviewPosition().copy()
+		if not getattr(pos.obj, "_copyStartMarker", None):
 			# Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 			ui.message(_("No start marker set"))
 			return
-		pos = api.getReviewPosition().copy()
-		if self._copyStartMarker.obj != pos.obj:
-			# Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
-			ui.message(_("The start marker must reside within the same object"))
+		startMarker = api.getReviewPosition().obj._copyStartMarker
+		# first call, try to set the selection.
+		if scriptHandler.getLastScriptRepeatCount()==0 :
+			if getattr(pos.obj, "_selectThenCopyRange", None):
+				# we have already tried selecting the text, dont try again. For now selections can not be ammended.
+				# Translators: Presented when text has already been marked for selection, but not yet copied.
+				ui.message(_("Press twice to copy, or reset the start marker"))
+				return
+			copyMarker = startMarker.copy()
+			# Check if the end position has moved
+			if pos.compareEndPoints(startMarker, "endToEnd") > 0: # user has moved the cursor 'forward'
+				# start becomes the original start
+				copyMarker.setEndPoint(startMarker, "startToStart")
+				# end needs to be updated to the current cursor position.
+				copyMarker.setEndPoint(pos, "endToEnd")
+				copyMarker.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+			elif pos.compareEndPoints(startMarker, "endToEnd") <= 0: # user has moved the cursor 'backwards'
+				# start becomes the current cursor position position
+				copyMarker.setEndPoint(pos, "startToStart")
+				# end becomes the original start position plus 1
+				copyMarker.setEndPoint(startMarker, "endToEnd")
+				copyMarker.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+			else:
+				# the cursor has not moved
+				pass
+			if copyMarker.compareEndPoints(copyMarker, "startToEnd") == 0:
+				# Translators: Presented when there is no text selection to copy from review cursor.
+				ui.message(_("No text to copy"))
+				api.getReviewPosition().obj._copyStartMarker = None;
+				return
+			api.getReviewPosition().obj._selectThenCopyRange = copyMarker
+			# for applications such as word, where the selected text is not automatically spoken we must monitor it ourself
+			try:
+				# old selection info must be saved so that its possible to report on the changes to the selection.
+				oldInfo=pos.obj.makeTextInfo(textInfos.POSITION_SELECTION)
+			except Exception as e:
+				log.debug("Error trying to get initial selection information %s" % e)
+				pass
+			try:
+				copyMarker.updateSelection()
+				if hasattr(pos.obj, "waitForAndSpeakSelectionChange"):
+					# wait for applications such as word to update their selection so that we can detect it
+					try:
+						pos.obj.waitForAndSpeakSelectionChange(oldInfo)
+					except Exception as e:
+						log.debug("Error trying to wait for the selection to update and then speak the selection %s" % e)
+						pass
+				# Translators: Presented when some review text has been selected
+				ui.message(_("Selection made"))
+			except NotImplementedError:
+				# we are unable to select the text, leave the _copyStartMarker in place in case the user wishes to copy the text.
+				# Translators: Presented when unable to select the marked text.
+				ui.message(_("Can't select text, press twice to copy"))
+				return
+		elif scriptHandler.getLastScriptRepeatCount()==1: # the second call, try to copy the text
+			copyMarker = pos.obj._selectThenCopyRange
+			if copyMarker.copyToClipboard():
+				# Translators: Presented when some review text has been copied to clipboard.
+				ui.message(_("Review selection copied to clipboard"))
+			else:
+				# Translators: Presented when unable to copy to the clipboard because of an error.
+				ui.message(_("Unable to copy"))
+			# on the second call always clean up the start marker
+			api.getReviewPosition().obj._selectThenCopyRange = None
+			api.getReviewPosition().obj._copyStartMarker = None
+		else: # an unknown number of getLastScriptRepeatCount() calls
 			return
-		pos.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
-		pos.setEndPoint(self._copyStartMarker, "startToStart")
-		if pos.compareEndPoints(pos, "startToEnd") < 0 and pos.copyToClipboard():
-			# Translators: Presented when some review text has been copied to clipboard.
-			ui.message(_("Review selection copied to clipboard"))
-		else:
-			# Translators: Presented when there is no text selection to copy from review cursor.
-			ui.message(_("No text to copy"))
-			return
-		self._copyStartMarker = None
-	# Translators: Input help mode message for copy selected review cursor text to clipboard command.
-	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
+		return
+	# Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+	script_review_copy.__doc__ = _("On first trigger, the text from the previously set start marker up to and including the current position of the review cursor is selected. On second trigger, the text is copied to the clipboard")
 	script_review_copy.category=SCRCAT_TEXTREVIEW
 
 	def script_braille_scrollBack(self, gesture):
