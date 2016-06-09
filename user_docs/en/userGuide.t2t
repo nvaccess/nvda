@@ -1213,12 +1213,27 @@ You can configure reporting of:
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
+
+
 ==== Announce formatting changes after the cursor ====
 If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it speaks it, even if doing this may slow down NVDA's performance.
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as Microsoft Word, where formatting is important.
+
+==== Report indents as ====
+
+When Report Line Indentation is enabled, the Report indents as combo box has three options.
+
+- Tones
+- Speech
+- Both Speech and Tones
+
+If speech is selected, when the level of indented text changes, NVDA will say something like "twelve spaces" or "four tabs."
+
+If Tones is selected, when the level of indented text changes, tones indicate the amount of change in indent.
+The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
 
 +++ Speech dictionaries +++
 The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases.

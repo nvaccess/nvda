@@ -1116,7 +1116,28 @@ class DocumentFormattingDialog(SettingsDialog):
 		#
 		self.lineIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation"))
 		self.lineIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportLineIndentation"])
+		self.lineIndentationCheckBox.Bind(wx.EVT_CHECKBOX,self.onReportIndent)
 		settingsSizer.Add(self.lineIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		self.indentTypeSizer = sizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox in the
+		# Document  Formatting  dialog (possible choices are Speech, Tones, or Both.
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report &Indents With:")))
+		indentChoices=[
+			#Translators: A setting to report indents with Speech.
+			_("Speech"),
+			#Translators: A setting to report indents with tones.
+			_("Tones"),
+			#Translators: A setting to report indents with both tones and Speech.
+			_("Both Tones and Speech")
+		]
+		self.indentTypeList=wx.Choice(self,wx.ID_ANY,choices=indentChoices)
+		curChoice = config.conf["documentFormatting"]["indentType"]
+		self.indentTypeList.SetSelection(curChoice-1) #Choices are 1-3, but we need 0-2.
+		sizer.Add(self.indentTypeList)
+		settingsSizer.Add(sizer)
+		if not config.conf["documentFormatting"]["reportLineIndentation"]:
+			self.indentTypeList.Enable(False)
+
 		# Translators: This message is presented in the document formatting settings dialogue
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		self.paragraphIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraph indentation"))
@@ -1176,6 +1197,12 @@ class DocumentFormattingDialog(SettingsDialog):
 	def postInit(self):
 		self.detectFormatAfterCursorCheckBox.SetFocus()
 
+	def onReportIndent(self, evt):
+		if self.lineIndentationCheckBox.GetValue():
+			self.indentTypeList.Enable(True)
+		else:
+			self.indentTypeList.Enable(False)
+
 	def onOk(self,evt):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
@@ -1191,6 +1218,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"]=self.lineIndentationCheckBox.IsChecked()
+		config.conf["documentFormatting"]["indentType"] = self.indentTypeList.GetSelection()+1
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
