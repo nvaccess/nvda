@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2015 NV Access Limited
+#Copyright (C) 2009-2016 NV Access Limited, Mohammad Suliman
 
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
@@ -525,10 +525,19 @@ class UIA(Window):
 			return ""
 
 	def _get_keyboardShortcut(self):
+		ret = ""
 		try:
-			return self.UIAElement.currentAccessKey
+			ret += self.UIAElement.currentAccessKey
 		except COMError:
-			return None
+			pass
+		if ret:
+			#add a double space to the end of the string
+			ret +="  "
+		try:
+			ret += self.UIAElement.currentAcceleratorKey
+		except COMError:
+			pass
+		return ret
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
