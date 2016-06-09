@@ -1116,9 +1116,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		#
 		self.lineIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation"))
 		self.lineIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportLineIndentation"])
-		self.lineIndentationCheckBox.Bind(wx.EVT_CHECKBOX,self.onReportIndent)
+		self.lineIndentationCheckBox.Bind(wx.EVT_CHECKBOX,self.onReportIndentChange)
 		settingsSizer.Add(self.lineIndentationCheckBox,border=10,flag=wx.BOTTOM)
-		self.indentTypeSizer = sizer=wx.BoxSizer(wx.HORIZONTAL)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: This is the label for a combobox in the
 		# Document  Formatting  dialog (possible choices are Speech, Tones, or Both.
 		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report &Indents With:")))
@@ -1197,11 +1197,8 @@ class DocumentFormattingDialog(SettingsDialog):
 	def postInit(self):
 		self.detectFormatAfterCursorCheckBox.SetFocus()
 
-	def onReportIndent(self, evt):
-		if self.lineIndentationCheckBox.GetValue():
-			self.indentTypeList.Enable(True)
-		else:
-			self.indentTypeList.Enable(False)
+	def onReportIndentChange(self, evt):
+		self.indentTypeList.Enable(self.lineIndentationCheckBox.GetValue())
 
 	def onOk(self,evt):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()

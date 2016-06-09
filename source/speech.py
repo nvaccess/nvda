@@ -408,9 +408,11 @@ def splitTextIndentation(text):
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
 RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
-BASE_FREQUENCY = 220 #One octave below middle A.
-TONE_DURATION = 80 #Milleseconds
-MAX_SPACES = 72
+IDT_BASE_FREQUENCY = 220 #One octave below middle A.
+IDT_TONE_DURATION = 80 #Milleseconds
+IDT_MAX_SPACES = 72
+INDENT_SPEECH = 1
+INDENT_TONES = 2
 def getIndentationSpeech(indentation):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
@@ -420,8 +422,8 @@ def getIndentationSpeech(indentation):
 	"""
 	indentConfig = config.conf["documentFormatting"]["indentType"]
 	if not indentation:
-		if indentConfig & config.INDENT_TONES:
-			tones.beep(BASE_FREQUENCY, TONE_DURATION)
+		if indentConfig & INDENT_TONES:
+			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
 		# Translators: This is spoken when the given line has no indentation.
 		return _("no indent")
 
@@ -443,12 +445,14 @@ def getIndentationSpeech(indentation):
 			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
 		quarterTones += (count*4 if raw[0]== "\t" else count)
 
-		speak = indentConfig & config.INDENT_SPEECH
-		if indentConfig & config.INDENT_TONES: #Remove me during speech refactor.
-			if quarterTones <= MAX_SPACES:
-				pitch = BASE_FREQUENCY*2**(quarterTones/24.0)
-				tones.beep(pitch, TONE_DURATION)
-			else: #we have more than 72 spaces (24 tabs), and must speak it since we don't want to hurt the users ears.
+		speak = indentConfig & INDENT_SPEECH
+		if indentConfig & INDENT_TONES: 
+			if quarterTones <= IDT_MAX_SPACES:
+				#Remove me during speech refactor.
+				pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
+				tones.beep(pitch, IDT_TONE_DURATION)
+			else: 
+				#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
 				speak = True
 	return (" ".join(res) if speak else "")
 

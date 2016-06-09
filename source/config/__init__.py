@@ -19,10 +19,6 @@ import baseObject
 import easeOfAccess
 import winKernel
 
-#Constants for indent tones and speech.
-INDENT_SPEECH = 1
-INDENT_TONES = 2
-
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	"""
 	@deprecated: Add-ons which need this should provide their own implementation.
