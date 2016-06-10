@@ -73,7 +73,6 @@ using namespace std;
 #define wdDISPID_CONTENTCONTROL_TITLE 12
 #define wdDISPID_STYLE_NAMELOCAL 0
 #define wdDISPID_STYLE_PARENT 1002
-#define wdDISPID_RANGE_GRAMMATICALERRORS 315
 #define wdDISPID_RANGE_SPELLINGERRORS 316
 #define wdDISPID_SPELLINGERRORS_ITEM 0
 #define wdDISPID_SPELLINGERRORS_COUNT 1
@@ -328,7 +327,7 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 	return foundFormField;
 }
 
-bool collectSpellingGrammarErrorOffsets(int spellingGrammarErrorsDispId, IDispatchPtr pDispatchRange, vector<pair<long,long>>& errorVector) {
+bool collectSpellingErrorOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& errorVector) {
 	IDispatchPtr pDispatchApplication=NULL;
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_APPLICATION ,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		return false;
@@ -340,7 +339,7 @@ bool collectSpellingGrammarErrorOffsets(int spellingGrammarErrorsDispId, IDispat
 		return false;
 	}
 	IDispatchPtr pDispatchSpellingErrors=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange,spellingGrammarErrorsDispId,VT_DISPATCH,&pDispatchSpellingErrors)!=S_OK||!pDispatchSpellingErrors) {
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)!=S_OK||!pDispatchSpellingErrors) {
 		return false;
 	}
 	long iVal=0;
@@ -848,11 +847,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	}
 	//Check for any inline shapes in the entire range to work out whether its worth checking for them by word
 	bool hasInlineShapes=(getInlineShapesCount(pDispatchRange)>0);
-	vector<pair<long,long> > spellingErrorVector;
-	vector<pair<long,long> > grammarErrorVector;
+	vector<pair<long,long> > errorVector;
 	if(formatConfig&formatConfig_reportSpellingErrors) {
-		collectSpellingGrammarErrorOffsets(wdDISPID_RANGE_SPELLINGERRORS,pDispatchRange,spellingErrorVector);
-		collectSpellingGrammarErrorOffsets(wdDISPID_RANGE_GRAMMATICALERRORS,pDispatchRange,grammarErrorVector);
+		collectSpellingErrorOffsets(pDispatchRange,errorVector);
 	}
 	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkStartOffset=args->startOffset;
@@ -951,15 +948,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream);
-			for(auto i=spellingErrorVector.cbegin();i!=spellingErrorVector.cend();++i) {
+			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
 				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
 					XMLStream<<L" invalid-spelling=\"1\" ";
-					break;
-				}
-			}
-			for(auto i=grammarErrorVector.cbegin();i!=grammarErrorVector.cend();++i) {
-				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
-					XMLStream<<L" invalid-grammar=\"1\" ";
 					break;
 				}
 			}
