@@ -425,7 +425,7 @@ def getIndentationSpeech(indentation):
 		if indentConfig & INDENT_TONES:
 			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
 		# Translators: This is spoken when the given line has no indentation.
-		return _("no indent")
+		return (_("no indent") if indentConfig & INDENT_SPEECH else "")
 
 	#The non-breaking space is semantically a space, so we replace it here.
 	indentation = indentation.replace(u"\xa0", u" ")
