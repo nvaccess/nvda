@@ -102,9 +102,9 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
 		# Translators: This will be presented when the input help is toggled.
-		stateOn = _("input help on")
+		stateOn = _("Input help on")
 		# Translators: This will be presented when the input help is toggled.
-		stateOff = _("input help off")
+		stateOff = _("Input help off")
 		state = stateOn if inputCore.manager.isInputHelpActive else stateOff
 		ui.message(state)
 	# Translators: Input help mode message for toggle input help command.
@@ -125,7 +125,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 			ui.message(_("Sleep mode on"))
 	# Translators: Input help mode message for toggle sleep mode command.
-	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
+	script_toggleCurrentAppSleepMode.__doc__=_("Toggles sleep mode on and off for the active application")
 	script_toggleCurrentAppSleepMode.allowInSleepMode=True
 
 	def script_reportCurrentLine(self,gesture):
@@ -265,11 +265,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleSpeakTypedCharacters(self,gesture):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			# Translators: The message announced when toggling the speak typed characters keyboard setting.
-			state = _("speak typed characters off")
+			state = _("Speak typed characters off")
 			config.conf["keyboard"]["speakTypedCharacters"]=False
 		else:
 			# Translators: The message announced when toggling the speak typed characters keyboard setting.
-			state = _("speak typed characters on")
+			state = _("Speak typed characters on")
 			config.conf["keyboard"]["speakTypedCharacters"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle speaked typed characters command.
@@ -279,11 +279,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleSpeakTypedWords(self,gesture):
 		if config.conf["keyboard"]["speakTypedWords"]:
 			# Translators: The message announced when toggling the speak typed words keyboard setting.
-			state = _("speak typed words off")
+			state = _("Speak typed words off")
 			config.conf["keyboard"]["speakTypedWords"]=False
 		else:
 			# Translators: The message announced when toggling the speak typed words keyboard setting.
-			state = _("speak typed words on")
+			state = _("Speak typed words on")
 			config.conf["keyboard"]["speakTypedWords"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle speak typed words command.
@@ -293,11 +293,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleSpeakCommandKeys(self,gesture):
 		if config.conf["keyboard"]["speakCommandKeys"]:
 			# Translators: The message announced when toggling the speak typed command keyboard setting.
-			state = _("speak command keys off")
+			state = _("Speak command keys off")
 			config.conf["keyboard"]["speakCommandKeys"]=False
 		else:
 			# Translators: The message announced when toggling the speak typed command keyboard setting.
-			state = _("speak command keys on")
+			state = _("Speak command keys on")
 			config.conf["keyboard"]["speakCommandKeys"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle speak command keys command.
@@ -307,11 +307,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportFontName(self,gesture):
 		if config.conf["documentFormatting"]["reportFontName"]:
 			# Translators: The message announced when toggling the report font name document formatting setting.
-			state = _("report font name off")
+			state = _("Report font name off")
 			config.conf["documentFormatting"]["reportFontName"]=False
 		else:
 			# Translators: The message announced when toggling the report font name document formatting setting.
-			state = _("report font name on")
+			state = _("Report font name on")
 			config.conf["documentFormatting"]["reportFontName"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report font name command.
@@ -321,11 +321,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportFontSize(self,gesture):
 		if config.conf["documentFormatting"]["reportFontSize"]:
 			# Translators: The message announced when toggling the report font size document formatting setting.
-			state = _("report font size off")
+			state = _("Report font size off")
 			config.conf["documentFormatting"]["reportFontSize"]=False
 		else:
 			# Translators: The message announced when toggling the report font size document formatting setting.
-			state = _("report font size on")
+			state = _("Report font size on")
 			config.conf["documentFormatting"]["reportFontSize"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report font size command.
@@ -335,11 +335,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportFontAttributes(self,gesture):
 		if config.conf["documentFormatting"]["reportFontAttributes"]:
 			# Translators: The message announced when toggling the report font attributes document formatting setting.
-			state = _("report font attributes off")
+			state = _("Report font attributes off")
 			config.conf["documentFormatting"]["reportFontAttributes"]=False
 		else:
 			# Translators: The message announced when toggling the report font attributes document formatting setting.
-			state = _("report font attributes on")
+			state = _("Report font attributes on")
 			config.conf["documentFormatting"]["reportFontAttributes"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report font attributes command.
@@ -349,11 +349,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
 			# Translators: The message announced when toggling the report revisions document formatting setting.
-			state = _("report revisions off")
+			state = _("Report revisions off")
 			config.conf["documentFormatting"]["reportRevisions"]=False
 		else:
 			# Translators: The message announced when toggling the report revisions document formatting setting.
-			state = _("report revisions on")
+			state = _("Report revisions on")
 			config.conf["documentFormatting"]["reportRevisions"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report revisions command.
@@ -363,11 +363,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportEmphasis(self,gesture):
 		if config.conf["documentFormatting"]["reportEmphasis"]:
 			# Translators: The message announced when toggling the report emphasis document formatting setting.
-			state = _("report emphasis off")
+			state = _("Report emphasis off")
 			config.conf["documentFormatting"]["reportEmphasis"]=False
 		else:
 			# Translators: The message announced when toggling the report emphasis document formatting setting.
-			state = _("report emphasis on")
+			state = _("Report emphasis on")
 			config.conf["documentFormatting"]["reportEmphasis"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report emphasis command.
@@ -377,11 +377,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
 			# Translators: The message announced when toggling the report colors document formatting setting.
-			state = _("report colors off")
+			state = _("Report colors off")
 			config.conf["documentFormatting"]["reportColor"]=False
 		else:
 			# Translators: The message announced when toggling the report colors document formatting setting.
-			state = _("report colors on")
+			state = _("Report colors on")
 			config.conf["documentFormatting"]["reportColor"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report colors command.
@@ -391,11 +391,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportAlignment(self,gesture):
 		if config.conf["documentFormatting"]["reportAlignment"]:
 			# Translators: The message announced when toggling the report alignment document formatting setting.
-			state = _("report alignment off")
+			state = _("Report alignment off")
 			config.conf["documentFormatting"]["reportAlignment"]=False
 		else:
 			# Translators: The message announced when toggling the report alignment document formatting setting.
-			state = _("report alignment on")
+			state = _("Report alignment on")
 			config.conf["documentFormatting"]["reportAlignment"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report alignment command.
@@ -405,11 +405,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportStyle(self,gesture):
 		if config.conf["documentFormatting"]["reportStyle"]:
 			# Translators: The message announced when toggling the report style document formatting setting.
-			state = _("report style off")
+			state = _("Report style off")
 			config.conf["documentFormatting"]["reportStyle"]=False
 		else:
 			# Translators: The message announced when toggling the report style document formatting setting.
-			state = _("report style on")
+			state = _("Report style on")
 			config.conf["documentFormatting"]["reportStyle"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report style command.
@@ -419,11 +419,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportSpellingErrors(self,gesture):
 		if config.conf["documentFormatting"]["reportSpellingErrors"]:
 			# Translators: The message announced when toggling the report spelling errors document formatting setting.
-			state = _("report spelling errors off")
+			state = _("Report spelling errors off")
 			config.conf["documentFormatting"]["reportSpellingErrors"]=False
 		else:
 			# Translators: The message announced when toggling the report spelling errors document formatting setting.
-			state = _("report spelling errors on")
+			state = _("Report spelling errors on")
 			config.conf["documentFormatting"]["reportSpellingErrors"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report spelling errors command.
@@ -433,11 +433,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportGrammarErrors(self,gesture):
 		if config.conf["documentFormatting"]["reportGrammarErrors"]:
 			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors off")
+			state = _("Report grammar errors off")
 			config.conf["documentFormatting"]["reportGrammarErrors"]=False
 		else:
 			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors on")
+			state = _("Report grammar errors on")
 			config.conf["documentFormatting"]["reportGrammarErrors"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report grammar errors command.
@@ -447,11 +447,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportPage(self,gesture):
 		if config.conf["documentFormatting"]["reportPage"]:
 			# Translators: The message announced when toggling the report pages document formatting setting.
-			state = _("report pages off")
+			state = _("Report pages off")
 			config.conf["documentFormatting"]["reportPage"]=False
 		else:
 			# Translators: The message announced when toggling the report pages document formatting setting.
-			state = _("report pages on")
+			state = _("Report pages on")
 			config.conf["documentFormatting"]["reportPage"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report pages command.
@@ -461,11 +461,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLineNumber(self,gesture):
 		if config.conf["documentFormatting"]["reportLineNumber"]:
 			# Translators: The message announced when toggling the report line numbers document formatting setting.
-			state = _("report line numbers off")
+			state = _("Report line numbers off")
 			config.conf["documentFormatting"]["reportLineNumber"]=False
 		else:
 			# Translators: The message announced when toggling the report line numbers document formatting setting.
-			state = _("report line numbers on")
+			state = _("Report line numbers on")
 			config.conf["documentFormatting"]["reportLineNumber"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report line numbers command.
@@ -475,11 +475,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLineIndentation(self,gesture):
 		if config.conf["documentFormatting"]["reportLineIndentation"]:
 			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			state = _("report line indentation off")
+			state = _("Report line indentation off")
 			config.conf["documentFormatting"]["reportLineIndentation"]=False
 		else:
 			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			state = _("report line indentation on")
+			state = _("Report line indentation on")
 			config.conf["documentFormatting"]["reportLineIndentation"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report line indentation command.
@@ -489,11 +489,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportParagraphIndentation(self,gesture):
 		if config.conf["documentFormatting"]["reportParagraphIndentation"]:
 			# Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-			state = _("report paragraph indentation off")
+			state = _("Report paragraph indentation off")
 			config.conf["documentFormatting"]["reportParagraphIndentation"]=False
 		else:
 			# Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-			state = _("report paragraph indentation on")
+			state = _("Report paragraph indentation on")
 			config.conf["documentFormatting"]["reportParagraphIndentation"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report paragraph indentation command.
@@ -503,11 +503,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportTables(self,gesture):
 		if config.conf["documentFormatting"]["reportTables"]:
 			# Translators: The message announced when toggling the report tables document formatting setting.
-			state = _("report tables off")
+			state = _("Report tables off")
 			config.conf["documentFormatting"]["reportTables"]=False
 		else:
 			# Translators: The message announced when toggling the report tables document formatting setting.
-			state = _("report tables on")
+			state = _("Report tables on")
 			config.conf["documentFormatting"]["reportTables"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report tables command.
@@ -517,11 +517,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportTableHeaders(self,gesture):
 		if config.conf["documentFormatting"]["reportTableHeaders"]:
 			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
-			state = _("report table row and column headers off")
+			state = _("Report table row and column headers off")
 			config.conf["documentFormatting"]["reportTableHeaders"]=False
 		else:
 			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
-			state = _("report table row and column headers on")
+			state = _("Report table row and column headers on")
 			config.conf["documentFormatting"]["reportTableHeaders"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report table row/column headers command.
@@ -531,11 +531,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportTableCellCoords(self,gesture):
 		if config.conf["documentFormatting"]["reportTableCellCoords"]:
 			# Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-			state = _("report table cell coordinates off")
+			state = _("Report table cell coordinates off")
 			config.conf["documentFormatting"]["reportTableCellCoords"]=False
 		else:
 			# Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-			state = _("report table cell coordinates on")
+			state = _("Report table cell coordinates on")
 			config.conf["documentFormatting"]["reportTableCellCoords"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report table cell coordinates command.
@@ -545,11 +545,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLinks(self,gesture):
 		if config.conf["documentFormatting"]["reportLinks"]:
 			# Translators: The message announced when toggling the report links document formatting setting.
-			state = _("report links off")
+			state = _("Report links off")
 			config.conf["documentFormatting"]["reportLinks"]=False
 		else:
 			# Translators: The message announced when toggling the report links document formatting setting.
-			state = _("report links on")
+			state = _("Report links on")
 			config.conf["documentFormatting"]["reportLinks"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report links command.
@@ -559,11 +559,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportComments(self,gesture):
 		if config.conf["documentFormatting"]["reportComments"]:
 			# Translators: The message announced when toggling the report comments document formatting setting.
-			state = _("report comments off")
+			state = _("Report comments off")
 			config.conf["documentFormatting"]["reportComments"]=False
 		else:
 			# Translators: The message announced when toggling the report comments document formatting setting.
-			state = _("report comments on")
+			state = _("Report comments on")
 			config.conf["documentFormatting"]["reportComments"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report comments command.
@@ -573,11 +573,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLists(self,gesture):
 		if config.conf["documentFormatting"]["reportLists"]:
 			# Translators: The message announced when toggling the report lists document formatting setting.
-			state = _("report lists off")
+			state = _("Report lists off")
 			config.conf["documentFormatting"]["reportLists"]=False
 		else:
 			# Translators: The message announced when toggling the report lists document formatting setting.
-			state = _("report lists on")
+			state = _("Report lists on")
 			config.conf["documentFormatting"]["reportLists"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report lists command.
@@ -587,11 +587,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportHeadings(self,gesture):
 		if config.conf["documentFormatting"]["reportHeadings"]:
 			# Translators: The message announced when toggling the report headings document formatting setting.
-			state = _("report headings off")
+			state = _("Report headings off")
 			config.conf["documentFormatting"]["reportHeadings"]=False
 		else:
 			# Translators: The message announced when toggling the report headings document formatting setting.
-			state = _("report headings on")
+			state = _("Report headings on")
 			config.conf["documentFormatting"]["reportHeadings"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report headings command.
@@ -601,11 +601,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportBlockQuotes(self,gesture):
 		if config.conf["documentFormatting"]["reportBlockQuotes"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
-			state = _("report block quotes off")
+			state = _("Report block quotes off")
 			config.conf["documentFormatting"]["reportBlockQuotes"]=False
 		else:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
-			state = _("report block quotes on")
+			state = _("Report block quotes on")
 			config.conf["documentFormatting"]["reportBlockQuotes"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report block quotes command.
@@ -615,11 +615,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLandmarks(self,gesture):
 		if config.conf["documentFormatting"]["reportLandmarks"]:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks off")
+			state = _("Report landmarks off")
 			config.conf["documentFormatting"]["reportLandmarks"]=False
 		else:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks on")
+			state = _("Report landmarks on")
 			config.conf["documentFormatting"]["reportLandmarks"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report landmarks command.
@@ -629,11 +629,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportFrames(self,gesture):
 		if config.conf["documentFormatting"]["reportFrames"]:
 			# Translators: The message announced when toggling the report frames document formatting setting.
-			state = _("report frames off")
+			state = _("Report frames off")
 			config.conf["documentFormatting"]["reportFrames"]=False
 		else:
 			# Translators: The message announced when toggling the report frames document formatting setting.
-			state = _("report frames on")
+			state = _("Report frames on")
 			config.conf["documentFormatting"]["reportFrames"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report frames command.
@@ -643,11 +643,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportClickable(self,gesture):
 		if config.conf["documentFormatting"]["reportClickable"]:
 			# Translators: The message announced when toggling the report if clickable document formatting setting.
-			state = _("report if clickable off")
+			state = _("Report if clickable off")
 			config.conf["documentFormatting"]["reportClickable"]=False
 		else:
 			# Translators: The message announced when toggling the report if clickable document formatting setting.
-			state = _("report if clickable on")
+			state = _("Report if clickable on")
 			config.conf["documentFormatting"]["reportClickable"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report if clickable command.
@@ -769,7 +769,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	# Translators: Input help mode message for report current navigator object command.
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this  object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times copies name and value of this object to the clipboard")
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
@@ -1412,11 +1412,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportDynamicContentChanges(self,gesture):
 		if config.conf["presentation"]["reportDynamicContentChanges"]:
 			# Translators: presented when the present dynamic changes is toggled.
-			state = _("report dynamic content changes off")
+			state = _("Report dynamic content changes off")
 			config.conf["presentation"]["reportDynamicContentChanges"]=False
 		else:
 			# Translators: presented when the present dynamic changes is toggled.
-			state = _("report dynamic content changes on")
+			state = _("Report dynamic content changes on")
 			config.conf["presentation"]["reportDynamicContentChanges"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle dynamic content changes command.
@@ -1426,25 +1426,25 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleCaretMovesReviewCursor(self,gesture):
 		if config.conf["reviewCursor"]["followCaret"]:
 			# Translators: presented when toggled.
-			state = _("caret moves review cursor off")
+			state = _("Caret moves review cursor off")
 			config.conf["reviewCursor"]["followCaret"]=False
 		else:
 			# Translators: presented when toggled.
-			state = _("caret moves review cursor on")
+			state = _("Caret moves review cursor on")
 			config.conf["reviewCursor"]["followCaret"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle caret moves review cursor command.
-	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
+	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving")
 	script_toggleCaretMovesReviewCursor.category=SCRCAT_TEXTREVIEW
 
 	def script_toggleFocusMovesNavigatorObject(self,gesture):
 		if config.conf["reviewCursor"]["followFocus"]:
 			# Translators: presented when toggled.
-			state = _("focus moves navigator object off")
+			state = _("Focus moves navigator object off")
 			config.conf["reviewCursor"]["followFocus"]=False
 		else:
 			# Translators: presented when toggled.
-			state = _("focus moves navigator object on")
+			state = _("Focus moves navigator object on")
 			config.conf["reviewCursor"]["followFocus"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle focus moves navigator object command.
@@ -1635,12 +1635,12 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleSpeechViewer(self,gesture):
 		if gui.speechViewer.isActive:
 			# Translators: The message announced when disabling speech viewer.
-			state = _("speech viewer disabled")
+			state = _("Speech viewer disabled")
 			gui.speechViewer.deactivate()
 			gui.mainFrame.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(False)
 		else:
 			# Translators: The message announced when enabling speech viewer.
-			state = _("speech viewer enabled")
+			state = _("Speech viewer enabled")
 			gui.speechViewer.activate()
 			gui.mainFrame.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(True)
 		ui.message(state)
@@ -1796,7 +1796,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Presented when plugins (app modules and global plugins) are reloaded.
 		ui.message(_("Plugins reloaded"))
 	# Translators: Input help mode message for reload plugins command.
-	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
+	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be useful for developers")
 	script_reloadPlugins.category=SCRCAT_TOOLS
 
 	def script_navigatorObject_nextInFlow(self,gesture):

@@ -316,254 +316,254 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 qn = BrowseModeTreeInterceptor.addQuickNav
 qn("heading", key="h",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading"),
+	nextDoc=_("Moves to the next heading"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading"),
+	nextError=_("No next heading"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading"),
+	prevDoc=_("Moves to the previous heading"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading"))
+	prevError=_("No previous heading"))
 qn("heading1", key="1",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 1"),
+	nextDoc=_("Moves to the next heading at level 1"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 1"),
+	nextError=_("No next heading at level 1"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 1"),
+	prevDoc=_("Moves to the previous heading at level 1"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 1"))
+	prevError=_("No previous heading at level 1"))
 qn("heading2", key="2",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 2"),
+	nextDoc=_("Moves to the next heading at level 2"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 2"),
+	nextError=_("No next heading at level 2"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 2"),
+	prevDoc=_("Moves to the previous heading at level 2"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 2"))
+	prevError=_("No previous heading at level 2"))
 qn("heading3", key="3",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 3"),
+	nextDoc=_("Moves to the next heading at level 3"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 3"),
+	nextError=_("No next heading at level 3"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 3"),
+	prevDoc=_("Moves to the previous heading at level 3"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 3"))
+	prevError=_("No previous heading at level 3"))
 qn("heading4", key="4",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 4"),
+	nextDoc=_("Moves to the next heading at level 4"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 4"),
+	nextError=_("No next heading at level 4"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 4"),
+	prevDoc=_("Moves to the previous heading at level 4"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 4"))
+	prevError=_("No previous heading at level 4"))
 qn("heading5", key="5",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 5"),
+	nextDoc=_("Moves to the next heading at level 5"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 5"),
+	nextError=_("No next heading at level 5"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 5"),
+	prevDoc=_("Moves to the previous heading at level 5"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 5"))
+	prevError=_("No previous heading at level 5"))
 qn("heading6", key="6",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next heading at level 6"),
+	nextDoc=_("Moves to the next heading at level 6"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next heading at level 6"),
+	nextError=_("No next heading at level 6"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous heading at level 6"),
+	prevDoc=_("Moves to the previous heading at level 6"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous heading at level 6"))
+	prevError=_("No previous heading at level 6"))
 qn("table", key="t",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next table"),
+	nextDoc=_("Moves to the next table"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next table"),
+	nextError=_("No next table"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous table"),
+	prevDoc=_("Moves to the previous table"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous table"),
+	prevError=_("No previous table"),
 	readUnit=textInfos.UNIT_LINE)
 qn("link", key="k",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next link"),
+	nextDoc=_("Moves to the next link"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next link"),
+	nextError=_("No next link"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous link"),
+	prevDoc=_("Moves to the previous link"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous link"))
+	prevError=_("No previous link"))
 qn("visitedLink", key="v",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next visited link"),
+	nextDoc=_("Moves to the next visited link"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next visited link"),
+	nextError=_("No next visited link"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous visited link"),
+	prevDoc=_("Moves to the previous visited link"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous visited link"))
+	prevError=_("No previous visited link"))
 qn("unvisitedLink", key="u",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next unvisited link"),
+	nextDoc=_("Moves to the next unvisited link"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next unvisited link"),
+	nextError=_("No next unvisited link"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous unvisited link"), 
+	prevDoc=_("Moves to the previous unvisited link"), 
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous unvisited link"))
+	prevError=_("No previous unvisited link"))
 qn("formField", key="f",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next form field"),
+	nextDoc=_("Moves to the next form field"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next form field"),
+	nextError=_("No next form field"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous form field"),
+	prevDoc=_("Moves to the previous form field"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous form field"),
+	prevError=_("No previous form field"),
 	readUnit=textInfos.UNIT_LINE)
 qn("list", key="l",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next list"),
+	nextDoc=_("Moves to the next list"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next list"),
+	nextError=_("No next list"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous list"),
+	prevDoc=_("Moves to the previous list"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous list"),
+	prevError=_("No previous list"),
 	readUnit=textInfos.UNIT_LINE)
 qn("listItem", key="i",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next list item"),
+	nextDoc=_("Moves to the next list item"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next list item"),
+	nextError=_("No next list item"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous list item"),
+	prevDoc=_("Moves to the previous list item"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous list item"))
+	prevError=_("No previous list item"))
 qn("button", key="b",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next button"),
+	nextDoc=_("Moves to the next button"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next button"),
+	nextError=_("No next button"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous button"),
+	prevDoc=_("Moves to the previous button"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous button"))
+	prevError=_("No previous button"))
 qn("edit", key="e",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next edit field"),
+	nextDoc=_("Moves to the next edit field"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next edit field"),
+	nextError=_("No next edit field"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous edit field"),
+	prevDoc=_("Moves to the previous edit field"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous edit field"),
+	prevError=_("No previous edit field"),
 	readUnit=textInfos.UNIT_LINE)
 qn("frame", key="m",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next frame"),
+	nextDoc=_("Moves to the next frame"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next frame"),
+	nextError=_("No next frame"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous frame"),
+	prevDoc=_("Moves to the previous frame"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous frame"),
+	prevError=_("No previous frame"),
 	readUnit=textInfos.UNIT_LINE)
 qn("separator", key="s",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next separator"),
+	nextDoc=_("Moves to the next separator"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next separator"),
+	nextError=_("No next separator"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous separator"),
+	prevDoc=_("Moves to the previous separator"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous separator"))
+	prevError=_("No previous separator"))
 qn("radioButton", key="r",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next radio button"),
+	nextDoc=_("Moves to the next radio button"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next radio button"),
+	nextError=_("No next radio button"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous radio button"),
+	prevDoc=_("Moves to the previous radio button"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous radio button"))
+	prevError=_("No previous radio button"))
 qn("comboBox", key="c",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next combo box"),
+	nextDoc=_("Moves to the next combo box"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next combo box"),
+	nextError=_("No next combo box"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous combo box"),
+	prevDoc=_("Moves to the previous combo box"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous combo box"))
+	prevError=_("No previous combo box"))
 qn("checkBox", key="x",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next check box"),
+	nextDoc=_("Moves to the next check box"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next check box"),
+	nextError=_("No next check box"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous check box"),
+	prevDoc=_("Moves to the previous check box"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous check box"))
+	prevError=_("No previous check box"))
 qn("graphic", key="g",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next graphic"),
+	nextDoc=_("Moves to the next graphic"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next graphic"),
+	nextError=_("No next graphic"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous graphic"),
+	prevDoc=_("Moves to the previous graphic"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous graphic"))
+	prevError=_("No previous graphic"))
 qn("blockQuote", key="q",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next block quote"),
+	nextDoc=_("Moves to the next block quote"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next block quote"),
+	nextError=_("No next block quote"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous block quote"), 
+	prevDoc=_("Moves to the previous block quote"), 
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous block quote"))
+	prevError=_("No previous block quote"))
 qn("notLinkBlock", key="n",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("skips forward past a block of links"),
+	nextDoc=_("Skips forward past a block of links"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no more text after a block of links"),
+	nextError=_("No more text after a block of links"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("skips backward past a block of links"),
+	prevDoc=_("Skips backward past a block of links"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no more text before a block of links"),
+	prevError=_("No more text before a block of links"),
 	readUnit=textInfos.UNIT_LINE)
 qn("landmark", key="d",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next landmark"),
+	nextDoc=_("Moves to the next landmark"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next landmark"),
+	nextError=_("No next landmark"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous landmark"),
+	prevDoc=_("Moves to the previous landmark"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous landmark"),
+	prevError=_("No previous landmark"),
 	readUnit=textInfos.UNIT_LINE)
 qn("embeddedObject", key="o",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next embedded object"),
+	nextDoc=_("Moves to the next embedded object"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next embedded object"),
+	nextError=_("No next embedded object"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous embedded object"),
+	prevDoc=_("Moves to the previous embedded object"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous embedded object"))
+	prevError=_("No previous embedded object"))
 qn("annotation", key="a",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next annotation"),
+	nextDoc=_("Moves to the next annotation"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next annotation"),
+	nextError=_("No next annotation"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous annotation"),
+	prevDoc=_("Moves to the previous annotation"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous annotation"))
+	prevError=_("No previous annotation"))
 del qn
 
 class ElementsListDialog(wx.Dialog):

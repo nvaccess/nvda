@@ -620,23 +620,23 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="next")
 	# Translators: the description for the next table row script on virtualBuffers.
-	script_nextRow.__doc__ = _("moves to the next table row")
+	script_nextRow.__doc__ = _("Moves to the next table row")
 
 
 	def script_previousRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="previous")
 	# Translators: the description for the previous table row script on virtualBuffers.
-	script_previousRow.__doc__ = _("moves to the previous table row")
+	script_previousRow.__doc__ = _("Moves to the previous table row")
 
 	def script_nextColumn(self, gesture):
 		self._tableMovementScriptHelper(axis="column", movement="next")
 	# Translators: the description for the next table column script on virtualBuffers.
-	script_nextColumn.__doc__ = _("moves to the next table column")
+	script_nextColumn.__doc__ = _("Moves to the next table column")
 
 	def script_previousColumn(self, gesture):
 		self._tableMovementScriptHelper(axis="column", movement="previous")
 	# Translators: the description for the previous table column script on virtualBuffers.
-	script_previousColumn.__doc__ = _("moves to the previous table column")
+	script_previousColumn.__doc__ = _("Moves to the previous table column")
 
 	def _isSuitableNotLinkBlock(self,range):
 		return (range._endOffset-range._startOffset)>=self.NOT_LINK_BLOCK_MIN_LEN
