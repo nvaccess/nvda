@@ -408,6 +408,11 @@ def splitTextIndentation(text):
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
 RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
+IDT_BASE_FREQUENCY = 220 #One octave below middle A.
+IDT_TONE_DURATION = 80 #Milleseconds
+IDT_MAX_SPACES = 72
+INDENT_SPEECH = 1
+INDENT_TONES = 2
 def getIndentationSpeech(indentation):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
@@ -415,9 +420,10 @@ def getIndentationSpeech(indentation):
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
-	# Translators: no indent is spoken when the user moves from a line that has indentation, to one that 
-	# does not.
+	indentConfig = config.conf["documentFormatting"]["indentType"]
 	if not indentation:
+		if indentConfig & INDENT_TONES:
+			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
 		# Translators: This is spoken when the given line has no indentation.
 		return _("no indent")
 
@@ -425,6 +431,7 @@ def getIndentationSpeech(indentation):
 	indentation = indentation.replace(u"\xa0", u" ")
 	res = []
 	locale=languageHandler.getLanguage()
+	quarterTones = 0
 	for m in RE_INDENTATION_CONVERT.finditer(indentation):
 		raw = m.group()
 		symbol = characterProcessing.processSpeechSymbol(locale, raw[0])
@@ -436,8 +443,18 @@ def getIndentationSpeech(indentation):
 			res.append(symbol)
 		else:
 			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
+		quarterTones += (count*4 if raw[0]== "\t" else count)
 
-	return " ".join(res)
+		speak = indentConfig & INDENT_SPEECH
+		if indentConfig & INDENT_TONES: 
+			if quarterTones <= IDT_MAX_SPACES:
+				#Remove me during speech refactor.
+				pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
+				tones.beep(pitch, IDT_TONE_DURATION)
+			else: 
+				#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
+				speak = True
+	return (" ".join(res) if speak else "")
 
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
