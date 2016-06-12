@@ -20,15 +20,20 @@ from globalCommands import SCRCAT_FOCUS
 import re
 import speech
 import config
-import time
+import gui
+import wx
+from configobj import ConfigObj
+from cStringIO import StringIO
 
-# some user configuration vars to control how the add-on behaves
-announceIntelliSensePosInfo = False
-beepOnBreakpoints = True
-announceBreakpoints = True
+#a config spec for visual studio settings within NVDA's configuration
+confspec = ConfigObj(StringIO("""
+announceBreakpoints = boolean(default=True)
+beepOnBreakpoints = boolean(default=True)
+reportIntelliSensePosInfo = boolean(default=False)
+"""))
+confspec.newlines = "\r\n"
 
 # global vars
-
 #whether last focused object was an intelliSense item
 intelliSenseLastFocused = False
 #last focused intelliSense object
@@ -45,6 +50,25 @@ class AppModule(appModuleHandler.AppModule):
 		#put the version of visual studio in the global variable, so other parts of the code have access to it
 		global studioVersion 
 		studioVersion = self.productVersion
+		#add visual studio entry to preferences menu of NVDA
+		self.preferencesMenu = gui.mainFrame.sysTrayIcon.preferencesMenu
+		self.settingsItem = self.preferencesMenu.Append(wx.ID_ANY,
+			# Translators: name of visual studio settings option in the menu.
+			_("&Visual Studio settings..."),
+			"")
+		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onSettings, self.settingsItem)
+		#add a seqtion to nvda's configuration for VS
+		config.conf.spec["visualStudio"] = confspec
+
+	def onSettings(self, evt):
+		gui.mainFrame._popupSettingsDialog(VSSettingsDialog)
+
+	def terminate(self):
+		super(AppModule, self).terminate()
+		try:
+			self.preferencesMenu.RemoveItem(self.settingsItem)
+		except wx.PyDeadObjectError:
+			pass
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.role == controlTypes.ROLE_TAB and isinstance(obj, UIA) and obj.UIAElement.currentClassName == "TabItem":
@@ -55,13 +79,13 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, IntelliSenseMenuItem)
 		elif isinstance(obj, UIA) and obj.UIAElement.currentClassName == "MenuItem" and obj.role == controlTypes.ROLE_MENUITEM:
 			clsList.insert(0, VSMenuItem)
-		elif obj.name == 'Treegrid Accessibility' and obj.role == controlTypes.ROLE_WINDOW:
+		elif obj.windowClassName == 'TREEGRID' and obj.role == controlTypes.ROLE_WINDOW:
 			clsList.insert(0, VarsTreeView)
 		elif obj.name is None and obj.windowClassName == 'TREEGRID' and obj.role == controlTypes.ROLE_PANE:
 			clsList.insert(0, BadVarView)
 		elif isinstance(obj, UIA) and obj.UIAElement.currentClassName == "TextMarker" and obj.role == controlTypes.ROLE_UNKNOWN and obj.name.startswith("Breakpoint"):
 			clsList.insert(0, Breakpoint)
-		elif obj.name == "Text Editor" and obj.role == controlTypes.ROLE_EDITABLETEXT:
+		elif isinstance(obj, UIA) and obj.UIAElement.currentClassName == "WpfTextView" and obj.role == controlTypes.ROLE_EDITABLETEXT:
 			clsList.insert(0, TextEditor)
 		elif obj.role == controlTypes.ROLE_DATAITEM and isinstance(obj, UIA) and obj.UIAElement.currentClassName == "ListViewItem":
 			clsList.insert(0, ErrorsListItem)
@@ -73,7 +97,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ToolboxItem)
 		elif obj.name == "Active Files" and obj.role in (controlTypes.ROLE_DIALOG, controlTypes.ROLE_LIST):
 			clsList.insert(0, SwitcherDialog)
-		elif obj.windowClassName.startswith("WindowsForms10.") and obj.windowText != "PropertyGridView":
+		elif isinstance(obj, IAccessible) and obj.windowClassName.startswith("WindowsForms10.") and obj.windowText != "PropertyGridView":
 			clsList.insert(0, FormsComponent)
 		elif isinstance(obj, UIA) and obj.UIAElement.currentClassName == "ViewPresenter" and obj.role == controlTypes.ROLE_PANE:
 			clsList.insert(0, EditorAncestor)
@@ -97,11 +121,13 @@ class AppModule(appModuleHandler.AppModule):
 	def event_appModule_loseFocus(self):
 		global intelliSenseLastFocused
 		global lastFocusedIntelliSenseItem
-		lastFocusedIntelliSenseItem		= None
+		lastFocusedIntelliSenseItem = None
 		intelliSenseLastFocused = False
 
 	def event_gainFocus(self, obj, nextHandler):
 		global intelliSenseLastFocused, lastFocusedIntelliSenseItem
+		#we consider here that current focus object is not intelliSense menu item. 
+		#if this is not the case, then gainFocus event of IntelliSense overlay class will set those vars to the needed values.
 		intelliSenseLastFocused = False
 		lastFocusedIntelliSenseItem = None
 		if self._shouldIgnoreFocusEvent(obj):
@@ -110,9 +136,12 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _shouldIgnoreFocusEvent(self, obj):
 		if obj.name is None and obj.role == controlTypes.ROLE_UNKNOWN and obj.windowClassName == "TBToolboxPane":
+			#a pane that gets in the way within tool box tool window.
+			#don't report the focus event for this element, a correct focus will follow up
 			return True
 
 #almost copied from NVDA core with minor modifications
+#will be removed when NVDA resolve status bar issues
 	def script_reportStatusLine(self, gesture):
 		#it seems that the status bar is the last child of the forground object
 		#so, get it from there
@@ -161,6 +190,10 @@ class AppModule(appModuleHandler.AppModule):
 
 
 def _shouldIgnoreEditorAncestorFocusEvents():
+	#we don't report focusEntered events for some of the text editor ancestors when last focused object was IntelliSense menu item.
+	#this is useful in following cases:
+	#when the user chooses a completion from the intelliSense or when he/she closes this menu
+	#sometimes when navigating the completion list of intelliSense, the editor fires focus events
 	global intelliSenseLastFocused
 	return intelliSenseLastFocused == True
 
@@ -188,7 +221,6 @@ class editorTabControl(UIA):
 REG_CUT_POS_INFO = re.compile(" \d+ of \d+$")
 REG_GET_ITEM_INDEX = re.compile("^ \d+")
 REG_GET_GROUP_COUNT = re.compile("\d+$")
-
 class IntelliSenseMenuItem(UIA):
 
 	def _get_states(self):
@@ -230,15 +262,16 @@ class IntelliSenseMenuItem(UIA):
 
 	def _get_positionInfo(self):
 		"""gets the position info of the intelliSense menu item based on the original name
-		the user can turn that off by setting to false the appropriate flag
+		the user can control whether to have this position info from VS settings dialog
 		"""
-		if announceIntelliSensePosInfo == False:
+		if not config.conf["visualStudio"]["reportIntelliSensePosInfo"]:
 			return {}
-		oldName = super(intelliSenseMenuItem, self).name
+		oldName = super(IntelliSenseMenuItem, self).name
 		info={}
-		if re.search(REG_CUT_POS_INFO, oldName) is None:
+		try:
+			positionalInfoStr = re.search(REG_CUT_POS_INFO, oldName).group()
+		except:
 			return {}
-		positionalInfoStr = re.search(REG_CUT_POS_INFO, oldName).group()
 		itemIndex = int(re.search(REG_GET_ITEM_INDEX, positionalInfoStr).group())
 		if itemIndex>0:
 			info['indexInGroup']=itemIndex
@@ -249,21 +282,25 @@ class IntelliSenseMenuItem(UIA):
 
 
 class VarsTreeView(IAccessible):
-	"""the parent view of the variables view in the locals / autos/ watch windows"""
+	"""the parent view of the variables view in the locals / autos/ watch/ call stack windows"""
 
 	role = controlTypes.ROLE_TREEVIEW
 	name = ''
 
 	def event_focusEntered(self):
+		#for some reason, NVDA doesn't execute a focusEvent for this object, so force it to do so
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUSENTERED)
 
-# a regular expression for removing level info from first child's value, see _get_positionInfo for more info
+# a regular expression for removing level info from first matching child's value, see _get_positionInfo for more info
 REG_CUT_LEVEL_INFO = re.compile(" @ tree depth \d+$")
 #a regular expression for getting the level from the first matching child value, see _get_positionInfo for more info
 REG_GET_LEVEL = re.compile("\d+$")
 class BadVarView(ContentGenericClient):
 	"""the view that showes the variable info (name, value, type) in the locals / autos / watch windows
 	also, the call stack window uses this view to expose its info
+	accessibility info for this view is retreaved from children of the parent view.
+	the matching children for the view has the focused / selected state. the number of matching children is 3, except for the call stack tool window, there, the number of matching children is 2.
+	refer to _getMatchingParentChildren method for more info
 	"""
 
 	role = controlTypes.ROLE_TREEVIEWITEM
@@ -334,7 +371,7 @@ class BadVarView(ContentGenericClient):
 	def _get_positionInfo(self):
 		# only calculate the level
 		#the level is found in the first matching child's value. which is usually the name of the variable
-		#suppose  the view shows info about a var called i, which is not a part of an array, then value string will be as following
+		#suppose  the view shows info about a var called i, which is not a part of an array, then value string will be as following:
 		# i @ tree depth 1
 		#index in group,  similar items in group are not easy to calculate, and it won't be efficien
 		matchingChildStr = self._getMatchingParentChildren().pop(0).value
@@ -368,6 +405,7 @@ class BadVarView(ContentGenericClient):
 
 	def event_typedCharacter(self, ch):
 		#default implementation of typedCharacter causes VS and NVDA to crash badly, if the user hits esc while in the quick watch window
+		#the direct reason for the problem is that NVDA tries to get the states for the object to decide whether typing is protected, and it seams the object will be already destroied in that stage
 		#only speek typed characters if needed
 		if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 			speech.speakSpelling(ch)
@@ -396,9 +434,9 @@ class VSMenuItem(UIA):
 
 	def _get_states(self):
 		states = super(VSMenuItem, self)._get_states()
-		# visual studio exposes the menu item which has a sub menu as collapsed
+		# visual studio exposes the menu item which has a sub menu as collapsed/ expanded
 		#add HASPOP state to fix NVDA behavior when this state is present
-		if controlTypes.STATE_COLLAPSED in states:
+		if controlTypes.STATE_COLLAPSED in states or controlTypes.STATE_EXPANDED in states:
 			states.add(controlTypes.STATE_HASPOPUP)
 		#this state is redundant in this context, it causes NVDA to say "not checked" for each menu item
 		states.discard(controlTypes.STATE_CHECKABLE)
@@ -420,8 +458,9 @@ class VSMenuItem(UIA):
 			pass
 		return ret
 
-
+#regular expression to get line info text from the entire status bar text
 REG_GET_LINE_TEXT = re.compile("Ln \d+")
+#a regular expression to get line number from line info text in the status bar
 REG_GET_LINE_NUM = re.compile("\d+$")
 
 def _getCurLineNumber():
@@ -432,27 +471,27 @@ def _getCurLineNumber():
 		text = api.getStatusBarText(obj)
 	if not text:
 		return 0
-	lineInfo = re.search(REG_GET_LINE_TEXT, text)
-	if not lineInfo:
+	try:
+		lineInfo = re.search(REG_GET_LINE_TEXT, text).group()
+	except:
 		return 0
-	lineInfo = lineInfo.group()
-	lineNum = re.search(REG_GET_LINE_NUM, lineInfo)
-	if not lineNum:
+	try:
+		lineNum = int(re.search(REG_GET_LINE_NUM, lineInfo).group())
+	except:
 		return 0
-	lineNum = int(lineNum.group())
 	if lineNum <= 0:
 		return 0
 	return lineNum
 
 REG_GET_BREAKPOINT_STATE = re.compile("Enabled|Disabled")
-
 class Breakpoint(UIA):
 	"""a class for break point control to allow us to detect and report break points once the caret reaches a line with break point""" 
 
 	def event_nameChange(self):
+		#a name changed event is fired by breakpoint UI control when the caret reaches a line with breakpoint, so, we rely on this to announce breakpoints
 		global caretMovedToDifferentLine
-		# return if we already announced the break point for the current line 
 		if not caretMovedToDifferentLine:
+			#a name changed event can be fired multiple times when moving by character within the same line, so, return if we already announced the break point for the current line 
 			return
 		caretMovedToDifferentLine = False
 		currentLineNum = _getCurLineNumber()
@@ -460,15 +499,14 @@ class Breakpoint(UIA):
 		if currentLineNum == 0 or BPLineNum == 0 \
 		or currentLineNum != BPLineNum:
 			return
-		global announceBreakpoints, beepOnbreakPoints
-		if beepOnBreakpoints:
+		if config.conf["visualStudio"]["beepOnBreakpoints"]:
 			tones.beep(1000, 50)
-		if not announceBreakpoints:
+		if not config.conf["visualStudio"]["announceBreakpoints"]:
 			return
 		message = _("breakpoint")
 		state = re.search(REG_GET_BREAKPOINT_STATE, self.name)
 		if  state:
-			message += ", " 
+			message += "  " 
 			message += state.group()
 		ui.message(message)
 
@@ -478,18 +516,17 @@ class Breakpoint(UIA):
 			ret=self.UIAElement.currentAutomationID
 		except Exception as e:
 			return 0
-		lineNum = re.search(REG_GET_LINE_NUM, ret)
-		if not lineNum:
+		try:
+			lineNum = int(re.search(REG_GET_LINE_NUM, ret).group())
+		except:
 			return 0
-		lineNum = int(lineNum.group())
 		if lineNum <= 0:
 			return 0
 		return lineNum
 
 class TextEditor(WpfTextView):
 	"""VS text editor view 
-	we need this class to try to tell whether the caret has moved to a different line 
-	this helps us to not make several announcements of the same breakpoint when moving the caret left and rite on the same line
+	we need this class to try to tell whether the caret has moved to a different line, this helps us to not make several announcements of the same breakpoint when moving the caret by character left and rite on the same line
 	also, commands for navigating the code with the debugger now causes NVDA to report the line which was executed.
 	"""
 
@@ -528,7 +565,7 @@ class TextEditor(WpfTextView):
 		super(TextEditor, self).script_caret_moveByLine(gesture)
 
 #this method is only a work around til the bug with compareing UIA bookmarks is resolved
-#we need to bind debugger stepping commands to  moveByLine only 
+#we need to bind debugger stepping commands to  moveByLine script only 
 	def script_debugger_step(self, gesture):
 		global caretMovedToDifferentLine
 		caretMovedToDifferentLine = True
@@ -553,10 +590,13 @@ class TextEditor(WpfTextView):
 		"kb:shift+f11": "debugger_step"
 	}
 
-
+#a regular expression to split the error list menu item name to columns
 REG_SPLIT_ERROR = re.compile("(Severity:.*)(Code:.*)(Description:.*\r?\n?.*)(Project:.*)(File:.*)(Line:.*)")
+#a regular expression to split the error list menu item name to columns when no code column is available
 REG_SPLIT_ERROR_NO_CODE_COL = re.compile("(Severity:.*)(Description:.*\r?\n?.*)(Project:.*)(File:.*)(Line:.*)")
+#a regular expression to split the error list menu item name to columns when no file column is available
 REG_SPLIT_ERROR_NO_FILE_COL = re.compile("(Severity:.*)(Code:.*)(Description:.*\r?\n?.*)(Project:.*)(Line:.*)")
+#a regular expression to split the error list menu item name to columns when no line column is available
 REG_SPLIT_ERROR_NO_LINE_COL = re.compile("(Severity:.*)(Code:.*)(Description:.*\r?\n?.*)(Project:.*)(File:.*)")
 class ErrorsListItem(RowWithoutCellObjects, RowWithFakeNavigation, UIA):
 	""" a class for list item of the errors list
@@ -581,7 +621,6 @@ class ErrorsListItem(RowWithoutCellObjects, RowWithFakeNavigation, UIA):
 		return text
 
 	def _getColumnContentAndHeader(self, column):
-		global REG_SPLIT_ERROR, REG_SPLIT_ERROR_NO_CODE_COL, REG_SPLIT_ERROR_NO_FILE_COL, REG_SPLIT_ERROR_NO_LINE_COL
 		if column < 1 or column > 6:
 			return ""
 		try:
@@ -618,7 +657,7 @@ class ErrorsListItem(RowWithoutCellObjects, RowWithFakeNavigation, UIA):
 		return len(UIA._get_children(self))
 
 	def initOverlayClass(self):
-		for i in xrange(10):
+		for i in xrange(1, self.childCount + 1):
 			self.bindGesture("kb:control+alt+" + str(i), "moveToColumn")
 
 	def script_moveToColumn(self, gesture):
@@ -626,12 +665,13 @@ class ErrorsListItem(RowWithoutCellObjects, RowWithFakeNavigation, UIA):
 		# extract the number from the key name
 		columnNum = re.search("\d+$", keyName).group()
 		columnNum = int(columnNum)
-		if columnNum > self.childCount + 1or columnNum == 0:
-			return
+		# if columnNum > self.childCount or columnNum == 0:
+			# return
 		self._moveToColumnNumber(columnNum)
 
 
 class QuickInfoToolTip(Toast):
+	"""quick info toast, the goal is to get this view to be considered as toast by NVDA, so it will be reported when it fires an alert event"""
 
 	def _get_name(self):
 		return "Quick Info"
@@ -654,7 +694,7 @@ class ToolboxItem(IAccessible):
 	def event_gainFocus(self):
 		badStates = set((controlTypes.STATE_INVISIBLE, controlTypes.STATE_UNAVAILABLE, controlTypes.STATE_OFFSCREEN))
 		if badStates.issubset(self.states) or controlTypes.STATE_SELECTED not in self.states:
-			#if the focus object has those states, or the object don't has a selected state, don't report this invalid focus event.
+			#if the object has those states, or the object don't has a selected state, don't report this invalid focus event.
 			#a valid focus event will be fired after then.
 			return
 		super(ToolboxItem, self).event_gainFocus()
@@ -681,7 +721,7 @@ class ToolboxItem(IAccessible):
 class SwitcherDialog(IAccessible):
 	"""the view of the file / tool windows switcher which is used to move between opened files and active tool windows
 	in latest version of VS (2015 currently), only gainFocus event method is needed to report the first selected entry when a file is opened
-	in older versions, this view manages all the user interaction with this view. AKA moving between entries using the corresponding keyboard commands
+	in older versions, this overlay class manages all the user interaction with this view. AKA moving between entries using the corresponding keyboard commands
 	"""
 
 	def initOverlayClass(self):
@@ -735,7 +775,7 @@ class SwitcherDialog(IAccessible):
 	def script_onEntryChange(self, gesture):
 		gesture.send()
 		if studioVersion.startswith('14.0'):
-			#if VS 2015 is the current version, then don't do any thing, a correct focus event will be fired, and the controle will move to the focused view.
+			#if VS 2015 is the  version used, then don't do any thing, a correct focus event will be fired, and the controle will move to the focused view.
 			return
 		self._reportSelectedEntry()
 
@@ -750,7 +790,6 @@ class SwitcherDialog(IAccessible):
 
 
 REG_SPLIT_LOCATION_TEXT = re.compile("(\d+), (\d+) (\d+), (\d+)")
-
 class FormsComponent(IAccessible):
 	"""the UI component in windows forms designer """
 
@@ -798,3 +837,32 @@ class EditorAncestor(UIA):
 	def _isEqual(self, other):
 		return False
 
+
+class VSSettingsDialog(gui.SettingsDialog):
+	"""a gui dialog for visual studio settings dialog"""
+
+	# Translators: title of a dialog.
+	title = _("Visual Studio settings")
+
+	def makeSettings(self, settingsSizer):
+		# Translators: label of a checkbox which toggles the announcement of breakpoints via speech
+		self.announceBreakpointCheckBox=wx.CheckBox(self, wx.NewId(), label=_("&Announce breakpoints via speech"))
+		self.announceBreakpointCheckBox.SetValue(config.conf["visualStudio"]["announceBreakpoints"])
+		settingsSizer.Add(self.announceBreakpointCheckBox,border=10, flag=wx.BOTTOM)
+		# Translators: label of a checkbox which toggles the beep on breakpoints option
+		self.beepOnBreakpointCheckBox=wx.CheckBox(self, wx.NewId(), label=_("&Beep on  breakpoints"))
+		self.beepOnBreakpointCheckBox.SetValue(config.conf["visualStudio"]["beepOnBreakpoints"])
+		settingsSizer.Add(self.beepOnBreakpointCheckBox,border=10, flag=wx.BOTTOM)
+		# Translators: label of a checkbox which toggles reporting of intelliSense menu item position info
+		self.reportIntelliSensePosInfoCheckBox=wx.CheckBox(self, wx.NewId(), label=_("&Report intelliSense menu item position information"))
+		self.reportIntelliSensePosInfoCheckBox.SetValue(config.conf["visualStudio"]["reportIntelliSensePosInfo"])
+		settingsSizer.Add(self.reportIntelliSensePosInfoCheckBox,border=10, flag=wx.BOTTOM)
+
+	def postInit(self):
+		self.announceBreakpointCheckBox.SetFocus()
+
+	def onOk(self, evt):
+		super(VSSettingsDialog, self).onOk(evt)
+		config.conf["visualStudio"]["announceBreakpoints"] = self.announceBreakpointCheckBox.IsChecked()
+		config.conf["visualStudio"]["beepOnBreakpoints"] = self.beepOnBreakpointCheckBox.IsChecked()
+		config.conf["visualStudio"]["reportIntelliSensePosInfo"] = self.reportIntelliSensePosInfoCheckBox.IsChecked()
