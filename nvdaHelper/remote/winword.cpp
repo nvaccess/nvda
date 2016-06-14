@@ -652,10 +652,10 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
 				}
 			}
-			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE,VT_I4,&iVal)==S_OK) {
-				formatAttribsStream<<L"wdLineSpacingRule=\"" << iVal <<L"\" ";
-			}
 			if(formatConfig&formatConfig_reportLineSpacing) {
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE,VT_I4,&iVal)==S_OK) {
+					formatAttribsStream<<L"wdLineSpacingRule=\"" << iVal <<L"\" ";
+				}
 				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACING,VT_R4,&fVal)==S_OK) {
 					formatAttribsStream<<L"wdLineSpacing=\"" << fVal <<L"\" ";
 				}

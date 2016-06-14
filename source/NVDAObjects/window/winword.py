@@ -1473,12 +1473,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def script_changeLineSpacing(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda:self.WinwordSelectionObject.ParagraphFormat.LineSpacingRule)
 		if val == wdLineSpaceSingle:
-			# Translators: a message when switching to single space  in Microsoft word
-			ui.message(_("Single Spaced"))
+			# Translators: a message when switching to single line spacing  in Microsoft word
+			ui.message(_("Single line spacing"))
 		elif val == wdLineSpaceDouble:
-			# Translators: a message when switching to double space  in Microsoft word
-			ui.message(_("Double Spaced"))
-		
+			# Translators: a message when switching to double line spacing  in Microsoft word
+			ui.message(_("Double line spacing"))
+		elif val == wdLineSpace1pt5:
+			# Translators: a message when switching to 1.5 line spaceing  in Microsoft word
+			ui.message(_("1.5 line spacing"))
+
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1581,6 +1584,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+3":"increaseDecreaseOutlineLevel",
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
+		"kb:control+5":"changeLineSpacing",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:NVDA+shift+c":"setColumnHeader",
