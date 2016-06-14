@@ -167,7 +167,7 @@ Actualment o NVDA vien con dos conchuntos de  teclas d'ordens conoixidas como di
 De traza predeterminada o NVDA se configura ta emplegar a distribución de sobremesa, encara que puetz cambiar t'a distribución de portatils en as Opcions de Teclau, que se troban en Preferencias en o menú NVDA.
 
 A distribución de sobremesa fa un uso amplo d'o teclau numerico (con o bloqueyo numerico desactivau).
-Encara que a mayoría d'os portatils no tienen un teclau numerico fisico, qualques portatils en pueden emular un mantenendo pretada a tecla FN y pretando letras y numeros en a man dreita d'o teclau (7 8 9 u i o j k l etc.).
+Encara que a mayoría d'os portatils no tienen un teclau numerico fisico, qualques portatils en pueden emular un mantenendo preta la tecla FN y pretando letras y numers en a man dreita d'o teclau (7 8 9 u i o j k l etc.).
 Si o tuyo portatil no puet fer isto, u no te permite desactivar o bloqueyo numerico, podrás querer cambiar a la distribución Portatil en cuenta.
 
 ++ Cenyos tactils d'o NVDA ++
@@ -646,7 +646,7 @@ Pretando l'intro u lo botón mover ta en estar en a fuella listada seleccionará
 %kc:beginInclude
 T'anunciar qualsiquier comentario t'a celda actualment enfocada preta NVDA+alt+c.
 %kc:endInclude
-Totz os comentarios d'o libro de treballo puet listar-se tamién en a lista d'lelementos d'o NVDA.
+Totz os comentarios d'a fuella de treballo pueden listar-sen tamién en a lista d'elementos d'o NVDA.
 
 +++ Leyer as celdas protechidas +++
 Si un libro de treballo fuó protechiu, puet estar imposible mover o foco t'a celdas particulars que fuoron blocadas ta edición.
@@ -991,6 +991,10 @@ Tecla: NVDA+4
 
 Quan ye marcada significa que NVDA anunciará todas as teclas que no sigan caracters en escribir-las en o teclau. Isto inclui combinacions de teclas tals como control mas qualsiquier atra letra. 
 
+==== Reproducir son pa las errors d'ortografía entre que s'escribe ====
+Quan ye enchegada reproduz un son curto de bomboloniu en que una parola que escribas contienga una error d'ortografía.
+Ista opción nomás ye disponible si l'anunciau d'errors d'ortografía ye enchegau en o dialogo d'[opcions de formatiau de documentos #DocumentFormattingSettings] d'o NVDA.
+
 ==== Teclas de maneyo d'atras aplicacions ====
 Ista opción permite a l'usuario controlar si cal que o NVDA maníe as pulsacions de teclas cheneradas por aplicacions tals como teclaus en pantalla y o software de reconoixencia de voz.
 Ista opción ye enchegada por defecto, anque qualques usuarios pueden deseyar desenchegar-la, como os que escriben vietnamita con o software de mecanografía Unikey ya que ferá que a dentrada de caracters siga incorrecta.
@@ -1104,8 +1108,8 @@ Para cuenta que a causa d'o feito que os metodos de dentrada varean en gran medi
 
 ==== Anunciar Automaticament totz os Candidatos Disponibles ====
 Ista opción, que ye activada de traza predeterminada, te permite trigar si totz os candidatos veyibles habrían d'anunciar-se automaticament en que amaneixca una lista de candidatos u a suya pachina cambee.
-Tener ista opción activada ta metodos de dentrada pictografica tals como lo chino Nuevo ChangJie u lo Boshiami, ye util pos puetz escuitar totz os simbolos automaticament y os suyos numeros y en puetz trigar un immediatament.
-Manimenos, ta os metodos de dentrada foneticos tals como chino Nuevo Fonetico, Podría estar mas util desactivar ista opción ya que totz os simbolos sonarán igual y habrás d'emplegar as teclas de cursor ta navegar por os elementos d'a lista individualment ta obtener mas información d'a descripción de caracters ta cada candidato.
+Tener ista opción activada pa metodos de dentrada pictografica tals como lo chino Nuevo ChangJie u lo Boshiami, ye util pos puetz escuitar totz os simbolos automaticament y os suyos numers y puetz trigar-ne un immediatament.
+Manimenos, pa os metodos de dentrada foneticos tals como chino Nuevo Fonetico, Podría estar mas util desactivar ista opción ya que totz os simbolos sonarán igual y habrás d'emplegar as teclas de cursor pa navegar por os elementos d'a lista individualment pa obtener mas información d'a descripción de caracters pa cada candidato.
 
 ==== Anunciar o Candidato trigau ====
 Ista Opción, que ye activada por omisión, te permite trigar si o NVDA habría d'anunciar o candidato seleccionau en que amaneixe una lista de candidatos u quan a selección se cambió.
@@ -1190,8 +1194,9 @@ Puetz configurar l'anunciau de:
 - Enfasi
 - Estilo d'o texto
 - Errors d'ortografía
-- Numeros de pachina
-- Numeros de linia
+- Errors gramaticals
+- Numers de pachina
+- Numers de linia
 - Sangría de linia
 - Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
 - Tablas
@@ -1246,8 +1251,8 @@ Finalment, un conchunto de botons de radio te permite dicir-le a lo NVDA si o tu
 Establir o patrón ta coincidir con una parola completa significa que nomás se ferá a substitución si o patrón no coincide con parti d'una parola larga; p. eix. dengún caracter diferent d'un caracter alfanumerico, un guión baixo, u dengún atro caracter no va chusto antis u dimpués d'o patrón.
 Por tanto, fendo servir l'eixemplo anterior d'a substitución d'a parola "can" con "mixín", si fueses a fer d'iste conchunto un reemplazo de parola, sería no coincidir con "canya" u "cans".
 
-Una expresión regular ye un patrón que contién simbolos especials que te permiten emparellar mas d'un caracter a o mesmo tiempo, u emparellar nomás numeros, u nomás letras, seguntes uns pocos eixemplos. 
-As expresions regulars no son cubiertas en ista Guida de l'Usuario, pero bi ha muitos tutorials en a Web que pueden proporcionar-te mas información.
+Una expresión regular ye un patrón que contién simbolos especials que te permiten emparellar mas d'un caracter a o mesmo tiempo, u emparellar nomás numers, u nomás letras, seguntes bells pocos eixemplos. 
+As expresions regulars no son cubiertas en ista Guida de l'Usuario, pero bi ha muitos tutorials en a Web que pueden furnir-te-ne mas información.
 
 +++ Pronuncia de Puntuación y simbolos +++[SymbolPronunciation]
 Iste dialogo te permite cambiar o modo en que son pronunciaus a puntuación y atros simbolos, asinas como o libel d'os simbolos en que se'n verbalizan. 

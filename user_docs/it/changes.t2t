@@ -3,6 +3,51 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+Le principali novità di questa versione riguardano la capacità di annunciare gli errori di ortografia durante la scrittura; il supporto agli errori grammaticali in Microsoft Word; inoltre miglioramenti e correzioni di bug in Microsoft Office
+
+== Novità ==
+- In modalità navigazione in Microsoft Internet Explorer e altri controlli Mshtml, la pressione dei tasti a e shift-A per spostarsi tra le annotazioni successive e precedenti ora sposterà il cursore virtuale tra il testo inserito e cancellato. (#5691)
+- In Microsoft Excel, NVDA ora annuncia il livello di un gruppo di celle, espanso o non espanso. (#5690)
+- Premendo la combinazione di tasti (NVDA+f) due volte, le informazioni verranno mostrate in modalità navigazione. (#4908)
+- In Microsoft Excel 2010 e successivi, viene ora annunciato l'ombreggiatura e il riempimento delle celle. Queste informazioni sono controllate dal parametro annuncia colori nella finestra impostazioni formattazione documento di NVDA. (#3683)
+- Nuove tabelle di traduzione braille: Greco Koine. (#5393)
+- Nel visualizzatore log è ora possibile salvare il log con la combinazione di tasti ctrl-s. (#4532)
+- Se la lettura degli errori di ortografia è attiva e supportata dal controllo focalizzato, NVDA emetterà un suono per avvisare l'utente dell'errore commesso in fase di scrittura. La funzione può essere disabilitata dalla finestra di dialogo impostazioni tastiera, opzione "emetti segnale acustico in fase di scrittura per gli errori di ortografia". (#2024)
+- In Microsoft Word vengono annunciati gli errori di grammatica. La funzione può essere disattivata dalla finestra di dialogo impostazioni formattazione documento, opzione Annuncia errori grammaticali. (#5877)
+
+
+== Cambiamenti ==
+- In modalità navigazione e nei campi di testo editabili, NVDA tratta il tasto Invio e il tasto Invio del tastierino numerico allo stesso modo. (#5385)
+- NVDA è passato alla sintesi eSpeak NG. (#5651)
+- In Microsoft Excel, NVDA non ignora più un'intestazione di colonna per una cella quando c'è una riga vuota tra la cella e l'intestazione. (#5396)
+- In Microsoft Excel, le coordinate sono ora annunciate prima delle intestazioni per eliminare qualsiasi ambiguità tra intestazioni e contenuto. (#5396)
+
+
+== Bug corretti ==
+- In modalità navigazione, quando si tenta di utilizzare un tasto singolo per spostarsi in un elemento che non è supportato per il documento corrente, NVDA avvertirà che la funzione non è supportata piuttosto di dire che non c'è alcun controllo in quella direzione. (#5691)
+- Quando si visualizzano i fogli nell'elenco elementi in Microsoft Excel, ora vengono inclusi anche i fogli contenenti soltanto grafici. (#5698)
+- NVDA non fornisce più informazioni senza senso quando si cambia finestra in un'applicazione Java con finestre multiple come IntelliJ o Android Studio. (#5732)
+- Nei controlli editazione Scintilla come ad esempio Notepad++, il braille si aggiorna correttamente quando si sposta il cursore con i tasti del display braille. (#5678)
+- NVDA non andrà più in crash sporadicamente all'attivazione della modalità Braille Output. (#4457)
+- In Microsoft Word, verrà rispettata l'unità di misura scelta dall'utente (centimetri o pollici) per annunciare il rientro dei paragrafi. (#5804)
+- Quando si utilizza un display braille, molti messaggi che venivano gestiti solo dalla sintesi vocale ora verranno visualizzati anche in braille. (#5557)
+- Nelle applicazioni Java accessibili, viene ora annunciato il livello di una visualizzazione ad albero. (#5766)
+- Sistemato un crash nelle applicazioni Flash con Mozilla Firefox. (#5367)
+- In Google Chrome e browser basati su  Chrome, i documenti all'interno di finestre di dialogo di applicazioni vengono gestiti anche in modalità navigazione. (#5818)
+- In Google Chrome e browser basati su  Chrome, è possibile forzare la modalità navigazione per NVDA nei documenti all'interno di applicazioni o finestre di dialogo. (#5818)
+- In Internet Explorer e altri controlli MSHTML, lo spostamento del focus su certi controlli (nello specifico, dove viene usato aria-activedescendant) non attiverà più inavvertitamente la modalità navigazione. Questo capitava, per esempio, quando ci si spostava tra i suggerimenti di un campo contenente indirizzi durante la composizione di un messaggio in Gmail. (#5676)
+- In Microsoft Word, NVDA non rallenterà più vistosamente in tabelle molto grandi quando è attivata la funzione di annuncio intestazioni righe/colonne. (#5878)
+- In Microsoft word, NVDA non annuncerà più il testo come intestazione, quando il testo presenta un rientro ma non ha uno stile di intestazione definito. #5186)
+- In modalità navigazione in Microsoft Word, i tasti , e Shift-, funzionano correttamente anche per le tabelle. (#5883)
+
+
+== Cambiamenti per sviluppatori (in inglese) ==
+- NVDA's C++ components are now built with Microsoft Visual Studio 2015. (#5592)
+- You can now present a text or HTML message to the user in browse mode using ui.browseableMessage. (#4908)
+- In the User Guide, when a %kc:setting command is used for a setting which has a common key for all layouts, the key may now be placed after a full-width colon (：) as well as the regular colon (:). (#5739)
+
+
 = 2016.1 =
 Le novità di questa versione si concentrano principalmente sulla possibilità di abbassare il volume di altre applicazioni quando la sintesi vocale è in funzione; su un miglioramento della visualizzazione braille; sono stati corretti alcuni errori nell'uso con Microsoft Office e, non da ultimo, miglioramenti della modalità navigazione in Itunes.
 

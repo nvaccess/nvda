@@ -430,20 +430,6 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportSpellingErrors.__doc__=_("Toggles on and off the reporting of spelling errors")
 	script_toggleReportSpellingErrors.category=SCRCAT_DOCUMENTFORMATTING
 
-	def script_toggleReportGrammarErrors(self,gesture):
-		if config.conf["documentFormatting"]["reportGrammarErrors"]:
-			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors off")
-			config.conf["documentFormatting"]["reportGrammarErrors"]=False
-		else:
-			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors on")
-			config.conf["documentFormatting"]["reportGrammarErrors"]=True
-		ui.message(state)
-	# Translators: Input help mode message for toggle report grammar errors command.
-	script_toggleReportGrammarErrors.__doc__=_("Toggles on and off the reporting of grammar errors")
-	script_toggleReportGrammarErrors.category=SCRCAT_DOCUMENTFORMATTING
-
 	def script_toggleReportPage(self,gesture):
 		if config.conf["documentFormatting"]["reportPage"]:
 			# Translators: The message announced when toggling the report pages document formatting setting.
@@ -1254,7 +1240,7 @@ class GlobalCommands(ScriptableObject):
 		formatConfig={
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
-			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,"reportGrammarErrors":True,
+			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
