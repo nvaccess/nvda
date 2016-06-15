@@ -387,6 +387,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# This could be for an event such as gyroscope movement,
 			# so don't report it.
 			return False
+		if self.vkCode in self.TOGGLE_KEYS:
+			# #5490: Dont report for keys that toggle on off.
+			# This is to avoid them from being reported twice: once by the 'speak command keys' feature,
+			# and once to announce that the state has changed.
+			return False
 		return not self.isCharacter
 
 	def _get_isCharacter(self):
