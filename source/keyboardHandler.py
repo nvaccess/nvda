@@ -389,8 +389,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			return False
 		if self.vkCode in self.TOGGLE_KEYS:
 			# #5490: Dont report for keys that toggle on off.
-			# This is to avoid them from reported twice: once by the 'speak command keys' feature,
-			# and once by the 'speak typed characters' feature
+			# This is to avoid them from being reported twice: once by the 'speak command keys' feature,
+			# and once to announce that the state has changed.
 			return False
 		return not self.isCharacter
 
