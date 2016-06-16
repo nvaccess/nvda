@@ -252,7 +252,11 @@ class JAB(Window):
 				keyList.append(keyLabels.localizedKeyLabels['control'])
 			if binding.modifiers&JABHandler.ACCESSIBLE_SHIFT_KEYSTROKE:
 				keyList.append(keyLabels.localizedKeyLabels['shift'])
-			keyList.append(binding.character)
+			# Fxx keys have special encoding: character contains 1-24
+			if binding.modifiers&JABHandler.ACCESSIBLE_FKEY_KEYSTROKE:
+				keyList.append("F" + str(ord(binding.character)))
+			else:
+				keyList.append(binding.character)
 		shortcutsList.append("+".join(keyList))
 		return ", ".join(shortcutsList)
 
