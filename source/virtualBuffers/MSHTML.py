@@ -122,7 +122,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
 			states.discard(controlTypes.STATE_UNAVAILABLE)
-		ariaRoles.append(aria.htmlNodeNameToAriaLandmarkRoles.get(nodeName.lower()))
+		lRole = aria.htmlNodeNameToAriaLandmarkRoles.get(nodeName.lower())
+		if lRole:
+			ariaRoles.append(lRole)
 		# Get the first landmark role, if any.
 		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
