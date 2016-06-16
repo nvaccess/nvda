@@ -240,7 +240,7 @@ class AddonsDialog(wx.Dialog):
 		self.Destroy()
 		if self.needsRestart:
 			# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed. 
-			if gui.messageBox(_("Add-ons have been added, enabled/disabled or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
+			if gui.messageBox(_("Add-ons have been added, enabled, disabled or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:
@@ -278,7 +278,7 @@ Description: {description}
 		shouldDisable = self._shouldDisable(addon)
 		if shouldDisable:
 			# Translators: Presented when attempting to disable the selected add-on.
-			if gui.messageBox(_("You are about to disable the selected add-on. Once disabled, you need to enable this add-on from add-ons manager to use add-on features. Are you sure you wish to continue and disable this add-on?"),
+			if gui.messageBox(_("You are about to disable the selected add-on. If you need to use features provided by this add-on, you need to enable this add-on from add-ons manager. Are you sure you wish to continue and disable this add-on?"),
 				# Translators: Title for message asking if the user really wishes to remove the selected Addon.
 				_("Disable Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
 		# Counterintuitive, but makes sense when context is taken into account.
