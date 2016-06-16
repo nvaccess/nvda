@@ -107,7 +107,6 @@ def disableAddonsIfAny():
 	global _disabledAddons
 	if "pendingDisableSet" not in state:
 		state["pendingDisableSet"] = set()
-	# Todo (later): receive list of additional add-ons to be disabled from the command line.
 	_disabledAddons |= state["pendingDisableSet"]
 	state["pendingDisableSet"].clear()
 
