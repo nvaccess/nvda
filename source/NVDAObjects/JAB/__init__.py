@@ -246,7 +246,12 @@ class JAB(Window):
 				continue
 			keyList=[]
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
-			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.ROLE_MENUITEM):
+			altModifier = binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE
+			if not altModifier:
+				if not binding.modifiers and self.role!=controlTypes.ROLE_MENUITEM:
+					parent=self.parent
+					altModifier=isinstance(parent,JAB) and parent.role==controlTypes.ROLE_MENUBAR
+			if altModifier:
 				keyList.append(keyLabels.localizedKeyLabels['alt'])
 			if binding.modifiers&JABHandler.ACCESSIBLE_CONTROL_KEYSTROKE:
 				keyList.append(keyLabels.localizedKeyLabels['control'])
