@@ -451,6 +451,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		mathMl=mathPres.getMathMlFromTextInfo(self)
 		if mathMl:
 			return mathPres.interactWithMathMl(mathMl)
+		newRng=self._rangeObj
+		newRng.End=newRng.End+1
+		if newRng.InlineShapes[1].Type==wdInlineShapeChart:
+			return eventHandler.queueEvent('gainFocus',WordChart(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordChartObject=self._rangeObj.InlineShapes[1].Chart))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -1650,7 +1654,7 @@ class WordChartSeriesTrendline(WordChart):
 		return output
 
 	def _get_role(self):
-		return controlTypes.ROLE_UNKNOWN
+		return controlTypes.ROLE_CHARTELEMENT
 
 	def invokeTrendline(self, trendlineIndex):
 		obj=WordChartSeriesTrendline(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, trendlineIndex=trendlineIndex)
@@ -1720,7 +1724,7 @@ class WordChartElement(WordChart):
 		return _("Chart Elements")
 
 	def _get_role(self):
-		return controlTypes.ROLE_UNKNOWN
+		return controlTypes.ROLE_CHARTELEMENT
 
 	def focusChartElement(self, key):
 		if 'Axis' in key:
@@ -1864,7 +1868,7 @@ class WordChartSeries(WordChart):
 		return seriesText
 
 	def _get_role(self):
-		return controlTypes.ROLE_UNKNOWN
+		return controlTypes.ROLE_CHARTELEMENT
 
 	def getPointIndex(self, direction):
 		if self.pointsCount > 1:
@@ -1966,7 +1970,7 @@ class WordChartPoint(WordChartSeries):
 		return output
 
 	def _get_role(self):
-		return controlTypes.ROLE_UNKNOWN
+		return controlTypes.ROLE_CHARTELEMENT
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
