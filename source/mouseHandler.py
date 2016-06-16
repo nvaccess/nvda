@@ -20,6 +20,7 @@ import winInputHook
 import core
 import ui
 from math import floor
+import screenExplorer
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -48,37 +49,6 @@ def updateMouseShape(name):
 		# Delay reporting to avoid unnecessary/excessive verbosity.
 		_shapeTimer.Stop()
 		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
-
-def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBrightness=True,blurFactor=0):
-	""" play audio coordinates:
-	- left to right adjusting the volume between left and right speakers
-	- top to bottom adjusts the pitch of the sound
-	- brightness adjusts the volume of the sound
-	Coordinates (x, y) are absolute, and can be negative.
-	"""
-
-	# make relative to (0,0) and positive
-	x = x - screenMinPos.x
-	y = y - screenMinPos.y
-
-	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
-	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
-	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
-	if detectBrightness:
-		startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
-		startY=min(max(y-blurFactor,0),screenHeight)+screenMinPos.y
-		width=min(blurFactor+1,screenWidth)
-		height=min(blurFactor+1,screenHeight)
-		grey=screenBitmap.rgbPixelBrightness(scrBmpObj.captureImage( startX, startY, width, height)[0][0])
-		brightness=grey/255.0
-		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
-		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
-		brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
-	else:
-		brightness=config.conf['mouse']['audioCoordinates_maxVolume']
-	leftVolume=int((85*((screenWidth-float(x))/screenWidth))*brightness)
-	rightVolume=int((85*(float(x)/screenWidth))*brightness)
-	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
 
 #Internal mouse event
 
@@ -167,10 +137,7 @@ def executeMouseMoveEvent(x,y):
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
 
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
-			config.conf['mouse']['audioCoordinates_detectBrightness'],
-			config.conf['mouse']['audioCoordinates_blurFactor'])
-
+		screenExplorer.playLocationCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
 	oldMouseObject=api.getMouseObject()
 	mouseObject=desktopObject.objectFromPoint(x, y)
 	while mouseObject and mouseObject.beTransparentToMouse:
