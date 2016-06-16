@@ -255,6 +255,40 @@ class JAB(Window):
 			# Fxx keys have special encoding: character contains 1-24
 			if binding.modifiers&JABHandler.ACCESSIBLE_FKEY_KEYSTROKE:
 				keyList.append("F" + str(ord(binding.character)))
+			# Control keys have special encoding
+			elif binding.modifiers&JABHandler.ACCESSIBLE_CONTROLCODE_KEYSTROKE:
+				if ord(binding.character)==JABHandler.ACCESSIBLE_VK_BACK_SPACE:
+					keyList.append(keyLabels.localizedKeyLabels['backspace'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_DELETE:
+					keyList.append(keyLabels.localizedKeyLabels['delete'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_LEFT:
+					keyList.append(keyLabels.localizedKeyLabels['leftarrow'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_RIGHT:
+					keyList.append(keyLabels.localizedKeyLabels['rightarrow'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_UP:
+					keyList.append(keyLabels.localizedKeyLabels['uparrow'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_DOWN:
+					keyList.append(keyLabels.localizedKeyLabels['downarrow'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_HOME:
+					keyList.append(keyLabels.localizedKeyLabels['home'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_END:
+					keyList.append(keyLabels.localizedKeyLabels['end'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_INSERT:
+					keyList.append(keyLabels.localizedKeyLabels['insert'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_KP_LEFT:
+					keyList.append(keyLabels.localizedKeyLabels['numpad4'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_KP_RIGHT:
+					keyList.append(keyLabels.localizedKeyLabels['numpad6'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_KP_UP:
+					keyList.append(keyLabels.localizedKeyLabels['numpad8'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_KP_DOWN:
+					keyList.append(keyLabels.localizedKeyLabels['numpad2'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_PAGE_UP:
+					keyList.append(keyLabels.localizedKeyLabels['pageup'])
+				elif ord(binding.character)==JABHandler.ACCESSIBLE_VK_PAGE_DOWN:
+					keyList.append(keyLabels.localizedKeyLabels['pagedown'])
+				else:
+					continue
 			else:
 				keyList.append(binding.character)
 		shortcutsList.append("+".join(keyList))
