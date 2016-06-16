@@ -12,7 +12,6 @@ import _winreg
 import ctypes
 import ctypes.wintypes
 import os
-import osreplace
 import sys
 from cStringIO import StringIO
 import itertools
@@ -602,7 +601,7 @@ class ConfigManager(object):
 		if oldName.lower() != newName.lower() and os.path.isfile(newFn):
 			raise ValueError("A profile with the same name already exists: %s" % newName)
 
-		osreplace.replace(oldFn, newFn)
+		os.rename(oldFn, newFn)
 		# Update any associated triggers.
 		allTriggers = self.triggersToProfiles
 		saveTrigs = False
