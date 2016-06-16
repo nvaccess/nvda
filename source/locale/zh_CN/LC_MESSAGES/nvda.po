@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 19:08+1000\n"
-"PO-Revision-Date: 2016-01-13 15:45+0800\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-12 11:29+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -83,6 +83,7 @@ msgid "unknown input method"
 msgstr "未知输入法"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{layout} - {language}"
 
@@ -125,17 +126,17 @@ msgid "region"
 msgstr "区域"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
 msgstr "不闪避"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
 msgstr "输出语音和声音时闪避"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-#. See the Audio Ducking Mode section of the User Gide for details.
+#. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
 msgstr "总是闪避"
 
@@ -323,6 +324,11 @@ msgstr "爱尔兰语二级点字"
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "古吉拉特语一级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Koine Greek"
+msgstr "柠檬绿"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -715,6 +721,7 @@ msgstr "没有%s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "，{total}之{number}项"
 
@@ -763,10 +770,11 @@ msgstr "盲文点"
 msgid "space"
 msgstr "空格"
 
-msgid "focus mode"
+msgid "Focus mode"
 msgstr "焦点模式"
 
-msgid "browse mode"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
 msgstr "浏览模式"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
@@ -795,7 +803,7 @@ msgid "Lists various types of elements in this document"
 msgstr "在此文档中列举了各种类型的元素。"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+msgid "Activates the current object in the document"
 msgstr "激活文档中的当前对象"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1299,7 +1307,8 @@ msgstr "移到元素的开始处，例如列表或表格。"
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
 msgstr "底部"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -1329,7 +1338,7 @@ msgstr "全部"
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "character"
-msgstr "标点字符级别"
+msgstr "逐字移动"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
@@ -2581,13 +2590,11 @@ msgstr "背景色"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "上标"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "下标"
 
@@ -2859,11 +2866,11 @@ msgid ""
 msgstr "从光标处向上查找您之前键入的文本"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
+msgid "No selection"
 msgstr "没有选择文本"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+msgid "Copied to clipboard"
 msgstr "复制到剪贴板"
 
 #. Translators: The name of a category of NVDA commands.
@@ -2932,11 +2939,11 @@ msgstr "在音频闪避模式之间切换，以确定何时减小其他声音的
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr "输入帮助开"
+msgstr "开启输入帮助"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr "输入帮助关"
+msgstr "关闭输入帮助"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -2946,11 +2953,11 @@ msgstr "切换输入帮助的开关，当开关打开时，按下按键会读出
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr "睡眠模式关"
+msgstr "关闭睡眠模式"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "睡眠模式开"
+msgstr "打开睡眠模式"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
@@ -2963,7 +2970,7 @@ msgid ""
 msgstr "读出系统焦点所在行的内容，连按两次则拼读这一行。"
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+msgid "Left click"
 msgstr "单击"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2971,7 +2978,7 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "在鼠标所在位置，单击鼠标左键一次。"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+msgid "Right click"
 msgstr "右击"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2979,28 +2986,32 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "在鼠标所在位置，单击鼠标右键一次。"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
-msgstr "鼠标左键松开"
+msgid "Left mouse button unlock"
+msgstr "松开鼠标左键"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "鼠标左键按下"
+msgid "Left mouse button lock"
+msgstr "按下鼠标左键"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "按下或松开鼠标左键"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr "鼠标右键松开"
+msgid "Right mouse button unlock"
+msgstr "松开鼠标右键"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "鼠标右键按下"
+msgid "Right mouse button lock"
+msgstr "按下鼠标右键"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "按下或松开鼠标右键"
+
+#, python-format
+msgid "Selected %s"
+msgstr "%s，已选择"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3036,11 +3047,11 @@ msgstr "切换到上一个可用的语音控制选项"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "读出输入字符关"
+msgstr "不读输入字符"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "读出输入字符开"
+msgstr "读出输入字符"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
@@ -3048,11 +3059,11 @@ msgstr "切换“读出输入字符”的开关"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "读出输入单词关"
+msgstr "不读输入单词"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "读出输入单词开"
+msgstr "读出输入单词"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
@@ -3060,11 +3071,11 @@ msgstr "切换“读出输入单词”的开关"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "读出 NVDA 快捷键关"
+msgstr "不读 NVDA 快捷键"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "读出 NVDA 快捷键开"
+msgstr "读出 NVDA 快捷键"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -3074,11 +3085,11 @@ msgstr "切换“读出 NVDA 快捷键”的开关（不包含字符）。"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "朗读字体名称关"
+msgstr "不读字体名称"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "朗读字体名称开"
+msgstr "读出字体名称"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -3086,11 +3097,11 @@ msgstr "切换字体更改朗读的开关"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "朗读字体大小关"
+msgstr "不读字体大小"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "朗读字体大小开"
+msgstr "读出字体大小"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -3098,11 +3109,11 @@ msgstr "切换字体大小修改朗读的开关"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "朗读字体属性关"
+msgstr "不读字体属性"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "朗读字体属性开"
+msgstr "读出字体属性"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
@@ -3110,11 +3121,11 @@ msgstr "切换字体属性朗读的开关"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "朗读编辑者修订关"
+msgstr "不读编辑者修订"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "朗读编辑者修订开"
+msgstr "读出编辑者修订"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -3122,11 +3133,11 @@ msgstr "切换编辑者修订朗读的开关"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "朗读标注关"
+msgstr "不读标注"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "朗读标注开"
+msgstr "读出标注"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
@@ -3134,11 +3145,11 @@ msgstr "切换标注朗读的开关"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
-msgstr "朗读颜色关"
+msgstr "不读颜色"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "朗读颜色开"
+msgstr "读出颜色"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3146,11 +3157,11 @@ msgstr "切换颜色朗读的开关"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "朗读对齐方式关"
+msgstr "不读对齐方式"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "朗读对齐方式开"
+msgstr "读出对齐方式"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
@@ -3158,11 +3169,11 @@ msgstr "切换对齐方式朗读的开关"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "朗读文本样式关"
+msgstr "不读文本样式"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "朗读文本样式开"
+msgstr "读出文本样式"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3170,23 +3181,35 @@ msgstr "切换文本样式朗读的开关"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "朗读拼写错误关"
+msgstr "不读拼写错误"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "朗读拼写错误开"
+msgstr "读出拼写错误"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "切换拼写错误朗读的开关"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "不读语法错误"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "读出语法错误"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "切换语法错误朗读的开关"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "朗读页码关"
+msgstr "不读页码"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "朗读页码开"
+msgstr "读出页码"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -3194,11 +3217,11 @@ msgstr "切换页码朗读的开关"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "朗读行号关"
+msgstr "不读行号"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "朗读行号开"
+msgstr "读出行号"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
@@ -3206,11 +3229,11 @@ msgstr "切换行号朗读的开关"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "朗读缩进关"
+msgstr "不读缩进"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "朗读缩进开"
+msgstr "读出缩进"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
@@ -3218,11 +3241,11 @@ msgstr "切换缩进朗读的开关"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "朗读段落缩进关"
+msgstr "不读段落缩进"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "朗读段落缩进开"
+msgstr "读出段落缩进"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -3230,11 +3253,11 @@ msgstr "切换段落缩进朗读的开关"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "朗读表格关"
+msgstr "不读表格"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "朗读表格开"
+msgstr "读出表格"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
@@ -3242,11 +3265,11 @@ msgstr "切换表格朗读的开关"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "朗读表格的行、列标题关"
+msgstr "不读表格的行列标题"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "朗读表格的行、列标题开"
+msgstr "读出表格的行列标题"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
@@ -3254,11 +3277,11 @@ msgstr "切换表格的行列标题朗读的开关"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "朗读表格的单元坐标关"
+msgstr "不读表格的单元坐标"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "朗读表格的单元坐标开"
+msgstr "读出表格的单元坐标"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3266,11 +3289,11 @@ msgstr "切换表格单元坐标朗读的开关"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "朗读链接关"
+msgstr "不读链接"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "朗读链接开"
+msgstr "读出链接"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3278,11 +3301,11 @@ msgstr "切换链接朗读的开关"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "朗读注释关"
+msgstr "不读注释"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "朗读注释开"
+msgstr "读出注释"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
@@ -3290,11 +3313,11 @@ msgstr "切换注释朗读的开关"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "朗读列表关"
+msgstr "不读列表"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "朗读列表开"
+msgstr "读出列表"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -3302,11 +3325,11 @@ msgstr "切换列表朗读的开关"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "朗读标题关"
+msgstr "不读标题"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "朗读标题开"
+msgstr "读出标题"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
@@ -3314,11 +3337,11 @@ msgstr "切换标题朗读的开关"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "朗读引用区关"
+msgstr "不读引用区"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "朗读引用区开"
+msgstr "读出引用区"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
@@ -3326,11 +3349,11 @@ msgstr "切换引用区朗读的开关"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "朗读路标关"
+msgstr "不读路标"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "朗读路标开"
+msgstr "读出路标"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -3338,11 +3361,11 @@ msgstr "切换路标朗读的开关"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "朗读框架关"
+msgstr "不读框架"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "朗读框架开"
+msgstr "读出框架"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
@@ -3350,11 +3373,11 @@ msgstr "切换框架朗读的开关"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "朗读可点击关"
+msgstr "不读可点击"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "朗读可点击开"
+msgstr "读出可点击"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3364,7 +3387,7 @@ msgstr "切换可点击朗读的开关"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
+msgid "Symbol level %s"
 msgstr "符号级别为%s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
@@ -3373,7 +3396,7 @@ msgid ""
 msgstr "循环切换语音符号级别，已确定朗读哪些符号。"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+msgid "Object has no location"
 msgstr "找不到对象的所在位置"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3416,7 +3439,7 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+msgid "No navigator object"
 msgstr "没有浏览对象"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3444,7 +3467,7 @@ msgid ""
 msgstr "朗读浏览光标下文本或对象的位置信息，连按两次获取更详细的信息。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
+msgid "Move to focus"
 msgstr "移动到焦点"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
@@ -3457,20 +3480,20 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
+msgid "No focus"
 msgstr "没有焦点"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
+msgid "Move focus"
 msgstr "移动焦点"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
+msgid "No caret"
 msgstr "没有输入焦点"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr "按一次设置键盘焦点到浏览对象，按两次设置系统输入焦点到浏览光标位置。"
 
@@ -3483,6 +3506,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "移动导航对象到此对象的父对象"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "往后没有对象"
 
@@ -3491,6 +3515,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "移动导航对象到下一个对象"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "往前没有对象"
 
@@ -3507,7 +3532,7 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "移动到此父对象的首个子对象"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
+msgid "Activate"
 msgstr "激活"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
@@ -3521,7 +3546,7 @@ msgid ""
 msgstr "执行当前浏览对象的默认动作，例如，若该对象为按钮则按下该按钮。"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+msgid "Top"
 msgstr "顶端"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3577,7 +3602,8 @@ msgid ""
 "speaks it"
 msgstr "将浏览光标移动到当前查看对象的后一个单词，并将其读出。"
 
-msgid "left"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
 msgstr "左"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
@@ -3602,7 +3628,8 @@ msgstr ""
 "读出当前查看对象光标所在位置的字符，连按两次解释该字符，连续按三次则读出该字"
 "符的十进制和十六进制代码。"
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
 msgstr "右"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3618,15 +3645,15 @@ msgid ""
 msgstr "将浏览光标移动到正在查看对象行尾的字符，并将其读出。"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
+msgid "Speech mode off"
 msgstr "声音模式 关"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+msgid "Speech mode beeps"
 msgstr "声音模式 提示音"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+msgid "Speech mode talk"
 msgstr "声音模式 朗读"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3663,13 +3690,13 @@ msgstr "显示 NVDA 菜单"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr "从浏览光标的位置朗读到文本末端的同时，焦点随之移动。"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr "从输入焦点的位置朗读到文本末端的同时，输入焦点随之移动。"
 
@@ -3677,14 +3704,20 @@ msgstr "从输入焦点的位置朗读到文本末端的同时，输入焦点随
 msgid "No formatting information"
 msgstr "没有格式信息"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "格式信息"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "读出当前文档中浏览光标所在位置的格式信息"
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"读出当前文档中浏览光标所在位置的格式信息，连按两次可使用浏览模式查看格式信"
+"息。"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr "朗读有焦点的对象，连按两次拼读信息"
 
 #. Translators: Reported when there is no status line for the current program or window.
@@ -3693,7 +3726,7 @@ msgstr "没有状态栏"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr "读出当前应用程序的状态栏，并将浏览光标移至该处，连按两次拼读该信息"
 
@@ -3710,7 +3743,7 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "开关鼠标移动时的信息朗读。"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+msgid "No title"
 msgstr "无标题"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3722,7 +3755,7 @@ msgstr ""
 "读出前景窗口或应用程序的标题。连按两次拼读标题，连按三次则复制标题到剪贴板。"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+msgid "Speaks the current foreground object"
 msgstr "读出当前的前景对象"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3732,19 +3765,19 @@ msgid ""
 msgstr "打开日志查看器并记录当前对象的信息，此信息可供程序员 开发时参考。"
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+msgid "No progress bar updates"
 msgstr "无"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+msgid "Speak progress bar updates"
 msgstr "朗读进度栏更新"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+msgid "Beep for progress bar updates"
 msgstr "用提示音表示进度栏更新"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+msgid "Beep and speak progress bar updates"
 msgstr "朗读并已提示音表示进度栏更新"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3757,25 +3790,25 @@ msgstr ""
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "朗读动态内容变化关"
+msgstr "不读动态内容更新"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "朗读动态内容变化开"
+msgstr "读出动态内容更新"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
-msgstr "切换是否朗读动态内容的变化，例如MS-DOS 提示符窗口内的文本。"
+msgstr "切换是否朗读动态内容的更新，例如MS-DOS 提示符窗口内的文本。"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "浏览光标随输入焦点移动关"
+msgstr "关闭浏览光标随输入焦点移动"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "浏览光标随输入焦点移动开"
+msgstr "打开浏览光标随输入焦点移动"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
@@ -3784,11 +3817,11 @@ msgstr "切换是否允许浏览光标跟随输入焦点移动"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "浏览光标随系统焦点移动关"
+msgstr "关闭浏览光标随系统焦点移动"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "浏览光标随系统焦点移动开"
+msgstr "打开浏览光标随系统焦点移动"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
@@ -3796,7 +3829,7 @@ msgid ""
 msgstr "切换是否允许浏览光标跟随系统焦点移动"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+msgid "No system battery"
 msgstr "没有系统电池"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3809,11 +3842,12 @@ msgid "AC power on"
 msgstr "交流电源已接通"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "剩余{hours:d}小时和{minutes:d}分钟"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "读出电池状态和可用时间（若没有连接交流电源）。"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -4070,19 +4104,11 @@ msgstr ""
 "在不重新启动 NVDA 的情况下，重新加载应用程序模块和全局插件，此功能对于程序开"
 "发者很有用。"
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "往后没有对象"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "移动导航对象到此层级的下一个对象"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "向前没有对象"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4096,8 +4122,8 @@ msgid "%s mode"
 msgstr "%s模式"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
-msgstr "在可用的触摸模式之间循环"
+msgid "Cycles between available touch modes"
+msgstr "在可用的触摸模式之间循环切换"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4129,10 +4155,6 @@ msgstr "模拟系统按键"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "杂项"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "浏览模式"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4336,55 +4358,55 @@ msgstr "滚动锁定"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "数字键盘 4"
+msgstr "小键盘 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "数字键盘 6"
+msgstr "小键盘 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "数字键盘 8"
+msgstr "小键盘 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "数字键盘 2"
+msgstr "小键盘 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "数字键盘 9"
+msgstr "小键盘 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "数字键盘 3"
+msgstr "小键盘 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "数字键盘 1"
+msgstr "小键盘 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "数字键盘 7"
+msgstr "小键盘 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "数字键盘 5"
+msgstr "小键盘 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
-msgstr "数字键盘 斜杠"
+msgstr "小键盘 斜杠"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad multiply"
-msgstr "数字键盘 星号"
+msgstr "小键盘 星号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
-msgstr "数字键盘 减号"
+msgstr "小键盘 减号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
-msgstr "数字键盘 加号"
+msgstr "小键盘 加号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
@@ -4600,17 +4622,17 @@ msgstr "%d 个字符"
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
 msgid "%s selected"
-msgstr "%s 已选择"
+msgstr "%s，已选择"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
 msgid "%s unselected"
-msgstr "%s 未选择"
+msgstr "%s,未选择"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
 msgid "%s selected instead"
-msgstr "%s作为覆盖选择"
+msgstr "%s,作为覆盖选择"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4620,11 +4642,6 @@ msgstr "移除所选"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "拖拽完成"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "%s级"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -4637,6 +4654,7 @@ msgid "column %s"
 msgstr "列%s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "{rowCount}行{columnCount}列"
 
@@ -4649,6 +4667,11 @@ msgstr "%s列"
 #, python-format
 msgid "with %s rows"
 msgstr "%s行"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "%s级"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4683,21 +4706,36 @@ msgstr "样式 %s"
 msgid "default style"
 msgstr "默认样式"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} 到 {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "文字顏色：{color}，背景顏色：{backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "文字顏色：{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "背景顏色：{backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "背景样式{pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4787,7 +4825,6 @@ msgstr "没有加下划线"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "基准线"
 
@@ -4889,11 +4926,20 @@ msgstr "拼写错误"
 msgid "out of spelling error"
 msgstr "离开拼写错误"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "语法错误"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "离开语法错误"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "离开表格"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "{columnCount}列{rowCount}行"
 
@@ -4970,22 +5016,27 @@ msgid "object mode"
 msgstr "对象模式"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "{action}一次"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "{action}两次"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action}三次"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "{action}四次"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers}指{action}"
 
@@ -5039,6 +5090,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "抬起"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA 消息"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "正在检查更新"
@@ -5063,6 +5118,7 @@ msgstr "NVDA 更新"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "NVDA 新版本 {version} 可用。"
 
@@ -5154,9 +5210,11 @@ msgstr "无视觉桌面访问"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "一套自由且开放源代码的 Microsoft Windows 屏幕阅读软件"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "版权归 (C) {years} 与 NVDA 贡献者所有"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5196,6 +5254,7 @@ msgstr ""
 "位于 NVDA 主菜单的“捐赠”菜单打开捐赠页面。"
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5204,6 +5263,7 @@ msgstr ""
 "您必须先运行 NVDA 以使插件可以顺利的安装。"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5213,16 +5273,18 @@ msgstr ""
 "{top:.1f}，宽度为百分之{width:.1f}，高度为百分之{height:.1f}"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
+msgid "Edge of table"
 msgstr "表格边缘"
 
 #. Translators: The description of an NVDA command.
@@ -5371,15 +5433,17 @@ msgid "Waiting for Outlook..."
 msgstr "正在等待OutLook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime}到{endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "日程{subject}，{time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
+msgid "Has appointment"
 msgstr "有日程"
 
 #. Translators: the email is a meeting request
@@ -5536,78 +5600,97 @@ msgid "Master Thumbnails"
 msgstr "主缩略图"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "幻灯片{slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "覆盖{otherShape}的左边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "被{otherShape}覆盖的左边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "覆盖{otherShape}上边的距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "被{otherShape}覆盖的上边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "覆盖{otherShape}的右边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "被{otherShape}覆盖的右边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "覆盖{otherShape}的底边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "被{otherShape}覆盖的底边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "覆盖着{otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "被{otherShape}覆盖"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "与幻灯片左边的距离为{distance:.3g}磅"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "幻灯片左边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "与幻灯片上边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "幻灯片上边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "与幻灯片右边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "幻灯片右边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "与幻灯片底边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "幻灯片底边的超出距离为{distance:.3g}磅"
 
@@ -5621,10 +5704,12 @@ msgstr ""
 "NVDA 的阅读。"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "幻灯片显示注视 - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "{slideName} - 幻灯片"
 
@@ -5675,6 +5760,12 @@ msgstr "停止"
 msgid "Record"
 msgstr "录音"
 
+msgid "left"
+msgstr "左"
+
+msgid "right"
+msgstr "右"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -5707,6 +5798,7 @@ msgstr "Baum/HumanWare/APH 点显器"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "系列: {portName}"
 
@@ -5940,12 +6032,12 @@ msgid "Python console"
 msgstr "Python 控制台(&P)"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "插件管理器(&A)"
+msgid "Manage &add-ons..."
+msgstr "插件管理器(&A)..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
-msgstr "创建便携版本(&C)"
+msgid "Create portable copy..."
+msgstr "创建便携版本(&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -5983,8 +6075,8 @@ msgid "C&ontributors"
 msgstr "贡献者名单(&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "欢迎窗口(&L)"
+msgid "We&lcome dialog..."
+msgstr "欢迎对话框(&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6176,6 +6268,7 @@ msgid "Choose Add-on Package File"
 msgstr "选择 Add-on 文件包"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA 插件包 (*.{ext})"
 
@@ -6187,6 +6280,7 @@ msgid ""
 msgstr "无法打开 add-on 文件！ %s 文件丢失或者格式错误。"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6255,6 +6349,7 @@ msgid "Restart NVDA"
 msgstr "重新启动 NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6267,6 +6362,7 @@ msgstr ""
 "描述: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "网址: {url}"
 
@@ -6519,6 +6615,7 @@ msgid ""
 msgstr "在系统中找到一个 NVDA 的先前版本。此版本将被更新。"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6632,6 +6729,10 @@ msgstr "NVDA 日志查看器"
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
 msgstr "刷新(\tF5)"
+
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "另存为(&A)...\tCtrl+S"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
@@ -6900,6 +7001,11 @@ msgstr "若“大小写锁定”键打开，输入小写字母时发出提示音
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "读出 NVDA 快捷键(&K)"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "输入时播放拼写错误提示音"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7178,6 +7284,11 @@ msgstr "朗读拼写错误(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "朗读语法错误(&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "朗读页码(&P)"
 
@@ -7441,6 +7552,7 @@ msgstr "过滤字符(&F):"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7479,10 +7591,12 @@ msgid "word"
 msgstr "单词"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "像素坐标 {x}， {y}"
 
@@ -7499,12 +7613,12 @@ msgid "Refreshes the document content"
 msgstr "刷新文档内容"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "使用屏幕布局 开"
+msgid "Use screen layout on"
+msgstr "打开屏幕布局 "
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "使用屏幕布局 关"
+msgid "Use screen layout off"
+msgstr "关闭屏幕布局 "
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
@@ -7538,6 +7652,7 @@ msgid "Taskbar"
 msgstr "任务栏"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 
@@ -7560,6 +7675,114 @@ msgstr "默认颜色"
 #. Translators: The background color cannot be detected.
 msgid "Unknown color"
 msgstr "未知颜色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "自动"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "检查器"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "交叉线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "向下对角线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "暗16"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "暗25"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "暗50"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "暗75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "暗8"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "数据网格"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "水平线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "浅色下对角线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "浅色水平线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "浅色上对角线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "浅色垂直线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "无"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "半黑文75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "原色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "上对角线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "垂直线"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "线性渐变"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "矩形渐变"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
@@ -7590,6 +7813,7 @@ msgid "&Sheets"
 msgstr "表格(&S)"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start}到{end}"
 
@@ -7603,18 +7827,22 @@ msgid ""
 msgstr "无法设置标题。请在“文档格式”对话框起用“读出表格序号”选项。"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "设置{address}为列标题的开始单元"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address}已被设置成列标题的开始单元"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+#, python-brace-format
+msgid "Removed {address}    from column headers"
 msgstr "{address}已从列标题中移除"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "无法再列标题找到{address}"
 
@@ -7627,18 +7855,22 @@ msgstr ""
 "域，连按两次清除此单元的列标题设置。"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "设置{address} 为航标题开始单元"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address}已被设置成行标题开始单元"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+#, python-brace-format
+msgid "Removed {address}    from row headers"
 msgstr "从行标题中删除{address}"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "在行标题未找到{address}    "
 
@@ -7650,9 +7882,11 @@ msgstr ""
 "按一次设置此单元格为第一个行标题单元，包括其右方和下方的单元在内都属于此区"
 "域，连按两次清除此单元的行标题设置。"
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "输入消息为{title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "输入的消息为{message}"
 
@@ -7665,12 +7899,14 @@ msgid "Reports the comment on the current cell"
 msgstr "读出当前单元的注释"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "正在编辑单元{address}的注释"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
-msgstr "{firstAddress} {firstContent}到{lastAddress} {lastContent}"
+msgstr "{lastAddress} {lastContent}到{firstAddress} {firstContent}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8023,6 +8259,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "没有标记的带直线散点图"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "图表标题： {chartTitle}， 类型： {chartType}"
 
@@ -8050,6 +8287,7 @@ msgstr "系列"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName}的轴是 {axisTitle}"
 
@@ -8063,6 +8301,7 @@ msgid "There are total %d series in this chart"
 msgstr "在这个图表总共有%d 个系列"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "系列 {number} {name}"
 
@@ -8087,6 +8326,7 @@ msgstr "数据点"
 msgid "item"
 msgstr "项目"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "系列颜色： {colorName} "
 
@@ -8176,51 +8416,61 @@ msgstr "主石形状"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} 系列{seriesCount}的{seriesIndex}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "没有对点{previousIndex}进行修改"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "从点{previousIndex}增加{incrementValue}，"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "从点{previousIndex}减小{decrementValue}"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}："
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "类别{categoryAxisData}："
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "值{valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr "分数{fractionValue:.2f}百分比 扇区 {pointCount}的{pointIndex}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr "{segmentType} {pointCount}的{pointIndex}"
 
@@ -8233,10 +8483,12 @@ msgid "Secondary"
 msgstr "次要组"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "图表轴，类型：{axisType}，组：{axisGroup}，标题：{axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "图表轴，类型：{axisType}，组：{axisGroup}"
 
@@ -8254,6 +8506,7 @@ msgid " squared "
 msgstr "平方"
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "图表标题：{chartTitle}"
 
@@ -8262,6 +8515,7 @@ msgid "Untitled chart"
 msgstr "无标题图表"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8274,6 +8528,7 @@ msgid "Chart area "
 msgstr "图表区域"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8297,12 +8552,14 @@ msgstr "没有图例"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "系列{seriesName}的图例条目{seriesCount}的{seriesIndex} "
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "系列{seriesName}的图例项标示{seriesCount}的{seriesIndex}"
 
@@ -8404,35 +8661,32 @@ msgstr "主要页首"
 msgid "Text frame"
 msgstr "文本框"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "评论: 由 {author} 在 {date} {text} "
 
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} by {author} on {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g个字符"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g 磅"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "设置行{rowNumber}列{columnNumber}为列标题的开始点"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "行{rowNumber}列{columnNumber}已被设置成列标题的开始单元"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "行{rowNumber}列{columnNumber}已从列标题中移除"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "无法再列标题找到行{rowNumber}列{columnNumber}"
 
@@ -8445,19 +8699,23 @@ msgstr ""
 "两次清除此设置。"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "行{rowNumber}列{columnNumber}作为行标题的开始单元"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "行{rowNumber}列{columnNumber}已设置为行标题的开始单元"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "行{rowNumber}列{columnNumber}已从行标题中移除"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "无法在行标题中找到行{rowNumber}列{columnNumber}"
 
@@ -8470,27 +8728,27 @@ msgstr ""
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
-msgstr "黑体开"
+msgstr "打开黑体"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold off"
-msgstr "黑体关"
+msgstr "关闭黑体"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic on"
-msgstr "斜体开"
+msgstr "打开斜体"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic off"
-msgstr "斜体关"
+msgstr "关闭斜体"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Underline on"
-msgstr "下划线开"
+msgstr "打开下划线"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Underline off"
-msgstr "下划线关"
+msgstr "关闭下划线"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -8508,42 +8766,62 @@ msgstr "右对齐"
 msgid "Justified"
 msgstr "段落重排"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "上标"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "下标"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "基准线"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} 样式，大纲级别{outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} 磅字体"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g}个字符"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} 英寸"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} 厘米"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} 毫米"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} 磅"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 十二点活字"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "没有注释"
+msgid "No comments"
+msgstr "没有注释。"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8553,9 +8831,6 @@ msgstr "朗读系统输入焦点所在的注释文本。"
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "不在表格中"
-
-msgid "Edge of table"
-msgstr "表格边缘"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8569,6 +8844,30 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "browse mode"
+#~ msgstr "浏览模式"
+
+#~ msgid "activate"
+#~ msgstr "激活"
+
+#~ msgid "no next"
+#~ msgstr "往后没有对象"
+
+#~ msgid "no previous"
+#~ msgstr "向前没有对象"
+
+#~ msgid "edge of table"
+#~ msgstr "表格边缘"
+
+#~ msgid "%g characters"
+#~ msgstr "%g个字符"
+
+#~ msgid "%g pt"
+#~ msgstr "%g 磅"
+
+#~ msgid "no comments"
+#~ msgstr "没有注释"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"
@@ -8605,10 +8904,6 @@ msgstr "HIMS SyncBraille"
 #, fuzzy
 #~ msgid "%s"
 #~ msgstr "%s级标题"
-
-#, fuzzy
-#~ msgid "none"
-#~ msgstr "无"
 
 #~ msgid "equation"
 #~ msgstr "公式"

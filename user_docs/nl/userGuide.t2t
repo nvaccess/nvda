@@ -37,7 +37,7 @@ Behalve de Engelse versie van NVDA is het programma beschikbaar in 47 talen, waa
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal  als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
 
-De gratis, open source spraakmodule eSpeak [eSpeak http://espeak.sourceforge.net/], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen. 
+De gratis, open source spraakmodule [eSpeak NG https://github.com/espeak-ng/espeak-ng], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen. 
 
 Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden onder [Ondersteunde spraaksynthesizers#SupportedSpeechSynths].
 
@@ -302,7 +302,7 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 | Ga een rij omlaag | control+alt+pijl omlaag | Verplaatst de tekstcursor een rij omlaag(van dezelfde kolom) |
 %kc:endInclude
 
-++ Objectnavigatie ++
+++ Objectnavigatie ++[ObjectNavigation]
 U zult meestal met applicaties werken door middel van de commando's voor het verplaatsen van de [focus #SystemFocus] en de [systeemcursor #SystemCaret].
 Soms kan het echter handig zijn om de huidige applicatie of het besturingssysteem te verkennen zonder de [focus #SystemFocus] of de systeemcursor #SystemCaret] te verplaatsen.
 Ook wilt u soms werken met [objecten #Objects] die niet te bedienen zijn met de TAB-toets van het toetsenbord.
@@ -375,7 +375,7 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+a | Veeg omlaag met 3 vingers (tekstmodus) | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt.  |
 | Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 | geen | Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
 | Tot leescursor kopiëren | NVDA+f10 | NVDA+f10 | geen | Het tekstgebied dat eerder met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 tot en met de huidige positie van de leescursor naar het klembord gekopieerd. |
-| Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt |
+| Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt. Bij tweemaal drukken krijgt u de informatie in bladermodus. |
 %kc:endInclude
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
@@ -445,7 +445,7 @@ Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet geb
 | naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | Verplaats het navigator object naar de muispositie |
 %kc:endInclude
 
-+ Bladermodus +
++ Bladermodus +[Bladermodus]
 In NVDA worden complexe alleen-lezen documenten zoals een webpagina weergegeven in bladermodus.
 Het gaat om documenten in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-berichten in Microsoft Outlook, Google Chrome, Adobe Reader en Adobe Flash.
 Bladermodus is ook optioneel beschikbaar voor Microsoft Word-documenten.
@@ -632,12 +632,12 @@ Evenals voor op het Web heeft NVDA een Elementenlijst voor Microsoft Excel, waar
 Om toegank te krijgen tot de Elementenlijst in Excel, drukt u op NVDA+f7.
 %kc:endInclude
 De volgende types informatie zijn in de Elementenlijst beschikbaar
-- Grafieken: Voor het weergeven van alle grafieken in de werkmap
+- Grafieken: Voor het weergeven van alle grafieken op het actieve werkblad
 Door een grafiek te selecteren en op enter of de knop Ga naar te  drukken krijgt de grafiek de focus voor navigatie en lezen met de pijltjestoetsen.
-- Opmerkingen: Voor het weergeven van cellen in de werkmap die opmerkingen  bevatten. 
+- Opmerkingen: Voor het weergeven van cellen op het actieve werkblad dat opmerkingen  bevat. 
 Het celadres samen met de opmerkingen erin worden voor elke cel weergegeven. 
 Door op Enter of de knop Ga Naar  te drukken wanneer u op een weergegeven opmerking staat, gaat u direct naar die cel.
-- Formules: Voor het weergeven van alle cellen in de werkmap waar een formule in staat. 
+- Formules: Voor het weergeven van alle cellen op het werkblad waar een formule in staat. 
 Het celadres samen met bijbehorende formule worden voor elke cel getoond.
 Door op Enter of de knop Ga Naar te drukken wanneer u zich op een weergegeven formule bevindt,  gaat u direct naar die cel. 
 - Bladen: Voor het weergeven van alle bladen in de werkmap. 
@@ -649,7 +649,7 @@ Een druk op de Enter- of de Ga Naar-knop terwijl u zich op een weergegeven blad 
 %kc:beginInclude
 Eventuele opmerkingen voor de momenteel gefocuseerde cel kunt u laten horen door NVDA+alt+c in te drukken.
 %kc:endInclude
-Alle opmerkingen voor de werkmap kunnen ook worden weergegeven in de NVDA Elementenlijst.
+Alle opmerkingen voor het werkblad kunnen ook worden weergegeven in de NVDA Elementenlijst.
 
 +++ Beveiligde Cellen Lezen +++
 Als een werkmap beveiligd is, kan het zijn dat bepaalde cellen  die niet mogen worden bewerkt, niet kunnen worden gefocuseerd.
@@ -786,7 +786,7 @@ Met de pijltoetsen kunt u alle keuzemogelijkheden beluisteren.
 Met pijl links en pijl omhoog gaat u naar het begin van de lijst en met pijl rechts en pijl omlaag naar het einde.
 
 ==== Variant ====
-Als u gebruik maakt van de eSpeak synthesizer, die standaard is opgenomen in NVDA, kunt u via een vervolgkeuzelijst een stemvariant kiezen.
+Als u gebruik maakt van de eSpeak NG synthesizer, die standaard is opgenomen in NVDA, kunt u via een vervolgkeuzelijst een stemvariant kiezen.
 Met de stemvarianten kunt u stemeigenschappen enigszins aanpassen.
 Er zijn varianten die als een mannen- of vrouwenstem klinken of zelfs als een kikker.
 
@@ -802,12 +802,12 @@ De schuifregelaar gaat van 0 tot 100 ( bij 0 klinkt de stem het laagst en op 100
 Met de schuifregelaar kunt u het volume van de stem instellen waarbij 0 het laagste en 100 het hoogste volume is. 
 
 ==== Intonatie ====
-Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak.
+Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak NG.
 
 ==== Automatisch van taal wisselen ====
 Met dit selectievakje bepaalt u of NVDA automatisch naar een andere spraaksynthesizertaal moet overschakelen als het te lezen document is voorzien van taalcodes, zoals NL voor Nederlands.
 Deze optie is standaard ingeschakeld.
-Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak synthesizer ondersteund.
+Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak NG synthesizer ondersteund.
 
 ==== Automatisch naar een andere variant van een taal  overschakelen ====
 Indien automatisch van taal wisselen is ingeschakeld, kan deze optie gebruikt worden om aan te geven dat ernaar een andere taalvariant  moet wordenovergeschakeld  in plaats van enkel taalwisselingen. Als een tekst bijvoorbeeld als Brits Engels is gemarkeerd zal de synthesizer een Britse variant van het Engels  gebruiken als deze optie is ingeschakeld.
@@ -847,7 +847,7 @@ De meeste synthesizers ondersteunen deze functionaliteit.
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
 +++ Synth settings ring +++[SynthSettingsRing]
-Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “rij/kolomkoppen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
+Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster , kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
 %kc:beginInclude
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Naar volgende synthesizerinstelling gaan | NVDA+control+pijl rechts | NVDA+shift+control+pijl rechts | Hiermee wordt steeds een volgende spraakinstelling gekozen. Na de laatst beschikbare instelling begint u weer vooraan enz. |
@@ -994,6 +994,10 @@ Toets: NVDA+4
 
 Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter.
 
+==== Geluid voor spelfouten afspelen tijdens typen ====
+Wanneer deze optie is ingeschakeld, zal er een kort zoemsignaal klinken als u een spelfout maakt in een woorrd dat u typt.
+Deze optie is alleen beschikbaar indien "Spelfouten melden"  is ingeschakeld in het dialoogvenster [Documentopmaak #DocumentFormattingSettings] van het instellingenmenu van NVDA.
++
 ==== Invoer van andere toepassingen beheren ====
 Met deze optie kan de gebruiker bepalen of invoer die afkomstig is van toepassingen zoals virtuele (scherm)toetsenborden of spraakherkenningssoftware door NVDA moet worden verwerkt. 
 Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die werken met het Unikey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders invoerfouten ontstaan. 
@@ -1194,6 +1198,7 @@ U kunt de vermelding laten horen van:
 - Nadruk
 - Tekststijl
 - Spelfouten
+- Grammaticale fouten
 - Paginanummers
 - Regelnummers
 - Regel inspringen
@@ -1467,22 +1472,22 @@ Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins o
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
 Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-De [eSpeak http://espeak.sourceforge.net/] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
-NVDA start standaard op met de eSpeak spraaksynthesizer.
-Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak synthesizer de ideale optie.
+++ eSpeak NG ++
+De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
+NVDA start standaard op met de eSpeak NG spraaksynthesizer.
+Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak NG synthesizer de ideale optie.
 
-Voor elk van de stemmen die in eSpeak is opgenomen, is een andere taal beschikbaar.
-Er worden meer dan 43 talen door eSpeak ondersteund.
+Voor elk van de stemmen die in eSpeak NG is opgenomen, is een andere taal beschikbaar.
+Er worden meer dan 43 talen door eSpeak NG ondersteund.
 
 De klank van de stemmen kan worden aangepast.
 
 ++ Microsoft Spraak API versie 4 (SAPI 4) ++
 Sapi 4 is een oudere Microsoft standaard voor softwarematige spraaksynthesizers.
-Op het internet zijn veel spraaksynthesizers te koop of gratis te downloaden die compatibel zijn met deze standaard.
-Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
+Voor gebruikers die reeds SAPI 4 synthesizers op hun systeem geïnstalleerd hebben, blijft NVDA deze ondersteunen.
+Microsoft ondersteunt deze standaard echter niet meer en de benodigde componenten worden door Microsoft niet langer beschikbaar gesteld.
 
-Als u Sapi 4 stemmen hebt geïnstalleerd maar de synthesizer hiervoor komt niet voor in de lijst  van beschikbare synthesizers van NVDA, kunt u de SAPI 4.0 runtime binaries installeren die te vinden zijn op http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
 
 ++ Microsoft Spraak API versie 5 (SAPI 5) ++
 Sapi 5 is een Microsoft standaard voor softwarematige spraaksynthesizers.

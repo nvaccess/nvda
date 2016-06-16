@@ -148,6 +148,7 @@ confspec = ConfigObj(StringIO(
 	speechInterruptForCharacters = boolean(default=true)
 	speechInterruptForEnter = boolean(default=true)
 	allowSkimReadingInSayAll = boolean(default=False)
+	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
 
 [virtualBuffers]
@@ -212,6 +213,7 @@ confspec = ConfigObj(StringIO(
 
 [debugLog]
 	hwIo = boolean(default=false)
+	audioDucking = boolean(default=false)
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)

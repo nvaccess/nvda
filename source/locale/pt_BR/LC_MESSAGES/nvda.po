@@ -5,11 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
-"PO-Revision-Date: 2016-02-04 21:52-0300\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-11 16:08-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clcaul@live.com>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
-"<clcaul@live.com>\n"
+"<clever97@gmail.com>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -133,17 +133,17 @@ msgstr "região"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "Não diminuir"
+msgstr "Não reduzir"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Diminuir ao reproduzir fala e sons"
+msgstr "Reduzir ao reproduzir fala e sons"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
-msgstr "Sempre diminuir"
+msgstr "Sempre reduzir"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -329,6 +329,11 @@ msgstr "Irlandês, grau 2"
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "Gujarati, grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Grego Coiné"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -770,11 +775,12 @@ msgstr "ponto"
 msgid "space"
 msgstr "espaço"
 
-msgid "focus mode"
-msgstr "modo de foco"
+msgid "Focus mode"
+msgstr "Modo de foco"
 
-msgid "browse mode"
-msgstr "modo de navegação"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "Modo de navegação"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -803,8 +809,8 @@ msgid "Lists various types of elements in this document"
 msgstr "Lista vários tipos de elementos neste documento"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
-msgstr "ativa o objeto atual do documento"
+msgid "Activates the current object in the document"
+msgstr "Ativa o objeto atual do documento"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1307,8 +1313,9 @@ msgstr "Move para o início do elemento pai, por exemplo uma lista ou tabela"
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "fim"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
+msgstr "Fundo"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -2590,13 +2597,11 @@ msgstr "cor de fundo"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superescrito"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subescrito"
 
@@ -2873,12 +2878,12 @@ msgstr ""
 "partir da posição atual do cursor"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
-msgstr "sem seleção"
+msgid "No selection"
+msgstr "Sem seleção"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
-msgstr "copiado para área de transferência"
+msgid "Copied to clipboard"
+msgstr "Copiado para área de transferência"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2984,44 +2989,48 @@ msgstr ""
 "soletra a linha atual"
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
-msgstr "clique esquerdo"
+msgid "Left click"
+msgstr "Clique esquerdo"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Clica uma vez com o botão esquerdo do mause na posição atual"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
-msgstr "clique direito"
+msgid "Right click"
+msgstr "Clique direito"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Clica uma vez com o botão direito do mause na posição atual"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
-msgstr "botão esquerdo solto"
+msgid "Left mouse button unlock"
+msgstr "Sôlto botão esquerdo do mouse"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "pressiona botão esquerdo do mause"
+msgid "Left mouse button lock"
+msgstr "Prêso botão esquerdo do mouse"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "Pressiona ou solta o botão esquerdo do mause"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr " botão direito solto"
+msgid "Right mouse button unlock"
+msgstr "Sôlto botão direito do mouse"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "pressiona o botão direito do mause"
+msgid "Right mouse button lock"
+msgstr "Prêso botão direito do mouse"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Pressiona ou solta o botão direito do mause"
+
+#, python-format
+msgid "Selected %s"
+msgstr "%s selecionado"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3137,11 +3146,11 @@ msgstr "Liga e desliga anunciar atributos da fonte"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "desligado anunciar revisões"
+msgstr "desligado o anúncio de revisões"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "ligado anunciar revisões"
+msgstr "ligado o anúncio de revisões"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -3149,11 +3158,11 @@ msgstr "Liga e desliga anunciar revisões"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "desligado anunciar ênfase"
+msgstr "desligado o anúncio de ênfase"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "ligado anunciar ênfase"
+msgstr "ligado o anúncio de ênfase"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
@@ -3161,11 +3170,11 @@ msgstr "Liga e desliga anunciar ênfase"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
-msgstr "desligado anunciar cores"
+msgstr "desligado o anúncio de cores"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "ligado anunciar cores"
+msgstr "ligado o anúncio de cores"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3173,11 +3182,11 @@ msgstr "Liga e desliga anunciar cores"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "desligado anunciar alinhamento"
+msgstr "desligado o anúncio de alinhamento"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "ligado anunciar alinhamento"
+msgstr "ligado o anúncio de alinhamento"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
@@ -3185,11 +3194,11 @@ msgstr "Liga e desliga anunciar alinhamento de texto"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "desligado anunciar estilo"
+msgstr "desligado o anúncio de estilo"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "ligado anunciar estilo"
+msgstr "ligado o anúncio de estilo"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3197,23 +3206,35 @@ msgstr "Liga e desliga anunciar mudanças de estilo"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "desligado anunciar erros ortográficos"
+msgstr "desligado o anúncio de erros ortográficos"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "ligado anunciar erros ortográficos"
+msgstr "ligado o anúncio de erros ortográficos"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Liga e desliga anunciar erros ortográficos"
 
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "desligado o anúncio de erros gramaticais"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "ligado o anúncio de erros gramaticais"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "Liga e desliga o anúncio de erros gramaticais"
+
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "desligado anunciar páginas"
+msgstr "desligado o anúncio de páginas"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "ligado anunciar páginas"
+msgstr "ligado o anúncio de páginas"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -3257,11 +3278,11 @@ msgstr "Liga e desliga anunciar indentação de parágrafo"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "desligado anunciar tabelas"
+msgstr "desligado o anúncio de tabelas"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "ligado anunciar tabelas"
+msgstr "ligado o anúncio de tabelas"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
@@ -3293,11 +3314,11 @@ msgstr "Liga e desliga anunciar coordenadas de células em tabelas"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "desligado anunciar linques"
+msgstr "desligado o anúncio de linques"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "ligado anunciar linques"
+msgstr "ligado o anúncio de linques"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3305,11 +3326,11 @@ msgstr "Liga e desliga anunciar linques"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "desligado anunciar comentários"
+msgstr "desligado o anúncio de comentários"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "ligado anunciar comentários"
+msgstr "ligado o anúncio de comentários"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
@@ -3317,11 +3338,11 @@ msgstr "Liga e desliga anunciar comentários"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "desligado anunciar listas"
+msgstr "desligado o anúncio de listas"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "ligado anunciar listas"
+msgstr "ligado o anúncio de listas"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -3329,11 +3350,11 @@ msgstr "Liga e desliga anunciar listas"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "desligado anunciar cabeçalhos"
+msgstr "desligado o anúncio de cabeçalhos"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "ligado anunciar cabeçalhos"
+msgstr "ligado o anúncio de cabeçalhos"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
@@ -3365,11 +3386,11 @@ msgstr "Liga e desliga anunciar marcas de seção"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "desligado anunciar freimes"
+msgstr "desligado o anúncio de freimes"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "ligado anunciar freimes"
+msgstr "ligado o anúncio de freimes"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
@@ -3391,8 +3412,8 @@ msgstr "Liga e desliga anunciar quando clicável"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
-msgstr "grau de sinais %s"
+msgid "Symbol level %s"
+msgstr "Grau de sinais %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3401,8 +3422,8 @@ msgstr ""
 "Circula entre os graus de pontuação que determinam quais sinais são falados"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
-msgstr "objeto sem local"
+msgid "Object has no location"
+msgstr "Objeto não possui local"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3448,8 +3469,8 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
-msgstr "nnão há objeto de navegação"
+msgid "No navigator object"
+msgstr "Sem objeto de navegação"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -3479,8 +3500,8 @@ msgstr ""
 "exploração. Ao pressionar duas vezes pode-se obter mais detalhes."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "mover para o foco"
+msgid "Move to focus"
+msgstr "Mover para o foco"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3493,20 +3514,20 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
-msgstr "sem foco"
+msgid "No focus"
+msgstr "Sem foco"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "move foco"
+msgid "Move focus"
+msgstr "Mover foco"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "sem cursor"
+msgid "No caret"
+msgstr "Sem cursor"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "Pressionada uma vez, coloca o foco do teclado no objeto de navegação; "
@@ -3522,6 +3543,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Coloca como objeto de navegação o pai do atual"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "último"
 
@@ -3530,6 +3552,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Coloca como objeto de navegação o próximo"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "primeiro"
 
@@ -3546,8 +3569,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Coloca como objeto de navegação o primeiro filho do atual"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "ativar"
+msgid "Activate"
+msgstr "Ativar"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3562,8 +3585,8 @@ msgstr ""
 "se for um botão."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
-msgstr "início"
+msgid "Top"
+msgstr "Tôpo"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3633,8 +3656,9 @@ msgstr ""
 "Move o cursor de exploração para a próxima palavra do objeto atual de "
 "navegação e a lê"
 
-msgid "left"
-msgstr "esquerda"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Esquêrda"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3664,8 +3688,9 @@ msgstr ""
 "caractere. Ao pressionar três vezes, anuncia o valor numérico decimal e "
 "hexadecimal do caractere"
 
-msgid "right"
-msgstr "direita"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Direita"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3684,16 +3709,16 @@ msgstr ""
 "cituado dentro do objeto atual de navegação e o anuncia"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "modo de fala é desligado"
+msgid "Speech mode off"
+msgstr "Modo de fala é desligado"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
-msgstr "modo de fala é bipes"
+msgid "Speech mode beeps"
+msgstr "Modo de fala é bipes"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
-msgstr "modo de fala é falar"
+msgid "Speech mode talk"
+msgstr "Modo de fala é falar"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3731,36 +3756,41 @@ msgstr "Exibe o menu do NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"lê a partir do cursor de exploração até o fim do texto atual, movendo o "
+"Lê a partir do cursor de exploração até o fim do texto atual, movendo o "
 "cursor de exploração de modo que ele acompanhe a leitura"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
-"lê a partir do cursor do sistema até o fim do texto, movendo o cursor de "
+"Lê a partir do cursor do sistema até o fim do texto, movendo o cursor de "
 "modo que ele acompanhe a leitura"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
 msgstr "sem informações de formatação"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Formatação"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Anuncia informações de formatação na posição atual do cursor de exploração "
-"num documento"
+"num documento. Se pressionada duas vezes, apresenta a informação no modo de "
+"navegação"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
-"anuncia o objeto com foco. Se pressionada duas vezes, soletra a informação"
+"Anuncia o objeto com foco. Se pressionada duas vezes, soletra a informação"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3768,10 +3798,10 @@ msgstr "Linha de status não achada"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
-"lê a barra de status do aplicativo atual e move o cursor de navegação para "
+"Lê a barra de status do aplicativo atual e move o cursor de navegação para "
 "ela. Se pressionada duas vezes, soletra a informação."
 
 #. Translators: presented when the mouse tracking is toggled.
@@ -3787,8 +3817,8 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Alterna o anúncio de informações conforme o mause é movido."
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
-msgstr "sem título"
+msgid "No title"
+msgstr "Sem título"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3801,8 +3831,8 @@ msgstr ""
 "para a área de transferência"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
-msgstr "anuncia o objeto atualmente em foco"
+msgid "Speaks the current foreground object"
+msgstr "Anuncia o objeto atualmente em primeiro plano"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3813,20 +3843,20 @@ msgstr ""
 "atual e ativa o visualizador de log para que as mesmas possam ser examinadas."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
-msgstr "Sem atualizações em barras de progresso"
+msgid "No progress bar updates"
+msgstr "Sem atualizações de barras de progresso"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
-msgstr "anunciar barras de progresso"
+msgid "Speak progress bar updates"
+msgstr "Falar em atualizações de barras de progresso"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
-msgstr "bipar em barras de progresso"
+msgid "Beep for progress bar updates"
+msgstr "Bipar em atualizações de barras de progresso"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
-msgstr "bipar e falar em barras de progresso"
+msgid "Beep and speak progress bar updates"
+msgstr "Bipar e falar em atualizações de barras de progresso"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3881,8 +3911,8 @@ msgid ""
 msgstr "Liga e desliga o movimento do objeto de navegação conforme o foco muda"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
-msgstr "sem bateria de sistema"
+msgid "No system battery"
+msgstr "Sem bateria de sistema"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
@@ -3899,9 +3929,10 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} horas e {minutes:d} minutos restantes"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"Anuncia a carga da bateria e o tempo restante caso o AC não esteja plugado"
+"Anuncia a carga da bateria e o tempo restante caso o cabo de força não "
+"esteja plugado"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -4172,10 +4203,6 @@ msgstr ""
 "Recarrega módulos de aplicativo e plug-ins globais sem reiniciar o NVDA; "
 "pode ser útil a desenvolvedores"
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "sem próximo"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4183,10 +4210,6 @@ msgid ""
 msgstr ""
 "Move para o próximo objeto numa visão plana da hierarquia dos objetos de "
 "navegação"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "primeiro"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4202,8 +4225,8 @@ msgid "%s mode"
 msgstr "modo %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
-msgstr "Alterna entre modos de toque disponíveis"
+msgid "Cycles between available touch modes"
+msgstr "Alterna entre os modos de toque disponíveis"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4237,10 +4260,6 @@ msgstr "Teclas emuladas do teclado de sistema"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Diversos"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Modo de navegação"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4731,11 +4750,6 @@ msgstr "seleção removida"
 msgid "done dragging"
 msgstr "sôlto"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "nível %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4760,6 +4774,11 @@ msgstr "com %s colunas"
 #, python-format
 msgid "with %s rows"
 msgstr "com %s linhas"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "nível %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4794,6 +4813,14 @@ msgstr "estilo %s"
 msgid "default style"
 msgstr "estilo padrão"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} em {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4812,6 +4839,10 @@ msgstr "{color}"
 #, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "fundo {backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "plano de fundo {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4901,7 +4932,6 @@ msgstr "não sublinhado"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "linha base"
 
@@ -5002,6 +5032,14 @@ msgstr "erro ortográfico"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "fora do erro"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "erro gramatical"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "fora de erro gramatical"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -5158,6 +5196,10 @@ msgstr "exploração"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "Soltar toque de exploração"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "Mensagem do NVDA"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -5356,8 +5398,8 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "borda da tabela"
+msgid "Edge of table"
+msgstr "Borda da tabela"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5515,8 +5557,8 @@ msgid "Appointment {subject}, {time}"
 msgstr "Compromisso {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
-msgstr "possui compromisso"
+msgid "Has appointment"
+msgstr "Possui compromisso"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -5833,6 +5875,12 @@ msgstr "Parar"
 msgid "Record"
 msgstr "Gravar"
 
+msgid "left"
+msgstr "esquerda"
+
+msgid "right"
+msgstr "direita"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -6111,11 +6159,11 @@ msgid "Python console"
 msgstr "Console Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Gerir &complementos"
+msgid "Manage &add-ons..."
+msgstr "Gerir &complementos..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Criar cópia portátil..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6154,8 +6202,8 @@ msgid "C&ontributors"
 msgstr "C&olaboradores"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "&Bem-vindo"
+msgid "We&lcome dialog..."
+msgstr "Diá&logo de boas vindas..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6837,6 +6885,10 @@ msgstr "Visualizador do log do NVDA"
 msgid "Refresh\tF5"
 msgstr "Atualizar\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "S&alvar como...\tCtrl+S"
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "Log"
@@ -7116,6 +7168,11 @@ msgstr "Falar &teclas de comando"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Tocar &som para erros ortográficos ao digitar"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Processar teclas de outros &aplicativos"
 
@@ -7388,6 +7445,11 @@ msgstr "Anunciar est&ilo"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "Anunciar e&rros ortográficos"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "Anunciar erros &gramaticais"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7717,12 +7779,12 @@ msgid "Refreshes the document content"
 msgstr "Atualiza o conteúdo do documento"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "Ativado usar apresentação da tela"
+msgid "Use screen layout on"
+msgstr "Ligado usar apresentação da tela"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "Desativado usar apresentação da tela"
+msgid "Use screen layout off"
+msgstr "Desligado usar apresentação da tela"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
@@ -7782,6 +7844,114 @@ msgstr "cor padrão"
 msgid "Unknown color"
 msgstr "cor desconhecida"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "automático"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "marcador"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "cruzadas"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "inferior"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "cinza 16"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "cinza 25"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "cinza 50"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "cinza 75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "cinza 8"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "grade"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "horizontal"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "inferior leve"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "horizontal leve"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "superior leve"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "vertical leve"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "nada"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "semicinza 75"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "sólido"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "superior"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "vertical"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "gradiente linear"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "gradiente retangular"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Esta célula não é editável"
@@ -7838,8 +8008,8 @@ msgstr "{address} já está como início dos cabeçalhos de coluna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
-msgid "removed {address}    from column headers"
-msgstr "{address}    removido dos cabeçalhos de coluna"
+msgid "Removed {address}    from column headers"
+msgstr "{address} removido dos cabeçalhos de coluna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -7867,8 +8037,8 @@ msgstr "{address} já está como início dos cabeçalhos de linha"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
-msgid "removed {address}    from row headers"
-msgstr "{address}    removido dos cabeçalhos de linha"
+msgid "Removed {address}    from row headers"
+msgstr "{address} removido dos cabeçalhos de linha"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -8677,15 +8847,6 @@ msgstr "comentário: {text} por {author} em {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} em {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g caracteres"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g pt"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8801,6 +8962,18 @@ msgstr "Alinhado à direita"
 msgid "Justified"
 msgstr "Justificado"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Sobrescrito"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Subscrito"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "Sublinhado"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -8843,8 +9016,8 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} paicas"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "sem comentários"
+msgid "No comments"
+msgstr "Sem comentários"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8854,9 +9027,6 @@ msgstr "Anuncia o texto do comentário onde se encontra o cursor do sistema."
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "Não está numa tabela"
-
-msgid "Edge of table"
-msgstr "Borda da tabela"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8870,6 +9040,30 @@ msgstr "Série HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "browse mode"
+#~ msgstr "modo de navegação"
+
+#~ msgid "activate"
+#~ msgstr "ativar"
+
+#~ msgid "no next"
+#~ msgstr "sem próximo"
+
+#~ msgid "no previous"
+#~ msgstr "primeiro"
+
+#~ msgid "edge of table"
+#~ msgstr "borda da tabela"
+
+#~ msgid "%g characters"
+#~ msgstr "%g caracteres"
+
+#~ msgid "%g pt"
+#~ msgstr "%g pt"
+
+#~ msgid "no comments"
+#~ msgstr "sem comentários"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"
@@ -8919,9 +9113,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} de {}"
-
-#~ msgid "none"
-#~ msgstr "nada"
 
 #~ msgid " trendline {} "
 #~ msgstr " linha de tendência {} "

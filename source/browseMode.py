@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 NV Access Limited
+#Copyright (C) 2007-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,7 +9,6 @@ import winsound
 import time
 import weakref
 import wx
-import queueHandler
 from logHandler import log
 import review
 import scriptHandler
@@ -47,9 +46,9 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 			nvwave.playWaveFile(sound)
 		else:
 			if treeInterceptor.passThrough:
-				ui.message(_("focus mode"))
+				ui.message(_("Focus mode"))
 			else:
-				ui.message(_("browse mode"))
+				ui.message(_("Browse mode"))
 		reportPassThrough.last = treeInterceptor.passThrough
 reportPassThrough.last = False
 
@@ -303,11 +302,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_activatePosition(self,gesture):
 		self._activatePosition()
 	# Translators: the description for the activatePosition script on browseMode documents.
-	script_activatePosition.__doc__ = _("activates the current object in the document")
+	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
 		"kb:enter": "activatePosition",
+		"kb:numpadEnter": "activatePosition",
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 	}
@@ -1464,7 +1464,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			# Translators: a message reported when:
 			# Review cursor is at the bottom line of the current navigator object.
 			# Landing at the end of a browse mode document when trying to jump to the end of the current container. 
-			ui.message(_("bottom"))
+			ui.message(_("Bottom"))
 		self._set_selection(container, reason=REASON_QUICKNAV)
 		if not willSayAllResume(gesture):
 			container.expand(textInfos.UNIT_LINE)

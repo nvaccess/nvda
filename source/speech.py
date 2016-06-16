@@ -946,6 +946,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
 		textList.append(propertyValues['keyboardShortcut'])
+	if includeTableCellCoords and cellCoordsText:
+		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
@@ -969,8 +971,6 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 				# Translators: Speaks current column number (example output: column 3).
 				textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
-	if includeTableCellCoords and cellCoordsText:
-		textList.append(cellCoordsText)
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
@@ -1105,7 +1105,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False , separator=CHUNK_SEPARATOR):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -1163,21 +1163,36 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
-		if color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
+		backgroundColor2=attrs.get("background-color2")
+		oldBackgroundColor2=attrsCache.get("background-color2") if attrsCache is not None else None
+		bgColorChanged=backgroundColor!=oldBackgroundColor or backgroundColor2!=oldBackgroundColor2
+		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)
+		if backgroundColor2:
+			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else unicode(backgroundColor2)
+			# Translators: Reported when there are two background colors.
+			# This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+			# {color1} will be replaced with the first background color.
+			# {color2} will be replaced with the second background color.
+			bgColorText=_("{color1} to {color2}").format(color1=bgColorText,color2=bg2Name)
+		if color and backgroundColor and color!=oldColor and bgColorChanged:
 			# Translators: Reported when both the text and background colors change.
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{color} on {backgroundColor}").format(
 				color=color.name if isinstance(color,colors.RGB) else unicode(color),
-				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+				backgroundColor=bgColorText))
 		elif color and color!=oldColor:
 			# Translators: Reported when the text color changes (but not the background color).
 			# {color} will be replaced with the text color.
 			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
-		elif backgroundColor and backgroundColor!=oldBackgroundColor:
+		elif backgroundColor and bgColorChanged:
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
-			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorText))
+		backgroundPattern=attrs.get("background-pattern")
+		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
+		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
+			textList.append(_("background pattern {pattern}").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
@@ -1416,7 +1431,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
-	return CHUNK_SEPARATOR.join(textList)
+	return separator.join(textList)
 
 def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if tableInfo is None and oldTableInfo is None:

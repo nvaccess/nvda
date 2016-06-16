@@ -37,7 +37,7 @@ Il est important que chacun, partout dans le monde, quelle que soit sa langue, a
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
 
-NVDA est fourni avec [eSpeak http://espeak.sourceforge.net/], un synthétiseur de parole gratuit, à source ouverte, multilingue.
+NVDA est fourni avec [eSpeak NG https://github.com/espeak-ng/espeak-ng], un synthétiseur de parole gratuit, à source ouverte, multilingue.
 
 Pour des informations concernant les autres synthétiseurs de parole pris en charge par NVDA, reportez-vous à la section [Synthétiseurs de parole pris en charge #SupportedSpeechSynths].
 
@@ -256,7 +256,7 @@ NVDA vous permet de naviguer dans le système ou de l'explorer de différentes m
 
 ++ Objets ++[Objects]
 Chaque application et le système d'exploitation lui-même se composent d'un grand nombre d'objets.
-Un objet est un élément simple tel qu'un morceau de texte, un bouton, une case à cocher, un curseur, une liste ou une zone d'édition.
+Un objet est un élément simple tel qu'un morceau de texte, un bouton, une case à cocher, un potentiomètre, une liste ou une zone d'édition.
 
 ++ Naviguer avec le focus système ++[SystemFocus]
 Le focus système, ou plus simplement focus, est [l'objet #Objects] qui reçoit les touches tapées au clavier.
@@ -299,7 +299,7 @@ Dans un tableau, vous disposez également des touches de commandes suivantes :
 | Aller à la ligne suivante | contrôle+alt+flèche bas | Déplace le curseur système à la ligne suivante en restant sur la même colonne |
 %kc:endInclude
 
-++ Naviguer par objet ++
+++ Naviguer par objet ++[ObjectNavigation]
 La plupart du temps, vous travaillerez avec les applications en utilisant des commandes qui déplacent le [focus #SystemFocus] et le [curseur #SystemCaret].
 Cependant, vous pouvez parfois avoir besoin d'explorer l'application en cours ou le système sans déplacer le [focus #SystemFocus].
 Vous pouvez aussi avoir besoin d'accéder à des [objets #Objects] inaccessibles par les commandes clavier habituelles.
@@ -372,7 +372,7 @@ Vous disposez des commandes suivantes pour explorer du texte :
 | Dire tout en revue | pavnumPlus | NVDA+maj+a | Glisser vers le bas 3 doigts (mode texte) | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
 | Copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas tant qu'on n'a pas indiqué la fin du texte à copier |
 | Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Copie depuis la position préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. Après l'appui sur cette touche, le texte est copié dans le presse-papiers de Windows. |
-| Annonce du formatage du texte | NVDA+f | NVDA+f | Aucun | Annonce le formatage du texte à la position du curseur de revue |
+| Annonce du formatage du texte | NVDA+f | NVDA+f | Aucun | Annonce le formatage du texte à la position du curseur de revue. Un double appui affiche l'information en mode navigation |
 %kc:endInclude
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -442,7 +442,7 @@ Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, 
 | Aller à l'objet sous la souris | NVDA+pavnumMultiplier | NVDA+maj+n | Amène l'objet navigateur à l'objet situé à la position de la souris |
 %kc:endInclude
 
-+ Le mode navigation +
++ Le mode navigation +[BrowseMode]
 Les documents complexes, tels que les pages web, sont représentés sous NVDA en utilisant le Mode Navigation.
 Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, les messages HTML sous Microsoft Outlook, Google Chrome, Adobe Reader et Adobe Flash.
 Le mode navigation est aussi disponible en option sous Microsoft Word.
@@ -629,12 +629,12 @@ Comme sur le web, NVDA a une liste d'éléments pour Microsoft Excel permettant 
 Pour accéder à la liste d'éléments sous Excel, pressez NVDA+f7.
 %kc:endInclude
 Les différents types d'informations disponibles dans la liste d'éléments sont :
-- Diagrammes : Ceci liste tous les diagrammes dans le classeur. 
+- Diagrammes : Ceci liste tous les diagrammes dans la feuille de travail active. 
 Sélectionner un diagramme et presser la touche Entrer ou le bouton "Aller à" amène le focus au diagramme pour naviguer et lire avec les flèches.
-- Commentaires : Ceci liste toutes les cellules du classeur contenant des commentaires. 
+- Commentaires : Ceci liste toutes les cellules de la feuille de travail active contenant des commentaires. 
 L'adresse de la cellule et ses commentaires sont présentés pour chaque cellule. 
 Presser sur la touche Entrer ou le bouton Aller à  sur un commentaire de la liste vous amènera directement à cette cellule.
-- Formules : Ceci liste toutes les cellules du classeur contenant une formule. 
+- Formules : Ceci liste toutes les cellules de la feuille de travail contenant une formule. 
 L'adresse de la cellule et sa formule sont présentés pour chaque cellule. 
 Presser sur la touche Entrer ou le bouton Aller à  sur une formule de la liste vous amènera directement à cette cellule.
 - feuilles : Ceci liste toutes les feuilles du classeur. 
@@ -646,7 +646,7 @@ Presser sur la touche Entrer ou le bouton Aller à  sur une feuille de la liste 
 %kc:beginInclude
 Pour annoncer tout commentaire pour la cellule actuellement en focus, pressez NVDA+alt+c.
 %kc:endInclude
-Tous les commentaires du classeur peuvent aussi être listés dans la liste d'éléments de NVDA.
+Tous les commentaires de la feuille de calcul peuvent aussi être listés dans la liste d'éléments de NVDA.
 
 +++ Lire des Cellules Protégées +++
 Si un classeur a été protégé, il peut être impossible d'amener le focus à certaines cellules ayant été protégées en écriture.
@@ -784,9 +784,9 @@ A l'aide des flèches de direction, on peut entendre les différents choix.
 Les flèches gauche et haut permettent de reculer d'un élément, droite et bas d'avancer.
 
 ==== Variante ====
-Une liste déroulante qui permet de choisir la variante utilisée par le synthétiseur. Actuellement, seule eSpeak propose ce paramètre.
-Les variantes eSpeak sont comparables à des voix, dans la mesure où elles modifient significativement les attributs de la voix eSpeak.
-Les variantes sont par exemple homme ou femme.
+Si vous utilisez le synthétiseur Espeak NG fourni avec NVDA, c'est une liste déroulante qui vous permet de choisir la variante avec laquelle le synthétiseur doit parler;
+Les variantes ESpeak NG sont comme des voix, dans la mesure où elles proposent des attributs légèrement différents à la voix ESpeak NG.
+Certaines variantes ressembleront à un homme, d'autres à une femme, d'autres même à une grenouille.
 
 ==== Débit ====
 Cette option vous permet de modifier le débit de la parole.
@@ -800,12 +800,12 @@ C'est un potentiomètre gradué de 0 à 100, (0 pour le son le plus grave et 100
 Cette option est un potentiomètre gradué de 0 à 100 qui permet de modifier le volume de la voix, (0 étant le volume le plus bas et 100 le plus élevé).
 
 ==== Inflexion ====
-Un potentiomètre qui permet de choisir le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser.
+Un potentiomètre qui permet de choisir le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser. Actuellement, le seul synthétiseur présentant cette option est ESpeak NG.
 
 ==== Changement automatique de langue ====
 Cette case à cocher vous permet de choisir si NVDA doit changer de langue à la volée si une balise de langue est présente dans le texte en cours de lecture.
 Par défaut, cette option est activée.
-À l'heure actuelle, seul le synthétiseur eSpeak prend en charge le changement automatique de langue.
+À l'heure actuelle, seul le synthétiseur eSpeak NG prend en charge le changement automatique de langue.
 
 ==== Changement automatique de dialecte ====
 Cette case à cocher vous permet de choisir si les changements de dialecte doivent être pris en compte en plus des changements de langue réels.
@@ -991,6 +991,10 @@ Raccourci clavier : NVDA+4
 
 Quand cette case est cochée, NVDA annonce, lors de leur frappe, toutes les touches ne correspondant pas à des caractères. Ceci inclut les combinaisons de touches telles que "contrôle" plus une autre lettre.
 
+==== Jouer un son pour les fautes d'orthographe durant la frappe ====
+Quand cette option est activée, un court son de vibreur sera émis quand un mot que vous frappez contient une faute d'orthographe.
+Cette option n'est disponible que si l'annonce des fautes d'orthographe est activée dans le dialogue [Mise en Forme des Documents #DocumentFormattingSettings] de NVDA.
+
 ==== Exécuter les touches d'autres applications ====
 Cette option permet à l'utilisateur de choisir si les combinaisons de touches générées par des applications telles que les claviers à l'écran et les logiciels de reconnaissance vocale doivent être traitées par NVDA.
 Cette option est activée par défaut, mais certains utilisateurs peuvent souhaiter désactiver cette fonction, comme ceux tapant en vietnamien avec le logiciel de dactylographie Unikey, car cela causerait la saisie de caractères incorrects.
@@ -1140,7 +1144,7 @@ Ce champ définit, en nombre de caractères, la longueur maximum d'une ligne en 
 Ce champ définit le nombre de lignes dont on se déplace par appui sur "Page Précédente" ou "Page Suivante" en mode navigation.
 
 %kc:setting
-==== Utiliser l'affichage tel qu'à l'écran ====
+==== Utiliser la disposition telle qu'à l'écran ====
 Raccourci clavier : NVDA+v
 
 Cette option vous permet d'indiquer si vous voulez que les objets tels que les liens ou autres champs soient placés sur leur propre ligne, ou s'ils doivent apparaître tels qu'à l'écran. Si l'option est activée, la représentation correspondra à l'aspect visuel. Sinon, chaque champ sera placé sur sa propre ligne.
@@ -1190,6 +1194,7 @@ On peut configurer les annonces suivantes :
 - emphase
 - style du texte,
 - fautes d'orthographe,
+- erreurs grammaticales,
 - numéro de page,
 - numéro de ligne,
 - retrait de ligne,
@@ -1463,23 +1468,23 @@ Cet élément, quand on l'active, recharge les modules d'applications et les mod
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
 Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-Le synthétiseur [eSpeak http://espeak.sourceforge.net/] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
-Par défaut, NVDA démarre en utilisant eSpeak.
+++ eSpeak NG ++
+Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
+Par défaut, NVDA démarre en utilisant eSpeak NG.
 Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB sur un autre système.
 
-Chaque voix fournie avec eSpeak correspond à une langue différente.
-eSpeak prend en charge plus de 20 langues.
+Chaque voix fournie avec eSpeak NG correspond à une langue différente.
+eSpeak NG prend en charge plus de 43 langues.
 
 Vous disposez également d'un grand choix de variantes, permettant de modifier considérablement le son de la voix.
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 est un ancien standard Microsoft pour les synthétiseurs de parole logiciels.
-Beaucoup de synthétiseurs de parole compatibles avec ce standard peuvent être achetés ou téléchargés gratuitement auprès de différentes sociétés ou sites web.
+NVDA le supporte encore pour les utilisateurs qui ont déjà des synthétiseurs SAPI 4 installés.
+Cependant, Microsoft ne le supporte plus et les composants nécessaires ne sont plus disponibles chez Microsoft.
+
 Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (accessibles via [le dialogue "Paramètres vocaux" #VoiceSettings], ou [la boucle des paramètres synthétiseur #SynthSettingsRing]) contient toutes les voix de tous les synthétiseurs SAPI 4 installés sur votre système.
-
-Si vous avez des voix SAPI 4 installées mais que le synthétiseur n'apparaît pas dans la liste des synthétiseurs de NVDA, veuillez installer SAPI 4.0 runtime binaries, disponible sur http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
-
+ 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 est un standard Microsoft pour les synthétiseurs de parole logiciels.
 Beaucoup de synthétiseurs de parole compatibles avec ce standard peuvent être achetés ou téléchargés gratuitement auprès de différentes sociétés ou sites web, mais il est probable que votre système possède déjà une voix SAPI 5 préinstallée.
@@ -2105,7 +2110,7 @@ Pour les afficheurs disposant d'un clavier braille, BRLTTY gèrent la saisie du 
 L'option table d'entrée n'est donc pas applicable.
 
 Voici les assignations de commandes BRLTTY pour NVDA.
-Veuillez consulter la [documentation tableau des touches de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] pour des informations sur la manière dont BRLTTY lie ses commandes aux touches sur les terminaux braille.
+Veuillez consulter la [documentation assignation des touches de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] pour des informations sur la manière dont BRLTTY lie ses commandes aux touches sur les terminaux braille.
 %kc:beginInclude
 || Nom | commande BRLTTY |
 | Défilement arrière de l'affichage braille | fwinlt (se déplacer à gauche d'une fenêtre) |

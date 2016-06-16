@@ -3,6 +3,50 @@
 
 %!includeconf: ../changes.t2tconf
 
+
+= 2016.2 =
+Novosti u ovoj inačici uključuju mogučnost izvještavanja o pravopisnim pogreškama pri pisanju; podrška za izgovaranje gramatičkih pogrešaka u Microsoft Wordu; i unaprjeđenja  i ispravke u podršci za Microsoft office paket.
+
+== Nove značajke ==
+- U načinu pregleda u Internet Exploreru i drugim MSHTML kontrolama, koristeći brzu navigaciju za kretanje po anotacijama (a i shift+a) sada se koristi i za kretanje po umetnutom i izbrisanom tekstu. (#5691)
+- U Microsoft Excelu, NVDA sada izgovara razinu grupe ćelija, kao i njihovu proširivost ili skupljivost. (#5690)
+- Pritiskom prečaca za izgovor formatiranja teksta (NVDA+f) dva puta, prezentira informaciju u načinu pregleda kako bi se mogla pregledati. (#4908)
+- U Microsoft Excelu 2010 i novijem, sjenćanje čelija i njihovo popunjavanje se izgovara. Automatsko izgovaranje možete uključiti u postavkama oblikovanja dokumenta. (#3683)
+- Nova brajična tablica: Starogrčki. (#5393)
+- u pregledniku zapisnika, sada možete pospremiti zapisnik koristeći prečac ctrl+s. (#4532)
+- Ako je izgovor pravopisnih grešaka uključen i podržan u određenoj kontroli, NVDA će reproducirati zvuk kako bi vas upozorio na pravopisnu pogrešku koja je napravljena prilikom pisanja. to se može onemogućiti koristeći "reproduciraj zvuk pri pravopisnim pogreškama" opciju u nvda postavkama tipkovnice. (#2024)
+- Gramatičke pogreške se sada izgovaraju u microsoft wordu.. Ovo se može onemogućiti uz pomoć nove opcije "izgovori gramatičke pogreške" u dijaloškom okviru za oblikovanje teksta. (#5877)
+
+
+== Izmjene ==
+- U načinu pregleda i poljima za uređivanje, NVDA tretira numerički Enter na isti način kao i enter na glavnom dijelu tipkovnice. (#5385)
+- NVDA sada koristi eSpeak NG sintetizator govora. (#5651)
+- U Microsoft Excelu, NVDA više ne ignorira zaglavlje stupca za ćeliju kada postoji prazan redak između ćelije i zaglavlja. (#5396)
+- U Microsoft Excelu, koordinate se sada izgovaraju prije zaglavlja, kako bi se  spriječila višeznačnost zaglavlja i sadržaja. (#5396)
+
+
+== Ispravke grešaka ==
+- u načinu pregleda, prilikom pokušaja korištenja brzog kretanja kako bi ste se pomakli na element koji nije podržan u dokumentu, nvda izgovara da to nije podržano bolje nego izgovaranje pogrešne informacije o nepostojećem elementu u tom smjeru. (#5691)
+- prilikom popisivanja radnih listova u popisu elemenata U Microsoft Excelu, radni listovi koji sadrže samo grafove sada su uključeni. (#5698)
+- NVDA više ne izgovara nepotrebne informacije prilikom prebacivanja prozora u java aplikacijama koje imaju višesstruke prozore kao što su to IntelliJ ili Android Studio. (#5732)
+- U scintilla'baziranim uređivaćima teksta kao što je to Notepad++, brajica se sada osvježava pravilno pri pomicanju kursora koristeći brajični redak. (#5678)
+- NVDA se više ne ruši prilikom odabira brajičnog izlaza. (#4457)
+- U Microsoft Wordu, Poravnanje odlomaka sada se izgovara u mjernoj jedinici koju odabire korisnik (NPR. centimetri ili inči). (#5804)
+- Pri korištenju brajičnog redka, puno više NVDA poruka koje su se prije samo izgovarale, sada su također ispisane i na brajici. (#5557)
+- U pristupačnim Java aplikacijama, razina stavaka stabla sada se izgovara. (#5766)
+- Popravljena urušavanja pri korištenju adobe flash'a u nekim slučajevima, koristeći mozilla firefox. (#5367)
+- U Google chromeu i chrome-baziranim preglednicima, dokumenti unutar dijaloga ili aplikacije sada se mogu čitati u načinu pregleda. (#5818)
+- U Google chromeu i chrome baziranim preglednicima, sada možete prisiliti NVDA da se prebaci u način pregleda u dijaloškim okvirima web sučelja ili aplikacija. (#5818)
+- U internet exploreru i drugim MSHTML kontrolama, pomičući fokus do pojedinih kontrola (specifično pri korištenju elementa aria-activedescendant) više se ne prebacuje pogrešno u način pregleda. Ovo se događalo, na primjer, prilikom pomicanja na prijedloge u adresnoj traci prilikom pisanja poruke u gmailu. (#5676)
+- U Microsoft Wordu, NVDA se više ne smrzava u velikim tablicama kada je izgovaranje zaglavlja redaka i stupaca uključeno. (#5878)
+- U Microsoft wordu, NVDA više ne izgovara pogrešno redak sa uvučenom razinom (ali ne ugrađeni stil razine) kao naslov. (#5186)
+- U načinu pregleda u microsoft wordu, pomicanje sa kraja na početak sadrživača (zarez i šift+zarez) sada radi i u tablicama. (#5883)
+
+
+== Izmjene za razvojne programere ==
+Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
+
+
 = 2016.1 =
 Najvažnije novosti u ovoj inačici uključuju mogućnost neobaveznog smanjivanja glasnoće drugih zvukova; unaprjeđenje brajičnog izlaza i podrške za brajične retke; nekoliko značajnih poboljšanja podrške za Microsoft office; i poboljšanja u načinu pregleda za Itunes.
 

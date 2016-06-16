@@ -3,11 +3,56 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+Les points forts de cette version incluent la possibilité d'indiquer les fautes d'orthographe durant la frappe; le support de l'annonce des erreurs grammaticales sous Microsoft Word; et des améliorations et corrections dans le support de Microsoft Office.
+
+== Nouvelles Fonctionnalités ==
+- en mode navigation sous Internet Explorer et autres contrôles MSHTML, utiliser la navigation par lettre pour se déplacer entre annotations (a et maj+a) ateint maintenant le texte inséré et effacé. (#5691)
+- Sous Microsoft Excel, NVDA annonce maintenant le niveau d'un groupe de cellules, ainsi que s'il est réduit ou développé. (#5690)
+- Un double appui sur la commande d'annonce de la mise en forme du texte (NVDA+f) présente l'information en mode navigation pour qu'elle puisse être parcourue. (#4908)
+- Sous Microsoft Excel 2010 et au-delà, la trame et le dégradé d'une cellule est maintenant annoncé. L'annonce automatique est contrôlée par l'option d'annonce des couleurs dans les préférences de formatage de document de NVDA. (#3683)
+- Nouvelle table de conversion braille : Grec Alexandrin. (#5393)
+- Dans la visionneuse du Journal, vous pouvez maintenant sauvegarder le journal en utilisant le raccourci Contrôle+s. (#4532)
+- Si l'annonce des fautes d'orthographe est activée et supportée par le contrôle en focus,, NVDA émettra un son pour vous avertir d'une faute d'orthographe commise durant la frappe. Ceci peut être désactivé en utilisant la nouvelle option "Jouer un son pour les fautes d'orthographe durant la frappe" dans le dialogue Paramètres Clavier de NVDA. (#2024)
+- Les erreurs grammaticales sont maintenant annoncées sous Microsoft Word. Ceci peut être désactivé en utilisant la nouvelle option "Annoncer les erreurs grammaticales" dans le dialogue "Mise en forme des documents" de NVDA. (#5877)
+
+
+== Changements ==
+- En mode navigation et dans les champs de saisie, NVDA traite maintenant la touche Entrer du pavé numérique de la même manière que la touche Entrer principale. (#5385)
+- NVDA est passé au synthétiseur de parole eSpeak NG. (#5651)
+- Sous Microsoft Excel, NVDA n'ignore plus l'en-tête de colonne pour une cellule quand il y a une ligne blanche entre la cellule et le titre. (#5396)
+- Sous Microsoft Excel, les coordonnées sont maintenant annoncées avant les en-têtes pour éliminer les ambiguïtés entre les en-têtes et le contenu. (#5396)
+
+
+== Corrections de Bogues ==
+- En mode navigation, quand on essaie d'utiliser la navigation par lettre pour atteindre un élément qui n'est pas suporté dans ce document, NVDA annonce que ceci n'est pas supporté plutôt que d'annoncer qu'il n'y a pas d'élément dans cette direction. (#5691)
+- Quand on liste les feuilles dans la liste d'éléments sous Microsoft Excel, les feuilles ne contenant que des graphiques sont maintenant incluses. (#5698)
+- NVDA n'annonce plus d'informations irrelevantes quand on change de fenêtre dans une application Java avec de multiples fenêtres comme IntelliJ oo Android Studio. (#5732)
+- dans les éditeurs basés sur Scintilla comme Notepad++, le braille est maintenant mis à jour correctement quand on déplace le curseur en utilisant un afficheur braille. (#5678)
+- NVDA ne se plante plus parfois quand on active l'affichage braille. (#4457)
+- Sous Microsoft Word, le retrait des paragraphes est maintenant toujours annoncé dans l'unité de mesure choisie par l'utilisateur (ex : centimètres ou pouces). (#5804)
+- Quand on utilise un afficheur braille, Beaucoup de messages de NVDA qui jusque là n'étaient que parlés sont maintenant également affichés en Braille. (#5557)
+- Dans les applications Java accessibles, le niveau des éléments d'arborescence est maintenant annoncé. (#5766)
+- Correction de plantages d'Adobe Flash sous Mozilla Firefox dans certains cas. (#5367)
+- Sous Google Chrome et les navigateurs basés sur Chrome, les documents dans les dialogues ou les applications peuvent maintenant être lus en mode navigation. (#5818)
+- Sous Google Chrome et les navigateurs basés sur Chrome, vous pouvez maintenant forcer NVDA à passer en mode navigation dans les dialogues ou applications web. (#5818)
+- Sous Internet Explorer et autres contrôles MSHTML, amener le focus à certains contrôles (spécifiquement, quand aria-activedescendant est utilisé) ne passe plus incorrectement en mode navigation. Ceci arrivait, par exemple, quand on allait aux suggestions dans les champs d'adresse en composant un message sous Gmail. (#5676)
+- Sous Microsoft Word, NVDA ne se bloque plus dans les grands tableaux quand l'annonce des en-têtes de lignes et collones de tableau est activée. (#5878)
+- Sous Microsoft word, NVDA n'annonce plus incorrectement un texte avec un niveau hiérarchique (mais sans style d'en-tête défini) comme un titre. (#5186)
+- En mode navigation sous Microsoft Word, les commandes aller après la fin ou avant le début d'un conteneur (virgule et maj+virgule) fonctionnent maintenant pour les tableaux. (#5883)
+
+
+== Changements pour les Développeurs ==
+- Les composants C++ de NVDA sont maintenant construits avec Microsoft Visual Studio 2015. (#5592)
+- Vous pouvez maintenant présenter un texte ou un message HTML à l'utilisateur en mode navigation en utilisant ui.browseableMessage. (#4908)
+- Dans le Guide de l'Utilisateur, quand une commande %kc:setting est utilisée pour un paramètre ayant un raccourci commun à toutes les configurations clavier, le raccourci peut maintenant être placé après un deux-points pleine largeur (：) aussi bien qu'après un deux-points normal (:). (#5739)
+
+
 = 2016.1 =
 Les points forts de cette version incluent la possibilité de baisser optionnellement le volume des autres sources audio ; des amélioration de l'affichage braille et du support des terminaux braille ; plusieurs corrections significatives dans le support de Microsoft Office; et des corrections pour le mode navigation sous iTunes.
 
 == Nouvelles Fonctionnalités ==
-- Nouvelle table de conversion braille  : Polonais braille informatique 8 points, Mongol. (#5537, #5574)
+- Nouvelle table de conversion braille : Polonais braille informatique 8 points, Mongol. (#5537, #5574)
 - Vous pouvez désactiver le curseur braille et en changer la forme en utilisant les nouvelles options Montrer le curseur et Forme du curseur dans le dialogue Paramètres Braille. (#5198)
 - NVDA peut maintenant se connecter à un afficheur braille HIMS Smart Beetle via Bluetooth. (#5607)
 - NVDA peut optionnellement baisser le volume des autres sons quand il est installé sous Windows 8 et au-delà. Ceci peut être configuré en utilisant l'option Mode d'Atténuation Audio dans le dialogue Synthétiseur de NVDA ou en pressant NVDA+maj+d. (#3830, #5575)
@@ -103,7 +148,7 @@ Les points forts de cette version incluent des améliorations de performances so
 == Corrections de Bogues ==
 - Améliorations majeures de performances quand on navigue dans la liste de messages d'Outlook 2010/2013. (#5268)
 - Dans un graphique sous Microsoft Excel, la navigation avec certaines touches (comme changer de feuille avec contrôle+pagePrec et contrôle+pageSuiv) fonctionne maintenant correctement. (#5336)
-- Correction de l'apparence visuelle  des boutons dans le dialogue d'avertissement qui est affiché quand on essaie d'installer une version inférieure de NVDA. (#5325)
+- Correction de l'apparence visuelle des boutons dans le dialogue d'avertissement qui est affiché quand on essaie d'installer une version inférieure de NVDA. (#5325)
 - Sous Windows 8 et au-delà, NVDA démarre maintenant beaucoup plus tôt quand il est configuré pour démarrer après la connexion à Windows. (#308)
  - Si vous avez configuré cela avec une version précédente de NVDA, vous devrez le désactiver puis le réactiver dans le dialogue Paramètres Généraux pour que le changement prenne effet. Suivez cette procédure :
   + Ouvrez le dialogue "Paramètres Généraux".
@@ -112,8 +157,8 @@ Les points forts de cette version incluent des améliorations de performances so
   + Ouvrez de nouveau le dialogue "Paramètres Généraux".
   + Cochez la case "Démarrer NVDA automatiquement après ma connexion à Windows".
   + Appuyez sur le bouton OK.
-- Améliorations de performances pour UI Automation incluant  l'explorateur de fichiers et la barre des tâches. (#5293)
-- Améliorations de performance pour UI Automation incluant  l'Explorateur de fichier et la barre des tâches. (#5293)
+- Améliorations de performances pour UI Automation incluant l'explorateur de fichiers et la barre des tâches. (#5293)
+- Améliorations de performance pour UI Automation incluant l'Explorateur de fichier et la barre des tâches. (#5293)
 - NVDA passe maintenant correctement en mode formulaire quand on tabule vers des contrôles ARIA grid en lecture seule en mode navigation pour Mozilla Firefox et autres contrôles basés sur Gecko. (#5118)
 - NVDA annonce maintenant correctement " Pas de précédent " au lieu de " pas de suivant " quand il n'y a plus d'objet quand on glisse à gauche sur un écran tactile.
 - Correction des problèmes apparaissant à la frappe de plusieurs mots dans la zone de filtre dans le dialogue "Gestes de commandes". (#5426)

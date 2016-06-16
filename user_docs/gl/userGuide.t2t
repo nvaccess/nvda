@@ -37,7 +37,7 @@ Actualmente NVDA foi traducido a 47 linguas ademáis da lingua inglesa incluínd
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
 
-NVDA está integrado co [eSpeak http://espeak.sourceforge.net/], un sintetizador de voz multilingüe, libre, de código aberto.
+NVDA ven integrado co [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizador de voz multilingüe, libre, de código aberto.
 
 Pódese atopar información acerca doutros sintetizadores de voz que soporta NVDA na sección [Sintetizadores de Voz soportados #SupportedSpeechSynths].
 
@@ -299,7 +299,7 @@ Cando esteas nunha táboa, as seguintes teclas de ordes tamén están dispoñibl
 | Moverse cara a fila seguinte | control+alt+Frecha Abaixo | Move o cursor do sistema á seguinte fila (permanecendo na mesma columna) |
 %kc:endInclude
 
-++ Navegación de Obxectos ++
+++ Navegación de Obxectos ++[ObjectNavigation]
 A maior parte do tempo, traballarás con aplicacións utilizando ordes que moven o [foco #SystemFocus] e o [cursor #SystemCaret].
 Sen embargo, ás veces, poderías querer explorar a aplicación actual ou o Sistema Operativo sen mover o foco ou o cursor.
 Tamén poderías querer traballar con [obxectos #Objects] que non podan accederse normalmente utilizando o teclado.
@@ -372,7 +372,7 @@ As seguintes ordes están dispoñibles para revisión de texto:
 | Ler todo con revisión | Máis teclado numérico | NVDA+shift+a | deslizar con 3 dedos abaixo (modo texto) | Le dende a posición actual do cursor de revisión, movéndoo segundo baixa |
 | copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | non | Comeza o copiado de texto dende a posición actual do cursor de revisión. A copia actual non se leva a cabo ata que digas ó NVDA onde copiar |
 | Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | non | Copia dende a posición fixada anteriormente con Copiar dende cursor de revisión ate e incluindo a actual posición do cursor de revisión.  Desppois de premer esta tecla, o texto copiarase ó portapapeis de Windows |
-| Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión |
+| Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión. Premendo dúas veces amosa a información en modo exploración |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum sexa desactivada para funcionar apropriadamente.
@@ -442,7 +442,7 @@ Se ben un rato físico ou un trackpad poderíanse utilizar para navegar co rato,
 | navegar ó obxecto baixo o rato | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pon o navegador de obxectos no obxecto localizado na posición do rato |
 %kc:endInclude
 
-+ Modo Navegación +
++ Modo Navegación +[BrowseMode]
 Os documentos complexos de só lectura, como páxinas web, son representados no NVDA cun Modo Navegación. 
 Esto inclúe documentos en Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensaxes HTML en Microsoft Outlook,Google Chrome, Adobe Reader e Adobe Flash.
 O modo Exploración tamén está dispoñible opcionalmente para documentos de Microsoft Word.
@@ -629,12 +629,12 @@ De xeito similar á web, NVDA ten unha Lista de Elementos para Microsoft Excel, 
 Para aceder á Lista de Elementos en Excel, preme NVDA+f7.
 %kc:endInclude
 Os diversos tipos de información dispoñible na Lista de Elementos son:
-- Gráficos: esto lista todos os gráficos no libro de traballo.
+- Gráficos: esto lista todos os gráficos na folla de traballo activa.
 Seleccionando un gráfico e premendo Intro ou o botón Mover A enfoca o gráfico para navegar e ler cas teclas de cursor.
-- Comentarios: esto lista todas as celdas no libro de traballo que conteñan comentarios. 
+- Comentarios: esto lista todas as celdas na folla de traballo activa que conteñan comentarios. 
 O enderezo da celda xunto cos seus comentarios amósase para cada celda. 
 Premendo Intro ou o botón Mover a cando se estea sobre un comentario listado moverase directamente a esa celda.
-- Fórmulas: esto lista todas as celdas no libro de traballo que conteñan unha fórmula. 
+- Fórmulas: esto lista todas as celdas na folla de traballo activa que conteñan unha fórmula. 
 O enderezo da celda xunto ca súa fórmula amósase para cada celda.
 Premendo Intro ou o botón Mover A sobre unha fórmula listada moverase directamente a esa celda. 
 - Follas: esto lista todas as follas no libro de traballo. 
@@ -646,7 +646,7 @@ Premendo Intro ou o botón Mover A mentres se estea sobre a folla listada cambia
 %kc:beginInclude
 Para anunciar calquera comentario para a celda actualmente enfocada, preme NVDA+alt+c.
 %kc:endInclude
-Todos os comentarios para o libro de traballo tamén poden listarse na Lista de Elementos de NVDA.
+Todos os comentarios para a folla de traballo tamén poden listarse na Lista de Elementos de NVDA.
 
 +++ Lendo Celdas Protexidas +++
 Se un libro de traballo foi protexido, podería non seren posible mover o foco a celdas en particular que foran bloqueadas para edición.
@@ -784,8 +784,8 @@ Podes utilizar as teclas de cursor para escoitar todas as varias eleccións.
 As frechas esquerda e arriba suben pola lista, mentres que as frechas dereita e abaixo baixan pola lista.
 
 ==== Variante ====
-Se estás utilizando o sintetizador Espeak empaquetado xunto co NVDA, este é unha caixa combinada que che permite seleccionar a variante ca que o sintetizador debería falar. 
-As variantes de Espeak son bastante parecidas ás voces, pero proporcionan atributos lixeiramente diferentes para a voz de ESpeak. 
+Se estás a usar o sintetizador Espeak NG empaquetado xunto co NVDA, esta é unha caixa combinada que che permite seleccionar a variante ca que o sintetizador debería falar. 
+As variantes de Espeak NG son bastante parecidas ás voces, pero proporcionan atributos lixeiramente diferentes para a voz de ESpeak NG. 
 Algunhas variantes soarán como un home, algunhas como unha muller, e algunhas como se tiveran ronqueira.
 
 ==== Velocidade ====
@@ -800,12 +800,12 @@ Esta é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o ton mái
 Esta opción é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o volume máis baixo e sendo 100 o máis alto).
 
 ==== Entoación ====
-Esta opción é unha barra de desprazamento que che permite elexir canta entoación (subida e caída no ton) o sintetizador debería utilizar para falar. (Soamente o sintetizador Espeak proporciona esta opción actualmente).
+Esta opción é unha barra de desprazamento que che permite elexir canta entoación (subida e caída no ton) o sintetizador debería utilizar para falar. (Soamente o sintetizador Espeak NG proporciona esta opción actualmente).
 
 ==== Cambio Automático de Lingua ====
 Esta caixa de verificación permíteche activar ou desactivar se NVDA debería cambiar automáticamente as linguas do sintetizador de voz se o texto a se ler o especifica.
 Esta opción está activada de maneira predeterminada.
-Actualmente só o sintetizador eSpeak sopporta o cambio automático de lingua.
+Actualmente só o sintetizador eSpeak NG sopporta o cambio automático de lingua.
 
 ==== Cambio Automático de Dialecto ====
 Esta caixa de verificación permíteche activar ou desactivar  se os cambios de dialecto deberíanse facer, en lugar de só cambiar a lingua actual. 
@@ -990,6 +990,10 @@ Polo tanto, pode ser bastante útil ser avisado acerca de esto.
 Tecla: NVDA+4
 
 Cando está marcada significa que NVDA anunciará todas as teclas que non sexan caracteres ó se escribir no teclado. Esto inclúe combinacións de teclas como control más calquera outra letra. 
+
+==== Reproducir son para Erros de Ortografía mentres se escrebe ====
+Ao habilitarse, reproducirase unha sinal acústica curta cando unha palabra que esteas escrebindo conteña un erro de ortografía.
+Esta opción só está dispoñible se o anunciado de erros de ortografía está habilitado no diálogo de NVDA [Opcións de Formateado de Documento #DocumentFormattingSettings].
 
 ==== Manexar teclas dende outras aplicacións ====
 Esta opción permite ó usuario controlar se a pulsación das teclas xerada por aplicacións como teclados en pantalla e polo software de recoñecemento da fala debería procesarse polo NVDA. 
@@ -1190,6 +1194,7 @@ Podes configurar o anunciado de:
 - Énfase
 - Estilo do texto
 - Erros de ortografía
+- Erros gramaticais
 - Números de páxina
 - Números de liña
 - Sangría de liña
@@ -1463,22 +1468,22 @@ Este elemento, unha vez activado, recarga app modules e plugins globais sen rein
 Esta sección contén información acerca dos sintetizadores de voz soportados polo NVDA.
 Para unha lista máis extensa dos sintetizadores libres e comerciais que podes descargar e comprar para utilizar co NVDA, por favor mira a páxina en [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-O sintetizador [eSpeak http://espeak.sourceforge.net/] compílase directamente no NVDA e non require ningún outro controlador ou componente especial para instalarse.
-NVDA iníciase utilizando eSpeak de xeito predeterminado.
-Como este sintetizador se compilou en NVDA, é unha gran elección para cando se executa NVDA nunha memoria USB ou nun CD noutros sistemas.
+++ eSpeak NG ++
+O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] compílase directamente no NVDA e non require ningún outro controlador ou componente especial para instalarse.
+NVDA iníciase utilizando eSpeak NG de xeito predeterminado.
+Como este sintetizador compilouse en NVDA, é unha gran elección para cando se executa NVDA nunha memoria USB ou nun CD noutros sistemas.
 
-Cada voz que ven co eSpeak fala unha lingua diferente.
-Hai unhas 43 linguas diferentes soportadas polo eSpeak.
+Cada voz que ven co eSpeak NG fala unha lingua diferente.
+Hai unhas 43 linguas diferentes soportadas polo eSpeak NG.
 
 Tamén hai moitas variantes que poden escollerse para alterar o son da voz.
 
 ++ Microsoft Speech API versión 4 (SAPI 4) ++
 SAPI 4 é un antigo estándar de Microsoft para sintetizadores de voz software.
-Moitos sintetizadores de voz que cumpren con este estándar poderían comprarse ou descargarse gratis en varias compañías e sitios Web.
-Cando se utiliza este sintetizador co NVDA, as voces dispoñibles (ás que se accede dende o [Diálogo Opcións de  Voz #VoiceSettings] ou dende o [Grupo de Opcións de Sintetizador #SynthSettingsRing]) conterán todas as voces de todos os motores SAPI 4 instalados que se atopen no teu sistema.
+NVDA aínda soporta esto para usuarios que teñan sintetizadores SAPI 4 instalados.
+Non obstante, Microsoft xa non soporta esto e necesítanse compoñentes que xa non están dispoñibles dende Microsoft.
 
-Se tes voces SAPI 4 instaladas pero o sintetizador non aparece na lista de sintetizadores de NVDA, por favor  instala os binarios do runtime de SAPI 4.0 , dispoñible en http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Cando uses este sintetizador co NVDA, as voces dispoñibles (accesibles dende o [diálogo Opcións de Voz #VoiceSettings] ou no [Grupo de Opcións do Sintetizador #SynthSettingsRing]) conterán todas as voces de todos os motores SAPI 4 instalados que se atopen no teu sistema.
 
 ++ Microsoft Speech API versión 5 (SAPI 5) ++
 SAPI 5 é un estándar de Microsoft para sintetizadores de voz software.
@@ -2105,7 +2110,7 @@ Para liñas que teñan un teclado braille, BRLTTY actualmente manexa a entrada b
 Polo tanto, a opción táboa braille de entrada de NVDA é irrelevante.
 
 Seguidamente van as asignacións a ordes BRLTTY para NVDA.
-Por favor mira [a documentación de táboas de teclas de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] para información acerca de cómo están mapeadas as ordes de BRLTTY para controlar as liñas braille.
+Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para información acerca de como se mapean as ordes de BRLTTY para controlar as pantallas braille.
 %kc:beginInclude
 || Nome | orde de BRLTTY |
 | Desprazar liña braille cara atrás | fwinlt (vai á esquerda unha ventá) |

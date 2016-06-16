@@ -37,7 +37,7 @@ NVDA on saatavilla englannin lisäksi seuraavilla 47 kielellä: afrikaans, alban
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
 
-NVDA:n mukana toimitetaan [eSpeak http://espeak.sourceforge.net/], monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori.
+NVDA:n mukana toimitetaan [eSpeak NG https://github.com/espeak-ng/espeak-ng], monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori.
 
 Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleesta.
 
@@ -299,7 +299,7 @@ Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 | Siirrä seuraavalle riville | Control+Alt+alanuoli | Siirtää järjestelmäkohdistimen seuraavalle riville pysyen samassa sarakkeessa. |
 %kc:endInclude
 
-++ Objektinavigointi ++[]
+++ Objektinavigointi ++[ObjectNavigation]
 Sovelluksia käytetään enimmäkseen komennoilla, jotka siirtävät [kohdistusta #SystemFocus] ja [kohdistinta #SystemCaret].
 Toisinaan voi kuitenkin olla tarpeen tutkia nykyistä sovellusta tai käyttöjärjestelmää ilman, että kohdistus tai kohdistin liikkuu.
 Saatat myös haluta siirtyä [objekteihin #Objects], joihin ei ole mahdollista päästä normaalisti näppäimistöä käyttäen.
@@ -372,7 +372,7 @@ Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 | Lue kaikki | Numeronäppäimistön plus | NVDA+Shift+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta lähtien siirtäen samalla sitä. |
 | Merkitse kopioitavan tekstin alkukohta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin kopioimisen tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, mihin kopiointi lopetetaan. |
 | Merkitse kopioitavan tekstin loppukohta | NVDA+F10 | NVDA+F10 | Ei mitään | Kopioi tekstin alkukohdan merkitsemiskomennolla asetetusta kohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Kun tätä näppäinyhdistelmää painetaan, teksti kopioidaan leikepöydälle. |
-| Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee järjestelmäkohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. |
+| Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa näyttää tiedot selaustilassa. |
 %kc:endInclude
 
 Huom: Numlockin on oltava pois käytöstä, jotta numeronäppäimistön näppäimet toimisivat oikein.
@@ -442,7 +442,7 @@ Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kos
 | Siirrä hiiren alla olevaan objektiin | NVDA+numeronäppäimistön tähti | NVDA+Shift+N | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
 %kc:endInclude
 
-+ Selaustila +
++ Selaustila +[BrowseMode]
 Monisisältöisiä, ei-muokattavia asiakirjoja kuten verkkosivuja luetaan NVDA:lla selaustilassa.
 Tällaisia ovat Mozilla Firefoxissa, Microsoft Internet Explorerissa, Mozilla Thunderbirdissä, Google Chromessa ja Adobe Readerissa luettavat asiakirjat, Microsoft Outlookin HTML-viestit sekä Flash-sisältö.
 Selaustila on käytettävissä valinnaisesti myös Microsoft Wordissa.
@@ -629,12 +629,12 @@ Samoin kuin verkkosivuilla, myös Microsoft Exceliä varten on elementtilista, j
 Elementtilista avataan painamalla NVDA+F7.
 %kc:endInclude
 Elementtilistassa ovat saatavilla seuraavat tiedot:
-- Kaaviot: Tämä näyttää listan kaikista työkirjassa olevista kaavioista.
+- Kaaviot: Tämä näyttää listan kaikista aktiivisen laskentataulukon kaavioista.
 Kaavion valitseminen ja Enterin tai Siirry-painikkeen painaminen siirtää kohdistuksen kyseiseen kaavioon, jolloin sitä on mahdollista selata ja lukea nuolinäppäimillä.
-- Kommentit: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kommentti.
+- Kommentit: Tämä näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kommentti.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kommentit.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kommentin kohdalla siirtää suoraan kyseiseen soluun.
-- Kaavat: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kaava.
+- Kaavat: Tämä näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kaava.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kaavat.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kaavan kohdalla siirtää suoraan kyseiseen soluun.
 - Laskentataulukot: Tämä näyttää listan kaikista työkirjassa olevista laskentataulukoista.
@@ -646,12 +646,12 @@ Enterin tai Siirry-painikkeen painaminen jonkin listassa olevan laskentataulukon
 %kc:beginInclude
 Lue mikä tahansa kommentti aktiivisesta solusta painamalla NVDA+Alt+C.
 %kc:endInclude
-Kaikki työkirjassa olevat kommentit voidaan näyttää myös Elementtilistassa.
+Kaikki laskentataulukossa olevat kommentit voidaan näyttää myös Elementtilistassa.
 
 +++ Suojattujen solujen lukeminen +++
 Mikäli työkirja on suojattu, kohdistuksen siirtäminen ei ehkä ole mahdollista sellaisiin soluihin, joiden muokkaaminen on estetty.
 %kc:beginInclude
-Lukittuihin soluihin siirtyminen on mahdollista selaustilassa, joka otetaan käyttöön painamalla NVDA+Väli, ja käyttämällä standardinmukaisia Excel-komentoja, kuten nuolinäppäimiä nykyisen työkirjan soluissa liikkumiseen.
+Lukittuihin soluihin siirtyminen on mahdollista selaustilassa, joka otetaan käyttöön painamalla NVDA+Väli, ja käyttämällä standardinmukaisia Excel-komentoja, kuten nuolinäppäimiä nykyisen laskentataulukon soluissa liikkumiseen.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -768,7 +768,7 @@ Näppäinkomento: NVDA+Shift+D
 
 Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä valita, alentaako NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
 - Ei vaimennusta: NVDA ei koskaan alenna muiden äänien voimakkuutta.
-- Vaimenna puhuttaessa ja ääniä toistettaessa: NVDA alentaa muiden äänien voimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
+- Vaimenna puhuttaessa ja ääntä toistettaessa: NVDA alentaa muiden äänien voimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
 - Vaimenna aina: NVDA alentaa muiden äänien voimakkuutta koko ajan käynnissä ollessaan.
 -
 
@@ -784,28 +784,28 @@ Vaihtoehtoja voidaan selata nuolinäppäimillä.
 Vasen ja ylänuoli siirtävät ylöspäin listassa, kun taas oikea ja alanuoli siirtävät alas.
 
 ==== Muunnelma ====
-Jos käytetään NVDA:n mukana tulevaa eSpeak-puhesyntetisaattoria, tästä yhdistelmäruudusta voidaan valita käytettävä muunnelma.
+Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
 Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa puheäänille hieman eri määreitä.
 Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
 
 ==== Nopeus ====
-Tällä liukusäätimellä voidaan muuttaa puheen nopeutta.
+Tällä liukusäätimellä voit muuttaa puheen nopeutta.
 Arvot 0 - 100 ovat mahdollisia (0=hitain ja 100=nopein).
 
 ==== Korkeus ====
-Tällä liukusäätimellä voidaan muuttaa puheen korkeutta.
+Tällä liukusäätimellä voit muuttaa puheen korkeutta.
 Arvot 0 - 100 ovat mahdollisia (0=matalin ja 100=korkein).
 
 ==== Voimakkuus ====
-Tällä liukusäätimellä voidaan muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
+Tällä liukusäätimellä voit muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
 
 ==== Sävy ====
-Tällä liukusäätimellä voidaan muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
+Tällä liukusäätimellä voit muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak NG on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
 
 ==== Vaihda kieltä automaattisesti (jos mahdollista) ====
 Tällä valintaruudulla voit vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritelty asianmukaisesti.
 Asetus on oletusarvoisesti käytössä.
-Tällä hetkellä vain eSpeak-syntetisaattori tukee automaattista kielen vaihtamista.
+Tällä hetkellä vain eSpeak NG -syntetisaattori tukee automaattista kielen vaihtamista.
 
 ==== Vaihda murretta automaattisesti (jos mahdollista) ====
 Tällä valintaruudulla voit määrittää, vaihdetaanko pelkän kielen lisäksi myös murretta.
@@ -991,6 +991,10 @@ Pikanäppäin: NVDA+4
 
 Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jotka eivät ole merkkejä. Näitä ovat sellaiset näppäinyhdistelmät kuin Control+jokin muu kirjain.
 
+==== Ilmaise kirjoitusvirheet kirjoitettaessa toistamalla ääni ====
+Tämän asetuksen ollessa käytössä toistetaan lyhyt summeriääni, kun kirjoittamassasi sanassa on kirjoitusvirhe.
+Asetus on käytettävissä vain, jos kirjoitusvirheiden lukeminen on otettu käyttöön NVDA:n [Asiakirjojen muotoiluasetukset #DocumentFormattingSettings] -valintaikkunasta.
+
 ==== Käsittele muiden sovellusten näppäinpainallukset ====
 Tällä asetuksella käyttäjä voi säätää, käsitteleekö NVDA sellaisten sovellusten kuin näyttönäppäimistöjen ja puheentunnistusohjelmistojen tuottamat näppäinpainallukset. 
 Asetus on oletusarvoisesti käytössä, vaikka tietyt käyttäjät (esim. vietnaminkielistä tekstiä Unikey-kirjoitusohjelmistolla kirjoittavat) saattavat haluta poistaa sen käytöstä, sillä se aiheuttaa väärien nmerkkien syöttämistä.
@@ -1113,7 +1117,7 @@ Tämä on tarpeen sellaisissa syöttömenetelmissä, joissa valintaa voidaan muu
 Huomaa, että vaikka tämä asetus ei ole käytössä, niin tarkastelukohdistin sijoitetaan silti valitun ehdotuksen kohdalle, mikä mahdollistaa objektinavigoinnin tai tekstintarkastelukomentojen käyttämisen kyseessä olevan tai muiden ehdotusten lukemiseen.
 
 ==== Ilmoita lyhyet merkkikuvaukset aina ehdotuksia luettaessa ====
-Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotuslistan tullessa näkyviin.
+Tällä asetuksella, joka on oletusarvoisesti käytössä, voit valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotuslistan tullessa näkyviin.
 Huomaa, että asetus ei vaikuta valitun ehdotuksen lisämerkkikuvausten lukemiseen sellaisissa kielissä kuin kiina.
 Tästä saattaa olla hyötyä korean ja japanin syöttömenetelmiä käytettäessä.
 
@@ -1190,6 +1194,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Korostus
 - Tekstityyli
 - Kirjoitusvirheet
+- Kielioppivirheet
 - Sivunumerot
 - Rivinumerot
 - Rivien sisennykset
@@ -1463,22 +1468,22 @@ Tällä voidaan ladata uudelleen sovellusmoduulit ja yleisliitännäiset ilman N
 Tässä kappaleessa on tietoja NVDA:n tukemista puhesyntetisaattoreista.
 Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on mahdollista ostaa ja ladata NVDA:lla käytettäväksi, on osoitteessa [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-[eSpeak http://espeak.sourceforge.net/]-puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
-NVDA käyttää ESpeakia oletusarvoisesti.
-Tämä syntetisaattori on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
+++ eSpeak NG ++
+[ESpeak NG https://github.com/espeak-ng/espeak-ng] -puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
+NVDA käyttää oletusarvoisesti tätä syntetisaattoria.
+Tämä on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
 
-Jokainen eSpeakin mukana tuleva puheääni puhuu eri kieltä.
+Jokainen eSpeak NG:n mukana tuleva puheääni puhuu eri kieltä.
 Tuettuja kieliä on yli 43.
 
 Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan erilaiselta.
 
 ++ Microsoft Speech API versio 4 (SAPI 4) ++
-SAPI4 on Microsoftin vanhempi ohjelmistopuhesyntetisaattoreiden standardi.
-Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
+SAPI4 on Microsoftin vanha ohjelmistopuhesyntetisaattoreiden standardi.
+NVDA tukee tätä edelleen käyttäjillä, joilla on jo SAPI 4 -syntetisaattoreita asennettuna.
+Microsoft ei kuitenkaan enää tue tätä, eikä tarvittavia komponentteja ole enää saatavilla.
 
-Mikäli SAPI 4 -puheääniä on asennettuna, mutta syntetisaattori ei näy NVDA:n syntetisaattorilistassa, on asennettava SAPI 4.0:n ajonaikaiset binäärit, jotka ovat ladattavissa osoitteesta http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
@@ -1524,8 +1529,8 @@ Ajuri tukee kaikkia Freedom Scientificin Focus- ja Pacmate-pistenäyttöjä, vai
 Jos käytät 64-bittistä Windowsia ja ajurit on jo asennettu jonkin toisen ruudunlukuohjelman mukana, edellä mainitun linkin takaa löytyvät ajurit on silti asennettava, sillä muissa ohjelmistoissa ei välttämättä ole kaikkia NVDA:n tarvitsemia tiedostoja.
 
 NVDA tunnistaa oletusarvoisesti pistenäytöt automaattisesti ja voi yhdistää niihin joko USB:n tai bluetoothin kautta.
-Yhteystyypin rajoittamiseksi voidaan kuitenkin myös itse valita USB- tai bluetooth-portti näytön asetuksia määritettäessä.
-Tästä voi olla hyötyä, jos Focus-näyttö halutaan yhdistää NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
+Yhteystyypin rajoittamiseksi voit kuitenkin myös itse valita USB-portin tai bluetoothin näytön asetuksia määritettäessä.
+Tästä voi olla hyötyä, jos haluat yhdistää Focus-näytön  NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1721,7 +1726,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 
 ++ HumanWare Brailliant BI/B ++
 [HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, BI 32, BI 40 ja B 80 mukaan lukien, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetoothilla.
-Mikäli näyttö kytketään USB:n kautta ja kun protokollaksi on määritetty HumanWare, sinun on ensin asennettava valmistajan toimittamat USB-ajurit.
+Mikäli näyttö yhdistetään USB:n kautta ja kun protokollaksi on määritetty HumanWare, sinun on ensin asennettava valmistajan toimittamat USB-ajurit.
 Jos protokollaksi on määritetty OpenBraille, USB-ajureita ei tarvita.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
@@ -1754,8 +1759,6 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense-, Braille EDGE- ja Smart Beetle -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
 USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
 Voit ladata ne täältä: http://www.himsintl.com/?c=2/13&uid=2319
-Valitse sivulta laitteesi ja lataa ajuri Window-Eyes-osiosta.
-Se on USB-yleisajuri, joka toimii myös NVDA:n kanssa, vaikka osiossa mainitaankin vain Window-Eyes.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2107,7 +2110,7 @@ BRLTTY huolehtii tällä hetkellä itse pistesyötöstä näytöissä, joissa on
 Tämän vuoksi NVDA:n syöttötaulukkoasetuksella ei ole merkitystä.
 
 Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
-Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/KeyTables/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.
+Katso [BRLTTY:n näppäinsidoslistoja http://mielke.cc/brltty/doc/KeyBindings/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.
 %kc:beginInclude
 || Nimi | BRLTTY-komento |
 | Vieritä pistenäyttöä taaksepäin | fwinlt (siirry yksi ikkuna vasemmalle) |

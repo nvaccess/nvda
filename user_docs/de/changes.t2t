@@ -3,13 +3,59 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.2 =
+Schwerpunkte sind u. a. die Ausgabe von Rechtschreibfehlern beim schreiben, die Ausgabe von  Grammatikfehlern in Microsoft Word; sowie Verbesserungen und Fehlerbehebungen in der Unterstützung von Microsoft Office.
+
+== Neue Funktionen ==
+- Wenn Sie im Internet Explorer und anderen MSHTML-Dokumenten mit den Schnellnavigationstasten A und Umschalt+A zur nächsten oder vorherigen Anmerkung springen, wird auch eingefügter oder gelöschter Text angesprungen. (#5691)
+- In Microsoft Excel wird bei Zellengruppen sowohl die Verschachtelungsebene als auch der Status (erweitert/reduziert) angezeigt. (#5690)
+- Beim zweimaligen Drücken der Tastenkombination für die Ansage der Textformatierungen werden nun die Informationen im Lesemodus angezeigt. (#4908)
+- In Microsoft Excel 2010 und neuer werden nun Zellschattierungen und Rahmen angesagt. Die automatische Ansage hierzu wird von der Einstellung für die Dokumentformatierungen in NVDA gesteuert. (#3683)
+- neue Braille-Übersetzungstabelle: griechisch (Koine). (#5393)
+- im Protokollbetrachter kann das Protokoll mit der Tastenkombination strg+s gespeichert werden. (#4532)
+- Über eine neue Option in den Tastatureinstellungen kann nun festgelegt werden, ob ein Signalton bei Rechtschreibfehlern während der Eingabe abgespielt werden soll. Dies gillt, sofern die Ausgabe von Rechtschreibfehlern aktiviert ist und im aktuellen Feld unterstützt wird. (#2024)
+- Die Ausgabe von Grammatikfehlern in Microsoft Word kann nun in den Einstellungen für Dokumentformatierung von NVDA ein- oder ausgeschaltet werden. (#5877)
+
+
+== Änderungen ==
+- im Lesemodus und in Eingabefeldern werden beide Eingabetasten nun gleich behandelt. (#5385)
+- NVDA verwendet nun espeeak NG. (#5651)
+- in Microsoft Excel wird die Spaltenüberschrift korrekt erkannt, wenn sich zwischen der aktuellen Zelle und der Spaltenüberschrift eine leere Zeile befindet. (#5396)
+- In Microsoft Excel werden die Zellkoordinaten nun vor den Überschriften angesagt. (#5396)
+
+
+== Fehlerkorrekturen ==
+- Wenn Sie die Schnellnavigationstasten verwenden, um zu einem Element eines Typs zu navigieren, der im aktuellen Dokument nicht unterstützt wird, wird dies von NVDA ausdrücklich angezeigt. (#5691)
+- Wenn Sie die Liste der Tabellenblätter in Excel aufrufen, werden nun auch Tabellenblätter einbezogen, die nur Diagramme enthalten. (#5698)
+- NVDA gibt nun nicht länger mehr belanglose Informationen beim Fensterwechseln in Java-Anwendungen mit mehrfachen Fenstern wie zum Beispiel in IntelliJ oder Android Studio wieder. (#5732)
+- In Scincilla-basierten Anwendungen wie Notepad++ wird die Brailleanzeige korrekt aktualisiert, wenn Sie den Cursor mit Hilfe der Braillezeile bewegen. (#5678)
+- NVDA stürzt nun nicht mehr ab, wenn Sie die Brailleausgabe aktivieren. (#4457)
+- in Word wird die Absatzeinrückung immer in der vom Anwender gewählten maßeinheit ausgegeben (z.B. Zentimeter). (#5804)
+- Wenn Sie eine Braillezeile verwenden, werden viele meldungen in Braille angezeigt, die zuvor nur gesprochen wurden. (#5557)
+- in zugänglichen Java-Anwendungen wird die Ebene in Baumstrukturen korrekt angezeigt. (#5766)
+- Probleme mit abstürzendem Adobe Flash und Firefox behoben. (#5367)
+- In Google Chrome und Chrome-basierten Browsern können Dokumente, die sich innerhalb von Web-Anwendungen befinden, im Lesemodus gelesen werden. (#5818)
+- In Google Chrome und Chrome-basierten Browsern können Sie NVDA in den Lesemodus zwingen, während Sie sich in Web-Anwendungen befinden. (#5818)
+- im Internet Explorer schaltet NVDA nicht mehr irrtümlich in den Lesemodus um, wenn der Fokus auf ein Element bewegt wird, dessen Eigenschaft Aria-ActivateDescendant verwendet wird. Dies betrifft beispielsweise die Vorschlagsliste im Adressfeld beim Erstellen einer Nachricht in Gmail. (#5676)
+- In Microsoft Word-Dokumenten mit großen Tabellen wird NVDA nun nicht mehr abstürzen, wenn die Ausgabe von Reihen-/Spaltenüberschriften aktiviert ist. (#5878)
+- In Microsoft Word wird NVDA Text nicht mehr länger als Überschrift anzeigen, wenn er zwar eine Gliederungsebene besitzt, nicht jedoch mit einer der integrierten Vorlagen für Überschriften formatiert wurde. (#5186)
+- Im Lesemodus für Microsoft Word funktionieren die Befehle zum Navigieren in/aus Containerobjekten auch für Tabellen. (#5883)
+
+
+== Änderungen für Entwickler ==
+- Die C++-Komponenten von NVDA werden nun mit Microsoft Visual Studio 2015 erzeugt. (#5592)
+- Sie können nun einen Text oder eine HTML-Meldung für den Anwender im Lesemodus darstellen, in dem Sie ui.browseableMessage verwenden. (#4908)
+- Wenn im Benutzerhandbuch der Befehl %kc:setting für eine Einstellung verwendet wird, die eine gemeinsame Tastenkombination für alle Tastaturschemen besitzt, wird nun eine Spalte in voller Breite verwendet. (#5739)
+
+
+
 = 2016.1 =
-Schwerpunkte dieser Version sind u.a. eine Option zum Reduzieren der Lautstärke anderer Anwendungen zugunsten von NVDA; Verbesserungen bei der Brailleausgabe und der Unterstützung von Braillezeilen; mehrere herausragende Neuerungen in der Unterstützung von Microsoft Office; sowie Fehlerkorrekturen im Lesemodus von Itunes.
+Schwerpunkte dieser Version sind unter anderem eine Option zum Reduzieren der Lautstärke anderer Anwendungen zugunsten von NVDA; Verbesserungen bei der Brailleausgabe und der Unterstützung von Braillezeilen; mehrere herausragende Neuerungen in der Unterstützung von Microsoft Office; sowie Fehlerkorrekturen im Lesemodus von Itunes.
 
 
-== neue Funktionen ==
-- neue Braille-Übersetzungstabellen: polnisches 8-Punkt-Computerbraille, mongolisch. (#5537 #5574)
-- Mit Hilfe zweier neuer Optionen im Braille-Einstellungsdialog kann nun die Form des Cursors auf der Braillezeile geändert Bzw. die Anzeige des Cursors ganz abgeschaltet werden. (#5198)
+== Neue Funktionen ==
+- Neue Braille-Übersetzungstabellen: Polnisches 8-Punkt-Computerbraille, Mongolisch. (#5537 #5574)
+- Mit Hilfe zweier neuer Optionen im Braille-Einstellungsdialog kann nun die Form des Cursors auf der Braillezeile geändert oder die Anzeige des Cursors ganz abgeschaltet werden. (#5198)
 - NVDA kann nun mittels Bluetooth mit HIMS Smart Beetle Braillezeilen kommunizieren. (#5607)
 - Ab Windows 8 und neuer kann NVDA die Lautstärke anderer Audio-Quellen optional reduzieren. Dies kann im Dialog Sprachausgabe mit der Option "Lautstärke anderer Audio-Quellen reduzieren" oder NVDA+Umschalt+d eingestellt werden. (#3830, #5575)
 - Unterstützung für folgende Braillezeilen: APH Refreshabraille im HID-Modus, Baum VarioUltra und Pronto! wenn diese mittels USB angeschlossen werden.  (#5609)
@@ -17,63 +63,67 @@ Schwerpunkte dieser Version sind u.a. eine Option zum Reduzieren der Lautstärke
 
 
 == Änderungen ==
-- Die ansage betonter Texte ist nun standardmäßig ausgeschaltet. (#4920)
-- Die Tastenkombination für den Auswahlschalter "Formel" in der Elementliste von Excel wurde in alt+r geändert. Jetzt kollidiert sie nicht mehr mit alt+f für das Suchfeld. (#5527)
+- Die Ansage betonter Texte ist nun standardmäßig ausgeschaltet. (#4920)
+- Die Tastenkombination für den Auswahlschalter "Formel" in der Elementliste von Excel wurde in Alt+R geändert. Jetzt kollidiert sie nicht mehr mit Alt+F für das Suchfeld. (#5527)
 - Liblouis Braille-Übersetzer auf 2.6.5 aktualisiert. (#5574)
 - Das Wort "Text" wird nun nicht länger ausgegeben, wenn der Fokus oder der NVDA-Cursor zu Text-Objekten bewegt wird. (#5452)
 
 == Fehlerbehebungen ==
-- In Itunes 12 wird der Lese-Modus  korrekt aktualisiert, wenn eine Seite im itunes Store neu geladen wird. (#5191)
+- In iTunes 12 wird der Lesemodus  korrekt aktualisiert, wenn eine Seite im itunes Store neu geladen wird. (#5191)
 - Die Schnellnavigation für Überschriften bestimmter Ordnung funktioniert nun auch dann korrekt, wenn die Ebene der Überschrift aus Gründen der Barrierefreiheit mittels Aria-level festgelegt wurde. Dies betrifft Internet Explorer und mshtml-Dokumente. (#5434)
-- in Spotify springt der Fokus nicht mehr regelmäßig auf unbekannte Objekte. (#5439)
+- In Spotify springt der Fokus nicht mehr regelmäßig auf unbekannte Objekte. (#5439)
 - Wenn Sie von einer anderen Anwendung aus zurück zu Spotify wechseln, wird der Fokus korrekt wiederhergestellt. (#5439)
 - Das Ein- und Ausschalten des Lesemodus wird nun auch in Braille angezeigt. (#5239)
 - Der Schalter "Start" auf der Taskleiste wird nicht mehr als Liste Bzw. als "Ausgewählt" ausgegeben. (#5178)
 - Wenn Sie in Microsoft Outlook Nachrichten schreiben, werden meldungen wie "eingefügt" nicht mehr angezeigt. (#5486)
-- Wenn Sie in einem Editorfenster Text markieren, wird die Braillezeile ggf. korrekt weitergescrollt. (#5410)
-- nvda wird nicht mehr abstürzen, wenn Sie eine Eingabeaufforderung in Windows 10 mit alt+f4 schließen. (#5343)
+- Wenn Sie in einem Editorfenster Text markieren, scrollt die Braillezeile korrekt weiter. (#5410)
+- NVDA stürzt nicht mehr ab, wenn Sie eine Eingabeaufforderung in Windows 10 mit Alt+F4 schließen. (#5343)
 - Wenn Sie in der Elementliste im Lesemodus den Elementtyp ändern, wird das Suchfeld automatisch geleert. (#5511)
 - Wenn Sie in Mozilla-Anwendungen die Maus auf ein Eingabefeld bewegen, wird nicht mehr der gesamte Feldinhalt gelesen, sondern (wie erwartet) das Wort, die Zeile etc. unter dem Mauszeiger. (#5535)
 - Wenn Sie in Mozilla-Anwendungen die Maus innerhalb von Eingabefeldern bewegen, wird das Lesen nicht bei Elementen unterbrochen, die sich innerhalb der zu lesenden Einheit (Wort, Zeile etc.) befinden. (#2160, #5535)
 - Wenn Sie die Webseite shoprite.com mit dem Internet Explorer aufsuchen, wird deren Inhalt nun erwartungsgemäß angezeigt. (Hierbei werden insbesondere ungültig gesetzte Sprachenauszeichnungen besser verarbeitet.) (#5569)
-- in Microsoft Word werden Änderungen am Dokument nur dann durch NVDA mitgeteilt, wenn sie auch tatsächlich im Dokument ausgezeichnet werden. Hierzu zählen beispielsweise Meldungen über eingefügten oder gelöschten Text. (#5566)
+- In Microsoft Word werden Änderungen am Dokument nur dann durch NVDA mitgeteilt, wenn sie auch tatsächlich im Dokument ausgezeichnet werden. Hierzu zählen beispielsweise Meldungen über eingefügten oder gelöschten Text. (#5566)
 - Wenn ein Umschalter fokusiert wird, gibt NVDA aus, wenn dieser von gedrückt zu nicht gedrückt wechselt. (#5441)
 - Die Ansage bei Änderung der Form des Mauszeigers funktioniert nun ordnungsgemäß. (#5595)
 - Bei der Ansage von Zeileneinrückungen werden geschützte Leerzeichen nun wie normale Leerzeichen behandelt. Dies führte zuvor zu Ansagen wie "Leerzeichen Leerzeichen Lerzeichen" anstatt von 3 Leerzeichen. (#5610)
 - Beim Schließen der Kandidatenliste bei der Eingabe komplexer Sonderzeichen wird der Fokus korrekt wiederhergestellt. (#4145)
-- Wenn die Menübänder in Office 2013 und neuer so wingestellt werden, dass sie nur Registerkarten anzeigen, werden sie von NVDA wie erwartet dargestellt, wenn eine Registerkarte aktiviert wird. (#5504)
+- Wenn die Menübänder in Office 2013 und neuer so eingestellt werden, dass sie nur Registerkarten anzeigen, werden sie von NVDA wie erwartet dargestellt, wenn eine Registerkarte aktiviert wird. (#5504)
 - Korrekturen und Verbesserungen beim Erkennen und Einbinden von Touch-Screen-Gesten: (#5652)
 - Wischgesten werden in der Eingabehilfe nicht mehr erkannt. (#5652)
 - Wenn sich in Microsoft Excel ein Kommentar auf eine verbundene Zelle bezieht, wird er korrekt erkannt. (#5704)
-- Fehler behoben, wonach NVDA in sehr seltenen Fällen den Inhalt von Tabellenblättern in Excel nicht angezeigt hat. (#5705)
+- Fehler behoben, wonach NVDA in sehr seltenen Fällen den Inhalt von Tabellenblättern in Excel nicht angezeigt hat, während die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" aktiviert ist. (#5705)
 - Fehler bei der Braille-Anzeige von koreanischen Zeichen behoben. (#5640)
+- Die Eingabe von asiatischen Sonderzeichen in Google Chrome funktioniert nun erwartungsgemäß. (#4080)
+- Beim Durchsuchen von Apple Music im Itunes Store wird der Lesemodus korekt aktualisiert. (#5659)
+- Wenn Sie in Microsoft Excel mit Umschalt+F11 ein neues Tabellenblatt erstellen, wird diCursorposition im Tabellenblatt korrekt angezeigt. (#5689)
+
 
 
 == Änderungen für Entwickler ==
 - Sie können die neue Klasse audioDucking.audioDucker verwenden, wenn Sie beim Abspielen von Audiomaterial die Lautstärke anderer Audioquellen reduzieren wollen. (#3830)
-- Der Konstruktor von nvwave.WavePlayer besitzt nun ein Arguzment namens wantDucking, mit dessen Hilfe Sie angeben können, ob während der Wiedergabe die Lautstärke anderer Audioquellen reduziert werden soll. (#3830)
- - Wenn die Funktion aktiviert ist (Standard), sollte zu gegebener Zeit WavePlayer.idle aufgerufen werden.
-- die Brailleausgabe wurde verbessert: (#5609)
- - Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
- - Data is written to thread-safe braille display drivers in the background, thus improving performance.
- - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
- - hwIo.Hid provides support for braille displays communicating via USB HID.
- - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
-- neue Eigenschaften für Touch-screen-Gesten: (#5652)
+- Der Konstruktor von nvwave.WavePlayer besitzt nun ein Argument namens wantDucking, mit dessen Hilfe Sie angeben können, ob während der Wiedergabe die Lautstärke anderer Audioquellen reduziert werden soll. (#3830)
+ - Wenn die Funktion aktiviert (ist Standard), sollte zu gegebener Zeit WavePlayer.idle aufgerufen werden.
+- Die Brailleausgabe wurde verbessert: (#5609)
+ - (en) Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
+ - (en) Data is written to thread-safe braille display drivers in the background, thus improving performance.
+ - (en) hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
+ - (en) hwIo.Hid provides support for braille displays communicating via USB HID.
+ - (en) hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+- Neue Eigenschaften für Touch-screen-Gesten: (#5652)
  - Das Objekt MultitouchTracker enthält nun eine Eigenschaft namens childTrackers. Hier werden die einzelnen Teile einer Mehrfachgeste gespeichert. Ein doppeltes Tippen mit zwei Fingern enthält zum Beispiel zwei zweifinger-Tippgesten. Die Zweifinger-Tippgesten enthalten ihrerseits zwei Tippgesten.
  - MultiTouchTracker Objekte enthalten außerdem eine Eigenschaft rawSingleTouchTracker, falls der Tracker das Ergebnis einer Geste ist, die mit einem Finger ausgeführt wird. Der Tracker gestattet Ihnen den Zugriff auf die vom Betriebssystem zurückgegebene ID des Fingers. Er erlaub Ihnen außerdem festzustellen, ob der Finger momentan (noch) den Bildschirm berührt.
  - TouchInputGestures enthalten nun X- und Y-Koordinaten. Dadurch ist es nicht länge nötig, auf den Tracker zuzugreifen.
- - TouchInputGesturs enthalten nun eine Eigenschaft namens preheldTracker.  Diese Eigenschaft gibt über Finger auskunft, die auf dem Bildschirm gehalten werden.
-- es werden zwei neue Touchscreen-Gesten erkannt: (#5652)
- - mehrfachgesten mit Tippen und Halten (z.B. zweifaches Tippen und Halten). 
- - die Angabe losgelassener Finger wurde verallgemeinert (z.b. halten+Wischen für ein Halten und Wischen mit einem Finger).
+ - TouchInputGestures enthalten nun eine Eigenschaft namens preheldTracker.  Diese Eigenschaft gibt über Finger auskunft, die auf dem Bildschirm gehalten werden.
+- Es werden zwei neue Touchscreen-Gesten erkannt: (#5652)
+ - Mehrfachgesten mit Tippen und Halten (Beispiel: Zweifaches Tippen und halten). 
+ - Die Angabe losgelassener Finger wurde verallgemeinert (z.b. halten+Wischen für ein Halten und Wischen mit einem Finger).
  
 
 = 2015.4 =
-Schwerpunkte dieser Version sind u.a. Leistungsverbesserungen in Windows 10; Unterstützung für das Center für erleichterte Bedienung in Windows 8 und neuer; Verbesserungen an Microsoft Excel wie z.B. das Auflisten und umbenennen von Tabellenblättern und der Zugriff auf gesperrte zellen in geschützten Arbeitsblättern; sowie die Unterstützung erweiterter Eingabefelder in Mozilla Firefox, Google Chrome und Mozilla Thunderbird.
+Schwerpunkte dieser Version sind unter anderem Leistungsverbesserungen in Windows 10; Unterstützung für das Center für erleichterte Bedienungen in Windows 8 und neuer; Verbesserungen an Microsoft Excel wie zum Beispiel das Auflisten und umbenennen von Tabellenblättern und der Zugriff auf gesperrte zellen in geschützten Arbeitsblättern; sowie die Unterstützung erweiterter Eingabefelder in Mozilla Firefox, Google Chrome und Mozilla Thunderbird.
 
 == Neue Funktionen ==
-- Unter Windows 8 und neuer taucht NVDA nun im Center für erleichterte Bedienung auf. (#308)
+- Unter Windows 8 und neuer taucht NVDA nun im Center für erleichterte Bedienungen auf. (#308)
 - Beim Navigieren zwischen Zellen in Excel werden Änderungen an Textformatierungen ausgegeben, sofern die entsprechenden Optionen in den Einstellungen für Textformatierungen aktiviert sind. (#4878)
 - Eine neue Option zum Ansagen von betontem Text hinzugefügt. Dies betrifft momentan nur die html-Tags em und strong im Internet Explorer und anderen MSHTML-Elementen. (#4920)
 - Falls die Ansage von Dokumentänderungen in den Einstellungen für Dokumentformatierungen aktiviert ist, werden nun auch eingefügte und gelöschte Textpassagen ausgegeben. Dies betrifft momentan den Internet Explorer und  mshtml-Dokumente. (#4920)
@@ -83,8 +133,8 @@ Schwerpunkte dieser Version sind u.a. Leistungsverbesserungen in Windows 10; Unt
 - In Microsoft Excel, NVDA now reports any input messages set by the sheet author on cells. (#5051) (en)
 - Unterstützung für Baum Pronto! V4 und VarioUltra Braillezeilen bei Bluetooth-Verbindungen. (#3717)
 - Unterstützung für erweiterte Eingabefelder in Mozilla-Anwendungen wie z.B. Google Docs bei Verwendung einer Braillezeile in Mozilla Firefox und html-Mail in Mozilla Thunderbird. (#1668)
-- Unterstützung für erweiterte Eingabefelder in Google Chrome und chrome-basierten Browsern wie z.B. Google Docs unter Verwendung einer Braillezeile. (#2634)
- - Dies erfordert Chrome Version 47 oder neuer.
+- Unterstützung für erweiterte Eingabefelder in Google Chrome und Chrome-basierten Browsern wie zum Beispiel Google Docs unter Verwendung einer Braillezeile. (#2634)
+ - Erforderlich ist Chrome Version 47 oder neuer.
 - Im Lesemodus in Microsoft Excel können Sie nun zu gesperrten Zellen in geschützten Arbeitsblättern navigieren. (#4952)
 
 
@@ -92,9 +142,9 @@ Schwerpunkte dieser Version sind u.a. Leistungsverbesserungen in Windows 10; Unt
 - Die Option "Dokumentänderungen ausgeben " in den Einstellungen für Dokumentformatierungen ist nun standardmäßig aktiviert. (#4920)
 - Beim Zeichenweisen Navigieren in Word-Dokumenten werden nun weniger Informationen angezeigt, sofern die Option zum Verfolgen von Änderungen aktiviert ist. Dies erlaubt eine flüssigere Navigation. Um mehr Informationen über Änderungen im Dokument zu erhalten, verwenden Sie die elementliste. (#4920)
 - Liblouis Braille-Übersetzer auf 2.6.4 aktualisiert. (#5341)
-- einige Sonderzeichen (einschließlich grundlegende mathematische zeichen) wurden in die Ebene einige verschoben, sodass sie standardmäßig ausgesprochen werden (#3799)
+- Einige Sonderzeichen (einschließlich grundlegende mathematische zeichen) wurden in die Ebene einige verschoben, sodass sie standardmäßig ausgesprochen werden (#3799)
 - Sofern die Sprachausgabe dies unterstützt, wird jetzt bei Runden Klammern und beim Strich (–) eine Sprechpause eingelegt. (#3799)
-- beim Markieren von Text wird jetzt der (de)markierte Text vor dem Ausdruck (de)markiert gesprochen. (#1707)
+- Beim Markieren von Text wird jetzt der (de)markierte Text vor dem Ausdruck (de)markiert gesprochen. (#1707)
 
 
 == Fehlerbehebungen ==
@@ -105,22 +155,22 @@ Schwerpunkte dieser Version sind u.a. Leistungsverbesserungen in Windows 10; Unt
  - Wenn die Option zum Start nach der Anmeldung mit einer vorherigen Version aktiviert wurde, müssen Sie sie aus- und wieder einschalten, damit die Änderungen wirksam werden. Folgen Sie dieser Anleitung:
   + Öffnen Sie die allgemeinen Einstellungen.
   + Deaktivieren Sie die Option "NVDA automatisch nach der Anmeldung starten".
-  + Betätigen Sie den OK-Schalter.
-  + Öffnen Sie die allgemeinen Einstellungen erneut.
+  + Betätigen Sie den Schalter "OK".
+  + Öffnen Sie die Allgemeinen Einstellungen erneut.
   + Aktivieren Sie die Option "NVDA automatisch nach der Anmeldung starten".
-  + Betätigen Sie den OK-Schalter.
+  + Betätigen Sie den Schalter "OK".
 - Leistungsverbesserungen für UI Automation einschließlich Windows-Explorer und Task-Manager. (#5293) 
 - NVDA schaltet nun korrekt in den Fokusmodus um, wenn Sie sich mit Tab auf schreibgeschützte Aria-Elemente bewegen. Dies betrifft Firefox und andere Gecko-Anwendungen. (#5118)
-- Wenn Sie mit einem Touchscreen arbeiten, zeigt nvda nun korrekterweise "kein voriges Objekt" an, wenn sie vom ersten objekt auf dem Bildschirm aus nach links streichen.
+- Wenn Sie mit einem Touchscreen arbeiten, zeigt NVDA nun korrekterweise "kein voriges Objekt" an, wenn sie vom ersten objekt auf dem Bildschirm aus nach links streichen.
 - Problem behoben, wenn Sie im Dialog einstellungen/eingaben mehrere Wörter in das Suchfeld eingeben. (#5426)
 - NVDA wird nun nicht mehr abstürzen, wenn Sie eine Humanware bi/b-Braillezeile über usb erneut anschließen. (#5406)
 - In languages with conjunct characters, character descriptions now work as expected for upper case English characters. (#5375) (en)
-- beim Aufruf des Startmenüs von Windows 10 sollte NVDA nun nicht mehr abstürzen. (#5417)
+- Beim Aufruf des Startmenüs von Windows 10 sollte NVDA nun nicht mehr abstürzen. (#5417)
 - In Skype für Desktop werden Benachrichtigungen, welche angezeigt werden, bevor die vorangegangenene Benachrichtigung verschwindet, nun ausgegeben. (#4841, #5405)
 - Benachrichtigungen werden in Skype für Desktop7.12 und neuer richtig ausgegeben. (#5405)
 - NVDA behandelt nun das Schließen von Kontextmenüs in Anwendungen wie Jarte korrekt. (#5302)
-- in Windows 7 und neuer werden Farben in Anwendungen wie Wordpad richtig ausgegeben. (#5352)
-- Wenn Sie in Microsoft Powerpoint während der Bearbeitung von Text die Eingabetaste drücken, wird automatisch hinzugefügter Text (wie z.B. Aufzählungen oder Numerierungen) ausgegeben. (#5360)
+- In Windows 7 und neuer werden Farben in Anwendungen wie Wordpad richtig ausgegeben. (#5352)
+- Wenn Sie in Microsoft PowerPoint während der Bearbeitung von Text die Eingabetaste drücken, wird automatisch hinzugefügter Text (wie z.B. Aufzählungen oder Numerierungen) ausgegeben. (#5360)
 
 = 2015.3 =
 Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die Möglichkeit Schnellnavigationstasten des Lesemodus zu deaktivieren (sinnvoll in bestimmten Internet-Anwendungen), Verbesserungen für den Internet Explorer sowie die Behebung von Fehlern, die beim schreiben in bestimmten Programmen zu verfälschtem Text geführt haben, wenn eine Braillezeile in Betrieb war.
@@ -132,7 +182,7 @@ Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die
 - Suchvorschläge im Startbildschirm von Windows 10 werden automatisch ausgegeben. (#5049)
 - Unterstützung der Braillezeillen EcoBraille 20, EcoBraille 40, EcoBraille 80 und EcoBraille Plus. (#4078)
 - Im Lesemodus können Sie nun die Schnellnavigation mittels NVDA+Umschalt+Leertaste ein- und ausschalten. Bei ausgeschalteter Schnellnavigation werden Buchstaben an die aktive Anwendung weitergereicht. Dies ist in einigen Internet-Anwendungen wie GMail, Twitter und Facebook hilfreich. (#3203)
-- Neue Brailleübersetzungstabellen: Finnisch 6-Punkt, Irische Vollschrift, Irische Kurzschrift, Koreanische Vollschrift (2006), Koreanische Kurzschrift (2006). (#5137, #5074, #5097)
+- Neue Braille-Übersetzungstabellen: Finnisch 6-Punkt, Irische Vollschrift, Irische Kurzschrift, Koreanische Vollschrift (2006), Koreanische Kurzschrift (2006). (#5137, #5074, #5097)
 - Die Qwertz-Tastatur der Braillezeile BRAILLEX Live Plus von Papenmeier wird nun unterstützt. (#5181)
 - Experimentelle Unterstützung für den Web-Browser Microsoft Edge sowie dessen Unterbau in Windows 10. (#5212)
 - Neue Sprache: Kanadisch.
@@ -145,8 +195,8 @@ Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die
 - Wenn Sie die Schnellnavigationstasten verwenden, werden Listeneinträge ignoriert, die zu Gestaltungszwecken eingefügt wurden. (#4204)
 - In Firefox erstellt NVDA keine Beschreibungen mehr für ARIA-Registerkarten, die den gesamten Inhalt der Registerkarte enthalten. (#4638)
 - Wenn Sie im Internet Explorer oder anderen MSHTML-Elementen in einen Abschnitt, einen Artikel oder einen Dialog navigieren, wird nicht mehr der gesamte Inhalt als Name angezeigt. (#5021, #5025) 
-- Wenn Sie eine Braillezeile von Baum, Humanware oder Aph verwenden, funktioniert die Brailletastatur wieder, nachdem Sie andere Tasten an der Braillezeile verwendet haben. (#3541)
-- Wenn Sie in windows 10 mittels Alt+Tab bzw. Alt+Umschalt+Tab zwischen Anwendungen wechseln, werden keine überflüssigenInformationen angesagt. (#5116)
+- Wenn Sie eine Braillezeile von Baum, Humanware oder APH verwenden, funktioniert die Brailletastatur wieder, nachdem Sie andere Tasten an der Braillezeile verwendet haben. (#3541)
+- Wenn Sie in Windows 10 mittels Alt+Tab bzw. Alt+Umschalt+Tab zwischen Anwendungen wechseln, werden keine überflüssigenInformationen angesagt. (#5116)
 - Wenn Sie bestimmte Anwendungen wie Microsoft Outlook mit einer Braillezeile verwenden, wird diese nun nicht mehr verstümmelt dargestellt. (#2953)
 - Im Internet Explorer und anderen MSHTML-Dokumenten werden nun sich ändernde Elemente korrekterweise fokussiert. (#5040)
 - In Microsoft Word wird nun die Anzeige auf der Braillezeile korrekt aktualisiert, wenn Sie die Schnellnavigation verwenden. (#4968)

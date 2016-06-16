@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
-"PO-Revision-Date: 2016-02-15 09:17+0800\n"
+"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"PO-Revision-Date: 2016-05-25 17:19+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -327,6 +327,11 @@ msgstr "愛爾蘭語二級點字"
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "古吉拉特語一級點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Koine Greek"
+msgstr "通用希臘語"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -753,25 +758,28 @@ msgstr "自動偵測"
 
 #. Translators: Reported before braille input in input help mode.
 msgid "braille"
-msgstr "點顯器"
+msgstr "點字"
 
+# 為使整個點顯器按鍵的幫助模式中報讀文字一致，此條目的 dot 未被翻譯。
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
-msgstr "點字 句點並空格"
+msgstr "space 加"
 
+# 為使整個點顯器按鍵的幫助模式中報讀文字一致，此條目不被翻譯，以半形空格替代。
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
-msgstr "點字 句點"
+msgstr " "
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
 msgstr "space"
 
-msgid "focus mode"
+msgid "Focus mode"
 msgstr "焦點模式"
 
-msgid "browse mode"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
 msgstr "瀏覽模式"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
@@ -800,8 +808,8 @@ msgid "Lists various types of elements in this document"
 msgstr "列出在此文件中不同的元件種類"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
-msgstr "啟動文件中目前的物件"
+msgid "Activates the current object in the document"
+msgstr "啟動目前在文檔中的物件"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1304,7 +1312,8 @@ msgstr "跳到清單或表格的開頭"
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
 msgstr "到了底部"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -2435,7 +2444,7 @@ msgstr "邊界"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "次方號"
+msgstr "插入點"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
@@ -2587,13 +2596,11 @@ msgstr "背景色"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "上標"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "下標"
 
@@ -2685,7 +2692,7 @@ msgstr "子功能表"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 msgid "protected"
-msgstr "保密"
+msgstr "受保護"
 
 #. Translators: This is presented when a required form field is encountered.
 msgid "required"
@@ -2865,11 +2872,11 @@ msgid ""
 msgstr "從目前游標位置往前找先前輸入的字串"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
+msgid "No selection"
 msgstr "沒有選取文字"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+msgid "Copied to clipboard"
 msgstr "複製到剪貼簿"
 
 #. Translators: The name of a category of NVDA commands.
@@ -2969,7 +2976,7 @@ msgid ""
 msgstr "讀出系統焦點所在的一行，連按兩下拼讀這一行"
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+msgid "Left click"
 msgstr "左擊"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2977,7 +2984,7 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "在目前鼠標位置點擊滑鼠左鍵一次"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+msgid "Right click"
 msgstr "右擊"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2985,11 +2992,11 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "在目前鼠標位置點擊滑鼠右鍵一次"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+msgid "Left mouse button unlock"
 msgstr "滑鼠左鍵解鎖"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
+msgid "Left mouse button lock"
 msgstr "滑鼠左鍵鎖定"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
@@ -2997,16 +3004,20 @@ msgid "Locks or unlocks the left mouse button"
 msgstr "將滑鼠左鍵鎖定或解鎖"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
+msgid "Right mouse button unlock"
 msgstr "滑鼠右鍵解鎖"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
+msgid "Right mouse button lock"
 msgstr "滑鼠右鍵鎖定"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "將滑鼠右鍵鎖定或解鎖"
+
+#, python-format
+msgid "Selected %s"
+msgstr "%s，已選取"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3096,7 +3107,7 @@ msgstr "讀出字體大小 關"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "讀出字體大小 關"
+msgstr "讀出字體大小 開"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -3168,7 +3179,7 @@ msgstr "讀出文字樣式 關"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "讀出文字樣式 關"
+msgstr "讀出文字樣式 開"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3185,6 +3196,18 @@ msgstr "讀出拼錯字 開"
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "切換讀出拼錯字的開關"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "關閉讀出文法錯誤"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "開啟讀出文法錯誤"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
+msgstr "切換讀出報告文法錯誤的開關"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -3370,7 +3393,7 @@ msgstr "切換讀出可點擊的開關"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
+msgid "Symbol level %s"
 msgstr "符號等級%s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
@@ -3379,7 +3402,7 @@ msgid ""
 msgstr "循環切換符號報讀等級，以決定會報讀哪些符號。"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+msgid "Object has no location"
 msgstr "找不到物件的所在位置"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3418,7 +3441,7 @@ msgstr "切換前一個檢閱模式，可切換的模式包括物件、文件和
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+msgid "No navigator object"
 msgstr "沒有瀏覽物件"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3444,7 +3467,7 @@ msgid ""
 msgstr "讀出瀏覽游標所在的文字或物件的位置資訊。按兩下可進一步提供詳細的內容。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
+msgid "Move to focus"
 msgstr "移到系統焦點"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
@@ -3456,20 +3479,20 @@ msgstr "將瀏覽游標移到目前系統焦點或編輯游標所在位置"
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
+msgid "No focus"
 msgstr "沒有焦點"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
+msgid "Move focus"
 msgstr "移動焦點"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "沒有編輯游標"
+msgid "No caret"
+msgstr "無法編輯"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr "按一下將系統焦點移至瀏覽物件，按兩下將編輯游標移至瀏覽游標"
 
@@ -3482,6 +3505,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "將瀏覽游標移到其母物件"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "沒有後一個物件了"
 
@@ -3490,6 +3514,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "移到後一個瀏覽物件"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "沒有前一個物件了"
 
@@ -3506,7 +3531,7 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "移至第一個子瀏覽物件"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
+msgid "Activate"
 msgstr "啟動"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
@@ -3520,7 +3545,7 @@ msgid ""
 msgstr "執行目前瀏覽物件的預設動作，例如若是一個按鈕的物件，就按下。"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+msgid "Top"
 msgstr "到了頂端"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3573,7 +3598,8 @@ msgid ""
 "speaks it"
 msgstr "瀏覽游標移到後一個字詞，並讀出。"
 
-msgid "left"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
 msgstr "到了左端"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
@@ -3598,7 +3624,8 @@ msgstr ""
 "讀出瀏覽游標所在的字元，連按兩下讀出字詞解釋，連按三下讀出字元的十進位值和十"
 "六進位值。"
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
 msgstr "到了右端"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3614,15 +3641,15 @@ msgid ""
 msgstr "瀏覽游標移到行尾的字元，並讀出。"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "語音模式關閉"
+msgid "Speech mode off"
+msgstr "語音模式關"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+msgid "Speech mode beeps"
 msgstr "語音模式嗶嗶聲"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+msgid "Speech mode talk"
 msgstr "語音模式開啟"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3654,30 +3681,33 @@ msgstr "開啟NVDA功能表"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr "從目前瀏覽游標所在的文字往後報讀直到結尾，瀏覽游標會跟隨移動。"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
-msgstr ""
-"在可編輯方塊或文件中，從目前游標所在的位置往後讀出直到結尾，編輯游標會跟隨移"
-"動。"
+msgstr "從目前游標所在位置往後讀到結尾，編輯游標跟隨移動。"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
 msgstr "沒有格式資訊"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "格式設定"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "讀出文件中目前瀏覽游標所在字元的格式資訊。"
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"讀出文件中目前瀏覽游標所在字元的格式資訊，連按兩次，在瀏覽模式顯示資訊。"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr "讀出目前焦點所在的物件，連按兩次，則拼讀其資訊。"
 
 #. Translators: Reported when there is no status line for the current program or window.
@@ -3686,7 +3716,7 @@ msgstr "找不到狀態列"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "讀出目前應用程式的狀態列，並將瀏覽游標移至該處。連按兩次，則拼讀其資訊。"
@@ -3704,7 +3734,7 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "切換鼠標移動時，讀出指向的物件或字詞的開關"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+msgid "No title"
 msgstr "沒有標題"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3715,7 +3745,7 @@ msgid ""
 msgstr "讀出目前視窗標題，連按兩下拼讀標題，連按三下複製標題到剪貼簿。"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+msgid "Speaks the current foreground object"
 msgstr "讀出目前的前景物件"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3725,19 +3755,19 @@ msgid ""
 msgstr "記錄目前瀏覽物件資訊，可由開啟事件記錄檢視器來供程式開發者查看"
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+msgid "No progress bar updates"
 msgstr "進度列改變時不報讀"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+msgid "Speak progress bar updates"
 msgstr "進度列改變時讀出來"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+msgid "Beep for progress bar updates"
 msgstr "進度列改變時發出嗶嗶聲"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+msgid "Beep and speak progress bar updates"
 msgstr "進度列改變時，發出嗶嗶聲並讀出來。"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3788,7 +3818,7 @@ msgid ""
 msgstr "切換瀏覽游標跟隨系統焦點的開關"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+msgid "No system battery"
 msgstr "沒有安裝電池"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3806,7 +3836,7 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "剩餘{hours:d}小時{minutes:d}分鐘"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "當沒有接交流電源時，讀出電池狀態和可用剩餘時間"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -4062,19 +4092,11 @@ msgid ""
 msgstr ""
 "不需重啟NVDA即可重新載入應用程式模組及通用外掛程式，有利於 NVDA程式開發者"
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "沒有後一個物件了"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "將瀏覽游標移到並讀出後一個項目"
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "沒有前一個物件了"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4088,7 +4110,7 @@ msgid "%s mode"
 msgstr "%s模式"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+msgid "Cycles between available touch modes"
 msgstr "在可用的觸控模式間循環"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4121,10 +4143,6 @@ msgstr "模擬系統鍵盤按鍵"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "雜項"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "瀏覽模式"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4573,7 +4591,7 @@ msgstr "模擬在系統鍵盤上按%s"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "空白"
+msgstr "空航"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -4613,11 +4631,6 @@ msgstr "移除所選"
 msgid "done dragging"
 msgstr "拖曳完成"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "第%s級"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4642,6 +4655,11 @@ msgstr "有%s欄"
 #, python-format
 msgid "with %s rows"
 msgstr "有%s列"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "第%s級"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4676,6 +4694,14 @@ msgstr "樣式%s"
 msgid "default style"
 msgstr "預設樣式"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} 到 {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4695,6 +4721,10 @@ msgstr "{color}"
 msgid "{backgroundColor} background"
 msgstr "背景色為{backgroundColor}"
 
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "背景圖案 {pattern}"
+
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
 #, python-format
@@ -4703,11 +4733,11 @@ msgstr "第%s行"
 
 #. Translators: Reported when text is marked as having been inserted
 msgid "inserted"
-msgstr "已新增"
+msgstr "已插入"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
-msgstr "沒有新增"
+msgstr "沒有插入"
 
 #. Translators: Reported when text is marked as having been deleted
 msgid "deleted"
@@ -4783,7 +4813,6 @@ msgstr "沒有加底線"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "基準線"
 
@@ -4875,7 +4904,7 @@ msgstr "垂直預設對齊"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "已沒有註解了"
+msgstr "離開註解"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -4884,6 +4913,14 @@ msgstr "拼錯字"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "離開拼錯字"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "文法錯誤"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "離開文法錯誤"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -5040,6 +5077,10 @@ msgstr "移動"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "抬起"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA 訊息"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -5231,7 +5272,7 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
+msgid "Edge of table"
 msgstr "表格的邊緣了"
 
 #. Translators: The description of an NVDA command.
@@ -5390,8 +5431,8 @@ msgid "Appointment {subject}, {time}"
 msgstr "預約時間 {subject}，{time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
-msgstr "已有預約了！"
+msgid "Has appointment"
+msgstr "已有預約了"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -5707,6 +5748,12 @@ msgstr "停止"
 msgid "Record"
 msgstr "錄音"
 
+msgid "left"
+msgstr "到了左端"
+
+msgid "right"
+msgstr "到了右端"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -5808,7 +5855,7 @@ msgstr "設定還原至預設值"
 
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "NVDA在安全模式下，不能儲存設定"
+msgstr "不能儲存設定- NVDA 在安全模式下"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -5816,11 +5863,11 @@ msgstr "設定存好了"
 
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
-msgstr "無法儲存設定，可能是NVDA程式位於唯讀的檔案系統所造成。"
+msgstr "無法儲存設定，可能是一個唯讀檔案系統。"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "另一個 NVDA 設定對話方塊已打開。請先把它關閉。"
+msgstr "另一個  NVDA 設定對話方塊已開啟，請先將其關閉。"
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -5829,7 +5876,7 @@ msgstr "通用語音字庫"
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #, python-format
 msgid "Voice dictionary (%s)"
-msgstr "特定語音字庫(%s)"
+msgstr "特定語音字庫 (%s)"
 
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 msgid "Temporary dictionary"
@@ -5837,36 +5884,36 @@ msgstr "暫存字庫"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
-msgstr "關於NVDA"
+msgstr "關於 NVDA"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
-msgstr "一般設定...(&G)"
+msgstr "一般設定 (&G)..."
 
 msgid "General settings"
 msgstr "一般設定"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
-msgstr "語音合成...(&S)"
+msgstr "語音合成 (&S)..."
 
 msgid "Change the synthesizer to be used"
 msgstr "變更了語音合成軟體"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "語音設定...(&V)"
+msgstr "語音設定 (&V)..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "設定報讀的語音、速度、音調和音量"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "點字設定...(&R)"
+msgstr "點字設定 (&R)..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "鍵盤設定...(&K)"
+msgstr "鍵盤設定 (&K)..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -5875,21 +5922,21 @@ msgstr "選擇套用哪一個鍵盤配置、設定是否邊打邊念字元、字
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "鼠標設定...(&M)"
+msgstr "鼠標設定 (&M)..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "切換讀出鼠標所指物件之鼠標圖案改變的開關"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
-msgstr "瀏覽游標...(&C)"
+msgstr "瀏覽游標 (&C)..."
 
 msgid "Configure how and when the review cursor moves"
 msgstr "設定瀏覽游標移動方式"
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "輸入法組字設定...(&I)"
+msgstr "輸入法組字設定 (&I)..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -5898,63 +5945,63 @@ msgstr "設定如何讀出某些語系輸入法的組字碼及其候選字"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
-msgstr "物件顯示...(&O)"
+msgstr "物件顯示 (&O)..."
 
 msgid "Change reporting of objects"
 msgstr "修改物件報讀的設定"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "瀏覽模式...(&B) "
+msgstr "瀏覽模式 (&B)..."
 
 msgid "Change virtual buffers specific settings"
 msgstr " 修改與虛擬緩衝相關的設定"
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
-msgstr "文件格式...(&F)"
+msgstr "文件格式 (&F)..."
 
 msgid "Change settings of document properties"
 msgstr "修改文件報讀的設定"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
-msgstr "通用語音字庫...(&D)"
+msgstr "通用語音字庫 (&D)..."
 
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "開啟通用語音字庫的對話方塊，可新增項目至清單中。"
+msgstr "可新增讀音項目至通用語音字庫的對話方塊"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
-msgstr "特定語音字庫...(&V)"
+msgstr "特定語音字庫 (&V)..."
 
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
-msgstr "開啟目前使用中語音字庫的對話方塊，可新增項目至清單中。"
+msgstr "可新增讀音項目至特定語音字庫的對話方塊"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
-msgstr "暫存字庫...(&T)"
+msgstr "暫存語音字庫 (&T)..."
 
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "開啟暫存字庫的對話方塊，可新增項目至清單中。"
+msgstr "可新增讀音項目至暫存語音字庫的對話方塊"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "讀音字庫(&d)"
+msgstr "讀音字庫 (&d)"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "標點符號/特殊符號讀音...(&P) "
+msgstr "標點符號/特殊符號讀音 (&P)..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "輸入手勢...(&N)"
+msgstr "輸入手勢 (&N)..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -5962,27 +6009,27 @@ msgstr "偏好設定(&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "檢視事件記錄"
+msgstr "檢視事件記錄(&V)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "檢視報讀"
+msgstr "檢視報讀 (&S)"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "Python主控台"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "管理附加元件(&A)"
+msgid "Manage &add-ons..."
+msgstr "管理附加元件 (&A)..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
-msgstr "建立可攜式版..."
+msgid "Create portable copy..."
+msgstr "建立可攜式版(&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
-msgstr "安裝NVDA...(&I)"
+msgstr "安裝 NVDA (&I)..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -5990,22 +6037,22 @@ msgstr "重新載入外掛程式"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
-msgstr "工具"
+msgstr "工具 (&T)"
 
 #. Translators: The label of a menu item to open NVDA user guide.
 msgid "&User Guide"
-msgstr "用戶指南(&U)"
+msgstr "用戶指南 (&U)"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "指令快速參考表(&Q)"
+msgstr "指令快速參考表 (&Q)"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
-msgstr "新版資訊(&N)"
+msgstr "新版資訊 (&N)"
 
 msgid "NVDA &web site"
-msgstr "NVDA官網(&W)"
+msgstr "NVDA 官網 (&W)"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -6013,31 +6060,31 @@ msgstr "授權(&I)"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
-msgstr "貢獻者(&O)"
+msgstr "貢獻者 (&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "歡迎視窗(&L)"
+msgid "We&lcome dialog..."
+msgstr "歡迎視窗 (&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "檢查更新...(&C)"
+msgstr "檢查更新 (&C)..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
-msgstr "關於...(&A)"
+msgstr "關於 (&A)..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
-msgstr "說明(&H)"
+msgstr "說明 (&H)"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "組態設定...(&C)"
+msgstr "組態設定(&C)..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "還原設定(&R)"
+msgstr "還原設定 (&R)"
 
 msgid "Reset all settings to saved state"
 msgstr "回復所有設定到已儲存的狀態"
@@ -6045,28 +6092,28 @@ msgstr "回復所有設定到已儲存的狀態"
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "回復設定至預設值(&R)"
+msgstr "回復設定至出廠預設值 (&R)"
 
 msgid "Reset all settings to default state"
 msgstr "回復所有設定到預設狀態"
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
-msgstr "儲存設定(&S)"
+msgstr "儲存設定 (&S)"
 
 msgid "Write the current configuration to nvda.ini"
-msgstr "將現在的設定寫入 nvda.ini"
+msgstr "將現在的設定寫入 nvda.ini 檔案內"
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "請贊助"
 
 msgid "E&xit"
-msgstr "結束(&X)"
+msgstr "結束 (&X)"
 
 #. Translators: The title of the dialog to exit NVDA
 msgid "Exit NVDA"
-msgstr "關閉NVDA"
+msgstr "關閉 NVDA"
 
 msgid ""
 "Welcome to NVDA!\n"
@@ -6085,7 +6132,8 @@ msgstr ""
 "狀態均是啟用。\n"
 "您也可將 Caps Lock 設定為 NVDA 鍵。\n"
 "您可隨時按 NVDA+n 開啟 NVDA 的功能表，\n"
-"此功能表可讓您設定 NVDA 的各種選項、取得開發工具相關資訊及使用說明等資訊。\n"
+"此功能表可讓您設定 NVDA 的各種選項，取得開發工具相關資訊及使用說明等資"
+"訊。\\\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -6102,7 +6150,7 @@ msgstr "將 Caps Lock 鍵設為 NVDA 鍵"
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "登入 Windows 後自動啟動 NVDA(&A)"
+msgstr "登入 Windows 後自動啟動 NVDA (&A)"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
@@ -6114,19 +6162,19 @@ msgstr "授權協議"
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
-msgstr "我同意(&A)"
+msgstr "我同意 (&A)"
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 msgid "&Install NVDA on this computer"
-msgstr "安裝NVDA在這台電腦(&I)"
+msgstr "安裝NVDA 在這台電腦 (&I)"
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 msgid "Create &portable copy"
-msgstr "建立可攜式版(&P)"
+msgstr "建立可攜式版 (&P)"
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
-msgstr "繼續執行(&C)"
+msgstr "繼續執行 (&C)"
 
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
@@ -6138,7 +6186,7 @@ msgstr ""
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
-msgstr "您想要做什麼？(&d)"
+msgstr "您想要做什麼？ (&d)"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
@@ -6150,7 +6198,7 @@ msgstr "重新啟動"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
-msgstr "重新啟動附加元件已停用"
+msgstr "重新啟動並停用附加元件"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -6186,26 +6234,26 @@ msgstr "作者"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "關於附加元件...(&A)"
+msgstr "關於附加元件 (&A)..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "附加元件說明(&H)"
+msgstr "附加元件說明 (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
-msgstr "安裝...(&I)"
+msgstr "安裝 (&I)..."
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
-msgstr "移除(&R)"
+msgstr "移除 (&R)"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "取得附加元件...(&G)"
+msgstr "取得附加元件 (&G)..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
@@ -6284,7 +6332,7 @@ msgstr "正在執行"
 msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
-msgstr "附加元件已新增或移除，必須重新啟動NVDA才能生效，您要現在重新啟動嗎?"
+msgstr "附加元件已新增或移除，必須重新啟動NVDA才能生效，您要現在重新啟動嗎？"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6322,25 +6370,25 @@ msgstr "設定檔(&P)"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
-msgstr "新增(&N)"
+msgstr "新增 (&N)"
 
 #. Translators: The label of a button to rename a configuration profile.
 msgid "&Rename"
-msgstr "重新命名(&R)"
+msgstr "重新命名 (&R)"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "刪除(&D)"
+msgstr "刪除 (&D)"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "觸發器...(&T)"
+msgstr "觸發器 (&T)..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "暫時停用所有的自動觸發(&I)"
+msgstr "暫時停用所有的自動觸發 (&I)"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -6674,6 +6722,10 @@ msgstr "NVDA事件記錄檢視器"
 msgid "Refresh\tF5"
 msgstr "重新整理\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "儲存檔案...\tCtrl+S (&a)"
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "事件記錄"
@@ -6942,6 +6994,11 @@ msgstr "大寫鍵鎖定時，輸入小寫字母會發出嗶嗶聲"
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "讀出指令鍵(&K)"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "拼錯字時播放聲音 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7220,6 +7277,11 @@ msgstr "讀出拼錯字 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "讀出文法錯誤 (&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "讀出頁碼(&P)"
 
@@ -7287,7 +7349,7 @@ msgstr "讀出頁框(&M)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "讀出可點擊"
+msgstr "讀出可點擊(&C)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7421,7 +7483,7 @@ msgstr "連接點顯器失敗"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
-msgstr "新增"
+msgstr "新增符號"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
 msgid "Symbol:"
@@ -7544,12 +7606,12 @@ msgid "Refreshes the document content"
 msgstr "更新文件內容"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "使用畫面顯示方式開啟"
+msgid "Use screen layout on"
+msgstr "使用畫面顯示開啟"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "使用畫面顯示方式關閉"
+msgid "Use screen layout off"
+msgstr "使用畫面顯示關閉"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
@@ -7607,6 +7669,114 @@ msgstr "預設色彩"
 msgid "Unknown color"
 msgstr "未知的色彩"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "自動"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "檢查工具"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "縱橫交錯線"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "down"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "百分之16灰色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "百分之25灰色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "百分之50灰色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "百分之75灰色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "百分之8灰色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "方格"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "水平線"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "light down"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "淺水平線"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "light up"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "淺垂直線條"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "沒有"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "百分之75半灰色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "單色"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "up"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "垂直線條"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "線性漸變"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "矩形漸變"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "這個儲存格不可編輯"
@@ -7661,7 +7831,7 @@ msgstr "已設定 {address} 為欄標題開頭了！ "
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
-msgid "removed {address}    from column headers"
+msgid "Removed {address}    from column headers"
 msgstr "清除 {address} 欄標題"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -7689,7 +7859,7 @@ msgstr "已設定{address}為列標題"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
-msgid "removed {address}    from row headers"
+msgid "Removed {address}    from row headers"
 msgstr "清除列標題{address}"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -7784,7 +7954,7 @@ msgstr "立體百分比堆疊直條圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr "立體橫條圖"
+msgstr "立體折線圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7819,12 +7989,12 @@ msgstr "圓形圖帶有子橫條圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr "堆疊區域圖"
+msgstr "堆疊橫條圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr "百分比堆疊區域圖"
+msgstr "百分比堆疊橫條圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7849,7 +8019,7 @@ msgstr "堆疊直條圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr "堆疊直條圖"
+msgstr "百分比堆疊直條圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7869,7 +8039,7 @@ msgstr "百分比堆疊水平圓錐圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr "群組圓錐圖"
+msgstr "立體群組圓錐圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7924,7 +8094,7 @@ msgstr "分裂式環圈圖"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr "橫條圖"
+msgstr "折線圖"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8495,15 +8665,6 @@ msgstr "註解: 由 {author} 於 {date} 加註的 {text}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} 由 {author} 於 {date} 修訂"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g 個字元"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g pt"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8602,6 +8763,18 @@ msgstr "右邊對齊"
 msgid "Justified"
 msgstr "左右對齊"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "上標"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "下標"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "基準線"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -8644,20 +8817,17 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 皮卡"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
+msgid "No comments"
 msgstr "沒有註解"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "讀出系統焦點所在的註解文字。"
+msgstr "讀出在系統游標上所加的註解"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "不在表格中"
-
-msgid "Edge of table"
-msgstr "表格的邊緣了"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8671,6 +8841,30 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "browse mode"
+#~ msgstr "瀏覽模式"
+
+#~ msgid "activate"
+#~ msgstr "啟動"
+
+#~ msgid "no next"
+#~ msgstr "沒有後一個物件了"
+
+#~ msgid "no previous"
+#~ msgstr "沒有前一個物件了"
+
+#~ msgid "edge of table"
+#~ msgstr "表格的邊緣了"
+
+#~ msgid "%g characters"
+#~ msgstr "%g 個字元"
+
+#~ msgid "%g pt"
+#~ msgstr "%g pt"
+
+#~ msgid "no comments"
+#~ msgstr "沒有註解"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"
@@ -8718,9 +8912,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} 之 {}"
-
-#~ msgid "none"
-#~ msgstr "沒有"
 
 #~ msgid " trendline {} "
 #~ msgstr " {} 趨勢線"

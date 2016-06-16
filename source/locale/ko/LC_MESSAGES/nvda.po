@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-12 00:10+1000\n"
-"PO-Revision-Date: 2016-02-14 15:20+0900\n"
+"POT-Creation-Date: 2016-05-20 00:10+1000\n"
+"PO-Revision-Date: 2016-06-05 12:40-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -87,7 +87,6 @@ msgid "unknown input method"
 msgstr "알 수 없는 입력 방식"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -328,6 +327,11 @@ msgstr "아일랜드어 1종"
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "구자라트어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Koine Greek"
+msgstr "코 이네 그리스어"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -720,7 +724,6 @@ msgstr "%s 해제"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} / {total}"
 
@@ -769,10 +772,11 @@ msgstr "dot"
 msgid "space"
 msgstr "스페이스"
 
-msgid "focus mode"
+msgid "Focus mode"
 msgstr "포커스 모드"
 
-msgid "browse mode"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
 msgstr "브라우즈 모드"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
@@ -801,7 +805,7 @@ msgid "Lists various types of elements in this document"
 msgstr "문서에 포함된 여러 요소를 보여줍니다"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+msgid "Activates the current object in the document"
 msgstr "현재 문서에서 포커스된 객체를 실행합니다."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1306,7 +1310,8 @@ msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 앞으�
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
 msgstr "밑"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -2588,13 +2593,11 @@ msgstr "배경 색상"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superscript"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subscript"
 
@@ -2868,11 +2871,11 @@ msgstr "찾고싶은 문자열을 현재커서부터 이전으로 이어서 찾�
 
 # Literally means, "no contents selcted".
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
-msgstr "선택된 내용이 없습니다."
+msgid "No selection"
+msgstr "선택된 내용 없음"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+msgid "Copied to clipboard"
 msgstr "클립보드에 복사됨"
 
 #. Translators: The name of a category of NVDA commands.
@@ -2983,7 +2986,7 @@ msgstr ""
 "를 읽어줍니다. "
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+msgid "Left click"
 msgstr "왼쪽 버튼 클릭"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2991,7 +2994,7 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "현재 마우스 위치에서 왼쪽 마우스 버튼을 한번 클릭합니다"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+msgid "Right click"
 msgstr "오른쪽 버튼 클릭"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2999,28 +3002,32 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "현재 마우스 위치에서 오른쪽 마우스 버튼을 한번 클릭합니다"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
-msgstr "왼쪽 마우스 버튼 클릭 잠금 해제"
+msgid "Left mouse button unlock"
+msgstr "왼쪽 마우스 버튼 잠금 해제"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
-msgstr "왼쪽 마우스 버튼 클릭 잠김"
+msgid "Left mouse button lock"
+msgstr "왼쪽 마우스 버튼 잠김"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
 msgstr "왼쪽 마우스버튼을 클릭상태로 유지하거나 해제합니다. "
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
-msgstr "오른쪽 마우스 버튼 클릭 잠금 해제"
+msgid "Right mouse button unlock"
+msgstr "오른쪽 마우스 버튼 잠금 해제"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
-msgstr "오른쪽 마우스 버튼 클릭 잠김"
+msgid "Right mouse button lock"
+msgstr "오른쪽 마우스 버튼 잠김"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "오른쪽 마우스를 클릭상태로 유지하거나 해제합니다. "
+
+#, python-format
+msgid "Selected %s"
+msgstr "%s 선택됨"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3192,14 +3199,26 @@ msgstr "글꼴 스타일 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "맞춤법 오류 알림 해제"
+msgstr "철자 오류 알림 해제"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "맞춤법 오류 알림"
+msgstr "철자 오류 알림"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
+msgstr "철자 오류 알림을 토글합니다"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "맞춤법 오류 알림 해제"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "맞춤법 오류 알림"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
 msgstr "맞춤법 오류 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
@@ -3386,7 +3405,7 @@ msgstr "클릭 가능 요소 알림을 토글합니다"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
+msgid "Symbol level %s"
 msgstr "기호 발음: %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
@@ -3395,7 +3414,7 @@ msgid ""
 msgstr "구두점 및 기호 출력 설정값을 변경합니다. "
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+msgid "Object has no location"
 msgstr "위치 없는 객체"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3438,7 +3457,7 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+msgid "No navigator object"
 msgstr "탐색 객체 없음"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3468,7 +3487,7 @@ msgstr ""
 "ㅜ이치 정보를 더 자세하게 알려줍니다."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
+msgid "Move to focus"
 msgstr "포커스된 객체로 이동"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
@@ -3482,24 +3501,24 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
+msgid "No focus"
 msgstr "포커스된 객체 없음"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "포커스를 탐색객체로 이동"
+msgid "Move focus"
+msgstr "포커스 이동"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "현 위치에 캐럿 없음"
+msgid "No caret"
+msgstr "캐럿 없음"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"한번 누르면 키보드 포커스를 네비게이터 객체로 이동하고, 두번 누르면 시스템 캐"
-"럿을 리뷰 커서의 위치로 이동합니다. "
+"한번 누르면 키보드 포커스를 탐색 객체로 이동하고, 두번 누르면 시스템 캐럿을 "
+"리뷰 커서의 위치로 이동합니다. "
 
 # In this case, no container means no higher level objects.
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -3512,6 +3531,7 @@ msgstr "화면 탐색 객체의 상위 갯체로 이동합니다. "
 
 # Translation reads, "cannot find next screen object".
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "다음 객체 없음"
 
@@ -3521,6 +3541,7 @@ msgstr "화면 탐색 객체를 다음 객체로 이동합니다. "
 
 # Reads, "no previous screen object."
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "이전 객체 없음"
 
@@ -3539,8 +3560,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "화면 탐색 객체의 첫 하위객체로 이동합니다. "
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "바로가기"
+msgid "Activate"
+msgstr "활성됨"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3555,7 +3576,7 @@ msgstr ""
 "을 누르게 됩니다.)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+msgid "Top"
 msgstr "위"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3615,7 +3636,8 @@ msgid ""
 msgstr ""
 "리뷰커서를 현재 화면 탐색 객체의 다음 단어로 옮기고 그 단어를 읽습니다. "
 
-msgid "left"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
 msgstr "왼쪽"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
@@ -3644,7 +3666,8 @@ msgstr ""
 "의 뜻이나 풀이를 알려주고 세번 누르면 글자의 ASCII값과 16진수의 값을 알 수 있"
 "습니다. "
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
 msgstr "오른쪽"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3663,15 +3686,15 @@ msgstr ""
 "고 그 글자를 읽습니다. "
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
+msgid "Speech mode off"
 msgstr "음성 출력 모드: 출력 안함"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+msgid "Speech mode beeps"
 msgstr "음성 출력 모드: 비프음 출력"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+msgid "Speech mode talk"
 msgstr "음성 출력 모드: 음성 출력"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3709,7 +3732,7 @@ msgstr "NVDA 메뉴를 보여줍니다"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "리뷰 커서의 현재 위치부터 모든 내용을 읽습니다. 점차 읽으면서 리뷰 커서도 따"
@@ -3717,7 +3740,7 @@ msgstr ""
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "현재 케럿 위치부터 텍스트 끝까지 일거줍니다. 이때 케럿도 함께 움직입니다."
@@ -3726,14 +3749,20 @@ msgstr ""
 msgid "No formatting information"
 msgstr "서식 정보 없음"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "문서 서식"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
-msgstr "현재 리뷰 커서 위치의 서식 정보를 알려줍니다. "
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"현재 리뷰 커서 위치의 서식 정보를 알려줍니다. 두번 누르면 서식 정보창을 보여"
+"줍니다"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr "포커스된 객체를 알려줍니다. 두번 누르면 포커스 정보를 발음합니다."
 
 #. Translators: Reported when there is no status line for the current program or window.
@@ -3742,7 +3771,7 @@ msgstr "표시줄을 찾을 수 없음"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "현재 응용프로그램의 상태 표시줄을 읽고 탐색 객체를 그곳으로 이동합니다. 두번 "
@@ -3761,7 +3790,7 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "마우스 이동에 따라 정보 읽기 여부를 토글합니다. "
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+msgid "No title"
 msgstr "제목 없음"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3774,7 +3803,7 @@ msgstr ""
 "음하고 세번 누르면 제목을 클립보드에 복사합니다"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+msgid "Speaks the current foreground object"
 msgstr "현재 포그라운드에 위치한 객체를 알려 줍니다."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3786,19 +3815,19 @@ msgstr ""
 "여줍니다. "
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+msgid "No progress bar updates"
 msgstr "진행률 알리지 않기"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+msgid "Speak progress bar updates"
 msgstr "진행률 업데이트 출력"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+msgid "Beep for progress bar updates"
 msgstr "경고음으로 진행률 알림"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+msgid "Beep and speak progress bar updates"
 msgstr "경고음과 음성 출력으로 진행률 알림"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3850,7 +3879,7 @@ msgid ""
 msgstr "포커스의 변화로 인한  화면 탐색 객체의 이동 여부를 토글합니다. "
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+msgid "No system battery"
 msgstr "배터리 없음"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3863,12 +3892,11 @@ msgid "AC power on"
 msgstr "전원 켜짐"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d}시간 {minutes:d}분 남음"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "AC 전원을 사용하지 않을 때, 배터리 상태와 남은 시간을 알려줍니다."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -4128,21 +4156,11 @@ msgstr ""
 "NVDA 개발때 편리하도록 NVDA를 재시작하지 않고도 플러그인과 프로그램 환경을 불"
 "러옵니다. "
 
-# Translation reads, "cannot find next screen object".
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "다음 객체 없음"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "다음 갯체로 이동합니다. "
-
-# Reads, "no previous screen object."
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "이전 객체 없음"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4156,7 +4174,7 @@ msgid "%s mode"
 msgstr "%s 모드"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+msgid "Cycles between available touch modes"
 msgstr "터치 모드를 전환합니다."
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4192,10 +4210,6 @@ msgstr "키보드에서 시스템 키를 누른 것과 동일하게 작동합니
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "기타"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "브라우즈 모드"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4685,11 +4699,6 @@ msgstr "선택 해제됨"
 msgid "done dragging"
 msgstr "드래그 마침"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "레벨 %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4701,7 +4710,6 @@ msgid "column %s"
 msgstr "%s열"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "{rowCount} 행, {columnCount} 열"
 
@@ -4714,6 +4722,11 @@ msgstr "%s 열"
 #, python-format
 msgid "with %s rows"
 msgstr "%s 행"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "레벨 %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4748,24 +4761,31 @@ msgstr "%s 스타일"
 msgid "default style"
 msgstr "default style"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+msgid "{color1} to {color2}"
+msgstr ""
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{backgroundColor} 바탕에 {color}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} 배경 색상"
+
+msgid "background pattern {pattern}"
+msgstr "채우기 {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4855,7 +4875,6 @@ msgstr "및줄 없음"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "baseline"
 
@@ -4951,18 +4970,25 @@ msgstr "주석 끝"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "맟춤법 오류"
+msgstr "철자 오류"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "철자 오류 끝"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "맞춤법 오류"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "맞춤법 오류 끝"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "테이블 끝"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "테이블: {columnCount} 열, {rowCount} 행"
 
@@ -5039,27 +5065,22 @@ msgid "object mode"
 msgstr "객체 모드"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "한번 {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "두번 {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "세번 {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "네번 {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers}손가락으로 {action}"
 
@@ -5113,6 +5134,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "약간 올리기"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "NVDA 메시지"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "업데이트 확인중"
@@ -5137,7 +5162,6 @@ msgstr "NVDA 업데이트"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "NVDA {version} 버전이 준비되어 있습니다. "
 
@@ -5232,11 +5256,9 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Microsoft Windows용 무료 오픈소스 스크린 리더"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "저작권 (C) {years} NVDA Contributors"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5278,7 +5300,6 @@ msgstr ""
 "있는 후원 기능을 통해 NV Access를 후원해 주셨으면 합니다."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5288,7 +5309,6 @@ msgstr ""
 
 # Literally means: "Object takes this amount of screen space."
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5299,18 +5319,16 @@ msgstr ""
 "퍼센트"
 
 #. Translators: a message announcing a candidate's character and description.
-#, fuzzy, python-brace-format
 msgid "{symbol} as in {description}"
-msgstr ": {description}"
+msgstr "{description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
+msgid "Edge of table"
 msgstr "테이블 가장자리"
 
 #. Translators: The description of an NVDA command.
@@ -5459,17 +5477,15 @@ msgid "Waiting for Outlook..."
 msgstr "아우틀룩 여는중..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} - {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "일정 {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
+msgid "Has appointment"
 msgstr "일정 있음"
 
 #. Translators: the email is a meeting request
@@ -5627,97 +5643,78 @@ msgid "Master Thumbnails"
 msgstr "마스터 축소판 그림"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Slide {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} 왼쪽 {distance:.3g} 포인트 커버함"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape}의 왼쪽 {distance:.3g} 포인트 뒤에 가려짐"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} 위 {distance:.3g} 포인트 커버함"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape}의 위 {distance:.3g} 포인트 뒤에 가려짐"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} 오른쪽 {distance:.3g} 포인트 커버함"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape}의 오른쪽 {distance:.3g} 포인트 뒤에 가려짐"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape} 아래 {distance:.3g} 포인트 커버함"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "{otherShape}의 아래 {distance:.3g} 포인트 뒤에 가려짐"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "{otherShape} 커버함"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "behind {otherShape}에 가려짐"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "슬라이드 좌측으로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "슬라이드 좌측으로부터 {distance:.3g} 포인트 벗어남"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "슬라이드 위로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "슬라이드 위로부터 {distance:.3g} 포인트 벗어남"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "슬라이드 우측으로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "슬라이드 우측으로부터 {distance:.3g} 포인트 벗어남"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "슬라이드 아래로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "슬라이드 아래로부터 {distance:.3g} 포인트 벗어남"
 
@@ -5731,12 +5728,10 @@ msgstr ""
 "특정 내용 읽기를 조절하며 스크린에 표시된 슬라이드 내용은 변경하지 않습니다."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "슬라이드쇼 노트 - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Slide show - {slideName}"
 
@@ -5787,6 +5782,12 @@ msgstr "정지"
 msgid "Record"
 msgstr "녹음"
 
+msgid "left"
+msgstr "왼쪽"
+
+msgid "right"
+msgstr "오른쪽"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -5819,7 +5820,6 @@ msgstr "Baum/HumanWare/APH 디스플레이"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serial: {portName}"
 
@@ -6061,11 +6061,11 @@ msgid "Python console"
 msgstr "Python console"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "추가 기능 관리 (&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "휴대용 버전 만들기 (&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6104,7 +6104,7 @@ msgid "C&ontributors"
 msgstr "NVDA 개발 공헌자 목록 (&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "NVDA 시작 대화상자 (&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -6302,7 +6302,6 @@ msgid "Choose Add-on Package File"
 msgstr "추가 기능 설치 파일 검색"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA 추가 기능 페키지 (*.{ext})"
 
@@ -6316,7 +6315,6 @@ msgstr ""
 "었습니다"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6390,7 +6388,6 @@ msgid "Restart NVDA"
 msgstr "NVDA 재시작"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6403,7 +6400,6 @@ msgstr ""
 "서령: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6660,7 +6656,6 @@ msgstr ""
 "시스템에 NVDA 이전 버전이 설치되어 있습니다. 설치한 버전을 업데이트합니다. "
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6777,6 +6772,10 @@ msgstr "NVDA 로그 뷰어"
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
 msgstr "Refresh\tF5"
+
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "저장 ...\tCtrl+S (&A)"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
@@ -7055,6 +7054,11 @@ msgstr "기능키 알림 (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "입력중 철자 오류 경고음 재생 (&S)"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "다른 프로그램에서의 키보드 입력 처리 (&A)"
 
@@ -7330,7 +7334,12 @@ msgstr "글꼴 스타일 알림 (&Y)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
-msgstr "맞춤법 오류 알림 (&R)"
+msgstr "철자 오류 알림 (&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "맞춤법 오류 알림 (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7600,7 +7609,6 @@ msgstr "명령 검색 (&F)"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7639,12 +7647,10 @@ msgid "word"
 msgstr "단어"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr " {x}, {y}"
 
@@ -7661,11 +7667,11 @@ msgid "Refreshes the document content"
 msgstr "문서 내용을 새로 고칩니다"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
+msgid "Use screen layout on"
 msgstr "화면 레이아웃 사용"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
+msgid "Use screen layout off"
 msgstr "화면 레이아웃 사용 않함"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -7700,7 +7706,6 @@ msgid "Taskbar"
 msgstr "작업 표시줄"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB 적 {rgb.red}, 녹 {rgb.green}, 청 {rgb.blue}"
 
@@ -7723,6 +7728,114 @@ msgstr "기본 색상"
 #. Translators: The background color cannot be detected.
 msgid "Unknown color"
 msgstr "알 수 없는 색상"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "자동 연결"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "대각선 교차 무늬"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "가는 실선 대각선 교차 무늬"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "down"
+msgstr "역대각선 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "16% 회색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "25% 회색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "50% 회색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "75% 회색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "8% 회색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "grid"
+msgstr "가는 실선 가로 교차 무늬"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "가로 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "가는 실선 역대각선 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "가는 실선 가로 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "light up"
+msgstr "가는 실선 대각선 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "가는 실선 세로 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "없음"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "굵은 실선 대각선 교차 무늬"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "단색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "대각선 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "세로 줄"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "직선 그라데이션"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "직각 그라데이션"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
@@ -7753,7 +7866,6 @@ msgid "&Sheets"
 msgstr "Sheets (&S)"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} - {end}"
 
@@ -7769,22 +7881,18 @@ msgstr ""
 "요. "
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "{address}을 열 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "이미 {address}을 열 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
-msgid "removed {address}    from column headers"
+msgid "Removed {address}    from column headers"
 msgstr "{address}를 열 머릿말에서 제외"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "{address}를 열 머릿말에서 찾을 수 없음"
 
@@ -7797,22 +7905,18 @@ msgstr ""
 "다. 두번 누르면 이 설정을 해제합니다."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "{address}을 행 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "이미 {address}을 행 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
-msgid "removed {address}    from row headers"
+msgid "Removed {address}    from row headers"
 msgstr "{address}를 행 머릿말에서 제외"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "{address}를 행 머릿말에서 찾을 수 없음"
 
@@ -7824,11 +7928,9 @@ msgstr ""
 "한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 행 머릿말 셀로 지정합니"
 "다. 두번 누르면 이 설정을 해제합니다."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "입력 메시지: {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "입력 메시지: {message}"
 
@@ -7841,373 +7943,370 @@ msgid "Reports the comment on the current cell"
 msgstr "셀 주석을 알려줍니다"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "셀 {address}에 대한 주석"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} 에서 {lastAddress} {lastContent}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
-msgstr ""
+msgstr "3차원 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr ""
+msgstr "3차원 누적 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
-msgstr ""
+msgstr "100% 기준 누적 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
-msgstr ""
+msgstr "3차원 묶은 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr ""
+msgstr "3차원 누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr ""
+msgstr "3차원 100% 기준 누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
-msgstr ""
+msgstr "3차원 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
-msgstr ""
+msgstr "3차원 묶은 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr ""
+msgstr "3차원 누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr ""
+msgstr "3차원 100% 기준 누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr ""
+msgstr "3차원 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr ""
+msgstr "3차원 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
-msgstr ""
+msgstr "3차원 쪼개진 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
-msgstr ""
+msgstr "영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
-msgstr ""
+msgstr "누적 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
-msgstr ""
+msgstr "묶은 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bar of Pie"
-msgstr ""
+msgstr "원형 대 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr ""
+msgstr "누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr ""
+msgstr "100% 기준 누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
-msgstr ""
+msgstr "거품형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
-msgstr ""
+msgstr "3차원 효과의 거품형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
-msgstr ""
+msgstr "묶은 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Column"
-msgstr ""
+msgstr "누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr ""
+msgstr "100% 기준 누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
-msgstr ""
+msgstr "묶은 원뿔형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
-msgstr ""
+msgstr "누적 원뿔형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
-msgstr ""
+msgstr "100% 기준 누적 원뿔형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr ""
+msgstr "3차원 원뿔형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Column"
-msgstr ""
+msgstr "묶은 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
-msgstr ""
+msgstr "누적 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
-msgstr ""
+msgstr "100% 기준 누적 원뿔형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
-msgstr ""
+msgstr "묶은 원통형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
-msgstr ""
+msgstr "묶은 원통형 세로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
-msgstr ""
+msgstr "100% 기준 누적 원통형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr ""
+msgstr "3차원 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
-msgstr ""
+msgstr "100% 기준 누적 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
-msgstr ""
+msgstr "도넛형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
-msgstr ""
+msgstr "쪼개진 도넛형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr ""
+msgstr "꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
-msgstr ""
+msgstr "표식이 있는 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
-msgstr ""
+msgstr "표식이 있는 누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr ""
+msgstr "표식이 있는 100% 기준 누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
-msgstr ""
+msgstr "누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr ""
+msgstr "100% 기준 누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie"
-msgstr ""
+msgstr "원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
-msgstr ""
+msgstr "쪼개진 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
-msgstr ""
+msgstr "원형 대 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
-msgstr ""
+msgstr "묶은 피라미드형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
-msgstr ""
+msgstr "누적 피라미드형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
-msgstr ""
+msgstr "100% 기준 누적 피라미드형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
-msgstr ""
+msgstr "3차원 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Column"
-msgstr ""
+msgstr "묶은 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
-msgstr ""
+msgstr "누적 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
-msgstr ""
+msgstr "100% 기준 누적 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar"
-msgstr ""
+msgstr "방사형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
-msgstr ""
+msgstr "채워진 방사형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
-msgstr ""
+msgstr "표식이 있는 방사형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
-msgstr ""
+msgstr "고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr ""
+msgstr "시가-고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
-msgstr ""
+msgstr "거래량-고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
-msgstr ""
+msgstr "거래량-시가-고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
-msgstr ""
+msgstr "3차원 표면형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
-msgstr ""
+msgstr "표면형 (조감도)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
-msgstr ""
+msgstr "표면형 (골격형 조감도)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr ""
+msgstr "3차원 표면형 (골격형)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
-msgstr "분산형"
+msgstr "표식만 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines"
-msgstr ""
+msgstr "직선 및 표식이 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
-msgstr ""
+msgstr "직선이 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
-msgstr ""
+msgstr "곡선 및 표식이 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr ""
+msgstr "곡선이 있는 분산형"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "차트 제목: {chartTitle}, 형식: {chartType}"
+msgstr "차트 제목: {chartTitle}, 종류: {chartType}"
 
 #. Translators: Reported when there is no title for an axis in a chart.
 msgid "Not defined"
-msgstr ""
+msgstr "정의되지 않음"
 
 #. Translators: A type of axis in a chart.
 #. Translators: The category axis in a Microsoft Excel chart.
@@ -8229,9 +8328,8 @@ msgstr "계열"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
-msgstr ""
+msgstr "{axisName} 축 {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
@@ -8243,13 +8341,12 @@ msgid "There are total %d series in this chart"
 msgstr ""
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "계열 {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
-msgstr ""
+msgstr "계열 정의되지 않음."
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
@@ -8268,13 +8365,12 @@ msgstr "데이터 요소"
 msgid "item"
 msgstr "항목"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "계열 색상: {colorName} "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
-msgstr ""
+msgstr "단위 레이블 표시"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
@@ -8290,7 +8386,7 @@ msgstr "Pivot Chart Drop Zone"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
-msgstr "Pivot Chart Field Button"
+msgstr "피벗 차트 필드 버튼"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Down Bars"
@@ -8302,7 +8398,7 @@ msgstr "하강선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
-msgstr ""
+msgstr "최고 최저값 연결선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
@@ -8330,7 +8426,7 @@ msgstr "밑면"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Nothing"
-msgstr ""
+msgstr "없음"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
@@ -8358,63 +8454,53 @@ msgstr "모양"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} 계열 {seriesIndex} 총 {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr ""
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "증가 {incrementValue} from point {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "감소 {decrementValue} from point {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "항목 {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "값 {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " 분수 {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr ""
+msgstr " {segmentType} {pointIndex} 총 {pointCount}"
 
 #. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
@@ -8425,12 +8511,10 @@ msgid "Secondary"
 msgstr "보조"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "차트 축, 유형: {axisType}, group: {axisGroup}, 제목: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "차트 축, 유형: {axisType}, group: {axisGroup}"
 
@@ -8448,7 +8532,6 @@ msgid " squared "
 msgstr " 제곱 "
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "차트 제목: {chartTitle}"
 
@@ -8457,7 +8540,6 @@ msgid "Untitled chart"
 msgstr "차트 제목 없음"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8470,7 +8552,6 @@ msgid "Chart area "
 msgstr "차트 영역 "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8492,14 +8573,12 @@ msgstr "범례 없음"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "범례 항목 계열 {seriesName} {seriesIndex} 총 {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 
@@ -8602,41 +8681,26 @@ msgstr "Primary header"
 msgid "Text frame"
 msgstr "텍스트 프레임"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g 글자"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g pt"
-
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "이미 {rowNumber}행 {columnNumber}열을 열 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말에서 제외"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말에서 찾을 수 없음"
 
@@ -8649,23 +8713,19 @@ msgstr ""
 "두번 누르면 이 설정을 해제합니다."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "이미 {rowNumber}행 {columnNumber}열을 행 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말에서 제외"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말에서 찾을 수 없음"
 
@@ -8717,49 +8777,53 @@ msgstr "오른쪽 맞춤"
 msgid "Justified"
 msgstr "양쪽 맞춤"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Superscript"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Subscript"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "Baseline"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} 스타일, {outlineLevel} outline"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} 포인트"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} 글자"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} 인치"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} CM"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} MM"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} 포인트"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 피카"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
+msgid "No comments"
 msgstr "주석 없음"
 
 #. Translators: a description for a script
@@ -8770,9 +8834,6 @@ msgstr "시스템 케럿 위치에 주석이 존재할 경우 이를 알려줍�
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "테이블 아님"
-
-msgid "Edge of table"
-msgstr "테이블 가장자리"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8786,3 +8847,9 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "browse mode"
+#~ msgstr "브라우즈 모드"
+
+#~ msgid "activate"
+#~ msgstr "바로가기"

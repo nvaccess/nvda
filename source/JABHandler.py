@@ -250,6 +250,7 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'getAccessibleContextInfo',c_long,JOBJECT64,POINTER(AccessibleContextInfo),errcheck=True)
 	_fixBridgeFunc(JOBJECT64,'getAccessibleChildFromContext',c_long,JOBJECT64,jint,errcheck=True)
 	_fixBridgeFunc(JOBJECT64,'getAccessibleParentFromContext',c_long,JOBJECT64)
+	_fixBridgeFunc(JOBJECT64,'getParentWithRole',c_long,JOBJECT64,POINTER(c_wchar))
 	_fixBridgeFunc(BOOL,'getAccessibleRelationSet',c_long,JOBJECT64,POINTER(AccessibleRelationSetInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextInfo',c_long,JOBJECT64,POINTER(AccessibleTextInfo),jint,jint,errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextItems',c_long,JOBJECT64,POINTER(AccessibleTextItemsInfo),jint,errcheck=True)
@@ -282,6 +283,13 @@ if bridgeDll:
 #NVDA specific code
 
 isRunning=False
+# Cache of the last active window handle for a given JVM ID. In theory, this
+# cache should not be needed, as it should always be possible to retrieve the
+# window handle of a given accessible context by calling getTopLevelObject then
+# getHWNDFromAccessibleContext. However, getTopLevelObject sometimes returns 
+# accessible contexts that make getHWNDFromAccessibleContext fail. To workaround
+# the issue, we use this cache as a fallback when either getTopLevelObject or
+# getHWNDFromAccessibleContext fails.
 vmIDsToWindowHandles={}
 internalFunctionQueue=Queue.Queue(1000)
 internalFunctionQueue.__name__="JABHandler.internalFunctionQueue"
@@ -289,6 +297,24 @@ internalFunctionQueue.__name__="JABHandler.internalFunctionQueue"
 def internalQueueFunction(func,*args,**kwargs):
 	internalFunctionQueue.put_nowait((func,args,kwargs))
 	core.requestPump()
+
+def internal_getWindowHandleFromAccContext(vmID,accContext):
+	try:
+		topAC=bridgeDll.getTopLevelObject(vmID,accContext)
+		try:
+			return bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
+		finally:
+			bridgeDll.releaseJavaObject(vmID,topAC)
+	except:
+		return None
+
+def getWindowHandleFromAccContext(vmID,accContext):
+	hwnd=internal_getWindowHandleFromAccContext(vmID,accContext)
+	if hwnd:
+		vmIDsToWindowHandles[vmID]=hwnd
+		return hwnd
+	else:
+		return vmIDsToWindowHandles.get(vmID)
 
 class JABContext(object):
 
@@ -298,15 +324,10 @@ class JABContext(object):
 			accContext=JOBJECT64()
 			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
 			#Record  this vm ID and window handle for later use with other objects
-			vmIDsToWindowHandles[vmID.value]=hwnd
+			vmID=vmID.value
+			vmIDsToWindowHandles[vmID]=hwnd
 		elif vmID and not hwnd:
-			hwnd=vmIDsToWindowHandles.get(vmID)
-			if not hwnd:
-				topAC=bridgeDll.getTopLevelObject(vmID,accContext)
-				hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
-				bridgeDll.releaseJavaObject(vmID,topAC)
-				#Record  this vm ID and window handle for later use with other objects
-				vmIDsToWindowHandles[vmID.value]=hwnd
+			hwnd = getWindowHandleFromAccContext(vmID,accContext)
 		self.hwnd=hwnd
 		self.vmID=vmID
 		self.accContext=accContext
@@ -416,6 +437,13 @@ class JABContext(object):
 		else:
 			return None
 
+	def getAccessibleParentWithRole(self, role):
+		accContext=bridgeDll.getParentWithRole(self.vmID,self.accContext, role)
+		if accContext:
+			return self.__class__(self.hwnd,self.vmID,accContext)
+		else:
+			return None
+
 	def getAccessibleChildFromContext(self,index):
 		accContext=bridgeDll.getAccessibleChildFromContext(self.vmID,self.accContext,index)
 		if accContext:
@@ -519,11 +547,12 @@ class JABContext(object):
 
 @AccessBridge_FocusGainedFP
 def internal_event_focusGained(vmID, event,source):
-	internalQueueFunction(event_gainFocus,vmID,source)
+	hwnd=getWindowHandleFromAccContext(vmID,source)
+	internalQueueFunction(event_gainFocus,vmID,source,hwnd)
 	bridgeDll.releaseJavaObject(vmID,event)
 
-def event_gainFocus(vmID,accContext):
-	jabContext=JABContext(vmID=vmID,accContext=accContext)
+def event_gainFocus(vmID,accContext,hwnd):
+	jabContext=JABContext(hwnd=hwnd,vmID=vmID,accContext=accContext)
 	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),jabContext.hwnd):
 		return
 	focus=eventHandler.lastQueuedFocusObject
@@ -536,7 +565,8 @@ def event_gainFocus(vmID,accContext):
 
 @AccessBridge_PropertyActiveDescendentChangeFP
 def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
-	internalQueueFunction(event_gainFocus,vmID,newDescendant)
+	hwnd=getWindowHandleFromAccContext(vmID,source)
+	internalQueueFunction(event_gainFocus,vmID,newDescendant,hwnd)
 	for accContext in [event,oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
@@ -603,14 +633,15 @@ def event_stateChange(vmID,accContext,oldState,newState):
 
 @AccessBridge_PropertyCaretChangeFP
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
+	hwnd=getWindowHandleFromAccContext(vmID,source)
 	if oldPos<0 and newPos>=0:
-		internalQueueFunction(event_gainFocus,vmID,source)
+		internalQueueFunction(event_gainFocus,vmID,source,hwnd)
 	else:
-		internalQueueFunction(event_caret,vmID,source)
+		internalQueueFunction(event_caret,vmID,source,hwnd)
 	bridgeDll.releaseJavaObject(vmID,event)
 
-def event_caret(vmID, accContext):
-	jabContext = JABContext(vmID=vmID, accContext=accContext)
+def event_caret(vmID, accContext, hwnd):
+	jabContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=accContext)
 	focus = api.getFocusObject()
 	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
 		obj = focus
@@ -646,7 +677,7 @@ def enterJavaWindow_helper(hwnd):
 	lastFocus=eventHandler.lastQueuedFocusObject
 	if isinstance(lastFocus,NVDAObjects.JAB.JAB) and lastFocus.windowHandle==hwnd:
 		return
-	event_gainFocus(vmID,accContext)
+	event_gainFocus(vmID,accContext,hwnd)
 
 def isJavaWindow(hwnd):
 	if not bridgeDll or not isRunning:

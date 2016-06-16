@@ -37,7 +37,7 @@ NVDA wurde bislang in 47 Sprachen übersetzt, darunter sind neben englisch: Afri
 ++ Unterstützung von Sprachausgaben ++
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
 
-NVDA wird standardmäßig mit der freien multilingualen Sprachausgabe [eSpeak http://espeak.sourceforge.net/download.html] ausgeliefert. 
+NVDA wird standardmäßig mit der freien multilingualen Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng], ausgeliefert. 
 
 Informationen über weitere Sprachausgaben, die NVDA unterstützt, können Sie im Abschnitt "[Unterstützte Sprachausgaben #SupportedSpeechSynths]" nachlesen.
 
@@ -299,7 +299,7 @@ Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügu
 | Zur nächsten Zeile springen | Steuerung+Alt+Pfeiltaste nach unten | Zieht den System-Cursor zur nächsten Zeile in der gleichen Spalte. |
 %kc:endInclude
 
-++ Objekt-Navigation ++
+++ Objektnavigation ++[ObjectNavigation]
 Üblicherweise arbeiten Sie mit Programmen, indem Sie mittels Tastenkürzeln den [Fokus #SystemFocus] beziehungsweise den [System-Cursor #SystemCaret] bewegen.
 Manchmal möchten Sie jedoch mit den Objekten einer Anwendung oder des Betriebssystems arbeiten, ohne den Fokus oder den System-Cursor zu bewegen.
 Oder sie wollen mit [Objekten #Objects] umgehen, die nicht mit den Standard-Tastenkombinationen erreichbar sind (etwa, weil sie nicht in der Tab-Reihenfolge stehen).
@@ -372,10 +372,10 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Alles ansagen | Nummerntaste Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
 | Ab NVDA-Cursor kopieren | NVDA+F9 | NVDA+F9 | Keine | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin kopiert werden soll. |
 | Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die zuvor (mit "ab NVDA-Cursor kopieren") festgelegt wurde bis einschließlich akttuellen Position des NVDA-Cursors. Nach dem Betätigen der Tastenkombination wird der Text in die Zwischenablage kopiert. |
-| Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. |
+| Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. Bei zweimaligen Drücken der Tastenkombination wird die Ausgabe im Lesemodus dargestellt. |
 %kc:endInclude
 
-Hinweis: Um die Tasten des Nummernblocks benutzen zu können, muss dieser deaktiviert sein.
+Hinweis: Um die Tasten des Nummernblocks benutzen zu können, muss dieser deaktiviert sein!
 
 Um sich bei der Verwendung des Desktop-Tastaturschemas auf hilfreiche Weise die Tastenkombinationen merken zu können, wird dieses Textraster grundsätzlich in drei Mal drei "Felder" angeordnet; von oben nach unten, von links nach rechts sowie zum vorherigen, aktuellen und nächsten.
 Das Layout ist wie folgt aufgebaut:
@@ -442,7 +442,7 @@ Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutz
 | Zum Objekt unter der Maus navigieren | NVDA+Nummerntaste Stern | NVDA+Umschalt+N | Bewegt das Navigator-Objekt zum Standort des Objekts an der Mausposition. |
 %kc:endInclude
 
-+ Lese-Modus +
++ Lesemodus +[BrowseMode]
 Umfangreiche schreibgeschützte Dokumente - wie beispielsweise Webseiten - werden in NVDA im so genannten Lese-Modus dargestellt. 
 Dies betrifft Dokumente in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Google Chrome, Adobe Reader und Adobe Flash sowie HTML-Nachrichten in Microsoft Outlook. 
 Der Lese-Modus ist optional in Microsoft Word-Dokumenten verfügbar. 
@@ -572,7 +572,7 @@ Weiter Informationen hierzu finden Sie in der Dokumentation zu mathplayer.
 Um die Navigation im Ausdruck zu beenden, drücken Sie esc.
 
 + anwendungsspezifische Funktionen +
-nvda stellt für bestimmte Anwendungen zusätzliche Funktionen bereit, um bestimmte Aufgaben zu erleichtern oder um Zugriff auf Funktionalität bereitzustellen, die sonst nicht zugänglich wäre.
+NVDA stellt für bestimmte Anwendungen zusätzliche Funktionen bereit, um bestimmte Aufgaben zu erleichtern oder um Zugriff auf Funktionalität bereitzustellen, die sonst nicht zugänglich wäre.
 
 ++ Microsoft Word ++
 
@@ -592,19 +592,19 @@ Dies bedeutet, dass auch andere Anwender von Bildschirmlesern, die dieses Dokume
 +++ Lesemodus in Microsoft Word +++
 Ähnlich wie im Netz können Sie in Microsoft Word den Lesemodus sowie die Elementliste oder die Schnellnavigation nutzen. 
 %kc:beginInclude
-Um den lesemodus in Microsoft Word ein- oder auszuschalten, drücken Sie nvda+Leertaste.
+Um den lesemodus in Microsoft Word ein- oder auszuschalten, drücken Sie NVDA+Leertaste.
 %kc:endInclude
 Weitere Informationen zum Lesemodus und zur Schnellnavigation finden Sie im [Abschnitt über den lesemodus #BrowseMode].
  
 ++++ die Elementliste ++++
 %kc:beginInclude
-Wenn Sie sich in Microsoft Word im Lesemodus befinden, können Sie mit der Tastenkombination nvda+f7 auf die Elementliste zugreifen.
+Wenn Sie sich in Microsoft Word im Lesemodus befinden, können Sie mit der Tastenkombination NVDA+F7 auf die Elementliste zugreifen.
 %kc:endInclude
 Die Elementliste enthält Überschriften, Links und Anmerkungen (einschließlich nachverfolgbarer Änderungen)
 
 +++ Ausgeben von Kommentaren +++
 %kc:beginInclude
-Verwenden Sie die Tastenkombination nvda+alt+c, um sich einen Kommentar an der aktuellen Cursorposition anzeigen zu lassen, sofern vorhanden.
+Verwenden Sie die Tastenkombination NVDA+Alt+C, um sich einen Kommentar an der aktuellen Cursorposition anzeigen zu lassen, sofern vorhanden.
 %kc:endInclude
 Alle Kommentare des aktuellen Dokuments sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Anmerkungen" auswählen.
  
@@ -626,15 +626,15 @@ Dies bedeutet, dass auch andere Anwender von Bildschirmlesern, die dieses Dokume
 +++ die Elementliste +++
 Ähnlich wie im Netz können Sie in Microsoft Excel die Elementliste nutzen, um verschiedene Informationen aufzulisten und um auf diese zuzugreifen.
 %kc:beginInclude
-Verwenden Sie die Tastenkombination nvda+f7, um auf die Elementliste zuzugreifen.
+Verwenden Sie die Tastenkombination NVDA+F7, um auf die Elementliste zuzugreifen.
 %kc:endInclude
 Die Elementliste enthält Elemente der folgenden Typen:
-- Diagramme: listet alle Diagramme in der Arbeitsmappe auf.
+- Diagramme: listet alle Diagramme auf dem aktuellen Tabellenblatt auf.
 Nachdem Sie ein Diagramm mit Eingabe oder dem Schalter wechseln zu ausgewählt haben, können Sie sich mit Hilfe der Pfeiltasten durch dessen Inhalt bewegen.
-- Kommentare: listet alle Zellen auf, die Kommentare enthalten.
+- Kommentare: listet alle Zellen auf dem aktuellen Tabellenblatt auf, die Kommentare enthalten.
 Es wird die Zellenadresse nebst Kommentar angezeigt.
 Wenn Sie innerhalb der Liste den Schalter "wechseln zu" oder die Eingabetaste drücken, wird der Fokus auf die entsprechende Zelle verschoben.
-- Formeln: listet alle Zellen in der Arbeitsmappe auf, die eine Formel enthalten.
+- Formeln: listet alle Zellen auf dem Tabellenblatt auf, die eine Formel enthalten.
 Es wird die Zellenadresse nebst Formel angezeigt.
 Wenn Sie innerhalb der Liste den Schalter "wechseln zu" oder die Eingabetaste drücken, wird der Fokus auf die entsprechende Zelle verschoben.
 - Tabellenblätter: listet alle Tabellenblätter in der Arbeitsmappe auf. 
@@ -644,14 +644,14 @@ Drücken Sie auf einem Tabellenblatt die Eingabetaste oder den Schalter "wechsel
 
 +++ Ausgeben von Kommentaren +++
 %kc:beginInclude
-Verwenden Sie die Tastenkombination nvda+alt+c, um sich einen Kommentar der aktuellen Zelle anzeigen zu lassen, sofern vorhanden.
+Verwenden Sie die Tastenkombination NVDA+Alt+C, um sich einen Kommentar der aktuellen Zelle anzeigen zu lassen, sofern vorhanden.
 %kc:endInclude
-Alle Kommentare der Arbeitsmappe sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Kommentare" auswählen.
+Alle Kommentare des Tabellenblattes sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Kommentare" auswählen.
 
 +++ ausgeben geschützter Zellen +++
 Wenn ein Excel-Arbeitsblatt geschützt wurde, können manche Zellen für eine Bearbeitung gesperrt sein. Solche Zellen sind dann normalerweise nicht zugänglich.
 %kc:beginInclude
-Um auf gesperrte Zellen zuzugreifen, wechseln Sie zunächst mit nvda+Leertaste in den Lesemodus und navigieren Sie anschließend mit den Standard-Excel-Tastenkombinationen wie z.B. den Pfeiltasten zu den gewünschten Zellen.
+Um auf gesperrte Zellen zuzugreifen, wechseln Sie zunächst mit NVDA+Leertaste in den Lesemodus und navigieren Sie anschließend mit den Standard-Excel-Tastenkombinationen wie z.B. den Pfeiltasten zu den gewünschten Zellen.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -685,7 +685,7 @@ Hinweis: Der Befehl "verbleibende Zeit ausgeben" funktioniert nur, wenn die Stan
 %kc:beginInclude
 Innerhalb einer Konversation:
 || Name | Tastenkombination | Beschreibung |
-| Nachricht anzeigen | NVDA+STRG+1-0 | Setzt den NVDA-Cursor auf die zur Nummer passenden Nachricht nvda+strg+2 zeigt beispielsweise die vorletzte Nachricht an |
+| Nachricht anzeigen | NVDA+STRG+1-0 | Setzt den NVDA-Cursor auf die zur Nummer passenden Nachricht NVDA+Strg+2 zeigt beispielsweise die vorletzte Nachricht an |
 %kc:endInclude
 
 + NVDA konfigurieren +
@@ -784,8 +784,8 @@ Mit Hilfe der Pfeiltasten können Sie sich alle Stimmen anhören.
 Die Pfeiltasten nachlinks beziehungsweise oben wechseln zur vorherigen Stimme, die Pfeiltasten nach rechts beziehungsweise nach unten zur nächsten Stimme.
 
 ==== Variante ====
-Wenn Sie die Sprachausgabe eSpeak verwenden, die zugleich Bestandteil von NVDA ist, können Sie sich in dieser Auswahlliste für eine Stimmvariante entscheiden.
-Die Varianten von ESpeak sind mit Stimmen vergleichbar, weil sie die Eigenschaften von ESpeak verändern.
+Wenn Sie die Sprachausgabe eSpeak NG  verwenden, die zugleich Bestandteil von NVDA ist, können Sie sich in dieser Auswahlliste für eine Stimmvariante entscheiden.
+Die Varianten von ESpeak NG sind mit Stimmen vergleichbar, weil sie die Eigenschaften von ESpeak NG verändern.
 Einige Varianten hören sich weiblich, männlich oder sogar wie ein Frosch an.
 
 ==== Geschwindigkeit ====
@@ -800,12 +800,12 @@ Der Schieberegler reicht von 0 bis 100, wobei der Wert "0" für sehr tief und de
 Diese Option ist ein Schieberegler, mit dem Sie den Wert von 0 bis 100 einstellen können. Der Wert "0" steht hier für sehr leise Aussprache und der Wert "100" steht für eine sehr laute Sprechweise.
 
 ==== Betonung ====
-Diese Option ist ebenfalls ein Schieberegler, mit dem Sie die Betonung festlegen können. Derzeit ist es nur möglich die Werte mit der eSpeak zu verändern.
+Diese Option ist ebenfalls ein Schieberegler, mit dem Sie die Betonung festlegen können. Derzeit ist es nur möglich die Werte mit der eSpeak NG zu verändern.
 
 ==== sprache automatisch wechseln (falls unterstützt) ====
 Dieses Kontrollfeld erlaubt Ihnen einzustellen, ob NVDA die Sprache der Sprachausgabe automatisch passend zur angegebenen Dokumentsprache einstellen soll.
 Diese Option ist standardmäßig aktiviert.
-Momentan unterstützt lediglich Espeak den automatischen Sprachenwechsel.
+Momentan unterstützt lediglich Espeak NG den automatischen Sprachenwechsel.
 
 ==== automatisch Dialekt umschalten (falls unterstützt) ====
 Wenn der automatische Sprachenwechsel aktiviert ist, können Sie NVDA mit dieser option dazu bringen, nicht nur die eigentliche sprache, sondern auch den Dialekt passend zur Dokumentsprache während des Lesens zu ändern.
@@ -991,6 +991,10 @@ Tastenkombination: NVDA+4
 
 Wenn dieses Kontrollfeld aktiviert ist, gibt NVDA alle Tasten wieder, die nicht mit einem Zeichen belegt sind. Das können Tastenkombinationen wie zum Beispiel "Steuerung+Buchstabe" sein.
 
+==== Klang bei Rechtschreibfehlern während der Eingabe abspielen ====
+Wenn diese Option aktiviert ist, wird ein kurzer Brummton abgespielt, wenn während der Eingebe Rechtschreibfehler auftreten.
+Diese Option funktioniert nur, wenn in den [Einstellung für Dokumentformatierungen #DocumentFormattingSettings] die Anzeige von Rechtschreibfehlern aktiviert ist.
+
 ==== Tastendrücke von anderen Anwendungen verarbeiten ====
 Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NVDA verarbeitet werden sollen. Hierzu zählen beispielsweise Tastendrücke auf einer Bildschirmtastatur oder per Spracherkennung erkannte Zeichen.
 Diese Option ist zwar standardmäßig aktiviert, dennoch kann es sinnvoll sein, sie in bestimmten Fällen zu deaktivieren. Wenn Sie zum Beispiel mit Hilfe der Software Unikey vietnamesische Zeichen eingeben wollen, kann dies zu falsch erkannten Zeichen führen, wenn die Option eingeschaltet ist.
@@ -1117,7 +1121,7 @@ Mit dieser Option, die standardmäßig aktiviert ist, können Sie festlegen, ob 
 In manchen Sprachräumen - wie etwa im chinesischen, hat diese Option jedoch keinen Einfluss auf die Ausgabe von Beschreibungen für Kandidaten.
 Diese Option ist lediglich für japanische und koreanische Eingabemethoden sinnvoll.
 
-==== Report changes to the reading string ====
+==== Änderungen der Zeichenketten beim Vorlesen ansagen====
 Einige Eingabemethoden wie zum Beispiel Chinese New Phonetic und New ChangJie besitzen einen "reading string (auch als "precomposition string" bezeichnet).
 Mit dieser Option teilen Sie NVDA mit, ob neue Zeichen, die in diese Zeichenketten eingegeben werden, zurückgemeldet werden sollen.
 Diese Option ist standardmäßig aktiviert.
@@ -1190,6 +1194,7 @@ Konfigurieren können Sie die Meldungen von:
 - betonten Text
 - Layout
 - Rechtschreibfehler
+- Grammatikfehler
 - Seitenwechsel
 - Zeilennummern
 - Zeileneinrückungen
@@ -1253,7 +1258,7 @@ Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und 
 In diesem Dialog können Sie die Aussprache von Satz-, beziehungsweise Sonderzeichen verändern und festlegen, ab welcher Symbolebene  dieses angesagt werden soll. 
 
 Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.
-Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den  [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der nvda-Sprache verwendet.
+Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den  [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der NVDA-Sprache verwendet.
 
 Um die aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
 
@@ -1463,22 +1468,22 @@ Dieser Eintrag, einmal aktiviert, lädt alle Anwendungsmodule sowie globale Plug
 Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Sprachausgaben.
 eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter  [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-Die in NVDA fest integrierte [eSpeak http://espeak.sourceforge.net/]-Sprachausgabe erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
+++ eSpeak NG ++
+Die in NVDA fest integrierte [eSpeak NG https://github.com/espeak-ng/espeak-ng],]-Sprachausgabe erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
 Beim Starten von NVDA wird sie als Standard verwendet.
 Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen mit einem USB-Stick ohne weiteres betrieben werden kann.
 
-Jede Stimme, die mit eSpeak ausgeliefert wird, spricht eine andere Sprache.
+Jede Stimme, die mit eSpeak NG ausgeliefert wird, spricht eine andere Sprache.
 Somit werden rund 43 unterschiedliche Sprachen unterstützt.
 
 Es gibt auch eine Vielzahl von Varianten, womit der Klang der Stimme geändert werden kann.
 
 ++ Microsoft Speech API Version 4 (SAPI 4.0) ++
 SAPI 4 ist ein älterer Microsoft-Standard für Softwaresprachausgaben.
-Viele Sprachausgaben, die noch diesem Standard entsprechen, können von verschiedenen Firmen käuflich erworben oder von Internetseiten kostenlos heruntergeladen werden.
-Wenn Sie diese Sprachausgabe mit NVDA verwenden, werden die installierten Sapi4-Stimmen aller Hersteller in einer Liste angezeigt. Dies gilt für den Dialog [Stimmeneinstellungen #VoiceSettings] sowie für den [Sprachausgaben-Einstellungsring #SynthSettingsRing].
+NVDA unterstützt noch die alte Schnittstelle, für all jene,  die bereits SAPI 4 Sprachausgaben installiert haben.
+Ferner werden die Treiber hierfür schon lange nicht mehr von Microsoft zum Download angeboten.
 
-Falls Sie SAPI4-Stimmen installiert haben, die Sprachausgabe jedoch nicht in der Liste der Sprachausgaben zu finden ist, installieren Sie bitte die Sapi4-Engine, die Sie [hier #http://activex.microsoft.com/activex/controls/sapi/spchapi.exe] herunterladen können.
+Wenn diese Sprachausgabe mit NVDA verwendet wird, finden Sie die Stimmen aller SAPI 4 Engines in den [Stimmeinstellungen #VoiceSettings] oder im [Sprachausgaben-Einstellungsring #SynthSettingsRing].
 
 ++ Microsoft Speech API Version 5 (SAPI 5.x) ++
 SAPI 5 ist ein Microsoft-Standard für Softwaresprachausgaben.
@@ -1664,7 +1669,7 @@ dies sind u. a.:
 -
 Einige andere Baum-Zeilen könnten ebenfalls funktionieren, dies wurde allerdings noch nicht getestet.
 
-Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren. Ausgenommen hiervon sind VarioUltra, Pronto! und Refreshabraille ausgenommen.
+Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren. Ausgenommen hiervon sind VarioUltra, Pronto! und Refreshabraille.
 
 Folgende Tastenzuweisungen sind in NVDA bei diesen Zeilen verfügbar:
 Bitte lesen Sie in der Dokumentation zu Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -2105,7 +2110,7 @@ Bei Braillezeilen, die eine eigene Braille-Tastatur besitzen, arbeitet BRLTTY di
 Die Einstellung der Braille-Eingabetabelle innerhalb von NVDA ist daher wirkungslos.
 
 Folgende BRLTTY-Befehle wurden an NVDA zugewiesen.
-Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.cc/brltty/doc/KeyTables/] für Informationen darüber, wie BRLTTY-Befehle an Braillezeilentasten zugewiesen werden.
+Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturbelegungen http://mielke.cc/brltty/doc/KeyBindings/] für Informationen darüber, wie BRLTTY-Befehle an Braillezeilentasten zugewiesen werden können.
 %kc:beginInclude
 || Name | BRLTTY-Befehl |
 | Braillezeile zurückscrollen | fwinlt (eine Zeilenlänge nach links bewegen) |
@@ -2175,8 +2180,8 @@ Die Kurzformen mehrerer Optionen können beispielsweise wie folgt kombiniert wer
 Einige Optionen akzeptieren zusätzliche Parameter, mit denen Sie zum Beispiel den Umfang der Protokollierung oder den Namen einer Konfigurationsdatei angeben können.
 Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen. Beispiele:
 | nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur" |
-| nvda --log-file=c:\nvda.log |  Speichert das Protokoll in der Datei c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der datei c:\nvda.log |
+| nvda --log-file=C:\nvda.log |  Speichert das Protokoll in der Datei "C:\nvda.log" |
+| nvda --log-level=20 -f C:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der datei C:\nvda.log |
 
 Folgende Kommandozeilenoptionen werden akzeptiert:
 || Kurzform | Langform | Beschreibung |

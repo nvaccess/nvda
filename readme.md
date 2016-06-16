@@ -50,7 +50,8 @@ For reference, the following dependencies are included in Git submodules:
 * [comtypes](http://sourceforge.net/projects/comtypes/), version 0.6.2
 * [wxPython](http://www.wxpython.org/), version 3.0.2.0
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
-* [eSpeak](http://espeak.sourceforge.net/), version 1.48.04
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
+* [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
 * [liblouis](http://www.liblouis.org/), version 2.6.5
@@ -71,7 +72,7 @@ For reference, the following dependencies are included in Git submodules:
 * SyncBraille.dll, version 1.0.0.1
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
-* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.46
+* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51
 * [NSIS UAC plug-in](http://nsis.sourceforge.net/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303

@@ -37,7 +37,7 @@ Além do inglês, o NVDA está traduzido para 45 idiomas, estando inclusos: Afri
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens da interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
 
-Este programa vem com o [eSpeak http://espeak.sourceforge.net/], um sintetizador de voz livre, de código-aberto e multilíngüe.
+Este programa vem com o [eSpeak NG https://github.com/espeak-ng/espeak-ng], um sintetizador de voz livre, de código-aberto e multilíngüe.
 
 Informações sobre outros sintetizadores de voz que o NVDA suporta podem ser encontradas na seção [Sintetizadores de Voz Suportados #SupportedSpeechSynths].
 
@@ -366,7 +366,7 @@ As seguintes teclas de atalho estão disponíveis para a revisão de texto:
 | Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+a | Varredura para baixo com 3 dedos (Modo de texto) | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Indisponível | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que você informe ao NVDA onde pretende copiar |
 | Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Indisponível | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows |
-| Informar formatação de texto | NVDA+f | NVDA+f | Indisponível | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
+| Informar formatação de texto | NVDA+f | NVDA+f | Indisponível | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente. Pressionando duas vezes, exibe  a informação em modo de navegação |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente. 
@@ -509,7 +509,8 @@ Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas tecla
 Para alternar a ativação das teclas de navegação por caractere no o documento atual, pressione NVDA+shift+espaço.
  %kc:endInclude
 
-++ A Lista de Elementos ++
+
+ ++ A Lista de Elementos ++
 A lista de elementos fornece acesso a uma lista de  vários tipos de elementos no documento, quando apropriado ao aplicativo.
 Os botões de opção permitem-lhe alternar entre os vários tipos de elementos.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
@@ -752,6 +753,15 @@ Isto pode ser útil para alguém que deseja utilizar o NVDA somente com Braille,
 ==== Dispositivo de Saída ====
 Esta opção permite-lhe escolher a placa de som que o NVDA indicará ao sintetizador selecionado para falar.
 
++%kc:setting
+==== Audio Ducking Mode ====
+Tecla: NVDA+shift+d
+
+No Windows 8 e superiores, essa opção permite-lhe escolher se o NVDA deve reduzir o volume de outros aplicativos enquanto ele estiver falando, ou durante todo o tempo em que o NVDA estiver em execução.
+- Não reduzir: o NVDA não reduzirá o volume de outros áudios. 
+- Reduzir ao reproduzir fala e sons: o NVDA irá reduzir o volume de outros áudios apenas quando ele estiver falando ou reproduzindo seus sons. Isso pode não funcionar para todos os sintetizadores. 
+- Sempre reduzir: o NVDA irá manter o volume de outros  áudios baixo enquanto este leitor de telas estiver em execução.
+
 +++ Opções de Voz (NVDA+control+v) +++[VoiceSettings]
 O diálogo das opções de voz que se encontra no menu Preferências contém opções que lhe permitem alterar o som da voz.
 Para uma forma alternativa e mais rápida de controlar os parâmetros de voz a partir de qualquer local, por favor consulte a seção [Anel de Opções de Voz #SynthSettingsRing].
@@ -764,9 +774,9 @@ Pode utilizar as setas para ouvir os diversos itens.
 As setas Acima e Esquerda sobem pela lista, enquanto as Setas Abaixo e Direita descem pela lista.
 
 ==== Variante ====
-Caso esteja usando o eSpeak que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
-As variantes do eSpeak assemelham-se às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
-Algumas variantes são semelhantes a homens, mulheres e outras são similares a sapos.
+Caso esteja usando o eSpeak NG que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
+As variantes do eSpeak NG assemelham-se às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
+Algumas variantes são semelhantes a homens e mulheres e outras são similares a sapos.
 
 ==== Velocidade ====
 Esta opção permite-lhe alterar a velocidade da voz.
@@ -780,12 +790,12 @@ Contém uma barra de controle que lhe possibilita andar de 0 a 100, (sendo 0 o t
 Esta opção é uma barra de controle que lhe permite andar  de 0 a 100, (sendo 0 o volume mais baixo e 100 o mais alto). 
 
 ==== Inflecção ====
-Uma barra de controle que lhe permite escolher a inflecção (mais alta ou mais baixa do tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak oferece essa opção por padrão).
+Uma barra de controle que lhe permite escolher a inflecção (mais alta ou mais baixa do tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak NG oferece essa opção por padrão).
 
 ==== Alternância Automática de Idioma ====
 Essa caixa de seleção lhe permite escolher se o NVDA deve ou não alterar o idioma do sintetizador de voz, desde que o atributo do idioma esteja disponível no texto que está sendo lido.
 Por padrão, essa opção está ativada.
-Atualmente, apenas o eSpeak suporta alternância automática de idioma.
+Atualmente, apenas o eSpeak NG suporta alternância automática de idioma.
 
 ==== Alternância Automática de Dialeto ====
 Se a alternância automática de Idioma estiver ativada, essa caixa de seleção lhe permite escolher se as alterações nos dialetos devem ser processadas em lugar de alterar apenas o idioma atual.
@@ -943,7 +953,11 @@ Portanto, é bastante útil ser alertado sobre isso.
 ==== Falar Teclas de Comando ====
 Tecla: NVDA+4
 
-Quando está marcada informa ao NVDA para anunciar todas as teclas que não são caracteres que você pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
+Quando está marcada, informa ao NVDA para anunciar todas as teclas que não são caracteres que você pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
+
++==== Tocar som para erros ortográficos ao digitar ====
+Se habilitada, um curto som de alerta será tocado quando uma palavra digitada contiver um erro ortográficco.
+Esta opção só estará disponível se o anúncio de erros ortográficos estiver habilitado no [Diálogo de Opções de Formatação de Documentos #DocumentFormattingSettings] do NVDA.
 
 ==== Processar Teclas  de outros Aplicativos ==== 
 Esta opção permite ao usuário controlar se o pressionamento de teclas gerado por aplicações tais como teclados na tela e softwares de reconhecimento de voz deverão ser processados pelo NVDA.  
@@ -1142,6 +1156,7 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - Ênfase
 - Estilo
 - Erros Ortográficos
+- Erros Gramaticais
 - Número das Páginas
 - Número das Linhas
 - Indentação das Linhas
@@ -1416,12 +1431,12 @@ Esse item, quando ativado, recarrega app modules e global plugins sem reiniciar 
 Esta seção contém informação sobre os sintetizadores de voz suportados pelo NVDA. Se deseja uma lista mais extensa de sintetizadores gratuitos e comerciais que você pode baixar ou  comprar para usar com o NVDA, por favor consulte a página
 http://www.nvda-project.org/wiki/ExtraVoices.
 
-++ eSpeak ++
-O sintetizador [eSpeak http://espeak.sourceforge.net/] é compilado diretamente para o NVDA e não necessita instalar nenhum outro driver ou componente especial.
-O eSpeak é iniciado com o NVDA por padrão.
+++ eSpeak NG ++
+O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] é compilado diretamente para o NVDA e não é necessário instalar nenhum outro driver ou componente especial.
+O eSpeak NG é iniciado com o NVDA por padrão.
 Por ter sido compilado para o NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo USB ou CD em outros sistemas.
 
-Cada voz que vem com o eSpeak fala um idioma diferente.
+Cada voz que vem com o eSpeak NG fala um idioma diferente.
 Existem cerca de 43 idiomas suportados por ele.
 
 Existem também muitas variantes que podem ser escolhidas para alterar o som da voz.
