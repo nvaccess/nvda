@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-25 17:19+0800\n"
+"PO-Revision-Date: 2016-06-07 15:11+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -2696,7 +2696,7 @@ msgstr "受保護"
 
 #. Translators: This is presented when a required form field is encountered.
 msgid "required"
-msgstr "需要"
+msgstr "必填"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
@@ -2705,7 +2705,7 @@ msgstr "沒有功能"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
-msgstr "輸入錯誤"
+msgstr "無效的輸入"
 
 msgid "modal"
 msgstr "樣式的"
@@ -4588,6 +4588,7 @@ msgstr "畫面瀏覽"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "模擬在系統鍵盤上按%s"
 
+# 避免報讀破音字有誤，將「空行」以「空航」替代
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -6025,7 +6026,7 @@ msgstr "管理附加元件 (&A)..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
-msgstr "建立可攜式版(&C)..."
+msgstr "建立可攜式版 (&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -6064,7 +6065,7 @@ msgstr "貢獻者 (&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog..."
-msgstr "歡迎視窗 (&L)"
+msgstr "歡迎視窗 (&L)..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6080,7 +6081,7 @@ msgstr "說明 (&H)"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "組態設定(&C)..."
+msgstr "組態設定 (&C)..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
