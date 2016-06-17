@@ -265,10 +265,12 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		raise NotImplementedError
 
 	def _getNVDAObjectFromOffset(self,offset):
-		raise NotImplementedError
+		return self.obj
 
 	def _getOffsetsFromNVDAObject(self,obj):
-		raise NotImplementedError
+		if obj==self.obj:
+			return 0,self._getStoryLength()
+		raise LookupError
 
 	def __init__(self,obj,position):
 		"""Constructor.
