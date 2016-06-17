@@ -178,8 +178,7 @@ confspec = ConfigObj(StringIO(
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	reportLineIndentation = boolean(default=False)
-	#INDENT_SPEECH is speech, INDENT_TONE is tones, | them to get the correct setting.
-	indentType =integer(min=1, default=1)
+	reportToneIndentation = boolean(default=False)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
