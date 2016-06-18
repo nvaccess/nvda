@@ -1111,16 +1111,27 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report line &numbers"))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This message is presented in the document formatting settings dialogue
-		# If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-		self.lineIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation"))
-		self.lineIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportLineIndentation"])
-		settingsSizer.Add(self.lineIndentationCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This message is presented in the document formatting settings dialogue
-		# If this option is selected, NVDA will cound the leading spaces and tabs of a line and play a tone to report it.
-		self.toneIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation with tones"))
-		self.toneIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportToneIndentation"])
-		settingsSizer.Add(self.toneIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox in the
+		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report Line &Indents With:")))
+		indentChoices=[
+			#Translators: A setting to report No  line Indentation.
+			_("Off"),
+			#Translators: A setting to report indents with Speech.
+			_("Speech"),
+			#Translators: A setting to report indents with tones.
+			_("Tones"),
+			#Translators: A setting to report indents with both tones and Speech.
+			_("Both  Speech and Tones")
+		]
+		self.lineIndentationCombo = wx.Choice(self,wx.ID_ANY,choices=indentChoices)
+		#This is for Speech. For legacy reasons, we leave this name.
+		#We use bitwise opperations because it saves us a four way if statement.
+		curChoice = config.conf["documentFormatting"]["reportToneIndentation"] * 2 |  config.conf["documentFormatting"]["reportLineIndentation"]
+		self.lineIndentationCombo.SetSelection(curChoice)
+		sizer.Add(self.lineIndentationCombo)
+		settingsSizer.Add(sizer)
 		# Translators: This message is presented in the document formatting settings dialogue
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		self.paragraphIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraph indentation"))
@@ -1194,8 +1205,19 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportGrammarErrors"]=self.grammarErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportLineIndentation"]=self.lineIndentationCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportToneIndentation"]=self.toneIndentationCheckBox.IsChecked()
+		choice = self.lineIndentationCombo.GetSelection()
+		if choice == 0:
+			config.conf["documentFormatting"]["reportLineIndentation"] = False
+			config.conf["documentFormatting"]["reportToneIndentation"] = False
+		elif choice == 1:
+			config.conf["documentFormatting"]["reportLineIndentation"] = True
+			config.conf["documentFormatting"]["reportToneIndentation"] = False
+		elif choice == 2:
+			config.conf["documentFormatting"]["reportLineIndentation"] = False
+			config.conf["documentFormatting"]["reportToneIndentation"] = True
+		if choice == 3:
+			config.conf["documentFormatting"]["reportLineIndentation"] = True
+			config.conf["documentFormatting"]["reportToneIndentation"] = True
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
