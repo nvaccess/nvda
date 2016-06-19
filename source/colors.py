@@ -71,273 +71,128 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 			return foundName
 		# convert to hsv (hue, saturation, value)
 		h,s,v=colorsys.rgb_to_hsv(self.red/255.0,self.green/255.0,self.blue/255.0)
-		h=int(h*360)
 		sv=s*v
-		if sv<0.05:
+		if sv<0.02:
 			# There is not enough saturation to perceive a hue, therefore its on the scale from black to white.
-			closestName=shadeNames[int(round((len(shadeNames)-1)*(1-v)))]
+			v=v*100
+			nv=min(shadeNames,key=lambda i: abs(i-v))
+			closestName=shadeNames[nv]
 		else:
+			h*=360
+			s*=100
+			v*=100
 			# Find the closest named hue (red, orange, yellow...)
-			# or a paile, dark or paile dark variation
-			nh=min((x for x in colorNamesByHue),key=lambda x: abs(x-h))
-			hueShadeNames=colorNamesByHue[nh][int(s<=0.5)]
-			closestName=hueShadeNames[int(round((len(hueShadeNames)-1)*(1-v)))]
+			nh=min(hueNames,key=lambda i: 180-abs(abs(i-h)-180))
+			hueName=hueNames[nh]
+			ns=min(brightnessLabelsBySaturation,key=lambda i: abs(i-s))
+			brightnessLabels=brightnessLabelsBySaturation[ns]
+			nv=min(brightnessLabels,key=lambda i: abs(i-v))
+			if nh in brownHueNames:
+				brownNV=brownBrightnessRedirectionValues.get(nv)
+				if brownNV is not None:
+					nv=brownNV
+					hueName=brownHueNames[nh]
+			variationTemplate=brightnessLabels.get(nv)
+			if variationTemplate:
+				closestName=variationTemplate.format(color=hueName)
+			else:
+				closestName=hueName
 		RGBToNamesCache[self]=closestName
 		return closestName
 
 RGBToNamesCache={}
 
-# a dictionary whos keys are hues in degrees, and values are:
-# a 2d array containing labels for normal and dark, and also pale versions of all of these 
-colorNamesByHue={
-	0:[
-		[
-			# Translators: The color red (HSV 0 degrees H, 100% S, 100% V)
-			pgettext('color name','red'),
-			# Translators: The color dark red (HSV 0 degrees H, 100% S, 50% V)
-			pgettext('color name','dark red'),
-		],
-		[
-			# Translators: The color pale red (HSV 0 degrees H, 50% S, 100% V)
-			pgettext('color name','pale red'),
-			# Translators: The color pale dark red (HSV 0 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark red'),
-		],
-	],
-	15:[
-		[
-			# Translators: The color red-orange (HSV 15 degrees H, 100% S, 100% V)
-			pgettext('color name','red-orange'),
-			# Translators: The color red-brown (HSV 15 degrees H, 100% S, 50% V)
-			pgettext('color name','red-brown'),
-			# Translators: The color dark red-brown (HSV 15 degrees H, 100% S, 25% V)
-			pgettext('color name','dark red-brown'),
-		],
-		[
-			# Translators: The color pale red-orange (HSV 15 degrees H, 50% S, 100% V)
-			pgettext('color name','pale red-orange'),
-			# Translators: The color pale red-brown (HSV 15 degrees H, 50% S, 50% V)
-			pgettext('color name','pale red-brown'),
-			# Translators: The color pale dark red-brown (HSV 15 degrees H, 50% S, 25% V)
-			pgettext('color name','pale dark red-brown'),
-		],
-	],
-	30:[
-		[
-			# Translators: The color orange (HSV 30 degrees H, 100% S, 100% V)
-			pgettext('color name','orange'),
-			# Translators: The color brown (HSV 30 degrees H, 100% S, 50% V)
-			pgettext('color name','brown'),
-			# Translators: The color dark brown (HSV 30 degrees H, 100% S, 25% V)
-			pgettext('color name','dark brown'),
-		],
-		[
-			# Translators: The color pale orange (HSV 30 degrees H, 50% S, 100% V)
-			pgettext('color name','pale orange'),
-			# Translators: The color pale brown (HSV 30 degrees H, 50% S, 50% V)
-			pgettext('color name','pale brown'),
-			# Translators: The color pale dark brown (HSV 30 degrees H, 50% S, 25% V)
-			pgettext('color name','pale dark brown'),
-		],
-	],
-	45:[
-		[
-			# Translators: The color orange-yellow (HSV 45 degrees H, 100% S, 100% V)
-			pgettext('color name','orange-yellow'),
-			# Translators: The color brown-yellow (HSV 45 degrees H, 100% S, 50% V)
-			pgettext('color name','brown-yellow'),
-			# Translators: The color dark brown-yellow (HSV 45 degrees H, 100% S, 25% V)
-			pgettext('color name','dark brown-yellow'),
-		],
-		[
-			# Translators: The color pale orange-yellow (HSV 45 degrees H, 50% S, 100% V)
-			pgettext('color name','pale orange-yellow'),
-			# Translators: The color pale brown-yellow (HSV 45 degrees H, 50% S, 50% V)
-			pgettext('color name','pale brown-yellow'),
-			# Translators: The color pale dark brown-yellow (HSV 45 degrees H, 50% S, 25% V)
-			pgettext('color name','pale dark brown-yellow'),
-		],
-	],
-	60:[
-		[
-			# Translators: The color yellow (HSV 60 degrees H, 100% S, 100% V)
-			pgettext('color name','yellow'),
-			# Translators: The color dark yellow (HSV 60 degrees H, 100% S, 50% V)
-			pgettext('color name','dark yellow'),
-		],
-		[
-			# Translators: The color pale yellow (HSV 60 degrees H, 50% S, 100% V)
-			pgettext('color name','pale yellow'),
-			# Translators: The color pale dark yellow (HSV 60 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark yellow'),
-		],
-	],
-	90:[
-		[
-			# Translators: The color yellow-green (HSV 90 degrees H, 100% S, 100% V)
-			pgettext('color name','yellow-green'),
-			# Translators: The color dark yellow-green (HSV 90 degrees H, 100% S, 50% V)
-			pgettext('color name','dark yellow-green'),
-		],
-		[
-			# Translators: The color pale yellow-green (HSV 90 degrees H, 50% S, 100% V)
-			pgettext('color name','pale yellow-green'),
-			# Translators: The color pale dark yellow-green (HSV 90 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark yellow-green'),
-		],
-	],
-	120:[
-		[
-			# Translators: The color green (HSV 120 degrees H, 100% S, 100% V)
-			pgettext('color name','green'),
-			# Translators: The color dark green (HSV 120 degrees H, 100% S, 50% V)
-			pgettext('color name','dark green'),
-		],
-		[
-			# Translators: The color pale green (HSV 120 degrees H, 50% S, 100% V)
-			pgettext('color name','pale green'),
-			# Translators: The color pale dark green (HSV 120 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark green'),
-		],
-	],
-	150:[
-		[
-			# Translators: The color green-aqua (HSV 150 degrees H, 100% S, 100% V)
-			pgettext('color name','green-aqua'),
-			# Translators: The color dark green-aqua (HSV 150 degrees H, 100% S, 50% V)
-			pgettext('color name','dark green-aqua'),
-		],
-		[
-			# Translators: The color pale green-aqua (HSV 150 degrees H, 50% S, 100% V)
-			pgettext('color name','pale green-aqua'),
-			# Translators: The color pale dark green-aqua (HSV 150 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark green-aqua'),
-		],
-	],
-	180:[
-		[
-			# Translators: The color aqua (HSV 180 degrees H, 100% S, 100% V)
-			pgettext('color name','aqua'),
-			# Translators: The color dark aqua (HSV 180 degrees H, 100% S, 50% V)
-			pgettext('color name','dark aqua'),
-		],
-		[
-			# Translators: The color pale aqua (HSV 180 degrees H, 50% S, 100% V)
-			pgettext('color name','pale aqua'),
-			# Translators: The color pale dark aqua (HSV 180 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark aqua'),
-		],
-	],
-	210:[
-		[
-			# Translators: The color aqua-blue (HSV 210 degrees H, 100% S, 100% V)
-			pgettext('color name','aqua-blue'),
-			# Translators: The color dark aqua-blue (HSV 210 degrees H, 100% S, 50% V)
-			pgettext('color name','dark aqua-blue'),
-		],
-		[
-			# Translators: The color pale aqua-blue (HSV 210 degrees H, 50% S, 100% V)
-			pgettext('color name','pale aqua-blue'),
-			# Translators: The color pale dark aqua-blue (HSV 210 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark aqua-blue'),
-		],
-	],
-	240:[
-		[
-			# Translators: The color blue (HSV 240 degrees H, 100% S, 100% V)
-			pgettext('color name','blue'),
-			# Translators: The color dark blue (HSV 240 degrees H, 100% S, 50% V)
-			pgettext('color name','dark blue'),
-		],
-		[
-			# Translators: The color pale blue (HSV 240 degrees H, 50% S, 100% V)
-			pgettext('color name','pale blue'),
-			# Translators: The color pale dark blue (HSV 240 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark blue'),
-		],
-	],
-	263:[
-		[
-			# Translators: The color blue-purple (HSV 263 degrees H, 100% S, 100% V)
-			pgettext('color name','blue-purple'),
-			# Translators: The color dark blue-purple (HSV 263 degrees H, 100% S, 50% V)
-			pgettext('color name','dark blue-purple'),
-		],
-		[
-			# Translators: The color pale blue-purple (HSV 263 degrees H, 50% S, 100% V)
-			pgettext('color name','pale blue-purple'),
-			# Translators: The color pale dark blue-purple (HSV 263 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark blue-purple'),
-		],
-	],
-	285:[
-		[
-			# Translators: The color purple (HSV 285 degrees H, 100% S, 100% V)
-			pgettext('color name','purple'),
-			# Translators: The color dark purple (HSV 285 degrees H, 100% S, 50% V)
-			pgettext('color name','dark purple'),
-		],
-		[
-			# Translators: The color pale purple (HSV 285 degrees H, 50% S, 100% V)
-			pgettext('color name','pale purple'),
-			# Translators: The color pale dark purple (HSV 285 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark purple'),
-		],
-	],
-	300:[
-		[
-			# Translators: The color purple-pink (HSV 300 degrees H, 100% S, 100% V)
-			pgettext('color name','purple-pink'),
-			# Translators: The color dark purple-pink (HSV 300 degrees H, 100% S, 50% V)
-			pgettext('color name','dark purple-pink'),
-		],
-		[
-			# Translators: The color pale purple-pink (HSV 300 degrees H, 50% S, 100% V)
-			pgettext('color name','pale purple-pink'),
-			# Translators: The color pale dark purple-pink (HSV 300 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark purple-pink'),
-		],
-	],
-	315:[
-		[
-			# Translators: The color pink (HSV 315 degrees H, 100% S, 100% V)
-			pgettext('color name','pink'),
-			# Translators: The color dark pink (HSV 315 degrees H, 100% S, 50% V)
-			pgettext('color name','dark pink'),
-		],
-		[
-			# Translators: The color pale pink (HSV 315 degrees H, 50% S, 100% V)
-			pgettext('color name','pale pink'),
-			# Translators: The color pale dark pink (HSV 315 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark pink'),
-		],
-	],
-	338:[
-		[
-			# Translators: The color pink-red (HSV 338 degrees H, 100% S, 100% V)
-			pgettext('color name','pink-red'),
-			# Translators: The color dark pink-red (HSV 338 degrees H, 100% S, 50% V)
-			pgettext('color name','dark pink-red'),
-		],
-		[
-			# Translators: The color pale pink-red (HSV 338 degrees H, 50% S, 100% V)
-			pgettext('color name','pale pink-red'),
-			# Translators: The color pale dark pink-red (HSV 338 degrees H, 50% S, 50% V)
-			pgettext('color name','pale dark pink-red'),
-		],
-	],
+shadeNames={
+	# Translators: the color white (HSV saturation0%, value 100%)
+	100:pgettext('color hue','white'),
+	# Translators: the color very light grey (HSV saturation 0%, value 84%)
+	84:pgettext('color hue','very light grey'),
+	# Translators: the color light grey (HSV saturation 0%, value 66%)
+	66:pgettext('color hue','light grey'),
+	# Translators: the color grey (HSV saturation 0%, value 50%)
+	50:pgettext('color hue','grey'),
+	# Translators: the color dark grey (HSV saturation 0%, value 34%)
+	34:pgettext('color hue','dark grey'),
+	# Translators: the color very dark grey (HSV saturation 0%, value 16%)
+	16:pgettext('color hue','very dark grey'),
+	# Translators: the color black (HSV saturation 0%, value 0%)
+	0:pgettext('color hue','black'),
 }
 
-shadeNames=[
-	# Translators: the color white (RGB 255,255,255)
-	pgettext('color name','white'),
-	# Translators: the color light grey (RGB 192,192,192)
-	pgettext('color name','light grey'),
-	# Translators: the color grey (RGB 128,128,128)
-	pgettext('color name','grey'),
-	# Translators: the color dark grey (RGB 64,64,64)
-	pgettext('color name','dark grey'),
-	# Translators: the color black (RGB 0,0,0)
-	pgettext('color name','black'),
-]
+hueNames={
+	# Translators: The color red (HSV hue 0 degrees)
+	0:pgettext('color hue','red'),
+	# Translators: The color between  red and orange (HSV hue 15 degrees)
+	15:pgettext('color hue','red-orange'),
+	# Translators: The color orange (HSV hue 30 degrees)
+	30:pgettext('color hue','orange'),
+	# Translators: The color between  orange and yellow (HSV hue 45 degrees)
+	45:pgettext('color hue','orange-yellow'),
+	# Translators: The color yellow (HSV hue 60 degrees)
+	60:pgettext('color hue','yellow'),
+	# Translators: The color between  yellow and green (HSV hue 90 degrees)
+	90:pgettext('color hue','yellow-green'),
+	# Translators: The color green (HSV hue 120 degrees)
+	120:pgettext('color hue','green'),
+	# Translators: The color between  green and aqua (HSV hue 150 degrees)
+	150:pgettext('color hue','green-aqua'),
+	# Translators: The color aqua (HSV hue 180 degrees)
+	180:pgettext('color hue','aqua'),
+	# Translators: The color between  aqua and blue (HSV hue 210 degrees)
+	210:pgettext('color hue','aqua-blue'),
+	# Translators: The color blue (HSV hue 240 degrees)
+	240:pgettext('color hue','blue'),
+	# Translators: The color between  blue and purple (HSV hue 270 degrees)
+	270:pgettext('color hue','blue-purple'),
+	# Translators: The color purple (HSV hue 300 degrees)
+	300:pgettext('color hue','purple'),
+	# Translators: The color between  purple and pink (HSV hue 312 degrees)
+	312:pgettext('color hue','purple-pink'),
+	# Translators: The color pink (HSV hue 324 degrees)
+	324:pgettext('color hue','pink'),
+	# Translators: The color between  pink and red (HSV hue 342 degrees)
+	342:pgettext('color hue','pink-red'),
+}
 
+brightnessLabelsBySaturation={
+	100:{
+		# Translators: a bright color (HSV saturation 100% and value 100%)
+		100:pgettext('color variation','bright {color}'),
+		72:'{color}',
+		# Translators: a dark color (HSV saturation 100% and value 44%)
+		44:pgettext('color variation','dark {color}'),
+		# Translators: a very dark color (HSV saturation 100% and value 16%)
+		16:pgettext('color variation','very dark {color}'),
+	},
+	60:{
+		# Translators: a light pale color (HSV saturation 50% and value 100%)
+		100:pgettext('color variation','light pale {color}'),
+		# Translators: a pale color (HSV saturation 50% and value 72%)
+		72:pgettext('color variation','pale {color}'),
+		# Translators: a dark pale color (HSV saturation 50% and value 44%)
+		44:pgettext('color variation','dark pale {color}'),
+		# Translators: a very dark color (HSV saturation 50% and value 16%)
+		16:pgettext('color variation','very dark pale {color}'),
+	},
+	10:{
+		# Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+		100:pgettext('color variation','{color} white'),
+		# Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+		72:pgettext('color variation','{color} grey'),
+		# Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+		44:pgettext('color variation','dark {color} grey'),
+		# Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+		16:pgettext('color variation','very dark {color} grey'),
+	},
+}
+
+brownHueNames={
+	# Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
+	15:pgettext('color hue','red-brown'),
+	# Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
+	30:pgettext('color hue','brown'),
+	# Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
+	45:pgettext('color hue','brown-yellow'),
+}
+
+brownBrightnessRedirectionValues={44:72,16:44}
