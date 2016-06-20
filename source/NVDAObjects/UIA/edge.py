@@ -116,10 +116,13 @@ def createUIAMultiPropertyCondition(*dicts):
 
 def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attributeValue,direction="next",ItemClass=UIATextRangeQuickNavItem):
 	includeCurrent=False
+	story=document.makeTextInfo(textInfos.POSITION_ALL)
 	if not position:
-		position=document.makeTextInfo(textInfos.POSITION_ALL)
+		curPosition=story
 		includeCurrent=True
-	curPosition=position
+	else:
+		curPosition=position.copy()
+		curPosition.setEndPoint(story,"startToStart" if direction=="previous" else "endToEnd")
 	while True:
 		try:
 			newRange=curPosition._rangeObj.findAttribute(attributeID,attributeValue,direction=="previous")
@@ -130,13 +133,7 @@ def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attr
 		newPosition=document.TextInfo(document,None,_rangeObj=newRange)
 		if includeCurrent or not newPosition.isOverlapping(position):
 			yield ItemClass(itemType,document,newRange)
-		curPosition=newPosition
-		if direction=="previous":
-			curPosition.collapse()
-			if curPosition.move(textInfos.UNIT_CHARACTER,-1)==0:
-				return
-		else:
-			curPosition.collapse(True)
+		curPosition.setEndPoint(newPosition,"endToStart" if direction=="previous" else "startToEnd")
 
 def UIATextRangeFromElement(documentTextPattern,element):
 	try:
