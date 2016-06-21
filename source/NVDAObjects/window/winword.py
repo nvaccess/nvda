@@ -453,8 +453,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return mathPres.interactWithMathMl(mathMl)
 		newRng=self._rangeObj
 		newRng.End=newRng.End+1
-		if newRng.InlineShapes[1].Type==wdInlineShapeChart:
-			return eventHandler.queueEvent('gainFocus',WordChart(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordChartObject=self._rangeObj.InlineShapes[1].Chart))
+		if newRng.InlineShapes.Count >= 1:
+			if newRng.InlineShapes[1].Type==wdInlineShapeChart:
+				return eventHandler.queueEvent('gainFocus',WordChart(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordChartObject=self._rangeObj.InlineShapes[1].Chart))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
