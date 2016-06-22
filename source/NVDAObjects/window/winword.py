@@ -42,7 +42,7 @@ from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
-from . import _chartConstants 
+from . import _msOfficeChartConstants 
 #Word constants
 
 # wdMeasurementUnits
@@ -451,11 +451,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		mathMl=mathPres.getMathMlFromTextInfo(self)
 		if mathMl:
 			return mathPres.interactWithMathMl(mathMl)
-		newRng=self._rangeObj
+		newRng=self._rangeObj.Duplicate
 		newRng.End=newRng.End+1
 		if newRng.InlineShapes.Count >= 1:
 			if newRng.InlineShapes[1].Type==wdInlineShapeChart:
-				return eventHandler.queueEvent('gainFocus',WordChart(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordChartObject=self._rangeObj.InlineShapes[1].Chart))
+				return eventHandler.queueEvent('gainFocus',WordChart(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordChartObject=newRng.InlineShapes[1].Chart))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -1467,6 +1467,9 @@ class WordDocument_WwN(WordDocument):
 	}
 
 class WordChart(Window):
+
+	role=controlTypes.ROLE_CHART
+
 	def __init__(self,windowHandle, wordApplicationObject, wordChartObject,keyIndex=0):
 		self.windowHandle=windowHandle
 		self.wordApplicationObject=wordApplicationObject
@@ -1518,47 +1521,41 @@ class WordChart(Window):
 			name=self.wordChartObject.Name
 		#find the type of the chart
 		chartType = self.wordChartObject.ChartType
-		chartTypeText = _chartConstants.chartTypeDict.get(chartType,
+		chartTypeText = _msOfficeChartConstants.chartTypeDict.get(chartType,
                 # Translators: Reported when the type of a chart is not known.
                                 _("unknown"))
 		# Translators: Message reporting the title and type of a chart.
 		text=_("Chart title: {chartTitle}, type: {chartType}").format(chartTitle=name, chartType=chartTypeText)
+		return text
+
+	def _get_description(self):
 		count = self.wordChartObject.SeriesCollection().count
+		text=""
 		if count>0:
-                        if count == 1:
-                                # Translators: Indicates that there is 1 series in a chart.
-                                seriesValueString = _( "There is 1 series in this chart" )
-                        else:
-                                # Translators: Indicates the number of series in a chart where there are multiple series.
-                                seriesValueString = _( "There are total %d series in this chart" ) %(count)
-                        for i in xrange(1, count+1):
-                                # Translators: Specifies the number and name of a series when listing series in a chart.
-                                seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.wordChartObject.SeriesCollection(i).Name)
-                        text += seriesValueString
-                else:
-                        # Translators: Indicates that there are no series in a chart.
-                        text +=_("No Series defined.")
-                return text
-
-	def _get_title(self):
-		try:
-			title=self.wordChartObject.ChartTitle.Text
-		except COMError:
-			title=None
-		return title
-
-	def _get_role(self):
-		return controlTypes.ROLE_CHART
+			if count == 1:
+				# Translators: Indicates that there is 1 series in a chart.
+				seriesValueString = _( "There is 1 series in this chart" )
+			else:
+				# Translators: Indicates the number of series in a chart where there are multiple series.
+				seriesValueString = _( "There are total %d series in this chart" ) %(count)
+				for i in xrange(1, count+1):
+					# Translators: Specifies the number and name of a series when listing series in a chart.
+					seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.wordChartObject.SeriesCollection(i).Name)
+				text += seriesValueString
+		else:
+			# Translators: Indicates that there are no series in a chart.
+			text +=_("No Series defined.")
+		return text
 
 	def getChartSegment(self):
 		chartType = self.wordChartObject.ChartType
-		if chartType in (_chartConstants.xl3DPie, _chartConstants.xl3DPieExploded, _chartConstants.xlPie, _chartConstants.xlPieExploded, _chartConstants.xlPieOfPie):
+		if chartType in (_msOfficeChartConstants.xl3DPie, _msOfficeChartConstants.xl3DPieExploded, _msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
 			# Translators: A slice in a pie chart.
 			text=_("slice")
-		elif chartType in (_chartConstants.xl3DColumn, _chartConstants.xl3DColumnClustered, _chartConstants.xl3DColumnStacked, _chartConstants.xl3DColumnStacked100, _chartConstants.xlColumnClustered, _chartConstants.xlColumnStacked100, _chartConstants.xlColumnStacked):
+		elif chartType in (_msOfficeChartConstants.xl3DColumn, _msOfficeChartConstants.xl3DColumnClustered, _msOfficeChartConstants.xl3DColumnStacked, _msOfficeChartConstants.xl3DColumnStacked100, _msOfficeChartConstants.xlColumnClustered, _msOfficeChartConstants.xlColumnStacked100, _msOfficeChartConstants.xlColumnStacked):
 			# Translators: A column in a column chart.
 			text=pgettext('chart','column')
-		elif chartType in (_chartConstants.xl3DLine, _chartConstants.xlLine, _chartConstants.xlLineMarkers, _chartConstants.xlLineMarkersStacked, _chartConstants.xlLineMarkersStacked100, _chartConstants.xlLineStacked, _chartConstants.xlLineStacked100):
+		elif chartType in (_msOfficeChartConstants.xl3DLine, _msOfficeChartConstants.xlLine, _msOfficeChartConstants.xlLineMarkers, _msOfficeChartConstants.xlLineMarkersStacked, _msOfficeChartConstants.xlLineMarkersStacked100, _msOfficeChartConstants.xlLineStacked, _msOfficeChartConstants.xlLineStacked100):
 			# Translators: A data point in a line chart.
 			text=_("data point")
 		else:
@@ -1606,14 +1603,10 @@ class WordChart(Window):
 		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
 
 	__gestures = {
-				"kb(laptop):upArrow":"nextChartElement",
-				"kb(desktop):upArrow":"nextChartElement",
-				"kb(laptop):downArrow":"previousChartElement",
-				"kb(desktop):downArrow":"previousChartElement",
-				"kb(desktop):leftArrow":"previousChartElement",
-				"kb(laptop):leftArrow":"previousChartElement",
-				"kb(desktop):rightarrow":"nextChartElement",
-				"kb(laptop):rightArrow":"nextChartElement",
+				"kb:upArrow":"nextChartElement",
+				"kb:downArrow":"previousChartElement",
+				"kb:leftArrow":"previousChartElement",
+				"kb:rightarrow":"nextChartElement",
 				"kb:enter": "activatePosition",
 				"kb(desktop):numpadEnter":"activatePosition",
 				"kb:space": "activatePosition",
@@ -1621,12 +1614,21 @@ class WordChart(Window):
 	}
 
 class WordChartSeriesTrendline(WordChart):
-	_trendlineTypeMap = {_chartConstants.xlExponential: 'Exponential',
-								_chartConstants.xlLinear: 'Linear',
-								_chartConstants.xlLogarithmic: 'Logarithmic',
-								_chartConstants.xlMovingAvg: 'Moving Average',
-								_chartConstants.xlPolynomial: 'Polynomial',
-								_chartConstants.xlPower: 'Power' 
+
+	role=controlTypes.ROLE_CHARTELEMENT
+	_trendlineTypeMap = {
+								# Translators: Indicates that trendline type is Exponential
+								_msOfficeChartConstants.xlExponential: _("Exponential"),
+								# Translators: Indicates that trendline type is Linear
+								_msOfficeChartConstants.xlLinear: _("Linear"),
+								# Translators: Indicates that trendline type is Logarithmic
+								_msOfficeChartConstants.xlLogarithmic: _("Logarithmic"),
+								# Translators: Indicates that trendline type is Moving Average
+								_msOfficeChartConstants.xlMovingAvg: _("Moving Average"),
+								# Translators: Indicates that trendline type is Polynomial
+								_msOfficeChartConstants.xlPolynomial: _("Polynomial"),
+								# Translators: Indicates that trendline type is Power
+								_msOfficeChartConstants.xlPower: _("Power") 
 	}
 
 	def __init__(self, windowHandle, wordApplicationObject, wordChartObject, keyIndex, seriesIndex, trendlineIndex=1):
@@ -1635,11 +1637,12 @@ class WordChartSeriesTrendline(WordChart):
 		self.seriesIndex=seriesIndex
 		self.trendlineIndex=trendlineIndex
 		self.trendlinesCount=wordChartObject.SeriesCollection(self.seriesIndex).Trendlines().Count
+		self.currentTrendline=self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex)
 		super(WordChartSeriesTrendline, self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordChartObject=wordChartObject, keyIndex=keyIndex)
 
 	def _get_name(self):
-		if self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).DisplayEquation or self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).DisplayRSquared:
-			label=self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).DataLabel.Text
+		if self.currentTrendline.DisplayEquation or self.currentTrendline.DisplayRSquared:
+			label=self.currentTrendline.DataLabel.Text
 			#Translators: Substitute superscript two by square for R square value
 			label=label.replace(u"²", _( " square " ))
 			label=re.sub(r'([a-zA-Z]+)([2])',r'\1 square', label)
@@ -1648,18 +1651,15 @@ class WordChartSeriesTrendline(WordChart):
 			#Translators: Substitute - by minus in trendline equations.
 			label=label.replace(u"-",_(" minus "))
 			# Translators: This message gives trendline type and name for selected series
-			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} ").format(seriesName=self.wordChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Type], trendlineName=self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Name, trendlineLabel=label)
+			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} ").format(seriesName=self.wordChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.currentTrendline.Type], trendlineName=self.currentTrendline.Name, trendlineLabel=label)
 		else:
 			# Translators: This message gives trendline type and name for selected series
-			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName} ").format(seriesName=self.wordChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Type], trendlineName=self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Name)
+			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName} ").format(seriesName=self.wordChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.currentTrendline.Type], trendlineName=self.currentTrendline.Name)
 		return output
-
-	def _get_role(self):
-		return controlTypes.ROLE_CHARTELEMENT
 
 	def invokeTrendline(self, trendlineIndex):
 		obj=WordChartSeriesTrendline(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, trendlineIndex=trendlineIndex)
-		self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex).Select()
+		self.currentTrendline.Select()
 		eventHandler.queueEvent('gainFocus',obj)
 
 	def script_previousTrendline(self, gesture):
@@ -1679,16 +1679,29 @@ class WordChartSeriesTrendline(WordChart):
 			self.invokeTrendline(self.trendlineIndex)
 
 	__gestures = {
-				"kb(laptop):leftArrow":"previousTrendline",
-				"kb(desktop):leftArrow":"previousTrendline",
-				"kb(laptop):rightArrow":"nextTrendline",
-				"kb(desktop):rightArrow":"nextTrendline",
+				"kb:leftArrow":"previousTrendline",
+				"kb:rightArrow":"nextTrendline",
 	}
 
 class WordChartElement(WordChart):
-	_axisMap={_chartConstants.xlCategory: {_chartConstants.xlPrimary: 'Primary Category Axis', _chartConstants.xlSecondary: 'Secondary Category Axis'},
-				_chartConstants.xlValue: {_chartConstants.xlPrimary: 'Primary Value Axis', _chartConstants.xlSecondary: 'Secondary Value Axis'},
-				_chartConstants.xlSeriesAxis: {_chartConstants.xlPrimary: 'Primary Series Axis', _chartConstants.xlSecondary: 'Secondary Series Axis'}
+
+	role=controlTypes.ROLE_CHARTELEMENT
+	_axisMap={
+				_msOfficeChartConstants.xlCategory: {
+													# Translators: Indicates Primary Category Axis
+													_msOfficeChartConstants.xlPrimary: _("Primary Category Axis"),
+													# Translators: Indicates Secondary Category Axis
+													_msOfficeChartConstants.xlSecondary: _("Secondary Category Axis")},
+				_msOfficeChartConstants.xlValue: {
+													# Translators: Indicates Primary Value Axis
+													_msOfficeChartConstants.xlPrimary: _("Primary Value Axis"),
+													# Translators: Indicates Secondary Value Axis
+													_msOfficeChartConstants.xlSecondary: _("Secondary Value Axis")},
+				_msOfficeChartConstants.xlSeriesAxis: {
+													# Translators: Indicates Primary Series Axis
+													_msOfficeChartConstants.xlPrimary: _("Primary Series Axis"),
+													# Translators: Indicates Secondary Series Axis
+													_msOfficeChartConstants.xlSecondary: _("Secondary Series Axis")}
 	}
 
 	def __init__(self,windowHandle, wordApplicationObject, wordChartObject, keyIndex, elementIndex=0):
@@ -1701,8 +1714,8 @@ class WordChartElement(WordChart):
 		if self.wordChartObject.HasTitle:
 			self.elementKeyList.append('chartTitle')
 		# Enumerations for chart object in Excel and Word are same
-		for axisType in [_chartConstants.xlCategory, _chartConstants.xlValue, _chartConstants.xlSeriesAxis]:
-			for axisGroup in [_chartConstants.xlPrimary, _chartConstants.xlSecondary]:
+		for axisType in [_msOfficeChartConstants.xlCategory, _msOfficeChartConstants.xlValue, _msOfficeChartConstants.xlSeriesAxis]:
+			for axisGroup in [_msOfficeChartConstants.xlPrimary, _msOfficeChartConstants.xlSecondary]:
 				if self.wordChartObject.HasAxis(axisType, axisGroup):
 					self.elementKeyList.append(self._axisMap[axisType][axisGroup])
 					if self.wordChartObject.Axes(axisType, axisGroup).HasTitle:
@@ -1724,22 +1737,19 @@ class WordChartElement(WordChart):
 		#Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
 		return _("Chart Elements")
 
-	def _get_role(self):
-		return controlTypes.ROLE_CHARTELEMENT
-
 	def focusChartElement(self, key):
 		if 'Axis' in key:
 			splitKey=key.split()
 			if splitKey[0]=='Primary':
-				axisGroup=_chartConstants.xlPrimary
+				axisGroup=_msOfficeChartConstants.xlPrimary
 			elif splitKey[0]=='Secondary':
-				axisGroup=_chartConstants.xlSecondary
+				axisGroup=_msOfficeChartConstants.xlSecondary
 			if splitKey[1]=='Category':
-				axisType=_chartConstants.xlCategory
+				axisType=_msOfficeChartConstants.xlCategory
 			elif splitKey[1]=='Value':
-				axisType=_chartConstants.xlValue
+				axisType=_msOfficeChartConstants.xlValue
 			elif splitKey[1]=='Series':
-				axisType=_chartConstants.xlSeriesAxis
+				axisType=_msOfficeChartConstants.xlSeriesAxis
 			if 'Axis Title' in key:
 				obj=WordChartAxisTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordChartObject=self.wordChartObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
 				self.wordChartObject.Axes(axisType, axisGroup).AxisTitle.Select()
@@ -1782,10 +1792,8 @@ class WordChartElement(WordChart):
 	script_nextElement.canPropagate=True
 
 	__gestures = {
-				"kb(laptop):leftArrow":"previousElement",
-				"kb(desktop):leftArrow":"previousElement",
-				"kb(laptop):rightArrow":"nextElement",
-				"kb(desktop):rightArrow":"nextElement",
+				"kb:leftArrow":"previousElement",
+				"kb:rightArrow":"nextElement",
 	}
 
 class WordChartDataTable(WordChartElement):
@@ -1841,6 +1849,9 @@ class WordChartAxis(WordChartElement):
 		return self._axisMap[self.axisType][self.axisGroup]
 
 class WordChartAxisTitle(WordChartElement):
+
+	role=controlTypes.ROLE_CHARTELEMENT
+
 	def __init__(self,windowHandle, wordApplicationObject, wordChartObject, axisType, axisGroup, keyIndex, elementIndex):
 		self.wordChartObject=wordChartObject
 		self.axisType=axisType
@@ -1867,9 +1878,6 @@ class WordChartSeries(WordChart):
 		# Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.wordChartObject.SeriesCollection(self.seriesIndex).Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount )
 		return seriesText
-
-	def _get_role(self):
-		return controlTypes.ROLE_CHARTELEMENT
 
 	def getPointIndex(self, direction):
 		if self.pointsCount > 1:
@@ -1901,7 +1909,7 @@ class WordChartSeries(WordChart):
 	script_nextPoint.canPropagate=True
 
 	def script_reportColor(self, gesture):
-		if self.wordChartObject.ChartType in (_chartConstants.xlPie, _chartConstants.xlPieExploded, _chartConstants.xlPieOfPie):
+		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
 			#Translators: Message to be spoken to report Slice Color in Pie Chart
 			ui.message ( _( "Slice color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.wordChartObject.SeriesCollection( self.seriesIndex ).Points(self.currentPointIndex).Format.Fill.ForeColor.RGB) ).name  ) )
 		else:
@@ -1917,6 +1925,9 @@ class WordChartSeries(WordChart):
 	}
 
 class WordChartPoint(WordChartSeries):
+
+	role=controlTypes.ROLE_CHARTELEMENT
+
 	def __init__(self, windowHandle, wordApplicationObject, wordChartObject, keyIndex, seriesIndex, pointIndex):
 		self.pointIndex=pointIndex
 		self.seriesIndex=seriesIndex
@@ -1929,7 +1940,7 @@ class WordChartPoint(WordChartSeries):
 		else:
 			excelSeriesXValue = self.wordChartObject.SeriesCollection(self.seriesIndex).XValues[self.pointIndex-1]
 		output=""
-		if self.wordChartObject.ChartType in (_chartConstants.xlLine, _chartConstants.xlLineMarkers , _chartConstants.xlLineMarkersStacked, _chartConstants.xlLineMarkersStacked100, _chartConstants.xlLineStacked, _chartConstants.xlLineStacked100):
+		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlLine, _msOfficeChartConstants.xlLineMarkers , _msOfficeChartConstants.xlLineMarkersStacked, _msOfficeChartConstants.xlLineMarkersStacked100, _msOfficeChartConstants.xlLineStacked, _msOfficeChartConstants.xlLineStacked100):
 			if self.pointIndex > 1:
 				if self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] == self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex - 2]:
 					# Translators: For line charts, indicates no change from the previous data point on the left
@@ -1940,25 +1951,25 @@ class WordChartPoint(WordChartSeries):
 				else:
 					# Translators: For line charts, indicates a decrease from the previous data point on the left
 					output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-2] - self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] , previousIndex = self.pointIndex-1 )
-		if self.wordChartObject.HasAxis(_chartConstants.xlCategory) and self.wordChartObject.Axes(_chartConstants.xlCategory).HasTitle:
+		if self.wordChartObject.HasAxis(_msOfficeChartConstants.xlCategory) and self.wordChartObject.Axes(_msOfficeChartConstants.xlCategory).HasTitle:
 			# Translators: Specifies the category of a data point.
 			# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 			# {categoryAxisData} will be replaced with the category itself; e.g. "January".
-			output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.wordChartObject.Axes(_chartConstants.xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue )
+			output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.wordChartObject.Axes(_msOfficeChartConstants.xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue )
 		else:
 			# Translators: Specifies the category of a data point.
 			# {categoryAxisData} will be replaced with the category itself; e.g. "January".
 			output += _( "Category {categoryAxisData}: ").format( categoryAxisData = excelSeriesXValue )
-		if self.wordChartObject.HasAxis(_chartConstants.xlValue) and self.wordChartObject.Axes(_chartConstants.xlValue).HasTitle:
+		if self.wordChartObject.HasAxis(_msOfficeChartConstants.xlValue) and self.wordChartObject.Axes(_msOfficeChartConstants.xlValue).HasTitle:
 			# Translators: Specifies the value of a data point.
 			# {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
-			output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.wordChartObject.Axes(_chartConstants.xlValue).AxisTitle.Text , valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
+			output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.wordChartObject.Axes(_msOfficeChartConstants.xlValue).AxisTitle.Text , valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
 		else:
 			# Translators: Specifies the value of a data point.
 			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
 			output +=  _( "value {valueAxisData}").format( valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
-		if self.wordChartObject.ChartType in (_chartConstants.xlPie, _chartConstants.xlPieExploded, _chartConstants.xlPieOfPie):
+		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
 			import math
 			total = math.fsum( self.wordChartObject.SeriesCollection(self.seriesIndex).Values )
 			# Translators: Details about a slice of a pie chart.
@@ -1969,9 +1980,6 @@ class WordChartPoint(WordChartSeries):
 			# For example, this might report "column 1 of 5"
 			output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.getChartSegment() ,  pointIndex = self.pointIndex , pointCount = count )
 		return output
-
-	def _get_role(self):
-		return controlTypes.ROLE_CHARTELEMENT
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 

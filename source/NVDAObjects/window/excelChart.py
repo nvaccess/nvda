@@ -28,7 +28,7 @@ from NVDAObjects import NVDAObject
 import string
 import weakref
 import api
-from _chartConstants import *
+from _msOfficeChartConstants import *
 
 #ChartEvents definition
 class ChartEvents(IDispatch):
