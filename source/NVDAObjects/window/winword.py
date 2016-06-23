@@ -1638,8 +1638,8 @@ class WordChartSeriesTrendline(WordChart):
 		self.seriesIndex=seriesIndex
 		self.trendlineIndex=trendlineIndex
 		self.wordChartObject=wordShapeObject.Chart
-		self.trendlinesCount=self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines().Count
-		self.currentTrendline=self.wordChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex)
+		self.trendlinesCount=self.currentSeries.Trendlines().Count
+		self.currentTrendline=self.currentSeries.Trendlines(self.trendlineIndex)
 		super(WordChartSeriesTrendline, self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex)
 
 	def _get_name(self):
@@ -1873,14 +1873,14 @@ class WordChartSeries(WordChart):
 		self.wordShapeObject=wordShapeObject
 		self.keyIndex=keyIndex
 		self.seriesCount=wordShapeObject.Chart.SeriesCollection().Count
-		self.pointsCollection=wordShapeObject.Chart.SeriesCollection(self.seriesIndex).Points()
+		self.currentSeries=wordShapeObject.Chart.SeriesCollection(self.seriesIndex)
+		self.pointsCollection=self.currentSeries.Points()
 		self.pointsCount=self.pointsCollection.Count
 		super(WordChartSeries,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex)
 
 	def _get_name(self):
-		currentSeries=self.wordChartObject.SeriesCollection(self.seriesIndex)
 		# Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
-		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.wordChartObject.SeriesCollection(self.seriesIndex).Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount )
+		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.currentSeries.Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount )
 		return seriesText
 
 	def getPointIndex(self, direction):
@@ -1899,7 +1899,7 @@ class WordChartSeries(WordChart):
 
 	def invokePoint(self, pointIndex):
 		point=WordChartPoint(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, pointIndex=pointIndex)
-		self.wordChartObject.SeriesCollection(self.seriesIndex).Points(pointIndex).Select()
+		self.currentSeries.Points(pointIndex).Select()
 		eventHandler.queueEvent("gainFocus", point )
 		
 	def script_previousPoint(self,gesture):
@@ -1915,10 +1915,10 @@ class WordChartSeries(WordChart):
 	def script_reportColor(self, gesture):
 		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
 			#Translators: Message to be spoken to report Slice Color in Pie Chart
-			ui.message ( _( "Slice color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.wordChartObject.SeriesCollection( self.seriesIndex ).Points(self.currentPointIndex).Format.Fill.ForeColor.RGB) ).name  ) )
+			ui.message ( _( "Slice color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.currentSeries.Points(self.currentPointIndex).Format.Fill.ForeColor.RGB) ).name  ) )
 		else:
 			#Translators: Message to be spoken to report Series Color
-			ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.wordChartObject.SeriesCollection( self.seriesIndex ).Interior.Color ) ).name  ) )
+			ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.currentSeries.Interior.Color ) ).name  ) )
 
 	__gestures = {
 				"kb(laptop):leftArrow":"previousPoint",
@@ -1935,26 +1935,27 @@ class WordChartPoint(WordChartSeries):
 	def __init__(self, windowHandle, wordApplicationObject, wordShapeObject, keyIndex, seriesIndex, pointIndex):
 		self.pointIndex=pointIndex
 		self.seriesIndex=seriesIndex
+		self.currentSeries=self.wordChartObject.SeriesCollection(self.seriesIndex)
 		super(WordChartPoint,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, seriesIndex=seriesIndex, pointIndex=pointIndex)
 
 	def _get_name(self):
-		count=self.wordChartObject.SeriesCollection(self.seriesIndex).Points().Count
-		if isinstance( self.wordChartObject.SeriesCollection(self.seriesIndex).XValues[self.pointIndex-1] , float):
-			excelSeriesXValue = int(self.wordChartObject.SeriesCollection(self.seriesIndex).XValues[self.pointIndex-1] )
+		count=self.currentSeries.Points().Count
+		if isinstance( self.currentSeries.XValues[self.pointIndex-1] , float):
+			excelSeriesXValue = int(self.currentSeries.XValues[self.pointIndex-1] )
 		else:
-			excelSeriesXValue = self.wordChartObject.SeriesCollection(self.seriesIndex).XValues[self.pointIndex-1]
+			excelSeriesXValue = self.currentSeries.XValues[self.pointIndex-1]
 		output=""
 		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlLine, _msOfficeChartConstants.xlLineMarkers , _msOfficeChartConstants.xlLineMarkersStacked, _msOfficeChartConstants.xlLineMarkersStacked100, _msOfficeChartConstants.xlLineStacked, _msOfficeChartConstants.xlLineStacked100):
 			if self.pointIndex > 1:
-				if self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] == self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex - 2]:
+				if self.currentSeries.Values[self.pointIndex-1] == self.currentSeries.Values[self.pointIndex - 2]:
 					# Translators: For line charts, indicates no change from the previous data point on the left
 					output += _( "no change from point {previousIndex}, ").format( previousIndex = self.pointIndex-1 )
-				elif self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] > self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-2]:
+				elif self.currentSeries.Values[self.pointIndex-1] > self.currentSeries.Values[self.pointIndex-2]:
 					# Translators: For line charts, indicates an increase from the previous data point on the left
-					output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] - self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-2] , previousIndex = self.pointIndex-1 )
+					output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.currentSeries.Values[self.pointIndex-1] - self.currentSeries.Values[self.pointIndex-2] , previousIndex = self.pointIndex-1 )
 				else:
 					# Translators: For line charts, indicates a decrease from the previous data point on the left
-					output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-2] - self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] , previousIndex = self.pointIndex-1 )
+					output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.currentSeries.Values[self.pointIndex-2] - self.currentSeries.Values[self.pointIndex-1] , previousIndex = self.pointIndex-1 )
 		if self.wordChartObject.HasAxis(_msOfficeChartConstants.xlCategory) and self.wordChartObject.Axes(_msOfficeChartConstants.xlCategory).HasTitle:
 			# Translators: Specifies the category of a data point.
 			# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -1968,17 +1969,17 @@ class WordChartPoint(WordChartSeries):
 			# Translators: Specifies the value of a data point.
 			# {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
-			output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.wordChartObject.Axes(_msOfficeChartConstants.xlValue).AxisTitle.Text , valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
+			output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.wordChartObject.Axes(_msOfficeChartConstants.xlValue).AxisTitle.Text , valueAxisData = self.currentSeries.Values[self.pointIndex-1])
 		else:
 			# Translators: Specifies the value of a data point.
 			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
-			output +=  _( "value {valueAxisData}").format( valueAxisData = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1])
+			output +=  _( "value {valueAxisData}").format( valueAxisData = self.currentSeries.Values[self.pointIndex-1])
 		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
 			import math
-			total = math.fsum( self.wordChartObject.SeriesCollection(self.seriesIndex).Values )
+			total = math.fsum( self.currentSeries.Values )
 			# Translators: Details about a slice of a pie chart.
 			# For example, this might report "fraction 25.25 percent slice 1 of 5"
-			output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.wordChartObject.SeriesCollection(self.seriesIndex).Values[self.pointIndex-1] / total *100.00 , pointIndex = self.pointIndex , pointCount = count )
+			output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.currentSeries.Values[self.pointIndex-1] / total *100.00 , pointIndex = self.pointIndex , pointCount = count )
 		else:
 			# Translators: Details about a segment of a chart.
 			# For example, this might report "column 1 of 5"
