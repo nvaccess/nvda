@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2015 NV Access Limited
+#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
 
 import sys
 import itertools
@@ -280,10 +280,10 @@ TABLES = (
 	("tr.ctb", _("Turkish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("UEBC-g1.utb", _("Unified English Braille Code grade 1"), False),
+	("en-ueb-g1.utb", _("Unified English Braille Code grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("UEBC-g2.ctb", _("Unified English Braille Code grade 2"), False),
+	("en-ueb-g2.ctb", _("Unified English Braille Code grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"), False),
