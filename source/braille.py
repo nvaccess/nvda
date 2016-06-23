@@ -280,7 +280,7 @@ TABLES = (
 	("tr.ctb", _("Turkish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("en-ueb-g1.utb", _("Unified English Braille Code grade 1"), False),
+	("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("en-ueb-g2.ctb", _("Unified English Braille Code grade 2"), False),
