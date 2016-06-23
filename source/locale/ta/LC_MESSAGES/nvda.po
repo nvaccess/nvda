@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-10 00:10+1000\n"
-"PO-Revision-Date: 2016-06-13 19:17+0530\n"
+"POT-Creation-Date: 2016-06-17 00:10+1000\n"
+"PO-Revision-Date: 2016-06-21 20:07+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -3210,18 +3210,6 @@ msgstr "எழுத்துப் பிழைகளை அறிவிக்�
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "எழுத்துப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்காது"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்கும்"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "பக்கங்களை அறிவிக்காது"
@@ -4622,7 +4610,7 @@ msgstr "%s விசைப்பலகை"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
-msgstr "விசைப்பலகை; எல்லா வரைவுகளும்"
+msgstr "விசைப்பலகை; எல்லாத் தளவமைப்புகளும்"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -5010,14 +4998,6 @@ msgstr "எழுத்துப் பிழை"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "எழுத்துப் பிழைக்கு வெளியே"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "இலக்கணப் பிழை"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "இலக்கணப் பிழைக்கு வெளியே"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -5608,7 +5588,7 @@ msgstr "அட்டவணைப் பிடிப்பிடம்"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "படவில்லை எண் பிடிப்பிடம்"
+msgstr "நிலைப்பட எண் பிடிப்பிடம்"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
@@ -5632,11 +5612,11 @@ msgstr "படப் பிடிப்பிடம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
-msgstr "படவில்லைத் தோற்றம்"
+msgstr "நிலைப்படத் தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Master view"
-msgstr "தலைமைப் படவில்லைத் தோற்றம்"
+msgstr "தலைமை நிலைப்படத் தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes page"
@@ -5656,7 +5636,7 @@ msgstr "வெளியமைத் தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Sorter view"
-msgstr "படவில்லை ஒழுங்கமைத்தல் தோற்றம்"
+msgstr "நிலைப்பட ஒழுங்கமைப்பு தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Title Master view"
@@ -5680,7 +5660,7 @@ msgstr "தலைமைச் சிறுபடங்கள்"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
-msgstr "படவில்லை {slideNumber}"
+msgstr "நிலைப்படம் {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5736,35 +5716,35 @@ msgstr "{otherShape} வடிவத்தின் பின்னால் அ
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr "படவில்லையின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
-msgstr "படவில்லையின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
-msgstr "படவில்லையின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr "படவில்லையின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: The description for a script
 msgid ""
@@ -5772,21 +5752,21 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"அறிவிப்பாளரின் குறிப்புகள், படவில்லையின் மெய் உள்ளடக்கம் ஆகியவைகளுக்கிடையே அறிவிப்பை "
+"அறிவிப்பாளரின் குறிப்புகள், நிலைப்படத்தின் மெய் உள்ளடக்கம் ஆகியவைகளுக்கிடையே அறிவிப்பை "
 "மாற்றியமைக்கிறது. திரையில் காணப்படுவதை இது மாற்றுவதில்லை. ஆனால், என்விடிஏவைக் கொண்டு "
 "ஒரு பயனர் எவைகளைப் படிக்கலாம் என்று வரையறுக்கிறது."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show notes - {slideName}"
-msgstr "படவில்லைக் காட்சிக் குறிப்புகள் - {slideName}"
+msgstr "நிலைப்படக் காட்சிக் குறிப்புகள் - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show - {slideName}"
-msgstr "படவில்லைக் காட்சி - {slideName}"
+msgstr "நிலைப்படக் காட்சி - {slideName}"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 msgid "Slide Show - complete"
-msgstr "படவில்லைக் காட்சி - முழுமையடைந்தது"
+msgstr "நிலைப்படக் காட்சி - முழுமையடைந்தது"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
@@ -5794,7 +5774,7 @@ msgstr "குறிப்புகள் ஏதுமில்லை"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
-msgstr "வெற்றுப் படவில்லை"
+msgstr "வெற்று நிலைப்படம்"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
@@ -6004,8 +5984,8 @@ msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
 msgstr ""
-"விசைப்பலகையை அமைவடிவமாக்குக, அல்லது  தட்டச்சிடப்பட்ட வரியுருக்களையோ, சொற்களையோ "
-"கட்டுப்பாடு விசைகளையோ பேசுக"
+"விசைப்பலகைத் தளவமைப்பினை அமைவடிவமாக்குக, அல்லது  தட்டச்சிடப்பட்ட வரியுருக்களையோ, "
+"சொற்களையோ கட்டுப்பாடு விசைகளையோ பேசுக"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
@@ -7066,11 +7046,11 @@ msgstr "விசைப்பலகை அமைப்புகள்"
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
 msgid "&Keyboard layout:"
-msgstr "விசைப்பலகை வரைவு (&K):"
+msgstr "விசைப்பலகைத் தளவமைப்பு (&K):"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
 msgid "Keyboard layout"
-msgstr "விசைப்பலகை வரைவு"
+msgstr "விசைப்பலகைத் தளவமைப்பு"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7314,7 +7294,7 @@ msgstr "ஒரு பக்கத்தில் இருக்கக்கூ�
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Use &screen layout (when supported)"
-msgstr "ஆதரவு இருக்கும்பொழுது திரை வரைவைப் பயன்படுத்துக (&S)"
+msgstr "ஆதரவு இருக்கும்பொழுது திரைத் தளவமைப்பைப் பயன்படுத்துக (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7324,7 +7304,7 @@ msgstr "பக்கம் ஏற்றப்படும்பொழுது �
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "வரைவு அட்டவணைகளைச் சேர்த்துக் கொள்க (&A)"
+msgstr "தளவமைப்பு அட்டவணைகளைச் சேர்த்துக் கொள்க (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7400,11 +7380,6 @@ msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும் (&R)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்கவும் (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7732,19 +7707,19 @@ msgstr "ஆவண உள்ளடக்கத்தைப் புத்தா�
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
-msgstr "திரை வரைவைப் பயன்படுத்தும்"
+msgstr "திரைத் தளவமைப்பைப் பயன்படுத்தும்"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout off"
-msgstr "திரை வரைவைப் பயன்படுத்தாது "
+msgstr "திரைத் தளவமைப்பைப் பயன்படுத்தாது "
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
-"ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, "
-"நிறுத்தவோ செய்கிறது"
+"ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரைத் தளவமைப்புப்  பாதுகாக்கப்பட்டிருந்தால், அதை "
+"இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -8940,6 +8915,24 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்காது"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கும்"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#~ msgid "grammar error"
+#~ msgstr "இலக்கணப் பிழை"
+
+#~ msgid "out of grammar error"
+#~ msgstr "இலக்கணப் பிழைக்கு வெளியே"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கவும் (&G)"
 
 #~ msgid "browse mode"
 #~ msgstr "உலாவும் நிலை"
