@@ -259,7 +259,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	This should be used when an object does not notify of selection changes.
 	"""
 
-	def waitForAndSpeakSelectionChange(self, oldTextInfo):
+	def waitForAndReportSelectionChange(self, oldTextInfo):
 		api.processPendingEvents(processEventQueue=False)
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		speech.speakSelectionChange(oldTextInfo,newInfo)
@@ -275,7 +275,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 		if isScriptWaiting() or eventHandler.isPendingEvents("gainFocus"):
 			return
 		try:
-			waitForAndSpeakSelectionChange(oldInfo)
+			self.waitForAndReportSelectionChange(oldInfo)
 		except:
 			return
 
