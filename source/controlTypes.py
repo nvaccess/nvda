@@ -147,8 +147,6 @@ ROLE_DATAITEM=140
 ROLE_HEADERITEM=141
 ROLE_THUMB=142
 ROLE_CALENDAR=143
-ROLE_EDITBOX=144
-ROLE_LISTBOX=145
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -481,9 +479,6 @@ roleLabels={
 	# Translators: Identifies a thumb control (a button-like control for changing options).
 	ROLE_THUMB:_("thumb control"),
 	ROLE_CALENDAR:_("calendar"),
-	ROLE_EDITBOX:_("edit box"),
-	# Translators: Identifies a list box.
-	ROLE_LISTBOX:_("list box"),
 }
 
 stateLabels={
