@@ -930,16 +930,6 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		unit = self._getReadingUnit()
-		self._readingInfo = readingInfo = self._getCursor()
-		# Get the reading unit at the cursor.
-		readingInfo.expand(unit)
-		# Get the selection.
-		sel = self._getSelection()
-		# Restrict the selection to the reading unit at the cursor.
-		if sel.compareEndPoints(readingInfo, "startToStart") < 0:
-			sel.setEndPoint(readingInfo, "startToStart")
-		if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
-			sel.setEndPoint(readingInfo, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
@@ -950,8 +940,24 @@ class TextInfoRegion(Region):
 		self.selectionStart = self.selectionEnd = None
 		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-
 		self._endsWithField = False
+		# Get the selection.
+		sel = self._getSelection()
+		if not sel.isCollapsed:
+			self._readingInfo = readingInfo = sel.copy()
+			# Collapse the selection to the point that is moving.
+			readingInfo.collapse(end=self.obj.isSelectionAnchoredAtStart)
+			# Get the reading unit at the end of the selection.
+			readingInfo.expand(unit)
+			# Restrict the selection to the reading unit.
+			if sel.compareEndPoints(readingInfo, "startToStart") < 0:
+				sel.setEndPoint(readingInfo, "startToStart")
+			if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
+				sel.setEndPoint(readingInfo, "endToEnd")
+		else:
+			self._readingInfo = readingInfo = self._getCursor()
+			# Get the reading unit at the cursor.
+			readingInfo.expand(unit)
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
