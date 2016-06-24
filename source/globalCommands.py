@@ -1777,11 +1777,12 @@ class GlobalCommands(ScriptableObject):
 					try:
 						pos.obj.waitForAndReportSelectionChange(oldInfo)
 					except Exception as e:
-						log.debug("Error trying to wait for the selection to update and then speak the selection %s" % e)
-			except NotImplementedError:
+						log.debug("Error trying to wait for the selection to update and then speak the selection: %s" % e)
+			except NotImplementedError as e:
 				# we are unable to select the text, leave the _copyStartMarker in place in case the user wishes to copy the text.
 				# Translators: Presented when unable to select the marked text.
 				ui.message(_("Can't select text, press twice to copy"))
+				log.debug("Error trying to update selection: %s" % e)
 				return
 		elif scriptHandler.getLastScriptRepeatCount()==1: # the second call, try to copy the text
 			copyMarker = pos.obj._selectThenCopyRange
