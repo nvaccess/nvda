@@ -519,3 +519,16 @@ class EdgeHTMLRoot(EdgeNode):
 		if role==controlTypes.ROLE_PANE:
 			role=controlTypes.ROLE_DOCUMENT
 		return role
+
+# PDF content in Edge cannot, and does not need to, use the Edge HTML specific treeInterceptor TextInfo as skipping containers such as combo boxes does not apply, plus using it can sometimes incorrectly skip over lists (possibly due to state mis-matches, focusable, readonly).
+# For now at least it is best to have a custom implementation, while Edge is so fluid. 
+class EdgePDFTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
+	pass
+
+class EdgePDFTreeInterceptor(EdgeHTMLTreeInterceptor):
+
+	TextInfo=EdgePDFTreeInterceptorTextInfo
+
+class EdgePDFRoot(UIA):
+
+	treeInterceptorClass=EdgePDFTreeInterceptor
