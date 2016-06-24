@@ -1617,6 +1617,7 @@ class WordChart(Window):
 class WordChartSeriesTrendline(WordChart):
 
 	role=controlTypes.ROLE_CHARTELEMENT
+	description=None
 	_trendlineTypeMap = {
 								# Translators: Indicates that trendline type is Exponential
 								_msOfficeChartConstants.xlExponential: _("Exponential"),
@@ -1688,6 +1689,7 @@ class WordChartSeriesTrendline(WordChart):
 class WordChartElement(WordChart):
 
 	role=controlTypes.ROLE_CHARTELEMENT
+	description=None
 	_axisMap={
 				_msOfficeChartConstants.xlCategory: {
 													# Translators: Indicates Primary Category Axis
@@ -1867,6 +1869,10 @@ class WordChartAxisTitle(WordChartElement):
 		return text
 
 class WordChartSeries(WordChart):
+
+	description=None
+	role=controlTypes.ROLE_CHARTELEMENT
+
 	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, seriesIndex, pointIndex=0):
 		self.seriesIndex=seriesIndex
 		self.currentPointIndex=pointIndex
