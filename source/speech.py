@@ -916,6 +916,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
+	if role==controlTypes.ROLE_CHARTELEMENT:
+		speakRole=False
 	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
 		textList.append(controlTypes.roleLabels[role])
 	if value:

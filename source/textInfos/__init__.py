@@ -74,7 +74,7 @@ class ControlField(Field):
 			return self.PRESCAT_LAYOUT
 
 		if (
-			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM)
+			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_CHART, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):

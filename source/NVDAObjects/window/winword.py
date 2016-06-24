@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2015 NV Access Limited, Manish Agrawal
@@ -34,11 +35,14 @@ import controlTypes
 import treeInterceptorHandler
 import browseMode
 import review
+import inputCore
+import api
+import re
 from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
- 
+from . import _msOfficeChartConstants 
 #Word constants
 
 # wdMeasurementUnits
@@ -128,6 +132,7 @@ wdContentControlBuildingBlockGallery=5
 wdContentControlDate=6
 wdContentControlGroup=7
 wdContentControlCheckBox=8
+wdInlineShapeChart=12
 
 wdNoRevision=0
 wdRevisionInsert=1
@@ -311,6 +316,20 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		text=(self.collectionItem.range.text or "")[:100]
 		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
+class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
+	@property
+	def label(self):
+		text=""
+		if self.collectionItem.Chart.HasTitle:
+			text=self.collectionItem.Chart.ChartTitle.Text
+		else:
+			text=self.collectionItem.Chart.Name
+		return _(u"{text}").format(text=text)
+
+	def moveTo(self):
+		chartNVDAObj = WordChart(windowHandle=self.document.rootNVDAObject.windowHandle, wordApplicationObject=self.rangeObj.Document.Application, wordShapeObject=self.collectionItem)
+		eventHandler.queueEvent("gainFocus",chartNVDAObj)
+
 class WinWordCollectionQuicknavIterator(object):
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
@@ -399,6 +418,13 @@ class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def filter(self,item):
 		return item.borders.enable
 
+class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentChartQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.inlineShapes
+	def filter(self,item):
+		return item.type==wdInlineShapeChart
+
 class WordDocumentTextInfo(textInfos.TextInfo):
 
 	# #4852: temporary fix.
@@ -428,6 +454,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		mathMl=mathPres.getMathMlFromTextInfo(self)
 		if mathMl:
 			return mathPres.interactWithMathMl(mathMl)
+		newRng=self._rangeObj.Duplicate
+		newRng.End=newRng.End+1
+		if newRng.InlineShapes.Count >= 1:
+			if newRng.InlineShapes[1].Type==wdInlineShapeChart:
+				return eventHandler.queueEvent('gainFocus',WordChart(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordShapeObject=newRng.InlineShapes[1]))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -534,6 +565,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			role=controlTypes.ROLE_ENDNOTE
 		elif role=="graphic":
 			role=controlTypes.ROLE_GRAPHIC
+		elif role=="chart":
+			role=controlTypes.ROLE_CHART
 		elif role=="object":
 			progid=field.get("progid")
 			if progid and progid.startswith("Equation.DSMT"):
@@ -851,6 +884,8 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			 return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
 			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="chart":
+			return ChartWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
@@ -1451,10 +1486,534 @@ class WordDocument_WwN(WordDocument):
 		"kb:shift+tab":None,
 	}
 
+class WordChart(Window):
+
+	role=controlTypes.ROLE_CHART
+
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject,keyIndex=0):
+		self.windowHandle=windowHandle
+		self.wordApplicationObject=wordApplicationObject
+		self.wordShapeObject=wordShapeObject
+		self.wordChartObject=wordShapeObject.Chart
+		self.currentSeriesIndex=0
+		self.keyIndex=keyIndex
+		self.chartElements={}
+		self.keyList=[]
+		try:
+			seriesCount=self.wordChartObject.SeriesCollection().Count
+		except:
+			seriesCount=None
+		if seriesCount:
+			for i in xrange(seriesCount):
+				key='series'+str(i+1)
+				self.chartElements[key]=(self.focusChartSeries,i+1)
+				self.keyList.append(key)
+				try:
+					trendlinesCount = self.wordChartObject.SeriesCollection(i+1).Trendlines().Count
+				except:
+					trendlinesCount = None
+				if trendlinesCount>=1:
+					key=key+"Trendline"
+					self.chartElements[key]=(self.focusSeriesTrendline,i+1)
+					self.keyList.append(key)
+		self.chartElements['otherElements']=(self.focusChartElements, None)
+		self.keyList.append('otherElements')
+		self.elementsCount=len(self.keyList)
+		self.wordShapeObject.Chart.Select()
+		super(WordChart,self).__init__(windowHandle=windowHandle)
+
+	def focusSeriesTrendline(self, seriesIndex):
+		obj=WordChartSeriesTrendline(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex, seriesIndex=seriesIndex)
+		eventHandler.queueEvent('gainFocus',obj)
+
+	def focusChartSeries(self, seriesIndex):
+		self.currentSeriesIndex=seriesIndex
+		obj=WordChartSeries(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex, seriesIndex=self.currentSeriesIndex)
+		self.wordChartObject.SeriesCollection(self.currentSeriesIndex).Select()
+		eventHandler.queueEvent('gainFocus',obj)
+
+	def focusChartElements(self):
+		obj=WordChartElement(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex)
+		eventHandler.queueEvent('gainFocus',obj)
+
+	def _get_name(self):
+		if self.wordChartObject.HasTitle:
+			name=self.wordChartObject.ChartTitle.Text
+		else:
+			name=self.wordChartObject.Name
+		#find the type of the chart
+		chartType = self.wordChartObject.ChartType
+		chartTypeText = _msOfficeChartConstants.chartTypeDict.get(chartType,
+                # Translators: Reported when the type of a chart is not known.
+                                _("unknown"))
+		# Translators: Message reporting the title and type of a chart.
+		text=_("Chart title: {chartTitle}, type: {chartType}").format(chartTitle=name, chartType=chartTypeText)
+		return text
+
+	def _get_description(self):
+		count = self.wordChartObject.SeriesCollection().count
+		text=""
+		if count>0:
+			if count == 1:
+				# Translators: Indicates that there is 1 series in a chart.
+				seriesValueString = _( "There is 1 series in this chart" )
+			else:
+				# Translators: Indicates the number of series in a chart where there are multiple series.
+				seriesValueString = _( "There are total %d series in this chart" ) %(count)
+				for i in xrange(1, count+1):
+					# Translators: Specifies the number and name of a series when listing series in a chart.
+					seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.wordChartObject.SeriesCollection(i).Name)
+				text += seriesValueString
+		else:
+			# Translators: Indicates that there are no series in a chart.
+			text +=_("No Series defined.")
+		return text
+
+	def getChartSegment(self):
+		chartType = self.wordChartObject.ChartType
+		if chartType in (_msOfficeChartConstants.xl3DPie, _msOfficeChartConstants.xl3DPieExploded, _msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
+			# Translators: A slice in a pie chart.
+			text=_("slice")
+		elif chartType in (_msOfficeChartConstants.xl3DColumn, _msOfficeChartConstants.xl3DColumnClustered, _msOfficeChartConstants.xl3DColumnStacked, _msOfficeChartConstants.xl3DColumnStacked100, _msOfficeChartConstants.xlColumnClustered, _msOfficeChartConstants.xlColumnStacked100, _msOfficeChartConstants.xlColumnStacked):
+			# Translators: A column in a column chart.
+			text=pgettext('chart','column')
+		elif chartType in (_msOfficeChartConstants.xl3DLine, _msOfficeChartConstants.xlLine, _msOfficeChartConstants.xlLineMarkers, _msOfficeChartConstants.xlLineMarkersStacked, _msOfficeChartConstants.xlLineMarkersStacked100, _msOfficeChartConstants.xlLineStacked, _msOfficeChartConstants.xlLineStacked100):
+			# Translators: A data point in a line chart.
+			text=_("data point")
+		else:
+			# Translators: A segment of a chart for charts which don't have a specific name for segments.
+			text=_("item")
+		return text
+
+	def invokeChartElement(self, keyIndex):
+		val=self.chartElements[self.keyList[keyIndex]]
+		func=val[0]
+		arg=val[1]
+		if arg==None:
+			func()
+		else:
+			func(arg)
+		
+	def script_nextChartElement(self,gesture):
+		if self.keyIndex == self.elementsCount-1:
+			self.keyIndex=0
+		else:
+			self.keyIndex=self.keyIndex+1
+		self.invokeChartElement(self.keyIndex)
+	script_nextChartElement.canPropagate=True
+
+	def script_previousChartElement(self,gesture):
+		if self.keyIndex == 0:
+			self.keyIndex=self.elementsCount-1
+		else:
+			self.keyIndex=self.keyIndex-1
+		self.invokeChartElement(self.keyIndex)
+	script_previousChartElement.canPropagate=True
+
+	def script_activatePosition(self,gesture):
+		# Toggle browse mode pass-through.
+		self.passThrough = True
+		self.ignoreTreeInterceptorPassThrough=False
+		browseMode.reportPassThrough(self)
+	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+	script_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
+	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
+
+	def script_disablePassThrough(self, gesture):
+		rangeStart=self.wordShapeObject.Range.Start
+		self.wordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
+		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+
+	__gestures = {
+				"kb:upArrow":"nextChartElement",
+				"kb:downArrow":"previousChartElement",
+				"kb:leftArrow":"previousChartElement",
+				"kb:rightarrow":"nextChartElement",
+				"kb:enter": "activatePosition",
+				"kb(desktop):numpadEnter":"activatePosition",
+				"kb:space": "activatePosition",
+				"kb:escape": "disablePassThrough",
+	}
+
+class WordChartSeriesTrendline(WordChart):
+
+	role=controlTypes.ROLE_CHARTELEMENT
+	_trendlineTypeMap = {
+								# Translators: Indicates that trendline type is Exponential
+								_msOfficeChartConstants.xlExponential: _("Exponential"),
+								# Translators: Indicates that trendline type is Linear
+								_msOfficeChartConstants.xlLinear: _("Linear"),
+								# Translators: Indicates that trendline type is Logarithmic
+								_msOfficeChartConstants.xlLogarithmic: _("Logarithmic"),
+								# Translators: Indicates that trendline type is Moving Average
+								_msOfficeChartConstants.xlMovingAvg: _("Moving Average"),
+								# Translators: Indicates that trendline type is Polynomial
+								_msOfficeChartConstants.xlPolynomial: _("Polynomial"),
+								# Translators: Indicates that trendline type is Power
+								_msOfficeChartConstants.xlPower: _("Power") 
+	}
+
+	def __init__(self, windowHandle, wordApplicationObject, wordShapeObject, keyIndex, seriesIndex, trendlineIndex=1):
+		self.windowHandle=windowHandle
+		self.wordApplicationObject=wordApplicationObject
+		self.seriesIndex=seriesIndex
+		self.trendlineIndex=trendlineIndex
+		self.wordChartObject=wordShapeObject.Chart
+		self.trendlinesCount=self.currentSeries.Trendlines().Count
+		self.currentTrendline=self.currentSeries.Trendlines(self.trendlineIndex)
+		super(WordChartSeriesTrendline, self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex)
+
+	def _get_name(self):
+		if self.currentTrendline.DisplayEquation or self.currentTrendline.DisplayRSquared:
+			label=self.currentTrendline.DataLabel.Text
+			#Translators: Substitute superscript two by square for R square value
+			label=label.replace(u"²", _( " square " ))
+			label=re.sub(r'([a-zA-Z]+)([2])',r'\1 square', label)
+			label=re.sub(r'([a-zA-Z]+)([3])',r'\1 cube', label)
+			label=re.sub(r'([a-zA-Z]+)([-]*[04-9][0-9]*)',r'\1 to the power \2', label)
+			#Translators: Substitute - by minus in trendline equations.
+			label=label.replace(u"-",_(" minus "))
+			# Translators: This message gives trendline type and name for selected series
+			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} ").format(seriesName=self.wordChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.currentTrendline.Type], trendlineName=self.currentTrendline.Name, trendlineLabel=label)
+		else:
+			# Translators: This message gives trendline type and name for selected series
+			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName} ").format(seriesName=self.wordChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.currentTrendline.Type], trendlineName=self.currentTrendline.Name)
+		return output
+
+	def invokeTrendline(self, trendlineIndex):
+		obj=WordChartSeriesTrendline(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, trendlineIndex=trendlineIndex)
+		self.currentTrendline.Select()
+		eventHandler.queueEvent('gainFocus',obj)
+
+	def script_previousTrendline(self, gesture):
+		if self.trendlinesCount > 1:
+			if self.trendlineIndex==1:
+				self.trendlineIndex=self.trendlinesCount
+			else:
+				self.trendlineIndex=self.trendlineIndex-1
+			self.invokeTrendline(self.trendlineIndex)
+
+	def script_nextTrendline(self, gesture):
+		if self.trendlinesCount > 1:
+			if self.trendlineIndex==self.trendlinesCount:
+				self.trendlineIndex=1
+			else:
+				self.trendlineIndex=self.trendlineIndex+1
+			self.invokeTrendline(self.trendlineIndex)
+
+	__gestures = {
+				"kb:leftArrow":"previousTrendline",
+				"kb:rightArrow":"nextTrendline",
+	}
+
+class WordChartElement(WordChart):
+
+	role=controlTypes.ROLE_CHARTELEMENT
+	_axisMap={
+				_msOfficeChartConstants.xlCategory: {
+													# Translators: Indicates Primary Category Axis
+													_msOfficeChartConstants.xlPrimary: _("Primary Category Axis"),
+													# Translators: Indicates Secondary Category Axis
+													_msOfficeChartConstants.xlSecondary: _("Secondary Category Axis")},
+				_msOfficeChartConstants.xlValue: {
+													# Translators: Indicates Primary Value Axis
+													_msOfficeChartConstants.xlPrimary: _("Primary Value Axis"),
+													# Translators: Indicates Secondary Value Axis
+													_msOfficeChartConstants.xlSecondary: _("Secondary Value Axis")},
+				_msOfficeChartConstants.xlSeriesAxis: {
+													# Translators: Indicates Primary Series Axis
+													_msOfficeChartConstants.xlPrimary: _("Primary Series Axis"),
+													# Translators: Indicates Secondary Series Axis
+													_msOfficeChartConstants.xlSecondary: _("Secondary Series Axis")}
+	}
+
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, elementIndex=0):
+		self.windowHandle=windowHandle
+		self.wordApplicationObject=wordApplicationObject
+		self.elementIndex=elementIndex
+		self.keyIndex=keyIndex
+		self.wordShapeObject=wordShapeObject
+		self.wordChartObject=wordShapeObject.Chart
+		self.elementKeyList=[]
+		if self.wordChartObject.HasTitle:
+			self.elementKeyList.append('chartTitle')
+		# Enumerations for chart object in Excel and Word are same
+		for axisType in [_msOfficeChartConstants.xlCategory, _msOfficeChartConstants.xlValue, _msOfficeChartConstants.xlSeriesAxis]:
+			for axisGroup in [_msOfficeChartConstants.xlPrimary, _msOfficeChartConstants.xlSecondary]:
+				if self.wordChartObject.HasAxis(axisType, axisGroup):
+					self.elementKeyList.append(self._axisMap[axisType][axisGroup])
+					if self.wordChartObject.Axes(axisType, axisGroup).HasTitle:
+						self.elementKeyList.append(self._axisMap[axisType][axisGroup]+' Title')
+		self.elementKeyList.append('chartArea')
+		
+		self.elementKeyList.append('plotArea')
+
+		if self.wordChartObject.HasLegend:
+			self.elementKeyList.append('legend')
+
+		if self.wordChartObject.HasDataTable:
+			self.elementKeyList.append('dataTable')
+
+		self.chartElementsCount=len(self.elementKeyList)
+		super(WordChartElement,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex)
+
+	def _get_name(self):
+		#Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+		return _("Chart Elements")
+
+	def focusChartElement(self, key):
+		if 'Axis' in key:
+			splitKey=key.split()
+			if splitKey[0]=='Primary':
+				axisGroup=_msOfficeChartConstants.xlPrimary
+			elif splitKey[0]=='Secondary':
+				axisGroup=_msOfficeChartConstants.xlSecondary
+			if splitKey[1]=='Category':
+				axisType=_msOfficeChartConstants.xlCategory
+			elif splitKey[1]=='Value':
+				axisType=_msOfficeChartConstants.xlValue
+			elif splitKey[1]=='Series':
+				axisType=_msOfficeChartConstants.xlSeriesAxis
+			if 'Axis Title' in key:
+				obj=WordChartAxisTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+				self.wordChartObject.Axes(axisType, axisGroup).AxisTitle.Select()
+			else:
+				obj=WordChartAxis(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, axisType=axisType, axisGroup=axisGroup, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+				self.wordChartObject.Axes(axisType, axisGroup).Select()
+		elif key=='chartTitle':
+			obj=WordChartTitle(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.ChartTitle.Select()
+		elif key=='chartArea':
+			obj=WordChartArea(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.ChartArea.Select()
+		elif key=='plotArea':
+			obj=WordChartPlotArea(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.PlotArea.Select()
+		elif key=='legend':
+			obj=WordChartLegend(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject,  keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.Legend.Select()
+		elif key=='dataTable':
+			obj=WordChartDataTable(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex, elementIndex=self.elementIndex)
+			self.wordChartObject.DataTable.Select()
+		eventHandler.queueEvent('gainFocus',obj)
+
+	def script_previousElement(self,gesture):
+		if self.elementIndex == 0:
+			self.elementIndex=self.chartElementsCount-1
+		else:
+			self.elementIndex=self.elementIndex-1
+		key=self.elementKeyList[self.elementIndex]
+		self.focusChartElement(key)
+	script_previousElement.canPropagate=True
+
+	def script_nextElement(self,gesture):
+		if self.elementIndex == self.chartElementsCount-1:
+			self.elementIndex=0
+		else:
+			self.elementIndex=self.elementIndex+1
+		key=self.elementKeyList[self.elementIndex]
+		self.focusChartElement(key)
+	script_nextElement.canPropagate=True
+
+	__gestures = {
+				"kb:leftArrow":"previousElement",
+				"kb:rightArrow":"nextElement",
+	}
+
+class WordChartDataTable(WordChartElement):
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, elementIndex):
+		super(WordChartDataTable,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, elementIndex=elementIndex)
+
+	def _get_name(self):
+		#Translators: Data Table will be spoken when chart element Data Table is selected
+		return _("Data Table")
+
+class WordChartLegend(WordChartElement):
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, elementIndex):
+		self.chartLegend=wordShapeObject.Chart.Legend
+		super(WordChartLegend,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, elementIndex=elementIndex)
+
+	def _get_name(self):
+		return self.chartLegend.Name
+
+class WordChartArea(WordChartElement):
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, elementIndex):
+		super(WordChartArea,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, elementIndex=elementIndex)
+
+	def _get_name(self):
+		#Translators: Chart area will be spoken when chart element chart area is selected
+		return _( "Chart area, height: {chartAreaHeight} points, width: {chartAreaWidth} points, top: {chartAreaTop} points, left: {chartAreaLeft} points").format ( chartAreaHeight = self.wordChartObject.ChartArea.Height , chartAreaWidth = self.wordChartObject.ChartArea.Width , chartAreaTop = self.wordChartObject.ChartArea.Top , chartAreaLeft = self.wordChartObject.ChartArea.Left)
+
+class WordChartPlotArea(WordChartElement):
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, elementIndex):
+		super(WordChartPlotArea,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, elementIndex=elementIndex)
+
+	def _get_name(self):
+		#Translators: Plot area will be spoken when chart element chart area is selected
+		return _( "Plot area, inside height: {plotAreaInsideHeight:.0f} points, inside width: {plotAreaInsideWidth:.0f} points, inside top: {plotAreaInsideTop:.0f} points, inside left: {plotAreaInsideLeft:.0f} points").format ( plotAreaInsideHeight = self.wordChartObject.PlotArea.InsideHeight , plotAreaInsideWidth = self.wordChartObject.PlotArea.InsideWidth , plotAreaInsideTop = self.wordChartObject.PlotArea.InsideTop , plotAreaInsideLeft = self.wordChartObject.PlotArea.InsideLeft )
+
+class WordChartTitle(WordChartElement):
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, elementIndex):
+		self.chartTitle=wordShapeObject.Chart.ChartTitle.Text
+		super(WordChartTitle,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, elementIndex=elementIndex)
+
+	def _get_name(self):
+		# Translators: Message reporting the chart title
+		text= _("Chart title: {chartTitle}").format(chartTitle=self.chartTitle)
+		return text
+
+class WordChartAxis(WordChartElement):
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, axisType, axisGroup, keyIndex, elementIndex):
+		self.wordChartObject=wordShapeObject.Chart
+		self.axisType=axisType
+		self.axisGroup=axisGroup
+		super(WordChartAxis,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, elementIndex=elementIndex)
+
+	def _get_name(self):
+		return self._axisMap[self.axisType][self.axisGroup]
+
+class WordChartAxisTitle(WordChartElement):
+
+	role=controlTypes.ROLE_CHARTELEMENT
+
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, axisType, axisGroup, keyIndex, elementIndex):
+		self.wordChartObject=wordShapeObject.Chart
+		self.axisType=axisType
+		self.axisGroup=axisGroup
+		super(WordChartAxisTitle,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, elementIndex=elementIndex)
+
+	def _get_name(self):
+		# Translators: Message reporting axis name and axis title
+		text= _("{axisName} title: {axisTitle}").format(axisName=self._axisMap[self.axisType][self.axisGroup], axisTitle=self.wordChartObject.Axes(self.axisType, self.axisGroup).AxisTitle.Text)
+		return text
+
+class WordChartSeries(WordChart):
+	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, keyIndex, seriesIndex, pointIndex=0):
+		self.seriesIndex=seriesIndex
+		self.currentPointIndex=pointIndex
+		self.wordShapeObject=wordShapeObject
+		self.keyIndex=keyIndex
+		self.seriesCount=wordShapeObject.Chart.SeriesCollection().Count
+		self.currentSeries=wordShapeObject.Chart.SeriesCollection(self.seriesIndex)
+		self.pointsCollection=self.currentSeries.Points()
+		self.pointsCount=self.pointsCollection.Count
+		super(WordChartSeries,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex)
+
+	def _get_name(self):
+		# Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.currentSeries.Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount )
+		return seriesText
+
+	def getPointIndex(self, direction):
+		if self.pointsCount > 1:
+			if direction=="previous":
+				if self.currentPointIndex==1:
+					self.currentPointIndex=self.pointsCount
+				else:
+					self.currentPointIndex=self.currentPointIndex-1
+			elif direction=="next":
+				if self.currentPointIndex==self.pointsCount:
+					self.currentPointIndex=1
+				else:
+					self.currentPointIndex=self.currentPointIndex+1
+		return self.currentPointIndex
+
+	def invokePoint(self, pointIndex):
+		point=WordChartPoint(windowHandle=self.windowHandle, wordApplicationObject=self.wordApplicationObject, wordShapeObject=self.wordShapeObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, pointIndex=pointIndex)
+		self.currentSeries.Points(pointIndex).Select()
+		eventHandler.queueEvent("gainFocus", point )
+		
+	def script_previousPoint(self,gesture):
+		self.currentPointIndex=self.getPointIndex("previous")
+		self.invokePoint(self.currentPointIndex)
+	script_previousPoint.canPropagate=True
+
+	def script_nextPoint(self,gesture):
+		self.currentPointIndex=self.getPointIndex("next")
+		self.invokePoint(self.currentPointIndex)
+	script_nextPoint.canPropagate=True
+
+	def script_reportColor(self, gesture):
+		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
+			#Translators: Message to be spoken to report Slice Color in Pie Chart
+			ui.message ( _( "Slice color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.currentSeries.Points(self.currentPointIndex).Format.Fill.ForeColor.RGB) ).name  ) )
+		else:
+			#Translators: Message to be spoken to report Series Color
+			ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.currentSeries.Interior.Color ) ).name  ) )
+
+	__gestures = {
+				"kb(laptop):leftArrow":"previousPoint",
+				"kb(desktop):leftArrow":"previousPoint",
+				"kb(laptop):rightArrow":"nextPoint",
+				"kb(desktop):rightArrow":"nextPoint",
+				"kb:NVDA+5": "reportColor",
+	}
+
+class WordChartPoint(WordChartSeries):
+
+	role=controlTypes.ROLE_CHARTELEMENT
+
+	def __init__(self, windowHandle, wordApplicationObject, wordShapeObject, keyIndex, seriesIndex, pointIndex):
+		self.pointIndex=pointIndex
+		self.seriesIndex=seriesIndex
+		self.currentSeries=self.wordChartObject.SeriesCollection(self.seriesIndex)
+		super(WordChartPoint,self).__init__(windowHandle=windowHandle, wordApplicationObject=wordApplicationObject, wordShapeObject=wordShapeObject, keyIndex=keyIndex, seriesIndex=seriesIndex, pointIndex=pointIndex)
+
+	def _get_name(self):
+		count=self.currentSeries.Points().Count
+		if isinstance( self.currentSeries.XValues[self.pointIndex-1] , float):
+			excelSeriesXValue = int(self.currentSeries.XValues[self.pointIndex-1] )
+		else:
+			excelSeriesXValue = self.currentSeries.XValues[self.pointIndex-1]
+		output=""
+		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlLine, _msOfficeChartConstants.xlLineMarkers , _msOfficeChartConstants.xlLineMarkersStacked, _msOfficeChartConstants.xlLineMarkersStacked100, _msOfficeChartConstants.xlLineStacked, _msOfficeChartConstants.xlLineStacked100):
+			if self.pointIndex > 1:
+				if self.currentSeries.Values[self.pointIndex-1] == self.currentSeries.Values[self.pointIndex - 2]:
+					# Translators: For line charts, indicates no change from the previous data point on the left
+					output += _( "no change from point {previousIndex}, ").format( previousIndex = self.pointIndex-1 )
+				elif self.currentSeries.Values[self.pointIndex-1] > self.currentSeries.Values[self.pointIndex-2]:
+					# Translators: For line charts, indicates an increase from the previous data point on the left
+					output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.currentSeries.Values[self.pointIndex-1] - self.currentSeries.Values[self.pointIndex-2] , previousIndex = self.pointIndex-1 )
+				else:
+					# Translators: For line charts, indicates a decrease from the previous data point on the left
+					output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.currentSeries.Values[self.pointIndex-2] - self.currentSeries.Values[self.pointIndex-1] , previousIndex = self.pointIndex-1 )
+		if self.wordChartObject.HasAxis(_msOfficeChartConstants.xlCategory) and self.wordChartObject.Axes(_msOfficeChartConstants.xlCategory).HasTitle:
+			# Translators: Specifies the category of a data point.
+			# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+			# {categoryAxisData} will be replaced with the category itself; e.g. "January".
+			output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.wordChartObject.Axes(_msOfficeChartConstants.xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue )
+		else:
+			# Translators: Specifies the category of a data point.
+			# {categoryAxisData} will be replaced with the category itself; e.g. "January".
+			output += _( "Category {categoryAxisData}: ").format( categoryAxisData = excelSeriesXValue )
+		if self.wordChartObject.HasAxis(_msOfficeChartConstants.xlValue) and self.wordChartObject.Axes(_msOfficeChartConstants.xlValue).HasTitle:
+			# Translators: Specifies the value of a data point.
+			# {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
+			output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.wordChartObject.Axes(_msOfficeChartConstants.xlValue).AxisTitle.Text , valueAxisData = self.currentSeries.Values[self.pointIndex-1])
+		else:
+			# Translators: Specifies the value of a data point.
+			# {valueAxisData} will be replaced with the value itself; e.g. "1000".
+			output +=  _( "value {valueAxisData}").format( valueAxisData = self.currentSeries.Values[self.pointIndex-1])
+		if self.wordChartObject.ChartType in (_msOfficeChartConstants.xlPie, _msOfficeChartConstants.xlPieExploded, _msOfficeChartConstants.xlPieOfPie):
+			import math
+			total = math.fsum( self.currentSeries.Values )
+			# Translators: Details about a slice of a pie chart.
+			# For example, this might report "fraction 25.25 percent slice 1 of 5"
+			output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.currentSeries.Values[self.pointIndex-1] / total *100.00 , pointIndex = self.pointIndex , pointCount = count )
+		else:
+			# Translators: Details about a segment of a chart.
+			# For example, this might report "column 1 of 5"
+			output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.getChartSegment() ,  pointIndex = self.pointIndex , pointCount = count )
+		return output
+
 class ElementsListDialog(browseMode.ElementsListDialog):
 
 	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("chart", _("&Charts")),
 	)
