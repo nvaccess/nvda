@@ -442,6 +442,12 @@ class UIA(Window):
 		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=True)
 		return self.UIATextPattern
 
+	def _get_UIATextEditPattern(self):
+		if not isinstance(UIAHandler.handler.clientObject,UIAHandler.IUIAutomation3):
+			return None
+		self.UIATextEditPattern=self._getUIAPattern(UIAHandler.UIA_TextEditPatternId,UIAHandler.IUIAutomationTextEditPattern,cache=False)
+		return self.UIATextEditPattern
+
 	def _get_UIALegacyIAccessiblePattern(self):
 		self.UIALegacyIAccessiblePattern=self._getUIAPattern(UIAHandler.UIA_LegacyIAccessiblePatternId,UIAHandler.IUIAutomationLegacyIAccessiblePattern)
 		return self.UIALegacyIAccessiblePattern
