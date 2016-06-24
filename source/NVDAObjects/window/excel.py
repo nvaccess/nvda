@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
+#Copyright (C) 2006-2016 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1519,7 +1519,18 @@ class ExcelMergedCell(ExcelCell):
 
 class ExcelFormControl(ExcelBase):
 	isFocusable=True
-	_roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_COMBOBOX, xlEditBox:controlTypes.ROLE_EDITABLETEXT, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LIST, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
+	_roleMap = {
+		xlButtonControl: controlTypes.ROLE_BUTTON,
+		xlCheckBox: controlTypes.ROLE_CHECKBOX,
+		xlDropDown: controlTypes.ROLE_COMBOBOX,
+		xlEditBox: controlTypes.ROLE_EDITABLETEXT,
+		xlGroupBox: controlTypes.ROLE_BOX,
+		xlLabel: controlTypes.ROLE_LABEL,
+		xlListBox: controlTypes.ROLE_LIST,
+		xlOptionButton: controlTypes.ROLE_RADIOBUTTON,
+		xlScrollBar: controlTypes.ROLE_SCROLLBAR,
+		xlSpinner: controlTypes.ROLE_SPINBUTTON,
+	}
 
 	def _get_excelControlFormatObject(self):
 		return self.excelFormControlObject.controlFormat
