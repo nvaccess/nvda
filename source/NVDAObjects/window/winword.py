@@ -1019,11 +1019,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		mathMl=mathPres.getMathMlFromTextInfo(self)
 		if mathMl:
 			return mathPres.interactWithMathMl(mathMl)
-		newRng=self._rangeObj
+		newRng=self._rangeObj.Duplicate
 		newRng.End=newRng.End+1
 		if newRng.InlineShapes.Count >= 1:
 			if newRng.InlineShapes[1].Type==wdInlineShapeSmartArt:
-				return eventHandler.queueEvent('gainFocus',WordSmartArt(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordShapeObject=self._rangeObj.InlineShapes[1]))
+				return eventHandler.queueEvent('gainFocus',WordSmartArt(windowHandle=self.obj.windowHandle, wordApplicationObject=self.obj.WinwordDocumentObject.Application, wordShapeObject=newRng.InlineShapes[1]))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -2036,6 +2036,8 @@ class WordDocument_WwN(WordDocument):
 
 class WordSmartArt(Window):
 
+	role=controlTypes.ROLE_SMARTART
+
 	def __init__(self,windowHandle, wordApplicationObject, wordShapeObject, currentNodeIndex=0):
 		self.windowHandle=windowHandle
 		self.wordApplicationObject=wordApplicationObject
@@ -2048,9 +2050,6 @@ class WordSmartArt(Window):
 		except:
 			pass
 		super(WordSmartArt,self).__init__(windowHandle=windowHandle)
-
-	def _get_role(self):
-		return controlTypes.ROLE_SMARTART
 
 	def _get_description(self):
 		# Translators: Indicates Layout Description of a SmartArt
@@ -2098,9 +2097,8 @@ class WordSmartArt(Window):
 	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def script_disablePassThrough(self, gesture):
-		rng=self.wordShapeObject.Range
-		rng.Collapse(0)
-		rng.Select()
+		rangeStart=self.wordShapeObject.Range.Start
+		self.wordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
 		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
 
 	__gestures = {
@@ -2113,6 +2111,9 @@ class WordSmartArt(Window):
 	}
 
 class WordSmartArtNode(Window):
+
+	role=controlTypes.ROLE_SMARTARTNODE
+
 	def __init__(self, windowHandle, wordSmartArtObject, currentNode, rootNodeIndex, childNodeIndex=0, hasLevelChanged=True):
 		self.rootNodeIndex=rootNodeIndex
 		self.hasLevelChanged=hasLevelChanged
@@ -2135,9 +2136,6 @@ class WordSmartArtNode(Window):
 					self.currentNode.Shapes.Select()
 					self.currentNode.Shapes.Select()
 		super(WordSmartArtNode, self).__init__(windowHandle=windowHandle)
-
-	def _get_role(self):
-		return controlTypes.ROLE_SMARTARTNODE
 
 	def _get_name(self):
 		text=""
