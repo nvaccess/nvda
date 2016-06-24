@@ -211,7 +211,7 @@ TABLES = (
 	("nl-NL-g1.ctb", _("Dutch (Netherlands) grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("no-no.ctb", _("Norwegian 8 dot computer braille"), True),
+	("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("No-No-g0.utb", _("Norwegian grade 0"), False),
@@ -274,7 +274,7 @@ TABLES = (
 	("ta-ta-g1.ctb", _("Tamil grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("te-in-g1.utb", _("Telegu grade 1"), False),
+	("te-in-g1.utb", _("Telugu grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("tr.ctb", _("Turkish grade 1"), False),
