@@ -667,6 +667,9 @@ class ElementsListDialog(wx.Dialog):
 		("link", _("Lin&ks")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
+		("button", _("&Buttons")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("heading", _("&Headings")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
@@ -740,8 +743,8 @@ class ElementsListDialog(wx.Dialog):
 		self.lastSelectedElementType=elementType
 
 	def initElementType(self, elType):
-		if elType == "link":
-			# Links can be activated.
+		if elType in ("link","button"):
+			# Links and buttons can be activated.
 			self.activateButton.Enable()
 			self.SetAffirmativeId(self.activateButton.GetId())
 		else:
