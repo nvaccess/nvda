@@ -237,25 +237,25 @@ NVDAUnitsToWordUnits={
 }
 
 formatConfigFlagsMap={
-	"reportFontName":1,
-	"reportFontSize":2,
-	"reportFontAttributes":4,
-	"reportColor":8,
-	"reportAlignment":16,
-	"reportStyle":32,
-	"reportSpellingErrors":64,
-	"reportPage":128,
-	"reportLineNumber":256,
-	"reportTables":512,
-	"reportLists":1024,
-	"reportLinks":2048,
-	"reportComments":4096,
-	"reportHeadings":8192,
-	"autoLanguageSwitching":16384,	
-	"reportRevisions":32768,
-	"reportParagraphIndentation":65536,
+	"reportFontName":0x1,
+	"reportFontSize":0x2,
+	"reportFontAttributes":0x4,
+	"reportColor":0x8,
+	"reportAlignment":0x10,
+	"reportStyle":0x20,
+	"reportSpellingErrors":0x40,
+	"reportPage":0x80,
+	"reportLineNumber":0x100,
+	"reportTables":0x200,
+	"reportLists":0x400,
+	"reportLinks":0x800,
+	"reportComments":0x1000,
+	"reportHeadings":0x2000,
+	"autoLanguageSwitching":0x4000,
+	"reportRevisions":0x8000,
+	"reportParagraphIndentation":0x10000,
 }
-formatConfigFlag_includeLayoutTables=131072
+formatConfigFlag_includeLayoutTables=0x20000
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
