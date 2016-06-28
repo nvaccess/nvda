@@ -667,10 +667,28 @@ class ElementsListDialog(wx.Dialog):
 		("link", _("Lin&ks")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
+		("heading", _("&Headings")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("graphic", _("&Graphics")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("formField", _("&Form fields")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("button", _("&Buttons")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("heading", _("&Headings")),
+		("edit", _("&Edit boxes")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("radioButton", _("&Radio buttons")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("comboBox", _("&Combo boxes")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("checkBox", _("Check bo&xes")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
