@@ -103,61 +103,61 @@ backgroundPatternLabels={
 		xlPatternAutomatic:_("automatic"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Checkerboard
-		xlPatternChecker:_("checker"),
+		xlPatternChecker:_("diagonal crosshatch"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Criss-cross lines
-		xlPatternCrissCross:_("crisscross"),
+		xlPatternCrissCross:_("thin diagonal crosshatch"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Dark diagonal lines running from the upper left to the lower right
-		xlPatternDown:_("down"),
+		xlPatternDown:_("reverse diagonal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 16% gray
-		xlPatternGray16:_("gray16"),
+		xlPatternGray16:_("12.5% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 25% gray
-		xlPatternGray25:_("gray25"),
+		xlPatternGray25:_("25% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 50% gray
-		xlPatternGray50:_("gray50"),
+		xlPatternGray50:_("50% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 75% gray
-		xlPatternGray75:_("gray75"),
+		xlPatternGray75:_("75% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 8% gray
-		xlPatternGray8:_("gray8"),
+		xlPatternGray8:_("6.25% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Grid
-		xlPatternGrid:_("grid"),
+		xlPatternGrid:_("thin horizontal crosshatch"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Dark horizontal lines
-		xlPatternHorizontal:_("horizontal"),
+		xlPatternHorizontal:_("horizontal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Light diagonal lines running from the upper left to the lower right
-		xlPatternLightDown:_("light down"),
+		xlPatternLightDown:_("thin reverse diagonal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Light horizontal lines
-		xlPatternLightHorizontal:_("light horizontal"),
+		xlPatternLightHorizontal:_("thin horizontal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Light diagonal lines running from the lower left to the upper right
-		xlPatternLightUp:_("light up"),
+		xlPatternLightUp:_("thin diagonal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Light vertical bars
-		xlPatternLightVertical:_("light vertical"),
+		xlPatternLightVertical:_("thin vertical stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# No pattern
 		xlPatternNone:_("none"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 75% dark moire
-		xlPatternSemiGray75:_("semi gray75"),
+		xlPatternSemiGray75:_("thick diagonal crosshatch"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Solid color
 		xlPatternSolid:_("solid"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Dark diagonal lines running from the lower left to the upper right
-		xlPatternUp:_("up"),
+		xlPatternUp:_("diagonal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Dark vertical bars
-		xlPatternVertical:_("vertical"),
+		xlPatternVertical:_("vertical stripe"),
 		# Translators: A type of background pattern in Microsoft Excel.
 		xlPatternLinearGradient:_("linear gradient"),
 		# Translators: A type of background pattern in Microsoft Excel.
