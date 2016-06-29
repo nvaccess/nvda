@@ -42,7 +42,6 @@ VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
-
 class VBufStorage_findMatch_word(unicode):
 	pass
 VBufStorage_findMatch_notEmpty = object()
@@ -109,14 +108,35 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
-		if self.itemType == "landmark":
-			attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
+		attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
+		roleRaw = attrs["role"]
+		role = controlTypes.roleLabels[roleRaw]
+		value = super(VirtualBufferQuickNavItem,self).label
+		# Translators: Reported label in the elements list for an element which which has no name and value
+		unlabeled = _("Unlabeled")
+		if self.itemType not in ("heading","graphic"):
 			name = attrs.get("name", "")
-			if name:
-				name += " "
-			return name + aria.landmarkRoles[attrs["landmark"]]
+			realStates=attrs["states"]
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(roleRaw, realStates, controlTypes.REASON_ELEMENTSLIST, realStates))
+			if self.itemType in ("formField","checkBox","radioButton"):
+				negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, controlTypes.REASON_ELEMENTSLIST, realStates))
+			if self.itemType == "landmark":
+				labelParts=(name, aria.landmarkRoles[attrs["landmark"]])
+			elif self.itemType == "formField":
+				if roleRaw == controlTypes.ROLE_BUTTON:
+					labelParts = (value or unlabeled, role, positiveStates)
+				else:
+					labelParts = (name or unlabeled, value, role, positiveStates, negativeStates)
+			elif self.itemType in ("link","button"):
+				labelParts = (value or unlabeled, positiveStates)
+			elif self.itemType in ("checkBox","radioButton"):
+				labelParts = (name or unlabeled, positiveStates, negativeStates)
+			else:
+				labelParts = (name or unlabeled, value, positiveStates)
+			label = " ".join(lp for lp in labelParts if lp)
 		else:
-			return super(VirtualBufferQuickNavItem,self).label
+			label = value or unlabeled
+		return label
 
 	def isChild(self,parent): 
 		if self.itemType == "heading":
