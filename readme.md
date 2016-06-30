@@ -36,7 +36,7 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](http://www.python.org/), version 2.7.11, 32 bit
-* Microsoft Visual Studio 2015 (Express for Desktop, or Community with VC++ and Windows SDK 7.1A support):
+* Microsoft Visual Studio 2015 (Express for Desktop with VC++ and Windows SDK 7.1A support, or Community with VC++ and Windows XP support):
 	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
 
 ### Git Submodules

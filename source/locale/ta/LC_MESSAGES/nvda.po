@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-27 00:10+1000\n"
-"PO-Revision-Date: 2016-06-08 20:21+0530\n"
+"POT-Creation-Date: 2016-06-17 00:10+1000\n"
+"PO-Revision-Date: 2016-06-21 20:07+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -2519,11 +2519,11 @@ msgstr "மேசைத்தள படவுரு"
 #. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
-msgstr "கவனிக்க!"
+msgstr "கவனிக்கவும்..."
 
 #. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
 msgid "IFrame"
-msgstr "சட்டகம்"
+msgstr "உள்சட்டகம்"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2674,7 +2674,7 @@ msgstr "தென்படாதது"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
-msgstr "வருகையளிக்கப்பட்ட"
+msgstr "வருகையளிக்கப்பட்டத்"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
@@ -3209,18 +3209,6 @@ msgstr "எழுத்துப் பிழைகளை அறிவிக்�
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "எழுத்துப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்காது"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்கும்"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -4040,8 +4028,8 @@ msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
-"என்விடிஏவிற்கான கூட்டுறுப்புத் தொகுதிகளை நிறுவவும், நிறுவு நீக்கவும் என்விடிஏ "
-"கூட்டுறுப்பு மேலாளர் உரையாடலை இயக்குகிறது"
+"என்விடிஏவிற்கான கூட்டுக்கூறுத் தொகுதிகளை நிறுவவும், நிறுவு நீக்கவும் என்விடிஏ "
+"கூட்டுக்கூறு மேலாளர் உரையாடலை இயக்குகிறது"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -4279,7 +4267,7 @@ msgstr "பயனர் வழிகாட்டி"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
-msgstr "என்விடிஏ கூட்டுறுப்புத் தொகுதி "
+msgstr "என்விடிஏ கூட்டுக்கூறுத் தொகுதி "
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 msgid "back"
@@ -4622,7 +4610,7 @@ msgstr "%s விசைப்பலகை"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
-msgstr "விசைப்பலகை; எல்லா வரைவுகளும்"
+msgstr "விசைப்பலகை; எல்லாத் தளவமைப்புகளும்"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -5011,14 +4999,6 @@ msgstr "எழுத்துப் பிழை"
 msgid "out of spelling error"
 msgstr "எழுத்துப் பிழைக்கு வெளியே"
 
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "இலக்கணப் பிழை"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "இலக்கணப் பிழைக்கு வெளியே"
-
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "அட்டவணைக்கு வெளியே"
@@ -5342,8 +5322,8 @@ msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
-"இவ்விடத்திலிருந்து என்விடிஏவின் கூட்டுறுப்பை நிறுவ இயலாது: {path}.\n"
-"கூட்டுறுப்புகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும். "
+"இவ்விடத்திலிருந்து என்விடிஏவின் கூட்டுக்கூறை நிறுவ இயலாது: {path}.\n"
+"கூட்டுக்கூறுகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும். "
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 msgid ""
@@ -5608,7 +5588,7 @@ msgstr "அட்டவணைப் பிடிப்பிடம்"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "படவில்லை எண் பிடிப்பிடம்"
+msgstr "நிலைப்பட எண் பிடிப்பிடம்"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
@@ -5632,11 +5612,11 @@ msgstr "படப் பிடிப்பிடம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
-msgstr "படவில்லைத் தோற்றம்"
+msgstr "நிலைப்படத் தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Master view"
-msgstr "தலைமைப் படவில்லைத் தோற்றம்"
+msgstr "தலைமை நிலைப்படத் தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes page"
@@ -5656,7 +5636,7 @@ msgstr "வெளியமைத் தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Sorter view"
-msgstr "படவில்லை ஒழுங்கமைத்தல் தோற்றம்"
+msgstr "நிலைப்பட ஒழுங்கமைப்பு தோற்றம்"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Title Master view"
@@ -5680,7 +5660,7 @@ msgstr "தலைமைச் சிறுபடங்கள்"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
-msgstr "படவில்லை {slideNumber}"
+msgstr "நிலைப்படம் {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5736,35 +5716,35 @@ msgstr "{otherShape} வடிவத்தின் பின்னால் அ
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr "படவில்லையின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
-msgstr "படவில்லையின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
-msgstr "படவில்லையின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr "படவில்லையின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr "படவில்லையின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: The description for a script
 msgid ""
@@ -5772,21 +5752,21 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"அறிவிப்பாளரின் குறிப்புகள், படவில்லையின் மெய் உள்ளடக்கம் ஆகியவைகளுக்கிடையே அறிவிப்பை "
+"அறிவிப்பாளரின் குறிப்புகள், நிலைப்படத்தின் மெய் உள்ளடக்கம் ஆகியவைகளுக்கிடையே அறிவிப்பை "
 "மாற்றியமைக்கிறது. திரையில் காணப்படுவதை இது மாற்றுவதில்லை. ஆனால், என்விடிஏவைக் கொண்டு "
 "ஒரு பயனர் எவைகளைப் படிக்கலாம் என்று வரையறுக்கிறது."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show notes - {slideName}"
-msgstr "படவில்லைக் காட்சிக் குறிப்புகள் - {slideName}"
+msgstr "நிலைப்படக் காட்சிக் குறிப்புகள் - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show - {slideName}"
-msgstr "படவில்லைக் காட்சி - {slideName}"
+msgstr "நிலைப்படக் காட்சி - {slideName}"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 msgid "Slide Show - complete"
-msgstr "படவில்லைக் காட்சி - முழுமையடைந்தது"
+msgstr "நிலைப்படக் காட்சி - முழுமையடைந்தது"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
@@ -5794,7 +5774,7 @@ msgstr "குறிப்புகள் ஏதுமில்லை"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
-msgstr "வெற்றுப் படவில்லை"
+msgstr "வெற்று நிலைப்படம்"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
@@ -6004,8 +5984,8 @@ msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
 msgstr ""
-"விசைப்பலகையை அமைவடிவமாக்குக, அல்லது  தட்டச்சிடப்பட்ட வரியுருக்களையோ, சொற்களையோ "
-"கட்டுப்பாடு விசைகளையோ பேசுக"
+"விசைப்பலகைத் தளவமைப்பினை அமைவடிவமாக்குக, அல்லது  தட்டச்சிடப்பட்ட வரியுருக்களையோ, "
+"சொற்களையோ கட்டுப்பாடு விசைகளையோ பேசுக"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
@@ -6113,7 +6093,7 @@ msgstr "பைத்தன் கட்டுப்பாட்டு மைய�
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
-msgstr "கூட்டுறுப்பு மேலாண்மை (&A)"
+msgstr "கூட்டுக்கூறு மேலாண்மை (&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -6274,7 +6254,7 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. கூட்டுறுப்புகளை மீண்டும் செயலிழக்கச்செய்ய "
+"எல்லா கூட்டுக்கூறுகளும் இப்பொழுது செயலிழந்துள்ளன. கூட்டுக்கூறுகளை மீண்டும் செயலிழக்கச்செய்ய "
 "தாங்கள் விரும்பவில்லையென்றால், அடுத்த மறுதுவக்கத்தில் அவைகள் செயற்படுத்தப்படும். "
 
 #. Translators: The label for actions list in the Exit dialog.
@@ -6291,7 +6271,7 @@ msgstr "மறுதுவக்குக"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
-msgstr "கூட்டுறுப்புகள் செயலிழந்த நிலையில் மறுதுவக்குக. "
+msgstr "கூட்டுக்கூறுகள் செயலிழந்த நிலையில் மறுதுவக்குக. "
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -6299,17 +6279,17 @@ msgstr "கருணைக்கூர்ந்து காத்திரு�
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
-msgstr "கூட்டுறுப்பு மேலாளர்"
+msgstr "கூட்டுக்கூறு மேலாளர்"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
 msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. அவைகளைச் செயற்படுத்த தாங்கள் என்விடிஏவை "
+"எல்லா கூட்டுக்கூறுகளும் இப்பொழுது செயலிழந்துள்ளன. அவைகளைச் செயற்படுத்த தாங்கள் என்விடிஏவை "
 "மறுதுவக்க வேண்டும். "
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
-msgstr "நிறுவப்பட்டுள்ள கூட்டுறுப்புகள்"
+msgstr "நிறுவப்பட்டுள்ள கூட்டுக்கூறுகள்"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 msgid "Package"
@@ -6329,11 +6309,11 @@ msgstr "படைப்பாளர்"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "கூட்டுறுப்புக் குறித்து... (&A)"
+msgstr "கூட்டுக்கூறு குறித்து... (&A)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "கூட்டுறுப்பு உதவி (&H)"
+msgstr "கூட்டுக்கூறு உதவி (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6348,15 +6328,15 @@ msgstr "நீக்குக (&R)"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "கூட்டுறுப்புகளைப் பெறுக... (&G)"
+msgstr "கூட்டுக்கூறுகளைப் பெறுக... (&G)"
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
-msgstr "கூட்டுறுப்பு தொகுப்புக் கோப்பினைத் தெரிவு செய்க"
+msgstr "கூட்டுக்கூறு தொகுப்புக் கோப்பினைத் தெரிவுச் செய்க"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "என்விடிஏ கூட்டுறுப்புத் தொகுதி (*.{ext})"
+msgstr "என்விடிஏ கூட்டுக்கூறுத் தொகுதி (*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -6364,7 +6344,7 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"%s கூட்டுறுப்பு தொகுப்பினைத் திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத "
+"%s கூட்டுக்கூறுத் தொகுப்பினைத் திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத "
 "வடிவூட்டம்"
 
 #. Translators: A message asking the user if they really wish to install an addon.
@@ -6374,41 +6354,42 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"இக்கூட்டுறுப்பைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா? நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் "
-"பெறப்படும் கூட்டுறுப்புகளை மட்டுமே நிறுவுங்கள்.\n"
-"கூட்டுறுப்பு: {summary} {version}\n"
+"இக்கூட்டுக்கூறைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா? நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் "
+"பெறப்படும் கூட்டுக்கூறுகளை மட்டுமே நிறுவுங்கள்.\n"
+"கூட்டுக்கூறு: {summary} {version}\n"
 "படைப்பாளர்: {author}"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 msgid "Add-on Installation"
-msgstr "கூட்டுறுப்பு நிறுவுதல்"
+msgstr "கூட்டுக்கூறு நிறுவுதல்"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 msgid ""
 "A version of this add-on is already installed. Would you like to update it?"
 msgstr ""
-"கூட்டுறுப்பின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
+"கூட்டுக்கூறின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
-msgstr "கூட்டுறுப்பு நிறுவப்படுகிறது"
+msgstr "கூட்டுக்கூறு நிறுவப்படுகிறது"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "கூட்டுறுப்பு நிறுவப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்"
+msgstr "கூட்டுக்கூறு நிறுவப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "%s தொகுப்பில் இருக்கும் கூட்டுறுப்பின் நிறுவுதல் தோல்வியடைந்தது"
+msgstr "%s தொகுப்பில் இருக்கும் கூட்டுக்கூறின் நிறுவுதல் தோல்வியடைந்தது"
 
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr ""
-"தெரிவு செய்யப்பட்டிருக்கும் கூட்டுறுப்பை என்விடிஏவிலிருந்து தாங்கள் கட்டாயம் நீக்க வேண்டுமா?"
+"தெரிவுச் செய்யப்பட்டிருக்கும் கூட்டுக்கூறைத் தாங்கள் என்விடிஏவிலிருந்து கட்டாயம் நீக்க "
+"விரும்புகிறீர்களா?"
 
 msgid "Remove Add-on"
-msgstr "கூட்டுறுப்பை நீக்குக"
+msgstr "கூட்டுக்கூறை நீக்குக"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "install"
@@ -6431,7 +6412,7 @@ msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
 msgstr ""
-"கூட்டுறுப்புகளின் நிறுவு அல்லது நீக்கம் நிகழ்ந்துள்ளன. மாற்றங்களைச் செயலிற்குக் கொண்டு வர "
+"கூட்டுக்கூறுகளின் நிறுவுதல் அல்லது நீக்கம் நிகழ்ந்துள்ளன. மாற்றங்களைச் செயலிற்குக் கொண்டு வர "
 "என்விடிஏவை மறுதுவக்க வேண்டும். இப்பொழுதே மறுதுவக்க விரும்புகிறீர்களா?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -6456,7 +6437,7 @@ msgstr "இணைய முகவரி: {url}"
 
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
-msgstr "கூட்டுறுப்புத் தகவல்"
+msgstr "கூட்டுக்கூறுத் தகவல்"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -6768,7 +6749,7 @@ msgid ""
 "and then press Continue"
 msgstr ""
 "என்விடிஏவின் பெயர்த்தகுப் படியை உருவாக்க, வழிதடத்தையும், பிற விருப்பத் தேர்வுகளையும் "
-"தெரிவு செய்த பின்னர், 'தொடர்க' பொத்தானை அழுத்தவும்."
+"தெரிவுச் செய்த பின்னர், 'தொடர்க' பொத்தானை அழுத்தவும்."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -6786,7 +6767,7 @@ msgstr "தற்போதைய பயனர் அமைவடிவத்த�
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
-msgstr "பெயர்த்தகு அடைவைத் தெரிவு செய்க"
+msgstr "பெயர்த்தகு அடைவைத் தெரிவுச் செய்க"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6922,7 +6903,7 @@ msgid ""
 "system profile could be a security risk. Do you still wish to copy your "
 "settings?"
 msgstr ""
-"தங்களின் பயனர் அமைப்புகள் அடைவில் கூட்டுறுப்புகள் காணப்படுகின்றன. இதைக் கணினியின் "
+"தங்களின் பயனர் அமைப்புகள் அடைவில் கூட்டுக்கூறுகள் காணப்படுகின்றன. இதைக் கணினியின் "
 "தனியமைப்பிற்குள் படியெடுப்பது பாதுகாப்பற்றதாகும். இருப்பினும், தங்களின் அமைப்புகளை "
 "கணினிக்குள் படியெடுக்க விரும்புகிறீர்களா?"
 
@@ -7065,11 +7046,11 @@ msgstr "விசைப்பலகை அமைப்புகள்"
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
 msgid "&Keyboard layout:"
-msgstr "விசைப்பலகை வரைவு (&K):"
+msgstr "விசைப்பலகைத் தளவமைப்பு (&K):"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
 msgid "Keyboard layout"
-msgstr "விசைப்பலகை வரைவு"
+msgstr "விசைப்பலகைத் தளவமைப்பு"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7313,7 +7294,7 @@ msgstr "ஒரு பக்கத்தில் இருக்கக்கூ�
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Use &screen layout (when supported)"
-msgstr "ஆதரவு இருக்கும்பொழுது திரை வரைவைப் பயன்படுத்துக (&S)"
+msgstr "ஆதரவு இருக்கும்பொழுது திரைத் தளவமைப்பைப் பயன்படுத்துக (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7323,7 +7304,7 @@ msgstr "பக்கம் ஏற்றப்படும்பொழுது �
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "வரைவு அட்டவணைகளைச் சேர்த்துக் கொள்க (&A)"
+msgstr "தளவமைப்பு அட்டவணைகளைச் சேர்த்துக் கொள்க (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7399,11 +7380,6 @@ msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும் (&R)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "இலக்கணப் பிழைகளை அறிவிக்கவும் (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7731,19 +7707,19 @@ msgstr "ஆவண உள்ளடக்கத்தைப் புத்தா�
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
-msgstr "திரை வரைவைப் பயன்படுத்தும்"
+msgstr "திரைத் தளவமைப்பைப் பயன்படுத்தும்"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout off"
-msgstr "திரை வரைவைப் பயன்படுத்தாது "
+msgstr "திரைத் தளவமைப்பைப் பயன்படுத்தாது "
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
-"ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, "
-"நிறுத்தவோ செய்கிறது"
+"ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரைத் தளவமைப்புப்  பாதுகாக்கப்பட்டிருந்தால், அதை "
+"இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -8940,6 +8916,24 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 
+#~ msgid "report grammar errors off"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்காது"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கும்"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#~ msgid "grammar error"
+#~ msgstr "இலக்கணப் பிழை"
+
+#~ msgid "out of grammar error"
+#~ msgstr "இலக்கணப் பிழைக்கு வெளியே"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கவும் (&G)"
+
 #~ msgid "browse mode"
 #~ msgstr "உலாவும் நிலை"
 
@@ -9220,8 +9214,8 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ "This add-on seems to already be installed. Please remove the existing add-"
 #~ "on and try again."
 #~ msgstr ""
-#~ "இக்கூட்டுறுப்பு ஏற்கெனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் "
-#~ "கூட்டுறுப்பை நீக்கிவிட்டு மீண்டும் முயற்சியுங்கள்."
+#~ "இக்கூட்டுக்கூறு ஏற்கெனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் "
+#~ "கூட்டுக்கூறை நீக்கிவிட்டு மீண்டும் முயற்சியுங்கள்."
 
 #~ msgid "loads the saved NVDA configuration, overriding current changes"
 #~ msgstr ""

@@ -410,6 +410,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			unit=textInfos.UNIT_SENTENCE
 		return unit
 
+	def copyToClipboard(self):
+		self._rangeObj.copy()
+		return True
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		f=self._rangeObj.find
 		f.text=text
@@ -562,6 +566,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
+		if role==controlTypes.ROLE_TABLE and field.get('longdescription'):
+			field['states']=set([controlTypes.STATE_HASLONGDESC])
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
@@ -801,6 +807,11 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
+
+	def _activateLongDesc(self,controlField):
+		longDesc=controlField.get('longdescription')
+		# Translators: the title of the message dialog desplaying an MS Word table description.
+		ui.browseableMessage(longDesc,_("Table description"))
 
 	def _get_isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
@@ -1210,6 +1221,37 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Baseline"))
 
+	def script_moveParagraphDown(self,gesture):
+		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		gesture.send()
+		if self._hasCaretMoved(oldBookmark)[0]:
+			info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+			info.collapse()
+			info.move(textInfos.UNIT_PARAGRAPH,-1,endPoint="start")
+			lastParaText=info.text.strip()
+			if lastParaText:
+				# Translators: a message reported when a paragraph is moved below another paragraph
+				ui.message(_("Moved below %s")%lastParaText)
+			else:
+				# Translators: a message reported when a paragraph is moved below a blank paragraph 
+				ui.message(_("Moved below blank paragraph"))
+
+	def script_moveParagraphUp(self,gesture):
+		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		gesture.send()
+		if self._hasCaretMoved(oldBookmark)[0]:
+			info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+			info.collapse()
+			info.move(textInfos.UNIT_PARAGRAPH,1)
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			lastParaText=info.text.strip()
+			if lastParaText:
+				# Translators: a message reported when a paragraph is moved above another paragraph
+				ui.message(_("Moved above %s")%lastParaText)
+			else:
+				# Translators: a message reported when a paragraph is moved above a blank paragraph 
+				ui.message(_("Moved above blank paragraph"))
+
 	def script_increaseDecreaseOutlineLevel(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
 		style=self.WinwordSelectionObject.style.nameLocal
@@ -1220,6 +1262,16 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
+
+	def script_caret_moveByCell(self,gesture):
+		gesture.send()
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable=info._rangeObj.tables.count>0
+		isCollapsed=info.isCollapsed
+		if inTable:
+			info.expand(textInfos.UNIT_CELL)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			braille.handler.handleCaretMove(self)
 
 	def script_tab(self,gesture):
 		gesture.send()
@@ -1384,6 +1436,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+e":"toggleAlignment",
 		"kb:control+r":"toggleAlignment",
 		"kb:control+j":"toggleAlignment",
+		"kb:alt+shift+downArrow":"moveParagraphDown",
+		"kb:alt+shift+upArrow":"moveParagraphUp",
 		"kb:alt+shift+rightArrow":"increaseDecreaseOutlineLevel",
 		"kb:alt+shift+leftArrow":"increaseDecreaseOutlineLevel",
 		"kb:control+shift+n":"increaseDecreaseOutlineLevel",
@@ -1401,6 +1455,14 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+downArrow":"nextParagraph",
 		"kb:control+upArrow":"previousParagraph",
+		"kb:alt+home":"caret_moveByCell",
+		"kb:alt+end":"caret_moveByCell",
+		"kb:alt+pageUp":"caret_moveByCell",
+		"kb:alt+pageDown":"caret_moveByCell",
+		"kb:alt+shift+home":"caret_changeSelection",
+		"kb:alt+shift+end":"caret_changeSelection",
+		"kb:alt+shift+pageUp":"caret_changeSelection",
+		"kb:alt+shift+pageDown":"caret_changeSelection",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 		"kb:NVDA+alt+c":"reportCurrentComment",

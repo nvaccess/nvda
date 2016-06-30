@@ -5,6 +5,17 @@
 
 = 2016.3 =
 
+== New Features ==
+- Browse mode can now be used to read PDF documents in Microsoft Edge. (#5740)
+- Strikethrough and double-strikethrough are now reported if appropriate in Microsoft Word. (#5800)
+- In Microsoft Word, the title of a table is now reported if one has been provided. If there is a description, it can be accessed using the open long description command (NVDA+d) in browse mode. (#5943)
+- In Microsoft Word, NVDA now reports position information when moving paragraphs (alt+shift+downArrow and alt+shift+upArow). (#5945)
+
+
+== Bug Fixes ==
+- In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)
+- In Microsoft Word, NVDA now reports appropriately when using Word's own table navigation commands (alt+home, alt+end, alt+pageUp and alt+pageDown) and table selection commands (shift added to the navigation commands). (#5961)
+
 
 = 2016.2.1 =
 This release fixes crashes in Microsoft Word:

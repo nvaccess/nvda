@@ -84,6 +84,8 @@ using namespace std;
 #define wdDISPID_FONT_BOLD 130
 #define wdDISPID_FONT_ITALIC 131
 #define wdDISPID_FONT_UNDERLINE 140
+#define wdDISPID_FONT_STRIKETHROUGH 135
+#define wdDISPID_FONT_DOUBLESTRIKETHROUGH 136
 #define wdDISPID_FONT_NAME 142
 #define wdDISPID_FONT_SIZE 141
 #define wdDISPID_FONT_SUBSCRIPT 138
@@ -122,6 +124,8 @@ using namespace std;
 #define wdDISPID_TABLES_ITEM 0
 #define wdDISPID_TABLE_NESTINGLEVEL 108
 #define wdDISPID_TABLE_RANGE 0
+#define wdDISPID_TABLE_TITLE 209
+#define wdDISPID_TABLE_DESCR 210
 #define wdDISPID_TABLE_BORDERS 1100
 #define wdDISPID_BORDERS_ENABLE 2
 #define wdDISPID_RANGE_CELLS 57
@@ -554,6 +558,26 @@ int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int st
 	if(!inTableCell) return numTags;
 	numTags+=2;
 	XMLStream<<L"<control role=\"table\" table-id=\"1\" table-rowcount=\""<<rowCount<<L"\" table-columncount=\""<<columnCount<<L"\" level=\""<<nestingLevel<<L"\" ";
+	wstring altTextStr=L"";
+	BSTR altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_TITLE,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		SysFreeString(altText);
+	}
+	if(!altTextStr.empty()) {
+		XMLStream<<L"alwaysReportName=\"1\" name=\""<<altTextStr<<L"\" ";
+		altTextStr=L"";
+	}
+	altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_DESCR,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		XMLStream<<L"longdescription=\""<<altTextStr<<L"\" ";
+		SysFreeString(altText);
+	}
 	IDispatchPtr pDispatchTableRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_RANGE,VT_DISPATCH,&pDispatchTableRange)==S_OK&&pDispatchTableRange) {
 		if(_com_dispatch_raw_propget(pDispatchTableRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
@@ -699,6 +723,11 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					formatAttribsStream<<L"text-position=\"super\" ";
 				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"text-position=\"sub\" ";
+				}
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_STRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"1\" ";
+				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_DOUBLESTRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"double\" ";
 				}
 			}
 		}
