@@ -159,7 +159,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	@property
 	def obj(self):
-		return self.textInfo.basePosition if isinstance(self.textInfo.basePosition,NVDAObject) else None
+		return self.textInfo.NVDAObjectAtStart
 
 	@property
 	def label(self):

@@ -126,6 +126,9 @@ POSITION_LAST="last"
 POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
+POSITION_TEXTINFO="TextInfo"
+POSITION_NVDAOBJECT="NVDAObject"
+
 
 class Point(object):
 	"""Represents a point on the screen.
@@ -237,6 +240,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		super(TextInfo,self).__init__()
 		self._obj=weakref.ref(obj) if type(obj)!=weakref.ProxyType else obj
+		from NVDAObjects import NVDAObject
+		if isinstance(position,TextInfo):
+			position=POSITION_TEXTINFO
+		elif isinstance(position,NVDAObject):
+			position=POSITION_NVDAOBJECT
 		#: The position with which this instance was constructed.
 		self.basePosition=position
 
