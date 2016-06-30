@@ -188,9 +188,6 @@ class AddonsDialog(wx.Dialog):
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			return _("remove")
 		# Need to do this here, as 'isDisabled' overrides other flags.
-		elif addon.isPendingEnable:
-			# Translators: The status shown for an addon when its disabled.
-			return _("enable")
 		elif addon.isPendingDisable:
 			# Translators: The status shown for an addon when its disabled.
 			return _("disable")
