@@ -61,10 +61,10 @@ class AddonsDialog(wx.Dialog):
 		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
 		entryButtonsSizer.Add(self.helpButton)
 		# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-		self.toggleButton=wx.Button(self,label=_("Disable add-on"))
-		self.toggleButton.Disable()
-		self.toggleButton.Bind(wx.EVT_BUTTON,self.onToggle)
-		entryButtonsSizer.Add(self.toggleButton)
+		self.enableDisableButton=wx.Button(self,label=_("Disable add-on"))
+		self.enableDisableButton.Disable()
+		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
+		entryButtonsSizer.Add(self.enableDisableButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 		self.addButton=wx.Button(self,label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON,self.onAddClick)
@@ -227,10 +227,10 @@ class AddonsDialog(wx.Dialog):
 		# #3090: Change toggle button label to indicate action to be taken if clicked.
 		if addon is not None:
 			# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-			self.toggleButton.SetLabel(_("Enable add-on") if not self._shouldDisable(addon) else _("Disable add-on"))
+			self.enableDisableButton.SetLabel(_("Enable add-on") if not self._shouldDisable(addon) else _("Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
-		self.toggleButton.Enable(addon is not None and not addon.isPendingRemove)
+		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
@@ -268,14 +268,14 @@ Description: {description}
 		path = self.curAddons[index].getDocFilePath()
 		os.startfile(path)
 
-	def onToggle(self, evt):
+	def onEnableDisable(self, evt):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
 		addon=self.curAddons[index]
 		shouldDisable = self._shouldDisable(addon)
 		# Counterintuitive, but makes sense when context is taken into account.
 		addon.enable(not shouldDisable)
-		self.toggleButton.SetLabel(_("Enable add-on") if shouldDisable else _("Disable add-on"))
+		self.enableDisableButton.SetLabel(_("Enable add-on") if shouldDisable else _("Disable add-on"))
 		self.needsRestart=True
 		self.refreshAddonsList(activeIndex=index)
 
