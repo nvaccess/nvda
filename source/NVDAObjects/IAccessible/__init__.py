@@ -1300,7 +1300,7 @@ the NVDAObject for IAccessible
 
 	def _get_isPresentableFocusAncestor(self):
 		IARole = self.IAccessibleRole
-		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
+		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and self.windowStyle & winUser.WS_SYSMENU:
 			return True
 		return super(IAccessible, self).isPresentableFocusAncestor
 
