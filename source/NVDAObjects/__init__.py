@@ -611,7 +611,7 @@ class NVDAObject(baseObject.ScriptableObject):
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE,controlTypes.ROLE_BORDER):
 			return self.presType_layout
 		name = self.name
 		description = self.description
