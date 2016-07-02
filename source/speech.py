@@ -419,7 +419,7 @@ def getIndentationSpeech(indentation):
 	@rtype: unicode
 	"""
 	speechIndentConfig = config.conf["documentFormatting"]["reportLineIndentation"]
-	toneIndentConfig = config.conf["documentFormatting"]["reportToneIndentation"] and speechMode == speechMode_talk
+	toneIndentConfig = config.conf["documentFormatting"]["reportLineIndentationWithTones"] and speechMode == speechMode_talk
 	if not indentation:
 		if toneIndentConfig:
 			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
@@ -682,7 +682,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	if extraDetail:
 		formatConfig=formatConfig.copy()
 		formatConfig['extraDetail']=True
-	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportToneIndentation"])
+	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
 
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one

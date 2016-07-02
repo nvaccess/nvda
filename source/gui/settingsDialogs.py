@@ -1112,23 +1112,22 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: This is the label for a combobox in the
+		# Translators: This is the label for a combobox controlling the line indentation in the
 		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report Line &Indents With:")))
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report Line &Indentation With:")))
 		indentChoices=[
-			#Translators: A setting to report No  line Indentation.
+			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 			_("Off"),
-			#Translators: A setting to report indents with Speech.
+			#Translators: A choice in a combo box in the document formatting dialog  to report indents with Speech.
 			_("Speech"),
-			#Translators: A setting to report indents with tones.
+			#Translators: A choice in a combo box in the document formatting dialog  to report indents with tones.
 			_("Tones"),
-			#Translators: A setting to report indents with both tones and Speech.
+			#Translators: A choice in a combo box in the document formatting dialog  to report indents with both  Speech and tones.
 			_("Both  Speech and Tones")
 		]
 		self.lineIndentationCombo = wx.Choice(self,wx.ID_ANY,choices=indentChoices)
-		#This is for Speech. For legacy reasons, we leave this name.
 		#We use bitwise opperations because it saves us a four way if statement.
-		curChoice = config.conf["documentFormatting"]["reportToneIndentation"] * 2 |  config.conf["documentFormatting"]["reportLineIndentation"]
+		curChoice = config.conf["documentFormatting"]["reportLineIndentationWithTones"] << 1 |  config.conf["documentFormatting"]["reportLineIndentation"]
 		self.lineIndentationCombo.SetSelection(curChoice)
 		sizer.Add(self.lineIndentationCombo)
 		settingsSizer.Add(sizer)
@@ -1206,18 +1205,8 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		choice = self.lineIndentationCombo.GetSelection()
-		if choice == 0:
-			config.conf["documentFormatting"]["reportLineIndentation"] = False
-			config.conf["documentFormatting"]["reportToneIndentation"] = False
-		elif choice == 1:
-			config.conf["documentFormatting"]["reportLineIndentation"] = True
-			config.conf["documentFormatting"]["reportToneIndentation"] = False
-		elif choice == 2:
-			config.conf["documentFormatting"]["reportLineIndentation"] = False
-			config.conf["documentFormatting"]["reportToneIndentation"] = True
-		if choice == 3:
-			config.conf["documentFormatting"]["reportLineIndentation"] = True
-			config.conf["documentFormatting"]["reportToneIndentation"] = True
+		config.conf["documentFormatting"]["reportLineIndentation"] = choice in (1, 3)
+		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = choice in (2, 3)
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()

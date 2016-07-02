@@ -178,7 +178,7 @@ confspec = ConfigObj(StringIO(
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	reportLineIndentation = boolean(default=False)
-	reportToneIndentation = boolean(default=False)
+	reportLineIndentationWithTones = boolean(default=False)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
