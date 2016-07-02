@@ -15,7 +15,7 @@ import ctypes
 from ctypes import byref
 from ctypes.wintypes import DWORD, USHORT
 import serial
-from serial.win32 import OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
+from serial.win32 import MAXDWORD, OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
 import winKernel
 import braille
 from logHandler import log
@@ -184,11 +184,23 @@ class Serial(IoBase):
 	def _setTimeout(self, timeout):
 		# #6035: pyserial reconfigures all settings of the port when setting a timeout.
 		# This can cause error 'Cannot configure port, some setting was wrong.'
-		# Therefore, manually set the timeout using the Win32 API.
-		# timeout=None to clear all timeouts, else a positive number of milliseconds.
+		# Therefore, manually set the timeouts using the Win32 API.
+		# Adapted from pyserial 3.1.1.
 		timeouts = COMMTIMEOUTS()
-		if timeout is not None:
+		if timeout is None:
+			pass # default of all zeros is OK
+		elif timeout == 0:
+			timeouts.ReadIntervalTimeout = win32.MAXDWORD
+		else:
 			timeouts.ReadTotalTimeoutConstant = max(int(timeout * 1000), 1)
+		if timeout != 0 and self.ser._interCharTimeout is not None:
+			timeouts.ReadIntervalTimeout = max(int(self.ser._interCharTimeout * 1000), 1)
+		if self.ser._writeTimeout is None:
+			pass
+		elif self.ser._writeTimeout == 0:
+			timeouts.WriteTotalTimeoutConstant = win32.MAXDWORD
+		else:
+			timeouts.WriteTotalTimeoutConstant = max(int(self.ser._writeTimeout * 1000), 1)
 		SetCommTimeouts(self._ser.hComPort, ctypes.byref(timeouts))
 
 class HIDP_CAPS (ctypes.Structure):
