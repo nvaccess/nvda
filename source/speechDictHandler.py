@@ -105,8 +105,14 @@ def processText(text):
 def initialize():
 	for type in dictTypes:
 		dictionaries[type]=SpeechDict()
-	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
-	dictionaries["builtin"].load("builtin.dic")
+	try:
+		dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
+	except Exception as e:
+		log.exception("Error loading dictionary, default.dic: %s" % e)
+	try:
+		dictionaries["builtin"].load("builtin.dic")
+	except Exception as e:
+		log.exception("Error loading dictionary, builtin.dic: %s" % e)
 
 def loadVoiceDict(synth):
 	"""Loads appropriate dictionary for the given synthesizer.
@@ -117,4 +123,7 @@ It handles case when the synthesizer doesn't support voice setting.
 		fileName=r"%s\%s-%s.dic"%(speechDictsPath,synth.name,api.filterFileName(voiceName))
 	else:
 		fileName=r"%s\%s.dic"%(speechDictsPath,synth.name)
-	dictionaries["voice"].load(fileName)
+	try:
+		dictionaries["voice"].load(fileName)
+	except Exception as e:
+		log.exception("Error loading voice dictionary, %s:%s" % (filename, e))
