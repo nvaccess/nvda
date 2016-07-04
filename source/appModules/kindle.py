@@ -24,7 +24,11 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 	TextInfo=treeInterceptorHandler.RootProxyTextInfo
 
 	def turnPage(self,previous=False):
-		return self.rootNVDAObject.turnPage(previous=previous)
+		try:
+			self.rootNVDAObject.appModule.inPageTurn=True
+			return self.rootNVDAObject.turnPage(previous=previous)
+		finally:
+			self.rootNVDAObject.appModule.inPageTurn=False
 
 	def isAlive(self):
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
@@ -116,9 +120,20 @@ class BookPageView(DocumentWithPageTurns,IAccessible):
 		else:
 			raise RuntimeError("no more pages")
 
+class PageTurnFocusIgnorer(IAccessible):
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		if self.appModule.inPageTurn:
+			return False
+		return super(PageTurnFocusIgnorer,self).shouldAllowIAccessibleFocusEvent
+
 class AppModule(appModuleHandler.AppModule):
 
+	inPageTurn=False
+
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,IAccessible) and hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View":
-			clsList.insert(0,BookPageView)
+		if isinstance(obj,IAccessible):
+			clsList.insert(0,PageTurnFocusIgnorer)
+			if hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View":
+				clsList.insert(0,BookPageView)
 		return clsList
