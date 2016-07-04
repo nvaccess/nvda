@@ -1112,9 +1112,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: This is the label for a combobox controlling the line indentation in the
+		# Translators: This is the label for a combobox controlling the reporting of line indentation in the
 		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report Line &Indentation With:")))
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report line &indentation with:")))
 		indentChoices=[
 			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 			_("Off"),
