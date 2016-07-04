@@ -187,20 +187,18 @@ class Serial(IoBase):
 		# Therefore, manually set the timeouts using the Win32 API.
 		# Adapted from pyserial 3.1.1.
 		timeouts = COMMTIMEOUTS()
-		if timeout is None:
-			pass # default of all zeros is OK
-		elif timeout == 0:
-			timeouts.ReadIntervalTimeout = win32.MAXDWORD
-		else:
-			timeouts.ReadTotalTimeoutConstant = max(int(timeout * 1000), 1)
-		if timeout != 0 and self.ser._interCharTimeout is not None:
-			timeouts.ReadIntervalTimeout = max(int(self.ser._interCharTimeout * 1000), 1)
-		if self.ser._writeTimeout is None:
-			pass
-		elif self.ser._writeTimeout == 0:
-			timeouts.WriteTotalTimeoutConstant = win32.MAXDWORD
-		else:
-			timeouts.WriteTotalTimeoutConstant = max(int(self.ser._writeTimeout * 1000), 1)
+		if timeout is not None:
+			if timeout == 0:
+				timeouts.ReadIntervalTimeout = win32.MAXDWORD
+			else:
+				timeouts.ReadTotalTimeoutConstant = max(int(timeout * 1000), 1)
+		if timeout != 0 and self._ser._interCharTimeout is not None:
+			timeouts.ReadIntervalTimeout = max(int(self._ser._interCharTimeout * 1000), 1)
+		if self._ser._writeTimeout is not None:
+			if self._ser._writeTimeout == 0:
+				timeouts.WriteTotalTimeoutConstant = win32.MAXDWORD
+			else:
+				timeouts.WriteTotalTimeoutConstant = max(int(self._ser._writeTimeout * 1000), 1)
 		SetCommTimeouts(self._ser.hComPort, ctypes.byref(timeouts))
 
 class HIDP_CAPS (ctypes.Structure):
