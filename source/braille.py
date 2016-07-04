@@ -205,10 +205,10 @@ TABLES = (
 	("mr-in-g1.utb", _("Marathi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-BE-g1.ctb", _("Dutch (Belgium) grade 1"), False),
+	("nl-BE-g1.ctb", _("Dutch (Belgium)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-NL-g1.ctb", _("Dutch (Netherlands) grade 1"), False),
+	("nl-NL-g1.ctb", _("Dutch (Netherlands)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"), True),
