@@ -1118,11 +1118,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		indentChoices=[
 			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 			_("Off"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indents with Speech.
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 			_("Speech"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indents with tones.
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 			_("Tones"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indents with both  Speech and tones.
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 			_("Both  Speech and Tones")
 		]
 		self.lineIndentationCombo = wx.Choice(self,wx.ID_ANY,choices=indentChoices)
