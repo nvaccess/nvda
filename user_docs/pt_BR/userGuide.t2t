@@ -509,7 +509,8 @@ Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas tecla
 Para alternar a ativação das teclas de navegação por caractere no o documento atual, pressione NVDA+shift+espaço.
  %kc:endInclude
 
-++ A Lista de Elementos ++
+
+ ++ A Lista de Elementos ++
 A lista de elementos fornece acesso a uma lista de  vários tipos de elementos no documento, quando apropriado ao aplicativo.
 Os botões de opção permitem-lhe alternar entre os vários tipos de elementos.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
@@ -952,7 +953,11 @@ Portanto, é bastante útil ser alertado sobre isso.
 ==== Falar Teclas de Comando ====
 Tecla: NVDA+4
 
-Quando está marcada informa ao NVDA para anunciar todas as teclas que não são caracteres que você pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
+Quando está marcada, informa ao NVDA para anunciar todas as teclas que não são caracteres que você pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
+
++==== Tocar som para erros ortográficos ao digitar ====
+Se habilitada, um curto som de alerta será tocado quando uma palavra digitada contiver um erro ortográficco.
+Esta opção só estará disponível se o anúncio de erros ortográficos estiver habilitado no [Diálogo de Opções de Formatação de Documentos #DocumentFormattingSettings] do NVDA.
 
 ==== Processar Teclas  de outros Aplicativos ==== 
 Esta opção permite ao usuário controlar se o pressionamento de teclas gerado por aplicações tais como teclados na tela e softwares de reconhecimento de voz deverão ser processados pelo NVDA.  
@@ -1151,6 +1156,7 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - Ênfase
 - Estilo
 - Erros Ortográficos
+- Erros Gramaticais
 - Número das Páginas
 - Número das Linhas
 - Indentação das Linhas
