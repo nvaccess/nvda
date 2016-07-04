@@ -823,7 +823,7 @@ class TextInfoRegion(Region):
 		typeform = louis.plain_text
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
-				self._isFormatFieldAtStart =False
+				self._isFormatFieldAtStart = False
 				if not command:
 					continue
 				if self._endsWithField:
