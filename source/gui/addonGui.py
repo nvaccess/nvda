@@ -219,7 +219,7 @@ class AddonsDialog(wx.Dialog):
 			self.removeButton.Disable()
 
 	def _shouldDisable(self, addon):
-		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable and not addon.isPendingDisable))
+		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable))
 
 	def onListItemSelected(self, evt):
 		index=evt.GetIndex()
