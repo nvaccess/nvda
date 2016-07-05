@@ -127,7 +127,7 @@ def terminate():
 	# #3090: Make enable/disable flags persistent.
 	if len(_disabledAddons) != 0:
 		pendingEnable = _disabledAddons & _futureEnable
-	state["pendingDisableSet"] |= _disabledAddons - pendingEnable
+		state["pendingDisableSet"] |= _disabledAddons - pendingEnable
 	saveState()
 
 def _getDefaultAddonPaths():
