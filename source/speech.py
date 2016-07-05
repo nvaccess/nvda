@@ -411,8 +411,6 @@ RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
 IDT_BASE_FREQUENCY = 220 #One octave below middle A.
 IDT_TONE_DURATION = 80 #Milleseconds
 IDT_MAX_SPACES = 72
-INDENT_SPEECH = 1
-INDENT_TONES = 2
 def getIndentationSpeech(indentation):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
@@ -420,12 +418,13 @@ def getIndentationSpeech(indentation):
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
-	indentConfig = config.conf["documentFormatting"]["indentType"]
+	speechIndentConfig = config.conf["documentFormatting"]["reportLineIndentation"]
+	toneIndentConfig = config.conf["documentFormatting"]["reportLineIndentationWithTones"] and speechMode == speechMode_talk
 	if not indentation:
-		if indentConfig & INDENT_TONES:
+		if toneIndentConfig:
 			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
 		# Translators: This is spoken when the given line has no indentation.
-		return _("no indent")
+		return (_("no indent") if speechIndentConfig else "")
 
 	#The non-breaking space is semantically a space, so we replace it here.
 	indentation = indentation.replace(u"\xa0", u" ")
@@ -445,8 +444,8 @@ def getIndentationSpeech(indentation):
 			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
 		quarterTones += (count*4 if raw[0]== "\t" else count)
 
-		speak = indentConfig & INDENT_SPEECH
-		if indentConfig & INDENT_TONES: 
+		speak = speechIndentConfig
+		if toneIndentConfig: 
 			if quarterTones <= IDT_MAX_SPACES:
 				#Remove me during speech refactor.
 				pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
@@ -683,7 +682,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	if extraDetail:
 		formatConfig=formatConfig.copy()
 		formatConfig['extraDetail']=True
-	reportIndentation=unit==textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]
+	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
 
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
