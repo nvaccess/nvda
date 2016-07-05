@@ -111,7 +111,7 @@ backgroundPatternLabels={
 		# Dark diagonal lines running from the upper left to the lower right
 		xlPatternDown:_("reverse diagonal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
-		# 16% gray
+		# 12.5% gray
 		xlPatternGray16:_("12.5% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 25% gray
@@ -123,7 +123,7 @@ backgroundPatternLabels={
 		# 75% gray
 		xlPatternGray75:_("75% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
-		# 8% gray
+		# 6.25% gray
 		xlPatternGray8:_("6.25% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Grid
