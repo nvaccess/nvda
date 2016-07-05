@@ -26,7 +26,6 @@ class AddonsDialog(wx.Dialog):
 		AddonsDialog._instance = self
 		# Translators: The title of the Addons Dialog
 		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
-		self.needsRestart=False
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
@@ -144,7 +143,6 @@ class AddonsDialog(wx.Dialog):
 			_("Please wait while the add-on is being installed."))
 			try:
 				gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
-				self.needsRestart=True
 			except:
 				log.error("Error installing  addon bundle from %s"%addonPath,exc_info=True)
 				self.refreshAddonsList()
@@ -176,7 +174,6 @@ class AddonsDialog(wx.Dialog):
 			_("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
 		addon=self.curAddons[index]
 		addon.requestRemove()
-		self.needsRestart=True
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
 
@@ -235,7 +232,9 @@ class AddonsDialog(wx.Dialog):
 
 	def onClose(self,evt):
 		self.Destroy()
-		if self.needsRestart:
+		addonState = addonHandler.state
+		if (len(addonState["pendingInstallsSet"]) > 0 or len(addonState["pendingRemovesSet"]) > 0
+			or addonHandler._disabledAddons != addonState["pendingDisableSet"]):
 			# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed. 
 			if gui.messageBox(_("Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
@@ -276,7 +275,6 @@ Description: {description}
 		# Counterintuitive, but makes sense when context is taken into account.
 		addon.enable(not shouldDisable)
 		self.enableDisableButton.SetLabel(_("Enable add-on") if shouldDisable else _("Disable add-on"))
-		self.needsRestart=True
 		self.refreshAddonsList(activeIndex=index)
 
 	def onGetAddonsClick(self,evt):
