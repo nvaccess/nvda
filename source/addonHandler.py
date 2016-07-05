@@ -123,7 +123,12 @@ def initialize():
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
-	pass
+	global _disabledAddons
+	# #3090: Make enable/disable flags persistent.
+	if len(_disabledAddons) != 0:
+		pendingEnable = _disabledAddons & _futureEnable
+	state["pendingDisableSet"] |= _disabledAddons - pendingEnable
+	saveState()
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.

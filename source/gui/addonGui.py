@@ -232,9 +232,14 @@ class AddonsDialog(wx.Dialog):
 
 	def onClose(self,evt):
 		self.Destroy()
-		addonState = addonHandler.state
-		if (len(addonState["pendingInstallsSet"]) > 0 or len(addonState["pendingRemovesSet"]) > 0
-			or addonHandler._disabledAddons != addonState["pendingDisableSet"]):
+		needsRestart = False
+		for addon in self.curAddons:
+			if (addon.isPendingInstall or addon.isPendingRemove
+				or addon.isDisabled and addon.isPendingEnable
+				or addon.isRunning and addon.isPendingDisable):
+				needsRestart = True
+				break
+		if needsRestart:
 			# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed. 
 			if gui.messageBox(_("Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
