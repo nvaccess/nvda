@@ -101,10 +101,6 @@ def removeFailedDeletions():
 				log.error("Failed to delete path %s, try removing manually"%path)
 
 _disabledAddons = set()
-# Records add-ons that should be enabled in the next session.
-_futureEnable = set()
-# Complementary to the above: records ones to be disabled in the next session.
-_futureDisable = set()
 def disableAddonsIfAny():
 	"""Disables add-ons if told to do so by the user from add-ons manager"""
 	global _disabledAddons
@@ -295,14 +291,12 @@ class Addon(object):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			_futureEnable.add(self.name)
-			_futureDisable.discard(self.name)
+			state["pendingEnableSet"].add(self.name)
+			state["pendingDisableSet"].discard(self.name)
 		else:
-			_futureDisable.add(self.name)
-			_futureEnable.discard(self.name)
+			state["pendingDisableSet"].add(self.name)
+			state["pendingEnableSet"].discard(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
-		state["pendingDisableSet"] = _futureDisable
-		state["pendingEnableSet"] = _futureEnable
 		saveState()
 
 	@property
@@ -315,11 +309,11 @@ class Addon(object):
 
 	@property
 	def isPendingEnable(self):
-		return self.name in _futureEnable
+		return self.name in state["pendingEnableSet"]
 
 	@property
 	def isPendingDisable(self):
-		return self.name in _futureDisable
+		return self.name in state["pendingDisableSet"]
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
