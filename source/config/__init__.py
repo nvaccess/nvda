@@ -17,6 +17,7 @@ from logHandler import log
 import shlobj
 import baseObject
 import easeOfAccess
+from fileUtils import FaultTolerantFile
 import winKernel
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
@@ -640,10 +641,12 @@ class ConfigManager(object):
 			# Never save the config if running securely.
 			return
 		try:
-			self.profiles[0].write()
+			with FaultTolerantFile(self.profiles[0].filename) as f:
+				self.profiles[0].write(f)
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
-				self._profileCache[name].write()
+				with FaultTolerantFile(self._profileCache[name].filename) as f:
+					self._profileCache[name].write(f)
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except Exception as e:
