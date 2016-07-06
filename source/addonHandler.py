@@ -48,6 +48,7 @@ def loadState():
 		state = {
 			"pendingRemovesSet":set(),
 			"pendingInstallsSet":set(),
+			"disabledAddons":set(),
 			"pendingDisableSet":set(),
 		}
 
@@ -102,13 +103,23 @@ def removeFailedDeletions():
 _disabledAddons = set()
 # Records add-ons that should be enabled in the next session.
 _futureEnable = set()
+# Complementary to the above: records ones to be disabled in the next session.
+_futureDisable = set()
 def disableAddonsIfAny():
 	"""Disables add-ons if told to do so by the user from add-ons manager"""
 	global _disabledAddons
+	if "disabledAddons" not in state:
+		state["disabledAddons"] = set()
 	if "pendingDisableSet" not in state:
 		state["pendingDisableSet"] = set()
-	_disabledAddons |= state["pendingDisableSet"]
+	if "pendingEnableSet" not in state:
+		state["pendingEnableSet"] = set()
+	# Pull in and enable add-ons that should be disabled and enabled, respectively.
+	state["disabledAddons"] |= state["pendingDisableSet"]
+	state["disabledAddons"] -= state["pendingEnableSet"]
+	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
+	state["pendingEnableSet"].clear()
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
@@ -116,19 +127,14 @@ def initialize():
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
-	# I3090: Are there add-ons that are supposed to not run for this session?
+	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
 	saveState()
 	getAvailableAddons(refresh=True)
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
-	global _disabledAddons
-	# #3090: Make enable/disable flags persistent.
-	if len(_disabledAddons) != 0:
-		pendingEnable = _disabledAddons & _futureEnable
-		state["pendingDisableSet"] |= _disabledAddons - pendingEnable
-	saveState()
+	pass
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
@@ -290,10 +296,13 @@ class Addon(object):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
 			_futureEnable.add(self.name)
-			state["pendingDisableSet"].discard(self.name)
+			_futureDisable.discard(self.name)
 		else:
-			state["pendingDisableSet"].add(self.name)
+			_futureDisable.add(self.name)
 			_futureEnable.discard(self.name)
+		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
+		state["pendingDisableSet"] = _futureDisable
+		state["pendingEnableSet"] = _futureEnable
 		saveState()
 
 	@property
@@ -310,7 +319,7 @@ class Addon(object):
 
 	@property
 	def isPendingDisable(self):
-		return self.name in state["pendingDisableSet"]
+		return self.name in _futureDisable
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
