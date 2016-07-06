@@ -739,12 +739,13 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field, isAtStart):
+def getFormatFieldBraille(field, isAtStart, formatConfig):
 	textList = []
 	if isAtStart:
-		lineNumber = field.get("line-number")
-		if lineNumber:
-			textList.append("%s" % lineNumber)
+		if formatConfig["reportLineNumber"]:
+			lineNumber = field.get("line-number")
+			if lineNumber:
+				textList.append("%s" % lineNumber)
 		linePrefix = field.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
@@ -855,7 +856,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field, self._isFormatFieldAtStart)
+					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
