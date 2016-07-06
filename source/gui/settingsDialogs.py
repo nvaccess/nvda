@@ -1252,9 +1252,9 @@ class DictionaryEntryDialog(wx.Dialog):
 		try:
 			self.dictEntry=speechDictHandler.SpeechDictEntry(self.patternTextCtrl.GetValue(),self.replacementTextCtrl.GetValue(),self.commentTextCtrl.GetValue(),bool(self.caseSensitiveCheckBox.GetValue()),self.getType())
 		except Exception as e:
-			log.debugWarning("Could not add dictionary entry due to: %s" % e)
+			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
 			# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-			gui.messageBox(_("Error in dictionary entry: %s.")%e, _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+			gui.messageBox(_("Regular Expression error: \"%s\".")%e, _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 		evt.Skip()
 

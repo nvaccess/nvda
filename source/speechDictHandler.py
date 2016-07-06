@@ -67,7 +67,13 @@ class SpeechDict(list):
 			else:
 				temp=line.split("\t")
 				if len(temp) ==4:
-					self.append(SpeechDictEntry(temp[0].replace(r'\#','#'),temp[1].replace(r'\#','#'),comment,bool(int(temp[2])),int(temp[3])))
+					pattern = temp[0].replace(r'\#','#')
+					replace = temp[1].replace(r'\#','#')
+					try:
+						dictionaryEntry=SpeechDictEntry(pattern, replace, comment, caseSensitive=bool(int(temp[2])), type=int(temp[3]))
+						self.append(dictionaryEntry)
+					except Exception as e:
+						log.exception("Dictionary (\"%s\") entry invalid for \"%s\" error raised: \"%s\"" % (fileName, line, e))
 					comment=""
 				else:
 					log.warning("can't parse line '%s'" % line)
@@ -105,14 +111,8 @@ def processText(text):
 def initialize():
 	for type in dictTypes:
 		dictionaries[type]=SpeechDict()
-	try:
-		dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
-	except Exception as e:
-		log.exception("Error loading dictionary, default.dic: %s" % e)
-	try:
-		dictionaries["builtin"].load("builtin.dic")
-	except Exception as e:
-		log.exception("Error loading dictionary, builtin.dic: %s" % e)
+	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
+	dictionaries["builtin"].load("builtin.dic")
 
 def loadVoiceDict(synth):
 	"""Loads appropriate dictionary for the given synthesizer.
@@ -123,7 +123,4 @@ It handles case when the synthesizer doesn't support voice setting.
 		fileName=r"%s\%s-%s.dic"%(speechDictsPath,synth.name,api.filterFileName(voiceName))
 	else:
 		fileName=r"%s\%s.dic"%(speechDictsPath,synth.name)
-	try:
-		dictionaries["voice"].load(fileName)
-	except Exception as e:
-		log.exception("Error loading voice dictionary, %s:%s" % (filename, e))
+	dictionaries["voice"].load(fileName)
