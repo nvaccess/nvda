@@ -188,8 +188,11 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingDisable:
 			# Translators: The status shown for an addon when its disabled.
 			return _("disable")
+		elif addon.isPendingEnable:
+			# Translators: The status shown for an addon when its enabled.
+			return _("enable")
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
-			# Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			return _("suspended")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
