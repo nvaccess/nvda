@@ -3,35 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2016.2 = 
+= 2016.3 = 
 
 == Nye Funktioner ==
-- Når der flyttes til annotationer ved brug af gennemsynstilstand i Internet Explorer samt andre MSHTML kontroller (A og skift+A) vil disse taster nu flytte til indsat og slettet tekst. (#5691)
-- NVDA vil nu annoncérer niveauet på en gruppe af celler, samt om de er udvidede eller sammenfoldede i Microsoft Excel. (#5690)
-- Ved et dobbelttryk af kommandoen til annoncéring af tekstformatering vil denne information blive vist i gennemsynstilstand til læsning. (#4908)
-- I Microsoft Excel 2010 eller senere vil gradueringsfyld og celleskygge nu blive annoncéret. Automatisk annoncéring er kontrolleret af "Annoncér Farver" indstillingen i NVDAs dokumentformateringsindstillinger. (#3683)
-- Ny punktoversættelsestabel: Koiné Græsk. (#5393)
-- I log fremviseren kan du nu gemme loggen med genvejstasten kontrol+S. (#4532)
-
-
-== Ændringer ==
-- I gennemsynstilstand samt redigerbare tekstfelter vil NVDA nu behandle numerisk enter som den primære enter-tast på tastaturet. (#5385)
-- NVDA har nu skiftet til eSpeak NG talesyntesen. (#5651)
+- Gennemsynstilstand kan nu bruges til læsning af PDF-dokumenter i Microsoft Edge. (#5740)
+- Gennemstreget og dobbelt genemstreget er nu annoncéret i Microsoft Word hvis passende. (#5800)
+- Titlen af en tabel vil nu blive rapporteret i Microsoft Word hvis tabellen er navngivet. Hvis der er en tabelbeskrivelse, kan den vises ved brug af kommandoen "Åbn lang beskrivelse" (NVDA+D) i gennemsynstilstand. (#5943)
+- NVDA vil nu rapporterer positionsinformation i Microsoft Word  når du flytter rundt med afsnit (alt+skift+pil ned og alt+skift+pil op). (#5945)
 
 
 == Fejlrettelser ==
-- Hvis der forsøges at benytte bogstavnavigation til at flytte til et element, der ikke er understøttet i det aktuelle dokument, vil NVDA nu annoncérer dette i stedet for at annoncérer at der ikke befinder sig et element i den givende retning. (#5691)
-- Når der vises en list over ark i elementlisten i Microsoft Excel, vil ark der kun indeholder diagrammer være inkluderet. (#5698)
-- NVDA vil ikke længere rapportere uvedkommende information når der skiftes vinduer i en Java-applikation med flere vinduer, såsom IntelliJ eller Android Studio. (#5732)
-- I  Scintilla-baserede applikationer såsom Notepad++ vil punkt nu blive korrekt opdateret når markøren flyttes ved brug af et punktdisplay. (#5678)
-- NVDA vil ikke længere nogle gange gå ned hvis punktoutput slåes til. (#4457)
-- Afsnitsindrykning vil nu altid blive annoncéret i den valgte enhed som valgt af brugeren i Microsoft Word (f.eks. centimeter eller tommer). (#5804)
-- Når der benyttes et punktdisplay vil beskeder, der tidligere kun var leveret på tale, nu også angives på punkt. (#5557)
-- I tilgængelige Java-applikationer vil niveauet i trævisninger nu blive rapporteret. (#5766)
-/ I nogle situationer skulle Adobe Flash i Mozilla Firefox ikke længere gå ned. (#5367)
-- I Google Chrome og Chrome-baserede browsere kan dokumenter indeni dialoger eller applikationer nu læses i gennemsynstilstand. (#5818)
-- Du kan nu tvinge NVDA til at skifte til gennemsynstilstand i webdialoger eller applikationer når du benytter Google Chrome eller en Chrome-baseret browser. (#5818)
-- Når fokus flyttes til bestemte kontroller i Internet Explorer eller andre MSHTML kontroller (specifikt når aria-activedescendant benyttes) vil NVDA ikke længere ukorrekt skifte til gennemsynstilstand. Dette skete f.eks. når der flyttes til forslag i adressefeltet når du var ved at skrive en besked i Gmail. (#5676)
+- Når gennemsynstilstand benyttes i Microsoft Word, vil formateringen blive bevaret når tekst kopieres til udklipsholderen. (#5956)
+- NVDA vil nu annoncére passende information når der benyttes Words egne kommandoer for tabelnavigation (Alt+hjem, alt+end, alt+side op og alt+side ned) samt kommandoer for udvælgelse af tabeller (skift tilføjet til ovenstående navigationskommandoer). (#5961)
 
 
 === Ændringer for udviklere ===
