@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 00:10+1000\n"
-"PO-Revision-Date: 2016-06-21 20:07+0530\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-05 20:14+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -2523,11 +2523,11 @@ msgstr "கவனிக்கவும்..."
 
 #. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
 msgid "IFrame"
-msgstr "உள்சட்டகம்"
+msgstr "உட்சட்டகம்"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
-msgstr "மேசைத்தள பலகை"
+msgstr "மேசைத்தளப் பலகை"
 
 #. Translators: Identifies an option pane.
 msgid "option pane"
@@ -4877,6 +4877,11 @@ msgstr "சாய்வு"
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "சாய்வில்லை"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "ஊடாக இரட்டைக் கோடிடப்பட்டது"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -8735,6 +8740,10 @@ msgstr "கருத்துரை: {text}, படைப்பாளர்: {au
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "அட்டவணை விளக்கம்"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8856,6 +8865,24 @@ msgstr "கீழெழுத்து"
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
 msgstr "அடித்தளக் கோடு"
+
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "இந்தப் பத்திக்குக் கீழ் நகர்த்தப்பட்டது: %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "வெற்றுப் பத்திக்குக் கீழ் நகர்த்தப்பட்டது"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "இந்தப் பத்திக்கு மேல் நகர்த்தப்பட்டது: %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "வெற்றுப் பத்திக்கு மேல் நகர்த்தப்பட்டது"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
