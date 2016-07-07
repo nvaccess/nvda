@@ -446,15 +446,15 @@ def getIndentationSpeech(indentation, formatConfig):
 			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
 		quarterTones += (count*4 if raw[0]== "\t" else count)
 
-		speak = speechIndentConfig
-		if toneIndentConfig: 
-			if quarterTones <= IDT_MAX_SPACES:
-				#Remove me during speech refactor.
-				pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
-				tones.beep(pitch, IDT_TONE_DURATION)
-			else: 
-				#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
-				speak = True
+	speak = speechIndentConfig
+	if toneIndentConfig: 
+		if quarterTones <= IDT_MAX_SPACES:
+			#Remove me during speech refactor.
+			pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
+			tones.beep(pitch, IDT_TONE_DURATION)
+		else: 
+			#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
+			speak = True
 	return (" ".join(res) if speak else "")
 
 def speak(speechSequence,symbolLevel=None):
