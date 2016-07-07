@@ -411,15 +411,17 @@ RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
 IDT_BASE_FREQUENCY = 220 #One octave below middle A.
 IDT_TONE_DURATION = 80 #Milleseconds
 IDT_MAX_SPACES = 72
-def getIndentationSpeech(indentation):
+def getIndentationSpeech(indentation, formatConfig):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
 	@type indentation: unicode
+	@param formatConfig: The configuration to use.
+	@type formatConfig: dict
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
-	speechIndentConfig = config.conf["documentFormatting"]["reportLineIndentation"]
-	toneIndentConfig = config.conf["documentFormatting"]["reportLineIndentationWithTones"] and speechMode == speechMode_talk
+	speechIndentConfig = formatConfig["reportLineIndentation"]
+	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
 	if not indentation:
 		if toneIndentConfig:
 			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
@@ -864,7 +866,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
 	if reportIndentation and speakTextInfoState and allIndentation!=speakTextInfoState.indentationCache:
-		indentationSpeech=getIndentationSpeech(allIndentation)
+		indentationSpeech=getIndentationSpeech(allIndentation, formatConfig)
 		if autoLanguageSwitching and speechSequence[-1].lang is not None:
 			# Indentation must be spoken in the default language,
 			# but the initial format field specified a different language.

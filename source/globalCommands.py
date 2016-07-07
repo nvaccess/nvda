@@ -1241,7 +1241,7 @@ class GlobalCommands(ScriptableObject):
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,"reportGrammarErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
+			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 		}
@@ -1253,7 +1253,7 @@ class GlobalCommands(ScriptableObject):
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation))
+			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
