@@ -5,6 +5,17 @@
 
 = 2016.3 =
 
+== Uudet ominaisuudet ==
+- Selaustilaa on nyt mahdollista käyttää PDF-asiakirjojen lukemiseen Microsoft Edgessä. (#5740)
+- Tavallinen ja kaksinkertainen yliviivaus ilmoitetaan nyt Microsoft Wordissa. (#5800)
+- Jos taulukolla on otsikko, se luetaan nyt Microsoft Wordissa. Mikäli kuvaus on lisätty, se voidaan lukea selaustilassa avaa pitkä kuvaus -komennolla (NVDA+D). (#5943)
+- NVDA ilmoittaa nyt Microsoft Wordissa sijaintitiedot kappaleita siirrettäessä (Alt+Shift+nuoli alas ja Alt+Shift+nuoli ylös). (#5945)
+
+
+== Korjatut ohjelmavirheet ==
+- Leikepöydälle kopioiminen selaustilassa Microsoft Wordissa säilyttää nyt muotoilun. (#5956)
+- NVDA ilmoittaa nyt asianmukaisesti Microsoft Wordissa sen omia  taulukkonavigointikomentoja (Alt+Home, Alt+End, Alt+Page up ja Alt+Page down) sekä taulukonvalitsemiskomentoja (Shift lisättynä navigointikomentoihin) käytettäessä. (#5961)
+
 
 = 2016.2.1 =
 Tämä versio korjaa Microsoft Wordin kaatumisia:
