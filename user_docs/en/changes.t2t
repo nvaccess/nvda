@@ -13,6 +13,10 @@
 - In Microsoft Word, line spacing is now reported via NVDA's report formatting command, when changing it with various Microsoft word shortcut keys, and when moving to text with different line spacing if Report Line Spacing is turned on in NVDA's Document Formatting Settings. (#2961)
 
 
+== Changes ==
+- NVDA now reports colors using a basic well-understood set of 9 color hues and 3 shades, with brightness and paleness variations. This is rather than using more subjective and less understood color names. (#6029)
+
+
 == Bug Fixes ==
 - In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)
 - In Microsoft Word, NVDA now reports appropriately when using Word's own table navigation commands (alt+home, alt+end, alt+pageUp and alt+pageDown) and table selection commands (shift added to the navigation commands). (#5961)
@@ -22,7 +26,6 @@
 - Reporting colors in Microsoft Word is now more accurate as changes in Microsoft Office Themes are now taken into account. (#5997)
 - Browse mode for Microsoft Edge and support for Start Screen search suggestions, is again available on Windows 10 builds after April 2016. (#5955)
 - In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)
-
 
 = 2016.2.1 =
 This release fixes crashes in Microsoft Word:
