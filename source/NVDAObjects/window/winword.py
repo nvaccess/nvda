@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Manish Agrawal
+#Copyright (C) 2006-2016 NV Access Limited, Manish Agrawal, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -40,6 +40,14 @@ from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
+
+#wdLineSpacing rules
+wdLineSpaceSingle=0
+wdLineSpace1pt5=1
+wdLineSpaceDouble=2
+wdLineSpaceAtLeast=3
+wdLineSpaceExactly=4
+wdLineSpaceMultiple=5
 
 # wdMeasurementUnits
 wdInches=0
@@ -254,6 +262,7 @@ formatConfigFlagsMap={
 	"autoLanguageSwitching":16384,	
 	"reportRevisions":32768,
 	"reportParagraphIndentation":65536,
+	"reportLineSpacing":262144,
 }
 formatConfigFlag_includeLayoutTables=131072
 
@@ -601,6 +610,28 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _normalizeFormatField(self,field,extraDetail=False):
 		_startOffset=int(field.pop('_startOffset'))
 		_endOffset=int(field.pop('_endOffset'))
+		lineSpacingRule=field.pop('wdLineSpacingRule',None)
+		lineSpacingVal=field.pop('wdLineSpacing',None)
+		if lineSpacingRule is not None:
+			lineSpacingRule=int(lineSpacingRule)
+			if lineSpacingRule==wdLineSpaceSingle:
+				# Translators: single line spacing
+				field['line-spacing']=pgettext('line spacing value',"single")
+			elif lineSpacingRule==wdLineSpaceDouble:
+				# Translators: double line spacing
+				field['line-spacing']=pgettext('line spacing value',"double")
+			elif lineSpacingRule==wdLineSpace1pt5:
+				# Translators:  line spacing of 1.5 lines
+				field['line-spacing']=pgettext('line spacing value',"1.5 lines")
+			elif lineSpacingRule==wdLineSpaceExactly:
+				# Translators: exact (minimum) line spacing
+				field['line-spacing']=pgettext('line spacing value',"exact")
+			elif lineSpacingRule==wdLineSpaceAtLeast:
+				# Translators: line spacing of at least x point
+				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
+			elif lineSpacingRule==wdLineSpaceMultiple:
+				# Translators: line spacing of x lines
+				field['line-spacing']=pgettext('line spacing value',"%.1f lines")%(float(lineSpacingVal)/12.0)
 		revisionType=int(field.pop('wdRevisionType',0))
 		if revisionType==wdRevisionInsert:
 			field['revision-insertion']=True
@@ -612,7 +643,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
-			field['color']=colors.RGB.fromCOLORREF(int(color))		
+			field['color']=colors.RGB.fromCOLORREF(int(color))
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
@@ -1344,6 +1375,18 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	# Translators: a description for a script
 	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
 
+	def script_changeLineSpacing(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda:self.WinwordSelectionObject.ParagraphFormat.LineSpacingRule)
+		if val == wdLineSpaceSingle:
+			# Translators: a message when switching to single line spacing  in Microsoft word
+			ui.message(_("Single line spacing"))
+		elif val == wdLineSpaceDouble:
+			# Translators: a message when switching to double line spacing  in Microsoft word
+			ui.message(_("Double line spacing"))
+		elif val == wdLineSpace1pt5:
+			# Translators: a message when switching to 1.5 line spaceing  in Microsoft word
+			ui.message(_("1.5 line spacing"))
+
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1444,6 +1487,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+1":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+2":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+3":"increaseDecreaseOutlineLevel",
+		"kb:control+1":"changeLineSpacing",
+		"kb:control+2":"changeLineSpacing",
+		"kb:control+5":"changeLineSpacing",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:NVDA+shift+c":"setColumnHeader",
