@@ -2053,9 +2053,8 @@ class WordSmartArt(Window):
 
 	def _get_description(self):
 		# Translators: Indicates Layout Description of a SmartArt
-		text= _("Layout Description: {description}".format(description=self.wordSmartArtObject.Layout.Description))
-		return text
-
+		return _("Layout Description: {description}".format(description=self.wordSmartArtObject.Layout.Description))
+		
 	def _get_name(self):
 		if self.totalNodeCount>0:
 			if self.totalNodeCount==1:
