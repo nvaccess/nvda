@@ -423,9 +423,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return self.SPEECHEFFECT_CANCEL
 
 	def reportExtra(self):
-		import core
 		if self.vkCode in self.TOGGLE_KEYS:
-			core.callLater(30, self._reportToggleKey)
+			wx.CallLater(30, self._reportToggleKey)
 
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
