@@ -43,6 +43,24 @@ class SDM(IAccessible):
 			return getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
 		return super(SDM, self).parent
 
+	def _get_presentationType(self):
+		t=super(SDM,self).presentationType
+		if t==self.presType_content and self.SDMChild:
+			t=self.presType_layout
+		return t
+
+	def _get_firstChild(self):
+		child=super(SDM,self).firstChild
+		if not child:
+			child=self.SDMChild
+		return child
+
+	def _get_lastChild(self):
+		child=super(SDM,self).lastChild
+		if not child:
+			child=self.SDMChild
+		return child
+
 	def _get_SDMChild(self):
 		if controlTypes.STATE_FOCUSED in self.states:
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
@@ -51,6 +69,8 @@ class SDM(IAccessible):
 				if not obj: return None
 				if getattr(obj,'parentSDMCanOverrideName',True):
 					obj.name=self.name
+				obj.keyboardShortcut=self.keyboardShortcut
+				obj.parent=self
 				return obj
 		return None
 
