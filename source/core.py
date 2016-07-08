@@ -185,7 +185,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# Set a reasonable timeout for any socket connections NVDA makes.
 	import socket
 	socket.setdefaulttimeout(10)
-	log.debug("Initializing addons system.")
+	log.debug("Initializing add-ons system")
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
