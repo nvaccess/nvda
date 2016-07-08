@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2014 NV Access Limited, Beqa Gozalishvili
+#Copyright (C) 2012-2016 NV Access Limited, Beqa Gozalishvili, Joseph Lee
 
 import os
 import wx
@@ -26,13 +26,12 @@ class AddonsDialog(wx.Dialog):
 		AddonsDialog._instance = self
 		# Translators: The title of the Addons Dialog
 		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
-		self.needsRestart=False
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
-			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. To enable add-ons you must restart NVDA."))
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are currently disabled. To enable add-ons you must restart NVDA."))
 			mainSizer.Add(addonsDisabledLabel)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
@@ -60,20 +59,25 @@ class AddonsDialog(wx.Dialog):
 		self.helpButton.Disable()
 		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
 		entryButtonsSizer.Add(self.helpButton)
+		# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+		self.enableDisableButton=wx.Button(self,label=_("Disable add-on"))
+		self.enableDisableButton.Disable()
+		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
+		entryButtonsSizer.Add(self.enableDisableButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 		self.addButton=wx.Button(self,label=_("&Install..."))
-		self.addButton.Bind(wx.EVT_BUTTON,self.OnAddClick)
+		self.addButton.Bind(wx.EVT_BUTTON,self.onAddClick)
 		entryButtonsSizer.Add(self.addButton)
 		# Translators: The label for a button to remove either:
 		# Remove the selected add-on in Add-ons Manager dialog.
 		# Remove a speech dictionary entry.
 		self.removeButton=wx.Button(self,label=_("&Remove"))
 		self.removeButton.Disable()
-		self.removeButton.Bind(wx.EVT_BUTTON,self.OnRemoveClick)
+		self.removeButton.Bind(wx.EVT_BUTTON,self.onRemoveClick)
 		entryButtonsSizer.Add(self.removeButton)
 		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 		self.getAddonsButton=wx.Button(self,label=_("&Get add-ons..."))
-		self.getAddonsButton.Bind(wx.EVT_BUTTON,self.OnGetAddonsClick)
+		self.getAddonsButton.Bind(wx.EVT_BUTTON,self.onGetAddonsClick)
 		entryButtonsSizer.Add(self.getAddonsButton)
 		settingsSizer.Add(entryButtonsSizer)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
@@ -89,7 +93,7 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.SetFocus()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
-	def OnAddClick(self,evt):
+	def onAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 		fd=wx.FileDialog(self,message=_("Choose Add-on Package File"),
 		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
@@ -139,7 +143,6 @@ class AddonsDialog(wx.Dialog):
 			_("Please wait while the add-on is being installed."))
 			try:
 				gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
-				self.needsRestart=True
 			except:
 				log.error("Error installing  addon bundle from %s"%addonPath,exc_info=True)
 				self.refreshAddonsList()
@@ -162,13 +165,15 @@ class AddonsDialog(wx.Dialog):
 				# The CallLater seems to work around this.
 				wx.CallLater(1, self.Close)
 
-	def OnRemoveClick(self,evt):
+	def onRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
-		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"), _("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
+		# Translators: Presented when attempting to remove the selected add-on.
+		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"),
+			# Translators: Title for message asking if the user really wishes to remove the selected Addon.
+			_("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
 		addon=self.curAddons[index]
 		addon.requestRemove()
-		self.needsRestart=True
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
 
@@ -179,8 +184,15 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			return _("remove")
-		elif globalVars.appArgs.disableAddons:
-			# Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+		# Need to do this here, as 'isDisabled' overrides other flags.
+		elif addon.isPendingDisable:
+			# Translators: The status shown for an addon when its disabled.
+			return _("disable")
+		elif addon.isPendingEnable:
+			# Translators: The status shown for an addon when its enabled.
+			return _("enable")
+		elif globalVars.appArgs.disableAddons or addon.isDisabled:
+			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			return _("suspended")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
@@ -206,18 +218,33 @@ class AddonsDialog(wx.Dialog):
 			self.helpButton.Disable()
 			self.removeButton.Disable()
 
+	def _shouldDisable(self, addon):
+		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable))
+
 	def onListItemSelected(self, evt):
 		index=evt.GetIndex()
 		addon=self.curAddons[index] if index>=0 else None
+		# #3090: Change toggle button label to indicate action to be taken if clicked.
+		if addon is not None:
+			# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+			self.enableDisableButton.SetLabel(_("Enable add-on") if not self._shouldDisable(addon) else _("Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
+		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
 		self.Destroy()
-		if self.needsRestart:
-			# Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed. 
-			if gui.messageBox(_("Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
+		needsRestart = False
+		for addon in self.curAddons:
+			if (addon.isPendingInstall or addon.isPendingRemove
+				or addon.isDisabled and addon.isPendingEnable
+				or addon.isRunning and addon.isPendingDisable):
+				needsRestart = True
+				break
+		if needsRestart:
+			# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed. 
+			if gui.messageBox(_("Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:
@@ -248,7 +275,17 @@ Description: {description}
 		path = self.curAddons[index].getDocFilePath()
 		os.startfile(path)
 
-	def OnGetAddonsClick(self,evt):
+	def onEnableDisable(self, evt):
+		index=self.addonsList.GetFirstSelected()
+		if index<0: return
+		addon=self.curAddons[index]
+		shouldDisable = self._shouldDisable(addon)
+		# Counterintuitive, but makes sense when context is taken into account.
+		addon.enable(not shouldDisable)
+		self.enableDisableButton.SetLabel(_("Enable add-on") if shouldDisable else _("Disable add-on"))
+		self.refreshAddonsList(activeIndex=index)
+
+	def onGetAddonsClick(self,evt):
 		ADDONS_URL = "http://addons.nvda-project.org"
 		os.startfile(ADDONS_URL)
 
