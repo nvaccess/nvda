@@ -188,7 +188,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing addons system.")
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
-		log.info("Addons are disabled. Restart NVDA to enable them.")
+		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
