@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 00:10+1000\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.7.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -331,6 +331,12 @@ msgstr "Irlandès grau 2"
 #. braille settings dialog.
 msgid "Gujarati grade 1"
 msgstr "Gujarati grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Koine Greek"
+msgstr "Verd llima"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -776,11 +782,13 @@ msgstr "punt"
 msgid "space"
 msgstr "espai"
 
-msgid "focus mode"
+#, fuzzy
+msgid "Focus mode"
 msgstr "mode de focus"
 
-msgid "browse mode"
-msgstr "mode de navegació"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "Mode de navegació"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -810,7 +818,8 @@ msgid "Lists various types of elements in this document"
 msgstr "Llista els tipus d'elements en aquest document"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+#, fuzzy
+msgid "Activates the current object in the document"
 msgstr "Activa l'objecte actual en el document"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1314,7 +1323,9 @@ msgstr "Salta al començament d'un element contenidor, com una llista o taula"
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#, fuzzy
+msgid "Bottom"
 msgstr "final"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -1361,10 +1372,9 @@ msgstr "sempre"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
-#, fuzzy
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "nivell de símbol %s"
+msgstr "només per sota del nivell del símbol"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2598,13 +2608,11 @@ msgstr "color del fons"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superíndex"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subíndex"
 
@@ -2797,9 +2805,8 @@ msgid "overflowing"
 msgstr "desbordament"
 
 #. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-#, fuzzy
 msgid "unlocked"
-msgstr "sense activar"
+msgstr "desbloquejat"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -2882,11 +2889,13 @@ msgstr ""
 "la posició actual del cursor"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
+#, fuzzy
+msgid "No selection"
 msgstr "cap text seleccionat"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+#, fuzzy
+msgid "Copied to clipboard"
 msgstr "copiat al porta-retalls"
 
 #. Translators: The name of a category of NVDA commands.
@@ -2995,7 +3004,8 @@ msgstr ""
 "vegades es lletrejarà  la línia actual"
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+#, fuzzy
+msgid "Left click"
 msgstr "clic esquerre"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -3003,7 +3013,8 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Clica amb el botó esquerre a la posició actual del ratolí"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+#, fuzzy
+msgid "Right click"
 msgstr "clic dret"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -3011,11 +3022,13 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Clica amb el botó dret a la posició actual del ratolí"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+#, fuzzy
+msgid "Left mouse button unlock"
 msgstr "botó esquerre del ratolí desbloquejat"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
+#, fuzzy
+msgid "Left mouse button lock"
 msgstr "botó esquerre del ratolí bloquejat"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
@@ -3023,16 +3036,22 @@ msgid "Locks or unlocks the left mouse button"
 msgstr "Bloqueja o desbloqueja el botó esquerre del ratolí"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
+#, fuzzy
+msgid "Right mouse button unlock"
 msgstr "botó dret del ratolí desbloquejat"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
+#, fuzzy
+msgid "Right mouse button lock"
 msgstr "botó dret del ratolí bloquejat"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Bloqueja o desbloqueja el botó dret del ratolí"
+
+#, fuzzy, python-format
+msgid "Selected %s"
+msgstr "%s seleccionat"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3416,8 +3435,8 @@ msgstr ""
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
-msgstr "nivell de símbol %s"
+msgid "Symbol level %s"
+msgstr "Nivell de símbol %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3427,7 +3446,8 @@ msgstr ""
 "seran verbalitzats"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+#, fuzzy
+msgid "Object has no location"
 msgstr "l'objecte no té posició"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3474,8 +3494,8 @@ msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
-msgstr "no hi ha objecte de navegació"
+msgid "No navigator object"
+msgstr "No hi ha objecte de navegació"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -3506,8 +3526,8 @@ msgstr ""
 "informació."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "mou al focus"
+msgid "Move to focus"
+msgstr "Mou al focus"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3520,20 +3540,21 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
-msgstr "sense focus"
+msgid "No focus"
+msgstr "Sense focus"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
-msgstr "mou el focus"
+msgid "Move focus"
+msgstr "Mou el focus"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
-msgstr "sense cursor del sistema"
+msgid "No caret"
+msgstr "Sense cursor del sistema"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
+#, fuzzy
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "Si es prem una vegada posa el focus del teclat en l'objecte de navegació, si "
@@ -3549,6 +3570,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Mou l'objecte de navegació a l'objecte que el conté"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Aquest és el darrer"
 
@@ -3557,6 +3579,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Mou l'objecte de navegació a l'objecte posterior"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Aquest és el primer"
 
@@ -3573,8 +3596,9 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Mou l'objecte de navegació al primer dels objectes que conté"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "activa"
+#, fuzzy
+msgid "Activate"
+msgstr "&Activa"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3589,7 +3613,8 @@ msgstr ""
 "si és un botó el prem)."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+#, fuzzy
+msgid "Top"
 msgstr "Inici"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3662,8 +3687,9 @@ msgstr ""
 "Mou el cursor de revisió a la paraula posterior de l'objecte de navegació "
 "actual i la verbalitza"
 
-msgid "left"
-msgstr "esquerra"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Esquerra"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3693,8 +3719,9 @@ msgstr ""
 "descripció o exemple d'aquest caràcter. Si es prem tres vegades, informa del "
 "valor numèric del caràcter en format decimal i hexadecimal"
 
-msgid "right"
-msgstr "dreta"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
+msgstr "Dreta"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3713,15 +3740,18 @@ msgstr ""
 "situat dins l'objecte de navegació actual i el verbalitza"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
+#, fuzzy
+msgid "Speech mode off"
 msgstr "mode de veu desactivat"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+#, fuzzy
+msgid "Speech mode beeps"
 msgstr "mode d'emissió de xiulets"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+#, fuzzy
+msgid "Speech mode talk"
 msgstr "mode de veu normal"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3761,16 +3791,18 @@ msgid "Shows the NVDA menu"
 msgstr "Mostra el menú de NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
+#, fuzzy
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "llegeix des del cursor de revisió fins al final del text actual, movent el "
 "cursor de revisió a mesura que avança"
 
 #. Translators: Input help mode message for say all with system caret command.
+#, fuzzy
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "llegeix des del cursor del sistema fins al final del text, movent el cursor "
@@ -3780,16 +3812,23 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Sense informació de format"
 
+#. Translators: title for formatting information dialog.
+#, fuzzy
+msgid "Formatting"
+msgstr "Formatació de Documents"
+
 #. Translators: Input help mode message for report formatting command.
+#, fuzzy
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Informa del format per a la posició actual del cursor de revisió dins d'un "
 "document"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+#, fuzzy
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "informa de l'objecte amb el focus. Si es prem dues vegades, lletreja la "
 "informació"
@@ -3799,8 +3838,9 @@ msgid "No status line found"
 msgstr "No s'ha trobat la línia d'estat"
 
 #. Translators: Input help mode message for report status line text command.
+#, fuzzy
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "llegeix la barra d'estat de l'aplicació actual i hi desplaça el cursor de "
@@ -3821,7 +3861,8 @@ msgstr ""
 "mesura que el ratolí es mou"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+#, fuzzy
+msgid "No title"
 msgstr "sense títol"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3835,7 +3876,8 @@ msgstr ""
 "el títol al porta-retalls"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+#, fuzzy
+msgid "Speaks the current foreground object"
 msgstr "Verbalitza l'objecte en primer pla"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3848,19 +3890,22 @@ msgstr ""
 "informació enregistrada."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
-msgstr "no informis de les actualitzacions de la barra de progrés"
+msgid "No progress bar updates"
+msgstr "No informis de les actualitzacions de la barra de progrés"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+#, fuzzy
+msgid "Speak progress bar updates"
 msgstr "verbalitza les actualitzacions de la barra de progrés"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+#, fuzzy
+msgid "Beep for progress bar updates"
 msgstr "emet un xiulet per anunciar actualitzacions de la barra de progrés"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+#, fuzzy
+msgid "Beep and speak progress bar updates"
 msgstr "emet un xiulet i verbalitza les actualitzacions de la barra de progrés"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3916,8 +3961,8 @@ msgid ""
 msgstr "Commuta entre si el focus segueix o no a l'objecte de navegació"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
-msgstr "sense bateria"
+msgid "No system battery"
+msgstr "Sense bateria"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
@@ -3934,7 +3979,8 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} hores i {minutes:d} minuts restants"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+#, fuzzy
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "informa de l’estat de la bateria i el temps restant si la font d’alimentació "
 "no està connectada"
@@ -4113,9 +4159,9 @@ msgid "Braille cursor is turned off"
 msgstr "El cursor braille s'ha aturat"
 
 #. Translators: Reports which braille cursor shape is activated.
-#, fuzzy, python-format
+#, python-format
 msgid "Braille cursor %s"
-msgstr "El braille segueix a %s"
+msgstr "Cursor Braille %s"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
@@ -4209,10 +4255,6 @@ msgstr ""
 "Recarrega els mòduls d'aplicacions i els connectors globals sense reiniciar "
 "NVDA,fet que pot ser útil per als desenvolupadors"
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "aquest és el darrer"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4220,11 +4262,6 @@ msgid ""
 msgstr ""
 "Salta a l’objecte posterior en una vista plana de la jerarquia d’objectes de "
 "navegació"
-
-#. Translators: a message when there is no previous object when navigating
-#, fuzzy
-msgid "no previous"
-msgstr "Aquest és el primer"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4240,7 +4277,8 @@ msgid "%s mode"
 msgstr "mode %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+#, fuzzy
+msgid "Cycles between available touch modes"
 msgstr "Avança entre els modes tàctils disponibles"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4275,10 +4313,6 @@ msgstr "Tecles d'emulació del teclat del sistema"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Miscel·lània"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Mode de navegació"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4402,7 +4436,7 @@ msgstr "Ctrl"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "alt"
-msgstr "Alt"
+msgstr "alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "shift"
@@ -4482,39 +4516,39 @@ msgstr "Bloqueig de desplaçament"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "Teclat numèric 4"
+msgstr "teclat numèric 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "Teclat numèric 6"
+msgstr "teclat numèric 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "Teclat numèric 8"
+msgstr "teclat numèric 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "Teclat numèric 2"
+msgstr "teclat numèric 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "Teclat numèric 9"
+msgstr "teclat numèric 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "Teclat numèric 3"
+msgstr "teclat numèric 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "Teclat numèric 1"
+msgstr "teclat numèric 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "Teclat numèric 7"
+msgstr "teclat numèric 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "Teclat numèric 5"
+msgstr "teclat numèric 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
@@ -4542,52 +4576,43 @@ msgstr "Inserció del teclat numèric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr "Teclat numèric 0"
+msgstr "teclat numèric 0"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 1"
-msgstr "Teclat numèric 1"
+msgstr "teclat numèric 1"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 2"
-msgstr "Teclat numèric 2"
+msgstr "teclat numèric 2"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 3"
-msgstr "Teclat numèric 3"
+msgstr "teclat numèric 3"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 4"
-msgstr "Teclat numèric 4"
+msgstr "teclat numèric 4"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 5"
-msgstr "Teclat numèric 5"
+msgstr "teclat numèric 5"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 6"
-msgstr "Teclat numèric 6"
+msgstr "teclat numèric 6"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 7"
-msgstr "Teclat numèric 7"
+msgstr "teclat numèric 7"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 8"
-msgstr "Teclat numèric 8"
+msgstr "teclat numèric 8"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 9"
-msgstr "Teclat numèric 9"
+msgstr "teclat numèric 9"
 
 #. Translators: This is the name of a key on the keyboard.
 #, fuzzy
@@ -4756,19 +4781,19 @@ msgid "%d characters"
 msgstr "%d caràcters"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, fuzzy, python-format
+#, python-format
 msgid "%s selected"
-msgstr "seleccionat"
+msgstr "%s seleccionat"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, fuzzy, python-format
+#, python-format
 msgid "%s unselected"
-msgstr "seleccionat"
+msgstr "%s no seleccionat"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#, fuzzy, python-format
+#, python-format
 msgid "%s selected instead"
-msgstr "%s seleccionat"
+msgstr "%s seleccionat en comptes"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4778,11 +4803,6 @@ msgstr "selecció eliminada"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "Acció d'arrossegar i deixar anar finalitzada"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "nivell %s"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -4808,6 +4828,11 @@ msgstr "amb %s columnes"
 #, python-format
 msgid "with %s rows"
 msgstr "amb %s files"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "nivell %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4842,6 +4867,14 @@ msgstr "estil %s"
 msgid "default style"
 msgstr "estil per defecte"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} per {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4860,6 +4893,10 @@ msgstr "{color}"
 #, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "fons {backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "patró de fons {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4929,6 +4966,11 @@ msgstr "cursiva"
 msgid "no italic"
 msgstr "sense cursiva"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "doble ratllat"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4949,7 +4991,6 @@ msgstr "sense subratllar"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "a la línia base"
 
@@ -5211,6 +5252,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "has deixat de prémer"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "Missatge del NVDA"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Comprovació manual d'actualitzacions"
@@ -5412,8 +5457,8 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "final de taula"
+msgid "Edge of table"
+msgstr "Vora de la taula"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5571,7 +5616,8 @@ msgid "Appointment {subject}, {time}"
 msgstr "Cita {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
+#, fuzzy
+msgid "Has appointment"
 msgstr "conté una cita"
 
 #. Translators: the email is a meeting request
@@ -5890,6 +5936,12 @@ msgstr "Atura"
 msgid "Record"
 msgstr "Enregistra"
 
+msgid "left"
+msgstr "esquerra"
+
+msgid "right"
+msgstr "dreta"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -6168,11 +6220,13 @@ msgid "Python console"
 msgstr "consola Phyton"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+#, fuzzy
+msgid "Manage &add-ons..."
 msgstr "Gestiona els &complements"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+#, fuzzy
+msgid "Create portable copy..."
 msgstr "Crea una versió portable..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6212,7 +6266,8 @@ msgid "C&ontributors"
 msgstr "C&ol·laboradors"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+#, fuzzy
+msgid "We&lcome dialog..."
 msgstr "Diàleg de ben&vinguda"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -6894,6 +6949,10 @@ msgstr "Visor de registre de NVDA"
 msgid "Refresh\tF5"
 msgstr "Actualitza\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "Anomena i des&a...\tCtrl+S"
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "Registre"
@@ -7179,6 +7238,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Verbalitza les &tecles d'ordres"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "R"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7629,9 +7693,8 @@ msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "E&xpandeix a braille d'ordinador la paraula sota el cursor"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#, fuzzy
 msgid "&Show cursor"
-msgstr "cursor"
+msgstr "Mo&stra el cursor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -7792,12 +7855,12 @@ msgid "Refreshes the document content"
 msgstr "Actualitza el contingut del document"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
-msgstr "ús de la disposició de pantalla activat"
+msgid "Use screen layout on"
+msgstr "Ús de la disposició de pantalla activat"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
-msgstr "ús de la disposició de pantalla desactivat"
+msgid "Use screen layout off"
+msgstr "Ús de la disposició de pantalla desactivat"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
@@ -7858,14 +7921,126 @@ msgstr "color predeterminat"
 msgid "Unknown color"
 msgstr "color desconegut"
 
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "automàtic"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "checker"
+msgstr "verificador"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "crisscross"
+msgstr "entrellaçat"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+#, fuzzy
+msgid "down"
+msgstr "Av Pàg"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 16% gray
+msgid "gray16"
+msgstr "Gris 16 per cent"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+msgid "gray25"
+msgstr "Gris 25 per cent"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+msgid "gray50"
+msgstr "Gris 50 per cent"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+msgid "gray75"
+msgstr "Gris 75 per cent"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 8% gray
+msgid "gray8"
+msgstr "Gris 8 per cent"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+#, fuzzy
+msgid "grid"
+msgstr "graella de dades"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal"
+msgstr "horitzontal"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "light down"
+msgstr "light down"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "light horizontal"
+msgstr "lluminós horitzontal"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+#, fuzzy
+msgid "light up"
+msgstr "Blau clar"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "light vertical"
+msgstr "lluminós vertical"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+#, fuzzy
+msgid "none"
+msgstr "cap"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "semi gray75"
+msgstr "Semi gris 75 per cent"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "sòlid"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "up"
+msgstr "amunt"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical"
+msgstr "vertical"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#, fuzzy
+msgid "linear gradient"
+msgstr "Eslovè grau 1"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "degragat rectangular"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Aquesta cel·la no és editable"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-#, fuzzy
 msgid "Lists various types of elements in this spreadsheet"
-msgstr "Llista els tipus d'elements en aquest document"
+msgstr "Llista els tipus d'elements en aquest full de càlcul"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7918,8 +8093,8 @@ msgstr "Ja s'ha establert {address} com a inici de les capçaleres de columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
-msgid "removed {address}    from column headers"
-msgstr "S'ha eliminat {address}    de les capÃ§aleres de columna"
+msgid "Removed {address}    from column headers"
+msgstr "S'ha eliminat {address}    de les capçaleres de columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -7947,8 +8122,8 @@ msgid "Already set {address} as start of row headers"
 msgstr "Ja s'ha establert {address} com a inici de les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
-msgid "removed {address}    from row headers"
+#, fuzzy, python-brace-format
+msgid "Removed {address}    from row headers"
 msgstr "S'ha eliminat {address}    de les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -8757,18 +8932,13 @@ msgstr "Marc de text"
 msgid "comment: {text} by {author} on {date}"
 msgstr "comentari: {text} per {author} el {date}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} per {author} el dia {date}"
+msgstr "{revisionType} {description}: {text} per {author} el {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g caràcters"
-
-#. Translators: the value in points for a paragraph indenting
-#, python-format
-msgid "%g pt"
-msgstr "%g pt"
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Descripció de la taula"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -8888,6 +9058,37 @@ msgstr "Alineat a la dreta"
 msgid "Justified"
 msgstr "Justificat"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Superíndex"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Subíndex"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Baseline"
+msgstr "a la línia base"
+
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Mogut a sota %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Mogut per sota del paràgraf en blanc"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Mogut a sobre %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Mogut per sobre del paràgraf en blanc"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -8930,8 +9131,8 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} piques"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "sense comentaris"
+msgid "No comments"
+msgstr "Sense comentaris"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -8942,22 +9143,63 @@ msgstr "Informa del text del comentari en què es troba el cursor del sistema."
 msgid "Not in table"
 msgstr "No et trobes en una taula"
 
-msgid "Edge of table"
-msgstr "Vora de la taula"
-
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Anotacions"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "sèries HIMS Braille Sense/Braille EDGE"
+msgstr "Sèries HIMS Braille Sense/Braille EDGE"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "report grammar errors off"
+#~ msgstr "Desactiva l'informe dels &marcs"
+
+#, fuzzy
+#~ msgid "report grammar errors on"
+#~ msgstr "Activa l'informe dels &marcs"
+
+#, fuzzy
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Activa i desactiva la verbalització dels marcs"
+
+#, fuzzy
+#~ msgid "out of grammar error"
+#~ msgstr "fora de l'error ortogràfic"
+
+#, fuzzy
+#~ msgid "Report &grammar errors"
+#~ msgstr "Informa dels e&rrors ortogràfics"
+
+#~ msgid "browse mode"
+#~ msgstr "mode de navegació"
+
+#~ msgid "activate"
+#~ msgstr "activa"
+
+#~ msgid "no next"
+#~ msgstr "aquest és el darrer"
+
+#, fuzzy
+#~ msgid "no previous"
+#~ msgstr "Aquest és el primer"
+
+#~ msgid "edge of table"
+#~ msgstr "final de taula"
+
+#~ msgid "%g characters"
+#~ msgstr "%g caràcters"
+
+#~ msgid "%g pt"
+#~ msgstr "%g pt"
+
+#~ msgid "no comments"
+#~ msgstr "sense comentaris"
 
 #~ msgid ""
 #~ "Presents a list of charts, cells with comments and cells with formulas"
@@ -9007,10 +9249,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid " {} {} of {}"
 #~ msgstr " {} {} de {}"
-
-#, fuzzy
-#~ msgid "none"
-#~ msgstr "cap"
 
 #~ msgid " trendline {} "
 #~ msgstr "Línia de tendencia {} "

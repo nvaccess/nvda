@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-14 14:32+0200\n"
-"Last-Translator: Leonard de Ruijter <dev@systeemdenker.nl>\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-06-30 18:29+0100\n"
+"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
 "projects/p/nvda/language/nl/)\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.7.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3221,18 +3221,6 @@ msgstr "Spelfouten melden"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Schakelt het uitspreken van spelfouten in en uit"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "Grammaticafouten niet melden"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "Grammaticafouten melden"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "Schakelt het uitspreken van grammaticafouten in en uit"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "paginanummers niet melden"
@@ -4924,6 +4912,11 @@ msgstr "cursief"
 msgid "no italic"
 msgstr "cursief uit"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dubbel doorhalen"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -5044,14 +5037,6 @@ msgstr "spelfout"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "buiten spelfout"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "Grammaticafout"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "buiten grammaticafout"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7481,11 +7466,6 @@ msgstr "Spel&fouten melden"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "&Grammaticafouten melden"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "&Paginanummers melden"
 
@@ -8877,6 +8857,10 @@ msgstr "opmerking: {text} door {author} op {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} door {author} op {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "tabelbeschrijving"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8997,6 +8981,24 @@ msgstr "Subscript"
 msgid "Baseline"
 msgstr ""
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Verplaatst onder %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Verplaatst onder lege paragraaf"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Verplaatst boven %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Verplaatst boven lege paragraaf"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9063,6 +9065,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Grammaticafouten niet melden"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "Grammaticafouten melden"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Schakelt het uitspreken van grammaticafouten in en uit"
+
+#~ msgid "grammar error"
+#~ msgstr "Grammaticafout"
+
+#~ msgid "out of grammar error"
+#~ msgstr "buiten grammaticafout"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "&Grammaticafouten melden"
 
 #~ msgid "browse mode"
 #~ msgstr "bladermodus"

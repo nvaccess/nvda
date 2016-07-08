@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -3218,18 +3218,6 @@ msgstr "Anunciar as errors d'ortografía enchegau"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Enchega y desenchega l'anunciau d'as errors d'ortografía"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "anunciar as errors gramaticals desenchegau"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "anunciar as errors gramaticals enchegau"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "Enchega y desenchega l'anunciau d'as errors gramaticals"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Anunciar as pachinas desenchegau"
@@ -4923,6 +4911,11 @@ msgstr "cursiva"
 msgid "no italic"
 msgstr "no bi ha garra cursiva"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dople rayadura"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -5043,14 +5036,6 @@ msgstr "error d'ortografía"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "salindo d'o texto con error ortografico"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "error gramatical"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "difuera d'a error gramatical"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7476,11 +7461,6 @@ msgstr "Anunciar as e&rrors d'ortografía"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "Anunciar as errors &gramaticals"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "Anunciar as pa&chinas"
 
@@ -8874,6 +8854,10 @@ msgstr "comentario: {text} por {author} a {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} el {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Descripción d'a tabla"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -9002,6 +8986,24 @@ msgstr "Subindiz"
 msgid "Baseline"
 msgstr "Linia base"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Moviu por debaixo de %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Moviu por debaixo d'un paragrafo en blanco"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Moviu por dencima de %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Moviu por dencima d'un paragrafo en blanco"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9068,6 +9070,24 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "anunciar as errors gramaticals desenchegau"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "anunciar as errors gramaticals enchegau"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Enchega y desenchega l'anunciau d'as errors gramaticals"
+
+#~ msgid "grammar error"
+#~ msgstr "error gramatical"
+
+#~ msgid "out of grammar error"
+#~ msgstr "difuera d'a error gramatical"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Anunciar as errors &gramaticals"
 
 #~ msgid "browse mode"
 #~ msgstr "modo de navegación"

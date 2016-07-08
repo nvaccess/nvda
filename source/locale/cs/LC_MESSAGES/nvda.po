@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-13 02:15+0100\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-06-30 16:41+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -3207,18 +3207,6 @@ msgstr "hlásit pravopisné chyby zapnuto"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Zapíná a vypíná hlášení pravopisných chyb"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "hlásit gramatické chyby vypnuto"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "hlásit gramatické chyby zapnuto"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "Zapíná a vypíná hlášení gramatických chyb"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "hlásit strany vypnuto"
@@ -4878,6 +4866,11 @@ msgstr "kurzíva"
 msgid "no italic"
 msgstr "není kurzíva"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dvojí přeškrtnutí"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4998,14 +4991,6 @@ msgstr "pravopisná chyba"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "vně pravopisné chyby"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "gramatická chyba"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "vně gramatické chyby"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7369,11 +7354,6 @@ msgstr "Hlásit pravopisné chyby"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "Hlásit &gramatické chyby"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "Hlásit stran&y"
 
@@ -8718,6 +8698,10 @@ msgstr "komentář: {text} od {author} dne {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dne {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Popis tabulky"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8828,6 +8812,24 @@ msgstr "Dolní index"
 msgid "Baseline"
 msgstr "Bez indexů"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Přesunuto pod %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Přesunuto pod prázdný odstavec"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Přesunuto nad %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Přesunuto nad prázdný odstavec"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "styl {styleName}, úroveň zobrazení {outlineLevel}"
@@ -8886,6 +8888,24 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "hlásit gramatické chyby vypnuto"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "hlásit gramatické chyby zapnuto"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Zapíná a vypíná hlášení gramatických chyb"
+
+#~ msgid "grammar error"
+#~ msgstr "gramatická chyba"
+
+#~ msgid "out of grammar error"
+#~ msgstr "vně gramatické chyby"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Hlásit &gramatické chyby"
 
 #~ msgid "browse mode"
 #~ msgstr "režim prohlížení"
