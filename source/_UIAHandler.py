@@ -119,9 +119,10 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
 	#UIA_Text_TextSelectionChangedEventId:"caret",
-	UIA_ToolTipOpenedEventId:"alert",
+	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
+	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 }
 
 class UIAHandler(COMObject):
