@@ -246,7 +246,10 @@ class UIATextInfo(textInfos.TextInfo):
 		if e:
 			obj=UIA(UIAElement=e)
 			while obj and obj!=self.obj:
-				field=self._getControlFieldForObject(obj)
+				try:
+					field=self._getControlFieldForObject(obj)
+				except LookupError:
+					break
 				if field:
 					field=textInfos.FieldCommand("controlStart",field)
 					fields.append(field)
