@@ -748,6 +748,7 @@ def getFormatFieldBraille(field):
 class TextInfoRegion(Region):
 
 	pendingCaretUpdate=False #: True if the cursor should be updated for this region on the display
+	allowPageTurns=True #: True if a page turn should be tried when a TextInfo cannot move anymore and the object supports page turns.
 
 	def __init__(self, obj):
 		super(TextInfoRegion, self).__init__()
@@ -987,7 +988,15 @@ class TextInfoRegion(Region):
 		dest = self._readingInfo.copy()
 		moved = dest.move(self._getReadingUnit(), 1)
 		if not moved:
-			return
+			if self.allowPageTurns and isinstance(dest.obj,textInfos.DocumentWithPageTurns):
+				try:
+					dest.obj.turnPage()
+				except RuntimeError:
+					pass
+				else:
+					dest=dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
+			else: # no page turn support
+				return
 		dest.collapse()
 		self._setCursor(dest)
 
@@ -1001,7 +1010,16 @@ class TextInfoRegion(Region):
 			unit = textInfos.UNIT_CHARACTER
 		moved = dest.move(unit, -1)
 		if not moved:
-			return
+			if self.allowPageTurns and isinstance(dest.obj,textInfos.DocumentWithPageTurns):
+				try:
+					dest.obj.turnPage(previous=True)
+				except RuntimeError:
+					pass
+				else:
+					dest=dest.obj.makeTextInfo(textInfos.POSITION_LAST)
+					dest.expand(unit)
+			else: # no page turn support
+				return
 		dest.collapse()
 		self._setCursor(dest)
 
@@ -1017,6 +1035,8 @@ class CursorManagerRegion(TextInfoRegion):
 		self.obj.selection = info
 
 class ReviewTextInfoRegion(TextInfoRegion):
+
+	allowPageTurns=False
 
 	def _getCursor(self):
 		return api.getReviewPosition().copy()
