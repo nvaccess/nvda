@@ -1504,7 +1504,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _writeCells(self, cells):
 		if not self.display.isThreadSafe:
-			self.display.display(cells)
+			try:
+				self.display.display(cells)
+			except:
+				log.error("Error displaying cells. Disabling display", exc_info=True)
+				self.setDisplayByName("noBraille", isFallback=True)
 			return
 		with _BgThread.queuedWriteLock:
 			alreadyQueued = _BgThread.queuedWrite
@@ -1738,7 +1742,11 @@ class _BgThread:
 			_BgThread.queuedWrite = None
 		if not data:
 			return
-		handler.display.display(data)
+		try:
+			handler.display.display(data)
+		except:
+			log.error("Error displaying cells. Disabling display", exc_info=True)
+			handler.setDisplayByName("noBraille", isFallback=True)
 
 	@classmethod
 	def func(cls):
