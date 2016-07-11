@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-#synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2016 NV Access Limited
 #This file is covered by the GNU General Public License.
