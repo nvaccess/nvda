@@ -168,7 +168,7 @@ class SynthDriver(SynthDriver):
 			tts.voice = voice
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
-			tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
+			tts.audioOutput=tts.getAudioOutputs()[outputDeviceID]
 		if self.testVoiceOnInit:
 			# test the voice
 			tts.Speak("", 1|constants.SVSFIsXML)
