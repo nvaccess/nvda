@@ -11,11 +11,13 @@
 - In Microsoft Word, the title of a table is now reported if one has been provided. If there is a description, it can be accessed using the open long description command (NVDA+d) in browse mode. (#5943)
 - In Microsoft Word, NVDA now reports position information when moving paragraphs (alt+shift+downArrow and alt+shift+upArrow). (#5945)
 - In Microsoft Word, line spacing is now reported via NVDA's report formatting command, when changing it with various Microsoft word shortcut keys, and when moving to text with different line spacing if Report Line Spacing is turned on in NVDA's Document Formatting Settings. (#2961)
-- In Internet Explorer, HTML 5 structural elements are now recognised (#6044)
+- In Internet Explorer, HTML5 structural elements are now recognised. (#5591)
+
 
 == Changes ==
 - NVDA now reports colors using a basic well-understood set of 9 color hues and 3 shades, with brightness and paleness variations. This is rather than using more subjective and less understood color names. (#6029)
-- The existing NVDA+F9 then NVDA+F10 behaviour has been modified to select text on the first press of F10. When F10 is presed twice (in quick succession) the text is copied to the clipboard. (#4636)
+- The existing NVDA+F9 then NVDA+F10 behavior has been modified to select text on the first press of F10. When F10 is pressed twice (in quick succession) the text is copied to the clipboard. (#4636)
+
 
 == Bug Fixes ==
 - In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)
@@ -27,7 +29,8 @@
 - Browse mode for Microsoft Edge and support for Start Menu search suggestions, is again available on Windows 10 builds after April 2016. (#5955)
 - In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)
 - In the Windows 10 Mail app, NVDA no longer fails to read the content of messages. (#5635) 
-- No longer double announce lock keys when Speak command keys is on. (#5490)
+- When speak command keys is on, lock keys such as caps lock are no longer announced twice. (#5490)
+
 
 = 2016.2.1 =
 This release fixes crashes in Microsoft Word:
