@@ -248,7 +248,8 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT]},
 				{"IHTMLDOMNode::nodeName":["SELECT"]},
 				{"HTMLAttrib::role":["listbox"]},
 			]
