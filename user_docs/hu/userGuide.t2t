@@ -36,7 +36,7 @@ Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, e
 
 Az üzenetek és a felhasználói felület többnyelvűsége mellett az NVDA lehetőséget biztosít a tartalom megfelelő nyelvű felolvasásához, amennyiben a használni kívánt beszédszintetizátor képes az adott nyelven megszólalni.
 
-Az NVDA tartalmazza az [ESpeak http://espeak.sourceforge.net/], beszédszintetizátor programot, amely ingyenes, nyílt forráskódú és többnyelvű. Az NVDA által támogatott többi beszédszintetizátorról a [Támogatott beszédszintetizátorok #SupportedSpeechSynths] fejezetben olvashat.
+Az NVDA tartalmazza az [eSpeak NG https://github.com/espeak-ng/espeak-ng] beszédszintetizátor programot, amely ingyenes, nyílt forráskódú és többnyelvű. Az NVDA által támogatott többi beszédszintetizátorról a [Támogatott beszédszintetizátorok #SupportedSpeechSynths] fejezetben olvashat.
 
 ++ Braille támogatás ++
 
@@ -291,7 +291,7 @@ Az NVDA a következő billentyűparancsokat biztosítja a rendszerkurzor mozgat�
 | Következő mondat | alt+lenyíl | alt+lenyíl | A kurzort a következő mondatra helyezi, és felolvassa azt (jelenleg ez csak a Microsoft Word és Outlook programban érhető el). |
 | Előző mondat | alt+felnyíl | alt+felnyíl | A kurzort az előző mondatra helyezi, és felolvassa azt (jelenleg ez csak a Microsoft Word és Outlook programban érhető el). |
 | A kijelölt szöveg felolvasása | NVDA+Shift+felnyíl | NVDA+shift+s | Felolvassa a kijelölt szöveget. |
-| A karakter formázásának bemondása | NVDA+f | | Bemondja a formázási beállítását annak a karakternek, melyen a rendszerkurzor éppen áll. |
+| A karakter formázásának bemondása | NVDA+f |NVDA+f | Bemondja a formázási beállítását annak a karakternek, melyen a rendszerkurzor éppen áll. Kétszeri gyors megnyomásra az információkat megjeleníti böngészőmódban, mely az escape megnyomásával zárható be. |
 
 Ha egy táblázatban áll, a következő billentyűparancsok érhetők el:
 || Funkció | Billentyűparancs | Leírás |
@@ -606,12 +606,12 @@ Böngészőmódban a Microsoft Excelben is elérhetővé válik egy elemlista, a
 Az elemlista megnyitásához használja az NVDA+f7 billentyűparancsot.
 %kc:endInclude
 Az alábbi típusú elemek érhetőek el az elemlistából:
-- Diagram: Kilistázza a munkafüzet összes diagramját. 
+- Diagram: Kilistázza az aktív munkalap összes diagramját. 
 A kiválasztott diagram elemei közt az enter billentyű lenyomása, vagy az Ugrás gomb aktiválása után lehet navigálni a nyílbillentyűk segítségével.
-- Megjegyzés: Kilistázza a munkafüzet összes megjegyzéssel ellátott celláját.
+- Megjegyzés: Kilistázza a munkalap összes megjegyzéssel ellátott celláját.
 A cellák címe a megjegyzéssel együtt szerepel a listában.
 Az Enter billentyű lenyomásával, vagy az Ugrás gomb aktiválásával lehet a kiválasztott cellára navigálni.
-- Képlet: Kilistázza a munkafüzet összes képletet tartalmazó celláját.
+- Képlet: Kilistázza a munkalap összes képletet tartalmazó celláját.
 A cellák címe a képlettel együtt szerepel a listában.
 Az enter billentyű lenyomásával, vagy az Ugrás gomb aktiválásával lehet a kiválasztott cellára navigálni.
 - Munkalap: Kilistázza a munkafüzet összes munkalapját.
@@ -730,9 +730,9 @@ A Beszédszintetizátor kombinált listamező tartalmazza a választható beszé
 Ha valami hiba történt a szintetizátor betöltésekor, a program egy felugró üzenetben értesíti önt, és visszatölti a régi beállításokat.
 Az NVDA a következő beszédszintetizátorokat támogatja:
 
-eSpeak, SAPI4, SAPI5, Audiologic, és csendes üzemmód.
+ESpeak NG, SAPI4, SAPI5, Audiologic, és csendes üzemmód.
 
-Az Espeak szintetizátor közvetlenül van beépítve az NVDA-ba, így nem függ semmilyen speciális drivertől, vagy a Sapi telepítésétől. Az NVDA indításkor az Espeak-et használja alapértelmezetten. Ennek a szintetizátornak minden olyan rendszeren működnie kell, amin az NVDA fut, így különböző rendszereken futtathatja, akár Pendrive-ról, vagy cd-ről is.
+Az ESpeak NG  szintetizátor közvetlenül van beépítve az NVDA-ba, így nem függ semmilyen speciális drivertől, vagy a Sapi telepítésétől. Az NVDA indításkor az Espeak-et használja alapértelmezetten. Ennek a szintetizátornak minden olyan rendszeren működnie kell, amin az NVDA fut, így különböző rendszereken futtathatja, akár Pendrive-ról, vagy cd-ről is.
 
 A Sapi4 a Sapi4 csatolófelületű szintetizátorokat tudja használni. Ezek a sapi4 alá integrált hangok, mint pl. az Elokvence hangok, valamint a többi sapi4 hang, amelyeket telepített a számítógépére.
 
@@ -746,6 +746,16 @@ A kimeneti hangeszköz kombinált listamezőben meghatározhatja, hogy a kivála
 
 Az NVDA képes arra is, hogy átváltson az idő közben csatlakoztatott hangeszközre. Ha pl. egy usb-s fejhallgatót használ alapértelmezett hangeszközként, de ezt csak menet közben csatlakoztatja, az NVDA képes átváltani rá, a fejhallgató kihúzásakor pedig képes visszaváltani egy másik használható hangeszközre.
 
+%kc:setting
+==== Hangerőigazítás ====
+Billentyűparancs: NVDA+shift+d
+
+Windows 8 és újabb verziói esetén az NVDA képes csökkenteni a többi alkalmazás hangerejét. Ezzel az opcióval kiválaszthatja, hogy csak akkor tegyen így, amikor beszél, vagy pedig a futása közben végig.
+- Soha: Az NVDA soha nem csökkenti más alkalmazások hangerejét. 
+- Csak amikor az NVDA használja a hangkimenetet: Az NVDA csak akkor csökkenti más alkalmazások hangerejét,amikor beszél, vagy hangjelzést ad. Ezt nem támogatja minden beszédszintetizátor. 
+- Mindig: Az NVDA futása közben minden más alkalmazás hangerejét folyamatosan alacsonyabban tartja.
+-
+
 +++ Beszéd beállítások (NVDA+control+v) +++[VoiceSettings]
 
 A Beszéd beállításai, amely a beállítások menüben található, azokat a lehetőségeket tartalmazza, amelyekkel megváltoztathatja a beszéd hangját. Egy alternatív megoldás is létezik a beszéd paraméterei  gyors megváltoztatására, ehhez kérjük olvassa el a [beszédkör beállításai #SynthSettingsRing] alcímet.
@@ -758,7 +768,7 @@ A párbeszédpanel első eleme egy kombinált listamező, mely felsorolja az akt
 
 ===== Változat =====
 
-Ha az Espeak beszédszintetizátort használja, mely alapértelmezésként megtalálható az NVDA-ban, ebben a kombinált listamezőben lehetősége van kiválasztani, milyen változatot kíván használni. Az egyes variációk eltérő beszédparamétereket jelentenek, pl férfi vagy női hang. 
+Ha az ESpeak NG beszédszintetizátort használja, mely alapértelmezésként megtalálható az NVDA-ban, ebben a kombinált listamezőben lehetősége van kiválasztani, milyen változatot kíván használni. Az egyes variációk eltérő beszédparamétereket jelentenek, pl férfi vagy női hang. 
 
 ===== Tempó =====
 
@@ -766,7 +776,7 @@ A felolvasás sebességének beállítását lehet itt elvégezni. A csúszka é
 
 ===== Sebesség fokozás =====
 
-Ha bejelöli ezt a jelölőnégyzetet, az Espeak a megszokottnál gyorsabb beszédre képes.
+Ha bejelöli ezt a jelölőnégyzetet, az ESpeak NG a megszokottnál gyorsabb beszédre képes.
 
 ===== Magasság =====
 
@@ -786,7 +796,7 @@ Ezzel a jelölőnégyzettel szabályozzuk, hogy az NVDA automatikusan állítsa-
 
 ===== Intonáció =====
 
-Ezzel a csúszkával beállítható a beszédszintetizátor hangsúlyozása (a hangmagasság növelése és csökkentése). (Az egyetlen beszédszintetizátor amely használja ezt a beállítást jelenleg az eSpeak). 0 esetén teljesen monoton, 100 esetén a legnagyobb mértékben hangsúlyoz.
+Ezzel a csúszkával beállítható a beszédszintetizátor hangsúlyozása (a hangmagasság növelése és csökkentése). (Az egyetlen beszédszintetizátor amely használja ezt a beállítást jelenleg az ESpeak NG). 0 esetén teljesen monoton, 100 esetén a legnagyobb mértékben hangsúlyoz.
 
 %kc:setting
 ===== Írásjel szintjének állítása =====
@@ -870,9 +880,19 @@ Kérjük, tanulmányozza az Ön braille kijelzőjére vonatkozó információkat
 
 Ez a beállítás azt jelenti, hogy a kurzor alatt lévő karaktert mindenképp megjeleníti a kijelzőn, még akkoris, ha nincs a táblában hozzárendelve a braille kódja. (ilyenkor az ascii kódot írja ki).
 
+===== Kurzor mutatása =====
+
+Ezzel az opcióval a braille kurzort lehet ki- és bekapcsolni.
+A rendszerkurzor és az áttekintő kurzor esetében működik, a kijelölésjelzővel viszont nem.
+
 ===== A kurzor villogási sebessége =====
 
 Ebben a mezőben megadhatja, hogy a kurzor hány ezred másodpercenként villogjon
+
+===== Kurzor alakja =====
+
+Ebben a legördülő mezőben kiválaszthatja    a kurzor pont alakú jelzését a braille kijelzőn.
+A  beállításnak nincs ráhatása a kijelölés jelzésére.
 
 ===== Üzenet megjelenésének időtartama(másodperc) =====
 
@@ -943,6 +963,11 @@ A jelölőnégyzet bejelölése után ha a Capslock be van kapcsolva, és a bet�
 Billentyűparancs: NVDA+4
 
 E jelölőnégyzet bejelölése esetén az NVDA bemond minden olyan billentyűt, amely nem valamilyen karakter, hanem egy gyors billentyű. Pl. controll+valamilyen betű.
+
+==== Hangjelzés gépelési hibánál ====
+Ha be van kapcsolva, az NVDA egy rövid zümmögő hanggal jelzi, ha gépelés közben hibát vét.
+Ez az opció csak akkor elérhető, ha a Helyesírási hibák jelzése opció be van kapcsolva az NVDA [Dokumentum formázás #DocumentFormattingSettings] párbeszédpanelén.
+Megjegyzés: Hogy egy szó hibás-e, vagy sem, azt nem az NVDA dönti el, a program csak a felhasználói alkalmazások jelzéseit alakítja át hangzó információvá, tehát az opció helyes működése nagyban függ az alkalmazások beállításaitól, és az azok által használt helyesírási szótáraktól. Ezen felül hatással lehet rá a rendszer átmeneti túlterheltsége is. 
 
 ==== Alkalmazások billentyűleütéseinek kezelése ====
 Ennek az opciónak a segítségével szabályozható, hogy az NVDA kezelje-e le a például virtuális billentyűzet vagy szövegfelismerő alkalmazások billentyűleütéseit.
@@ -1333,7 +1358,7 @@ Ez a fejezet az NVDA által támogatott beszédszintetizátorokról nyújt bőve
 
 ++ Espeak ++
 
-Az [eSpeak http://espeak.sourceforge.net/] egy ingyenes beszédszintetizátor, ami bele van építve az NVDA programba. Ennek egyik nagy előnye az, hogy az NVDA egy USB eszközön is kiválóan fut, ugyanis nincs szüksége semmilyen driver telepítésére. A beszédszintetizátor több mint húsz nyelvet támogat, és a felhasználóknak lehetőségük van a hang különböző változatainak kiválasztására is.
+Az [eSpeak NG https://github.com/espeak-ng/espeak-ng] egy ingyenes beszédszintetizátor, ami bele van építve az NVDA programba. Ennek egyik nagy előnye az, hogy az NVDA egy USB eszközön is kiválóan fut, ugyanis nincs szüksége semmilyen driver telepítésére. A beszédszintetizátor több mint 43 nyelvet támogat, és a felhasználóknak lehetőségük van a hang különböző változatainak kiválasztására is.
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 

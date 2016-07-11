@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-06-07 15:11+0800\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-07 08:45+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -2228,7 +2228,7 @@ msgstr "分隔線"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
-msgstr "標題"
+msgstr "層級標題"
 
 #. Translators: Identifies a heading level.
 msgid "heading 1"
@@ -3197,18 +3197,6 @@ msgstr "讀出拼錯字 開"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "切換讀出拼錯字的開關"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "關閉讀出文法錯誤"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "開啟讀出文法錯誤"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "切換讀出報告文法錯誤的開關"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "讀出頁碼 關"
@@ -3271,27 +3259,27 @@ msgstr "切換讀出表格的開關"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "讀出表格的列及欄標題 關"
+msgstr "讀出列及欄標題 關"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "讀出表格的列及欄標題 開"
+msgstr "讀出列及欄標題 開"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "切換讀出表格的列及欄標題的開關"
+msgstr "切換讀出列及欄標題的開關"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "讀出表格儲存格的座標 關"
+msgstr "讀出儲存格的座標 關"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "讀出表格儲存格的座標 開"
+msgstr "讀出儲存格的座標 開"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "切換讀出表格儲存格的座標的開關"
+msgstr "切換讀出儲存格的座標的開關"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -3650,14 +3638,14 @@ msgstr "語音模式嗶嗶聲"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
-msgstr "語音模式開啟"
+msgstr "語音模式開"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "切換語音模式，依序是關閉、嗶嗶聲、開啟"
+msgstr "切換語音模式，依序是關、嗶嗶聲、開"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -4794,6 +4782,11 @@ msgstr "斜體"
 msgid "no italic"
 msgstr "沒有斜體"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "雙刪除線"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4914,14 +4907,6 @@ msgstr "拼錯字"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "離開拼錯字"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "文法錯誤"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "離開文法錯誤"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -5152,7 +5137,7 @@ msgstr "下載更新時發生錯誤"
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
 msgid "Update downloaded. It will now be installed."
-msgstr "更新程式以下載，現在將開始進行安裝。"
+msgstr "更新程式以下載，將開始安裝。"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
 msgid "Install Update"
@@ -5168,7 +5153,7 @@ msgid ""
 "develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
-"我們需要您的贊助來持續改善NVDA，此專案主要依賴捐款及補助計畫。\n"
+"我們需要您的贊助，以持續改善 NVDA，此專案主要依賴捐款及補助計畫。\n"
 "針對捐款，您可幫忙贊助一位全職的開發人員。即使每次下載只捐十美元，集合眾人捐"
 "款，就可負擔所有接下來專案的費用。\n"
 "所有的捐款皆由 NV Access 收取，它是一個非營利組織主要負責開發NVDA。\n"
@@ -7278,11 +7263,6 @@ msgstr "讀出拼錯字 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "讀出文法錯誤 (&R)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "讀出頁碼(&P)"
 
@@ -7310,12 +7290,12 @@ msgstr "讀出表格(&T)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "讀出表格的列及欄標題(&E)"
+msgstr "讀出列及欄標題(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "讀出表格儲存格的座標(&C)"
+msgstr "讀出儲存格的座標(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -8666,6 +8646,10 @@ msgstr "註解: 由 {author} 於 {date} 加註的 {text}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} 由 {author} 於 {date} 修訂"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "表格說明"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8776,6 +8760,24 @@ msgstr "下標"
 msgid "Baseline"
 msgstr "基準線"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "移到下一個 %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "移到下一個空白段落"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "移到上一個 %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "移到上一個空白段落"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -8842,6 +8844,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "關閉讀出文法錯誤"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "開啟讀出文法錯誤"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "切換讀出報告文法錯誤的開關"
+
+#~ msgid "grammar error"
+#~ msgstr "文法錯誤"
+
+#~ msgid "out of grammar error"
+#~ msgstr "離開文法錯誤"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "讀出文法錯誤 (&R)"
 
 #~ msgid "browse mode"
 #~ msgstr "瀏覽模式"

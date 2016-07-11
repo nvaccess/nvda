@@ -92,6 +92,9 @@ using namespace std;
 #define wdDISPID_FONT_SUPERSCRIPT 139
 #define wdDISPID_RANGE_PARAGRAPHFORMAT 1102
 #define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
+#define wdDISPID_PARAGRAPHFORMAT_LINESPACING 109
+#define wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE 110
+
 #define wdDISPID_RANGE_LISTFORMAT 68
 #define wdDISPID_LISTFORMAT_LISTSTRING 75
 #define wdDISPID_RANGE_PARAGRAPHS 59
@@ -191,6 +194,7 @@ using namespace std;
 #define formatConfig_reportRevisions 32768
 #define formatConfig_reportParagraphIndentation 65536
 #define formatConfig_includeLayoutTables 131072
+ #define formatConfig_reportLineSpacing 262144
  
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables)
@@ -609,7 +613,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
-	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)) {
+	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)||(formatConfig&formatConfig_reportLineSpacing)) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
 			if(formatConfig&formatConfig_reportAlignment) {
@@ -630,8 +634,8 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					}
 				}
 			}
+			float fVal=0.0;
 			if(formatConfig&formatConfig_reportParagraphIndentation) {
-				float fVal=0.0;
 				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT,VT_R4,&fVal)==S_OK) {
 					formatAttribsStream<<L"right-indent=\"" << fVal <<L"\" ";
 				}
@@ -646,6 +650,14 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LEFTINDENT,VT_R4,&fVal)==S_OK) {
 					if(firstLineIndent<0) fVal+=firstLineIndent;
 					formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
+				}
+			}
+			if(formatConfig&formatConfig_reportLineSpacing) {
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE,VT_I4,&iVal)==S_OK) {
+					formatAttribsStream<<L"wdLineSpacingRule=\"" << iVal <<L"\" ";
+				}
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACING,VT_R4,&fVal)==S_OK) {
+					formatAttribsStream<<L"wdLineSpacing=\"" << fVal <<L"\" ";
 				}
 			}
 		}

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-13 15:39+0900\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-01 00:36+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3197,18 +3197,6 @@ msgstr "スペルの間違いを報告する"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "スペルの間違いの報告の切り替え"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "文章校正の結果を報告しない"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "文章校正の結果を報告する"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "文章校正の結果の報告の切り替え"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "ページ番号を報告しない"
@@ -4840,6 +4828,11 @@ msgstr "斜体"
 msgid "no italic"
 msgstr "斜体なし"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "2重打ち消し線"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4960,14 +4953,6 @@ msgstr "スペルの間違い"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "スペルの間違いの外"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "文章校正の結果"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "文章校正の結果の外"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7356,11 +7341,6 @@ msgstr "スペルの間違いの報告(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "文章校正の結果の報告(&G)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "ページ番号の報告(&P)"
 
@@ -8748,6 +8728,10 @@ msgstr "コメント {text} 更新者 {author} 更新日 {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description} {text} 更新者 {author} 更新日 {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "テーブルの説明"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8858,6 +8842,24 @@ msgstr "サブスクリプト"
 msgid "Baseline"
 msgstr "ベースライン"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "%sの下に移動"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "ブランクの下に移動"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "%sの上に移動"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "ブランクの上に移動"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -8924,6 +8926,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "文章校正の結果を報告しない"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "文章校正の結果を報告する"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "文章校正の結果の報告の切り替え"
+
+#~ msgid "grammar error"
+#~ msgstr "文章校正の結果"
+
+#~ msgid "out of grammar error"
+#~ msgstr "文章校正の結果の外"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "文章校正の結果の報告(&G)"
 
 #~ msgid "browse mode"
 #~ msgstr "ブラウズモード"

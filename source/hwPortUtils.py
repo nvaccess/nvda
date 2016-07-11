@@ -1,6 +1,6 @@
 #hwPortUtils.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2001-2015 Chris Liechti, NV Access Limited
+#Copyright (C) 2001-2016 Chris Liechti, NV Access Limited
 # Based on serial scanner code by Chris Liechti from https://raw.githubusercontent.com/pyserial/pyserial/81167536e796cc2e13aa16abd17a14634dc3aed1/pyserial/examples/scanwin32.py
 
 """Utilities for working with hardware connection ports.
@@ -189,29 +189,36 @@ def listComPorts(onlyAvailable=True):
 				hwID = entry["hardwareID"] = buf.value
 
 			regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(g_hdi, ctypes.byref(devinfo), DICS_FLAG_GLOBAL, 0, DIREG_DEV, winreg.KEY_READ)
-			port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
-			if hwID.startswith("BTHENUM\\"):
-				# This is a Microsoft bluetooth port.
+			try:
 				try:
-					addr = winreg.QueryValueEx(regKey, "Bluetooth_UniqueID")[0].split("#", 1)[1].split("_", 1)[0]
-					addr = int(addr, 16)
-					entry["bluetoothAddress"] = addr
-					if addr:
-						entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
-				except:
-					pass
-			elif hwID == r"Bluetooth\0004&0002":
-				# This is a Toshiba bluetooth port.
-				try:
-					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
-				except:
-					pass
-			elif hwID == r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
-				try:
-					entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
-				except:
-					pass
-			ctypes.windll.advapi32.RegCloseKey(regKey)
+					port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
+				except WindowsError:
+					# #6015: In some rare cases, this value doesn't exist.
+					log.debugWarning("No PortName value for hardware ID %s" % hwID)
+					continue
+				if hwID.startswith("BTHENUM\\"):
+					# This is a Microsoft bluetooth port.
+					try:
+						addr = winreg.QueryValueEx(regKey, "Bluetooth_UniqueID")[0].split("#", 1)[1].split("_", 1)[0]
+						addr = int(addr, 16)
+						entry["bluetoothAddress"] = addr
+						if addr:
+							entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
+					except:
+						pass
+				elif hwID == r"Bluetooth\0004&0002":
+					# This is a Toshiba bluetooth port.
+					try:
+						entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
+					except:
+						pass
+				elif hwID == r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
+					try:
+						entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
+					except:
+						pass
+			finally:
+				ctypes.windll.advapi32.RegCloseKey(regKey)
 
 			# friendly name
 			if not SetupDiGetDeviceRegistryProperty(
