@@ -1098,11 +1098,6 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.spellingErrorsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.grammarErrorsCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Report &grammar errors"))
-		self.grammarErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportGrammarErrors"])
-		settingsSizer.Add(self.grammarErrorsCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
 		self.pageCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &pages"))
 		self.pageCheckBox.SetValue(config.conf["documentFormatting"]["reportPage"])
 		settingsSizer.Add(self.pageCheckBox,border=10,flag=wx.BOTTOM)
@@ -1201,7 +1196,6 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportGrammarErrors"]=self.grammarErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		choice = self.lineIndentationCombo.GetSelection()
