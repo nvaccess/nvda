@@ -384,6 +384,10 @@ the NVDAObject for IAccessible
 		windowClassName=self.windowClassName
 		role=self.IAccessibleRole
 
+		# SDM child windows
+		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
+			from msOffice import SDMChild
+			clsList.append(SDMChild)
 		if self.role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG) and not self.isFocusable:
 			# Make unfocusable applications focusable.
 			# This is particularly useful for ARIA applications.

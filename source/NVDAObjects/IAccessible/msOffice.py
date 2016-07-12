@@ -74,6 +74,31 @@ class SDM(IAccessible):
 				return obj
 		return None
 
+class SDMChild(IAccessible):
+
+	def _get_SDMParent(self):
+		hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
+		if hwndFocus==self.windowHandle:
+			parentSDM=getNVDAObjectFromEvent(winUser.getAncestor(self.windowHandle,winUser.GA_PARENT),winUser.OBJID_CLIENT,0)
+			accFocus=parentSDM.IAccessibleObject.accFocus
+			if accFocus and isinstance(accFocus,int):
+				return IAccessible(windowHandle=parentSDM.windowHandle,IAccessibleObject=parentSDM.IAccessibleObject,IAccessibleChildID=accFocus)
+
+	def _get_parent(self):
+		if self.SDMParent:
+			return self.SDMParent
+		return super(SDMChild,self).parent
+
+	def _get_name(self):
+		if getattr(self,'parentSDMCanOverrideName',True) and self.SDMParent:
+			return self.SDMParent.name
+		return super(SDMChild,self).name
+
+	def _get_keyboardShortcut(self):
+		if self.SDMParent:
+			return self.SDMParent.keyboardShortcut
+		return super(SDMChild,self).keyboardShortcut
+
 class MSOUNISTAT(IAccessible):
 
 	def _get_role(self):
