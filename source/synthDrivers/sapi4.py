@@ -24,6 +24,9 @@ class SynthDriverBufSink(COMObject):
 		self._allowDelete = True
 		super(SynthDriverBufSink,self).__init__()
 
+	def ITTSBufNotifySink_TextDataDone(self, this, qTimeStamp, dwFlags):
+		self._synthDriver._busy=False
+
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
 		self._synthDriver.lastIndex=dwMarkNum
 
@@ -75,6 +78,7 @@ class SynthDriver(SynthDriver):
 		if len(self._enginesList)==0:
 			raise RuntimeError("No Sapi4 engines available")
 		self.voice=str(self._enginesList[0].gModeID)
+		self._busy=False
 
 	def terminate(self):
 		self._bufSink._allowDelete = True
@@ -99,11 +103,13 @@ class SynthDriver(SynthDriver):
 			textList.append("\\RmS=0\\")
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
+		self._busy=True
 		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
 		self.lastIndex=None
+		self._busy=False
 
 	def pause(self,switch):
 		if switch:
@@ -251,3 +257,6 @@ class SynthDriver(SynthDriver):
 		val=self._percentToParam(val,self._minVolume&0xffff,self._maxVolume&0xffff)
 		val+=val<<16
 		self._ttsAttrs.VolumeSet(val)
+
+	def _get_busy(self):
+		return self._busy
