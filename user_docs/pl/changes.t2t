@@ -5,6 +5,17 @@
 
 = 2016.3 =
 
+== Nowe funkcje ==
+- Tryb czytania może teraz być używany do odczytu dokumentów PDF w Microsoft Edge. (#5740)
+- Przekreślenie i podwójne przekreślenie są odczytywane  w razie potrzeby w Microsoft Word. (#5800)
+- W Microsoft Word odczytywany jest tytuł tabeli jeśli jest zdefiniowany. Jeżeli istnieje opis, można go odczytać przy pomocy komendy otwarcia długiego opisu (NVDA+d) w trybie czytania. (#5943)
+- W Microsoft Word, NVDA zgłasza informację o położeniu podczas przenoszenia paragrafów (alt+shift+strzałka w dół i alt+shift+strzałka w górę). (#5945)
+
+
+== Poprawki błędów ==
+- Kopiowanie do schowka w trybie czytania w Microsoft Word, zachowuje formatowanie. (#5956)
+- W Microsoft Word, NVDA informuje prawidłowo o użyciu poleceń Worda nawigacji w tabeli (alt+home, alt+end, alt+pageUp i alt+pageDown) i komend zaznaczania tabeli (shift z klawiszami skrótu nawigacji). (#5961)
+
 
 = 2016.2.1 =
 To wydanie naprawia awarie Microsoft Word:
