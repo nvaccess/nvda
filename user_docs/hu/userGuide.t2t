@@ -432,7 +432,7 @@ Bár az egér használatához egy fizikai egér (vagy más mutatóeszköz, pl. T
 | A navigátor kurzor áthelyezése az egérmutatóhoz | NVDA+numerikus csillag | NVDA+shift+n | A navigátor kurzort az egérmutatónál lévő elemhez helyezi. |
 %kc:endInclude
 
-+ A böngészőmód +
++ A böngészőmód +[BrowseMode]
 
 Az összetett csak olvasható dokumentumok, pl. a weblapok, az NVDA-ban a virtuális kijelzőben jelennek meg.
 
@@ -1362,7 +1362,8 @@ Az [eSpeak NG https://github.com/espeak-ng/espeak-ng] egy ingyenes beszédszinte
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 
-A SAPI4 a Windows egy régebbi szabványa a különböző beszédszintetizátorokhoz. Ha ön egy SAPI 4-es szintetizátort használ, akkor a hozzátartozó hangkaraktereket a [beszéd... #VoiceSettings] beállításainál, vagy a [szintetizátor körön #SynthSettingsRing] tudja módosítani, miután aktiválta a SAPI 4 szabványt a Beszédszintetizátor párbeszédablakon. Ha ön már feltelepített SAPI 4-es szintetizátorokat, de azok nem jelennek meg az NVDA listájában, kérjük, telepítse fel a SAPI 4.0 runtime binaries kiegészítőt, amit innen letölthet: http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+A SAPI4 a Windows egy régebbi szabványa a különböző beszédszintetizátorokhoz. Ez a Microsoft már nem támogatja, az ehhez tartozó kiegésztők már nem tölthetőek le a hivatalos oldalról.
+Ha ön egy SAPI 4-es szintetizátort használ, akkor a hozzátartozó hangkaraktereket a [beszéd... #VoiceSettings] beállításainál, vagy a [szintetizátor körön #SynthSettingsRing] tudja módosítani, miután aktiválta a SAPI 4 szabványt a Beszédszintetizátor párbeszédablakon.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 
@@ -1536,6 +1537,7 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 ++ HumanWare Brailliant BI/B sorozat ++
 Az NVDA támogatja a Brailliant BI és B sorozatába tartozó kijelzőket (gyártó: [HumanWare http://www.humanware.com/]). Ez a sorozat magában foglalja a BI 32, BI 40 és a B 80 modelleket, mind USB, mind bluetooth csatlakoztatási módban.
 Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot.
+Az OpenBraille protokoll használata esetén nem szükséges az USB vezérlőprogram telepítése.
 
 Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és a hozzájuk tartozó parancsokat), amiket az NVDA programban használhat. A kijelző dokumentációjában találhatja meg, hogy ezek a billentyűk hol helyezkednek el.
 %kc:beginInclude
@@ -1870,7 +1872,7 @@ Kérjük, tanulmányozza az [Eco Braille kijelzők dokumentációit ftp://ftp.on
 
 A [BRLTTY http://mielke.cc/brltty/] egy különálló program, amely számos braille kijelzőt támogat. A használatához fel kell telepítenie a [BRLTTY Windows-os változatát http://brl.thefreecat.org/brltty/].
 Töltse le az ezen az oldalon található legfrissebb verziót (pl. brltty-win-4.2-2.exe). A kijelző beállításaikor figyeljen oda, hogy melyik portot használja. Ugyanis ez gyártónként változhat, különösen ha USB-s, és már fenn vannak a hozzátartozó driverek.
-Alább a BRLTTY billentyűparancsait olvashatja, a kijelzők helyes beállításához kérjük olvassa el a [BRLTTY ide tartozó dokumentációját http://mielke.cc/brltty/doc/drivers/]:
+Alább a BRLTTY billentyűparancsait olvashatja, a kijelzők helyes beállításához kérjük olvassa el a [BRLTTY ide tartozó dokumentációját http://mielke.cc/brltty/doc/KeyBindings/]:
 
 %kc:beginInclude
 || Leírás | BRLTTY billentyűparancs |
