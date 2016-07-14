@@ -80,12 +80,15 @@ class Logger(logging.Logger):
 	IO = 12
 	DEBUGWARNING = 15
 
-	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
+	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None,skip_frames=0):
 		if not extra:
 			extra={}
 
 		if not codepath or stack_info is True:
 			f=inspect.currentframe().f_back.f_back
+			# optionally skip extra frames (E.g. our WX log adapter)
+			for x in xrange(skip_frames):
+				f=f.f_back
 
 		if not codepath:
 			codepath=getCodePath(f)

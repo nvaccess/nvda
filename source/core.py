@@ -210,7 +210,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# our wxPython is pached to log asserts at a wx log level of error, as level debug is disabled for release builds
 	class wxErrorLog(wx.PyLog):
 		def DoLogRecord(self,level,msg,record):
-			if level==wx.LOG_Error: log._log(log.DEBUGWARNING,msg,(),codepath='WX')
+			if level==wx.LOG_Error: log.debugWarning(msg,codepath='WX',stack_info=True,skip_frames=1)
 	wx.Log_SetActiveTarget(wxErrorLog())
 	wx.Log_SetLogLevel(wx.LOG_Error)
 	app.SetAssertMode(wx.PYAPP_ASSERT_LOG)
