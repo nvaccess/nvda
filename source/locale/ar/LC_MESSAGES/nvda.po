@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-20 12:15+0200\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-04 11:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -3198,18 +3198,6 @@ msgstr "الإعلان عن الأخطاء الهجائِية تشغيل"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الأخطاء الهجائية"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "الإعلان عن الأخطاء النحوية تعطيل"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "الإعلان عن الأخطاء النحوية تشغيل"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الأخطاء النحوية"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "الإعلان عن الصفحات تعطيل"
@@ -4826,6 +4814,11 @@ msgstr "مائل"
 msgid "no italic"
 msgstr "ليس مائلا"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "يتوسطه خط مزدوج"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4946,14 +4939,6 @@ msgstr "خطأ هجائِي"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "خارج الخطأ الهجائِي"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "خطأ نحوي"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "خارج الخطأ النحوي"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7304,11 +7289,6 @@ msgstr "الإعلان عن الأخ&طاء الهجائِية"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "الإعلان عن الأخطاء الن&حوِية"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "الإعلان عن ال&صفحات"
 
@@ -8657,6 +8637,10 @@ msgstr "التعليق: {text} بواسطة {author} في {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}{description}: {text} بواسطة {author} في {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "وصف الجدول"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "تعيين الصف {rowNumber} العمود {columnNumber}  كبداية لرؤوس الأعمدة"
@@ -8761,6 +8745,24 @@ msgstr "الكتابة التحتية"
 msgid "Baseline"
 msgstr "سطر الأساس"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "تم تحريكها لأسفل %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "تم تحريكها أسفل فقرة فارغة"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "تم تحريكها لأعلى %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "تم تحريكها أعلى فقرة فارغة"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "نمط {styleName}, مستوى المخطط التفصيلي {outlineLevel}"
@@ -8819,6 +8821,24 @@ msgstr "سلسلة الأسطر HIMS Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "الإعلان عن الأخطاء النحوية تعطيل"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "الإعلان عن الأخطاء النحوية تشغيل"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الأخطاء النحوية"
+
+#~ msgid "grammar error"
+#~ msgstr "خطأ نحوي"
+
+#~ msgid "out of grammar error"
+#~ msgstr "خارج الخطأ النحوي"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "الإعلان عن الأخطاء الن&حوِية"
 
 #~ msgctxt "espeak NG NGVarient"
 #~ msgid "none"

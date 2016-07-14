@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-14 13:31+0100\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-04 10:54+0100\n"
 "Last-Translator: OAron <info@o-soft.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Teszt megjegyzés
@@ -134,7 +134,7 @@ msgstr "Soha"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Csak amikor a beszéd és a hangok egyszerre"
+msgstr "Csak amikor az NVDA használja a hangkimenetet"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -3213,18 +3213,6 @@ msgstr "Helyesírási hibák jelzése bekapcsolva"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Ki- vagy bekapcsolja a Helyesírási hibák jelzését"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "Nyelvhelyességi hibák jelzése kikapcsolva"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "Nyelvhelyességi hibák jelzése bekapcsolva"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "Ki- vagy bekapcsolja a Nyelvhelyességi hibák jelzését"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Oldalszámok bemondása kikapcsolva"
@@ -4907,6 +4895,11 @@ msgstr "dőlt"
 msgid "no italic"
 msgstr "nem dőlt"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "duplán áthúzott"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -5027,14 +5020,6 @@ msgstr "Hibás szó"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "A hibás szón kívül"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "Hibás rész"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "Hibás részen kívül"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7457,11 +7442,6 @@ msgstr "Helyesírási hi&bák jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "&Nyelvhelyességi hibák jelzése"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "&Oldalszámok bemondása"
 
@@ -8857,6 +8837,10 @@ msgstr "megjegyzés: {text}, {author} által, {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} {author} által {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Táblázat leírása"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8980,6 +8964,24 @@ msgstr "alsó index"
 msgid "Baseline"
 msgstr "alapvonal"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "áthelyezve %s alá"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "áthelyezve üres bekezdés alá"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Átheyezve %s fölé"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "áthelyezve üres bekezdés fölé"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9046,6 +9048,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Nyelvhelyességi hibák jelzése kikapcsolva"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "Nyelvhelyességi hibák jelzése bekapcsolva"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Ki- vagy bekapcsolja a Nyelvhelyességi hibák jelzését"
+
+#~ msgid "grammar error"
+#~ msgstr "Hibás rész"
+
+#~ msgid "out of grammar error"
+#~ msgstr "Hibás részen kívül"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "&Nyelvhelyességi hibák jelzése"
 
 #~ msgid "browse mode"
 #~ msgstr "böngésző mód"

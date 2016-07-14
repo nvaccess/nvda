@@ -6,6 +6,18 @@
 = 2016.3 =
 
 
+== neue Funktionen ==
+- Der Lesemodus kann nun verwendet werden, um in Microsoft Edge Pdf-Dokumente zu lesen. (#5740)
+- in Microsoft Word wird durchgestrichener und doppelt durchgestrichener Text erkannt. (#5800)
+- in Microsoft Word wird der Titel einer Tabelle korrekt erkannt. Wenn außerdem eine Beschreibung vorhanden ist, kann diese mit dem Befehl nvda+d angezeigt werden. (#5943)
+- in Microsoft Word wird die Position im Dokument korrekt angezeigt, wenn Sie sich mit alt+umschalt+Pfeil auf und alt+Umschalt+Pfeil ab absatzweise durch das Dokument bewegen. (#5945)
+
+
+== Fehlerkorrekturen ==
+- im Lesemodus in Microsoft Word wird beim Kopieren von Text in die Zwischenablage die Formatierung beibehalten. (#5956)
+- in Microsoft Word werden words eigene Tabellennavigationsbefehle (alt+pos1, alt+ende, alt+seite auf und alt+seite ab) korrekt unterstützt. Dies gilt auch für die Markieungsbefehle für Tabellen (alt+Umschalt+pos1, alt+Umschalt+Ende, alt+Umschalt+Seite auf, alt+Umschalt+Seite ab). (#5961)
+
+
 = 2016.2.1 =
 Diese Version behebt einige Fehler in Microsoft Word:
 

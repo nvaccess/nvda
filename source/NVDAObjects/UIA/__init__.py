@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2015 NV Access Limited
+#Copyright (C) 2009-2016 NV Access Limited, Mohammad Suliman
 
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
@@ -246,7 +246,10 @@ class UIATextInfo(textInfos.TextInfo):
 		if e:
 			obj=UIA(UIAElement=e)
 			while obj and obj!=self.obj:
-				field=self._getControlFieldForObject(obj)
+				try:
+					field=self._getControlFieldForObject(obj)
+				except LookupError:
+					break
 				if field:
 					field=textInfos.FieldCommand("controlStart",field)
 					fields.append(field)
@@ -327,7 +330,7 @@ class UIA(Window):
 		elif ((UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId) #Windows 8.x
 		or (self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and self.UIAElement.cachedAutomationId=="NormalToastView")): # Windows 10
 			clsList.append(Toast)
-		elif self.UIAElement.cachedFrameworkID=="InternetExplorer":
+		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
@@ -337,6 +340,10 @@ class UIA(Window):
 				clsList.append(edge.EdgeList)
 			else:
 				clsList.append(edge.EdgeNode)
+		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
+				# PDFs
+				import edge
+				clsList.append(edge.EdgePDFRoot)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -442,6 +449,12 @@ class UIA(Window):
 		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=True)
 		return self.UIATextPattern
 
+	def _get_UIATextEditPattern(self):
+		if not isinstance(UIAHandler.handler.clientObject,UIAHandler.IUIAutomation3):
+			return None
+		self.UIATextEditPattern=self._getUIAPattern(UIAHandler.UIA_TextEditPatternId,UIAHandler.IUIAutomationTextEditPattern,cache=False)
+		return self.UIATextEditPattern
+
 	def _get_UIALegacyIAccessiblePattern(self):
 		self.UIALegacyIAccessiblePattern=self._getUIAPattern(UIAHandler.UIA_LegacyIAccessiblePatternId,UIAHandler.IUIAutomationLegacyIAccessiblePattern)
 		return self.UIALegacyIAccessiblePattern
@@ -515,10 +528,19 @@ class UIA(Window):
 			return ""
 
 	def _get_keyboardShortcut(self):
+		ret = ""
 		try:
-			return self.UIAElement.currentAccessKey
+			ret += self.UIAElement.currentAccessKey
 		except COMError:
-			return None
+			pass
+		if ret:
+			#add a double space to the end of the string
+			ret +="  "
+		try:
+			ret += self.UIAElement.currentAcceleratorKey
+		except COMError:
+			pass
+		return ret
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()

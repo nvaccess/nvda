@@ -1,6 +1,6 @@
 #watchdog.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2014 NV Access Limited
+#Copyright (C) 2008-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -173,6 +173,11 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
 	else:
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
+
+	# Log Python stacks for every thread.
+	for logThread, logFrame in sys._current_frames().iteritems():
+		log.info("Python stack for thread %d" % logThread,
+			stack_info=traceback.extract_stack(logFrame))
 
 	log.info("Restarting due to crash")
 	core.restart()

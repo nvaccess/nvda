@@ -5,6 +5,17 @@ Quoi de Neuf dans NVDA
 
 = 2016.3 =
 
+== Nouvelles Fonctionnalités ==
+- Le mode navigation peut maintenant être utilisé pour lire les documents PDF sous Microsoft Edge. (#5740)
+- Les biffures et doubles-biffures sont maintenant annoncées si approprié sous Microsoft Word. (#5800)
+- Sous Microsoft Word, le titre d'un tableau est maintenant annoncé si un titre a été donné. If there is a description, it can be accessed using the open long description command (NVDA+d) in browse mode. (#5943)
+- Sous Microsoft Word, NVDA annonce maintenant l'information de position quand on déplace des paragraphes (alt+maj+flècheBasse et alt+maj+flècheHaute). (#5945)
+
+
+== Corrections de Bogues ==
+- En mode navigation sous Microsoft Word, la copie dans le presse-papiers préserve maintenant le formatage. (#5956)
+- Sous Microsoft Word, NVDA annonce maintenant correctement quand on utilise les commandes de navigation dans les tableaux propres à Word (alt+début, alt+fin, alt+pagePrec et alt+pageSuiv) et les commandes de sélection dans les tableaux (maj ajouté aux commandes de navigation). (#5961)
+
 
 = 2016.2.1 =
 Cette version corrige des plantages sous Microsoft Word:
