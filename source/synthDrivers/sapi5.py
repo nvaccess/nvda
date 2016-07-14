@@ -81,8 +81,6 @@ class SynthDriver(SynthDriver):
 	name="sapi5"
 	description="Microsoft Speech API version 5"
 
-	testVoiceOnInit=False #: Try speaking when first setting a voice to fail quickly
-
 	@classmethod
 	def check(cls):
 		try:
@@ -159,25 +157,16 @@ class SynthDriver(SynthDriver):
 		self.tts.Volume = value
 
 	def _initTts(self, voice=None):
-		tts=comtypes.client.CreateObject(self.COM_CLASS)
+		self.tts=comtypes.client.CreateObject(self.COM_CLASS)
 		if voice:
 			# #749: It seems that SAPI 5 doesn't reset the audio parameters when the voice is changed,
 			# but only when the audio output is changed.
 			# Therefore, set the voice before setting the audio output.
 			# Otherwise, we will get poor speech quality in some cases.
-			tts.voice = voice
+			self.tts.voice = voice
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
-			tts.audioOutput=tts.getAudioOutputs()[outputDeviceID]
-		if self.testVoiceOnInit:
-			# test the voice
-			tts.Speak("", 1|constants.SVSFIsXML)
-		self.tts=tts
-		from comInterfaces.SpeechLib import ISpAudio
-		try:
-			self.ttsAudioStream=self.tts.audioOutputStream.QueryInterface(ISpAudio)
-		except COMError:
-			self.ttsAudioStream=None
+			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 
 	def _set_voice(self,value):
 		tokens = self._getVoiceTokens()
@@ -309,8 +298,7 @@ class SynthDriver(SynthDriver):
 		self.tts.Speak(text, flags)
 
 	def cancel(self):
-		if self.ttsAudioStream:
-			self.ttsAudioStream.setState(1,0)
+		#if self.tts.Status.RunningState == 2:
 		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
 
 	def pause(self,switch):
