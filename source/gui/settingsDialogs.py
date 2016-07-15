@@ -1598,25 +1598,25 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 		self.pendingRemovals = {}
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label for symbols list in symbol pronunciation dialog.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
-		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(360, 350))
+		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
 		# Translators: The label for a column in symbols list used to identify a symbol.
-		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
-		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
+		self.symbolsList.InsertColumn(0, _("Symbol"))
+		self.symbolsList.InsertColumn(1, _("Replacement"))
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-		self.symbolsList.InsertColumn(2, _("Level"), width=60)
+		self.symbolsList.InsertColumn(2, _("Level"))
 		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-		self.symbolsList.InsertColumn(3, _("Preserve"), width=60)
+		self.symbolsList.InsertColumn(3, _("Preserve"))
 		for symbol in symbols:
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
-		sizer.Add(self.symbolsList)
-		settingsSizer.Add(sizer)
+		sizer.Add(self.symbolsList, flag=wx.EXPAND)
+		settingsSizer.Add(sizer, flag=wx.EXPAND)
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change symbol")), wx.VERTICAL)
