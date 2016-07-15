@@ -297,8 +297,8 @@ INPUT_TABLES = tuple(t for t in TABLES if t[2])
 
 #: Old versus new braille table names to be consulted during migration from liblouis 2 to liblouis 3.
 OLDTABLENAMES2NEWTABLENAMES = {
-	"da-dk-g16.utb":"da-dk-g16.ctb"
-	"da-dk-g18.utb":"da-dk-g18.ctb"
+	"da-dk-g16.utb":"da-dk-g16.ctb",
+	"da-dk-g18.utb":"da-dk-g18.ctb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-comp8.ctb",
