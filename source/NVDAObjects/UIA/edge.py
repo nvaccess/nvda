@@ -6,6 +6,7 @@
 from comtypes import COMError
 from comtypes.automation import VARIANT
 from ctypes import byref
+from logHandler import log
 import eventHandler
 import controlTypes
 import winUser
@@ -15,9 +16,244 @@ import browseMode
 import treeInterceptorHandler
 import cursorManager
 import aria
-from . import UIA
+from . import UIA, UIATextInfo
+
+class EdgeTextInfo(UIATextInfo):
+
+	def _getTextWithFields_text(self,textRange,formatConfig):
+		log.debug("_getTextWithFields_text start")
+		tempRange=textRange.clone()
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("full text: %s"%textRange.getText(-1))
+		tempRange.MoveEndPointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		delta=-1
+		while delta<0:
+			if tempRange.MoveEndPointByUnit(UIAHandler.TextUnit_Format,1,UIAHandler.TextPatternRangeEndpoint_End)==0:
+				log.debug("Failed to move end by format. Breaking")
+				break
+			log.debug("Moved end by format")
+			delta=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+			if delta>0:
+				log.debug("Moved past end of textRange. Cropping to fit")
+				tempRange.MoveEndPointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+			if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
+				log.debug("range is now degenerate. Breaking")
+				break
+			text=tempRange.getText(-1)
+			if text:
+				yield self._getFormatFieldAtRange(tempRange,formatConfig)
+				yield text
+			tempRange.MoveEndPointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+		log.debug("_getTextWithFields_text end")
+
+	def _getTextWithFields_balanced(self,rootElement,textRange,formatConfig,includeRoot=True):
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("_getTextWithFields_balanced")
+			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType)
+			log.debug("full text: %s"%textRange.getText(-1))
+			log.debug("includeRoot: %s"%includeRoot)
+		enclosingElement=textRange.getEnclosingElement()
+		if enclosingElement:
+			enclosingElement=enclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		else:
+			log.debug("No enclosingElement. Returning")
+			return
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
+		parents=[]
+		parentElement=enclosingElement
+		log.debug("Generating parents")
+		while parentElement:
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
+			isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
+			log.debug("isRoot: %s"%isRoot)
+			try:
+				obj=UIA(UIAElement=parentElement)
+				field=self._getControlFieldForObject(obj)
+			except LookupError:
+				log.debug("Failed to fetch controlField data for parent. Falling back to rootElement")
+				parents=[]
+				isRoot=True
+				try:
+					obj=UIA(UIAElement=rootElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+					field=self._getControlFieldForObject(obj)
+				except LookupError:
+					log.debug("Failed to fetch controlField data on rootElement. Breaking")
+					break
+			parents.append((parentElement,field,isRoot))
+			if isRoot:
+				break
+			log.debug("Fetching next parentElement")
+			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
+		log.debug("Done generating parents")
+		log.debug("Yielding parent controlStarts")
+		for parentElement,field,isRoot in reversed(parents):
+			if includeRoot or not isRoot:
+				yield textInfos.FieldCommand("controlStart",field)
+		log.debug("Done yielding parent controlStarts")
+		# Move through the text range, collecting text and recursing into children
+		tempRange=textRange.clone()
+		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		childElements=textRange.getChildren()
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("Child count: %s"%childElements.length)
+			log.debug("Walking children")
+		for index in xrange(childElements.length):
+			childElement=childElements.getElement(index)
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
+			if UIAHandler.handler.clientObject.compareElements(childElement,rootElement):
+				log.debug("childElement is rootElement. Breaking")
+				break
+			childRange=self.obj.UIATextPattern.rangeFromChild(childElement)
+			if not childRange:
+				log.debug("NULL childRange. Skipping")
+				continue
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+				log.debug("Child at or past end of textRange. Breaking")
+				break
+			childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+			if childStartDelta>0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+				# plain text before this child
+				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
+				log.debug("Plain text before child")
+				for field in self._getTextWithFields_text(tempRange,formatConfig):
+					yield field
+			elif childStartDelta<0:
+				log.debug("textRange started part way through child. Cropping Start of child range to fit" )
+				childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
+				log.debug("textRange ended part way through the child. Crop end of childRange to fit")
+				childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
+				log.debug("childRange is degenerate. Skipping")
+				continue
+			log.debug("Recursing into child %s"%index)
+			for field in self._getTextWithFields_balanced(childElement,childRange,formatConfig):
+				yield field
+			log.debug("Done recursing into child %s"%index)
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
+		log.debug("children done")
+		# Plain text after the final child
+		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+			log.debug("Yielding final text")
+			for field in self._getTextWithFields_text(tempRange,formatConfig):
+				yield field
+		log.debug("Done yielding final text")
+		log.debug("Yielding controlEnds for parents")
+		for parentElement,field,isRoot in parents:
+			if includeRoot or not isRoot:
+				yield textInfos.FieldCommand("controlEnd",field)
+		log.debug("Done yielding controlEnds for parents")
+		log.debug("_getTextWithFields_balanced end")
+
+	def _getTextWithFields_unbalanced(self,rootElement,textRange,formatConfig,includeRoot=True):
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("_getTextWithFields_unbalanced")
+			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType)
+			log.debug("full text: %s"%textRange.getText(-1))
+			log.debug("includeRoot: %s"%includeRoot)
+		startRange=textRange.clone()
+		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		enclosingElement=startRange.getEnclosingElement()
+		if enclosingElement:
+			enclosingElement=enclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		else:
+			log.debug("No enclosingElement. Returning")
+			return
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
+		parents=[]
+		parentElement=enclosingElement
+		log.debug("Generating ancestors:")
+		while parentElement:
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
+			isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
+			log.debug("isRoot: %s"%isRoot)
+			try:
+				obj=UIA(UIAElement=parentElement)
+				field=self._getControlFieldForObject(obj)
+			except LookupError:
+				log.debug("Failed to fetch controlField data for parentElement. Falling back to rootElement")
+				parents=[]
+				isRoot=True
+				try:
+					obj=UIA(UIAElement=rootElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+					field=self._getControlFieldForObject(obj)
+				except LookupError:
+					log.debug("Failed to fetch controlField data on rootElement. Breaking")
+					break
+			parents.append((parentElement,field,isRoot))
+			if isRoot:
+				break
+			log.debug("Fetching next parentElement")
+			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
+		log.debug("Done generating parents")
+		log.debug("Yielding parents in reverse order")
+		for parentElement,field,isRoot in reversed(parents):
+			if includeRoot or not isRoot:
+				yield textInfos.FieldCommand("controlStart",field)
+		log.debug("Done yielding parents")
+		enclosingRange=self.obj.UIATextPattern.rangeFromChild(enclosingElement)
+		if enclosingRange:
+			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
+			if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
+				startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+		else:
+			log.debug("NULL enclosingRange. Falling back to textRange")
+			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+		log.debug("Yielding balanced fields for startRange")
+		for field in self._getTextWithFields_balanced(enclosingElement,startRange,formatConfig,includeRoot=False):
+			yield field
+		log.debug("Done yielding balanced fields for startRange")
+		tempRange=startRange.clone()
+		log.debug("Walking parents to yield controlEnds and recurse unbalanced endRanges")
+		for parentElement,field,isRoot in parents:
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
+			if parentElement is not enclosingElement:
+				log.debug("is enclosingElement: True")
+				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+				try:
+					parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
+				except COMError:
+					parentRange=None
+				if parentRange:
+					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
+				else:
+					log.debug("NULL parentRange")
+					if isRoot:
+						log.debug("falling back to textRange as parent is root")
+						tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
+					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+					log.debug("Recursing endRange")
+					for endField in self._getTextWithFields_unbalanced(parentElement,tempRange,formatConfig,includeRoot=False):
+						yield endField
+					log.debug("Done recursing endRange")
+			if includeRoot or not isRoot:
+				"Yielding controlEnd for parent"
+				yield textInfos.FieldCommand("controlEnd",field)
+		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
+		log.debug("_getTextWithFields_unbalanced end")
+
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		fields=[]
+		for field in self._getTextWithFields_unbalanced(self.obj.UIAElement,self._rangeObj,formatConfig):
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("field: %s"%field)
+			fields.append(field)
+		return fields
 
 class EdgeNode(UIA):
+
+	_TextInfo=EdgeTextInfo
 
 	def _get_role(self):
 		role=super(EdgeNode,self).role
@@ -37,7 +273,6 @@ class EdgeList(EdgeNode):
 		if controlTypes.STATE_FOCUSABLE not in states:
 			states.add(controlTypes.STATE_READONLY)
 		return states
-
 
 class EdgeHTMLRootContainer(EdgeNode):
 
@@ -332,99 +567,11 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				yield UIATextRangeQuickNavItem(itemType,document,curElement)
 
 class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
-
-	def getTextWithFields(self,formatConfig=None):
-		try:
-			container=next(self.obj._iterNodesByType("nonTextContainer","up",self))
-		except StopIteration:
-			container=None
-		if container:
-			fields=super(EdgeHTMLTreeInterceptorTextInfo,container.textInfo).getTextWithFields(formatConfig)
-			startLen=0
-			for index,field in enumerate(fields):
-				if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-					startLen=index+1
-				else:
-					break
-			fields[startLen:0-startLen]=[container.obj.value or u""]
-			return fields
-		else:
-			return super(EdgeHTMLTreeInterceptorTextInfo,self).getTextWithFields(formatConfig)
-
-	# override move to get around bugs in Edge where moving by line jumps over checkboxes, radio buttons etc.
-	def move(self,unit,direction,endPoint=None):
-		try:
-			containerInfo=next(self.obj._iterNodesByType("nonTextContainer","up",self)).textInfo
-		except StopIteration:
-			containerInfo=None
-		if containerInfo:
-			if direction>0:
-				containerInfo.collapse(end=True)
-				super(EdgeHTMLTreeInterceptorTextInfo,containerInfo).move(textInfos.UNIT_CHARACTER,-1)
-			else:
-				containerInfo.collapse()
-			self._rangeObj=containerInfo._rangeObj
-			del containerInfo
-		origInfo=None
-		if (direction==1 or direction==-1) and not endPoint and unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
-			origInfo=self.copy()
-			origInfo.expand(unit)
-		res=super(EdgeHTMLTreeInterceptorTextInfo,self).move(unit,direction,endPoint)
-		if res and origInfo:
-			if direction==1 and self.compareEndPoints(origInfo,"startToEnd")>0:
-				newInfo=origInfo.copy()
-				newInfo.collapse(end=True)
-				newInfo.move(textInfos.UNIT_CHARACTER,-1)
-				newInfo.move(textInfos.UNIT_CHARACTER,1)
-				newInfo.expand(unit)
-				if newInfo.compareEndPoints(origInfo,"startToEnd")>=0 and self.compareEndPoints(newInfo,"startToStart")>0:
-					newInfo.collapse()
-					charInfo=newInfo.copy()
-					charInfo.expand(textInfos.UNIT_CHARACTER)
-					children=charInfo._rangeObj.getChildren()
-					if children.length==1:
-						childInfo=self.obj.TextInfo(self.obj,None,_rangeObj=self.obj.rootNVDAObject.UIATextPattern.rangeFromChild(children.getElement(0)))
-						if childInfo.compareEndPoints(charInfo,"startToStart")==0 and childInfo.compareEndPoints(charInfo,"endToEnd")==0:
-							self._rangeObj=newInfo._rangeObj.clone()
-			elif direction==-1:
-				newInfo=self.copy()
-				count=4
-				while count>0:
-					newInfo.move(unit,1)
-					if newInfo.compareEndPoints(origInfo,"startToStart")<0:
-						self._rangeObj=newInfo._rangeObj.clone()
-					else:
-						break
-					count-=1
-		return res
-
-	# Override expand to get around bugs in Edge where expanding to line on a checkbox, radio button etc expands the previous line (not containing the control in question).
-	def expand(self,unit):
-		try:
-			containerInfo=None #next(self.obj._iterNodesByType("nonTextContainer","up",self)).textInfo
-		except StopIteration:
-			containerInfo=None
-		if containerInfo:
-			self._rangeObj=containerInfo._rangeObj
-			del containerInfo
-		origInfo=None
-		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
-			origInfo=self.copy()
-		super(EdgeHTMLTreeInterceptorTextInfo,self).expand(unit)
-		if origInfo:
-			if self.compareEndPoints(origInfo,"endToEnd")<=0:
-				self._rangeObj=origInfo._rangeObj.clone()
-				super(EdgeHTMLTreeInterceptorTextInfo,self).expand(textInfos.UNIT_CHARACTER)
+	pass
 
 class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=EdgeHTMLTreeInterceptorTextInfo
-
-	# Ovveride setting selection to get around bugs in Edge where programmatically setting focus corrupts existing IUIAutomationTextRanges
-	# cloning them seems to fix them
-	def _set_selection(self,info,reason=controlTypes.REASON_CARET):
-		super(EdgeHTMLTreeInterceptor,self)._set_selection(info,reason=reason)
-		info._rangeObj=info._rangeObj.clone()
 
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
@@ -507,22 +654,8 @@ class EdgeHTMLRoot(EdgeNode):
 	def _get_shouldCreateTreeInterceptor(self):
 		return self.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in self.states 
 
-
 	def _get_role(self):
 		role=super(EdgeHTMLRoot,self).role
 		if role==controlTypes.ROLE_PANE:
 			role=controlTypes.ROLE_DOCUMENT
 		return role
-
-# PDF content in Edge cannot, and does not need to, use the Edge HTML specific treeInterceptor TextInfo as skipping containers such as combo boxes does not apply, plus using it can sometimes incorrectly skip over lists (possibly due to state mis-matches, focusable, readonly).
-# For now at least it is best to have a custom implementation, while Edge is so fluid. 
-class EdgePDFTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
-	pass
-
-class EdgePDFTreeInterceptor(EdgeHTMLTreeInterceptor):
-
-	TextInfo=EdgePDFTreeInterceptorTextInfo
-
-class EdgePDFRoot(UIA):
-
-	treeInterceptorClass=EdgePDFTreeInterceptor
