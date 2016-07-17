@@ -208,14 +208,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import wx
 	log.info("Using wx version %s"%wx.version())
 	app = wx.App(redirect=False)
-	# log wx assertions to our log at debugWarning
-	# our wxPython is pached to log asserts at a wx log level of error, as level debug is disabled for release builds
-	class wxErrorLog(wx.PyLog):
-		def DoLogRecord(self,level,msg,record):
-			if level==wx.LOG_Error: log.debugWarning(msg,codepath='WX',stack_info=True,skip_frames=1)
-	wx.Log_SetActiveTarget(wxErrorLog())
-	wx.Log_SetLogLevel(wx.LOG_Error)
-	app.SetAssertMode(wx.PYAPP_ASSERT_LOG)
+	# HACK: wx currently raises spurious assertion failures when a timer is stopped but there is already an event in the queue for that timer.
+	# Unfortunately, these assertion exceptions are raised in the middle of other code, which causes problems.
+	# Therefore, disable assertions for now.
+	app.SetAssertMode(wx.PYAPP_ASSERT_SUPPRESS)
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
