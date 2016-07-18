@@ -5,6 +5,7 @@
 #Copyright (C) 2009-2012 NV Access Limited, Aleksey Sadovoy
 
 from . import VirtualBuffer, VirtualBufferTextInfo
+import browseMode
 import controlTypes
 import NVDAObjects.IAccessible
 from NVDAObjects.IAccessible.adobeAcrobat import normalizeStdName, AcrobatNode
@@ -120,3 +121,10 @@ class AdobeAcrobat(VirtualBuffer):
 			return nextHandler()
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+
+	def _get_ElementsListDialog(self):
+		return ElementsListDialog
+
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=browseMode.ElementsListDialog.ELEMENT_TYPES[0:2]
