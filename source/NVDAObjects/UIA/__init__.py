@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2016 NV Access Limited, Mohammad Suliman
+#Copyright (C) 2009-2016 NV Access Limited, Joseph Lee, Mohammad Suliman
 
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
@@ -364,7 +364,8 @@ class UIA(Window):
 				pass
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
-		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog"):
+		# #5942: In recent Windows 10 Redstone builds (14332 and later), Microsoft rewrote various dialog code including that of User Account Control.
+		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
 
 		clsList.append(UIA)
