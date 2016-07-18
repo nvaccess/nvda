@@ -8,6 +8,7 @@ from comtypes.automation import VARIANT
 from ctypes import byref
 from logHandler import log
 import eventHandler
+import config
 import controlTypes
 import winUser
 import textInfos
