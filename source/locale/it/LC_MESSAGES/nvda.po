@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-11 14:13+0100\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-12 13:01+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3218,18 +3218,6 @@ msgstr "Leggi errori di ortografia attivato"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Attiva o disattiva la lettura degli errori di ortografia"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "Leggi errori grammaticali Disattivato"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "Leggi errori grammaticali Attivato"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "Attiva o disattiva l'annuncio degli errori grammaticali"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Leggi Pagine Disattivato"
@@ -4914,6 +4902,11 @@ msgstr "Corsivo"
 msgid "no italic"
 msgstr "Non corsivo"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "Barrato doppio"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -5034,14 +5027,6 @@ msgstr "Errore di ortografia"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "Fuori dall'errore di ortografia"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "errore grammaticale"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "Fuori dall'errore grammaticale"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7478,11 +7463,6 @@ msgstr "L&eggi gli errori di ortografia"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "Leggi gli errori &grammaticali"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "Leggi le &pagine"
 
@@ -8875,6 +8855,10 @@ msgstr "commento: {text} di {author} del {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} di {author} in data {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Descrizione della tabella"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -9000,6 +8984,24 @@ msgstr "pedice"
 msgid "Baseline"
 msgstr "Testo normale"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Spostato al di sotto di %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Spostato sotto un paragrafo vuoto"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Spostato al di sopra di %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Spostato sopra un paragrafo vuoto"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9066,6 +9068,24 @@ msgstr "HIMS serie Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Leggi errori grammaticali Disattivato"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "Leggi errori grammaticali Attivato"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Attiva o disattiva l'annuncio degli errori grammaticali"
+
+#~ msgid "grammar error"
+#~ msgstr "errore grammaticale"
+
+#~ msgid "out of grammar error"
+#~ msgstr "Fuori dall'errore grammaticale"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Leggi gli errori &grammaticali"
 
 #~ msgid "browse mode"
 #~ msgstr "Modalita' navigazione"

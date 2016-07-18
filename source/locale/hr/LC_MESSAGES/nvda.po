@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-11 21:30+1000\n"
-"PO-Revision-Date: 2016-05-14 15:44+0100\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-09 00:42+0100\n"
 "Last-Translator: zwonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -3220,18 +3220,6 @@ msgstr "Izvijesti o pravopisnim pogreškama uključeno"
 msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Uključuje i isključuje izgovor pravopisnih pogrešaka"
 
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors off"
-msgstr "Izvijesti o gramatičkim pogreškama isključeno"
-
-#. Translators: The message announced when toggling the report grammar errors document formatting setting.
-msgid "report grammar errors on"
-msgstr "izvjesti o gramatičkim pogreškama uključeno"
-
-#. Translators: Input help mode message for toggle report grammar errors command.
-msgid "Toggles on and off the reporting of grammar errors"
-msgstr "Uključuje i isključuje izgovor gramatičkih pogrešaka"
-
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
 msgstr "Izvijesti o stranicama isključeno"
@@ -4919,6 +4907,11 @@ msgstr "kurziv"
 msgid "no italic"
 msgstr "nije kurziv"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dvostruko podcrtavanje"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -5039,14 +5032,6 @@ msgstr "pravopisna pogreška"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "izvan pravopisne pogreške"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "Gramatička greška"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "izvan gramatičke greške"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7468,11 +7453,6 @@ msgstr "Izvijesti o pravopisnim &pogreškama"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &grammar errors"
-msgstr "Izvijesti o &gramatičkim pogreškama"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
 msgid "Report &pages"
 msgstr "Izvijesti o &stranicama"
 
@@ -8862,6 +8842,10 @@ msgstr "komentar: {text} od strane {author} datuma {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} datuma {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "opis tablice"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8981,6 +8965,24 @@ msgstr "podpis"
 msgid "Baseline"
 msgstr "osnovni pravac"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "premješteno ispod %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "premješteno ispod praznog odlomaka"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "premješteno iznad %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "premješteno iznad praznog odlomka"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9048,6 +9050,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Izvijesti o gramatičkim pogreškama isključeno"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "izvjesti o gramatičkim pogreškama uključeno"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Uključuje i isključuje izgovor gramatičkih pogrešaka"
+
+#~ msgid "grammar error"
+#~ msgstr "Gramatička greška"
+
+#~ msgid "out of grammar error"
+#~ msgstr "izvan gramatičke greške"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Izvijesti o &gramatičkim pogreškama"
 
 #~ msgid "browse mode"
 #~ msgstr "mod pretraživanja"

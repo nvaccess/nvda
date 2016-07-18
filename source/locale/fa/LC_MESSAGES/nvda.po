@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 00:10+1000\n"
-"PO-Revision-Date: 2016-06-20 05:57+0330\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-11 23:30+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -2252,7 +2252,7 @@ msgstr "سرنوشتارِ ۶"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 msgid "paragraph"
-msgstr "بند"
+msgstr "پاراگراف"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
@@ -3249,15 +3249,15 @@ msgstr "اعلام شدنِ تورفتگیِ خط را فعال یا غیرِ ف
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "تورفتگیِ بند اعلام نمیشود."
+msgstr "تورفتگیِ پاراگراف اعلام نمیشود."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "تورفتگیِ بند اعلام میشود."
+msgstr "تورفتگیِ پاراگراف اعلام میشود."
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "اعلام شدنِ تورفتگیِ بند را فعال یا غیرِ فعال میکند."
+msgstr "اعلام شدنِ تورفتگیِ پاراگراف را فعال یا غیرِ فعال میکند."
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -4876,6 +4876,11 @@ msgstr "کج‌نویس"
 msgid "no italic"
 msgstr "کج‌نویس نیست"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "دوبار خط‌نخورده"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4951,11 +4956,11 @@ msgstr "بدونِ تورفتگی"
 
 #. Translators: the label for paragraph format first line indent
 msgid "first line indent"
-msgstr "تورفتگیِ نخستین خط"
+msgstr "تورفتگیِ خطِّ اول"
 
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
-msgstr "بدونِ تورفتگی در نخستین خط"
+msgstr "بدونِ تورفتگیِ خطِّ اول"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
@@ -7414,7 +7419,7 @@ msgstr "اعلامِ تورفتگیِ &خط"
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "Report &paragraph indentation"
-msgstr "اعلامِ تورفتگیِ &بند"
+msgstr "اعلامِ تورفتگیِ &پاراگراف"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7585,7 +7590,7 @@ msgstr "مکان‌نمای بریل م&تصل شد به:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "خواندنِ &بند به بند"
+msgstr "خواندنِ &پاراگراف به پاراگراف"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
@@ -8698,7 +8703,7 @@ msgstr "خصوصیات تغییر یافته"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
-msgstr "تعداد بندهای تغییر یافته"
+msgstr "تعداد پاراگراف‌های تغییر یافته"
 
 #. Translators: a Microsoft Word revision type (display field)
 msgid "display field"
@@ -8718,7 +8723,7 @@ msgstr "جایگزین شده"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
-msgstr "خصوصیاتِ بند"
+msgstr "خصوصیاتِ پاراگراف"
 
 #. Translators: a Microsoft Word revision type (table)
 msgid "table property"
@@ -8789,6 +8794,10 @@ msgstr "توضیح: {text} توسطِ {author} به تاریخِ {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} توسطِ {author} در {date}"
+
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "توضیحِ جدول"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -8905,6 +8914,24 @@ msgstr "زیر‌نویس"
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
 msgstr "روی خط"
+
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "زیرِ %s رفت"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "زیرِ پاراگرافِ خالی رفت"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "روی %s رفت"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "روی پاراگرافِ خالی رفت"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
