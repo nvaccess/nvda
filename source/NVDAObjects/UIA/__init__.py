@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2016 NV Access Limited, Joseph Lee, , Mohammad Suliman
+#Copyright (C) 2009-2016 NV Access Limited, Joseph Lee, Mohammad Suliman
 
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT

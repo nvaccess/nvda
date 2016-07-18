@@ -12,6 +12,7 @@
 - In Microsoft Word, NVDA now reports position information when moving paragraphs (alt+shift+downArrow and alt+shift+upArrow). (#5945)
 - In Microsoft Word, line spacing is now reported via NVDA's report formatting command, when changing it with various Microsoft word shortcut keys, and when moving to text with different line spacing if Report Line Spacing is turned on in NVDA's Document Formatting Settings. (#2961)
 - In Internet Explorer, HTML5 structural elements are now recognised. (#5591)
+- Reporting of comments (such as in Microsoft Word) can now be disabled via a Report Comments checkbox in NVDA's Document Formatting settings dialog. (#5108)
 
 
 == Changes ==
@@ -30,6 +31,9 @@
 - In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)
 - In the Windows 10 Mail app, NVDA no longer fails to read the content of messages. (#5635) 
 - When speak command keys is on, lock keys such as caps lock are no longer announced twice. (#5490)
+- Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)
+- In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)
+- Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
 
 
 = 2016.2.1 =
