@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-22 00:10+1000\n"
-"PO-Revision-Date: 2016-04-21 16:36+0200\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-04 11:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -1196,7 +1196,7 @@ msgstr "الانتقال لعلامة دليلية التالية"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
-msgstr "لا توجد المزيد من العلامات الدليلية"
+msgstr "لا يوجد المزيد من العلامات الدليلية"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
@@ -1228,15 +1228,15 @@ msgstr "الانتقال للملحوظة التالية"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "لا توجد المزيد من الملاحظات"
+msgstr "لا يوجد المزيد من التعليقات التوضيحية"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "الانتقال للملحوظة السابقة"
+msgstr "الانتقال للتعليق التوضيحي السابق"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "لا توجد ملحوظة سابقة"
+msgstr "لا يوجد تعليق توضيحي سابقة"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2634,7 +2634,7 @@ msgstr "غير متاح"
 
 #. Translators: This is presented when a control has focus.
 msgid "focused"
-msgstr "مستعرض"
+msgstr "نشط"
 
 #. Translators: This is presented when the control is selected.
 msgid "selected"
@@ -4814,6 +4814,11 @@ msgstr "مائل"
 msgid "no italic"
 msgstr "ليس مائلا"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "يتوسطه خط مزدوج"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -5697,7 +5702,7 @@ msgstr "اختتام العرض التقديمي"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
-msgstr "لا توجد ملاحظات جانبية بهذه الشريحة"
+msgstr "لا يوجد ملاحظات جانبية بهذه الشريحة"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
@@ -6012,11 +6017,11 @@ msgid "Python console"
 msgstr "بوابة لغة بايثون"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "إ&دارة الإضافات البرمجية"
+msgid "Manage &add-ons..."
+msgstr "إ&دارة الإضافات البرمجية..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "إنشاء نسخة محمولة..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6055,8 +6060,8 @@ msgid "C&ontributors"
 msgstr "أ&سماء فريق العمل"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "رسالة استهلالية"
+msgid "We&lcome dialog..."
+msgstr "رسالة ال&ترحيب"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6999,6 +7004,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "نطق مفا&تيح الاختصارات"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "إصدار &صوت عند الوقوع في أخطاء هجائية أثناء الكتابة"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8627,6 +8637,10 @@ msgstr "التعليق: {text} بواسطة {author} في {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}{description}: {text} بواسطة {author} في {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "وصف الجدول"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "تعيين الصف {rowNumber} العمود {columnNumber}  كبداية لرؤوس الأعمدة"
@@ -8731,6 +8745,24 @@ msgstr "الكتابة التحتية"
 msgid "Baseline"
 msgstr "سطر الأساس"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "تم تحريكها لأسفل %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "تم تحريكها أسفل فقرة فارغة"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "تم تحريكها لأعلى %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "تم تحريكها أعلى فقرة فارغة"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "نمط {styleName}, مستوى المخطط التفصيلي {outlineLevel}"
@@ -8780,7 +8812,7 @@ msgstr "خارج جدول"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "&ملاحظاتمعلومات حول الإضافة البرمجية"
+msgstr "&تعليقات توضيحية"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -8789,6 +8821,24 @@ msgstr "سلسلة الأسطر HIMS Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "الإعلان عن الأخطاء النحوية تعطيل"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "الإعلان عن الأخطاء النحوية تشغيل"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الأخطاء النحوية"
+
+#~ msgid "grammar error"
+#~ msgstr "خطأ نحوي"
+
+#~ msgid "out of grammar error"
+#~ msgstr "خارج الخطأ النحوي"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "الإعلان عن الأخطاء الن&حوِية"
 
 #~ msgctxt "espeak NG NGVarient"
 #~ msgid "none"

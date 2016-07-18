@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-14 16:52+0100\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-09 00:42+0100\n"
 "Last-Translator: zwonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -4907,6 +4907,11 @@ msgstr "kurziv"
 msgid "no italic"
 msgstr "nije kurziv"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dvostruko podcrtavanje"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -6151,11 +6156,11 @@ msgid "Python console"
 msgstr "Python konzola"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "Upravljanje &dodacima"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Stvori prijenosnu kopiju..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6194,7 +6199,7 @@ msgid "C&ontributors"
 msgstr "D&oprinositelji"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "Dijaloški okvir &dobrodošlice"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -7163,6 +7168,11 @@ msgstr "Zvučno signaliziraj pisanje malih slova kada je caps lock uključen"
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Izgovori naredbene &tipke"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "reproduciraj zvuk za pravopisne pogreške prilikom pisanja"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8832,6 +8842,10 @@ msgstr "komentar: {text} od strane {author} datuma {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} datuma {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "opis tablice"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8951,6 +8965,24 @@ msgstr "podpis"
 msgid "Baseline"
 msgstr "osnovni pravac"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "premješteno ispod %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "premješteno ispod praznog odlomaka"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "premješteno iznad %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "premješteno iznad praznog odlomka"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9018,6 +9050,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Izvijesti o gramatičkim pogreškama isključeno"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "izvjesti o gramatičkim pogreškama uključeno"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Uključuje i isključuje izgovor gramatičkih pogrešaka"
+
+#~ msgid "grammar error"
+#~ msgstr "Gramatička greška"
+
+#~ msgid "out of grammar error"
+#~ msgstr "izvan gramatičke greške"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Izvijesti o &gramatičkim pogreškama"
 
 #~ msgid "browse mode"
 #~ msgstr "mod pretraživanja"

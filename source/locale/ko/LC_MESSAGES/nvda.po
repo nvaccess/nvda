@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-03-31 17:03-0800\n"
+"POT-Creation-Date: 2016-05-20 00:10+1000\n"
+"PO-Revision-Date: 2016-06-05 12:40-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -331,7 +331,7 @@ msgstr "구자라트어 1종"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Koine Greek"
-msgstr ""
+msgstr "코 이네 그리스어"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3199,14 +3199,26 @@ msgstr "글꼴 스타일 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "맞춤법 오류 알림 해제"
+msgstr "철자 오류 알림 해제"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "맞춤법 오류 알림"
+msgstr "철자 오류 알림"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
+msgstr "철자 오류 알림을 토글합니다"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors off"
+msgstr "맞춤법 오류 알림 해제"
+
+#. Translators: The message announced when toggling the report grammar errors document formatting setting.
+msgid "report grammar errors on"
+msgstr "맞춤법 오류 알림"
+
+#. Translators: Input help mode message for toggle report grammar errors command.
+msgid "Toggles on and off the reporting of grammar errors"
 msgstr "맞춤법 오류 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
@@ -3501,7 +3513,6 @@ msgid "No caret"
 msgstr "캐럿 없음"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
-#, fuzzy
 msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
@@ -3627,7 +3638,7 @@ msgstr ""
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
-msgstr ""
+msgstr "왼쪽"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -4754,9 +4765,8 @@ msgstr "default style"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, fuzzy
 msgid "{color1} to {color2}"
-msgstr "{backgroundColor} 바탕에 {color}"
+msgstr ""
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
@@ -4775,7 +4785,7 @@ msgid "{backgroundColor} background"
 msgstr "{backgroundColor} 배경 색상"
 
 msgid "background pattern {pattern}"
-msgstr ""
+msgstr "채우기 {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4960,11 +4970,19 @@ msgstr "주석 끝"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "맟춤법 오류"
+msgstr "철자 오류"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "철자 오류 끝"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "맞춤법 오류"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "맞춤법 오류 끝"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -5302,7 +5320,7 @@ msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
-msgstr ": {description}"
+msgstr "{description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 msgid "{number} {candidate}"
@@ -6043,11 +6061,11 @@ msgid "Python console"
 msgstr "Python console"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "추가 기능 관리 (&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "휴대용 버전 만들기 (&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6086,7 +6104,7 @@ msgid "C&ontributors"
 msgstr "NVDA 개발 공헌자 목록 (&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "NVDA 시작 대화상자 (&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -7036,6 +7054,11 @@ msgstr "기능키 알림 (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "입력중 철자 오류 경고음 재생 (&S)"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "다른 프로그램에서의 키보드 입력 처리 (&A)"
 
@@ -7311,7 +7334,12 @@ msgstr "글꼴 스타일 알림 (&Y)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
-msgstr "맞춤법 오류 알림 (&R)"
+msgstr "철자 오류 알림 (&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &grammar errors"
+msgstr "맞춤법 오류 알림 (&G)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7708,116 +7736,106 @@ msgstr "자동 연결"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-#, fuzzy
 msgid "checker"
-msgstr "선택됨"
+msgstr "대각선 교차 무늬"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "crisscross"
-msgstr ""
+msgstr "가는 실선 대각선 교차 무늬"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-#, fuzzy
 msgid "down"
-msgstr "page down"
+msgstr "역대각선 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 16% gray
 msgid "gray16"
-msgstr ""
+msgstr "16% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
 msgid "gray25"
-msgstr ""
+msgstr "25% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
 msgid "gray50"
-msgstr ""
+msgstr "50% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
 msgid "gray75"
-msgstr ""
+msgstr "75% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 8% gray
 msgid "gray8"
-msgstr ""
+msgstr "8% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-#, fuzzy
 msgid "grid"
-msgstr "data grid"
+msgstr "가는 실선 가로 교차 무늬"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
 msgid "horizontal"
-msgstr ""
+msgstr "가로 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-#, fuzzy
 msgid "light down"
-msgstr "쓸어내리기"
+msgstr "가는 실선 역대각선 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-#, fuzzy
 msgid "light horizontal"
-msgstr "오른쪽 control"
+msgstr "가는 실선 가로 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-#, fuzzy
 msgid "light up"
-msgstr "흐린 파랑"
+msgstr "가는 실선 대각선 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#, fuzzy
 msgid "light vertical"
-msgstr "오른쪽 alt"
+msgstr "가는 실선 세로 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
-#, fuzzy
 msgid "none"
-msgstr "안 함"
+msgstr "없음"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "semi gray75"
-msgstr ""
+msgstr "굵은 실선 대각선 교차 무늬"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
 msgid "solid"
-msgstr ""
+msgstr "단색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
 msgid "up"
-msgstr ""
+msgstr "대각선 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#, fuzzy
 msgid "vertical"
-msgstr "세로 정렬(상단)"
+msgstr "세로 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#, fuzzy
 msgid "linear gradient"
-msgstr "슬라브어 1종"
+msgstr "직선 그라데이션"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
-msgstr ""
+msgstr "직각 그라데이션"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
@@ -7871,7 +7889,6 @@ msgid "Already set {address} as start of column headers"
 msgstr "이미 {address}을 열 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "Removed {address}    from column headers"
 msgstr "{address}를 열 머릿말에서 제외"
 
@@ -7896,7 +7913,6 @@ msgid "Already set {address} as start of row headers"
 msgstr "이미 {address}을 행 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, fuzzy
 msgid "Removed {address}    from row headers"
 msgstr "{address}를 행 머릿말에서 제외"
 
@@ -7937,360 +7953,360 @@ msgstr "{firstAddress} {firstContent} 에서 {lastAddress} {lastContent}"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
-msgstr ""
+msgstr "3차원 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr ""
+msgstr "3차원 누적 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
-msgstr ""
+msgstr "100% 기준 누적 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
-msgstr ""
+msgstr "3차원 묶은 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr ""
+msgstr "3차원 누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr ""
+msgstr "3차원 100% 기준 누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
-msgstr ""
+msgstr "3차원 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
-msgstr ""
+msgstr "3차원 묶은 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr ""
+msgstr "3차원 누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr ""
+msgstr "3차원 100% 기준 누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr ""
+msgstr "3차원 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr ""
+msgstr "3차원 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
-msgstr ""
+msgstr "3차원 쪼개진 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
-msgstr ""
+msgstr "영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
-msgstr ""
+msgstr "누적 영역형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
-msgstr ""
+msgstr "묶은 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bar of Pie"
-msgstr ""
+msgstr "원형 대 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr ""
+msgstr "누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr ""
+msgstr "100% 기준 누적 가로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
-msgstr ""
+msgstr "거품형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
-msgstr ""
+msgstr "3차원 효과의 거품형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
-msgstr ""
+msgstr "묶은 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Column"
-msgstr ""
+msgstr "누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr ""
+msgstr "100% 기준 누적 세로 막대형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
-msgstr ""
+msgstr "묶은 원뿔형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
-msgstr ""
+msgstr "누적 원뿔형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
-msgstr ""
+msgstr "100% 기준 누적 원뿔형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr ""
+msgstr "3차원 원뿔형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Column"
-msgstr ""
+msgstr "묶은 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
-msgstr ""
+msgstr "누적 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
-msgstr ""
+msgstr "100% 기준 누적 원뿔형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
-msgstr ""
+msgstr "묶은 원통형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
-msgstr ""
+msgstr "묶은 원통형 세로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
-msgstr ""
+msgstr "100% 기준 누적 원통형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr ""
+msgstr "3차원 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
-msgstr ""
+msgstr "100% 기준 누적 원통형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
-msgstr ""
+msgstr "도넛형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
-msgstr ""
+msgstr "쪼개진 도넛형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr ""
+msgstr "꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
-msgstr ""
+msgstr "표식이 있는 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
-msgstr ""
+msgstr "표식이 있는 누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr ""
+msgstr "표식이 있는 100% 기준 누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
-msgstr ""
+msgstr "누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr ""
+msgstr "100% 기준 누적 꺾은선형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie"
-msgstr ""
+msgstr "원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
-msgstr ""
+msgstr "쪼개진 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
-msgstr ""
+msgstr "원형 대 원형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
-msgstr ""
+msgstr "묶은 피라미드형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
-msgstr ""
+msgstr "누적 피라미드형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
-msgstr ""
+msgstr "100% 기준 누적 피라미드형 가로"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
-msgstr ""
+msgstr "3차원 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Column"
-msgstr ""
+msgstr "묶은 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
-msgstr ""
+msgstr "누적 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
-msgstr ""
+msgstr "100% 기준 누적 피라미드형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar"
-msgstr ""
+msgstr "방사형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
-msgstr ""
+msgstr "채워진 방사형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
-msgstr ""
+msgstr "표식이 있는 방사형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
-msgstr ""
+msgstr "고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr ""
+msgstr "시가-고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
-msgstr ""
+msgstr "거래량-고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
-msgstr ""
+msgstr "거래량-시가-고가-저가-종가"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
-msgstr ""
+msgstr "3차원 표면형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
-msgstr ""
+msgstr "표면형 (조감도)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
-msgstr ""
+msgstr "표면형 (골격형 조감도)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr ""
+msgstr "3차원 표면형 (골격형)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
-msgstr "분산형"
+msgstr "표식만 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines"
-msgstr ""
+msgstr "직선 및 표식이 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
-msgstr ""
+msgstr "직선이 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
-msgstr ""
+msgstr "곡선 및 표식이 있는 분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr ""
+msgstr "곡선이 있는 분산형"
 
 #. Translators: Message reporting the title and type of a chart.
 msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "차트 제목: {chartTitle}, 형식: {chartType}"
+msgstr "차트 제목: {chartTitle}, 종류: {chartType}"
 
 #. Translators: Reported when there is no title for an axis in a chart.
 msgid "Not defined"
-msgstr ""
+msgstr "정의되지 않음"
 
 #. Translators: A type of axis in a chart.
 #. Translators: The category axis in a Microsoft Excel chart.
@@ -8313,7 +8329,7 @@ msgstr "계열"
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
 msgid "{axisName} Axis is {axisTitle}"
-msgstr ""
+msgstr "{axisName} 축 {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
@@ -8330,7 +8346,7 @@ msgstr "계열 {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
-msgstr ""
+msgstr "계열 정의되지 않음."
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
@@ -8354,7 +8370,7 @@ msgstr "계열 색상: {colorName} "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
-msgstr ""
+msgstr "단위 레이블 표시"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
@@ -8370,7 +8386,7 @@ msgstr "Pivot Chart Drop Zone"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
-msgstr "Pivot Chart Field Button"
+msgstr "피벗 차트 필드 버튼"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Down Bars"
@@ -8382,7 +8398,7 @@ msgstr "하강선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
-msgstr ""
+msgstr "최고 최저값 연결선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
@@ -8410,7 +8426,7 @@ msgstr "밑면"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Nothing"
-msgstr ""
+msgstr "없음"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
@@ -8484,7 +8500,7 @@ msgstr " 분수 {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr ""
+msgstr " {segmentType} {pointIndex} 총 {pointCount}"
 
 #. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
@@ -8558,7 +8574,7 @@ msgstr "범례 없음"
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "범례 항목 계열 {seriesName} {seriesIndex} 총 {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -8762,19 +8778,16 @@ msgid "Justified"
 msgstr "양쪽 맞춤"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Superscript"
-msgstr "superscript"
+msgstr "Superscript"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Subscript"
-msgstr "subscript"
+msgstr "Subscript"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Baseline"
-msgstr "baseline"
+msgstr "Baseline"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"

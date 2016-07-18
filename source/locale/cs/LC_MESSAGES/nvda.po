@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-05-01 16:23+0100\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-06-30 16:41+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -4866,6 +4866,11 @@ msgstr "kurzíva"
 msgid "no italic"
 msgstr "není kurzíva"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dvojí přeškrtnutí"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -6066,11 +6071,11 @@ msgid "Python console"
 msgstr "Python &konzole"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Spravovat doplňky"
+msgid "Manage &add-ons..."
+msgstr "Spravovat &doplňky..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Vytvořit Přenosnou kopii..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6109,8 +6114,8 @@ msgid "C&ontributors"
 msgstr "Tým NVDA"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Uvítací &dialog"
+msgid "We&lcome dialog..."
+msgstr "Uvítací &dialog..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7064,6 +7069,11 @@ msgstr "Pípat při psaní malých písmen, je-li zapnutý caps lock"
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Hlásit &příkazové klávesy"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Při psaní oznámit zvukem &pravopisné chyby"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8688,6 +8698,10 @@ msgstr "komentář: {text} od {author} dne {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dne {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Popis tabulky"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8798,6 +8812,24 @@ msgstr "Dolní index"
 msgid "Baseline"
 msgstr "Bez indexů"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Přesunuto pod %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Přesunuto pod prázdný odstavec"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Přesunuto nad %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Přesunuto nad prázdný odstavec"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "styl {styleName}, úroveň zobrazení {outlineLevel}"
@@ -8856,6 +8888,24 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "hlásit gramatické chyby vypnuto"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "hlásit gramatické chyby zapnuto"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Zapíná a vypíná hlášení gramatických chyb"
+
+#~ msgid "grammar error"
+#~ msgstr "gramatická chyba"
+
+#~ msgid "out of grammar error"
+#~ msgstr "vně gramatické chyby"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Hlásit &gramatické chyby"
 
 #~ msgid "browse mode"
 #~ msgstr "režim prohlížení"

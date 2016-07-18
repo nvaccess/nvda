@@ -37,7 +37,7 @@ Poza angielskim, NVDA został przetłumaczony na 47 języków, w tym: afrykaners
 ++ Obsługa Syntezatora Mowy ++
 NVDA oferuje wiele wersji językowych interfejsu i daje możliwość odczytywania treści w każdym języku wspieranym przez zainstalowany w systemie syntezator mowy.
 
-Podstawowym, dołączonym do programu syntezatorem mowy jest darmowy wielojęzyczny syntezator [eSpeak http://espeak.sourceforge.net/], który jest wolnym oprogramowaniem.
+Podstawowym, dołączonym do programu syntezatorem mowy, jest darmowy wielojęzyczny syntezator [eSpeak NG https://github.com/espeak-ng/espeak-ng], który jest wolnym oprogramowaniem.
 
 Informacje o innych syntezatorach mowy, które obsługuje NVDA można znaleźć w rozdziale [Obsługiwane syntezatory mowy #SupportedSpeechSynths].
 
@@ -299,7 +299,7 @@ Do poruszania się w struktórze tabel słurzą następujące klawisze poleceń:
 | Przejdź do następnej linii | CTRL+ALT+strzałka w dół | Przenosi do następnej linii. |
 %kc:endInclude
 
-++ Nawigacja w Hierarchii Obiektów ++
+++ Nawigacja w Hierarchii Obiektów ++[ObjectNavigation]
 Przez większość czasu będziesz pracować z aplikacjami używając komend przenoszących [punkt uwagi #SystemFocus] i [kursor systemowy #SystemCaret].
 Czasem jednak możesz chcieć eksplorować aktualną aplikację lub system operacyjny bez przemieszczania punktu uwagi lub kursora.
 Może się też zdarzyć konieczność pracy z  [obiektami #Objects], do których nie można uzyskać dostępu przy użyciu klawiatury.
@@ -372,7 +372,7 @@ Do przeglądania tekstu są dostępne następujące polecenia:
 | Odczytaj wszystko z przeglądu | numeryczny Plus | NVDA+shift+a | machnięcie trzema palcami w dół (tryb tekstowy) | Odczytuje od punktu przeglądu do końca tekstu. |
 | Kopiuj od punktu zaznaczenia | NVDA+f9 | nvda+f9 | brak | Ustawia w aktualnym punkcie przeglądu początek zaznaczenia kopiowanego tekstu. |
 | Kopiuj do punktu zaznaczenia | NVDA+f10 | NVDA+f10 | brak | Kopiuje do systemowego schowka tekst od początku zaznaczenia do aktualnego punktu przeglądu, włączając w to znak, na którym znajduje się punkt przeglądu. |
-| Informacje o formatowaniu | NVDa+f | NVDA+F | brak | odczytuje informacje o formatowaniu tekstu pod kursorem. |
+| Informacje o formatowaniu | NVDa+f | NVDA+F | brak | odczytuje informacje o formatowaniu tekstu pod kursorem. Podwójne naciśnięcie prezentuje informację w trybie czytania. |
 %kc:endInclude
 
 UWAGA: Aby skróty na klawiaturze numerycznej działały poprawnie, należy wyłączyć klawisz Num Lock.
@@ -442,7 +442,7 @@ Nawigacja myszą powinna odbywać się przy użyciu fizycznej myszy lub trackpad
 | Przejdź do obiektu pod myszą | NVDA+numeryczna Gwiazdka | NVDA+shift+n | Przenosi obiekt nawigatora do obiektu znajdującego się pod wskaźnikiem myszy. |
 %kc:endInclude
 
-+ Tryb czytania +
++ Tryb czytania +[BrowseMode]
 Złożone dokumenty przeznaczone tylko do odczytywania, na przykład strony internetowe, przedstawiane są w NVDA w trybie czytania.
 Dotyczy to dokumentów wyświetlanych w programach Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, wiadomości HTML w Microsoft Outlook, Google Chrome, Adobe Reader i Adobe Flash.
 Tryb czytania jest również opcjonalnie dostępny dla dokumentów w programie Microsoft Word . 
@@ -483,7 +483,7 @@ Naciśnięcie litery przechodzi do następnego elementu odpowiedniego typu, nato
 - I: element listy
 - T: tabela
 - K: link
-- N: tekst nie będący linkiem
+- N: tekst niebędący linkiem
 - F: pole formularza
 - U: nieodwiedzony link
 - V: odwiedzony link
@@ -629,12 +629,12 @@ Podobnie jak na stronach internetowych, NVDA posiada listę elementów dla Micro
 Aby otworzyć listę elementów w Excel, naciśnij NVDA+f7.
 %kc:endInclude
 Różne typy informacji na liście elementów to:
-- Wykresy: wymienia wszystkie wykresy w skoroszycie. 
+- Wykresy: wymienia wszystkie wykresy w aktywnym arkuszu. 
 Wybranie wykresu i naciśnięcie Enter lub przycisku "idź do" przeniesie punkt uwagi do tego wykresu, umożliwiając nawigację i odczyt strzałkami.
-- komentarze: wszystkie komórki w skoroszycie zawierające komentarze. 
-Są wyświetlanea dres komórki i jej komentarze. 
+- komentarze: wszystkie komórki w aktywnym arkuszu, zawierające komentarze. 
+Wyświetlany jest  adres komórki i jej komentarze. 
 Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranej komórki.
-- Formuły: Wymienia wszystkie komórki w skoroszycie, które zawierają formułę. 
+- Formuły: Wymienia wszystkie komórki w arkuszu, które zawierają formułę. 
 Wyświetlany jest adres komórki, oraz zawarta w niej formuła.
 Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranej komórki.
 - Arkusze: wyświetla wszystkie arkusze w skoroszycie. 
@@ -646,7 +646,7 @@ Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranego a
 %kc:beginInclude
 Aby odczytać komentarz zaznaczonej komórki, naciśnij NVDA+alt+c.
 %kc:endInclude
- Wszystkie komentarze skoroszytu mogą być wymienione na liście elementów NVDA.
+ Wszystkie komentarze arkusza mogą być wymienione na liście elementów NVDA.
 
 +++ Odczyt zablokowanych komórek +++
 Jeśli skoroszyt został zabezpieczony, może nie być możliwe przejście do niektórych komórek, które zostały zablokowane do edycji.
@@ -784,8 +784,8 @@ Za pomocą strzałek możesz przechodzić kolejno przez wszystkie głosy słucha
 Strzałkami w lewo i w górę przesuwasz się w górę listy, a strzałkami w prawo i w dół przesuwasz się w dół.
 
 ==== Wariant ====
-Jeśli korzystasz z dołączonego do NVDA syntezatora eSpeak, pole rozwijalne Wariant umożliwia zmianę brzmienia dla aktualnie używanego głosu.
-Warianty głosu Espeaka to w zasadzie różne głosy, jako że modyfikują one parametry brzmienia głosu Espeak.
+Jeśli korzystasz z dołączonego do NVDA syntezatora eSpeak NG, pole rozwijalne Wariant umożliwia zmianę brzmienia dla aktualnie używanego głosu.
+Warianty głosu Espeak NG to w zasadzie różne głosy, jako że modyfikują one parametry brzmienia głosu Espeak NG.
 Niektóre warianty będą brzmieć jak mężczyzna, inne jak kobieta, a jeszcze inne - jak żaba.
 
 ==== Prędkość ====
@@ -800,12 +800,12 @@ Jest to suwak, który zmienia wysokość głosu w skali od 0 do 100, (0 oznacza 
 Jest to suwak służący do zmiany natężenia głosu w skali od 0 do 100, (0 oznacza głos najcichszy, 100 najgłośniejszy).
 
 ==== Modulacja ====
-Jest to suwak służący do zmiany intonacji (unoszenia i opadania) głosu w skali od 0 do 100, (0 oznacza głos najbardziej monotonny, 100 najbardziej melodyjny). (Zmiana modulacji możliwa jest jedynie w przypadku syntezatora eSpeak.)
+Jest to suwak służący do zmiany intonacji (unoszenia i opadania) głosu w skali od 0 do 100, (0 oznacza głos najbardziej monotonny, 100 najbardziej melodyjny). (Zmiana modulacji możliwa jest jedynie w przypadku syntezatora eSpeak NG.)
 
 ==== automatycznie zmieniaj język ====
 To pole wyboru przełącza ustawienie automatycznej zmiany języka syntezatora w locie. Opcja ta działa tylko wówczas, gdy odpowiedni język jest zadeklarowany w kodzie dokumentu. 
 Domyślnie pole to jest zaznaczone.
-Aktualnie tylko syntezator Espeak obsługuję automatyczną zmianę języka .
+Aktualnie tylko syntezator Espeak NG obsługuje automatyczną zmianę języka .
 
 ==== Automatycznie zmieniaj dialekt ====
 To pole wyboru pozwala ustalić, czy dialekt powinien być zmieniany w trakcie czytania. 
@@ -991,6 +991,10 @@ Skrót Klawiszowy: NVDA+4
 
 Jeśli zaznaczysz to pole, NVDA będzie wypowiadać naciskane klawisze, którym nie odpowiadają znaki pisarskie, na przykład klawisze funkcyjne lub kombinacje Kontrol+litera.
 
+==== Odtwarzaj dźwięk przy błędach pisowni podczas wpisywania ====
+Gdy włączone, krótki dźwięk alarmu zostanie odtworzony, gdy słowo, które wpisujesz, zawiera błąd pisowni.
+Ta opcja jest dostępna tylko jeśli włączone jest zgłaszanie błędów pisowni w oknie [Ustawień formatowania #DocumentFormattingSettings] NVDA.
+
 ==== Przetwarzaj klawisze z innych aplikacji ====
 Ta opcja pozwala kontrolować, czy naciśnięcia klawiszy generowane przez aplikacje takie jak klawiatury ekranowe i aplikacje rozpoznawania mowy, powinny być przetwarzane przez NVDA. 
 Opcja jest domyślnie włączona, aczkolwiek niektórzy użytkownicy mogą chcieć ją wyłączyć, np. aby pisać w języku wietnamskim przy użyciu programu Unikey - pozostawienie jej wówczas włączonej powodowałoby wprowadzanie nieprawidłowych znaków.
@@ -1170,7 +1174,7 @@ Na przykład, gdy poruszając się strzałkami po stronie internetowej natrafisz
 ==== Sygnalizuj dźwiękiem tryby przeglądania ====
 Jeśli ta opcja jest włączona, NVDA będzie sygnalizować dźwiękiem przełączanie się między trybem czytania i trybem formularza, zamiast ogłaszać te zmiany mową.
 
-==== Nie przekazuj do dokumentu zdarzeń wejścia nie będących poleceniami ====
+==== Nie przekazuj do dokumentu zdarzeń wejścia niebędących poleceniami ====
 Domyślnie włączone, to ustawienie pozwala zdecydować, że zdarzenia wejścia, (takie jak naciskane klawisze) które nie są poleceniami NVDA, ani nie wyglądają na polecenia aplikacji, powinny być nieprzekazywane do dokumentu, w którym znajduje się punkt uwagi. 
 Dla przykładu: jeśli to ustawienie jest włączone i naciśnięto literę j, zostanie ona zignorowana, ponieważ nie jest komendą szybkiej nawigacji i nie wydaje się być poleceniem aplikacji.
 
@@ -1463,22 +1467,22 @@ Po aktywacji tego polecenia wszystkie moduły aplikacji oraz wtyczki zostaną pr
 Ten rozdział zawiera informacje na temat syntezatorów mowy wspieranych przez NVDA.
 Dla jeszcze bardziej rozszerzonej listy darmowych i komercyjnych syntezatorów, które możesz pobrać i zakupić do użytkowania z NVDA, proszę zajrzeć na stronę [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-[eSpeak http://espeak.sourceforge.net/] jest to syntezator wbudowany bezpośrednio w NVDA i nie wymaga specjalnych sterowników lub innych komponentów, które muszą być zainstalowane. 
-NVDA uruchamiając się  używa domyślnie eSpeak.
+++ eSpeak NG ++
+[eSpeak NG https://github.com/espeak-ng/espeak-ng] jest to syntezator wbudowany bezpośrednio w NVDA i nie wymaga specjalnych sterowników lub innych komponentów, które muszą być zainstalowane. 
+NVDA uruchamiając się  używa domyślnie eSpeak NG.
 Jako że syntezator ten jest wbudowany w NVDA, jest to doskonały wybór przy uruchamianiu NVDA z napędu USB na innych systemach.
 
-Każdy głos pochodzący z eSpeaka mówi innym językiem. 
-Ponad 43 różne języki są  obsługiwane przez eSpeak.
+Każdy głos eSpeak NG, mówi innym językiem. 
+Ponad 43 różne języki są  obsługiwane przez eSpeak NG.
 
 Istnieje również wiele wariantów, które mogą być wybrane do zmiany brzmienia głosu.
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 to starszy standard oprogramowania Microsoftu dla syntezatorów mowy.
-Wiele syntezatorów mowy, które są zgodne z tym standardem można nabyć z różnych firm lub pobrać ze stron internetowych.
-Podczas korzystania przez NVDA z tych syntezatorów, można zmieniać głosy w oknie dialogowym [Ustawienia Głosu #VoiceSettings] lub poprzez [Szybką zmianę ustawień syntezatora #SynthSettingsRing]. Dostępne są wszystkie głosy ze wszystkich zainstalowanych silników SAPI4 znalezionych w systemie.
+NVDA nadal obsługuje ten standard dla użytkowników, którzy już posiadają zainstalowane syntezatory SAPI 4.
+Microsoft jednak nie wspiera już tego standardu i potrzebne komponenty nie są już dostępne ze strony Microsoft.
 
-Jeśli masz zainstalowane głosy syntezatora SAPI4, ale nie pojawiają się one na liście syntezatorów w NVDA, należy zainstalować binaria runtime SAPI 4.0, dostępne na stronie http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Podczas korzystania przez NVDA z tych syntezatorów, można zmieniać głosy w oknie dialogowym [Ustawienia Głosu #VoiceSettings] lub poprzez [Szybką zmianę ustawień syntezatora #SynthSettingsRing]. Dostępne są wszystkie głosy ze wszystkich zainstalowanych silników SAPI4 znalezionych w systemie.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 to standard Microsoftu dla oprogramowania syntezatorów mowy.
@@ -2105,7 +2109,7 @@ Dla monitorów z klawiaturą brajlowską, BRLTTY aktualnie sam zarządza wprowad
 W związku z tym, ustawienie w NVDA tabeli wprowadzania nie ma zastosowania.
 
 Poniżej wykaz poleceń brltty dla nvda. 
-Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyTables/] by dowiedzieć się, jak poszczególne komendy programu wywołać za pomocą klawiszy poszczególnych monitorów.
+Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyBindings/] by dowiedzieć się, jak poszczególne komendy programu wywołać za pomocą klawiszy poszczególnych monitorów.
 %kc:beginInclude
 || Działanie | komenda brltty |
 | Przewiń brajla do tyłu | fwinlt (go left one window) |

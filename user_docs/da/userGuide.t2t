@@ -646,7 +646,7 @@ Tryk på Enter eller "Flyt til"-knappen på et ark for at skifte til arket.
 %kc:beginInclude
 For at få oplæst en kommentar for den celle, som er i fokus, skal du trykke NVDA+alt+c.
 %kc:endInclude
-Du kan også få vist alle kommentarer i projektmappen i elementlisten.
+Du kan også få vist alle kommentarer i projektarket i elementlisten.
 
 +++ Læsning af beskyttede celler +++
 Hvis en projektmappe er blevet skrivebeskyttet, kan det være, det ikke er muligt at flytte fokus til de celler, der er låst for redigering.
@@ -990,6 +990,10 @@ Derfor kan det være meget rart at blive advaret om det.
 Tast: NVDA+4
 
 Når denne funktion er slået til, oplæser NVDA alle taster på tastaturet, der ikke er bogstaver, når du trykker på dem. Dette omfatter ligeledes tastekombinationer som Ctrl plus et bogstav.
+
+====Afspil lyd for stavefejl ved skrivning ====
+Når denne indstilling er aktiveret vil der blive afspillet en lyd, hvis du begår en stavefejl imens du skriver.
+Denne indstilling er kun tilgængelig hvis "Annoncér stavefejl" indstillingen er slået til i NVDAs [Dokumentformatering #DocumentFormattingSettings] dialog.
 
 ==== Håndter tastetryk fra andre programmer ====
 Med denne indstilling kan du vælge, om NVDA skal behandle tastetryk, der bliver genereret af andre programmer som fx. skærmtastaturer eller talegenkendelsesprogrammer. 
@@ -1479,8 +1483,6 @@ NVDA understøtter denne talesyntese for brugere, som allerede har SAPI 4 syntes
 Microsoft understøtter derimod ikke længere talesyntesen og nødvendige komponenter er ikke længere tilgængelige fra Microsoft.
 
 Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via den cirkulære menu Talesyntese-indstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 4 talesynteser, der er installeret på dit system.
-
-Hvis dine installerede SAPI 4 talesynteser ikke fremkommer i NVDAs liste med talesynteser, skal du installere SAPI 4.0 pakkerne (SAPI 4.0 runtime binaries). De kan hentes på http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 er en standard fra Microsoft for software-talesynteser.

@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
+"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -4273,7 +4273,7 @@ msgstr "Verschiedenes"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr "Strg+Alt+N"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -4927,6 +4927,11 @@ msgstr "kursiv"
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "nicht kursiv"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "doppelt durchgestrichen"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -6200,11 +6205,11 @@ msgid "Python console"
 msgstr "Python-&Konsole"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "&Erweiterungen verwalten"
+msgid "Manage &add-ons..."
+msgstr "&Erweiterungen verwalten..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Portable &Version erstellen..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6243,8 +6248,8 @@ msgid "C&ontributors"
 msgstr "&mitwirkende"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "&Willkommensdialog"
+msgid "We&lcome dialog..."
+msgstr "Wi&llkommensdialog"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7226,6 +7231,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "&Funktionstasten ansagen"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "K&lang bei Rechtschreibfehlern während der Eingabe abspielen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8911,6 +8921,10 @@ msgstr "Kommentar: {text} von {author} am {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} von {author} am {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Tabellenbeschreibung"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -9041,6 +9055,24 @@ msgstr "tiefgestellt"
 msgid "Baseline"
 msgstr "Grundlinie"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "unter %s verschoben"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "unter leeren Absatz verschoben"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "über %s verschoben"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "über leeren Absatz verschoben"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9107,6 +9139,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Grammatikfehler nicht ansagen"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "Grammatikfehler ansagen"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "schaltet die ansage von Grammatikfehlern ein oder aus"
+
+#~ msgid "grammar error"
+#~ msgstr "Grammatikfehler"
+
+#~ msgid "out of grammar error"
+#~ msgstr "Ende des Grammatikfehlers"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "&Grammatikfehler ansagen"
 
 #~ msgid "browse mode"
 #~ msgstr "Lesemodus"

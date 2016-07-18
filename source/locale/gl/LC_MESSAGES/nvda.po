@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-03-31 22:01+0100\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-03 13:32+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ó Galego <oprisniki@gmail.com>\n"
 "Language: gl_ES\n"
@@ -4904,6 +4904,11 @@ msgstr "cursiva"
 msgid "no italic"
 msgstr "non hai cursivas"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "tachado dobre"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -6148,12 +6153,12 @@ msgid "Python console"
 msgstr "Consola de Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Administrador de &complementos"
+msgid "Manage &add-ons..."
+msgstr "Administrador de &complementos..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
-msgstr "Criar copia Portable..."
+msgid "Create portable copy..."
+msgstr "Crear copia Portable..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -6191,8 +6196,8 @@ msgid "C&ontributors"
 msgstr "&Colaboradores"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Diálogo &Benvido"
+msgid "We&lcome dialog..."
+msgstr "Diálogo de &Benvida..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7156,6 +7161,11 @@ msgstr "Pitar se se teclean letras en minúsculas cando BloqMaius está activado
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "falar &teclas de ordes"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Reproducir son para erros de &ortografía mentres se escrebe"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8830,6 +8840,10 @@ msgstr "comentario: {text} por {author} en {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} en {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Descripción de táboa"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8955,6 +8969,24 @@ msgstr "Subíndice"
 msgid "Baseline"
 msgstr "Liña de base"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Movido %s abaixo"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Parágrafo en branco movido abaixo"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Movido %s arriba"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Parágrafo en branco movido arriba"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9021,6 +9053,24 @@ msgstr "Series das HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Anunciar erros gramaticais desativado"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "Anunciar erros gramaticais ativado"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Activa e desactiva o anunciado dos erros gramaticais"
+
+#~ msgid "grammar error"
+#~ msgstr "erro gramatical"
+
+#~ msgid "out of grammar error"
+#~ msgstr "Fóra do erro gramatical"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Anunciar erros &gramaticais"
 
 #~ msgid "browse mode"
 #~ msgstr "modo navegación"

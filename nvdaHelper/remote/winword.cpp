@@ -73,7 +73,6 @@ using namespace std;
 #define wdDISPID_CONTENTCONTROL_TITLE 12
 #define wdDISPID_STYLE_NAMELOCAL 0
 #define wdDISPID_STYLE_PARENT 1002
-#define wdDISPID_RANGE_GRAMMATICALERRORS 315
 #define wdDISPID_RANGE_SPELLINGERRORS 316
 #define wdDISPID_SPELLINGERRORS_ITEM 0
 #define wdDISPID_SPELLINGERRORS_COUNT 1
@@ -85,12 +84,17 @@ using namespace std;
 #define wdDISPID_FONT_BOLD 130
 #define wdDISPID_FONT_ITALIC 131
 #define wdDISPID_FONT_UNDERLINE 140
+#define wdDISPID_FONT_STRIKETHROUGH 135
+#define wdDISPID_FONT_DOUBLESTRIKETHROUGH 136
 #define wdDISPID_FONT_NAME 142
 #define wdDISPID_FONT_SIZE 141
 #define wdDISPID_FONT_SUBSCRIPT 138
 #define wdDISPID_FONT_SUPERSCRIPT 139
 #define wdDISPID_RANGE_PARAGRAPHFORMAT 1102
 #define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
+#define wdDISPID_PARAGRAPHFORMAT_LINESPACING 109
+#define wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE 110
+
 #define wdDISPID_RANGE_LISTFORMAT 68
 #define wdDISPID_LISTFORMAT_LISTSTRING 75
 #define wdDISPID_RANGE_PARAGRAPHS 59
@@ -123,6 +127,8 @@ using namespace std;
 #define wdDISPID_TABLES_ITEM 0
 #define wdDISPID_TABLE_NESTINGLEVEL 108
 #define wdDISPID_TABLE_RANGE 0
+#define wdDISPID_TABLE_TITLE 209
+#define wdDISPID_TABLE_DESCR 210
 #define wdDISPID_TABLE_BORDERS 1100
 #define wdDISPID_BORDERS_ENABLE 2
 #define wdDISPID_RANGE_CELLS 57
@@ -188,6 +194,7 @@ using namespace std;
 #define formatConfig_reportRevisions 32768
 #define formatConfig_reportParagraphIndentation 65536
 #define formatConfig_includeLayoutTables 131072
+ #define formatConfig_reportLineSpacing 262144
  
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables)
@@ -328,7 +335,7 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 	return foundFormField;
 }
 
-bool collectSpellingGrammarErrorOffsets(int spellingGrammarErrorsDispId, IDispatchPtr pDispatchRange, vector<pair<long,long>>& errorVector) {
+bool collectSpellingErrorOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& errorVector) {
 	IDispatchPtr pDispatchApplication=NULL;
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_APPLICATION ,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		return false;
@@ -340,7 +347,7 @@ bool collectSpellingGrammarErrorOffsets(int spellingGrammarErrorsDispId, IDispat
 		return false;
 	}
 	IDispatchPtr pDispatchSpellingErrors=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange,spellingGrammarErrorsDispId,VT_DISPATCH,&pDispatchSpellingErrors)!=S_OK||!pDispatchSpellingErrors) {
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)!=S_OK||!pDispatchSpellingErrors) {
 		return false;
 	}
 	long iVal=0;
@@ -363,8 +370,10 @@ bool collectSpellingGrammarErrorOffsets(int spellingGrammarErrorsDispId, IDispat
 	return !errorVector.empty();
 }
 
+// #6033: This must not be a static variable inside the function
+// because that causes crashes on Windows XP (Visual Studio bug 1941836).
+vector<wstring> headingStyleNames;
 int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
-	static vector<wstring> headingNames;
 	IDispatchPtr pDispatchStyle=NULL;
 	// fetch the localized style name for the given paragraph
 	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_STYLE,VT_DISPATCH,&pDispatchStyle)!=S_OK||!pDispatchStyle) {
@@ -376,7 +385,7 @@ int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
 		return 0;
 	}
 	// If not fetched already, fetch all builtin heading style localized names (1 through 9).
-	if(headingNames.empty()) {
+	if(headingStyleNames.empty()) {
 		IDispatchPtr pDispatchDocument=NULL;
 		IDispatchPtr pDispatchStyles=NULL;
 		if(_com_dispatch_raw_propget(pDispatchStyle,wdDISPID_STYLE_PARENT,VT_DISPATCH,&pDispatchDocument)==S_OK&&pDispatchDocument&&_com_dispatch_raw_propget(pDispatchDocument,wdDISPID_DOCUMENT_STYLES,VT_DISPATCH,&pDispatchStyles)==S_OK&&pDispatchStyles) {
@@ -387,7 +396,7 @@ int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
 					BSTR builtinNameLocal=NULL;
 					_com_dispatch_raw_propget(pDispatchBuiltinStyle,wdDISPID_STYLE_NAMELOCAL,VT_BSTR,&builtinNameLocal);
 					if(!builtinNameLocal) continue;
-					headingNames.push_back(builtinNameLocal);
+					headingStyleNames.push_back(builtinNameLocal);
 					SysFreeString(builtinNameLocal);
 				}
 			}
@@ -396,7 +405,7 @@ int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
 	int level=0;
 	int count=1;
 	// See if the style name matches one of the builtin heading styles
-	for(auto i=headingNames.cbegin();i!=headingNames.cend();++i) {
+	for(auto i=headingStyleNames.cbegin();i!=headingStyleNames.cend();++i) {
 		if(i->compare(nameLocal)==0) {
 			level=count;
 			break;
@@ -553,6 +562,26 @@ int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int st
 	if(!inTableCell) return numTags;
 	numTags+=2;
 	XMLStream<<L"<control role=\"table\" table-id=\"1\" table-rowcount=\""<<rowCount<<L"\" table-columncount=\""<<columnCount<<L"\" level=\""<<nestingLevel<<L"\" ";
+	wstring altTextStr=L"";
+	BSTR altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_TITLE,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		SysFreeString(altText);
+	}
+	if(!altTextStr.empty()) {
+		XMLStream<<L"alwaysReportName=\"1\" name=\""<<altTextStr<<L"\" ";
+		altTextStr=L"";
+	}
+	altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_DESCR,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		XMLStream<<L"longdescription=\""<<altTextStr<<L"\" ";
+		SysFreeString(altText);
+	}
 	IDispatchPtr pDispatchTableRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_RANGE,VT_DISPATCH,&pDispatchTableRange)==S_OK&&pDispatchTableRange) {
 		if(_com_dispatch_raw_propget(pDispatchTableRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
@@ -584,7 +613,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
-	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)) {
+	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)||(formatConfig&formatConfig_reportLineSpacing)) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
 			if(formatConfig&formatConfig_reportAlignment) {
@@ -605,8 +634,8 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					}
 				}
 			}
+			float fVal=0.0;
 			if(formatConfig&formatConfig_reportParagraphIndentation) {
-				float fVal=0.0;
 				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT,VT_R4,&fVal)==S_OK) {
 					formatAttribsStream<<L"right-indent=\"" << fVal <<L"\" ";
 				}
@@ -621,6 +650,14 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LEFTINDENT,VT_R4,&fVal)==S_OK) {
 					if(firstLineIndent<0) fVal+=firstLineIndent;
 					formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
+				}
+			}
+			if(formatConfig&formatConfig_reportLineSpacing) {
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE,VT_I4,&iVal)==S_OK) {
+					formatAttribsStream<<L"wdLineSpacingRule=\"" << iVal <<L"\" ";
+				}
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACING,VT_R4,&fVal)==S_OK) {
+					formatAttribsStream<<L"wdLineSpacing=\"" << fVal <<L"\" ";
 				}
 			}
 		}
@@ -698,6 +735,11 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					formatAttribsStream<<L"text-position=\"super\" ";
 				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"text-position=\"sub\" ";
+				}
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_STRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"1\" ";
+				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_DOUBLESTRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"double\" ";
 				}
 			}
 		}
@@ -846,11 +888,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	}
 	//Check for any inline shapes in the entire range to work out whether its worth checking for them by word
 	bool hasInlineShapes=(getInlineShapesCount(pDispatchRange)>0);
-	vector<pair<long,long> > spellingErrorVector;
-	vector<pair<long,long> > grammarErrorVector;
+	vector<pair<long,long> > errorVector;
 	if(formatConfig&formatConfig_reportSpellingErrors) {
-		collectSpellingGrammarErrorOffsets(wdDISPID_RANGE_SPELLINGERRORS,pDispatchRange,spellingErrorVector);
-		collectSpellingGrammarErrorOffsets(wdDISPID_RANGE_GRAMMATICALERRORS,pDispatchRange,grammarErrorVector);
+		collectSpellingErrorOffsets(pDispatchRange,errorVector);
 	}
 	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkStartOffset=args->startOffset;
@@ -949,15 +989,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream);
-			for(auto i=spellingErrorVector.cbegin();i!=spellingErrorVector.cend();++i) {
+			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
 				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
 					XMLStream<<L" invalid-spelling=\"1\" ";
-					break;
-				}
-			}
-			for(auto i=grammarErrorVector.cbegin();i!=grammarErrorVector.cend();++i) {
-				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
-					XMLStream<<L" invalid-grammar=\"1\" ";
 					break;
 				}
 			}

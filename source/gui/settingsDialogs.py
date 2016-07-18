@@ -1078,6 +1078,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.colorCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
+		self.commentsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report co&mments"))
+		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
+		settingsSizer.Add(self.commentsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.revisionsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &editor revisions"))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
 		settingsSizer.Add(self.revisionsCheckBox,border=10,flag=wx.BOTTOM)
@@ -1096,11 +1101,6 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.spellingErrorsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report spelling e&rrors"))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 		settingsSizer.Add(self.spellingErrorsCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
-		self.grammarErrorsCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Report &grammar errors"))
-		self.grammarErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportGrammarErrors"])
-		settingsSizer.Add(self.grammarErrorsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		self.pageCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &pages"))
@@ -1122,6 +1122,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.paragraphIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraph indentation"))
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
 		settingsSizer.Add(self.paragraphIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This message is presented in the document formatting settings dialogue
+		# If this option is selected, NVDA will report line spacing if available. 
+		self.lineSpacingCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &line spacing"))
+		self.lineSpacingCheckBox.SetValue(config.conf["documentFormatting"]["reportLineSpacing"])
+		settingsSizer.Add(self.lineSpacingCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		self.tablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tables"))
@@ -1182,16 +1187,17 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportGrammarErrors"]=self.grammarErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"]=self.lineIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 

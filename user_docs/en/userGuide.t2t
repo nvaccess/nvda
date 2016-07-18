@@ -370,8 +370,8 @@ The following commands are available for reviewing text:
 | Move to next character in review | numpad3 | NVDA+rightArrow | flick right (text mode) | Move the review cursor to the next character on the current line of text |
 | Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
-| Copy from review cursor | NVDA+f9 | NVDA+f9 | none | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
-| Copy to review cursor | NVDA+f10 | NVDA+f10 | none | Copies from the position previously set with Copy from review cursor up to and including the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
+| Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
+| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set start marker up to and including the review cursor's current position. After pressing this key a second time, the text will be copied to the Windows clipboard |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
 %kc:endInclude
 
@@ -1190,15 +1190,16 @@ You can configure reporting of:
 - Font attributes
 - Text alignment
 - Colors
+- Comments
 - editor revisions
 - Emphasis
 - Text style
 - Spelling errors
-- Grammar errors
 - Page numbers
 - Line numbers
 - Line indentation
 - Paragraph indentation (e.g. hanging indent, first line indent)
+- line spacing (single, double etc)
 - Tables
 - Table row/column headers
 - Table cell coordinates

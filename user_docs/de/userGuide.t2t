@@ -646,7 +646,7 @@ Drücken Sie auf einem Tabellenblatt die Eingabetaste oder den Schalter "wechsel
 %kc:beginInclude
 Verwenden Sie die Tastenkombination NVDA+Alt+C, um sich einen Kommentar der aktuellen Zelle anzeigen zu lassen, sofern vorhanden.
 %kc:endInclude
-Alle Kommentare der Arbeitsmappe sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Kommentare" auswählen.
+Alle Kommentare des Tabellenblattes sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Kommentare" auswählen.
 
 +++ ausgeben geschützter Zellen +++
 Wenn ein Excel-Arbeitsblatt geschützt wurde, können manche Zellen für eine Bearbeitung gesperrt sein. Solche Zellen sind dann normalerweise nicht zugänglich.
@@ -990,6 +990,10 @@ Somit kann es hilfreich sein, wenn man diesbezüglich gewarnt wird.
 Tastenkombination: NVDA+4
 
 Wenn dieses Kontrollfeld aktiviert ist, gibt NVDA alle Tasten wieder, die nicht mit einem Zeichen belegt sind. Das können Tastenkombinationen wie zum Beispiel "Steuerung+Buchstabe" sein.
+
+==== Klang bei Rechtschreibfehlern während der Eingabe abspielen ====
+Wenn diese Option aktiviert ist, wird ein kurzer Brummton abgespielt, wenn während der Eingebe Rechtschreibfehler auftreten.
+Diese Option funktioniert nur, wenn in den [Einstellung für Dokumentformatierungen #DocumentFormattingSettings] die Anzeige von Rechtschreibfehlern aktiviert ist.
 
 ==== Tastendrücke von anderen Anwendungen verarbeiten ====
 Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NVDA verarbeitet werden sollen. Hierzu zählen beispielsweise Tastendrücke auf einer Bildschirmtastatur oder per Spracherkennung erkannte Zeichen.
@@ -1475,9 +1479,10 @@ Es gibt auch eine Vielzahl von Varianten, womit der Klang der Stimme geändert w
 
 ++ Microsoft Speech API Version 4 (SAPI 4.0) ++
 SAPI 4 ist ein älterer Microsoft-Standard für Softwaresprachausgaben.
-Wer die alten Stimmen noch installiert hat, findet Sie im Einstellungsring der Sprachausgaben. Dort werden die ermittelten Engines aufgeführt.
-NVDA unterstützt zwar noch die alte Schnittstelle, wer die SAPI 4 bereits installiert hat.
+NVDA unterstützt noch die alte Schnittstelle, für all jene,  die bereits SAPI 4 Sprachausgaben installiert haben.
 Ferner werden die Treiber hierfür schon lange nicht mehr von Microsoft zum Download angeboten.
+
+Wenn diese Sprachausgabe mit NVDA verwendet wird, finden Sie die Stimmen aller SAPI 4 Engines in den [Stimmeinstellungen #VoiceSettings] oder im [Sprachausgaben-Einstellungsring #SynthSettingsRing].
 
 ++ Microsoft Speech API Version 5 (SAPI 5.x) ++
 SAPI 5 ist ein Microsoft-Standard für Softwaresprachausgaben.

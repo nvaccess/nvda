@@ -1,19 +1,19 @@
 # Traduction française de NVDA
-# Copyright (C) 2006-2016 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2016 NVDA Contributors <http://www.nvaccess.org/>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-03-31 16:38+0200\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-06-30 16:21+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -2883,7 +2883,7 @@ msgstr "Aucune sélection"
 
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
-msgstr "Copié dans le presse-papiers"
+msgstr "Copié vers le presse-papiers"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2948,7 +2948,7 @@ msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr ""
-"Boucler entre les modes d'atténuation audio pour déterminer comment NVDA "
+"Faire défiler les modes d'atténuation audio pour déterminer comment NVDA "
 "atténue le volume des autres sons"
 
 #. Translators: This will be presented when the input help is toggled.
@@ -3412,7 +3412,7 @@ msgstr "Niveau de symbole %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"Boucler entre les niveaux d'annonce des symboles pour déterminer quels "
+"Faire défiler les niveaux d'annonce des symboles pour déterminer quels "
 "symboles seront annoncés"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
@@ -4106,7 +4106,7 @@ msgstr "Curseur braille %s"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
-msgstr "Boucler entre les formes de curseur braille"
+msgstr "Faire défiler les formes de curseur braille"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4220,7 +4220,7 @@ msgstr "mode %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Cycles between available touch modes"
-msgstr "Boucler entre les différents modes de toucher"
+msgstr "Faire défiler les différents modes de toucher"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4905,6 +4905,11 @@ msgstr "italique"
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "non italique"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "double biffure"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -6150,11 +6155,11 @@ msgid "Python console"
 msgstr "Console Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Gérer les &modules complémentaires"
+msgid "Manage &add-ons..."
+msgstr "Gérer les &modules complémentaires..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Créer une copie portable..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6193,8 +6198,8 @@ msgid "C&ontributors"
 msgstr "C&ontributeurs"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Dialogue de &bienvenue"
+msgid "We&lcome dialog..."
+msgstr "Dialogue de &bienvenue..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7173,6 +7178,11 @@ msgstr "Dire les &touches de commandes"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Jouer un son pour les fautes d'&orthographe pendant la frappe"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Exécuter les touches d'autres &applications"
 
@@ -7804,11 +7814,11 @@ msgstr "pas dans une cellule de tableau"
 
 #. Translators: the description for the next table row script on virtualBuffers.
 msgid "moves to the next table row"
-msgstr "Aller  à la ligne suivante du tableau"
+msgstr "Aller à la ligne suivante du tableau"
 
 #. Translators: the description for the previous table row script on virtualBuffers.
 msgid "moves to the previous table row"
-msgstr "Aller  à la ligne précédente du tableau"
+msgstr "Aller à la ligne précédente du tableau"
 
 #. Translators: the description for the next table column script on virtualBuffers.
 msgid "moves to the next table column"
@@ -8852,6 +8862,10 @@ msgstr "commentaire : {text} par {author} le {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description} : {text} par {author} le {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Description de tableau"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8978,6 +8992,24 @@ msgstr "Indice"
 msgid "Baseline"
 msgstr "Ligne de base"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Déplacé sous %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Déplacé sous le paragraphe vide"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Déplacé au-dessu de %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Déplacé au-dessus du paragraphe vide"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9044,6 +9076,24 @@ msgstr "HIMS Braille séries Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "annonce des erreurs grammaticales désactivée"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "annonce des erreurs grammaticales activée"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Activer ou désactiver l'annonce des erreurs grammaticales"
+
+#~ msgid "grammar error"
+#~ msgstr "erreur grammaticale"
+
+#~ msgid "out of grammar error"
+#~ msgstr "hors de l'erreur grammaticale"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Annoncer les &erreurs grammaticales"
 
 #~ msgid "browse mode"
 #~ msgstr "mode navigation"

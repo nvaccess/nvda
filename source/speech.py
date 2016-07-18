@@ -1071,7 +1071,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return roleText+" "+_("with %s items")%childControlCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
-		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
+		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
 	elif fieldType in ("start_addedToControlFieldStack","start_relative") and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
@@ -1275,12 +1275,17 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		strikethrough=attrs.get("strikethrough")
 		oldStrikethrough=attrsCache.get("strikethrough") if attrsCache is not None else None
 		if (strikethrough or oldStrikethrough is not None) and strikethrough!=oldStrikethrough:
-			# Translators: Reported when text is formatted with strikethrough.
-			# See http://en.wikipedia.org/wiki/Strikethrough
-			text=(_("strikethrough") if strikethrough
+			if strikethrough:
+				# Translators: Reported when text is formatted with double strikethrough.
+				# See http://en.wikipedia.org/wiki/Strikethrough
+				text=(_("double strikethrough") if strikethrough=="double"
+				# Translators: Reported when text is formatted with strikethrough.
+				# See http://en.wikipedia.org/wiki/Strikethrough
+				else _("strikethrough"))
+			else:
 				# Translators: Reported when text is formatted without strikethrough.
 				# See http://en.wikipedia.org/wiki/Strikethrough
-				else _("no strikethrough"))
+				text=_("no strikethrough")
 			textList.append(text)
 		underline=attrs.get("underline")
 		oldUnderline=attrsCache.get("underline") if attrsCache is not None else None
@@ -1392,6 +1397,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text has reverted to default vertical alignment.
 				text=_("vertical align default")
 			textList.append(text)
+	if formatConfig["reportLineSpacing"]:
+		lineSpacing=attrs.get("line-spacing")
+		oldLineSpacing=attrsCache.get("line-spacing") if attrsCache is not None else None
+		if (lineSpacing or oldLineSpacing is not None) and lineSpacing!=oldLineSpacing:
+			# Translators: a type of line spacing (E.g. single line spacing)
+			textList.append(_("line spacing %s")%lineSpacing)
 	if  formatConfig["reportLinks"]:
 		link=attrs.get("link")
 		oldLink=attrsCache.get("link") if attrsCache is not None else None
@@ -1420,20 +1431,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a spelling error.
 				text=_("out of spelling error")
-			else:
-				text=""
-			if text:
-				textList.append(text)
-	if formatConfig["reportGrammarErrors"]:
-		invalidGrammar=attrs.get("invalid-grammar")
-		oldInvalidGrammar=attrsCache.get("invalid-grammar") if attrsCache is not None else None
-		if (invalidGrammar or oldInvalidGrammar is not None) and invalidGrammar!=oldInvalidGrammar:
-			if invalidGrammar:
-				# Translators: Reported when text contains a grammar error.
-				text=_("grammar error")
-			elif extraDetail:
-				# Translators: Reported when moving out of text containing a grammar error.
-				text=_("out of grammar error")
 			else:
 				text=""
 			if text:

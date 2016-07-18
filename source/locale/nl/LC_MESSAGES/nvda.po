@@ -4,19 +4,20 @@
 #   <florianbeijers@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5884\n"
+"Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-13 22:04+0200\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-08 12:20+0200\n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
-"Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
-"projects/p/nvda/language/nl/)\n"
+"Language-Team: Dutch (http://www.transifex.net/projects/p/nvda/language/nl/) "
+"<nvda-nl@googlegroups.com>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -705,7 +706,7 @@ msgstr "Alle punten"
 #. %s is replaced with the level.
 #, python-format
 msgid "h%s"
-msgstr "h%s"
+msgstr "k%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
@@ -2374,7 +2375,7 @@ msgstr "pagina"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr "keuzerondjes menu-item"
+msgstr "keuzerondje menu-item"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
@@ -2439,7 +2440,7 @@ msgstr "tekstframe"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "aankruis knop"
+msgstr "aankruisknop"
 
 msgid "border"
 msgstr "begrenzing"
@@ -4912,6 +4913,11 @@ msgstr "cursief"
 msgid "no italic"
 msgstr "cursief uit"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dubbel doorhalen"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -6157,11 +6163,11 @@ msgid "Python console"
 msgstr "Python console"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Add-ons &beheren"
+msgid "Manage &add-ons..."
+msgstr "&Add-ons beheren"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Draagbare versie aanmaken..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6200,8 +6206,8 @@ msgid "C&ontributors"
 msgstr "&Vrijwilligers"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Wel&kom dialoog"
+msgid "We&lcome dialog..."
+msgstr "Wel&kom dialoogvenster"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7171,6 +7177,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "&Commando-toetsen uitspreken"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Geluid bij &spelfouten tijdens typen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8847,6 +8858,10 @@ msgstr "opmerking: {text} door {author} op {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} door {author} op {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "tabelbeschrijving"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8967,6 +8982,24 @@ msgstr "Subscript"
 msgid "Baseline"
 msgstr ""
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Verplaatst onder %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Verplaatst onder lege paragraaf"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Verplaatst boven %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Verplaatst boven lege paragraaf"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9033,6 +9066,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Grammaticafouten niet melden"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "Grammaticafouten melden"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Schakelt het uitspreken van grammaticafouten in en uit"
+
+#~ msgid "grammar error"
+#~ msgstr "Grammaticafout"
+
+#~ msgid "out of grammar error"
+#~ msgstr "buiten grammaticafout"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "&Grammaticafouten melden"
 
 #~ msgid "browse mode"
 #~ msgstr "bladermodus"

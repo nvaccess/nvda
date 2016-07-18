@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 00:10+1000\n"
-"PO-Revision-Date: 2016-04-01 09:42+0200\n"
+"POT-Creation-Date: 2016-07-01 00:10+1000\n"
+"PO-Revision-Date: 2016-07-01 08:33+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -4907,6 +4907,11 @@ msgstr "kursivoitu"
 msgid "no italic"
 msgstr "ei kursivointia"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "Kaksinkertainen yliviivaus"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -6153,11 +6158,11 @@ msgid "Python console"
 msgstr "&Python-konsoli"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "&Lisäosien hallinta"
+msgid "Manage &add-ons..."
+msgstr "&Lisäosien hallinta..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Luo &massamuistiversio..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6196,8 +6201,8 @@ msgid "C&ontributors"
 msgstr "T&ekijät"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "&Tervetuloa-valintaikkuna"
+msgid "We&lcome dialog..."
+msgstr "&Tervetuloa-ikkuna..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -7152,6 +7157,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Puhu k&omentonäppäimet"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Ilmaise &kirjoitusvirheet kirjoitettaessa toistamalla ääni"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8823,6 +8833,10 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Taulukon kuvaus"
+
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8943,6 +8957,24 @@ msgstr "Alaindeksi"
 msgid "Baseline"
 msgstr "Perusviiva"
 
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Siirretty kappaleen %s alapuolelle"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Siirretty tyhjän kappaleen alapuolelle"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Siirretty kappaleen %s yläpuolelle"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Siirretty tyhjän kappaleen yläpuolelle"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
@@ -9009,6 +9041,25 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "report grammar errors off"
+#~ msgstr "Kielioppivirheitä ei ilmoiteta"
+
+#~ msgid "report grammar errors on"
+#~ msgstr "Ilmoita kirjoitusvirheet"
+
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr ""
+#~ "Ottaa käyttöön kielioppivirheiden ilmoittamisen tai poistaa sen käytöstä"
+
+#~ msgid "grammar error"
+#~ msgstr "kielioppivirhe"
+
+#~ msgid "out of grammar error"
+#~ msgstr "kielioppivirheen loppu"
+
+#~ msgid "Report &grammar errors"
+#~ msgstr "Ilmoita k&ielioppivirheet"
 
 #~ msgid "browse mode"
 #~ msgstr "selaustila"
