@@ -65,6 +65,7 @@ confspec = ConfigObj(StringIO(
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
+	showSpeechViewerAtStartup = boolean(default=false)
 
 # Speech settings
 [speech]

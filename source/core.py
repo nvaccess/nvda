@@ -53,6 +53,8 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
+	if config.conf["general"]["showSpeechViewerAtStartup"]:
+		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
