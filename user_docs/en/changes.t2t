@@ -34,6 +34,7 @@
 - Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)
 - In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)
 - Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
+- When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)
 
 
 = 2016.2.1 =
