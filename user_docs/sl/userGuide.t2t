@@ -370,8 +370,8 @@ Za pregled besedila so na voljo naslednji ukazi:
 | Pomik na naslednji znak v pregledu | številski del3 | NVDA+Puščica desno | švig desno (delovanje besedila) | Premakne pregledno utripalko na naslednji znak v vrstici z besedilom |
 | Pomik na konec vrstice v pregledu | shift+številski del3 | NVDA+konec | brez | Premakne pregledno utripalko na konec trenutne vrstice z besedilom |
 | Govori vse s pregledom | številski delPlus | NVDA+shift+a | troprstni švig dol (delovanje besedila) | Začetek branja od trenutnega položaja pregledne utripalke in se pri tem premikajoč tako, kot se giblje utripalka |
-| Preslikava od pregledne utripalke | NVDA+f9 | NVDA+f9 | brez | začetek preslikave besedila od trenutnega položaja pregledne utripalke. Aktualna preslikava se ne bo izvedla, dokler ne boste NVDA sporočili, kam naj preslika izbran del |
-| Preslikava do pregledne utripalke | NVDA+f10 | NVDA+f10 | brez | Preslika vsebino od položaja pregledne utripalke v danem trenutku že prej določenega z ukazom  Preslikava od pregledne utripalke, do vključno trenutnega položaja pregledne utripalke. Po pritisku te tipke se bo besedilo preslikalo v odložišče Oken. |
+| Izbor in preslikava od pregledne utripalke | NVDA+f9 | NVDA+f9 | brez | začetek izbora in preslikave besedila od trenutnega položaja pregledne utripalke. Aktualno dejanje se ne bo izvedlo, dokler ne boste NVDA sporočili, kje se konča območje besedila |
+| Izbor in preslikava do pregledne utripalke | NVDA+f10 | NVDA+f10 | brez | Ob prvem pritisku se označi območje od zaznamka, ki zaznamuje začetek besedila do vključno trenutnega položaja pregledne utripalke.ob drugem pritisku, se vsebina preslika v odložišče Oken |
 | Sporoči oblikovanje besedila | NVDA+f | NVDA+f | brez | Poroča o oblikovanju besedila, nad katerim je trenutno postavljena pregledna utripalka. Dvojni pritisk informacijo predstavi v brskalniškem delovanju. |
 %kc:endInclude
 
@@ -1198,6 +1198,7 @@ V NVDA lahko nastavite poročanje za:
 - Številke Vrstice
 - Zamike Vrstice
 - Zamike odstavka (viseči zamik, zamik prve vrstice...)
+- Razmik med vrsticami (enojni, dvojni ipd.)
 - Tabele
 - Glave in čela Tabel (glave vrstic in stolpcev)
 - Koordinate celic v tabelah

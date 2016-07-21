@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-08 00:10+1000\n"
-"PO-Revision-Date: 2016-07-07 14:06+0100\n"
+"POT-Creation-Date: 2016-07-15 00:10+1000\n"
+"PO-Revision-Date: 2016-07-15 20:28+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -84,7 +84,6 @@ msgid "unknown input method"
 msgstr "neznana metoda vnosa"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -722,7 +721,6 @@ msgstr "ni %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} od {total}"
 
@@ -1363,711 +1361,190 @@ msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "samo pod nivojem simbola"
 
-#. Translators: Reported when text is written in unknown color.
-msgid "unknown color"
-msgstr "neznana barva"
-
-#. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Alice Blue"
-msgstr "Modro (Alica)"
-
-#. Translators: the color Antique White (RGB 250, 235, 215) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Antique White"
-msgstr "Antično Belo"
-
-#. Translators: the color Aqua (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aqua"
-msgstr "modro (voda)"
-
-#. Translators: the color Aquamarine (RGB 127, 255, 212) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aquamarine"
-msgstr "Akvamarin"
-
-#. Translators: the color Azure (RGB 240, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Azure"
-msgstr "Azurno"
-
-#. Translators: the color Beige (RGB 245, 245, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Beige"
-msgstr "Beš"
-
-# preveriti
-#. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Bisque"
-msgstr "Rdeče (žgana glina)"
-
-#. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Black"
-msgstr "Črno"
-
-#. Translators: the color Blanched Almond (RGB 255, 235, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blanched Almond"
-msgstr "Pobeljeno Mandljevo"
-
-#. Translators: the color Blue (RGB 0, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue"
-msgstr "Modro"
-
-#. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue Violet"
-msgstr "Modro Vijolično"
-
-#. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Brown"
-msgstr "Rjavo"
-
-#. Translators: the color Burly Wood (RGB 222, 184, 135) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Burly Wood"
-msgstr "Peščeno"
-
-#. Translators: the color Cadet Blue (RGB 95, 158, 160) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cadet Blue"
-msgstr "Kadetno Modro"
-
-#. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chartreuse"
-msgstr "Likerjevo (Chartreuse)"
-
-#. Translators: the color Chocolate (RGB 210, 105, 30) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chocolate"
-msgstr "Čokoladno"
-
-#. Translators: the color Coral (RGB 255, 127, 80) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Coral"
-msgstr "Koralno"
-
-#. Translators: the color Cornflower Blue (RGB 100, 149, 237) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornflower Blue"
-msgstr "Modro (Kuruzni Cvet)"
-
-#. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornsilk"
-msgstr "Kuruzno Svilnato"
-
-#. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Crimson"
-msgstr "Škrlatno"
-
-#. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cyan"
-msgstr "Sinje"
-
-#. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Blue"
-msgstr "Temno Modro"
-
-#. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Cyan"
-msgstr "Temno Sinje"
-
-#. Translators: the color Dark Goldenrod (RGB 184, 134, 11) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Goldenrod"
-msgstr "Temno (Zlate Rozge)"
-
-#. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Gray"
-msgstr "Temno Sivo"
-
-#. Translators: the color Dark Green (RGB 0, 100, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Green"
-msgstr "Temno Zeleno"
-
-#. Translators: the color Dark Khaki (RGB 189, 183, 107) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Khaki"
-msgstr "Temno Kakijevo"
-
-#. Translators: the color Dark Magenta (RGB 139, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Magenta"
-msgstr "Temno Roza"
-
-#. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Olive Green"
-msgstr "Temno Olivno Zeleno"
-
-#. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Orange"
-msgstr "Temno Oranžno"
-
-#. Translators: the color Dark Orchid (RGB 153, 50, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Orchid"
-msgstr "Temno Orhidejino"
-
-#. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Red"
-msgstr "Temno Rdeče"
-
-#. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Salmon"
-msgstr "Temno Lososovo"
-
-#. Translators: the color Dark Sea Green (RGB 143, 188, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Sea Green"
-msgstr "Temno Morsko Zeleno"
-
-#. Translators: the color Dark Slate Blue (RGB 72, 61, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Blue"
-msgstr "Temno Skrilasto Modro"
-
-#. Translators: the color Dark Slate Gray (RGB 47, 79, 79) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Gray"
-msgstr "Temno Skrilasto Sivo"
-
-#. Translators: the color Dark Turquoise (RGB 0, 206, 209) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Turquoise"
-msgstr "Temno Turkizno"
-
-#. Translators: the color Dark Violet (RGB 148, 0, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Violet"
-msgstr "Temno Vijolično"
-
-#. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Pink"
-msgstr "Globoko Rožnato"
-
-#. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Sky Blue"
-msgstr "Globoko Nebesno Modro"
-
-#. Translators: the color Dim Gray (RGB 105, 105, 105) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dim Gray"
-msgstr "Umazano Sivo"
-
-#. Translators: the color Dodger Blue (RGB 30, 144, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dodger Blue"
-msgstr "Modro (letak)"
-
-#. Translators: the color Fire Brick (RGB 178, 34, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fire Brick"
-msgstr "Opečnato"
-
-#. Translators: the color Floral White (RGB 255, 250, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Floral White"
-msgstr "Rožno Belo"
-
-#. Translators: the color Forest Green (RGB 34, 139, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Forest Green"
-msgstr "Gozdno Zeleno"
-
-#. Translators: the color Fuchsia (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fuchsia"
-msgstr "Fuksijino"
-
-# po testiranju popraviti
-#. Translators: the color Gainsboro (RGB 220, 220, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gainsboro"
-msgstr "Močno Sivo"
-
-#. Translators: the color Ghost White (RGB 248, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ghost White"
-msgstr "Belo (Duh)"
-
-#. Translators: the color Gold (RGB 255, 215, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gold"
-msgstr "Zlato"
-
-#. Translators: the color Goldenrod (RGB 218, 165, 32) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Goldenrod"
-msgstr "Rozgino (Zlata Rozga)"
-
-#. Translators: the color Gray (RGB 128, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gray"
-msgstr "Sivo"
-
-#. Translators: the color Green (RGB 0, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green"
-msgstr "Zeleno"
-
-#. Translators: the color Green Yellow (RGB 173, 255, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green Yellow"
-msgstr "ZelenoRumeno"
-
-#. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Honeydew"
-msgstr "Manino"
-
-#. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Hot Pink"
-msgstr "Živo Rožnato"
-
-#. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indian Red"
-msgstr "Indijansko Rdeče"
-
-#. Translators: the color Indigo (RGB 75, 0, 130) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indigo"
-msgstr "Modro (Indigo)"
-
-#. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ivory"
-msgstr "Slonokoščeno"
-
-#. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Khaki"
-msgstr "Kakijevo"
-
-#. Translators: the color Lavender (RGB 230, 230, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender"
-msgstr "Sivkino"
-
-#. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender Blush"
-msgstr "Pordelo Sivkino"
-
-#. Translators: the color Lawn Green (RGB 124, 252, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lawn Green"
-msgstr "Travnato Zeleno"
-
-#. Translators: the color Lemon Chiffon (RGB 255, 250, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lemon Chiffon"
-msgstr "Šifonasto Limonino"
-
-#. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Blue"
-msgstr "Svetlo Modro"
-
-#. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Coral"
-msgstr "Svetlo Koralno"
-
-#. Translators: the color Light Cyan (RGB 224, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Cyan"
-msgstr "Svetlo Sinje"
-
-#. Translators: the color Light Goldenrod Yellow (RGB 250, 250, 210) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Goldenrod Yellow"
-msgstr "Svetlo Rumeno (Zlata Rozga"
-
-#. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Green"
-msgstr "Svetlo Zeleno"
-
-#. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Grey"
-msgstr "Svetlo Sivo"
-
-#. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Pink"
-msgstr "Svetlo Rožnato"
-
-#. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Salmon"
-msgstr "Svetlo Lososovo"
-
-#. Translators: the color Light Sea Green (RGB 32, 178, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sea Green"
-msgstr "Svetlo Morsko Zeleno"
-
-#. Translators: the color Light Sky Blue (RGB 135, 206, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sky Blue"
-msgstr "Svetlo Nebesno Modro"
-
-#. Translators: the color Light Slate Gray (RGB 119, 136, 153) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Slate Gray"
-msgstr "Svetlo Skrilasto Sivo"
-
-#. Translators: the color Light Steel Blue (RGB 176, 196, 222) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Steel Blue"
-msgstr "Svetlo Jekleno Modro"
-
-#. Translators: the color Light Yellow (RGB 255, 255, 224) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Yellow"
-msgstr "Svetlo Rumeno"
-
-#. Translators: the color Lime (RGB 0, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime"
-msgstr "Limetno"
-
-#. Translators: the color Lime Green (RGB 50, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime Green"
-msgstr "Limetno Zeleno"
-
-#. Translators: the color Linen (RGB 250, 240, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Linen"
-msgstr "laneno"
-
-#. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Magenta"
-msgstr "Roza"
-
-#. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Maroon"
-msgstr "Kostanjevo"
-
-#. Translators: the color Medium Aquamarine (RGB 102, 205, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Aquamarine"
-msgstr "srednje Akvamarin"
-
-#. Translators: the color Medium Blue (RGB 0, 0, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Blue"
-msgstr "Srednje Modro"
-
-#. Translators: the color Medium Orchid (RGB 186, 85, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Orchid"
-msgstr "Srednje Orhidejino"
-
-#. Translators: the color Medium Purple (RGB 147, 112, 219) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Purple"
-msgstr "Srednje purpurno"
-
-#. Translators: the color Medium Sea Green (RGB 60, 179, 113) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Sea Green"
-msgstr "Srednje Morsko Zeleno"
-
-#. Translators: the color Medium Slate Blue (RGB 123, 104, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Slate Blue"
-msgstr "Srednje Skrilasto Modro"
-
-#. Translators: the color Medium Spring Green (RGB 0, 250, 154) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Spring Green"
-msgstr "Srednje Pomladno Zeleno"
-
-#. Translators: the color Medium Turquoise (RGB 72, 209, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Turquoise"
-msgstr "Srednje Turkizno"
-
-#. Translators: the color Medium Violet Red (RGB 199, 21, 133) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Violet Red"
-msgstr "Srednje Vijolično Rdeče"
-
-#. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Midnight Blue"
-msgstr "Polnočno Modro"
-
-#. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Mint Cream"
-msgstr "Metino Kremasto"
-
-#. Translators: the color Misty Rose (RGB 255, 228, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Misty Rose"
-msgstr "Megleno Vrtnično"
-
-#. Translators: the color Moccasin (RGB 255, 228, 181) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Moccasin"
-msgstr "Mokasinasto"
-
-#. Translators: the color Navajo White (RGB 255, 222, 173) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navajo White"
-msgstr "Belo (Navajo)"
-
-#. Translators: the color Navy (RGB 0, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navy"
-msgstr "Mornarsko"
-
-#. Translators: the color Old Lace (RGB 253, 245, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Old Lace"
-msgstr "Postarano Čipkasto"
-
-#. Translators: the color Olive (RGB 128, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive"
-msgstr "Olivno"
-
-#. Translators: the color Olive Drab (RGB 107, 142, 35) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive Drab"
-msgstr "Olivno Drap"
-
-#. Translators: the color Orange (RGB 255, 165, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orange"
-msgstr "Oranžno"
-
-#. Translators: the color Orange Red (RGB 255, 69, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orange Red"
-msgstr "OranžnoRdeče"
-
-#. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orchid"
-msgstr "Orhidejino"
-
-#. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Goldenrod"
-msgstr "Bledo (Zlata Rozga)"
-
-#. Translators: the color Pale Green (RGB 152, 251, 152) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Green"
-msgstr "Bledo Zeleno"
-
-#. Translators: the color Pale Turquoise (RGB 175, 238, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Turquoise"
-msgstr "Bledo Turkizno"
-
-#. Translators: the color Pale Violet Red (RGB 219, 112, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Violet Red"
-msgstr "Bledo Vijolično Rdeče"
-
-#. Translators: the color Papaya Whip (RGB 255, 239, 213) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Papaya Whip"
-msgstr "Papajino bliskovno"
-
-#. Translators: the color Peach Puff (RGB 255, 218, 185) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peach Puff"
-msgstr "breskvasto penasto"
-
-#. Translators: the color Peru (RGB 205, 133, 63) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peru"
-msgstr "Perujsko Oranžna"
-
-#. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pink"
-msgstr "Rožnato"
-
-#. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Plum"
-msgstr "Slivovo"
-
-#. Translators: the color Powder Blue (RGB 176, 224, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Powder Blue"
-msgstr "Kobaltno Modro"
-
-#. Translators: the color Purple (RGB 128, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Purple"
-msgstr "Purpurno"
-
-#. Translators: the color Red (RGB 255, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Red"
-msgstr "Rdeče"
-
-#. Translators: the color Rosy Brown (RGB 188, 143, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Rosy Brown"
-msgstr "Vrtnično Rjavo"
-
-#. Translators: the color Royal Blue (RGB 65, 105, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Royal Blue"
-msgstr "Kraljevo Modro"
-
-#. Translators: the color Saddle Brown (RGB 139, 69, 19) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Saddle Brown"
-msgstr "Sedelno Rjavo"
-
-#. Translators: the color Salmon (RGB 250, 128, 114) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Salmon"
-msgstr "Lososovo"
-
-#. Translators: the color Sandy Brown (RGB 244, 164, 96) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sandy Brown"
-msgstr "Peščeno Rjavo"
-
-#. Translators: the color Sea Green (RGB 46, 139, 87) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sea Green"
-msgstr "Morsko Zeleno"
-
-#. Translators: the color Seashell (RGB 255, 245, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Seashell"
-msgstr "školjčnato"
-
-#. Translators: the color Sienna (RGB 160, 82, 45) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sienna"
-msgstr "Sienasto"
-
-#. Translators: the color Silver (RGB 192, 192, 192) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Silver"
-msgstr "Srebrno"
-
-#. Translators: the color Sky Blue (RGB 135, 206, 235) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sky Blue"
-msgstr "Nebesno Modro"
-
-#. Translators: the color Slate Blue (RGB 106, 90, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Blue"
-msgstr "Skrilasto Modro"
-
-#. Translators: the color Slate Gray (RGB 112, 128, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Gray"
-msgstr "Skrilasto Sivo"
-
-#. Translators: the color Snow (RGB 255, 250, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Snow"
-msgstr "Sneženo"
-
-#. Translators: the color Spring Green (RGB 0, 255, 127) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Spring Green"
-msgstr "Pomladno Zeleno"
-
-#. Translators: the color Steel Blue (RGB 70, 130, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Steel Blue"
-msgstr "Jekleno Modro"
-
-#. Translators: the color Tan (RGB 210, 180, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tan"
-msgstr "Ogorelo"
-
-#. Translators: the color Teal (RGB 0, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Teal"
-msgstr "modrikasto"
-
-#. Translators: the color Thistle (RGB 216, 191, 216) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Thistle"
-msgstr "Osatno"
-
-#. Translators: the color Tomato (RGB 255, 99, 71) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tomato"
-msgstr "Paradižnikovo"
-
-#. Translators: the color Turquoise (RGB 64, 224, 208) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Turquoise"
-msgstr "Turkizno"
-
-#. Translators: the color Violet (RGB 238, 130, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Violet"
-msgstr "Vijolično"
-
-#. Translators: the color Wheat (RGB 245, 222, 179) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Wheat"
-msgstr "Pšenično"
-
-#. Translators: the color White (RGB 255, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White"
-msgstr "Belo"
-
-#. Translators: the color White Smoke (RGB 245, 245, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White Smoke"
-msgstr "Dimasto Belo"
-
-#. Translators: the color Yellow (RGB 255, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow"
-msgstr "Rumeno"
-
-#. Translators: the color Yellow Green (RGB 154, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow Green"
-msgstr "RumenoZeleno"
+#. Translators: the color white (HSV saturation0%, value 100%)
+msgctxt "color hue"
+msgid "white"
+msgstr "belo"
+
+#. Translators: the color very light grey (HSV saturation 0%, value 84%)
+msgctxt "color hue"
+msgid "very light grey"
+msgstr "zelo rahlo sivo"
+
+#. Translators: the color light grey (HSV saturation 0%, value 66%)
+msgctxt "color hue"
+msgid "light grey"
+msgstr "rahlo sivo"
+
+#. Translators: the color grey (HSV saturation 0%, value 50%)
+msgctxt "color hue"
+msgid "grey"
+msgstr "sivo"
+
+#. Translators: the color dark grey (HSV saturation 0%, value 34%)
+msgctxt "color hue"
+msgid "dark grey"
+msgstr "temno sivo"
+
+#. Translators: the color very dark grey (HSV saturation 0%, value 16%)
+msgctxt "color hue"
+msgid "very dark grey"
+msgstr "zelo temno sivo"
+
+#. Translators: the color black (HSV saturation 0%, value 0%)
+msgctxt "color hue"
+msgid "black"
+msgstr "črno"
+
+#. Translators: The color red (HSV hue 0 degrees)
+msgctxt "color hue"
+msgid "red"
+msgstr "rdeče"
+
+#. Translators: The color between  red and orange (HSV hue 15 degrees)
+msgctxt "color hue"
+msgid "red-orange"
+msgstr "rdeče-oranžno"
+
+#. Translators: The color orange (HSV hue 30 degrees)
+msgctxt "color hue"
+msgid "orange"
+msgstr "oranžno"
+
+#. Translators: The color between  orange and yellow (HSV hue 45 degrees)
+msgctxt "color hue"
+msgid "orange-yellow"
+msgstr "oražno-rumeno"
+
+#. Translators: The color yellow (HSV hue 60 degrees)
+msgctxt "color hue"
+msgid "yellow"
+msgstr "rumeno"
+
+#. Translators: The color between  yellow and green (HSV hue 90 degrees)
+msgctxt "color hue"
+msgid "yellow-green"
+msgstr "rumeno-zeleno"
+
+#. Translators: The color green (HSV hue 120 degrees)
+msgctxt "color hue"
+msgid "green"
+msgstr "zeleno"
+
+#. Translators: The color between  green and aqua (HSV hue 150 degrees)
+msgctxt "color hue"
+msgid "green-aqua"
+msgstr "zeleno-turkizno"
+
+#. Translators: The color aqua (HSV hue 180 degrees)
+msgctxt "color hue"
+msgid "aqua"
+msgstr "turkizno"
+
+#. Translators: The color between  aqua and blue (HSV hue 210 degrees)
+msgctxt "color hue"
+msgid "aqua-blue"
+msgstr "turkizno-modro"
+
+#. Translators: The color blue (HSV hue 240 degrees)
+msgctxt "color hue"
+msgid "blue"
+msgstr "modro"
+
+#. Translators: The color between  blue and purple (HSV hue 270 degrees)
+msgctxt "color hue"
+msgid "blue-purple"
+msgstr "modro-vijolično"
+
+#. Translators: The color purple (HSV hue 300 degrees)
+msgctxt "color hue"
+msgid "purple"
+msgstr "vijolično"
+
+#. Translators: The color between  purple and pink (HSV hue 312 degrees)
+msgctxt "color hue"
+msgid "purple-pink"
+msgstr "vijolično-roza"
+
+#. Translators: The color pink (HSV hue 324 degrees)
+msgctxt "color hue"
+msgid "pink"
+msgstr "roza"
+
+#. Translators: The color between  pink and red (HSV hue 342 degrees)
+msgctxt "color hue"
+msgid "pink-red"
+msgstr "roza-rdeče"
+
+#. Translators: a bright color (HSV saturation 100% and value 100%)
+msgctxt "color variation"
+msgid "bright {color}"
+msgstr "svetlo {color}"
+
+#. Translators: a dark color (HSV saturation 100% and value 44%)
+msgctxt "color variation"
+msgid "dark {color}"
+msgstr "temno {color}"
+
+#. Translators: a very dark color (HSV saturation 100% and value 16%)
+msgctxt "color variation"
+msgid "very dark {color}"
+msgstr "zelo temno {color}"
+
+#. Translators: a light pale color (HSV saturation 50% and value 100%)
+msgctxt "color variation"
+msgid "light pale {color}"
+msgstr "rahlo obledelo {color}"
+
+#. Translators: a pale color (HSV saturation 50% and value 72%)
+msgctxt "color variation"
+msgid "pale {color}"
+msgstr "obledelo {color}"
+
+#. Translators: a dark pale color (HSV saturation 50% and value 44%)
+msgctxt "color variation"
+msgid "dark pale {color}"
+msgstr "temno obledelo {color}"
+
+#. Translators: a very dark color (HSV saturation 50% and value 16%)
+msgctxt "color variation"
+msgid "very dark pale {color}"
+msgstr "zelo temno obledelo {color}"
+
+#. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+msgctxt "color variation"
+msgid "{color} white"
+msgstr "{color} belo"
+
+#. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+msgctxt "color variation"
+msgid "{color} grey"
+msgstr "{color} sivo"
+
+#. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+msgctxt "color variation"
+msgid "dark {color} grey"
+msgstr "temno {color} sivo"
+
+#. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+msgctxt "color variation"
+msgid "very dark {color} grey"
+msgstr "zelo temno {color} sivo"
+
+#. Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "red-brown"
+msgstr "rdeče-rjavo"
+
+#. Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "brown"
+msgstr "rjavo"
+
+#. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "brown-yellow"
+msgstr "rjavo-rumeno"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -3294,6 +2771,18 @@ msgstr "sporočaj zamik odstavka vključeno"
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "Vključi/izključi sporočanje zamika odstavka"
 
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+msgid "report line spacing off"
+msgstr "sporočaj razmik med vrsticami izključeno"
+
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+msgid "report line spacing on"
+msgstr "sporočaj razmik med vrsticami vključeno"
+
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "Vključi/izključi sporočanje raznika med vrsticami"
+
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
 msgstr "sporočaj tabele izključeno"
@@ -3943,7 +3432,6 @@ msgid "AC power on"
 msgstr "Na izmeničnem napajanju"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "Ostane še {hours:d} ur in {minutes:d} minut"
 
@@ -4154,37 +3642,47 @@ msgstr "Sporoča besedilo, ki je v odložišču Okn"
 msgid "Start marked"
 msgstr "Naznačba začetka"
 
-#. Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
-"copied"
+"selected or copied"
 msgstr ""
-"Naznači trenutni položaj pregledne utripalke kot začetek besedila za "
-"preslikavo"
+"Naznači trenutni položaj pregledne utripalke kot začetek besedila za izbor "
+"ali preslikavo"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "Nobeno začetno znamenje ni nastavljeno"
 
-#. Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
-msgid "The start marker must reside within the same object"
-msgstr "Znamenje začetka mora obstajati znotraj istega predmeta"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "Preglej izbor, ki je v odložišču"
+#. Translators: Presented when text has already been marked for selection, but not yet copied.
+msgid "Press twice to copy or reset the start marker"
+msgstr ""
+"Pritisnite dvakrat za preslikavo ali ponovno nastavitev zaznamka za začetek"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
 msgstr "Ni besedila za preslikavo"
 
-#. Translators: Input help mode message for copy selected review cursor text to clipboard command.
+#. Translators: Presented when unable to select the marked text.
+msgid "Can't select text, press twice to copy"
+msgstr "Ni mogoče izbrati besedila. Pritisnite dvakrat za preslikavo"
+
+#. Translators: Presented when some review text has been copied to clipboard.
+msgid "Review selection copied to clipboard"
+msgstr "Preglej izbor, ki je v odložišču"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+msgid "Unable to copy"
+msgstr "Ni možno preslikati"
+
+#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
-"Retrieves the text from the previously set start marker up to and including "
-"the current position of the review cursor and copies it to the clipboard"
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
 msgstr ""
-"Prenese besedilo od že prej naznačenega znamenja vključno s trenutnim "
-"položajem pregledne utripalke in vse skupaj preslika v odložišče"
+"Enojni pritisk označi besedilo vse od zaznamka za začetek, do vključno "
+"trenotnega položaja pregledne utripalke. Dvojni pritisk besedilo preslika"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4787,7 +4285,6 @@ msgid "column %s"
 msgstr "stolpec %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "ki vsebuje {rowCount} vrstic in {columnCount} stolpcev"
 
@@ -4844,30 +4341,25 @@ msgstr "privzeti slog"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} na {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} na {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} ozadje"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "vzorec ozadja {pattern}"
 
@@ -5053,6 +4545,11 @@ msgstr "navpična poravnava z razmiki med znaki"
 msgid "vertical align default"
 msgstr "navpična privzeta poravnava"
 
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "razmik %s"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "izven komentarja"
@@ -5070,7 +4567,6 @@ msgid "out of table"
 msgstr "izven tabele"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabela, ki vsebuje {columnCount} stolpcev in {rowCount} vrstic"
 
@@ -5147,27 +4643,22 @@ msgid "object mode"
 msgstr "delovanje predmeta"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "enkratno {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "dvakratno {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "trikratno {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "štirikratno {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} večprstno {action}"
 
@@ -5250,7 +4741,6 @@ msgstr "NVDA Posodobitev"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Na voljo je različica NVDA {version}."
 
@@ -5344,11 +4834,9 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Prost in odprtokoden bralnik zaslona za Microsoft Windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Avtorske pravice (C) {years} NVDA Sodelujoči"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5392,7 +4880,6 @@ msgstr ""
 "meniju NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5401,7 +4888,6 @@ msgstr ""
 "NVDA mora obvezno teči, če želite dodatke nameščati."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5412,12 +4898,10 @@ msgstr ""
 "edstotka zaslona, višina obsega {height:.1f} odstotka zaslona"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} kot v {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -5574,12 +5058,10 @@ msgstr "Čakanje na Outlook..."
 
 # več po testu
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "od {startTime} do {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Sestanek {subject}, {time}"
 
@@ -5752,97 +5234,78 @@ msgid "Master Thumbnails"
 msgstr "Glavne miniaturne sličice"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Diapozitiv {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "prekriva levo {otherShape} za {distance:.3g} pik"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "za {otherShape} levo za {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "prekriva zgornjo {otherShape} za {distance:.3g} pik"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "za {otherShape} zgoraj za {distance:.3g} pik"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "prekriva desno {otherShape} za {distance:.3g} pik"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "za{otherShape} desno za {distance:.3g} pik"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "prekriva spodnjo {otherShape} za {distance:.3g} pik"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "za{otherShape} spodaj za {distance:.3g} pik"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "prekriva {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "za {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} pik od levega roba diapozitiva"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pik do levega roba diapozitiva"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} pik od zgornjega roba diapozitiva"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pik do zgornjega roba diapozitiva"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} pik od desnega roba diapozitiva"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pik do desnega roba diapozitiva"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} pik od spodnjega roba diapozitiva"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pik do spodnjega roba diapozitiva"
 
@@ -5856,12 +5319,10 @@ msgstr ""
 "ne spreminja prikaza zaslona ampak samo, kaj prebere NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Beležke o diaprojekciji - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Diaprojekcija - {slideName}"
 
@@ -5951,7 +5412,6 @@ msgstr "brajeve vrstice Baum/HumanWare/APH"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serijska {portName}"
 
@@ -6443,7 +5903,6 @@ msgid "Choose Add-on Package File"
 msgstr "Izberi datoteko s paketom dodatka"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA Paket Dodatka (*.{ext})"
 
@@ -6457,7 +5916,6 @@ msgstr ""
 "napačen tip datoteke"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6528,7 +5986,6 @@ msgid "Restart NVDA"
 msgstr "NVDA ponovno zaženi"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6541,7 +5998,6 @@ msgstr ""
 "Opis: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6804,7 +6260,6 @@ msgstr ""
 "Predhodna kopija NVDA se je našla na sistemu. Ta kopija bo posodobljena."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7514,6 +6969,11 @@ msgstr "Sporočaj &Zamik vrstice"
 msgid "Report &paragraph indentation"
 msgstr "Sporočaj zamik &odstavka"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report line spacing if available.
+msgid "Report &line spacing"
+msgstr "Sporočaj &razmik med vrsticami"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -7763,7 +7223,6 @@ msgstr "Preseji &med:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7804,12 +7263,10 @@ msgid "word"
 msgstr "beseda"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
 
@@ -7867,7 +7324,6 @@ msgid "Taskbar"
 msgstr "Opravilna vrstica"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB rdeče {rgb.red}, zeleno {rgb.green}, modro {rgb.blue}"
 
@@ -7884,6 +7340,7 @@ msgstr "Namizje"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
+#. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
 msgstr "privzeta barva"
 
@@ -8032,7 +7489,6 @@ msgstr "&Listi"
 
 # več po testu
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "od {start} do {end}"
 
@@ -8048,22 +7504,18 @@ msgstr ""
 "nastavitvah za oblikovanje dokumentov."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Nastavi {address} kot začetek glav stolpca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Že postavljeno {address} kot začetek glav stolpca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address} odstranjeno iz glavv stolpca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Ni mogoče najti {address}    v glavah stolpca"
 
@@ -8076,22 +7528,18 @@ msgstr ""
 "so v odseku pod in desno od nje. Dvojni pritisk bo to nastavitev izbrisal."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Nastavi {address} kot začetek glav vrstice"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Že postavljeno {address} kot začetek glav vrstice"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address} odstranjeno iz glavv vrstice"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Ni mogoče najti {address}    v glavah vrstice"
 
@@ -8104,12 +7552,10 @@ msgstr ""
 "so v odseku pod in desno od nje. Dvojni pritisk bo to nastavitev izbrisal."
 
 # več po testu
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Vnosno Sporočilo je {title}: {message}"
 
 # več po testu
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Vnosno Sporočilo je {message}"
 
@@ -8122,13 +7568,11 @@ msgid "Reports the comment on the current cell"
 msgstr "Sporoča komentar mad trenutno celico"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Urejanje komentarja za celico {address}"
 
 # lahko tudi ... skozi ...
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "od {firstAddress} {firstContent} do {lastAddress} {lastContent}"
 
@@ -8485,7 +7929,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Raztreseni grafikon z Zglajenimi Črtami in Oznakami"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Naslov grafikona: {chartTitle}, tip: {chartType}"
 
@@ -8514,7 +7957,6 @@ msgstr "Niz"
 # potrebno testirati
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} Os je {axisTitle}"
 
@@ -8529,7 +7971,6 @@ msgid "There are total %d series in this chart"
 msgstr "V tem grafikonu je največ %d nizov"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "niz {number} {name}"
 
@@ -8555,7 +7996,6 @@ msgstr "podatkovna točka"
 msgid "item"
 msgstr "postavka"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Barva niza: {colorName} "
 
@@ -8649,62 +8089,52 @@ msgstr "Oblika"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} niz {seriesIndex} od {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "ni spremembe od točke {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "povečano za {incrementValue} od točke {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "zmanjšano za {decrementValue} od točke {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Zvrst {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "vrednost {valueAxisData}"
 
 # potrebno testirati
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr "del {fractionValue:.2f} odstotka rezine {pointIndex} of {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr "{segmentType} {pointIndex} od {pointCount}"
 
@@ -8717,13 +8147,11 @@ msgid "Secondary"
 msgstr "Drugotna"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Os grafikona, tip: {axisType}, skupina: {axisGroup}, naslov: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Os grafikona, tip: {axisType}, skupina: {axisGroup}"
 
@@ -8741,7 +8169,6 @@ msgid " squared "
 msgstr "kvadratno"
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Naslov grafikona: {chartTitle}"
 
@@ -8750,7 +8177,6 @@ msgid "Untitled chart"
 msgstr "Grafikon brez naslova"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8763,7 +8189,6 @@ msgid "Chart area "
 msgstr "Območje grafikona"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8788,14 +8213,12 @@ msgstr "Ni legende"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Vnos legende za niz {seriesName} {seriesIndex} od {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Ključ legende za niz {seriesName} {seriesIndex} od {seriesCount}"
 
@@ -8899,27 +8322,55 @@ msgstr "Primarna glava"
 msgid "Text frame"
 msgstr "Okvir besedila"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} od {author} na {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} na {date}"
+
+#. Translators: single line spacing
+msgctxt "line spacing value"
+msgid "single"
+msgstr "enojni"
+
+#. Translators: double line spacing
+msgctxt "line spacing value"
+msgid "double"
+msgstr "dvojni"
+
+#. Translators:  line spacing of 1.5 lines
+msgctxt "line spacing value"
+msgid "1.5 lines"
+msgstr "1,5 vrstice"
+
+#. Translators: exact (minimum) line spacing
+msgctxt "line spacing value"
+msgid "exact"
+msgstr "točno"
+
+#. Translators: line spacing of at least x point
+#, python-format
+msgctxt "line spacing value"
+msgid "at least %.1f pt"
+msgstr "vsaj %.1f pik"
+
+#. Translators: line spacing of x lines
+#, python-format
+msgctxt "line spacing value"
+msgid "%.1f lines"
+msgstr "%.1f vrst"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Opis tabele"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Nastavi celico v vrstici {rowNumber} in stolpcu {columnNumber} kot začetek "
 "glav stolpca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8928,14 +8379,12 @@ msgstr ""
 
 # lahko tudi glava tabele
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "Celica v vrstici {rowNumber} in v stolpcu {columnNumber} je odstranjena iz "
 "glav stolpca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Ni mogoče najti celice v vrstici {rowNumber} in stolpcu {columnNumber} kot "
@@ -8950,14 +8399,12 @@ msgstr ""
 "so v tabeli pod in desno od nje. Dvojni pritisk bo to nastavitev izbrisal."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Nastavi celico v vrstici {rowNumber} in stolpcu {columnNumber} kot začetek "
 "glav vrstice"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8965,14 +8412,12 @@ msgstr ""
 "začetek glav vrstice"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "Celica v vrstici {rowNumber} in stolpcu {columnNumber} je odstranjena iz "
 "glav vrstice"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Ni mogoče najti celice v vrstici {rowNumber} in stolpcu {columnNumber} kot "
@@ -9057,44 +8502,36 @@ msgid "Moved above blank paragraph"
 msgstr "Premaknjeno nad prazen odstavek"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "slog {styleName}, nivo obrisa {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "velikost pisave {size:g} "
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} znaki"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} palci"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetri"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetri"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pike"
 
 # več po testu, ko se bo videla uporaba
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} ciceri"
 
@@ -9105,6 +8542,18 @@ msgstr "Ni komentarjev"
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "Sporoča besedilo komentarja nad položajem sistemske kazalke."
+
+#. Translators: a message when switching to single line spacing  in Microsoft word
+msgid "Single line spacing"
+msgstr "Enojni razmik med vrsticami"
+
+#. Translators: a message when switching to double line spacing  in Microsoft word
+msgid "Double line spacing"
+msgstr "Dvojni razmik med vrsticami"
+
+#. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
+msgid "1.5 line spacing"
+msgstr "1,5 razmik med vrsticami"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -9123,6 +8572,534 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unknown color"
+#~ msgstr "neznana barva"
+
+#~ msgctxt "color name"
+#~ msgid "Alice Blue"
+#~ msgstr "Modro (Alica)"
+
+#~ msgctxt "color name"
+#~ msgid "Antique White"
+#~ msgstr "Antično Belo"
+
+#~ msgctxt "color name"
+#~ msgid "Aqua"
+#~ msgstr "modro (voda)"
+
+#~ msgctxt "color name"
+#~ msgid "Aquamarine"
+#~ msgstr "Akvamarin"
+
+#~ msgctxt "color name"
+#~ msgid "Azure"
+#~ msgstr "Azurno"
+
+#~ msgctxt "color name"
+#~ msgid "Beige"
+#~ msgstr "Beš"
+
+# preveriti
+#~ msgctxt "color name"
+#~ msgid "Bisque"
+#~ msgstr "Rdeče (žgana glina)"
+
+#~ msgctxt "color name"
+#~ msgid "Blanched Almond"
+#~ msgstr "Pobeljeno Mandljevo"
+
+#~ msgctxt "color name"
+#~ msgid "Blue"
+#~ msgstr "Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Blue Violet"
+#~ msgstr "Modro Vijolično"
+
+#~ msgctxt "color name"
+#~ msgid "Burly Wood"
+#~ msgstr "Peščeno"
+
+#~ msgctxt "color name"
+#~ msgid "Cadet Blue"
+#~ msgstr "Kadetno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Chartreuse"
+#~ msgstr "Likerjevo (Chartreuse)"
+
+#~ msgctxt "color name"
+#~ msgid "Chocolate"
+#~ msgstr "Čokoladno"
+
+#~ msgctxt "color name"
+#~ msgid "Coral"
+#~ msgstr "Koralno"
+
+#~ msgctxt "color name"
+#~ msgid "Cornflower Blue"
+#~ msgstr "Modro (Kuruzni Cvet)"
+
+#~ msgctxt "color name"
+#~ msgid "Cornsilk"
+#~ msgstr "Kuruzno Svilnato"
+
+#~ msgctxt "color name"
+#~ msgid "Crimson"
+#~ msgstr "Škrlatno"
+
+#~ msgctxt "color name"
+#~ msgid "Cyan"
+#~ msgstr "Sinje"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Blue"
+#~ msgstr "Temno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Cyan"
+#~ msgstr "Temno Sinje"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Goldenrod"
+#~ msgstr "Temno (Zlate Rozge)"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Green"
+#~ msgstr "Temno Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Khaki"
+#~ msgstr "Temno Kakijevo"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Magenta"
+#~ msgstr "Temno Roza"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Olive Green"
+#~ msgstr "Temno Olivno Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Orange"
+#~ msgstr "Temno Oranžno"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Orchid"
+#~ msgstr "Temno Orhidejino"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Red"
+#~ msgstr "Temno Rdeče"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Salmon"
+#~ msgstr "Temno Lososovo"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Sea Green"
+#~ msgstr "Temno Morsko Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Slate Blue"
+#~ msgstr "Temno Skrilasto Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Slate Gray"
+#~ msgstr "Temno Skrilasto Sivo"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Turquoise"
+#~ msgstr "Temno Turkizno"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Violet"
+#~ msgstr "Temno Vijolično"
+
+#~ msgctxt "color name"
+#~ msgid "Deep Pink"
+#~ msgstr "Globoko Rožnato"
+
+#~ msgctxt "color name"
+#~ msgid "Deep Sky Blue"
+#~ msgstr "Globoko Nebesno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Dim Gray"
+#~ msgstr "Umazano Sivo"
+
+#~ msgctxt "color name"
+#~ msgid "Dodger Blue"
+#~ msgstr "Modro (letak)"
+
+#~ msgctxt "color name"
+#~ msgid "Fire Brick"
+#~ msgstr "Opečnato"
+
+#~ msgctxt "color name"
+#~ msgid "Floral White"
+#~ msgstr "Rožno Belo"
+
+#~ msgctxt "color name"
+#~ msgid "Forest Green"
+#~ msgstr "Gozdno Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Fuchsia"
+#~ msgstr "Fuksijino"
+
+# po testiranju popraviti
+#~ msgctxt "color name"
+#~ msgid "Gainsboro"
+#~ msgstr "Močno Sivo"
+
+#~ msgctxt "color name"
+#~ msgid "Ghost White"
+#~ msgstr "Belo (Duh)"
+
+#~ msgctxt "color name"
+#~ msgid "Gold"
+#~ msgstr "Zlato"
+
+#~ msgctxt "color name"
+#~ msgid "Goldenrod"
+#~ msgstr "Rozgino (Zlata Rozga)"
+
+#~ msgctxt "color name"
+#~ msgid "Gray"
+#~ msgstr "Sivo"
+
+#~ msgctxt "color name"
+#~ msgid "Green Yellow"
+#~ msgstr "ZelenoRumeno"
+
+#~ msgctxt "color name"
+#~ msgid "Honeydew"
+#~ msgstr "Manino"
+
+#~ msgctxt "color name"
+#~ msgid "Hot Pink"
+#~ msgstr "Živo Rožnato"
+
+#~ msgctxt "color name"
+#~ msgid "Indian Red"
+#~ msgstr "Indijansko Rdeče"
+
+#~ msgctxt "color name"
+#~ msgid "Indigo"
+#~ msgstr "Modro (Indigo)"
+
+#~ msgctxt "color name"
+#~ msgid "Ivory"
+#~ msgstr "Slonokoščeno"
+
+#~ msgctxt "color name"
+#~ msgid "Khaki"
+#~ msgstr "Kakijevo"
+
+#~ msgctxt "color name"
+#~ msgid "Lavender"
+#~ msgstr "Sivkino"
+
+#~ msgctxt "color name"
+#~ msgid "Lavender Blush"
+#~ msgstr "Pordelo Sivkino"
+
+#~ msgctxt "color name"
+#~ msgid "Lawn Green"
+#~ msgstr "Travnato Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Lemon Chiffon"
+#~ msgstr "Šifonasto Limonino"
+
+#~ msgctxt "color name"
+#~ msgid "Light Blue"
+#~ msgstr "Svetlo Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Light Coral"
+#~ msgstr "Svetlo Koralno"
+
+#~ msgctxt "color name"
+#~ msgid "Light Cyan"
+#~ msgstr "Svetlo Sinje"
+
+#~ msgctxt "color name"
+#~ msgid "Light Goldenrod Yellow"
+#~ msgstr "Svetlo Rumeno (Zlata Rozga"
+
+#~ msgctxt "color name"
+#~ msgid "Light Green"
+#~ msgstr "Svetlo Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Light Pink"
+#~ msgstr "Svetlo Rožnato"
+
+#~ msgctxt "color name"
+#~ msgid "Light Salmon"
+#~ msgstr "Svetlo Lososovo"
+
+#~ msgctxt "color name"
+#~ msgid "Light Sea Green"
+#~ msgstr "Svetlo Morsko Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Light Sky Blue"
+#~ msgstr "Svetlo Nebesno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Light Slate Gray"
+#~ msgstr "Svetlo Skrilasto Sivo"
+
+#~ msgctxt "color name"
+#~ msgid "Light Steel Blue"
+#~ msgstr "Svetlo Jekleno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Light Yellow"
+#~ msgstr "Svetlo Rumeno"
+
+#~ msgctxt "color name"
+#~ msgid "Lime"
+#~ msgstr "Limetno"
+
+#~ msgctxt "color name"
+#~ msgid "Lime Green"
+#~ msgstr "Limetno Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Linen"
+#~ msgstr "laneno"
+
+#~ msgctxt "color name"
+#~ msgid "Magenta"
+#~ msgstr "Roza"
+
+#~ msgctxt "color name"
+#~ msgid "Maroon"
+#~ msgstr "Kostanjevo"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Aquamarine"
+#~ msgstr "srednje Akvamarin"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Blue"
+#~ msgstr "Srednje Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Orchid"
+#~ msgstr "Srednje Orhidejino"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Purple"
+#~ msgstr "Srednje purpurno"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Sea Green"
+#~ msgstr "Srednje Morsko Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Slate Blue"
+#~ msgstr "Srednje Skrilasto Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Spring Green"
+#~ msgstr "Srednje Pomladno Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Turquoise"
+#~ msgstr "Srednje Turkizno"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Violet Red"
+#~ msgstr "Srednje Vijolično Rdeče"
+
+#~ msgctxt "color name"
+#~ msgid "Midnight Blue"
+#~ msgstr "Polnočno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Mint Cream"
+#~ msgstr "Metino Kremasto"
+
+#~ msgctxt "color name"
+#~ msgid "Misty Rose"
+#~ msgstr "Megleno Vrtnično"
+
+#~ msgctxt "color name"
+#~ msgid "Moccasin"
+#~ msgstr "Mokasinasto"
+
+#~ msgctxt "color name"
+#~ msgid "Navajo White"
+#~ msgstr "Belo (Navajo)"
+
+#~ msgctxt "color name"
+#~ msgid "Navy"
+#~ msgstr "Mornarsko"
+
+#~ msgctxt "color name"
+#~ msgid "Old Lace"
+#~ msgstr "Postarano Čipkasto"
+
+#~ msgctxt "color name"
+#~ msgid "Olive"
+#~ msgstr "Olivno"
+
+#~ msgctxt "color name"
+#~ msgid "Olive Drab"
+#~ msgstr "Olivno Drap"
+
+#~ msgctxt "color name"
+#~ msgid "Orange Red"
+#~ msgstr "OranžnoRdeče"
+
+#~ msgctxt "color name"
+#~ msgid "Orchid"
+#~ msgstr "Orhidejino"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Goldenrod"
+#~ msgstr "Bledo (Zlata Rozga)"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Green"
+#~ msgstr "Bledo Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Turquoise"
+#~ msgstr "Bledo Turkizno"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Violet Red"
+#~ msgstr "Bledo Vijolično Rdeče"
+
+#~ msgctxt "color name"
+#~ msgid "Papaya Whip"
+#~ msgstr "Papajino bliskovno"
+
+#~ msgctxt "color name"
+#~ msgid "Peach Puff"
+#~ msgstr "breskvasto penasto"
+
+#~ msgctxt "color name"
+#~ msgid "Peru"
+#~ msgstr "Perujsko Oranžna"
+
+#~ msgctxt "color name"
+#~ msgid "Pink"
+#~ msgstr "Rožnato"
+
+#~ msgctxt "color name"
+#~ msgid "Plum"
+#~ msgstr "Slivovo"
+
+#~ msgctxt "color name"
+#~ msgid "Powder Blue"
+#~ msgstr "Kobaltno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Red"
+#~ msgstr "Rdeče"
+
+#~ msgctxt "color name"
+#~ msgid "Rosy Brown"
+#~ msgstr "Vrtnično Rjavo"
+
+#~ msgctxt "color name"
+#~ msgid "Royal Blue"
+#~ msgstr "Kraljevo Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Saddle Brown"
+#~ msgstr "Sedelno Rjavo"
+
+#~ msgctxt "color name"
+#~ msgid "Salmon"
+#~ msgstr "Lososovo"
+
+#~ msgctxt "color name"
+#~ msgid "Sandy Brown"
+#~ msgstr "Peščeno Rjavo"
+
+#~ msgctxt "color name"
+#~ msgid "Sea Green"
+#~ msgstr "Morsko Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Seashell"
+#~ msgstr "školjčnato"
+
+#~ msgctxt "color name"
+#~ msgid "Sienna"
+#~ msgstr "Sienasto"
+
+#~ msgctxt "color name"
+#~ msgid "Silver"
+#~ msgstr "Srebrno"
+
+#~ msgctxt "color name"
+#~ msgid "Sky Blue"
+#~ msgstr "Nebesno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Slate Blue"
+#~ msgstr "Skrilasto Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Slate Gray"
+#~ msgstr "Skrilasto Sivo"
+
+#~ msgctxt "color name"
+#~ msgid "Snow"
+#~ msgstr "Sneženo"
+
+#~ msgctxt "color name"
+#~ msgid "Spring Green"
+#~ msgstr "Pomladno Zeleno"
+
+#~ msgctxt "color name"
+#~ msgid "Steel Blue"
+#~ msgstr "Jekleno Modro"
+
+#~ msgctxt "color name"
+#~ msgid "Tan"
+#~ msgstr "Ogorelo"
+
+#~ msgctxt "color name"
+#~ msgid "Teal"
+#~ msgstr "modrikasto"
+
+#~ msgctxt "color name"
+#~ msgid "Thistle"
+#~ msgstr "Osatno"
+
+#~ msgctxt "color name"
+#~ msgid "Tomato"
+#~ msgstr "Paradižnikovo"
+
+#~ msgctxt "color name"
+#~ msgid "Turquoise"
+#~ msgstr "Turkizno"
+
+#~ msgctxt "color name"
+#~ msgid "Violet"
+#~ msgstr "Vijolično"
+
+#~ msgctxt "color name"
+#~ msgid "Wheat"
+#~ msgstr "Pšenično"
+
+#~ msgctxt "color name"
+#~ msgid "White Smoke"
+#~ msgstr "Dimasto Belo"
+
+#~ msgid "The start marker must reside within the same object"
+#~ msgstr "Znamenje začetka mora obstajati znotraj istega predmeta"
 
 #~ msgid "report grammar errors off"
 #~ msgstr "sporočaj napake slovnice izključeno"
@@ -9181,9 +9158,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "Default color"
 #~ msgstr "Privzeta barva"
-
-#~ msgid "selecting %s"
-#~ msgstr "označevanje %s"
 
 #~ msgid "unselecting %s"
 #~ msgstr "odznačevanje %s"
@@ -9263,23 +9237,11 @@ msgstr "HIMS SyncBraille"
 #~ msgid "Slovak"
 #~ msgstr "Slovaška"
 
-#~ msgid "grey"
-#~ msgstr "sivo"
-
 #~ msgid "navy blue"
 #~ msgstr "mornarsko modro"
 
-#~ msgid "red"
-#~ msgstr "rdeče"
-
-#~ msgid "blue"
-#~ msgstr "modro"
-
 #~ msgid "teal"
 #~ msgstr "turkizno-modro"
-
-#~ msgid "aqua"
-#~ msgstr "vodeno-modro"
 
 #~ msgid "obscuring"
 #~ msgstr "osenčeno"
