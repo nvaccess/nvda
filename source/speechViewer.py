@@ -6,8 +6,9 @@
 
 import wx
 import gui
+import config
 
-class SpeechViewerFrame(wx.MiniFrame):
+class SpeechViewerFrame(wx.Dialog):
 
 	def __init__(self):
 		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
@@ -15,6 +16,13 @@ class SpeechViewerFrame(wx.MiniFrame):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		self.textCtrl = wx.TextCtrl(self, -1,size=(500,500),style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
 		sizer.Add(self.textCtrl, proportion=1, flag=wx.EXPAND)
+		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.NewId(),label=_("&Show Speech Viewer on Startup"))
+		self.shouldShowOnStartupCheckBox.SetValue(config.conf["general"]["showSpeechViewerAtStartup"])
+		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
+		# set the check box as having focus, by default the textCtrl has focus which stops the speechviewer output (even if another window is in focus)
+		sizer.Add(self.shouldShowOnStartupCheckBox, border=5, flag=wx.ALL)
+		self.shouldShowOnStartupCheckBox.SetFocus()
 		sizer.Fit(self)
 		self.SetSizer(sizer)
 		self.Show(True)
@@ -26,6 +34,9 @@ class SpeechViewerFrame(wx.MiniFrame):
 			self.Destroy()
 			return
 		evt.Veto()
+
+	def onShouldShowOnStartupChanged(self, evt):
+		config.conf["general"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
 
 _guiFrame=None
 isActive=False

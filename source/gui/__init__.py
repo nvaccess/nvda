@@ -109,6 +109,8 @@ class MainFrame(wx.Frame):
 				self.Hide()
 
 	def Destroy(self):
+		if speechViewer.isActive:
+			speechViewer.deactivate()
 		self.sysTrayIcon.Destroy()
 		super(MainFrame, self).Destroy()
 
