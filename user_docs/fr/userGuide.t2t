@@ -370,8 +370,8 @@ Vous disposez des commandes suivantes pour explorer du texte :
 | Aller au caractère suivant en revue | pavnum3 | NVDA+flèche droite | Glisser vers la droite (mode texte) | Amène le curseur de revue au caractère suivant de la ligne courante |
 | Aller en fin de ligne en revue | maj+pavnum3 | NVDA+fin | Aucun | Amène le curseur de revue à la fin de la ligne courante |
 | Dire tout en revue | pavnumPlus | NVDA+maj+a | Glisser vers le bas 3 doigts (mode texte) | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
-| Copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas tant qu'on n'a pas indiqué la fin du texte à copier |
-| Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Copie depuis la position préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. Après l'appui sur cette touche, le texte est copié dans le presse-papiers de Windows. |
+| Sélectionner puis copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à sélectionner puis copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas tant qu'on n'a pas indiqué la fin du texte à copier |
+| Sélectionner puis copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Au premier appui, le texte est sélectionné depuis la position préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. Au second appui, le texte est copié dans le presse-papiers de Windows. |
 | Annonce du formatage du texte | NVDA+f | NVDA+f | Aucun | Annonce le formatage du texte à la position du curseur de revue. Un double appui affiche l'information en mode navigation |
 %kc:endInclude
 
@@ -1198,6 +1198,7 @@ On peut configurer les annonces suivantes :
 - numéro de ligne,
 - retrait de ligne,
 - retrait de paragraphe (ex : retrait en cours, retrait de première ligne),
+- interligne (simple, double etc)
 - tableaux,
 - titres des lignes et colonnes d'un tableau,
 - coordonnées des cellules d'un tableau,
