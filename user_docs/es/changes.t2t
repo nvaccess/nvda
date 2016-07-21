@@ -10,11 +10,26 @@ Qué hay de Nuevo en NVDA
 - El tachado y el doble tachado ahora se anuncian si es apropiado en Microsoft Word. (#5800)
 - En Microsoft Word, ahora se anuncia el título de una tabla si se ha proporcionado uno. Si hay una descripción, se puede acceder a ella utilizando la opción Abrir descripción larga (NVDA+d) en modo exploración. (#5943)
 - En Microsoft Word, NVDA ahora anuncia información de posición cuando se mueven párrafos (alt+shift+flecha abajo y alt+shift+flecha arriba. (#5945)
+- En Microsoft Word, ahora se anuncia el espaciado a través de la orden anunciar formato de NVDA, cuando se cambie con varios atajos de teclado de Microsoft word, y cuando al moverte al texto con espaciado de línea diferente si Anunciar Espaciado de Línea está activado en las Opciones de Formato de Documento de NVDA. (#2961)
+- En Internet Explorer, los elementos estructurales  HTML5 ahora se reconocen. (#5591)
 
  
+== Cambios ==
+- NVDA ahora anuncia colores utilizando un conjunto básico comprensible de 9 tonos y de 3 matices de color, con variaciones de brillo y palidez. Esto es mejor que utilizar nombres de colores más subjetivos y menos inteligibles. (#6029)
+- Se ha modificado el comportamiento del existente NVDA+F9 después NVDA+F10 para seleccionar texto en la primera pulsación de F10. Cuando se pulse F10 dos veces (en sucesión rápida) el texto se copia al portapapeles. (#4636)
+
+
 == Corrección de Fallos ==
 - En modo exploración en Microsoft Word, el copiado al portapapeles ahora conserva el formato. (#5956)
 - En Microsoft Word, NVDA ahora anuncia apropiadamente al utilizar las propias órdenes de navegación de tablas de Word (alt+inicio, alt+fin, alt+rePág y alt+avPág) y las órdenes de selección de tabla (shift añadido a las órdenes de navegación). (#5961)
+- En los cuadros de diálogo de Microsoft Word, la navegación de objetos de NVDA ha sido muy mejorada. (#6036)
+- En algunas aplicaciones tales como Visual Studio 2015, los atajos de teclado (ej.: control+c para Copiar) ahora se anuncian como se esperaba. (#6021)
+- SE corrigió un extraño problema al escanear los puertos serie en algunos sistemas que hacían inusables algunos controladores de pantallas braille.  (#6015)
+- El anunciado de colores en Microsoft Word ahora es más preciso tal que los cambios en los temas de Microsoft Office ahora se tengan en cuenta. (#5997)
+- Está disponible de nuevo el modo exploración en Microsoft Edge y el soporte para las sugerencias de búsqueda del menú Inicio en compilaciones de Windows 10 de después de abril de 2016. (#5955)
+- En Microsoft Word, la lectura automática de emcabezados de tabla funciona mejor cuando se traten celdas combinadas. (#5926)
+- En la aplicación Mail de Windows 10, NVDA ya no falla al leer el contenido de los mensajes. (#5635) 
+- Cuando esté activa la bervalización de teclas de órdenes, las teclas de bloqueo tales como el bloqueo de mayúsculas ya no se anuncian dos veces. (#5490)
 
 
 = 2016.2.1 =
