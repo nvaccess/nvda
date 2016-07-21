@@ -10,11 +10,26 @@
 - Gennemstreget og dobbelt genemstreget er nu annoncéret i Microsoft Word hvis passende. (#5800)
 - Titlen af en tabel vil nu blive rapporteret i Microsoft Word hvis tabellen er navngivet. Hvis der er en tabelbeskrivelse, kan den vises ved brug af kommandoen "Åbn lang beskrivelse" (NVDA+D) i gennemsynstilstand. (#5943)
 - NVDA vil nu rapporterer positionsinformation i Microsoft Word  når du flytter afsnit (alt+skift+pil ned og alt+skift+pil op). (#5945)
+- Linjeafstand i Microsoft Word er nu annoncéret ved brug af "Sig tekstformatering" kommandoen, når dette ændres ved brug af Microsoft Words egne genvejstaster, eller hvis der flyttes med markøren til tekst med en anden linjeafstand. Den sidste mulighed kræver, at indstillingen "Annoncér linjeafstand" er slået til i Dokumentformatering. (#2961)
+- HTML5 strukturelle elementer er nu anerkendte i Internet Explorer. (#5591)
+
+
+== Ændringer ==
+- NVDA vil nu rapportere farver ved brug af et velforstået farvesæt der består af ni farvenuancer, samt tre skyggefarver med klar- og bleghedsvariationer. Dette er frem for at benytte mere subjektive farvenavne, der muligvis ville være sværrer at forstå. (#6029)
+- Fremgangsmåden af tastekombinationen NVDA+f9 og derefter NVDA+f10 er blevet ændret. Disse tastetryk vil nu vælge tekst første gang der trykkes F10. Når F10 trykkes hurtigt (lige efter hinanden) vil teksten kopieres til udklipsholderen. (#4636)
 
 
 == Fejlrettelser ==
 - Når gennemsynstilstand benyttes i Microsoft Word, vil formateringen blive bevaret når tekst kopieres til udklipsholderen. (#5956)
 - NVDA vil nu annoncére passende information når der benyttes Words egne kommandoer for tabelnavigation (Alt+hjem, alt+end, alt+side op og alt+side ned) samt kommandoer for udvælgelse af tabeller (skift tilføjet til ovenstående navigationskommandoer). (#5961)
+- NVDAs objektnavigation er blevet forbedret når det benyttes i dialogbokse i Microsoft Word. (#6036)
+- I nogle applikationer såsom Visual Studio, genvejstaster (f.eks. CTRL+C for at kopiere) vil nu blive annoncéret som forventet. (#6021)
+- Rettet en sjælden fejl der opstod når der blev scannet for seriel porte på nogle systemer. Dette gjorde i disse tilfælde nogle punktdisplay-drivere ubruglige. (#6015)
+- Farverapportering er nu mere præcis i Microsoft Word, da der nu tages hensyn til ændringerne af temaerne i Microsoft Office. (#5997)
+- Gennemsynstilstand for Microsoft Edge samt søgeforslag i startmenuen er nu igen tilgængelige i Windows 10 for versioner frigivet efter April 2016. (#5955)
+- Automatisk læsning af tabeloverskrifter virker nu bedre i Microsoft Word når der arbejdes med flettede celler. (#5926)
+- NVDA vil ikke længere have problemer med at læse indholdet af beskeder i Windows 10 Mail. (#5635) 
+- Når "oplæs funktionstaste" er slået til, vil låsetaster som CAPS lock ikke annoncéres to gange. (#5490)
 
 
 === Ændringer for udviklere ===
