@@ -10,11 +10,26 @@
 - Tavallinen ja kaksinkertainen yliviivaus ilmoitetaan nyt Microsoft Wordissa. (#5800)
 - Jos taulukolla on otsikko, se luetaan nyt Microsoft Wordissa. Mikäli kuvaus on lisätty, se voidaan lukea selaustilassa avaa pitkä kuvaus -komennolla (NVDA+D). (#5943)
 - NVDA ilmoittaa nyt Microsoft Wordissa sijaintitiedot kappaleita siirrettäessä (Alt+Shift+nuoli alas ja Alt+Shift+nuoli ylös). (#5945)
+- Riviväli ilmoitetaan nyt Microsoft Wordissa NVDA:n muotoilutietojen lukukomennolla, Wordin pikanäppäimillä muutettaessa sekä siirryttäessä sellaisen tekstin kohdalle, jonka riviväli eroaa aiemmasta, mikäli Ilmoita rivivälit -asetus on otettu käyttöön NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunasta. (#2961)
+- HTML5:n rakenteelliset elementit tunnistetaan nyt Internet Explorerissa. (#5591)
+
+
+== Muutokset ==
+- NVDA ilmoittaa nyt värit käyttäen paremmin ymmärrettävää 9 sävyn ja 3 voimakkuuden perussarjaa kirkkaus- ja haaleusmuunnelmineen. Aiemmin käytettiin subjektiivisempia ja vähemmän ymmärrettäviä värien nimiä. (#6029)
+- Olemassa oleva NVDA+F9- ja NVDA+F10-toiminnallisuus on muutettu valitsemaan tekstiä ensimmäisellä F10:n painalluksella. Kun F10:tä painetaan kahdesti (nopeasti peräkkäin), teksti kopioidaan leikepöydälle. (#4636)
 
 
 == Korjatut ohjelmavirheet ==
 - Leikepöydälle kopioiminen selaustilassa Microsoft Wordissa säilyttää nyt muotoilun. (#5956)
 - NVDA ilmoittaa nyt asianmukaisesti Microsoft Wordissa sen omia  taulukkonavigointikomentoja (Alt+Home, Alt+End, Alt+Page up ja Alt+Page down) sekä taulukonvalitsemiskomentoja (Shift lisättynä navigointikomentoihin) käytettäessä. (#5961)
+- NVDA:n objektinavigointia on paranneltu huomattavasti Microsoft Wordin valintaikkunoissa. (#6036)
+- Pikanäppäimet (esim. Ctrl+C kopiointia varten) ilmoitetaan nyt odotetusti joissakin sovelluksissa, kuten esim. Visual Studio 2015. (#6021)
+- Korjattu muutamissa järjestelmissä sarjaportteja etsittäessä ilmennyt harvinainen ongelma, joka teki joistakin pistenäyttöajureista käyttökelvottomia. (#6015)
+- Värien ilmoittaminen on Microsoft Wordissa tarkempaa, sillä Office-teemojen muutokset otetaan nyt huomioon. (#5997)
+- Microsoft Edgen selaustila ja Käynnistä-valikon hakukentän ehdotusten tuki ovat taas käytettävissä Windows 10:n koontiversioissa, jotka on julkaistu huhtikuun 2016 jälkeen. (#5955)
+- Automaattinen taulukko-otsikoiden lukeminen toimii paremmin Microsoft Wordissa yhdistettyjä soluja käsiteltäessä. (#5926)
+- Viestien sisällön lukeminen onnistuu nyt NVDA:lla Windows 10:n Sähköposti-sovelluksessa. (#5635) 
+- Lukitusnäppäimiä, kuten Caps Lock, ei enää ilmoiteta kahdesti komentonäppäinten lukemisen ollessa käytössä. (#5490)
 
 
 = 2016.2.1 =
@@ -76,7 +91,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mahdollisuus valinnais
 - Uusia pistetaulukoita: puolalainen 8 pisteen tietokonemerkistö, mongoli. (#5537, #5574)
 - Voit poistaa pistekohdistimen käytöstä ja muuttaa sen muotoa uusia Pistekirjoitusasetukset-valintaikkunan Näytä kohdistin- ja Kohdistimen muoto -asetuksia käyttäen. (#5198)
 - NVDA voi nyt yhdistää HIMS Smart Beetle -pistenäyttöön bluetoothin kautta. (#5607)
-- NVDA voi valinnaisesti alentaa muiden äänien voimakkuutta, kun se on asennettuna Windows 8:ssa tai uudemmassa käyttöjärjestelmässä. Tämä voidaan määrittää Syntetisaattorin asetukset -valintaikkunan Taustaäänien vaimennus -asetusta käyttäen tai painamalla NVDA+Shift+D. (#3830, #5575)
+- NVDA voi valinnaisesti alentaa muiden äänien voimakkuutta, kun se on asennettu Windows 8:aan tai uudempaan käyttöjärjestelmään. Tämä voidaan määrittää Syntetisaattorin asetukset -valintaikkunan Taustaäänien vaimennus -asetusta käyttäen tai painamalla NVDA+Shift+D. (#3830, #5575)
 - Tuki APH Refreshabraille -pistenäytölle HID-tilassa ja Baum VarioUltralle sekä Pronto!:lle USB:n kautta yhdistettäessä. (#5609)
 - Tuki HumanWare Brailliant BI/B -pistenäytöille, kun protokollaksi on määritetty OpenBraille. (#5612)
 
