@@ -135,6 +135,9 @@ confspec = ConfigObj(StringIO(
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
 
+[speechView]
+	autoPositionWindow = boolean(default=True)
+
 #Keyboard settings
 [keyboard]
 	useCapsLockAsNVDAModifierKey = boolean(default=false)
