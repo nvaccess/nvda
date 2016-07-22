@@ -65,7 +65,6 @@ confspec = ConfigObj(StringIO(
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
-	showSpeechViewerAtStartup = boolean(default=false)
 
 # Speech settings
 [speech]
@@ -135,6 +134,9 @@ confspec = ConfigObj(StringIO(
 	audioCoordinates_minPitch = integer(default=220)
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
+
+[speechView]
+	showSpeechViewerAtStartup = boolean(default=false)
 
 #Keyboard settings
 [keyboard]

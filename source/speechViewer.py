@@ -18,7 +18,7 @@ class SpeechViewerFrame(wx.Dialog):
 		sizer.Add(self.textCtrl, proportion=1, flag=wx.EXPAND)
 		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.NewId(),label=_("&Show Speech Viewer on Startup"))
-		self.shouldShowOnStartupCheckBox.SetValue(config.conf["general"]["showSpeechViewerAtStartup"])
+		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechView"]["showSpeechViewerAtStartup"])
 		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
 		# set the check box as having focus, by default the textCtrl has focus which stops the speechviewer output (even if another window is in focus)
 		sizer.Add(self.shouldShowOnStartupCheckBox, border=5, flag=wx.ALL)
@@ -36,7 +36,7 @@ class SpeechViewerFrame(wx.Dialog):
 		evt.Veto()
 
 	def onShouldShowOnStartupChanged(self, evt):
-		config.conf["general"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
+		config.conf["speechView"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
 
 _guiFrame=None
 isActive=False
@@ -52,7 +52,7 @@ def appendText(text):
 	if not isinstance(text,basestring):
 		return
 	#If the speech viewer text control has the focus, we want to disable updates
-	#Otherwize it would be impossible to select text, or even just read it (as a blind person).
+	#Otherwise it would be impossible to select text, or even just read it (as a blind person).
 	if _guiFrame.FindFocus()==_guiFrame.textCtrl:
 		return
 	_guiFrame.textCtrl.AppendText(text + "\n")
