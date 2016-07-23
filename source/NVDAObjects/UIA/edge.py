@@ -164,6 +164,10 @@ class EdgeTextInfo(UIATextInfo):
 		else:
 			log.debug("No enclosingElement. Returning")
 			return
+		enclosingRange=self.obj.UIATextPattern.rangeFromChild(enclosingElement)
+		if not enclosingRange:
+			log.debug("enclosingRange is NULL. Returning")
+			return
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
 		parents=[]
@@ -199,12 +203,8 @@ class EdgeTextInfo(UIATextInfo):
 				yield textInfos.FieldCommand("controlStart",field)
 		log.debug("Done yielding parents")
 		enclosingRange=self.obj.UIATextPattern.rangeFromChild(enclosingElement)
-		if enclosingRange:
-			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
-			if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
-				startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-		else:
-			log.debug("NULL enclosingRange. Falling back to textRange")
+		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
+		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 		log.debug("Yielding balanced fields for startRange")
 		for field in self._getTextWithFields_balanced(enclosingElement,startRange,formatConfig,includeRoot=False):
@@ -246,7 +246,7 @@ class EdgeTextInfo(UIATextInfo):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=[]
-		for field in self._getTextWithFields_unbalanced(self.obj.UIAElement,self._rangeObj,formatConfig):
+		for field in self._getTextWithFields_unbalanced(self.obj.UIAElement,self._rangeObj,formatConfig,False):
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("field: %s"%field)
 			fields.append(field)
