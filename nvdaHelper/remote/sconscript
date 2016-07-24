@@ -72,9 +72,11 @@ nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
 
 ia2utilsObj=env.Object("./ia2utils","../common/ia2utils.cpp")
 
+
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=[
+		env.RES(env['projectRCFile']),
 		"injection.cpp",
 		"log.cpp",
 		"inProcess.cpp",

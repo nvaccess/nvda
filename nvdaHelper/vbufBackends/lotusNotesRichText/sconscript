@@ -20,6 +20,7 @@ Import([
 lotusNotesRichTextBackendLib=env.SharedLibrary(
 	target="VBufBackend_lotusNotesRichText",
 	source=[
+		env.RES(env['projectRCFile']),
 		"lotusNotesRichText.cpp",
 	],
 	LIBS=[

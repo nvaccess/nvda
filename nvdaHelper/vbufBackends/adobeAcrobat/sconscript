@@ -21,6 +21,7 @@ Import([
 adobeAcrobatBackendLib=env.SharedLibrary(
 	target="VBufBackend_adobeAcrobat",
 	source=[
+		env.RES(env['projectRCFile']),
 		"adobeAcrobat.cpp",
 		env.Object('_acrobatAccess_i',acrobatAccessRPCStubs[2]),
 	],
