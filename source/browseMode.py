@@ -706,13 +706,14 @@ class ElementsListDialog(wx.Dialog):
 		#Do case-insensitive matching by lowering both filterText and each element's text.
 		filterText=filterText.lower()
 		for element in self._elements:
-			if filterText and filterText not in element.item.label.lower():
+			label=element.item.label
+			if filterText and filterText not in label.lower():
 				continue
 			matched = True
 			parent = element.parent
 			if parent:
 				parent = elementsToTreeItems.get(parent)
-			item = self.tree.AppendItem(parent or self.treeRoot, element.item.label)
+			item = self.tree.AppendItem(parent or self.treeRoot, label)
 			self.tree.SetItemPyData(item, element)
 			elementsToTreeItems[element] = item
 			if element == defaultElement:
