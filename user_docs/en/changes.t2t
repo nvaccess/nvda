@@ -37,6 +37,7 @@
 - Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
 - When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)
 - If NVDA is unable to communicate with a braille display (e.g. because it has been disconnected), it will automatically disable use of the display. (#1555)
+- Slightly improved performance of filtering in the Browse Mode Elements List in some cases. (#6126)
 
 
 == Changes for Developers ==
