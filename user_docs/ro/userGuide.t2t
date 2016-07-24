@@ -370,8 +370,8 @@ Următoarele comenzi din taste sunt disponibile pentru examinarea textului:
 | Mută la următorul caracter din descriere | numpad3 | NVDA+săgeată dreapta | glisează brusc dreapta (mod text) | Mută cursorul de examinare la următorul caracter de pe rândul curent din text |
 | Mută la sfârșitul rândului din descriere | shift+numpad3 | NVDA+end | fără | Mută cursorul de examinare la sfârșitul rândului curent din text |
 | Citește tot din descriere | numpadPlus | NVDA+shift+a | glisează brusc jos cu 3 degete (mod text) | Citește din poziția curentă a cursorului de examinare, deplasându-l pe măsură ce înaintează |
-| Copiază de la cursorul de examinare | NVDA+f9 | NVDA+f9 | fără | Începe copierea textului din poziția curentă a cursorului de examinare. Operația de copiere nu este efectuată până nu specificați destinația copierii către NVDA |
-| Copiază la cursorul de examinare | NVDA+f10 | NVDA+f10 | fără | Copiază de la  poziția aleasă în prealabil cu comanda „Copiază de la cursorul de examinare”, până la și inclusiv poziția curentă a cursorului de examinare. După apăsarea acestei taste, textul va fi copiat în planșeta Windows |
+| Selectează apoi copiază de la cursorul de examinare | NVDA+f9 | NVDA+f9 | fără | Începe procesul de selectare și copiere de la poziția curentă a cursorului de examinare. Operația propriu-zisă nu este efectuată până nu specificați către NVDA unde se află limita finală a textului |
+| Selectează apoi copiază la cursorul de examinare | NVDA+f10 | NVDA+f10 | fără | La prima apăsare, se slectează textul începând cu poziția marcată anterior, până la și inclusiv poziția curentă a cursorului de examinare. După apăsarea a doua oară a acestei taste, textul va fi copiat în planșeta Windows |
 | Raportează formatul textului | NVDA+f | NVDA+f | fără | Anunță formatul textului unde se află cursorul de examinare |
 %kc:endInclude
 
@@ -1198,6 +1198,7 @@ Puteți configura anunțarea pentru:
 - număr de rând
 - indentație rând
 - indentație paragraf (de ex. negativă, a primului rând)
+- spațiere între linii (simplă, dublă, etc)
 - tabele
 - anteturi rânduri/coloane tabele
 - coordonate celule tabel

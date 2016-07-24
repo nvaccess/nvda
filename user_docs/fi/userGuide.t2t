@@ -370,8 +370,8 @@ Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 | Siirrä seuraavaan merkkiin | Numeronäppäimistön 3 | NVDA+oikea nuoli | Pyyhkäisy oikealle (tekstitila) | Siirtää tarkastelukohdistimen tekstissä seuraavan merkin kohdalle nykyisellä rivillä. |
 | Siirrä rivin loppuun | Shift+numeronäppäimistön 3 | NVDA+End | Ei mitään | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin loppuun. |
 | Lue kaikki | Numeronäppäimistön plus | NVDA+Shift+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta lähtien siirtäen samalla sitä. |
-| Merkitse kopioitavan tekstin alkukohta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin kopioimisen tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, mihin kopiointi lopetetaan. |
-| Merkitse kopioitavan tekstin loppukohta | NVDA+F10 | NVDA+F10 | Ei mitään | Kopioi tekstin alkukohdan merkitsemiskomennolla asetetusta kohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Kun tätä näppäinyhdistelmää painetaan, teksti kopioidaan leikepöydälle. |
+| Valitse ja kopioi tarkastelukohdistimesta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin valitsemisen ja  kopioinnin tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, missä tekstilohkon loppu on. |
+| Valitse ja kopioi tarkastelukohdistimeen | NVDA+F10 | NVDA+F10 | Ei mitään | Valitsee ensimmäisellä painalluksella aiemmin asetetusta tekstilohkon alkukohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Toisen kerran painettaessa teksti kopioidaan leikepöydälle. |
 | Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa näyttää tiedot selaustilassa. |
 %kc:endInclude
 
@@ -1198,6 +1198,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Rivinumerot
 - Rivien sisennykset
 - Kappaleiden sisennykset (esim. riippuva ja ensimmäisen rivin sisennys)
+- rivivälit (yksinkertainen, kaksinkertainen jne.)
 - Taulukot
 - Taulukon rivi- ja sarakeotsikot
 - Taulukon solun koordinaatit

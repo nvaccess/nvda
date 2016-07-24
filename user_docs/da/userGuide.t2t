@@ -370,8 +370,8 @@ Følgende tastekommandoer er tilgængelige for gennemsyn af tekst:
 | Gå til næste tegn i læsetilstand | Numpad3 | NVDA+Højre-pil | Svirp til højre (teksttilstand) | Flytter læsemarkøren til næste tegn på den aktuelle linje i teksten |
 | Gå til slutningen af linje i læsetilstand | Shift+Numpad3 | NVDA+End | Ingen | Flytter læsemarkøren til slutningen af den aktuelle linje i teksten |
 | Sig alt i læsetilstand | Numpad-plus | NVDA+Shift+a | Svirp ned med tre fingre (teksttilstand) | Læser fra læsemarkørens aktuelle position og flytter den under læsningen |
-| Kopier fra læsemarkør | NVDA+f9 | NVDA+f9 | Ingen | Begynder at kopiere tekst fra læsemarkørens aktuelle position. Den faktiske kopiering finder ikke sted, før du fortæller NVDA, hvor teksten skal kopieres hen. |
-| Kopier til læsemarkør | NVDA+f10 | NVDA+f10 | Ingen | Kopierer fra den position, som er blevet sat med funktionen "Kopier fra læsemarkør" til læsemarkørens aktuelle position. Når du trykker på denne tast, bliver teksten kopieret til Windows udklipsholderen. |
+| Vælg og derefter kopier fra læsemarkør | NVDA+f9 | NVDA+f9 | Ingen | Begynder vælge og kopiere processen fra læsemarkørens aktuelle position. Den faktiske handling finder ikke sted, før du fortæller NVDA, hvor udvælgelsen af teksten afsluttes. |
+| Vælg og kopier til læsemarkør | NVDA+f10 | NVDA+f10 | Ingen | Ved et tryk, vil tekst blive valgt fra den tidligere startmarkør, som er blevet sat, til og med læsemarkørens aktuelle position. Når du trykker på denne tast to gange, bliver teksten kopieret til Windows udklipsholderen. |
 | Sig tekstformatering | NVDA+f | NVDA+f | Ingen | Annoncerer formateringen af teksten ved læsemarkørens position. Trykkes dette to gange vil informationen blive vist i gennemsynstilstand |
 %kc:endInclude
 
@@ -1198,6 +1198,7 @@ Du kan tilpasse annoncering af:
 - Linjenumre
 - Indrykning af linje
 - Indrykning af afsnit (fx. hængende indryk eller indrykning af første linje)
+- Linjeafstand (f.eks. enkel, dobbel, osv.)
 - tabeller
 - Række- og kolonneoverskrifter i tabeller
 - Koordinater på tabelceller
