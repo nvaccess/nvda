@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2015 NV Access Limited
+#Copyright (C) 2008-2016 NV Access Limited
 
 import sys
 import itertools
@@ -1480,7 +1480,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _writeCells(self, cells):
 		if not self.display.isThreadSafe:
-			self.display.display(cells)
+			try:
+				self.display.display(cells)
+			except:
+				log.error("Error displaying cells. Disabling display", exc_info=True)
+				self.setDisplayByName("noBraille", isFallback=True)
 			return
 		with _BgThread.queuedWriteLock:
 			alreadyQueued = _BgThread.queuedWrite
@@ -1714,7 +1718,11 @@ class _BgThread:
 			_BgThread.queuedWrite = None
 		if not data:
 			return
-		handler.display.display(data)
+		try:
+			handler.display.display(data)
+		except:
+			log.error("Error displaying cells. Disabling display", exc_info=True)
+			handler.setDisplayByName("noBraille", isFallback=True)
 
 	@classmethod
 	def func(cls):
