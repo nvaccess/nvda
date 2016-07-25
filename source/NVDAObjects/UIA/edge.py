@@ -318,8 +318,6 @@ class EdgeList(EdgeNode):
 
 class EdgeHTMLRootContainer(EdgeNode):
 
-	shouldAllowUIAFocusEvent=True
-
 	def event_gainFocus(self):
 		firstChild=self.firstChild
 		if isinstance(firstChild,UIA):
