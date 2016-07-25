@@ -264,10 +264,33 @@ class EdgeTextInfo(UIATextInfo):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=[]
+		seenText=False
+		curStarts=[]
 		for field in self._getTextWithFields_unbalanced(self.obj.UIAElement,self._rangeObj,formatConfig,False):
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("field: %s"%field)
 			fields.append(field)
+		# Chop extra fields off the end incorrectly put there by Edge
+		numFields=len(fields)
+		for index in xrange(numFields):
+			index=(numFields-1)-index
+			field=fields[index]
+			if isinstance(field,basestring) and field.isspace():
+				del fields[index]
+				break
+		startCount=0
+		lastStartIndex=None
+		numFields=len(fields)
+		for index in xrange(numFields):
+			index=(numFields-1)-index
+			field=fields[index]
+			if isinstance(field,basestring):
+				break
+			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				startCount+=1
+				lastStartIndex=index
+		if lastStartIndex:
+			del fields[lastStartIndex:lastStartIndex+(startCount*2)]
 		return fields
 
 class EdgeNode(UIA):
