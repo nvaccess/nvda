@@ -10,6 +10,7 @@ from logHandler import log
 import eventHandler
 import config
 import controlTypes
+import aria
 import winUser
 import textInfos
 import UIAHandler
@@ -20,6 +21,23 @@ import aria
 from . import UIA, UIATextInfo
 
 class EdgeTextInfo(UIATextInfo):
+
+	def _getControlFieldForObject(self,obj):
+		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj)
+		lct=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedControlTypePropertyId)
+		landmark=None
+		if lct in aria.landmarkRoles:
+			landmark=lct
+		else:
+			ar=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_AriaRolePropertyId)
+			if ar:
+				for ar in ar.split():
+					if ar in aria.landmarkRoles:
+						landmark=ar
+						break
+		if landmark and (landmark!='region' or field.get('name')):
+			field['landmark']=landmark
+		return field
 
 	def _getTextWithFields_text(self,textRange,formatConfig):
 		log.debug("_getTextWithFields_text start")

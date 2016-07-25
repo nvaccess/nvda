@@ -31,6 +31,8 @@ ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
 UIA_LevelPropertyId=30154
 UIA_PositionInSetPropertyId=30152
 UIA_SizeOfSetPropertyId=30153
+UIA_LocalizedLandmarkTypePropertyId=30158
+UIA_LandmarkTypePropertyId=30157
 
 badUIAWindowClassNames=[
 	"SysTreeView32",
