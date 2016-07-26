@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+// See https://github.com/nvaccess/nvda/wiki/Using-COM-with-NVDA-and-Microsoft-Word
 #define wdDISPID_STYLES_ITEM 0
 #define wdDISPID_DOCUMENT_STYLES 22
 #define wdDISPID_DOCUMENT_RANGE 2000
@@ -276,7 +277,7 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_DUPLICATE,VT_DISPATCH,&pDispatchRange2)!=S_OK||!pDispatchRange2) {
 		return false;
 	}
-	_com_dispatch_raw_method(pDispatchRange2,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph,1);
+	_com_dispatch_raw_method(pDispatchRange2,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph,1); // is it wrong?
 	BOOL foundFormField=false;
 	IDispatchPtr pDispatchFormFields=NULL;
 	_com_dispatch_raw_propget(pDispatchRange2,wdDISPID_RANGE_FORMFIELDS,VT_DISPATCH,&pDispatchFormFields);
@@ -462,6 +463,41 @@ int getHyperlinkCount(IDispatch* pDispatchRange) {
 		return 0;
 	}
 	return count;
+}
+
+const int wdDISPID_RANGE_FIELDS = 64;
+const int wdDISPID_FIELDS_COUNT = 1;
+const int wdDISPID_FIELDS_ITEM = 0;
+const int wdDISPID_FIELDS_ITEM_TYPE = 1;
+
+int getXRefLinkCount(IDispatch* pDispatchRange) {
+	IDispatchPtr pDispatchFields = nullptr;
+	LOG_DEBUGWARNING(L"called getXRefLinkCount");
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_FIELDS, VT_DISPATCH, &pDispatchFields);
+	if( res != S_OK || !pDispatchFields ) {
+		return 0;
+	}
+
+	int count = 0;
+	res = _com_dispatch_raw_propget( pDispatchFields, wdDISPID_FIELDS_COUNT, VT_I4, &count);
+	if( res != S_OK || count <= 0 ) {
+		return 0;
+	}
+	int xRefCount = 0;
+	for(int i = 1; i <= count; ++i) {
+		IDispatchPtr pDispatchItem = nullptr;
+		res = _com_dispatch_raw_method( pDispatchFields, wdDISPID_FIELDS_ITEM, DISPATCH_METHOD, VT_DISPATCH, &pDispatchItem, L"\x0003", i);
+		if( res == S_OK && pDispatchItem) {
+			int type = -1;
+			const int CROSS_REFERENCE_TYPE_VALUE = 3; // wdFieldRef see (WdFieldType Enumeration - https://msdn.microsoft.com/en-us/library/office/ff192211.aspx)
+			res = _com_dispatch_raw_propget( pDispatchItem, wdDISPID_FIELDS_ITEM_TYPE, VT_I4, &type);
+			if( res == S_OK && type == CROSS_REFERENCE_TYPE_VALUE ){
+				++xRefCount;
+			}
+		}
+	}
+	LOG_DEBUGWARNING(L"Found links: " << xRefCount);
+	return xRefCount;
 }
 
 bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& commentVector) {
@@ -688,7 +724,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	}
-	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)>0) {
+	if( (formatConfig&formatConfig_reportLinks) && (getHyperlinkCount(pDispatchRange) + getXRefLinkCount(pDispatchRange) > 0) ) {
 		formatAttribsStream<<L"link=\"1\" ";
 	}
 	if(formatConfig&formatConfig_reportRevisions) {
@@ -880,7 +916,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Collapse the range
 	int initialFormatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
-	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)==0) {
+	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange) + getXRefLinkCount(pDispatchRange) == 0) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
 	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory)) {
