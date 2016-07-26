@@ -433,6 +433,8 @@ def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attr
 		curPosition=position.copy()
 		curPosition.setEndPoint(story,"startToStart" if direction=="previous" else "endToEnd")
 	while True:
+		if direction=="previous":
+			curPosition.move(textInfos.UNIT_CHARACTER,-1,endPoint="end")
 		try:
 			newRange=curPosition._rangeObj.findAttribute(attributeID,attributeValue,direction=="previous")
 		except COMError:
@@ -652,6 +654,10 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType=="heading":
+			if pos:
+				pos=pos.copy()
+				pos.expand(textInfos.UNIT_PARAGRAPH)
+				pos.collapse()
 			return browseMode.mergeQuickNavItemIterators([UIATextAttributeQuickNavIterator("heading%d"%level,self,pos,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.StyleId_Heading1+(level-1),direction,HeadingUIATextRangeQuickNavItem) for level in xrange(1,7)],direction)
 		elif nodeType.startswith("heading"):
 			level=int(nodeType[7:])
