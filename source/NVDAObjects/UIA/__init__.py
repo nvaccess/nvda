@@ -9,6 +9,7 @@ from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import sys
+import numbers
 import UIAHandler
 import globalVars
 import eventHandler
@@ -25,27 +26,75 @@ import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
+	def _getUIATextAttributeValueFromRange(self,range,attrib):
+		try:
+			return range.GetAttributeValue(attrib)
+		except COMError:
+			return UIAHandler.handler.reservedNotSupportedValue
+
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
-			try:
-				fontNameValue=range.GetAttributeValue(UIAHandler.UIA_FontNameAttributeId)
-			except COMError:
-				fontNameValue=UIAHandler.handler.reservedNotSupportedValue
-			if fontNameValue!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField["font-name"]=fontNameValue
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontNameAttributeId)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField["font-name"]=val
 		if formatConfig["reportFontSize"]:
-			try:
-				fontSizeValue=range.GetAttributeValue(UIAHandler.UIA_FontSizeAttributeId)
-			except COMError:
-				fontSizeValue=UIAHandler.handler.reservedNotSupportedValue
-			if fontSizeValue!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField['font-size']="%g pt"%float(fontSizeValue)
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontSizeAttributeId)
+			if isinstance(val,numbers.Number):
+				formatField['font-size']="%g pt"%float(val)
+		if formatConfig["reportFontAttributes"]:
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontWeightAttributeId)
+			if isinstance(val,int):
+				formatField['bold']=(val>=700)
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsItalicAttributeId)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField['italic']=val
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_UnderlineStyleAttributeId)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField['underline']=bool(val)
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StrikethroughStyleAttributeId)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField['strikethrough']=bool(val)
+			textPosition=None
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSuperscriptAttributeId)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
+				textPosition='super'
+			else:
+				val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSubscriptAttributeId)
+				if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
+					textPosition="sub"
+				else:
+					textPosition="baseline"
+			if textPosition:
+				formatField['text-position']=textPosition
+		if formatConfig["reportAlignment"]:
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
+			if val==UIAHandler.HorizontalTextAlignment_Left:
+				val="left"
+			elif val==UIAHandler.HorizontalTextAlignment_Centered:
+				val="center"
+			elif val==UIAHandler.HorizontalTextAlignment_Right:
+				val="right"
+			elif val==UIAHandler.HorizontalTextAlignment_Justified:
+				val="justify"
+			else:
+				val=None
+			if val:
+				formatField['text-align']=val
+		if formatConfig["reportColor"]:
+			import colors
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_BackgroundColorAttributeId)
+			if isinstance(val,int):
+				formatField['background-color']=colors.RGB.fromCOLORREF(val)
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_ForegroundColorAttributeId)
+			if isinstance(val,int):
+				formatField['color']=colors.RGB.fromCOLORREF(val)
+		if formatConfig['reportLinks']:
+			val=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_LinkAttributeId)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField['link']=bool(val)
 		if formatConfig["reportHeadings"]:
-			try:
-				styleIDValue=range.GetAttributeValue(UIAHandler.UIA_StyleIdAttributeId)
-			except COMError:
-				styleIDValue=UIAHandler.handler.reservedNotSupportedValue
+			styleIDValue=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StyleIdAttributeId)
 			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 		return textInfos.FieldCommand("formatChange",formatField)

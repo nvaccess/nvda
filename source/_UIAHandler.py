@@ -34,6 +34,11 @@ UIA_SizeOfSetPropertyId=30153
 UIA_LocalizedLandmarkTypePropertyId=30158
 UIA_LandmarkTypePropertyId=30157
 
+HorizontalTextAlignment_Left=0
+HorizontalTextAlignment_Centered=1
+HorizontalTextAlignment_Right=2
+HorizontalTextAlignment_Justified=3
+  
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
