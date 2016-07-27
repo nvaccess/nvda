@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2010 James Teh <jamie@jantrid.net>, Aleksey Sadovoy <lex@onm.su>
+#Copyright (C) 2008-2016 NV Access Limited, Aleksey Sadovoy, Babbage B.v.
 
 localizedKeyLabels = {
 	# Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
@@ -162,3 +162,6 @@ localizedKeyLabels = {
 	# Translators: This is the name of a key on the keyboard.
 	'tab': pgettext("keyLabel", "tab"),
 }
+
+def getKeyCombinationLabel(keyCombination):
+	return "+".join(localizedKeyLabels[key.lower()] for key in keyCombination.split("+"))

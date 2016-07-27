@@ -1,6 +1,6 @@
 #scriptHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2016 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ from logHandler import log
 import inputCore
 import globalPluginHandler
 import braille
+import keyLabels
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -35,7 +36,7 @@ def _makeKbEmulateScript(scriptName):
 		# __name__ must be str; i.e. can't be unicode.
 		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
-	func.__doc__ = _("Emulates pressing %s on the system keyboard") % keyName
+	func.__doc__ = _("Emulates pressing %s on the system keyboard") % keyLabels.getKeyCombinationLabel(keyName)
 	return func
 
 def _getObjScript(obj, gesture, globalMapScripts):
