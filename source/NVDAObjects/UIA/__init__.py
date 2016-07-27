@@ -159,6 +159,8 @@ class UIATextInfo(textInfos.TextInfo):
 	def _getControlFieldForObject(self, obj):
 		role = obj.role
 		field = textInfos.ControlField()
+		# Ensure this controlField is unique to the object
+		field['runtimeID']=obj.UIAElement.getRuntimeID()
 		field["role"] = obj.role
 		states = obj.states
 		# The user doesn't care about certain states, as they are obvious.
