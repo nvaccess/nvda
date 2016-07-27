@@ -714,6 +714,11 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
 
+	def shouldPassThrough(self,obj,reason=None):
+		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
+			return True
+		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
+
 class EdgeHTMLRoot(EdgeNode):
 
 	treeInterceptorClass=EdgeHTMLTreeInterceptor
