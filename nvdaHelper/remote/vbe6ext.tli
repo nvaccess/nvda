@@ -1,0 +1,1669 @@
+﻿// Created by Microsoft (R) C/C++ Compiler Version 14.00.24210.0 (f793506e).
+//
+// c:\users\reef\documents\visual studio 2015\projects\createwordheaders\createwordheaders\debug\vbe6ext.tli
+//
+// Wrapper implementations for Win32 type library C:\Program Files (x86)\Common Files\Microsoft Shared\VBA\VBA6\VBE6EXT.OLB
+// compiler-generated file created 07/27/16 at 11:49:23 - DO NOT EDIT!
+
+#pragma once
+
+//
+// interface Application wrapper method implementations
+//
+
+inline _bstr_t Application::GetVersion ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Version(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+//
+// dispinterface _dispVBProjectsEvents wrapper method implementations
+//
+
+inline HRESULT _dispVBProjectsEvents::ItemAdded ( struct _VBProject * VBProject ) {
+    return _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBProject);
+}
+
+inline HRESULT _dispVBProjectsEvents::ItemRemoved ( struct _VBProject * VBProject ) {
+    return _com_dispatch_method(this, 0x2, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBProject);
+}
+
+inline HRESULT _dispVBProjectsEvents::ItemRenamed ( struct _VBProject * VBProject, _bstr_t OldName ) {
+    return _com_dispatch_method(this, 0x3, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009\x0008", VBProject, (BSTR)OldName);
+}
+
+inline HRESULT _dispVBProjectsEvents::ItemActivated ( struct _VBProject * VBProject ) {
+    return _com_dispatch_method(this, 0x4, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBProject);
+}
+
+//
+// dispinterface _dispVBComponentsEvents wrapper method implementations
+//
+
+inline HRESULT _dispVBComponentsEvents::ItemAdded ( struct _VBComponent * VBComponent ) {
+    return _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBComponent);
+}
+
+inline HRESULT _dispVBComponentsEvents::ItemRemoved ( struct _VBComponent * VBComponent ) {
+    return _com_dispatch_method(this, 0x2, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBComponent);
+}
+
+inline HRESULT _dispVBComponentsEvents::ItemRenamed ( struct _VBComponent * VBComponent, _bstr_t OldName ) {
+    return _com_dispatch_method(this, 0x3, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009\x0008", VBComponent, (BSTR)OldName);
+}
+
+inline HRESULT _dispVBComponentsEvents::ItemSelected ( struct _VBComponent * VBComponent ) {
+    return _com_dispatch_method(this, 0x4, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBComponent);
+}
+
+inline HRESULT _dispVBComponentsEvents::ItemActivated ( struct _VBComponent * VBComponent ) {
+    return _com_dispatch_method(this, 0x5, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBComponent);
+}
+
+inline HRESULT _dispVBComponentsEvents::ItemReloaded ( struct _VBComponent * VBComponent ) {
+    return _com_dispatch_method(this, 0x6, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", VBComponent);
+}
+
+//
+// dispinterface _dispReferencesEvents wrapper method implementations
+//
+
+inline HRESULT _dispReferencesEvents::ItemAdded ( struct Reference * Reference ) {
+    return _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", Reference);
+}
+
+inline HRESULT _dispReferencesEvents::ItemRemoved ( struct Reference * Reference ) {
+    return _com_dispatch_method(this, 0x2, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", Reference);
+}
+
+//
+// dispinterface _dispCommandBarControlEvents wrapper method implementations
+//
+
+inline HRESULT _dispCommandBarControlEvents::Click ( IDispatch * CommandBarControl, VARIANT_BOOL * handled, VARIANT_BOOL * CancelDefault ) {
+    return _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009\x400b\x400b", CommandBarControl, handled, CancelDefault);
+}
+
+//
+// interface _ProjectTemplate wrapper method implementations
+//
+
+inline ApplicationPtr _ProjectTemplate::GetApplication ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Application(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+inline ApplicationPtr _ProjectTemplate::GetParent ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+//
+// interface Events wrapper method implementations
+//
+
+inline _ReferencesEventsPtr Events::GetReferencesEvents ( struct _VBProject * VBProject ) {
+    struct _ReferencesEvents * _result = 0;
+    HRESULT _hr = get_ReferencesEvents(VBProject, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ReferencesEventsPtr(_result, false);
+}
+
+inline _CommandBarControlEventsPtr Events::GetCommandBarEvents ( IDispatch * CommandBarControl ) {
+    struct _CommandBarControlEvents * _result = 0;
+    HRESULT _hr = get_CommandBarEvents(CommandBarControl, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CommandBarControlEventsPtr(_result, false);
+}
+
+//
+// interface _Component wrapper method implementations
+//
+
+inline ApplicationPtr _Component::GetApplication ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Application(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+inline _ComponentsPtr _Component::GetParent ( ) {
+    struct _Components * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ComponentsPtr(_result, false);
+}
+
+inline VARIANT_BOOL _Component::GetIsDirty ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_IsDirty(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void _Component::PutIsDirty ( VARIANT_BOOL lpfReturn ) {
+    HRESULT _hr = put_IsDirty(lpfReturn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t _Component::GetName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Name(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void _Component::PutName ( _bstr_t pbstrReturn ) {
+    HRESULT _hr = put_Name(pbstrReturn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+//
+// interface SelectedComponents wrapper method implementations
+//
+
+inline _ComponentPtr SelectedComponents::Item ( int index ) {
+    struct _Component * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ComponentPtr(_result, false);
+}
+
+inline ApplicationPtr SelectedComponents::GetApplication ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Application(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+inline _VBProjectPtr SelectedComponents::GetParent ( ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+inline long SelectedComponents::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr SelectedComponents::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+//
+// dispinterface _dispReferences_Events wrapper method implementations
+//
+
+inline HRESULT _dispReferences_Events::ItemAdded ( struct Reference * Reference ) {
+    return _com_dispatch_method(this, 0x0, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", Reference);
+}
+
+inline HRESULT _dispReferences_Events::ItemRemoved ( struct Reference * Reference ) {
+    return _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0009", Reference);
+}
+
+//
+// interface VBE wrapper method implementations
+//
+
+inline _VBProjectsPtr VBE::GetVBProjects ( ) {
+    struct _VBProjects * _result = 0;
+    HRESULT _hr = get_VBProjects(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectsPtr(_result, false);
+}
+
+inline Office::_CommandBarsPtr VBE::GetCommandBars ( ) {
+    struct Office::_CommandBars * _result = 0;
+    HRESULT _hr = get_CommandBars(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return Office::_CommandBarsPtr(_result, false);
+}
+
+inline _CodePanesPtr VBE::GetCodePanes ( ) {
+    struct _CodePanes * _result = 0;
+    HRESULT _hr = get_CodePanes(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodePanesPtr(_result, false);
+}
+
+inline _WindowsPtr VBE::GetWindows ( ) {
+    struct _Windows * _result = 0;
+    HRESULT _hr = get_Windows(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _WindowsPtr(_result, false);
+}
+
+inline EventsPtr VBE::GetEvents ( ) {
+    struct Events * _result = 0;
+    HRESULT _hr = get_Events(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return EventsPtr(_result, false);
+}
+
+inline _VBProjectPtr VBE::GetActiveVBProject ( ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = get_ActiveVBProject(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+inline void VBE::PutRefActiveVBProject ( struct _VBProject * lppptReturn ) {
+    HRESULT _hr = putref_ActiveVBProject(lppptReturn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _VBComponentPtr VBE::GetSelectedVBComponent ( ) {
+    struct _VBComponent * _result = 0;
+    HRESULT _hr = get_SelectedVBComponent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentPtr(_result, false);
+}
+
+inline WindowPtr VBE::GetMainWindow ( ) {
+    struct Window * _result = 0;
+    HRESULT _hr = get_MainWindow(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline WindowPtr VBE::GetActiveWindow ( ) {
+    struct Window * _result = 0;
+    HRESULT _hr = get_ActiveWindow(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline _CodePanePtr VBE::GetActiveCodePane ( ) {
+    struct _CodePane * _result = 0;
+    HRESULT _hr = get_ActiveCodePane(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodePanePtr(_result, false);
+}
+
+inline void VBE::PutRefActiveCodePane ( struct _CodePane * ppCodePane ) {
+    HRESULT _hr = putref_ActiveCodePane(ppCodePane);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _AddInsPtr VBE::GetAddins ( ) {
+    struct _AddIns * _result = 0;
+    HRESULT _hr = get_Addins(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _AddInsPtr(_result, false);
+}
+
+//
+// interface Window wrapper method implementations
+//
+
+inline VBEPtr Window::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _WindowsPtr Window::GetCollection ( ) {
+    struct _Windows * _result = 0;
+    HRESULT _hr = get_Collection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _WindowsPtr(_result, false);
+}
+
+inline HRESULT Window::Close ( ) {
+    HRESULT _hr = raw_Close();
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline _bstr_t Window::GetCaption ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Caption(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline VARIANT_BOOL Window::GetVisible ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_Visible(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void Window::PutVisible ( VARIANT_BOOL pfVisible ) {
+    HRESULT _hr = put_Visible(pfVisible);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline long Window::GetLeft ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Left(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void Window::PutLeft ( long plLeft ) {
+    HRESULT _hr = put_Left(plLeft);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline long Window::GetTop ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Top(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void Window::PutTop ( long plTop ) {
+    HRESULT _hr = put_Top(plTop);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline long Window::GetWidth ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Width(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void Window::PutWidth ( long plWidth ) {
+    HRESULT _hr = put_Width(plWidth);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline long Window::GetHeight ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Height(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void Window::PutHeight ( long plHeight ) {
+    HRESULT _hr = put_Height(plHeight);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline enum vbext_WindowState Window::GetWindowState ( ) {
+    enum vbext_WindowState _result;
+    HRESULT _hr = get_WindowState(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void Window::PutWindowState ( enum vbext_WindowState plWindowState ) {
+    HRESULT _hr = put_WindowState(plWindowState);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline HRESULT Window::SetFocus ( ) {
+    HRESULT _hr = raw_SetFocus();
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline enum vbext_WindowType Window::GetType ( ) {
+    enum vbext_WindowType _result;
+    HRESULT _hr = get_Type(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline HRESULT Window::SetKind ( enum vbext_WindowType eKind ) {
+    HRESULT _hr = raw_SetKind(eKind);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline _LinkedWindowsPtr Window::GetLinkedWindows ( ) {
+    struct _LinkedWindows * _result = 0;
+    HRESULT _hr = get_LinkedWindows(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _LinkedWindowsPtr(_result, false);
+}
+
+inline WindowPtr Window::GetLinkedWindowFrame ( ) {
+    struct Window * _result = 0;
+    HRESULT _hr = get_LinkedWindowFrame(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline HRESULT Window::Detach ( ) {
+    HRESULT _hr = raw_Detach();
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline HRESULT Window::Attach ( long lWindowHandle ) {
+    HRESULT _hr = raw_Attach(lWindowHandle);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline long Window::GetHWnd ( ) {
+    long _result = 0;
+    HRESULT _hr = get_HWnd(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+//
+// interface _Windows_old wrapper method implementations
+//
+
+inline VBEPtr _Windows_old::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline ApplicationPtr _Windows_old::GetParent ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+inline WindowPtr _Windows_old::Item ( const _variant_t & index ) {
+    struct Window * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline long _Windows_old::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _Windows_old::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+//
+// interface _LinkedWindows wrapper method implementations
+//
+
+inline VBEPtr _LinkedWindows::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline WindowPtr _LinkedWindows::GetParent ( ) {
+    struct Window * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline WindowPtr _LinkedWindows::Item ( const _variant_t & index ) {
+    struct Window * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline long _LinkedWindows::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _LinkedWindows::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline HRESULT _LinkedWindows::Remove ( struct Window * Window ) {
+    HRESULT _hr = raw_Remove(Window);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline HRESULT _LinkedWindows::Add ( struct Window * Window ) {
+    HRESULT _hr = raw_Add(Window);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+//
+// interface _VBProject_Old wrapper method implementations
+//
+
+inline _bstr_t _VBProject_Old::GetHelpFile ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_HelpFile(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void _VBProject_Old::PutHelpFile ( _bstr_t lpbstrHelpFile ) {
+    HRESULT _hr = put_HelpFile(lpbstrHelpFile);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline long _VBProject_Old::GetHelpContextID ( ) {
+    long _result = 0;
+    HRESULT _hr = get_HelpContextID(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void _VBProject_Old::PutHelpContextID ( long lpdwContextID ) {
+    HRESULT _hr = put_HelpContextID(lpdwContextID);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t _VBProject_Old::GetDescription ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Description(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void _VBProject_Old::PutDescription ( _bstr_t lpbstrDescription ) {
+    HRESULT _hr = put_Description(lpbstrDescription);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline enum vbext_VBAMode _VBProject_Old::GetMode ( ) {
+    enum vbext_VBAMode _result;
+    HRESULT _hr = get_Mode(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _ReferencesPtr _VBProject_Old::GetReferences ( ) {
+    struct _References * _result = 0;
+    HRESULT _hr = get_References(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ReferencesPtr(_result, false);
+}
+
+inline _bstr_t _VBProject_Old::GetName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Name(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void _VBProject_Old::PutName ( _bstr_t lpbstrName ) {
+    HRESULT _hr = put_Name(lpbstrName);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline VBEPtr _VBProject_Old::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _VBProjectsPtr _VBProject_Old::GetCollection ( ) {
+    struct _VBProjects * _result = 0;
+    HRESULT _hr = get_Collection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectsPtr(_result, false);
+}
+
+inline enum vbext_ProjectProtection _VBProject_Old::GetProtection ( ) {
+    enum vbext_ProjectProtection _result;
+    HRESULT _hr = get_Protection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline VARIANT_BOOL _VBProject_Old::GetSaved ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_Saved(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _VBComponentsPtr _VBProject_Old::GetVBComponents ( ) {
+    struct _VBComponents * _result = 0;
+    HRESULT _hr = get_VBComponents(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentsPtr(_result, false);
+}
+
+//
+// interface _VBProject wrapper method implementations
+//
+
+inline HRESULT _VBProject::SaveAs ( _bstr_t FileName ) {
+    HRESULT _hr = raw_SaveAs(FileName);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline HRESULT _VBProject::MakeCompiledFile ( ) {
+    HRESULT _hr = raw_MakeCompiledFile();
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline enum vbext_ProjectType _VBProject::GetType ( ) {
+    enum vbext_ProjectType _result;
+    HRESULT _hr = get_Type(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t _VBProject::GetFileName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_FileName(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _VBProject::GetBuildFileName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_BuildFileName(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void _VBProject::PutBuildFileName ( _bstr_t lpbstrBldFName ) {
+    HRESULT _hr = put_BuildFileName(lpbstrBldFName);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+//
+// interface _VBProjects_Old wrapper method implementations
+//
+
+inline _VBProjectPtr _VBProjects_Old::Item ( const _variant_t & index ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+inline VBEPtr _VBProjects_Old::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline VBEPtr _VBProjects_Old::GetParent ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline long _VBProjects_Old::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _VBProjects_Old::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+//
+// interface _VBProjects wrapper method implementations
+//
+
+inline _VBProjectPtr _VBProjects::Add ( enum vbext_ProjectType Type ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = raw_Add(Type, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+inline HRESULT _VBProjects::Remove ( struct _VBProject * lpc ) {
+    HRESULT _hr = raw_Remove(lpc);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline _VBProjectPtr _VBProjects::Open ( _bstr_t bstrPath ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = raw_Open(bstrPath, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+//
+// interface _Components wrapper method implementations
+//
+
+inline _ComponentPtr _Components::Item ( const _variant_t & index ) {
+    struct _Component * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ComponentPtr(_result, false);
+}
+
+inline ApplicationPtr _Components::GetApplication ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Application(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+inline _VBProjectPtr _Components::GetParent ( ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+inline long _Components::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _Components::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline HRESULT _Components::Remove ( struct _Component * Component ) {
+    HRESULT _hr = raw_Remove(Component);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline _ComponentPtr _Components::Add ( enum vbext_ComponentType ComponentType ) {
+    struct _Component * _result = 0;
+    HRESULT _hr = raw_Add(ComponentType, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ComponentPtr(_result, false);
+}
+
+inline _ComponentPtr _Components::Import ( _bstr_t FileName ) {
+    struct _Component * _result = 0;
+    HRESULT _hr = raw_Import(FileName, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ComponentPtr(_result, false);
+}
+
+inline VBEPtr _Components::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+//
+// interface _VBComponents_Old wrapper method implementations
+//
+
+inline _VBComponentPtr _VBComponents_Old::Item ( const _variant_t & index ) {
+    struct _VBComponent * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentPtr(_result, false);
+}
+
+inline _VBProjectPtr _VBComponents_Old::GetParent ( ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+inline long _VBComponents_Old::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _VBComponents_Old::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline HRESULT _VBComponents_Old::Remove ( struct _VBComponent * VBComponent ) {
+    HRESULT _hr = raw_Remove(VBComponent);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline _VBComponentPtr _VBComponents_Old::Add ( enum vbext_ComponentType ComponentType ) {
+    struct _VBComponent * _result = 0;
+    HRESULT _hr = raw_Add(ComponentType, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentPtr(_result, false);
+}
+
+inline _VBComponentPtr _VBComponents_Old::Import ( _bstr_t FileName ) {
+    struct _VBComponent * _result = 0;
+    HRESULT _hr = raw_Import(FileName, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentPtr(_result, false);
+}
+
+inline VBEPtr _VBComponents_Old::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+//
+// interface _VBComponents wrapper method implementations
+//
+
+inline _VBComponentPtr _VBComponents::AddCustom ( _bstr_t ProgId ) {
+    struct _VBComponent * _result = 0;
+    HRESULT _hr = raw_AddCustom(ProgId, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentPtr(_result, false);
+}
+
+inline _VBComponentPtr _VBComponents::AddMTDesigner ( long index ) {
+    struct _VBComponent * _result = 0;
+    HRESULT _hr = raw_AddMTDesigner(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentPtr(_result, false);
+}
+
+//
+// interface _VBComponent_Old wrapper method implementations
+//
+
+inline VARIANT_BOOL _VBComponent_Old::GetSaved ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_Saved(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t _VBComponent_Old::GetName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Name(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void _VBComponent_Old::PutName ( _bstr_t pbstrReturn ) {
+    HRESULT _hr = put_Name(pbstrReturn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline IDispatchPtr _VBComponent_Old::GetDesigner ( ) {
+    IDispatch * _result = 0;
+    HRESULT _hr = get_Designer(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IDispatchPtr(_result, false);
+}
+
+inline _CodeModulePtr _VBComponent_Old::GetCodeModule ( ) {
+    struct _CodeModule * _result = 0;
+    HRESULT _hr = get_CodeModule(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodeModulePtr(_result, false);
+}
+
+inline enum vbext_ComponentType _VBComponent_Old::GetType ( ) {
+    enum vbext_ComponentType _result;
+    HRESULT _hr = get_Type(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline HRESULT _VBComponent_Old::Export ( _bstr_t FileName ) {
+    HRESULT _hr = raw_Export(FileName);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline VBEPtr _VBComponent_Old::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _VBComponentsPtr _VBComponent_Old::GetCollection ( ) {
+    struct _VBComponents * _result = 0;
+    HRESULT _hr = get_Collection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentsPtr(_result, false);
+}
+
+inline VARIANT_BOOL _VBComponent_Old::GetHasOpenDesigner ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_HasOpenDesigner(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _PropertiesPtr _VBComponent_Old::GetProperties ( ) {
+    struct _Properties * _result = 0;
+    HRESULT _hr = get_Properties(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _PropertiesPtr(_result, false);
+}
+
+inline WindowPtr _VBComponent_Old::DesignerWindow ( ) {
+    struct Window * _result = 0;
+    HRESULT _hr = raw_DesignerWindow(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline HRESULT _VBComponent_Old::Activate ( ) {
+    HRESULT _hr = raw_Activate();
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+//
+// interface _VBComponent wrapper method implementations
+//
+
+inline _bstr_t _VBComponent::GetDesignerID ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_DesignerID(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+//
+// interface Property wrapper method implementations
+//
+
+inline _variant_t Property::GetValue ( ) {
+    VARIANT _result;
+    VariantInit(&_result);
+    HRESULT _hr = get_Value(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _variant_t(_result, false);
+}
+
+inline void Property::PutValue ( const _variant_t & lppvReturn ) {
+    HRESULT _hr = put_Value(lppvReturn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _variant_t Property::GetIndexedValue ( const _variant_t & Index1, const _variant_t & Index2, const _variant_t & Index3, const _variant_t & Index4 ) {
+    VARIANT _result;
+    VariantInit(&_result);
+    HRESULT _hr = get_IndexedValue(Index1, Index2, Index3, Index4, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _variant_t(_result, false);
+}
+
+inline void Property::PutIndexedValue ( const _variant_t & Index1, const _variant_t & Index2, const _variant_t & Index3, const _variant_t & Index4, const _variant_t & lppvReturn ) {
+    HRESULT _hr = put_IndexedValue(Index1, Index2, Index3, Index4, lppvReturn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline short Property::GetNumIndices ( ) {
+    short _result = 0;
+    HRESULT _hr = get_NumIndices(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline ApplicationPtr Property::GetApplication ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Application(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+inline _PropertiesPtr Property::GetParent ( ) {
+    struct _Properties * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _PropertiesPtr(_result, false);
+}
+
+inline _bstr_t Property::GetName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Name(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline VBEPtr Property::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _PropertiesPtr Property::GetCollection ( ) {
+    struct _Properties * _result = 0;
+    HRESULT _hr = get_Collection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _PropertiesPtr(_result, false);
+}
+
+inline IUnknownPtr Property::GetObject ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = get_Object(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline void Property::PutRefObject ( IUnknown * lppunk ) {
+    HRESULT _hr = putref_Object(lppunk);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+//
+// interface _Properties wrapper method implementations
+//
+
+inline PropertyPtr _Properties::Item ( const _variant_t & index ) {
+    struct Property * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return PropertyPtr(_result, false);
+}
+
+inline ApplicationPtr _Properties::GetApplication ( ) {
+    struct Application * _result = 0;
+    HRESULT _hr = get_Application(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ApplicationPtr(_result, false);
+}
+
+inline IDispatchPtr _Properties::GetParent ( ) {
+    IDispatch * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IDispatchPtr(_result, false);
+}
+
+inline long _Properties::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _Properties::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline VBEPtr _Properties::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+//
+// interface AddIn wrapper method implementations
+//
+
+inline _bstr_t AddIn::GetDescription ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Description(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void AddIn::PutDescription ( _bstr_t lpbstr ) {
+    HRESULT _hr = put_Description(lpbstr);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline VBEPtr AddIn::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _AddInsPtr AddIn::GetCollection ( ) {
+    struct _AddIns * _result = 0;
+    HRESULT _hr = get_Collection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _AddInsPtr(_result, false);
+}
+
+inline _bstr_t AddIn::GetProgId ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_ProgId(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t AddIn::GetGuid ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Guid(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline VARIANT_BOOL AddIn::GetConnect ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_Connect(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void AddIn::PutConnect ( VARIANT_BOOL lpfConnect ) {
+    HRESULT _hr = put_Connect(lpfConnect);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline IDispatchPtr AddIn::GetObject ( ) {
+    IDispatch * _result = 0;
+    HRESULT _hr = get_Object(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IDispatchPtr(_result, false);
+}
+
+inline void AddIn::PutObject ( IDispatch * lppdisp ) {
+    HRESULT _hr = put_Object(lppdisp);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+//
+// interface _Windows wrapper method implementations
+//
+
+inline WindowPtr _Windows::CreateToolWindow ( struct AddIn * AddInInst, _bstr_t ProgId, _bstr_t Caption, _bstr_t GuidPosition, IDispatch * * DocObj ) {
+    struct Window * _result = 0;
+    HRESULT _hr = raw_CreateToolWindow(AddInInst, ProgId, Caption, GuidPosition, DocObj, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+//
+// interface _AddIns wrapper method implementations
+//
+
+inline AddInPtr _AddIns::Item ( const _variant_t & index ) {
+    struct AddIn * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return AddInPtr(_result, false);
+}
+
+inline VBEPtr _AddIns::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline IDispatchPtr _AddIns::GetParent ( ) {
+    IDispatch * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IDispatchPtr(_result, false);
+}
+
+inline long _AddIns::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _AddIns::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline HRESULT _AddIns::Update ( ) {
+    HRESULT _hr = raw_Update();
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+//
+// interface _CodeModule wrapper method implementations
+//
+
+inline _VBComponentPtr _CodeModule::GetParent ( ) {
+    struct _VBComponent * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBComponentPtr(_result, false);
+}
+
+inline VBEPtr _CodeModule::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _bstr_t _CodeModule::GetName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Name(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline void _CodeModule::PutName ( _bstr_t pbstrName ) {
+    HRESULT _hr = put_Name(pbstrName);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline HRESULT _CodeModule::AddFromString ( _bstr_t String ) {
+    HRESULT _hr = raw_AddFromString(String);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline HRESULT _CodeModule::AddFromFile ( _bstr_t FileName ) {
+    HRESULT _hr = raw_AddFromFile(FileName);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline _bstr_t _CodeModule::GetLines ( long StartLine, long Count ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Lines(StartLine, Count, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline long _CodeModule::GetCountOfLines ( ) {
+    long _result = 0;
+    HRESULT _hr = get_CountOfLines(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline HRESULT _CodeModule::InsertLines ( long Line, _bstr_t String ) {
+    HRESULT _hr = raw_InsertLines(Line, String);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline HRESULT _CodeModule::DeleteLines ( long StartLine, long Count ) {
+    HRESULT _hr = raw_DeleteLines(StartLine, Count);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline HRESULT _CodeModule::ReplaceLine ( long Line, _bstr_t String ) {
+    HRESULT _hr = raw_ReplaceLine(Line, String);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline long _CodeModule::GetProcStartLine ( _bstr_t ProcName, enum vbext_ProcKind ProcKind ) {
+    long _result = 0;
+    HRESULT _hr = get_ProcStartLine(ProcName, ProcKind, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline long _CodeModule::GetProcCountLines ( _bstr_t ProcName, enum vbext_ProcKind ProcKind ) {
+    long _result = 0;
+    HRESULT _hr = get_ProcCountLines(ProcName, ProcKind, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline long _CodeModule::GetProcBodyLine ( _bstr_t ProcName, enum vbext_ProcKind ProcKind ) {
+    long _result = 0;
+    HRESULT _hr = get_ProcBodyLine(ProcName, ProcKind, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t _CodeModule::GetProcOfLine ( long Line, enum vbext_ProcKind * ProcKind ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_ProcOfLine(Line, ProcKind, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline long _CodeModule::GetCountOfDeclarationLines ( ) {
+    long _result = 0;
+    HRESULT _hr = get_CountOfDeclarationLines(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline long _CodeModule::CreateEventProc ( _bstr_t EventName, _bstr_t ObjectName ) {
+    long _result = 0;
+    HRESULT _hr = raw_CreateEventProc(EventName, ObjectName, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline VARIANT_BOOL _CodeModule::Find ( _bstr_t Target, long * StartLine, long * StartColumn, long * EndLine, long * EndColumn, VARIANT_BOOL WholeWord, VARIANT_BOOL MatchCase, VARIANT_BOOL PatternSearch ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = raw_Find(Target, StartLine, StartColumn, EndLine, EndColumn, WholeWord, MatchCase, PatternSearch, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _CodePanePtr _CodeModule::GetCodePane ( ) {
+    struct _CodePane * _result = 0;
+    HRESULT _hr = get_CodePane(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodePanePtr(_result, false);
+}
+
+//
+// interface _CodePanes wrapper method implementations
+//
+
+inline VBEPtr _CodePanes::GetParent ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline VBEPtr _CodePanes::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _CodePanePtr _CodePanes::Item ( const _variant_t & index ) {
+    struct _CodePane * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodePanePtr(_result, false);
+}
+
+inline long _CodePanes::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _CodePanes::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline _CodePanePtr _CodePanes::GetCurrent ( ) {
+    struct _CodePane * _result = 0;
+    HRESULT _hr = get_Current(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodePanePtr(_result, false);
+}
+
+inline void _CodePanes::PutCurrent ( struct _CodePane * CodePane ) {
+    HRESULT _hr = put_Current(CodePane);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+//
+// interface _CodePane wrapper method implementations
+//
+
+inline _CodePanesPtr _CodePane::GetCollection ( ) {
+    struct _CodePanes * _result = 0;
+    HRESULT _hr = get_Collection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodePanesPtr(_result, false);
+}
+
+inline VBEPtr _CodePane::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline WindowPtr _CodePane::GetWindow ( ) {
+    struct Window * _result = 0;
+    HRESULT _hr = get_Window(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return WindowPtr(_result, false);
+}
+
+inline HRESULT _CodePane::GetSelection ( long * StartLine, long * StartColumn, long * EndLine, long * EndColumn ) {
+    HRESULT _hr = raw_GetSelection(StartLine, StartColumn, EndLine, EndColumn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline HRESULT _CodePane::SetSelection ( long StartLine, long StartColumn, long EndLine, long EndColumn ) {
+    HRESULT _hr = raw_SetSelection(StartLine, StartColumn, EndLine, EndColumn);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline long _CodePane::GetTopLine ( ) {
+    long _result = 0;
+    HRESULT _hr = get_TopLine(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void _CodePane::PutTopLine ( long TopLine ) {
+    HRESULT _hr = put_TopLine(TopLine);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline long _CodePane::GetCountOfVisibleLines ( ) {
+    long _result = 0;
+    HRESULT _hr = get_CountOfVisibleLines(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _CodeModulePtr _CodePane::GetCodeModule ( ) {
+    struct _CodeModule * _result = 0;
+    HRESULT _hr = get_CodeModule(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _CodeModulePtr(_result, false);
+}
+
+inline HRESULT _CodePane::Show ( ) {
+    HRESULT _hr = raw_Show();
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}
+
+inline enum vbext_CodePaneview _CodePane::GetCodePaneView ( ) {
+    enum vbext_CodePaneview _result;
+    HRESULT _hr = get_CodePaneView(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+//
+// interface Reference wrapper method implementations
+//
+
+inline _ReferencesPtr Reference::GetCollection ( ) {
+    struct _References * _result = 0;
+    HRESULT _hr = get_Collection(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _ReferencesPtr(_result, false);
+}
+
+inline VBEPtr Reference::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline _bstr_t Reference::GetName ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Name(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t Reference::GetGuid ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Guid(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline long Reference::GetMajor ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Major(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline long Reference::GetMinor ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Minor(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t Reference::GetFullPath ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_FullPath(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline VARIANT_BOOL Reference::GetBuiltIn ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_BuiltIn(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline VARIANT_BOOL Reference::GetIsBroken ( ) {
+    VARIANT_BOOL _result = 0;
+    HRESULT _hr = get_IsBroken(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline enum vbext_RefKind Reference::GetType ( ) {
+    enum vbext_RefKind _result;
+    HRESULT _hr = get_Type(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t Reference::GetDescription ( ) {
+    BSTR _result = 0;
+    HRESULT _hr = get_Description(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+//
+// interface _References wrapper method implementations
+//
+
+inline _VBProjectPtr _References::GetParent ( ) {
+    struct _VBProject * _result = 0;
+    HRESULT _hr = get_Parent(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _VBProjectPtr(_result, false);
+}
+
+inline VBEPtr _References::GetVBE ( ) {
+    struct VBE * _result = 0;
+    HRESULT _hr = get_VBE(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return VBEPtr(_result, false);
+}
+
+inline ReferencePtr _References::Item ( const _variant_t & index ) {
+    struct Reference * _result = 0;
+    HRESULT _hr = raw_Item(index, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ReferencePtr(_result, false);
+}
+
+inline long _References::GetCount ( ) {
+    long _result = 0;
+    HRESULT _hr = get_Count(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline IUnknownPtr _References::_NewEnum ( ) {
+    IUnknown * _result = 0;
+    HRESULT _hr = raw__NewEnum(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return IUnknownPtr(_result, false);
+}
+
+inline ReferencePtr _References::AddFromGuid ( _bstr_t Guid, long Major, long Minor ) {
+    struct Reference * _result = 0;
+    HRESULT _hr = raw_AddFromGuid(Guid, Major, Minor, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ReferencePtr(_result, false);
+}
+
+inline ReferencePtr _References::AddFromFile ( _bstr_t FileName ) {
+    struct Reference * _result = 0;
+    HRESULT _hr = raw_AddFromFile(FileName, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return ReferencePtr(_result, false);
+}
+
+inline HRESULT _References::Remove ( struct Reference * Reference ) {
+    HRESULT _hr = raw_Remove(Reference);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _hr;
+}

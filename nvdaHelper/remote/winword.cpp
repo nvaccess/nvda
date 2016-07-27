@@ -26,6 +26,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaInProcUtils.h"
 #include "winword.h"
 
+#include "mso.tlh"
+#include "vbe6ext.tlh"
+#include "msword.tlh"
+
 using namespace std;
 
 #define wdDISPID_STYLES_ITEM 0
@@ -150,7 +154,7 @@ using namespace std;
 #define wdCharacter 1
 #define wdWord 2
 #define wdParagraph 4
-#define wdLine 5
+#define def_wdLine 5
 #define wdCharacterFormatting 13
 
 #define wdCollapseEnd 0
@@ -239,11 +243,11 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.  
 	// Therefore do it in two steps
 	bool lineError=false;
-	if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
+	if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",def_wdLine,0)!=S_OK) {
 		lineError=true;
 	} else {
 		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
-		if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_ENDOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
+		if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_ENDOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",def_wdLine,0)!=S_OK) {
 			lineError=true;
 		} else {
 			_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
@@ -255,7 +259,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	// Fall back to the older expand if there was an error getting line bounds
 	if(lineError) {
 		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
-		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
+		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",def_wdLine);
 		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
 		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
 	} 
@@ -1037,44 +1041,56 @@ typedef struct {
 } winword_moveByLine_args;
 void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 	//Fetch all needed objects
-	IDispatchPtr pDispatchWindow=NULL;
-	if(AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK||!pDispatchWindow) {
+	Word::WindowPtr pWindow;
+	auto res = AccessibleObjectFromWindow( hwnd, OBJID_NATIVEOM, pWindow.GetIID(), reinterpret_cast<void **>(&pWindow) );
+	if(res!=S_OK || !pWindow) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
-	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+	Word::_ApplicationPtr pApplication;
+	res = pWindow->get_Application( &pApplication );
+	if(res!=S_OK || !pApplication) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
-	IDispatchPtr pDispatchSelection=NULL;
-	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+	Word::SelectionPtr pSelection;
+	res = pApplication->get_Selection( &pSelection );
+	if(res!=S_OK || !pSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
-	BOOL startWasActive=false;
-	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,&startWasActive)!=S_OK) {
+	VARIANT_BOOL startWasActive=VARIANT_FALSE;
+	res = pSelection->get_StartIsActive( &startWasActive );
+	if(res!=S_OK) {
 		LOG_DEBUGWARNING(L"selection.StartIsActive failed");
 	}
-	IDispatch* pDispatchOldSelRange=NULL;
-	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK||!pDispatchOldSelRange) {
+
+	Word::RangePtr pOldSelRange;
+	res = pSelection->get_Range( &pOldSelRange );
+	if(res!=S_OK || !pOldSelRange) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
 	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+	res = pApplication->put_ScreenUpdating(VARIANT_FALSE);
 	//Move the selection to the given range
-	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+	res = pSelection->raw_SetRange(args->offset, args->offset);
+
 // Move the selection by 1 line
-	int unitsMoved=0;
-	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_MOVE,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdLine,((args->moveBack)?-1:1));
-	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->newOffset));
+	long unitsMoved=0;
+	_variant_t unit, count;
+	unit = Word::wdLine;
+	count = ((args->moveBack)?-1:1);
+	res = pSelection->raw_Move(&unit, &count, &unitsMoved);
+	long start = 0;
+	res = pSelection->get_Start(&start);
+	args->newOffset = start;
 	//Move the selection back to its original location
-	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	res = pOldSelRange->raw_Select();
 	//Restore the old selection direction
-	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
+	res = pSelection->put_StartIsActive(startWasActive);
 	//Reenable screen updating
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+	res = pApplication->put_ScreenUpdating(VARIANT_TRUE);
 }
 
 LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
