@@ -114,29 +114,24 @@ class EdgeTextInfo(UIATextInfo):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
 			isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 			log.debug("isRoot: %s"%isRoot)
+			if not includeRoot and isRoot:
+				log.debug("root not requested. Breaking")
+				break
 			try:
 				obj=UIA(UIAElement=parentElement)
 				field=self._getControlFieldForObject(obj)
 			except LookupError:
-				log.debug("Failed to fetch controlField data for parent. Falling back to rootElement")
-				parents=[]
-				isRoot=True
-				try:
-					obj=UIA(UIAElement=rootElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-					field=self._getControlFieldForObject(obj)
-				except LookupError:
-					log.debug("Failed to fetch controlField data on rootElement. Breaking")
-					break
-			parents.append((parentElement,field,isRoot))
+				log.debug("Failed to fetch controlField data for parent. Breaking")
+				break
+			parents.append((parentElement,field))
 			if isRoot:
 				break
 			log.debug("Fetching next parentElement")
 			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
 		log.debug("Done generating parents")
 		log.debug("Yielding parent controlStarts")
-		for parentElement,field,isRoot in reversed(parents):
-			if includeRoot or not isRoot:
-				yield textInfos.FieldCommand("controlStart",field)
+		for parentElement,field in reversed(parents):
+			yield textInfos.FieldCommand("controlStart",field)
 		log.debug("Done yielding parent controlStarts")
 		# Move through the text range, collecting text and recursing into children
 		tempRange=textRange.clone()
@@ -198,9 +193,8 @@ class EdgeTextInfo(UIATextInfo):
 				yield field
 		log.debug("Done yielding final text")
 		log.debug("Yielding controlEnds for parents")
-		for parentElement,field,isRoot in parents:
-			if includeRoot or not isRoot:
-				yield textInfos.FieldCommand("controlEnd",field)
+		for parentElement,field in parents:
+			yield textInfos.FieldCommand("controlEnd",field)
 		log.debug("Done yielding controlEnds for parents")
 		log.debug("_getTextWithFields_balanced end")
 
@@ -232,31 +226,25 @@ class EdgeTextInfo(UIATextInfo):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
 			isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 			log.debug("isRoot: %s"%isRoot)
+			if not includeRoot and isRoot:
+				log.debug("root not requested. Breaking")
+				break
 			try:
 				obj=UIA(UIAElement=parentElement)
 				field=self._getControlFieldForObject(obj)
 			except LookupError:
-				log.debug("Failed to fetch controlField data for parentElement. Falling back to rootElement")
-				parents=[]
-				isRoot=True
-				try:
-					obj=UIA(UIAElement=rootElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-					field=self._getControlFieldForObject(obj)
-				except LookupError:
-					log.debug("Failed to fetch controlField data on rootElement. Breaking")
-					break
-			parents.append((parentElement,field,isRoot))
+				log.debug("Failed to fetch controlField data for parentElement. Breaking")
+				break
+			parents.append((parentElement,field))
 			if isRoot:
 				break
 			log.debug("Fetching next parentElement")
 			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
 		log.debug("Done generating parents")
 		log.debug("Yielding parents in reverse order")
-		for parentElement,field,isRoot in reversed(parents):
-			if includeRoot or not isRoot:
-				yield textInfos.FieldCommand("controlStart",field)
+		for parentElement,field in reversed(parents):
+			yield textInfos.FieldCommand("controlStart",field)
 		log.debug("Done yielding parents")
-		enclosingRange=self.obj.UIATextPattern.rangeFromChild(enclosingElement)
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
@@ -266,7 +254,7 @@ class EdgeTextInfo(UIATextInfo):
 		log.debug("Done yielding balanced fields for startRange")
 		tempRange=startRange.clone()
 		log.debug("Walking parents to yield controlEnds and recurse unbalanced endRanges")
-		for parentElement,field,isRoot in parents:
+		for parentElement,field in parents:
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
 			if parentElement is not enclosingElement:
@@ -275,24 +263,19 @@ class EdgeTextInfo(UIATextInfo):
 				try:
 					parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
 				except COMError:
+					log.debug("Error fetching parent range")
 					parentRange=None
 				if parentRange:
 					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
-				else:
-					log.debug("NULL parentRange")
-					if isRoot:
-						log.debug("falling back to textRange as parent is root")
+					if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 						tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
-					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
-					log.debug("Recursing endRange")
-					for endField in self._getTextWithFields_unbalanced(parentElement,tempRange,formatConfig,includeRoot=False):
-						yield endField
-					log.debug("Done recursing endRange")
-			if includeRoot or not isRoot:
-				"Yielding controlEnd for parent"
-				yield textInfos.FieldCommand("controlEnd",field)
+					if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+						log.debug("Recursing endRange")
+						for endField in self._getTextWithFields_unbalanced(parentElement,tempRange,formatConfig,includeRoot=False):
+							yield endField
+						log.debug("Done recursing endRange")
+			log.debug("Yielding controlEnd for parent")
+			yield textInfos.FieldCommand("controlEnd",field)
 		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
 		log.debug("_getTextWithFields_unbalanced end")
 
