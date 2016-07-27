@@ -60,7 +60,9 @@ class EdgeTextInfo(UIATextInfo):
 				break
 			text=tempRange.getText(-1)
 			if text:
-				yield self._getFormatFieldAtRange(tempRange,formatConfig)
+				field=self._getFormatFieldAtRange(tempRange,formatConfig)
+				if field.field:
+					yield field
 				yield text
 			tempRange.MoveEndPointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 		log.debug("_getTextWithFields_text end")
@@ -306,17 +308,16 @@ class EdgeTextInfo(UIATextInfo):
 			fields.append(field)
 		# Chop extra fields off the end incorrectly put there by Edge
 		numFields=len(fields)
-		for index in xrange(numFields):
-			index=(numFields-1)-index
+		for index in xrange(numFields-1,-1,-1):
 			field=fields[index]
-			if field in (u'\n',u'\r'):
-				del fields[index]
-				break
+			if index>0 and isinstance(field,basestring) and field.isspace():
+				prevField=fields[index-1]
+				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
+					del fields[index]
 		startCount=0
 		lastStartIndex=None
 		numFields=len(fields)
-		for index in xrange(numFields):
-			index=(numFields-1)-index
+		for index in xrange(numFields-1,-1,-1):
 			field=fields[index]
 			if isinstance(field,basestring):
 				break
