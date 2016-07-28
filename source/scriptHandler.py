@@ -36,6 +36,7 @@ def _makeKbEmulateScript(scriptName):
 		# __name__ must be str; i.e. can't be unicode.
 		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
+	func.emuGesture = emuGesture
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
 
