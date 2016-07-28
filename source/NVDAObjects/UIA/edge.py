@@ -82,21 +82,30 @@ class EdgeTextInfo(UIATextInfo):
 		yield textInfos.FieldCommand("controlStart",field)
 		yield textInfos.FieldCommand("controlEnd",field)
 
-	def _getTextWithFields_balanced(self,rootElement,textRange,formatConfig,includeRoot=True,_enclosingElement=None):
+	def _getTextWithFields_balanced(self,rootElement,textRange,formatConfig,includeRoot=True):
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("_getTextWithFields_balanced")
 			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType)
 			log.debug("full text: %s"%textRange.getText(-1))
 			log.debug("includeRoot: %s"%includeRoot)
-		if _enclosingElement:
-			enclosingElement=_enclosingElement
-		else:
-			enclosingElement=textRange.getEnclosingElement()
-			if enclosingElement:
-				enclosingElement=enclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-			else:
-				log.debug("No enclosingElement. Returning")
+		# Specific check for embedded elements (checkboxes etc)
+		# Calling getChildren on their childRange always gives back the same child.
+		childElements=textRange.getChildren()
+		if childElements.length==1:
+			childElement=childElements.getElement(0)
+			if childElement and UIAHandler.handler.clientObject.compareElements(childElement,rootElement):
+				log.debug("Detected embedded child. Handling with _getTextWithFields_embedded")
+				childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+				for field in self._getTextWithFields_embedded(childElement):
+					yield field
+				log.debug("Done handling embedded child")
 				return
+		enclosingElement=textRange.getEnclosingElement()
+		if enclosingElement:
+			enclosingElement=enclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		else:
+			log.debug("No enclosingElement. Returning")
+			return
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
 		parents=[]
@@ -129,7 +138,6 @@ class EdgeTextInfo(UIATextInfo):
 		# Move through the text range, collecting text and recursing into children
 		tempRange=textRange.clone()
 		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		childElements=textRange.getChildren()
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("Child count: %s"%childElements.length)
 			log.debug("Walking children")
@@ -164,18 +172,10 @@ class EdgeTextInfo(UIATextInfo):
 			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
 				log.debug("childRange is degenerate. Skipping")
 				continue
-			childEnclosingElement=childRange.getEnclosingElement()
-			if childEnclosingElement:
-				childEnclosingElement=childEnclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-			if not childEnclosingElement or UIAHandler.handler.clientObject.compareElements(enclosingElement,childEnclosingElement):
-				log.debug("childElement is embedded")
-				for field in self._getTextWithFields_embedded(childElement):
-					yield field
-			else:
-				log.debug("Recursing into child %s"%index)
-				for field in self._getTextWithFields_balanced(childElement,childRange,formatConfig,_enclosingElement=childEnclosingElement):
-					yield field
-				log.debug("Done recursing into child %s"%index)
+			log.debug("Recursing into child %s"%index)
+			for field in self._getTextWithFields_balanced(childElement,childRange,formatConfig):
+				yield field
+			log.debug("Done recursing into child %s"%index)
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
 		log.debug("children done")
 		# Plain text after the final child
