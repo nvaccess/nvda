@@ -32,7 +32,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 47 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, argonesisch, Brasilianisches Portugiesisch, Bulgarisch, Catalan, kolumbianisches Spanisch, Kroatisch, tschechisch, dänisch, Niederländisch, Farsi, Finnisch, Französisch, galizisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, irisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Punjabi, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 47 Sprachen übersetzt, darunter sind neben Englisch: Afrikaans, Albanisch, Amharisch, Arabisch, Argonesisch, brasilianisches Portugiesisch, Bulgarisch, Catalan, Kolumbianisches Spanisch, Kroatisch, Tschechisch, Dänisch, Niederländisch, Farsi, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Koreanisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Punjabi, Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamil, Thai, traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
@@ -370,8 +370,8 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Zum nächsten Zeichen springen | Num 3 | NVDA+Pfeiltaste nach rechts | Nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
 | Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+Ende | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
 | Alles ansagen | Nummerntaste Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
-| Ab NVDA-Cursor kopieren | NVDA+F9 | NVDA+F9 | Keine | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin kopiert werden soll. |
-| Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die zuvor (mit "ab NVDA-Cursor kopieren") festgelegt wurde bis einschließlich akttuellen Position des NVDA-Cursors. Nach dem Betätigen der Tastenkombination wird der Text in die Zwischenablage kopiert. |
+| vom NVDA-Cursor markieren und kopieren | NVDA+f9 | NVDA+f9 | keine | setzt eine Startmarke an der aktuellen Position des NVDA-Cursors. |
+| bis zum NVDA-Cursor markieren und kopieren | NVDA+f10 | NVDA+f10 | keine | Wird die Tastenkombination einmal gedrückt, markiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors. Wird die Tastenkombination zweimal gedrückt, so kopiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors in die Zwischenablage |
 | Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. Bei zweimaligen Drücken der Tastenkombination wird die Ausgabe im Lesemodus dargestellt. |
 %kc:endInclude
 
@@ -1190,6 +1190,7 @@ Konfigurieren können Sie die Meldungen von:
 - Schriftattribute
 - Ausrichtung
 - Farben
+- Kommentare
 - Dokumentänderungen
 - betonten Text
 - Layout
@@ -1198,6 +1199,7 @@ Konfigurieren können Sie die Meldungen von:
 - Zeilennummern
 - Zeileneinrückungen
 - Absatzeinrückungen (zum Beispiel hängender Einzug, Ehrstzeileneinzug)
+- Zeilenabstand (einfach, doppelt etc.)
 - Tabellen
 - Spalten- und Reihenüberschriften von Tabellen
 - Zellkoordinaten in Tabellen
