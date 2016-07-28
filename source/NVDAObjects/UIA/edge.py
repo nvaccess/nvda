@@ -84,7 +84,7 @@ class EdgeTextInfo(UIATextInfo):
 		# As this field will have no text or children itself, set its value to something useful.
 		content=""
 		if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_BUTTON,controlTypes.ROLE_GROUPING,controlTypes.ROLE_LINK):
-			content=obj.name or obj.description
+			content=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
 		if not content:
 			content=obj.value
 		field['value']=content
