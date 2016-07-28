@@ -135,7 +135,7 @@ confspec = ConfigObj(StringIO(
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
 
-[speechView]
+[speechViewer]
 	showSpeechViewerAtStartup = boolean(default=false)
 
 #Keyboard settings
