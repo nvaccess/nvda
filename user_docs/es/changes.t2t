@@ -12,6 +12,7 @@ Qué hay de Nuevo en NVDA
 - En Microsoft Word, NVDA ahora anuncia información de posición cuando se mueven párrafos (alt+shift+flecha abajo y alt+shift+flecha arriba. (#5945)
 - En Microsoft Word, ahora se anuncia el espaciado a través de la orden anunciar formato de NVDA, cuando se cambie con varios atajos de teclado de Microsoft word, y cuando al moverte al texto con espaciado de línea diferente si Anunciar Espaciado de Línea está activado en las Opciones de Formato de Documento de NVDA. (#2961)
 - En Internet Explorer, los elementos estructurales  HTML5 ahora se reconocen. (#5591)
+- El anunciado de comentarios (tales como en Microsoft Word) ahora pueden deshabilitarse a través de una casilla de verificación Anunciar Comentarios en el diálogo de opciones de Formateado de Documentos de NVDA. (#5108)
 
  
 == Cambios ==
@@ -30,6 +31,10 @@ Qué hay de Nuevo en NVDA
 - En Microsoft Word, la lectura automática de emcabezados de tabla funciona mejor cuando se traten celdas combinadas. (#5926)
 - En la aplicación Mail de Windows 10, NVDA ya no falla al leer el contenido de los mensajes. (#5635) 
 - Cuando esté activa la bervalización de teclas de órdenes, las teclas de bloqueo tales como el bloqueo de mayúsculas ya no se anuncian dos veces. (#5490)
+- Los diálogos de Control de Cuentas de Usuario de Windows se leen correctamente de nuevo en la actualización Windows 10 Anniversary. (#5942)
+- En el Plugin Web Conference (tal como se utilizó en out-of-sight.net) NVDA ya no pita y habla las actualizaciones de las barras de progreso relacionadas con la entrada de micrófono. (#5888)
+- Al realizar una orden Buscar Siguiente o Buscar Anterior en modo exploración ahora hará correctamente la búsqueda sensible a mayúsculas si la Búsqueda original era sensible a las mayúsculas. (#5522)
+- Al editar entradas de diccionario, ahora se da retroalimentación para expresiones regulares inválidas. NVDA ya no se cuelga si un fichero de diccionario contiene una expresión regular inválida. (#4834)
 
 
 = 2016.2.1 =

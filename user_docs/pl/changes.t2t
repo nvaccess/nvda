@@ -10,11 +10,31 @@
 - Przekreślenie i podwójne przekreślenie są odczytywane  w razie potrzeby w Microsoft Word. (#5800)
 - W Microsoft Word odczytywany jest tytuł tabeli jeśli jest zdefiniowany. Jeżeli istnieje opis, można go odczytać przy pomocy komendy otwarcia długiego opisu (NVDA+d) w trybie czytania. (#5943)
 - W Microsoft Word, NVDA zgłasza informację o położeniu podczas przenoszenia paragrafów (alt+shift+strzałka w dół i alt+shift+strzałka w górę). (#5945)
+- Microsoft Word: zgłaszana jest interlinia poprzez komendę NVDA odczytaj formatowanie, oraz automatycznie, jeśli włączona jest opcja w ustawieniach formatowania dokumentów NVDA - przy zmianie interlinii klawiszami skrótu Microsoft word, oraz przy przejściu do tekstu o innej interlinii. (#2961)
+- Internet Explorer:  rozpoznawane są strukturalne elementy HTML 5. (#6044)
+- Odczytywanie komentarzy (takich jak w Microsoft Word) może teraz być wyłączone przy pomocy opcji "Czytaj komentarze" w ustawieniach formatowania dokumentów NVDA. (#5108)
+
+
+== Zmiany ==
+- NVDA zgłasza teraz kolory przy użyciu podstawowego, dobrze rozumianego zestawu 9 odcieni kolorów i 3 cieni ze zmianami jasności i bladości. Zastępuje to bardziej subiektywne i mniej rozumiane nazwy kolorów. (#6029)
+- Zmienione zachowanie NVDA+F9 a następnie NVDA+F10: teraz zaznacza tekst po pierwszym naciśnięciu F10. Po kolejnym naciśnięciu F10 w krótkim odstępie czasowym, tekst jest kopiowany do schowka . (#4636)
 
 
 == Poprawki błędów ==
 - Kopiowanie do schowka w trybie czytania w Microsoft Word, zachowuje formatowanie. (#5956)
 - W Microsoft Word, NVDA informuje prawidłowo o użyciu poleceń Worda nawigacji w tabeli (alt+home, alt+end, alt+pageUp i alt+pageDown) i komend zaznaczania tabeli (shift z klawiszami skrótu nawigacji). (#5961)
+- W oknach dialogowych Microsoft Word, znacząco poprawiona nawigacja w chierarchii obiektów NVDA. (#6036)
+- W niektórych aplikacjach takich jak Visual Studio 2015, klawisze skrótu (np. control+c dla skopiowania) są teraz odczytywane. (#6021)
+- Poprawiono rzadki błąd skanowania portów szeregowych na niektórych systemach, który powodował bezużyteczność niektórych sterowników monitorów brajlowskich. (#6015)
+- Zgłaszanie kolorów w Microsoft Word jest teraz dokładniejsze, ponieważ uwzględnia zmiany powodowane przez motywy Microsoft Office. (#5997)
+- W kompilacjach Windows 10  po kwietniu 2016, ponownie dostępny jest tryb czytania Microsoft Edge i wsparcie dla sugestii wyszukiwania na ekranie startowym. (#5955)
+- W Microsoft Word, automatyczny odczyt nagłówków tabeli  radzi sobie lepiej z połączonymi komórkami. (#5926)
+- W aplikacji Poczta systemu Windows 10, NVDA nie ma od teraz problemów z odczytaniem treści wiadomości. (#5635) 
+- przy włączonym oznajmianiu klawiszy poleceń, stan klawiszy przełącznikowych takich jak caps lock, nie jest anonsowany podwójnie. (#5490)
+- Okna kontroli konta użytkownika Windows są ponownie odczytywane prawidłowo w aktualizacji rocznicowej Windows 10. (#5942)
+- We wtyczce konferencji web, (takiej jak używana na stronie out-of-sight.net) NVDA odd teraz nie generuje dźwięków i nie wypowiada pasków postępu związanych z wejściem mikrofonu. (#5888)
+- W trybie czytania, wykonanie polecenia znajdź poprzedni lub znajdź następny, prawidłowo wykona poszukiwanie z uwzględnieniem wielkości liter, jeżeli pierwsze wyszukiwanie uwzględniało wielkość liter. (#5522)
+- Podczas edycji wpisów słownika, dostarczana jest informacja zwrotna dla nieprawidłowych wyrażeń regularnych. NVDA nie zawiesza się, jeżeli plik słownika zawiera nieprawidłowe wyrażenie regularne. (#4834)
 
 
 = 2016.2.1 =

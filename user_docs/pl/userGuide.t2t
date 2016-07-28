@@ -370,8 +370,8 @@ Do przeglądania tekstu są dostępne następujące polecenia:
 | Przechodzi do następnego znaku w przeglądzie | numeryczne 3 | NVDA+prawo | machnięcie jednym palcem w prawo (tryb tekstowy) | Przenosi punkt przeglądu do następnego znaku aktualnej linii. |
 | Przechodzi na koniec linii w przeglądzie | shift+numeryczne 3 | NVDA+end | brak | Przenosi punkt przeglądu na koniec aktualnej linii. |
 | Odczytaj wszystko z przeglądu | numeryczny Plus | NVDA+shift+a | machnięcie trzema palcami w dół (tryb tekstowy) | Odczytuje od punktu przeglądu do końca tekstu. |
-| Kopiuj od punktu zaznaczenia | NVDA+f9 | nvda+f9 | brak | Ustawia w aktualnym punkcie przeglądu początek zaznaczenia kopiowanego tekstu. |
-| Kopiuj do punktu zaznaczenia | NVDA+f10 | NVDA+f10 | brak | Kopiuje do systemowego schowka tekst od początku zaznaczenia do aktualnego punktu przeglądu, włączając w to znak, na którym znajduje się punkt przeglądu. |
+| Zaznacz i skopiuj od kursora przeglądu | NVDA+f9 | NVDA+f9 | brak | Rozpoczyna proces zaznacz i kopiuj na aktualnej pozycji kursora przeglądu. Akcja nie jest wykonana do momentu wskazania NVDA miejsca końca zakresu tekstu |
+| Zaznacz i kopiuj do kursora przeglądu | NVDA+f10 | NVDA+f10 | brak | Po jednokrotnym naciśnięciu, tekst jest zaznaczany od pozycji poprzednio ustawionej znacznikiem początku do aktualnej pozycji kursora przeglądu włącznie. Po naciśnięciu tego klawisza po raz drugi, tekst zostanie skopiowany do schowka systemowego |
 | Informacje o formatowaniu | NVDa+f | NVDA+F | brak | odczytuje informacje o formatowaniu tekstu pod kursorem. Podwójne naciśnięcie prezentuje informację w trybie czytania. |
 %kc:endInclude
 
@@ -1190,6 +1190,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
 - Atrybutów czcionki
 - Wyrównania tekstu
 - Kolorów
+- komentarzy
 - Zmian edycyjnych
 - Podkreślenia
 - Stylu tekstu
@@ -1198,6 +1199,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
 - Numerów linii
 - Wcięć
 - Wcięć akapitu (np. wysunięcie, wcięcie pierwszej linii)
+- interlinii (pojedyncza, podwójna etc)
 - Tabel
 - Nagłówków kolumn i wierszy tabeli
 - Współrzędnych komórek tabeli
