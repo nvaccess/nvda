@@ -14,9 +14,9 @@ class SpeechViewerFrame(wx.Dialog):
 	def __init__(self):
 		dialogSize=wx.Size(w=500, h=500)
 		dialogPos=None
-		if not config.conf["speechView"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
+		if not config.conf["speechViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
 			log.debug("Setting speechViewer window position")
-			speechViewSection = config.conf["speechView"]
+			speechViewSection = config.conf["speechViewer"]
 			dialogSize = wx.Size(w=int(speechViewSection["width"]), h=int(speechViewSection["height"]))
 			dialogPos = wx.Point(x=int(speechViewSection["x"]), y=int(speechViewSection["y"]))
 		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
@@ -42,24 +42,25 @@ class SpeechViewerFrame(wx.Dialog):
 		evt.Skip()
 
 	def doDisplaysMatchConfig(self):
-		configSizes = config.conf["speechView"]["displays"]
-		attachedSizes = self.getAttachedDisplaySizes()
-		convertedAttachedSizes = [repr( (i.width, i.height) ) for i in attachedSizes]
-		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == convertedAttachedSizes[i] for i in range(0, len(configSizes)))
+		configSizes = config.conf["speechViewer"]["displays"]
+		attachedSizes = self.getAttachedDisplaySizesAsStringArray()
+		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in range(0, len(configSizes)))
 
-	def getAttachedDisplaySizes(self):
+	def getAttachedDisplaySizesAsStringArray(self):
 		displays = (wx.Display(i) for i in range(wx.Display.GetCount()))
-		return [display.GetGeometry().GetSize() for display in displays]
+		displays = [display.GetGeometry().GetSize() for display in displays]
+		return [repr( (i.width, i.height) ) for i in displays]
+
 
 	def savePositionInformation(self):
 		position = self.GetPosition()
-		config.conf["speechView"]["x"] = position.x
-		config.conf["speechView"]["y"] = position.y
+		config.conf["speechViewer"]["x"] = position.x
+		config.conf["speechViewer"]["y"] = position.y
 		size = self.GetSize()
-		config.conf["speechView"]["width"] = size.width
-		config.conf["speechView"]["height"] = size.height
-		config.conf["speechView"]["displays"] = self.getAttachedDisplaySizes()
-		config.conf["speechView"]["autoPositionWindow"] = False
+		config.conf["speechViewer"]["width"] = size.width
+		config.conf["speechViewer"]["height"] = size.height
+		config.conf["speechViewer"]["displays"] = self.getAttachedDisplaySizesAsStringArray()
+		config.conf["speechViewer"]["autoPositionWindow"] = False
 
 _guiFrame=None
 isActive=False
