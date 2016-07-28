@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
-"PO-Revision-Date: 2016-07-19 20:22+0800\n"
+"POT-Creation-Date: 2016-07-22 00:10+1000\n"
+"PO-Revision-Date: 2016-07-23 23:56+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2271,7 +2271,7 @@ msgstr "содержит формулу"
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "содержит комментарий"
+msgstr "содержит примечание"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
@@ -2706,15 +2706,15 @@ msgstr "Включает и выключает объявление орфогр
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "чтение страниц выключено"
+msgstr "чтение номеров страниц выключено"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "чтение страниц включено"
+msgstr "чтение номеров страниц включено"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
-msgstr "Включает и выключает объявление страниц"
+msgstr "Включает и выключает объявление номеров страниц"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -2730,15 +2730,15 @@ msgstr "Включает и выключает объявление номеро
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "чтение отступов выключено"
+msgstr "чтение отступов строк выключено"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "чтение отступов включено"
+msgstr "чтение отступов строк включено"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
-msgstr "Включает и выключает объявление отступов"
+msgstr "Включает и выключает объявление отступов строк"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -4369,12 +4369,12 @@ msgstr "не удалённый"
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
-msgstr "Проверено %s"
+msgstr "исправлено %s"
 
 #. Translators: Reported when text is not revised.
 #, python-format
 msgid "no revised %s"
-msgstr "no revised %s"
+msgstr "нет исправлений %s"
 
 #. Translators: Reported when text is marked
 msgid "marked"
@@ -4533,7 +4533,7 @@ msgstr "междустрочный интервал %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "Больше нет примечания."
+msgstr "вне примечания"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -6949,6 +6949,11 @@ msgstr "Читать &цвета"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "Читать &примечания"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Читать &ревизии редактора"
 
@@ -7074,6 +7079,14 @@ msgstr "&Комментарий"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&Тип"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Ошибка в регулярном выражении: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "Ошибка словарной статьи"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8279,11 +8292,11 @@ msgstr "вставка"
 
 #. Translators: a Microsoft Word revision type (deleted content)
 msgid "deletion"
-msgstr "Удаление"
+msgstr "удаление"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 msgid "property"
-msgstr "Свойство"
+msgstr "свойство"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
@@ -8307,19 +8320,19 @@ msgstr "Заменить"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
-msgstr "Свойство абзаца"
+msgstr "свойство абзаца"
 
 #. Translators: a Microsoft Word revision type (table)
 msgid "table property"
-msgstr "Свойство таблицы"
+msgstr "свойство таблицы"
 
 #. Translators: a Microsoft Word revision type (section property)
 msgid "section property"
-msgstr "Свойство раздела"
+msgstr "свойство раздела"
 
 #. Translators: a Microsoft Word revision type (style definition)
 msgid "style definition"
-msgstr "Определение стиля"
+msgstr "определение стиля"
 
 #. Translators: a Microsoft Word revision type (moved from)
 msgid "moved from"
@@ -8373,11 +8386,11 @@ msgstr "Текстовый фрейм"
 
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
-msgstr "комментарий: {text} {author} в {date}"
+msgstr "примечание: {text}. {author}, {date}"
 
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text}. {author}, {date}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -8561,7 +8574,7 @@ msgstr "Помещён над пустым абзацом"
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
-msgstr "стиль {styleName}, уровень наброски {outlineLevel}"
+msgstr "стиль {styleName}, уровень структуры {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 #, python-brace-format
