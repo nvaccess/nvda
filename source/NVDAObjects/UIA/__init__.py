@@ -582,7 +582,9 @@ class UIA(Window):
 			fullDescription=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
 		except COMError:
 			fullDescription=""
-		return u"\n".join([fullDescription,helpText])
+		if fullDescription and fullDescription==self.name:
+			fullDescription=""
+		return u"\n".join(x for x in [fullDescription,helpText] if x)
 
 	def _get_keyboardShortcut(self):
 		ret = ""
