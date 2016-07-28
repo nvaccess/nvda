@@ -34,31 +34,13 @@ class EdgeTextInfo(UIATextInfo):
 
 	def _getTextWithFields_text(self,textRange,formatConfig):
 		log.debug("_getTextWithFields_text start")
-		tempRange=textRange.clone()
-		if log.isEnabledFor(log.DEBUG):
-			log.debug("full text: %s"%textRange.getText(-1))
-		tempRange.MoveEndPointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		delta=-1
-		while delta<0:
-			if tempRange.MoveEndPointByUnit(UIAHandler.TextUnit_Format,1,UIAHandler.TextPatternRangeEndpoint_End)==0:
-				log.debug("Failed to move end by format. Breaking")
-				break
-			log.debug("Moved end by format")
-			delta=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-			if delta>0:
-				log.debug("Moved past end of textRange. Cropping to fit")
-				tempRange.MoveEndPointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-			if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
-				log.debug("range is now degenerate. Breaking")
-				break
+		for tempRange in self._iterUIARangeByUnit(textRange,UIAHandler.TextUnit_Format):
 			text=tempRange.getText(-1)
 			if text:
 				field=self._getFormatFieldAtRange(tempRange,formatConfig)
 				if field.field:
 					yield field
 				yield text
-			tempRange.MoveEndPointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-		log.debug("_getTextWithFields_text end")
 
 	def _getTextWithFields_embedded(self,element):
 		try:
