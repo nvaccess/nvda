@@ -499,6 +499,23 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if links.count>0:
 			links[1].follow()
 			return
+		fields=tempRange.fields
+		if fields.count>0 and fields[1].type == 3:
+			# text will be something like ' REF _Ref457210120 \\h '
+			fieldText = fields[1].code.text.split(' ')
+			log.debugWarning("fieldText: %s" % fieldText)
+			# ensure that the text has a \\h in it
+			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
+				log.debugWarning("no \\h for field xref: %s" % fields[1].code.text)
+			bookmarkKey = fieldText[2] # we want the _Ref12345 part
+			log.debugWarning("bookmarkKey to activate: %s" % bookmarkKey)
+			# get book mark start, we need to look at the whole document to find the bookmark.
+			tempRange.Expand(wdStory)
+			log.debugWarning("range start: %s end: %s" % (tempRange.start, tempRange.end))
+			bMark = tempRange.bookmarks(bookmarkKey)
+			log.debugWarning("bMark range start: %s end: %s" % (bMark.range.start, bMark.range.end))
+			self._rangeObj.setRange(bMark.start, bMark.start)
+			self.updateCaret()
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
