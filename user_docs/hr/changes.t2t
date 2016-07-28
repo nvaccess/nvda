@@ -6,20 +6,21 @@
 = 2016.3 =
 
 == Nove značajke ==
-- U microsoft edgeu, način pregleda se sada može koristiti za čitanje pdf dokumenata. (#5740)
-- Strikethrough and double-strikethrough are now reported if appropriate in Microsoft Word. (#5800)
-- In Microsoft Word, the title of a table is now reported if one has been provided. If there is a description, it can be accessed using the open long description command (NVDA+d) in browse mode. (#5943)
-- In Microsoft Word, NVDA now reports position information when moving paragraphs (alt+shift+downArrow and alt+shift+upArrow). (#5945)
-- In Microsoft Word, line spacing is now reported via NVDA's report formatting command, when changing it with various Microsoft word shortcut keys, and when moving to text with different line spacing if Report Line Spacing is turned on in NVDA's Document Formatting Settings. (#2961)
-- In Internet Explorer, HTML5 structural elements are now recognised. (#5591)
+- Način pregleda se može koristiti za čitanje pdf dokumenata u Microsoft edge'u. (#5740)
+- U microsoft Wordu, Jednostruko i dvostruko podcrtavanje se sada izgovara ako je to spodržano. (#5800)
+- Naslov tablice u microsoft wordu se sada izgovara ako je isti ugrađen.Ako postoji opis, može mu se pristupiti koristeći prečac za otvaranje dugih opisa (insert+d) u načinu pregleda. (#5943)
+- U Microsoft Wordu, NVDA sada izgovara informaciju o poziciji prilikom premještanja između odlomaka (alt+shift+StrelicaDolje i alt+shift+strelicaGore). (#5945)
+- U Microsoft wordu, prored se sada izgovara pomoću nvda komande za izgovor oblikovanja, prilikom mjenjanja istog uz pomoć raznih tipkovničkih prečaca, i prilikom premještanja u tekstu koji sadrži različite prorede ako je uključena opcija "izvjesti o proredima" u nvda postavkama oblikovanja dokumenata. (#2961)
+- U Internet Exploreru, HTML5 elementi strukture su sada normalno prepoznati. (#5591)
+- Izgovaranje komentara (kao na primjer u Microsoft Wordu) može se sada isključiti preko odabirnog okvira izvještavaj o komentarima u NVDA dijaloškom okviru. (#5108)
 
 
-== Changes ==
+== izmjene ==
 - NVDA now reports colors using a basic well-understood set of 9 color hues and 3 shades, with brightness and paleness variations. This is rather than using more subjective and less understood color names. (#6029)
 - The existing NVDA+F9 then NVDA+F10 behavior has been modified to select text on the first press of F10. When F10 is pressed twice (in quick succession) the text is copied to the clipboard. (#4636)
 
 
-== Bug Fixes ==
+== ispravke grešaka ==
 - In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)
 - In Microsoft Word, NVDA now reports appropriately when using Word's own table navigation commands (alt+home, alt+end, alt+pageUp and alt+pageDown) and table selection commands (shift added to the navigation commands). (#5961)
 - In Microsoft Word dialog boxes, NVDA's object navigation has been greatly improved. (#6036)
@@ -30,6 +31,10 @@
 - In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)
 - In the Windows 10 Mail app, NVDA no longer fails to read the content of messages. (#5635) 
 - When speak command keys is on, lock keys such as caps lock are no longer announced twice. (#5490)
+- Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)
+- In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)
+- Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
+- When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)
 
 
 = 2016.2.1 =
