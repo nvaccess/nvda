@@ -318,6 +318,12 @@ class EdgeNode(UIA):
 				break
 		return role
 
+	def _get_states(self):
+		states=super(EdgeNode,self).states
+		if self.role in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
+			states.add(controlTypes.STATE_CLICKABLE)
+		return states
+
 class EdgeList(EdgeNode):
 
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
