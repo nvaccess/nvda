@@ -25,18 +25,9 @@ class EdgeTextInfo(UIATextInfo):
 	def _getControlFieldForObject(self,obj):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj)
 		lct=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedControlTypePropertyId)
-		landmark=None
-		if lct in aria.landmarkRoles:
-			landmark=lct
-		else:
-			ar=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_AriaRolePropertyId)
-			if ar:
-				for ar in ar.split():
-					if ar in aria.landmarkRoles:
-						landmark=ar
-						break
+		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
-			field['landmark']=landmark
+			field['landmark']=aria.landmarkRoles.get(landmark)
 		if obj.role==controlTypes.ROLE_EDITABLETEXT:
 			field["name"] = obj.name
 		return field
