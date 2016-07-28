@@ -12,6 +12,7 @@ Quoi de Neuf dans NVDA
 - Sous Microsoft Word, NVDA annonce maintenant l'information de position quand on déplace des paragraphes (alt+maj+flècheBasse et alt+maj+flècheHaute). (#5945)
 - Sous Microsoft Word, l'interligne est maintenant annoncé via la commande d'annonce de formatage de NVDA, quand on le change par divers raccourcis clavier de Microsoft word, et quand on se déplace dans un texte avec différents interlignes si l'annonce des interlignes est activée dans le dialogue Mise en Forme des Documents de NVDA.  (#2961)
 - Sous Internet Explorer, les éléments structurants HTML 5 sont maintenant reconnus. (#6044)
+- L'annonce des commentaires (comme sous Microsoft Word) peut maintenant être désactivée via une case à cocher Annoncer les Commentaires dans le dialogue Mise en Forme des Documents de NVDA. (#5108)
 
 
 == Changements ==
@@ -30,6 +31,10 @@ Quoi de Neuf dans NVDA
 - Sous Microsoft Word, la lecture automatique des titres de tableaux fonctionne mieux quand on rencontre des cellules fusionnées. (#5926)
 - Dans l'application Courrier de Windows 10, NVDA n'échoue plus à lire le contenu des messages. (#5635) 
 - Plus d'annonce en double des touches de verrouillage quand l'annonce des touches de commande est activée. (#5490)
+- Les dialogues Contrôle de Compte Utilisateur de Windows sont de nouveau lus correctement dans la mise à jour Anniversaire de Windows 10. (#5942)
+- Dans le plug-in Web Conference (comme utilisé sous out-of-sight.net) NVDA n'annonce plus par des bips et vocalement les mises à jour de la barre de progression concernant l'entrée microphone. (#5888)
+- Effectuer une commande Recherche Suivant ou Recherche Précédent en mode navigation fera maintenant une recherche sensible à la casse si la recherche originale est sensible à la casse. (#5522)
+- Quand on édite les entrées de dictionnaire, un avertissement est maintenant donné pour les expressions régulières incorrectes. NVDA ne se plante plus si un dictionnaire contient une expression régulière invalide. (#4834)
 
 
 = 2016.2.1 =
