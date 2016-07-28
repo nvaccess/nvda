@@ -37,6 +37,8 @@ class EdgeTextInfo(UIATextInfo):
 						break
 		if landmark and (landmark!='region' or field.get('name')):
 			field['landmark']=landmark
+		if obj.role==controlTypes.ROLE_EDITABLETEXT:
+			field["name"] = obj.name
 		return field
 
 	def _getTextWithFields_text(self,textRange,formatConfig):
