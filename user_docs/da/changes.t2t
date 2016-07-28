@@ -12,10 +12,11 @@
 - NVDA vil nu rapporterer positionsinformation i Microsoft Word  når du flytter afsnit (alt+skift+pil ned og alt+skift+pil op). (#5945)
 - Linjeafstand i Microsoft Word er nu annoncéret ved brug af "Sig tekstformatering" kommandoen, når dette ændres ved brug af Microsoft Words egne genvejstaster, eller hvis der flyttes med markøren til tekst med en anden linjeafstand. Den sidste mulighed kræver, at indstillingen "Annoncér linjeafstand" er slået til i Dokumentformatering. (#2961)
 - HTML5 strukturelle elementer er nu anerkendte i Internet Explorer. (#5591)
+- Annoncéring af kommentarer (som dem i Microsoft Word) kan nu slåes fra ved brug af checkboksen "Annoncér kommentarer" i indstillingerne for dokumentformatering. (#5108)
 
 
 == Ændringer ==
-- NVDA vil nu rapportere farver ved brug af et velforstået farvesæt der består af ni farvenuancer, samt tre skyggefarver med klar- og bleghedsvariationer. Dette er frem for at benytte mere subjektive farvenavne, der muligvis ville være sværrer at forstå. (#6029)
+- NVDA vil nu rapportere farver ved brug af et velforstået farvesæt der består af ni farvenuancer, samt tre skyggefarver med klar- og bleghedsvariationer. Dette er frem for at benytte mere subjektive farvenavne, der muligvis ville være sværer at forstå. (#6029)
 - Fremgangsmåden af tastekombinationen NVDA+f9 og derefter NVDA+f10 er blevet ændret. Disse tastetryk vil nu vælge tekst første gang der trykkes F10. Når F10 trykkes hurtigt (lige efter hinanden) vil teksten kopieres til udklipsholderen. (#4636)
 
 
@@ -30,6 +31,10 @@
 - Automatisk læsning af tabeloverskrifter virker nu bedre i Microsoft Word når der arbejdes med flettede celler. (#5926)
 - NVDA vil ikke længere have problemer med at læse indholdet af beskeder i Windows 10 Mail. (#5635) 
 - Når "oplæs funktionstaste" er slået til, vil låsetaster som CAPS lock ikke annoncéres to gange. (#5490)
+- Dialogerne for Windows kontrol af brugerkonti er nu igen oplæst korrekt i Windows 10 anniversary update. (#5942)
+- I Web Conference Plugin (såsom det der benyttes på out-of-sight.net) vil NVDA ikke længere bippe og sige behandlingslinjens opdatering med hensyn til mikrofoninput. (#5888)
+- Når kommandoerne "Find næste" eller "Find forrige" udføres i gennemsynstilstand, vil NVDA nu tage hensyn til, om den oprindelige søgning gjorde forskel på store og små bogstaver. (#5522)
+- Når ordbogsord redigeres, gives der nu feedback hvis det regulære udtryk er ugyldigt. NVDA vil desuden heller ikke længere gå ned, hvis ordbogsfilen indeholder ugyldige regulære udtryk. (#4834)
 
 
 === Ændringer for udviklere ===
