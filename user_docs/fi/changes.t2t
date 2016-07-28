@@ -10,8 +10,9 @@
 - Tavallinen ja kaksinkertainen yliviivaus ilmoitetaan nyt Microsoft Wordissa. (#5800)
 - Jos taulukolla on otsikko, se luetaan nyt Microsoft Wordissa. Mikäli kuvaus on lisätty, se voidaan lukea selaustilassa avaa pitkä kuvaus -komennolla (NVDA+D). (#5943)
 - NVDA ilmoittaa nyt Microsoft Wordissa sijaintitiedot kappaleita siirrettäessä (Alt+Shift+nuoli alas ja Alt+Shift+nuoli ylös). (#5945)
-- Riviväli ilmoitetaan nyt Microsoft Wordissa NVDA:n muotoilutietojen lukukomennolla, Wordin pikanäppäimillä muutettaessa sekä siirryttäessä sellaisen tekstin kohdalle, jonka riviväli eroaa aiemmasta, mikäli Ilmoita rivivälit -asetus on otettu käyttöön NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunasta. (#2961)
+- Jos Ilmoita rivivälit -asetus on otettu käyttöön NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunasta, riviväli ilmoitetaan nyt Microsoft Wordissa NVDA:n muotoilutietojen lukukomennolla, Wordin pikanäppäimillä muutettaessa sekä siirryttäessä sellaisen tekstin kohdalle, jonka riviväli eroaa aiemmasta. (#2961)
 - HTML5:n rakenteelliset elementit tunnistetaan nyt Internet Explorerissa. (#5591)
+- Kommenttien lukeminen (esim. Microsoft Wordissa) voidaan nyt poistaa käytöstä NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunan Lue kommentit -asetuksen avulla. (#5108)
 
 
 == Muutokset ==
@@ -30,6 +31,10 @@
 - Automaattinen taulukko-otsikoiden lukeminen toimii paremmin Microsoft Wordissa yhdistettyjä soluja käsiteltäessä. (#5926)
 - Viestien sisällön lukeminen onnistuu nyt NVDA:lla Windows 10:n Sähköposti-sovelluksessa. (#5635) 
 - Lukitusnäppäimiä, kuten Caps Lock, ei enää ilmoiteta kahdesti komentonäppäinten lukemisen ollessa käytössä. (#5490)
+- Käyttäjätilien valvonnan valintaikkunat luetaan taas oikein Windows 10:n Anniversary update -versiossa. (#5942)
+- NVDA ei enää anna äänimerkkejä ja ilmoita mikrofonisyötteeseen liittyviä edistymispalkkien päivityksiä Web Conference -lisäosassa (käytetään esim. out-of-sight.netissä). (#5888)
+- Etsi seuraava- tai Etsi edellinen -komennon suorittaminen selaustilassa suorittaa nyt asianmukaisesti kirjainkoon huomioivan haun, mikäli alkuperäinen haku oli sellainen. (#5522)
+- Virheellisistä säännöllisistä lausekkeista annetaan nyt palautetta sanastomäärityksiä muokattaessa. NVDA ei enää kaadu, mikäli sanastotiedosto sisältää virheellisen säännöllisen lausekkeen. (#4834)
 
 
 = 2016.2.1 =
