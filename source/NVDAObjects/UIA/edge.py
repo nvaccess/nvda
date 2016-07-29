@@ -263,6 +263,8 @@ class EdgeNode(UIA):
 
 	def _get_role(self):
 		role=super(EdgeNode,self).role
+		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
+			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self.UIAElement.currentAriaRole
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
