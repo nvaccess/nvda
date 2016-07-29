@@ -41,7 +41,6 @@ class EdgeTextInfo(UIATextInfo):
 
 	def _getControlFieldForObject(self,obj):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj)
-		lct=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedControlTypePropertyId)
 		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
 			field['landmark']=aria.landmarkRoles.get(landmark)
@@ -338,6 +337,15 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 		UIAElement=self._UIAElement if self._UIAElement else self.textInfo._rangeObj.getEnclosingElement()
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		return UIA(UIAElement=UIAElement)
+
+	@property
+	def label(self):
+		if self.itemType=="landmark":
+			obj=self.obj
+			name=obj.name
+			landmarkType=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
+			return " ".join(x for x in (name,landmarkType) if x)
+		return super(UIATextRangeQuickNavItem,self).label
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -685,6 +693,9 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="formField":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_CheckBoxControlTypeId,UIAHandler.UIA_RadioButtonControlTypeId,UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_ButtonControlTypeId]})
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="landmark":
+			condition=UIAHandler.handler.clientObject.createNotCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_LocalizedLandmarkTypePropertyId,""))
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
