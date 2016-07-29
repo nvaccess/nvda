@@ -30,6 +30,16 @@ class EdgeTextInfo(UIATextInfo):
 			field['landmark']=aria.landmarkRoles.get(landmark)
 		if obj.role==controlTypes.ROLE_EDITABLETEXT:
 			field["name"] = obj.name
+		ariaProperties=obj.UIAElement.currentAriaProperties
+		hasAriaLabel=('label=' in ariaProperties)
+		hasAriaLabelledby=('labelledby=' in ariaProperties)
+		if hasAriaLabelledby:
+			field['name']=obj.name
+		if hasAriaLabel or hasAriaLabelledby:
+			if obj.role in (controlTypes.ROLE_LINK,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_BUTTON):
+				field['value']=obj.name
+			elif obj.role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_PANE):
+				field['alwaysReportName']=True
 		return field
 
 	def _getTextWithFields_text(self,textRange,formatConfig):
@@ -56,11 +66,10 @@ class EdgeTextInfo(UIATextInfo):
 			field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
 		# As this field will have no text or children itself, set its value to something useful.
 		content=""
-		if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_BUTTON,controlTypes.ROLE_GROUPING,controlTypes.ROLE_LINK):
-			content=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
-		if not content:
-			content=obj.value
-		field['value']=content
+		if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_GROUPING):
+			field['value']=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
+		else:
+			field['value']=obj.value
 		yield textInfos.FieldCommand("controlStart",field)
 		yield textInfos.FieldCommand("controlEnd",field)
 
@@ -235,6 +244,17 @@ class EdgeTextInfo(UIATextInfo):
 				lastStartIndex=index
 		if lastStartIndex:
 			del fields[lastStartIndex:lastStartIndex+(startCount*2)]
+		# Remove any content from fields with a value
+		numFields=len(fields)
+		curField=None
+		for index in xrange(numFields-1,-1,-1):
+			field=fields[index]
+			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('value'):
+				curField=field.field
+				endIndex=index
+			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
+				del fields[index+1:endIndex]
+				curField=None
 		return fields
 
 class EdgeNode(UIA):
