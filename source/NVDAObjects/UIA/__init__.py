@@ -141,11 +141,12 @@ class UIATextInfo(textInfos.TextInfo):
 		return bool(self._rangeObj.compare(other._rangeObj))
 
 	def _get_NVDAObjectAtStart(self):
-		tempRange=self._rangeObj.clone()
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		tempInfo=self.copy()
+		tempInfo.collapse()
+		tempInfo.expand(textInfos.UNIT_CHARACTER)
+		tempRange=tempInfo._rangeObj
 		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
 		# Thus we must check getChildren before getEnclosingElement.
-		tempRange.expandToEnclosingUnit(UIAHandler.TextUnit_Character)
 		children=tempRange.getChildren()
 		if children.length==1:
 			child=children.getElement(0)

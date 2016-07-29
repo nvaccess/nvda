@@ -22,6 +22,23 @@ from . import UIA, UIATextInfo
 
 class EdgeTextInfo(UIATextInfo):
 
+	def expand(self,unit):
+		# Work around MS Edge bug 8246010
+		if unit==textInfos.UNIT_CHARACTER:
+			tempInfo=self.copy()
+			if tempInfo.move(unit,1)>0:
+				tempInfo2=self.copy()
+				tempInfo2.setEndPoint(tempInfo,"endToStart")
+				children=tempInfo2._rangeObj.getChildren()
+				if children.length:
+					child=children.getElement(0)
+					if not child.getCurrentPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId):
+						childRange=self.obj.UIATextPattern.rangeFromChild(child)
+						if childRange and childRange.getChildren().length==1:
+							self._rangeObj=tempInfo2._rangeObj
+							return
+		return super(EdgeTextInfo,self).expand(unit)
+
 	def _getControlFieldForObject(self,obj):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj)
 		lct=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedControlTypePropertyId)
@@ -253,7 +270,8 @@ class EdgeTextInfo(UIATextInfo):
 				curField=field.field
 				endIndex=index
 			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
-				del fields[index+1:endIndex]
+				fields[index+1:endIndex]=curField.pop('value')
+				
 				curField=None
 		return fields
 
@@ -602,7 +620,21 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				yield UIATextRangeQuickNavItem(itemType,document,curElement)
 
 class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
-	pass
+
+	def _get_focusableNVDAObjectAtStart(self):
+		# Work around MS Edge bug 8246010
+		obj=self.NVDAObjectAtStart
+		condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_IsKeyboardFocusablePropertyId,True)
+		runtimeID=VARIANT()
+		self.obj.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		condition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),condition)
+		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
+		e=walker.normalizeElementBuildCache(obj.UIAElement,UIAHandler.handler.baseCacheRequest)
+		if e:
+			obj=UIA(UIAElement=e)
+			if obj:
+				return obj
+		return self.obj.rootNVDAObject
 
 class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.BrowseModeDocumentTreeInterceptor):
 
