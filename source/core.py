@@ -53,6 +53,8 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
+	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
+		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
@@ -237,7 +239,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
-
 	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
