@@ -767,7 +767,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
-	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail,initialFormat=True)
 	if text:
 		speechSequence.append(text)
 	if autoLanguageSwitching:
@@ -825,7 +825,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				if commonFieldCount>len(newControlFieldStack):
 					commonFieldCount=len(newControlFieldStack)
 			elif command.command=="formatChange":
-				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail)
 				if fieldText:
 					inTextChunk=False
 				if autoLanguageSwitching:
@@ -1103,7 +1103,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False , separator=CHUNK_SEPARATOR):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,unit=None,extraDetail=False , initialFormat=False, separator=CHUNK_SEPARATOR):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -1124,7 +1124,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if  formatConfig["reportHeadings"]:
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
-		if headingLevel and headingLevel!=oldHeadingLevel:
+		if headingLevel and (initialFormat and (reason==controlTypes.REASON_FOCUS or unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH)) or headingLevel!=oldHeadingLevel):
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text=_("heading level %d")%headingLevel
 			textList.append(text)
