@@ -191,6 +191,10 @@ wdThemeColorMainLight2=3
 wdThemeColorText1=13
 wdThemeColorText2=15
 
+# Word Field types
+FIELD_TYPE_REF = 3 # cross reference field
+FIELD_TYPE_HYPERLINK = 88 # hyperlink field
+
 # Mapping from http://www.wordarticles.com/Articles/Colours/2007.php#UIConsiderations
 WdThemeColorIndexToMsoThemeColorSchemeIndex={
 	wdThemeColorMainDark1:msoThemeDark1,
@@ -364,6 +368,10 @@ class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 	def rangeFromCollectionItem(self,item):
 		return item.scope
 
+class WordDocumentFieldQuickNavItem(WordDocumentCollectionQuickNavItem):
+	def rangeFromCollectionItem(self,item):
+		return item.result
+
 class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
 	def label(self):
@@ -437,8 +445,18 @@ class WinWordCollectionQuicknavIterator(object):
 			isFirst=False
 
 class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentFieldQuickNavItem
 	def collectionFromRange(self,rangeObj):
-		return rangeObj.hyperlinks
+		return rangeObj.fields
+
+	def filter(self, item):
+		t = item.type
+		if t == FIELD_TYPE_REF:
+			fieldText = item.code.text.strip().split(' ')
+			# ensure that the text has a \\h in it
+			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
+		return t == FIELD_TYPE_HYPERLINK
+
 
 class CommentWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentCommentQuickNavItem
@@ -500,7 +518,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			links[1].follow()
 			return
 		fields=tempRange.fields
-		if fields.count>0 and fields[1].type == 3:
+		if fields.count>0 and fields[1].type == FIELD_TYPE_REF:
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = fields[1].code.text.split(' ')
 			log.debugWarning("fieldText: %s" % fieldText)
