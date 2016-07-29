@@ -57,6 +57,10 @@ class EdgeTextInfo(UIATextInfo):
 				field['value']=obj.name
 			elif obj.role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_PANE):
 				field['alwaysReportName']=True
+		if obj.role==controlTypes.ROLE_LIST:
+			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
+			if child:
+				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
 		return field
 
 	def _getTextWithFields_text(self,textRange,formatConfig):
