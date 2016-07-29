@@ -17,8 +17,8 @@ class SpeechViewerFrame(wx.Dialog):
 		if not config.conf["speechViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
 			log.debug("Setting speechViewer window position")
 			speechViewSection = config.conf["speechViewer"]
-			dialogSize = wx.Size(w=int(speechViewSection["width"]), h=int(speechViewSection["height"]))
-			dialogPos = wx.Point(x=int(speechViewSection["x"]), y=int(speechViewSection["y"]))
+			dialogSize = wx.Size(w=speechViewSection["width"], h=speechViewSection["height"])
+			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
 		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
@@ -44,11 +44,10 @@ class SpeechViewerFrame(wx.Dialog):
 	def doDisplaysMatchConfig(self):
 		configSizes = config.conf["speechViewer"]["displays"]
 		attachedSizes = self.getAttachedDisplaySizesAsStringArray()
-		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in range(0, len(configSizes)))
+		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in xrange(len(configSizes)))
 
 	def getAttachedDisplaySizesAsStringArray(self):
-		displays = (wx.Display(i) for i in range(wx.Display.GetCount()))
-		displays = [display.GetGeometry().GetSize() for display in displays]
+		displays = ( wx.Display(i).GetGeometry().GetSize() for i in xrange(wx.Display.GetCount()) )
 		return [repr( (i.width, i.height) ) for i in displays]
 
 
