@@ -295,14 +295,14 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		return UIA(UIAElement=UIAElement)
 
-class HeadingUIATextRangeQuickNavItem(UIATextRangeQuickNavItem):
+class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
-	@property
-	def level(self):
-		return int(self.itemType[7:]) if len(self.itemType)>7 else 0
+	def __init__(self,itemType,document,position,level=0):
+		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
+		self.level=level
 
 	def isChild(self,parent):
-		if not isinstance(parent,HeadingUIATextRangeQuickNavItem):
+		if not isinstance(parent,HeadingUIATextInfoQuickNavItem):
 			return False
 		return self.level>parent.level
 
@@ -386,6 +386,27 @@ def getDeepestLastChildUIAElementInWalker(element,walker):
 		else:
 			break
 		return element if descended else None
+
+def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
+	if position:
+		curPosition=position
+	else:
+		curPosition=document.makeTextInfo(textInfos.POSITION_LAST if direction=="previous" else textInfos.POSITION_FIRST)
+	stop=False
+	firstLoop=True
+	while not stop:
+		tempInfo=curPosition.copy()
+		tempInfo.expand(textInfos.UNIT_CHARACTER)
+		styleIDValue=tempInfo.innerTextInfo._getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId)
+		if (UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9):
+			foundLevel=(styleIDValue-UIAHandler.StyleId_Heading1)+1
+			wantedLevel=int(itemType[7:]) if len(itemType)>7 else None
+			if not wantedLevel or wantedLevel==foundLevel: 
+				if not firstLoop or not position:
+					tempInfo.expand(textInfos.UNIT_PARAGRAPH)
+					yield HeadingUIATextInfoQuickNavItem(itemType,document,tempInfo,level=foundLevel)
+		stop=(curPosition.move(textInfos.UNIT_PARAGRAPH,1 if direction=="next" else -1)==0)
+		firstLoop=False
 
 def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction="next"):
 	# A part from the condition given, we must always match on the root of the document so we know when to stop walking
@@ -569,15 +590,8 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 		return self.rootNVDAObject.parent.name
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
-		if nodeType=="heading":
-			if pos:
-				pos=pos.copy()
-				pos.expand(textInfos.UNIT_PARAGRAPH)
-				pos.collapse()
-			return browseMode.mergeQuickNavItemIterators([UIATextAttributeQuickNavIterator("heading%d"%level,self,pos,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.StyleId_Heading1+(level-1),direction,HeadingUIATextRangeQuickNavItem) for level in xrange(1,7)],direction)
-		elif nodeType.startswith("heading"):
-			level=int(nodeType[7:])
-			return UIATextAttributeQuickNavIterator(nodeType,self,pos,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.StyleId_Heading1+(level-1),direction,HeadingUIATextRangeQuickNavItem)
+		if nodeType.startswith("heading"):
+			return UIAHeadingQuicknavIterator(nodeType,self,pos,direction=direction)
 		elif nodeType=="link":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
