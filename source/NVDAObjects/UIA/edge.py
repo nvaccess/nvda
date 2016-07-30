@@ -80,16 +80,19 @@ class EdgeTextInfo(UIATextInfo):
 			log.debug("Failed to fetch controlField data for child")
 			return
 		field['embedded']=True
+		field['_startOfNode']=True
+		field['_endOfNode']=True
 		# Embedded groupings are probably things like audio or video tags etc.
 		if obj.role==controlTypes.ROLE_GROUPING:
 			# Force the role to embedded object for now so that value is reported
 			field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
 		# As this field will have no text or children itself, set its value to something useful.
-		content=""
 		if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_GROUPING):
-			field['value']=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
+			value=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
 		else:
-			field['value']=obj.value
+			value=obj.value
+		if not value: value=" "
+		field['value']=value
 		yield textInfos.FieldCommand("controlStart",field)
 		yield textInfos.FieldCommand("controlEnd",field)
 
@@ -114,8 +117,12 @@ class EdgeTextInfo(UIATextInfo):
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
+		clippedStart=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,startRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+			clippedEnd=True
+		else:
+			clippedEnd=False
 		# Specific check for embedded elements (checkboxes etc)
 		# Calling getChildren on their childRange always gives back the same child.
 		childElements=startRange.getChildren()
@@ -212,8 +219,12 @@ class EdgeTextInfo(UIATextInfo):
 		for parentElement,field in parents:
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
-			if parentElement is not enclosingElement:
+			if parentElement is enclosingElement:
 				log.debug("is enclosingElement: True")
+				field['_startOfNode']=not clippedStart
+				field['_endOfNode']=not clippedEnd
+			else:
+				log.debug("is enclosingElement: False")
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 				try:
 					parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
@@ -221,9 +232,15 @@ class EdgeTextInfo(UIATextInfo):
 					log.debug("Error fetching parent range")
 					parentRange=None
 				if parentRange:
+					clippedStart=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
 					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
 					if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 						tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+						clippedEnd=True
+					else:
+						clippedEnd=False
+					field['_startOfNode']=not clippedStart
+					field['_endOfNode']=not clippedEnd
 					if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
 						log.debug("Recursing endRange")
 						for endField in self._getTextWithFields_unbalanced(parentElement,tempRange,formatConfig,includeRoot=False):
