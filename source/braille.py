@@ -752,6 +752,10 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 		linePrefix = field.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
+		if formatConfig["reportHeadings"]:
+			headingLevel=field.get('heading-level')
+			if headingLevel:
+				textList.append("h%s"%headingLevel)
 	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):

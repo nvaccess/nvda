@@ -122,6 +122,7 @@ class EdgeTextInfo(UIATextInfo):
 
 	def _getTextWithFields_text(self,textRange,formatConfig):
 		log.debug("_getTextWithFields_text start")
+		isInitial=True
 		for tempRange in self._iterUIARangeByUnit(textRange,UIAHandler.TextUnit_Format):
 			text=tempRange.getText(-1)
 			if text:
@@ -129,6 +130,10 @@ class EdgeTextInfo(UIATextInfo):
 				if field.field:
 					yield field
 				yield text
+				if field.field and isInitial:
+					isInitial=False
+					formatConfig=formatConfig.copy()
+					formatConfig['reportHeadings']=False
 
 	def _getTextWithFields_embedded(self,element):
 		try:
