@@ -87,12 +87,13 @@ class EdgeTextInfo(UIATextInfo):
 			super(EdgeTextInfo,tempInfo).move(textInfos.UNIT_CHARACTER,1)
 			self.setEndPoint(tempInfo,"endToStart")
 		else:
+			# Ensure expanding to character/word correctly covers embedded controls
+			tempInfo=self.copy()
+			tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
+			if tempInfo._hasEmbedded():
+				self.setEndPoint(tempInfo,"endToEnd")
+				return
 			super(EdgeTextInfo,self).expand(unit)
-			if not self.text:
-				tempInfo=self.copy()
-				tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
-				if tempInfo._hasEmbedded():
-					self.setEndPoint(tempInfo,"endToEnd")
 		return
 
 	def _getControlFieldForObject(self,obj):
@@ -110,6 +111,7 @@ class EdgeTextInfo(UIATextInfo):
 		if hasAriaLabel or hasAriaLabelledby:
 			if obj.role in (controlTypes.ROLE_LINK,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_BUTTON):
 				field['value']=obj.name
+				field['alwaysReportValue']=True
 			elif obj.role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_PANE):
 				field['alwaysReportName']=True
 		if obj.role==controlTypes.ROLE_LIST:
@@ -148,6 +150,7 @@ class EdgeTextInfo(UIATextInfo):
 		else:
 			value=obj.value
 		if not value: value=" "
+		field['alwaysReportValue']=True
 		field['value']=value
 		yield textInfos.FieldCommand("controlStart",field)
 		yield textInfos.FieldCommand("controlEnd",field)
@@ -350,8 +353,7 @@ class EdgeTextInfo(UIATextInfo):
 				curField=field.field
 				endIndex=index
 			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
-				fields[index+1:endIndex]=curField.pop('value')
-				
+				fields[index+1:endIndex]=" " #curField.pop('value')
 				curField=None
 		return fields
 
@@ -411,9 +413,10 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def obj(self):
-		UIAElement=self._UIAElement if self._UIAElement else self.textInfo._rangeObj.getEnclosingElement()
-		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		return UIA(UIAElement=UIAElement)
+		if self._UIAElement:
+			UIAElement=self._UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			return UIA(UIAElement=UIAElement)
+		return self.textInfo.NVDAObjectAtStart
 
 	@property
 	def label(self):

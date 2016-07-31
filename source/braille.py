@@ -578,7 +578,7 @@ def getBrailleTextForProperties(**propertyValues):
 		role = propertyValues.get("_role")
 		roleText = None
 	value = propertyValues.get("value")
-	if value and role not in controlTypes.silentValuesForRoles:
+	if value and (propertyValues.get('alwaysReportValue') or role not in controlTypes.silentValuesForRoles):
 		textList.append(value)
 	if states:
 		positiveStates = controlTypes.processPositiveStates(role, states, controlTypes.REASON_FOCUS, states)
@@ -720,6 +720,9 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		level = field.get("level")
 		if level:
 			props["positionInfo"] = {"level": level}
+		if value:
+			props['value']=value
+			props['alwaysReportValue']=field.get('alwaysReportValue',False)
 		text = getBrailleTextForProperties(**props)
 		if role == controlTypes.ROLE_MATH:
 			import mathPres
