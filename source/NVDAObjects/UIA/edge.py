@@ -22,22 +22,78 @@ from . import UIA, UIATextInfo
 
 class EdgeTextInfo(UIATextInfo):
 
-	def expand(self,unit):
-		# Work around MS Edge bug 8246010
-		if unit==textInfos.UNIT_CHARACTER:
+	def _normalizeUIARange(self,range):
+		info=self.copy()
+		info._rangeObj=range
+		tempInfo=info.copy()
+		tempInfo.collapse()
+		while tempInfo.move(textInfos.UNIT_CHARACTER,1)!=0:
+			tempInfo.setEndPoint(info,"startToStart")
+			if tempInfo.text or tempInfo._hasEmbedded():
+				break
+			info.setEndPoint(tempInfo,"startToEnd")
+			tempInfo.collapse(True)
+
+	def _hasEmbedded(self):
+		children=self._rangeObj.getChildren()
+		if children.length:
+			child=children.getElement(0)
+			if not child.getCurrentPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId):
+				childRange=self.obj.UIATextPattern.rangeFromChild(child)
+				if childRange:
+					childChildren=childRange.getChildren()
+				if childChildren.length==1 and UIAHandler.handler.clientObject.compareElements(child,childChildren.getElement(0)):
+					return True
+		return False
+
+	def move(self,unit,direction,endPoint=None):
+		# Skip over non-text element starts and ends
+		if not endPoint:
+			if direction>0 and unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
+				return super(EdgeTextInfo,self).move(unit,direction)
+			elif direction>0:
+				res=super(EdgeTextInfo,self).move(unit,direction)
+				if res!=0:
+					# Ensure we move past the start of any elements 
+					tempInfo=self.copy()
+					while super(EdgeTextInfo,tempInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
+						tempInfo.setEndPoint(self,"startToStart")
+						if tempInfo.text or tempInfo._hasEmbedded():
+							break
+						tempInfo.collapse(True)
+						self._rangeObj=tempInfo._rangeObj.clone()
+				return res
+			elif direction<0:
+				tempInfo=self.copy()
+				res=super(EdgeTextInfo,self).move(unit,direction)
+				if res!=0:
+					tempInfo.setEndPoint(self,"startToStart")
+					if not tempInfo.text and not tempInfo._hasEmbedded():
+						self.move(textInfos.UNIT_CHARACTER,-1)
+				return res
+		else:
 			tempInfo=self.copy()
-			if tempInfo.move(unit,1)>0:
-				tempInfo2=self.copy()
-				tempInfo2.setEndPoint(tempInfo,"endToStart")
-				children=tempInfo2._rangeObj.getChildren()
-				if children.length:
-					child=children.getElement(0)
-					if not child.getCurrentPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId):
-						childRange=self.obj.UIATextPattern.rangeFromChild(child)
-						if childRange and childRange.getChildren().length==1:
-							self._rangeObj=tempInfo2._rangeObj
-							return
-		return super(EdgeTextInfo,self).expand(unit)
+			res=tempInfo.move(unit,direction)
+			if res!=0:
+				self.setEndPoint(tempInfo,"endToEnd" if endPoint=="end" else "startToStart")
+			return res
+
+	def expand(self,unit):
+		if unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
+			tempInfo=self.copy()
+			super(EdgeTextInfo,self).expand(unit)
+			tempInfo.move(unit,1)
+			tempInfo.move(textInfos.UNIT_CHARACTER,-1)
+			super(EdgeTextInfo,tempInfo).move(textInfos.UNIT_CHARACTER,1)
+			self.setEndPoint(tempInfo,"endToStart")
+		else:
+			super(EdgeTextInfo,self).expand(unit)
+			if not self.text:
+				tempInfo=self.copy()
+				tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
+				if tempInfo._hasEmbedded():
+					self.setEndPoint(tempInfo,"endToEnd")
+		return
 
 	def _getControlFieldForObject(self,obj):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj)
@@ -117,7 +173,8 @@ class EdgeTextInfo(UIATextInfo):
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
-		clippedStart=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,startRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
+		self._normalizeUIARange(enclosingRange)
+		clippedStart=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 			clippedEnd=True
@@ -232,6 +289,7 @@ class EdgeTextInfo(UIATextInfo):
 					log.debug("Error fetching parent range")
 					parentRange=None
 				if parentRange:
+					self._normalizeUIARange(parentRange)
 					clippedStart=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
 					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
 					if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
@@ -252,6 +310,8 @@ class EdgeTextInfo(UIATextInfo):
 		log.debug("_getTextWithFields_unbalanced end")
 
 	def getTextWithFields(self,formatConfig=None):
+		if self.isCollapsed:
+			return []
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=[]
