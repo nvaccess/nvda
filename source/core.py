@@ -207,11 +207,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
-	app = wx.App(redirect=False)
-	# HACK: wx currently raises spurious assertion failures when a timer is stopped but there is already an event in the queue for that timer.
-	# Unfortunately, these assertion exceptions are raised in the middle of other code, which causes problems.
-	# Therefore, disable assertions for now.
-	app.SetAssertMode(wx.PYAPP_ASSERT_SUPPRESS)
+	class App(wx.App):
+		def OnAssert(self,file,line,cond,msg):
+			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
+			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+	app = App(redirect=False)
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
