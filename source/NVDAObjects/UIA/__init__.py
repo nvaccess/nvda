@@ -8,6 +8,7 @@ from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
+import sys
 import UIAHandler
 import globalVars
 import eventHandler
@@ -19,7 +20,7 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
 import braille
 
 class UIATextInfo(textInfos.TextInfo):
@@ -327,9 +328,10 @@ class UIA(Window):
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
-		elif ((UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId) #Windows 8.x
-		or (self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and self.UIAElement.cachedAutomationId=="NormalToastView")): # Windows 10
-			clsList.append(Toast)
+		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
+			clsList.append(Toast_win8)
+		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
+			clsList.append(Toast_win10)
 		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
@@ -973,14 +975,17 @@ class ListItem(UIA):
 class Dialog(Dialog):
 	role=controlTypes.ROLE_DIALOG
 
-class Toast(UIA):
+class Toast_win8(Notification, UIA):
 
-	def event_alert(self):
-		if not config.conf["presentation"]["reportHelpBalloons"]:
-			return
-		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
-		# TODO: Don't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+	event_UIA_toolTipOpened=Notification.event_alert
+
+class Toast_win10(Notification, UIA):
+
+	# #6096: Windows 10 Redstone build 14366 and later does not fire tooltip event when toasts appear.
+	if sys.getwindowsversion().build > 10586:
+		event_UIA_window_windowOpen=Notification.event_alert
+	else:
+		event_UIA_toolTipOpened=Notification.event_alert
 
 #WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
 #This causes major lags when using this control with Braille in NVDA. (#2759) 
