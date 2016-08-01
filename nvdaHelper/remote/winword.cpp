@@ -152,6 +152,7 @@ using namespace std;
 #define wdWord 2
 #define wdParagraph 4
 #define wdLine 5
+const int wdStory = 6;
 #define wdCharacterFormatting 13
 
 #define wdCollapseEnd 0
@@ -469,12 +470,26 @@ const int wdDISPID_RANGE_FIELDS = 64;
 const int wdDISPID_FIELDS_COUNT = 1;
 const int wdDISPID_FIELDS_ITEM = 0;
 const int wdDISPID_FIELDS_ITEM_TYPE = 1;
+const int wdDISPID_FIELDS_ITEM_RESULT = 4;
 
 int getXRefLinkCount(IDispatch* pDispatchRange) {
+	IDispatchPtr pDispatchRangeDup = nullptr;
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
+	if( res != S_OK || !pDispatchRangeDup ) {
+		LOG_DEBUGWARNING(L"error duplicating the range.");
+		return 0;
+	}
+
+	res = _com_dispatch_raw_method( pDispatchRangeDup, wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph);
+	if( res != S_OK || !pDispatchRangeDup ) {
+		LOG_DEBUGWARNING(L"error expanding the range");
+		return 0;
+	}
+
 	IDispatchPtr pDispatchFields = nullptr;
-	LOG_DEBUGWARNING(L"called getXRefLinkCount");
-	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_FIELDS, VT_DISPATCH, &pDispatchFields);
+	res = _com_dispatch_raw_propget( pDispatchRangeDup, wdDISPID_RANGE_FIELDS, VT_DISPATCH, &pDispatchFields);
 	if( res != S_OK || !pDispatchFields ) {
+		LOG_DEBUGWARNING(L"error getting fields from range");
 		return 0;
 	}
 
@@ -483,20 +498,47 @@ int getXRefLinkCount(IDispatch* pDispatchRange) {
 	if( res != S_OK || count <= 0 ) {
 		return 0;
 	}
+
 	int xRefCount = 0;
 	for(int i = 1; i <= count; ++i) {
 		IDispatchPtr pDispatchItem = nullptr;
 		res = _com_dispatch_raw_method( pDispatchFields, wdDISPID_FIELDS_ITEM, DISPATCH_METHOD, VT_DISPATCH, &pDispatchItem, L"\x0003", i);
-		if( res == S_OK && pDispatchItem) {
-			int type = -1;
-			const int CROSS_REFERENCE_TYPE_VALUE = 3; // wdFieldRef see (WdFieldType Enumeration - https://msdn.microsoft.com/en-us/library/office/ff192211.aspx)
-			res = _com_dispatch_raw_propget( pDispatchItem, wdDISPID_FIELDS_ITEM_TYPE, VT_I4, &type);
-			if( res == S_OK && type == CROSS_REFERENCE_TYPE_VALUE ){
-				++xRefCount;
-			}
+		if( res != S_OK || !pDispatchItem){
+			LOG_DEBUGWARNING(L"error getting field item");
+			continue;
+		}
+		int type = -1;
+		const int CROSS_REFERENCE_TYPE_VALUE = 3; // wdFieldRef see (WdFieldType Enumeration - https://msdn.microsoft.com/en-us/library/office/ff192211.aspx)
+		res = _com_dispatch_raw_propget( pDispatchItem, wdDISPID_FIELDS_ITEM_TYPE, VT_I4, &type);
+		if( res != S_OK || type != CROSS_REFERENCE_TYPE_VALUE ){
+			continue;
+		}
+
+		IDispatchPtr pDispatchFieldResult = nullptr;
+		res = _com_dispatch_raw_propget( pDispatchItem, wdDISPID_FIELDS_ITEM_RESULT, VT_DISPATCH, &pDispatchFieldResult);
+		if( res != S_OK || !pDispatchFieldResult){
+			LOG_DEBUGWARNING(L"error getting the result from the field item.");
+			continue;
+		}
+
+		long rangeStart = 0, rangeEnd = 0, resultStart = 0, resultEnd = 0;
+		auto ok = S_OK == _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_START, VT_I4, &rangeStart)
+		       && S_OK == _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_END, VT_I4, &rangeEnd)
+		       && S_OK == _com_dispatch_raw_propget( pDispatchFieldResult, wdDISPID_RANGE_START, VT_I4, &resultStart)
+		       && S_OK == _com_dispatch_raw_propget( pDispatchFieldResult, wdDISPID_RANGE_END, VT_I4, &resultEnd);
+
+		auto inRange = [] (long index, long start, long end) {
+			return index >= start && index <= end;
+		};
+
+		if( ok && (
+			inRange(rangeStart, resultStart, resultEnd) ||
+			inRange(rangeEnd, resultStart, resultEnd) ||
+			inRange(resultStart, rangeStart, rangeEnd) ||
+			inRange(resultEnd, rangeStart, rangeEnd) )){
+			++xRefCount;
 		}
 	}
-	LOG_DEBUGWARNING(L"Found links: " << xRefCount);
 	return xRefCount;
 }
 
