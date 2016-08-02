@@ -96,6 +96,7 @@ xlPatternVertical = -4166
 xlPatternLinearGradient = 4000
 xlPatternRectangularGradient = 4001
 
+# #6092/6229: Percent (%) character must be escaped in order for Gettext to let translations pass.
 backgroundPatternLabels={
 		# See https://msdn.microsoft.com/en-us/library/microsoft.office.interop.excel.xlpattern.aspx
 		# Translators: A type of background pattern in Microsoft Excel. 
@@ -112,19 +113,19 @@ backgroundPatternLabels={
 		xlPatternDown:_("reverse diagonal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 12.5% gray
-		xlPatternGray16:_("12.5% gray"),
+		xlPatternGray16:_("12.5%% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 25% gray
-		xlPatternGray25:_("25% gray"),
+		xlPatternGray25:_("25%% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 50% gray
-		xlPatternGray50:_("50% gray"),
+		xlPatternGray50:_("50%% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 75% gray
-		xlPatternGray75:_("75% gray"),
+		xlPatternGray75:_("75%% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 6.25% gray
-		xlPatternGray8:_("6.25% gray"),
+		xlPatternGray8:_("6.25%% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Grid
 		xlPatternGrid:_("thin horizontal crosshatch"),
