@@ -27,7 +27,7 @@ class EdgeTextInfo(UIATextInfo):
 		info._rangeObj=range
 		tempInfo=info.copy()
 		tempInfo.collapse()
-		while tempInfo.move(textInfos.UNIT_CHARACTER,1)!=0:
+		while super(EdgeTextInfo,tempInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
 			tempInfo.setEndPoint(info,"startToStart")
 			if tempInfo.text or tempInfo._hasEmbedded():
 				break
@@ -79,21 +79,13 @@ class EdgeTextInfo(UIATextInfo):
 			return res
 
 	def expand(self,unit):
-		if unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
-			tempInfo=self.copy()
-			super(EdgeTextInfo,self).expand(unit)
-			tempInfo.move(unit,1)
-			tempInfo.move(textInfos.UNIT_CHARACTER,-1)
-			super(EdgeTextInfo,tempInfo).move(textInfos.UNIT_CHARACTER,1)
-			self.setEndPoint(tempInfo,"endToStart")
-		else:
-			# Ensure expanding to character/word correctly covers embedded controls
-			tempInfo=self.copy()
-			tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
-			if tempInfo._hasEmbedded():
-				self.setEndPoint(tempInfo,"endToEnd")
-				return
-			super(EdgeTextInfo,self).expand(unit)
+		# Ensure expanding to character/word correctly covers embedded controls
+		tempInfo=self.copy()
+		tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
+		if tempInfo._hasEmbedded():
+			self.setEndPoint(tempInfo,"endToEnd")
+			return
+		super(EdgeTextInfo,self).expand(unit)
 		return
 
 	def _getControlFieldForObject(self,obj):
