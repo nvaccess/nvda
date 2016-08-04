@@ -277,7 +277,7 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_DUPLICATE,VT_DISPATCH,&pDispatchRange2)!=S_OK||!pDispatchRange2) {
 		return false;
 	}
-	_com_dispatch_raw_method(pDispatchRange2,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph,1); // is it wrong?
+	_com_dispatch_raw_method(pDispatchRange2,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph);
 	BOOL foundFormField=false;
 	IDispatchPtr pDispatchFormFields=NULL;
 	_com_dispatch_raw_propget(pDispatchRange2,wdDISPID_RANGE_FORMFIELDS,VT_DISPATCH,&pDispatchFormFields);
