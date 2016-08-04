@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-25 14:53+0900\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-31 21:06+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1480,6 +1480,12 @@ msgstr "ピンクレッドの色"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "明るい {color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -3628,6 +3634,10 @@ msgstr "点字表示を次の行に移動"
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "点字ディスプレイからの文字入力"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "点字表示をフォーカスに移動"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "プラグインを再度読み込みました"
@@ -5768,7 +5778,8 @@ msgid "Add-ons Manager"
 msgstr "アドオン マネージャー"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "すべてのアドオンが無効です。アドオンを有効にするにはNVDAを再起動してくださ"
 "い。"
@@ -5800,6 +5811,10 @@ msgstr "このアドオンについて(&A)..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "アドオンのヘルプ(&H)"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "アドオンの無効化"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5870,9 +5885,11 @@ msgstr "アドオンがインストールされるまでお待ちください。
 msgid "Failed to install add-on  from %s"
 msgstr "%s からのアドオンのインストールに失敗しました。"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "このアドオンを本当にNVDAから削除しますか？"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "アドオンの削除"
 
@@ -5884,7 +5901,15 @@ msgstr "インストール"
 msgid "remove"
 msgstr "削除"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "無効"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "有効"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "保留中"
 
@@ -5892,13 +5917,17 @@ msgstr "保留中"
 msgid "running"
 msgstr "実行中"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "アドオンの有効化"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"アドオンが追加または削除されました。有効にするにはNVDAを再起動する必要があり"
-"ます。今すぐNVDAを再起動しますか？"
+"アドオンを変更しました。有効にするにはNVDAを再起動する必要があります。今すぐ"
+"NVDAを再起動しますか？"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -7276,73 +7305,73 @@ msgstr "自動"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "市松模様"
+msgid "diagonal crosshatch"
+msgstr "斜め格子模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "十字模様"
+msgid "thin diagonal crosshatch"
+msgstr "細線の斜め格子模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "右下がり斜線"
+msgid "reverse diagonal stripe"
+msgstr "右下がり斜線縞模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "16パーセント灰色"
+#. 12.5% gray
+msgid "12.5% gray"
+msgstr "12.5パーセント グレー"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "25パーセント灰色"
+msgid "25% gray"
+msgstr "25パーセント グレー"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "50パーセント灰色"
+msgid "50% gray"
+msgstr "50パーセント グレー"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "75パーセント灰色"
+msgid "75% gray"
+msgstr "75パーセント グレー"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "8パーセント灰色"
+#. 6.25% gray
+msgid "6.25% gray"
+msgstr "6.25パーセント グレー"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "格子模様"
+msgid "thin horizontal crosshatch"
+msgstr "細線の水平格子模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "横縞"
+msgid "horizontal stripe"
+msgstr "横縞模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "薄い右下がり斜線"
+msgid "thin reverse diagonal stripe"
+msgstr "細線の右下がり斜線縞模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "薄い横縞"
+msgid "thin horizontal stripe"
+msgstr "細線の横縞模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "薄い右上がり線"
+msgid "thin diagonal stripe"
+msgstr "細線の右上がり斜線縞模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "薄い縦縞"
+msgid "thin vertical stripe"
+msgstr "細線の縦模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7351,8 +7380,8 @@ msgstr "なし"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "75パーセント灰色"
+msgid "thick diagonal crosshatch"
+msgstr "太線の斜め格子模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7361,13 +7390,13 @@ msgstr "単色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "右上がり斜線"
+msgid "diagonal stripe"
+msgstr "右上がり斜線縞模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "縦縞"
+msgid "vertical stripe"
+msgstr "縦縞模様"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8507,6 +8536,45 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "市松模様"
+
+#~ msgid "crisscross"
+#~ msgstr "十字模様"
+
+#~ msgid "down"
+#~ msgstr "右下がり斜線"
+
+#~ msgid "gray16"
+#~ msgstr "16パーセント灰色"
+
+#~ msgid "gray25"
+#~ msgstr "25パーセント灰色"
+
+#~ msgid "gray50"
+#~ msgstr "50パーセント灰色"
+
+#~ msgid "gray75"
+#~ msgstr "75パーセント灰色"
+
+#~ msgid "grid"
+#~ msgstr "格子模様"
+
+#~ msgid "light down"
+#~ msgstr "薄い右下がり斜線"
+
+#~ msgid "light up"
+#~ msgstr "薄い右上がり線"
+
+#~ msgid "light vertical"
+#~ msgstr "薄い縦縞"
+
+#~ msgid "semi gray75"
+#~ msgstr "75パーセント灰色"
+
+#~ msgid "up"
+#~ msgstr "右上がり斜線"
 
 #~ msgid "unknown color"
 #~ msgstr "不明な色"
