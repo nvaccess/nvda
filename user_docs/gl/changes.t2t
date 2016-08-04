@@ -13,11 +13,15 @@ Que hai de Novo no NVDA
 - No Microsoft Word, agora anúnciase o espaciado a través da orde anunciar formato do NVDA, cando se cambie con varios atallos de teclado do Microsoft word, e cando ao te mover ao texto co espaciado de liña diferente se Anunciar Espaciado de Liña está activado nas Opcións de Formato de Documento do NVDA. (#2961)
 - No Internet Explorer, os elementos estructurais HTML5 agora recoñécense. (#5591)
 - O anunciado de comentarios (coma no Microsoft Word) agora poden deshabilitarse a través dunha caixa de verificación Anunciar Comentarios no diálogo de opcións de Formateado de Documentos do NVDA. (#5108)
+- Administrador de complementos: agora é posible deshabilitar complementos individuais. (#3090)
+- Engadíronse asignacións de teclas adicionais para as pantallas braille ALVA BC640/680 series. (#5206)
+- Agora hai unha orde para mover a pantalla braille ao foco actual. Polo de agora, só as ALVA BC640/680 series teñen unha tecla asignada a esta orde, pero pode asignarse manualmente para outras pantallas no diálogo Xestos de Entrada se se desexa. (#5250)
 
  
 == Cambios ==
 - NVDA agora anuncia as cores usando un conxunto básico comprensible de 9 tons e de 3 matices de cor, con variacións de brilo e palidez. Esto é mellor que utilizar nomes de cores máis subxetivos e menos intelixibles. (#6029)
 - Modificouse o comportamento do existente NVDA+F9 logo NVDA+F10 para selecionar texto na primeira pulsación de F10. Cando se prema F10 dúas veces (en sucesión rápida) o texto cópiase ao portapapeis. (#4636)
+- Actualizado eSpeakNG á versión Master 11b1a7b (22 de xunio de 2016). (#6037)
 
 
 == Correción de Fallos ==
@@ -35,6 +39,15 @@ Que hai de Novo no NVDA
 - No Plugin Web Conference (coma se utilizou en out-of-sight.net) NVDA xa non pita e fala as actualizacións das barras de progreso relacionadas coa entrada de micrófono. (#5888)
 - Ao se realizar unha orde Procurar Seguinte ou Procurar Anterior en modo exploración agora fará correctamente a procura sensible ás maiúsculas se a procura orixinal era sensible ás maiúsculas. (#5522)
 - Ao se editar entradas de diccionario, agora dase retroalimentación para expresións regulares inválidas. NVDA xa non se colga se un ficheiro de diccionario contén unha expresión regular inválida. (#4834)
+- Se NVDA non é capaz de comunicarse cunha pantalla braille (Por ex.: porque se desconectou), deshabilitarase automáticamente a utilización da pantalla. (#1555)
+- Mellórase lixeiramente o rendemento do filtrado na Lista de Elementos do Modo Exploración nalgúns casos. (#6126)
+- En Microsoft Excel, os nomes dos motivos de fondo anunciados polo NVDA agora coinciden con aqueles utilizados polo Excel. (#6092)
+- Mellorado o soporte para a pantalla de autentificación de Windows 10, incluindo o anunciado de alertas e activación do campo de contrasinal co touch. (#6010)
+- NVDA agora detecta correctamente os sensores de seguemento secundarios nas pantallas braille ALVA BC640/680 series. (#5206)
+
+
+== Cambios para Desenvolvedores ==
+- A información de autentificación directamente dende unha propiedade xa non resulta en que a propiedade sexa chamada recursivamente unha e outra vez. (#6122)
 
 
 = 2016.2.1 =
