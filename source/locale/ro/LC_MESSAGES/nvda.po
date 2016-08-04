@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3899\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-22 22:58+0200\n"
-"Last-Translator: DanP <dan.punga@gmail.com>\n"
-"Language-Team:  <mihai.craciun@gmail.com, dan.punga@gmail.com>\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-08-02 19:38+0300\n"
+"Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
+"Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1481,6 +1481,12 @@ msgstr "roz-roșu"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "{color} luminos"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -3711,6 +3717,10 @@ msgstr "Mută afișajul braille la linia următoare"
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Introduce puncte braille via tastatura braille"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Mută afișajul braille la focalizarea curentă"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Extensii plug-in reîncărcate"
@@ -5881,7 +5891,8 @@ msgid "Add-ons Manager"
 msgstr "Administrare extensii add-on"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "Toate extensiile add-on sunt dezactivate. Pentru a le reactiva trebuie "
 "repornit NVDA."
@@ -5913,6 +5924,10 @@ msgstr "&Despre extensia add-on..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "A&jutor extensii add-on"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Dezactivare extensie add-on"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5985,9 +6000,11 @@ msgstr "Așteptați cât timp extensia add-on este instalată."
 msgid "Failed to install add-on  from %s"
 msgstr "Instalarea extensiei add-on de la %s a eșuat"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Sigur doriți să înlăturați din NVDA extensia add-on selectată?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Eliminare extensie add-on"
 
@@ -5999,7 +6016,15 @@ msgstr "instalat"
 msgid "remove"
 msgstr "eliminat"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "dezactivează"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "activează"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "întrerupt"
 
@@ -6007,13 +6032,17 @@ msgstr "întrerupt"
 msgid "running"
 msgstr "rulează"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "activare extensie add-on"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Au fost adăugate sau înlăturate extensii add-on. NVDA trebuie repornit "
-"pentru ca modificările să aibă efect. Vreți să reporniți acum?"
+"Au fost făcute modificări în extensiile add-on. NVDA trebuie repornit pentru "
+"ca modificările să aibă efect. Vreți să reporniți acum?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6765,7 +6794,7 @@ msgstr "Opțiuni Cursor examinare"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow system &focus"
-msgstr "Urmărește &focalizarea sitemului"
+msgstr "Urmărește &focalizarea sistemului"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -7409,73 +7438,78 @@ msgstr "automat"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "tablă de șah"
+msgid "diagonal crosshatch"
+msgstr "hașurare diagonală"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "intersectat"
+msgid "thin diagonal crosshatch"
+msgstr "diagonală hașurată subțire"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "jos"
+msgid "reverse diagonal stripe"
+msgstr "diagonală inversă"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "gri16"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "12.5% gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "gri25"
+#, python-format
+msgid "25% gray"
+msgstr "25% gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "gri50"
+#, python-format
+msgid "50% gray"
+msgstr "50% gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "gri75"
+#, python-format
+msgid "75% gray"
+msgstr "75% gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "gri8"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "6.25% gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "grilă"
+msgid "thin horizontal crosshatch"
+msgstr "hașurare orizontală subțire"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "orizontal"
+msgid "horizontal stripe"
+msgstr "dungă orizontală"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "deschis spre jos"
+msgid "thin reverse diagonal stripe"
+msgstr "dungă diagonală inversă subțire"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "deschis orizontal"
+msgid "thin horizontal stripe"
+msgstr "dungă orizontală subțire"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "deschis spre sus"
+msgid "thin diagonal stripe"
+msgstr "dungă diagonală subțire"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "deschis vertical"
+msgid "thin vertical stripe"
+msgstr "dungă verticală subțire"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7484,8 +7518,8 @@ msgstr "fără"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "semi gri75"
+msgid "thick diagonal crosshatch"
+msgstr "hașurare diagonală îngroșată"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7494,13 +7528,13 @@ msgstr "solid"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "sus"
+msgid "diagonal stripe"
+msgstr "dungă diagonală"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "vertical"
+msgid "vertical stripe"
+msgstr "dungă verticală"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8665,6 +8699,45 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "tablă de șah"
+
+#~ msgid "crisscross"
+#~ msgstr "intersectat"
+
+#~ msgid "down"
+#~ msgstr "jos"
+
+#~ msgid "gray16"
+#~ msgstr "gri16"
+
+#~ msgid "gray25"
+#~ msgstr "gri25"
+
+#~ msgid "gray50"
+#~ msgstr "gri50"
+
+#~ msgid "gray75"
+#~ msgstr "gri75"
+
+#~ msgid "grid"
+#~ msgstr "grilă"
+
+#~ msgid "light down"
+#~ msgstr "deschis spre jos"
+
+#~ msgid "light up"
+#~ msgstr "deschis spre sus"
+
+#~ msgid "light vertical"
+#~ msgstr "deschis vertical"
+
+#~ msgid "semi gray75"
+#~ msgstr "semi gri75"
+
+#~ msgid "up"
+#~ msgstr "sus"
 
 #~ msgid "unknown color"
 #~ msgstr "culoare necunoscută"
