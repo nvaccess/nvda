@@ -29,177 +29,176 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 // See https://github.com/nvaccess/nvda/wiki/Using-COM-with-NVDA-and-Microsoft-Word
-#define wdDISPID_STYLES_ITEM 0
-#define wdDISPID_DOCUMENT_STYLES 22
-#define wdDISPID_DOCUMENT_RANGE 2000
-#define wdDISPID_WINDOW_DOCUMENT 2
-#define wdDISPID_WINDOW_APPLICATION 1000
-#define wdDISPID_WINDOW_SELECTION 4
-#define wdDISPID_APPLICATION_SCREENUPDATING 26
-#define wdDISPID_SELECTION_RANGE 400
-#define wdDISPID_SELECTION_SETRANGE 100
-#define wdDISPID_SELECTION_STARTISACTIVE 404
-#define wdDISPID_SELECTION_STARTOF 107
-#define wdDISPID_SELECTION_ENDOF 108
-#define wdDISPID_RANGE_INRANGE 126
-#define wdDISPID_RANGE_DUPLICATE 6
-#define wdDISPID_RANGE_REVISIONS 150
-#define wdDISPID_REVISIONS_ITEM 0
-#define wdDISPID_REVISION_TYPE 4
-#define wdDISPID_RANGE_STORYTYPE 7
-#define wdDISPID_RANGE_MOVE 109
-#define wdDISPID_RANGE_MOVEEND 111
-#define wdDISPID_RANGE_COLLAPSE 101
-#define wdDISPID_RANGE_TEXT 0
-#define wdDISPID_RANGE_EXPAND 129
-#define wdDISPID_RANGE_SELECT 65535
-#define wdDISPID_RANGE_SETRANGE 100
-#define wdDISPID_RANGE_START 3
-#define wdDISPID_RANGE_END 4
-#define wdDISPID_RANGE_INFORMATION 313
-#define wdDISPID_RANGE_STYLE 151
-#define wdDISPID_RANGE_LANGUAGEID 153
-#define wdDISPID_RANGE_DUPLICATE 6
-#define wdDISPID_RANGE_FORMFIELDS 65
-#define wdDISPID_RANGE_CONTENTCONTROLS 424
-#define wdDISPID_FORMFIELDS_ITEM 0
-#define wdDISPID_FORMFIELD_RANGE 17
-#define wdDISPID_FORMFIELD_TYPE 0
-#define wdDISPID_FORMFIELD_RESULT 10
-#define wdDISPID_FORMFIELD_STATUSTEXT 8
-#define wdDISPID_CONTENTCONTROLS_ITEM 0
-#define wdDISPID_CONTENTCONTROL_RANGE 1
-#define wdDISPID_CONTENTCONTROL_TYPE 5
-#define wdDISPID_CONTENTCONTROL_CHECKED 28
-#define wdDISPID_CONTENTCONTROL_TITLE 12
-#define wdDISPID_STYLE_NAMELOCAL 0
-#define wdDISPID_STYLE_PARENT 1002
-#define wdDISPID_RANGE_SPELLINGERRORS 316
-#define wdDISPID_SPELLINGERRORS_ITEM 0
-#define wdDISPID_SPELLINGERRORS_COUNT 1
-#define wdDISPID_RANGE_APPLICATION 1000
-#define wdDISPID_APPLICATION_ISSANDBOX 492
+constexpr int wdDISPID_STYLES_ITEM = 0;
+constexpr int wdDISPID_DOCUMENT_STYLES = 22;
+constexpr int wdDISPID_DOCUMENT_RANGE = 2000;
+constexpr int wdDISPID_WINDOW_DOCUMENT = 2;
+constexpr int wdDISPID_WINDOW_APPLICATION = 1000;
+constexpr int wdDISPID_WINDOW_SELECTION = 4;
+constexpr int wdDISPID_APPLICATION_SCREENUPDATING = 26;
+constexpr int wdDISPID_SELECTION_RANGE = 400;
+constexpr int wdDISPID_SELECTION_SETRANGE = 100;
+constexpr int wdDISPID_SELECTION_STARTISACTIVE = 404;
+constexpr int wdDISPID_SELECTION_STARTOF = 107;
+constexpr int wdDISPID_SELECTION_ENDOF = 108;
+constexpr int wdDISPID_RANGE_INRANGE = 126;
+constexpr int wdDISPID_RANGE_DUPLICATE = 6;
+constexpr int wdDISPID_RANGE_REVISIONS = 150;
+constexpr int wdDISPID_REVISIONS_ITEM = 0;
+constexpr int wdDISPID_REVISION_TYPE = 4;
+constexpr int wdDISPID_RANGE_STORYTYPE = 7;
+constexpr int wdDISPID_RANGE_MOVE = 109;
+constexpr int wdDISPID_RANGE_MOVEEND = 111;
+constexpr int wdDISPID_RANGE_COLLAPSE = 101;
+constexpr int wdDISPID_RANGE_TEXT = 0;
+constexpr int wdDISPID_RANGE_EXPAND = 129;
+constexpr int wdDISPID_RANGE_SELECT = 65535;
+constexpr int wdDISPID_RANGE_SETRANGE = 100;
+constexpr int wdDISPID_RANGE_START = 3;
+constexpr int wdDISPID_RANGE_END = 4;
+constexpr int wdDISPID_RANGE_INFORMATION = 313;
+constexpr int wdDISPID_RANGE_STYLE = 151;
+constexpr int wdDISPID_RANGE_LANGUAGEID = 153;
+constexpr int wdDISPID_RANGE_FORMFIELDS = 65;
+constexpr int wdDISPID_RANGE_CONTENTCONTROLS = 424;
+constexpr int wdDISPID_FORMFIELDS_ITEM = 0;
+constexpr int wdDISPID_FORMFIELD_RANGE = 17;
+constexpr int wdDISPID_FORMFIELD_TYPE = 0;
+constexpr int wdDISPID_FORMFIELD_RESULT = 10;
+constexpr int wdDISPID_FORMFIELD_STATUSTEXT = 8;
+constexpr int wdDISPID_CONTENTCONTROLS_ITEM = 0;
+constexpr int wdDISPID_CONTENTCONTROL_RANGE = 1;
+constexpr int wdDISPID_CONTENTCONTROL_TYPE = 5;
+constexpr int wdDISPID_CONTENTCONTROL_CHECKED = 28;
+constexpr int wdDISPID_CONTENTCONTROL_TITLE = 12;
+constexpr int wdDISPID_STYLE_NAMELOCAL = 0;
+constexpr int wdDISPID_STYLE_PARENT = 1002;
+constexpr int wdDISPID_RANGE_SPELLINGERRORS = 316;
+constexpr int wdDISPID_SPELLINGERRORS_ITEM = 0;
+constexpr int wdDISPID_SPELLINGERRORS_COUNT = 1;
+constexpr int wdDISPID_RANGE_APPLICATION = 1000;
+constexpr int wdDISPID_APPLICATION_ISSANDBOX = 492;
 
-#define wdDISPID_RANGE_FONT 5
-#define wdDISPID_FONT_COLOR 159
-#define wdDISPID_FONT_BOLD 130
-#define wdDISPID_FONT_ITALIC 131
-#define wdDISPID_FONT_UNDERLINE 140
-#define wdDISPID_FONT_STRIKETHROUGH 135
-#define wdDISPID_FONT_DOUBLESTRIKETHROUGH 136
-#define wdDISPID_FONT_NAME 142
-#define wdDISPID_FONT_SIZE 141
-#define wdDISPID_FONT_SUBSCRIPT 138
-#define wdDISPID_FONT_SUPERSCRIPT 139
-#define wdDISPID_RANGE_PARAGRAPHFORMAT 1102
-#define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
-#define wdDISPID_PARAGRAPHFORMAT_LINESPACING 109
-#define wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE 110
+constexpr int wdDISPID_RANGE_FONT = 5;
+constexpr int wdDISPID_FONT_COLOR = 159;
+constexpr int wdDISPID_FONT_BOLD = 130;
+constexpr int wdDISPID_FONT_ITALIC = 131;
+constexpr int wdDISPID_FONT_UNDERLINE = 140;
+constexpr int wdDISPID_FONT_STRIKETHROUGH = 135;
+constexpr int wdDISPID_FONT_DOUBLESTRIKETHROUGH = 136;
+constexpr int wdDISPID_FONT_NAME = 142;
+constexpr int wdDISPID_FONT_SIZE = 141;
+constexpr int wdDISPID_FONT_SUBSCRIPT = 138;
+constexpr int wdDISPID_FONT_SUPERSCRIPT = 139;
+constexpr int wdDISPID_RANGE_PARAGRAPHFORMAT = 1102;
+constexpr int wdDISPID_PARAGRAPHFORMAT_ALIGNMENT = 101;
+constexpr int wdDISPID_PARAGRAPHFORMAT_LINESPACING = 109;
+constexpr int wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE = 110;
 
-#define wdDISPID_RANGE_LISTFORMAT 68
-#define wdDISPID_LISTFORMAT_LISTSTRING 75
-#define wdDISPID_RANGE_PARAGRAPHS 59
-#define wdDISPID_PARAGRAPHS_ITEM 0
-#define wdDISPID_PARAGRAPH_RANGE 0
-#define wdDISPID_PARAGRAPH_STYLE 100
-#define wdDISPID_PARAGRAPH_OUTLINELEVEL 202
-#define wdDISPID_RANGE_FOOTNOTES 54
-#define wdDISPID_FOOTNOTES_ITEM 0
-#define wdDISPID_FOOTNOTES_COUNT 2
-#define wdDISPID_FOOTNOTE_INDEX 6
-#define wdDISPID_RANGE_ENDNOTES 55
-#define wdDISPID_ENDNOTES_ITEM 0
-#define wdDISPID_ENDNOTES_COUNT 2
-#define wdDISPID_ENDNOTE_INDEX 6
-#define wdDISPID_RANGE_INLINESHAPES 319
-#define wdDISPID_INLINESHAPES_COUNT 1
-#define wdDISPID_INLINESHAPES_ITEM 0 
-#define wdDISPID_INLINESHAPE_OLEFORMAT 5
-#define wdDISPID_INLINESHAPE_TYPE 6
-#define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
-#define wdDISPID_INLINESHAPE_TITLE 158
-#define wdDISPID_RANGE_HYPERLINKS 156
-#define wdDISPID_HYPERLINKS_COUNT 1
-#define wdDISPID_RANGE_COMMENTS 56
-#define wdDISPID_COMMENTS_COUNT 2
-#define wdDISPID_COMMENTS_ITEM 0
-#define wdDISPID_COMMENT_SCOPE 1005
-#define wdDISPID_RANGE_TABLES 50
-#define wdDISPID_TABLES_ITEM 0
-#define wdDISPID_TABLE_NESTINGLEVEL 108
-#define wdDISPID_TABLE_RANGE 0
-#define wdDISPID_TABLE_TITLE 209
-#define wdDISPID_TABLE_DESCR 210
-#define wdDISPID_TABLE_BORDERS 1100
-#define wdDISPID_BORDERS_ENABLE 2
-#define wdDISPID_RANGE_CELLS 57
-#define wdDISPID_CELLS_ITEM 0
-#define wdDISPID_CELL_RANGE 0
-#define wdDISPID_CELL_ROWINDEX 4
-#define wdDISPID_CELL_COLUMNINDEX 5
-#define wdDISPID_TABLE_COLUMNS 100
-#define wdDISPID_COLUMNS_COUNT 2
-#define wdDISPID_TABLE_ROWS 101
-#define wdDISPID_ROWS_COUNT 2
-#define wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT 106
-#define wdDISPID_PARAGRAPHFORMAT_LEFTINDENT 107
-#define wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT 108
-#define wdDISPID_OLEFORMAT_PROGID 22
+constexpr int wdDISPID_RANGE_LISTFORMAT = 68;
+constexpr int wdDISPID_LISTFORMAT_LISTSTRING = 75;
+constexpr int wdDISPID_RANGE_PARAGRAPHS = 59;
+constexpr int wdDISPID_PARAGRAPHS_ITEM = 0;
+constexpr int wdDISPID_PARAGRAPH_RANGE = 0;
+constexpr int wdDISPID_PARAGRAPH_STYLE = 100;
+constexpr int wdDISPID_PARAGRAPH_OUTLINELEVEL = 202;
+constexpr int wdDISPID_RANGE_FOOTNOTES = 54;
+constexpr int wdDISPID_FOOTNOTES_ITEM = 0;
+constexpr int wdDISPID_FOOTNOTES_COUNT = 2;
+constexpr int wdDISPID_FOOTNOTE_INDEX = 6;
+constexpr int wdDISPID_RANGE_ENDNOTES = 55;
+constexpr int wdDISPID_ENDNOTES_ITEM = 0;
+constexpr int wdDISPID_ENDNOTES_COUNT = 2;
+constexpr int wdDISPID_ENDNOTE_INDEX = 6;
+constexpr int wdDISPID_RANGE_INLINESHAPES = 319;
+constexpr int wdDISPID_INLINESHAPES_COUNT = 1;
+constexpr int wdDISPID_INLINESHAPES_ITEM = 0;
+constexpr int wdDISPID_INLINESHAPE_OLEFORMAT = 5;
+constexpr int wdDISPID_INLINESHAPE_TYPE = 6;
+constexpr int wdDISPID_INLINESHAPE_ALTERNATIVETEXT = 131;
+constexpr int wdDISPID_INLINESHAPE_TITLE = 158;
+constexpr int wdDISPID_RANGE_HYPERLINKS = 156;
+constexpr int wdDISPID_HYPERLINKS_COUNT = 1;
+constexpr int wdDISPID_RANGE_COMMENTS = 56;
+constexpr int wdDISPID_COMMENTS_COUNT = 2;
+constexpr int wdDISPID_COMMENTS_ITEM = 0;
+constexpr int wdDISPID_COMMENT_SCOPE = 1005;
+constexpr int wdDISPID_RANGE_TABLES = 50;
+constexpr int wdDISPID_TABLES_ITEM = 0;
+constexpr int wdDISPID_TABLE_NESTINGLEVEL = 108;
+constexpr int wdDISPID_TABLE_RANGE = 0;
+constexpr int wdDISPID_TABLE_TITLE = 209;
+constexpr int wdDISPID_TABLE_DESCR = 210;
+constexpr int wdDISPID_TABLE_BORDERS = 1100;
+constexpr int wdDISPID_BORDERS_ENABLE = 2;
+constexpr int wdDISPID_RANGE_CELLS = 57;
+constexpr int wdDISPID_CELLS_ITEM = 0;
+constexpr int wdDISPID_CELL_RANGE = 0;
+constexpr int wdDISPID_CELL_ROWINDEX = 4;
+constexpr int wdDISPID_CELL_COLUMNINDEX = 5;
+constexpr int wdDISPID_TABLE_COLUMNS = 100;
+constexpr int wdDISPID_COLUMNS_COUNT = 2;
+constexpr int wdDISPID_TABLE_ROWS = 101;
+constexpr int wdDISPID_ROWS_COUNT = 2;
+constexpr int wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT = 106;
+constexpr int wdDISPID_PARAGRAPHFORMAT_LEFTINDENT = 107;
+constexpr int wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT = 108;
+constexpr int wdDISPID_OLEFORMAT_PROGID = 22;
 
-#define wdCommentsStory 4
+constexpr int wdCommentsStory = 4;
 
-#define wdCharacter 1
-#define wdWord 2
-#define wdParagraph 4
-#define wdLine 5
-const int wdStory = 6;
-#define wdCharacterFormatting 13
+constexpr int wdCharacter = 1;
+constexpr int wdWord = 2;
+constexpr int wdParagraph = 4;
+constexpr int wdLine = 5;
+constexpr int wdStory = 6;
+constexpr int wdCharacterFormatting = 13;
 
-#define wdCollapseEnd 0
-#define wdCollapseStart 1
+constexpr int wdCollapseEnd = 0;
+constexpr int wdCollapseStart = 1;
 
-#define wdActiveEndAdjustedPageNumber 1
-#define wdFirstCharacterLineNumber 10
-#define wdWithInTable 12
-#define wdStartOfRangeRowNumber 13
-#define wdMaximumNumberOfRows 15
-#define wdStartOfRangeColumnNumber 16
-#define wdMaximumNumberOfColumns 18
+constexpr int wdActiveEndAdjustedPageNumber = 1;
+constexpr int wdFirstCharacterLineNumber = 10;
+constexpr int wdWithInTable = 12;
+constexpr int wdStartOfRangeRowNumber = 13;
+constexpr int wdMaximumNumberOfRows = 15;
+constexpr int wdStartOfRangeColumnNumber = 16;
+constexpr int wdMaximumNumberOfColumns = 18;
 
-#define wdAlignParagraphLeft 0
-#define wdAlignParagraphCenter 1
-#define wdAlignParagraphRight 2
-#define wdAlignParagraphJustify 3
-#define wdLanguageNone 0  //&H0
-#define wdNoProofing 1024  //&H400
-#define wdLanguageUnknown 9999999
+constexpr int wdAlignParagraphLeft = 0;
+constexpr int wdAlignParagraphCenter = 1;
+constexpr int wdAlignParagraphRight = 2;
+constexpr int wdAlignParagraphJustify = 3;
+constexpr int wdLanguageNone = 0;  //&H0
+constexpr int wdNoProofing = 1024;  //&H400
+constexpr int wdLanguageUnknown = 9999999;
 
-#define wdInlineShapeEmbeddedOLEObject 1
-#define wdInlineShapePicture 3
-#define wdInlineShapeLinkedPicture 4
+constexpr int wdInlineShapeEmbeddedOLEObject = 1;
+constexpr int wdInlineShapePicture = 3;
+constexpr int wdInlineShapeLinkedPicture = 4;
 
-#define formatConfig_reportFontName 1
-#define formatConfig_reportFontSize 2
-#define formatConfig_reportFontAttributes 4
-#define formatConfig_reportColor 8
-#define formatConfig_reportAlignment 16
-#define formatConfig_reportStyle 32
-#define formatConfig_reportSpellingErrors 64
-#define formatConfig_reportPage 128
-#define formatConfig_reportLineNumber 256
-#define formatConfig_reportTables 512
-#define formatConfig_reportLists 1024
-#define formatConfig_reportLinks 2048
-#define formatConfig_reportComments 4096
-#define formatConfig_reportHeadings 8192
-#define formatConfig_reportLanguage 16384
-#define formatConfig_reportRevisions 32768
-#define formatConfig_reportParagraphIndentation 65536
-#define formatConfig_includeLayoutTables 131072
- #define formatConfig_reportLineSpacing 262144
- 
-#define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables)
+constexpr int formatConfig_reportFontName = 1;
+constexpr int formatConfig_reportFontSize = 2;
+constexpr int formatConfig_reportFontAttributes = 4;
+constexpr int formatConfig_reportColor = 8;
+constexpr int formatConfig_reportAlignment = 16;
+constexpr int formatConfig_reportStyle = 32;
+constexpr int formatConfig_reportSpellingErrors = 64;
+constexpr int formatConfig_reportPage = 128;
+constexpr int formatConfig_reportLineNumber = 256;
+constexpr int formatConfig_reportTables = 512;
+constexpr int formatConfig_reportLists = 1024;
+constexpr int formatConfig_reportLinks = 2048;
+constexpr int formatConfig_reportComments = 4096;
+constexpr int formatConfig_reportHeadings = 8192;
+constexpr int formatConfig_reportLanguage = 16384;
+constexpr int formatConfig_reportRevisions = 32768;
+constexpr int formatConfig_reportParagraphIndentation = 65536;
+constexpr int formatConfig_includeLayoutTables = 131072;
+constexpr int formatConfig_reportLineSpacing = 262144;
+
+constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
+constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
 
 UINT wm_winword_expandToLine=0;
 typedef struct {
