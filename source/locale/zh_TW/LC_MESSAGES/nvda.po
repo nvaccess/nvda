@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-26 08:15+0800\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-08-02 09:06+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -1485,6 +1485,12 @@ msgstr "粉紅偏紅色"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "明 {color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -3585,6 +3591,10 @@ msgstr "點字游標移到下一行"
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "透過點字鍵盤輸入點字"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "移動點字游標到目前焦點"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5717,8 +5727,10 @@ msgid "Add-ons Manager"
 msgstr "附加元件管理員"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
-msgstr "所有的附加元件均已停用，若要再啟用這些附加元件，您必須重新啟動NVDA。"
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"所有的附加元件目前均已停用，若要再啟用這些附加元件，您必須重新啟動NVDA。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5747,6 +5759,10 @@ msgstr "關於附加元件 (&A)..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "附加元件說明 (&H)"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "停用附加元件"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5814,9 +5830,11 @@ msgstr "正在安裝附加元件，請稍候。"
 msgid "Failed to install add-on  from %s"
 msgstr "從%s安裝附加元件失敗"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "您確定要從NVDA移除所選取的附加元件嗎？"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "移除附加元件"
 
@@ -5828,7 +5846,15 @@ msgstr "安裝"
 msgid "remove"
 msgstr "移除"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "停用"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "啟用"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "停用"
 
@@ -5836,10 +5862,14 @@ msgstr "停用"
 msgid "running"
 msgstr "正在執行"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "啟用附加元件"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr "附加元件已新增或移除，必須重新啟動NVDA才能生效，您要現在重新啟動嗎？"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -7198,76 +7228,78 @@ msgstr "自動"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "檢查工具"
+msgid "diagonal crosshatch"
+msgstr "對角線斜紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "縱橫交錯線"
+msgid "thin diagonal crosshatch"
+msgstr "細線對角線斜紋"
 
-# 儲存格內用以從左上到右下的深分隔線
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "右斜線"
+msgid "reverse diagonal stripe"
+msgstr "反對角線條紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "百分之16灰色"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "百分之12.5 灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "百分之25灰色"
+#, python-format
+msgid "25% gray"
+msgstr "百分之25 灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "百分之50灰色"
+#, python-format
+msgid "50% gray"
+msgstr "百分之50 灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "百分之75灰色"
+#, python-format
+msgid "75% gray"
+msgstr "百分之75 灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "百分之8灰色"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "百分之6.25 灰色"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "方格"
+msgid "thin horizontal crosshatch"
+msgstr "細線水平斜紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "水平線"
+msgid "horizontal stripe"
+msgstr "水平條紋"
 
-# 儲存格內用以從左上到右下的淺分隔線
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "淺右斜線"
+msgid "thin reverse diagonal stripe"
+msgstr "細線反對角線條紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "淺水平線"
+msgid "thin horizontal stripe"
+msgstr "細線水平條紋"
 
-# 儲存格內用以從左下到右上的淺分隔線
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "淺左斜線"
+msgid "thin diagonal stripe"
+msgstr "細線對角線條紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "淺垂直線條"
+msgid "thin vertical stripe"
+msgstr "細線垂直條紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7276,24 +7308,23 @@ msgstr "沒有"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "百分之75半灰色"
+msgid "thick diagonal crosshatch"
+msgstr "粗線對角線斜紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
 msgid "solid"
 msgstr "單色"
 
-# 儲存格內用以從左下到右上的深分隔線
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "左斜線"
+msgid "diagonal stripe"
+msgstr "對角線條紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "垂直線條"
+msgid "vertical stripe"
+msgstr "垂直條紋"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8433,6 +8464,49 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "檢查工具"
+
+#~ msgid "crisscross"
+#~ msgstr "縱橫交錯線"
+
+# 儲存格內用以從左上到右下的深分隔線
+#~ msgid "down"
+#~ msgstr "右斜線"
+
+#~ msgid "gray16"
+#~ msgstr "百分之16灰色"
+
+#~ msgid "gray25"
+#~ msgstr "百分之25灰色"
+
+#~ msgid "gray50"
+#~ msgstr "百分之50灰色"
+
+#~ msgid "gray75"
+#~ msgstr "百分之75灰色"
+
+#~ msgid "grid"
+#~ msgstr "方格"
+
+# 儲存格內用以從左上到右下的淺分隔線
+#~ msgid "light down"
+#~ msgstr "淺右斜線"
+
+# 儲存格內用以從左下到右上的淺分隔線
+#~ msgid "light up"
+#~ msgstr "淺左斜線"
+
+#~ msgid "light vertical"
+#~ msgstr "淺垂直線條"
+
+#~ msgid "semi gray75"
+#~ msgstr "百分之75半灰色"
+
+# 儲存格內用以從左下到右上的深分隔線
+#~ msgid "up"
+#~ msgstr "左斜線"
 
 #~ msgid "unknown color"
 #~ msgstr "未知的色彩"

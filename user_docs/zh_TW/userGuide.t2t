@@ -1,5 +1,5 @@
 ﻿ NVDA_VERSION 用戶指南
-（最後更新日期：2016年7月20日）
+（最後更新日期：2016年8月2日）
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION 指令快速參考
@@ -503,8 +503,8 @@ NVDA 在預設狀況下，會自動切換到焦點模式。
 -
 若要移動到清單或表格的最開頭或最後面，可採以下的指令：
 || 名稱 | 快速鍵 | 說明 |
-| 移動到清單或表格的開頭位置 | shift+, | 移動到清單或表格的開頭位置 |
-| 跳過此清單或表格 | , | 跳過此清單或表格  |
+| 移到開頭 | shift+, | 移動到此清單或表格的開頭位置 |
+| 跳開此清單或表格 | , | 跳離開此清單或表格  |
 
 %kc:endInclude
 有些網頁應用程式如 Gmail，Twitter 及 Facebook  使用單鍵作為快速鍵，
@@ -1190,6 +1190,7 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 - 字體屬性
 - 對齊方式
 - 顏色
+- 註解
 - 修訂
 - 強調
 - 文字樣式
@@ -1422,12 +1423,12 @@ NVDA允許您使用修改「設定檔」來達成前述的功能。
 如果您想要在任何處切換開啟「檢視報讀」的手勢，您需要在 [輸入手勢 #InputGestures] 對話方塊來新增設定。
 
 ++ 管理附加元件 ++
-NVDA 功能表的「工具」子功能表中，「管理附加元件」可讓您安裝或移除NVDA附加元件。
+NVDA 功能表的「工具」子功能表中，「管理附加元件」可讓您安裝或移除，啟用和禁用NVDA附加元件。
 此附加元件是由參與的開發社群人員所提供，它包括一些客製化的程式碼，有可能會更動NVDA的功能，甚至可提供額外的點字顯示器或語音合成軟體之支援。
 
-「管理附加元件」包含了一個所有目前安裝於您的 NVDA 使用者設定之附加元件清單，清單中同時顯示的有附加元件的名稱、版次及作者。
-若要知道該附加元件更詳細的資訊，可點選「關於附加元件」按鈕。
-針對選取的附加元件，若有提供說明，則可按附加元件的「說明」按鈕。
+「管理附加元件」包含了一個所有目前安裝於您的 NVDA 使用者設定之附加元件清單，
+清單中同時顯示的有附加元件的名稱、版次及作者。
+若要進一步瞭解相關資訊，如內容描述、 URL等，可在選取的附加元件上，按「說明」按鈕。
 
 欲瀏覽或下載線上可供使用的附加元件，請按「取得附加元件」按鈕，則會開啟 NVDA
 官網 [NVDA 附加元件頁面 http://addons.nvda-project.org/]。
@@ -1448,8 +1449,14 @@ NVDA會請您確認是否要移除。
 如同安裝步驟，NVDA也必須重新啟動才能將NVDA完全移除。
 等執行完以上步驟，「移除」的狀態才會出現在附加元件清單中。
 
+要停用附加元件，需按「停用」按鈕。 
+要啟用先前停用的附加元件，須按「啟用」按鈕。
+若附加元件的狀態顯示為正在執行或啟用，你可以停用附加元件，若顯示為暫停或停用，你可以啟用它。
+每次按下「啟用/停用」按鈕，附加元件的狀態會顯示NVDA重新啟動後的變更。
+就像是當你在安裝或移除附加元件一樣，你需要重新啟動NVDA來使變更生效。
+
 「管理附加元件」的對話方塊也有一個「關閉」的按鈕，以供關閉此對話方塊。
-不管您是安裝或移除附加元件，NVDA 都會先詢問您是否要重新啟動來使變更生效。
+不管您是安裝、移除或改變附加元件的狀態，NVDA都會先詢問您是否要重新啟動來使變更生效。
 
 在以往的版本，是允許藉由複製個別外掛元件或驅動程式到您的NVDA使用者設定檔目錄來延伸NVDA的功能。
 雖然這個版本仍會將在該資料夾內的外掛元件載入，但它們並不會顯示在管理附加元件中的「已安裝的附加元件」清單中。
@@ -1594,11 +1601,17 @@ Nuance Vocalizer 是一個商業化的高品質語音合成軟體，它是由 Nu
 這些按鍵的實際位置，請參閱顯示器的說明文件。
 %kc:beginInclude
 || 名稱 | 按鍵 |
-| Scroll braille display back | t1 |
+| Scroll braille display back | t1 or etouch1 |
 | Move braille display to previous line | t2 |
+| Move to current focus | t3 |
 | Move braille display to next line | t4 |
-| Scroll braille display forward | t5 |
+| Scroll braille display forward | t5 or etouch3  |
 | Route to braille cell | routing |
+| Move to top line in review | t1+t2 |
+| Move to bottom line in review | t4+t5 |
+| Toggle braille tethered to | t1+t3 |
+| Report title | etouch2 |
+| Report status bar | etouch4 |
 | shift+tab 鍵 | sp1 |
 | alt 鍵 | sp2 |
 | escape 鍵 | sp3 |
@@ -1608,10 +1621,16 @@ Nuance Vocalizer 是一個商業化的高品質語音合成軟體，它是由 Nu
 | 向左鍵 | spLeft |
 | 向右鍵 | spRight |
 | enter 鍵 | spEnter |
+| Report date/time | sp1+sp2 |
 | NVDA 功能表 | sp1+sp3 |
 | windows+d 鍵 (minimise all applications) | sp1+sp4 |
+| windows+b key (focus system tray) | sp3+sp4 |
 | windows 鍵 | sp2+sp3 |
 | alt+tab 鍵 | sp2+sp4 |
+| control+home key | t3+spUp |
+| control+end key | t3+spDown |
+| home key | t3+spLeft |
+| end key | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech 顯示器 ++
