@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-22 00:39-0800\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-08-01 23:57-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -1492,6 +1492,12 @@ msgstr ""
 #, fuzzy
 msgctxt "color variation"
 msgid "bright {color}"
+msgstr "{color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, fuzzy
+msgctxt "color variation"
+msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
@@ -3655,6 +3661,10 @@ msgstr "점자 디스플레이를 다음 줄로 이동합니다. "
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "점자 키보드를 사용하여 텍스트를 입력합니다."
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "점자 디스플레이를 포커스된 객체로 이동합니다"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "플러그인 재등록됨"
@@ -5763,7 +5773,8 @@ msgid "Add-ons Manager"
 msgstr "추가 기능 관리자"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "현재 추가 기능들이 일시적으로 정지되어 있습니다. 추가 기능들을 사용하려면 "
 "NvDA를 재시작하십시오."
@@ -5795,6 +5806,10 @@ msgstr "추가 기능 정보 (&A)..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "도움말 읽기 (&H)"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "사용 않함"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5867,9 +5882,11 @@ msgstr "추가 기능을 설치하고 있습니다. 잠시만 기다려 주십�
 msgid "Failed to install add-on  from %s"
 msgstr "%s 에서 추가 기능 설치 실패"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "NVDA 추가 기능을 삭제하시겠습니까? "
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "추가 기능 삭제"
 
@@ -5879,23 +5896,35 @@ msgstr "설치"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
-msgstr "추가 기능 삭제"
+msgstr "삭제"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "사용 안함"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "사용"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
-msgstr "일시 정지됨"
+msgstr "정지됨"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
-msgstr "실행중"
+msgstr "사용중"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "사용"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"추가 기능들이 설치되었거나 삭제되었습니다. 변경된 사항을 적용하려면 NVDA를 다"
-"시 시작해야 합니다. NVDA를 다시 시작하시겠습니까? "
+"추가 기능들이 변경되었습니다. 변경된 사항을 적용하려면 NVDA를 다시 시작해야 "
+"합니다. NVDA를 다시 시작하시겠습니까?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -7264,73 +7293,81 @@ msgstr "자동 연결"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "대각선 교차 무늬"
+msgid "diagonal crosshatch"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "가는 실선 대각선 교차 무늬"
+msgid "thin diagonal crosshatch"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "역대각선 줄"
+msgid "reverse diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "16% 회색"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "25% 회색"
-
-#. Translators: A type of background pattern in Microsoft Excel.
-#. 50% gray
-msgid "gray50"
-msgstr "50% 회색"
-
-#. Translators: A type of background pattern in Microsoft Excel.
-#. 75% gray
-msgid "gray75"
-msgstr "75% 회색"
-
-#. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
+#, fuzzy, python-format
+msgid "25% gray"
 msgstr "8% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+#, fuzzy, python-format
+msgid "50% gray"
+msgstr "8% 회색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+#, fuzzy, python-format
+msgid "75% gray"
+msgstr "8% 회색"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "가는 실선 가로 교차 무늬"
+msgid "thin horizontal crosshatch"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
+#, fuzzy
+msgid "horizontal stripe"
 msgstr "가로 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "가는 실선 역대각선 줄"
+msgid "thin reverse diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
+#, fuzzy
+msgid "thin horizontal stripe"
 msgstr "가는 실선 가로 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "가는 실선 대각선 줄"
+msgid "thin diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "가는 실선 세로 줄"
+#, fuzzy
+msgid "thin vertical stripe"
+msgstr "세로 골고루 정렬"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7339,8 +7376,8 @@ msgstr "없음"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "굵은 실선 대각선 교차 무늬"
+msgid "thick diagonal crosshatch"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7349,12 +7386,13 @@ msgstr "단색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "대각선 줄"
+msgid "diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
+#, fuzzy
+msgid "vertical stripe"
 msgstr "세로 줄"
 
 #. Translators: A type of background pattern in Microsoft Excel.
@@ -8416,15 +8454,15 @@ msgstr "시스템 케럿 위치에 주석이 존재할 경우 이를 알려줍�
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
-msgstr ""
+msgstr "한줄 간격"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
 msgid "Double line spacing"
-msgstr ""
+msgstr "두줄 간격"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr ""
+msgstr "1.5줄 간격"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -8443,6 +8481,45 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "checker"
+#~ msgstr "대각선 교차 무늬"
+
+#~ msgid "crisscross"
+#~ msgstr "가는 실선 대각선 교차 무늬"
+
+#~ msgid "down"
+#~ msgstr "역대각선 줄"
+
+#~ msgid "gray16"
+#~ msgstr "16% 회색"
+
+#~ msgid "gray25"
+#~ msgstr "25% 회색"
+
+#~ msgid "gray50"
+#~ msgstr "50% 회색"
+
+#~ msgid "gray75"
+#~ msgstr "75% 회색"
+
+#~ msgid "grid"
+#~ msgstr "가는 실선 가로 교차 무늬"
+
+#~ msgid "light down"
+#~ msgstr "가는 실선 역대각선 줄"
+
+#~ msgid "light up"
+#~ msgstr "가는 실선 대각선 줄"
+
+#~ msgid "light vertical"
+#~ msgstr "가는 실선 세로 줄"
+
+#~ msgid "semi gray75"
+#~ msgstr "굵은 실선 대각선 교차 무늬"
+
+#~ msgid "up"
+#~ msgstr "대각선 줄"
 
 #~ msgid "unknown color"
 #~ msgstr "알 수 없는 색상"
