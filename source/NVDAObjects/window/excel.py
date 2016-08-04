@@ -112,18 +112,23 @@ backgroundPatternLabels={
 		xlPatternDown:_("reverse diagonal stripe"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 12.5% gray
+		# xgettext:no-python-format
 		xlPatternGray16:_("12.5% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 25% gray
+		# xgettext:no-python-format
 		xlPatternGray25:_("25% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
+		# xgettext:no-python-format
 		# 50% gray
 		xlPatternGray50:_("50% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 75% gray
+		# xgettext:no-python-format
 		xlPatternGray75:_("75% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# 6.25% gray
+		# xgettext:no-python-format
 		xlPatternGray8:_("6.25% gray"),
 		# Translators: A type of background pattern in Microsoft Excel. 
 		# Grid
