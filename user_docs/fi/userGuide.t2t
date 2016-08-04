@@ -269,7 +269,7 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Lue nykyinen kohdistus | NVDA+Sarkain | NVDA+Sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
-| Lue ikkunan otsikko | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan otsikon. Kahdesti painettaessa otsikko tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle. |
+| Lue ikkunan nimi | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan nimen. Kahdesti painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle. |
 | Lue aktiivinen ikkuna | NVDA+B | NVDA+B | Lukee kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
 | Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. Kahdesti painettaessa tiedot tavataan. |
 %kc:endInclude
@@ -1423,11 +1423,11 @@ Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, 
 Ota Puheen tarkastelu -toiminto käyttöön mistä tahansa määrittämällä sille oma ele [Syöte-eleet-valintaikkunaa käyttäen. #InputGestures]
 
 ++ Lisäosien hallinta ++
-Lisäosien hallinnalla, johon pääset NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voit asentaa ja poistaa NVDA:n lisäosapaketteja.
+Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voi asentaa, poistaa, ottaa käyttöön sekä poistaa käytöstä NVDA:n lisäosapaketteja.
 Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
 
 Lisäosien hallinnassa on lista, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
-Jokaisesta lisäosasta näytetään nimi, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
+Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
 Jos valitulle lisäosalle on saatavana ohje, voit avata sen painamalla Ohje-painiketta.
 
 Verkossa saatavilla olevia lisäosia on mahdollista selata ja ladata painamalla Hae lisäosia -painiketta.
@@ -1449,8 +1449,14 @@ NVDA kysyy, halutaanko se varmasti poistaa.
 NVDA on, samoin kuin asennettaessa, käynnistettävä uudelleen, jotta lisäosa voidaan poistaa kokonaan.
 Uudelleenkäynnistykseen saakka listassa näkyy lisäosan tilana "poista".
 
+Poista lisäosa käytöstä painamalla Poista käytöstä -painiketta.
+Ota aiemmin käytöstä poistettu lisäosa käyttöön painamalla Ota käyttöön -painiketta.
+Voit poistaa lisäosan käytöstä, mikäli sen tilana on käynnissä tai ota käyttöön, tai ottaa käyttöön, mikäli tilana on ei käytössä tai poista käytöstä.
+Jokainen Ota käyttöön/Poista käytöstä -painikkeen painallus muuttaa lisäosan tilaa, joka ilmaisee,  mitä NVDA:n uudelleenkäynnistyessä tapahtuu.
+NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan, aivan kuten lisäosia asennettaessa ja poistettaessa.
+
 Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
-Jos lisäosia on asennettu tai poistettu, NVDA kysyy, halutaanko se käynnistää uudelleen, jotta muutokset tulevat voimaan.
+Jos lisäosia on asennettu tai poistettu tai niiden tilaa on muutettu, NVDA kysyy, halutaanko se käynnistää uudelleen, jotta muutokset tulevat voimaan.
 
 NVDA:n toiminnallisuutta on ollut aiemmin mahdollista laajentaa kopioimalla asetushakemistoon erillisiä liitännäisiä ja ajureita.
 Vaikka tämä NVDA:n versio saattaa edelleen ladata niitä, ne eivät näy lisäosien hallinnassa.
@@ -1537,10 +1543,10 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | ylin kosketuskohdistinnäppäin 1 (ensimmäinen pistesolu) |
-| Vieritä pistenäyttöä eteenpäin | ylin kosketuskohdistinnäppäin 20/40/80 (viimeinen pistesolu) |
-| Vieritä pistenäyttöä taaksepäin | vasen eteenpäin siirtävä näppäin |
-| Vieritä pistenäyttöä eteenpäin | oikea eteenpäin siirtävä näppäin |
+| Vieritä taaksepäin | ylin kosketuskohdistinnäppäin 1 (ensimmäinen pistesolu) |
+| Vieritä eteenpäin | ylin kosketuskohdistinnäppäin 20/40/80 (viimeinen pistesolu) |
+| Vieritä taaksepäin | vasen eteenpäin siirtävä näppäin |
+| Vieritä eteenpäin | oikea eteenpäin siirtävä näppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | leftGDFButton+rightGDFButton |
 | Vaihda vasemman säätörullan toimintoa | vasemman säätörullan painallus |
 | Siirrä taaksepäin vasenta säätörullaa käyttäen | vasen säätörulla ylös |
@@ -1548,15 +1554,15 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Vaihda oikean säätörullan toimintoa | oikean säätörullan painallus |
 | Siirrä taaksepäin oikeaa säätörullaa käyttäen | oikea säätörulla ylös |
 | Siirrä eteenpäin oikeaa säätörullaa käyttäen | oikea säätörulla alas |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Askelpalautin-näppäin | piste 7 |
 | Enter-näppäin | piste 8 |
 | Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 2 |
 | Sarkain-näppäin | välilyönti+pisteet 4 ja 5 |
 | ylänuolinäppäin | välilyönti+piste 1 |
 | alanuolinäppäin | välilyönti+piste 4 |
-| Näppäinyhdistelmä Control+vasen nuoli | välilyönti+piste 2 |
-| Näppäinyhdistelmä Control+oikea nuoli | välilyönti+piste 5 |
+| Control+vasen nuoli -näppäinyhdistelmä | välilyönti+piste 2 |
+| Control+oikea nuoli -näppäinyhdistelmä | välilyönti+piste 5 |
 | vasen nuolinäppäin | välilyönti+piste 3 |
 | oikea nuolinäppäin | välilyönti+piste 6 |
 | Home-näppäin | välilyönti+pisteet 1 ja 3 |
@@ -1574,13 +1580,13 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 
 Uudet Focus-mallit, joissa on keinunäppäimiä (Focus 40, 80 ja Blue):
 || Nimi | Näppäinkomento |
-| Siirrä pistenäyttö edelliselle riville | vasen keinunäppäin alas, oikea keinunäppäin ylös |
-| Siirrä pistenäyttö seuraavalle riville | vasen keinunäppäin alas, oikea keinunäppäin alas |
+| Siirrä edelliselle riville | vasen keinunäppäin alas, oikea keinunäppäin ylös |
+| Siirrä seuraavalle riville | vasen keinunäppäin alas, oikea keinunäppäin alas |
 
 Vain Focus 80:
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | leftBumperBarUp, rightBumperBarUp |
-| Vieritä pistenäyttöä eteenpäin | leftBumperBarDown, rightBumperBarDown |
+| Vieritä taaksepäin | leftBumperBarUp, rightBumperBarUp |
+| Vieritä eteenpäin | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1595,11 +1601,17 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | t1 |
-| Siirrä pistenäyttö edelliselle riville | t2 |
-| Siirrä pistenäyttö seuraavalle riville | t4 |
-| Vieritä pistenäyttöä eteenpäin | t5 |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | t1 tai etouch1 |
+| Siirrä edelliselle riville | t2 |
+| Siirrä nykyiseen kohdistukseen | t3 |
+| Siirrä seuraavalle riville | t4 |
+| Vieritä eteenpäin | t5 tai etouch3 |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Siirrä ylimmälle riville | t1+t2 |
+| Siirrä alimmalle riville | t4+t5 |
+| Vaihda Pistenäyttö seuraa -asetusta | t1+t3 |
+| Lue ikkunan nimi | etouch2 |
+| Lue tilarivi | etouch4 |
 | Shift+Sarkain-näppäinyhdistelmä | sp1 |
 | Alt-näppäin | sp2 |
 | Esc-näppäin | sp3 |
@@ -1609,10 +1621,16 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | vasen nuolinäppäin | spLeft |
 | oikea nuolinäppäin | spRight |
 | Enter-näppäin | spEnter |
+| Lue päiväys/aika | sp1+sp2 |
 | NVDA-valikko | sp1+sp3 |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | sp1+sp4 |
+| Windows+B-näppäinyhdistelmä (siirrä kohdistus järjestelmätarjottimelle) | sp3+sp4 |
 | Windows-näppäin | sp2+sp3 |
 | Alt+Sarkain-näppäinyhdistelmä | sp2+sp4 |
+| Control+Home-näppäinyhdistelmä | t3+spUp |
+| Control+End-näppäinyhdistelmä | t3+spDown |
+| Home-näppäin | t3+spLeft |
+| End-näppäin | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech ++
@@ -1625,11 +1643,11 @@ Seuraavassa on lueteltu näiden pistenäyttöjen näppäinkomennot NVDA:ta käyt
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | vasen, ylös |
-| Vieritä pistenäyttöä eteenpäin | oikea, alas |
-| Siirrä pistenäyttö edelliselle riville | b4 |
-| Siirrä pistenäyttö seuraavalle riville | b5 |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | vasen, ylös |
+| Vieritä eteenpäin | oikea, alas |
+| Siirrä edelliselle riville | b4 |
+| Siirrä seuraavalle riville | b5 |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Shift+Sarkain-näppäinyhdistelmä | esc |
 | Alt-näppäin | b2+b4+b5 |
 | Esc-näppäin | b4+b6 |
@@ -1650,11 +1668,11 @@ Seuraavassa on lueteltu tämän pistenäytön näppäinkomennot NVDA:ta käytett
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | LF |
-| Vieritä pistenäyttöä eteenpäin | RG |
-| Siirrä pistenäyttö edelliselle riville | UP |
-| Siirrä pistenäyttö seuraavalle riville | DN |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | LF |
+| Vieritä eteenpäin | RG |
+| Siirrä edelliselle riville | UP |
+| Siirrä seuraavalle riville | DN |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Shift+Sarkain-näppäinyhdistelmä | SLF |
 | Sarkain-näppäin | SRG |
 | Alt+Sarkain-näppäinyhdistelmä | SDN |
@@ -1676,11 +1694,11 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | d2 |
-| Vieritä pistenäyttöä eteenpäin | d5 |
-| Siirrä pistenäyttö edelliselle riville | d1 |
-| Siirrä pistenäyttö seuraavalle riville | d3 |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | d2 |
+| Vieritä eteenpäin | d5 |
+| Siirrä edelliselle riville | d1 |
+| Siirrä seuraavalle riville | d3 |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 
 Malleissa, joissa on ohjaustappi:
 || Nimi | Näppäinkomento |
@@ -1699,11 +1717,11 @@ Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | K1 |
-| Vieritä pistenäyttöä eteenpäin | K3 |
-| Siirrä pistenäyttö edelliselle riville | B2 |
-| Siirrä pistenäyttö seuraavalle riville | B5 |
-| Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | K1 |
+| Vieritä eteenpäin | K3 |
+| Siirrä edelliselle riville | B2 |
+| Siirrä seuraavalle riville | B5 |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | K2 |
 | Lue kaikki | B6 |
 %kc:endInclude
@@ -1716,11 +1734,11 @@ Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | K1 |
-| Vieritä pistenäyttöä eteenpäin | K3 |
-| Siirrä pistenäyttö edelliselle riville | B2 |
-| Siirrä pistenäyttö seuraavalle riville | B5 |
-| Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | K1 |
+| Vieritä eteenpäin | K3 |
+| Siirrä edelliselle riville | B2 |
+| Siirrä seuraavalle riville | B5 |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | K2 |
 | Lue kaikki | B6 |
 %kc:endInclude
@@ -1734,11 +1752,11 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | vasen |
-| Vieritä pistenäyttöä eteenpäin | oikea |
-| Siirrä pistenäyttö edelliselle riville | ylös |
-| Siirrä pistenäyttö seuraavalle riville | alas |
-| Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | vasen |
+| Vieritä eteenpäin | oikea |
+| Siirrä edelliselle riville | ylös |
+| Siirrä seuraavalle riville | alas |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | ylös+alas |
 | ylänuolinäppäin | välilyönti+piste 1 |
 | alanuolinäppäin | välilyönti+piste 4 |
@@ -1765,11 +1783,11 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | vasemmanpuoleinen vieritä alas |
-| Vieritä pistenäyttöä eteenpäin | oikeanpuoleinen vieritä alas |
-| Siirrä pistenäyttö edelliselle riville | vasemmanpuoleinen vieritä ylös |
-| Siirrä pistenäyttö seuraavalle riville | oikeanpuoleinen vieritä ylös |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | vasemmanpuoleinen vieritä alas |
+| Vieritä eteenpäin | oikeanpuoleinen vieritä alas |
+| Siirrä edelliselle riville | vasemmanpuoleinen vieritä ylös |
+| Siirrä seuraavalle riville | oikeanpuoleinen vieritä ylös |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Shift+Sarkain-näppäinyhdistelmä | pisteet 1 ja 2+välilyönti |
 | Alt-näppäin | pisteet 1, 3 ja 4+välilyönti |
 | Esc-näppäin | pisteet 1 ja 5+välilyönti |
@@ -1786,29 +1804,29 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Home-näppäin | pisteet 1 ja 3+välilyönti |
 | Control+Home-näppäinyhdistelmä | pisteet 1, 2 ja 3+välilyönti |
 | vasen nuolinäppäin | piste 3+välilyönti |
-| Näppäinyhdistelmä Control+Shift+vasen nuoli | pisteet 2 ja 8+välilyönti+advance1 |
-| Näppäinyhdistelmä Control+vasen nuoli | piste 2+välilyönti |
-| Näppäinyhdistelmä Shift+Alt+vasen nuoli | pisteet 2 ja 7+advance1 |
-| Näppäinyhdistelmä Alt+vasen nuoli | pisteet 2 ja 7 |
+| Control+Shift+vasen nuoli -näppäinyhdistelmä | pisteet 2 ja 8+välilyönti+advance1 |
+| Control+vasen nuoli -näppäinyhdistelmä | piste 2+välilyönti |
+| Shift+Alt+vasen nuoli -näppäinyhdistelmä | pisteet 2 ja 7+advance1 |
+| Alt+vasen nuoli -näppäinyhdistelmä | pisteet 2 ja 7 |
 | Oikea nuolinäppäin | piste 6+välilyönti |
-| Näppäinyhdistelmä Control+Shift+oikea nuoli | pisteet 5 ja 8+välilyönti+advance1 |
-| Näppäinyhdistelmä Control+oikea nuoli | piste 5+välilyönti |
-| Näppäinyhdistelmä Shift+Alt+oikea nuoli | pisteet 5 ja 7+advance1 |
-| Näppäinyhdistelmä Alt+oikea nuoli | pisteet 5 ja 7 |
+| Control+Shift+oikea nuoli -näppäinyhdistelmä | pisteet 5 ja 8+välilyönti+advance1 |
+| Control+oikea nuoli -näppäinyhdistelmä | piste 5+välilyönti |
+| Shift+Alt+oikea nuoli -näppäinyhdistelmä | pisteet 5 ja 7+advance1 |
+| Alt+oikea nuoli -näppäinyhdistelmä | pisteet 5 ja 7 |
 | Page up -näppäin | pisteet 1, 2 ja 6+välilyönti |
 | Control+Page up -näppäinyhdistelmä | pisteet 1, 2, 6 ja 8+välilyönti |
-| Näppäinyhdistelmä Control+Shift+ylänuoli | pisteet 2, 3 ja 8+välilyönti+advance1 |
-| Näppäinyhdistelmä Control+ylänuoli | pisteet 2 ja 3+välilyönti |
-| Näppäinyhdistelmä Shift+Alt+ylänuoli | pisteet 2, 3 ja 7+advance1 |
-| Näppäinyhdistelmä Alt+ylänuoli | pisteet 2, 3 ja 7 |
-| Näppäinyhdistelmä Shift+ylänuoli | vasen vieritä alas + välilyönti |
+| Control+Shift+ylänuoli-näppäinyhdistelmä | pisteet 2, 3 ja 8+välilyönti+advance1 |
+| Control+ylänuoli-näppäinyhdistelmä | pisteet 2 ja 3+välilyönti |
+| Shift+Alt+ylänuoli-näppäinyhdistelmä | pisteet 2, 3 ja 7+advance1 |
+| Alt+ylänuoli-näppäinyhdistelmä | pisteet 2, 3 ja 7 |
+| Shift+ylänuoli-näppäinyhdistelmä | vasen vieritä alas + välilyönti |
 | Page down -näppäin | pisteet 3, 4 ja 5+välilyönti |
 | Control+Page down -näppäinyhdistelmä | pisteet 3, 4, 5 ja 8+välilyönti |
-| Näppäinyhdistelmä Control+Shift+alanuoli | pisteet 5, 6 ja 8+välilyönti+advance1 |
-| Näppäinyhdistelmä Control+alanuoli | pisteet 5 ja 6+välilyönti |
-| Näppäinyhdistelmä Shift+Alt+alanuoli | pisteet 5, 6 ja 7+advance1 |
-| Näppäinyhdistelmä Alt+alanuoli | pisteet 5, 6 ja 7 |
-| Näppäinyhdistelmä Shift+alanuoli | oikea vieritä alas + välilyönti |
+| Control+Shift+alanuoli-näppäinyhdistelmä | pisteet 5, 6 ja 8+välilyönti+advance1 |
+| Control+alanuoli-näppäinyhdistelmä | pisteet 5 ja 6+välilyönti |
+| Shift+Alt+alanuoli-näppäinyhdistelmä | pisteet 5, 6 ja 7+advance1 |
+| Alt+alanuoli-näppäinyhdistelmä | pisteet 5, 6 ja 7 |
+| Shift+alanuoli-näppäinyhdistelmä | oikea vieritä alas + välilyönti |
 | Delete-näppäin | pisteet 1, 3 ja 5+välilyönti |
 | F1-näppäin | pisteet 1, 2 ja 5+välilyönti |
 | F3-näppäin | pisteet 1, 2, 4 ja 8 |
@@ -1825,9 +1843,9 @@ Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | vasemmanpuoleinen vieritä alas |
-| Vieritä pistenäyttöä eteenpäin | oikeanpuoleinen vieritä alas |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | vasemmanpuoleinen vieritä alas |
+| Vieritä eteenpäin | oikeanpuoleinen vieritä alas |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 %kc:endInclude
 
 ++ Seika ++
@@ -1839,17 +1857,17 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | vasen |
-| Vieritä pistenäyttöä eteenpäin | oikea |
-| Siirrä pistenäyttö edelliselle riville | b3 |
-| Siirrä pistenäyttö seuraavalle riville | b4 |
+| Vieritä taaksepäin | vasen |
+| Vieritä eteenpäin | oikea |
+| Siirrä edelliselle riville | b3 |
+| Siirrä seuraavalle riville | b4 |
 | Vaihda Pistenäyttö seuraa -asetusta | b5 |
 | Lue kaikki | b6 |
 | Sarkain-näppäin | b1 |
 | Shift+Sarkain-näppäinyhdistelmä | b2 |
 | Alt+Sarkain-näppäinyhdistelmä | b1+b2 |
 | NVDA-valikko | vasen+oikea |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 %kc:endInclude
 
 ++ Papenmeier BRAILLEX (uudet mallit) ++
@@ -1893,15 +1911,15 @@ Näissä pistenäytöissä on käytettävissä yleensä seuraavat näppäimet:
 Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | left |
-| Vieritä pistenäyttöä eteenpäin | right |
-| Siirrä pistenäyttö edelliselle riville | up |
-| Siirrä pistenäyttö edelliselle riville | dn |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | left |
+| Vieritä eteenpäin | right |
+| Siirrä edelliselle riville | up |
+| Siirrä edelliselle riville | dn |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
-| Lue ikkunan otsikko | l1+up |
+| Lue ikkunan nimi | l1+up |
 | Lue tilarivi | l2+down |
 | Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
@@ -1918,7 +1936,7 @@ Ne ovat vasemmalta oikealle järjestyksessä:
 - oikea peukalonäppäin (rt)
 -
 Oikea peukalonäppäin ei ole tällä hetkellä käytössä.
-Molemmat sisemmät näppäimet on liitetty välilyöntiin.
+Molemmat sisemmät näppäimet on määritelty välilyönniksi.
 
 || Nimi | Näppäinkomento |
 %kc:beginInclude
@@ -1970,14 +1988,14 @@ Seuraaavassa on Papenmeierin komentomääritykset NVDA:lle:
 %kc:beginInclude
 Laitteet, joissa on EAB:
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | left |
-| Vieritä pistenäyttöä eteenpäin | right |
-| Siirrä pistenäyttö edelliselle riville | up |
-| Siirrä pistenäyttö seuraavalle riville | dn |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | left |
+| Vieritä eteenpäin | right |
+| Siirrä edelliselle riville | up |
+| Siirrä seuraavalle riville | dn |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
-| Lue ikkunan otsikko | l1up |
+| Lue ikkunan nimi | l1up |
 | Lue tilarivi | l2down |
 | Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
@@ -1989,17 +2007,17 @@ BRAILLEX Tiny:
 || Nimi | Näppäinkomento |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
-| Vieritä pistenäyttöä taaksepäin | left |
-| Vieritä pistenäyttöä eteenpäin | right |
-| Siirrä pistenäyttö edelliselle riville | up |
-| Siirrä pistenäyttö seuraavalle riville | dn |
+| Vieritä taaksepäin | left |
+| Vieritä eteenpäin | right |
+| Siirrä edelliselle riville | up |
+| Siirrä seuraavalle riville | dn |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
 | Siirrä säilöobjektiin | r1+up |
 | Siirrä ensimmäiseen sisältöobjektiin | r1+dn |
 | Siirrä edelliseen objektiin | r1+left |
 | Siirrä seuraavaan objektiin | r1+right |
 | Lue tekstin muotoilutiedot | reportf |
-| Lue ikkunan otsikko | l1+up |
+| Lue ikkunan nimi | l1+up |
 | Lue tilarivi | l2+down |
 
 BRAILLEX 2D Screen:
@@ -2008,10 +2026,10 @@ BRAILLEX 2D Screen:
 | Aktivoi nykyinen navigointiobjekti | l2 |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
 | Lue tekstin muotoilutiedot | reportf |
-| Siirrä pistenäyttö edelliselle riville | up |
-| Vieritä pistenäyttöä taaksepäin | left |
-| Vieritä pistenäyttöä eteenpäin | right |
-| Siirrä pistenäyttö seuraavalle riville | dn |
+| Siirrä edelliselle riville | up |
+| Vieritä taaksepäin | left |
+| Vieritä eteenpäin | right |
+| Siirrä seuraavalle riville | dn |
 | Siirrä seuraavaan objektiin | left2 |
 | Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
@@ -2040,11 +2058,11 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä pistenäyttöä taaksepäin | takaisin |
-| Vieritä pistenäyttöä eteenpäin | eteenpäin |
-| Siirrä pistenäyttö edelliselle riville | edellinen |
-| Siirrä pistenäyttö seuraavalle riville | seuraava |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | takaisin |
+| Vieritä eteenpäin | eteenpäin |
+| Siirrä edelliselle riville | edellinen |
+| Siirrä seuraavalle riville | seuraava |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | edellinen+seuraava |
 | Ylänuolinäppäin | välilyönti+piste1 |
 | Alanuolinäppäin | välilyönti+piste4 |
@@ -2082,11 +2100,11 @@ Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Linea
 
 %kc:beginInclude
 || Nimi | Näppäin |
-| Vieritä pistenäyttöä taaksepäin | T2 |
-| Vieritä pistenäyttöä eteenpäin | T4 |
-| Siirrä pistenäyttö edelliselle riville | T1 |
-| Siirrä pistenäyttö seuraavalle riville | T5 |
-| Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
+| Vieritä taaksepäin | T2 |
+| Vieritä eteenpäin | T4 |
+| Siirrä edelliselle riville | T1 |
+| Siirrä seuraavalle riville | T5 |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Aktivoi nykyinen navigointiobjekti | T3 |
 | Vaihda seuraavaan tarkastelutilaan | F1 |
 | Siirrä säilöobjektiin | F2 |
@@ -2114,11 +2132,11 @@ Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
 Katso [BRLTTY:n näppäinsidoslistoja http://mielke.cc/brltty/doc/KeyBindings/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.
 %kc:beginInclude
 || Nimi | BRLTTY-komento |
-| Vieritä pistenäyttöä taaksepäin | fwinlt (siirry yksi ikkuna vasemmalle) |
-| Vieritä pistenäyttöä eteenpäin | fwinrt (siirry yksi ikkuna oikealle) |
-| Siirrä pistenäyttö edelliselle riville | lnup (siirry yksi rivi ylöspäin) |
-| Siirrä pistenäyttö seuraavalle riville | lndn (siirry yksi rivi alaspäin) |
-| siirrä pistesoluun | kosketuskohdistinnäppäimet (siirrä kohdistin merkin kohdalle) |
+| Vieritä taaksepäin | fwinlt (siirry yksi ikkuna vasemmalle) |
+| Vieritä eteenpäin | fwinrt (siirry yksi ikkuna oikealle) |
+| Siirrä edelliselle riville | lnup (siirry yksi rivi ylöspäin) |
+| Siirrä seuraavalle riville | lndn (siirry yksi rivi alaspäin) |
+| siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
 + Säädintyyppien ja -tilojen lyhenteet pistenäytöllä +
