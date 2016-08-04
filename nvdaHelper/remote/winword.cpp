@@ -453,16 +453,16 @@ int getRevisionType(IDispatch* pDispatchOrigRange) {
 	return revisionType;
 }
 
-int getHyperlinkCount(IDispatch* pDispatchRange) {
+bool hasHyperlink(IDispatch* pDispatchRange) {
 	IDispatchPtr pDispatchHyperlinks=NULL;
 	int count=0;
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_HYPERLINKS,VT_DISPATCH,&pDispatchHyperlinks)!=S_OK||!pDispatchHyperlinks) {
-		return 0;
+		return false;
 	}
 	if(_com_dispatch_raw_propget(pDispatchHyperlinks,wdDISPID_HYPERLINKS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
-		return 0;
+		return false;
 	}
-	return count;
+	return count > 0;
 }
 
 const int wdDISPID_RANGE_FIELDS = 64;
@@ -471,25 +471,25 @@ const int wdDISPID_FIELDS_ITEM = 0;
 const int wdDISPID_FIELDS_ITEM_TYPE = 1;
 const int wdDISPID_FIELDS_ITEM_RESULT = 4;
 
-int getXRefLinkCount(IDispatch* pDispatchRange) {
+bool hasXRefLink(IDispatch* pDispatchRange) {
 	IDispatchPtr pDispatchRangeDup = nullptr;
 	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
 	if( res != S_OK || !pDispatchRangeDup ) {
 		LOG_DEBUGWARNING(L"error duplicating the range.");
-		return 0;
+		return false;
 	}
 
 	res = _com_dispatch_raw_method( pDispatchRangeDup, wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph);
 	if( res != S_OK || !pDispatchRangeDup ) {
 		LOG_DEBUGWARNING(L"error expanding the range");
-		return 0;
+		return false;
 	}
 
 	IDispatchPtr pDispatchFields = nullptr;
 	res = _com_dispatch_raw_propget( pDispatchRangeDup, wdDISPID_RANGE_FIELDS, VT_DISPATCH, &pDispatchFields);
 	if( res != S_OK || !pDispatchFields ) {
 		LOG_DEBUGWARNING(L"error getting fields from range");
-		return 0;
+		return false;
 	}
 
 	int count = 0;
@@ -498,7 +498,6 @@ int getXRefLinkCount(IDispatch* pDispatchRange) {
 		return 0;
 	}
 
-	int xRefCount = 0;
 	for(int i = 1; i <= count; ++i) {
 		IDispatchPtr pDispatchItem = nullptr;
 		res = _com_dispatch_raw_method( pDispatchFields, wdDISPID_FIELDS_ITEM, DISPATCH_METHOD, VT_DISPATCH, &pDispatchItem, L"\x0003", i);
@@ -535,10 +534,10 @@ int getXRefLinkCount(IDispatch* pDispatchRange) {
 			inRange(rangeEnd, resultStart, resultEnd) ||
 			inRange(resultStart, rangeStart, rangeEnd) ||
 			inRange(resultEnd, rangeStart, rangeEnd) )){
-			++xRefCount;
+			return true;
 		}
 	}
-	return xRefCount;
+	return false;
 }
 
 bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& commentVector) {
@@ -765,7 +764,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	}
-	if( (formatConfig&formatConfig_reportLinks) && (getHyperlinkCount(pDispatchRange) + getXRefLinkCount(pDispatchRange) > 0) ) {
+	if( (formatConfig&formatConfig_reportLinks) && (hasHyperlink(pDispatchRange) || hasXRefLink(pDispatchRange)) ) {
 		formatAttribsStream<<L"link=\"1\" ";
 	}
 	if(formatConfig&formatConfig_reportRevisions) {
@@ -957,9 +956,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Collapse the range
 	int initialFormatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
-	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange) + getXRefLinkCount(pDispatchRange) == 0) {
+	if((formatConfig&formatConfig_reportLinks) && !(hasHyperlink(pDispatchRange) || hasXRefLink(pDispatchRange) )) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
+
 	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory)) {
 		formatConfig&=~formatConfig_reportComments;
 	}
