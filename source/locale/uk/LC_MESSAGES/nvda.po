@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
-"PO-Revision-Date: 2016-07-19 11:00+0300\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-30 20:37+0300\n"
 "Last-Translator: Volodymyr <vlodko@torba.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -786,8 +786,15 @@ msgid "Single letter navigation on"
 msgstr "Навігацію за допомогою літер увімкнено"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
-msgstr "Вмикає або вимикає навігацію за допомогою літер. Якщо увімкнено, то клавіші літер дозволяють здійснювати навігацію по різних елементах на сторінці, коли ви перебуваєте в режимі огляду. Якщо вимкннено, то натискання літер передаються безпосередньо до програми"
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"Вмикає або вимикає навігацію за допомогою літер. Якщо увімкнено, то клавіші "
+"літер дозволяють здійснювати навігацію по різних елементах на сторінці, коли "
+"ви перебуваєте в режимі огляду. Якщо вимкннено, то натискання літер "
+"передаються безпосередньо до програми"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -1297,7 +1304,8 @@ msgstr "Поза контейнером"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
-msgstr "переходить до початку елемента-контейнера, наприклад, списку або таблиці"
+msgstr ""
+"переходить до початку елемента-контейнера, наприклад, списку або таблиці"
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -1308,7 +1316,8 @@ msgstr "Нижній"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Переходить в кінець елемента-контейнера, наприклад, списку або таблиці."
+msgstr ""
+"Переходить в кінець елемента-контейнера, наприклад, списку або таблиці."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1473,6 +1482,12 @@ msgstr "рожево-червоний"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "яскраво {color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -2289,18 +2304,24 @@ msgid "not checked"
 msgstr "Не позначено"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
+msgid ""
+"Your configuration file contains errors. Your configuration has been reset "
+"to factory defaults.\n"
 "More details about the errors can be found in the log file."
-msgstr "Ваш файл конфігурації містить помилки. Вашу конфігурацію буде повернуто до стандартних налаштувань.\n"
+msgstr ""
+"Ваш файл конфігурації містить помилки. Вашу конфігурацію буде повернуто до "
+"стандартних налаштувань.\n"
 "Більше деталей про цю помилку можна знайти у файлі журналу."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
 msgstr "Помилка конфігураційного файла"
 
-msgid "Your gesture map file contains errors.\n"
+msgid ""
+"Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
-msgstr "вВаш файл із прив'язкою жестів містить помилки.\n"
+msgstr ""
+"вВаш файл із прив'язкою жестів містить помилки.\n"
 "Більше інформації про них можна знайти у журнальному файлі."
 
 msgid "gesture map File Error"
@@ -2339,12 +2360,18 @@ msgid "find a text string from the current cursor position"
 msgstr "пошук текстового рядка із поточної позиції курсора"
 
 #. Translators: Input help message for find next command.
-msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "Пошук наступного входження текстового рядка із поточної позиції курсора"
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"Пошук наступного входження текстового рядка із поточної позиції курсора"
 
 #. Translators: Input help message for find previous command.
-msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "Пошук попереднього входження текстового рядка із поточної позиції курсора"
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"Пошук попереднього входження текстового рядка із поточної позиції курсора"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -2413,8 +2440,12 @@ msgid "Audio ducking not supported"
 msgstr "Приглушування не підтримується"
 
 #. Translators: Describes the Cycle audio ducking mode command.
-msgid "Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
-msgstr "Циклічно перемикає між режимами приглушування звуку, які вказують, коли NVDA повинна зменшувати гучність сторонніх звуків"
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Циклічно перемикає між режимами приглушування звуку, які вказують, коли NVDA "
+"повинна зменшувати гучність сторонніх звуків"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2425,8 +2456,13 @@ msgid "input help off"
 msgstr "Режим допомоги при вводі вимкнено"
 
 #. Translators: Input help mode message for toggle input help command.
-msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Вмикає і вимикає режим допомоги при вводі. У цьому режимі NVDA промовляє назву клавіші та її дію, якщо, звісно, дія за клавішею чи за комбінацією клавіш закріплена."
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
+msgstr ""
+"Вмикає і вимикає режим допомоги при вводі. У цьому режимі NVDA промовляє "
+"назву клавіші та її дію, якщо, звісно, дія за клавішею чи за комбінацією "
+"клавіш закріплена."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -2441,8 +2477,12 @@ msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "Перемикає режим сну для активних програм."
 
 #. Translators: Input help mode message for report current line command.
-msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
-msgstr "Читає рядок під курсором додатка. Якщо натиснуто двічі, читає його по символах"
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr ""
+"Читає рядок під курсором додатка. Якщо натиснуто двічі, читає його по "
+"символах"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2489,11 +2529,17 @@ msgid "Selected %s"
 msgstr "Виділено %s"
 
 #. Translators: Input help mode message for report current selection command.
-msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "Читає виділений фрагмент у редакторі або у елементі редагування. Якщо виділення відсутнє - також сповіщає про це"
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
+msgstr ""
+"Читає виділений фрагмент у редакторі або у елементі редагування. Якщо "
+"виділення відсутнє - також сповіщає про це"
 
 #. Translators: Input help mode message for report date and time command.
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
 msgstr "Якщо натиснуто один раз - читає поточний час, а якщо двічі - дату"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
@@ -2510,11 +2556,15 @@ msgstr "Зменшує значення активного параметра у
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "Переходить до наступного доступного параметра у кільці налаштувань синтезатора"
+msgstr ""
+"Переходить до наступного доступного параметра у кільці налаштувань "
+"синтезатора"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "Переходить до попереднього доступного параметра у кільці налаштувань синтезатора"
+msgstr ""
+"Переходить до попереднього доступного параметра у кільці налаштувань "
+"синтезатора"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
@@ -2549,7 +2599,9 @@ msgid "speak command keys on"
 msgstr "Промовляти командні клавіші увімкнено"
 
 #. Translators: Input help mode message for toggle speak command keys command.
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
 msgstr "Перемикає промовляння клавіш, які не є символами"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
@@ -2661,7 +2713,6 @@ msgid "Toggles on and off the reporting of spelling errors"
 msgstr "Вмикає або вимикає повідомлення про граматичні помилки"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
-
 msgid "report pages off"
 msgstr "Промовляти сторінки вимкнено"
 
@@ -2861,7 +2912,8 @@ msgid "Symbol level %s"
 msgstr "Рівень символа %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
-msgid "Cycles through speech symbol levels which determine what symbols are spoken"
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "Циклічно змінює рівень промовляння символів"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
@@ -2877,24 +2929,38 @@ msgid "Move navigator object to mouse"
 msgstr "Привести об'єктний навігатор до мишки"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "Приводить об'єктний навігатор до поточного елемента під мишкою та озвучує його"
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
+msgstr ""
+"Приводить об'єктний навігатор до поточного елемента під мишкою та озвучує "
+"його"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
 msgstr "Немає наступного режиму перегляду"
 
 #. Translators: Script help message for next review mode command.
-msgid "Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Перемикає до наступного режиму перегляду, наприклад, екранного перегляду, об'єктного перегляду чи режиму перегляду документа і встановлює переглядовий курсор у позицію об'єктного навігатора"
+msgid ""
+"Switches to the next review mode (e.g. object, document or screen) and "
+"positions the review position at the point of the navigator object"
+msgstr ""
+"Перемикає до наступного режиму перегляду, наприклад, екранного перегляду, "
+"об'єктного перегляду чи режиму перегляду документа і встановлює переглядовий "
+"курсор у позицію об'єктного навігатора"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
 msgstr "Немає попереднього режиму перегляду"
 
 #. Translators: Script help message for previous review mode command.
-msgid "Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Перемикає до попереднього режиму перегляду, наприклад, екранного перегляду, об'єктного перегляду чи режиму перегляду документа і встановлює переглядовий курсор у позицію об'єктного навігатора"
+msgid ""
+"Switches to the previous review mode (e.g. object, document or screen) and "
+"positions the review position at the point of the navigator object"
+msgstr ""
+"Перемикає до попереднього режиму перегляду, наприклад, екранного перегляду, "
+"об'єктного перегляду чи режиму перегляду документа і встановлює переглядовий "
+"курсор у позицію об'єктного навігатора"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2907,24 +2973,38 @@ msgid "%s copied to clipboard"
 msgstr "%s скопійовано у буфер обміну"
 
 #. Translators: Input help mode message for report current navigator object command.
-msgid "Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this  object to the clipboard"
-msgstr "Промовляє поточний об'єкт. Натисніть двічі для посимвольного читання,та натисніть тричі для копіювання імені і значення цього об'єкта до буферу обміну"
+msgid ""
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
+msgstr ""
+"Промовляє поточний об'єкт. Натисніть двічі для посимвольного читання,та "
+"натисніть тричі для копіювання імені і значення цього об'єкта до буферу "
+"обміну"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
 msgstr "Немає інформації про розташування"
 
 #. Translators: Description for report review cursor location command.
-msgid "Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."
-msgstr "Повідомляє інформацію про текст чи об'єкт, розташований у позиції переглядового курсора. Натисніть двічі для отримання детальнішої інформації"
+msgid ""
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
+msgstr ""
+"Повідомляє інформацію про текст чи об'єкт, розташований у позиції "
+"переглядового курсора. Натисніть двічі для отримання детальнішої інформації"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "Привести до фокусу"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
-msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "Встановлює навігатор на поточний об'єкт у фокусі, а переглядовий курсор в позицію системної каретки в цьому об'єкті, якщо можливо"
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Встановлює навігатор на поточний об'єкт у фокусі, а переглядовий курсор в "
+"позицію системної каретки в цьому об'єкті, якщо можливо"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -2941,8 +3021,13 @@ msgid "No caret"
 msgstr "Немає курсору"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
-msgid "Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Натисніть один раз для встановлення фокусу клавіатури на об'єктний навігатор, натисніть двічі для переміщення системної каретки у позицію переглядового курсора"
+msgid ""
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Натисніть один раз для встановлення фокусу клавіатури на об'єктний "
+"навігатор, натисніть двічі для переміщення системної каретки у позицію "
+"переглядового курсора"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -2987,72 +3072,133 @@ msgid "No action"
 msgstr "Немає дії"
 
 #. Translators: Input help mode message for activate current object command.
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Виконує встановлену дію для поточного об'єкта, наприклад, натискає його, якщо це кнопка"
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"Виконує встановлену дію для поточного об'єкта, наприклад, натискає його, "
+"якщо це кнопка"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
 msgstr "Верхній"
 
 #. Translators: Input help mode message for move review cursor to top line command.
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на верхній рядок поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на верхній рядок поточного об'єкта і читає його"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
-msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на попередній рядок поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на попередній рядок поточного об'єкта і читає "
+"його"
 
 #. Translators: Input help mode message for read current line under review cursor command.
-msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Повідомляє рядок поточного об'єкта, на якому знаходиться переглядовий курсор. Натисніть двічі для посимвольного читання, а при потрійному натисканні ви отримаєте опис та зразки використання кожного із символів."
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled. "
+"Pressing three times will spell the line using character descriptions."
+msgstr ""
+"Повідомляє рядок поточного об'єкта, на якому знаходиться переглядовий "
+"курсор. Натисніть двічі для посимвольного читання, а при потрійному "
+"натисканні ви отримаєте опис та зразки використання кожного із символів."
 
 #. Translators: Input help mode message for move review cursor to next line command.
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на наступний рядок поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на наступний рядок поточного об'єкта і читає "
+"його"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на нижній рядок поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на нижній рядок поточного об'єкта і читає його"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
-msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на попереднє слово поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на попереднє слово поточного об'єкта і читає "
+"його"
 
 #. Translators: Input help mode message for report current word under review cursor command.
-msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "Промовляє слово, на якому знаходиться переглядовий курсор. Натисніть двічі для посимвольного читання, а при потрійному натисканні ви отримаєте опис або зразок використання кожного із символів."
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. Pressing twice spells the word. Pressing three times spells the "
+"word using character descriptions"
+msgstr ""
+"Промовляє слово, на якому знаходиться переглядовий курсор. Натисніть двічі "
+"для посимвольного читання, а при потрійному натисканні ви отримаєте опис або "
+"зразок використання кожного із символів."
 
 #. Translators: Input help mode message for move review cursor to next word command.
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на наступне слово поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на наступне слово поточного об'єкта і читає "
+"його"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
 msgstr "Лівий"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
-msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на перший символ рядка поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на перший символ рядка поточного об'єкта і "
+"читає його"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
-msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на попередній символ поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на попередній символ поточного об'єкта і читає "
+"його"
 
 #. Translators: Input help mode message for report current character under review cursor command.
-msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Промовляє символ, на якому знаходиться переглядовий курсор. Натисніть двічі для отримання опису символа або зразків його використання. Натисніть тричі для отримання його десяткового та шістнадцятиричного значень."
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
+msgstr ""
+"Промовляє символ, на якому знаходиться переглядовий курсор. Натисніть двічі "
+"для отримання опису символа або зразків його використання. Натисніть тричі "
+"для отримання його десяткового та шістнадцятиричного значень."
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 msgid "Right"
 msgstr "Правий"
 
 #. Translators: Input help mode message for move review cursor to next character command.
-msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на наступний символ поточного об'єкта і читає його"
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на наступний символ поточного об'єкта і читає "
+"його"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
-msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Переміщає переглядовий курсор на останній символ рядка поточного об'єкта  і читає його"
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Переміщає переглядовий курсор на останній символ рядка поточного об'єкта  і "
+"читає його"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -3067,16 +3213,31 @@ msgid "Speech mode talk"
 msgstr "Режим озвучення мовлення"
 
 #. Translators: Input help mode message for toggle speech mode command.
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Перемикає режим озвучення NVDA між вимкнено, Сигналы, Мовлення. При Вимкнено, NVDA нічого не читає. При режимі Сигналы - NVDA видає високочастотні звуки, коли на екрані з'являється нова інформація. При режимі Мовлення NVDA озвучує події активним синтезатором"
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Перемикає режим озвучення NVDA між вимкнено, Сигналы, Мовлення. При "
+"Вимкнено, NVDA нічого не читає. При режимі Сигналы - NVDA видає "
+"високочастотні звуки, коли на екрані з'являється нова інформація. При режимі "
+"Мовлення NVDA озвучує події активним синтезатором"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "Переміщає фокус між документами"
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Перемикає між режимом огляду і режимом редагування. В режимі редагування клавіші передаються безпосередньо програмі, дозволяючи взаємодіяти з активним елементом керування. В режимі огляду можна переглядати вміст документа, використовуючи курсор, швидкі клавіші NVDA і т.д."
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr ""
+"Перемикає між режимом огляду і режимом редагування. В режимі редагування "
+"клавіші передаються безпосередньо програмі, дозволяючи взаємодіяти з "
+"активним елементом керування. В режимі огляду можна переглядати вміст "
+"документа, використовуючи курсор, швидкі клавіші NVDA і т.д."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3087,12 +3248,20 @@ msgid "Shows the NVDA menu"
 msgstr "Викликає меню NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
-msgid "Reads from the review cursor up to end of current text, moving the review cursor as it goes"
-msgstr "Читає від переглядового курсора до кінця тексту, із переміщеннямм переглядового курсора за текстом"
+msgid ""
+"Reads from the review cursor up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"Читає від переглядового курсора до кінця тексту, із переміщеннямм "
+"переглядового курсора за текстом"
 
 #. Translators: Input help mode message for say all with system caret command.
-msgid "Reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "Читає від системного курсора до кінця тексту, із переміщенням системного курсора за текстом"
+msgid ""
+"Reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"Читає від системного курсора до кінця тексту, із переміщенням системного "
+"курсора за текстом"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -3103,8 +3272,13 @@ msgid "Formatting"
 msgstr "Форматування документа"
 
 #. Translators: Input help mode message for report formatting command.
-msgid "Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in browse mode"
-msgstr "Повідомляє інформацію про поточне форматування документа у позиції, на якій знаходиться переглядовий курсор. Натисніть двічі щоб отримати інформацію в режимі огляду"
+msgid ""
+"Reports formatting info for the current review cursor position within a "
+"document. If pressed twice, presents the information in browse mode"
+msgstr ""
+"Повідомляє інформацію про поточне форматування документа у позиції, на якій "
+"знаходиться переглядовий курсор. Натисніть двічі щоб отримати інформацію в "
+"режимі огляду"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -3115,8 +3289,12 @@ msgid "No status line found"
 msgstr "Рядок стану невиявлено"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information"
-msgstr "читає рядок стану поточного додатка і приводить туди навігатор. Натисніть двічі для посимвольного читання"
+msgid ""
+"Reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
+msgstr ""
+"читає рядок стану поточного додатка і приводить туди навігатор. Натисніть "
+"двічі для посимвольного читання"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3135,16 +3313,26 @@ msgid "No title"
 msgstr "Немає заголовка"
 
 #. Translators: Input help mode message for report title bar command.
-msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "Повідомляє заголовок поточної програми або вікна на передньому плані. При подвійному натисканні відтворює його посимвольно. При потрійному- копіює заголовок в буфер обміну"
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
+msgstr ""
+"Повідомляє заголовок поточної програми або вікна на передньому плані. При "
+"подвійному натисканні відтворює його посимвольно. При потрійному- копіює "
+"заголовок в буфер обміну"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Speaks the current foreground object"
 msgstr "Промовляє об'єкт на передньому плані"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
-msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
-msgstr "Записує в журнал корисну для розробників інформацію про поточний об'єкт і відкриває переглядач журналу"
+msgid ""
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
+msgstr ""
+"Записує в журнал корисну для розробників інформацію про поточний об'єкт і "
+"відкриває переглядач журналу"
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -3163,8 +3351,12 @@ msgid "Beep and speak progress bar updates"
 msgstr "Звуковий сигнал та проговорювання оновлень індикаторів виконання"
 
 #. Translators: Input help mode message for toggle progress bar output command.
-msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "Перемикає між звуком, мовленням, звуком і мовленням або взагалі вимикає рапорт про оновлення індикаторів виконання"
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Перемикає між звуком, мовленням, звуком і мовленням або взагалі вимикає "
+"рапорт про оновлення індикаторів виконання"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -3175,8 +3367,12 @@ msgid "report dynamic content changes on"
 msgstr "Повідомляти про зміни динамічного контенту увімкнено"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "Перемикає читання динамічних змін контенту, наприклад, озвучення нового тексту у DOS-консолі Windows"
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"Перемикає читання динамічних змін контенту, наприклад, озвучення нового "
+"тексту у DOS-консолі Windows"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -3187,8 +3383,11 @@ msgid "caret moves review cursor on"
 msgstr "Прив'язку переглядового курсора до системного увімкнено"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Вмикає або вимикає переміщення переглядового курсора під час руху системного курсора"
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"Вмикає або вимикає переміщення переглядового курсора під час руху системного "
+"курсора"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3199,7 +3398,8 @@ msgid "focus moves navigator object on"
 msgstr "Прив'язку навігатора до фокусу увімкнено"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Вмикає або вимикає переміщення навігатора при зміні фокусу"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
@@ -3222,15 +3422,21 @@ msgstr "Залишилося {hours:d} годин і {minutes:d} хвилин"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr "Повідомляє стан батареї і час до розрядження при відключеному живленні від електромережі"
+msgstr ""
+"Повідомляє стан батареї і час до розрядження при відключеному живленні від "
+"електромережі"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
 msgstr "Пропуск клавіші"
 
 #. Translators: Input help mode message for pass next key through command.
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Наступне натиснення клавіші або комбінації клавіш не буде опрацьовуватись NVDA, а буде передано, безпосередньо, Windows."
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"Наступне натиснення клавіші або комбінації клавіш не буде опрацьовуватись "
+"NVDA, а буде передано, безпосередньо, Windows."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -3247,8 +3453,12 @@ msgid " and currently loaded module is %s"
 msgstr " Завантажений модуль: %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
-msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
-msgstr "Повідомляє назву  виконуваного файла активного додатка і завантаженого для нього модуля"
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Повідомляє назву  виконуваного файла активного додатка і завантаженого для "
+"нього модуля"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
@@ -3319,16 +3529,24 @@ msgid "Saves the current NVDA configuration"
 msgstr "Зберігає поточну конфігурацію налаштувань NVDA"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
-msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults."
-msgstr "Натисніть один раз для повернення до попередньої конфігурації, або ж натисніть тричі для того, щоб скинути налаштування до стандартних"
+msgid ""
+"Pressing once reverts the current configuration to the most recently saved "
+"state. Pressing three times reverts to factory defaults."
+msgstr ""
+"Натисніть один раз для повернення до попередньої конфігурації, або ж "
+"натисніть тричі для того, щоб скинути налаштування до стандартних"
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Активовує консоль Python NVDA, Головним чином, використовується розробниками"
+msgstr ""
+"Активовує консоль Python NVDA, Головним чином, використовується розробниками"
 
 #. Translators: Input help mode message for activate manage add-ons command.
-msgid "Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA"
-msgstr "Активовує Менеджер додатків NVDA для встановлення чи видалення додатків"
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
+msgstr ""
+"Активовує Менеджер додатків NVDA для встановлення чи видалення додатків"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -3339,8 +3557,12 @@ msgid "speech viewer enabled"
 msgstr "Переглядач мовлення увімкнено"
 
 #. Translators: Input help mode message for toggle speech viewer command.
-msgid "Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"
-msgstr "Перемикає до Переглядача мовлення NVDA, де у плаваючому вікні можна переглядати текст, який NVDA промовляє у цей момент"
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
+"Перемикає до Переглядача мовлення NVDA, де у плаваючому вікні можна "
+"переглядати текст, який NVDA промовляє у цей момент"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3391,7 +3613,8 @@ msgstr "У буфері обміну немає тексту"
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Буфер обміну містить великий об'єм тексту. він становить %s символів."
 
 #. Translators: Input help mode message for report clipboard text command.
@@ -3403,8 +3626,12 @@ msgid "Start marked"
 msgstr "Помічено початок"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
-msgid "Marks the current position of the review cursor as the start of text to be selected or copied"
-msgstr "Помічає поточну позицію переглядового курсора в тексті як початкову для виділення чи копіювання"
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"selected or copied"
+msgstr ""
+"Помічає поточну позицію переглядового курсора в тексті як початкову для "
+"виділення чи копіювання"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
@@ -3431,8 +3658,14 @@ msgid "Unable to copy"
 msgstr "Нема нічого для копіювання"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
-msgstr "Одноразове натискання виділяє весь текст від попередньо встановленої початкової помітки до позиції переглядового курсора%=:===%; подвійне натискання копіює текст в буфер обміну"
+msgid ""
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
+msgstr ""
+"Одноразове натискання виділяє весь текст від попередньо встановленої "
+"початкової помітки до позиції переглядового курсора%=:===%; подвійне "
+"натискання копіює текст в буфер обміну"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -3456,23 +3689,40 @@ msgstr "Переходить до наступного рядка на брай�
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "Вводить текст брайлівськими крапками за допомогою брайлівської клавіатури"
+msgstr ""
+"Вводить текст брайлівськими крапками за допомогою брайлівської клавіатури"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Переходить на брайлівському дисплеї до поточного фокуса"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Плагіни перезавантажено"
 
 #. Translators: Input help mode message for reload plugins command.
-msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "Перезавантажує модулі програм і плагіни без перезапуску NVDA. Зручно для розробників"
+msgid ""
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
+msgstr ""
+"Перезавантажує модулі програм і плагіни без перезапуску NVDA. Зручно для "
+"розробників"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
-msgstr "Переходить до наступного об'єкта в ієрархії об'єктної навігації у режимі огляду екрана"
+msgid ""
+"Moves to the next object in a flattened view of the object navigation "
+"hierarchy"
+msgstr ""
+"Переходить до наступного об'єкта в ієрархії об'єктної навігації у режимі "
+"огляду екрана"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "Moves to the previous object in a flattened view of the object navigation hierarchy"
-msgstr "Переходить до попереднього об'єкта в ієрархії об'єктної навігації в режимі огляду екрана"
+msgid ""
+"Moves to the previous object in a flattened view of the object navigation "
+"hierarchy"
+msgstr ""
+"Переходить до попереднього об'єкта в ієрархії об'єктної навігації в режимі "
+"огляду екрана"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -3488,8 +3738,12 @@ msgid "Reports the object and content directly under your finger"
 msgstr "Повідомляє про об'єкт і контент безпосередньо під вашим пальцем"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "Reports the new object or content under your finger if different to where your finger was last"
-msgstr "Повідомляє про новий об'єкт чи контент під пальцем, якщо він відрізняється від того, на якому ваш палець був останній раз"
+msgid ""
+"Reports the new object or content under your finger if different to where "
+"your finger was last"
+msgstr ""
+"Повідомляє про новий об'єкт чи контент під пальцем, якщо він відрізняється "
+"від того, на якому ваш палець був останній раз"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -3929,8 +4183,12 @@ msgid "%s cursor"
 msgstr "%s курсор"
 
 #. Translators: The description of the NVDA service.
-msgid "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure screens."
-msgstr "Дозволяє NVDA запускатись на екрані входу у Windows, екрані контролю облікових записів (UAC) та інших захищені екранах."
+msgid ""
+"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
+"screens."
+msgstr ""
+"Дозволяє NVDA запускатись на екрані входу у Windows, екрані контролю "
+"облікових записів (UAC) та інших захищені екранах."
 
 msgid "Type help(object) to get help about object."
 msgstr "Введіть help(об'єкт) для отримання допомоги із використання об'єкта."
@@ -4528,15 +4786,23 @@ msgstr "Оновлення завантажено. Зараз його буде 
 msgid "Install Update"
 msgstr "Встановити оновлення"
 
-msgid "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+msgid ""
+"We need your help in order to continue to improve NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
-msgstr "Ми потребуємо вашої допомоги для подальшого розвитку NVDA.\n"
-"Цей проект існує завдяки грантам та благодійним внескам. Роблячи благодійний внесок, ви допомагаєте розробникам повноцінно розвивати цю програму.\n"
-"Якщо ми отримаємо 10 доларів благодійних внесків з кожного завантаження, то зможемо покрити абсолютно усі подальші затрати проекту.\n"
-"Усі благодійні внески приймає NV Access, некомерційна організація, яка розробляє NVDA.\n"
+msgstr ""
+"Ми потребуємо вашої допомоги для подальшого розвитку NVDA.\n"
+"Цей проект існує завдяки грантам та благодійним внескам. Роблячи благодійний "
+"внесок, ви допомагаєте розробникам повноцінно розвивати цю програму.\n"
+"Якщо ми отримаємо 10 доларів благодійних внесків з кожного завантаження, то "
+"зможемо покрити абсолютно усі подальші затрати проекту.\n"
+"Усі благодійні внески приймає NV Access, некомерційна організація, яка "
+"розробляє NVDA.\n"
 "Дякуємо за вашу підтримку."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -4562,47 +4828,78 @@ msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr "Вільна програма екранного доступу із відкритим вихідним кодом для Microsoft Windows"
+msgstr ""
+"Вільна програма екранного доступу із відкритим вихідним кодом для Microsoft "
+"Windows"
 
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Авторське право (C) {years} NVDA Contributors"
 
 #, python-brace-format
-msgid "{longName} ({name})\n"
+msgid ""
+"{longName} ({name})\n"
 "Version: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
-msgstr "{longName} ({name})\n"
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
+msgstr ""
+"{longName} ({name})\n"
 "Версія: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} поширюється на умовах ліцензії GNU General Public License (Версія 2). Ви можете вільно поширювати і/або змінювати це програмне забезпечення за умови дотримання ліцензії і надання вихідного коду всім охочим. Це стосується оригінальної версії цього програмного забезпечення, його змінених копій та змінених версій цих копій.\n"
+"{name} поширюється на умовах ліцензії GNU General Public License (Версія 2). "
+"Ви можете вільно поширювати і/або змінювати це програмне забезпечення за "
+"умови дотримання ліцензії і надання вихідного коду всім охочим. Це "
+"стосується оригінальної версії цього програмного забезпечення, його змінених "
+"копій та змінених версій цих копій.\n"
 "Для деталей перегляньте ліцензію в меню \"довідка\".\n"
-" Також можна її подивитись онлайн: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+" Також можна її подивитись онлайн: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} ррозробляє NV Access - некомерційна організація, яку створено для підтримки та популяризації вільних рішень з відкритим вихідним кодом для людей з проблемами зору.\n"
-"Якщо ви вважаєте, що  NVDA є корисною і хочете, щоб вона продовжувала розвиватись, будь ласка, подумайте про можливість зробити благодійний внесок на користь NV Access. Це можна зробити, обравши \"зробити благодійний внесок\" у меню NVDA."
+"{name} ррозробляє NV Access - некомерційна організація, яку створено для "
+"підтримки та популяризації вільних рішень з відкритим вихідним кодом для "
+"людей з проблемами зору.\n"
+"Якщо ви вважаєте, що  NVDA є корисною і хочете, щоб вона продовжувала "
+"розвиватись, будь ласка, подумайте про можливість зробити благодійний внесок "
+"на користь NV Access. Це можна зробити, обравши \"зробити благодійний внесок"
+"\" у меню NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
-msgid "Cannot install NVDA add-on from {path}.\n"
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
-msgstr "Неможливо встановити додаток для NVDA з {path}.\n"
+msgstr ""
+"Неможливо встановити додаток для NVDA з {path}.\n"
 "Ви повинні запустити NVDA, аби мати змогу встановлювати додатки."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
-msgid "Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen"
-msgstr "Межі об'єкта розташовані {left:.1f} відсотків від лівого краю екрана, {top:.1f} відсотків від верхнього краю екрана, ширина складає {width:.1f} відсотків екрана, висота становить {height:.1f} відсотків екрана"
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Межі об'єкта розташовані {left:.1f} відсотків від лівого краю екрана, "
+"{top:.1f} відсотків від верхнього краю екрана, ширина складає {width:.1f} "
+"відсотків екрана, висота становить {height:.1f} відсотків екрана"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -5027,8 +5324,14 @@ msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Off bottom slide edge by {distance:.3g} points"
 
 #. Translators: The description for a script
-msgid "Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA"
-msgstr "Перемикає між читанням нотатків програми екранного доступу і фактичним вмістом. Це не змінює фактичного вмісту на екрані, а лише дозволяє користувачеві \"прочитати\" інформацію за допомогою NVDA"
+msgid ""
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
+msgstr ""
+"Перемикає між читанням нотатків програми екранного доступу і фактичним "
+"вмістом. Це не змінює фактичного вмісту на екрані, а лише дозволяє "
+"користувачеві \"прочитати\" інформацію за допомогою NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -5205,11 +5508,13 @@ msgstr "Конфігурацію збережено"
 
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
-msgstr "Не вдалося зберегти конфігурацію. Можливо, файлова система - лише для читання"
+msgstr ""
+"Не вдалося зберегти конфігурацію. Можливо, файлова система - лише для читання"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "Діалог налаштувань NVDA вже відкрито. Будь ласка, спершу закрийте його."
+msgstr ""
+"Діалог налаштувань NVDA вже відкрито. Будь ласка, спершу закрийте його."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -5257,8 +5562,12 @@ msgstr "Н&алаштування брайля..."
 msgid "&Keyboard settings..."
 msgstr "&Налаштування клавіатури..."
 
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Налаштування розкладки клавіатури, читання символів при введенні, слів та командних клавіш"
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"Налаштування розкладки клавіатури, читання символів при введенні, слів та "
+"командних клавіш"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
@@ -5278,8 +5587,12 @@ msgstr "Налаштувати як і коли пересуватиметься
 msgid "&Input composition settings..."
 msgstr "&Налаштування формування вводу..."
 
-msgid "Configure how NVDA reports input composition and candidate selection for certain languages"
-msgstr "Configure how NVDA reports input composition and candidate selection for certain languages"
+msgid ""
+"Configure how NVDA reports input composition and candidate selection for "
+"certain languages"
+msgstr ""
+"Configure how NVDA reports input composition and candidate selection for "
+"certain languages"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
@@ -5306,22 +5619,35 @@ msgstr "Змінити налаштування властивостей док�
 msgid "&Default dictionary..."
 msgstr "&Основний словник..."
 
-msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
-msgstr "Цей діалог дозволяє сформувати загальний словник, шляхом додавання потрібних Вам записів до списку"
+msgid ""
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
+msgstr ""
+"Цей діалог дозволяє сформувати загальний словник, шляхом додавання потрібних "
+"Вам записів до списку"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
 msgstr "&Голосовий словник..."
 
-msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "Цей діалог дозволяє сформувати голосовий словник, який буде використовувати лише той голос, для якого його було сформовано, шляхом додавання потрібних Вам записів до списку"
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Цей діалог дозволяє сформувати голосовий словник, який буде використовувати "
+"лише той голос, для якого його було сформовано, шляхом додавання потрібних "
+"Вам записів до списку"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
 msgstr "&Тимчасовий словник..."
 
-msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Цей діалог дозволяє сформувати тимчасовий словник, шляхом додавання потрібних Вам записів до списку"
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Цей діалог дозволяє сформувати тимчасовий словник, шляхом додавання "
+"потрібних Вам записів до списку"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -5447,20 +5773,27 @@ msgstr "В&ихід"
 msgid "Exit NVDA"
 msgstr "Вихід із NVDA"
 
-msgid "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+msgid ""
+"Welcome to NVDA!\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
-""
-msgstr "Ласкаво просимо до NVDA!\n"
-"Більшість команд NVDA вводяться із утримуванням клавіші-модифікатора NVDA при натисканні інших клавіш.\n"
-"Типово, використовується insert на цифровому блоці і звичайний insert як клавіша-модифікатор NVDA.\n"
-"Також можна налаштувати NVDA на використання CapsLock як клавіші-модифікатора NVDA.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
+msgstr ""
+"Ласкаво просимо до NVDA!\n"
+"Більшість команд NVDA вводяться із утримуванням клавіші-модифікатора NVDA "
+"при натисканні інших клавіш.\n"
+"Типово, використовується insert на цифровому блоці і звичайний insert як "
+"клавіша-модифікатор NVDA.\n"
+"Також можна налаштувати NVDA на використання CapsLock як клавіші-"
+"модифікатора NVDA.\n"
 "Натискайте NVDA+n у будь-який час для активації меню NVDA.\n"
-"Із цього меню ви можете налаштовувати NVDA, отримувати доступ до довідки та інших функцій програми.\n"
-""
+"Із цього меню ви можете налаштовувати NVDA, отримувати доступ до довідки та "
+"інших функцій програми.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -5504,8 +5837,12 @@ msgid "&Continue running"
 msgstr "&Продовжити запуск"
 
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again."
-msgstr "Тепер всі додатки вимкнено. Їх буде знову увімкнено під час наступного перезапуску, якщо ви не вирішите відключити їх знову."
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Тепер всі додатки вимкнено. Їх буде знову увімкнено під час наступного "
+"перезапуску, якщо ви не вирішите відключити їх знову."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -5532,8 +5869,10 @@ msgid "Add-ons Manager"
 msgstr "Менеджер додатків"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
-msgstr "Тепер всі додатки вимкнено. Аби увімкнути додатки, ви повинні перезапустити NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Усі додатки вимкнено. Аби увімкнути додатки, ви повинні перезапустити NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5563,6 +5902,10 @@ msgstr "&Про додаток..."
 msgid "Add-on &help"
 msgstr "Довідка &додатка"
 
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Вимкнути додаток"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "&Встановити..."
@@ -5589,15 +5932,23 @@ msgstr "Пакетний файл додатків NVDA (*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
-msgid "Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "Помилка відкриття пакетного файла додатка у %s - файл пошкоджено або неправильний формат файла"
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"Помилка відкриття пакетного файла додатка у %s - файл пошкоджено або "
+"неправильний формат файла"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
-msgid "Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+msgid ""
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
-msgstr "Ви справді хочете встановити цей додаток? Встановлюйте додатки лише з захищених джерел.\n"
+msgstr ""
+"Ви справді хочете встановити цей додаток? Встановлюйте додатки лише з "
+"захищених джерел.\n"
 "Додаток: {summary} {version}\n"
 "Автор: {author}"
 
@@ -5607,7 +5958,8 @@ msgid "Add-on Installation"
 msgstr "Встановлення додатка"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-msgid "A version of this add-on is already installed. Would you like to update it?"
+msgid ""
+"A version of this add-on is already installed. Would you like to update it?"
 msgstr "Версію цього додатку вже встановлено. Бажаєте його оновити?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
@@ -5623,9 +5975,11 @@ msgstr "Зачекайте, будь ласка, поки додаток вст�
 msgid "Failed to install add-on  from %s"
 msgstr "Помилка встановлення додатка з %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Справді видалити вибраний додаток з NVDA?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Вилучити додаток"
 
@@ -5637,7 +5991,15 @@ msgstr "Встановити"
 msgid "remove"
 msgstr "Видалити"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "вимкнено"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "увімкнено"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "Припинений"
 
@@ -5645,9 +6007,17 @@ msgstr "Припинений"
 msgid "running"
 msgstr "Запуск"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
-msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
-msgstr "Додаток додано або видалено. Ви повинні перезавантажити NVDA  для того, щоб зміни набрали чинності. Бажаєте  виконати цю дію зараз?"
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Увімкнути додаток"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
+msgid ""
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
+msgstr ""
+"До додатків внесено зміни. Щоб вони набули чинності, необхідно "
+"перезавантажити NVDA. Бажаєте це зробити зараз?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -5655,16 +6025,16 @@ msgstr "Перезавантажити NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
 #, python-brace-format
-msgid "{summary} ({name})\n"
+msgid ""
+"{summary} ({name})\n"
 "Version: {version}\n"
 "Author: {author}\n"
 "Description: {description}\n"
-""
-msgstr "{summary} ({name})\n"
+msgstr ""
+"{summary} ({name})\n"
 "Версія: {version}\n"
 "Автор: {author}\n"
 "Опис: {description}\n"
-""
 
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
@@ -5779,8 +6149,11 @@ msgid "Say all"
 msgstr "Промовляти все"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
-msgid "Error saving configuration profile triggers - probably read only file system."
-msgstr "Невдалося зберегти автоперемикання для цього профіля - можливо, ваша система - лише для читання."
+msgid ""
+"Error saving configuration profile triggers - probably read only file system."
+msgstr ""
+"Невдалося зберегти автоперемикання для цього профіля - можливо, ваша система "
+"- лише для читання."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -5818,9 +6191,13 @@ msgstr "Використовувати цей профіль для:"
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
-msgid "This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated with this one.\n"
+msgid ""
+"This trigger is already associated with another profile. If you continue, it "
+"will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
-msgstr "Цей автоперемикач вже асоційований з іншим профілем. Якщо ви продовжите, то його буде видалено з іншого профіля і асоційовано з поточним. Продовжити?"
+msgstr ""
+"Цей автоперемикач вже асоційований з іншим профілем. Якщо ви продовжите, то "
+"його буде видалено з іншого профіля і асоційовано з поточним. Продовжити?"
 
 #. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
@@ -5829,13 +6206,20 @@ msgstr "Попередження"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
-msgstr "Помилка при створенні профілю - можливо, ваша система - лише для читання"
+msgstr ""
+"Помилка при створенні профілю - можливо, ваша система - лише для читання"
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
-msgid "To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
+msgid ""
+"To edit this profile, you will need to manually activate it. Once you have "
+"finished editing, you will need to manually deactivate it to resume normal "
+"usage.\n"
 "Do you wish to manually activate it now?"
-msgstr "Для редагування цього профілю вам необхідно спершу його активувати вручну. Коли ви закінчите редагування, вам необхідно буде вручну деактивувати його, щоб відновити нормальне використання.\n"
+msgstr ""
+"Для редагування цього профілю вам необхідно спершу його активувати вручну. "
+"Коли ви закінчите редагування, вам необхідно буде вручну деактивувати його, "
+"щоб відновити нормальне використання.\n"
 "Бажаєте зараз активувати його вручну?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
@@ -5859,8 +6243,14 @@ msgid "Please wait while NVDA is being installed"
 msgstr "Зачекайте, будь ласка, поки триває встановлення NVDA"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
-msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
-msgstr "Неможливо під час встановлення видалити або перезаписати файл. Можливо, запущено іншу копію NVDA  під іншим обліковим записом. Переконайтеся, що усі копії неактивні і повторіть спробу встановлення ще раз."
+msgid ""
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
+msgstr ""
+"Неможливо під час встановлення видалити або перезаписати файл. Можливо, "
+"запущено іншу копію NVDA  під іншим обліковим записом. Переконайтеся, що усі "
+"копії неактивні і повторіть спробу встановлення ще раз."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -5868,8 +6258,12 @@ msgid "File in Use"
 msgstr "Файл використовується"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
-msgstr "Не вдалося встановити NVDA. Перегляньте журнал роботи для детальної інформації."
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
+msgstr ""
+"Не вдалося встановити NVDA. Перегляньте журнал роботи для детальної "
+"інформації."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
@@ -5894,15 +6288,21 @@ msgstr "Встановити NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "Для встановлення NVDA на ваш комп'ютер, натисніть кнопку \"Продовжити\"."
+msgstr ""
+"Для встановлення NVDA на ваш комп'ютер, натисніть кнопку \"Продовжити\"."
 
 #. Translators: An informational message in the Install NVDA dialog.
-msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
-msgstr "У вашій системі виявлено попередньо встановлену копію NVDA. Її буде оновлено."
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
+msgstr ""
+"У вашій системі виявлено попередньо встановлену копію NVDA. Її буде оновлено."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #, python-brace-format
-msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
 msgstr "Шлях установки NVDA змінено. Програму буде встановлено в {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
@@ -5917,7 +6317,9 @@ msgstr "&Зберегти поточний ярлик на робочому ст
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "Створити &іконку на робочому столі і призначити на запуск комбінацію клавіш (control+alt+n)"
+msgstr ""
+"Створити &іконку на робочому столі і призначити на запуск комбінацію клавіш "
+"(control+alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
@@ -5929,8 +6331,16 @@ msgstr "&Продовжити"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr "Ви намагаєтеся встановити старішу версію NVDA попри те, що у вас вже встановлена новіша версія. Якщо ви справді бажаєте повернутися до старішої версії, то пперед тим, як це зробити, закрийте цю установку і видаліть поточну версію NVDA."
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Ви намагаєтеся встановити старішу версію NVDA попри те, що у вас вже "
+"встановлена новіша версія. Якщо ви справді бажаєте повернутися до старішої "
+"версії, то пперед тим, як це зробити, закрийте цю установку і видаліть "
+"поточну версію NVDA."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -5942,8 +6352,12 @@ msgid "Create Portable NVDA"
 msgstr "Створити портабельну копію NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
-msgstr "Для створення портабельної копії NVDA необхідно обрати шлях для видобування файлів і вказати інші параметри"
+msgid ""
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
+msgstr ""
+"Для створення портабельної копії NVDA необхідно обрати шлях для видобування "
+"файлів і вказати інші параметри"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -5966,7 +6380,8 @@ msgstr "Вибрати папку портабельної версії"
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "Будь ласка, вкажіть папку, в яку ви бажаєте встановити портабельну копію"
+msgstr ""
+"Будь ласка, вкажіть папку, в яку ви бажаєте встановити портабельну копію"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -6072,20 +6487,33 @@ msgid "Log level"
 msgstr "Рівень звітності"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "Використовувати NVDA при читанні екрану входу у Windows (необхідні права адміністратора)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr ""
+"Використовувати NVDA при читанні екрану входу у Windows (необхідні права "
+"адміністратора)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
-msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
-msgstr "Використовувати останні збережені налаштування NVDA при читанні екрану входу у Windows та інших захищених екранів (необхідні права адміністратора)"
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
+msgstr ""
+"Використовувати останні збережені налаштування NVDA при читанні екрану входу "
+"у Windows та інших захищених екранів (необхідні права адміністратора)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "Автоматично перевіряти оновлення &для NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
-msgid "Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-msgstr "У папці з налаштуваннями користувача виявлено додатки. Копіювання їх до системного профіля може бути загрозливим для вашої безпеки. Бажаєте продовжити копіювання налаштувань?"
+msgid ""
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
+msgstr ""
+"У папці з налаштуваннями користувача виявлено додатки. Копіювання їх до "
+"системного профіля може бути загрозливим для вашої безпеки. Бажаєте "
+"продовжити копіювання налаштувань?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -6093,11 +6521,16 @@ msgstr "Копіювання налаштувань"
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "Зачекайте, будь ласка, поки копіюються налаштування у системну конфігурацію."
+msgstr ""
+"Зачекайте, будь ласка, поки копіюються налаштування у системну конфігурацію."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
-msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
-msgstr "Неможливо скопіювати файл. Ймовірно, він зайнятий іншим процесом, або ж на диску, на який ви хочете здійснити копіювання, немає місця."
+msgid ""
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
+msgstr ""
+"Неможливо скопіювати файл. Ймовірно, він зайнятий іншим процесом, або ж на "
+"диску, на який ви хочете здійснити копіювання, немає місця."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 msgid "Error Copying"
@@ -6125,8 +6558,15 @@ msgid "Insufficient Privileges"
 msgstr "Недостатньо прав"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Для застосування зміни мови необхідне збереження конфігурації та перезавантаження NVDA. Натисніть \"Гаразд\" для виконання процедури або натисніть \"Скасувати\" для виходу з діалогу і подальшого виконання дій вручну"
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Для застосування зміни мови необхідне збереження конфігурації та "
+"перезавантаження NVDA. Натисніть \"Гаразд\" для виконання процедури або "
+"натисніть \"Скасувати\" для виходу з діалогу і подальшого виконання дій "
+"вручну"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -6251,7 +6691,9 @@ msgstr "Переривати мовлення натисненням клаві�
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Продовжувати неперервне читання навіть після натиснення клавіш швидкої навігації"
+msgstr ""
+"Продовжувати неперервне читання навіть після натиснення клавіш швидкої "
+"навігації"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6496,7 +6938,9 @@ msgstr "Форматування документа"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Промовляти про зміни формату після переміщення курсора (може викликати відставання)"
+msgstr ""
+"Промовляти про зміни формату після переміщення курсора (може викликати "
+"відставання)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -6525,6 +6969,11 @@ msgstr "Промовляти &кольори"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "промовляти ко&ментарі"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Повідомляти про &редакторські ревізії"
 
@@ -6542,6 +6991,11 @@ msgstr "Промовляти &Стиль"
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
 msgstr "Промовляти граматичні по&милки"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report &pages"
+msgstr "Повідомляти про &сторінки"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -6645,6 +7099,14 @@ msgstr "&Коментар"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&Тип"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Помилка регулярного виразу: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "Помилка словникової статті"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -6818,7 +7280,9 @@ msgstr "Введіть жест вводу:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "Не вдалося зберегти користувацькі жести - можливо, файлова система - лише для читання"
+msgstr ""
+"Не вдалося зберегти користувацькі жести - можливо, файлова система - лише "
+"для читання"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -6877,8 +7341,11 @@ msgid "Use screen layout off"
 msgstr "Використання екранного представлення вимкнено"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
-msgstr "Вмикає та вимикає екранне представлення вмісту документа, не змінюючи його"
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"Вмикає та вимикає екранне представлення вмісту документа, не змінюючи його"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -6938,73 +7405,78 @@ msgstr "Автоматично"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "checker"
+msgid "diagonal crosshatch"
+msgstr "diagonal crosshatch"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "crisscross"
+msgid "thin diagonal crosshatch"
+msgstr "thin diagonal crosshatch"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "Вниз"
+msgid "reverse diagonal stripe"
+msgstr "reverse diagonal stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "gray16"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "12.5% сірий"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "gray25"
+#, python-format
+msgid "25% gray"
+msgstr "25% сірий"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "gray50"
+#, python-format
+msgid "50% gray"
+msgstr "50% сірий"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "gray75"
+#, python-format
+msgid "75% gray"
+msgstr "75% сірий"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "gray8"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "6.25% сірий"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "Сітка"
+msgid "thin horizontal crosshatch"
+msgstr "thin horizontal crosshatch"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "Горизонтальний"
+msgid "horizontal stripe"
+msgstr "horizontal stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "light down"
+msgid "thin reverse diagonal stripe"
+msgstr "thin reverse diagonal stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "light horizontal"
+msgid "thin horizontal stripe"
+msgstr "thin horizontal stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "light up"
+msgid "thin diagonal stripe"
+msgstr "thin diagonal stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "light vertical"
+msgid "thin vertical stripe"
+msgstr "thin vertical stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7013,8 +7485,8 @@ msgstr "none"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "semi gray75"
+msgid "thick diagonal crosshatch"
+msgstr "thick diagonal crosshatch"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7023,13 +7495,13 @@ msgstr "solid"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "Вгору"
+msgid "diagonal stripe"
+msgstr "diagonal stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "vertical"
+msgid "vertical stripe"
+msgstr "vertical stripe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -7076,8 +7548,12 @@ msgstr "{start} через {end}"
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid "Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"
-msgstr "Не вдається встановити заголовок. Будь ласка, увімкніть читання заголовків таблиці у діалозі \"Форматування документа\"."
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Не вдається встановити заголовок. Будь ласка, увімкніть читання заголовків "
+"таблиці у діалозі \"Форматування документа\"."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -7099,8 +7575,14 @@ msgstr "{address}    видалено з заголовка стовпчиків
 msgid "Cannot find {address}    in column headers"
 msgstr "Неможливо знайти {address}    у заголовках стовпчиків"
 
-msgid "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -7122,8 +7604,14 @@ msgstr "{address}    видалено з заголовка рядків"
 msgid "Cannot find {address}    in row headers"
 msgstr "Неможливо знайти {address}    в заголовках рядків"
 
-msgid "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
 
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
@@ -7439,22 +7927,30 @@ msgstr "Radar with Data Markers"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
-msgstr "Біржова діаграма відображає набори даних з трьох значень (найвищий курс, найнижчий курс, курс на момент закриття)"
+msgstr ""
+"Біржова діаграма відображає набори даних з трьох значень (найвищий курс, "
+"найнижчий курс, курс на момент закриття)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr "Біржова діаграма для наборів з чотирьох значень (курс на момент відкриття, найвищий курс, найнижчий курс, курс на момент закрыття)"
+msgstr ""
+"Біржова діаграма для наборів з чотирьох значень (курс на момент відкриття, "
+"найвищий курс, найнижчий курс, курс на момент закрыття)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
-msgstr "Біржова діаграма для наборів з чотырьох значень (обсяг, найвищий курс, найнижчий курс, курс на момент закрыття)"
+msgstr ""
+"Біржова діаграма для наборів з чотырьох значень (обсяг, найвищий курс, "
+"найнижчий курс, курс на момент закрыття)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
-msgstr "Біржова діаграма для наборів з п'яти значень (обсяг, курс на момент відкриття, найвищий курс, найнижчий курс, курс на момент закрыття)"
+msgstr ""
+"Біржова діаграма для наборів з п'яти значень (обсяг, курс на момент "
+"відкриття, найвищий курс, найнижчий курс, курс на момент закрыття)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7707,8 +8203,11 @@ msgstr "значення {valueAxisData}"
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 #, python-brace-format
-msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr " що складає сектор в {fractionValue:.2f} відсоток {pointIndex} із {pointCount}"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+" що складає сектор в {fractionValue:.2f} відсоток {pointIndex} із "
+"{pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -7727,7 +8226,8 @@ msgstr "Secondary"
 #. Translators: Details about an axis in a chart.
 #, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr "Вісь діаграми, тип: {axisType}, група: {axisGroup}, заголовок: {axisTitle}"
+msgstr ""
+"Вісь діаграми, тип: {axisType}, група: {axisGroup}, заголовок: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
 #, python-brace-format
@@ -7758,8 +8258,12 @@ msgstr "Діаграма без назви"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
 #, python-brace-format
-msgid "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: {chartAreaLeft}"
-msgstr "Область діаграми, висота: {chartAreaHeight}, ширина: {chartAreaWidth}, зверху: {chartAreaTop}, зліва: {chartAreaLeft}"
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"Область діаграми, висота: {chartAreaHeight}, ширина: {chartAreaWidth}, "
+"зверху: {chartAreaTop}, зліва: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
@@ -7767,8 +8271,14 @@ msgstr "Область діаграми"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
 #, python-brace-format
-msgid "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}"
-msgstr "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}"
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
@@ -7945,8 +8455,10 @@ msgstr "Set row {rowNumber} column {columnNumber} as start of column headers"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
-msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -7958,8 +8470,14 @@ msgstr "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 
-msgid "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
-msgstr "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
@@ -7968,8 +8486,10 @@ msgstr "Set row {rowNumber} column {columnNumber} as start of row headers"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
-msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
@@ -7981,8 +8501,14 @@ msgstr "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 
-msgid "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -8133,526 +8659,565 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid "checker"
+#~ msgstr "checker"
+
+#~ msgid "crisscross"
+#~ msgstr "crisscross"
+
+#~ msgid "down"
+#~ msgstr "Вниз"
+
+#~ msgid "gray16"
+#~ msgstr "gray16"
+
+#~ msgid "gray25"
+#~ msgstr "gray25"
+
+#~ msgid "gray50"
+#~ msgstr "gray50"
+
+#~ msgid "gray75"
+#~ msgstr "gray75"
+
+#~ msgid "grid"
+#~ msgstr "Сітка"
+
+#~ msgid "light down"
+#~ msgstr "light down"
+
+#~ msgid "light up"
+#~ msgstr "light up"
+
+#~ msgid "light vertical"
+#~ msgstr "light vertical"
+
+#~ msgid "semi gray75"
+#~ msgstr "semi gray75"
+
+#~ msgid "up"
+#~ msgstr "Вгору"
+
 #~ msgid "unknown color"
 #~ msgstr "Невідомий колір"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Alice Blue"
 #~ msgstr "Синій Еліс"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Antique White"
 #~ msgstr "Античний білий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Aqua"
 #~ msgstr "Колір морської хвилі"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Aquamarine"
 #~ msgstr "Аквамариновий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Azure"
 #~ msgstr "Блакитний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Beige"
 #~ msgstr "Бежевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Bisque"
 #~ msgstr "Бісквітний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Blanched Almond"
 #~ msgstr "Очищений мигдаль"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Blue"
 #~ msgstr "Синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Blue Violet"
 #~ msgstr "Синьо-фіолетовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Burly Wood"
 #~ msgstr "Жовтуватий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Cadet Blue"
 #~ msgstr "Сіро-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Chartreuse"
 #~ msgstr "Салатовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Chocolate"
 #~ msgstr "шоколадний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Coral"
 #~ msgstr "Кораловий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Cornflower Blue"
 #~ msgstr "Васильковий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Cornsilk"
 #~ msgstr "Шовковий відтінок"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Crimson"
 #~ msgstr "Темно-червоний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Cyan"
 #~ msgstr "Ціановий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Blue"
 #~ msgstr "Темно-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Cyan"
 #~ msgstr "Темно-ціановий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Goldenrod"
 #~ msgstr "Темно-золотий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Green"
 #~ msgstr "Темно-зелений"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Khaki"
 #~ msgstr "Темний з відтінком хакі"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Magenta"
 #~ msgstr "Темно-пурпуровий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Olive Green"
 #~ msgstr "Темний оливково-зелений"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Orange"
 #~ msgstr "темно-помаранчевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Orchid"
 #~ msgstr "Колір темної орхідеї"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Red"
 #~ msgstr "Темно-червоний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Salmon"
 #~ msgstr "Темно-помаранчево-рожевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Sea Green"
 #~ msgstr "Темно-чорно-зелений"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Slate Blue"
 #~ msgstr "Темно-аспідний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Slate Gray"
 #~ msgstr "Темно-аспідно-сірий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Turquoise"
 #~ msgstr "Темно-бірюзовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dark Violet"
 #~ msgstr "Темно-фіолетовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Deep Pink"
 #~ msgstr "Глибокий рожевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Deep Sky Blue"
 #~ msgstr "Глибокий небесно-блакитний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dim Gray"
 #~ msgstr "Тьмяно-сірий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Dodger Blue"
 #~ msgstr "Захисно-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Fire Brick"
 #~ msgstr "Цегляний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Floral White"
 #~ msgstr "Квітково-білий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Forest Green"
 #~ msgstr "Колір зеленого лісу"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Fuchsia"
 #~ msgstr "Фуксія"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Gainsboro"
 #~ msgstr "Ґейнсборо"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Ghost White"
 #~ msgstr "Тінисто-білий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Gold"
 #~ msgstr "Золотий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Goldenrod"
 #~ msgstr "Золотисто-березовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Gray"
 #~ msgstr "Сірий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Green Yellow"
 #~ msgstr "Зелено-жовтий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Honeydew"
 #~ msgstr "Медовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Hot Pink"
 #~ msgstr "Яскраво-рожевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Indian Red"
 #~ msgstr "Каштановий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Indigo"
 #~ msgstr "Колір індіґо"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Ivory"
 #~ msgstr "Колір слонової кістки"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Khaki"
 #~ msgstr "Хакі"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Lavender"
 #~ msgstr "Лавандовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Lavender Blush"
 #~ msgstr "Рожево-лавандовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Lawn Green"
 #~ msgstr "Колір зеленої галявини"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Lemon Chiffon"
 #~ msgstr "Лимонно-кремовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Blue"
 #~ msgstr "Світло-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Coral"
 #~ msgstr "Світло-кораловий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Cyan"
 #~ msgstr "Світло-ціановий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Goldenrod Yellow"
 #~ msgstr "Світло-золотисто-жовтий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Green"
 #~ msgstr "Світло-зелений"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Pink"
 #~ msgstr "Світло-рожевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Salmon"
 #~ msgstr "Світло-помаранчево-рожевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Sea Green"
 #~ msgstr "Колір світло-зеленої морської хвилі"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Sky Blue"
 #~ msgstr "Світло-небесно-блакитний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Slate Gray"
 #~ msgstr "Світло-аспідно-сірий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Steel Blue"
 #~ msgstr "Колір світло-синьої сталі"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Light Yellow"
 #~ msgstr "Світло-жовтий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Lime"
 #~ msgstr "Лимонний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Lime Green"
 #~ msgstr "Лимонно-зелений"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Linen"
 #~ msgstr "Льняний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Magenta"
 #~ msgstr "Пурпуровий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Maroon"
 #~ msgstr "Темно-бордовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Aquamarine"
 #~ msgstr "Помірно-аквамариновий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Blue"
 #~ msgstr "Помірно-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Orchid"
 #~ msgstr "Помірно-орхідейний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Purple"
 #~ msgstr "Помірно-пурпуровий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Sea Green"
 #~ msgstr "Помірний колір зеленої морської хвилі"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Slate Blue"
 #~ msgstr "Помірний аспітно-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Spring Green"
 #~ msgstr "Помірний зелено-весняний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Turquoise"
 #~ msgstr "Помірно-бірюзовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Medium Violet Red"
 #~ msgstr "Помірний фіолетово-червоний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Midnight Blue"
 #~ msgstr "Північно-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Mint Cream"
 #~ msgstr "М'ятно-кремовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Misty Rose"
 #~ msgstr "Туманно-трояндовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Moccasin"
 #~ msgstr "Мокасин"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Navajo White"
 #~ msgstr "Білий навахо"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Navy"
 #~ msgstr "Темно-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Old Lace"
 #~ msgstr "Колір старого мережива"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Olive"
 #~ msgstr "Оливковий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Olive Drab"
 #~ msgstr "Ніжно-оливковий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Orange Red"
 #~ msgstr "помаранчево-червоний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Orchid"
 #~ msgstr "Колір орхідеї"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Pale Goldenrod"
 #~ msgstr "Блідий золотисто-березовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Pale Green"
 #~ msgstr "Блідо-зелений"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Pale Turquoise"
 #~ msgstr "Блідо-бірюзовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Pale Violet Red"
 #~ msgstr "Блідий фіолетово-червоний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Papaya Whip"
 #~ msgstr "Papaya Whip"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Peach Puff"
 #~ msgstr "Персиковий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Peru"
 #~ msgstr "Світло-коричневий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Pink"
 #~ msgstr "Рожевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Plum"
 #~ msgstr "Сливовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Powder Blue"
 #~ msgstr "Порохова блакить"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Red"
 #~ msgstr "Червоний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Rosy Brown"
 #~ msgstr "Трояндово-коричневий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Royal Blue"
 #~ msgstr "Яскраво-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Saddle Brown"
 #~ msgstr "Шкіряно-коричневий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Salmon"
 #~ msgstr "Помаранчево-рожевий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Sandy Brown"
 #~ msgstr "Пісочний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Sea Green"
 #~ msgstr "Колір зеленої морської хвилі"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Seashell"
 #~ msgstr "Колір морської піни"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Sienna"
 #~ msgstr "Охра"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Silver"
 #~ msgstr "Срібний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Sky Blue"
 #~ msgstr "Колір небесної блакиті"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Slate Blue"
 #~ msgstr "Аспідно-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Slate Gray"
 #~ msgstr "Аспідно-сірий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Snow"
 #~ msgstr "Сніжний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Spring Green"
 #~ msgstr "Весняно-зелений"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Steel Blue"
 #~ msgstr "Сталево-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Tan"
 #~ msgstr "Рудувато-коричневий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Teal"
 #~ msgstr "Зеленувато-синій"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Thistle"
 #~ msgstr "Колір чортополоху"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Tomato"
 #~ msgstr "Томатний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Turquoise"
 #~ msgstr "Бірюзовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Violet"
 #~ msgstr "Фіолетовий"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "Wheat"
 #~ msgstr "Пшеничний"
-#~ msgctxt "color name"
 
+#~ msgctxt "color name"
 #~ msgid "White Smoke"
 #~ msgstr "Колір білого диму"
 
