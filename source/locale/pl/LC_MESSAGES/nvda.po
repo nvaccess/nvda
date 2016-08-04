@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-25 19:35+0200\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-31 21:47+0200\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -1480,6 +1480,12 @@ msgstr "różowo-czerwony"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "jasny {color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -3679,6 +3685,10 @@ msgstr "Przenosi monitor brajlowski do następnej linii"
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Wprowadza punkty brajla przy pomocy klawiatóry brajlowskiej"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Przenosi wyświetlanie brajla do punktu uwagi"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Wtyczki przeładowane"
@@ -5827,7 +5837,8 @@ msgid "Add-ons Manager"
 msgstr "Menadżer wtyczek"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "Wszystkie dodatki są wyłączone. Aby je włączyć, musisz zrestartować NVDA."
 
@@ -5858,6 +5869,10 @@ msgstr "&O dodatku"
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "Pomo&c dodatku"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "W&yłącz dodatek"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5928,9 +5943,11 @@ msgstr "Czekaj. Dodatek jest instalowany."
 msgid "Failed to install add-on  from %s"
 msgstr "Nieudało się zainstalować dodatku z %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Czy napewno usunąć wtyczkę?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "&Usuń dodatek"
 
@@ -5942,7 +5959,15 @@ msgstr "zainstaluj"
 msgid "remove"
 msgstr "usuń"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "wyłączony"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "włączony"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "wstrzymany"
 
@@ -5950,13 +5975,17 @@ msgstr "wstrzymany"
 msgid "running"
 msgstr "uruchomiony"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "&Włącz dodatek"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"wtyczki zostały dodane lub usunięte. Aby zmiany zadziałały, należy "
-"zrestartować NVDA. Czy chcesz zrobić to teraz?"
+"Nastąpiła zmiana w dodatkach. Aby zmiany zadziałały, należy zrestartować "
+"NVDA. Czy chcesz zrobić to teraz?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -7340,73 +7369,78 @@ msgstr "automatyczne"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "szachownica"
+msgid "diagonal crosshatch"
+msgstr "kreskowanie krzyżowe ukośne"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "kratka"
+msgid "thin diagonal crosshatch"
+msgstr "cienkie kreskowanie krzyżowe ukośne"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "ku dołowi"
+msgid "reverse diagonal stripe"
+msgstr "odwrócony pasek ukośny"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "szary16"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "12.5% szary"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "szary25"
+#, python-format
+msgid "25% gray"
+msgstr "25% szary"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "szary50"
+#, python-format
+msgid "50% gray"
+msgstr "50% szary"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "szary75"
+#, python-format
+msgid "75% gray"
+msgstr "75% szary"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "szary8"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "6.25% szary"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "siatka"
+msgid "thin horizontal crosshatch"
+msgstr "Kreskowanie krzyżowe poziome"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "poziome"
+msgid "horizontal stripe"
+msgstr "pasek poziomy"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "jasne ku dołowi"
+msgid "thin reverse diagonal stripe"
+msgstr "cienki odwrócony pasek ukośny"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "jasne poziome"
+msgid "thin horizontal stripe"
+msgstr "cienki pasek poziomy"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "jasne ku górze"
+msgid "thin diagonal stripe"
+msgstr "cienki pasek ukośny"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "jasne pionowe"
+msgid "thin vertical stripe"
+msgstr "cienki pasek pionowy"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7415,8 +7449,8 @@ msgstr "brak"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "częściowo szary75"
+msgid "thick diagonal crosshatch"
+msgstr "grube kreskowanie krzyżowe ukośne"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7425,13 +7459,13 @@ msgstr "pełny"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "ku górze"
+msgid "diagonal stripe"
+msgstr "pasek ukośny"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "pionowe"
+msgid "vertical stripe"
+msgstr "pasek pionowy"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8589,6 +8623,45 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "szachownica"
+
+#~ msgid "crisscross"
+#~ msgstr "kratka"
+
+#~ msgid "down"
+#~ msgstr "ku dołowi"
+
+#~ msgid "gray16"
+#~ msgstr "szary16"
+
+#~ msgid "gray25"
+#~ msgstr "szary25"
+
+#~ msgid "gray50"
+#~ msgstr "szary50"
+
+#~ msgid "gray75"
+#~ msgstr "szary75"
+
+#~ msgid "grid"
+#~ msgstr "siatka"
+
+#~ msgid "light down"
+#~ msgstr "jasne ku dołowi"
+
+#~ msgid "light up"
+#~ msgstr "jasne ku górze"
+
+#~ msgid "light vertical"
+#~ msgstr "jasne pionowe"
+
+#~ msgid "semi gray75"
+#~ msgstr "częściowo szary75"
+
+#~ msgid "up"
+#~ msgstr "ku górze"
 
 #~ msgid "unknown color"
 #~ msgstr "nieznany kolor"

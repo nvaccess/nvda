@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-27 06:25+0200\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-29 09:45+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1482,6 +1482,12 @@ msgstr "pinkki ja punainen"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "kirkkaan{color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -3702,6 +3708,10 @@ msgstr "siirtää pistenäytön seuraavalle riville"
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Syöttää pistekirjoitusta pistenäppäimistön avulla"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Siirtää pistenäytön nykyiseen kohdistukseen."
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Liitännäiset ladattu uudelleen"
@@ -5839,8 +5849,8 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"Lisäosat on poistettu käytöstä. Ne otetaan taas käyttöön seuraavalla NVDA:n "
-"uudelleenkäynnistyksellä ellet valitse käytöstäpoistamista toistamiseen."
+"Lisäosat on poistettu käytöstä. Ne otetaan käyttöön seuraavalla NVDA:n "
+"uudelleenkäynnistyksellä, ellet poista niitä käytöstä toistamiseen."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -5867,9 +5877,10 @@ msgid "Add-ons Manager"
 msgstr "Lisäosien hallinta"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"Lisäosat on poistettu käytöstä. Ota ne käyttöön käynnistämällä NVDA "
+"Kaikki lisäosat on poistettu käytöstä. Ota ne käyttöön käynnistämällä NVDA "
 "uudelleen."
 
 #. Translators: the label for the installed addons list in the addons manager.
@@ -5899,6 +5910,10 @@ msgstr "&Tietoja..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "&Ohje"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Poista käytöstä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5970,9 +5985,11 @@ msgstr "Odota, kun lisäosaa asennetaan."
 msgid "Failed to install add-on  from %s"
 msgstr "Lisäosan asennus epäonnistui kohteesta %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Haluatko varmasti poistaa valitun lisäosan NVDA:sta?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Poista lisäosa"
 
@@ -5984,7 +6001,15 @@ msgstr "asenna"
 msgid "remove"
 msgstr "poista"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "poista käytöstä"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "ota käyttöön"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "ei käytössä"
 
@@ -5992,12 +6017,16 @@ msgstr "ei käytössä"
 msgid "running"
 msgstr "käytössä"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Ota käyttöön"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Lisäosia on asennettu tai poistettu. NVDA on käynnistettävä uudelleen, jotta "
+"Lisäosiin on tehty muutoksia. NVDA on käynnistettävä uudelleen, jotta "
 "muutokset tulevat voimaan. Haluatko käynnistää uudelleen nyt?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -7377,73 +7406,78 @@ msgstr "automaattinen"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "shakkiruutu"
+msgid "diagonal crosshatch"
+msgstr "vinoon ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "siksakki"
+msgid "thin diagonal crosshatch"
+msgstr "kapea vinoon ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "alas"
+msgid "reverse diagonal stripe"
+msgstr "kenoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "16% harmaa"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "12,5 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "25% harmaa"
+#, python-format
+msgid "25% gray"
+msgstr "25 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "50% harmaa"
+#, python-format
+msgid "50% gray"
+msgstr "50 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "75% harmaa"
+#, python-format
+msgid "75% gray"
+msgstr "75 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "8% harmaa"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "6,25 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "ruudukko"
+msgid "thin horizontal crosshatch"
+msgstr "kapea vaakasuuntaan ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "vaakasuuntainen"
+msgid "horizontal stripe"
+msgstr "vaakasuuntaan raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "kapea alas"
+msgid "thin reverse diagonal stripe"
+msgstr "kapea kenoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "kapea vaakasuuntainen"
+msgid "thin horizontal stripe"
+msgstr "kapea vaakasuuntaan raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "kapea ylös"
+msgid "thin diagonal stripe"
+msgstr "kapea vinoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "kapea pystysuuntainen"
+msgid "thin vertical stripe"
+msgstr "kapea pystysuuntainen raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7452,8 +7486,8 @@ msgstr "ei mitään"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "75% puoliharmaa"
+msgid "thick diagonal crosshatch"
+msgstr "leveä vinoon ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7462,13 +7496,13 @@ msgstr "tasainen"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "ylös"
+msgid "diagonal stripe"
+msgstr "vinoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "pystysuuntainen"
+msgid "vertical stripe"
+msgstr "pystysuuntainen raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8623,6 +8657,45 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "shakkiruutu"
+
+#~ msgid "crisscross"
+#~ msgstr "siksakki"
+
+#~ msgid "down"
+#~ msgstr "alas"
+
+#~ msgid "gray16"
+#~ msgstr "16% harmaa"
+
+#~ msgid "gray25"
+#~ msgstr "25% harmaa"
+
+#~ msgid "gray50"
+#~ msgstr "50% harmaa"
+
+#~ msgid "gray75"
+#~ msgstr "75% harmaa"
+
+#~ msgid "grid"
+#~ msgstr "ruudukko"
+
+#~ msgid "light down"
+#~ msgstr "kapea alas"
+
+#~ msgid "light up"
+#~ msgstr "kapea ylös"
+
+#~ msgid "light vertical"
+#~ msgstr "kapea pystysuuntainen"
+
+#~ msgid "semi gray75"
+#~ msgstr "75% puoliharmaa"
+
+#~ msgid "up"
+#~ msgstr "ylös"
 
 #~ msgid "unknown color"
 #~ msgstr "tuntematon väri"

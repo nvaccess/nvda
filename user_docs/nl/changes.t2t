@@ -10,31 +10,44 @@
 - Doorhalen en dubbel doorhalen worden nu gemeld indien van toepassing in Microsoft Word. (#5800)
 - In Microsoft Word wordt nu de titel van een tabel gemeld als die voorzien is. Als er een beschrijving is, kunt u die bereiken met het commando open lange beschrijving (NVDA+d) in bladermodus. (#5943)
 - In Microsoft Word meldt NVDA nu positie-informatie bij wisselen tussen paragrafen (alt+shift+pijlOmlaag en alt+shift+pijlOmhoog). (#5945)
-- In Microsoft Word wordt regelafstand nu gemeld via het NVDA-commando Opmaak melden, als u die wijzigt met de voorziene sneltoetsen van Microsoft word, en als u naar tekst gaat met een andere regelafstand als Regelafstand melden is ingeschakeld in NVDA-instellingen voor Documentopmaak. (#2961)
+- Als Regelafstand melden is ingeschakeld in NVDA-instellingen voor Documentopmaak, wordt in Microsoft Word regelafstand nu gemeld als u die wijzigt met de voorziene sneltoetsen van Microsoft word, en als u naar tekst gaat met een andere regelafstand. (#2961)
 - In Internet Explorer worden HTML5 structuurelementen nu herkend. (#5591)
-- Reporting of comments (such as in Microsoft Word) can now be disabled via a Report Comments checkbox in NVDA's Document Formatting settings dialog. (#5108)
+- Het melden van opmerkingen (zoals in Microsoft Word) kan nu worden uitgeschakeld via het selectievakje Opmerkingen melden in het dialoogvenster met instellingen voor Documentopmaak . (#5108)
+- In de Add-ons manager kunt u nu individuele add-ons uitschakelen. (#3090)
+- Bijkomende toetskoppelingen zijn toegevoegd voor ALVA BC640/680 brailleleesregels. (#5206)
+- Er is nu een commando om de brailleleesregel te verplaatsen naar de huidige focus. Momenteel is enkel bij de ALVA BC640/680 serie een toets aan dit commando gekoppeld. Voor andere leeesregels kunt u het manueel koppelen in het dialoogvenster Invoerhandelingen koppelen. (#5250)
 
 
 == Veranderingen ==
-- NVDA meldt nu kleuren using een basic well-understood set of 9 kleur hues en 3 shades, met brightness en paleness variaties. This is rather than using more subjective en less understood kleurnamen. (#6029)
-- Het bestaande NVDA+F9 then NVDA+F10 gedrag has been modified to select tekst on de eerste press of F10. Als F10 tweemaal (snel na elkaar) wordt gedrukt, wordt de tekst gekopieerd naar het klembord. (#4636)
+- NVDA meldt nu kleuren met een begrijpelijke basisreeks van 9 kleurtinten en 3 schakeringen, met variaties van helderheid en bleekheid. Dit komt in de plaats van de subjectieve en moeilijk te begrijpen kleurnamen. (#6029)
+- Het bestaande gedrag van NVDA+F9 en later NVDA+F10 is gewijzigd. Als f10 een eerste keer wordt gedrukt, wordt tekst geselecteerd. Als F10 tweemaal (snel na elkaar) wordt gedrukt, wordt de tekst gekopieerd naar het klembord. (#4636)
+- eSpeakNG bijgewerkt naar versie Master 11b1a7b (22 juni 2016). (#6037)
 
 
 == Opgeloste Problemen ==
 - In bladermodus in Microsoft Word blijft de opmaak nu behouden bij het kopiëren naar het klembord. (#5956)
-- In Microsoft Word meldt NVDA nu appropriately bij gebruik van Word's eigen tabelnavigatie commands (alt+home, alt+end, alt+pageUp en alt+pageDown) en tabelselectiecommando's (shift toegevoegd aan de navigatiecommando's). (#5961)
-- In Microsoft Word dialoogvensters, NVDA's objectnavigatie has been greatly verbeterd. (#6036)
+- In Microsoft Word reageert NVDA nu correct bij gebruik van de tabelnavigatiecommando's van Word zelf (alt+home, alt+end, alt+pageUp en alt+pageDown) en tabelselectiecommando's (navigatiecommando's met shift). (#5961)
+- In dialoogvensters van Microsoft Word is de objectnavigatie van NVDA sterk verbeterd. (#6036)
 - In sommige toepassingen zoals Visual Studio 2015 worden sneltoetsen (b.v. control+c om te kopiëren) nu gemeld zoals verwacht. (#6021)
-- Een zeldzaam issue opgelost when scanning for seriële poorten op sommige systemen which made some braille display drivers unusable. (#6015)
-- Kleuren melden in Microsoft Word is nu more accurate as changes in Microsoft Office Themes are nu taken into account. (#5997)
-- Bladermodus voor Microsoft Edge en ondersteuning voor Start Menu zoeksuggesties, is opnieuw beschikbaar on Windows 10 builds after April 2016. (#5955)
-- In Microsoft Word, automatic tabel header reading works better when dealing met merged cellen. (#5926)
-- In de Windows 10 Mail app, NVDA niet langer fails to read de inhoud van berichten. (#5635) 
-- When speak commandotoetsen is on, lock toetsen zoals caps lock are niet langer tweemaal aangekondigd. (#5490)
-- Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)
-- In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)
-- Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
-- When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)
+- Een zeldzaam probleem opgelost bij het scannen naar seriële poorten dat op sommige systemen sommige drivers voor brailleleesregels onbruikbaar maakte. (#6015)
+- Kleuren melden in Microsoft Word is nu meer accuraat omdat er nu rekening wordt gehouden met wijzigingen in Microsoft Office Themes. (#5997)
+- Bladermodus voor Microsoft Edge en ondersteuning voor Start Menu zoeksuggesties, is opnieuw beschikbaar in versies van Windows 10 van na april 2016. (#5955)
+- In Microsoft Word werkt het automatisch lezen van tabelhoofdingen beter in het geval van samengevoegde cellen. (#5926)
+- In de Windows 10 Mail app weigert NVDA niet langer de inhoud van berichten te lezen. (#5635) 
+- Als Commandotoetsen uitspreken is ingeschakeld, worden lock-toetsen zoals caps lock niet langer tweemaal aangekondigd. (#5490)
+- Dialoogvensters van Windows Gebruikersaccountbeheer worden opnieuw correct gelezen in de Windows 10 verjaardagsupdate. (#5942)
+- In de Web Conference Plugin (zoals gebruikt in de website out-of-sight.net) zal NVDA niet langer piepen en wijzigingen van de voortgangsbalk uitspreken die te maken hebben met invoer via de microfoon. (#5888)
+- Als u de commando's Volgende/Vorige zoeken uitvoert in Bladermodus zal er nu een correcte  hoofdlettergevoelige zoekopdracht gebeuren als de oorspronkelijke  zoekopdracht hoofdletteergevoelig was. (#5522)
+- Bij het bewerken van woordenboekregels krijgt u nu feedback als een reguliere expressie fout is. NVDA loopt niet langer vast als een woordenboekbestand een verkeerde reguliere expressie bevat. (#4834)
+- Als NVDA niet kan communiceren met een brailleleesregel (b.v. omdat hij werd ontkoppeld), zal dit automatisch het gebruik van de leesregel uitschakelen. (#1555)
+- Lichtverbeterde performantie van filters in de Bladermodus Elementenlijst in sommige gevallen. (#6126)
+- In Microsoft Excel meldt NVDA de achtergrondpatronen. De gebruikte namen komen nu overeen met die van Excel. (#6092)
+- Verbeterde ondersteuning voor het Windows 10 logon scherm, inclusief aankondigingen van waarschuwingen en het activeren van het wachtwoordveld via aanraken. (#6010)
+- NVDA detecteert nu correct de secundaire routingknoppen van de ALVA BC640/680 brailleleesregels. (#5206)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
 
 
 = 2016.2.1 =

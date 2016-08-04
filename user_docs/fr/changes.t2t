@@ -13,11 +13,15 @@ Quoi de Neuf dans NVDA
 - Sous Microsoft Word, l'interligne est maintenant annoncé via la commande d'annonce de formatage de NVDA, quand on le change par divers raccourcis clavier de Microsoft word, et quand on se déplace dans un texte avec différents interlignes si l'annonce des interlignes est activée dans le dialogue Mise en Forme des Documents de NVDA.  (#2961)
 - Sous Internet Explorer, les éléments structurants HTML 5 sont maintenant reconnus. (#6044)
 - L'annonce des commentaires (comme sous Microsoft Word) peut maintenant être désactivée via une case à cocher Annoncer les Commentaires dans le dialogue Mise en Forme des Documents de NVDA. (#5108)
+- Gestionnaire de modules complémentaires : Il est maintenant possible de désactiver un module individuellement. (#3090)
+- Des assignations de touches supplémentaires ont été ajoutées pour les afficheurs braille ALVA BC640/680 series. (#5206)
+- Il y a maintenant une commande pour amener l'afficheur braille au focus courant. Actuellement, seul les terminaux ALVA BC640/680 ont une touche assignée à cette commande, mais elle peut être assignée manuellement pour les autres afficheurs dans le Dialogue Gestes de Commandes si besoin. (#5250)
 
 
 == Changements ==
 - NVDA annonce maintenant les couleurs en utilisant un jeu basique clair de 9 teintes et 3 tons, avec des variations de brillance et paleur, ceci pour ne pas utiliser des noms de couleurs plus subjectifs et moins clairs. (#6029)
 - le comportement de NVDA+F9 suivi de NVDA+F10 a été modifié pour sélectionner le texte au premier appui sur F10. Quand f10 est pressé deux fois rapidement, le texte est copié dans le presse-papiers. (#4636)
+- eSpeakNG mis à jour à la version Master 11b1a7b (22 Juin 2016). (#6037)
 
 
 == Corrections de Bogues ==
@@ -35,8 +39,17 @@ Quoi de Neuf dans NVDA
 - Dans le plug-in Web Conference (comme utilisé sous out-of-sight.net) NVDA n'annonce plus par des bips et vocalement les mises à jour de la barre de progression concernant l'entrée microphone. (#5888)
 - Effectuer une commande Recherche Suivant ou Recherche Précédent en mode navigation fera maintenant une recherche sensible à la casse si la recherche originale est sensible à la casse. (#5522)
 - Quand on édite les entrées de dictionnaire, un avertissement est maintenant donné pour les expressions régulières incorrectes. NVDA ne se plante plus si un dictionnaire contient une expression régulière invalide. (#4834)
+- Si NVDA est incapable de communiquer avec un afficheur braille (ex : parce qu'il a été déconnecté), il désactivera automatiquement l'utilisation de l'afficheur. (#1555)
+- Légère amélioration de performance du filtrage dans la liste d'éléments du mode navigation dans certains cas. (#6126)
+- Sous Microsoft Excel, les noms de modèles d'arrière-plan annoncés par NVDA correspondent maintenant à ceux utilisés par Excel. (#6092)
+- Support amélioré de l'écran de connexion à Windows 10, incluant l'annonce des alertes et l'activation du champ mot de passe au toucher. (#6010)
+- NVDA détecte maintenant correctement les boutons de routage secondaires sur les afficheurs braille ALVA BC640/680 series. (#5206)
 
 
+== Changements pour les Développeurs ==
+- La journalisation des informations directement depuis une propriété ne provoque plus l'appel récursif de la propriété indéfiniment. (#6122)
+
+ 
 = 2016.2.1 =
 Cette version corrige des plantages sous Microsoft Word:
 

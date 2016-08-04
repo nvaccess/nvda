@@ -1199,7 +1199,7 @@ Puedes configurar el anunciado de:
 - Números de línea
 - Sangría de línea
 - Sangría de párrafo (por ejemplo: sangría francesa, sangría de primera línea)
-- espaciado de línea (simple, doble etc)
+- Espaciado de línea (simple, doble etc)
 - Tablas
 - Encabezados de fila/columna de tabla
 - Coordenadas de celdas de tabla
@@ -1423,11 +1423,11 @@ No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA dete
 Para conmutar el visualizador de voz desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
 
 ++ Administrador de Complementos ++
-El Administrador de Complementos, al que se accede seleccionando Administrador de complementos bajo Herramientas en el menú NVDA, te permite instalar y desinstalar paquetes de complementos para NVDA.
+El Administrador de Complementos, al que se accede seleccionando Administrador de complementos bajo Herramientas en el menú NVDA, te permite instalar, desinstalar, habilitar y deshabilitar paquetes de complementos para NVDA.
 Estos paquetes son proporcionados por la comunidad y contienen código personalizado que podrá añadir o cambiar características en NVDA o también proporcionan soporte para pantallas Braille o sintetizadores de voz extra.
 
 El Administrador de Complementos contiene una lista que muestra todos los complementos instalados actualmente en tu configuración de usuario de NVDA. 
-Se muestra un nombre de paquete, versión y autor para cada complemento, aunque se puede ver más información tal como una descripción y una URL seleccionando el complemento y pulsando el botón Acerca del complemento.
+Se muestra el nombre de paquete, el estado, la versión y el autor para cada complemento, aunque se puede ver más información tal como una descripción y una URL seleccionando el complemento y pulsando el botón Acerca del complemento.
 Si hay ayuda disponible para el complemento seleccionado, puedes acceder a ella pulsando su botón de Ayuda.
 
 Para examinar y descargar los complementos disponibles online, pulsa el botón Obtener Complementos.
@@ -1436,21 +1436,27 @@ Si NVDA está instalado y ejecutándose en tu sistema, puedes abrir directamente
 De lo contrario, guarda el paquete de complemento y sigue las instrucciones más abajo.
 
 Para instalar un complemento que obtuviste previamente, pulsa el botón Instalar.
- Esto te permitirá buscar un paquete de complemento (fichero .nvda-addon) en algún lugar de tu ordenador o en una red.
+Esto te permitirá buscar un paquete de complemento (fichero .nvda-addon) en algún lugar de tu ordenador o en una red.
 Una vez pulses Abrir, el proceso de instalación comenzará.
 
 Cuando un complemento se va a instalar, NVDA primero te pedirá que confirmes que realmente deseas instalarlo.
 Debido a que la funcionalidad de los complementos no tiene restricciones dentro de NVDA, lo cual en teoría podría incluir el acceso a tus datos personales o incluso a todo el sistema si NVDA es una copia instalada, es muy importante que instales sólo complementos desde fuentes fiables.
 Una vez que el complemento esté instalado, NVDA debe reiniciarse para que el complemento comience su ejecución. 
-Hasta que lo hagas, un estado de "instalar" se mostrará para ese complemento en la lista.
+Hasta que lo hagas, se mostrará un estado de "instalar" para ese complemento en la lista.
 
 Para eliminar un complemento, selecciona el complemento desde la lista y pulsa el botón Eliminar.
 NVDA te preguntará si realmente deseas hacer esto.
 Al igual que con la instalación, NVDA debe reiniciarse para que el complemento sea eliminado completamente.
-Hasta que lo hagas, un estado de "eliminar" se mostrará para ese complemento en la lista.
+Hasta que lo hagas, se mostrará un estado de "eliminar" para ese complemento en la lista.
+
+Para deshabilitar un complemento, pulsa el botón deshabilitar.
+Para habilitar un comnplemento anteriormente deshabilitado, pulsa el botón habilitar.
+Puedes deshabilitar un complemento si su estado indica que está en ejecución o habilitado, o habilitarlo si el complemento está suspendido o deshabilitado.
+Para cada pulsación del botón habilitar/deshabilitar, el estado del complemento cambia para indicar qué ocurrirá al reiniciar NVDA.
+Al igual que cuando instalas o eliminas complementos, tienes que reiniciar NVDA para que los cambios tengan efecto.
 
 El administrador también tiene un botón Cerrar para cerrar el diálogo.
-Si has instalado o eliminado complementos, NVDA primero te preguntará si deseas reiniciar para que los cambios puedan llevarse a cabo.
+Si has instalado, eliminado o cambiado el estado de los complementos, NVDA primero te preguntará si deseas reiniciar para que los cambios puedan llevarse a cabo.
 
 En el pasado ha sido posible extender la funcionalidad de NVDA copiando plugins y controladores individuales en tu directorio de configuración del usuario de NVDA.
 Aunque esta versión de NVDA todavía podrá cargarlos, No se mostrarán en el Administrador de Complementos.
@@ -1595,11 +1601,17 @@ Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar pantalla braille hacia atrás | t1 |
+| Desplazar pantalla braille hacia atrás | t1 o etouch1 |
 | Mover la pantalla braille a la línea anterior | t2 |
+| Mover al foco actual | t3 |
 | Mover la pantalla braille a la línea siguiente | t4 |
-| Desplazar pantalla braille hacia adelante | t5 |
+| Desplazar pantalla braille hacia adelante | t5 o etouch3 |
 | Guiar a la celda braille | sensor |
+| Mover a la línea superior en revisión | t1+t2 |
+| Mover a la línea inferior en revisión | t4+t5 |
+| Conmutar el seguimiento braille | t1+t3 |
+| Anunciar el título | etouch2 |
+| Anunciar la barra de estado | etouch4 |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
@@ -1611,8 +1623,13 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | tecla intro | spEnter |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas las aplicaciones) | sp1+sp4 |
+| Tecla windows+b (enfocar la bandeja del sistema) | sp3+sp4 |
 | tecla windows | sp2+sp3 |
 | tecla alt+tab | sp2+sp4 |
+| tecla control+inicio | t3+spArriba |
+| tecla control+fin | t3+spAbajo |
+| tecla inicio | t3+spIzquierda |
+| tecla fin | t3+spDerecha |
 %kc:endInclude
 
 ++ Pantallas Handy Tech ++

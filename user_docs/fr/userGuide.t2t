@@ -1423,7 +1423,7 @@ Cependant, si vous cliquez ou mettez le focus sur la visionneuse, NVDA arrêtera
 Pour activer la visionneuse de parole de n'importe où, Veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
 ++ Gestionnaire de modules complémentaires ++
-Le Gestionnaire de modules complémentaires, accessible en sélectionnant "Gestion des Modules Complémentaires" dans le menu "Outils" du menu NVDA, permet d'installer ou de désinstaller des paquets de modules complémentaires pour NVDA.
+Le Gestionnaire de modules complémentaires, accessible en sélectionnant "Gestion des Modules Complémentaires" dans le menu "Outils" du menu NVDA, permet d'installer, désinstaller, activer ou désactiver des paquets de modules complémentaires pour NVDA.
 Ces paquets sont fournis par la communauté et contiennent du code qui peut ajouter ou modifier des fonctionnalités dans NVDA ou proposer le support de plages braille ou synthèses vocales suplémentaires.
 
 Le gestionnaire de modules complémentaires contient une liste affichant tous les modules complémentaires actuellement installés dans votre configuration utilisateur de NVDA.
@@ -1446,11 +1446,17 @@ Ce module complémentaire aura l'état "Installé" dans la liste jusqu'à ce que
 
 Pour supprimer un module complémentaire, sélectionnez-le dans la liste et cliquez sur le bouton "Supprimer".
 NVDA vous demandera de confirmer la désinstallation.
-Comme pour l'installation, NVDA doit être relancé pour que le module complémentaire soit complètement supprimé.
-Son statut dans la liste sera "Supprimé".
+Comme pour l'installation, NVDA doit être redémarré pour que le module complémentaire soit complètement supprimé.
+Jusqu'au redémarrage, ce module aura le statut Supprimé dans la liste.
+
+Pour désactiver un module, pressez le bouton désactiver.
+Pour activer un module précédemment désactivé, pressez le bouton activer.
+Vous pouvez désactiver un module si le statut du module indique qu'il est en cours d'exécution ou activé, ou l'activer si le module est suspendu ou désactivé.
+Pour chaque appui sur le bouton Activer/Désactiver, le statut du module change pour indiquer ce qui arrivera au redémarrage de NVDA.
+Comme lorsque vous installez ou supprimez un module, vous devez redémarrer NVDA pour que les changements prennent effet.
 
 Le gestionnaire a également un bouton "Fermer" pour fermer le dialogue.
-Si vous avez installé ou supprimé des modules complémentaires, NVDA vous demandera d'abord si vous voulez le redémarrer pour que vos changements prennent effet.
+Si vous avez installé, supprimé ou changé le statut des modules complémentaires, NVDA vous demandera d'abord si vous voulez le redémarrer pour que vos changements prennent effet.
 
 Jusqu'à maintenant, il était possible d'étendre les fonctionnalités de NVDA en copiant des plugins ou pilotes dans votre répertoire de configuration utilisateur.
 Même si cette version peut toujours les charger, ceux-ci ne seront pas affichés dans le gestionnaire de modules complémentaires.
@@ -1595,11 +1601,17 @@ Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 %kc:beginInclude
 || Nom | Touche |
-| Défilement arrière de l'affichage braille | t1 |
+| Défilement arrière de l'affichage braille | t1 ou etouch1 |
 | Amener l'affichage braille à la ligne précédente | t2 |
+| Aller au focus courant | t3 |
 | Amener l'affichage braille à la ligne suivante | t4 |
-| Défilement avant de l'affichage braille | t5 |
+| Défilement avant de l'affichage braille | t5 ou etouch3 |
 | Aller à la cellule braille | routing |
+| Aller à la première ligne en mode revue | t1+t2 |
+| Aller à la dernière ligne en mode revue | t4+t5 |
+| Bascule du suivi braille | t1+t3 |
+| Annonce du titre | etouch2 |
+| Annonce de la barre d'état | etouch4 |
 | Touche maj+tab | sp1 |
 | Touche alt | sp2 |
 | Touche échap | sp3 |
@@ -1609,10 +1621,16 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Flèche gauche | spLeft |
 | Flèche droite | spRight |
 | Entrer | spEnter |
+| date et heure | sp1+sp2 |
 | Menu NVDA | sp1+sp3 |
 | Touche Windows+d (Minimiser toutes les applications) | sp1+sp4 |
+| Touche windows+b (focus sur la zone de notification) | sp3+sp4 |
 | Touche Windows | sp2+sp3 |
 | Touche alt+tab | sp2+sp4 |
+| Touche contrôle+début | t3+spUp |
+| Touche contrôle+fin | t3+spDown |
+| Touche home | t3+spLeft |
+| Touche fin | t3+spRight |
 %kc:endInclude
 
 ++ Les terminaux Handy Tech ++
