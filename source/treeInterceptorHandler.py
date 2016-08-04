@@ -162,6 +162,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _set__rangeObj(self,r):
 		self.innerTextInfo._rangeObj=r
 
+	def _get_locationText(self):
+		return self.innerTextInfo.locationText
+
 	def copyToClipboard(self):
 		return self.innerTextInfo.copyToClipboard()
 
