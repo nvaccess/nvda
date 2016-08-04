@@ -1423,7 +1423,7 @@ Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog m
 Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en speciel inputbevægelse med [dialogen inputbevægelser [InputGestures].
 
 ++ Styring af tilføjelsesprogrammer++
-Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installer tilføjelser til skærmlæseren, samt afinstallere tilføjelserne.
+Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installer tilføjelser til skærmlæseren, samt afinstallere, aktivére eller deaktivére tilføjelserne.
 Disse pakker kan indeholde tilpasset kode der kan ændre eller tilføje funktionalitet i NVDA, såsom understøttelse af bestemte talesynteser eller punktdisplays. Pakkerne er udgivet og bliver stillet til rådighed af fællesskabet.
 
 Under Styring af tilføjelsesprogrammer kan du finde en liste over alle de tilføjelser, du har installeret på nuværende tidspunkt i din NVDA brugerkonfiguration.
@@ -1449,8 +1449,14 @@ NvDA spørger, om du ønsker at fortsætte med denne handling.
 Ligesom ved installation skal NVDA genstartes før ændringen træder i kraft.
 Før du udfører denne handling, vil statusen af dit afinstallerede tilføjelsesprogram vise "Fjern."
 
-dialogen har også en Luk-knap.
-Hvis du har tilføjet eller fjernet tilføjelsesprogrammer, vil NVDA spørge om du ønsker at genstarte, så dine ændringer kan træde i kraft.
+For at deaktivére et tilføjelsesprogram, tryk på knappen "Deaktivér".
+For at aktivére et tidligere deaktivéret tilføjelsesprogram, tryk på knappen "Aktivér".
+Du kan deaktivére et tilføjelsesprogram, hvis status indikerer at programmet kører eller er i gang, eller deaktivére det hvis tilføjelsesprogrammet er stoppet eller deaktivéret.
+For hvert tryk af disse knapper vil status ændres, så du ved hvad der vil ske, når NVDA genstartes.
+Hvis du har lavet ændringer til tilføjelsesprogrammer,skal du genstarte NVDA, så dine ændringer kan træde i kraft.
+
+Dialogboksen har også en luk-knap.
+Hvis du har installeret, fjernet eller ændret status af et tilføjelsesprogram, vil NVDA spørge om du ønsker at genstarte, så ændringerne kan træde i kraft.
 
 Det har før i tiden været muligt at udvide funktionaliteten af NVDA ved at kopiere plugins og drivere ind i mappen med brugerkonfigurationen til NVDA.
 Selv om denne version af NVDA kan indlæse dem, vil de ikke figurere i listen over tilføjelsesprogrammer.
@@ -1597,9 +1603,15 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 || Navn | Tast |
 | Rul punktdisplay tilbage | t1 |
 | Flyt punktdisplay to forrige linje | t2 |
+| Flyt til aktuelle fokus | t3 |
 | Flyt punktdisplay til næste linje | t4 |
-| Rul punktdisplay fremad | t5 |
+| Rul punktdisplay fremad | t5 eller etouch3 |
 | Flyt til punktcelle | markørsammenføringsknapper |
+| Flyt til øverste linje i læsning | t1+t2 |
+| Flyt til nederste linje i læsning | t4+t5 |
+| Skift punkt tøjret til | t1+t3 |
+| Rapporter titel | etouch2 |
+| Rapporter statuslinje | etouch4 |
 | shift+tab tast | sp1 |
 | alt tast | sp2 |
 | escape tast | sp3 |
@@ -1609,10 +1621,16 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Venstre-pil | spVenstre |
 | Højre-pil | spHøjre |
 | enter tast | spEnter |
+| Rapporter dato/tid | sp1+sp2 |
 | NVDA-menu | sp1+sp3 |
 | windows+d tast (Minimer alle programmer) | sp1+sp4 |
+| windows+b key (gå til systembakke) | sp3+sp4 |
 | windows tast | sp2+sp3 |
 | alt+tab tast | sp2+sp4 |
+| CTRL+hjem | t3+spUp |
+| CTRL+end | t3+spDown |
+| hjem tast | t3+spLeft |
+| end tast | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech Displays ++
