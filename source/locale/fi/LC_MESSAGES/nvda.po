@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
-"PO-Revision-Date: 2016-07-14 21:26+0200\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-29 09:45+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1405,7 +1405,7 @@ msgstr "punainen"
 #. Translators: The color between  red and orange (HSV hue 15 degrees)
 msgctxt "color hue"
 msgid "red-orange"
-msgstr "punaoranssi"
+msgstr "puna-oranssi"
 
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
@@ -1415,7 +1415,7 @@ msgstr "oranssi"
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
 msgid "orange-yellow"
-msgstr "oranssi-keltainen"
+msgstr "kelta-oranssi"
 
 #. Translators: The color yellow (HSV hue 60 degrees)
 msgctxt "color hue"
@@ -1425,7 +1425,7 @@ msgstr "keltainen"
 #. Translators: The color between  yellow and green (HSV hue 90 degrees)
 msgctxt "color hue"
 msgid "yellow-green"
-msgstr "keltavihreä"
+msgstr "kelta-vihreä"
 
 #. Translators: The color green (HSV hue 120 degrees)
 msgctxt "color hue"
@@ -1435,7 +1435,7 @@ msgstr "vihreä"
 #. Translators: The color between  green and aqua (HSV hue 150 degrees)
 msgctxt "color hue"
 msgid "green-aqua"
-msgstr "vihreä-akva"
+msgstr "vihreä ja akva"
 
 #. Translators: The color aqua (HSV hue 180 degrees)
 msgctxt "color hue"
@@ -1445,7 +1445,7 @@ msgstr "akva"
 #. Translators: The color between  aqua and blue (HSV hue 210 degrees)
 msgctxt "color hue"
 msgid "aqua-blue"
-msgstr "akva-sininen"
+msgstr "akva ja sininen"
 
 #. Translators: The color blue (HSV hue 240 degrees)
 msgctxt "color hue"
@@ -1455,7 +1455,7 @@ msgstr "sininen"
 #. Translators: The color between  blue and purple (HSV hue 270 degrees)
 msgctxt "color hue"
 msgid "blue-purple"
-msgstr "sinivioletti"
+msgstr "sini-violetti"
 
 #. Translators: The color purple (HSV hue 300 degrees)
 msgctxt "color hue"
@@ -1465,7 +1465,7 @@ msgstr "violetti"
 #. Translators: The color between  purple and pink (HSV hue 312 degrees)
 msgctxt "color hue"
 msgid "purple-pink"
-msgstr "violetti-pinkki"
+msgstr "violetti ja pinkki"
 
 #. Translators: The color pink (HSV hue 324 degrees)
 msgctxt "color hue"
@@ -1475,13 +1475,19 @@ msgstr "pinkki"
 #. Translators: The color between  pink and red (HSV hue 342 degrees)
 msgctxt "color hue"
 msgid "pink-red"
-msgstr "pinkki-punainen"
+msgstr "pinkki ja punainen"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "kirkkaan{color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -1546,7 +1552,7 @@ msgstr "hyvin tumman{color} harmaa"
 #. Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "red-brown"
-msgstr "punaruskea"
+msgstr "puna-ruskea"
 
 #. Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
 msgctxt "color hue"
@@ -1556,7 +1562,7 @@ msgstr "ruskea"
 #. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "brown-yellow"
-msgstr "keltaruskea"
+msgstr "kelta-ruskea"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2564,11 +2570,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "kirjoitettuja merkkejä ei puhuta"
+msgstr "Kirjoitettujen merkkien puhuminen pois"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "kirjoitetut merkit puhutaan"
+msgstr "Kirjoitettujen merkkien puhuminen käytössä"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
@@ -2576,11 +2582,11 @@ msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen merkkien puhumis
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "kirjoitettuja sanoja ei puhuta"
+msgstr "Kirjoitettujen sanojen puhuminen pois"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "kirjoitetut sanat puhutaan"
+msgstr "Kirjoitettujen sanojen puhuminen käytössä"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
@@ -2588,11 +2594,11 @@ msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen puhumise
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "komentonäppäimiä ei puhuta"
+msgstr "Komentonäppäimien puhuminen pois"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "komentonäppäimet puhutaan"
+msgstr "Komentonäppäimien puhuminen käytössä"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -2604,11 +2610,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "fontin lukeminen pois"
+msgstr "Fontin lukeminen pois"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "fontin lukeminen käytössä"
+msgstr "Fontin lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -2616,11 +2622,11 @@ msgstr "Ottaa käyttöön fonttimuutosten ilmoittamisen tai poistaa sen käytös
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "fonttikoon lukeminen pois"
+msgstr "Fonttikoon lukeminen pois"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "fonttikoon lukeminen käytössä"
+msgstr "Fonttikoon lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -2629,11 +2635,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "fonttimääreiden lukeminen pois"
+msgstr "Fonttimääreiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "fonttimääreiden lukeminen käytössä"
+msgstr "Fonttimääreiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
@@ -2641,11 +2647,11 @@ msgstr "Ottaa käyttöön fonttimääreiden ilmoittamisen tai poistaa sen käyt�
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "muokkausten lukeminen pois"
+msgstr "Muokkausten lukeminen pois"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "muokkausten lukeminen käytössä"
+msgstr "Muokkausten lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -2653,11 +2659,11 @@ msgstr "Ottaa käyttöön muokkausten lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "korostuksen ilmoittaminen pois"
+msgstr "Korostuksen ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "korostuksen ilmoittaminen käytössä"
+msgstr "Korostuksen ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
@@ -2665,11 +2671,11 @@ msgstr "Ottaa käyttöön korostuksen ilmoittamisen tai poistaa sen käytöstä.
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
-msgstr "värien lukeminen pois"
+msgstr "Värien lukeminen pois"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "värien lukeminen käytössä"
+msgstr "Värien lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -2677,11 +2683,11 @@ msgstr "Ottaa käyttöön värien lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "tasauksen lukeminen pois"
+msgstr "Tasauksen lukeminen pois"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "tasauksen lukeminen käytössä"
+msgstr "Tasauksen lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
@@ -2690,11 +2696,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "tyylin lukeminen pois"
+msgstr "Tyylin lukeminen pois"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "tyylin lukeminen käytössä"
+msgstr "Tyylin lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -2702,11 +2708,11 @@ msgstr "Ottaa käyttöön tyylimuutosten ilmoittamisen tai poistaa sen käytöst
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "kirjoitusvirheiden lukeminen pois"
+msgstr "Kirjoitusvirheiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "kirjoitusvirheiden lukeminen käytössä"
+msgstr "Kirjoitusvirheiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
@@ -2714,11 +2720,11 @@ msgstr "Ottaa käyttöön kirjoitusvirheiden lukemisen tai poistaa sen käytöst
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "sivunumeroiden lukeminen pois"
+msgstr "Sivunumeroiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "sivunumeroiden lukeminen käytössä"
+msgstr "Sivunumeroiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -2726,11 +2732,11 @@ msgstr "Ottaa käyttöön sivunumeroiden lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "rivinumeroiden lukeminen pois"
+msgstr "Rivinumeroiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "rivinumeroiden lukeminen käytössä"
+msgstr "Rivinumeroiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
@@ -2738,11 +2744,11 @@ msgstr "Ottaa käyttöön rivinumeroiden lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "rivin sisennyksen lukeminen pois"
+msgstr "Rivin sisennyksen lukeminen pois"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "rivin sisennyksen lukeminen käytössä"
+msgstr "Rivin sisennyksen lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
@@ -2750,11 +2756,11 @@ msgstr "Ottaa käyttöön rivin sisennyksen lukemisen tai poistaa sen käytöst�
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "kappaleen sisennyksen lukeminen pois"
+msgstr "Kappaleen sisennyksen lukeminen pois"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "kappaleen sisennyksen lukeminen käytössä"
+msgstr "Kappaleen sisennyksen lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2763,11 +2769,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
-msgstr "rivivälien ilmoittaminen pois"
+msgstr "Rivivälien ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing on"
-msgstr "rivivälien ilmoittaminen käytössä"
+msgstr "Rivivälien ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report line spacing command.
 msgid "Toggles on and off the reporting of line spacing"
@@ -2775,11 +2781,11 @@ msgstr "Ottaa käyttöön rivivälien ilmoittamisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "taulukoiden lukeminen pois"
+msgstr "Taulukoiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "taulukoiden lukeminen käytössä"
+msgstr "Taulukoiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
@@ -2787,11 +2793,11 @@ msgstr "Ottaa käyttöön taulukoiden lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "taulukon rivi- ja sarakeotsikoiden lukeminen pois"
+msgstr "Taulukon rivi- ja sarakeotsikoiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "taulukon rivi- ja sarakeotsikoiden lukeminen käytössä"
+msgstr "Taulukon rivi- ja sarakeotsikoiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
@@ -2801,11 +2807,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "taulukon solujen koordinaattien lukeminen pois"
+msgstr "Taulukon solujen koordinaattien lukeminen pois"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "taulukon solujen koordinaattien lukeminen käytössä"
+msgstr "Taulukon solujen koordinaattien lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -2815,11 +2821,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "linkkien lukeminen pois"
+msgstr "Linkkien lukeminen pois"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "linkkien lukeminen käytössä"
+msgstr "Linkkien lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -2827,11 +2833,11 @@ msgstr "Ottaa käyttöön linkkien lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "kommenttien lukeminen pois"
+msgstr "Kommenttien lukeminen pois"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "kommenttien lukeminen käytössä"
+msgstr "Kommenttien lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
@@ -2839,11 +2845,11 @@ msgstr "Ottaa käyttöön kommenttien lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "listojen lukeminen pois"
+msgstr "Listojen lukeminen pois"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "listojen lukeminen käytössä"
+msgstr "Listojen lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -2851,11 +2857,11 @@ msgstr "Ottaa käyttöön listojen lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "otsikoiden lukeminen pois"
+msgstr "Otsikoiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "otsikoiden lukeminen käytössä"
+msgstr "Otsikoiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
@@ -2863,11 +2869,11 @@ msgstr "Ottaa käyttöön otsikoiden lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "sisennettyjen kappaleiden lukeminen pois"
+msgstr "Sisennettyjen kappaleiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "sisennettyjen kappaleiden lukeminen käytössä"
+msgstr "Sisennettyjen kappaleiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
@@ -2876,11 +2882,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "kiintopisteiden lukeminen pois"
+msgstr "Kiintopisteiden lukeminen pois"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "kiintopisteiden lukeminen käytössä"
+msgstr "Kiintopisteiden lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -2888,11 +2894,11 @@ msgstr "Ottaa käyttöön kiintopisteiden lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "kehysten lukeminen pois"
+msgstr "Kehysten lukeminen pois"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "kehysten lukeminen käytössä"
+msgstr "Kehysten lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
@@ -2900,11 +2906,11 @@ msgstr "Ottaa käyttöön kehysten lukemisen tai poistaa sen käytöstä"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "napsautettavien kohteiden ilmoittaminen pois"
+msgstr "Napsautettavien kohteiden ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "napsautettavien kohteiden ilmoittaminen käytössä"
+msgstr "Napsautettavien kohteiden ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3701,6 +3707,10 @@ msgstr "siirtää pistenäytön seuraavalle riville"
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Syöttää pistekirjoitusta pistenäppäimistön avulla"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Siirtää pistenäytön nykyiseen kohdistukseen."
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5839,8 +5849,8 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"Lisäosat on poistettu käytöstä. Ne otetaan taas käyttöön seuraavalla NVDA:n "
-"uudelleenkäynnistyksellä ellet valitse käytöstäpoistamista toistamiseen."
+"Lisäosat on poistettu käytöstä. Ne otetaan käyttöön seuraavalla NVDA:n "
+"uudelleenkäynnistyksellä, ellet poista niitä käytöstä toistamiseen."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -5867,9 +5877,10 @@ msgid "Add-ons Manager"
 msgstr "Lisäosien hallinta"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"Lisäosat on poistettu käytöstä. Ota ne käyttöön käynnistämällä NVDA "
+"Kaikki lisäosat on poistettu käytöstä. Ota ne käyttöön käynnistämällä NVDA "
 "uudelleen."
 
 #. Translators: the label for the installed addons list in the addons manager.
@@ -5899,6 +5910,10 @@ msgstr "&Tietoja..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "&Ohje"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Poista käytöstä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5970,9 +5985,11 @@ msgstr "Odota, kun lisäosaa asennetaan."
 msgid "Failed to install add-on  from %s"
 msgstr "Lisäosan asennus epäonnistui kohteesta %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Haluatko varmasti poistaa valitun lisäosan NVDA:sta?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Poista lisäosa"
 
@@ -5984,7 +6001,15 @@ msgstr "asenna"
 msgid "remove"
 msgstr "poista"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "poista käytöstä"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "ota käyttöön"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "ei käytössä"
 
@@ -5992,12 +6017,16 @@ msgstr "ei käytössä"
 msgid "running"
 msgstr "käytössä"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Ota käyttöön"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Lisäosia on asennettu tai poistettu. NVDA on käynnistettävä uudelleen, jotta "
+"Lisäosiin on tehty muutoksia. NVDA on käynnistettävä uudelleen, jotta "
 "muutokset tulevat voimaan. Haluatko käynnistää uudelleen nyt?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -6059,7 +6088,7 @@ msgstr "Po&ista kaikki käynnistimet käytöstä tilapäisesti"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "(tavalliset asetukset)"
+msgstr "(normaalit asetukset)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
@@ -6940,6 +6969,11 @@ msgstr "Lue &värit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "Lue ko&mmentit"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Lue &muokkaajan muokkaukset"
 
@@ -7065,6 +7099,14 @@ msgstr "&Kommentti"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&Tyyppi"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Virhe säännöllisessä lausekkeessa: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "Virhe sanastomäärityksessä"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7364,73 +7406,78 @@ msgstr "automaattinen"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "shakkiruutu"
+msgid "diagonal crosshatch"
+msgstr "vinoon ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "siksakki"
+msgid "thin diagonal crosshatch"
+msgstr "kapea vinoon ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "alas"
+msgid "reverse diagonal stripe"
+msgstr "kenoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "16% harmaa"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "12,5 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "25% harmaa"
+#, python-format
+msgid "25% gray"
+msgstr "25 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "50% harmaa"
+#, python-format
+msgid "50% gray"
+msgstr "50 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "75% harmaa"
+#, python-format
+msgid "75% gray"
+msgstr "75 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "8% harmaa"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "6,25 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "ruudukko"
+msgid "thin horizontal crosshatch"
+msgstr "kapea vaakasuuntaan ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "vaakasuuntainen"
+msgid "horizontal stripe"
+msgstr "vaakasuuntaan raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "kapea alas"
+msgid "thin reverse diagonal stripe"
+msgstr "kapea kenoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "kapea vaakasuuntainen"
+msgid "thin horizontal stripe"
+msgstr "kapea vaakasuuntaan raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "kapea ylös"
+msgid "thin diagonal stripe"
+msgstr "kapea vinoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "kapea pystysuuntainen"
+msgid "thin vertical stripe"
+msgstr "kapea pystysuuntainen raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7439,8 +7486,8 @@ msgstr "ei mitään"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "75% puoliharmaa"
+msgid "thick diagonal crosshatch"
+msgstr "leveä vinoon ristiviivoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7449,13 +7496,13 @@ msgstr "tasainen"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "ylös"
+msgid "diagonal stripe"
+msgstr "vinoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "pystysuuntainen"
+msgid "vertical stripe"
+msgstr "pystysuuntainen raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8610,6 +8657,45 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "shakkiruutu"
+
+#~ msgid "crisscross"
+#~ msgstr "siksakki"
+
+#~ msgid "down"
+#~ msgstr "alas"
+
+#~ msgid "gray16"
+#~ msgstr "16% harmaa"
+
+#~ msgid "gray25"
+#~ msgstr "25% harmaa"
+
+#~ msgid "gray50"
+#~ msgstr "50% harmaa"
+
+#~ msgid "gray75"
+#~ msgstr "75% harmaa"
+
+#~ msgid "grid"
+#~ msgstr "ruudukko"
+
+#~ msgid "light down"
+#~ msgstr "kapea alas"
+
+#~ msgid "light up"
+#~ msgstr "kapea ylös"
+
+#~ msgid "light vertical"
+#~ msgstr "kapea pystysuuntainen"
+
+#~ msgid "semi gray75"
+#~ msgstr "75% puoliharmaa"
+
+#~ msgid "up"
+#~ msgstr "ylös"
 
 #~ msgid "unknown color"
 #~ msgstr "tuntematon väri"

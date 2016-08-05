@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
-"PO-Revision-Date: 2016-07-16 11:01+0530\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-31 11:46+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -1477,6 +1477,11 @@ msgstr "இளஞ்சிவப்பு-சிவப்பு"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "ஒளிர் {color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 msgctxt "color variation"
@@ -3669,6 +3674,10 @@ msgstr "பிரெயில் காட்சியமைவை அடுத�
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "பிரெயில் விசைப் பலகை மூலம் புள்ளிகளை உள்ளீடு செய்கிறது"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "பிரெயில் காட்சியமைவை தற்போதைய குவிமையத்திற்கு நகர்த்தும்"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "உட்பொருத்திகள் மீளேற்றம் செய்யப்பட்டன"
@@ -5795,7 +5804,8 @@ msgid "Add-ons Manager"
 msgstr "கூட்டுக்கூறு மேலாளர்"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "எல்லா கூட்டுக்கூறுகளும் இப்பொழுது செயலிழந்துள்ளன. அவைகளைச் செயற்படுத்த தாங்கள் என்விடிஏவை "
 "மறுதுவக்க வேண்டும். "
@@ -5827,6 +5837,10 @@ msgstr "கூட்டுக்கூறு குறித்து... (&A)"
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "கூட்டுக்கூறு உதவி (&H)"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "கூட்டுக்கூறினைச் செயலிழக்கச் செய்க "
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5867,7 +5881,7 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"இக்கூட்டுக்கூறைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா? நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் "
+"இக்கூட்டுக்கூறினைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா? நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் "
 "பெறப்படும் கூட்டுக்கூறுகளை மட்டுமே நிறுவுங்கள்.\n"
 "கூட்டுக்கூறு: {summary} {version}\n"
 "படைப்பாளர்: {author}"
@@ -5896,13 +5910,15 @@ msgstr "கூட்டுக்கூறு நிறுவப்படுக�
 msgid "Failed to install add-on  from %s"
 msgstr "%s தொகுப்பில் இருக்கும் கூட்டுக்கூறின் நிறுவுதல் தோல்வியடைந்தது"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr ""
-"தெரிவுச் செய்யப்பட்டிருக்கும் கூட்டுக்கூறைத் தாங்கள் என்விடிஏவிலிருந்து கட்டாயம் நீக்க "
+"தெரிவுச் செய்யப்பட்டிருக்கும் கூட்டுக்கூறினைத் தாங்கள் என்விடிஏவிலிருந்து கட்டாயம் நீக்க "
 "விரும்புகிறீர்களா?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
-msgstr "கூட்டுக்கூறை நீக்குக"
+msgstr "கூட்டுக்கூறினை நீக்குக"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "install"
@@ -5912,7 +5928,15 @@ msgstr "நிறுவுக"
 msgid "remove"
 msgstr "நீக்குக"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "செயலிழந்துள்ளது"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "செயலிலுள்ளது"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "இடைநிறுத்தப்பட்டது"
 
@@ -5920,13 +5944,17 @@ msgstr "இடைநிறுத்தப்பட்டது"
 msgid "running"
 msgstr "ஓடிக் கொண்டிருக்கிறது"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "கூட்டுக்கூறினைச் செயற்படுத்துக"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"கூட்டுக்கூறுகளின் நிறுவுதல் அல்லது நீக்கம் நிகழ்ந்துள்ளன. மாற்றங்களைச் செயலிற்குக் கொண்டு வர "
-"என்விடிஏவை மறுதுவக்க வேண்டும். இப்பொழுதே மறுதுவக்க விரும்புகிறீர்களா?"
+"கூட்டுக்கூறுகளில் மாற்றங்கள் செய்யப்பட்டுள்ளன. மாற்றங்களைச் செயலிற்குக் கொண்டு வர என்விடிஏவை "
+"மறுதுவக்க வேண்டும். இப்பொழுதே மறுதுவக்க விரும்புகிறீர்களா?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6876,6 +6904,11 @@ msgstr "நிரங்களை அறிவிக்கவும் (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "கருத்துரைகளை அறிவிக்கவும் (&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "தொகுப்பாளர் திருத்தங்களை அறிவிக்கவும் (&E)"
 
@@ -7001,6 +7034,14 @@ msgstr "கருத்துரை (&C)"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "வகை (&T)"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "சுருங்குறித்தொடர் பிழை: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "அகரமுதலி உள்ளீட்டுப் பிழை"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7296,73 +7337,78 @@ msgstr "தன்னியக்கம்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "கட்டங்கள்"
+msgid "diagonal crosshatch"
+msgstr "சாய்வுக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "குறுக்குநெடுக்குக் கோடுகள்"
+msgid "thin diagonal crosshatch"
+msgstr "மெல்லிய சாய்வுக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "கீழ்"
+msgid "reverse diagonal stripe"
+msgstr "திரும்பிய சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "சாம்பல் 16"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "சாம்பல் 25"
+#, python-format
+msgid "25% gray"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "சாம்பல் 50"
+#, python-format
+msgid "50% gray"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "சாம்பல் 75"
+#, python-format
+msgid "75% gray"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "சாம்பல் 8"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "வலையம்"
+msgid "thin horizontal crosshatch"
+msgstr "மெல்லிய கிடைக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "அடர் கிடைக் கோடுகள்"
+msgid "horizontal stripe"
+msgstr "கிடைப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "மெல்லியக் கீழ்க் கோடுகள்"
+msgid "thin reverse diagonal stripe"
+msgstr "மெல்லிய திரும்பிய சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "மெல்லியக் கிடைக்கோடுகள்"
+msgid "thin horizontal stripe"
+msgstr "மெல்லிய கிடைப் பட்டைக் கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "மெல்லிய மேற்கோடுகள்"
+msgid "thin diagonal stripe"
+msgstr "மெல்லிய சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "மெல்லியச் செங்குத்துக்கோடுகள்"
+msgid "thin vertical stripe"
+msgstr "மெல்லிய செங்குத்துப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7371,8 +7417,8 @@ msgstr "ஏதுமில்லை"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "அரைச் சாம்பல் 75"
+msgid "thick diagonal crosshatch"
+msgstr "அடர் சாய்வுக் குறுக்குக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7381,13 +7427,13 @@ msgstr "திண்மம்"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "அடர் மேற்கோடுகள்"
+msgid "diagonal stripe"
+msgstr "சாய்வுப் பட்டைக்கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "அடர் செங்குத்துக் கோடுகள்"
+msgid "vertical stripe"
+msgstr "செங்குத்துப் பட்டைக் கோடு"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8500,6 +8546,45 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "checker"
+#~ msgstr "கட்டங்கள்"
+
+#~ msgid "crisscross"
+#~ msgstr "குறுக்குநெடுக்குக் கோடுகள்"
+
+#~ msgid "down"
+#~ msgstr "கீழ்"
+
+#~ msgid "gray16"
+#~ msgstr "சாம்பல் 16"
+
+#~ msgid "gray25"
+#~ msgstr "சாம்பல் 25"
+
+#~ msgid "gray50"
+#~ msgstr "சாம்பல் 50"
+
+#~ msgid "gray75"
+#~ msgstr "சாம்பல் 75"
+
+#~ msgid "grid"
+#~ msgstr "வலையம்"
+
+#~ msgid "light down"
+#~ msgstr "மெல்லியக் கீழ்க் கோடுகள்"
+
+#~ msgid "light up"
+#~ msgstr "மெல்லிய மேற்கோடுகள்"
+
+#~ msgid "light vertical"
+#~ msgstr "மெல்லியச் செங்குத்துக்கோடுகள்"
+
+#~ msgid "semi gray75"
+#~ msgstr "அரைச் சாம்பல் 75"
+
+#~ msgid "up"
+#~ msgstr "அடர் மேற்கோடுகள்"
 
 #~ msgid "unknown color"
 #~ msgstr "தெரியாத நிறம்"

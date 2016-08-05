@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
-"PO-Revision-Date: 2016-07-19 20:22+0800\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-08-01 10:30+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1483,6 +1483,12 @@ msgctxt "color variation"
 msgid "bright {color}"
 msgstr "яркий {color}"
 
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
+
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
 msgctxt "color variation"
@@ -2271,7 +2277,7 @@ msgstr "содержит формулу"
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "содержит комментарий"
+msgstr "содержит примечание"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
@@ -2706,15 +2712,15 @@ msgstr "Включает и выключает объявление орфогр
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "чтение страниц выключено"
+msgstr "чтение номеров страниц выключено"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "чтение страниц включено"
+msgstr "чтение номеров страниц включено"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
-msgstr "Включает и выключает объявление страниц"
+msgstr "Включает и выключает объявление номеров страниц"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -2730,15 +2736,15 @@ msgstr "Включает и выключает объявление номеро
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "чтение отступов выключено"
+msgstr "чтение отступов строк выключено"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "чтение отступов включено"
+msgstr "чтение отступов строк включено"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
-msgstr "Включает и выключает объявление отступов"
+msgstr "Включает и выключает объявление отступов строк"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3682,6 +3688,10 @@ msgstr "перемещает брайлевское отображение на 
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Набирает шрифтом брайля с брайлевской клавиатуры"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Перемещает брайль к текущему фокусу"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Плагины перезагружены"
@@ -4369,12 +4379,12 @@ msgstr "не удалённый"
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
-msgstr "Проверено %s"
+msgstr "исправлено %s"
 
 #. Translators: Reported when text is not revised.
 #, python-format
 msgid "no revised %s"
-msgstr "no revised %s"
+msgstr "нет исправлений %s"
 
 #. Translators: Reported when text is marked
 msgid "marked"
@@ -4533,7 +4543,7 @@ msgstr "междустрочный интервал %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "Больше нет примечания."
+msgstr "вне примечания"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -5861,9 +5871,10 @@ msgid "Add-ons Manager"
 msgstr "Менеджер дополнений"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"Все дополнения отключены. Чтобы их включить необходимо перезапустить NVDA."
+"Все дополнения отключены. Чтобы их включить, необходимо перезапустить NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5892,6 +5903,10 @@ msgstr "&О дополнении..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "Сп&равка"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Отключить дополнение"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5962,9 +5977,11 @@ msgstr "Пожалуйста, подождите пока идёт процес�
 msgid "Failed to install add-on  from %s"
 msgstr "Не удалось установить дополнение из %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Вы уверены, что хотите удалить выбранное дополнение из NVDA?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Удаление дополнения"
 
@@ -5976,7 +5993,15 @@ msgstr "установить"
 msgid "remove"
 msgstr "удалить"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "отключить"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "включить"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "приостановлено"
 
@@ -5984,14 +6009,17 @@ msgstr "приостановлено"
 msgid "running"
 msgstr "работает"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Включить дополнение"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Была произведена установка или удаление дополнений. Для того, чтобы "
-"изменения вступили в силу, необходимо перезагрузить NVDA. Хотите сделать это "
-"сейчас?"
+"В дополнения были внесены изменения. Для того, чтобы изменения вступили в "
+"силу, необходимо перезагрузить NVDA. Хотите сделать это сейчас?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6949,6 +6977,11 @@ msgstr "Читать &цвета"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "Читать &примечания"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Читать &ревизии редактора"
 
@@ -7074,6 +7107,14 @@ msgstr "&Комментарий"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&Тип"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Ошибка в регулярном выражении: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "Ошибка словарной статьи"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7371,72 +7412,72 @@ msgstr "автоматический"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
+msgid "diagonal crosshatch"
 msgstr "диагональный клетчатый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
+msgid "thin diagonal crosshatch"
 msgstr "тонкий, диагональный клетчатый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
+msgid "reverse diagonal stripe"
 msgstr "перевёрнутый диагональный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
+#. 12.5% gray
+msgid "12.5% gray"
 msgstr "12,50%-ый серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
+msgid "25% gray"
 msgstr "25% серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
+msgid "50% gray"
 msgstr "50%-ый серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
+msgid "75% gray"
 msgstr "75%-ый серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
+#. 6.25% gray
+msgid "6.25% gray"
 msgstr "6,25%-ый серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
+msgid "thin horizontal crosshatch"
 msgstr "тонкий, горизонтальный клетчатый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
+msgid "horizontal stripe"
 msgstr "горизонтальный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
+msgid "thin reverse diagonal stripe"
 msgstr "тонкий, перевёрнутый диагональный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
+msgid "thin horizontal stripe"
 msgstr "тонкий, горизонтальный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
+msgid "thin diagonal stripe"
 msgstr "тонкий, диагональный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
+msgid "thin vertical stripe"
 msgstr "тонкий, вертикальный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
@@ -7446,7 +7487,7 @@ msgstr "отсутствует"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
+msgid "thick diagonal crosshatch"
 msgstr "толстый, диагональный клетчатый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
@@ -7456,12 +7497,12 @@ msgstr "сплошной"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
+msgid "diagonal stripe"
 msgstr "диагональный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
+msgid "vertical stripe"
 msgstr "вертикальный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
@@ -8279,11 +8320,11 @@ msgstr "вставка"
 
 #. Translators: a Microsoft Word revision type (deleted content)
 msgid "deletion"
-msgstr "Удаление"
+msgstr "удаление"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 msgid "property"
-msgstr "Свойство"
+msgstr "свойство"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
@@ -8307,19 +8348,19 @@ msgstr "Заменить"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
-msgstr "Свойство абзаца"
+msgstr "свойство абзаца"
 
 #. Translators: a Microsoft Word revision type (table)
 msgid "table property"
-msgstr "Свойство таблицы"
+msgstr "свойство таблицы"
 
 #. Translators: a Microsoft Word revision type (section property)
 msgid "section property"
-msgstr "Свойство раздела"
+msgstr "свойство раздела"
 
 #. Translators: a Microsoft Word revision type (style definition)
 msgid "style definition"
-msgstr "Определение стиля"
+msgstr "определение стиля"
 
 #. Translators: a Microsoft Word revision type (moved from)
 msgid "moved from"
@@ -8373,11 +8414,11 @@ msgstr "Текстовый фрейм"
 
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
-msgstr "комментарий: {text} {author} в {date}"
+msgstr "примечание: {text}. {author}, {date}"
 
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text}. {author}, {date}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -8561,7 +8602,7 @@ msgstr "Помещён над пустым абзацом"
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
-msgstr "стиль {styleName}, уровень наброски {outlineLevel}"
+msgstr "стиль {styleName}, уровень структуры {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 #, python-brace-format
@@ -8636,6 +8677,45 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "диагональный клетчатый"
+
+#~ msgid "crisscross"
+#~ msgstr "тонкий, диагональный клетчатый"
+
+#~ msgid "down"
+#~ msgstr "перевёрнутый диагональный штриховой"
+
+#~ msgid "gray16"
+#~ msgstr "12,50%-ый серый"
+
+#~ msgid "gray25"
+#~ msgstr "25% серый"
+
+#~ msgid "gray50"
+#~ msgstr "50%-ый серый"
+
+#~ msgid "gray75"
+#~ msgstr "75%-ый серый"
+
+#~ msgid "grid"
+#~ msgstr "тонкий, горизонтальный клетчатый"
+
+#~ msgid "light down"
+#~ msgstr "тонкий, перевёрнутый диагональный штриховой"
+
+#~ msgid "light up"
+#~ msgstr "тонкий, диагональный штриховой"
+
+#~ msgid "light vertical"
+#~ msgstr "тонкий, вертикальный штриховой"
+
+#~ msgid "semi gray75"
+#~ msgstr "толстый, диагональный клетчатый"
+
+#~ msgid "up"
+#~ msgstr "диагональный штриховой"
 
 #~ msgid "unknown color"
 #~ msgstr "Неизвестный цвет"

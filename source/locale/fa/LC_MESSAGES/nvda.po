@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
-"PO-Revision-Date: 2016-07-15 23:12+0330\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-30 16:40+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -1479,6 +1479,12 @@ msgstr "صورتی-قرمز"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "{color}ِ روشن"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -3319,7 +3325,7 @@ msgstr "هیچ پیشرفتی گزارش نمیشود."
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "Speak progress bar updates"
-msgstr "به روز آوری نوار پیشرفت خوانده میشود."
+msgstr "به‌روز‌آوریِ نوارِ پیش‌رفت خوانده میشود."
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "Beep for progress bar updates"
@@ -3671,6 +3677,10 @@ msgstr "نمایشگرِ بریل را به خطِّ بعدی میبَرَد."
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "نقطه های بریل را توسط صفحه کلیدِ بریل وارد میکند."
+
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "نمایشگرِ بریل را به مکانِ فرمان‌پذیریِ فعلی میبَرَد"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5832,10 +5842,11 @@ msgid "Add-ons Manager"
 msgstr "مدیرِ افزونه ها"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"همه‌ی افزونه‌ها هم‌اکنون غیرِ فعال میشوند. برای فعال کردن دوباره‌ی آن‌ها٬ باید "
-"NVDA را از نو راه‌اندازی کنید."
+"در حالِ حاضر همه‌ی افزونه‌ها غیرِ فعال هستند. برای فعال کردنِ افزونه‌ها باید NVDA "
+"را دوباره راه‌بیندازید."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5864,6 +5875,10 @@ msgstr "&در باره‌ی افزونه..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "&راهنمای افزونه"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "غیرِ فعال کردنِ &افزونه"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5935,9 +5950,11 @@ msgstr "لطفا صبر کنید تا افزونه نصب شود."
 msgid "Failed to install add-on  from %s"
 msgstr "خطا در نصبِ افزونه از %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "آیا برای حذفِ افزونه‌ی انتخاب شده از NVDA اطمینان دارید؟"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "حذفِ افزونه"
 
@@ -5949,7 +5966,15 @@ msgstr "نصب شده"
 msgid "remove"
 msgstr "حذف خواهد شد"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "از کار خواهد افتاد"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "فعال خواهد شد"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "از کار افتاده"
 
@@ -5957,13 +5982,17 @@ msgstr "از کار افتاده"
 msgid "running"
 msgstr "در حالِ اجرا"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "فعال کردنِ &افزونه"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"افزونه ها اضافه یا حذف شدند. شما باید NVDA را برای اِعمالِ این تغییرات دوباره "
-"راه بیندازید. آیا میخواهید هم اکنون این کار را انجام دهید؟"
+"تغییراتی روی افزونه‌ها صورت گرفت. برای اِعمالِ کاملِ تغییرات باید NVDA را از نو "
+"راه بیندازید. میخواهید هم‌اکنون این کار را انجام دهید؟"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6901,6 +6930,11 @@ msgstr "اعلامِ رن&گ‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "اعلامِ تو&ضیحات"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "اعلامِ بازبینی‌های &ویراستار"
 
@@ -7026,6 +7060,14 @@ msgstr "&توضیح"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&نوع"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "خطا در عبارتِ مُنتظم: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "خطا در ورودیِ دیکشنری"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7327,73 +7369,78 @@ msgstr "خودکار"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "شطرنجی"
+msgid "diagonal crosshatch"
+msgstr "هاشورِ مورب"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "متقاطع"
+msgid "thin diagonal crosshatch"
+msgstr "هاشورِ موربِ نازک"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "خطوطِ مورّب از بالا به پایین"
+msgid "reverse diagonal stripe"
+msgstr "راه‌راهِ موربِ وارونه"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "خاکستریِ ۱۶"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "خاکستریِ ۱۲ُنیم٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "خاکستریِ ۲۵"
+#, python-format
+msgid "25% gray"
+msgstr "خاکستریِ ۲۵٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "خاکستریِ ۵۰"
+#, python-format
+msgid "50% gray"
+msgstr "خاکستریِ ۵۰٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "خاکستریِ ۷۵"
+#, python-format
+msgid "75% gray"
+msgstr "خاکستریِ ۷۵٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "خاکستریِ ۸"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "خاکستریِ ۶ُ۲۵صدمِ درصد"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "جدول"
+msgid "thin horizontal crosshatch"
+msgstr "هاشورِ افقیِ نازک"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "خطوطِ افقی"
+msgid "horizontal stripe"
+msgstr "راه‌راهِ افقی"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "خطوطِ روشنِ مورّب از بالا به پایین"
+msgid "thin reverse diagonal stripe"
+msgstr "راه‌راهِ موربِ وارونه‌ی نازک"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "خطوطِ روشنِ افقی"
+msgid "thin horizontal stripe"
+msgstr "راه‌راهِ افقیِ نازک"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "خطوطِ روشنِ مورّب از پایین به بالا"
+msgid "thin diagonal stripe"
+msgstr "راه‌راهِ موربِ نازک"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "خطوطِ روشنِ عمودی"
+msgid "thin vertical stripe"
+msgstr "راه‌راهِ عمودیِ نازک"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7402,8 +7449,8 @@ msgstr "هیچ"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "نیمه‌خاکستریِ ۷۵"
+msgid "thick diagonal crosshatch"
+msgstr "هاشورِ موربِ ضخیم"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7412,13 +7459,13 @@ msgstr "یک‌دست"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "خطوطِ مورّب از پایین به بالا"
+msgid "diagonal stripe"
+msgstr "راه‌راهِ مورب"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "خطوطِ عمودی"
+msgid "vertical stripe"
+msgstr "راه‌راهِ عمودی"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8568,6 +8615,45 @@ msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE/Smart
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "شطرنجی"
+
+#~ msgid "crisscross"
+#~ msgstr "متقاطع"
+
+#~ msgid "down"
+#~ msgstr "خطوطِ مورّب از بالا به پایین"
+
+#~ msgid "gray16"
+#~ msgstr "خاکستریِ ۱۶"
+
+#~ msgid "gray25"
+#~ msgstr "خاکستریِ ۲۵"
+
+#~ msgid "gray50"
+#~ msgstr "خاکستریِ ۵۰"
+
+#~ msgid "gray75"
+#~ msgstr "خاکستریِ ۷۵"
+
+#~ msgid "grid"
+#~ msgstr "جدول"
+
+#~ msgid "light down"
+#~ msgstr "خطوطِ روشنِ مورّب از بالا به پایین"
+
+#~ msgid "light up"
+#~ msgstr "خطوطِ روشنِ مورّب از پایین به بالا"
+
+#~ msgid "light vertical"
+#~ msgstr "خطوطِ روشنِ عمودی"
+
+#~ msgid "semi gray75"
+#~ msgstr "نیمه‌خاکستریِ ۷۵"
+
+#~ msgid "up"
+#~ msgstr "خطوطِ مورّب از پایین به بالا"
 
 #~ msgid "unknown color"
 #~ msgstr "رنگِ نامشخص"

@@ -373,8 +373,8 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | In de leesmodus naar het volgende karakter gaan | numeriek3 | NVDA+pijl rechts | Veeg rechts (tekstmodus) | De leescursor wordt naar het volgende karakter verplaatst in de huidige tekstregel|
 | In de leesmodus naar het einde van de regel gaan | shift+numeriek3 | NVDA+End | geen | De leescursor wordt naar het einde van de huidige tekstregel verplaatst |
 | Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+a | Veeg omlaag met 3 vingers (tekstmodus) | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt.  |
-| Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 | geen | Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
-| Tot leescursor kopiëren | NVDA+f10 | NVDA+f10 | geen | Het tekstgebied dat eerder met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 tot en met de huidige positie van de leescursor naar het klembord gekopieerd. |
+| Selecteer, kopieer dan vanaf leescursor | NVDA+f9 | NVDA+f9 | geen | Start het selectie-  en daaropvolgend kopieerproces vanaf de huidige positie van de leescursor. De feitelijke actie wordt pas uitgevoerd zodra aan NVDA wordt doorgegeven waar het tekstgebied eindigt. |
+| Selecteer,  kopieer dan  tot leescursor | NVDA+f10 | NVDA+f10 | geen | Bij de eerste maal drukken wordt tekst geselecteerd vanaf het eerder ingestelde beginpunt tot einde inclusief de huidige positie van de leescursor. Nadat de toetscombinatie de 2de keer wordt ingedrukt wordt de tekst naar het klembord gekopieerd. |
 | Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt. Bij tweemaal drukken krijgt u de informatie in bladermodus. |
 %kc:endInclude
 
@@ -1194,6 +1194,7 @@ U kunt de vermelding laten horen van:
 - Lettertype-eigenschappen
 - Tekstuitlijning
 - Kleuren
+- Opmerkingen
 - Aangebrachte wijzigingen in de tekst
 - Nadruk
 - Tekststijl
@@ -1202,6 +1203,7 @@ U kunt de vermelding laten horen van:
 - Regelnummers
 - Regel inspringen
 - Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
+- Regelafstand ( enkel, dubbel, etc.)
 - Tabellen
 - Rij- en kolomhoofden van tabellen
 - Tabel celcoördinaten
@@ -1426,11 +1428,11 @@ Maar klikt u in of verplaatst u de focus naar het viewer venster, dan wordt het 
 Als u het Spraakweergavevenster altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
 ++ Add-Ons Beheren ++
-Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren en verwijderen.
+Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren, verwijderen alsmede in- en uitschakelen.
 Deze pakketten worden door de NVDA gemeenschap beschikbaar gesteld en ze bevatten aangepaste programmacode die het mogelijk maakt bepaalde functies van NVDA uit te breiden of te wijzigen. Ook zijn er Add-ons voor ondersteuning van extra brailleleesregels en spraaksynthesizers.
 
 In het dialoogvenster "Add-ons Beheren" vindt u een lijst met alle geïnstalleerde Add-ons die op het moment in uw gebruikersconfiguratiemap staan.
-Van elke Add-on wordt de pakketnaam, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL. Als er voor de geselecteerde Add-on hulpinformatie beschikbaar is, kunt u deze raadplegen door op de knop  "Add-on Help" te drukken.
+Van elke Add-on wordt de pakketnaam, status, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL. Als er voor de geselecteerde Add-on hulpinformatie beschikbaar is, kunt u deze raadplegen door op de knop  "Add-on Help" te drukken.
 
 U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken.
 U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 
@@ -1451,8 +1453,14 @@ U wordt nu gevraagd of u de Add-on inderdaad wilt verwijderen. Als u de vraag me
 Net zoals bij het installeren moet ook bij het verwijderen van een Add-on NVDA opnieuw gestart worden.
 Zolang dit niet gebeurt, wordt voor die Add-on als status "Verwijderen" weergegeven.  
 
+Om een add-on uit te schakelen drukt u op de knop ' Add-on Uitschakelen' 
+Om een eerder uitgeschakelde add-on in te schakelen drukt u op de knop 'Add-on Inschakelen'
+U kunt een add-on uitschakelen als de status van de add-on als werkend of ingeschakeld wordt aangemerkt. Een add-on kan worden ingeschakeld indien de status wordt omschreven als 'opgeschort'of 'uitgeschakeld'.
+Telkens wanneer de knop 'In- / Uitschakelen'wordt ingedrukt geeft de statusvermelding van de add-on de wijziging te zien die geldt na herstart van NVDA.
+Evenals bij het installeren en verwijderen van add-ons, moet u NVDA opnieuw starten om de wijzigingen door te voeren.
+
 Door op de knop "Sluiten" te drukken wordt het dialoogvenster "Add-ons Beheren" gesloten.
-Als u Add-ons hebt geïnstalleerd of verwijderd zal NVDA vragen of u eerst NVDA opnieuw wilt starten om de wijzigingen van kracht te laten worden.
+Als u Add-ons hebt geïnstalleerd,  verwijderd of de status ervan hebt gewijzigd, zal NVDA vragen of u eerst NVDA opnieuw wilt starten om de wijzigingen van kracht te laten worden.
 
 In het verleden kon de functionaliteit van NVDA worden uitgebreid door plug-ins en drivers naar de gebruikersconfiguratiemap te kopiëren.
 Hoewel de huidige versie van NVDA deze mogelijk nog steeds zal laden, worden ze niet getoond in de lijst met geïnstalleerde Add-ons in Add-on Beheer. 
@@ -1597,11 +1605,17 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel achteruit scrollen | T1 |
-| Brailleregel naar voorafgaande regel brengen | T2 |
-| Brailleregel naar volgende regel brengen | T4 |
-| Brailleregel vooruit scrollen | T5 |
+| Brailleregel achteruit scrollen | t1 of etouch1 |
+| Brailleregel naar voorafgaande regel brengen | t2 |
+| Naar huidige focus verplaatsen | t3 |
+| Brailleregel naar volgende regel brengen | t4 |
+| Brailleregel vooruit scrollen | t5 of etouch3 |
 | Naar braillecel gaan| Routing |
+| Naar bovenste regel verplaatsen in leesmodus | t1+t2 |
+| Naar onderste regel verplaatsen in leesmodus | t4+t5 |
+| Braillevolgmodus wisselen (tethered) naar | t1+t3 |
+| Titel weergeven | etouch2 |
+| Statusbalk weergeven | etouch4 |
 | Shift+Tabtoets | Sp1 |
 | Alt-Toets | Sp2 |
 | Escape-toets | Sp3 |
@@ -1611,10 +1625,16 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Pijltoets naar links | SpLinks |
 | Pijltoets naar rechts | SpRechts |
 | Enter-toets | SpEnter |
+| Datum/tijd weergeven | sp1+sp2 |
 | NVDA-Menü | Sp1+Sp3 |
 | Windows-Toets+D (alle toepassingenn minimaliseren) | Sp1+Sp4 |
+| windows toets+b(focus op systeemvak) | sp3+sp4 |
 | Windows-Toets | Sp2+Sp3 |
 | Alt+Tabtoets | Sp2+Sp4 |
+| control+home-toets  | t3+spOmhoog |
+| control+end-toets | t3+spOmlaag |
+| home-toets | t3+spLinks |
+| end-toets | t3+spRechts |
 %kc:endInclude
 
 ++ Handy Tech Leesregels ++

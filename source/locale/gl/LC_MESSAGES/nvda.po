@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
-"PO-Revision-Date: 2016-07-15 15:19+0100\n"
+"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"PO-Revision-Date: 2016-07-28 18:58+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ó Galego <oprisniki@gmail.com>\n"
 "Language: gl_ES\n"
@@ -1481,6 +1481,12 @@ msgstr "rosa bermello"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "{color} brilante"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
@@ -3697,6 +3703,10 @@ msgstr "Move a liña braille a liña seguinte"
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Introduce pontos braille a traverso do teclado braille"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Move a pantalla braille ao foco actual"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Plugins recargados"
@@ -5862,10 +5872,11 @@ msgid "Add-ons Manager"
 msgstr "Administrador de Complementos"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"Agora deshabilitáronse todos os complementos. Para habilitalos debes "
-"reiniciar ó NVDA."
+"Deshabilitáronse todos os complementos. Para habilitalos debes reiniciar ó "
+"NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5894,6 +5905,10 @@ msgstr "&Acerca do complemento..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "&Axuda do complemento"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Deshabilitar complemento"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5965,9 +5980,11 @@ msgstr "Por favor agarda mentres o complemento se instala."
 msgid "Failed to install add-on  from %s"
 msgstr "Fallóu ó instalar complementos dende %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "¿estás seguro de desexar eliminar o complemento seleccionado do NVDA?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Eliminar Complemento"
 
@@ -5979,7 +5996,15 @@ msgstr "instalar"
 msgid "remove"
 msgstr "Eliminar"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "deshabilitar"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "habilitar"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "suspendido"
 
@@ -5987,13 +6012,17 @@ msgstr "suspendido"
 msgid "running"
 msgstr "en execución"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Habilitar complemento"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Os complementos foron engadidos ou eliminados. Debes reiniciar NVDA para que "
-"estos cambios teñan efecto. ¿Gostaríache reiniciar agora?"
+"Fixéronse cambios aos complementos. Debes reiniciar NVDA para que estos "
+"cambios teñan efecto. ¿Gostaríache reiniciar agora?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6947,6 +6976,11 @@ msgstr "Anunciar &colores"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "Anunciar co&mentarios"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Anunciar revisións de &editor"
 
@@ -7072,6 +7106,14 @@ msgstr "&Comentario"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "Tipo:"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Erro de Expresión Regular: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "Erro de Entrada de Diccionario"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7371,73 +7413,78 @@ msgstr "Automático"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "marcador"
+msgid "diagonal crosshatch"
+msgstr "raia diagonal"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "cruzadas"
+msgid "thin diagonal crosshatch"
+msgstr "raia diagonal estreita"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "abaixo"
+msgid "reverse diagonal stripe"
+msgstr "franxa diagonal invertida"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "gris16"
+#. 12.5% gray
+#, python-format
+msgid "12.5% gray"
+msgstr "12.5% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "gris25"
+#, python-format
+msgid "25% gray"
+msgstr "25% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "gris50"
+#, python-format
+msgid "50% gray"
+msgstr "50% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "gris75"
+#, python-format
+msgid "75% gray"
+msgstr "75% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "gris8"
+#. 6.25% gray
+#, python-format
+msgid "6.25% gray"
+msgstr "6.25% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "Regra"
+msgid "thin horizontal crosshatch"
+msgstr "raia horizontal estreita"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "horizontal"
+msgid "horizontal stripe"
+msgstr "franxa horizontal"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "lixeiramente cara  abaixo"
+msgid "thin reverse diagonal stripe"
+msgstr "franxa diagonal invertida estreita"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "lixeiramente horizontal"
+msgid "thin horizontal stripe"
+msgstr "franxa horizontal estreita"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "lixeiramente cara arriba"
+msgid "thin diagonal stripe"
+msgstr "franxa diagonal estreita"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "lixeiramente vertical"
+msgid "thin vertical stripe"
+msgstr "franxa vertical estreita"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7446,8 +7493,8 @@ msgstr "ningunha"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "semi gris75"
+msgid "thick diagonal crosshatch"
+msgstr "raia diagonal grosa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7456,13 +7503,13 @@ msgstr "sólido"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "arriba"
+msgid "diagonal stripe"
+msgstr "franxa diagonal"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "vertical"
+msgid "vertical stripe"
+msgstr "franxa vertical"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -8622,6 +8669,45 @@ msgstr "Series das HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "checker"
+#~ msgstr "marcador"
+
+#~ msgid "crisscross"
+#~ msgstr "cruzadas"
+
+#~ msgid "down"
+#~ msgstr "abaixo"
+
+#~ msgid "gray16"
+#~ msgstr "gris16"
+
+#~ msgid "gray25"
+#~ msgstr "gris25"
+
+#~ msgid "gray50"
+#~ msgstr "gris50"
+
+#~ msgid "gray75"
+#~ msgstr "gris75"
+
+#~ msgid "grid"
+#~ msgstr "Regra"
+
+#~ msgid "light down"
+#~ msgstr "lixeiramente cara  abaixo"
+
+#~ msgid "light up"
+#~ msgstr "lixeiramente cara arriba"
+
+#~ msgid "light vertical"
+#~ msgstr "lixeiramente vertical"
+
+#~ msgid "semi gray75"
+#~ msgstr "semi gris75"
+
+#~ msgid "up"
+#~ msgstr "arriba"
 
 #~ msgid "unknown color"
 #~ msgstr "cor descoñecida"
