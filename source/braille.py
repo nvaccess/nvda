@@ -262,7 +262,7 @@ TABLES = (
 	("Se-Se-g1.utb", _("Swedish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("sk-sk-g1.utb", _("Slovak grade 1"), False),
+	("sk-g1.ctb", _("Slovak grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("sl-si-g1.utb", _("Slovene grade 1"), False),
@@ -302,6 +302,7 @@ OLDTABLENAMES2NEWTABLENAMES = {
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-comp8.ctb",
+	"sk-sk-g1.utb":"sk-g1.ctb",
 	"UEBC-g1.ctb":"en-ueb-g1.ctb",
 	"UEBC-g2.ctb":"en-ueb-g2.ctb",
 }
