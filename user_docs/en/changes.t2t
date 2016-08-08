@@ -48,6 +48,8 @@
 - NVDA now correctly detects the secondary routing buttons on ALVA BC640/680 series braille displays. (#5206)
 - NVDA can again report Windows Toast notifications in recent builds of Windows 10. (#6096)
 - NVDA no longer occasionally stops recognising key presses on Baum compatible and HumanWare Brailliant B braille displays. (#6035)
+- If reporting of line numbers is enabled in NVDA's Document Formatting preferences, line numbers are now shown on a braille display. (#5941)
+- When speech mode is off, reporting objects (such as pressing NVDA+tab to report the focus) now appears in the Speech Viewer as expected. (#6049)
 
 
 == Changes for Developers ==
