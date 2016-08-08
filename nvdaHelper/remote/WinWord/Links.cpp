@@ -11,7 +11,6 @@ Copyright 2006-2010 NVDA contributers.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
-
 #define WIN32_LEAN_AND_MEAN 
 
 #include <sstream>
@@ -22,7 +21,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include <remote/nvdaInProcUtils.h>
 #include <remote/nvdaInProcUtils.h>
-
 
 #include "Links.h"
 #include <remote/WinWord/Constants.h>
@@ -99,10 +97,10 @@ bool inRange (long index, long start, long end) {
 
 bool Links::hasLinks(const int rangeStart, const int rangeEnd){
 	for( auto&& link : m_links) {
-		if( inRange(link.first, rangeStart, rangeStart) ||
-			inRange(link.second, rangeStart, rangeStart) ||
+		if( inRange(link.first, rangeStart, rangeEnd) ||
+			inRange(link.second, rangeStart, rangeEnd) ||
 			inRange(rangeStart, link.first, link.second) ||
-			inRange(rangeStart, link.first, link.second) ){
+			inRange(rangeEnd, link.first, link.second) ){
 			return true;
 		}
 	}

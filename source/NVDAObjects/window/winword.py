@@ -303,26 +303,26 @@ NVDAUnitsToWordUnits={
 }
 
 formatConfigFlagsMap={
-	"reportFontName":1,
-	"reportFontSize":2,
-	"reportFontAttributes":4,
-	"reportColor":8,
-	"reportAlignment":16,
-	"reportStyle":32,
-	"reportSpellingErrors":64,
-	"reportPage":128,
-	"reportLineNumber":256,
-	"reportTables":512,
-	"reportLists":1024,
-	"reportLinks":2048,
-	"reportComments":4096,
-	"reportHeadings":8192,
-	"autoLanguageSwitching":16384,	
-	"reportRevisions":32768,
-	"reportParagraphIndentation":65536,
-	"reportLineSpacing":262144,
+	"reportFontName":0x1,
+	"reportFontSize":0x2,
+	"reportFontAttributes":0x4,
+	"reportColor":0x8,
+	"reportAlignment":0x10,
+	"reportStyle":0x20,
+	"reportSpellingErrors":0x40,
+	"reportPage":0x80,
+	"reportLineNumber":0x100,
+	"reportTables":0x200,
+	"reportLists":0x400,
+	"reportLinks":0x800,
+	"reportComments":0x1000,
+	"reportHeadings":0x2000,
+	"autoLanguageSwitching":0x4000,
+	"reportRevisions":0x8000,
+	"reportParagraphIndentation":0x10000,
+	"reportLineSpacing":0x40000,
 }
-formatConfigFlag_includeLayoutTables=131072
+formatConfigFlag_includeLayoutTables=0x20000
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -454,7 +454,7 @@ class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		if t == FIELD_TYPE_REF:
 			fieldText = item.code.text.strip().split(' ')
 			# ensure that the text has a \\h in it
-			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
+			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
 		return t == FIELD_TYPE_HYPERLINK
 
 
@@ -523,13 +523,18 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			if field.type != FIELD_TYPE_REF:
 				continue
 			fResult = field.result
-			fResult.MoveStart(wdCharacter, -1)
-			if not self._rangeObj.InRange(fResult):
+			fResult.moveStart(wdCharacter,-1) # move back one visible character (passed the hidden text eg the code for the reference).
+			fResStart = fResult.start +1 # don't include the character before the hidden text.
+			fResEnd = fResult.end
+			rObjStart = self._rangeObj.start
+			rObjEnd = self._rangeObj.end
+			# check to see if the _rangeObj is inside the fResult range
+			if not (fResStart <= rObjStart and fResEnd >= rObjEnd):
 				continue
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = field.code.text.strip().split(' ')
 			# the \\h field indicates that the field is a link
-			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
+			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
 				log.debugWarning("no \\h for field xref: %s" % field.code.text)
 				continue
 			bookmarkKey = fieldText[1] # we want the _Ref12345 part
@@ -541,7 +546,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
-			braille.handler.handleCaretMove(tiCopy)
+			braille.handler.handleCaretMove(self)
 			return
 
 	def _expandToLineAtCaret(self):

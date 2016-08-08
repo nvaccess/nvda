@@ -31,25 +31,25 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 // See https://github.com/nvaccess/nvda/wiki/Using-COM-with-NVDA-and-Microsoft-Word
-constexpr int formatConfig_reportFontName = 1;
-constexpr int formatConfig_reportFontSize = 2;
-constexpr int formatConfig_reportFontAttributes = 4;
-constexpr int formatConfig_reportColor = 8;
-constexpr int formatConfig_reportAlignment = 16;
-constexpr int formatConfig_reportStyle = 32;
-constexpr int formatConfig_reportSpellingErrors = 64;
-constexpr int formatConfig_reportPage = 128;
-constexpr int formatConfig_reportLineNumber = 256;
-constexpr int formatConfig_reportTables = 512;
-constexpr int formatConfig_reportLists = 1024;
-constexpr int formatConfig_reportLinks = 2048;
-constexpr int formatConfig_reportComments = 4096;
-constexpr int formatConfig_reportHeadings = 8192;
-constexpr int formatConfig_reportLanguage = 16384;
-constexpr int formatConfig_reportRevisions = 32768;
-constexpr int formatConfig_reportParagraphIndentation = 65536;
-constexpr int formatConfig_includeLayoutTables = 131072;
-constexpr int formatConfig_reportLineSpacing = 262144;
+constexpr int formatConfig_reportFontName = 0x1;
+constexpr int formatConfig_reportFontSize = 0x2;
+constexpr int formatConfig_reportFontAttributes = 0x4;
+constexpr int formatConfig_reportColor = 0x8;
+constexpr int formatConfig_reportAlignment = 0x10;
+constexpr int formatConfig_reportStyle = 0x20;
+constexpr int formatConfig_reportSpellingErrors = 0x40;
+constexpr int formatConfig_reportPage = 0x80;
+constexpr int formatConfig_reportLineNumber = 0x100;
+constexpr int formatConfig_reportTables = 0x200;
+constexpr int formatConfig_reportLists = 0x400;
+constexpr int formatConfig_reportLinks = 0x800;
+constexpr int formatConfig_reportComments = 0x1000;
+constexpr int formatConfig_reportHeadings = 0x2000;
+constexpr int formatConfig_reportLanguage = 0x4000;
+constexpr int formatConfig_reportRevisions = 0x8000;
+constexpr int formatConfig_reportParagraphIndentation = 0x10000;
+constexpr int formatConfig_includeLayoutTables = 0x20000;
+constexpr int formatConfig_reportLineSpacing = 0x40000;
 
 constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
 constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
@@ -459,7 +459,7 @@ int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int st
 	return numTags;
 }
 
-void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream, WinWord::Links& currentLinks) {
+void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
 	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)&&iVal>0) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
@@ -541,9 +541,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				SysFreeString(listString);
 			}
 		}
-	}
-	if( (formatConfig&formatConfig_reportLinks) && currentLinks.hasLinks(startOffset, endOffset) ) {
-		formatAttribsStream<<L"link=\"1\" ";
 	}
 	if(formatConfig&formatConfig_reportRevisions) {
 		long revisionType=getRevisionType(pDispatchRange);
@@ -776,7 +773,14 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if(initialFormatConfig&formatConfig_reportHeadings) {
 		neededClosingControlTagCount+=generateHeadingXML(pDispatchParagraph,pDispatchParagraphRange,args->startOffset,args->endOffset,XMLStream);
 	}
-	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream, currentLinks);
+	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
+	{	//scope for shouldReportLinks
+		const auto shouldReportLinks = (initialFormatConfig&formatConfig_reportLinks);
+		if( shouldReportLinks && currentLinks.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+			initialFormatAttribsStream<<L"link=\"1\" ";
+		}
+	}
+
 	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
@@ -847,7 +851,16 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
-			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream, currentLinks);
+
+			{	// scope for xmlAttribsFormatConfig
+				const auto xmlAttribsFormatConfig = formatConfig&(~curDisabledFormatConfig);
+				generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,xmlAttribsFormatConfig,XMLStream);
+				const auto shouldReportLinks = (xmlAttribsFormatConfig&formatConfig_reportLinks);
+				if( shouldReportLinks && currentLinks.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+					XMLStream<<L"link=\"1\" ";
+				}
+			}
+
 			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
 				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
 					XMLStream<<L" invalid-spelling=\"1\" ";
