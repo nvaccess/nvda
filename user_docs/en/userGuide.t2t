@@ -640,6 +640,9 @@ Pressing Enter or the Move To button on a listed formula will move directly to t
 - Sheets: This lists all sheets in the workbook. 
 Pressing f2 when on a listed sheet allows you to rename the sheet. 
 Pressing Enter or the Move To button while on the listed sheet will switch to that sheet.
+- Form fields: This lists all form fields in the active worksheet.
+For each form field, the Elements List shows the alternative text of the field along with the addresses of the cells it covers.
+Selecting a form field and pressing enter or the Move to button moves to that field in browse mode.
 -
 
 +++ Reporting Comments +++
@@ -653,6 +656,12 @@ If a workbook has been protected, it may not be possible to move focus to partic
 %kc:beginInclude
 To allow moving to locked cells, switch to Browse Mode by pressing NVDA+space, and then use standard Excel movement commands such as the arrow keys to move around all cells on the current worksheet.
 %kc:endInclude
+
++++ Form Fields +++
+Excel worksheets can include form fields.
+You can access these using the Elements List or the f and shift+f form field single letter navigation keys.
+Once you move to a form field in browse mode, you can press enter or space to either activate it or switch to focus mode so you can interact with it, depending on the control.
+For further information about Browse mode and single letter navigation, see the [Browse Mode section #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
