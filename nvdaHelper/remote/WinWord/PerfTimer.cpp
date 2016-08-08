@@ -52,10 +52,10 @@ std::string PerfTimer::GetPerfResults() {
 	std::stringstream sstream;
 	sstream << "Perf Results\n";
 	for(auto& result : perfResults){
-		sstream << result.first << " total time: " << result.second.totalTime 
-		<< " hit count: " << result.second.numberOfHits;
+		sstream << result.first << " Total time: " << result.second.totalTime 
+		<< " Hit count: " << result.second.numberOfHits;
 		if(result.second.totalTime > 0 && result.second.numberOfHits > 0) {
-			sstream << " average time: " << result.second.totalTime / result.second.numberOfHits;
+			sstream << " Average Time: " << result.second.totalTime / result.second.numberOfHits;
 		}
 		sstream << '\n';
 	}
