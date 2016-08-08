@@ -565,9 +565,9 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("formula", _("Fo&rmulas")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
+		("formField", _("&Form fields")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("formField", _("FormField")),
 		("sheet", _("&Sheets")),
 	)
 
