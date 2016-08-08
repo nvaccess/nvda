@@ -734,6 +734,20 @@ class GlobalCommands(ScriptableObject):
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
 
+	def script_toggleSimpleReviewMode(self,gesture):
+		if config.conf["reviewCursor"]["simpleReviewMode"]:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode off")
+			config.conf["reviewCursor"]["simpleReviewMode"]=False
+		else:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode on")
+			config.conf["reviewCursor"]["simpleReviewMode"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle simple review mode command.
+	script_toggleSimpleReviewMode.__doc__=_("Toggles simple review mode on and off")
+	script_toggleSimpleReviewMode.category=SCRCAT_OBJECTNAVIGATION
+
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
