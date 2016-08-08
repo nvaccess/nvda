@@ -605,18 +605,15 @@ def getBrailleTextForProperties(**propertyValues):
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 			# %s is replaced with the level.
 			textList.append(_('lv %s')%positionInfo['level'])
-	rowHeaderText = propertyValues.get("rowHeaderText")
-	if rowHeaderText:
-		textList.append(rowHeaderText)
 	if rowNumber:
 		if includeTableCellCoords and not cellCoordsText: 
 			# Translators: Displayed in braille for a table cell row number.
 			# %s is replaced with the row number.
 			textList.append(_("r%s") % rowNumber)
-	columnHeaderText = propertyValues.get("columnHeaderText")
-	if columnHeaderText:
-		textList.append(columnHeaderText)
 	if columnNumber:
+		columnHeaderText = propertyValues.get("columnHeaderText")
+		if columnHeaderText:
+			textList.append(columnHeaderText)
 		if includeTableCellCoords and not cellCoordsText:
 			# Translators: Displayed in braille for a table cell column number.
 			# %s is replaced with the column number.
@@ -645,14 +642,6 @@ class NVDAObjectRegion(Region):
 	def update(self):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
-		try:
-			rowNumber=obj.rowNumber
-		except NotImplementedError:
-			rowNumber=None
-		try:
-			columnNumber=obj.columnNumber
-		except NotImplementedError:
-			columnNumber=None
 		role = obj.role
 		text = getBrailleTextForProperties(name=obj.name, role=role,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
@@ -660,10 +649,6 @@ class NVDAObjectRegion(Region):
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
-			rowNumber=rowNumber,
-			columnNumber=columnNumber,
-			columnHeaderText=obj.columnHeaderText if hasattr(obj, "columnHeaderText") and config.conf["documentFormatting"]["reportTableHeaders"] else None,
-			rowHeaderText=obj.rowHeaderText if hasattr(obj, "rowHeaderText") and config.conf["documentFormatting"]["reportTableHeaders"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
 		)
 		if role == controlTypes.ROLE_MATH:
@@ -720,7 +705,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
-			props["rowHeaderText"] = field.get("table-rowheadertext")
 		return getBrailleTextForProperties(**props)
 
 	elif reportStart:
