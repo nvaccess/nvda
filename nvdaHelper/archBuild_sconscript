@@ -75,7 +75,6 @@ projectRCSubstDict={
 	'%publisher%':env['publisher'],
 	'%version%':env['version'],
 	'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
-	'%fileDescription%':"A component of %s, %s"%(versionInfo.name,versionInfo.description),
 }
 env['projectRCFile']=env.Substfile('nvda.rc.subst',SUBST_DICT=projectRCSubstDict)
 
