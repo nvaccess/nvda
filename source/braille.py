@@ -739,11 +739,17 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field):
-	linePrefix = field.get("line-prefix")
-	if linePrefix:
-		return linePrefix
-	return None
+def getFormatFieldBraille(field, isAtStart, formatConfig):
+	textList = []
+	if isAtStart:
+		if formatConfig["reportLineNumber"]:
+			lineNumber = field.get("line-number")
+			if lineNumber:
+				textList.append("%s" % lineNumber)
+		linePrefix = field.get("line-prefix")
+		if linePrefix:
+			textList.append(linePrefix)
+	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):
 
@@ -818,6 +824,7 @@ class TextInfoRegion(Region):
 		typeform = louis.plain_text
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
+				self._isFormatFieldAtStart = False
 				if not command:
 					continue
 				if self._endsWithField:
@@ -849,7 +856,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field)
+					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -920,9 +927,10 @@ class TextInfoRegion(Region):
 		self._rawToContentPos = []
 		self._currentContentPos = 0
 		self.selectionStart = self.selectionEnd = None
+		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-		self._endsWithField = False
 
+		self._endsWithField = False
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
