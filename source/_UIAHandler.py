@@ -156,7 +156,7 @@ class UIAHandler(COMObject):
 			try:
 				self.clientObject=CoCreateInstance(CUIAutomation8._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 				isUIA8=True
-			except (COMError,WindowsError):
+			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
 				try:
