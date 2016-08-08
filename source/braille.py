@@ -295,8 +295,8 @@ TABLES = (
 #: Braille tables that support input (only computer braille tables yet).
 INPUT_TABLES = tuple(t for t in TABLES if t[2])
 
-#: Old versus new braille table names to be consulted during migration from liblouis 2 to liblouis 3.
-OLDTABLENAMES2NEWTABLENAMES = {
+#: Maps old table names to new table names for tables renamed in newer versions of liblouis.
+RENAMED_TABLES = {
 	"da-dk-g16.utb":"da-dk-g16.ctb",
 	"da-dk-g18.utb":"da-dk-g18.ctb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
@@ -1739,10 +1739,11 @@ def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
-	# #6109 and #6140: Migrate to new table names as smoothly as possible.
+	# #6140: Migrate to new table names as smoothly as possible.
 	oldTableName = config.conf["braille"]["translationTable"]
-	if oldTableName in OLDTABLENAMES2NEWTABLENAMES:
-		config.conf["braille"]["translationTable"] = OLDTABLENAMES2NEWTABLENAMES[oldTableName]
+	newTableName = RENAMED_TABLES.get(oldTableName)
+	if newTableName:
+		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
