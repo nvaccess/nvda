@@ -20,7 +20,7 @@ Import([
 adobeFlashBackendLib=env.SharedLibrary(
 	target="VBufBackend_adobeFlash",
 	source=[
-		env.RES(env['projectRCFile']),
+		env['projectResFile'],
 		"adobeFlash.cpp",
 	],
 	LIBS=[

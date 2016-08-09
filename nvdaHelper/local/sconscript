@@ -70,7 +70,7 @@ displayModelRPCHeader,displayModelRPCClientSource=env.MSRPCStubs(
 localLib=env.SharedLibrary(
 	target="nvdaHelperLocal",
 	source=[
-		env.RES(env['projectRCFile']),
+		env['projectResFile'],
 		"nvdaHelperLocal.cpp",
 		"beeps.cpp",
 		vbufRPCClientSource,

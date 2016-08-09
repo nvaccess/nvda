@@ -76,7 +76,7 @@ projectRCSubstDict={
 	'%version%':env['version'],
 	'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
 }
-env['projectRCFile']=env.Substfile('nvda.rc.subst',SUBST_DICT=projectRCSubstDict)
+env['projectResFile']=env.RES(env.Substfile('nvda.rc.subst',SUBST_DICT=projectRCSubstDict))
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 Export('acrobatAccessRPCStubs')

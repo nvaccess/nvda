@@ -30,13 +30,10 @@ controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 
 clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' else '32')
 
-rcFile=env.Command('nvda.rc',env['projectRCFile'],Copy('$TARGET','$SOURCE'))
-RESFile=env.RES(rcFile)
-
 clientLib=env.SharedLibrary(
 	target=clientLibName,
 	source=[
-		RESFile,
+		env['projectResFile'],
 		"client.cpp",
 		winIPCUtilsObj,
 		controllerRPCClientSource,
