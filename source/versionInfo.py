@@ -6,11 +6,6 @@
 
 import os
 
-version_year=2016
-version_major=3
-version_minor=0
-version_build=0
-
 def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
 	"""
@@ -36,6 +31,10 @@ def _updateVersionFromVCS():
 # Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
+version_year=2016
+version_major=3
+version_minor=0
+version_build=0
 version="%s.%s.%sdev"%(version_year,version_major,version_minor)
 publisher="unknown"
 updateVersionType=None
