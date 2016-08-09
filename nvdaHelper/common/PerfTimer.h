@@ -11,6 +11,9 @@ Copyright 2006-2010 NVDA contributers.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
+#ifndef NVDAHELPER_COMMON_PERFTIMER_H
+#define NVDAHELPER_COMMON_PERFTIMER_H
+
 #include <windows.h>
 #include <map>
 
@@ -64,3 +67,5 @@ private:
 	PerfResult* m_result; ///< The result for this instance of the timer.
 	static std::map<std::string, PerfResult> s_results; ///< The results being collected.
 };
+
+#endif
