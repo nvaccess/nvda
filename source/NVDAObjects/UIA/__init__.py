@@ -97,6 +97,10 @@ class UIATextInfo(textInfos.TextInfo):
 			styleIDValue=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StyleIdAttributeId)
 			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
+		if formatConfig["reportSpellingErrors"]:
+			annotationTypes=self._getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId)
+			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+				formatField["invalid-spelling"]=True
 		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position,_rangeObj=None):
