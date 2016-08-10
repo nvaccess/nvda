@@ -190,6 +190,10 @@ wdThemeColorMainLight2=3
 wdThemeColorText1=13
 wdThemeColorText2=15
 
+# Word Field types
+FIELD_TYPE_REF = 3 # cross reference field
+FIELD_TYPE_HYPERLINK = 88 # hyperlink field
+
 # Mapping from http://www.wordarticles.com/Articles/Colours/2007.php#UIConsiderations
 WdThemeColorIndexToMsoThemeColorSchemeIndex={
 	wdThemeColorMainDark1:msoThemeDark1,
@@ -298,26 +302,26 @@ NVDAUnitsToWordUnits={
 }
 
 formatConfigFlagsMap={
-	"reportFontName":1,
-	"reportFontSize":2,
-	"reportFontAttributes":4,
-	"reportColor":8,
-	"reportAlignment":16,
-	"reportStyle":32,
-	"reportSpellingErrors":64,
-	"reportPage":128,
-	"reportLineNumber":256,
-	"reportTables":512,
-	"reportLists":1024,
-	"reportLinks":2048,
-	"reportComments":4096,
-	"reportHeadings":8192,
-	"autoLanguageSwitching":16384,	
-	"reportRevisions":32768,
-	"reportParagraphIndentation":65536,
-	"reportLineSpacing":262144,
+	"reportFontName":0x1,
+	"reportFontSize":0x2,
+	"reportFontAttributes":0x4,
+	"reportColor":0x8,
+	"reportAlignment":0x10,
+	"reportStyle":0x20,
+	"reportSpellingErrors":0x40,
+	"reportPage":0x80,
+	"reportLineNumber":0x100,
+	"reportTables":0x200,
+	"reportLists":0x400,
+	"reportLinks":0x800,
+	"reportComments":0x1000,
+	"reportHeadings":0x2000,
+	"autoLanguageSwitching":0x4000,
+	"reportRevisions":0x8000,
+	"reportParagraphIndentation":0x10000,
+	"reportLineSpacing":0x40000,
 }
-formatConfigFlag_includeLayoutTables=131072
+formatConfigFlag_includeLayoutTables=0x20000
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -362,6 +366,10 @@ class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 
 	def rangeFromCollectionItem(self,item):
 		return item.scope
+
+class WordDocumentFieldQuickNavItem(WordDocumentCollectionQuickNavItem):
+	def rangeFromCollectionItem(self,item):
+		return item.result
 
 class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
@@ -436,8 +444,18 @@ class WinWordCollectionQuicknavIterator(object):
 			isFirst=False
 
 class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentFieldQuickNavItem
 	def collectionFromRange(self,rangeObj):
-		return rangeObj.hyperlinks
+		return rangeObj.fields
+
+	def filter(self, item):
+		t = item.type
+		if t == FIELD_TYPE_REF:
+			fieldText = item.code.text.strip().split(' ')
+			# ensure that the text has a \\h in it
+			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
+		return t == FIELD_TYPE_HYPERLINK
+
 
 class CommentWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentCommentQuickNavItem
@@ -497,6 +515,37 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		links=tempRange.hyperlinks
 		if links.count>0:
 			links[1].follow()
+			return
+		tempRange.expand(wdParagraph)
+		fields=tempRange.fields
+		for field in (fields.item(i) for i in xrange(1, fields.count+1)):
+			if field.type != FIELD_TYPE_REF:
+				continue
+			fResult = field.result
+			fResult.moveStart(wdCharacter,-1) # move back one visible character (passed the hidden text eg the code for the reference).
+			fResStart = fResult.start +1 # don't include the character before the hidden text.
+			fResEnd = fResult.end
+			rObjStart = self._rangeObj.start
+			rObjEnd = self._rangeObj.end
+			# check to see if the _rangeObj is inside the fResult range
+			if not (fResStart <= rObjStart and fResEnd >= rObjEnd):
+				continue
+			# text will be something like ' REF _Ref457210120 \\h '
+			fieldText = field.code.text.strip().split(' ')
+			# the \\h field indicates that the field is a link
+			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
+				log.debugWarning("no \\h for field xref: %s" % field.code.text)
+				continue
+			bookmarkKey = fieldText[1] # we want the _Ref12345 part
+			# get book mark start, we need to look at the whole document to find the bookmark.
+			tempRange.Expand(wdStory)
+			bMark = tempRange.bookmarks(bookmarkKey)
+			self._rangeObj.setRange(bMark.start, bMark.start)
+			self.updateCaret()
+			tiCopy = self.copy()
+			tiCopy.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			braille.handler.handleCaretMove(self)
 			return
 
 	def _expandToLineAtCaret(self):
