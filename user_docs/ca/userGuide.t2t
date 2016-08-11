@@ -541,7 +541,7 @@ MathPlayer es pot descarregar gratuïtament de: http://www.dessci.com/en/product
 
 NVDA és compatible amb els següents tipus de contingut matemàtic:
 - MathML a Mozilla Firefox i a Microsoft Internet Explorer.
-- Design Science MathType a Microsoft Word i PowerPoint. 
+- Design Science MathType a Microsoft Word i PowerPoint. És necessari instal·lar MathType per a que funcioni. Amb la versió de prova és suficient.
 - MathML a Adobe reader. Has de tenir en compte que això no és un estàndar oficial encara, i actualment no hi ha cap programari disponible públicament que pugui produir aquest contingut.
 - 
 
@@ -587,9 +587,8 @@ NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, pe
 | Estableix com a encapçalament de columna | NVDA+Maj+c | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la fila que conté encapçalaments de columna, i així ho hauria d'anunciar automàticament quan et mous entre les columnes sota aquesta fila. Si prems dos cops, deixa de ser l’encapçalament. | 
 | Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous entre les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament. | 
 | Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari de la cel·la actual, si és que n'hi ha. | 
-|Diàleg de llista d'elements | NVDA+f7| Obre el Diàleg de llista d'elements i mostra gràfics, cel·les amb comentaris o cel·les amb fòrmules. |
+| Diàleg de llista d'elements | NVDA+f7 | Obre el Diàleg de llista d'elements i mostra gràfics, cel·les amb comentaris, cel·les amb fòrmules, o fulls. |
 %kc:endInclude
-
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
@@ -1106,6 +1105,7 @@ Pots configurar si vols que s'informi de:
 - Alineació
 - Colors
 - Revisions de l'editor
+- Èmfasi
 - Estil
 - Errors ortogràfics
 - Números de pàgina
@@ -1174,8 +1174,18 @@ L'idioma del qual s'està editant la pronunciació del símbols es mostrarà en 
 Tingues en compte que el diàleg respecta l'opció "Confia en l'idioma de la veu per processar els símbols i els caràcters" del [Diàleg de configuració de veus #VoiceSettings]; és a dir, usa l'idioma de la veu abans que el llenguatge global configurat per NVDA quan aquesta 
 
 Per canviar un símbol, primer l'has de seleccionar a la llista de símbols.
-El camp Reemplaçament et permet canviar el text que es verbalitzarà en comptes del símbol.
-Si uses el camp Nivell, pots ajustar el nivell més baix en el qual el símbol es verbalitzarà.
+- El camp Reemplaçament et permet canviar el text que es verbalitzarà en comptes del símbol.
+- Si uses el camp Nivell, pots ajustar el nivell més baix en el qual el símbol es verbalitzarà.
+- The Send actual symbol to synthesizer field specifies when the symbol itself (en contrast amb el seu reemplaçament) hauria de ser enviat al sintetitzador.
+Això és útil si el símbol provoca la pausa del sintetitzador o canvia la inflexió de la veu.
+Per exemple, una coma provoca la pausa del sintetitzador.
+Hi ha tres opcions:
+ - mai: mai envia el símbol actual al sintetitzador.
+ - sempre: sempre envia el símbol actual al sintetitzador.
+ - només per sota del nivell dels símbols: només envia el símbol actual si el nivell de veu del símbol configurat és més baix que el nivell establert per aquest símbol.
+ Per exemple, pots utilitzar aquesta opció per a que un símbol tingui el seu reemplaçament verbalitzat als nivells més alts sense pausa, mentre que es continua indicant amb una pausa als nivells més baixos.
+ -
+ -
 
 Pots afegir nous símbols prement el botó Afegir.
 En el diàleg que apareix, entra el símbol i prem el botó D'acord.
@@ -1565,7 +1575,7 @@ Consulta la documentació de línia per obtenir la descripció d'on es troben aq
 ++ Baum/Humanware/APH Braille Displays ++
 NVDA és compatible amb algunes línies en_[Baum http://www.baum.de/cms/en/], en_[HumanWare http://www.humanware.com/] i en_[APH http://www.aph.org/] si es connecten via USB o Bluetooth.
 Aquestes inclouen:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (només Bluetooth), Pronto! (només Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
