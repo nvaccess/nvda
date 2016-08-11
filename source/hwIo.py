@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015 NV Access Limited
+#Copyright (C) 2015-2016 NV Access Limited
 
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
@@ -143,9 +143,9 @@ class Serial(IoBase):
 		"""
 		onReceive = kwargs.pop("onReceive")
 		self._ser = None
+		self.port = args[0] if len(args) >= 1 else kwargs["port"]
 		if _isDebug():
-			port = args[0] if len(args) >= 1 else kwargs["port"]
-			log.debug("Opening port %s" % port)
+			log.debug("Opening port %s" % self.port)
 		try:
 			self._ser = serial.Serial(*args, **kwargs)
 		except Exception as e:
