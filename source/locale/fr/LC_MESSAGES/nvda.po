@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-07-28 16:50+0200\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-09 08:50+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -1458,17 +1458,17 @@ msgstr "bleu"
 #. Translators: The color between  blue and purple (HSV hue 270 degrees)
 msgctxt "color hue"
 msgid "blue-purple"
-msgstr "bleu-pourpre"
+msgstr "bleu-violet"
 
 #. Translators: The color purple (HSV hue 300 degrees)
 msgctxt "color hue"
 msgid "purple"
-msgstr "pourpre"
+msgstr "violet"
 
 #. Translators: The color between  purple and pink (HSV hue 312 degrees)
 msgctxt "color hue"
 msgid "purple-pink"
-msgstr "pourpre-rose"
+msgstr "violet-rose"
 
 #. Translators: The color pink (HSV hue 324 degrees)
 msgctxt "color hue"
@@ -1520,7 +1520,7 @@ msgstr "{color} pâle"
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "{color} pale foncé"
+msgstr "{color} pâle foncé"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
@@ -2968,6 +2968,18 @@ msgid ""
 msgstr ""
 "Passer au mode de revue précédent (ex. objet, document ou écran) et placer "
 "la position de revue au point de l'objet de navigation"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Mode de revue simple désactivé"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Mode de revue simple activé"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Activer et désactiver le mode de revue simple"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -7445,31 +7457,31 @@ msgstr "bande diagonale inversée"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "12.5% grisé"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "25% grisé"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "50% grisé"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "75% grisé"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "6.25% grisé"
 
@@ -7536,10 +7548,6 @@ msgstr "dégradé linéaire"
 msgid "rectangular gradient"
 msgstr "dégradé rectangulaire"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Cette cellule n'est pas éditable"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr ""
@@ -7559,6 +7567,11 @@ msgstr "C&ommentaires"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Formules"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Champs de formulaire"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8692,6 +8705,9 @@ msgstr "HIMS Braille séries Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Cette cellule n'est pas éditable"
 
 #~ msgid "checker"
 #~ msgstr "vérificateur"

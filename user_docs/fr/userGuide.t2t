@@ -640,6 +640,9 @@ Presser sur la touche Entrer ou le bouton Aller à  sur une formule de la liste 
 - feuilles : Ceci liste toutes les feuilles du classeur. 
 L'appui sur f2 sur une feuille de la liste vous permet de renommer cette feuille. 
 Presser sur la touche Entrer ou le bouton Aller à  sur une feuille de la liste vous amènera directement à cette feuille.
+- Champs de formulaire : Ceci liste tous les champs de formulaire dans la feuille de travail active.
+Pour chaque champ de formulaire, la liste d'éléments présente le texte alternatif du champ avec l'adresse des cellules concernées.
+La sélection d'un champ de formulaire et l'appui sur entrée ou le bouton Aller à amènent à ce champ en mode navigation.
 -
 
 +++ Annonce desCommentaires +++
@@ -653,6 +656,12 @@ Si un classeur a été protégé, il peut être impossible d'amener le focus à 
 %kc:beginInclude
 Pour pouvoir aller aux cellules protégées, passer en mode navigation en pressant NVDA+espace, puis utilisez les commandes standards de mouvement d'Excel telles que les flèches pour vous déplacer parmi les cellules de la feuille en cours.
 %kc:endInclude
+
++++ Champs de formulaire +++
+Les feuilles de travail Excel peuvent inclure des champs de formulaire.
+Vous pouvez y accéder en utilisant la liste d'éléments ou les touches de navigation rapide f et maj+f.
+Quand vous êtes sur un champ de formulaire en mode navigation, vous pouvez presser entrée ou espace pour l'activer ou passer en mode formulaire pour pouvoir interagir avec lui, selon le type de contrôle.
+Pour plus d'information concernant le mode navigation et la navigation par lettre, veuillez consulter la [section Mode Navigation #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1050,6 +1059,8 @@ Quand l'option est activée, le curseur de revue suit les mouvements de la souri
 
 ==== Mode de revue simple ====
 Quand l'option est activée, NVDA filtre la hiérarchie des objets que l'on peut atteindre, excluant les objets sans intérêt pour l'utilisateur ; Ex : les objets invisibles et les objets utilisés seulement à des fins de présentation.
+
+Pour activer ou désactiver le mode de revue simple depuis n'importe où, veuillez lui assigner un geste de commande personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
 +++ Paramètres de présentation des objets +++
 Ce dialogue se trouve dans le menu "Préférences" sous "Présentation des Objets...". 
