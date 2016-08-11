@@ -3,6 +3,62 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.3 =
+
+== New Features ==
+- Browse mode can now be used to read PDF documents in Microsoft Edge. (#5740)
+- Strikethrough and double-strikethrough are now reported if appropriate in Microsoft Word. (#5800)
+- In Microsoft Word, the title of a table is now reported if one has been provided. If there is a description, it can be accessed using the open long description command (NVDA+d) in browse mode. (#5943)
+- In Microsoft Word, NVDA now reports position information when moving paragraphs (alt+shift+downArrow and alt+shift+upArrow). (#5945)
+- In Microsoft Word, line spacing is now reported via NVDA's report formatting command, when changing it with various Microsoft word shortcut keys, and when moving to text with different line spacing if Report Line Spacing is turned on in NVDA's Document Formatting Settings. (#2961)
+- In Internet Explorer, HTML5 structural elements are now recognised. (#5591)
+- Reporting of comments (such as in Microsoft Word) can now be disabled via a Report Comments checkbox in NVDA's Document Formatting settings dialog. (#5108)
+- Add-ons manager: It is now possible to disable individual add-ons. (#3090)
+- Additional key assignments have been added for ALVA BC640/680 series braille displays. (#5206)
+- There is now a command to move the braille display to the current focus. Currently, only the ALVA BC640/680 series has a key assigned to this command, but it can be assigned manually for other displays in the Input Gestures dialog if desired. (#5250)
+
+
+== Changes ==
+- NVDA now reports colors using a basic well-understood set of 9 color hues and 3 shades, with brightness and paleness variations. This is rather than using more subjective and less understood color names. (#6029)
+- The existing NVDA+F9 then NVDA+F10 behavior has been modified to select text on the first press of F10. When F10 is pressed twice (in quick succession) the text is copied to the clipboard. (#4636)
+- Updated eSpeakNG to version Master 11b1a7b (22 June 2016). (#6037)
+
+
+== Bug Fixes ==
+- In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)
+- In Microsoft Word, NVDA now reports appropriately when using Word's own table navigation commands (alt+home, alt+end, alt+pageUp and alt+pageDown) and table selection commands (shift added to the navigation commands). (#5961)
+- In Microsoft Word dialog boxes, NVDA's object navigation has been greatly improved. (#6036)
+- In some applications such as Visual Studio 2015, shortcut keys (e.g. control+c for Copy) are now reported as expected. (#6021)
+- Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6015)
+- Reporting colors in Microsoft Word is now more accurate as changes in Microsoft Office Themes are now taken into account. (#5997)
+- Browse mode for Microsoft Edge and support for Start Menu search suggestions, is again available on Windows 10 builds after April 2016. (#5955)
+- In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)
+- In the Windows 10 Mail app, NVDA no longer fails to read the content of messages. (#5635) 
+- When speak command keys is on, lock keys such as caps lock are no longer announced twice. (#5490)
+- Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)
+- In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)
+- Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
+- When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)
+- If NVDA is unable to communicate with a braille display (e.g. because it has been disconnected), it will automatically disable use of the display. (#1555)
+- Slightly improved performance of filtering in the Browse Mode Elements List in some cases. (#6126)
+- In Microsoft Excel, the background pattern names reported by NVDA now match those used by Excel. (#6092)
+- Improved support for the Windows 10 logon screen, including announcement of alerts and activating of the password field with touch. (#6010)
+- NVDA now correctly detects the secondary routing buttons on ALVA BC640/680 series braille displays. (#5206)
+- NVDA can again report Windows Toast notifications in recent builds of Windows 10. (#6096)
+- NVDA no longer occasionally stops recognising key presses on Baum compatible and HumanWare Brailliant B braille displays. (#6035)
+
+
+== Changes for Developers ==
+- Logging information directly from a property no longer results in the property  being called recursively over and over again. (#6122)
+
+
+= 2016.2.1 =
+This release fixes crashes in Microsoft Word:
+
+- NVDA no longer causes Microsoft Word to crash immediately after it starts in Windows XP. (#6033)
+- Removed reporting of grammar errors, as this causes crashes in Microsoft Word. (#5954, #5877)
+
+
 = 2016.2 =
 Highlights of this release include the ability to indicate spelling errors while typing; support for reporting grammar errors in Microsoft Word; and improvements and fixes to Microsoft Office support.本次進版特色主要在針對微軟 Word文件，提供了報讀拼錯字，或出現文法錯誤等訊息的功能，也提昇了對微軟辦公室文件的支援。 
 
