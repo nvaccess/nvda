@@ -640,6 +640,9 @@ Hvis du trykker på Enter eller "Flyt til"-knappen på en formel i listen, komme
 - Ark: Viser en liste over alle ark i projektmappen.
 Du kan omdøbe et ark ved at trykke F2 på arket.
 Tryk på Enter eller "Flyt til"-knappen på et ark for at skifte til arket.
+- Formularfelter: Dette viser en liste over formularfelter i det aktuelle regneark.
+Alternativ tekst vil blive vist for hvert formularfelt, samt celleadresserne formularfeltet omfatter.
+Ved at vælge et formularfelt og derefter trykke på "Flyt til" knappen eller enter, vil fokus flyttes til formularfeltet i gennemsynstilstand.
 -
 
 +++ Annoncering af kommentarer +++
@@ -653,6 +656,12 @@ Hvis en projektmappe er blevet skrivebeskyttet, kan det være, det ikke er mulig
 %kc:beginInclude
 For at kunne navigere til låste celler skal du skifte til gennemsynstilstand ved at trykke NVDA+Mellemrum og så bruge de almindelige flyttekommandoer i Excel, f.eks. piletasterne, til at bevæge dig rundt i alle cellerne i regnearket.
 %kc:endInclude
+
++++ Formularfelter +++
+Excel regneark kan indeholde formularfelter.
+Du kan få adgang til disse ved brug af elementlisten eller F og Skift+F bogstavnavigation for formularfelter.
+Når du flytter til et formularfelt i gennemsynstilstand, kan du benytte enter eller mellemrum til at aktivere eller skifte til fokustilstand, så du kan interagere med feltet, afhængigt af kontrollen.
+For yderligere informationer om gennemsynstilstand samt bogstavnavigation, se [Gennemsynstilstand #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1050,6 +1059,8 @@ Når dette punkt er markeret, følger læsemarkøren musen, når musen flytter s
 
 ==== Simpel læsetilstand ====
 Når denne funktion er slået til, vil NVDA filtrere de objekter, du kan navigere til. NVDA vil udelukke de objekter, som i almindelighed ikke er af interesse, fx. usynlige objekter eller objekter, som kun bruges til layoutformål.
+
+For at kunne slå simpel læsetilstand til og fra hvor som helst, tildel en bevælgelse til kommandoen ved brug af [dialogen Input-bevægelser #InputGestures].
 
 +++ Indstillinger for præsentation af objekter +++
 Findes i menuen Indstillinger under "Objektpræsentation...".
