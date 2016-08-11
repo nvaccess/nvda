@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-07-28 18:14+0100\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-09 14:39+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -2976,6 +2976,18 @@ msgstr ""
 "pantalla) y coloca la posición de revisión en el punto del navegador de "
 "objetos"
 
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Modo de revisión simple desactivado"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Modo de revisión simple activado"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Activa o desactiva el modo de revisión simple"
+
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "No navigator object"
@@ -4435,7 +4447,7 @@ msgstr "no destacado"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
-msgstr "no hay negritas"
+msgstr "Sin negritas"
 
 #. Translators: Reported when text is italicized.
 msgid "italic"
@@ -4443,7 +4455,7 @@ msgstr "cursiva"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
-msgstr "no hay cursivas"
+msgstr "Sin cursivas"
 
 #. Translators: Reported when text is formatted with double strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -4458,7 +4470,7 @@ msgstr "tachado"
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
-msgstr "no hay tachado"
+msgstr "Sin tachado"
 
 #. Translators: Reported when text is underlined.
 msgid "underlined"
@@ -4466,7 +4478,7 @@ msgstr "subrayado"
 
 #. Translators: Reported when text is not underlined.
 msgid "not underlined"
-msgstr "no subrayado"
+msgstr "Sin subrayado"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -4825,9 +4837,9 @@ msgstr ""
 "este proyecto se vasa principalmente en donaciones y subvenciones. Donando, "
 "estás ayudando a financiar su desarrollo a tiempo completo.\n"
 "Si se donan hasta 10 dólares por cada descarga, nosotros podremos cubrir "
-"todos los costos en curso del proyecto.\n"
-"Todas las donaciones son recibidas por NV Access, La organización sin ánimo "
-"de lucro que desarrolla NVDA.\n"
+"todos los costes en curso del proyecto.\n"
+"Todas las donaciones se reciben por NV Access, La organización sin ánimo de "
+"lucro que desarrolla NVDA.\n"
 "Gracias por tu apoyo."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -5374,7 +5386,7 @@ msgstr "Paso de Diapositivas - completo"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
-msgstr "No hay notas"
+msgstr "Sin notas"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
@@ -5701,7 +5713,7 @@ msgstr "Consola P&ython"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
-msgstr "Administrador de &complementos..."
+msgstr "Gestionar &complementos..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -7455,31 +7467,31 @@ msgstr "franja diagonal inversa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "12.5% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "25% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "50% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "75% gris"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "6.25% gris"
 
@@ -7546,10 +7558,6 @@ msgstr "Degradado lineal"
 msgid "rectangular gradient"
 msgstr "Degradado rectangular"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Esta celda no es editable"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Lista varios tipos de elementos en esta hoja de cálculo"
@@ -7568,6 +7576,11 @@ msgstr "&Comentarios"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Fórmulas"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Campos de &Formulario"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8705,6 +8718,9 @@ msgstr "Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Esta celda no es editable"
 
 #~ msgid "checker"
 #~ msgstr "marcador"
