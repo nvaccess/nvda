@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-07-30 16:40+0330\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-10 02:02+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -2957,6 +2957,18 @@ msgid ""
 msgstr ""
 "حالتِ بازبینی را به حالتِ بازبینیِ قبلی، مانندِ حالتِ بازبینیِ شیء، سند یا صفحه "
 "تغییر داده و موقعیتِ بازبینی را در محلِّ اشاره‌ی پِیمایِشگر قرار میدهد."
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "حالتِ بازبینیِ ساده خاموش شد"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "حالتِ بازبینیِ ساده روشن شد"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "حالتِ بازبینیِ ساده را فعال یا غیرِ فعال میکند"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -7384,31 +7396,31 @@ msgstr "راه‌راهِ موربِ وارونه"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "خاکستریِ ۱۲ُنیم٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "خاکستریِ ۲۵٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "خاکستریِ ۵۰٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "خاکستریِ ۷۵٪"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "خاکستریِ ۶ُ۲۵صدمِ درصد"
 
@@ -7475,10 +7487,6 @@ msgstr "شیب‌دارِ خطّی"
 msgid "rectangular gradient"
 msgstr "شیب‌دارِ راست‌گوشه"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "این خانه غیرِ قابلِ ویرایش است"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "انواعِ گوناگونی از سازه‌های موجود در این صفحه‌ی گسترده را فهرست میکند."
@@ -7497,6 +7505,11 @@ msgstr "ت&وضیح‌ها"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "ف&رمول‌ها"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "فر&م‌ها"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8615,6 +8628,9 @@ msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE/Smart
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "این خانه غیرِ قابلِ ویرایش است"
 
 #~ msgid "checker"
 #~ msgstr "شطرنجی"
