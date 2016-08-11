@@ -640,6 +640,9 @@ Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranej ko
 - Arkusze: wyświetla wszystkie arkusze w skoroszycie. 
 Naciśnięcie F2 na liście arkuszy pozwala zmienić nazwę arkusza. 
 Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranego arkusza.
+- Pola formularzy: wyświetla wszystkie pola formularzy w aktywnym arkuszu.
+Dla każdego pola formularza, lista elementów wyświetla alternatywny tekst pola oraz adresy komórek, które ono zajmuje.
+Zaznaczenie pola i naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranego pola.
 -
 
 +++ Zgłaszanie komentarzy +++
@@ -653,6 +656,12 @@ Jeśli skoroszyt został zabezpieczony, może nie być możliwe przejście do ni
 %kc:beginInclude
 Aby przejść do zablokowanych komórek, przejdź do trybu czytania naciskając NVDA+space, a następnie użyj standardowych klawiszy Excel takich jak klawisze strzałek, aby przechodzić po wszystkich komórkach w aktualnym arkuszu.
 %kc:endInclude
+
++++ Pola formularzy +++
+Arkusze Excel mogą zawierać pola formularzy.
+Można uzyskać do nich dostęp przy pomocy listy elementów, albo klawiszy nawigacji literami f i shift+f.
+Po przejściu do pola formularza w trybie czytania, można nacisnąć enter lub space aby je aktywować, albo przejść do trybu formularzy dla wykonania dalszej interakcji z polem, zależnie od kontrolki.
+Więcej informacji o trybie czytania i nawigacji literami jest dostępne w [rozdziale tryb czytania #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Gdy opcja jest włączona, kursor przeglądu będzie przesuwać się do wskaźni
 ==== Tryb prostego przeglądania ====
 Gdy opcja jest włączona, NVDA będzie filtrować hierarchie obiektów, którymi można nawigować, aby wykluczyć bezużyteczne obiekty np. obiekty niewidoczne, albo używane tylko do tworzenia układu treści.
 
+Aby przełączać ten tryb z każdego miejsca, proszę przypisać własne zdarzenie wejścia przy użyciu [okna zdarzeń wejścia #InputGestures].
+
 +++ Ustawienia: Prezentacja Obiektów (NVDA+kontrol+o) +++
 Okno "Prezentacja Obiektów..." znajduje się w menu ustawień nvda.
 Zawiera następujące opcje:
@@ -1190,7 +1201,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
 - Atrybutów czcionki
 - Wyrównania tekstu
 - Kolorów
-- komentarzy
+- Komentarzy
 - Zmian edycyjnych
 - Podkreślenia
 - Stylu tekstu
@@ -1199,7 +1210,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
 - Numerów linii
 - Wcięć
 - Wcięć akapitu (np. wysunięcie, wcięcie pierwszej linii)
-- interlinii (pojedyncza, podwójna etc)
+- Interlinii (pojedyncza, podwójna etc)
 - Tabel
 - Nagłówków kolumn i wierszy tabeli
 - Współrzędnych komórek tabeli
@@ -1423,11 +1434,11 @@ Gdy klikniesz lub umieścisz punkt uwagi wewnątrz podglądu, NVDA tymczasowo za
 Aby przełączać podgląd mowy z każdego miejsca, zdefiniuj własne zdarzenie wejścia używając [okna Zdarzenia wejścia #InputGestures].
 
 ++ Manager wtyczek ++
-Manager wtyczek, dostępny poprzez polecenie "Zarządzaj dodatkami" w menu NVDA: Narzędzia, pozwala na instalację i usuwanie dodatków NVDA.
+Manager wtyczek, dostępny poprzez polecenie "Zarządzaj dodatkami" w menu NVDA: Narzędzia, pozwala na instalację, usuwanie, włączanie i wyłączanie dodatków NVDA.
 Dodatki to pakiety przygotowywane przez społeczność, zawierające oprogramowanie, które może dodawać lub zmieniać funkcje NVDA, czy nawet dostarczać wsparcie dodatkowych monitorów brajlowskich lub syntezatorów mowy.
 
 Okienko managera dodatków zawiera listę wszystkich dodatków aktualnie zainstalowanych w twojej konfiguracji NVDA. 
-Wyświetlana jest nazwa pakietu, wersja i autor, a dalsze informacje, takie jak opis i adres strony internetowej mogą zostać wyświetlone po zaznaczeniu dodatku i kliknięciu przycisku "O dodatku" .
+Wyświetlana jest nazwa pakietu, status, wersja i autor, a dalsze informacje, takie jak opis i adres strony internetowej mogą zostać wyświetlone po zaznaczeniu dodatku i kliknięciu przycisku "O dodatku" .
 Jeśli wybrany dodatek posiada pomoc, możesz ją przejrzeć po wciśnięciu przycisku Pomoc dodatku.
 
 Aby przejrzeć i pobrać dostępne dodatki, naciśnij przycisk "Pobierz dodatki".
@@ -1449,8 +1460,14 @@ NVDA zapyta, czy na pewno chcesz to zrobić..
 Tak jak w przypadku instalacji, NVDA musi zostać ponownie uruchomiony aby dodatek został całkowicie usunięty.
 Do tego czasu, na liście managera dodatków usuwany dodatek będzie miał status "usunięty".
 
+Aby wyłączyć dodatek, użyj przycisku Wyłącz.
+Aby włączyć wyłączony wcześniej dodatek, użyj przycisku Włącz.
+Możesz wyłączyć dodatek, jeśli jego status to uruchomiony lub włączony, albo włączyć gdy jest wstrzymany lub wyłączony.
+Po każdym naciśnięciu przycisku Włącz / Wyłącz, status dodatku zmienia się i informuje, co się stanie po restarcie NVDA.
+Jak w przypadku instalacji lub usunięcia dodatku, należy uruchomić ponownie NVDA aby wprowadzone zmiany zaczęły obowiązywać.
+
 Okno managera dodatków zawiera również przycisk "Zamknij".
-Jeśli zainstalowałeś lub usunąłeś jakieś dodatki, NVDA zapyta, czy chcesz zrestartować program, aby wprowadzone zmiany mogły zostać wprowadzone.
+Jeśli zainstalowałeś lub usunąłeś jakieś dodatki, albo zmieniłeś ich status, NVDA zapyta, czy chcesz zrestartować program, aby wprowadzone zmiany mogły zostać wprowadzone.
 
 W przeszłości możliwe było rozszerzanie funkcjonalności NVDA poprzez  kopiowanie pojedynczych wtyczek i sterowników do folderu konfiguracji użytkownika.
 O ile obecna wersja NVDA może wciąż uruchamiać takie wtyczki, nie będą się one pojawiać na liście Managera dodatków.
@@ -1595,11 +1612,17 @@ Poniżej klawisze monitora, których możesz używać z nvda.
 Aby je odnaleźć, zajrzyj do dokumentacji urządzenia:
 %kc:beginInclude
 || Działanie | Klawisz skrótu |
-| przewiń brajl do tyłu | t1 |
+| przewiń brajl do tyłu | t1 albo etouch1 |
 | przenieś monitor do poprzedniej linii | t2
+| Przenieś do punktu uwagi | t3 |
 | przenieś monitor do następnej linii | t4 |
-| Przewiń brajl do przodu | t5 |
+| Przewiń brajl do przodu | t5 lub etouch3 |
 | Przywołaj do komórki brajla | routing |
+| Przenieś do pierwszej linii w przeglądzie | t1+t2 |
+| Przenieś do ostatniej linii w przeglądzie | t4+t5 |
+| Przełącz brajl związany z | t1+t3 |
+| Odczytaj tytuł | etouch2 |
+| Odczytaj pasek stanu | etouch4 |
 | Klawisz shift+tab | sp1 |
 | Klawisz alt | sp2 |
 | Klawisz escape | sp3 |
@@ -1609,10 +1632,16 @@ Aby je odnaleźć, zajrzyj do dokumentacji urządzenia:
 | Klawisz strzałka w lewo | spLeft |
 | Klawisz strzałka w prawo | spRight |
 | Klawisz enter | spEnter |
+| Odczytaj datę/czas | sp1+sp2 |
 | Menu NVDA | sp1+sp3 |
 | klawisz windows + d (minimalizuje wszystkie okna) | sp1+sp4 |
+| Klawisz windows+b (przejdź do zasobnika systemowego) | sp3+sp4 |
 | Klawisz windows | sp2+sp3 |
 | Klawisz alt+tab | sp2+sp4 |
+| Klawisz control+home | t3+spUp |
+| Klawisz control+end | t3+spDown |
+| klawisz home | t3+spLeft |
+| Klawisz end | t3+spRight |
 %kc:endInclude
 
 ++ Monitory Handy Tech ++
