@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -1505,25 +1505,25 @@ msgstr "{color} muito escuro"
 #, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
-msgstr "{color} paliu floixo"
+msgstr "{color} esbufaliu floixo"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
-msgstr "{color} paliu"
+msgstr "{color} esbufaliu"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "{color} paliu escuro"
+msgstr "{color} esbufaliu escuro"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
-msgstr "{color} paliu muito escuro"
+msgstr "{color} esbufaliu muito escuro"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
 #, python-brace-format
@@ -2968,6 +2968,18 @@ msgstr ""
 "Cambea a l'anterior modo de revisión (p. eix. obchecto, documento u "
 "pantalla) y coloca a posición de revisión en o punto d'o navegador "
 "d'obchectos"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Modo de revisión simpla desenchegau"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Modo de revisión simpla enchegau"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Enchega y desenchega o modo de revisión simpla"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -7441,31 +7453,31 @@ msgstr "raya diagonal invertida"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "12,5% griso"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "25% griso"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "50% griso"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "75% griso"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "6,25% griso"
 
@@ -7532,10 +7544,6 @@ msgstr "degradau linial"
 msgid "rectangular gradient"
 msgstr "Degradau rectangular"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Ista celda no ye editable"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Lista qualques menas d'elementos en ista fuella de calculo"
@@ -7554,6 +7562,11 @@ msgstr "C&omentarios"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "Fo&rmulas"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Campos de &formulario"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8686,6 +8699,9 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Ista celda no ye editable"
 
 #~ msgid "checker"
 #~ msgstr "marcador"
