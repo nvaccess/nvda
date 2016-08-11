@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-08-01 13:13+0200\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-09 10:01+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -2773,9 +2773,8 @@ msgid "report line spacing on"
 msgstr "Leggi spaziatura righe attivo"
 
 #. Translators: Input help mode message for toggle report line spacing command.
-#, fuzzy
 msgid "Toggles on and off the reporting of line spacing"
-msgstr "Attiva o disattiva la lettura dei link"
+msgstr "Attiva o disattiva l'annuncio della spaziatura righe"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -2967,6 +2966,18 @@ msgid ""
 msgstr ""
 "Passa alla modalità di esplorazione precedente (ad esempio ad oggetti, "
 "documento, in linea), posizionandosi sul punto del navigatore ad oggetti"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Modalità semplice disattiva"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Modalita' semplice attiva"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Attiva o disattiva la modalità semplice"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3639,13 +3650,12 @@ msgid "Start marked"
 msgstr "Marcatore del punto di i inizio"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
-#, fuzzy
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
 "Marca la posizione corrente del cursore di controllo come punto di inizio "
-"del testo da copiare"
+"del testo da copiare o selezionare"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
@@ -3672,14 +3682,15 @@ msgid "Unable to copy"
 msgstr "Impossibile copiare"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-#, fuzzy
 msgid ""
 "If pressed once, the text from the previously set start marker up to and "
 "including the current position of the review cursor is selected. If pressed "
 "twice, the text is copied to the clipboard"
 msgstr ""
-"Recupera il testo dal marcatore del punto  di inizio precedentemente "
-"selezionato  alla posizione del cursore di controllo e lo copia negli appunti"
+"Se premuto una volta, verrà selezionato il testo dal marcatore di inizio "
+"impostato in precedenza fino alla posizione attuale del cursore di "
+"controllo, incluso il carattere in cui esso si trova. Se premuto due volte, "
+"il testo sarà copiato negli appunti"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -5873,7 +5884,6 @@ msgid "Add-ons Manager"
 msgstr "Gestore componenti aggiuntivi"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-#, fuzzy
 msgid ""
 "All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
@@ -6022,14 +6032,13 @@ msgid "Enable add-on"
 msgstr "Abilita componente aggiuntivo"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
-#, fuzzy
 msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"Alcuni componenti aggiuntivi sono stati installati o rimossi. è necessario "
-"riavviare NVDA affinché i cambiamenti abbiano effetto. Si desidera riavviare "
-"NVDA adesso?"
+"Alcuni componenti aggiuntivi sono stati modificati. è necessario riavviare "
+"NVDA affinché i cambiamenti abbiano effetto. Si desidera riavviare NVDA "
+"adesso?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -7431,80 +7440,77 @@ msgstr "Automatico"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 msgid "diagonal crosshatch"
-msgstr ""
+msgstr "Tratteggio incrociato diagonale"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "thin diagonal crosshatch"
-msgstr ""
+msgstr "Tratteggio incrociato diagonale sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
 msgid "reverse diagonal stripe"
-msgstr ""
+msgstr "Striscia diagonale inversa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
-msgstr ""
+msgstr "grigio 12.5%"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "grigio 25%"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "grigio 50%"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "grigio 75%"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
-msgstr ""
+msgstr "Grigio 6.25%"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
 msgid "thin horizontal crosshatch"
-msgstr ""
+msgstr "Tratteggio incrociato orizzontale sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-#, fuzzy
 msgid "horizontal stripe"
-msgstr "orizzontale"
+msgstr "striscia orizzontale"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
 msgid "thin reverse diagonal stripe"
-msgstr ""
+msgstr "striscia diagonale inversa sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-#, fuzzy
 msgid "thin horizontal stripe"
-msgstr "Linee orizzontali chiare"
+msgstr "striscia orizzontale sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
 msgid "thin diagonal stripe"
-msgstr ""
+msgstr "striscia diagonale sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#, fuzzy
 msgid "thin vertical stripe"
-msgstr "allineamento distribuito verticalmente"
+msgstr "striscia verticale sottile"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7514,7 +7520,7 @@ msgstr "nessuno"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "thick diagonal crosshatch"
-msgstr ""
+msgstr "tratteggio incrociato diagonale spesso "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7524,13 +7530,12 @@ msgstr "solido"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
 msgid "diagonal stripe"
-msgstr ""
+msgstr "striscia diagonale"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#, fuzzy
 msgid "vertical stripe"
-msgstr "Linee scure verticali"
+msgstr "striscia verticale"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -7539,10 +7544,6 @@ msgstr "Gradiente lineare"
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
 msgstr "Gradiente rettangolare"
-
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Questa cella non è modificabile"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
@@ -7562,6 +7563,11 @@ msgstr "C&ommenti"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "Fo&rmule"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "campi del &form"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8672,7 +8678,7 @@ msgstr "spaziatura righe doppia"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr ""
+msgstr "spaziatura righe 1.5"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -8691,6 +8697,9 @@ msgstr "HIMS serie Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Questa cella non è modificabile"
 
 #~ msgid "checker"
 #~ msgstr "scacchiera"
