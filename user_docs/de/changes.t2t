@@ -4,38 +4,53 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.3 =
-
+Schwerpunkte dieser Version sind u. a. eine Möglichkeit zum Deaktivieren einzelner Erweiterungen; die Unterstützung von Formularfeldern in Microsoft Excel; Verbesserungen bei der Ansage von Farben; Verbesserungen und Fehlerkorrekturen bzgl. einiger Braillezeilen; sowie Fehlerbehebungen und Verbesserungen an der Unterstützung für Microsoft Word.
 
 == Neue Funktionen ==
 - Der Lesemodus kann nun verwendet werden, um in Microsoft Edge PDF-Dokumente zu lesen. (#5740)
 - In Microsoft Word wird durchgestrichener und doppelt durchgestrichener Text erkannt. (#5800)
-- In Microsoft Word wird der Titel einer Tabelle korrekt erkannt. Wenn außerdem eine Beschreibung vorhanden ist, kann diese mit dem Befehl NVDA+D angezeigt werden. (#5943)
-- In Microsoft Word wird die Position im Dokument korrekt angezeigt, wenn Sie sich mit Alt+Umschalt+Pfeil auf und Alt+Umschalt+Pfeil ab absatzweise durch das Dokument bewegen. (#5945)
-- In Microsoft Word werden jetzt Zeilenabstände erkannt. Die ansage von Zeilenabständen kann in den Einstellungen für Dokumentformatierungen (de)aktiviert werden. Außerdem werden die Zeilenabstände angesagt, wenn Sie den Zeilenabstand mit den Tastenkombinationen von Word ändern oder wenn sie sich beim Navigieren im Dokument in einen Abschnitt mit einem anderen Zeilenabstand bewegen. (#2961)
-- im Internet Explorer werden strukturierte html5-Elemente erkannt. (#5591)
-- Die Ansage von komentaren (z. B. in Microsoft Word) kann nun in den Einstellungen für Dokumentformatierungen (de)aktiviert werden. (#5108)
+- In Microsoft Word wird der Titel einer Tabelle korrekt erkannt. Wenn außerdem eine Beschreibung vorhanden ist, kann diese im Lese-Modus mit dem Befehl Ausführliche Beschreibung öffnen (NVDA+D) angezeigt werden. (#5943)
+- In Microsoft Word wird die Position im Dokument korrekt ausgegeben, wenn Sie mittels  Alt+Umschalt+Pfeil auf und Alt+Umschalt+Pfeil ab  Absätze im Dokument verschieben. (#5945)
+- In Microsoft Word werden jetzt Zeilenabstände erkannt. Die ansage von Zeilenabständen kann in den Einstellungen für Dokumentformatierungen eingestellt werden. Außerdem werden die Zeilenabstände angesagt, wenn Sie den Zeilenabstand mit den Tastenkombinationen von Word ändern oder wenn sie sich beim Navigieren im Dokument in einen Abschnitt mit einem anderen Zeilenabstand bewegen. (#2961)
+- Im Internet Explorer werden strukturierte HTML5-Elemente erkannt. (#5591)
+- Die Ansage von kommentaren (z. B. in Microsoft Word) kann nun in den Einstellungen für Dokumentformatierungen eingestellt werden. (#5108)
+- Sie können nun einzelne Erweiterungen im Dialog "Erweiterungen verwalten" deaktivieren. (#3090)
+- Zusätzliche Tastenkombinationen für Braillezeilen von ALVA BC640 und BC680. (#5206)
+- Es gibt einen neuen Befehl zum Bewegen der Braillezeile zum Fokus. Momentan wird dieser Befehl nur von Alva-Braillezeilen verwendet; es steht Ihnen jedoch frei, diesen Befehl auch an Ihrer Braillezeile auf eine Tastenkombination zu legen. Hierfür können Sie den Dialog "Einstellungen -> Eingaben" verwenden. (#5250)
+- In Microsoft Excel können Sie nun mit Formularfeldern interagieren. Verwenden Sie hierfür entweder die Elementliste oder die Schnellnavigationstasten. (#4953)
+- Es gibt einen neuen Befehl zum Umschalten des einfachen Darstellungsmodus. Sie können den Dialog "Einstellungen -> Eingaben" verwenden. (#6173)
 
 
-== Changes ==
+== Änderungen ==
 - NVDA verwendet nun einen leichter verständlichen Satz von Farbnamen. Diese sind übersichtlicher als die subjektiven Web-Farbnamen. (#6029)
-- Das Verhalten von NVDA+F9 und NVDA+F10 wurde geändert. Wird NVDA+F10 einmal gedrückt, so wird der Text zwischen der zuvor gesetzten Startmarke und der aktuellen Aktuellen Position des NVDA-Cursors markiert. Wird die Tastenkombination zweimal gedrückt, so wird er in die Zwischenablage kopiert. (#4636)
+- Das Verhalten von NVDA+F9 und NVDA+F10 wurde geändert. Wird NVDA+F10 einmal gedrückt, so wird der Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors markiert. Wird die Tastenkombination zweimal gedrückt, so wird er in die Zwischenablage kopiert. (#4636)
+- eSpeak NG auf die Testversion Master 11b1a7b (22. Juni 2016) aktualisiert. (#6037)
 
 
 == Fehlerkorrekturen ==
 - Im Lesemodus in Microsoft Word wird beim Kopieren von Text in die Zwischenablage die Formatierung beibehalten. (#5956)
-- In Microsoft Word werden words eigene Tabellennavigationsbefehle (Alt+Pos1, Alt+Ende, Alt+Seite auf und Alt+Seite ab) korrekt unterstützt. Dies gilt auch für die Markierungsbefehle für Tabellen (Alt+Umschalt+Pos1, Alt+Umschalt+Ende, Alt+Umschalt+Seite auf, Alt+Umschalt+Seite ab). (#5961)
-- in Dialogen von Microsoft Word wurde die Objektnavigation von NVDA verbessert. (#6036)
-- in Anwendungen wie Visual Studio 2015 werden Tastenkombinationen wie strg+c korekt angesagt. (#6021)
-- Fehler bei der Suche nach seriellen Anschlüssen bei der Verwendung mancher Braillezeilentreiber behoben. (#6015)
-- die Ansage von Farben in Microsoft Office berücksichtigt Änderungen im Design von Microsoft Office. (#5997)
-- in Windows 10-Versionen die am/nach dem April 2016 erschienen sind, wird Microsoft Edge unterstützt. Außerdem werden Suchvorschläge im Startmenü unterstützt. (#5955)
-- in Microsoft Word funktioniert die Ansage von Tabellenüberschriften besser, wenn Sie sich in einer verbundenen Zelle befinden. (#5926)
-- in Windows 10 Mail werden Nachrichten korrekt gelesen. (#5635) 
+- In Microsoft Word werden Word-eigene Tabellennavigationsbefehle (Alt+Pos1, Alt+Ende, Alt+Seite auf und Alt+Seite ab) korrekt unterstützt. Dies gilt auch für die Markierungsbefehle für Tabellen (Alt+Umschalt+Pos1, Alt+Umschalt+Ende, Alt+Umschalt+Seite auf, Alt+Umschalt+Seite ab). (#5961)
+- In Dialogen von Microsoft Word wurde die Objektnavigation von NVDA verbessert. (#6036)
+- In Anwendungen wie Visual Studio 2015 werden Tastenkombinationen wie Strg+C korrekt angesagt. (#6021)
+- Fehler bei der Suche nach seriellen Anschlüssen bei der Verwendung einiger Braillezeilentreiber behoben. (#6015)
+- Die Ansage von Farben in Microsoft Word ist nun genauer, da Änderungen im Design von Microsoft Office berücksichtigt werden. (#5997)
+- In Windows 10-Versionen die im Aprill 2016 oder später erschienen sind, wird Microsoft Edge unterstützt. Außerdem werden Suchvorschläge im Startmenü unterstützt. (#5955)
+- In Microsoft Word funktioniert die Ansage von Tabellenüberschriften besser, wenn Sie sich in einer verbundenen Zelle befinden. (#5926)
+- In Windows 10-Mail werden Nachrichten korrekt gelesen. (#5635) 
 - Wenn die Ansage von Funktionstasten aktiviert ist, werden Umschalttasten (Num lock, Dauergroßschreibung etc.) nicht mehr zweimal angesagt. (#5490)
-- die Dialoge der Benutzerkontensteuerung in Windows 10 werden wieder korrekt ausgelesen. (#5942)
-- im Web-Conference-Plugin (z. B. auf www.out-of-sight.net) spielt NVDA keine Signaltöne mehr ab, wenn sich die Aussteuerungsanzeige für das Mikrofon ändert. (#5888)
-- die Befehle weitersuchen und rückwärts suchen berücksichtigen jetzt die Groß-/Kleinschreibung, wenn beim vorherigen Aufruf des Suchdialogs die Groß-/Kleinschreibung berücksichtigt wurde. (#5522)
-- Beim Bearbeiten von Wörterbucheinträgen wird bei fehlerhaften regulären Ausdrücken eine Fehlermeldung angezeigt. Außerdem wird NVDA nicht mehr abstürzen, wenn ein Wörterbuch fehlerhafte Einträge enthält. (#4834)
+- Die Dialogfelder der Benutzerkontensteuerung werden ab Windows 10 Anniversary update wieder korrekt ausgelesen. (#5942)
+- Im Web-Conference-Plugin (z. B. auf www.out-of-sight.net) spielt NVDA keine Signaltöne mehr ab, wenn sich die Aussteuerungsanzeige für das Mikrofon ändert. (#5888)
+- Die Befehle Weitersuchen und Rückwärtssuchen berücksichtigen jetzt die Groß-/Kleinschreibung, wenn beim vorherigen Aufruf des Suchdialogs die Groß-/Kleinschreibung berücksichtigt wurde. (#5522)
+- Beim Bearbeiten von Wörterbucheinträgen wird bei fehlerhaften regulären Ausdrücken eine Fehlermeldung angezeigt. Außerdem stürtzt NVDA nicht mehr ab, wenn ein Wörterbuch fehlerhafte Einträge enthält. (#4834)
+- Falls NVDA nicht (mehr) in der Lage sein sollte, mit einer Braillezeile zu kommunizieren (etwa weil sie abgezogen wurde), wird die Verwendung von Braillezeilen generell unterlassen. (#1555)
+- Leistungsverbesserungen im Filter-Dialog im Lesemodus. (#6126)
+- Die von NVDA zurückgegebenen namen für Filtergrundmuster in Excel entsprechen jetzt denen, die tatsächlich in Excel verwendet wurden. (#6092)
+- Verbesserungen im Anmeldebildschirm von Windows 10 (einschließlich Aktivierung des Kennwortfeldes mittels Berührung) und der Ansage von Meldungen. (#6010)
+- NVDA unterstützt nun die zweiten Routingtasten an Alva-Braillezeilen. (#5206)
+- NVDA kann Windows-10-Benachrichtigungen nun wieder anzeigen. Dies betrifft vor allem aktuelle Versionen von Windows 10. (#6096)
+- NVDA erkennt Tastendrücke an Baum-/Humanware-Braillezeilen zuverlässiger. (#6035)
+- Wenn die Ausgabe von Zeilennummern im Dialog für Dokumentformatierungen aktiviert ist, werden die Zeilennummern auch in Braille angezeigt. (#5941)
+- Wenn die Sprache abgeschaltet wurde, erscheinen Objektinformationen (z. B. beim Drücken von NVDA+Tab) trotzdem im Sprachbetrachter. (#6049)
 
 
 = 2016.2.1 =
