@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-07-31 23:42+0100\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-09 17:31+0200\n"
 "Last-Translator: zvonimmir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1512,13 +1512,13 @@ msgstr "svjetlo blijeda {color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
-msgstr "pale {color}"
+msgstr "blijeda {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "tamno pale {color}"
+msgstr "tamno blijeda {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
@@ -2966,6 +2966,18 @@ msgid ""
 msgstr ""
 "Prebacuje na prethodni mod pregleda (npr. objekt, dokument ili zaslon) i "
 "postavlja položaj pregleda na mjesto objekta navigatora"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "način jednostavnog pregleda isključen"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "način jednostavnog pregleda uključen"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "uključuje ili isključuje jednostavni prikaz"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -7433,31 +7445,31 @@ msgstr "obrnuta dijagonalna pruga"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "12.5% gray"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "25% gray"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "50% gray"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "75% gray"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "6.25% gray"
 
@@ -7524,10 +7536,6 @@ msgstr "linearni gradijan"
 msgid "rectangular gradient"
 msgstr "pravokutni gradijan"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Ova se ćelija ne može urediti"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "prikazuje razne vrste elemenata u ovoj radnoj knjizi"
@@ -7546,6 +7554,11 @@ msgstr "&komentari"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&formule"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Polja obrazca"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8666,6 +8679,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Ova se ćelija ne može urediti"
 
 #~ msgid "checker"
 #~ msgstr "provjera"
