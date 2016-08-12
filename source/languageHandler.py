@@ -1,3 +1,9 @@
+#languageHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2007-2016 NV access Limited, Joseph Lee
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import __builtin__
 import os
 import sys
@@ -38,7 +44,9 @@ def getLanguageDescription(language):
 	"""Finds out the description (localized full name) of a given local name"""
 	desc=None
 	LCID=localeNameToWindowsLCID(language)
-	if LCID!=0:
+	# #6259: LCID 0x1000 denotes custom locale in Windows 10, thus returns "unknown language" or an odd description (observed for Aragonese).
+	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
+	if LCID not in (0, 4096):
 		buf=ctypes.create_unicode_buffer(1024)
 		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
 		if '_' not in language:
