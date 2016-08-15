@@ -88,8 +88,8 @@ class EdgeTextInfo(UIATextInfo):
 		super(EdgeTextInfo,self).expand(unit)
 		return
 
-	def _getControlFieldForObject(self,obj):
-		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj)
+	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
 			field['landmark']=aria.landmarkRoles.get(landmark)
@@ -112,49 +112,14 @@ class EdgeTextInfo(UIATextInfo):
 				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
 		return field
 
-	def _getTextWithFields_text(self,textRange,formatConfig):
-		log.debug("_getTextWithFields_text start")
-		isInitial=True
-		for tempRange in self._iterUIARangeByUnit(textRange,UIAHandler.TextUnit_Format):
-			text=tempRange.getText(-1)
-			if text:
-				field=self._getFormatFieldAtRange(tempRange,formatConfig)
-				if field.field:
-					yield field
-				yield text
-				if field.field and isInitial:
-					isInitial=False
-					formatConfig=formatConfig.copy()
-					formatConfig['reportHeadings']=False
-
-	def _getTextWithFields_embedded(self,element):
-		try:
-			obj=UIA(UIAElement=element)
-			field=self._getControlFieldForObject(obj)
-		except LookupError:
-			log.debug("Failed to fetch controlField data for child")
+	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+		log.debug("_getTextWithFieldsForUIARange (unbalanced)")
+		if not recurseChildren:
+			log.debug("recurseChildren is False. Falling back to super")
+			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,textRange,formatConfig,includeRoot=includeRoot,alwaysWalkAncestors=True,recurseChildren=False,_rootElementRange=_rootElementRange):
+				yield field
 			return
-		field['embedded']=True
-		field['_startOfNode']=True
-		field['_endOfNode']=True
-		# Embedded groupings are probably things like audio or video tags etc.
-		if obj.role==controlTypes.ROLE_GROUPING:
-			# Force the role to embedded object for now so that value is reported
-			field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
-		# As this field will have no text or children itself, set its value to something useful.
-		if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_GROUPING):
-			value=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
-		else:
-			value=obj.value
-		if not value: value=" "
-		field['alwaysReportValue']=True
-		field['value']=value
-		yield textInfos.FieldCommand("controlStart",field)
-		yield textInfos.FieldCommand("controlEnd",field)
-
-	def _getTextWithFields_unbalanced(self,rootElement,textRange,formatConfig,includeRoot=True):
 		if log.isEnabledFor(log.DEBUG):
-			log.debug("_getTextWithFields_unbalanced")
 			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType)
 			log.debug("full text: %s"%textRange.getText(-1))
 			log.debug("includeRoot: %s"%includeRoot)
@@ -174,43 +139,39 @@ class EdgeTextInfo(UIATextInfo):
 			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
 		self._normalizeUIARange(enclosingRange)
-		clippedStart=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-			clippedEnd=True
-		else:
-			clippedEnd=False
-		# Specific check for embedded elements (checkboxes etc)
-		# Calling getChildren on their childRange always gives back the same child.
+		# check for an embedded child
 		childElements=startRange.getChildren()
-		if childElements.length==1:
-			childElement=childElements.getElement(0)
-			if childElement and UIAHandler.handler.clientObject.compareElements(childElement,rootElement):
-				log.debug("Detected embedded child. Handling with _getTextWithFields_embedded")
-				childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-				for field in self._getTextWithFields_embedded(childElement):
-					yield field
-				log.debug("Done handling embedded child")
-				return
+		if childElements.length==1 and UIAHandler.handler.clientObject.compareElements(rootElement,childElements.getElement(0)):
+			log.debug("Using single embedded child as enclosingElement")
+			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementRange=_rootElementRange,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False):
+				yield field
+			return
 		parents=[]
 		parentElement=enclosingElement
 		log.debug("Generating ancestors:")
+		hasAncestors=False
 		while parentElement:
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
 			isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 			log.debug("isRoot: %s"%isRoot)
+			if not isRoot:
+				hasAncestors=True
 			if not includeRoot and isRoot:
 				log.debug("root not requested. Breaking")
 				break
-			try:
-				obj=UIA(UIAElement=parentElement)
-				field=self._getControlFieldForObject(obj)
-			except LookupError:
-				log.debug("Failed to fetch controlField data for parentElement. Breaking")
-				break
-			parents.append((parentElement,field))
+			if parentElement is not enclosingElement:
+				try:
+					obj=UIA(UIAElement=parentElement)
+					field=self._getControlFieldForObject(obj)
+				except LookupError:
+					log.debug("Failed to fetch controlField data for parentElement. Breaking")
+					break
+				parents.append((parentElement,field))
 			if isRoot:
+				log.debug("Hit root. Breaking")
 				break
 			log.debug("Fetching next parentElement")
 			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
@@ -220,115 +181,53 @@ class EdgeTextInfo(UIATextInfo):
 			yield textInfos.FieldCommand("controlStart",field)
 		log.debug("Done yielding parents")
 		log.debug("Yielding balanced fields for startRange")
-		# Move through the text range, collecting text and recursing into children
-		tempRange=startRange.clone()
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		if log.isEnabledFor(log.DEBUG):
-			log.debug("Child count: %s"%childElements.length)
-			log.debug("Walking children")
-		for index in xrange(childElements.length):
-			childElement=childElements.getElement(index)
-			if not childElement:
-				log.debug("NULL childElement. Skipping")
-				continue
-			childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-			if log.isEnabledFor(log.DEBUG):
-				log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
-			childRange=self.obj.UIATextPattern.rangeFromChild(childElement)
-			if not childRange:
-				log.debug("NULL childRange. Skipping")
-				continue
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,startRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
-				log.debug("Child at or past end of startRange. Breaking")
-				break
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
-				log.debug("startRange ended part way through the child. Crop end of childRange to fit")
-				childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_End)
-			childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-			if childStartDelta>0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,startRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
-				# plain text before this child
-				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
-				log.debug("Plain text before child")
-				for field in self._getTextWithFields_text(tempRange,formatConfig):
-					yield field
-			elif childStartDelta<0:
-				log.debug("startRange started part way through child. Cropping Start of child range to fit" )
-				childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
-				log.debug("childRange is degenerate. Skipping")
-				continue
-			log.debug("Recursing into child %s"%index)
-			for field in self._getTextWithFields_unbalanced(childElement,childRange,formatConfig):
-				yield field
-			log.debug("Done recursing into child %s"%index)
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
-		log.debug("children done")
-		# Plain text after the final child
-		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_End)
-			log.debug("Yielding final text")
-			for field in self._getTextWithFields_text(tempRange,formatConfig):
-				yield field
-		log.debug("Done yielding final text")
-		log.debug("Done yielding balanced fields for startRange")
+		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementRange=enclosingRange,includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True):
+			yield field
 		tempRange=startRange.clone()
 		log.debug("Walking parents to yield controlEnds and recurse unbalanced endRanges")
 		for parentElement,field in parents:
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
-			if parentElement is enclosingElement:
-				log.debug("is enclosingElement: True")
+			log.debug("is enclosingElement: False")
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+			try:
+				parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
+			except COMError:
+				log.debug("Error fetching parent range")
+				parentRange=None
+			if parentRange:
+				self._normalizeUIARange(parentRange)
+				clippedStart=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
+				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
+				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
+					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+					clippedEnd=True
+				else:
+					clippedEnd=False
 				field['_startOfNode']=not clippedStart
 				field['_endOfNode']=not clippedEnd
-			else:
-				log.debug("is enclosingElement: False")
-				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-				try:
-					parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
-				except COMError:
-					log.debug("Error fetching parent range")
-					parentRange=None
-				if parentRange:
-					self._normalizeUIARange(parentRange)
-					clippedStart=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
-					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
-					if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
-						tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-						clippedEnd=True
-					else:
-						clippedEnd=False
-					field['_startOfNode']=not clippedStart
-					field['_endOfNode']=not clippedEnd
-					if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
-						log.debug("Recursing endRange")
-						for endField in self._getTextWithFields_unbalanced(parentElement,tempRange,formatConfig,includeRoot=False):
-							yield endField
-						log.debug("Done recursing endRange")
+				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+					log.debug("Recursing endRange")
+					for endField in self._getTextWithFieldsForUIARange(parentElement,tempRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True):
+						yield endField
+					log.debug("Done recursing endRange")
 			log.debug("Yielding controlEnd for parent")
 			yield textInfos.FieldCommand("controlEnd",field)
 		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
-		log.debug("_getTextWithFields_unbalanced end")
+		log.debug("_getTextWithFieldsForUIARange (unbalanced) end")
 
 	def getTextWithFields(self,formatConfig=None):
-		if self.isCollapsed:
-			return []
-		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		fields=[]
+		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
 		seenText=False
 		curStarts=[]
-		for field in self._getTextWithFields_unbalanced(self.obj.UIAElement,self._rangeObj,formatConfig,False):
-			if log.isEnabledFor(log.DEBUG):
-				log.debug("field: %s"%field)
-			fields.append(field)
 		# Chop extra fields off the end incorrectly put there by Edge
 		numFields=len(fields)
 		for index in xrange(numFields-1,-1,-1):
 			field=fields[index]
-			if index>0 and isinstance(field,basestring) and field.isspace():
-				prevField=fields[index-1]
+			if index>1 and isinstance(field,basestring) and field.isspace():
+				prevField=fields[index-2]
 				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
-					del fields[index]
+					del fields[index-1:index+1]
 		startCount=0
 		lastStartIndex=None
 		numFields=len(fields)
