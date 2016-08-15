@@ -292,8 +292,8 @@ long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
 	return rawChildCount;
 }
 
-bool hasAriaHiddenAttribute(map<wstring,wstring>& IA2AttribsMap){
-	auto IA2AttribsMapIt = IA2AttribsMap.find(L"hidden");
+bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
+	const auto IA2AttribsMapIt = IA2AttribsMap.find(L"hidden");
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
 }
 
@@ -503,19 +503,19 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Certain objects are never interactive, even if other checks are true.
 	bool isNeverInteractive = parentNode->isHidden||(!isEditable && (isRoot || role == ROLE_SYSTEM_DOCUMENT || role == IA2_ROLE_INTERNAL_FRAME));
 	bool isInteractive = !isNeverInteractive && (isEditable || inLink || states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE || isEmbeddedApp || role == ROLE_SYSTEM_EQUATION);
+	// We aren't finished calculating isInteractive yet; actions are handled below.
 
 	const bool isAriaHidden = hasAriaHiddenAttribute(IA2AttribsMap);
 	const long childCount = getChildCount(isAriaHidden, pacc);
 
 	bool nameIsContent = false;
-	{
-		const bool isImgMap = role == ROLE_SYSTEM_GRAPHIC && childCount > 0;
-		// We aren't finished calculating isInteractive yet; actions are handled below.
-		// Whether the name is the content of this node.
-		nameIsContent = isEmbeddedApp
-			|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
-			|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
-	}
+
+	const bool isImgMap = role == ROLE_SYSTEM_GRAPHIC && childCount > 0;
+	// Whether the name is the content of this node.
+	nameIsContent = isEmbeddedApp
+		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
+		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
+
 
 	IAccessibleText* paccText=NULL;
 	IAccessibleHypertext* paccHypertext=NULL;
@@ -667,7 +667,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		parentNode->addAttribute(L"name", name);
 
 	if (isVisible) {
-		if (role==ROLE_SYSTEM_GRAPHIC&&childCount>0&&name) {
+		if ( isImgMap && name ) {
 			// This is an image map with a name. Render the name first.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
