@@ -29,35 +29,35 @@ UIAFormatUnits=[UIAHandler.TextUnit_Format,UIAHandler.TextUnit_Word,UIAHandler.T
 
 class UIATextInfo(textInfos.TextInfo):
 
-	def _getFormatFieldAtRange(self,range,formatConfig):
+	def _getFormatFieldAtRange(self,range,formatConfig,ignoreMixedValues=False):
 		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontNameAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if not UIAHandler.handler.clientObject.checkNotSupported(val):
 				formatField["font-name"]=val
 		if formatConfig["reportFontSize"]:
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontSizeAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontSizeAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,numbers.Number):
 				formatField['font-size']="%g pt"%float(val)
 		if formatConfig["reportFontAttributes"]:
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontWeightAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontWeightAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
 				formatField['bold']=(val>=700)
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsItalicAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsItalicAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if not UIAHandler.handler.clientObject.checkNotSupported(val):
 				formatField['italic']=val
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_UnderlineStyleAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_UnderlineStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if not UIAHandler.handler.clientObject.checkNotSupported(val):
 				formatField['underline']=bool(val)
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StrikethroughStyleAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StrikethroughStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if not UIAHandler.handler.clientObject.checkNotSupported(val):
 				formatField['strikethrough']=bool(val)
 			textPosition=None
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSuperscriptAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
 				textPosition='super'
 			else:
-				val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSubscriptAttributeId)
+				val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 				if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
 					textPosition="sub"
 				else:
@@ -65,7 +65,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if textPosition:
 				formatField['text-position']=textPosition
 		if formatConfig["reportAlignment"]:
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
 				val="left"
 			elif val==UIAHandler.HorizontalTextAlignment_Centered:
@@ -80,23 +80,23 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField['text-align']=val
 		if formatConfig["reportColor"]:
 			import colors
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_BackgroundColorAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
 				formatField['background-color']=colors.RGB.fromCOLORREF(val)
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_ForegroundColorAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_ForegroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
 				formatField['color']=colors.RGB.fromCOLORREF(val)
 		if formatConfig['reportLinks']:
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_LinkAttributeId)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_LinkAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if not UIAHandler.handler.clientObject.checkNotSupported(val):
 				if val:
 					formatField['link']
 		if formatConfig["reportHeadings"]:
-			styleIDValue=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StyleIdAttributeId)
+			styleIDValue=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 		if formatConfig["reportSpellingErrors"]:
-			annotationTypes=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId)
+			annotationTypes=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
 				formatField["invalid-spelling"]=True
 		return textInfos.FieldCommand("formatChange",formatField)
@@ -222,7 +222,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
-					field=self._getFormatFieldAtRange(tempRange,formatConfig)
+					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(UIAFormatUnits)<2)
 				except UIAMixedAttributeError:
 					log.debug("Mixed formatting. Trying higher resolution unit")
 					for subfield in self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits[1:]):
@@ -261,7 +261,10 @@ class UIATextInfo(textInfos.TextInfo):
 				if isRoot and not includeRoot:
 					log.debug("Is root, and root not requested. Breaking")
 					break
-				parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
+				try:
+					parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
+				except COMError:
+					parentRange=None
 				if not parentRange:
 					log.debug("parentRange is NULL. Breaking")
 					break

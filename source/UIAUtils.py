@@ -66,13 +66,14 @@ def getDeepestLastChildUIAElementInWalker(element,walker):
 class UIAMixedAttributeError(ValueError):
 	pass
 
-def getUIATextAttributeValueFromRange(range,attrib):
+def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
 	try:
 		val=range.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
 	if val==UIAHandler.handler.ReservedMixedAttributeValue:
-		raise UIAMixedAttributeError
+		if not ignoreMixedValues:
+			raise UIAMixedAttributeError
 	return val
 
 def iterUIARangeByUnit(rangeObj,unit):
