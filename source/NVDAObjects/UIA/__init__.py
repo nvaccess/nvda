@@ -19,42 +19,13 @@ import speech
 import api
 import textInfos
 from logHandler import log
+from UIAUtils import *
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
 import braille
 
-class UIAMixedAttributeError(ValueError):
-	pass
-
 UIAFormatUnits=[UIAHandler.TextUnit_Format,UIAHandler.TextUnit_Word,UIAHandler.TextUnit_Character]
-
-def getUIATextAttributeValueFromRange(range,attrib):
-	try:
-		val=range.GetAttributeValue(attrib)
-	except COMError:
-		return UIAHandler.handler.reservedNotSupportedValue
-	if val==UIAHandler.handler.ReservedMixedAttributeValue:
-		raise UIAMixedAttributeError
-	return val
-
-def iterUIARangeByUnit(rangeObj,unit):
-	tempRange=rangeObj.clone()
-	tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
-	endRange=tempRange.Clone()
-	while endRange.Move(unit,1)>0:
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,endRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		pastEnd=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0
-		if pastEnd:
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-		yield tempRange.clone()
-		if pastEnd:
-			return
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-	# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
-	if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-		yield tempRange.clone()
 
 class UIATextInfo(textInfos.TextInfo):
 
