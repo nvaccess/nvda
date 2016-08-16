@@ -508,11 +508,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	const bool isAriaHidden = hasAriaHiddenAttribute(IA2AttribsMap);
 	const long childCount = getChildCount(isAriaHidden, pacc);
 
-	bool nameIsContent = false;
-
 	const bool isImgMap = role == ROLE_SYSTEM_GRAPHIC && childCount > 0;
 	// Whether the name is the content of this node.
-	nameIsContent = isEmbeddedApp
+	const bool nameIsContent = isEmbeddedApp
 		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
 		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
 
