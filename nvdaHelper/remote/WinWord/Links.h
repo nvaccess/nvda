@@ -16,23 +16,24 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #define WIN32_LEAN_AND_MEAN 
 #include <vector>
+#include <common/optional.hpp>
 
 struct IDispatch;
 namespace WinWord {
 
 	typedef std::pair<int, int> range;
 
-	class Links {
+	class Fields {
 	public:
 		/**
 		* Ctor
-		* @param pRange the range to get link information for. All subsequent queries will be on
-		*        sub-ranges of this. Most likely, this range should be the paragraph.
+		* @param pRange the range to get field information for. This includes references, links and page numbers.
+		*  All subsequent queries will be on sub-ranges of this. Most likely, this range should be the paragraph.
 		*/
-		Links(IDispatch* pRange);
+		Fields(IDispatch* pRange);
 
 		/*
-		* Are there any links that given range intersects with.
+		* Are there any links that given range intersects with. This refers to cross references / hyperlinks
 		* @param rangeStart start of range to look for links in
 		* @param rangeEnd end of the range to look for links in
 		* @remarks should be a subset of the range given on construction, otherwise the function is likely to be inaccurate.
@@ -40,14 +41,21 @@ namespace WinWord {
 		bool hasLinks(const int rangeStart, const int rangeEnd);
 
 		/*
-		* Are there any links in the original range
+		* Are there any links in the original range at all. This refers to cross references / hyperlinks
 		*/
 		bool hasLinks();
 
-		Links(const Links&) = delete; // Copy constructor disabled, no implementation.
-		Links& operator=(const Links&) = delete; // Assignment disabled, no implementation.
+		/* Get the end index of the first range found that surrounds the given index. If such a range exists.
+		* @param index Find a range that this index is part of.
+		* @returns an optional value, if a range exists the end index is returned of visible text range.
+		*/
+		std::experimental::optional<int> getEndOfPageNumberFieldAtIndex(const int index);
+
+		Fields(const Fields&) = delete; // Copy constructor disabled, no implementation.
+		Fields& operator=(const Fields&) = delete; // Assignment disabled, no implementation.
 	private:
 		std::vector<range> m_links; ///< The links contained in the paragraph
+		std::vector<range> m_pageNumbers; ///< The page numbers in the paragraph
 
 	};
 }

@@ -733,9 +733,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
 
 	IDispatchPtr paragraphRange = CreateExpandedDuplicate(pDispatchRange, wdParagraph);
-	WinWord::Links currentLinks(paragraphRange);
+	WinWord::Fields currentFields(paragraphRange);
 
-	if((formatConfig&formatConfig_reportLinks) && false == currentLinks.hasLinks() ) {
+	if((formatConfig&formatConfig_reportLinks) && false == currentFields.hasLinks() ) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
 
@@ -776,7 +776,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
 	{	//scope for shouldReportLinks
 		const auto shouldReportLinks = (initialFormatConfig&formatConfig_reportLinks);
-		if( shouldReportLinks && currentLinks.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+		if( shouldReportLinks && currentFields.hasLinks(chunkStartOffset, chunkEndOffset) ) {
 			initialFormatAttribsStream<<L"link=\"1\" ";
 		}
 	}
@@ -788,7 +788,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		int curDisabledFormatConfig=0;
 		//generated form field xml if in a form field
 		//Also automatically extends the range and chunkEndOffset to the end of the field
-		BOOL isFormField=generateFormFieldXML(pDispatchRange,paragraphRange,XMLStream,chunkEndOffset);
+		const bool isFormField = TRUE == generateFormFieldXML(pDispatchRange,paragraphRange,XMLStream,chunkEndOffset);
 		if(!isFormField) {
 			//Move the end by word
 			if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK||unitsMoved<=0) {
@@ -796,6 +796,12 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 		}
+		const auto pageNumberField = currentFields.getEndOfPageNumberFieldAtIndex(chunkEndOffset);
+		if(pageNumberField){
+			chunkEndOffset = *pageNumberField;
+			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,chunkEndOffset);
+		}
+
 		//Make sure  that the end is not past the requested end after the move
 		if(chunkEndOffset>(args->endOffset)) {
 			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
@@ -856,7 +862,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				const auto xmlAttribsFormatConfig = formatConfig&(~curDisabledFormatConfig);
 				generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,xmlAttribsFormatConfig,XMLStream);
 				const auto shouldReportLinks = (xmlAttribsFormatConfig&formatConfig_reportLinks);
-				if( shouldReportLinks && currentLinks.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+				if( shouldReportLinks && currentFields.hasLinks(chunkStartOffset, chunkEndOffset) ) {
 					XMLStream<<L"link=\"1\" ";
 				}
 			}
