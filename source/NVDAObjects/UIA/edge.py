@@ -80,11 +80,12 @@ class EdgeTextInfo(UIATextInfo):
 
 	def expand(self,unit):
 		# Ensure expanding to character/word correctly covers embedded controls
-		tempInfo=self.copy()
-		tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
-		if tempInfo._hasEmbedded():
-			self.setEndPoint(tempInfo,"endToEnd")
-			return
+		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
+			tempInfo=self.copy()
+			tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
+			if tempInfo._hasEmbedded():
+				self.setEndPoint(tempInfo,"endToEnd")
+				return
 		super(EdgeTextInfo,self).expand(unit)
 		return
 
