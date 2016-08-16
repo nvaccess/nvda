@@ -196,29 +196,16 @@ class UIATextInfo(textInfos.TextInfo):
 				field['table-rowheadertext']=obj.rowHeaderText
 			except NotImplementedError:
 				pass
-		if isEmbedded:
-			field['embedded']=True
-			field['_startOfNode']=True
-			field['_endOfNode']=True
-			# Embedded groupings are probably things like audio or video tags etc.
-			if obj.role==controlTypes.ROLE_GROUPING:
-				# Force the role to embedded object for now so that value is reported
-				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
-			# As this field will have no text or children itself, set its value to something useful.
-			if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_GROUPING):
-				value=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
-			else:
-				value=obj.value
-			if not value: value=" "
-			field['alwaysReportValue']=True
-			field['value']=value
 		return field
+
+	def _getTextFromUIARange(self,range):
+		return range.getText(-1)
 
 	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=UIAFormatUnits):
 		log.debug("_getTextWithFields_text start")
 		log.debug("Walking by UIA unit %s"%UIAFormatUnits[0])
 		for tempRange in iterUIARangeByUnit(textRange,UIAFormatUnits[0]):
-			text=tempRange.getText(-1)
+			text=self._getTextFromUIARange(tempRange)
 			if text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
@@ -279,18 +266,21 @@ class UIATextInfo(textInfos.TextInfo):
 				rootElementRange=_rootElementRange if _rootElementRange else self.obj.UIATextPattern.rangeFromChild(rootElement)
 				parentElements.append((rootElement,rootElementRange))
 		log.debug("Done fetching parents")
+		enclosingElement=parentElements[0][0] if parentElements else rootElement
 		parentFields=[]
 		log.debug("Generating controlFields for parents")
 		for index,(parentElement,parentRange) in enumerate(parentElements):
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
-			startOfNode=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<=0
-			endOfNode=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0
+			startOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,parentRange,UIAHandler.TextPatternRangeEndpoint_Start)<=0
+			endOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)>=0
 			try:
 				obj=UIA(UIAElement=parentElement)
 				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
 			except LookupError:
 				log.debug("Failed to fetch controlField data for parentElement. Breaking")
+				continue
+			if not field:
 				continue
 			parentFields.append(field)
 		log.debug("Done generating controlFields for parents")
@@ -309,7 +299,7 @@ class UIATextInfo(textInfos.TextInfo):
 				log.debug("Walking children")
 			for index in xrange(childElements.length):
 				childElement=childElements.getElement(index)
-				if not childElement:
+				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
 					continue
 				childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
@@ -361,8 +351,6 @@ class UIATextInfo(textInfos.TextInfo):
 		log.debug("_getTextWithFieldsForUIARange end")
 
 	def getTextWithFields(self,formatConfig=None):
-		if self.isCollapsed:
-			return []
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=[]
@@ -373,7 +361,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return fields
 
 	def _get_text(self):
-		return self._rangeObj.GetText(-1)
+		return self._getTextFromUIARange(self._rangeObj)
 
 	def expand(self,unit):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
@@ -431,7 +419,7 @@ class UIATextInfo(textInfos.TextInfo):
 class UIA(Window):
 
 	def findOverlayClasses(self,clsList):
-		if self.TextInfo==UIATextInfo:
+		if False: #self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		UIAControlType=self.UIAElement.cachedControlType
@@ -439,6 +427,9 @@ class UIA(Window):
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
+		elif UIAClassName=='_WwG' and self.role==controlTypes.ROLE_DOCUMENT:
+			from .wordDocument import WordDocument
+			clsList.append(WordDocument)
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
 			clsList.append(Toast_win8)
 		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
@@ -698,7 +689,11 @@ class UIA(Window):
 			states.add(controlTypes.STATE_INVALID_ENTRY)
 		if e.getCachedPropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
-		if e.getCachedPropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId):
+		try:
+			isReadOnly=e.getCachedPropertyValueEx(UIAHandler.UIA_ValueIsReadOnlyPropertyId,True)
+		except COMError:
+			isReadOnly=UIAHandler.handler.reservedNotSupportedValue
+		if isReadOnly and isReadOnly!=UIAHandler.handler.reservedNotSupportedValue:
 			states.add(controlTypes.STATE_READONLY)
 		try:
 			s=e.getCachedPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)

@@ -324,3 +324,6 @@ class UIABrowseModeDocument(cursorManager.ReviewCursorManager,browseMode.BrowseM
 		except LookupError:
 			return False
 		return True
+
+	def event_caret(self,obj,nextHandler):
+		pass

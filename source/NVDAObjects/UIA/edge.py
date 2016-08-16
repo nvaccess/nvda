@@ -21,6 +21,7 @@ from . import UIA, UIATextInfo
 class EdgeTextInfo(UIATextInfo):
 
 	def _normalizeUIARange(self,range):
+		"""Move the start of a UIA text range past any element start character stops."""
 		info=self.copy()
 		info._rangeObj=range
 		tempInfo=info.copy()
@@ -33,6 +34,7 @@ class EdgeTextInfo(UIATextInfo):
 			tempInfo.collapse(True)
 
 	def _hasEmbedded(self):
+		"""Is this textInfo positioned on an embedded child?"""
 		children=self._rangeObj.getChildren()
 		if children.length:
 			child=children.getElement(0)
@@ -88,11 +90,15 @@ class EdgeTextInfo(UIATextInfo):
 
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		# report landmarks
 		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
 			field['landmark']=aria.landmarkRoles.get(landmark)
+		# Edit controls must expose a name
 		if obj.role==controlTypes.ROLE_EDITABLETEXT:
 			field["name"] = obj.name
+		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
+		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a value.
 		ariaProperties=obj.UIAElement.currentAriaProperties
 		hasAriaLabel=('label=' in ariaProperties)
 		hasAriaLabelledby=('labelledby=' in ariaProperties)
@@ -104,13 +110,32 @@ class EdgeTextInfo(UIATextInfo):
 				field['alwaysReportValue']=True
 			elif obj.role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_PANE):
 				field['alwaysReportName']=True
+		# Give lists an item count
 		if obj.role==controlTypes.ROLE_LIST:
 			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
 			if child:
 				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+		if isEmbedded:
+			field['embedded']=True
+			# Embedded groupings are probably things like audio or video tags etc.
+			if obj.role==controlTypes.ROLE_GROUPING:
+				# Force the role to embedded object for now so that value is reported
+				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+			# As this field will have no text or children itself, set its value to something useful.
+			if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_GROUPING):
+				value=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
+			else:
+				value=obj.value
+			if not value: value=" "
+			field['alwaysReportValue']=True
+			field['value']=value
 		return field
 
 	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+		# Edge zooms into its children at the start.
+		# Thus you are already in the deepest first child.
+		# Therefore get the deepest enclosing element at the start, get its content, Then do the whole thing again on the content from the end of the enclosing element to the end of its parent, and repete!
+		# In other words, get the content while slowly zooming out from the start.
 		log.debug("_getTextWithFieldsForUIARange (unbalanced)")
 		if not recurseChildren:
 			log.debug("recurseChildren is False. Falling back to super")
@@ -215,6 +240,10 @@ class EdgeTextInfo(UIATextInfo):
 		log.debug("_getTextWithFieldsForUIARange (unbalanced) end")
 
 	def getTextWithFields(self,formatConfig=None):
+		# We don't want fields for collapsed ranges.
+		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
+		if self.isCollapsed:
+			return []
 		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
 		seenText=False
 		curStarts=[]
@@ -316,6 +345,7 @@ class EdgeHTMLTreeInterceptor(UIABrowseModeDocument):
 		return self.rootNVDAObject.parent.name
 
 	def shouldPassThrough(self,obj,reason=None):
+		# Enter focus mode for selectable list items (<select> and role=listbox)
 		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
 			return True
 		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
@@ -325,7 +355,7 @@ class EdgeHTMLRoot(EdgeNode):
 	treeInterceptorClass=EdgeHTMLTreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return self.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in self.states 
+		return self.role==controlTypes.ROLE_DOCUMENT
 
 	def _get_role(self):
 		role=super(EdgeHTMLRoot,self).role
