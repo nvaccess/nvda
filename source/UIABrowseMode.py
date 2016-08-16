@@ -4,6 +4,7 @@
 #Copyright (C) 2015-2016 NV Access Limited
 
 from ctypes import byref
+from comtypes import COMError
 from comtypes.automation import VARIANT
 import winUser
 import UIAHandler
