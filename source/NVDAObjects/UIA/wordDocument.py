@@ -99,11 +99,9 @@ class WordDocumentBrowseModeDocument(UIABrowseModeDocument):\
 			return False
 		return super(WordDocumentBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
 
-class WordDocument(UIA):
-
+class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
-	treeInterceptorClass=WordDocumentBrowseModeDocument
 
-	def _get_shouldCreateTreeInterceptor(self):
-		# Currently is not true. The user must still press NVDA+space to get a browse mode document
-		return controlTypes.STATE_READONLY in self.states
+class WordDocument(WordDocumentNode):
+	treeInterceptorClass=WordDocumentBrowseModeDocument
+	shouldCreateTreeInterceptor=False

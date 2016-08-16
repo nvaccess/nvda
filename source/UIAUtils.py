@@ -77,6 +77,13 @@ def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
 	return val
 
 def iterUIARangeByUnit(rangeObj,unit):
+	"""
+	Splits a given UI Automation text range into smaller text ranges the size of the given unit and yields them.
+	@param rangeObj: the UI Automation text range to split.
+	@type rangeObj: L{UIAHandler.IUIAutomationTextRange}
+	@param unit: a UI Automation text unit.
+	@rtype: a generator that yields L{UIAHandler.IUIAutomationTextRange} objects.
+	"""
 	tempRange=rangeObj.clone()
 	tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
 	endRange=tempRange.Clone()

@@ -25,11 +25,23 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
 import braille
 
+#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
 UIAFormatUnits=[UIAHandler.TextUnit_Format,UIAHandler.TextUnit_Word,UIAHandler.TextUnit_Character]
 
 class UIATextInfo(textInfos.TextInfo):
 
 	def _getFormatFieldAtRange(self,range,formatConfig,ignoreMixedValues=False):
+		"""
+		Fetches formatting for the given UI Automation Text range.
+		@ param range: the text range who's formatting should be fetched.
+		@type range: L{UIAutomation.IUIAutomationTextRange}
+		@param formatConfig: the types of formatting requested.
+		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included. If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute value signifying that the caller may want to try again with a smaller range. 
+		@type: bool
+		@return: The formatting for the given text range.
+		@rtype: L{textInfos.FormatField}
+		"""
 		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
 			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontNameAttributeId,ignoreMixedValues=ignoreMixedValues)
@@ -128,6 +140,7 @@ class UIATextInfo(textInfos.TextInfo):
 				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
 			except COMError:
 				raise LookupError
+			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,textInfos.Point):
 			#rangeFromPoint causes a freeze in UIA client library!
@@ -145,10 +158,10 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_NVDAObjectAtStart(self):
 		tempInfo=self.copy()
 		tempInfo.collapse()
-		tempInfo.expand(textInfos.UNIT_CHARACTER)
-		tempRange=tempInfo._rangeObj
 		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
 		# Thus we must check getChildren before getEnclosingElement.
+		tempInfo.expand(textInfos.UNIT_CHARACTER)
+		tempRange=tempInfo._rangeObj
 		children=tempRange.getChildren()
 		if children.length==1:
 			child=children.getElement(0)
@@ -160,6 +173,19 @@ class UIATextInfo(textInfos.TextInfo):
 		return self.copy()
 
 	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+		"""
+		Fetch control field information for the given UIA NVDAObject.
+		@ param obj: the NVDAObject the control field is for.
+		@type obj: L{UIA}
+		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
+		@ type isEmbedded: bool
+		@param startOfNode: True if the control field represents the very start of this object.
+		@type startOfNode: bool
+		@param endOfNode: True if the control field represents the very end of this object.
+		@type endOfNode: bool
+		@return: The control field for this object
+		@rtype: dict containing NVDA control field data.
+		"""
 		role = obj.role
 		field = textInfos.ControlField()
 		# Ensure this controlField is unique to the object
@@ -199,9 +225,23 @@ class UIATextInfo(textInfos.TextInfo):
 		return field
 
 	def _getTextFromUIARange(self,range):
+		"""
+		Fetches plain text from the given UI Automation text range.
+		Just calls getText(-1). This only exists to be overridden for filtering.
+		"""
 		return range.getText(-1)
 
 	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=UIAFormatUnits):
+		"""
+		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
+		@param textRange: the UI Automation text range to walk.
+		@type textRange: L{UIAHandler.IUIAutomationTextRange}
+		@param formatConfig: the types of formatting requested.
+		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text such that formatting won't have mixed values.
+		@type List of UI Automation Text Units 
+		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
+		"""
 		log.debug("_getTextWithFields_text start")
 		log.debug("Walking by UIA unit %s"%UIAFormatUnits[0])
 		for tempRange in iterUIARangeByUnit(textRange,UIAFormatUnits[0]):
@@ -222,6 +262,25 @@ class UIATextInfo(textInfos.TextInfo):
 		log.debug("Done _getTextWithFields_text")
 
 	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+		"""
+		Yields start and end control fields, and text, for the given UI Automation text range.
+		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
+		@type rootElement: L{UIAHandler.IUIAutomation}
+		@param textRange: the UI Automation text range who's content should be fetched.
+		@type textRange: L{UIAHandler.IUIAutomation}
+		@param formatConfig: the types of formatting requested.
+		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param includeRoot: If true, then a control start and end will be yielded for the root element.
+		@ type includeRoot: bool
+		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
+		@type alwaysWalkAncestors: bool
+		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
+		@type recurseChildren: bool
+		@param _rootElementRange: Optimization argument: the actual text range for the root element, as it is usually already known when making recursive calls.
+		@type rootElementRange: L{UIAHandler.IUIAutomationTextRange} 
+		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
+		"""
+		
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("_getTextWithFieldsForUIARange")
 			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType if rootElement else None)
@@ -419,17 +478,20 @@ class UIATextInfo(textInfos.TextInfo):
 class UIA(Window):
 
 	def findOverlayClasses(self,clsList):
-		if False: #self.TextInfo==UIATextInfo:
+		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif EditableTextWithoutAutoSelectDetection in clsList and (UIAClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+			from .wordDocument import WordDocument, WordDocumentNode
+			if self.role==controlTypes.ROLE_DOCUMENT:
+				clsList.append(WordDocument)
+			else:
+				clsList.append(WordDocumentNode)
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
-		elif UIAClassName=='_WwG' and self.role==controlTypes.ROLE_DOCUMENT:
-			from .wordDocument import WordDocument
-			clsList.append(WordDocument)
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
 			clsList.append(Toast_win8)
 		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
