@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaInProcUtils.h"
 #include "nvdaInProcUtils.h"
 #include <remote/WinWord/Constants.h>
-#include <remote/WinWord/Links.h>
+#include <remote/WinWord/Fields.h>
 #include "winword.h"
 
 using namespace std;

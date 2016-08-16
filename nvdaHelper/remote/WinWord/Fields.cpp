@@ -22,7 +22,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <remote/nvdaInProcUtils.h>
 #include <remote/nvdaInProcUtils.h>
 
-#include "Links.h"
+#include "Fields.h"
 #include <remote/WinWord/Constants.h>
 
 namespace WinWord {
