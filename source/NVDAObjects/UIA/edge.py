@@ -247,6 +247,17 @@ class EdgeTextInfo(UIATextInfo):
 		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
 		seenText=False
 		curStarts=[]
+		# remove clickable state on descendants of controls with clickable state
+		clickableField=None
+		for field in fields:
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				states=field.field['states']
+				if clickableField:
+					states.discard(controlTypes.STATE_CLICKABLE)
+				elif controlTypes.STATE_CLICKABLE in states:
+					clickableField=field.field
+			elif clickableField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field is clickableField:
+				clickableField=None
 		# Chop extra fields off the end incorrectly put there by Edge
 		numFields=len(fields)
 		for index in xrange(numFields-1,-1,-1):
