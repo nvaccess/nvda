@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-08-01 23:57-0800\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-09 00:30-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -2960,6 +2960,18 @@ msgid ""
 msgstr ""
 "이전 탐색 모드 (객체, 문서 또는 화면)로 전환하며 이때 리뷰 커서는 현 탐색 객"
 "체의 위치에 있게 됩니다"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "심플 리뷰 모드 해제"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "심플 리뷰 모드 사용"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "심플 리뷰 모드 사용을 토글합니다"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -7308,31 +7320,31 @@ msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, fuzzy, python-format
+#, fuzzy, no-python-format
 msgid "25% gray"
 msgstr "8% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, fuzzy, python-format
+#, fuzzy, no-python-format
 msgid "50% gray"
 msgstr "8% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, fuzzy, python-format
+#, fuzzy, no-python-format
 msgid "75% gray"
 msgstr "8% 회색"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr ""
 
@@ -7403,10 +7415,6 @@ msgstr "직선 그라데이션"
 msgid "rectangular gradient"
 msgstr "직각 그라데이션"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "읽기 전용 셀"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Spreadsheet에 포함된 여러 요소를 보여줍니다"
@@ -7425,6 +7433,12 @@ msgstr "주석 (&O)"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "수식 (&R)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Form fields"
+msgstr "다음 폼 필드 없음"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8481,6 +8495,9 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "읽기 전용 셀"
 
 #~ msgid "checker"
 #~ msgstr "대각선 교차 무늬"

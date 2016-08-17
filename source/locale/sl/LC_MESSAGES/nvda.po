@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-23 19:37+0100\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-09 19:44+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -1480,6 +1480,11 @@ msgstr "roza-rdeče"
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "svetlo {color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 msgctxt "color variation"
@@ -2975,6 +2980,20 @@ msgstr ""
 "Preklopi na predhodni pregled delovanja (npr. predmet, dokument ali zaslon) "
 "in postavi pregledni položaj na točko predmeta krmarjenja"
 
+# ni točno jasno, kaj to pomeni
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Delovanje enostavnega pregleda izključeno"
+
+# ni točno jasno, kaj to pomeni
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Delovanje enostavnega pregleda vključeno"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Vključi/izključi delovanje enostavnega pregleda"
+
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "No navigator object"
@@ -3707,6 +3726,10 @@ msgstr "Premakne brajevo vrstico v naslednjo vrstico"
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Vnaša brajeve znake preko brajeve tipkovnice"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Premakne brajevo vrstico na trenutno žarišče"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5425,7 +5448,7 @@ msgstr "HumanWare Brailliant BI/B serija"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
-msgstr "EcoBrajeve vrstice"
+msgstr "brajeve vrstice Eco"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5850,7 +5873,8 @@ msgid "Add-ons Manager"
 msgstr "Upravitelj dodatkov"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "Vsi dodatki so sedaj onemogočeni. Če želite omogočiti dodatke, morate NVDA "
 "ponovno zagnati."
@@ -5882,6 +5906,10 @@ msgstr "&O dodatku..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "&pomoč dodatka"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Onemogoči dodatek"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5950,9 +5978,11 @@ msgstr "Prosimo, počakajte medtem, ko se dodatek namešča."
 msgid "Failed to install add-on  from %s"
 msgstr "Spodletela namestitev dodatka iz %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Ste prepričani, da želite odstraniti označen dodatek iz NVDA?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Odstrani dodatek"
 
@@ -5964,8 +5994,17 @@ msgstr "namesti"
 msgid "remove"
 msgstr "odstrani"
 
+# raje uredljivo pa ne obstaja
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "onemogoči"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "omogoči"
+
 # začasen prevod
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "suspendiran"
 
@@ -5973,12 +6012,16 @@ msgstr "suspendiran"
 msgid "running"
 msgstr "teče"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Omogoči dodatek"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Dodatke ste dodali ali odstranili. Za uveljavitev sprememb morate ponovno "
+"V dodatkih so se zaznale spremembe. Če jih želite uveljaviti, morate ponovno "
 "zagnati NVDA. Želite to storiti zdaj?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -7135,11 +7178,11 @@ msgstr "Tabela za v&nos znakov"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "Prikaži besedo, kjer stoji utripalka, v &računalniški brajici"
+msgstr "Prikaži besedo, kjer stoji utripalka, v računalniški &brajici"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
-msgstr "&Prikazuj utripalko"
+msgstr "Prikazuj &utripalko"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -7147,7 +7190,7 @@ msgstr "Hitrost utripanja utripalke (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
-msgstr "Oblika &utripalke:"
+msgstr "&Oblika utripalke:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7159,7 +7202,7 @@ msgstr "Braj se omeji na:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "Preberi kot &odstavke"
+msgstr "Preberi kot od&stavke"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
@@ -7167,7 +7210,7 @@ msgstr "Prepreči deljenje &besed, ko je to mogoče"
 
 #, python-format
 msgid "Could not load the %s display."
-msgstr "Ni mogoče naložiti %s vrstice."
+msgstr "Ni mogoče naložiti vrstice %s."
 
 msgid "Braille Display Error"
 msgstr "Napaka brajeve vrstice"
@@ -7370,74 +7413,78 @@ msgstr "samodejno"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "progasto"
+msgid "diagonal crosshatch"
+msgstr "diagonalno križno"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
-msgstr "križno"
+msgid "thin diagonal crosshatch"
+msgstr "tanko diagonalno križno"
 
-# pgdn (page down)
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "dol"
+msgid "reverse diagonal stripe"
+msgstr "obrnjeno diagonalno progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "sivo16"
+#. 12.5% gray
+#, no-python-format
+msgid "12.5% gray"
+msgstr "12,5% sivo"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "sivo25"
+#, no-python-format
+msgid "25% gray"
+msgstr "25% sivo"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "sivo50"
+#, no-python-format
+msgid "50% gray"
+msgstr "50% sivo"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "sivo75"
+#, no-python-format
+msgid "75% gray"
+msgstr "75% sivo"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "sivo8"
+#. 6.25% gray
+#, no-python-format
+msgid "6.25% gray"
+msgstr "6,25% sivo"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "mrežno"
+msgid "thin horizontal crosshatch"
+msgstr "tanko vodoravno križno"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
-msgstr "vodoravno"
+msgid "horizontal stripe"
+msgstr "vodoravno progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "tanko navzdol"
+msgid "thin reverse diagonal stripe"
+msgstr "tanko obrnjeno diagonalno progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
-msgstr "tanko vodoravno"
+msgid "thin horizontal stripe"
+msgstr "tanko vodoravno progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "tanko navzgor"
+msgid "thin diagonal stripe"
+msgstr "tanko diagonalno progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "tanko navpično"
+msgid "thin vertical stripe"
+msgstr "tanko navpično progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7446,8 +7493,8 @@ msgstr "brez"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "polovično sivo"
+msgid "thick diagonal crosshatch"
+msgstr "debelo diagonalno križno"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7456,13 +7503,13 @@ msgstr "polno"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "gor"
+msgid "diagonal stripe"
+msgstr "diagonalno progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr "navpično"
+msgid "vertical stripe"
+msgstr "navpično progasto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -7471,10 +7518,6 @@ msgstr "iz sredine"
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
 msgstr "iz kota"
-
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Ta celica ni namenjena urejanju"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
@@ -7495,6 +7538,11 @@ msgstr "&Komentarji"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Formule"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Polja v obrazcu"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8586,6 +8634,49 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Ta celica ni namenjena urejanju"
+
+#~ msgid "checker"
+#~ msgstr "progasto"
+
+#~ msgid "crisscross"
+#~ msgstr "križno"
+
+# pgdn (page down)
+#~ msgid "down"
+#~ msgstr "dol"
+
+#~ msgid "gray16"
+#~ msgstr "sivo16"
+
+#~ msgid "gray25"
+#~ msgstr "sivo25"
+
+#~ msgid "gray50"
+#~ msgstr "sivo50"
+
+#~ msgid "gray75"
+#~ msgstr "sivo75"
+
+#~ msgid "grid"
+#~ msgstr "mrežno"
+
+#~ msgid "light down"
+#~ msgstr "tanko navzdol"
+
+#~ msgid "light up"
+#~ msgstr "tanko navzgor"
+
+#~ msgid "light vertical"
+#~ msgstr "tanko navpično"
+
+#~ msgid "semi gray75"
+#~ msgstr "polovično sivo"
+
+#~ msgid "up"
+#~ msgstr "gor"
 
 #~ msgid "unknown color"
 #~ msgstr "neznana barva"

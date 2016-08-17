@@ -628,25 +628,34 @@ Samoin kuin verkkosivuilla, myös Microsoft Exceliä varten on elementtilista, j
 %kc:beginInclude
 Elementtilista avataan painamalla NVDA+F7.
 %kc:endInclude
-Elementtilistassa ovat saatavilla seuraavat tiedot:
-- Kaaviot: Tämä näyttää listan kaikista aktiivisen laskentataulukon kaavioista.
+Elementtilistassa ovat käytettävissä seuraavat tiedot:
+- Kaaviot: Näyttää listan kaikista aktiivisen laskentataulukon kaavioista.
 Kaavion valitseminen ja Enterin tai Siirry-painikkeen painaminen siirtää kohdistuksen kyseiseen kaavioon, jolloin sitä on mahdollista selata ja lukea nuolinäppäimillä.
-- Kommentit: Tämä näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kommentti.
+- Kommentit: Näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kommentti.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kommentit.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kommentin kohdalla siirtää suoraan kyseiseen soluun.
-- Kaavat: Tämä näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kaava.
+- Kaavat: Näyttää listan kaikista aktiivisen laskentataulukon soluista, joissa on kaava.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kaavat.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kaavan kohdalla siirtää suoraan kyseiseen soluun.
-- Laskentataulukot: Tämä näyttää listan kaikista työkirjassa olevista laskentataulukoista.
+- Laskentataulukot: Näyttää listan kaikista työkirjassa olevista laskentataulukoista.
 Voit nimetä laskentataulukon uudelleen painamalla listassa sen kohdalla F2.
-Enterin tai Siirry-painikkeen painaminen jonkin listassa olevan laskentataulukon kohdalla siirtää kyseiseen taulukkoon.
+Enterin tai Siirry-painikkeen painaminen listassa olevan laskentataulukon kohdalla siirtää kyseiseen taulukkoon.
+- Lomakekentät: Näyttää listan kaikista aktiivisen laskentataulukon lomakekentistä.
+Jokaisesta lomakekentästä näytetään sen vaihtoehtoisen tekstin ohella peitossa olevien solujen osoitteet.
+Lomakekentän valitseminen ja Enterin tai  Siirry-painikkeen painaminen siirtää kyseiseen kenttään selaustilassa.
 -
 
 +++ Kommenttien lukeminen +++
 %kc:beginInclude
 Lue mikä tahansa kommentti aktiivisesta solusta painamalla NVDA+Alt+C.
 %kc:endInclude
-Kaikki laskentataulukossa olevat kommentit voidaan näyttää myös Elementtilistassa.
+Kaikki laskentataulukossa olevat kommentit voidaan näyttää myös elementtilistassa.
+
++++ Lomakekentät +++
+Excelin laskentataulukot voivat sisältää lomakekenttiä.
+Pääset niihin elementtilistaa tai pikanavigointinäppäimiä F ja Shift+F käyttäen.
+Kun siirryt selaustilassa lomakekentän kohdalle, voit säätimestä riippuen joko aktivoida sen tai vaihtaa vuorovaikutustilaan painamalla Enteriä tai välilyöntiä ollaksesi vuorovaikutuksessa sen kanssa.
+Saat lisätietoja selaustilasta ja pikanavigointinäppäimistä [Selaustila-kappaleesta. #BrowseMode]
 
 +++ Suojattujen solujen lukeminen +++
 Mikäli työkirja on suojattu, kohdistuksen siirtäminen ei ehkä ole mahdollista sellaisiin soluihin, joiden muokkaaminen on estetty.
@@ -1050,6 +1059,8 @@ Kun tämä asetus on käytössä, tarkastelukohdistin seuraa hiirtä sen liikkue
 
 ==== Yksinkertainen objektinavigointi ====
 Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellaiset objektit, joilla ei ole merkitystä käyttäjälle, esim. näkymättömät tai asettelutarkoituksiin käytettävät.
+
+Ota yksinkertainen tarkastelutila käyttöön tai poista se käytöstä mistä tahansa määrittämällä sille oma syöte-ele [Syöte-eleet-valintaikkunaa #InputGestures] käyttäen.
 
 +++ Objektien lukuasetukset (NVDA+Control+O) +++
 Tämä valintaikkuna löytyy Asetukset-valikosta kohdasta "Objektien lukeminen...".

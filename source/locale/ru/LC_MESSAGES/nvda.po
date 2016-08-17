@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-08-01 10:30+0800\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-05 05:39+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1639,11 +1639,11 @@ msgstr "Графика"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "Всплывающая подсказка"
+msgstr "Всплывающее системное сообщение"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr "Подсказка"
+msgstr "Всплывающая подсказка"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
@@ -2957,6 +2957,21 @@ msgid ""
 msgstr ""
 "Переключается на предыдущий режим просмотра (например, объект, документ или "
 "экран) и располагает позицию просмотра в точке объекта навигатора"
+
+#. Translators: The message announced when toggling simple review mode.
+#, fuzzy
+msgid "Simple review mode off"
+msgstr "Облегченный режим просмотра"
+
+#. Translators: The message announced when toggling simple review mode.
+#, fuzzy
+msgid "Simple review mode on"
+msgstr "Облегченный режим просмотра"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+#, fuzzy
+msgid "Toggles simple review mode on and off"
+msgstr "Включать и выключать курсор брайля"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -6845,12 +6860,12 @@ msgstr "Проговаривать и воспроизводить звуков�
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &tooltips"
-msgstr "Читать &Подсказки"
+msgstr "Читать всплывающие &подсказки"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &help balloons"
-msgstr "Читать &Всплывающие системные сообщения"
+msgstr "Читать &всплывающие системные сообщения"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -7427,28 +7442,33 @@ msgstr "перевёрнутый диагональный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
+#, no-python-format
 msgid "12.5% gray"
-msgstr "12,50%-ый серый"
+msgstr "12,50% серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
+#, no-python-format
 msgid "25% gray"
 msgstr "25% серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
+#, no-python-format
 msgid "50% gray"
-msgstr "50%-ый серый"
+msgstr "50% серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
+#, no-python-format
 msgid "75% gray"
-msgstr "75%-ый серый"
+msgstr "75% серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
+#, no-python-format
 msgid "6.25% gray"
-msgstr "6,25%-ый серый"
+msgstr "6,25% серый"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
@@ -7513,10 +7533,6 @@ msgstr "линейный градиент"
 msgid "rectangular gradient"
 msgstr "прямоугольный градиент"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Эта ячейка нередактируемая"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Вызывает список элементов различного типа в этой таблице"
@@ -7535,6 +7551,12 @@ msgstr "&Комментарии"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "Фо&рмулы"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Form fields"
+msgstr "Нет следующего поля формы"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8677,6 +8699,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Эта ячейка нередактируемая"
 
 #~ msgid "checker"
 #~ msgstr "диагональный клетчатый"

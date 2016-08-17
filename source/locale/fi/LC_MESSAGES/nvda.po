@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-07-29 09:45+0200\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-09 10:43+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -2971,6 +2971,18 @@ msgid ""
 msgstr ""
 "Vaihtaa edelliseen tarkastelutilaan (esim. objekti, asiakirja tai ruutu) ja "
 "sijoittaa tarkastelukohdan navigointiobjektin kohdalle."
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Yksinkertainen tarkastelutila pois"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Yksinkertainen tarkastelutila käytössä"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Ottaa yksinkertaisen tarkastelutilan käyttöön ja poistaa sen käytöstä."
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -6780,7 +6792,7 @@ msgstr "Seuraa &hiirikohdistinta"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Simple review mode"
-msgstr "Yksinkertainen objektinavigointi"
+msgstr "Yksinkertainen tarkastelutila"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
@@ -7421,31 +7433,31 @@ msgstr "kenoon raidoitettu"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "12,5 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "25 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "50 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "75 % harmaa"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "6,25 % harmaa"
 
@@ -7512,10 +7524,6 @@ msgstr "lineaarinen liukuväri"
 msgid "rectangular gradient"
 msgstr "suorakulmainen liukuväri"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Tätä solua ei voi muokata"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Näyttää listan tämän laskentataulukon elementeistä."
@@ -7534,6 +7542,11 @@ msgstr "K&ommentit"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "K&aavat"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Lom&akekentät"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8657,6 +8670,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Tätä solua ei voi muokata"
 
 #~ msgid "checker"
 #~ msgstr "shakkiruutu"

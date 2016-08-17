@@ -1,6 +1,6 @@
 ﻿NVDA NVDA_VERSION Manuale utente
 NVDA NVDA_VERSION Manuale utente
-Ultimo Aggiornamento del manuale originale: 23 maggio 2016, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 10 agosto2016, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -370,8 +370,8 @@ Sono disponibili i seguenti tasti caldi per esplorare il testo:
 | Spostarsi al carattere successivo, modalità esplorazione | 3 del tastierino numerico | NVDA+freccia destra | Scorrimento a destra (modo testo) | Sposta il cursore di controllo al carattere di testo successivo nella riga corrente |
 | Spostarsi alla fine della riga, modalità esplorazione | shift+3 del tastierino numerico | NVDA+fine | Nessuno | Sposta il cursore di controllo alla fine della riga di testo corrente |
 | Dire tutto, modalità esplorazione | Più del tastierino numerico | NVDA+shift+a | Scorrimento in basso con tre dita (modo testo) | Legge il testo dalla posizione attuale del cursore di controllo, spostando tale cursore man mano che la lettura continua |
-| Copiare dalla posizione  del cursore di controllo | NVDA+f9 | NVDA+f9 | Nessuno | Marca il punto di inizio del testo da copiare, partendo dalla posizione attuale del cursore di controllo. Si noti che NVDA non effettuerà alcuna operazione fino a quando non verrà specificato il punto di fine |
-| Copiare fino al cursore di controllo | NVDA+f10 | NVDA+f10 | Nessuno | Copia il testo dalla posizione marcata in precedenza con NVDA+f9 fino alla posizione attuale del cursore di controllo. Una volta effettuata questa operazione, il testo verrà copiato negli appunti |
+| Selezionare e poi copiare dalla posizione  del cursore di controllo | NVDA+f9 | NVDA+f9 | Nessuno | Dà inizio al processo di selezione e copia a partire dalla posizione del cursore di controllo. Si noti che NVDA non effettuerà alcuna operazione fino a quando non verrà specificato il punto di fine |
+| Selezionare e copiare fino al cursore di controllo | NVDA+f10 | NVDA+f10 | Nessuno | Una singola pressione seleziona il testo dalla posizione iniziale impostata in precedenza fino alla posizione attuale del cursore di controllo, incluso il carattere in cui si trova. Una seconda pressione copierà il testo negli appunti di Windows |
 | Annuncia formattazione del testo | NVDA+f | | Nessuno Annuncia la formattazione del testo sul quale è posizionato il cursore di controllo. Una doppia pressione mostrerà le informazioni in modalità navigazione
 %kc:endInclude
  
@@ -640,6 +640,15 @@ Premendo il tasto Invio o il pulsante Vai in presenza di una formula ci si spost
 - Fogli: Elenca tutti i fogli della cartella di lavoro.
 Premendo f2 nell'elenco dei fogli permette di rinominare il foglio selezionato.
 Premendo il tasto Invio o il pulsante Vai in presenza di un foglio ci si sposterà a quel determinato foglio.
+- Campi del form: elenca tutti i campi del form contenuti nella cartella di lavoro attiva.
+Per ciascun campo del form, 
+
+
+
+
+
+
+
 -
 
 +++ Leggere i commenti +++
@@ -1190,15 +1199,16 @@ Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA 
 - attributi carattere
 - Allineamento testo
 - Colori
+- Commenti
 - Revisioni
 - Testo enfatizzato
 - stile del testo
 - Errori ortografici
-- Errori grammaticali
 - Numeri di pagina
 - Numeri di riga
 - Rientro righe
 - Rientro paragrafi (ad esempio rientro prima riga)
+- Spaziatura righe (singola, doppia etc)
 - tabelle
 - intestazioni riga/colonna delle tabelle
 - Coordinate delle celle delle tabelle
@@ -1422,11 +1432,11 @@ Comunque, se si clicca o si focalizza la finestra, NVDA fermerà temporaneamente
 Per abilitare/disabilitare il visualizzatore sintesi vocale da qualsiasi punto ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
 ++ Gestore componenti aggiuntivi ++
-Il gestore di componenti aggiuntivi, accessibile selezionando "gestisci componenti aggiuntivi" dal menu strumenti di NVDA, permette di installare e disinstallare questo tipo di pacchetti. 
+Il gestore di componenti aggiuntivi, accessibile selezionando "gestisci componenti aggiuntivi" dal menu strumenti di NVDA, permette di installare, disinstallare, abilitare e disabilitare questo tipo di pacchetti. 
 Essi vengono prodotti  dalla comunità internazionale di NVDA  e contengono codice personalizzato che può aggiungere o modificare le caratteristiche dello screen reader, o anche fornire supporto per Display Braille o sintesi vocali extra.
 
 Il gestore di componenti aggiuntivi contiene un elenco che visualizza tutti i pacchetti installati nella propria cartella di configurazione di NVDA.
-Per ciascun componente, vengono mostrati il nome del pacchetto, la versione e l'autore, ed inoltre altre informazioni come la descrizione o l'URL possono essere visualizzate selezionando tale componente e cliccando sul pulsante "informazioni su".
+Per ciascun componente, vengono mostrati il nome del pacchetto, lo stato, la versione e l'autore, ed inoltre possono essere visualizzate altre informazioni come la descrizione o l'URL selezionando tale componente e cliccando sul pulsante "informazioni su".
 Se per il componente selezionato è disponibile aiuto specifico, è possibile accedervi tramite il pulsante Aiuto componente aggiuntivo.
 
 Per cercare e scaricare altri componenti aggiuntivi,  premere il pulsante Scarica Componenti aggiuntivi.
@@ -1448,8 +1458,14 @@ NVDA chiederà se si è sicuri di voler disinstallare il pachetto.
 Come per l'installazione, lo screen reader deve essere riavviato per consentire la piena rimozione del componente aggiuntivo.
 Fino a quando non verrà effettuata tale operazione, accanto al componente aggiuntivo vi sarà la parola "Rimuovi".
 
+Per disattivare un componente aggiuntivo, premere il pulsante disabilita.
+Per riattivare un componente aggiuntivo disattivato in precedenza, servirsi del pulsante abilita.
+è possibile disattivare un componente aggiuntivo solo se lo stato dell'addon viene indicato come "in esecuzione" o "abilitato", mentre è possibile attivarlo solo se lo stato corrisponde a "sospeso" o "disabilitato".
+Per ciascuna pressione del pulsante abilita/disabilita, lo stato del componente aggiuntivo viene modificato per indicare ciò che accadrà al successivo riavvio di NVDA.
+Esattamente come accade durante l'installazione o la disinstallazione di un componente aggiuntivo, NVDA ha bisogno di essere riavviato affinché le modifiche abbiano effetto.
+
 Il gestore dispone anche del pulsante chiudi, per chiudere la finestra di dialogo.
-Se sono stati installati o rimossi dei componenti, NVDA chiederà di potersi riavviare, in modo da rendere effettive le modifiche.
+Se sono stati installati o rimossi dei componenti, o il loro stato è stato modificato, NVDA chiederà di potersi riavviare, in modo da rendere effettive le modifiche.
 
 In passato è stato possibile aumentare le funzionalità di NVDA copiando driver e plugin individuali nella propria cartella contenente le configurazioni utente. 
 Sebbene questa versione di NVDA sia ancora in grado di caricarli, essi non saranno visualizzati nel gestore componenti aggiuntivi. 
@@ -1594,11 +1610,17 @@ Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
 %kc:beginInclude
 || Nome | Tasto |
-| Scorrimento display braille indietro | t1 |
+| Scorrimento display braille indietro | t1 o etouch1|
 | Sposta il display braille alla riga precedente | t2 |
+| Spostarsi alla posizione attuale del focus | t3 |
 | Sposta il Display Braille alla riga successiva | t4 |
-| Scorrimento Display Braille avanti | t5 |
+| Scorrimento Display Braille avanti | t5 o etouch3|
 | Portare cursore sulla cella braille  | routing |
+\ spostarsi all'inizio della riga in modalità in linea | t1+t2 |
+| Spostarsi alla fine della riga in modalità in linea | t4+t5 |
+| Commuta inseguimento braille | t1+t3 |
+| Leggi titolo | etouch2 |
+| Leggi barra di stato | etouch4 |
 | Tasto shift+tab | sp1 |
 | Tasto alt | sp2 |
 | Tasto esc | sp3 |
@@ -1608,10 +1630,16 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Freccia sinistra | spLeft |
 | Freccia destra | spRight |
 | Tasto invio | spEnter |
+| leggere data/ora | sp1+sp2 |
 | Menu NVDA  | sp1+sp3 |
 | Tasto windows+d  (ridurre ad icona tutte le applicazioni) | sp1+sp4 |
+| tasto windows+b (focus sul system tray) | sp3+sp4 |
 | Tasto windows | sp2+sp3 |
 | Tasto alt+tab | sp2+sp4 |
+| tasto control+home | t3+spUp |
+| tasto control+end | t3+spDown |
+| Tasto home | t3+spLeft |
+| Tasto end | t3+spRight |
 %kc:endInclude
 
 ++ Modelli Handy Tech ++

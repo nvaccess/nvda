@@ -629,30 +629,39 @@ De xeito similar á web, NVDA ten unha Lista de Elementos para Microsoft Excel, 
 Para aceder á Lista de Elementos en Excel, preme NVDA+f7.
 %kc:endInclude
 Os diversos tipos de información dispoñible na Lista de Elementos son:
-- Gráficos: esto lista todos os gráficos na folla de traballo activa.
+- Gráficos: esto lista todos os gráficos na folla de cálculo activa.
 Seleccionando un gráfico e premendo Intro ou o botón Mover A enfoca o gráfico para navegar e ler cas teclas de cursor.
-- Comentarios: esto lista todas as celdas na folla de traballo activa que conteñan comentarios. 
+- Comentarios: esto lista todas as celdas na folla de cálculo activa que conteñan comentarios. 
 O enderezo da celda xunto cos seus comentarios amósase para cada celda. 
 Premendo Intro ou o botón Mover a cando se estea sobre un comentario listado moverase directamente a esa celda.
-- Fórmulas: esto lista todas as celdas na folla de traballo activa que conteñan unha fórmula. 
+- Fórmulas: esto lista todas as celdas na folla de cálculo activa que conteñan unha fórmula. 
 O enderezo da celda xunto ca súa fórmula amósase para cada celda.
 Premendo Intro ou o botón Mover A sobre unha fórmula listada moverase directamente a esa celda. 
 - Follas: esto lista todas as follas no libro de traballo. 
 Premendo f2 cando se estea sobre unha folla listada permíteche renomear a folla. 
 Premendo Intro ou o botón Mover A mentres se estea sobre a folla listada cambiará a esa folla.
+- Campos de formulario: esto lista todos os campos de formulario na folla de cálculo activa.
+Para cada campo de formulario, a Lista de Elementos amosa o texto alternativo do campo xunto cos enderezos das celdas que cubra.
+Ao selecionar un campo de formulario e ao premer intro ou o botón Mover móveste a ese campo en modo exploración.
 -
 
 +++ Anunciando Comentarios +++
 %kc:beginInclude
 Para anunciar calquera comentario para a celda actualmente enfocada, preme NVDA+alt+c.
 %kc:endInclude
-Todos os comentarios para a folla de traballo tamén poden listarse na Lista de Elementos de NVDA.
+Todos os comentarios para a folla de cálculo tamén poden listarse na Lista de Elementos de NVDA.
 
 +++ Lendo Celdas Protexidas +++
 Se un libro de traballo foi protexido, podería non seren posible mover o foco a celdas en particular que foran bloqueadas para edición.
 %kc:beginInclude
 Para permitir o movemento a celdas bloqueadas, cambia a modo Exploración premendo NVDA+espazo, e entón usa as ordes estándar de movemento de Excel  como as teclas de cursor para moverte por todas as celdas na folla de cálculo actual.
 %kc:endInclude
+
++++ Campos de Formulario +++
+As follas de cálculo de Excel poden incluir campos de formulario.
+Podes aceder a éstos usando a Lista de Elementos ou as teclas de navegación cunha soa letra para campos de formulario f e shift+f.
+Unha vez te movas a un campo de formulario en modo exploración, podes premer intro ou espazo para activalo ou cambiar a modo foco para poder interactuar con el, dependendo do control.
+Para información adicional acerca do modo exploración e da navegación cunha soa tecla, consulta a [sección Modo Exploración #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Cando se activa, o cursor de revisión seguirá ó rato segundo se mova.
 ==== Modo de Revisión Sinxelo ====
 Cando se activa, NVDA filtrará a xerarquía de obxectos que pode navegarse, para excluir calquer obxecto que non sexa do interese para o usuario; ex.: obxectos invisibles e obxectos utilizados só con propósitos de deseño.
 
+Para conmutar o modo de revisión sinxela dende calquera lado, por favor asigna un Xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
+
 +++ Opcións de Presentación de Obxectos (NVDA+control+o) +++
 Atópase no menú Preferencias baixo "Presentación de Obxectos..." 
 Esta caixa de diálogo contén as seguintes opcións:
@@ -1423,7 +1434,7 @@ Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deter�
 Para conmutar o visualizador de voz dende calquera lugar, por favor asigna un xesto persoalizado utilizando o [diálogo Xestos de Entrada #InputGestures].
 
 ++ Administrador de Complementos ++
-O Administrador de Complementos, ao que se accesa selecionando Administrador de complementos baixo Ferramentas no menú NVDA, permíteche instalar, desinstalar, habilitar e deshabilitar os paquetes de complementos para o NVDA.
+O Administrador de Complementos, ao que se accesa selecionando Xestionar Complementos baixo Ferramentas no menú NVDA, permíteche instalar, desinstalar, habilitar e deshabilitar os paquetes de complementos para o NVDA.
 Estos paquetes son proporcionados pola comunidade e conteñen código persoalizado que poderá engadir ou cambiar características no NVDA ou tamén proporcionan soporte para liñas Braille ou sintetizadores de voz extra.
 
 O Administrador de Complementos contén unha lista que amosa todos os complementos instalados actualmente na túa configuración do usuario do NVDA. 

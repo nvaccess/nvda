@@ -370,7 +370,7 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Zum nächsten Zeichen springen | Num 3 | NVDA+Pfeiltaste nach rechts | Nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
 | Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+Ende | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
 | Alles ansagen | Nummerntaste Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
-| vom NVDA-Cursor markieren und kopieren | NVDA+f9 | NVDA+f9 | keine | setzt eine Startmarke an der aktuellen Position des NVDA-Cursors. |
+| vom NVDA-Cursor markieren und kopieren | NVDA+f9 | NVDA+f9 | keine | setzt eine Startmarke an der aktuellen Position des NVDA-Cursors ab der markiert oder kopiert werden soll. Die Aktion (markieren/kopieren) wird nicht ausgeführt, bis Sie NVDA den Textende mitgeteilt haben. |
 | bis zum NVDA-Cursor markieren und kopieren | NVDA+f10 | NVDA+f10 | keine | Wird die Tastenkombination einmal gedrückt, markiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors. Wird die Tastenkombination zweimal gedrückt, so kopiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors in die Zwischenablage |
 | Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. Bei zweimaligen Drücken der Tastenkombination wird die Ausgabe im Lesemodus dargestellt. |
 %kc:endInclude
@@ -640,6 +640,9 @@ Wenn Sie innerhalb der Liste den Schalter "wechseln zu" oder die Eingabetaste dr
 - Tabellenblätter: listet alle Tabellenblätter in der Arbeitsmappe auf. 
 Drücken Sie auf einem der aufgelisteten Tabellenblätter F2, um es umzubenennen.
 Drücken Sie auf einem Tabellenblatt die Eingabetaste oder den Schalter "wechseln zu", um es zu öffnen.
+- Formularfelder: listet alle Formularfelder im aktiven Tabellenblatt auf.
+NVDA zeigt zu jedem Formularfeld dessen Alternativtext sowie die Adresse der Zelle an, die das Formularfeld enthält.
+Wählen Sie ein Formularfeld in der Liste aus und verwenden Sie den Schalter wechseln zu, um im Lesemodus auf das Formularfeld zu springen.
 -
 
 +++ Ausgeben von Kommentaren +++
@@ -653,6 +656,12 @@ Wenn ein Excel-Arbeitsblatt geschützt wurde, können manche Zellen für eine Be
 %kc:beginInclude
 Um auf gesperrte Zellen zuzugreifen, wechseln Sie zunächst mit NVDA+Leertaste in den Lesemodus und navigieren Sie anschließend mit den Standard-Excel-Tastenkombinationen wie z.B. den Pfeiltasten zu den gewünschten Zellen.
 %kc:endInclude
+
++++ Formularfelder +++
+Excel-Tabellenblätter können Formularfelder enthalten.
+Sie können entweder die Elementliste oder die Schnellnavigationstasten F und Umschalt+F verwenden, um auf Formularfelder zuzugreifen.
+Anschließend können Sie mit der leertaste oder mit der Eingabetaste den Fokusmodus aktivieren um mit dem Formularfeld umzugehen.
+Weitere Informationen über den lesemodus und die Schnellnavigationstasten finden Sie im  [Abschnitt über den lesemodus #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Wenn eingeschaltet, verfolgt der NVDA-Cursor bei Bewegungen die Maus.
 ==== Einfacher Darstellungsmodus ====
 Bei eingeschaltetem Modus filtert NVDA nicht wichtige Objekte aus der Hierarchie der navigierbaren Objekte heraus. Dabei werden zum Beispiel unsichtbare Objekte und Objekte, welche nur zu Gestaltungszwecken eingebaut wurden, übersprungen.
 
+Um den einfachen Darstellungsmodus per Tastenkombination  ein- und auszuschalten, können Sie den entsprechenden Befehl an eine Tastenkombination zuweisen. Verwenden Sie hierfür den Dialog [Eingaben #InputGestures].
+
 +++ Einstellungen zur Objektdarstellung (NVDA+STRG+O) +++
 Zu finden im Menü Einstellungen unter Objektpräsentation.
 Dieses Dialogfeld enthält die folgenden Optionen:
@@ -1192,7 +1203,7 @@ Konfigurieren können Sie die Meldungen von:
 - Farben
 - Kommentare
 - Dokumentänderungen
-- betonten Text
+- betonter Text
 - Layout
 - Rechtschreibfehler
 - Seitenwechsel
@@ -1423,17 +1434,17 @@ Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich
 Um den Sprachbetrachter per Tastenkombination ein- beziehungsweise auszuschalten, müssen Sie diesem mittels des []Dialog Eingaben #InputGestures] eine eigene Tastenkombination zuweisen.
 
 ++ Erweiterungen verwalten ++
-Der Dialog "Erweiterungen verwalten", den Sie über das Untermenü Extras im NVDA-Menü erreichen, erlaubt Ihnen, Erweiterungspakete für NVDA zu installieren und zu deinstallieren. 
+Im Dialog "Erweiterungen verwalten", den Sie über das Untermenü Extras im NVDA-Menü erreichen, können Sie Erweiterungspakete für NVDA installieren, deinstallieren, aktivieren oder deaktivieren. 
 Diese Pakete werden von der NVDA-Nutzergemeinde bereit gestellt und können zusätzlichen Code enthalten, um NVDA-Funktionen zu verändern oder zu erweitern. Es ist auf diese Weise sogar möglich, neue Braillezeilen- oder Sprachausgabentreiber hinzuzufügen.
 
 Die Erweiterungsverwaltung enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
-Für jede Erweiterung wird Ihnen der Name, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine Url als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und klicken Sie anschließend auf die Schaltfläche "Über...".
+Für jede Erweiterung wird Ihnen der Name, der Status,die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine Url als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und klicken Sie anschließend auf die Schaltfläche "Über...".
 Falls für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese mit dem Schalter "Hilfe für diese Erweiterung" aufrufen.
 
 Um weitere Erweiterungen herunterzuladen und zu installieren, klicken Sie auf den Schalter "Erweiterungen herunterladen...".
 Hiermit wird die Webseite für NVDA-Erweiterungen http://addons.nvda-project.org geöffnet.
 Falls NVDA installiert ist und gerade verwendet wird, können Sie Erweiterungen direkt vom Browser aus installieren.
-Anderenfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
+Andernfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
 
 Um eine Erweiterung zu installieren, klicken Sie auf den Schalter "Installieren...".
 Jetzt können Sie auf Ihrem Rechner oder im Netzwerk nach der gewünschten Erweiterung (einer Datei mit der Endung ".nvda-addon") suchen.
@@ -1449,8 +1460,14 @@ Sie werden gefragt, ob Sie dies wirklich wünschen.
 Genau wie beim Installieren von Erweiterungen muss NVDA auch hier neu gestartet werden, damit die Erweiterung tatsächlich entfernt wird.
 Solange Sie den Neustart von NVDA nicht durchführen, wird im Erweiterungs-Manager in der Spalte "Status" der Zustand "Entfernen" angezeigt.
 
+Um eine Erweiterung zu deaktivieren, drücken Sie den Schalter "deaktivieren"
+Um eine zuvor deaktivierte Erweiterung wieder zu aktivieren, verwenden Sie den Schalter "aktivieren".
+Sie können momentan laufende sowie aktivierte Erweiterungen deaktivieren. Sie können solche Erweiterungen aktivieren, deren Status als "stillgelegt" Bzw. "deaktiviert" angezeigt wird.
+Nach jedem Tastendruck des aktivieren/deaktivieren- Schalters zeigt der Status der Erweiterung an, was nach dem Neustart von NVDA passiert.
+Ähnlich wie beim Installieren oder Entfernen von Erweiterungen müssen Sie NVDA neu starten, damit die Änderungen wirksam werden.
+
 Die Erweiterungsverwaltung enthält außerdem noch den Schalter "schließen", um den Dialog zu schließen.
-Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, jedoch Erweiterungen installiert oder entfernt werden müssen, werden Sie gefragt, ob NVDA neu gestartet werden soll, damit die Änderungen wirksam werden.
+Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, zu dem Erweiterungen installiert oder entfernt werden müssen oder deren Status geändert werden muss, werden Sie gefragt, ob NVDA neu gestartet werden soll, damit die Änderungen wirksam werden.
 
 In früheren NVDA-Versionen war es möglich, den Funktionsumfang durch Plug-ins, Anwendungsmodule oder Treiber zu erweitern, indem diese in das benutzerspezifische Konfigurationsverzeichnis kopiert wurden. 
 Auch wenn NVDA solche Module immer noch lädt, werden diese nicht im Erweiterungs-Manager angezeigt. 
@@ -1595,11 +1612,17 @@ Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
 || Name | Taste |
-| Braillezeile zurückscrollen | T1 |
+| Braillezeile zurückscrollen | T1 oder etouch1 |
 | Braillezeile zur vorherigen Zeile ziehen | T2 |
+| zum Fokus bewegen | t3 |
 | Braillezeile zur nächsten Zeile ziehen | T4 |
-| Braillezeile weiterscrollen | T5 |
+| Braillezeile weiterscrollen | T5 oder etouch3 |
 | Zum aktuellen Modul auf der Brailezeile springen | Routing |
+| NVDA-Cursor zur ersten Zeile bewegen | t1+t2 |
+| NVDA-Cursor zur letzten Zeile bewegen | t4+t5 |
+| Kopplung der Braillezeile konfigurieren | t1+t3 |
+| Titelzeile anzeigen | etouch2 |
+| Statuszeile anzeigen | etouch4 |
 | Umschalt+Tabulatortaste | Sp1 |
 | Alt-Taste | Sp2 |
 | Escape-Taste | Sp3 |
@@ -1609,10 +1632,16 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Pfeiltaste nach links | SpLeft |
 | Pfeiltaste nach rechts | SpRight |
 | Eingabetaste | SpEnter |
+| Datum/Uhrzeit anzeigen | sp1+sp2 |
 | NVDA-Menü | Sp1+Sp3 |
 | Windows-Taste+D (alle Anwendungen minimieren) | Sp1+Sp4 |
+| Windows-Taste+B (Infobereich fokussieren) | sp3+sp4 |
 | Windows-Taste | Sp2+Sp3 |
 | Alt+Tabulatortaste | Sp2+Sp4 |
+| strg+Pos1 | t3+spUp |
+| strg+Ende | t3+spDown |
+| pos1 | t3+spLeft |
+| Ende | t3+spRight |
 %kc:endInclude
 
 ++ HandyTech-Braillezeilen ++

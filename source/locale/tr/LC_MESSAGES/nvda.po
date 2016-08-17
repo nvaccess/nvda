@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 00:10+1000\n"
-"PO-Revision-Date: 2016-07-27 16:29+0300\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-10 13:58+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -1480,6 +1480,12 @@ msgctxt "color variation"
 msgid "bright {color}"
 msgstr "parlak {color}"
 
+#. Translators: color (HSV saturation 100% and value 72%)
+#, fuzzy, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
+
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
 msgctxt "color variation"
@@ -2939,6 +2945,18 @@ msgstr ""
 "Önceki inceleme kipine geçer (örneğin, nesne, belge ya da ekran inceleme "
 "kipi) ve inceleme imlecini nesne sunucusunun bulunduğu noktada konumlandırır"
 
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Basit İnceleme kipi kapalı"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Basit İnceleme kipi açık"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Basit inceleme kipini açıp kapatır"
+
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "No navigator object"
@@ -3654,6 +3672,10 @@ msgstr "Braille ekranını bir sonraki satıra taşır"
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Kabartma klavye üzerinden braille alfabesi girişi yapar"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Geçerli odağa Braille ekranı taşır"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5815,10 +5837,11 @@ msgid "Add-ons Manager"
 msgstr "Eklenti Yöneticisi"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"Tüm eklentiler şimdi devre dışı bırakılıyor. Eklentileri etkinleştirmek için "
-"NVDA'yı tekrar yeniden başlatın."
+"Tüm eklentiler şimdi devre dışı. Eklentileri etkinleştirmek için NVDA'yı "
+"yeniden başlatın."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5847,6 +5870,10 @@ msgstr "Eklenti &hakkında..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "Eklenti &yardımı"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Devre dışı bırak"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5917,9 +5944,11 @@ msgstr "Eklenti kurulurken lütfen bekleyin"
 msgid "Failed to install add-on  from %s"
 msgstr "%s konumundaki eklenti kurulamadı"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Seçili eklentiyi NVDA'dan kaldırmak istediğinize emin misiniz?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Eklentiyi Kaldır"
 
@@ -5931,7 +5960,15 @@ msgstr "kur"
 msgid "remove"
 msgstr "kaldır"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "devre dışı"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "etkin"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "Askıya alınmış"
 
@@ -5939,13 +5976,18 @@ msgstr "Askıya alınmış"
 msgid "running"
 msgstr "çalışıyor"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Etkinleştir"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Yeni eklenen ya da kaldırılan eklentiler var. Değişikliklerin etkili olması "
-"için NVDA'yı yeniden başlatmalısınız. Şimdi yeniden başlatılsın mı?"
+"Yeni eklenen, kaldırılan ya da statüsü değiştirilen eklentiler var. "
+"Değişikliklerin etkili olması için NVDA'yı yeniden başlatmalısınız. Şimdi "
+"yeniden başlatılsın mı?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -7332,73 +7374,79 @@ msgstr "Otomatik"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
+msgid "diagonal crosshatch"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
+msgid "thin diagonal crosshatch"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
+msgid "reverse diagonal stripe"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
+#. 12.5% gray
+#, no-python-format
+msgid "12.5% gray"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
+#, no-python-format
+msgid "25% gray"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
+#, no-python-format
+msgid "50% gray"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
+#, no-python-format
+msgid "75% gray"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
+#. 6.25% gray
+#, no-python-format
+msgid "6.25% gray"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
+msgid "thin horizontal crosshatch"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
+msgid "horizontal stripe"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
+msgid "thin reverse diagonal stripe"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
+msgid "thin horizontal stripe"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
+msgid "thin diagonal stripe"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr ""
+#, fuzzy
+msgid "thin vertical stripe"
+msgstr "Dikey hiza dağıtılmış"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7407,7 +7455,7 @@ msgstr "hiçbiri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
+msgid "thick diagonal crosshatch"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
@@ -7417,13 +7465,14 @@ msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
+msgid "diagonal stripe"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
-msgstr ""
+#, fuzzy
+msgid "vertical stripe"
+msgstr "Dikey hiza dağıtılmış"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
@@ -7432,10 +7481,6 @@ msgstr ""
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
 msgstr ""
-
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Bu hücre düzenlenebilir değil"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
@@ -7455,6 +7500,11 @@ msgstr "A&çıklamalar"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Formüller"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Form alanları"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8568,6 +8618,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serisi"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Bu hücre düzenlenebilir değil"
 
 #~ msgid "unknown color"
 #~ msgstr "bilinmeyen renk"
