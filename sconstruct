@@ -61,6 +61,7 @@ keyCommandsLangBlacklist=set([])
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
+vars.Add("version_build", "A unique number for this build.", "0")
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add("updateVersionType", "The version type for which to check for updates", versionInfo.updateVersionType or "")
@@ -91,7 +92,11 @@ if len(unknown)>0:
 env['ENV']['PYTHONPATH']=Dir('#miscDeps/python').abspath
 
 env["copyright"]=versionInfo.copyright
+env['version_year']=versionInfo.version_year
+env['version_major']=versionInfo.version_major
+env['version_minor']=versionInfo.version_minor
 version = env["version"]
+version_build = env["version_build"]
 release = env["release"]
 publisher = env["publisher"]
 certFile = env["certFile"]
@@ -205,7 +210,8 @@ def NVDADistGenerator(target, source, env, for_signature):
 		'version = {version!r}\r\n'
 		'publisher = {publisher!r}\r\n'
 		'updateVersionType = {updateVersionType!r}\r\n'
-		.format(version=version, publisher=publisher, updateVersionType=updateVersionType))]
+		'version_build = {version_build!r}\r\n'
+		.format(version=version, publisher=publisher, updateVersionType=updateVersionType,version_build=version_build))]
 
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]
@@ -275,7 +281,7 @@ env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
 uninstFile=File("dist/uninstall.exe")
 uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
 	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
 	"/DUNINSTEXE=%s"%uninstFile.abspath,
 	"/DINSTEXE=${TARGET.abspath}",
 	"$SOURCE"]])
@@ -292,7 +298,7 @@ env.Clean([dist], buildDir)
 
 launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
 	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
 	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:

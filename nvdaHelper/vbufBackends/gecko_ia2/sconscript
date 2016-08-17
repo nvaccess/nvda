@@ -23,6 +23,7 @@ ia2utilsObj=env.Object("./ia2utils","../../common/ia2utils.cpp")
 geckoBackendLib=env.SharedLibrary(
 	target="VBufBackend_gecko_ia2",
 	source=[
+		env['projectResFile'],
 		"gecko_ia2.cpp",
 		ia2utilsObj,
 		env.Object('_ia2_i',ia2RPCStubs[3]),

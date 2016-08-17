@@ -20,6 +20,7 @@ Import([
 mshtmlBackendLib=env.SharedLibrary(
 	target="VBufBackend_mshtml",
 	source=[
+		env['projectResFile'],
 		"mshtml.cpp",
 		"node.cpp",
 	],

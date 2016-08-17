@@ -16,10 +16,10 @@ RequestExecutionLevel user
 ReserveFile "..\miscDeps\uninstaller\UAC.dll"
 
 Name "${appName}"
-VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
+VIProductVersion "${VERSION_YEAR}.${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "${appName}"
 VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
-VIAddVersionKey "FileDescription" "${appName} installer"
+VIAddVersionKey "FileDescription" "${appName} uninstaller"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 
 ;Minimal installer to generate uninstaller

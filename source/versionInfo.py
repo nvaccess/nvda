@@ -31,11 +31,15 @@ def _updateVersionFromVCS():
 # Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2016.3dev"
+version_year=2016
+version_major=3
+version_minor=0
+version_build=0
+version="%s.%s.%sdev"%(version_year,version_major,version_minor)
 publisher="unknown"
 updateVersionType=None
 try:
-	from _buildVersion import version, publisher, updateVersionType
+	from _buildVersion import version, publisher, updateVersionType, version_build
 except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")

@@ -63,6 +63,7 @@ build_script:
      }
      $sconsArgs += ' publisher="NV Access"'
      $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+     $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
      # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
      # It's possible to work around this, but the workarounds have annoying side effects.
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
