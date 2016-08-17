@@ -600,6 +600,12 @@ class UIA(Window):
 		# #5942: In recent Windows 10 Redstone builds (14332 and later), Microsoft rewrote various dialog code including that of User Account Control.
 		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
+		# 6241: Try detecting all possible suggestions containers scattered throughout Windows 10.
+		try:
+			if self.parent.UIAElement.cachedAutomationId.lower()=="suggestionslist":
+				clsList.append(SuggestionListItem)
+		except AttributeError:
+			pass
 
 		clsList.append(UIA)
 
@@ -1239,4 +1245,17 @@ class WpfTextView(UIA):
 
 	def event_stateChange(self):
 		return
+
+class SuggestionListItem(UIA):
+	"""Windows 10 uses suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+	"""
+
+	role=controlTypes.ROLE_LISTITEM
+
+	def event_UIA_elementSelected(self):
+		focusControllerFor=api.getFocusObject().controllerFor
+		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
+			speech.cancelSpeech()
+			api.setNavigatorObject(self)
+			self.reportFocus()
 
