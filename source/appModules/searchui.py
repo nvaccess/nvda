@@ -4,11 +4,6 @@
 #See the file COPYING for more details.
 
 import appModuleHandler
-import controlTypes
-import api
-import speech
-from NVDAObjects.UIA import UIA
-from NVDAObjects.UIA.edge import EdgeList
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 
 class AppModule(appModuleHandler.AppModule):
