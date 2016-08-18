@@ -438,11 +438,11 @@ Az összetett csak olvasható dokumentumok, pl. a weblapok, az NVDA-ban a virtu�
 
 A virtuális kijelző egy egyszerűsített nézetét tartalmazza pl. egy weboldalnak, amelyben a nyilakkal mozoghat. A különböző információkat, pl.  ha az adott szövegrész egy hivatkozás, a címsorokat, és egyéb információkat az NVDA a szöveggel együtt olvassa.
 
-A virtuális kijelzőben az NVDA kétféleképpen használható. Böngésző módban egy virtuális kurzor segítségével mozoghat a szövegben, interaktív módban viszont közvetlenül vihet információkat a böngészőbe, pl. írhat a szerkesztőmezőkbe, választhat a kombinált listákon, bejelölheti az egyik választógombot, tehát ugyanazokat a billentyűket használhatja, amelyeket egyébként is használna. Az NVDA böngésző módból automatikusan interaktív módba kapcsol, ha olyan vezérlőelemre lép, amelynek használatához erre van szükség. Kézzel is átválthat interaktív módra az NVDA+szóköz billentyűparanccsal. Ha az NVDA automatikusan interaktív módra váltott egy tab vagy egy kattintás miatt, automatikusan visszavált böngésző módba, ha olyan elemre lép, amely csak így tekinthető meg. Ha viszont kézzel kapcsolta be az NVDA+szóközzel az interaktív módot, az NVDA mind addig interaktív módban marad, amíg az escape-pel vagy az NVDA+szóköz billentyűparanccsal vissza nem vált böngésző módba. A böngészőmód beálításai párbeszédpanelen (NVDA menü beállítások almenüjében) tiltani lehet az interaktív és böngésző mód automatikus váltását.
+A virtuális kijelzőben az NVDA kétféleképpen használható. Böngészőmódban egy virtuális kurzor segítségével mozoghat a szövegben, fókuszmódban viszont közvetlenül vihet információkat a böngészőbe, pl. írhat a szerkesztőmezőkbe, választhat a kombinált listákon, bejelölheti az egyik választógombot, tehát ugyanazokat a billentyűket használhatja, amelyeket egyébként is használna. Az NVDA böngészőmódból automatikusan fókuszmódba kapcsol, ha olyan vezérlőelemre lép, amelynek használatához erre van szükség. Kézzel is átválthat fókuszmódra az NVDA+szóköz billentyűparanccsal. Ha az NVDA automatikusan fókuszmódra váltott egy tab vagy egy kattintás miatt, automatikusan visszavált böngészőmódba, ha olyan elemre lép, amely csak így tekinthető meg. Ha viszont kézzel kapcsolta be az NVDA+szóközzel a fókuszmódot, az NVDA mind addig fókuszmódban marad, amíg az escape-pel vagy az NVDA+szóköz billentyűparanccsal vissza nem vált böngészőmódba. A böngészőmód párbeszédpanelen (NVDA menü beállítások almenüjében) tiltani lehet a fókuszmód és böngészőmód automatikus váltását.
 %kc:beginInclude
 || Funkció | billentyűparancs | leírás |
-| Váltás a virtuális kijelző módjai között | NVDA+szóköz | Vált az interaktív és a  böngészőmód között |
-| Kilépés az interaktív módból | escape | Visszavált az interaktív módból böngésző módra. |
+| Váltás a virtuális kijelző módjai közt | NVDA+szóköz | Vált a fókuszmód és a  böngészőmód közt |
+| Kilépés a fókuszmódból | escape | Visszavált a fókuszmódból böngészőmódra. |
 | A virtuális kijelző frissítése | NVDA+f5 | Frissíti a virtuális kijelző tartalmát. Ez akkor lehet hasznos, ha egy oldal hiányosan töltődött be. (a funkció nem érhető el Microsoft Word és Outlook programok használata esetén). |
 | Keresés | NVDA+control+f | A felbukkanó ablak segítségével egy szövegrészletre kereshet rá az adott oldalon. |
 | Ugrás a következő találatra | NVDA+f3 | Az ön által keresett kifejezés következő előfordulására ugrik. |
@@ -453,7 +453,7 @@ Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben, a Mozil
 
 ++ Navigációs gyorsbillentyűk ++
 
-Böngésző módban az NVDA a gyorsabb navigáció érdekében egykarakteres navigációs gyorsbillentyűket tartalmaz a virtuális kijelző meghatározott területére történő ugráshoz.
+Böngészőmódban az NVDA a gyorsabb navigáció érdekében egykarakteres navigációs gyorsbillentyűket tartalmaz a virtuális kijelző meghatározott területére történő ugráshoz.
 Megjegyzés: Nem minden gyorsbillentyűhasználható a böngészőmódot támogató dokumentumokban.
 
 %kc:beginInclude
@@ -489,7 +489,7 @@ Első vagy utolsó elemre ugrás (listák vagy táblázatok esetében):
 
 Kiegészítő megjegyzés: a navigációs gyorsbillentyűket könnyebb megjegyezni, ha megjegyezzük azoknak a fogalmaknak az angol megfelelőjét, amire utalnak. Pl.: edit box: szerkesztőmező, radio button: választógomb.
 
-Megjegyzés: Bizonyos alkalmazásokban (Facebbok, Gmail, stb) elérhetőek a böngészést segítő billentyűparancsok. Ezek használatához ki kell kapcsolnia az egykarakteres navigációt.
+Megjegyzés: Bizonyos alkalmazásokban (Facebook, Gmail, stb) elérhetőek a böngészést segítő billentyűparancsok. Ezek használatához ki kell kapcsolnia az egykarakteres navigációt.
 %kc:beginInclude
 Az egykarakteres navigáció ki/bekapcsolásához a jelenlegi dokumentumban nyomja meg az  NVDA+shift+szóköz billentyűparancsot.
  %kc:endInclude
@@ -531,7 +531,7 @@ Böngészőmód használata esetén ezt megteheti, csak keresse meg a matematika
 
 Ha nem böngészőmódban van:
 + Keresse meg az áttekintő kurzorral a matematikai tartalmat.
-Alapértelmezetten az áttekintő kurzor követi a rendszer fókuszt, így ezt megteheti a nyíl billentyűk használatával is.
+Alapértelmezetten az áttekintő kurzor követi a rendszerfókuszt, így ezt megteheti a nyíl billentyűk használatával is.
 + Nyomja le a következő billentyűparancsot:
 +
 
@@ -543,7 +543,7 @@ Alapértelmezetten az áttekintő kurzor követi a rendszer fókuszt, így ezt m
 Ettől a ponttól kezdve használhatja a MathPlayer billentyűparancsait (pl. a nyíl billentyűket) a tartalom áttekintésére.
 Így például bejárhatja a teljes kifejezést a jobbra és balra nyíl használatával, de megtekintheti annak csak egy részletét is (pl. egy zárójel tartalmát) a lefele nyíl megnyomásával.
 
-Bővebb információkért olvassal el a MathPlayer súgóját.
+Bővebb információkért olvassa el a MathPlayer súgóját.
 
 Amennyiben szeretne visszatérni a fődokumentumba, nyomja meg az escape billentyűt.
 
@@ -554,7 +554,7 @@ Az NVDA néhány alkalmazásban saját billentyűparanccsal rendelkezik, melyek 
 
 +++ Automatikus sor- és oszlopfejléc bemondás +++
 Az NVDA képes automatikusan bemondani a megfelelő sor- és oszlopfejléceket miközben a táblázatokban navigál a Microsoft Wordben.
-Ehhez először is A táblázat sor/oszlop fejléceinek bemondása opciónak bekapcsolt állapotban kell lennie az NVDA Dokumentum formázás párbeszédablakán.
+Ehhez először is A táblázat fejléceinek bemondása opciónak bekapcsolt állapotban kell lennie az NVDA Dokumentumformázás párbeszédablakán.
 Másodszor az NVDA-nak tudnia kell, hogy az adott táblázatban mely sorok és oszlopok tartalmazzák a fejléceket.
 A fejléceket tartalmazó sor vagy oszlop első celláján állva alkalmazhatók az alábbi parancsok:
 %kc:beginInclude
@@ -588,7 +588,7 @@ A dokumentumban található összes megjegyzés és szerkesztői változás elé
 
 +++ Automatikus sor- és oszlopfejléc bemondás +++
 Az NVDA képes automatikusan bemondani a megfelelő sor- és oszlopfejléceket miközben munkalapokon navigál a Microsoft Excelben.
-Ehhez először is A táblázat sor/oszlop fejléceinek bemondása opciónak bekapcsolt állapotban kell lennie az NVDA Dokumentum formázás párbeszédablakán.
+Ehhez először is A táblázat fejléceinek bemondása opciónak bekapcsolt állapotban kell lennie az NVDA Dokumentumformázás párbeszédablakán.
 Másodszor az NVDA-nak tudnia kell, hogy az adott táblázatban mely sorok és oszlopok tartalmazzák a fejléceket.
 A fejléceket tartalmazó sor vagy oszlop első celláján állva alkalmazhatók az alábbi parancsok:
 %kc:beginInclude
@@ -629,7 +629,7 @@ A munkafüzethez tartozó összes megjegyzés elérhető az elemlistából.
 +++ Zárolt cellák olvasása +++
 Ha egy munkafüzet védett, akkor nem lehet a zárolt, tehát nem szerkeszthető celláira navigálni.
 %kc:beginInclude
-A zárolt cellák eléréséhez böngészőmódra kell váltani az NVDA+szóköz billentyűparancs segítségével, akkor már az Excel szokásos navigációs parancsaival is felolvastathatók.
+A zárolt cellák eléréséhez böngészőmódra kell váltani az NVDA+szóköz billentyűparanccsal, akkor már az Excel szokásos navigációs parancsaival is felolvastathatók.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -668,14 +668,14 @@ Megjegyzés: A hátralévő idő bemondása csak akkor lehetséges, ha a Foobar 
 + Az NVDA Beállítása+
 ++ beállítások ++
 %kc:settingsSection: || Funkció | Asztali billentyűparancs | Laptop billentyűparancs | Leírás |
-A legtöbb beállítást az NVDA menüjének beállítások almenüjéből érheti el. Egy beállítás véglegesítéséhez nyomja meg az Igen, a módosítás visszavonásához a mégsem gombot.
+A legtöbb beállítást az NVDA menüjének beállítások almenüjéből érheti el. Egy beállítás véglegesítéséhez nyomja meg az Ok, a módosítás visszavonásához a mégsem gombot.
 Számos beállításhoz gyorsgomb is tartozik, amit az alábbi fejezetekben fel is sorolunk.
 
 Megjegyzés: Azokhoz a beállításokhoz amikhez nincsen gyorsgomb rendelve, megteheti ezt kézzel a beviteli parancsok párbeszédablakon.
 
-+++ Általános beállítások (NVDA+control+g)+++
++++ Általános (NVDA+control+g)+++
 
-Az általános beállítások az NVDA beállítások almenüjében található.
+Az általános beállításokat az NVDA beállítások/Általános almenüjében érheti el.
 A párbeszédpanel a következő beállításokat tartalmazza:
 
 ===== Nyelv =====
@@ -685,11 +685,11 @@ Ebben a kombinált listamezőben kiválaszthatja az NVDA felhasználói felület
 Fontos: a nyelv megváltoztatása csak az NVDA újbóli elindításával következik be.
  AzNVDA rákérdez, hogy szeretné-e ezt a műveletet. Nyomja meg az igen gombot, és az NVDA újraindul.
 
-===== A beállítások elmentése kilépéskor =====
+===== A beállítások automatikus elmentése kilépéskor =====
 
 Ez egy jelölőnégyzet, amivel vezérelheti az NVDA-t, hogy elmentse-e a beállításokat kilépéskor. Alapértelmezetten ez be van kapcsolva.
 
-===== A kilépési lehetőségek mutatása az NVDA-ból való kilépéskor =====
+===== Lehetőségek mutatása kilépéskor =====
 Ez a beállítás egy jelölőnégyzet, mely lehetővé teszi, hogy az NVDA-ból való kilépéskor megjelenjen-e egy párbeszédpanel az NVDA-ból való kilépéskori lehetőségek felkínálásával.
 Ha be van jelölve, egy párbeszédpanel jelenik meg, ahol eldönthető, hogy kilépünk-e az NVDA-ból, bővítmények nélkül indítjuk újra, vagy a bővítmények betöltésével együtt.
 Ha nincs bejelölve, az NVDA azonnal kilép.
@@ -720,9 +720,9 @@ Ez a beállítás csak a telepített verzióban érhető el.
 A beállítás bekapcsolásakor az NVDA bizonyos időközönként frissítéseketkeres az interneten. Ha talál, erről tájékoztatja a felhasználót, aki dönthet a frissítés feltelepítéséről, elhalasztásáról vagy elutasításáról. 
 Az ellenőrzést kézzel is elvégezheti az NVDA menü -súgó almenüjében a frissítés ellenőrzése menüparanccsal.
 
-+++ Beszédszintetizátor választás (NVDA+control+s+++
++++ Beszédszintetizátor (NVDA+control+s+++
 
-A beszédszintetizátor párbeszédpanelen, mely megtalálható Beszédszintetizátor néven a beállítások almenüben, vagy megnyitható az NVDA+Control+S billentyűparancs leütésével, kiválasztható, hogy az NVDA melyik beszédszintetizátort használja.
+A beszédszintetizátor párbeszédpanelen, mely megtalálható a beállítások almenüben, vagy megnyitható az NVDA+Control+S billentyűparancs leütésével, kiválasztható, hogy az NVDA melyik beszédszintetizátort használja.
 
 ==== Beszédszintetizátor ====
 A Beszédszintetizátor kombinált listamező tartalmazza a választható beszédszintetizátorokat. Használja a fel-le nyilakat a kívánt beszédszintetizátor kiválasztásához.
@@ -747,7 +747,7 @@ A kimeneti hangeszköz kombinált listamezőben meghatározhatja, hogy a kivála
 Az NVDA képes arra is, hogy átváltson az idő közben csatlakoztatott hangeszközre. Ha pl. egy usb-s fejhallgatót használ alapértelmezett hangeszközként, de ezt csak menet közben csatlakoztatja, az NVDA képes átváltani rá, a fejhallgató kihúzásakor pedig képes visszaváltani egy másik használható hangeszközre.
 
 %kc:setting
-==== Hangerőigazítás ====
+==== Hangerő-igazítás ====
 Billentyűparancs: NVDA+shift+d
 
 Windows 8 és újabb verziói esetén az NVDA képes csökkenteni a többi alkalmazás hangerejét. Ezzel az opcióval kiválaszthatja, hogy csak akkor tegyen így, amikor beszél, vagy pedig a futása közben végig.
@@ -756,11 +756,11 @@ Windows 8 és újabb verziói esetén az NVDA képes csökkenteni a többi alkal
 - Mindig: Az NVDA futása közben minden más alkalmazás hangerejét folyamatosan alacsonyabban tartja.
 -
 
-+++ Beszéd beállítások (NVDA+control+v) +++[VoiceSettings]
++++ Beszéd (NVDA+control+v) +++[VoiceSettings]
 
-A Beszéd beállításai, amely a beállítások menüben található, azokat a lehetőségeket tartalmazza, amelyekkel megváltoztathatja a beszéd hangját. Egy alternatív megoldás is létezik a beszéd paraméterei  gyors megváltoztatására, ehhez kérjük olvassa el a [beszédkör beállításai #SynthSettingsRing] alcímet.
+A Beszéd párbeszédpanel, amely a beállítások menüben található, azokat a lehetőségeket tartalmazza, amelyekkel megváltoztathatja a beszéd hangját. Egy alternatív megoldás is létezik a beszéd paraméterei  gyors megváltoztatására, ehhez kérjük olvassa el a [beszédkör beállításai #SynthSettingsRing] alcímet.
 
-A hangbeállítások párbeszédpanel a következő elemeket tartalmazza:
+A párbeszédpanel a következő elemeket tartalmazza:
 
 ===== Hangkarakter =====
 
@@ -774,7 +774,7 @@ Ha az ESpeak NG beszédszintetizátort használja, mely alapértelmezésként me
 
 A felolvasás sebességének beállítását lehet itt elvégezni. A csúszka értéke 0-tól 100-ig állítható, 0 a leglassabb, 100 a leggyorsabb.
 
-===== Sebesség fokozás =====
+===== Sebességfokozás =====
 
 Ha bejelöli ezt a jelölőnégyzetet, az ESpeak NG a megszokottnál gyorsabb beszédre képes.
 
@@ -799,10 +799,10 @@ Ezzel a jelölőnégyzettel szabályozzuk, hogy az NVDA automatikusan állítsa-
 Ezzel a csúszkával beállítható a beszédszintetizátor hangsúlyozása (a hangmagasság növelése és csökkentése). (Az egyetlen beszédszintetizátor amely használja ezt a beállítást jelenleg az ESpeak NG). 0 esetén teljesen monoton, 100 esetén a legnagyobb mértékben hangsúlyoz.
 
 %kc:setting
-===== Írásjel szintjének állítása =====
+===== Írásjelszint =====
 Billentyűparancs: NVDA+p
 
-Az NVDA minden írásjel szintnek megfelelően képes az írásjeleket különálló szavanként kezelni. A szintek között a billentyűparancs többszöri lenyomásával tud váltani.
+Az NVDA minden írásjelszintnek megfelelően képes az írásjeleket különálló szavanként kezelni. A szintek között a billentyűparancs többszöri lenyomásával tud váltani.
 
 ===== Karakterek és írásjelek feldolgozása az aktív hangkarakter nyelvén =====
 
@@ -812,7 +812,7 @@ Alapértelmezésben ez a jelölőnégyzet az NVDA-t arra utasítja, hogy a megad
 
 Az egykarakteres szavakat másképpen kell ejteni hangzó szóként és másképpen karakterként. (Pl. betűzéskor) vagy külön szóként. Például az angolban az "a"-t másképpen kell mondani, ha szó és másképpen, ha betű. Ezzel a jelölőnégyzettel szabályozható, hogy a beszédszintetizátor tegyen-e különbséget e két eset között, ha a beszédszintetizátor támogatja ezt a funkciót. A legtöbb szintetizátor támogatja ezt az opciót. Ez a jelölőnégyzet általában be van jelölve, azonban egyes Microsoft Speech API beszédszintetizátorok nem tartalmazzák megfelelően ezt a funkciót, és ha be van kapcsolva, furcsán viselkednek. Ha problémákat tapasztalunk egyes különálló karakterek kiejtésével, kapcsoljuk ki ezt a jelölőnégyzetet!
 
-===== A hangmagasság megemelése nagybetűknél =====
+===== Hangmagasság változtatása nagybetűknél százalékban =====
 
 Ha ez a jelölőnégyzet be van jelölve, az NVDA megemeli a hangmagasságot a nagybetűknél.
 
@@ -826,7 +826,7 @@ Ha a jelölőnégyzet be van jelölve, egy rövid csipogó hang hallható a nagy
 
 +++ Szintetizátor beállítási kör +++[SynthSettingsRing]
 
-Lehetősége van a beszéd beállítások párbeszédablak megnyitása nélkül is megváltoztatni a beszéd különböző paramétereit. Ehhez a következő billentyűparancsok állnak rendelkezésére:
+Lehetősége van a beszéd párbeszédablak megnyitása nélkül is megváltoztatni a beszéd különböző paramétereit. Ehhez a következő billentyűparancsok állnak rendelkezésére:
 %kc:beginInclude
 || Funkció | Asztali billentyűparancs | Laptop billentyűparancs | Leírás |
 | Ugrás a következő szintetizátor beállításra | NVDA+control+jobbnyíl | NVDA+shift+control+jobbra nyíl | A következő beszéd beállításra ugrik. Ha elérte az utolsót, akkor az elsőre lép. |
@@ -835,9 +835,9 @@ Lehetősége van a beszéd beállítások párbeszédablak megnyitása nélkül 
 | Az aktuális beállítás értékének csökkentése | NVDA+control+le nyíl | NVDA+shift+control+lenyíl | A gomb megnyomására csökken az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
 %kc:endInclude
 
-+++ Braille beállítások +++
++++ Braille kijelző +++
 
-A braille beállítások párbeszédpanel a beállítások menüben található meg.
+A braille kijelző párbeszédpanel a beállítások menüben található meg.
 
 ===== Braille kijelző =====
 
@@ -860,7 +860,7 @@ A program a kiválasztott táblát használja arra, hogy a braille kijelző Perk
 Az NVDA egyelőre csak a számítógépes braille beviteli módot támogatja, így a listában csak a nyolcpontos braile beviteli táblák jelennek meg.
 a listában a nyíl billentyűkkel léphetünk bemeneti braille tábláról bemeneti braille táblára.
 
-Vegyük figyelembe, hogy ez a beállítás csak akor használható, ha a braille kijelzőnek van Perkins-stílusú braile billentyűzete, és a braille kijelző eszközillesztő programja támogatja ezt a funkciót.
+Vegyük figyelembe, hogy ez a beállítás csak akkor használható, ha a braille kijelzőnek van Perkins-stílusú braile billentyűzete, és a braille kijelző eszközillesztő programja támogatja ezt a funkciót.
 Ha a braille kijelzőnek van bilentyűzete, de ez a  funkció nem érhető el, ezt a [támogatott Braille kijelzők #SupportedBrailleDisplays] című szakaszban jelezzük.
 
 ==== Port ====
@@ -889,7 +889,7 @@ A rendszerkurzor és az áttekintő kurzor esetében működik, a kijelölésjel
 
 Ebben a mezőben megadhatja, hogy a kurzor hány ezred másodpercenként villogjon
 
-===== Kurzor alakja =====
+===== A kurzor alakja =====
 
 Ebben a legördülő mezőben kiválaszthatja    a kurzor pont alakú jelzését a braille kijelzőn.
 A  beállításnak nincs ráhatása a kijelölés jelzésére.
@@ -910,9 +910,9 @@ Ha ez a jelölőnégyzet be van jelölve, akkor az utolsó szó ha nem fér ki a
 
 Amennyiben a jelölőnégyzet nincs bejelölve, a lehető legtöbb cella kitöltésre kerül. Ha az utolsó szó nem fér ki, ennek vége levágásra kerül, a maradék csak a görgetés után jelenik meg.
 
-+++ Billentyűzet beállítások  (NVDA+control+k) +++
++++ Billentyűzet  (NVDA+control+k) +++
 
-Ez a párbeszédpanel a beállítások menüben a "billentyűzet beállítások..." parancs alatt található. A következő beállításokat tartalmazza:
+Ez a párbeszédpanel a beállítások menüben található. A következő beállításokat tartalmazza:
 
 =====  Billentyűzetkiosztás  =====
 
@@ -933,28 +933,28 @@ Ha ez a jelölőnégyzet be van jelölve, a numerikus billentyűzeten lévő ins
 Ha egyik lehetőséget se jelölte be NVDA gombként, nem lesznek elérhetőek az NVDA specifikus billentyűparancsok. Az ablak bezárásakor az NVDA erről értesíti is a felhasználót.
 
 %kc:setting
-=====  Betűk bemondása gépeléskor =====
+=====  Karakterek bemondása íráskor =====
 Billentyűparancs: NVDA+2
 
-E jelölőnégyzet bejelölése esetén az NVDA minden begépelt karaktert visszamond. 
+E jelölőnégyzet bejelölése esetén az NVDA minden beírt karaktert visszamond. 
 
 %kc:setting
-===== Begépelt szavak bemondása  =====
+===== Szavak bemondása íráskor  =====
 Billentyűparancs: NVDA+3
 
-E jelölőnégyzet bejelölése esetén az Nvda elmondja a begépelt szavakat. A szavakat értelemszerűen a szóközök és az írásjelek határolják el egymástól.
+E jelölőnégyzet bejelölése esetén az Nvda elmondja a beírt szavakat. A szavakat értelemszerűen a szóközök és az írásjelek határolják el egymástól.
 
-===== A beszéd megszakítása karakterek begépelésekor ====
+===== Beszéd megszakítása íráskor ====
 Ha be van kapcsolva, ez a parancs azt idézi elő, hogy a beszéd minden egyes karakter beírásakor megszakad. Ez az alapértelmezett beállítás.
 
-===== A beszéd megszakítása az enter bilentyű megnyomásakor ====
+===== Beszéd megszakítása az enterrel ====
 Ha be van kapcsolva, ez a parancs azt idézi elő, hogy a beszéd minden alkalommal megszakad, ha az entert megnyomjuk. Ez az alapértelmezett beállítás.
 
-===== Az átfutó felolvasás engedélyezése folyamatos felolvasás közben =====
+===== Átfutás engedélyezése folyamatos felolvasáskor =====
 
 Ha ez a funkció be van kapcsolva, bizonyos navigációs parancsok (pl. böngészőmódban a gyors navigációs billentyűk, vagy a sorról sorra, bekezdésről bekezdésre lépés) nem állítja meg a folyamatos felolvasást, hanem a folyamatos felolvasáskor a program az új pozícióra ugrik, és a felolvasást onnan folytatja.
 
-===== Hangjelzés kisbetűk gépelésekor a capslock bekapcsolt állapotában =====
+===== Hangjelzés kisbetű beírásakor, ha a capslock be van kapcsolva =====
 
 A jelölőnégyzet bejelölése után ha a Capslock be van kapcsolva, és a betű gépelésekor lenyomja a shift billentyűt, a program egy éles csippanással figyelmeztet. Egyes helyzetekben a felhasználók nem veszik észre, hogy a caps lock bekapcsolva maradt, ezért került bele a programba ez a funkció.
 
@@ -973,25 +973,25 @@ Megjegyzés: Hogy egy szó hibás-e, vagy sem, azt nem az NVDA dönti el, a prog
 Ennek az opciónak a segítségével szabályozható, hogy az NVDA kezelje-e le a például virtuális billentyűzet vagy szövegfelismerő alkalmazások billentyűleütéseit.
 Az opció alapértelmezés szerint engedélyezve van, azonban egyesek valószínűleg letiltják azt, például akik a Vietnami Unikey beviteli módot használják, mivel így az hibás karakterbevitelt eredményezne.
 
-+++ Az egér beállításai (NVDA+control+m) +++
++++ Egér (NVDA+control+m) +++
 
-Az egér beállításai párbeszédpanel a beálítások menü "Egérbeállítások..." menüparanccsal érhető el, és a következő beállítási lehetőségeket tartalmazza:
+Az egér beállításait a beálítások menü "Egér..." almenüjéből érheti el, és a következő beállítási lehetőségeket tartalmazza:
 
-===== Az egérmutató alakváltozásának bemondása  =====
+===== Tájékoztasson az egérmutató alakjának megváltozásáról  =====
 
 E jelölőnégyzet bejelölése esetén az NVDA mindig bemondja, ha az egérmutató alakja megváltozik. A Windowsban az egérmutató alakjának változása bizonyos információkat közöl a felhasználókkal. Ilyen pl. szerkeszthető szöveg, vagy az éppen betöltődő alkalmazás (homokóra), stb. jelzése.
 
 %kc:setting
-===== Az egérmutató alatti szöveg felolvasása  =====
+===== Az egér követése  =====
 Billentyűparancs: NVDA+m
 
 E jelölőnégyzet bejelölése esetén az NVDA bemondja azt a szöveget, amely az egérmutató alatt van, annak mozgásakor a képernyőn. Ez lehetővé teszi, hogy az egér valódi mozgatásával térképezze fel a képernyőt, ne pedig az elemek közötti navigációval.
 
-===== Szöveg feldolgozási egység =====
+===== Szövegbemondási egység =====
 
 Ha az NVDA úgy van beállítva, hogy bemondja a szöveget az egér mozgása közben, akkor ezzel a beállítással beállítható, hogy az NVDA mennyi szöveget olvasson  fel. A beállítás lehet karakter, szó, sor, és bekezdés.
 
-===== Vezérlőelem típusának bemondása az egérmutató mozgásakor =====
+===== A vezérlőelem típusának bemondása az egérmutató mozgásakor =====
 
 Ha ez a jelölőnégyzet be van jelölve, az NVDA bemondja az egérmutató alatt lévő vezérlőelem típusát.
 
@@ -1004,66 +1004,66 @@ Az Nvda az egérmutató mozgását hangjelzéssel jelezheti. A hangjelzések há
 - Az elem fényerejét (ha világosabb, hangosabb, ha sötétebb, halkabb).
 -
 
-===== Az egérmutató mozgásának jelzése hangjelzéssel =====
+===== Az egérmutató mozgásának jelzése hanggal =====
 
 E jelölőnégyzet bejelölése azt eredményezi, hogy az NVDA kis hangjelzéseket ad, ahogy az egérmutató mozog. Ezzel a felhasználó figyelemmel kísérheti, hogy az egérmutató a képernyő mely részén van.
 
 ===== A képernyőn lévő elemek fényerejének jelzése az egér mozgatása közben =====
 
-Ha "Az egérmutató mozgásának jelzése hangjelzéssel" jelölőnégyzet be van jelölve, e jelölőnégyzet bejelölése esetén az NVDA hangjelzése attól függően hangosabb vagy halkabb, hogy az egérmutató alatt a képernyő világosabb vagy sötétebb. Mivel ez a funkció Windows Vista alatt teljesítménycsökkenést okozhat, alapértelmezés szerint nincs bejelölve.
+Ha "Az egérmutató mozgásának jelzése hanggall" jelölőnégyzet be van jelölve, e jelölőnégyzet bejelölése esetén az NVDA hangjelzése attól függően hangosabb vagy halkabb, hogy az egérmutató alatt a képernyő világosabb vagy sötétebb. Mivel ez a funkció Windows Vista alatt teljesítménycsökkenést okozhat, alapértelmezés szerint nincs bejelölve.
 
-+++ Áttekintő kurzor beállítások +++
++++ Áttekintő kurzor +++
 A beállítás a beállítások/áttekintő kurzor menüelemmel érhető el.
 Ez a párbeszédablak az alábbi beállításokat tartalmazza:
 
 %kc:setting
-==== A billentyűzet követése====
+==== Az aktív elem követése ====
 Billentyűparancs: NVDA+7
 
 A beállítás engedélyezésével az áttekintő kurzor mindig az aktív elem szövegét mutatja, vagyis azt, ahol a rendszerkurzor található.
 
 %kc:setting
-==== A rendszer kurzor követése ====
+==== A kurzor követése ====
 Billentyűparancs: NVDA+6
 
 A beállítás engedélyezésével az áttekintőkurzor a rendszerkurzor pozíciójához kerül, és követi azt.
 
-==== Az egérkurzor követése ====
+==== Az egérmutató követése ====
 A beállítás engedélyezésével az áttekintő kurzor mindig az egér alatt lévő szöveghez kerül.
 
-==== Egyszerű áttekintő mód ====
+==== Egyszerű áttekintőmód ====
 A beállítás engedélyezésével az NVDA kiszűri a közvetlenül nem hozzáférhető és használható objektumokat, egyszerűbbé téve ezzel a navigálást a navigátor kurzorral.
 
-+++ Objektummegjelenítési beállítások (NVDA+control+o) +++
++++ Objektumok megjelenítése (NVDA+control+o) +++
 
-Ez a párbeszédpanel a beállítások menü objektummegjelenítési beállítások parancsával érhető el, és a következő beállítási lehetőségeket tartalmazza:
+Ez a párbeszédpanel a beállítások menü Objektumok megjelenítése parancsával érhető el, és a következő beállítási lehetőségeket tartalmazza:
 
 =====  Eszköztippek bemondása  =====
 
 Ha ez a jelölőnégyzet be van jelölve, az NVDA bemondja az eszköztippeket, amint azok megjelennek. Egyes ablakok és vezérlőelemek rövid üzeneteket vagy eszköztippeket jelenítenek meg, ha az egérmutató föléjük kerül, vagy ha a fókuszt rájuk helyezi.
 
-=====  Súgóbuborékok felolvasása  =====
+=====  Súgóbuborékok bemondása  =====
 
 Ha ez a jelölőnégyzet be van jelölve, az NVDA felolvassa a súgóbuborékokat, amint megjelennek. A súgóbuborékok olyanok, mint az eszköztippek, de általában nagyobbak, és rendszerint valamilyen rendszereseményről tájékoztatnak. Ilyen pl. hálózati kábel kihúzásakor felugró tájékoztatás vagy windows biztonsági figyelmeztetés.
 
-=====  Elem gyorsgombjának felolvasása  =====
+=====  Az elemhez tartozó gyorsbillentyűk bemondása  =====
 
 Ha e jelölőnégyzet be van jelölve, az NVDA felolvassa az elemhez vagy vezérlőelemhez társított billentyűparancsot. pl. egy program menüsorában a fájl menü az alt+F billentyűparanccsal is előhívható.
 
-=====  Elem pozíciójának felolvasása  =====
+=====  Az elemen belüli pozíció bemondása  =====
 
 Ezzel a beállítással kiválasztható, hogy az objektum pozíciója elhangozzon-e, amikor a fókusz vagy a navigátor kurzor az objektumhoz kerül.
 
-===== Az elem pozíciójának meghatározása =====
+===== A pozíció meghatározása akkor is, ha nem támogatott =====
 
 A jelölőnégyzet bejelölésekor az NVDA megpróbálja kitalálni azoknak az elemeknek a pozícióját, amik alapértelmezettként nem hozzáférhetőek. Ez a funkció olykor pontatlanul működik. 
 
-===== Elem leírásának felolvasása  =====
+===== Az elem leírásának bemondása  =====
 
 Kapcsolja ki ezt a jelölőnégyzetet, ha nem kívánja, hogy az NVDA felolvassa az elemhez tartozó leírást.
 
 %kc:setting
-===== Hangjelzés folyamatjelző változásakor  =====
+===== A folyamatjelző változásának jelzése  =====
 Billentyűparancs: NVDA+u
 
 A folyamatjelző egy olyan vezérlőelem, amely egy vonalzóra hasonlít. Egy lassú folyamat esetén a folyamatjelző a feladat előrehaladtával folyamatosan kivilágosodik, továbbá százalékban mutatja, hogy a munka hol tart. Folyamatjelzők pl. weboldal betölltődésekor, e-mailek lehívásakor vagy hangfájlok feldolgozásakor jelennek meg. Az NVDA képes hanggal jelezni, hogy hol tart a folyamat, a hang egyre emelkedik. Ez néha jobb, mintha számokat hallanánk. Egy kombinált listamezőben választhatja ki, hogy az NVDA milyen tájékoztatást adjon a folyamatjelzőkről. 
@@ -1080,13 +1080,13 @@ Folyamatjelző állapotának jelzési módjai:
 Ha ezt a jelölőnégyzetet bejelöli, és lerakja kis méretre az ablakot, az NVDA akkoris jelezni fogja a változást, így több folyamat előrehaladását is figyelemmel kísérheti.
 
 %kc:setting
-==== Frissülő tartalom bemondása ====
+==== Frissülő tartalom felolvasása ====
 Billentyűparancs: NVDA+5
 
-Ki és bekapcsolhatja a frissülő tartalom bemondását bizonyos objektumokban, pl. parancssor ablakok, vagy chat programok előzmény ablakai.
+Ki és bekapcsolhatja a frissülő tartalom felolvasását bizonyos objektumokban, pl. parancssor ablakok, vagy chat programok előzmény ablakai.
 
-+++ Beviteli mód beállítások +++
-A Beviteli mód beállítások párbeszédablakot a Beállítások menüben találja.
++++ Beviteli mód +++
+A Beviteli mód párbeszédablakot a Beállítások menüben találja.
 Ebben a párbeszédablakban beállíthatja, hogy az NVDA hogyan kezelje az ázsiai írásjegyek bevitelére szolgáló különböző beviteli módokat.
 Ahhoz, hogy igazán gyorsan tudjon gépelni, valószínűleg minden egyes használt beviteli módnál egyedileg kell megadnia ezeket a beállításokat, mivel az egyes beviteli módok nagyon különböző szolgáltatásokat nyújtanak, és más-más módon kommunikálnak a felhasználóval.
  
@@ -1105,32 +1105,32 @@ Ezzel a beállítással (ami alapértelmezésben be van kapcsolva) megadhatja, h
 Megjegyzés: egyes nyelveknél (például a kínainál) a kiválasztott javaslathoz tartozó magyarázat elhangzása nem függ ettől a beállítástól.
 Ez a beállítás a koreai, vagy a japán nyelvhez készített beviteli módoknál lehet hasznos.
  
-==== Az olvasási szöveg változásának bemondása ====
+==== Az olvasási szöveg változásainak bemondása ====
 Egyes beviteli módok (például a kínai New Phonetic és a New ChangJie) ún. olvasási szöveget is használnak (ezt néha bevitel előtti szövegnek is nevezik).
 Ezzel a beállítással eldöntheti, hogy az NVDA felolvassa-e az olvasási szövegbe beírt írásjegyeket.
 Ez a beállítás alapértelmezésben be van kapcsolva.
 Megjegyzés: egyes régebbi beviteli módok (például a kínai ChangJie) bevitel előtt nem az olvasási szövegben, hanem közvetlenül a beviteli szövegben tárolják a bevitt írásjegyeket. A beviteli szöveg felolvasását a következő beállítással szabályozhatja.
 
-==== A beviteli szöveg változásának bemondása ====
+==== A beviteli szöveg változásainak bemondása ====
 A legtöbb beviteli mód, miután előállította a kívánt írásjegyet, azt átmenetileg egy ún. beviteli szövegben tárolja a korábban beírt írásjegyekkel együtt mindaddig, amíg be nem illeszti ezt a szöveget a dokumentumba.
 Ezzel a beállítással megadhatja, hogy az NVDA bemondja-e a beviteli szövegbe kerülő új írásjegyeket.
 Ez a beállítás alapértelmezésben be van kapcsolva.
 
-+++ A böngésző mód beállításai (NVDA+Control+b) +++
++++ Böngészőmód (NVDA+Control+b) +++
 
-A Böngésző mód beállításai párbeszédpanel a beállítások almenü böngésző mód... almenüjében nyitható meg.
+A Böngészőmód beállításait a beállítások menü Böngészőmód... almenüjében érheti el.
 A párbeszédpanel a következő beállítási lehetőségeket tartalmazza:
 
-=====  Soronkénti karakterek maximális száma  =====
+=====  Az egy sorban lévő karakterek maximális száma  =====
 
 E mezőben beállítható, hogy a virtuális kijelző egy-egy sorában maximum hány karakter legyen. Nem biztos, hogy minden sor belefér, de a legtöbb igen.
 
-=====  Sorok maximális száma egy oldalon  =====
+=====  Az egy oldalon lévő sorok száma  =====
 
 Annak ellenére, hogy a virtuális kijelzőben valójában nincsenek lapok, ebben a mezőben lehet megadni, hogy a page up és page down billentyűk megnyomásakor hány sort lépjen az NVDA a virtuális kijelzőn.
 
 %kc:setting
-===== Képernyő elrendezés használata =====
+===== Képernyő-elrendezés használata (ha támogatott) =====
 Billentyűparancs: NVDA+v
 
 Ezzel a beállítással megadható, hogy a virtuális kijelzőben az elemek és a mezők külön sorban legyenek, vagy tartsák meg a képernyőn lévő helyüket. Ha ez a beállítás engedéllyezve van, akkor minden a képernyőn látható módon jelenik meg, de ha le van tiltva, akkor az elemek külön sorban fognak megjelenni.
@@ -1139,21 +1139,21 @@ Ezzel a beállítással megadható, hogy a virtuális kijelzőben az elemek és 
 
 Amikor ez a lehetőség le van tiltva, akkor az NVDA csak táblázatos adatokat jelez, (ahol szükséges a táblázatos elrendezés). Ha a lehetőség engedéllyezve van, az NVDA ezek mellett azokat a táblázatokat is jelzi, amellyek csak a látvány célját szolgálják, (Pl egy weboldal navigációs menüje egy táblázatban).
 
-=====  Automatikus váltás interaktív módba a fókusz változásakor =====
+=====  Automatikus fókuszmód az aktív vezérlőelem megváltozásakor =====
 
-Ez az opció lehetővé teszi, hogy a fókusz változásakor az NVDA automatikusan interaktív módba lépjen. pl., ha egy weboldalon egy űrlapmezőre lép a tab billentyűvel, az NVDA automatikusan interaktív módba lép, ha ez a jelölőnégyzet be van jelölve.
+Ez az opció lehetővé teszi, hogy a fókusz változásakor az NVDA automatikusan fókuszmódba lépjen. pl., ha egy weboldalon egy űrlapmezőre lép a tab billentyűvel, az NVDA automatikusan fókuszmódba lép, ha ez a jelölőnégyzet be van jelölve.
 
-=====  Automatikus interaktív módba lépés a kurzor mozgatásakor =====
+=====  Automatikus fókuszmód a kurzor mozgásakor =====
 
-Ha ez a jelölőnégyzet be van jelölve, az NVDA a nyíl billentyűk mozgatása közben automatikusan vált interaktív és böngésző mód között. Ha pl. egy weboldalon lefelé halad a le nyíl segítségével és az NVDA talál egy szerkesztőmezőt, automatikusan interaktív módba lép. Ha azonban a szerkesztőmezőt elhagyja, visszavált böngésző módba.
+Ha ez a jelölőnégyzet be van jelölve, az NVDA a nyílbillentyűk mozgatásakor automatikusan vált a fókuszmód és a böngészőmód közt. Ha pl. egy weboldalon lefelé halad a le nyíl segítségével és az NVDA talál egy szerkesztőmezőt, automatikusan fókuszmódba lép. Ha azonban a szerkesztőmezőt elhagyja, visszavált böngészőmódba.
 
-===== Az interaktív és a böngésző mód jelzése hangjelzéssel =====
+===== A fókuszmód és a böngészőmód jelzése hangjelzéssel =====
 
-Ha bekapcsolja ezt a beállítást, akkor az interaktív és a böngésző mód közötti váltást hangjelzéssel jelzi a program.
+Ha bekapcsolja ezt a beállítást, akkor a fókuszmód és a böngészőmód közti váltást hangjelzéssel jelzi a program.
 
-+++ Dokumentum Formázási beállítások (NVDA+control+d) +++
++++ Dokumentumformázás (NVDA+control+d) +++
 
-E párbeszédpanel a beállítások almenü dokumentum formázás... parancsával nyitható meg. Az itt található jelölőnégyzetekkel lehet beállítani, hogy az NVDA milyen formázási információkat olvasson fel, ha egy Word vagy Wordpad dokumentumban mozog a nyíl billentyűkkel. pl.: ha bejelöli a betűtípus bemondása jelölőnégyzetet, az NVDA bemondja a betűtípus nevét, ha a kurzorral új betűtípusú szövegrészre lép.
+E párbeszédpanel a beállítások menü Dokumentumformázás... parancsával nyitható meg. Az itt található jelölőnégyzetekkel lehet beállítani, hogy az NVDA milyen formázási információkat olvasson fel, ha egy Word vagy Wordpad dokumentumban mozog a nyíl billentyűkkel. pl.: ha bejelöli a betűtípus bemondása jelölőnégyzetet, az NVDA bemondja a betűtípus nevét, ha a kurzorral új betűtípusú szövegrészre lép.
 Be lehet állítani a: 
 - betűtípus,
 - betűméret,
@@ -1168,8 +1168,8 @@ Be lehet állítani a:
 - Sorigazítás,
 - Bekezdés igazítás (pl. változó sorigazítás, első sorigazítás),
 - táblázatok,
-- táblázat sor/oszlop fejlécei,
-- táblázat sor/oszlop koordinátái,
+- táblázat fejlécei,
+- táblázatcella koordinátái,
 - címsorok,
 - hivatkozások,
 - listák,
@@ -1179,19 +1179,19 @@ Be lehet állítani a:
 -
 bemondását.
 
-==== A kurzor pozíciójánál lévő formázások változásának jelzése ====
+==== A kurzor pozíciójánál lévő formázások változásának jelzése (a beszéd késését okozhatja) ====
 E jelölőnégyzet bejelölésével az NVDA a sorok felolvasásakor bemondja a formázási változásokat (pl. eltérő betűméret, betűtípus, stb). Ez az NVDA lassabb működését eredményezheti.
 
 Alapértelmezettként az NVDA az aktuális karakter formázásait észleli (rendszer vagy áttekintő kurzor használatakor), esetenként az egész sorra kiterjedő formázást is, ha az nem vezet az NVDA működésének lelassulásához.
 Engedélyezze ezt a lehetőséget pl. Microsoft Word esetén, ahol fontos a formázás.
 
-+++ Kivételszótárak beállításai+++
++++ Kivételszótárak +++
 
 A beállítások menüben található kivételszótárak menü olyan lehetőségeket tartalmaz, melyekkel megadható, hogy az NVDA miként ejtsen ki egyes szavakat, kifejezéseket. Jelenleg háromféle szótártípus létezik:
  
-- Alapértelmezett: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek.
-- Hangkarakter: az itt megadott szabályok csak az éppen használt hangkarakterre érvényesek.
-- Ideiglenes: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek, de csak a jelenlegi munkameneten belül. A szabályok csak átmeneti jellegűek, melyek az NVDA újraindításakor érvényüket vesztik.
+- Alapértelmezett kivételszótár: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek.
+- Hangkarakter kivételszótár: az itt megadott szabályok csak az éppen használt hangkarakterre érvényesek.
+- Ideiglenes kivételszótár: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek, de csak a jelenlegi munkameneten belül. A szabályok csak átmeneti jellegűek, melyek az NVDA újraindításakor érvényüket vesztik.
 -
 Minden párbeszédablak tartalmaz egy szabálylistát, mely a szöveg feldolgozása közben hajtódik végre. Itt szintén elérhető a hozzáadás, szerkesztés és az eltávolítás gomb is.
 
@@ -1201,7 +1201,7 @@ A szabályok az NVDA kivételszótáraiban lehetővé teszik, hogy egy szövegr�
 
 Az NVDA kivételszótárai azonban ennél jóval többre képesek. A párbeszédablak tartalmaz egy kis- és nagybetűk megkülönböztetése jelölőnégyzetet, mely bejelölése esetén az NVDA különbséget tesz a kis- és nagybetűk között. Alapértelmezettként az NVDA figyelmen kívül hagyja a kis- és nagybetűket. Egy másik jelölőnégyzettel beállítható, hogy a kifejezés egy "szabályozott kifejezés" legyen-e. Egy szabályozott kifejezés egy speciális karaktereket tartalmazó kifejezés, mellyel egyszerre töb karakterre, számra, vagy csak betűkre is rákereshet. A szabályozott kifejezések nem képezik az útmutató részét, de rengeteg leírás létezik, melyekkel bővebben megismerheti a használatukat.
 
-+++ Írásjel kiejtés +++
++++ Írásjelkiejtés +++
 
 Ezen a párbeszédablakon beállítható, hogy a különböző írásjelek szintenként hogyan hangozzanak el a program használatakor. Az írásjelek listából kiválasztható az önnek megfelelő írásjel. Egy tab billentyű lenyomásával a behelyettesített kifejezésre léphet, ahol átírható az ottlévő kifejezés. A tab billentyű ismételt lenyomásával megadható az írásjel szintje, mely az írásjel a beállított szinttől kezdődő kiejtését határozza meg. Az Igen gomb lenyomásával elmenthetők a változtatások, a mégsem gomb lenyomásával pedig visszatérhet az előző állapothoz.
 
@@ -1990,9 +1990,9 @@ Ebben a dokumentumban a következő fogalmakon az alábbi meghatározásokat ér
 - Elem: Az alkalmazás vagy az operációs rendszer interfészének olyan logikailag elkülönült része, amely meghatározott információt közöl vagy meghatározott vezérlőelemet vagy vezérlőelemeket tartalmaz.
 - Vezérlőelem: Olyan elem, amelynek segítségével tetszőlegesen irányíthatja az alkalmazás működését.
 - Virtuális kijelző: Olyan speciális memóriaterület (puffer), amelyre a képernyőolvasó az összetett dokumentumok (pl. html, pdf) leegyszerűsített, átalakított  képét másolja abból a célból, hogy azt egy látássérült felhasználó könnyebben áttekinthesse.
-- Böngésző mód: A képernyőolvasó olyan módja, amely segítségével a dokumentum a virtuális kijelzőben olvasható.
-- Interaktív mód: A képernyőolvasónak az a módja, amely közvetlenül lehetővé teszi a böngészőben vagy pdf-olvasóban megjelenő vezérlőelemek kezelését. E mód segítségével lehet űrlapokat (formokat) kitölteni, illetőleg egyéb vezérlő műveleteket végezni (pl. távoli szolgáltatások beállításai).
-- Navigációs gyorsbillentyűk: A böngésző módban használható olyan egybillentyűs parancsok, amelyek az összetett dokumentum meghatározott részére helyezik a képernyőolvasó virtuális (böngésző) kurzorát.
+- Böngészőmód: A képernyőolvasó olyan módja, amely segítségével a dokumentum a virtuális kijelzőben olvasható.
+- Fókuszmód: A képernyőolvasónak az a módja, amely közvetlenül lehetővé teszi a böngészőben vagy pdf-olvasóban megjelenő vezérlőelemek kezelését. E mód segítségével lehet űrlapokat (formokat) kitölteni, illetőleg egyéb vezérlő műveleteket végezni (pl. távoli szolgáltatások beállításai).
+- Navigációs gyorsbillentyűk: A böngészőmódban használható olyan egybillentyűs parancsok, amelyek az összetett dokumentum meghatározott részére helyezik a képernyőolvasó virtuális (böngésző) kurzorát.
 - parancsikon: olyan speciális fájl, amellyel anélkül indíthat el egy programot vagy végezhet el egy műveletet, hogy a program indítófájlját meg kellene keresnie vagy a művelet parancsait be kellene gépelnie.
 - A futtatás ablak: A Windowsnak az a része, ahová begépelhet egy parancsot, iletve kitallózhat egy indítandó programot, ha ahhoz nem tartozik ikon.
 - Parancssor: A Windows olyan speciális alrendszere, mely karakteres üzemmódú működést tesz lehetővé, és parancsok, kulcsszavak begépelésével teszi lehetővé a számítógép használatát. Az MS-Dos, az OS/2 és más rendszerek parancsait tartalmazza.
