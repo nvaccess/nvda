@@ -230,3 +230,29 @@ def isCurrentScript(scriptFunc):
 		return False
 	return givenFunc==realFunc
 
+def script(description="", category=None, gesture=None, gestures=None):
+	"""Define metadata for a script.
+	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
+	@param description: A short translatable description of the script to be used in the gesture editor, etc.
+	@type description: string 
+	@param category: The category of the script displayed in the gesture editor.
+	@type category: string
+	@param gesture: A gesture associated with this script
+	@type gesture: string
+	@param gestures: A list of gestures associated with this script
+@type gestures: list(string)
+	"""
+	if gestures is None:
+		gestures = []
+	def script_decorator(decoratedScript):
+		decoratedScript.__doc__ = description
+		if category is not None:
+			decoratedScript.category = category
+		if gesture is not None:
+			decoratedScript.gesture = gesture
+		if gestures:
+			decoratedScript.gestures = gestures
+		return decoratedScript
+	return script_decorator
+
+

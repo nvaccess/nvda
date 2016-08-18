@@ -123,6 +123,29 @@ class AutoPropertyObject(object):
 		for instance in cls.__instances.keys():
 			instance.invalidateCache()
 
+class GestureCollector(AutoPropertyType):
+	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
+
+	def __new__(meta, name, bases, dct):
+		gestures = {}
+		cls = super(GestureCollector, meta).__new__(meta, name, bases, dct)
+		for i in reversed(cls.__mro__):
+			try:
+				gestures.update(getattr(i, "_%s__gestures" % i.__name__))
+			except AttributeError:
+				pass
+		for name, script in dct.iteritems():
+			if not name.startswith('script_'):
+				continue
+			scriptName = name[7:]
+			if hasattr(script, 'gesture'):
+				gestures[script.gesture] = scriptName
+			if hasattr(script, 'gestures'):
+				for gesture in script.gestures:
+					gestures[gesture] = scriptName
+		cls._gestures = gestures
+		return cls
+
 class ScriptableObject(AutoPropertyObject):
 	"""A class that implements NVDA's scripting interface.
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
@@ -138,16 +161,14 @@ class ScriptableObject(AutoPropertyObject):
 	@type scriptCategory: basestring
 	"""
 
+	__metaclass__ = GestureCollector
+
 	def __init__(self):
 		#: Maps input gestures to script functions.
 		#: @type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
-		for cls in reversed(self.__class__.__mro__):
-			try:
-				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
-			except AttributeError:
-				pass
+		self.bindGestures(self._gestures)
 		super(ScriptableObject, self).__init__()
 
 	def bindGesture(self, gestureIdentifier, scriptName):
@@ -217,6 +238,10 @@ class ScriptableObject(AutoPropertyObject):
 				continue
 		else:
 			return None
+
+	def getScripts(self):
+		"""return a list of all scripts on this object"""
+		return self._scripts
 
 	#: A value for sleepMode which indicates that NVDA should fully sleep for this object;
 	#: i.e. braille and speech via NVDA controller client is disabled and the user cannot disable sleep mode.
