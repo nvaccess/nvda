@@ -24,6 +24,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
 import braille
+import ui
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -600,7 +601,9 @@ class UIA(Window):
 		# #5942: In recent Windows 10 Redstone builds (14332 and later), Microsoft rewrote various dialog code including that of User Account Control.
 		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
-		# 6241: Try detecting all possible suggestions containers scattered throughout Windows 10.
+		# 6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
+		if self.UIAElement.cachedAutomationID in ("TextBox", "SearchTextBox"):
+			clsList.append(SearchField)
 		try:
 			if self.parent.UIAElement.cachedAutomationId.lower()=="suggestionslist":
 				clsList.append(SuggestionListItem)
@@ -1245,6 +1248,22 @@ class WpfTextView(UIA):
 
 	def event_stateChange(self):
 		return
+
+class SearchField(UIA):
+	"""An edit field that presents suggestions based on search term.
+	"""
+
+	def event_UIA_controllerFor(self):
+		# Only useful if suggestions appear and disappear.
+		focus = api.getFocusObject()
+		if len(self.controllerFor)>0:
+			# Translators: Announced when suggestions appear when search term is entered in various search fields in Windows 10.
+			ui.message(_("Suggestions"))
+		else:
+			# Translators: Announced when suggestions disappear when search term is entered in various search fields in Windows 10.
+			ui.message(_("Suggestions closed"))
+
+
 
 class SuggestionListItem(UIA):
 	"""Windows 10 uses suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
