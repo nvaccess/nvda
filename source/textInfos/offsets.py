@@ -221,7 +221,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
-		return [offset,offset+1]
+		# Windows Unicode is UTF-16, so a character may be two offsets for code points beyond 16 bits.
+		char = self._getTextRange(offset, offset + 1)
+		if u'\uD800' <= char <= u'\uDBFF':
+			# High (leading) surrogate; next offset is also part of this character.
+			return offset, offset + 2
+		elif offset > 0 and u'\uDC00' <= char <= u'\uDFFF':
+			# Low (trailing) surrogate; previous offset is also part of this character.
+			return offset - 1, offset + 1
+		return offset, offset + 1
 
 	def _getWordOffsets(self,offset):
 		lineStart,lineEnd=self._getLineOffsets(offset)
