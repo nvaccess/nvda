@@ -10,6 +10,7 @@ from logHandler import log
 import eventHandler
 import config
 import controlTypes
+import cursorManager
 import aria
 import textInfos
 import UIAHandler
@@ -349,7 +350,7 @@ class EdgeHTMLTreeInterceptorTextInfo(UIABrowseModeDocumentTextInfo):
 				return obj
 		return self.obj.rootNVDAObject
 
-class EdgeHTMLTreeInterceptor(UIABrowseModeDocument):
+class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
 
 	TextInfo=EdgeHTMLTreeInterceptorTextInfo
 

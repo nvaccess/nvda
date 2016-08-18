@@ -251,7 +251,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 class UIABrowseModeDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 	pass
 
-class UIABrowseModeDocument(cursorManager.ReviewCursorManager,browseMode.BrowseModeDocumentTreeInterceptor):
+class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=UIABrowseModeDocumentTextInfo
 
