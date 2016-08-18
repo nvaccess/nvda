@@ -5,10 +5,19 @@
 
 import controlTypes
 import textInfos
+import eventHandler
+import controlTypes
+import speech
+import api
 from UIABrowseMode import UIABrowseModeDocument
 from . import UIA, UIATextInfo
 
 class WordDocumentTextInfo(UIATextInfo):
+
+	# UIA text range comparison for bookmarks works okay in this MS Word implementation
+	# Thus __ne__ is useful
+	def __ne__(self,other):
+		return not self==other
 
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
@@ -98,6 +107,17 @@ class WordDocumentBrowseModeDocument(UIABrowseModeDocument):\
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
 		return super(WordDocumentBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
+
+	def script_tab(self,gesture):
+		oldBookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+		gesture.send()
+		noTimeout,newInfo=self.rootNVDAObject._hasCaretMoved(oldBookmark,timeout=1)
+		if not newInfo:
+			return
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		if not info.isCollapsed:
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+	script_shiftTab=script_tab
 
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
