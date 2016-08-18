@@ -17,8 +17,8 @@ Hoogtepunten in deze versie zijn de mogelijkheid om individuele add-ons uit te s
 - In de Add-ons manager kunt u nu individuele add-ons uitschakelen. (#3090)
 - Bijkomende toetskoppelingen zijn toegevoegd voor ALVA BC640/680 brailleleesregels. (#5206)
 - Er is nu een commando om de brailleleesregel te verplaatsen naar de huidige focus. Momenteel is enkel bij de ALVA BC640/680 serie een toets aan dit commando gekoppeld. Voor andere leeesregels kunt u het manueel koppelen in het dialoogvenster Invoerhandelingen koppelen. (#5250)
-- In Microsoft Excel, you can now interact with form fields. You move to form fields using the Elements List or single letter navigation in browse mode. (#4953)
-- You can now assign an input gesture to toggle simple review mode using the Input Gestures dialog. (#6173)
+- In Microsoft Excel kunt u nu interageren met formuliervelden. Ga naar formuliervelden via de elementenlijst of met lettertoetsnavigatie in bladermodus. (#4953)
+- In het dialoogvenster invoehrandelingen koppelen, kunt U nu een invoerhandeling toewijzen om vereenvoudigde leesmodus in en uit te schakelen. (#6173)
 
 
 == Veranderingen ==
@@ -40,7 +40,7 @@ Hoogtepunten in deze versie zijn de mogelijkheid om individuele add-ons uit te s
 - Als Commandotoetsen uitspreken is ingeschakeld, worden lock-toetsen zoals caps lock niet langer tweemaal aangekondigd. (#5490)
 - Dialoogvensters van Windows Gebruikersaccountbeheer worden opnieuw correct gelezen in de Windows 10 verjaardagsupdate. (#5942)
 - In de Web Conference Plugin (zoals gebruikt in de website out-of-sight.net) zal NVDA niet langer piepen en wijzigingen van de voortgangsbalk uitspreken die te maken hebben met invoer via de microfoon. (#5888)
-- Als u de commando's Volgende/Vorige zoeken uitvoert in Bladermodus zal er nu een correcte  hoofdlettergevoelige zoekopdracht gebeuren als de oorspronkelijke  zoekopdracht hoofdletteergevoelig was. (#5522)
+- Als u de commando's Volgende/Vorige zoeken uitvoert in Bladermodus zal er nu een correcte hoofdlettergevoelige zoekopdracht gebeuren als de oorspronkelijke zoekopdracht hoofdletteergevoelig was. (#5522)
 - Bij het bewerken van woordenboekregels krijgt u nu feedback als een reguliere expressie fout is. NVDA loopt niet langer vast als een woordenboekbestand een verkeerde reguliere expressie bevat. (#4834)
 - Als NVDA niet kan communiceren met een brailleleesregel (b.v. omdat hij werd ontkoppeld), zal dit automatisch het gebruik van de leesregel uitschakelen. (#1555)
 - Lichtverbeterde performantie van filters in de Bladermodus Elementenlijst in sommige gevallen. (#6126)
@@ -48,9 +48,9 @@ Hoogtepunten in deze versie zijn de mogelijkheid om individuele add-ons uit te s
 - Verbeterde ondersteuning voor het Windows 10 logon scherm, inclusief aankondigingen van waarschuwingen en het activeren van het wachtwoordveld via aanraken. (#6010)
 - NVDA detecteert nu correct de secundaire routingknoppen van de ALVA BC640/680 brailleleesregels. (#5206)
 - NVDA kan opnieuw Windows Pop-upmeldingen weergeven in recente versies van Windows 10. (#6096)
-- NVDA no longer occasionally stops recognising key presses on Baum compatible and HumanWare Brailliant B brailleleesregels. (#6035)
-- If reporting of line numbers is enabled in NVDA's Document Formatting preferences, line numbers are nu getoond op een brailleleesregel. (#5941)
-- When speech mode is off, reporting objects (such as pressing NVDA+tab to report the focus) now appears in the Speech Viewer as expected. (#6049)
+- Het kon gebeuren dat NVDA geen toetsaanslagen meer herkende op Baum compatibele en HumanWare Brailliant B brailleleesregels. Dit is niet langer het geval. (#6035)
+- Als het melden van regelnummers is ingeschakeld in NVDA's voorkeuren voor Documentopmaak, dan worden regelnummers nu getoond op een brailleleesregel. (#5941)
+- Als spraakmodus uit is, verschijnen gemelde objecten (zoals het drukken van NVDA+tab om de focus te melden) nu in het spraakweergavevenster zoals verwacht. (#6049)
 
 
 == Veranderingen voor Ontwikkelaars ==
@@ -60,7 +60,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 = 2016.2.1 =
 Deze versie verhelpt het vastlopen van Microsoft Word:
 
-- NVDA veroorzaakt niet langer het vastlopen van Microsoft Word onmiddellijk  nadat het wordt gestart in Windows XP. (#6033)
+- NVDA veroorzaakt niet langer het vastlopen van Microsoft Word onmiddellijk nadat het wordt gestart in Windows XP. (#6033)
 - Melden van grammaticafouten is verwijderd omdat het Microsoft Word deed vastlopen. (#5954, #5877)
 
 
@@ -71,7 +71,7 @@ Hoogtepunten in deze versie zijn de mogelijkheid om spelfouten aan te geven tijd
 - In bladermodus in Internet Explorer en andere MSHTML controls, bij gebruik van lettertoetsnavigatie a en shift+a (om naar aantekeningen te springen), gaat u nu ook naar ingevoegde en verwijderde tekst. (#5691)
 - In Microsoft Excel meldt NVDA nu het niveau van een groep van cellen, en ook of het is samen- of uitgevouwen. (#5690)
 - Het commando Tekstopmaak melden (NVDA+f) tweemaal drukken, toont de informatie in bladermodus zodat u het kan nakijken. (#4908)
-- In Microsoft Excel 2010 en hoger worden cel shading en gradient fill nu gemeld. Automatisch melden wordt gecontrolleerd door de optie Kleuren melden in NVDA-instellingen voor Documentopmaak. (#3683)
+- In Microsoft Excel 2010 en hoger worden cel shading en gradient fill nu gemeld. Automatisch melden wordt gecontroleerd door de optie Kleuren melden in NVDA-instellingen voor Documentopmaak. (#3683)
 - Nieuwe brailletabel: Koine Greek. (#5393)
 - In de Log Viewer kunt u de log nu opslaan met de sneltoets control+s. (#4532)
 - Als het melden van spelfouten is ingeschakeld en ondersteund in de control die focus heeft, zal NVDA een geluid afspelen om u op een spelfout te wijzen tijdens het typen. Dit kunt u uitschakelen met de nieuwe optie "Geluid bij spelfouten tijdens typen" in het dialoogvenster Toetsenbordinstellingen van NVDA. (#2024)
@@ -82,7 +82,7 @@ Hoogtepunten in deze versie zijn de mogelijkheid om spelfouten aan te geven tijd
 - In bladermodus en invulbare tekstvelden behandelt NVDA numpadEnter nu hetzelfde als de gewone entertoets. (#5385)
 - NVDA is overgeschakeld naar de eSpeak NG spraaksynthesizer. (#5651)
 - In Microsoft Excel negeert NVDA niet langer een kolomhoofding voor een cel als er een lege rij is tussen de cel en de hoofding. (#5396)
-- In Microsoft Excel worden coördinaten nu aangekondigd voorafgaand aan de hoofdingen om verwarring te vorkomen tussen hoofdingen en inhoud. (#5396)
+- In Microsoft Excel worden coördinaten nu aangekondigd voorafgaand aan de hoofdingen om verwarring te voorkomen tussen hoofdingen en inhoud. (#5396)
 
 
 == Opgeloste Problemen ==
@@ -92,15 +92,15 @@ Hoogtepunten in deze versie zijn de mogelijkheid om spelfouten aan te geven tijd
 - In Scintilla-gebaseerde editors zoals Notepad++ wordt braille nu correct bijgewerkt als u de cursor beweegt via een brailleleesregel. (#5678)
 - NVDA loopt niet langer soms vast bij het inschakelen van braille-uitvoer. (#4457)
 - In Microsoft Word wordt alinea-inspringing nu altijd gemeld in de meeteenheid die de gebruiker kiest (b.v. centimeters of inches). (#5804)
-- Bij gebruik van een brailleleesregel worden veel NVDA-berichten die voorheen enkel werden uitgesproken  nu ook in braille getoond. (#5557)
-- In toegankelijke Java-toepassingen wordt nu het niveau van tree view items gemeld. (#5766)
+- Bij gebruik van een brailleleesregel worden veel NVDA-berichten die voorheen enkel werden uitgesproken nu ook in braille getoond. (#5557)
+- In toegankelijke Java-toepassingen wordt nu het niveau van items in een boomstructuur gemeld. (#5766)
 - Vastlopers opgelost in Adobe Flash in Mozilla Firefox in sommige gevallen. (#5367)
 - In Google Chrome en Chrome-gebaseerde browsers kunnen documenten binnen dialoogvensters of toepassingen nu gelezen worden in bladermodus. (#5818)
 - In Google Chrome en Chrome-gebaseerde browsers, kunt u NVDA nu verplichten om naar bladermodus over te schakelen in web-dialoogvensters of toepassingen. (#5818)
-- Het verplaatsen van de focus naar bepaalde controlsIn Internet Explorer en andere MSHTML controls  (specifiek waar aria-activedescendant is gebruikt) schakelt niet langer onterecht naar bladermodus. Dit gebeurde bijvoorbeeld als u naar suggesties ging in adresvelden bij het schrijven van een bericht in Gmail. (#5676)
+- Het verplaatsen van de focus naar bepaalde controlsIn Internet Explorer en andere MSHTML controls (specifiek waar aria-activedescendant is gebruikt) schakelt niet langer onterecht naar bladermodus. Dit gebeurde bijvoorbeeld als u naar suggesties ging in adresvelden bij het schrijven van een bericht in Gmail. (#5676)
 - In Microsoft Word loopt NVDA niet langer vast in grote tabellen als melden van tabelrij/kolomhoofdingen is ingeschakeld. (#5878)
-- In Microsoft word meldt NVDA niet langer onterecht tekst met een outline level (maar niet een igebouwden heading style) als een heading. (#5186)
-- In bladermodus in Microsoft Word werken de Move past end/to start of container commands (comma en shift+comma) nu voor tabellen. (#5883)
+- In Microsoft word meldt NVDA niet langer onterecht tekst als een kop als die een outline level heeft maar geen ingebouwde kopstijl. (#5186)
+- In bladermodus in Microsoft Word werken de commando's Achter/Naar begin van containerobject springen (komma en shift+komma) nu voor tabellen. (#5883)
 
 
 == Veranderingen voor Ontwikkelaars ==
@@ -108,7 +108,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 
 = 2016.1 =
-Hoogtepunten in deze versie zijn de mogelijkheid om het volume van andere geluiden te verlagen; verbeteringen aan braille-uitvoer en ondersteuning voor brailleleesregels; verschillende belangirjke correcties aan Microsoft Office ondersteuning; en correcties aan bladermodus in iTunes.
+Hoogtepunten in deze versie zijn de mogelijkheid om het volume van andere geluiden te verlagen; verbeteringen aan braille-uitvoer en ondersteuning voor brailleleesregels; verschillende belangrijke correcties aan Microsoft Office ondersteuning; en correcties aan bladermodus in iTunes.
 
 == Nieuwe Functies ==
 - Nieuwe brailletabellen: Pools 8 punts computerbraille, Mongools. (#5537, #5574)
@@ -128,25 +128,25 @@ Hoogtepunten in deze versie zijn de mogelijkheid om het volume van andere geluid
 
 == Opgeloste problemen ==
 - In iTunes 12 update bladermodus nu correct als een nieuwe pagina laadt in de iTunes Store. (#5191)
-- In Internet Explorer en andere MSHTML controls, moving to specific heading levels met lettertoetsnavigatie nu behaves zoals verwacht als het kopniveau is overschreven voor toegankelijkheidsredeneen (specifiek als aria-level het niveau overschrijft van een h tag). (#5434)
+- In Internet Explorer en andere MSHTML controls gedraagt naar specifieke kopniveau's gaan met lettertoetsnavigatie zich nu zoals verwacht als het kopniveau is overschreven voor toegankelijkheidsredenen (specifiek als aria-level het niveau overschrijft van een h-tag). (#5434)
 - In Spotify landt de focus minder vaak op "unbekende" objecten. (#5439)
 - Focus wordt nu correct teruggezet bij het terugkeren naar Spotify vanuit een andere toepassing. (#5439)
 - Bij het schakelen tussen bladermodus en focusmodus, wordt de modus zowel in braille als via spraak gemeld. (#5239)
 - De Startknop op de Taakbalk wordt niet langer gemeld als een lijst en/of als geselecteerd in sommige versies van Windows. (#5178)
 - Berichten als "ingevoegd" worden niet langer gemeld bij het opstellen van berichten in Microsoft Outlook. (#5486)
-- Bij gebruik van een brailleleesregel en tekst is geselecteerd op de huidige regel (b.v. bij het zoeken in een tekstverwerker naar tekst die op dezelfde regel voorkomt), de brailleleesregel will be scrolled if appropriate. (#5410)
+- Bij gebruik van een brailleleesregel en tekst is geselecteerd op de huidige regel (b.v. bij het zoeken in een tekstverwerker naar tekst die op dezelfde regel voorkomt), zal de brailleleesregel scrollen al sdat nodig is. (#5410)
 - NVDA sluit niet langer stil af bij het sluiten van een Windows commandoconsole met alt+f4 in Windows 10. (#5343)
-- Als u het soort element wijzigt in de Elementenlijst in bladermodus, wordt het Filter by veld nu leeggemaakt. (#5511)
-- In tekstvelden in Mozilla-toepassingen, moving de muis again reads de appropriate regel, woord, etc. zoals verwacht in plaats van de hele inhoud. (#5535)
-- Bij het bewegen van de muis in tekstvelden in Mozilla-toepassingen, reading niet langer stops bij elementen als links binnen het woord of de regel being read. (#2160, #5535)
+- Als u het soort element wijzigt in de Elementenlijst in bladermodus, wordt het filterveld nu leeggemaakt. (#5511)
+- Als u de muis beweegt in tekstvelden in Mozilla-toepassingen, leest dit opnieuw de betreffende regel, woord, etc. zoals verwacht in plaats van de hele inhoud. (#5535)
+- Bij het bewegen van de muis in tekstvelden in Mozilla-toepassingen stopt het lezen niet langer bij elementen als links binnen het woord of de regel worden gelezen. (#2160, #5535)
 - In Internet Explorer kan de shoprite.com website nu worden gelezen in bladermodus. Vroeger werd hij gemeld als leeg. (Specifiek worden misvormde lang-attributen nu keurig opgevangen.) (#5569)
-- In Microsoft Word worden tracked changes zoals "ingevoegd" niet langer gemeld als track changes markup niet wordt weergegeven. (#5566)
+- In Microsoft Word worden bijgehouden wijzigingen zoals "ingevoegd" niet langer gemeld als bijgehouden wijzigingen niet worden weergegeven. (#5566)
 - Als een aankruisknop focus krijgt, meldt NVDA nu wanneer hij verandert van ingedrukt naar niet ingedrukt. (#5441)
 - Melden van veranderingen van muisvormen werkt opnieuw zoals verwacht. (#5595)
-- When speaking regelinspringing, non-breaking spaces are nu treated as normal spaces. Voorheen kon dit  aankondigingen veroorzaken als "spatie spatie spatie" in plaats van "3 spaties". (#5610)
-- Bij het sluiten van een moderne Microsoft ininvoermethode kandidatenlijst wordt de focus correct teruggezet naar ofwel de invoersamenstelling of het onderliggende document. (#4145)
+- Als regelinspringing wordt uitgesproken, worden non-breaking spaces nu behandeld als normale spaties. Voorheen kon dit aankondigingen veroorzaken als "spatie spatie spatie" in plaats van "3 spaties". (#5610)
+- Bij het sluiten van een moderne Microsoft invoermethode kandidatenlijst wordt de focus correct teruggezet naar ofwel de invoersamenstelling of het onderliggende document. (#4145)
 - In Microsoft Office 2013 en later, als het lint is ingesteld om enkel tabs te tonen, worden items in het lint opnieuw gemeld zoals verwacht als een tab wordt geactiveerd. (#5504)
-- Fixes en verbeteringen to aanraakscherm gesture detection en binding. (#5652)
+- Oplossingen en verbeteringen to aanraakscherm gesture detection en binding. (#5652)
 - Aanraakscherm hovers worden niet langer gemeld in invoerhulp. (#5652)
 - NVDA weigert niet langer opmerkingen op te lijsten in de Elementenlijst voor Microsoft Excel als de opmerking op samengevoegde cellen is geplaatst. (#5704)
 - In een zeer uitzonderlijk geval weigert NVDA niet langer inhoud te lezen van een werkblad in Microsoft Excel met melden van rij- en kolomhoofdingen ingeschakeld. (#5705)
@@ -165,7 +165,7 @@ Hoogtepunten in deze versie zijn performantieverbeteringen in Windows 10; opname
 
 == Nieuwe Functies ==
 - NVDA verschijnt nu in het Toegankelijkheidscentrum in Windows 8 en hoger. (#308)
-- Bij het bewegen tussen cellen in Excel, worden veranderingen in de opmaak nu automatisch gemeld als die opties zijn ingeschakeld in het  dialoogvenster documentopmaak instellingen van NVDA. (#4878)
+- Bij het bewegen tussen cellen in Excel, worden veranderingen in de opmaak nu automatisch gemeld als die opties zijn ingeschakeld in het dialoogvenster documentopmaak instellingen van NVDA. (#4878)
 - Aan het dialoogvenster documentopmaak instellingen is de optie Nadruk Melden toegevoegd. Ze is standaard ingeschakeld en laat NVDA automatisch melden dat tekst benadrukt is in documenten. Momenteel is dit enkel ondersteund voor em en strong tags in Bladermodus voor Internet Explorer en andere MSHTML controls. (#4920)
 - De aanwezigheid van ingevoegde en verwijderde tekst wordt nu gemeld in Bladermodus voor Internet Explorer en andere MSHTML controls als de optie Aangebrachte wijzigingen in de tekst melden, is ingeschakeld. (#4920)
 - Bij het bekijken van gemaakte wijzigingen in de Elementenlijst van NVDA voor Microsoft Word, wordt meer informatie getoond zoals welke opmaakeigenschappen gewijzigd zijn. (#4920)
@@ -200,7 +200,7 @@ Hoogtepunten in deze versie zijn performantieverbeteringen in Windows 10; opname
   + Open opnieuw het dialoogvenster met Algemene instellingen.
   + Schakel het selectievakje in: NVDA &automatisch starten nadat ik me bij windows heb aangemeld".
   + Druk op de OK knop.
-- Performantieverbeteringen voor UIv Automation inclusief File Explorer en Task Viewer. (#5293)
+- Performantieverbeteringen voor UI Automation inclusief File Explorer en Task Viewer. (#5293)
 - NVDA schakelt nu correct naar focusmodus bij het tabben naar alleen-lezen ARIA grid controls in Bladermodus voor Mozilla Firefox en andere Gecko-gebaseerde controls. (#5118)
 - NVDA meldt nu correct "geen vorig" in plaats van "geen volgend" als er geen objecten meer zijn bij het vegen naar links op een aanraakscherm.
 - Problemen opgelost bij het typen van meerdere woorden in het filterveld in het dialoogvenster Invoerhandelingen koppelen. (#5426)
@@ -349,7 +349,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 == Nieuwe Functies ==
 - Nieuwe talen: Colombiaans Spaans, Punjabi.
-- Het is nu mogelijk om NVDA te herstarten of NVDA te herstarten Nmet add-ons uitgeschakeld vanuit het afsluitvenster van NVDA. (#4057)
+- Het is nu mogelijk om NVDA te herstarten of NVDA te herstarten met add-ons uitgeschakeld vanuit het afsluitvenster van NVDA. (#4057)
  - NVDA kan ook worden gestart met add-ons uitgeschakeld via de --disable-addons commandoregeloptie.
 - In uitspraakwoordenboeken is het nu mogelijk om in te stellen dat een patroon alleen gebruikt wordt wanneer het een heel woord betreft, d.w.z. het vervangen vindt niet plaats wanneer het woord een deel van een langer woord is. (#1704)
 
@@ -444,7 +444,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 - Microsoft Word: tabben naar een lege cel in een tabel kondigt niet langer foutief aan dat de tabel wordt verlaten. (#4151)
 - Microsoft Word: het eerste teken na het einde van een tabel (inclusief een nieuwe lege regel) wordt niet langer foutief als onderdeel van de tabel beschouwd. (#4152)
 - In de spellingcontrole van Microsoft Word 2010 wordt het eigenlijke foutief gespelde woord gemeld in plaats van onterecht enkel het eerste vette woord te melden. (#3431)
-- In bladermodus in Internet Explorer en andere MSHTML controls, tabbing or using lettertoetsnavigatie to move to formuliervelden meldt opnieuw het label in veel gevallen where it didn't (specificek waar HTML label elements zijn gebruikt). (#4170)
+- In bladermodus in Internet Explorer en andere MSHTML controls, tabbing of gebruik van lettertoetsnavigatie om naar formuliervelden te gaan, meldt opnieuw het label in veel gevallen waar dat vroeger niet gebeurde (specifiek waar HTML label elements zijn gebruikt). (#4170)
 - Microsoft Word: Reporting de aanwezigheid en placement of comments is more accurate. (#3528)
 - Navigatie in bepaalde dialoogvensters in MS Office producten zoals Word, Excel en Outlook is verbeterd door niet langer particular control container toolbars te melden die niet nuttig zijn voor de gebruiker. (#4198) 
 - Task panes zoals clipboard manager or File recovery niet langer accidentilly seem to gain focus bij het openen van een toepassing als Microsoft Word or Excel, waardoor de gebruiker soms heen en weer moest schakelen naar de toepassing om het document of werkblad te gebruiken. (#4199)

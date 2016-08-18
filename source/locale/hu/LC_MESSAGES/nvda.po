@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-04 11:00+0100\n"
+"PO-Revision-Date: 2016-08-11 12:54+0100\n"
 "Last-Translator: OAron <info@o-soft.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -772,19 +772,19 @@ msgid "space"
 msgstr "szóköz"
 
 msgid "Focus mode"
-msgstr "Interaktív mód"
+msgstr "Fókuszmód"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
-msgstr "Böngésző mód"
+msgstr "Böngészőmód"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "egykarakteres navigáció ki"
+msgstr "Egykarakteres navigáció kikapcsolva"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "egykarakteres navigáció be"
+msgstr "Egykarakteres navigáció bekapcsolva"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -792,9 +792,9 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Be vagy kikapcsolja az egykarakteres navigációs gyorsbillentyűk kezelését. "
-"Bekapcsolt állapotban mozoghat a weblap egyes elemein, kikapcsolás esetén a "
-"lenyomott navigációs billentyűket az NVDA átadja az alkalmazás számára."
+"Egykarakteres navigáció be és kikapcsolása. Bekapcsolt állapotban "
+"böngészőmódban mozoghat a webes dokumentum egyes elemein, kikapcsolva a "
+"navigációs billentyűket is az aktív alkalmazás kezeli."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -1787,7 +1787,7 @@ msgstr "alkalmazás"
 
 #. Translators: Identifies a box element.
 msgid "box"
-msgstr "négyzet"
+msgstr "doboz"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
@@ -1811,7 +1811,7 @@ msgstr "bejelölhető menüelem"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
-msgstr "dátum szerkesztőmező"
+msgstr "adat szerkesztőmező"
 
 #. Translators: Identifies an icon.
 msgid "icon"
@@ -1827,7 +1827,7 @@ msgstr "beágyazott objektum"
 
 #. Translators: Identifies an end note.
 msgid "end note"
-msgstr "végjel"
+msgstr "végjegyzet"
 
 #. Translators: Identifies a footer (usually text).
 msgid "footer"
@@ -1909,7 +1909,7 @@ msgstr "bekezdés"
 
 #. Translators: Identifies a shape.
 msgid "shape"
-msgstr "forma"
+msgstr "alakzat"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
@@ -1919,7 +1919,7 @@ msgstr "osztott terület"
 #. which represents the portion of the entire data that the user can see.
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 msgid "view port"
-msgstr "nézet"
+msgstr "nézetablak"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
@@ -2415,15 +2415,15 @@ msgstr "Eszközök"
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
 msgid "Touch screen"
-msgstr "Érintő képernyő"
+msgstr "Érintőképernyő"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System focus"
-msgstr "Rendszer fókusz"
+msgstr "Rendszerfókusz"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System status"
-msgstr "Rendszer státusz"
+msgstr "Rendszerstátusz"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Input"
@@ -2431,18 +2431,18 @@ msgstr "Bevitel"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
-msgstr "Dokumentum formázás"
+msgstr "Dokumentumformázás"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
-msgstr "A hangerőigazítás nem támogatott."
+msgstr "A hangerő-igazítás nem támogatott."
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr ""
-"Váltogat a hangerőigazítás módjai közt, amivel meghatározható, hogy mikor "
+"Váltogat a hangerő-igazítás módjai közt, amivel meghatározható, hogy mikor "
 "halkítsa le az NVDA a többi hangot."
 
 #. Translators: This will be presented when the input help is toggled.
@@ -2458,7 +2458,7 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"Ki- vagy bekapcsolja a bevitelsúgót. Bekapcsolt állapotban megtudhatja, hogy "
+"Bevitelsúgó be és kikapcsolása. Bekapcsolt állapotban megtudhatja, hogy "
 "milyen szkript van hozzárendelve egy adott beviteli eszköz (pl. "
 "billentyűzet) gombjaihoz."
 
@@ -2472,7 +2472,7 @@ msgstr "Alvó mód bekapcsolva"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Be- és kikapcsolja az alvó módot a jelenlegi alkalmazásban"
+msgstr "Alvó mód be és kikapcsolása az aktív alkalmazásban"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -2506,7 +2506,7 @@ msgstr "bal egérgomb lenyomva"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
-msgstr "A bal egérgomb lenyomva tartása, vagy felengedése"
+msgstr "A bal egérgomb lenyomva tartása vagy felengedése"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
@@ -2519,7 +2519,7 @@ msgstr "jobb egérgomb lenyomva"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
-msgstr "A jobb egérgomb lenyomva tartása, vagy felengedése"
+msgstr "A jobb egérgomb lenyomva tartása vagy felengedése"
 
 #, python-format
 msgid "Selected %s"
@@ -2563,27 +2563,27 @@ msgstr "Az előző elérhető szintetizátorbeállításra lép"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "beírt karakterek bemondása gépeléskor kikapcsolva"
+msgstr "beírt karakterek bemondása íráskor kikapcsolva"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "beírt karakterek bemondása gépeléskor bekapcsolva"
+msgstr "beírt karakterek bemondása íráskor bekapcsolva"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "Ki- vagy bekapcsolja a beírt karakterek bemondását"
+msgstr "Beírt karakterek bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "beírt szavak bemondása gépeléskor kikapcsolva"
+msgstr "beírt szavak bemondása íráskor kikapcsolva"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "beírt szavak bemondása gépeléskor bekapcsolva"
+msgstr "beírt szavak bemondása íráskor bekapcsolva"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "Ki- vagy bekapcsolja a beírt szavak bemondását"
+msgstr "Beírt szavak bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -2597,7 +2597,7 @@ msgstr "parancsbillentyűk bemondása bekapcsolva"
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr "Be- és kikapcsolja a beírt, speciális parancsbillentyűk bemondását"
+msgstr "Parancsbillentyűk bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -2609,7 +2609,7 @@ msgstr "A betűtípus nevének bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
-msgstr "Ki- vagy bekapcsolja A betűtípus nevének bemondását"
+msgstr "Betűtípus nevének bemondása be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -2621,7 +2621,7 @@ msgstr "Betűméret bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
-msgstr "Ki- vagy bekapcsolja a betűméret bemondását"
+msgstr "Betűméret bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
@@ -2633,7 +2633,7 @@ msgstr "Betűtípus paraméterek bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "Ki- vagy bekapcsolja a betűtípus paraméterek bemondását"
+msgstr "Betűtípus paraméterek bemondásának be és kikapcsolása"
 
 # itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
 # címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
@@ -2649,7 +2649,7 @@ msgstr "Szerkesztői változások jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
-msgstr "Ki- vagy bekapcsolja a szerkesztői változások jelzését"
+msgstr "Szerkesztői változások jelzésének  be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -2661,7 +2661,7 @@ msgstr "Kiemelés jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Ki- vagy bekapcsolja a kiemelés jelzését"
+msgstr "Kiemelés jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -2673,7 +2673,7 @@ msgstr "Színek bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
-msgstr "Ki- vagy bekapcsolja a Színek bemondását"
+msgstr "Színek bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
@@ -2685,7 +2685,7 @@ msgstr "Igazítás bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
-msgstr "Ki- vagy bekapcsolja az Igazítás bemondását "
+msgstr "Igazítás bemondásának  be és kikapcsolása "
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -2697,7 +2697,7 @@ msgstr "Stílus bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
-msgstr "Ki- vagy bekapcsolja a stílus bemondását"
+msgstr "Stílus bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -2709,7 +2709,7 @@ msgstr "Helyesírási hibák jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Ki- vagy bekapcsolja a Helyesírási hibák jelzését"
+msgstr "Helyesírási hibák jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -2721,7 +2721,7 @@ msgstr "Oldalszámok bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
-msgstr "Ki- vagy bekapcsolja az oldalszámok bemondását"
+msgstr "Oldalszámok bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
@@ -2733,19 +2733,19 @@ msgstr "Sorszámok bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
-msgstr "Ki- vagy bekapcsolja a Sorszámok bemondását"
+msgstr "Sorszámok bemondásának  be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "Behúzás felolvasása kikapcsolva"
+msgstr "Behúzás bemondása kikapcsolva"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "Behúzás felolvasása bekapcsolva"
+msgstr "Behúzás bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
-msgstr "Ki- vagy bekapcsolja a Behúzás felolvasását"
+msgstr "Behúzás bemondásának be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -2757,7 +2757,7 @@ msgstr "Bekezdés igazítás bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Ki- vagy bekapcsolja a Bekezdés igazítás bemondását"
+msgstr "Bekezdés igazítás bemondásának  be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -2769,7 +2769,7 @@ msgstr "Sorköz jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report line spacing command.
 msgid "Toggles on and off the reporting of line spacing"
-msgstr "Ki- vagy bekapcsolja a sorköz jelzését"
+msgstr "Sorköz jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -2781,31 +2781,31 @@ msgstr "Táblázatok jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
-msgstr "Ki- vagy bekapcsolja a táblázatok jelzését"
+msgstr "Táblázatok jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "A táblázat sor/oszlop fejléceinek bemondása kikapcsolva"
+msgstr "A táblázat fejléceinek bemondása kikapcsolva"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "A táblázat sor/oszlop fejléceinek bemondása bekapcsolva"
+msgstr "A táblázat fejléceinek bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "Ki- vagy bekapcsolja A táblázat sor/oszlop fejléceinek bemondását"
+msgstr "Táblázat fejléceinek bemondása be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "A táblázat sor/oszlop koordinátáinak bemondása kikapcsolva"
+msgstr "A táblázatcellák koordinátáinak bemondása kikapcsolva"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "A táblázat sor/oszlop koordinátáinak bemondása bekapcsolva"
+msgstr "A táblázatcellák koordinátáinak bemondása bekapcsolva"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "Ki- vagy bekapcsolja A táblázat sor/oszlop koordinátáinak bemondását"
+msgstr "Táblázatcellák koordinátáinak bemondása be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
@@ -2817,7 +2817,7 @@ msgstr "Hivatkozások jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr "Ki- vagy bekapcsolja a Hivatkozások jelzését"
+msgstr "Hivatkozások jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
@@ -2829,7 +2829,7 @@ msgstr "Megjegyzések jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
-msgstr "Ki- vagy bekapcsolja a megjegyzések bemondását"
+msgstr "Megjegyzések jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
@@ -2841,7 +2841,7 @@ msgstr "Listák jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
-msgstr "Ki- vagy bekapcsolja a Listák jelzését"
+msgstr "Listák jelzésének be és kikapcsolása"
 
 # itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
 # címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
@@ -2857,7 +2857,7 @@ msgstr "Címsorok jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
-msgstr "Ki- vagy bekapcsolja a Címsorok jelzését"
+msgstr "Címsorok jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
@@ -2869,7 +2869,7 @@ msgstr "Idézetblokkok jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
-msgstr "Ki- vagy bekapcsolja az Idézetblokkok jelzését"
+msgstr "Idézetblokkok jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
@@ -2881,7 +2881,7 @@ msgstr "Jelzőpontok jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr "Ki- vagy bekapcsolja a Jelzőpontok jelzését"
+msgstr "Jelzőpontok jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -2893,7 +2893,7 @@ msgstr "Keretek jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
-msgstr "Ki- vagy bekapcsolja a Keretek jelzését"
+msgstr "Keretek jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
@@ -2905,7 +2905,7 @@ msgstr "Jelzés ha kattintható bekapcsolva"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
-msgstr "Ki- vagy bekapcsolja a kattintható állapot jelzését"
+msgstr "Kattintható állapot jelzésének be és kikapcsolása"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -2964,19 +2964,16 @@ msgstr ""
 "áttekintő kurzort pedig a navigátor kurzorhoz helyezi"
 
 #. Translators: The message announced when toggling simple review mode.
-#, fuzzy
 msgid "Simple review mode off"
-msgstr "Egyszerű &áttekintő mód"
+msgstr "Egyszerű áttekintőmód ki"
 
 #. Translators: The message announced when toggling simple review mode.
-#, fuzzy
 msgid "Simple review mode on"
-msgstr "Egyszerű &áttekintő mód"
+msgstr "Egyszerű áttekintőmód be"
 
 #. Translators: Input help mode message for toggle simple review mode command.
-#, fuzzy
 msgid "Toggles simple review mode on and off"
-msgstr "A Braille kurzor be- és kikapcsolása."
+msgstr "Egyszerű áttekintőmód be- és kikapcsolása."
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3007,7 +3004,7 @@ msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"Az áttekintő kurzornál lévő szövegről, vagy objektumról közöl pozíció "
+"Az áttekintő kurzornál lévő szövegről vagy objektumról közöl pozíció "
 "információkat. Kétszeri gyors megnyomásra további információ hangzik el."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
@@ -3251,11 +3248,10 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"Váltás az interaktív és a böngésző mód között. Az interaktív módban a "
-"leütött billentyűket az aktív alkalmazás fogadja, lehetővé téve egy "
-"vezérlőelem közvetlen használatát. Böngésző módban a leütött billentyűket az "
-"NVDA kezeli, lehetővé téve az oldalon való navigálást, és a gyorsbillentyűk "
-"használatát."
+"Váltás a fókuszmód és a böngészőmód között. Fókuszmódban a leütött "
+"billentyűket az aktív alkalmazás fogadja, lehetővé téve egy vezérlőelem "
+"közvetlen használatát. Böngészőmódban a leütött billentyűket az NVDA kezeli, "
+"lehetővé téve az oldalon való navigálást, és a gyorsbillentyűk használatát."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3374,7 +3370,7 @@ msgid ""
 "progress bar updates"
 msgstr ""
 "Váltogat a folyamatjelzők változásának jelzési módjai közt: hangjelzés, "
-"bemondás, hangjelzés és bemondás együtt, vagy semmi."
+"bemondás, hangjelzés és bemondás együtt vagy semmi."
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -3439,7 +3435,7 @@ msgstr "{hours:d} óra és {minutes:d} perc van hátra"
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"Akkumulátor használatakor bemondja az akkumulátor töltöttségi szintjét, és a "
+"Akkumulátor használatakor bemondja az akkumulátor töltöttségi szintjét és a "
 "hátralévő időt."
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -3451,7 +3447,7 @@ msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"A következő billentyűparancsot az NVDA figyelmen kívül hagyja és átadja a "
+"A következő billentyűparancsot az NVDA figyelmen kívül hagyja, és átadja a "
 "parancsot az aktív alkalmazásnak."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
@@ -3562,7 +3558,7 @@ msgid ""
 "for NVDA"
 msgstr ""
 "Megnyitja az NVDA bővítménykezelőjét, ahol lehetőség van a kiegészítők "
-"telepítésére és eltávolítására."
+"telepítésére, felfüggesztésére és eltávolítására."
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -3750,15 +3746,15 @@ msgstr "Vált a lehetséges érintési módok között"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
-msgstr "Bemondja közvetlenül az ujja alatt lévő elemet, vagy tartalmat"
+msgstr "Bemondja közvetlenül az ujja alatt lévő elemet vagy tartalmat"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
 msgstr ""
-"Bemondja az ujja alatt lévő elemet, vagy tartalmat, ha az eltér a "
-"legutoljára bemondottól"
+"Bemondja az ujja alatt lévő elemet vagy tartalmat, ha az eltér a legutoljára "
+"bemondottól"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -3801,7 +3797,7 @@ msgstr "Az NVDA eltávolítása"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 msgid "Explore NVDA user configuration directory"
-msgstr "Az NVDA felhasználói beállítások könyvtár böngészése"
+msgstr "Az NVDA felhasználói beállításai könyvtárának böngészése"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
 msgid "Documentation"
@@ -3833,7 +3829,7 @@ msgstr "frissítés"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 msgid "browser stop"
-msgstr "böngészés leállítás"
+msgstr "böngészés leállítása"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 msgid "search page"
@@ -3845,11 +3841,11 @@ msgstr "Kedvencek"
 
 #. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
 msgid "home page"
-msgstr "kezdőoldal"
+msgstr "kezdőlap"
 
 #. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
 msgid "mute"
-msgstr "elnémítás"
+msgstr "némítás"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 msgid "volume down"
@@ -3881,7 +3877,7 @@ msgstr "email"
 
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 msgid "media player"
-msgstr "média lejátszó"
+msgstr "médialejátszó"
 
 #. Translators: This is the name of the launch custom application 1 key found on multimedia keyboards to launch a user-defined application.
 msgid "custom application 1"
@@ -4201,7 +4197,7 @@ msgid ""
 "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
 "screens."
 msgstr ""
-"Ezzel a lehetőséggel az NVDA futtatható a bejelentkező, UAC, és egyéb  "
+"Ezzel a lehetőséggel az NVDA futtatható a bejelentkező, UAC és egyéb  "
 "biztonsági képernyők használatakor."
 
 msgid "Type help(object) to get help about object."
@@ -5560,7 +5556,7 @@ msgstr "az NVDA névjegye"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
-msgstr "Á&ltalános beállítások..."
+msgstr "Á&ltalános..."
 
 msgid "General settings"
 msgstr "Általános beállítások"
@@ -5582,11 +5578,11 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "B&raille kijelző beállítások..."
+msgstr "B&raille kijelző..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "B&illentyűzet beállítások..."
+msgstr "B&illentyűzet..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -5612,7 +5608,7 @@ msgstr "Az áttekintő kurzor mozgásának konfigurálása"
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "Be&viteli mód beállításai"
+msgstr "Be&viteli mód..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -5621,7 +5617,7 @@ msgstr "A bevitel és a javaslatok bemondásának beállítása egyes nyelvekné
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
-msgstr "&objektumok megjelenítése..."
+msgstr "&Objektumok megjelenítése..."
 
 msgid "Change reporting of objects"
 msgstr "Az objektumok megjelenítésének beállítása"
@@ -5630,14 +5626,14 @@ msgstr "Az objektumok megjelenítésének beállítása"
 # menüben), meg a három pontot
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "bö&ngésző mód..."
+msgstr "Bö&ngészőmód..."
 
 msgid "Change virtual buffers specific settings"
 msgstr "A böngészőmód beállítása"
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
-msgstr "&Dokumentum formázás..."
+msgstr "&Dokumentumformázás..."
 
 msgid "Change settings of document properties"
 msgstr "a dokumentumok formázási tulajdonságainak beállítása"
@@ -5653,7 +5649,7 @@ msgstr "Az alapértelmezett kivételszótár beállítására szolgáló párbes
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
-msgstr "&hangkarakter kivételszótár"
+msgstr "&Hangkarakter kivételszótár"
 
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
@@ -5662,7 +5658,7 @@ msgstr "A hangkarakter kivételszótár beállítására szolgáló párbeszéda
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
-msgstr "&ideiglenes kivételszótár..."
+msgstr "&Ideiglenes kivételszótár..."
 
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
@@ -5671,11 +5667,11 @@ msgstr "Az ideiglenes kivételszótár beállítására szolgáló párbeszédab
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "&kivétel szótárak"
+msgstr "&Kivételszótárak"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "Írás&jel-kiejtés..."
+msgstr "Írás&jelkiejtés..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
@@ -5860,8 +5856,8 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"A kiegészítők mostantól le vannak tiltva. Az NVDA újraindításakor ezek "
-"engedélyezésre kerülnek mindaddig, amíg ujra ki nem kapcsolja őket."
+"Az NVDA-t kiegészítők nélkül indította el. Ha újraindítja a képernyőolvasót, "
+"a kiegészítők betöltődnek, kivéve, ha ismét letiltja őket.kapcsolja őket."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -5974,7 +5970,7 @@ msgstr ""
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 msgid "Add-on Installation"
-msgstr "Bővítmény telepítő"
+msgstr "Bővítménytelepítő"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 msgid ""
@@ -5992,7 +5988,7 @@ msgstr "Kérem, várjon, amíg a bővítmény feltelepül."
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "Sikertelen bővítmény telepítés innen: %s"
+msgstr "Sikertelen bővítménytelepítés innen: %s"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
@@ -6036,8 +6032,8 @@ msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"A végrehajtott módosítások életbe léptetéséhez újra kell indítani az NVDA "
-"programot. Szeretné ezt most megtenni?"
+"A változtatások életbe léptetéséhez újra kell indítani az NVDA-t. Szeretné "
+"most?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6129,7 +6125,7 @@ msgstr "Törlés megerősítése"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
 msgid "Error deleting profile."
-msgstr "Hiba történt a profil betöltésekor."
+msgstr "Hiba történt a profil törlésekor."
 
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
@@ -6172,7 +6168,7 @@ msgstr "Folyamatos felolvasás"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Hiba történt a profil feltételeinek elmentése közben - lehetséges, hogy a "
+"Hiba történt a profil feltételeinek elmentése közben, lehetséges, hogy a "
 "fájlrendszer írásvédett."
 
 #. Translators: The title of the configuration profile triggers dialog.
@@ -6217,8 +6213,7 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 "Ez a feltétel már egy másik profilhoz van rendelve. Ha folytatja, a feltétel "
-"az eddigi profilból törlésre kerül, és csak a mostani használatakor lép "
-"életbe.\n"
+"az előző profilból törlődik, és csak a mostani használatakor lép életbe.\n"
 "Biztosan folytatja?"
 
 #. Translators: The title of a warning dialog.
@@ -6258,7 +6253,7 @@ msgstr "Az NVDA telepítése"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "Kérem, várjon, amíg az NVDA régebbi verziója frissül!"
+msgstr "Kérem, várjon, amíg az NVDA frissül!"
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
@@ -6292,7 +6287,7 @@ msgstr "Az NVDA sikeresen telepítve."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Az NVDA frissítése sikeresen megtörtént. "
+msgstr "Az NVDA sikeresen frissült."
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -6316,7 +6311,7 @@ msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"Az NVDA egyik korábbi verziója van a számítógépen, mely frissítve lesz."
+"A telepítő az NVDA régebbi verzióját találta a számítógépen, melyet frissít."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #, python-brace-format
@@ -6357,9 +6352,9 @@ msgid ""
 "should first cancel this installation and completely uninstall NVDA before "
 "installing the earlier version."
 msgstr ""
-"Arra készül, hogy egy a feltelepítettnél régebbi NVDA verziót telepítsen "
-"számítógépére. Ha biztosan ezt szeretné, zárja be ezt az ablakot, és "
-"távolítsa el a telepített NVDA verziót a régebbi verzió feltelepítése előtt."
+"Figyelem! Az NVDA régebbi verzióját telepítené, mint ami a számítógépen van! "
+"Ha tényleg ezt szeretné, zárja be ezt az ablakot, távolítsa el az NVDA "
+"jelenlegi példányát, mielőtt a korábbi változatot telepítené!"
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -6547,7 +6542,7 @@ msgid ""
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
 "A fájl másolása sikertelen. Lehet, hogy egy másik folyamat használja épp, "
-"vagy nincs elég hely azon a meghajtón ahova másolni szeretné."
+"vagy nincs elég hely azon a meghajtón, ahova másolni szeretné."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 msgid "Error Copying"
@@ -6591,23 +6586,23 @@ msgstr "A nyelvi beállítások megváltoztatása"
 
 #. Translators: This is the label for the synthesizer dialog.
 msgid "Synthesizer"
-msgstr "Beszédszintetizátor"
+msgstr "Beszédszintetizátor beállítások"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
 msgid "&Synthesizer:"
-msgstr "Beszéd&szintetizátor:"
+msgstr "&Beszédszintetizátor:"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
 msgid "Output &device:"
-msgstr "Kimeneti &hangeszköz"
+msgstr "&Kimeneti hangeszköz"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 msgid "Audio &ducking mode:"
-msgstr "Hangerőigazítás"
+msgstr "&Hangerő-igazítás"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -6689,22 +6684,22 @@ msgstr "A no&rmál Insert használata NVDA gombként"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &characters"
-msgstr "&Karakterek bemondása gépeléskor"
+msgstr "&Karakterek bemondása íráskor"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &words"
-msgstr "&Szavak bemondása gépeléskor"
+msgstr "&Szavak bemondása íráskor"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for typed characters"
-msgstr "Beszéd &megszakítása gépeléskor"
+msgstr "Beszéd &megszakítása íráskor"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for Enter key"
-msgstr "Beszéd m&egszakítás az enter billentyűvel"
+msgstr "Beszéd m&egszakítása az enterrel"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6795,7 +6790,7 @@ msgstr "Az &egérmutató követése"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Simple review mode"
-msgstr "Egyszerű &áttekintő mód"
+msgstr "Egyszerű &áttekintőmód"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
@@ -6900,7 +6895,7 @@ msgstr "Frissülő &tartalom felolvasása"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
-msgstr "Böngésző mód"
+msgstr "Böngészőmód"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
@@ -6930,17 +6925,17 @@ msgstr "&Rétegződő táblázatok jelzése"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for focus changes"
-msgstr "Automatikus &interaktív mód az aktív vezérlőelem megváltozásakor."
+msgstr "Automatikus fók&uszmód az aktív vezérlőelem megváltozásakor."
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for caret movement"
-msgstr "Automatikus i&nteraktív mód a kurzor mozgásakor"
+msgstr "Automatikus fókus&zmód a kurzor mozgásakor"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "Az interaktív és a böngészőmód jelzése hangjelzéssel"
+msgstr "A fókuszmód és a böngészőmód jelzése hangjelzéssel"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7024,7 +7019,7 @@ msgstr "So&rszámok bemondása"
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
 msgid "Report l&ine indentation"
-msgstr "&Behúzás felolvasása"
+msgstr "&Behúzás bemondása"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7046,12 +7041,12 @@ msgstr "T&áblázatok jelzése"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "A táblázat sor/oszlop &fejléceinek bemondása"
+msgstr "A táblázat &fejléceinek bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "A táblázat sor/oszlop &koordinátáinak bemondása"
+msgstr "A táblázatcella &koordinátáinak bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7199,11 +7194,11 @@ msgstr "Kurzor &mutatása"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "&A kurzor villogási sebessége (ms)"
+msgstr "A kurzor &villogási sebessége (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
-msgstr "A kurzor alakja"
+msgstr "A kurzor &alakja"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7323,7 +7318,7 @@ msgstr "nincs"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "Sebesség &fokozás"
+msgstr "Sebesség&fokozás"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -7356,19 +7351,19 @@ msgstr "Frissíti a dokumentum tartalmát"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
-msgstr "a képernyőelrendezés használata kikapcsolva"
+msgstr "a képernyő-elrendezés használata kikapcsolva"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout off"
-msgstr "a képernyőelrendezés használata kikapcsolva"
+msgstr "a képernyő-elrendezés használata kikapcsolva"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
-"Be- és kikapcsolja, hogy az NVDA megtartsa-e a képernyőelrendezést, amikor a "
-"dokumentumot böngészőmódban tekinti meg"
+"Képernyő-elrendezés megtartása be és kikapcsolása. Böngészőmódban "
+"megtekintett dokumentumok esetén."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -7555,9 +7550,8 @@ msgstr "&Képletek"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Form fields"
-msgstr "nincs következő űrlapmező"
+msgstr "&Űrlapmezők"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.

@@ -6,6 +6,13 @@
 Tradução de Rui Fontes
 
 = 2016.3 =
+Highlights of this release include the ability to disable individual add-ons; support for form fields in Microsoft Excel; significant improvements to reporting of colors; fixes and improvements related to several braille displays; and fixes and improvements to support for Microsoft Word.
+Os destaques desta versão incluem:
+- Possibilidade de desactivar Extras  individualmente;
+- Suporte para campos de formulário no Microsoft Excel;
+- Melhorias significativas no anúncio de cores;
+- Correções e melhorias relacionadas com várias linhas Braille;
+- Correções e melhorias no suporte ao Microsoft Word.
 
 == Novas Funcionalidades ==
 - O modo de navegação passou a poder ser usado para ler documentos PDF no Microsoft Edge. (#5740)
@@ -18,6 +25,8 @@ Tradução de Rui Fontes
 - Através do Gestor de Extras é agora possível desativar um Extra específico. (#3090)
 - Foram adicionados mais comandos para as linhas da série ALVA BC640/680. (#5206)
 - Foi criado um comando para mover a linha Braille para o foco actual. Actualmente, apenas as linhas das séries ALVA BC640/680 têm uma tecla associada a este comando, mas a associação pode ser feita manualmente para qualquer linha através da opção Comandos. (#5250)
+- No Microsoft Excel, já é possível interagir com Campos de formulário. Pode mover-se pelos campos de formulário usando a Lista de elementos ou, em Modo de navegação, a navegação por caracter. (#4953)
+- Já é possível associar um comando para alternar o Modo de revisão simples usando a opção Definir comandos. (#6173)
 
 
 == Alterações ==
@@ -32,8 +41,8 @@ Tradução de Rui Fontes
 - Nos diálogos do Microsoft Word a navegação por objectos do  NVDA foi bastante melhorada. (#6036)
 - Em algumas aplicações como o Visual Studio 2015, as teclas de atalho (como control+c para Copiar) passam a ser anunciadas como seria esperado. (#6021)
 - Corrigida uma eventual falha ao pesquisar por portas série, em alguns sistemas, que tornava os drivers das linhas Braille inutilizáveis. (#6015)
-- Reporting colors in Microsoft Word is now more accurate as changes in Microsoft Office Themes are now taken into account. (#5997)
-- Browse mode for Microsoft Edge and support for Start Menu search suggestions, is again available on Windows 10 builds after April 2016. (#5955)
+- O anúncio de cores no Microsoft Word é agora mais certeiro, pois as alterações provocadas pelos temas do Microsoft Office são levadas em conta. (#5997)
+- O modo de navegação para o Microsoft Edge e o suporte às sugestões da pesquisa no Menu Iniciar está novamente disponível nas versões  do Windows 10 depois de Abril de 2016. (#5955)
 - No Microsoft Word, a leitura automática dos cabeçalhos da tabela, quando estes se encontram em células mescladas, funciona melhor. (#5926)
 - No Correio do Windows 10 o NVDA já não falha na leitura do conteúdo das mensagens. (#5635) 
 - Quando o "Anúncio de teclas de comando" está activado, CapsLock, NumLock e ScrollLock já não são anunciados em duplicado. (#5490)
@@ -46,6 +55,10 @@ Tradução de Rui Fontes
 - No Microsoft Excel, os nomes dos fundos anunciados pelo NVDA passam a ser os mesmos que os usados pelo Excel. (#6092)
 - Suporte melhorado para o ecrã de início de sessão do Windows 10 incluindo o anúncio de alertas e activação do campo de introdução da palavra-passe com ecrã táctil. (#6010)
 - O NVDA passa a detectar correctamente a segunda fila de cursores de toque das linhas Braille das séries ALVA BC640/680. (#5206)
+- O NVDA volta a anunciar os toast, balões de notificações, nas versões mais recentes do Windows 10. (#6096)
+- O NVDA já não deixa de reconhecer o pressionar de teclas nas linhas Braille da Baum e da HumanWare Brailliant B. (#6035)
+- Se a opção Anunciar números de página estiver marcada, o os números de linha serão também anunciados em Braille. (#5941)
+- Quando o Modo de voz estiver desactivado, o anúncio de objectos (tal como pressionar NVDA+tab para anunciar o objecto em foco) a informação aparece no Visualizador de discurso como esperado. (#6049)
 
 
 == Alterações para Desenvolvedores ==

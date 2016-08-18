@@ -32,7 +32,7 @@ Trăsăturile importante includ:
 
 ++ Internaționalizare ++
 Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, să aibă același acces la tehnologie.
-În afară de engleză, NVDA a fost tradus în 47 de limbi incluzând: africană, albaneză, amhară, arabă, aragoneză, portugheză braziliană, bulgară, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindusă, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
+În afară de engleză, NVDA a fost tradus în 47 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindusă, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
 
 ++ Suport pentru sintetizator de voce ++
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorului să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
@@ -640,6 +640,9 @@ Apăsând „Enter” sau butonul „Mută la”, când aveți selectată o form
 - Foi: Listează toate foile din registrul de lucru.
 Apăsând F2 pe o foaie selectată din listă, vă permite redenumirea foii respective.
 Apăsând „Enter” sau butonul „Mută la”, când aveți selectată o foaie din listă, vă va muta pe foaia respectivă.
+- Câmpuri de formular: Listează toate câmpurile formular din foaia de lucru activă.
+Pentru fiecare câmp formular, lista de elemente arată versiunea alternativă a textului din câmp, împreună cu adresele celulelor pe care le cuprinde.
+Selectând un câmp de formular și apăsând Enter sau butonul „Mută la”, vă veți muta la câmpul respectiv în modul navigare.
 -
 
 +++ Raportarea comentariilor +++
@@ -653,6 +656,12 @@ Dacă un registru de lucru a fost protejat, s-ar putea ca mutarea focalizării l
 %kc:beginInclude
 Pentru a permite navigarea la celule blocate, comutați pe Modul navigare, apăsând NVDA+spațiu și apoi folosiți comenzi de miscare standard ale Excel cum ar fi tastele săgeată pentru a vă misca printre toate celulele foii de lucru curente.
 %kc:endInclude
+
++++ Câmpuri formular +++
+Foile de lucru Excel pot include câmpuri de formular.
+Le puteți accesa, folosind lista de elemente sau tastele de navigare cu o singură literă pentru câmpuri formular „f” și „shift+f”.
+Odată ce ați navigat la un câmp formular în modul navigare, puteți apăsa Enter sau Spațiu fie pentru a îl activa, fie pentru a comuta la modul focalizare ca să puteți interacționa cu acesta, în funcție de tipul de control.
+Pentru mai multe informații despre Modul navigare și navigarea cu o singură literă, vedeți [secțiunea Mod Navigare #ModNavigare].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1050,6 +1059,8 @@ Când este activată, cursorul de examinare va urmări mausul pe măsură ce se 
 
 ==== Mod examinare simplă ====
 Când este activată, NVDA va filtra ierarhia obiectelor care pot fi navigate, pentru a exclude orice obiecte ce nu sunt interesante pentru utilizator; de ex. obiecte invizibile și obiecte folosite doar pentru aspect.
+
+Pentru a activa modul de examinare simplă de oriunde, definiți un gest personalizat, folosind [dialogul cu Gesturi de Intrare #GesturiIntrare].
 
 +++ Setările pentru prezentarea de obiecte (NVDA+control+o) +++
 Se găsesc în meniul „Preferințe”, la „Prezentare obiect...”.
@@ -1861,7 +1872,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Derulează afișajul braille înainte | dreapta |
 | Mută afișajul braille la rândul anterior | b3 |
 | Mută afișajul braille la rândul următor | b4 |
-| Comută braille asociat la| b5 |
+| Comută braille asociat la | b5 |
 | Rostește tot | b6 |
 | tab | b1 |
 | shift+tab | b2 |

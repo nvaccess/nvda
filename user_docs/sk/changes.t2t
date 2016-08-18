@@ -3,6 +3,56 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.3 =
+prednosti tejto verzie zahŕňajú možnosť samostatne povoľovať a zakazovať doplnky, podporu pre formuláre v dokumentoch MS Excel, výrazné zmeny v oznamovaní farieb, úpravy pre niektoré braillovské riadky a vylepšenú podporu pre MS Word.
+
+== Nové vlastnosti ==
+- Od výročnej aktualizácie systému Windows 10 je možné pdf dokumenty čítať aj v prehliadači Microsoft Edge. Používa sa režim prehliadania. (#5740)
+- prečiarknutie a dvojité prečiarknutie je hlásené  v dokumentoch MS Word. (#5800)
+- Ak má tabuľka v dokumente MS Word názov, NVDA ho prečíta. Ak je k tabuľke pridaný popis, dá sa zobraziť v režime prehliadania skratkou na zobrazenie dlhého popisu (predvolene NVDA+D). (#5943)
+- Pri presúvaní odsekov v dokumente MS Word (skratky alt+shift+šípky hore-dole) NVDA hlási pozíciu presunutého odseku. (#5945)
+- NVDA odteraz dokáže oznamovať riadkovanie. Toto funguje, ak zmeníte riadkovanie pomocou príslušných skratiek vo Worde, alebo ak sa presuniete na text s odlišným riadkovaním a je zapnuté oznamovanie riadkovania v nastaveniach čítania textu. Riadkovanie je tiež možné zistiť  skratkou na zistenie formátovania. (#2961)
+- V prehliadači Internet Explorer sú správne spracované html5 prvky na rozlišovanie štruktúry stránky. (#5591)
+- Oznamovanie komentárov sa dá odteraz vypnúť v nastaveniach čítania textu. (#5108)
+- V správcovy doplnkov môžete zakázať jednotlivé doplnky. (#3090)
+- Pridané klávesové skratky pre braillovské riadky ALVA BC640/680. (#5206)
+- Pridaná možnosť presunúť braillovský riadok na fokus. V súčasnosti je skratka priradená len pre riadok ALVA BC640/680. Môžete si ju ale pridať pre vlastný riadok v dialógu Klávesové skratky. (#5250)
+- V dokumentoch MS Excel je odteraz možné pracovať s formulármi. Medzi prvkami formulára sa presúvate skratkami f a shift+F. Zoznam formulárových prvkov sa dá zobraziť cez zoznam prvkov. V oboch prípadoch je potrebné mať aktivovaný režim prehliadania. (#4953)
+- Odteraz si môžete nastaviť klávesovú skratku na vypínanie a zapínanie jednoduchého režimu objektovej navigácie. (#6173)
+
+
+== Zmeny ==
+- NVDA odteraz oznamuje farby pomocou deviatych základných farieb a troch odtieňov, pričom rozlišuje svetlosť a tmavosť. Tento spôsob je uprednostnený pred subjektívnymi farbami, ktoré nemusia byť každému zrozumiteľné. (#6029)
+- Zmenilo sa správanie skratiek nvda+F9 a NVDA+F10. Po stlačení NVDA+F10 na konci bloku textu je tento text označený. Dvojité stlačenie NVDA+F10 skopíruje text do schránky. (#4636)
+- aktualizovaná syntéza reči eSpeak NG na verziu   Master 11b1a7b (22. jún 2016). (#6037)
+
+
+== Opravy ==
+- Ak v dokumente programu MS Word v režime prehliadania kopírujete text do schránky, skopíruje sa aj formátovanie textu. (#5956)
+- NVDA správne oznamuje pohyb po tabuľkách v dokumentoch MS Word, ak používate navigačné príkazy Wordu (alt+home, alt+end, alt+pageUp a alt+pageDown) a takisto správne oznamuje označovanie (tie isté skratky, ale so shiftom). (#5961)
+- Zlepšená objektová navigácia v dialógoch programu MS Word. (#6036)
+- V niektorých aplikáciách (napríklad Visual Studio 2015) sú správne oznamované klávesové skratky (napríklad ctrl+c pre kopírovanie). (#6021)
+- Opravená zriedkavá chyba, ktorá spôsobila pri prehľadavání sériových portov nefunkčnosť ovládačov k braillovským riadkom. (#6015)
+- Oznamovanie farieb v programe MS Word je presnejšie, lebo sa zohľadňujú zmeny v použitej téme. (#5997)
+- Režim prehliadania pre Microsoft Edge a podpora pre návrhy vo vyhľadávaní v ponuke štart sú opäť podporované v systéme Windows 10 od verzie z apríla 2016. (#5955)
+- Zlepšilo sa Automatické oznamovanie hlavičky tabuľky  v dokumentoch MS Word, ak pracujete so zlúčenými bunkami. (#5926)
+- V aplikácii Mail v systéme Windows 10 NVDA už dokáže prečítať obsah správy. (#5635)
+- Ak je zapnuté čítanie príkazových skratiek, niektoré klávesy (napríklad Capslock) už nie sú hlásené dvakrát. (#5490)
+- Vo výročnej aktualizácii Windows 10 je správne prezentovaná zabezpečená obrazovka. (#5942)
+- V plugine na webové konferencie (používa sa napríklad na stránke out-of-sight.net) NVDA viac neoznamuje kryvku hlasitosti mikrofónu. (#5888)
+- Ak v režime prehliadania pri hľadaní nastavíte rozlišovanie veľkých a malých písmen, zohľadní sa to aj pri použití tlačidiel hľadať ďalej a hľadať predošlé. (#5522)
+- Ak pri vkladaní výrazu do slovníka vložíte nesprávny regulárny výraz, NVDA na to upozorní. NVDA viac nezamrzne, ak   súbor so slovníkom  obsahuje nesprávne regulárne výrazy. (#4834)
+- Ak NVDA nemôže komunikovať s braillovským riadkom (napríklad ak je odpojený), automaticky prestane na riadok posielať text. (#1555)
+- Mierne zrýchlené filtrovanie v zozname prvkov v režime prehliadania. (#6126)
+- v programe MS Excel NVDA správne oznamuje vzor pozadia. (#6092)
+- Vylepšená podpora pre prihlasovaciu obrazovku v systéme Windows 10. NVDA oznamuje upozornenia a umožňuje dotykom aktivovať editačné pole na zadanie hesla. (#6010)
+- NVDA správne deteguje sekundárne tlačidlá smerovania na riadkoch ALVA BC640/680 (#5206)
+- NVDA opäť správne číta  dlaždicové upozornenia v aktuálnych verziách systému Windows 10. (#6096)
+- NVDA viac náhodne neprestane rozpoznávať stlačené tlačidlá na brailovských riadkoch Baum a HumanWare Brailliant B. (#6035)
+- Ak je zapnuté oznamovanie čísla riadku, toto sa zobrazí aj na braillovskom riadku. (#5941)
+- Ak je nastavený hlasový výstup na bezreči, v zobrazovači reči sa správne zobrazuje oznamovanie objektov (napríklad pod skratkou nvda+tab). (#6049)
+
+
 = 2016.2 =
 Medzi prednosti tejto verzie patrí zvukové oznamovanie pravopisných chýb pri písaní; oznamovanie gramatických chýb v programe MS Word; opravy chýb v podpore pre balík MS Office.
 
