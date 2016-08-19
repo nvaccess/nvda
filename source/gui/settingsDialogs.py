@@ -1322,10 +1322,8 @@ class DictionaryDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		dictListID=wx.NewId()
-		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
-		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
-		entriesSizer.Add(entriesLabel)
+		entriesSizer=wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("&Dictionary entries")), wx.VERTICAL)
 		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.InsertColumn(0,_("Comment"),width=150)
@@ -1343,23 +1341,24 @@ class DictionaryDialog(SettingsDialog):
 		self.editingIndex=-1
 		self.dictList.Bind(wx.EVT_CHAR, self.onListChar)
 		entriesSizer.Add(self.dictList,proportion=8)
-		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		addButtonID=wx.NewId()
 		# Translators: The label for a button in speech dictionaries dialog to add new entries.
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
 		entryButtonsSizer.Add(addButton)
 		editButtonID=wx.NewId()
+		spaceBetweenButtons = 7
 		# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 		editButton=wx.Button(self,editButtonID,_("&Edit"),wx.DefaultPosition)
-		entryButtonsSizer.Add(editButton)
+		entryButtonsSizer.Add(editButton, border=spaceBetweenButtons, flag=wx.LEFT)
 		removeButtonID=wx.NewId()
 		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
-		entryButtonsSizer.Add(removeButton)
+		entryButtonsSizer.Add(removeButton, border=spaceBetweenButtons, flag=wx.LEFT)
 		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnEditClick,id=editButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
-		settingsSizer.Add(entryButtonsSizer)
+		entriesSizer.Add(entryButtonsSizer, border=5, flag=wx.BOTTOM|wx.TOP)
+		settingsSizer.Add(entriesSizer, border=10, flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.dictList.SetFocus()
