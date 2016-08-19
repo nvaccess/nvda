@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2012 NV Access Limited
+#Copyright (C) 2011-2016 NV Access Limited, Babbage B.v.
 
 import os
 import ctypes
@@ -203,7 +203,11 @@ class PortableCreaterDialog(wx.Dialog):
 			ctrl.Disable()
 		optionsSizer.Add(ctrl)
 		mainSizer.Add(optionsSizer)
-
+		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+		ctrl = self.startAfterCreateCheckbox = wx.CheckBox(self, label=_("&Start the new portable copy after creation"))
+		ctrl.Value = False
+		optionsSizer.Add(ctrl)
+		mainSizer.Add(optionsSizer)
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		ctrl = wx.Button(self, label=_("&Continue"), id=wx.ID_OK)
 		ctrl.SetDefault()
@@ -242,13 +246,13 @@ class PortableCreaterDialog(wx.Dialog):
 				wx.OK | wx.ICON_ERROR)
 			return
 		self.Hide()
-		doCreatePortable(self.portableDirectoryEdit.Value,self.copyUserConfigCheckbox.Value)
+		doCreatePortable(self.portableDirectoryEdit.Value,self.copyUserConfigCheckbox.Value,False,self.startAfterCreateCheckbox.Value)
 		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
 
-def doCreatePortable(portableDirectory,copyUserConfig=False):
+def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAfterCreate=False):
 	d = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 		_("Creating Portable Copy"),
@@ -265,7 +269,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False):
 			# Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
 			title=_("File in Use")
 			if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
-				return doCreatePortable(portableDirectory,copyUserConfig)
+				return doCreatePortable(portableDirectory,copyUserConfig,silent,startAfterCreate)
 		# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 		# %s will be replaced with the specific error message.
 		gui.messageBox(_("Failed to create portable copy: %s")%e,
@@ -273,7 +277,16 @@ def doCreatePortable(portableDirectory,copyUserConfig=False):
 			wx.OK | wx.ICON_ERROR)
 		return
 	d.done()
-	# Translators: The message displayed when a portable copy of NVDA has been successfully created.
-	# %s will be replaced with the destination directory.
-	gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
-		_("Success"))
+	if silent:
+		wx.GetApp().ExitMainLoop()
+	else:
+		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
+		# %s will be replaced with the destination directory.
+		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
+			_("Success"))
+		if startAfterCreate:
+			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
+			shellapi.ShellExecute(None, None,
+				os.path.join(os.path.abspath(unicode(portableDirectory)),'nvda.exe'),
+				u"-r",
+				None, winUser.SW_SHOWNORMAL)

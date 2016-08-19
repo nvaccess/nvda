@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited, Aleksey Sadovoy
+#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Babbage B.v.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -79,6 +79,9 @@ parser.add_option('--disable-addons',action="store_true",dest='disableAddons',de
 parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
 parser.add_option('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
 parser.add_option('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
+parser.add_option('--create-portable',action="store_true",dest='createPortable',default=False,help="Creates a portable copy of NVDA (starting the new copy after installation)")
+parser.add_option('--create-portable-silent',action="store_true",dest='createPortableSilent',default=False,help="Creates a portable copy of NVDA silently (does not start the new copy after installation).")
+parser.add_option('--portable-path',dest='portablePath',default=None,help="The path where a portable copy will be created")
 parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
