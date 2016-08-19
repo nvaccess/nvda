@@ -13,7 +13,6 @@ import touchHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
-import screenExplorer
 import review
 import controlTypes
 import api
@@ -870,8 +869,6 @@ class GlobalCommands(ScriptableObject):
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
-			if config.conf["presentation"]["playObjectCoordinates"]:
-				screenExplorer.playObjectCoordinates(curObject)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 			ui.reviewMessage(_("No containing object"))
@@ -891,8 +888,6 @@ class GlobalCommands(ScriptableObject):
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
-			if config.conf["presentation"]["playObjectCoordinates"]:
-				screenExplorer.playObjectCoordinates(curObject)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
 			ui.reviewMessage(_("No next"))
@@ -912,8 +907,6 @@ class GlobalCommands(ScriptableObject):
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
-			if config.conf["presentation"]["playObjectCoordinates"]:
-				screenExplorer.playObjectCoordinates(curObject)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
 			ui.reviewMessage(_("No previous"))
@@ -933,8 +926,6 @@ class GlobalCommands(ScriptableObject):
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
-			if config.conf["presentation"]["playObjectCoordinates"]:
-				screenExplorer.playObjectCoordinates(curObject)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
 			ui.reviewMessage(_("No objects inside"))
@@ -2064,8 +2055,6 @@ class GlobalCommands(ScriptableObject):
 		if newObject:
 			api.setNavigatorObject(newObject)
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
-			if config.conf["presentation"]["playObjectCoordinates"]:
-				screenExplorer.playObjectCoordinates(newObject)
 		else:
 			# Translators: a message when there is no next object when navigating
 			ui.reviewMessage(_("No next"))
@@ -2084,8 +2073,6 @@ class GlobalCommands(ScriptableObject):
 		if newObject:
 			api.setNavigatorObject(newObject)
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
-			if config.conf["presentation"]["playObjectCoordinates"]:
-				screenExplorer.playObjectCoordinates(newObject)
 		else:
 			# Translators: a message when there is no previous object when navigating
 			ui.reviewMessage(_("No previous"))

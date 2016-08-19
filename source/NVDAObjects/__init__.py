@@ -27,6 +27,7 @@ import treeInterceptorHandler
 import braille
 import globalPluginHandler
 import brailleInput
+import screenExplorer
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
