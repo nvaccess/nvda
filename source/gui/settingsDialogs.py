@@ -458,6 +458,8 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def makeStringSettingControl(self,setting):
 		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
+		dropDownLabelBorder = 10
+		dropDownLabelFlags = wx.RIGHT | wx.ALIGN_CENTER_VERTICAL # border on right, center vertically.
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		synth=getSynth()
@@ -472,7 +474,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		except ValueError:
 			pass
 		lCombo.Bind(wx.EVT_CHOICE,StringSynthSettingChanger(setting,self))
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		sizer.Add(lCombo)
 		if self.lastControl:
 			lCombo.MoveAfterInTabOrder(self.lastControl)
@@ -492,6 +494,8 @@ class VoiceSettingsDialog(SettingsDialog):
 		return checkbox
 
 	def makeSettings(self, settingsSizer):
+		dropDownLabelBorder = 10
+		dropDownLabelFlags = wx.RIGHT | wx.ALIGN_CENTER_VERTICAL # border on right, center vertically.
 		self.sizerDict={}
 		self.lastControl=None
 		#Create controls for Synth Settings
@@ -509,7 +513,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: This is the label for a combobox in the
 		# voice settings dialog (possible choices are none, some, most and all).
-		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")), border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
 		curLevel = config.conf["speech"]["symbolLevel"]
