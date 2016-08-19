@@ -1,6 +1,6 @@
 #screenExplorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2014 NVDA Contributors
+#Copyright (C) 2012-2016 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,7 +18,7 @@ import config
 import mouseHandler
 
 def playLocationCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,blurFactor=0):
-	"""Plays a tone indicating the XY-coordinate for the given location. This works for both mouse movement and during touch hover gesture.  
+	"""Plays a tone indicating the XY-coordinate for the given location. This works for keyboard-based object navigation/focus movement, mouse movement and during touch hover gesture.  
 	@param obj: the coordinate for the location and the screen resolution (typically desktopObject.location)
 	@type obj: int
 	"""
@@ -51,8 +51,11 @@ def playObjectCoordinates(obj):
 	l,t,w,h=obj.location
 	x = l+(w/2)
 	y = t+(h/2)
-	screenWidth, screenHeight = api.getDesktopObject().location[2], api.getDesktopObject().location[3]
-	playLocationCoordinates(x, y, screenWidth, screenHeight)
+	screenWidth, screenHeight = api.getDesktopObject().location[-2:]
+	try:
+		playLocationCoordinates(x, y, screenWidth, screenHeight)
+	except AttributeError:
+		pass
 
 
 class ScreenExplorer(object):

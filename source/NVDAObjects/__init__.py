@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -24,6 +24,7 @@ import appModuleHandler
 import treeInterceptorHandler
 import braille
 import globalPluginHandler
+import screenExplorer
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -903,6 +904,8 @@ This code is executed if a gain focus event is received by this object.
 		"""Called when this object becomes the navigator object.
 		"""
 		braille.handler.handleReviewMove()
+		if config.conf["presentation"]["playObjectCoordinates"]:
+			screenExplorer.playObjectCoordinates(self)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
