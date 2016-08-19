@@ -370,8 +370,8 @@ Sljedeći prečaci su dostupne za pregled teksta:
 | Pomakni se na slijedeći znak u pregledu | num3 | NVDA+strelicaDesno | klizni desno (tekstualni način) | pomakni kursor pregleda na idući znak na trenutnom retku teksta |
 | Pomakni se na kraj retka u pregledu | shift+num3 | NVDA+end | nema | pomiče pregledni kursor na kraj u trenutnom retku teksta |
 | Izgovori sve pomoću pregleda | numPlus | NVDA+shift+a | klizni sa tri prsta prema dolje (tekstualni način) | Čita od trenutne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
-| Kopiraj s preglednog kursora | NVDA+f9 | NVDA+f9 | nema | započinje kopiranje teksta od trenutne pozicije preglednog kursora. U tom se trenutku kopiranje ne izvodi sve dok ne kažemo  NVDA gdje to treba kopirati |
-| kopiraj na pregledni kursor | NVDA+f10 | NVDA+f10 | nema | kopira od prethodne pozicije postavljene uz pomoć koprečaca kopiraj sa preglednog kursora do  trenutne pozicije preglednog kursora. poslije pritiska ove kombinacije tipaka, tekst će biti kopiran u međuspremnik |
+| označi a potom kopiraj sa preglednog kursora | insert+f9 | insert+f9 | nema | označava a potom započinje proces kopiranja od trenutne pozicije preglednog kursora. trenutna akcija se ne izvodi sve dok ne kažete NVDA gdje se nalazi kraj niza znakova |
+| označi a potom kopiraj na pregledni kursor | insert+f10 | insert+f10 | nema | prilikom prvog pritiska, tekst je označen od pozicije od koje je označen početni marker uključujući trenutnu poziciju preglednog kursora. Poslije drugog pritiska iste prečice, tekst će biti kopiran u windowsow međuspremnik |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi Prilikom pritiska prečaca dva puta brzo, informacija se prikazuje u načinu pregleda. |
 %kc:endInclude
 
@@ -640,6 +640,9 @@ Pritišćući enter ili gumb premjesti na će premjestiti izravno na ovu ćeliju
 - radni listovi: ovo popisuje sve radne listove u  radnoj knjizi. 
 Pritišćući f2 na odabranom radnom listu omogućuje preimenovanje radnog lista. 
 Pritišćući enter ili gumb premjesti na kada se nalazite na označenoj ćeliji Premješta na taj radni list.
+- obrazci: ovo popisuje sve obrasce u aktivnom radnom listu.
+za svaki obrazac, u popisu elemenata prikazuje se  alternativan tekst polja, zajedno sa adresama ćelija koje pokriva
+označavajući polje obrazca i pritiščući enter ili gumb premjesti na premještava na to polje u načinu pregleda.
 -
 
 +++ Izvještavanje o komentarima +++
@@ -653,6 +656,12 @@ Ako je radna knjiga zaštićena, neće možda biti moguće premještati fokus na
 %kc:beginInclude
 Kako biste omogućili premještanje po zaključanim ćelijama, Premjestite se u način pregleda pritišćući NVDA+razmak, a potom koristite standardne excelove prečace za kretanje po dokumentu poput strelica kako biste se premještali po trenutnom radnom listu.
 %kc:endInclude
+
++++ Polja obrazaca +++
+Excelovi radni listovi mogu sadržavati obrasce.
+Možete im pristupiti koristeći popis elemenata ili prečace f i shift+f.
+Jedamput kada se premjestite na obrazac u načinu pregleda, možete pritisnuti enter ili razmaknicu kako biste aktivirali ili se prebacili na načim fokusa kako biste mogli manipulirati s time, ovisno o kontroli.
+Za više informacija o načinu pregleda i brzoj navigacii, molimo pogledajte [poglavlje o brzoj navigaciji #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Kad je ova opcija uključena, pregledni će kursor pratiti miš kako se isti bud
 ==== Način jednostavnog pregleda ====
 Kad je ova opcija uključena, NVDA će filtrirati hijerarhiju objekata po kojima se možete kretati kako bi se izbacili suvišni objekti koji nisu zanimljivi korisniku; Npr. nevidljivi objekti i objekti u estetske svrhe.
 
+Da biste uključili ili isključili način jednostavnog pregleda iz bilo kojeg prozora, molimo dodijelite prilagođeni prečac koristeći [dijaloški okvir ulazne geste #InputGestures].
+
 +++ Prezentacija objekta (NVDA+kontrol+o) +++
 Ovu opciju možete pronaći u izborniku postavke "Prezentacija objekta...".
 Ovaj dijaloški okvir sadrži sljedeće opcije:
@@ -1190,15 +1201,16 @@ Možete podesiti izgovor slijedećeg:
 - Karakteristike fonta
 - Poravnanje teksta
 - Boje
+- komentare
 - Revizije urednika
 - Isticanje
 - Stil teksta
 - Pravopisne pogreške
-- gramatičke pogreške
 - Brojeve stranica
 - Brojeve redaka
 - Poravnanje redaka
 - Poravnanje odlomaka (npr. viseća uvlaka, uvlačenje prvog retka)
+- prored npr: jednostruki, dvostruki itd.
 - Tablice
 - Zaglavlja redaka/stupaca tablica
 - Koordinate ćelije u tablici
@@ -1211,7 +1223,7 @@ Možete podesiti izgovor slijedećeg:
 - klikabilne elemente
 -
 
-Da biste mogli ukljućivati/iskljućivati ove postavke sa bilo kojeg mjesta, molimo pridjelite prilagođene tipkovničke prećace koristeći [dijaloški okvir ulazne geste #InputGestures].
+Da biste mogli uključivati/isključivati ove postavke sa bilo kojeg mjesta, molimo pridjelite prilagođene tipkovničke prečace koristeći [dijaloški okvir ulazne geste #InputGestures].
 
 ==== Obavijesti o promjenama oblikovanja poslije kursora ====
 Ako je ova opcija uključena, ova će opcija uzrokovati da NVDA pokuša prepoznati sve postavke oblikovanja u retku i potom ih izgovara, čak iako uključite ovu opciju to može uzrokovati usporavanje NVDA.
@@ -1422,11 +1434,11 @@ Međutim, ako kliknete ili se fokusirate na preglednik, NVDA će privremeno zaus
 Kako biste mogli uključiti ili isključiti preglednik govora sa bilo kojeg mjesta, molimo pridjelite prilagođenu gestu koristeći [dijaloški okvir ulazne geste #InputGestures].
 
 ++ Upravitelj dodacima ++
-Upravitelj dodacima, kojemu se može pristupiti u NVDA izborniku u podizborniku alati pod stavkom upravljaj dodacima, vam omogućuje instalaciju i deinstalaciju NVDA dodataka.
+Upravitelj dodacima, kojemu se može pristupiti u NVDA izborniku u podizborniku alati pod stavkom upravljaj dodacima, omogućuje vam instalaciju, deinstalaciju omogućavanje i onemogućavanje NVDA dodataka.
 Ove pakete pruža zajednica koja koristi NVDA, i ovi dodaci mogu sadržavati prilagođeni kod pomoću kojeg su dodane ili izmjenjene neke funkcije u NVDA ili čak pružaju podršku za neke brajične retke ili govorne jedinice.
 
 Upravitelj dodataka sadrži listu u kojoj su prikazani svi dodaci trenutno instalirani u vašoj konfiguraciji za NVDA. 
-Ime paketa, inačica i autor prikazani su za svaki dodatak, ali se i informacije kao što su opis i web adresa mogu pročitati kad označite dodatak i pritisnete gumb o dodatku.
+Ime paketa, stanje, inačica i autor prikazani su za svaki dodatak, međutim, više informacija poput opisa i web adrese može se saznati tako što se označi dodatak sa popisa,  i pritiskom gumba "o dodatku".
 Ako je dostupna pomoč za dodatak, možete joj pristupiti kad označite dodatak i pritisnete gumb pomoč za dodatak.
 
 Da biste istražili i preuzeli dodatke na mreži, pritisnite gumb preuzmi dodatke.
@@ -1448,8 +1460,14 @@ NVDA će vas pitati želite li to doista.
 Kao i kod instalacije, NVDA mora ponovno biti pokrenut da bi dodatak bio potpuno uklonjen.
 Sve dok to ne učinite, status "uklanjanje" će se prikazivati za taj dodatak na popisu.
 
+Da biste uklonili dodatak, pritisnite gumb "Ukloni".
+Da biste omogućili dodatak koji je prije bio omogućen, pritisnite gumb "omogući".
+Možete onemogučiti dodatak ako status dodatka pokazuje "pokrenut", ili omogućen,, ili ga onemogućite ako je dodatak suspendiran ili omogućen.
+Pri svakom pritisku na gumb omogući-onemogući, stanje dodatka se mijenja kako bi pokazivalo na akciju koja će se izvršiti pri ponovnom pokretanju nvda.
+Kao i prilikom uklanjanja i-ili deinstalacije dodataka, trebate ponovno pokrenuti nvda, kako bi vaše izmjene stupile na snagu.
+
 Upravitelj također ima gumb zatvori da biste zatvorili dijaloški okvir.
-Ako ste dodali ili uklonili dodatke, NVDA će vas najprije pitati želite li ga ponovno pokrenuti tako da vaše promjene stupe na snagu.
+Ako ste dodali, uklonili ili promijenili status dodataka, NVDA će vas najprije pitati želite li ga ponovno pokrenuti kako bi vaše promjene stupile na snagu.
 
 U prošlosti je bilo moguće proširiti funkcionalnost NVDA kopirajući dodatne dodatke i upravljačke programe u vašu korisničku mapu.
 Iako ih ova NVDA inačica može pokretati, oni neće biti prikazani u upravitelju dodataka.
@@ -1594,11 +1612,17 @@ Sljede prečaci dodjeljeni za ovaj brajični redak za korištenje sa NVDA.
 Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis i smještaj tipaka na brajičnom retku.
 %kc:beginInclude
 || Naziv | Prečac |
-| Pomakni brajični redak za redak u natrag | t1 |
+| Pomakni brajični redak za redak u natrag | t1 ili etouch1 |
 | Premjesti brajični redak na prijašnji redak | t2 |
+| premjesti na trenutni fokus | t3 |
 | Premjesti brajični redak na slijedeći redak | t4 |
-| Pomakni brajični redak u naprijed za redak | t5 |
+| Pomakni brajični redak u naprijed za redak | t5 ili etouch 3|
 | Prebaci na brajičnu ćeliju | routing |
+| premjesti se na najgornji redak u pregledu | t1+t2 |
+| premjesti se na posljednji redak u pregledu | t4+t5 |
+| prebaci brajicu usmjerenu na | t1+t3 |
+| pročitaj naslov | etouch2 |
+| pročitaj traku stanja | etouch4 |
 | shift+tab | sp1 |
 | alt | sp2 |
 | escape | sp3 |
@@ -1608,10 +1632,16 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 | strelicaLijevo | spLeft |
 | strelicaDesno | spRight |
 | enter | spEnter |
+| izgovori datum i vrijeme | sp1+sp2 |
 | NVDA Izbornik | sp1+sp3 |
 | windows+d (minimiziraj sve aplikacije) | sp1+sp4 |
+| windows+b tipka (fokusiranje područja obavjesti) | sp3+sp4 |
 | windows tipka | sp2+sp3 |
 | alt+tab | sp2+sp4 |
+| ctrl+home | t3+spUp |
+| control+end | t3+spDown |
+| home | t3+spLeft |
+| end | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech brajični retci ++

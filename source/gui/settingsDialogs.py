@@ -1078,6 +1078,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.colorCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
+		self.commentsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report co&mments"))
+		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
+		settingsSizer.Add(self.commentsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.revisionsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &editor revisions"))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
 		settingsSizer.Add(self.revisionsCheckBox,border=10,flag=wx.BOTTOM)
@@ -1182,6 +1187,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
@@ -1246,12 +1252,23 @@ class DictionaryEntryDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
 		self.patternTextCtrl.SetFocus()
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 
 	def getType(self):
 		typeRadioValue = self.typeRadioBox.GetSelection()
 		if typeRadioValue == wx.NOT_FOUND:
 			return speechDictHandler.ENTRY_TYPE_ANYWHERE
 		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
+
+	def onOk(self,evt):
+		try:
+			self.dictEntry=speechDictHandler.SpeechDictEntry(self.patternTextCtrl.GetValue(),self.replacementTextCtrl.GetValue(),self.commentTextCtrl.GetValue(),bool(self.caseSensitiveCheckBox.GetValue()),self.getType())
+		except Exception as e:
+			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
+			# Translators: This is an error message to let the user know that the dictionary entry is not valid.
+			gui.messageBox(_("Regular Expression error: \"%s\".")%e, _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+			return 
+		evt.Skip()
 
 	def setType(self, type):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
@@ -1326,7 +1343,7 @@ class DictionaryDialog(SettingsDialog):
 		# Translators: This is the label for the add dictionary entry dialog.
 		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType()))
+			self.tempSpeechDict.append(entryDialog.dictEntry)
 			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],DictionaryDialog.TYPE_LABELS[entryDialog.getType()]))
 			index=self.dictList.GetFirstSelected()
 			while index>=0:
@@ -1351,7 +1368,7 @@ class DictionaryDialog(SettingsDialog):
 		entryDialog.caseSensitiveCheckBox.SetValue(self.tempSpeechDict[editIndex].caseSensitive)
 		entryDialog.setType(self.tempSpeechDict[editIndex].type)
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict[editIndex]=speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType())
+			self.tempSpeechDict[editIndex]=entryDialog.dictEntry
 			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())

@@ -4,8 +4,59 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.3 =
+Caracteristicile principale ale acestei lansări includ abilitatea de a dezactiva add-on-uri în mod individual, suport pentru câmpuri de formular în Microsoft Excel, îmbunătățiri semnificative ale raportării culorilor, corectării și îmbunătățiri asociate mai multor afișaje braille și remedieri și îmbunătățiri ale compatibilității cu Microsoft Word.
+
+== Noi funcționalități ==
+- Modul navigare poate fi acum folosit pentru citirea documentelor PDF în Microsoft Edge, pentru versiunile Windows 10 Aniversar. (#5740)
+- Textele tăiate cu o linie sau linie dublă sunt acum anunțate dacă este cazul în Microsoft Word. (#5800)
+- În Microsoft Word, este raportat titlul unui tabel dacă a fost definit. Dacă există o descriere, poate fi accesată folosind comanda de deschidere a descrierii detaliate (NVDA+d) în mod navigare. (#5943)
+- În Microsoft Word, NVDA acum raportează informații despre poziție când sunt mutate paragrafe (alt+shift+săgeată jos și alt+shift+săgeată sus). (#5945)
+- În Microsoft Word, spațierea între linii este raportată prin comanda NVDA de raportare a formatării, atunci când proprietatea este modificată cu diversele scurtături de taste specifice Microsoft, precum și la mutarea pe un text cu un alt tip de spațiere dacă opțiunea „Anunță spațiere linie” este activată din setările NVDA de formatare a documentului. (#2961)
+- În Internet Explorer, elementele structurale de HTML5 sunt acum recunoscute (#6044)
+- Raportarea comentariilor (cum sunt cele din Microsoft Word) poate fi acum dezactivată prin opțiunea „Anunță comentarii”, o căsuță de bifat din fereastra de dialog cu setările pentru „Formatare document”. (#5108)
+- Acum este posibilă dezactivarea individuală pentru add-on-uri din Managerul de add-on-uri. (#3090)
+- Au fost adăugate asocieri adiționale de taste pentru seriile ALVA BC640/680 de afișaje braille. (#5206)
+- Există acum o comandă pentru a muta afișajul braille la focalizarea curentă. Momentan doar afișajele din seriile ALVA BC640/680 au o tastă asociată acestei comenzi, dar poate fi asociată manual pentru alte afișaje din fereastra cu gesturi de intrare, dacă se dorește. (#5250)
+- În Microsoft Excel, puteți interacționa acum cu câmpuri de forumular. Navigați la câmpuri de formular, folosind lista de elemente sau navigarea cu o singură literă în mod navigare. (#4953)
+- Puteți acum asocia un gest de intrare pentru comutarea la modul examinare simplă, folosind fereastra dialog cu „Gesturi de Intrare”. (#6173)
 
 
+== Modificări ==
+- NVDA acum raportează culori, folosind un set de bază și ușor de înțeles de 9 culori principale și 3 nuanțe, cu variații de luminozitate și tentă. Modul este ales mai degrabă decât cel cu folosirea de nume pentru culori care sunt mai subiective și greu de înțeles. (#6029)
+- Comportamentul existent pentru comenzile NVDA+F9 apoi NVDA+F10 a fost modificat în selecția de text la prima apăsare a lui F10. Când F10 este apăsat de două ori (în succesiune rapidă) textul este copiat în planșetă. (#4636)
+- Actualizare a eSpeak NG la versiunea Master 11b1a7b (22 iunie 2016). (#6037)
+
+
+== Rezolvări defecte ==
+- În mod navigare în Microsoft Word, copierea în planșetă acum menține formatarea. (#5956)
+- În Microsoft Word, NVDA acum raportează corespunzător când se folosesc comenzile proprii Wordului de navigare a tabelelor (alt+home, alt+end, alt+pageUp și alt+pageDown) și comenzi de selecție pentru tabele (shift adăugat la comenzile de navigare). (#5961)
+- În ferestrele de dialog Microsoft Word, navigarea prin obiecte a NVDA a fost îmbunătățită semnificativ. (#6036)
+- În anumite aplicații precum Visual Studio 2015, tastele scurtătură (de ex. control+c pentru copiere) sunt acum anunțate cum ar trebui. (#6021)
+- Corecție a unei situații rare la scanarea de porturi seriale pe anumite sisteme, care făcea ca anumite drivere de afișaje braille să nu poată fi folosite. (#6015)
+- Raportarea de culori în Microsoft Word este acum mai exactă prin luarea în considerare a schimbărilor de teme în Microsoft Office. (#5997)
+- Modul navigare pentru Microsoft Edge și compatibilitate pentru sugestiile de căutare din Meniul de Start sunt din nou disponibile pe variantele Windows 10 de după aprilie 2016. (#5955)
+- În Microsoft Word, citirea automată a antetelor de tabel funcționează mai bine în cazul celulelor unite. (#5926)
+- În aplicația Windows 10 Mail , NVDA nu mai eșuează în citirea conținutului mesajelor. (#5635) 
+- Când tasta „Anunță comanda” este activată, tastele de blocare, cum ar fi CapsLock nu mai sunt anunțate de două ori. (#5490)
+- Ferestrele de dialog pentru controlul conturilor de utilizator Windows sunt din nou citite corect în actualizarea Windows 10 Anniversary. (#5942)
+- În pluginul Web Conference (cum este cel folosit pe out-of-sight.net) NVDA nu mai emite bipuri și nu mai anunță actualizări pentru bara de progres pentru intrările de la microfon. (#5888)
+- Efectuarea unei comenzi de „găsește următor” sau „găsește anterior” în modul de navigare, va face acum corect distincția de majuscule, dacă operația de căutare originală a fost cu distincție de majuscule. (#5522)
+- La modificarea înregistrărilor într-un dicționar, acum se va anunța folosirea unei expresii regulate invalide. NVDA nu va mai pica dacă un fișier dicționar conține o expresie regulată invalidă. (#4834)
+- Dacă NVDA nu mai poate comunica cu afișajul braille (de ex. pentru că a fost deconectat), va dezactiva automat folosirea afișajului. (#1555)
+- Performanță ușor îmbunătățită la filtrare în lista de elemente din modul navigare, în unele cazuri. (#6126)
+- În Microsoft Excel, numele șabloanelor de fundal raportate de NVDA acum corespund celor folosite de Excel. (#6092)
+- Suport îmbunătățit pentru ecranul de autentificare Windows 10, incluzând anunțul alertelor și activarea câmpului de parolă prin atingere. (#6010)
+- NVDA acum detectează corect butoanele de mutare pentru seriile ALVA BC640/680 de afișaje braille. (#5206)
+- NVDA poate din nou să raporteze notificări Windows Toast în versiunile recente ale Windows 10. (#6096)
+- NVDA nu se mai oprește din a recunoaște câteodată apăsări de taste pe afișaje braille Baum-compatibile și HumanWare Brailliant B. (#6035)
+- Dacă raportarea numerelor de rând este activată în opțiunile de formatare a documentului ale NVDA, sunt arătate numerele de rând pe afișajele braille. (#5941)
+- Când modul vorbire este dezactivat, raportarea obiectelor (cum ar fi apăsarea NVDA+tab pentru anunțul focalizării) apare acum în Monitorul de vorbire așa cum este de așteptat. (#6049)
+
+
+== Modificări pentru Dezvoltatori ==
+- Introducerea directă în jurnale a informației de la o proprietate nu mai cauzează apelul recursiv la proprietatea respectivă în repetate rânduri. (#6122)
+
+ 
 = 2016.2.1 =
 Această lansare corectează defectele din Microsoft Word:
 

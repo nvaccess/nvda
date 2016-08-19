@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2014 Rui Batista, NV Access Limited, Noelia Ruiz Martínez
+#Copyright (C) 2012-2016 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -48,6 +48,8 @@ def loadState():
 		state = {
 			"pendingRemovesSet":set(),
 			"pendingInstallsSet":set(),
+			"disabledAddons":set(),
+			"pendingDisableSet":set(),
 		}
 
 def saveState():
@@ -98,12 +100,31 @@ def removeFailedDeletions():
 			if os.path.exists(path):
 				log.error("Failed to delete path %s, try removing manually"%path)
 
+_disabledAddons = set()
+def disableAddonsIfAny():
+	"""Disables add-ons if told to do so by the user from add-ons manager"""
+	global _disabledAddons
+	if "disabledAddons" not in state:
+		state["disabledAddons"] = set()
+	if "pendingDisableSet" not in state:
+		state["pendingDisableSet"] = set()
+	if "pendingEnableSet" not in state:
+		state["pendingEnableSet"] = set()
+	# Pull in and enable add-ons that should be disabled and enabled, respectively.
+	state["disabledAddons"] |= state["pendingDisableSet"]
+	state["disabledAddons"] -= state["pendingEnableSet"]
+	_disabledAddons = state["disabledAddons"]
+	state["pendingDisableSet"].clear()
+	state["pendingEnableSet"].clear()
+
 def initialize():
 	""" Initializes the add-ons subsystem. """
 	loadState()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
+	# #3090: Are there add-ons that are supposed to not run for this session?
+	disableAddonsIfAny()
 	saveState()
 	getAvailableAddons(refresh=True)
 
@@ -137,7 +158,10 @@ def _getAvailableAddonsFromPath(path):
 			log.debug("Loading add-on from %s", addon_path)
 			try:
 				a = Addon(addon_path)
-				log.debug("Found add-on %s", a.manifest['name'])
+				name = a.manifest['name']
+				log.debug("Found add-on %s", name)
+				if a.isDisabled:
+					log.debug("Disabling add-on %s", name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -217,6 +241,9 @@ class Addon(object):
 			getAvailableAddons(refresh=True)
 		else:
 			state['pendingRemovesSet'].add(self.name)
+			# There's no point keeping a record of this add-on being disabled now.
+			_disabledAddons.discard(self.name)
+			state['pendingDisableSet'].discard(self.name)
 		saveState()
 
 	def completeRemove(self,runUninstallTask=True):
@@ -248,6 +275,9 @@ class Addon(object):
 		@param package: the python module representing the package.
 		@type package: python module.
 		"""
+		# #3090: Don't even think about adding a disabled add-on to package path.
+		if self.isDisabled:
+			return
 		extension_path = os.path.join(self.path, package.__name__)
 		if not os.path.isdir(extension_path):
 			# This addon does not have extension points for this package
@@ -258,9 +288,32 @@ class Addon(object):
 		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
+	def enable(self, shouldEnable):
+		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
+		if shouldEnable:
+			state["pendingEnableSet"].add(self.name)
+			state["pendingDisableSet"].discard(self.name)
+		else:
+			state["pendingDisableSet"].add(self.name)
+			state["pendingEnableSet"].discard(self.name)
+		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
+		saveState()
+
 	@property
 	def isRunning(self):
-		return not self.isPendingInstall
+		return not (self.isPendingInstall or self.isDisabled)
+
+	@property
+	def isDisabled(self):
+		return self.name in _disabledAddons
+
+	@property
+	def isPendingEnable(self):
+		return self.name in state["pendingEnableSet"]
+
+	@property
+	def isPendingDisable(self):
+		return self.name in state["pendingDisableSet"]
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)

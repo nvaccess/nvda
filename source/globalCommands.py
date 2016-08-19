@@ -734,6 +734,20 @@ class GlobalCommands(ScriptableObject):
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
 
+	def script_toggleSimpleReviewMode(self,gesture):
+		if config.conf["reviewCursor"]["simpleReviewMode"]:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode off")
+			config.conf["reviewCursor"]["simpleReviewMode"]=False
+		else:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode on")
+			config.conf["reviewCursor"]["simpleReviewMode"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle simple review mode command.
+	script_toggleSimpleReviewMode.__doc__=_("Toggles simple review mode on and off")
+	script_toggleSimpleReviewMode.category=SCRCAT_OBJECTNAVIGATION
+
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -1839,6 +1853,23 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for a braille command.
 	script_braille_dots.__doc__= _("Inputs braille dots via the braille keyboard")
 	script_braille_dots.category=SCRCAT_BRAILLE
+
+	def script_braille_toFocus(self, gesture):
+		if braille.handler.tether == braille.handler.TETHER_REVIEW:
+			self.script_navigatorObject_toFocus(gesture)
+		else:
+			if not braille.handler.mainBuffer.regions:
+				return
+			region = braille.handler.mainBuffer.regions[-1]
+			braille.handler.mainBuffer.focus(region)
+			if region.brailleCursorPos is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
+			elif region.brailleSelectionStart is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+			braille.handler.mainBuffer.updateDisplay()
+	# Translators: Input help mode message for a braille command.
+	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
+	script_braille_toFocus.category=SCRCAT_BRAILLE
 
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler

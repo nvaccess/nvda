@@ -370,8 +370,8 @@ As seguintes ordes están dispoñibles para revisión de texto:
 | Mover ó seguinte carácter en revisión | 3 teclado numérico | NVDA+frecha dereita | deslizar á dereita (modo texto) | Move o cursor de revisión ó seguinte carácter na liña actual de texto |
 | Mover ó final da liña en revisión | shift+3 teclado numérico | NVDA+fin  | non | Move o cursor de revisión ó final da liña actual de texto |
 | Ler todo con revisión | Máis teclado numérico | NVDA+shift+a | deslizar con 3 dedos abaixo (modo texto) | Le dende a posición actual do cursor de revisión, movéndoo segundo baixa |
-| copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | non | Comeza o copiado de texto dende a posición actual do cursor de revisión. A copia actual non se leva a cabo ata que digas ó NVDA onde copiar |
-| Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | non | Copia dende a posición fixada anteriormente con Copiar dende cursor de revisión ate e incluindo a actual posición do cursor de revisión.  Desppois de premer esta tecla, o texto copiarase ó portapapeis de Windows |
+| Selecionar logo Copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | none | Comeza a seleción logo procesa a copia dende a posición actual do cursor de revisión. A acción actual non se leva a cabo ata que digas ao NVDA onde está o final do rango de texto |
+| Seleccionar logo Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | none | Na primeira pulsación, o texto seleciónase dende enriba da posición previamente fixada coma a marca de comezo e incluindo a posición actual do cursor de revisión. Logo de premer esta tecla unha segunda vez, o texto copiarase ao portapapeis de Windows |
 | Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión. Premendo dúas veces amosa a información en modo exploración |
 %kc:endInclude
 
@@ -629,30 +629,39 @@ De xeito similar á web, NVDA ten unha Lista de Elementos para Microsoft Excel, 
 Para aceder á Lista de Elementos en Excel, preme NVDA+f7.
 %kc:endInclude
 Os diversos tipos de información dispoñible na Lista de Elementos son:
-- Gráficos: esto lista todos os gráficos na folla de traballo activa.
+- Gráficos: esto lista todos os gráficos na folla de cálculo activa.
 Seleccionando un gráfico e premendo Intro ou o botón Mover A enfoca o gráfico para navegar e ler cas teclas de cursor.
-- Comentarios: esto lista todas as celdas na folla de traballo activa que conteñan comentarios. 
+- Comentarios: esto lista todas as celdas na folla de cálculo activa que conteñan comentarios. 
 O enderezo da celda xunto cos seus comentarios amósase para cada celda. 
 Premendo Intro ou o botón Mover a cando se estea sobre un comentario listado moverase directamente a esa celda.
-- Fórmulas: esto lista todas as celdas na folla de traballo activa que conteñan unha fórmula. 
+- Fórmulas: esto lista todas as celdas na folla de cálculo activa que conteñan unha fórmula. 
 O enderezo da celda xunto ca súa fórmula amósase para cada celda.
 Premendo Intro ou o botón Mover A sobre unha fórmula listada moverase directamente a esa celda. 
 - Follas: esto lista todas as follas no libro de traballo. 
 Premendo f2 cando se estea sobre unha folla listada permíteche renomear a folla. 
 Premendo Intro ou o botón Mover A mentres se estea sobre a folla listada cambiará a esa folla.
+- Campos de formulario: esto lista todos os campos de formulario na folla de cálculo activa.
+Para cada campo de formulario, a Lista de Elementos amosa o texto alternativo do campo xunto cos enderezos das celdas que cubra.
+Ao selecionar un campo de formulario e ao premer intro ou o botón Mover móveste a ese campo en modo exploración.
 -
 
 +++ Anunciando Comentarios +++
 %kc:beginInclude
 Para anunciar calquera comentario para a celda actualmente enfocada, preme NVDA+alt+c.
 %kc:endInclude
-Todos os comentarios para a folla de traballo tamén poden listarse na Lista de Elementos de NVDA.
+Todos os comentarios para a folla de cálculo tamén poden listarse na Lista de Elementos de NVDA.
 
 +++ Lendo Celdas Protexidas +++
 Se un libro de traballo foi protexido, podería non seren posible mover o foco a celdas en particular que foran bloqueadas para edición.
 %kc:beginInclude
 Para permitir o movemento a celdas bloqueadas, cambia a modo Exploración premendo NVDA+espazo, e entón usa as ordes estándar de movemento de Excel  como as teclas de cursor para moverte por todas as celdas na folla de cálculo actual.
 %kc:endInclude
+
++++ Campos de Formulario +++
+As follas de cálculo de Excel poden incluir campos de formulario.
+Podes aceder a éstos usando a Lista de Elementos ou as teclas de navegación cunha soa letra para campos de formulario f e shift+f.
+Unha vez te movas a un campo de formulario en modo exploración, podes premer intro ou espazo para activalo ou cambiar a modo foco para poder interactuar con el, dependendo do control.
+Para información adicional acerca do modo exploración e da navegación cunha soa tecla, consulta a [sección Modo Exploración #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Cando se activa, o cursor de revisión seguirá ó rato segundo se mova.
 ==== Modo de Revisión Sinxelo ====
 Cando se activa, NVDA filtrará a xerarquía de obxectos que pode navegarse, para excluir calquer obxecto que non sexa do interese para o usuario; ex.: obxectos invisibles e obxectos utilizados só con propósitos de deseño.
 
+Para conmutar o modo de revisión sinxela dende calquera lado, por favor asigna un Xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
+
 +++ Opcións de Presentación de Obxectos (NVDA+control+o) +++
 Atópase no menú Preferencias baixo "Presentación de Obxectos..." 
 Esta caixa de diálogo contén as seguintes opcións:
@@ -1190,6 +1201,7 @@ Podes configurar o anunciado de:
 - Atributos de fonte
 - Alineamento do texto
 - Cores
+- Comentarios
 - Revisións do editor
 - Énfase
 - Estilo do texto
@@ -1198,6 +1210,7 @@ Podes configurar o anunciado de:
 - Números de liña
 - Sangría de liña
 - Sangría de parágrafo (por exemplo: sangría francesa, sangría de primeira liña)
+- espaciado de liña (simple, doble etc)
 - Táboas
 - Cabeceiras de fila/columna de táboa
 - Coordinadas de celdas da táboa
@@ -1421,11 +1434,11 @@ Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deter�
 Para conmutar o visualizador de voz dende calquera lugar, por favor asigna un xesto persoalizado utilizando o [diálogo Xestos de Entrada #InputGestures].
 
 ++ Administrador de Complementos ++
-O Administrador de Complementos, ó que se accesa seleccionando Administrador de complementos baixo Ferramentas no menú NVDA, permíteche instalar e desinstalar paquetes de complementos para o NVDA.
+O Administrador de Complementos, ao que se accesa selecionando Xestionar Complementos baixo Ferramentas no menú NVDA, permíteche instalar, desinstalar, habilitar e deshabilitar os paquetes de complementos para o NVDA.
 Estos paquetes son proporcionados pola comunidade e conteñen código persoalizado que poderá engadir ou cambiar características no NVDA ou tamén proporcionan soporte para liñas Braille ou sintetizadores de voz extra.
 
 O Administrador de Complementos contén unha lista que amosa todos os complementos instalados actualmente na túa configuración do usuario do NVDA. 
-Amósase un nome de paquete, versión e autor para cada complemento, aíndaque se pode ver máis información coma unha descripción e unha URL seleccionando o complemento e premendo o botón Acerca do complemento.
+Amósase o nome de paquete, o estado, a versión e o autor para cada complemento, aíndaque se pode ver máis información coma unha descripción e unha URL seleccionando o complemento e premendo o botón Acerca do complemento.
 Se hai axuda dispoñible para o complemento seleccionado, podes acceder a ela premendo o seu botón de Axuda.
 
 Para examinar e descargar os complementos dispoñibles online, preme o botón Obter Complementos.
@@ -1447,8 +1460,14 @@ NVDA preguntarache se realmente desexas facer esto.
 Ó igual que ca instalación, NVDA debe reiniciarse para que o complemento sexa eliminado compretamente.
 Ata que o fagas, un estado de "eliminar" amosarase para ese complemento na lista.
 
+Para deshabilitar un complemento, preme o botón deshabilitar.
+Para habilitar un comnplemento anteriormente deshabilitado, preme o botón habilitar.
+Podes deshabilitar un complemento se o seu estado indica que está en execución ou habilitado, ou habilitarlo se o complemento está suspendido ou deshabilitado.
+Para cada pulsación do botón habilitar/deshabilitar, o estado do complemento cambia para indicar que ocurrirá ao reiniciar NVDA.
+Ao igual que cando instalas ou eliminas complementos, tes que reiniciar o NVDA para que os cambios teñan efecto.
+
 O administrador tamén ten un botón Pechar para pechar o diálogo.
-Se instalaches ou eliminaches complementos, NVDA primeiro preguntarache se desexas reiniciar para que os cambios podan levarse a cabo.
+Se instalaches, eliminaches ou cambiaches o estado dos complementos, NVDA primeiro preguntarache se desexas reiniciar para que os cambios podan levarse a cabo.
 
 No pasado foi posible extender a funcionalidade do NVDA copiando plugins e controladores individuais no teu directorio de configuración do usuario do NVDA.
 Aíndaque esta versión do NVDA aínda poderá cargalos, Non se amosarán no Administrador de Complementos.
@@ -1593,11 +1612,17 @@ Seguidamente van as asignacións de teclas para esta liña co NVDA.
 Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
 %kc:beginInclude
 || Nome | Tecla |
-| Desprazar liña braille cara atrás | t1 |
+| Desprazar liña braille cara atrás | t1 ou etouch1 |
 | Mover a liña braille á liña anterior | t2 |
+| Mover ao foco actual | t3 |
 | Mover a liña braille á a liña seguinte | t4 |
-| Desprazar liña braille cara adiante | t5 |
+| Desprazar liña braille cara adiante | t5 ou etouch3 |
 | Guiar á celda braille | sensor |
+| Mover á liña superior en revisión | t1+t2 |
+| Mover á liña inferior en revisión | t4+t5 |
+| Conmutar o seguemento braille | t1+t3 |
+| Anunciar o título | etouch2 |
+| Anunciar a barra de estado | etouch4 |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
@@ -1609,8 +1634,13 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | tecla intro | spEnter |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicacións) | sp1+sp4 |
+| Tecla windows+b (enfocar a bandexa do sistema) | sp3+sp4 |
 | tecla windows | sp2+sp3 |
 | tecla alt+tab | sp2+sp4 |
+| tecla control+inicio | t3+spArriba |
+| tecla control+fin | t3+spAbaixo |
+| tecla inicio | t3+spEsquerda |
+| tecla fin | t3+spDereita |
 %kc:endInclude
 
 ++ Liñas Handy Tech ++
