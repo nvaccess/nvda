@@ -238,5 +238,5 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVariants(self):
 		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.iteritems())
 
-	def _get_busy(self):
+	def _get_isSpeaking(self):
 		return _espeak.isSpeaking

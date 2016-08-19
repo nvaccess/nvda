@@ -185,7 +185,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	Each setting is retrieved and set using attributes named after the setting;
 	e.g. the L{voice} attribute is used for the L{voice} setting.
 	These will usually be properties.
-	The L{busy} attribute indicates whether a synthesiser is engaged in speech output.
 	The L{lastIndex} attribute should also be provided.
 	@ivar supportedSettings: The settings supported by the synthesiser.
 	@type supportedSettings: list or tuple of L{SynthSetting}
@@ -205,8 +204,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@type availableVariants: OrderedDict of [L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar inflection: The current inflection; ranges between 0 and 100.
 	@type inflection: int
-	@ivar busy: C{True} if synth is engaged in speech output.
-	@type busy: bool
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
 	@type lastIndex: int
 	"""
@@ -364,9 +361,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def cancel(self):
 		"""Silence speech immediately.
 		"""
-
-	def _get_busy(self):
-		return False
 
 	def _get_language(self):
 		return self.availableVoices[self.voice].language

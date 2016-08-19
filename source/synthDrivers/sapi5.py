@@ -305,5 +305,5 @@ class SynthDriver(SynthDriver):
 		if switch:
 			self.cancel()
 
-	def _get_busy(self):
+	def _get_isSpeaking(self):
 		return self.tts.Status.RunningState != 1

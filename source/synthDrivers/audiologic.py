@@ -83,6 +83,6 @@ class SynthDriver(SynthDriver):
 		else:
 			_audiologic.TtsRestart()
 
-	def _get_busy(self):
+	def _get_isSpeaking(self):
 		_audiologic.TtsGetStatus()
 		return _audiologic.Tts3Status().SynthStatus != _audiologic.SYNTH_IDLE
