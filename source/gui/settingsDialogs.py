@@ -1434,6 +1434,9 @@ class BrailleSettingsDialog(SettingsDialog):
 	title = _("Braille Settings")
 
 	def makeSettings(self, settingsSizer):
+		dropDownLabelBorder = 10
+		dropDownLabelFlags = wx.RIGHT | wx.ALIGN_CENTER_VERTICAL # border on right, center vertically.
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to choose a braille display.
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &display:"))
@@ -1446,7 +1449,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.displayList.SetSelection(selection)
 		except:
 			pass
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags) 
 		sizer.Add(self.displayList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
@@ -1454,7 +1457,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("&Port:"))
 		self.portsList = wx.Choice(self, wx.ID_ANY, choices=[])
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		sizer.Add(self.portsList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 		self.updatePossiblePorts()
@@ -1469,7 +1472,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.tableList.SetSelection(selection)
 		except:
 			pass
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		sizer.Add(self.tableList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
@@ -1483,7 +1486,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.inputTableList.SetSelection(selection)
 		except:
 			pass
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		sizer.Add(self.inputTableList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
@@ -1501,7 +1504,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor blink rate (ms)"))
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		self.cursorBlinkRateEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.cursorBlinkRateEdit.SetValue(str(config.conf["braille"]["cursorBlinkRate"]))
 		if not self.showCursorCheckBox.GetValue():
@@ -1521,17 +1524,17 @@ class BrailleSettingsDialog(SettingsDialog):
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.shapeList.Disable()
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		sizer.Add(self.shapeList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Message timeout (sec)"))
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		self.messageTimeoutEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.messageTimeoutEdit.SetValue(str(config.conf["braille"]["messageTimeout"]))
-		sizer.Add(self.messageTimeoutEdit)
+		sizer.Add(self.messageTimeoutEdit, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1545,7 +1548,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.tetherList.SetSelection(selection)
 		except:
 			pass
-		sizer.Add(label)
+		sizer.Add(label, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		sizer.Add(self.tetherList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
