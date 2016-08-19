@@ -640,15 +640,9 @@ Premendo il tasto Invio o il pulsante Vai in presenza di una formula ci si spost
 - Fogli: Elenca tutti i fogli della cartella di lavoro.
 Premendo f2 nell'elenco dei fogli permette di rinominare il foglio selezionato.
 Premendo il tasto Invio o il pulsante Vai in presenza di un foglio ci si sposterà a quel determinato foglio.
-- Campi del form: elenca tutti i campi del form contenuti nella cartella di lavoro attiva.
-Per ciascun campo del form, 
-
-
-
-
-
-
-
+- Campi: elenca tutti i campi del form contenuti nella cartella di lavoro attiva.
+Per ciascun campo, l'elenco elementi visualizza il testo alternativo del campo assieme all'indirizzo delle celle che lo riguardano. 
+Selezionando un campo premendo invio o utilizzando il pulsante "vai a" provocherà lo spostamento in quel campo in modalità navigazione.
 -
 
 +++ Leggere i commenti +++
@@ -660,8 +654,14 @@ Si noti che tutti i commenti del foglio di lavoro possono essere raggiunti anche
 +++ Lettura di celle protette +++
 Se una cartella di lavoro è stata protetta, potrebbe non essere possibile portare il focus in alcune celle che non possono essere modificate.
 %kc:beginInclude
-Per spostarsi in una cella protetta, spassare alla modalità navigazione premendo NVDA+Spazio, dopodiché utilizzare i comandi standard di Excel come le frecce per spostarsi tra le celle del foglio di lavoro.
+Per spostarsi in una cella protetta, passare alla modalità navigazione premendo NVDA+Spazio, dopodiché utilizzare i comandi standard di Excel come le frecce per spostarsi tra le celle del foglio di lavoro.
 %kc:endInclude
+
++++ Campi +++
+Le cartelle di lavoro di Excel possono includere i campi.
+è possibile accedervi  attraverso l'elenco elementi oppure premendo i tasti di navigazione rapida per lettera f o shift+f.
+Una volta raggiunto un campo in modalità navigazione, premere invio o la barra spaziatrice per attivarlo o per interagire con esso in modalità focus.
+Per ulteriori informazioni sulla modalità di navigazione e i caratteri singoli, si veda la [sezione modalità navigazione #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1059,6 +1059,8 @@ Quando questa casella di controllo è attiva, il cursore di controllo seguirà i
 
 ==== Modalità semplice ====
 Quando questa casella di controllo è attiva, NVDA filtrerà la gerarchia di oggetti che possono essere raggiunti col navigatore ad oggetti, in modo da escludere oggetti di poco interesse per l'utente; ad esempio, oggetti invisibili o che sono usati esclusivamente  per il layout.
+
+Per abilitare o disabilitare la modalità semplice da qualsiasi punto ci si trovi, assegnare un gesto personalizzato servendosi della [finestra gesti e tasti di immissione #InputGestures].
 
 +++ Presentazione oggetti (NVDA+Control+o) +++
 Situata sul menu preferenze alla voce presentazione oggetti..., 
