@@ -905,6 +905,9 @@ class ObjectPresentationDialog(SettingsDialog):
 	)
 
 	def makeSettings(self, settingsSizer):
+		dropDownLabelBorder = 10
+		dropDownLabelFlags = wx.RIGHT | wx.ALIGN_CENTER_VERTICAL # border on right, center vertically.
+
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
 		self.tooltipCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tooltips"))
@@ -939,7 +942,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		# Translators: This is the label for a combobox in the
 		# object presentation settings dialog.
 		progressLabel=wx.StaticText(self,-1,label=_("Progress &bar output:"))
-		progressSizer.Add(progressLabel)
+		progressSizer.Add(progressLabel, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		progressListID=wx.NewId()
 		# Translators: This is the name of a combobox in the
 		# object presentation settings dialog.
