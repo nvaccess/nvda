@@ -629,11 +629,14 @@ class KeyboardSettingsDialog(SettingsDialog):
 	title = _("Keyboard Settings")
 
 	def makeSettings(self, settingsSizer):
+		dropDownLabelBorder = 10
+		dropDownLabelFlags = wx.RIGHT | wx.ALIGN_CENTER_VERTICAL # border on right, center vertically.
+
 		kbdSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: This is the label for a combobox in the
 		# keyboard settings dialog.
 		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout:"))
-		kbdSizer.Add(kbdLabel)
+		kbdSizer.Add(kbdLabel, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		kbdListID=wx.NewId()
 		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
 		self.kbdNames=sorted(layouts)
@@ -743,6 +746,9 @@ class MouseSettingsDialog(SettingsDialog):
 	title = _("Mouse Settings")
 
 	def makeSettings(self, settingsSizer):
+		dropDownLabelBorder = 10
+		dropDownLabelFlags = wx.RIGHT | wx.ALIGN_CENTER_VERTICAL # border on right, center vertically.
+
 		# Translators: This is the label for a checkbox in the
 		# mouse settings dialog.
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
@@ -757,7 +763,7 @@ class MouseSettingsDialog(SettingsDialog):
 		# Translators: This is the label for a combobox in the
 		# mouse settings dialog.
 		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution:"))
-		textUnitSizer.Add(textUnitLabel)
+		textUnitSizer.Add(textUnitLabel, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		import textInfos
 		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
 		# Translators: This is the name of a combobox in the mouse settings dialog.
