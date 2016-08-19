@@ -298,6 +298,9 @@ class SynthesizerDialog(SettingsDialog):
 	title = _("Synthesizer")
 
 	def makeSettings(self, settingsSizer):
+		dropDownLabelBorder = 10
+		dropDownLabelFlags = wx.RIGHT | wx.ALIGN_CENTER_VERTICAL # border on right, center vertically.
+
 		synthListSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: This is a label for the select
 		# synthesizer combobox in the synthesizer dialog.
@@ -312,7 +315,7 @@ class SynthesizerDialog(SettingsDialog):
 			self.synthList.SetSelection(index)
 		except:
 			pass
-		synthListSizer.Add(synthListLabel)
+		synthListSizer.Add(synthListLabel, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		synthListSizer.Add(self.synthList)
 		settingsSizer.Add(synthListSizer,border=10,flag=wx.BOTTOM)
 		deviceListSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -329,7 +332,7 @@ class SynthesizerDialog(SettingsDialog):
 		except ValueError:
 			selection = 0
 		self.deviceList.SetSelection(selection)
-		deviceListSizer.Add(deviceListLabel)
+		deviceListSizer.Add(deviceListLabel, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		deviceListSizer.Add(self.deviceList)
 		settingsSizer.Add(deviceListSizer,border=10,flag=wx.BOTTOM)
 		duckingListSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -339,7 +342,7 @@ class SynthesizerDialog(SettingsDialog):
 		self.duckingList=wx.Choice(self,duckingListID,choices=audioDucking.audioDuckingModes)
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
-		duckingListSizer.Add(duckingListLabel)
+		duckingListSizer.Add(duckingListLabel, border=dropDownLabelBorder, flag=dropDownLabelFlags)
 		duckingListSizer.Add(self.duckingList)
 		if not audioDucking.isAudioDuckingSupported():
 			self.duckingList.Disable()
