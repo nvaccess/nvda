@@ -1833,33 +1833,39 @@ class InputGesturesDialog(SettingsDialog):
 	title = _("Input Gestures")
 
 	def makeSettings(self, settingsSizer):
+		# Translators: The label of a group of controls for input gestures in the Input Gestures dialog.
+		gesturesGroupSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("&Gestures")), wx.VERTICAL)
+		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-		settingsSizer.Add(wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:")))
+		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
+		filterSizer.Add(filterLabel, border=10, flag=wx.RIGHT|wx.ALIGN_CENTER_VERTICAL)
 		filter = wx.TextCtrl(self)
 		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
-		settingsSizer.Add(filter)
+		filterSizer.Add(filter, proportion=1)
+		gesturesGroupSizer.Add(filterSizer, border = 5, flag=wx.BOTTOM|wx.EXPAND)
 		tree = self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
 		self.treeRoot = tree.AddRoot("root")
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
-		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
+		gesturesGroupSizer.Add(tree, proportion=1, border=5, flag=wx.EXPAND|wx.BOTTOM)
 
 		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
 		self.populateTree()
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
 		item = self.addButton = wx.Button(self, label=_("&Add"))
 		item.Bind(wx.EVT_BUTTON, self.onAdd)
 		item.Disable()
-		sizer.Add(item)
+		buttonSizer.Add(item)
 		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 		item = self.removeButton = wx.Button(self, label=_("&Remove"))
 		item.Bind(wx.EVT_BUTTON, self.onRemove)
 		item.Disable()
 		self.pendingAdds = set()
 		self.pendingRemoves = set()
-		sizer.Add(item)
-		settingsSizer.Add(sizer)
+		buttonSizer.Add(item, border=7, flag=wx.LEFT)
+		gesturesGroupSizer.Add(buttonSizer)
+		settingsSizer.Add(gesturesGroupSizer, border=10, flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.tree.SetFocus()
