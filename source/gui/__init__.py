@@ -718,7 +718,7 @@ class ExitDialog(wx.Dialog):
 		actionSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for actions list in the Exit dialog.
 		actionsLabel=wx.StaticText(self,-1,label=_("What would you like to &do?"))
-		actionSizer.Add(actionsLabel)
+		actionSizer.Add(actionsLabel,border=10,flag=wx.RIGHT|wx.ALIGN_CENTER_VERTICAL)
 		actionsListID=wx.NewId()
 		self.actions = [
 		# Translators: An option in the combo box to choose exit action.
@@ -730,9 +730,9 @@ class ExitDialog(wx.Dialog):
 		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
 		self.actionsList.SetSelection(0)
 		actionSizer.Add(self.actionsList)
-		mainSizer.Add(actionSizer,border=10,flag=wx.CENTER)
+		mainSizer.Add(actionSizer,border=10,flag=wx.ALL)
 
-		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL), border=5, flag=wx.ALL)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
