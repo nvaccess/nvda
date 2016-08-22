@@ -32,7 +32,39 @@ VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWin
 	LOG_DEBUG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 }
 
-void VBufBackend_t::initialize() {
+void VBufBackend_t::initialize(const wchar_t* labels) {
+			  wstring labelsStr=wstring(labels);
+			  wstring str, key;
+			  	bool inEscape = false;
+			  	for (wstring::const_iterator it = labelsStr.begin(); it != labelsStr.end(); ++it) {
+			  		if (inEscape) {
+			  			str.push_back(*it);
+			  			inEscape = false;
+			  		} else if (*it == L'\\') {
+			  			inEscape = true;
+			  		} else if (*it == L':') {
+			  			// We're about to move on to the value, so save the key and clear str.
+			  			key = str;
+			  			str.clear();
+			  		} else if (*it == L',' || *it == L';' || *it == L'}') {
+			  			// We're about to move on to a new attribute or another value for the same attribute.
+			  			// In either case, the current value ends here.
+			  			// Add this key/value pair to the map.
+			  			if (!key.empty()) {
+			  				labelsMap.insert(pair<wstring, wstring>(key, str));
+			  				if (*it == L';') {
+			  					// We're about to move on to a new attribute.
+			  					key.clear();
+			  				}
+			  			}
+			  			str.clear();
+			  		} else if (*it == '{' || *it == L'\'' || *it == L'\'') {
+
+			  		} else {
+			  			str.push_back(*it);
+			  		}
+			  	}
+
 	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);

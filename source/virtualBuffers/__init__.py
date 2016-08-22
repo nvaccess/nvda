@@ -37,6 +37,13 @@ import nvwave
 import treeInterceptorHandler
 import watchdog
 
+from urlparse import urlparse
+from ConfigParser import SafeConfigParser
+import os
+import globalVars
+import wx
+import gui
+
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
@@ -366,7 +373,24 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def _loadBuffer(self):
 		try:
-			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
+  			weblink=self.documentConstantIdentifier
+  			parsed_uri = urlparse( weblink )
+  		 	domain='{uri.netloc}'.format(uri=parsed_uri)
+   		 	domain=domain.replace('.','_')
+   		  	domain=domain.replace(':','_')
+   		  	domain=domain.replace('\\','_')
+   		  	filename=domain+'.ini'
+   		  	labels={}
+  		  	config = SafeConfigParser()
+		  	config.read(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
+		  	try:
+		  		options = config.options('Section')
+		  		for option in options:
+		  			labels[option]=config.get('Section', option)
+		  	except Exception as e:
+		  		pass
+			
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),unicode(labels))
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:

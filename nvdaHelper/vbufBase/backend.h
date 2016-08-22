@@ -114,6 +114,8 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 	virtual ~VBufBackend_t();
 
+	std::map<std::wstring,std::wstring> labelsMap;
+
 	public:
 
 /**
@@ -127,7 +129,7 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
 /**
  * Initializes the state of the backend and performs an initial rendering of content.
  */
-	virtual void initialize();
+	virtual void initialize(const wchar_t* labels);
 
 /**
  * identifies the window or document where the backend starts rendering from

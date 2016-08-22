@@ -28,6 +28,13 @@ from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
 
+from urlparse import urlparse
+import wx
+import gui
+from ConfigParser import SafeConfigParser
+import os
+import globalVars
+
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
 class UIAMSHTMLTextInfo(UIATextInfo):
@@ -975,6 +982,91 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+		
+	def getFilenameFromElementDomain(self):
+		weblink=getattr(self.HTMLNode.document,'url',"")
+ 		parsed_uri = urlparse( weblink )
+ 		domain='{uri.netloc}'.format(uri=parsed_uri)
+  		domain=domain.replace('.','_')
+  		domain=domain.replace(':','_')
+  		domain=domain.replace('\\','_')
+  		filename=domain+'.ini'
+  		#filename="testing.ini"
+  		return filename
+  	
+	def script_assignCustomLabel(self, gesture):
+		if (self.HTMLNode.nodeName=="IMG"):
+			srcAttribute=self.HTMLAttributes['src']
+			nameAttribute=None
+			linkAttribute=None
+# 			log.info("srcAttribute is: %s",srcAttribute)
+		elif (self.HTMLNode.nodeName=="A"):
+			linkAttribute=self.HTMLAttributes['href']
+			nameAttribute=None
+			srcAttribute=None
+# 			log.info("linkAttributeis: %s",linkAttribute)
+		else:
+			nameAttribute=self.HTMLAttributes['name']
+			linkAttribute=None
+			srcAttribute=None
+# 			log.info("name Attributeis: %s",nameAttribute)
+		if linkAttribute:
+			linkAttribute=linkAttribute.replace(':','')
+			linkAttribute=linkAttribute.replace('/','')
+			linkAttribute=linkAttribute.replace('.','')
+			
+		if srcAttribute:
+			srcAttribute=srcAttribute.replace(':','')
+			srcAttribute=srcAttribute.replace('/','')
+			srcAttribute=srcAttribute.replace('.','')
+			srcAttribute=srcAttribute.replace(';','')
+			srcAttribute=srcAttribute.replace('?','')
+			srcAttribute=srcAttribute.replace('%','')
+		filename=self.getFilenameFromElementDomain()
+		
+		config = SafeConfigParser()
+		
+		if not os.path.exists(os.path.join(globalVars.appArgs.configPath, "webLabels")):
+			os.makedirs(os.path.join(globalVars.appArgs.configPath, "webLabels"))
+			
+		config.read(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
+		if not config.has_section('Section'):
+			config.add_section('Section')
+			
+		try:
+			if (self.HTMLNode.nodeName=="IMG"):
+				defaultCustomLabel=config.get('Section', str(srcAttribute))
+			elif (self.HTMLNode.nodeName=="A"):
+				defaultCustomLabel=config.get('Section', str(linkAttribute))
+			else:
+				defaultCustomLabel=config.get('Section', str(nameAttribute))
+		except Exception as e:
+			defaultCustomLabel=u""
+		
+		if nameAttribute or linkAttribute or srcAttribute:
+			d = wx.TextEntryDialog(gui.mainFrame, 
+			# Translators: Dialog text for 
+			_("Custom Label Edit"),
+			# Translators: Title of a dialog edit an Excel comment 
+			_("Custom Label"),
+			defaultValue=defaultCustomLabel,
+			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
+			#btn1 = wx.Button(d, label = "Delete") 
+			def callback(result):
+				if result == wx.ID_OK:
+					if (self.HTMLNode.nodeName=="IMG"):
+						config.set('Section', srcAttribute, d.Value)
+					if (self.HTMLNode.nodeName=="A"):
+						config.set('Section', linkAttribute, d.Value)
+					else:
+						config.set('Section', nameAttribute, d.Value)
+					with open(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename),'w') as configfile:
+						config.write(configfile)
+			gui.runScriptModalDialog(d, callback)
+		
+	__gestures = {
+		"kb:NVDA+control+tab": "assignCustomLabel",
+		}
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.

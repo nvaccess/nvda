@@ -462,6 +462,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 		macro_addHTMLAttributeToMap(L"rowspan",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"scope",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	}
+	macro_addHTMLAttributeToMap(L"name",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"longdesc",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"alt",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"title",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -1072,6 +1073,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 				// There is alt text, so use it.
 				contentString = tempIter->second;
 			}
+
 		} else if ((tempIter = attribsMap.find(L"HTMLAttrib::title")) != attribsMap.end()) {
 			// There is a title, so use it.
 			contentString = tempIter->second;
@@ -1080,7 +1082,36 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		else if (isInteractive && !IAValue.empty()) {
 			// The graphic is unlabelled, but we should try to derive a name for it.
 			contentString=getNameForURL(IAValue);
-		} 
+		}
+
+		//////////////////////////////////
+		if ((tempIter = attribsMap.find(L"HTMLAttrib::src")) != attribsMap.end()) {
+			renderChildren=true;
+			wstring wSrcAttribute=tempIter->second;
+			wstring srcAttribute;
+			for (wstring::const_iterator it = wSrcAttribute.begin(); it != wSrcAttribute.end(); ++it)
+			{
+				if (*it != L':' && *it != L'/' && *it != L'.')
+				{
+					srcAttribute.push_back(*it);
+				}
+			}
+			for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
+			{
+				wstring key = it->first;
+				wstring value = it->second;
+				if (srcAttribute.compare(key)==0)
+				{
+					contentString=it->second;
+					renderChildren=false;
+				}
+//				else {
+//					renderChildren=true;
+//				}
+			}
+		}
+		/////////////////////////////////
+
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
 		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"file")==0) {
@@ -1130,6 +1161,32 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		||nodeName.compare(L"MATH")==0
 	) {
 		contentString=L" ";
+	} else if((nodeName.compare(L"A")==0)&&(attribsMap.find(L"HTMLAttrib::href")!=attribsMap.end())) {
+		renderChildren=true;
+		tempIter = attribsMap.find(L"HTMLAttrib::href");
+		wstring wLinkAttribute=tempIter->second;
+		wstring linkAttribute;
+		for (wstring::const_iterator it = wLinkAttribute.begin(); it != wLinkAttribute.end(); ++it)
+		{
+			if (*it != L':' && *it != L'/' && *it != L'.')
+			{
+				linkAttribute.push_back(*it);
+			}
+		}
+		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
+		{
+			wstring key = it->first;
+			wstring value = it->second;
+			if (linkAttribute.compare(key)==0)
+			{
+				contentString=it->second;
+				renderChildren=false;
+			}
+//			else {
+//				renderChildren=true;
+//			}
+		}
+
 	} else {
 		renderChildren=true;
 	}
@@ -1140,7 +1197,34 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end()
 		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
 	)))
-		attribsMap[L"name"]=IAName;
+		{attribsMap[L"name"]=IAName;
+		LOG_INFO(L"attribs1:"<<attribsMap[L"name"]);
+		}
+
+	tempIter = attribsMap.find(L"HTMLAttrib::name");
+	if(tempIter!=attribsMap.end())
+	{
+		wstring nameAttribute=tempIter->second;
+		transform(nameAttribute.begin(), nameAttribute.end(),nameAttribute.begin(), tolower);
+		LOG_INFO(L"nameAttribute is:"<<nameAttribute);
+		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
+			{
+				wstring key = it->first;
+				wstring value = it->second;
+			//	LOG_INFO(L"key is:"<<key);
+			//	LOG_INFO(L"value is:"<<value);
+				transform(key.begin(), key.end(), key.begin(), tolower);
+				if (nameAttribute.compare(key)==0)
+				{
+					LOG_INFO(L"Compared");
+					contentString=it->second;
+					//LOG_INFO(L"Content:"<<contentString);
+					attribsMap[L"name"]=it->second;
+					LOG_INFO(L"attribs:"<<attribsMap[L"name"]);
+					renderChildren=false;
+				}
+			}
+	}
 
 	//Add a textNode to the buffer containing any special content retreaved
 	if(!hidden&&!contentString.empty()) {

@@ -48,7 +48,7 @@ interface VBuf {
  * @param backendName The name of the backend (the path to the correct dll will be calculated automatically)
  * @return a handle identifying the new virtual buffer.
  */
-	VBufRemote_bufferHandle_t createBuffer([in] handle_t bindingHandle, [in] int docHandle, [in] int ID, [in,string] const wchar_t* backendName);
+	VBufRemote_bufferHandle_t createBuffer([in] handle_t bindingHandle, [in] int docHandle, [in] int ID, [in,string] const wchar_t* backendName,[in,string] const wchar_t* labels);
 
 /**
  * Destroies a virtual buffer
