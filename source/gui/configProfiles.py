@@ -34,35 +34,45 @@ class ProfilesDialog(wx.Dialog):
 		self.profileNames = [None]
 		self.profileNames.extend(config.conf.listProfiles())
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of the profile list in the Configuration Profiles dialog.
-		sizer.Add(wx.StaticText(self, label=_("&Profile")))
+		# Translators: The label of the profiles group in the Configuration Profiles dialog.
+		profilesListGroupSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("&Profiles")), wx.HORIZONTAL)
+
+		sizer = wx.BoxSizer(wx.VERTICAL)
 		item = self.profileList = wx.ListBox(self,
 			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames])
 		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		sizer.Add(item, proportion=1.0)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		spaceBetweenButtons = 3
 		item = self.changeStateButton = wx.Button(self)
 		item.Bind(wx.EVT_BUTTON, self.onChangeState)
-		sizer.Add(item)
 		self.AffirmativeId = item.Id
 		item.SetDefault()
+		sizer.AddSpacer(spaceBetweenButtons)
+		sizer.Add(item)
+
+		profilesListGroupSizer.Add(sizer, flag = wx.EXPAND)
+		profilesListGroupSizer.AddSpacer(5)
+
+		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of a button to create a new configuration profile.
 		item = newButton = wx.Button(self, label=_("&New"))
 		item.Bind(wx.EVT_BUTTON, self.onNew)
 		sizer.Add(item)
+		sizer.AddSpacer(spaceBetweenButtons)
 		# Translators: The label of a button to rename a configuration profile.
 		item = self.renameButton = wx.Button(self, label=_("&Rename"))
 		item.Bind(wx.EVT_BUTTON, self.onRename)
 		sizer.Add(item)
+		sizer.AddSpacer(spaceBetweenButtons)
 		# Translators: The label of a button to delete a configuration profile.
 		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
 		item.Bind(wx.EVT_BUTTON, self.onDelete)
 		sizer.Add(item)
-		mainSizer.Add(sizer)
+		profilesListGroupSizer.Add(sizer)
+
+		mainSizer.Add(profilesListGroupSizer, flag=wx.ALL, border=5)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a button to manage triggers
@@ -71,16 +81,17 @@ class ProfilesDialog(wx.Dialog):
 		triggersButton = wx.Button(self, label=_("&Triggers..."))
 		triggersButton.Bind(wx.EVT_BUTTON, self.onTriggers)
 		sizer.Add(triggersButton)
+		sizer.AddSpacer(5)
 		# Translators: The label of a checkbox in the Configuration Profiles dialog.
 		item = self.disableTriggersToggle = wx.CheckBox(self, label=_("Temporarily d&isable all triggers"))
 		item.Value = not config.conf.profileTriggersEnabled
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		sizer.Add(item, flag=wx.ALIGN_CENTER_VERTICAL)
+		mainSizer.Add(sizer, flag=wx.ALL, border=10)
 
 		# Translators: The label of a button to close a dialog.
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(item)
+		mainSizer.Add(item, flag=wx.ALL, border=10)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
 
