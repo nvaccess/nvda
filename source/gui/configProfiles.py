@@ -378,10 +378,11 @@ class NewProfileDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a field to enter the name of a new configuration profile.
-		sizer.Add(wx.StaticText(self, label=_("Profile name:")))
+		sizer.Add(wx.StaticText(self, label=_("Profile name:")), flag=wx.ALIGN_CENTER_VERTICAL)
+		sizer.AddSpacer(5)
 		item = self.profileName = wx.TextCtrl(self)
 		sizer.Add(item)
-		mainSizer.Add(sizer)
+		mainSizer.Add(sizer, border=10, flag=wx.ALL)
 
 		# Translators: The label of a radio button to specify that a profile will be used for manual activation
 		# in the new configuration profile dialog.
@@ -392,9 +393,9 @@ class NewProfileDialog(wx.Dialog):
 		item.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
-		mainSizer.Add(item)
+		mainSizer.Add(item, border=5, flag=wx.ALL)
 
-		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL), border=5, flag=wx.ALL)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
