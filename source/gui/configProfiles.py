@@ -309,27 +309,28 @@ class TriggersDialog(wx.Dialog):
 				continue
 			triggers.append(TriggerInfo(spec, disp, profile))
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 		sizer.Add(wx.StaticText(self, label=_("Triggers")))
 		item = self.triggerList = wx.ListBox(self, choices=[trig.display for trig in triggers])
 		item.Bind(wx.EVT_LISTBOX, self.onTriggerListChoice)
 		item.Selection = 0
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		sizer.Add(item, flag=wx.EXPAND)
+		mainSizer.Add(sizer, border=10, flag=wx.ALL|wx.EXPAND)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the profile list in the Configuration Profile Triggers dialog.
-		sizer.Add(wx.StaticText(self, label=_("Profile")))
+		sizer.Add(wx.StaticText(self, label=_("Profile")), flag=wx.ALIGN_CENTER_VERTICAL)
+		sizer.AddSpacer(5)
 		item = self.profileList = wx.Choice(self,
 			choices=[parent.getProfileDisplay(name) for name in parent.profileNames])
 		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		sizer.Add(item, proportion=1.0)
+		mainSizer.Add(sizer, border=10, flag=wx.ALL|wx.EXPAND)
 
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(item)
+		mainSizer.Add(item, border=10, flag=wx.ALL)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.AffirmativeId = wx.ID_CLOSE
 		item.SetDefault()
