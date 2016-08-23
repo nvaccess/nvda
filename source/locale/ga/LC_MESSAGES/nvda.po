@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: NVDA 2016.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-14 20:18+0100\n"
+"PO-Revision-Date: 2016-08-20 17:12+0100\n"
 "Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -807,7 +807,6 @@ msgid "Lists various types of elements in this document"
 msgstr "Saghas"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-#, fuzzy
 msgid "Activates the current object in the document"
 msgstr "gníomhachtaigh an réad reatha sa cháipéis"
 
@@ -1439,7 +1438,6 @@ msgid "green-aqua"
 msgstr ""
 
 #. Translators: The color aqua (HSV hue 180 degrees)
-#, fuzzy
 msgctxt "color hue"
 msgid "aqua"
 msgstr "gormghlas"
@@ -1487,7 +1485,7 @@ msgid "bright {color}"
 msgstr "{color} geal"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
@@ -2971,9 +2969,8 @@ msgstr ""
 "athbhreithnithe ag áit na hoibiachta."
 
 #. Translators: The message announced when toggling simple review mode.
-#, fuzzy
 msgid "Simple review mode off"
-msgstr "Mód simplí athbhreithnithe"
+msgstr "Mód simplí athbhreithnithe múchta"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
@@ -3273,7 +3270,6 @@ msgid "Shows the NVDA menu"
 msgstr "Taispeáin an roghchlár NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
-#, fuzzy
 msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
@@ -3282,7 +3278,6 @@ msgstr ""
 "cursóir ag leanúint an téacs"
 
 #. Translators: Input help mode message for say all with system caret command.
-#, fuzzy
 msgid ""
 "Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
@@ -3299,13 +3294,13 @@ msgid "Formatting"
 msgstr "Formáidiú"
 
 #. Translators: Input help mode message for report formatting command.
-#, fuzzy
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Tabhair tuairisc ar an bhformáidiú atá i bhfeidhm ag ionad an chursóra "
-"athbhreithnithe sa cháipéis"
+"athbhreithnithe sa cháipéis. Brúitear faoi dhó chun na faisnéise a "
+"thaispeáint I mód brabhsála. "
 
 #. Translators: Input help mode message for report current focus command.
 #, fuzzy
@@ -3352,7 +3347,6 @@ msgstr ""
 "dtí an ghearrthaisce."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-#, fuzzy
 msgid "Speaks the current foreground object"
 msgstr "léigh an réad atá sa tulra faoi láthair"
 
@@ -3661,7 +3655,6 @@ msgid "Start marked"
 msgstr "Tús an téacs roghnaithe"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
-#, fuzzy
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
@@ -5724,7 +5717,6 @@ msgid "Manage &add-ons..."
 msgstr "Bainistigh &breiseáin"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-#, fuzzy
 msgid "Create portable copy..."
 msgstr "Cruthaigh cóip inaistrithe..."
 
@@ -8475,10 +8467,9 @@ msgid "double"
 msgstr ""
 
 #. Translators:  line spacing of 1.5 lines
-#, fuzzy
 msgctxt "line spacing value"
 msgid "1.5 lines"
-msgstr "líne %s"
+msgstr "1.5 línte"
 
 #. Translators: exact (minimum) line spacing
 msgctxt "line spacing value"
