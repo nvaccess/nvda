@@ -37,4 +37,15 @@ inline void appendCharToXML(const wchar_t c, std::wstring& xml, bool isAttribute
 	}
 }
 
+inline void appendAttribNameToXML(const std::wstring& attribName, std::wstring& xml) {
+	// #6249: Attribute names can sometimes contain spaces,
+	// but this isn't valid in XML, so filter it out.
+	for(auto c = attribName.begin(); c != attribName.end(); ++c) {
+		if (*c == L' ')
+			xml += L'_';
+		else
+			xml += *c;
+	}
+}
+
 #endif
