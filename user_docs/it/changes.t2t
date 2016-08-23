@@ -3,6 +3,66 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.3 =
+Le principali caratteristiche di questa versione si focalizzano sulla possibilità di disabilitare i singoli componenti aggiuntivi, sul supporto per i campi modulo in Microsoft Excel, su un grosso miglioramento inerente la gestione e l'individuazione dei colori, sulla risoluzione e l'aggiunta di funzioni per alcuni display braille ed infine su un ulteriore sviluppo delle funzionalità per microsoft Word.
+
+== Novità ==
+- è possibile utilizzare la modalità navigazione per leggere i documenti pdf con il Browser Microsoft Edge in Windows10 Anniversary Update (#5740)
+- Implementato l'annuncio del barrato e del doppio barrato in Microsoft Word. (#5800)
+- In Microsoft Word, NVDA ora è in grado di annunciare le informazioni sulla posizione quando ci si sposta per paragrafi (alt-shift-freccia su/giù). (#5945)
+- In Microsoft Word, NVDA è in grado di annunciare la spaziatura righe, configurabile dalle impostazioni formato documento, e ascoltabile con la solita combinazione NVDA-f. Questo sia quando ci si sposta semplicemente con le frecce, sia quando si modifica la spaziatura righe con i tasti rapidi di Microsoft Word. (#2961)
+- In Internet Explorer, vengono riconosciuti i documenti con struttura HTML5. (#5591)
+- L'annuncio dei commenti in Microsoft Word può essere disabilitato tramite una casella di controllo presente nelle impostazioni formattazione documento di NVDA. . (#5108
+- è ora possibile disattivare singoli componenti aggiuntivi dal gestore componenti. (#3090)
+- Sono stati assegnati nuovi tasti rapidi per i modelli di display braille Alva bc640/680. (#5206)
+- è stato introdotto un nuovo comando per spostare il display braille alla posizione del focus. Per adesso soltanto i modelli Alva640/680 contengono una combinazione tasti appropriata, ma è possibile assegnarne una attraverso la finestra tasti e gesti di immissione. (#5250)
+- In Microsoft Excel è ora possibile interagire con i campi. Ci si sposta sui campi tramite l'elenco elementi oppure con i tasti appropriati di navigazione rapida per carattere, in modalità navigazione. (#4953)
+- è possibile assegnare una combinazione di tasti o gesti alla funzione "il display braille segue": focus o cursore di controllo. Lo si fa tramite le impostazioni tasti e gesti di immissione. (#6173)
+
+
+== Cambiamenti ==
+- NVDA ora annuncia colori di base con una serie completa di 9 toni e 3 sfumature di colore, con le variazioni di luminosità e intensità. Questo risulta più comprensibile rispetto ad utilizzare  nomi di colori più soggettivi e meno intelligibili. (#6029)
+- Modificato il funzionamento della combinazione nvda+f9/f10. Adesso una pressione della combinazione nvda-f10 selezionerà il testo, e una doppia pressione lo copierà negli appunti. (#4636)
+- Aggiornata eSpeak NG alla versione Master 11b1a7b (22 Giugno 2016). (#6037)
+
+== Bug Fixes ==
+- In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)
+- In Microsoft Word, NVDA now reports appropriately when using Word's own table navigation commands (alt+home, alt+end, alt+pageUp and alt+pageDown) and table selection commands (shift added to the navigation commands). (#5961)
+- In Microsoft Word dialog boxes, NVDA's object navigation has been greatly improved. (#6036)
+- In some applications such as Visual Studio 2015, shortcut keys (e.g. control+c for Copy) are now reported as expected. (#6021)
+- Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6015)
+- Reporting colors in Microsoft Word is now more accurate as changes in Microsoft Office Themes are now taken into account. (#5997)
+- Browse mode for Microsoft Edge and support for Start Menu search suggestions is again available on Windows 10 builds after April 2016. (#5955)
+- In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)
+- In the Windows 10 Mail app, NVDA no longer fails to read the content of messages. (#5635) 
+- When speak command keys is on, lock keys such as caps lock are no longer announced twice. (#5490)
+- Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)
+- In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)
+- Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
+- When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)
+- If NVDA is unable to communicate with a braille display (e.g. because it has been disconnected), it will automatically disable use of the display. (#1555)
+- Slightly improved performance of filtering in the Browse Mode Elements List in some cases. (#6126)
+- In Microsoft Excel, the background pattern names reported by NVDA now match those used by Excel. (#6092)
+- Improved support for the Windows 10 logon screen, including announcement of alerts and activating of the password field with touch. (#6010)
+- NVDA now correctly detects the secondary routing buttons on ALVA BC640/680 series braille displays. (#5206)
+- NVDA can again report Windows Toast notifications in recent builds of Windows 10. (#6096)
+- NVDA no longer occasionally stops recognising key presses on Baum compatible and HumanWare Brailliant B braille displays. (#6035)
+- If reporting of line numbers is enabled in NVDA's Document Formatting preferences, line numbers are now shown on a braille display. (#5941)
+- When speech mode is off, reporting objects (such as pressing NVDA+tab to report the focus) now appears in the Speech Viewer as expected. (#6049)
+- In the Outlook 2016 message list,  associated draft information is no longer reported. (#6219)
+
+
+== Changes for Developers ==
+- Logging information directly from a property no longer results in the property  being called recursively over and over again. (#6122)
+
+
+= 2016.2.1 =
+This release fixes crashes in Microsoft Word:
+
+- NVDA no longer causes Microsoft Word to crash immediately after it starts in Windows XP. (#6033)
+- Removed reporting of grammar errors, as this causes crashes in Microsoft Word. (#5954, #5877)
+
+
 = 2016.2 =
 Le principali novità di questa versione riguardano la capacità di annunciare gli errori di ortografia durante la scrittura; il supporto agli errori grammaticali in Microsoft Word; inoltre miglioramenti e correzioni di bug in Microsoft Office
 
