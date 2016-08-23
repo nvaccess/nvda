@@ -3,6 +3,7 @@
 
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 inline void appendCharToXML(const wchar_t c, std::wstring& xml, bool isAttribute=false) {
 	switch(c) {
@@ -37,15 +38,11 @@ inline void appendCharToXML(const wchar_t c, std::wstring& xml, bool isAttribute
 	}
 }
 
-inline void appendAttribNameToXML(const std::wstring& attribName, std::wstring& xml) {
+inline std::wstring sanitizeXMLAttribName(std::wstring attribName) {
 	// #6249: Attribute names can sometimes contain spaces,
 	// but this isn't valid in XML, so filter it out.
-	for(auto c = attribName.begin(); c != attribName.end(); ++c) {
-		if (*c == L' ')
-			xml += L'_';
-		else
-			xml += *c;
-	}
+	std::replace(attribName.begin(), attribName.end(), L' ', L'_');
+	return attribName;
 }
 
 #endif
