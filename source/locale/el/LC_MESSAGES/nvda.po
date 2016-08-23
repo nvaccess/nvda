@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-16 22:12+0200\n"
+"PO-Revision-Date: 2016-08-20 14:40+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -1671,7 +1671,7 @@ msgstr "καρτέλα"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "στοιχείο καρτέλας"
+msgstr "καρτέλα"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
@@ -1959,7 +1959,7 @@ msgstr "χαρακτήρας"
 
 #. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
 msgid "chart"
-msgstr "διάγραμμα"
+msgstr "γράφημα"
 
 #. Translators: Identifies a cursor object.
 msgid "cursor"
@@ -2136,7 +2136,7 @@ msgstr "στοιχείο κεφαλίδας"
 
 #. Translators: Identifies a thumb control (a button-like control for changing options).
 msgid "thumb control"
-msgstr "μικρογραφία (κουμπί ελέγχου)"
+msgstr "στοιχείο ελέγχου δείκτη κύλισης"
 
 msgid "calendar"
 msgstr "ημερολόγιο"
@@ -3745,15 +3745,15 @@ msgstr "Αναφέρει το κείμενο στο πρόχειρο των Wind
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
-msgstr "Ορίστηκε δείκτης αρχής"
+msgstr "Επισημάνθηκε η αρχή"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
-"Σημαδεύει την τρέχουσα θέση του δρομέα επισκόπησης ως αρχή του κειμένου προς "
-"επισήμανση ή προς αντιγραφή "
+"Επισημαίνει την τρέχουσα θέση του δρομέα επισκόπησης ως αρχή του κειμένου "
+"προς επισήμανση ή προς αντιγραφή "
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
@@ -4362,12 +4362,12 @@ msgstr "%d χαρακτήρες"
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
 msgid "%s selected"
-msgstr "%s με επιλογή"
+msgstr "%s επιλεγμένο"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
 msgid "%s unselected"
-msgstr "%s χωρίς επιλογή"
+msgstr "%s μη επιλεγμένο"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
@@ -4553,12 +4553,12 @@ msgstr "διπλή διακριτή διαγραφή"
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
-msgstr "με διαγράμμιση"
+msgstr "διακριτή διαγραφή"
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
-msgstr "χωρίς διαγράμμιση"
+msgstr "χωρίς διακριτή διαγραφή"
 
 #. Translators: Reported when text is underlined.
 msgid "underlined"
@@ -5267,7 +5267,7 @@ msgstr "Δεσμευτικό θέσης Αντικειμένου"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "Δεσμευτικό θέσης Διαγράμματος"
+msgstr "Δεσμευτικό θέσης γραφήματος"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
@@ -5281,7 +5281,7 @@ msgstr "Δεσμευτικό θέσης Πολυμέσων"
 # ???
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Δεσμευτικό θέσης Διαγράμματος Org"
+msgstr "Δεσμευτικό θέσης γραφήματος Org"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
@@ -7246,7 +7246,7 @@ msgstr "Επεξεργασία Καταχώρησης Λεξικού"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "&Πρότυπο"
+msgstr "&Μοτίβο"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
@@ -7279,7 +7279,7 @@ msgstr "Σχόλιο"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
-msgstr "Πρότυπο"
+msgstr "Μοτίβο"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
@@ -7426,7 +7426,7 @@ msgstr "Χειρονομίες εισόδου"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "&Εφαρμογή φίλτρου κατά:"
+msgstr "&Φιλτράρισμα κατά:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -7682,7 +7682,7 @@ msgstr "Παραθέτει διαφόρους τύπους στοιχείων σ
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Charts"
-msgstr "&Διαγράμματα"
+msgstr "&Γραφήματα"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8191,12 +8191,12 @@ msgstr "{axisName} Άξονας είναι {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
-msgstr "Υπάρχει 1 σειρά σε αυτό το διάγραμμα"
+msgstr "Υπάρχει 1 σειρά σε αυτό το γράφημα"
 
 #. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
-msgstr "Υπάρχουν %d σειρές σε αυτό το διάγραμμα"
+msgstr "Υπάρχουν %d σειρές σε αυτό το γράφημα"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #, python-brace-format
@@ -8387,17 +8387,16 @@ msgstr "Δευτερεύον"
 #, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
-"Άξονας διαγράμματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: "
-"{axisTitle}"
+"Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
 #, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "Άξονας διαγράμματος, τύπος: {axisType}, ομάδα: {axisGroup}"
+msgstr "Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}"
 
 #. Translators: Indicates a chart axis title in Microsoft Excel.
 msgid "Chart axis title"
-msgstr "Τίτλος άξονα διαγράμματος"
+msgstr "Τίτλος άξονα γραφήματος"
 
 #. Translators: Indicates a trendline in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
@@ -8411,11 +8410,11 @@ msgstr " τετραγωνισμένο"
 #. Translators: Details about a chart title in Microsoft Excel.
 #, python-brace-format
 msgid "Chart title: {chartTitle}"
-msgstr "Τίτλος διαγράμματος: {chartTitle}"
+msgstr "Τίτλος γραφήματος: {chartTitle}"
 
 #. Translators: Indicates an untitled chart in Microsoft Excel.
 msgid "Untitled chart"
-msgstr "Διάγραμμα χωρίς τίτλο"
+msgstr "Γράφημα χωρίς τίτλο"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
 #, python-brace-format
@@ -8423,12 +8422,12 @@ msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
-"Περιοχή διαγράμματος, ύψος: {chartAreaHeight}, πλάτος: {chartAreaWidth}, "
+"Περιοχή γραφήματος, ύψος: {chartAreaHeight}, πλάτος: {chartAreaWidth}, "
 "κορυφή: {chartAreaTop}, αριστερά: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
-msgstr "Περιοχή διαγράμματος"
+msgstr "Περιοχή γραφήματος"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
 #, python-brace-format
