@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2009-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -72,3 +72,15 @@ def newGetTypeInfo(self,index,lcid=0):
 		raise COMError(E_NOTIMPL,None,None)
 	return res
 IDispatch._GetTypeInfo=newGetTypeInfo
+
+# Windows updates often include newer versions of dlls/typelibs we use.
+# The typelib being newer than the comtypes generated module doesn't hurt us,
+# so kill the "Typelib newer than module" ImportError.
+# comtypes doesn't let us disable this when running from source, so we need to monkey patch.
+# This is just the code from the original comtypes._check_version excluding the time check.
+import comtypes
+def _check_version(actual):
+	from comtypes.tools.codegenerator import version as required
+	if actual != required:
+		raise ImportError("Wrong version")
+comtypes._check_version = _check_version
