@@ -237,10 +237,6 @@ class ScriptableObject(AutoPropertyObject):
 		else:
 			return None
 
-	def getScripts(self):
-		"""return a list of all scripts on this object"""
-		return self._scripts
-
 	#: A value for sleepMode which indicates that NVDA should fully sleep for this object;
 	#: i.e. braille and speech via NVDA controller client is disabled and the user cannot disable sleep mode.
 	SLEEP_FULL = "full"
