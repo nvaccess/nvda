@@ -138,8 +138,6 @@ class GestureCollector(AutoPropertyType):
 			if not name.startswith('script_'):
 				continue
 			scriptName = name[7:]
-			if hasattr(script, 'gesture'):
-				gestures[script.gesture] = scriptName
 			if hasattr(script, 'gestures'):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName

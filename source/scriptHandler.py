@@ -249,7 +249,7 @@ def script(description="", category=None, gesture=None, gestures=None):
 		if category is not None:
 			decoratedScript.category = category
 		if gesture is not None:
-			decoratedScript.gesture = gesture
+			gestures.append(gesture)
 		if gestures:
 			decoratedScript.gestures = gestures
 		return decoratedScript
