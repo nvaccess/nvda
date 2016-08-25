@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -108,7 +108,8 @@ def getAppModuleFromProcessID(processID):
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			appName=getAppNameFromProcessID(processID)
+			# #5323: Certain executables contain dots as part of their file names.
+			appName=getAppNameFromProcessID(processID).replace(".","_")
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")
