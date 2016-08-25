@@ -108,10 +108,8 @@ def getAppModuleFromProcessID(processID):
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			appName=getAppNameFromProcessID(processID)
-			# #5323: Certain executables contain dots as part of its file name.
-			if "." in appName:
-				appName = appName.replace(".","_")
+			# #5323: Certain executables contain dots as part of their file names.
+			appName=getAppNameFromProcessID(processID).replace(".","_")
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")
