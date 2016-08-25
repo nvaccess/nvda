@@ -4,10 +4,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2012 NV Access Limited
 
-"""App module for SecureCRT
+"""App module for automatic reading of the terminal in all versions of SecureCRT
 """
 
 import oleacc
+import re
 from NVDAObjects.behaviors import Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler
@@ -15,7 +16,7 @@ import appModuleHandler
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName in ("AfxFrameOrView80u", "AfxFrameOrView90u", "AfxFrameOrView100u",	"AfxFrameOrView110u",	"AfxFrameOrView120u",	"AfxFrameOrView130u",	"AfxFrameOrView140u") and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+		if re.match("AfxFrameOrView\d{2,}u", obj.windowClassName) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
