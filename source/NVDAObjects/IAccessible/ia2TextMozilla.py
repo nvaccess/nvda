@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015 NV Access Limited
+#Copyright (C) 2015-2016 NV Access Limited
 
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
@@ -476,10 +476,16 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		if not endPoint or endPoint == "start":
 			moveTi = self._start
 			moveObj = self._startObj
+			if endPoint and moveTi is self._end:
+				# We're just moving start. We don't want end to be affected.
+				moveTi = moveTi.copy()
 			moveTi.collapse()
 		elif endPoint == "end":
 			moveTi = self._end
 			moveObj = self._endObj
+			if endPoint and moveTi is self._start:
+				# We're just moving end. We don't want start to be affected.
+				moveTi = moveTi.copy()
 			moveTi.collapse(end=True)
 			if moveTi.compareEndPoints(self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
 				# We're at the end of the object, so move to the start of the next.
