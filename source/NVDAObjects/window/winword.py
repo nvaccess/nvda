@@ -426,8 +426,16 @@ class WinWordCollectionQuicknavIterator(object):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
-			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
-			itemRange=item.rangeObj
+			try:
+				item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+				itemRange=item.rangeObj
+			except:
+				values = (self.itemType, self.direction, itemCount, index)
+				message = ("Error iterating over item with "+
+				("type: %s, iteration direction: %s, total item count: %s, item at index: %s" % values )+
+				"\nThis could be caused by an issue with some element within or a corruption of the word document.")
+				log.debugWarning(message ,exc_info=True)
+				continue
 			# Skip over the item we're already on.
 			if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
 				continue
