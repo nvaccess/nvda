@@ -17,7 +17,6 @@ import review
 import controlTypes
 import api
 import textInfos
-import editableText
 import speech
 import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -1786,7 +1785,7 @@ class GlobalCommands(ScriptableObject):
 				pass
 			try:
 				copyMarker.updateSelection()
-				if isinstance(pos.obj, editableText.EditableTextWithoutAutoSelectDetection):
+				if hasattr(pos.obj, "waitForAndReportSelectionChange"):
 					# wait for applications such as word to update their selection so that we can detect it
 					try:
 						pos.obj.waitForAndReportSelectionChange(oldInfo)

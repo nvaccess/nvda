@@ -313,6 +313,11 @@ class CursorManager(baseObject.ScriptableObject):
 			# Translators: Message presented when text has been copied to clipboard.
 			ui.message(_("Copied to clipboard"))
 
+	def waitForAndReportSelectionChange(self, oldTextInfo):
+		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		speech.speakSelectionChange(oldTextInfo,newInfo)
+		braille.handler.handleCaretMove(self)
+
 	__gestures = {
 		"kb:pageUp": "moveByPage_back",
 		"kb:pageDown": "moveByPage_forward",
