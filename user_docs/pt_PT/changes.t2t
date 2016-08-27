@@ -3,30 +3,99 @@
 
 %!includeconf: ../changes.t2tconf
 
-Tradução de Rui Fontes, a partir da versão 2015.1, adaptação por Rui Batista e Rui Fontes da tradução brasileira nas versões anteriores.
+Tradução de Rui Fontes
+
+= 2016.3 =
+Os destaques desta versão incluem:
+- Possibilidade de desactivar Extras  individualmente;
+- Suporte para campos de formulário no Microsoft Excel;
+- Melhorias significativas no anúncio de cores;
+- Correções e melhorias relacionadas com várias linhas Braille;
+- Correções e melhorias no suporte ao Microsoft Word.
+-
+
+
+== Novas Funcionalidades ==
+- O modo de navegação passou a poder ser usado para ler documentos PDF no Microsoft Edge. (#5740)
+- O Rasurado e o Rasurado duplo passam a ser reportados quando apropriado no Microsoft Word. (#5800)
+- No Microsoft Word, o título duma tabela passa a ser anunciado, se tiver sido definido. Se houver uma descrição, pode ser acedida usando o comando Abrir descrição longa (NVDA+d) no Modo de navegação. (#5943)
+- No Microsoft Word, o NVDA agora anuncia informações de posição ao mover-se por parágrafos (alt+shift+seta abaixo e alt+shift+seta acima). (#5945)
+- No Microsoft Word, o espaçamento das linhas passa a ser anunciado através do comando NVDA+F, Anunciar formatação de texto, quando for alterado por um comando do Word e quando nos movermos entre texto com diferentes níveis de espaçamento, se o Anunciar espaçamento de linhas estiver marcado na Formatação de documentos do NVDA. (#2961)
+- No Internet Explorer, os elementos estruturais do HTML5 passam a ser reconhecidos. (#5591)
+- O anúncio de comentários no Microsoft Word) pode ser desativado através da caixa de verificação Anunciar Comentários na Formatação de documentos do NVDA. (#5108)
+- Através do Gestor de Extras é agora possível desativar um Extra específico. (#3090)
+- Foram adicionados mais comandos para as linhas da série ALVA BC640/680. (#5206)
+- Foi criado um comando para mover a linha Braille para o foco actual. Actualmente, apenas as linhas das séries ALVA BC640/680 têm uma tecla associada a este comando, mas a associação pode ser feita manualmente para qualquer linha através da opção Comandos. (#5250)
+- No Microsoft Excel, já é possível interagir com Campos de formulário. Pode mover-se pelos campos de formulário usando a Lista de elementos ou, em Modo de navegação, a navegação por caracter. (#4953)
+- Já é possível associar um comando para alternar o Modo de revisão simples usando a opção Definir comandos. (#6173)
+
+
+== Alterações ==
+- O NVDA passa a anunciar as cores usando um conjunto básico, bem reconhecível e entendível, de 9 cores e 3 graus de claridade. Os desenvolvedores pensam que é melhor que muitos nomes de cores difilmente reconhecíveis por quem nunca viu. (#6029)
+- O comportamento de NVDA+F9 seguido de NVDA+F10 foi modificado para seleccionar texto com o primeiro pressionar de NVDA+F10. Quando NVDA+F10 é pressionado duas vezes rapidamente, o texto é copiado para a área de transferência. (#4636)
+- Actualizado o eSpeakNG para a versão Master 11b1a7b (22 June 2016). (#6037)
+
+
+== Correcção de falhas ==
+- No Modo de navegação no Microsoft Word, o copiar para a área de transferência passa a preservar a formatação. (#5956)
+- No Microsoft Word, o NVDA passa a anunciar correctamente os comandos de navegação em tabelas (alt+home, alt+end, alt+pageUp e alt+pageDown) e de selecção em tabelas (adicionamdo shift aos comandos de navegação). (#5961)
+- Nos diálogos do Microsoft Word a navegação por objectos do  NVDA foi bastante melhorada. (#6036)
+- Em algumas aplicações como o Visual Studio 2015, as teclas de atalho (como control+c para Copiar) passam a ser anunciadas como seria esperado. (#6021)
+- Corrigida uma eventual falha ao pesquisar por portas série, em alguns sistemas, que tornava os drivers das linhas Braille inutilizáveis. (#6015)
+- O anúncio de cores no Microsoft Word é agora mais certeiro, pois as alterações provocadas pelos temas do Microsoft Office são levadas em conta. (#5997)
+- O modo de navegação para o Microsoft Edge e o suporte às sugestões da pesquisa no Menu Iniciar está novamente disponível nas versões  do Windows 10 depois de Abril de 2016. (#5955)
+- No Microsoft Word, a leitura automática dos cabeçalhos da tabela, quando estes se encontram em células mescladas, funciona melhor. (#5926)
+- No Correio do Windows 10 o NVDA já não falha na leitura do conteúdo das mensagens. (#5635) 
+- Quando o "Anúncio de teclas de comando" está activado, CapsLock, NumLock e ScrollLock já não são anunciados em duplicado. (#5490)
+- Os diálogos do Controlo de Conta do Utilizador do Windows são novamente lidos correctamente na versão Aniversário do Windows 10. (#5942)
+- No Plugin Web Conference, como o que é usado no out-of-sight.net, o NVDA já não emite bips nem fala as barras de progressão relativas ao nível do microfone. (#5888)
+- Ao executar o Localizar seguinte ou Localizar anterior, no Modo de navegação, passa a ser respeitado o parâmtero Maiúsculas/minúsculas. (#5522)
+- Ao editar entradas no dicionário, é dado feedback sobre expressões regulares inválidas. O NVDA já não crasha se o dicionário contiver expressões regulares inválidas. (#4834)
+- Se o NVDA não conseguir comunicar com uma linha Braille (por exemplo,  por ter sido desligada), será automaticamente desactivado o uso da linha. (#1555)
+- Ligeiramente melhorada, em alguns casos, a performance da filtragem na Lista de elementos no Mode de navegação. (#6126)
+- No Microsoft Excel, os nomes dos fundos anunciados pelo NVDA passam a ser os mesmos que os usados pelo Excel. (#6092)
+- Suporte melhorado para o ecrã de início de sessão do Windows 10 incluindo o anúncio de alertas e activação do campo de introdução da palavra-passe com ecrã táctil. (#6010)
+- O NVDA passa a detectar correctamente a segunda fila de cursores de toque das linhas Braille das séries ALVA BC640/680. (#5206)
+- O NVDA volta a anunciar os toast, balões de notificações, nas versões mais recentes do Windows 10. (#6096)
+- O NVDA já não deixa de reconhecer o pressionar de teclas nas linhas Braille da Baum e da HumanWare Brailliant B. (#6035)
+- Se a opção Anunciar números de página estiver marcada, o os números de linha serão também anunciados em Braille. (#5941)
+- Quando o Modo de voz estiver desactivado, o anúncio de objectos (tal como pressionar NVDA+tab para anunciar o objecto em foco) a informação aparece no Visualizador de discurso como esperado. (#6049)
+- Na lista de mensagens do Outlook 2016, a informação sobre rascunhos associados já não é anunciada. (#6219)
+
+
+== Alterações para Desenvolvedores ==
+- Logging uma informação directamente duma propriedade já não resulta na propriedade ser chamada recursiva e infinitamente. (#6122)
+
+
+= 2016.2.1 =
+Esta versão corrige falhas no Microsoft Word:
+
+- O NVDA já não provoca falhas no Microsoft Word, assim que este é iniciado no Windows XP. (#6033)
+- Removido o anúncio de erros gramaticais, por provocar falhas no Microsoft Word. (#5954, #5877)
+
 
 = 2016.2 =
-Highlights of this release include the ability to indicate spelling errors while typing; support for reporting grammar errors in Microsoft Word; and improvements and fixes to Microsoft Office support.
+Os destaques desta versão incluem a funcionalidade de anunciar os erros ortográficos, à medida que se escreve, e a possibilidade de reportar os erros gramaticais  no Microsoft Word, bem como várias melhorias e correcções  no suporte ao Microsoft Office.
 
-== New Features ==
-- In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)
-- In Microsoft Excel, NVDA now reports the level of a group of cells, as well as whether it is collapsed or expanded. (#5690)
-- Pressing the Report text formatting command (NVDA+f) twice presents the information in browse mode so it can be reviewed. (#4908)
-- In Microsoft Excel 2010 and later, cell shading and gradient fill is now reported. Automatic reporting is controlled by the Report colors option in NVDA's Document Formatting preferences. (#3683)
-- New braille translation table: Koine Greek. (#5393)
-- In the Log Viewer, you can now save the log using the shortcut key control+s. (#4532)
-- If reporting of spelling errors is enabled and supported in the focused control, NVDA will play a sound to alert you of a spelling error made while typing. This can be disabled using the new "Play sound for spelling errors while typing" option in NVDA's Keyboard Settings dialog. (#2024)
-- Grammar errors are now reported in Microsoft Word. This can be disabled using the new "Report grammar errors" option in NVDA's Document Formatting preferences dialog. (#5877)
+== Novas Funcionalidades ==
+- No modo de navegação no  Internet Explorer e outros controlos MSHTML, usando a navegação por caracter, mover por anotações (a e shift+a) agora também move para texto inserido e apagado. (#5691)
+- No Microsoft Excel, o NVDA agora anuncia o nível de um grupo de células, bem como se estão expandidas ou recolhidas. (#5690)
+- Ao pressionar, duas vezes, o comando para anunciar a formatação do texto (NVDA+f), é apresentado um diálogo, em modo de navegação, com a informação de modo a poder ser revista. (#4908)
+- No Microsoft Excel 2010 e seguintes, o sombreado e o gradiente das células é agora anunciado. O anúncio automático é controlado pela opção Anunciar cores nas preferências do NVDA, Formatação de documentos. (#3683)
+- Nova tabela Braille: Grego Koine. (#5393)
+- No Visualizador de registo é agora possível gravar o documento usando o comando Control+s. (#4532)
+- Se o anúncio de erros ortográficos estiver activado, e se for suportado pelo campo de edição em uso, o NVDA reproduzirá um som para alertar de um erro ortográfico cometido ao escrever. Isto pode ser desactivado com a nova opção "Tocar som para erros ortográficos ao escrever" nas Opções de Teclado do  NVDA. (#2024)
+- Os erros gramaticais são agora anunciados no Microsoft Word. Isto pode ser desactivado na nova opção "Anunciar erros gramaticais" na Formatação de documentos das preferências do NVDA. (#5877)
 
 
-== Changes ==
+== Alterações ==
+- O NVDA mudou para o sintetizador eSpeak NG. (#5651)
 - In browse mode and editable text fields, NVDA now treats numpadEnter the same as the main enter key. (#5385)
-- NVDA has switched to the eSpeak NG speech synthesizer. (#5651)
 - In Microsoft Excel, NVDA no longer ignores a column header for a cell when there is a blank row between the cell and the header. (#5396)
 - In Microsoft Excel, coordinates are now announced before headers to eliminate ambiguity between headers and content. (#5396)
 
 
-== Bug Fixes ==
+== Correcção de falhas ==
 - In browse mode, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)
 - When listing sheets in the Elements List in Microsoft Excel, sheets containing only charts are now included. (#5698)
 - NVDA no longer reports extraneous information when switching windows in a Java application with multiple windows such as IntelliJ or Android Studio. (#5732)
@@ -44,7 +113,7 @@ Highlights of this release include the ability to indicate spelling errors while
 - In browse mode in Microsoft Word, the Move past end/to start of container commands (comma and shift+comma) now work for tables. (#5883)
 
 
-== Changes for Developers ==
+== Alterações para Desenvolvedores ==
 - NVDA's C++ components are now built with Microsoft Visual Studio 2015. (#5592)
 - You can now present a text or HTML message to the user in browse mode using ui.browseableMessage. (#4908)
 - In the User Guide, when a %kc:setting command is used for a setting which has a common key for all layouts, the key may now be placed after a full-width colon (：) as well as the regular colon (:). (#5739)

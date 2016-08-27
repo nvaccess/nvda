@@ -14,6 +14,7 @@ import config
 import inputCore
 
 ALVA_RELEASE_MASK = 0x8000
+ALVA_2ND_CR_MASK = 0x80
 
 ALVA_KEYS = {
 	# Thumb keys (FRONT_GROUP)
@@ -114,11 +115,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(alvaBC6):t1",),
+			"braille_scrollBack": ("br(alvaBC6):t1","br(alvaBC6):etouch1"),
 			"braille_previousLine": ("br(alvaBC6):t2",),
+			"braille_toFocus": ("br(alvaBC6):t3",),
 			"braille_nextLine": ("br(alvaBC6):t4",),
-			"braille_scrollForward": ("br(alvaBC6):t5",),
+			"braille_scrollForward": ("br(alvaBC6):t5","br(alvaBC6):etouch3"),
 			"braille_routeTo": ("br(alvaBC6):routing",),
+			"review_top": ("br(alvaBC6):t1+t2",),
+			"review_bottom": ("br(alvaBC6):t4+t5",),
+			"braille_toggleTether": ("br(alvaBC6):t1+t3",),
+			"braille_cycleCursorShape": ("br(alvaBC6):t1+t4",),
+			"braille_toggleShowCursor": ("br(alvaBC6):t2+t5",),
+			"title": ("br(alvaBC6):etouch2",),
+			"reportStatusLine": ("br(alvaBC6):etouch4",),
 			"kb:shift+tab": ("br(alvaBC6):sp1",),
 			"kb:alt": ("br(alvaBC6):sp2",),
 			"kb:escape": ("br(alvaBC6):sp3",),
@@ -128,10 +137,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:leftArrow": ("br(alvaBC6):spLeft",),
 			"kb:rightArrow": ("br(alvaBC6):spRight",),
 			"kb:enter": ("br(alvaBC6):spEnter",),
+			"dateTime": ("br(alvaBC6):sp1+sp2",),
 			"showGui": ("br(alvaBC6):sp1+sp3",),
 			"kb:windows+d": ("br(alvaBC6):sp1+sp4",),
+			"kb:windows+b": ("br(alvaBC6):sp3+sp4",),
 			"kb:windows": ("br(alvaBC6):sp2+sp3",),
 			"kb:alt+tab": ("br(alvaBC6):sp2+sp4",),
+			"kb:control+home": ("br(alvaBC6):t3+spUp",),
+			"kb:control+end": ("br(alvaBC6):t3+spDown",),
+			"kb:home": ("br(alvaBC6):t3+spLeft",),
+			"kb:end": ("br(alvaBC6):t3+spRight",),
 		}
 	})
 
@@ -146,8 +161,12 @@ class InputGesture(braille.BrailleDisplayGesture):
 		self.keyNames = names = set()
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
-				names.add("routing")
-				self.routingIndex = number
+				if number & ALVA_2ND_CR_MASK:
+					names.add("routing2")
+					self.routingIndex = number & ~ALVA_2ND_CR_MASK
+				else:
+					names.add("routing")
+					self.routingIndex = number
 			else:
 				try:
 					names.add(ALVA_KEYS[group][number])

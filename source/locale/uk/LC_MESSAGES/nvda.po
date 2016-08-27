@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-09-20 15:58+0200\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-13 09:33+0300\n"
 "Last-Translator: Volodymyr <vlodko@torba.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.7.3\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -83,6 +83,7 @@ msgid "unknown input method"
 msgstr "Невідомий метод вводу"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -123,6 +124,21 @@ msgstr "Форма"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "Регіон"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "Не приглушувати"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Приглушувати, коли виводиться звук чи мовлення"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "Завжди приглушувати"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -311,6 +327,11 @@ msgstr "Gujarati grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Koine Greek"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece) grade 1"
 msgstr "Greek (Greece) grade 1"
 
@@ -401,6 +422,11 @@ msgstr "Manipuri grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongolian"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Marathi grade 1"
 
@@ -448,6 +474,11 @@ msgstr "Nepali grade 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polish 8 dot computer braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -654,6 +685,18 @@ msgstr "клік"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Крапки 7 і 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Крапка 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Всі крапки"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -678,6 +721,7 @@ msgstr "Не %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} із {total}"
 
@@ -726,10 +770,11 @@ msgstr "Крапка"
 msgid "space"
 msgstr "Пробіл"
 
-msgid "focus mode"
+msgid "Focus mode"
 msgstr "Режим редагування"
 
-msgid "browse mode"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
 msgstr "Режим огляду"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
@@ -760,7 +805,7 @@ msgid "Lists various types of elements in this document"
 msgstr "Списки різних типів елементів у цьому документі"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+msgid "Activates the current object in the document"
 msgstr "Активовує поточний об'єкт у документі"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1265,7 +1310,8 @@ msgstr ""
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
 msgstr "Нижній"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -1298,709 +1344,225 @@ msgctxt "symbolLevel"
 msgid "character"
 msgstr "Символ"
 
-#. Translators: Reported when text is written in unknown color.
-msgid "unknown color"
-msgstr "Невідомий колір"
-
-#. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Alice Blue"
-msgstr "Синій Еліс"
-
-#. Translators: the color Antique White (RGB 250, 235, 215) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Antique White"
-msgstr "Античний білий"
-
-#. Translators: the color Aqua (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aqua"
-msgstr "Колір морської хвилі"
-
-#. Translators: the color Aquamarine (RGB 127, 255, 212) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aquamarine"
-msgstr "Аквамариновий"
-
-#. Translators: the color Azure (RGB 240, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Azure"
-msgstr "Блакитний"
-
-#. Translators: the color Beige (RGB 245, 245, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Beige"
-msgstr "Бежевий"
-
-#. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Bisque"
-msgstr "Бісквітний"
-
-#. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Black"
-msgstr "Чорний"
-
-#. Translators: the color Blanched Almond (RGB 255, 235, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blanched Almond"
-msgstr "Очищений мигдаль"
-
-#. Translators: the color Blue (RGB 0, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue"
-msgstr "Синій"
-
-#. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue Violet"
-msgstr "Синьо-фіолетовий"
-
-#. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Brown"
-msgstr "Коричневий"
-
-#. Translators: the color Burly Wood (RGB 222, 184, 135) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Burly Wood"
-msgstr "Жовтуватий"
-
-#. Translators: the color Cadet Blue (RGB 95, 158, 160) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cadet Blue"
-msgstr "Сіро-синій"
-
-#. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chartreuse"
-msgstr "Салатовий"
-
-#. Translators: the color Chocolate (RGB 210, 105, 30) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chocolate"
-msgstr "шоколадний"
-
-#. Translators: the color Coral (RGB 255, 127, 80) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Coral"
-msgstr "Кораловий"
-
-#. Translators: the color Cornflower Blue (RGB 100, 149, 237) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornflower Blue"
-msgstr "Васильковий"
-
-#. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornsilk"
-msgstr "Шовковий відтінок"
-
-#. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Crimson"
-msgstr "Темно-червоний"
-
-#. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cyan"
-msgstr "Ціановий"
-
-#. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Blue"
-msgstr "Темно-синій"
-
-#. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Cyan"
-msgstr "Темно-ціановий"
-
-#. Translators: the color Dark Goldenrod (RGB 184, 134, 11) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Goldenrod"
-msgstr "Темно-золотий"
-
-#. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Gray"
-msgstr "Темно-сірий"
-
-#. Translators: the color Dark Green (RGB 0, 100, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Green"
-msgstr "Темно-зелений"
-
-#. Translators: the color Dark Khaki (RGB 189, 183, 107) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Khaki"
-msgstr "Темний з відтінком хакі"
-
-#. Translators: the color Dark Magenta (RGB 139, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Magenta"
-msgstr "Темно-пурпуровий"
-
-#. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Olive Green"
-msgstr "Темний оливково-зелений"
-
-#. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Orange"
-msgstr "темно-помаранчевий"
-
-#. Translators: the color Dark Orchid (RGB 153, 50, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Orchid"
-msgstr "Колір темної орхідеї"
-
-#. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Red"
-msgstr "Темно-червоний"
-
-#. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Salmon"
-msgstr "Темно-помаранчево-рожевий"
-
-#. Translators: the color Dark Sea Green (RGB 143, 188, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Sea Green"
-msgstr "Темно-чорно-зелений"
-
-#. Translators: the color Dark Slate Blue (RGB 72, 61, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Blue"
-msgstr "Темно-аспідний"
-
-#. Translators: the color Dark Slate Gray (RGB 47, 79, 79) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Gray"
-msgstr "Темно-аспідно-сірий"
-
-#. Translators: the color Dark Turquoise (RGB 0, 206, 209) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Turquoise"
-msgstr "Темно-бірюзовий"
-
-#. Translators: the color Dark Violet (RGB 148, 0, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Violet"
-msgstr "Темно-фіолетовий"
-
-#. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Pink"
-msgstr "Глибокий рожевий"
-
-#. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Sky Blue"
-msgstr "Глибокий небесно-блакитний"
-
-#. Translators: the color Dim Gray (RGB 105, 105, 105) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dim Gray"
-msgstr "Тьмяно-сірий"
-
-#. Translators: the color Dodger Blue (RGB 30, 144, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dodger Blue"
-msgstr "Захисно-синій"
-
-#. Translators: the color Fire Brick (RGB 178, 34, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fire Brick"
-msgstr "Цегляний"
-
-#. Translators: the color Floral White (RGB 255, 250, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Floral White"
-msgstr "Квітково-білий"
-
-#. Translators: the color Forest Green (RGB 34, 139, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Forest Green"
-msgstr "Колір зеленого лісу"
-
-#. Translators: the color Fuchsia (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fuchsia"
-msgstr "Фуксія"
-
-#. Translators: the color Gainsboro (RGB 220, 220, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gainsboro"
-msgstr "Ґейнсборо"
-
-#. Translators: the color Ghost White (RGB 248, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ghost White"
-msgstr "Тінисто-білий"
-
-#. Translators: the color Gold (RGB 255, 215, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gold"
-msgstr "Золотий"
-
-#. Translators: the color Goldenrod (RGB 218, 165, 32) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Goldenrod"
-msgstr "Золотисто-березовий"
-
-#. Translators: the color Gray (RGB 128, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gray"
-msgstr "Сірий"
-
-#. Translators: the color Green (RGB 0, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green"
-msgstr "зелений"
-
-#. Translators: the color Green Yellow (RGB 173, 255, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green Yellow"
-msgstr "Зелено-жовтий"
-
-#. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Honeydew"
-msgstr "Медовий"
-
-#. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Hot Pink"
-msgstr "Яскраво-рожевий"
-
-#. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indian Red"
-msgstr "Каштановий"
-
-#. Translators: the color Indigo (RGB 75, 0, 130) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indigo"
-msgstr "Колір індіґо"
-
-#. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ivory"
-msgstr "Колір слонової кістки"
-
-#. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Khaki"
-msgstr "Хакі"
-
-#. Translators: the color Lavender (RGB 230, 230, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender"
-msgstr "Лавандовий"
-
-#. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender Blush"
-msgstr "Рожево-лавандовий"
-
-#. Translators: the color Lawn Green (RGB 124, 252, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lawn Green"
-msgstr "Колір зеленої галявини"
-
-#. Translators: the color Lemon Chiffon (RGB 255, 250, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lemon Chiffon"
-msgstr "Лимонно-кремовий"
-
-#. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Blue"
-msgstr "Світло-синій"
-
-#. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Coral"
-msgstr "Світло-кораловий"
-
-#. Translators: the color Light Cyan (RGB 224, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Cyan"
-msgstr "Світло-ціановий"
-
-#. Translators: the color Light Goldenrod Yellow (RGB 250, 250, 210) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Goldenrod Yellow"
-msgstr "Світло-золотисто-жовтий"
-
-#. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Green"
-msgstr "Світло-зелений"
-
-#. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Grey"
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "Ніколи"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "Завжди"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "only below symbol's level"
+
+#. Translators: the color white (HSV saturation0%, value 100%)
+msgctxt "color hue"
+msgid "white"
+msgstr "білий"
+
+#. Translators: the color very light grey (HSV saturation 0%, value 84%)
+msgctxt "color hue"
+msgid "very light grey"
+msgstr "дуже світло-сірий"
+
+#. Translators: the color light grey (HSV saturation 0%, value 66%)
+msgctxt "color hue"
+msgid "light grey"
 msgstr "світло-сірий"
 
-#. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Pink"
-msgstr "Світло-рожевий"
+#. Translators: the color grey (HSV saturation 0%, value 50%)
+msgctxt "color hue"
+msgid "grey"
+msgstr "сірий"
 
-#. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Salmon"
-msgstr "Світло-помаранчево-рожевий"
+#. Translators: the color dark grey (HSV saturation 0%, value 34%)
+msgctxt "color hue"
+msgid "dark grey"
+msgstr "темно-сірий"
 
-#. Translators: the color Light Sea Green (RGB 32, 178, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sea Green"
-msgstr "Колір світло-зеленої морської хвилі"
+#. Translators: the color very dark grey (HSV saturation 0%, value 16%)
+msgctxt "color hue"
+msgid "very dark grey"
+msgstr "дуже темно-сірий"
 
-#. Translators: the color Light Sky Blue (RGB 135, 206, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sky Blue"
-msgstr "Світло-небесно-блакитний"
+#. Translators: the color black (HSV saturation 0%, value 0%)
+msgctxt "color hue"
+msgid "black"
+msgstr "чорний"
 
-#. Translators: the color Light Slate Gray (RGB 119, 136, 153) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Slate Gray"
-msgstr "Світло-аспідно-сірий"
+#. Translators: The color red (HSV hue 0 degrees)
+msgctxt "color hue"
+msgid "red"
+msgstr "червоний"
 
-#. Translators: the color Light Steel Blue (RGB 176, 196, 222) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Steel Blue"
-msgstr "Колір світло-синьої сталі"
+#. Translators: The color between  red and orange (HSV hue 15 degrees)
+msgctxt "color hue"
+msgid "red-orange"
+msgstr "червоно-помаранчевий"
 
-#. Translators: the color Light Yellow (RGB 255, 255, 224) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Yellow"
-msgstr "Світло-жовтий"
+#. Translators: The color orange (HSV hue 30 degrees)
+msgctxt "color hue"
+msgid "orange"
+msgstr "помаранчевий"
 
-#. Translators: the color Lime (RGB 0, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime"
-msgstr "Лимонний"
+#. Translators: The color between  orange and yellow (HSV hue 45 degrees)
+msgctxt "color hue"
+msgid "orange-yellow"
+msgstr "помаранчево-жовтий"
 
-#. Translators: the color Lime Green (RGB 50, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime Green"
-msgstr "Лимонно-зелений"
+#. Translators: The color yellow (HSV hue 60 degrees)
+msgctxt "color hue"
+msgid "yellow"
+msgstr "жовтий"
 
-#. Translators: the color Linen (RGB 250, 240, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Linen"
-msgstr "Льняний"
+#. Translators: The color between  yellow and green (HSV hue 90 degrees)
+msgctxt "color hue"
+msgid "yellow-green"
+msgstr "жовто-зелений"
 
-#. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Magenta"
-msgstr "Пурпуровий"
+#. Translators: The color green (HSV hue 120 degrees)
+msgctxt "color hue"
+msgid "green"
+msgstr "зелений"
 
-#. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Maroon"
-msgstr "Темно-бордовий"
+#. Translators: The color between  green and aqua (HSV hue 150 degrees)
+msgctxt "color hue"
+msgid "green-aqua"
+msgstr "колір зеленої води"
 
-#. Translators: the color Medium Aquamarine (RGB 102, 205, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Aquamarine"
-msgstr "Помірно-аквамариновий"
+#. Translators: The color aqua (HSV hue 180 degrees)
+msgctxt "color hue"
+msgid "aqua"
+msgstr "колір морської хвилі"
 
-#. Translators: the color Medium Blue (RGB 0, 0, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Blue"
-msgstr "Помірно-синій"
+#. Translators: The color between  aqua and blue (HSV hue 210 degrees)
+msgctxt "color hue"
+msgid "aqua-blue"
+msgstr "синій з кольором морської хвилі"
 
-#. Translators: the color Medium Orchid (RGB 186, 85, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Orchid"
-msgstr "Помірно-орхідейний"
+#. Translators: The color blue (HSV hue 240 degrees)
+msgctxt "color hue"
+msgid "blue"
+msgstr "синій"
 
-#. Translators: the color Medium Purple (RGB 147, 112, 219) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Purple"
-msgstr "Помірно-пурпуровий"
+#. Translators: The color between  blue and purple (HSV hue 270 degrees)
+msgctxt "color hue"
+msgid "blue-purple"
+msgstr "синьо-пурпуровий"
 
-#. Translators: the color Medium Sea Green (RGB 60, 179, 113) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Sea Green"
-msgstr "Помірний колір зеленої морської хвилі"
-
-#. Translators: the color Medium Slate Blue (RGB 123, 104, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Slate Blue"
-msgstr "Помірний аспітно-синій"
-
-#. Translators: the color Medium Spring Green (RGB 0, 250, 154) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Spring Green"
-msgstr "Помірний зелено-весняний"
-
-#. Translators: the color Medium Turquoise (RGB 72, 209, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Turquoise"
-msgstr "Помірно-бірюзовий"
-
-#. Translators: the color Medium Violet Red (RGB 199, 21, 133) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Violet Red"
-msgstr "Помірний фіолетово-червоний"
-
-#. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Midnight Blue"
-msgstr "Північно-синій"
-
-#. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Mint Cream"
-msgstr "М'ятно-кремовий"
-
-#. Translators: the color Misty Rose (RGB 255, 228, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Misty Rose"
-msgstr "Туманно-трояндовий"
-
-#. Translators: the color Moccasin (RGB 255, 228, 181) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Moccasin"
-msgstr "Мокасин"
-
-#. Translators: the color Navajo White (RGB 255, 222, 173) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navajo White"
-msgstr "Білий навахо"
-
-#. Translators: the color Navy (RGB 0, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navy"
-msgstr "Темно-синій"
-
-#. Translators: the color Old Lace (RGB 253, 245, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Old Lace"
-msgstr "Колір старого мережива"
-
-#. Translators: the color Olive (RGB 128, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive"
-msgstr "Оливковий"
-
-#. Translators: the color Olive Drab (RGB 107, 142, 35) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive Drab"
-msgstr "Ніжно-оливковий"
-
-#. Translators: the color Orange (RGB 255, 165, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orange"
-msgstr "Помаранчевий"
-
-#. Translators: the color Orange Red (RGB 255, 69, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orange Red"
-msgstr "помаранчево-червоний"
-
-#. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orchid"
-msgstr "Колір орхідеї"
-
-#. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Goldenrod"
-msgstr "Блідий золотисто-березовий"
-
-#. Translators: the color Pale Green (RGB 152, 251, 152) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Green"
-msgstr "Блідо-зелений"
-
-#. Translators: the color Pale Turquoise (RGB 175, 238, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Turquoise"
-msgstr "Блідо-бірюзовий"
-
-#. Translators: the color Pale Violet Red (RGB 219, 112, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Violet Red"
-msgstr "Блідий фіолетово-червоний"
-
-#. Translators: the color Papaya Whip (RGB 255, 239, 213) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Papaya Whip"
-msgstr "Papaya Whip"
-
-#. Translators: the color Peach Puff (RGB 255, 218, 185) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peach Puff"
-msgstr "Персиковий"
-
-#. Translators: the color Peru (RGB 205, 133, 63) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peru"
-msgstr "Світло-коричневий"
-
-#. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pink"
-msgstr "Рожевий"
-
-#. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Plum"
-msgstr "Сливовий"
-
-#. Translators: the color Powder Blue (RGB 176, 224, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Powder Blue"
-msgstr "Порохова блакить"
-
-#. Translators: the color Purple (RGB 128, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Purple"
+#. Translators: The color purple (HSV hue 300 degrees)
+msgctxt "color hue"
+msgid "purple"
 msgstr "пурпуровий"
 
-#. Translators: the color Red (RGB 255, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Red"
-msgstr "Червоний"
+#. Translators: The color between  purple and pink (HSV hue 312 degrees)
+msgctxt "color hue"
+msgid "purple-pink"
+msgstr "пурпурово-рожевий"
 
-#. Translators: the color Rosy Brown (RGB 188, 143, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Rosy Brown"
-msgstr "Трояндово-коричневий"
+#. Translators: The color pink (HSV hue 324 degrees)
+msgctxt "color hue"
+msgid "pink"
+msgstr "рожевий"
 
-#. Translators: the color Royal Blue (RGB 65, 105, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Royal Blue"
-msgstr "Яскраво-синій"
+#. Translators: The color between  pink and red (HSV hue 342 degrees)
+msgctxt "color hue"
+msgid "pink-red"
+msgstr "рожево-червоний"
 
-#. Translators: the color Saddle Brown (RGB 139, 69, 19) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Saddle Brown"
-msgstr "Шкіряно-коричневий"
+#. Translators: a bright color (HSV saturation 100% and value 100%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "bright {color}"
+msgstr "яскраво {color}"
 
-#. Translators: the color Salmon (RGB 250, 128, 114) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Salmon"
-msgstr "Помаранчево-рожевий"
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
 
-#. Translators: the color Sandy Brown (RGB 244, 164, 96) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sandy Brown"
-msgstr "Пісочний"
+#. Translators: a dark color (HSV saturation 100% and value 44%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "dark {color}"
+msgstr "темно {color}"
 
-#. Translators: the color Sea Green (RGB 46, 139, 87) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sea Green"
-msgstr "Колір зеленої морської хвилі"
+#. Translators: a very dark color (HSV saturation 100% and value 16%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "very dark {color}"
+msgstr "дуже темно {color}"
 
-#. Translators: the color Seashell (RGB 255, 245, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Seashell"
-msgstr "Колір морської піни"
+#. Translators: a light pale color (HSV saturation 50% and value 100%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "light pale {color}"
+msgstr "світло-тьмяно {color}"
 
-#. Translators: the color Sienna (RGB 160, 82, 45) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sienna"
-msgstr "Охра"
+#. Translators: a pale color (HSV saturation 50% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "pale {color}"
+msgstr "тьмяно {color}"
 
-#. Translators: the color Silver (RGB 192, 192, 192) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Silver"
-msgstr "Срібний"
+#. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "dark pale {color}"
+msgstr "темно-тьмяний {color}"
 
-#. Translators: the color Sky Blue (RGB 135, 206, 235) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sky Blue"
-msgstr "Колір небесної блакиті"
+#. Translators: a very dark color (HSV saturation 50% and value 16%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "very dark pale {color}"
+msgstr "дуже темно-тьмяно {color}"
 
-#. Translators: the color Slate Blue (RGB 106, 90, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Blue"
-msgstr "Аспідно-синій"
+#. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color} white"
+msgstr "{color} біло"
 
-#. Translators: the color Slate Gray (RGB 112, 128, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Gray"
-msgstr "Аспідно-сірий"
+#. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color} grey"
+msgstr "{color} зелено"
 
-#. Translators: the color Snow (RGB 255, 250, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Snow"
-msgstr "Сніжний"
+#. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "dark {color} grey"
+msgstr "темний {color} сірий"
 
-#. Translators: the color Spring Green (RGB 0, 255, 127) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Spring Green"
-msgstr "Весняно-зелений"
+#. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "very dark {color} grey"
+msgstr "дуже темний {color} сірий"
 
-#. Translators: the color Steel Blue (RGB 70, 130, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Steel Blue"
-msgstr "Сталево-синій"
+#. Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "red-brown"
+msgstr "червоно-коричневий"
 
-#. Translators: the color Tan (RGB 210, 180, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tan"
-msgstr "Рудувато-коричневий"
+#. Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "brown"
+msgstr "коричневий"
 
-#. Translators: the color Teal (RGB 0, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Teal"
-msgstr "Зеленувато-синій"
-
-#. Translators: the color Thistle (RGB 216, 191, 216) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Thistle"
-msgstr "Колір чортополоху"
-
-#. Translators: the color Tomato (RGB 255, 99, 71) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tomato"
-msgstr "Томатний"
-
-#. Translators: the color Turquoise (RGB 64, 224, 208) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Turquoise"
-msgstr "Бірюзовий"
-
-#. Translators: the color Violet (RGB 238, 130, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Violet"
-msgstr "Фіолетовий"
-
-#. Translators: the color Wheat (RGB 245, 222, 179) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Wheat"
-msgstr "Пшеничний"
-
-#. Translators: the color White (RGB 255, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White"
-msgstr "Білий"
-
-#. Translators: the color White Smoke (RGB 245, 245, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White Smoke"
-msgstr "Колір білого диму"
-
-#. Translators: the color Yellow (RGB 255, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow"
-msgstr "Жовтий"
-
-#. Translators: the color Yellow Green (RGB 154, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow Green"
-msgstr "Жовто-зелений"
+#. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "brown-yellow"
+msgstr "коричнево-жовтий"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2533,13 +2095,11 @@ msgstr "Колір заднього фону"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "Надрядковий"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "Підрядковий"
 
@@ -2731,6 +2291,10 @@ msgstr "обрізано"
 msgid "overflowing"
 msgstr "Переповнено"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "Розбллоковано"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "Не виділено"
@@ -2810,12 +2374,12 @@ msgstr ""
 "Пошук попереднього входження текстового рядка із поточної позиції курсора"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
+msgid "No selection"
 msgstr "Немає виділення"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
-msgstr "Скопійовано у буфер обміну"
+msgid "Copied to clipboard"
+msgstr "Скопійовано в буфер обміну"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2871,6 +2435,18 @@ msgstr "Введення"
 msgid "Document formatting"
 msgstr "Форматування документа"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Приглушування не підтримується"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Циклічно перемикає між режимами приглушування звуку, які вказують, коли NVDA "
+"повинна зменшувати гучність сторонніх звуків"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "Режим допомоги при вводі увімкнено"
@@ -2909,7 +2485,7 @@ msgstr ""
 "символах"
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+msgid "Left click"
 msgstr "Лівий клік"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2917,7 +2493,7 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Виконує разовий клік лівою кнопкою миші у поточній позиції вказівника"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+msgid "Right click"
 msgstr "Правий клік"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2925,11 +2501,11 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Виконує разовий клік правою кнопкою миші у поточній позиції вказівника"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+msgid "Left mouse button unlock"
 msgstr "Ліву кнопку мишки розблоковано"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
+msgid "Left mouse button lock"
 msgstr "Ліву кнопку мишки заблоковано"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
@@ -2937,16 +2513,20 @@ msgid "Locks or unlocks the left mouse button"
 msgstr "Блокує або розблоковує ліву кнопку миші"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
+msgid "Right mouse button unlock"
 msgstr "Праву кнопку мишки розблоковано"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
+msgid "Right mouse button lock"
 msgstr "Праву кнопку мишки заблоковано"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Блокує або розблоковує праву кнопку миші"
+
+#, python-format
+msgid "Selected %s"
+msgstr "Виділено %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3073,19 +2653,16 @@ msgid "Toggles on and off the reporting of revisions"
 msgstr "Вмикає або вимикає промовляння ревізій"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis off"
-msgstr "Промовляти сторінки вимкнено"
+msgstr "Промовляти виділення у тексті вимкнено"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis on"
-msgstr "Промовляти сторінки увімкнено"
+msgstr "Промовляти виділення у тексті увімкнено"
 
 #. Translators: Input help mode message for toggle report emphasis command.
-#, fuzzy
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Вмикає або вимикає промовляння сторінок"
+msgstr "Вмикає або вимикає читання виділених фрагментів у тексті"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3182,6 +2759,18 @@ msgstr "Повідомляти про відступ абзаца увімкне
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "Вмикає або вимикає повідомлення про відступ абзаца"
+
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+msgid "report line spacing off"
+msgstr "повідомлення про міжрядкові інтервали вимкнено"
+
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+msgid "report line spacing on"
+msgstr "повідомлення про міжрядкові інтервали увімкнено"
+
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "Вмикає або вимикає повідомлення інформації про міжрядкові інтервали"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3319,8 +2908,8 @@ msgstr "Вмикає або вимикає читання елементів, я
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
-msgstr "Рівень символів %s"
+msgid "Symbol level %s"
+msgstr "Рівень символа %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3328,7 +2917,7 @@ msgid ""
 msgstr "Циклічно змінює рівень промовляння символів"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+msgid "Object has no location"
 msgstr "Об'єкт не має розташування"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3373,9 +2962,21 @@ msgstr ""
 "об'єктного перегляду чи режиму перегляду документа і встановлює переглядовий "
 "курсор у позицію об'єктного навігатора"
 
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Простий режим перегляду вимкнено"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Простий режим перегляду увімкнено"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Вмикає і вимикає простий режим перегляду"
+
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+msgid "No navigator object"
 msgstr "Немає об'єктного навігатора"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3406,7 +3007,7 @@ msgstr ""
 "переглядового курсора. Натисніть двічі для отримання детальнішої інформації"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
+msgid "Move to focus"
 msgstr "Привести до фокусу"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
@@ -3420,20 +3021,20 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
+msgid "No focus"
 msgstr "Немає фокусу"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
+msgid "Move focus"
 msgstr "Перемістити фокус"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
+msgid "No caret"
 msgstr "Немає курсору"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "Натисніть один раз для встановлення фокусу клавіатури на об'єктний "
@@ -3449,6 +3050,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Приводить об'єктний навігатор до батьківського об'єкта"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Немає наступного"
 
@@ -3457,6 +3059,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Приводить навігатор до наступного об'єкта"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Немає попереднього"
 
@@ -3473,7 +3076,7 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Переміщає вказівник до першого об'єкта всередині"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
+msgid "Activate"
 msgstr "Активувати"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
@@ -3489,7 +3092,7 @@ msgstr ""
 "якщо це кнопка"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+msgid "Top"
 msgstr "Верхній"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3558,7 +3161,8 @@ msgstr ""
 "Переміщає переглядовий курсор на наступне слово поточного об'єкта і читає "
 "його"
 
-msgid "left"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
 msgstr "Лівий"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
@@ -3588,7 +3192,8 @@ msgstr ""
 "для отримання опису символа або зразків його використання. Натисніть тричі "
 "для отримання його десяткового та шістнадцятиричного значень."
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
 msgstr "Правий"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3608,15 +3213,15 @@ msgstr ""
 "читає його"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
+msgid "Speech mode off"
 msgstr "Режим озвучення вимкнено"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+msgid "Speech mode beeps"
 msgstr "Режим озвучення сигнали"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+msgid "Speech mode talk"
 msgstr "Режим озвучення мовлення"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3656,7 +3261,7 @@ msgstr "Викликає меню NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "Читає від переглядового курсора до кінця тексту, із переміщеннямм "
@@ -3664,7 +3269,7 @@ msgstr ""
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "Читає від системного курсора до кінця тексту, із переміщенням системного "
@@ -3674,18 +3279,22 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Немає інформації про форматування"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Форматування документа"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Повідомляє інформацію про поточне форматування документа у позиції, на якій "
-"знаходиться переглядовий курсор"
+"знаходиться переглядовий курсор. Натисніть двічі щоб отримати інформацію в "
+"режимі огляду"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
-msgstr ""
-"Читає об'єкт у системному фокусі. Натисніть двічі для посимвольного читання"
+msgid "Reports the object with focus. If pressed twice, spells the information"
+msgstr "Читає об'єкт у фокусі. Натисніть двічі для посимвольного читання"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3693,10 +3302,10 @@ msgstr "Рядок стану невиявлено"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
-"читає рядок стану поточної програми і приводить туди навігатор. Натисніть "
+"читає рядок стану поточного додатка і приводить туди навігатор. Натисніть "
 "двічі для посимвольного читання"
 
 #. Translators: presented when the mouse tracking is toggled.
@@ -3712,7 +3321,7 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Перемикає озвучення інформації під час переміщення вказівника мышки"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+msgid "No title"
 msgstr "Немає заголовка"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3726,7 +3335,7 @@ msgstr ""
 "заголовок в буфер обміну"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+msgid "Speaks the current foreground object"
 msgstr "Промовляє об'єкт на передньому плані"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3738,19 +3347,19 @@ msgstr ""
 "відкриває переглядач журналу"
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+msgid "No progress bar updates"
 msgstr "Немає оновлень індикаторів виконання"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+msgid "Speak progress bar updates"
 msgstr "Озвучувати оновлення індикаторів виконання"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+msgid "Beep for progress bar updates"
 msgstr "Звукові сигнали оновлення індикаторів виконання"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+msgid "Beep and speak progress bar updates"
 msgstr "Звуковий сигнал та проговорювання оновлень індикаторів виконання"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3806,7 +3415,7 @@ msgid ""
 msgstr "Вмикає або вимикає переміщення навігатора при зміні фокусу"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+msgid "No system battery"
 msgstr "В системі немає батареї"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3819,11 +3428,12 @@ msgid "AC power on"
 msgstr "Підключено живлення від електромережі"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "Залишилося {hours:d} годин і {minutes:d} хвилин"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Повідомляє стан батареї і час до розрядження при відключеному живленні від "
 "електромережі"
@@ -3983,6 +3593,31 @@ msgstr "Брайль прив'язаний до %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Перемикає прив'язку Брайля між позицією фокусу і огляду"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Курсор брайля вимкнено"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Курсор брайля увімкнено"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Вимикає і вмикає курсор брайля"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Брайлівський курсор зараз вимкнено"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Курсор брайля  %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Перемикає форми курсора брайля"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "У буфері обміну немає тексту"
@@ -4002,36 +3637,47 @@ msgstr "Читає текст у буфері обміну"
 msgid "Start marked"
 msgstr "Помічено початок"
 
-#. Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
-"copied"
+"selected or copied"
 msgstr ""
-"Помічає поточну позицію переглядового курсора як початкову для копіювання"
+"Помічає поточну позицію переглядового курсора в тексті як початкову для "
+"виділення чи копіювання"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "Початок невідмічено"
 
-#. Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
-msgid "The start marker must reside within the same object"
-msgstr "Помітка початку повинна знаходитися в одному об'єкті з кінцевою"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "виділення перегляду скопійовано до буферу обміну"
+#. Translators: Presented when text has already been marked for selection, but not yet copied.
+msgid "Press twice to copy or reset the start marker"
+msgstr "Натисніть двічі для копіювання або очищення початкової помітки"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
 msgstr "Немає тексту для копіювання"
 
-#. Translators: Input help mode message for copy selected review cursor text to clipboard command.
+#. Translators: Presented when unable to select the marked text.
+msgid "Can't select text, press twice to copy"
+msgstr "Не можу виділити текст, натисніть двічі для копіювання"
+
+#. Translators: Presented when some review text has been copied to clipboard.
+msgid "Review selection copied to clipboard"
+msgstr "виділення перегляду скопійовано до буферу обміну"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+msgid "Unable to copy"
+msgstr "Нема нічого для копіювання"
+
+#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
-"Retrieves the text from the previously set start marker up to and including "
-"the current position of the review cursor and copies it to the clipboard"
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
 msgstr ""
-"Шукає текст від попередньо встановленої помітки, включаючи позицію "
-"переглядового курсора, і копіює її у буфер обміну"
+"Одноразове натискання виділяє весь текст від попередньо встановленої "
+"початкової помітки до позиції переглядового курсора%=:===%; подвійне "
+"натискання копіює текст в буфер обміну"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4058,6 +3704,10 @@ msgid "Inputs braille dots via the braille keyboard"
 msgstr ""
 "Вводить текст брайлівськими крапками за допомогою брайлівської клавіатури"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Переходить на брайлівському дисплеї до поточного фокуса"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Плагіни перезавантажено"
@@ -4069,10 +3719,6 @@ msgid ""
 msgstr ""
 "Перезавантажує модулі програм і плагіни без перезапуску NVDA. Зручно для "
 "розробників"
-
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "Немає наступного"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4096,7 +3742,7 @@ msgid "%s mode"
 msgstr "%s режим"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+msgid "Cycles between available touch modes"
 msgstr "Перемикає між доступними режимами дотику"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4131,10 +3777,6 @@ msgstr "Емулює клавіші системної клавіатури"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Різне"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "Режим огляду"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4392,68 +4034,56 @@ msgid "numpad plus"
 msgstr "додатковий плюс"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numpad decimal"
-msgstr "Додатковий деліт"
+msgstr "Десятковий роздільник"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numpad insert"
-msgstr "додатковий ентер"
+msgstr "додатковий інсерт"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr ""
+msgstr "numLock 0 на цифровій клавіатурі"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 1"
 msgstr "додаткова 1"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 2"
 msgstr "додаткова 2"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 3"
 msgstr "додаткова 3"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 4"
 msgstr "додаткова 4"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 5"
 msgstr "додаткова 5"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 6"
 msgstr "додаткова 6"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 7"
 msgstr "додаткова 7"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 8"
 msgstr "додаткова 8"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 9"
 msgstr "додаткова 9"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "insert"
-msgstr "Вставка"
+msgstr "інсерт"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
@@ -4616,15 +4246,20 @@ msgstr "Немає відступу"
 msgid "%d characters"
 msgstr "%d Символів"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "Виділено %s"
+msgid "%s selected"
+msgstr "%s виділено"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "Невыділено %s"
+msgid "%s unselected"
+msgstr "%s не виділено"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s виділено замість"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4634,11 +4269,6 @@ msgstr "Виділення видалено"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "Перетягування завершено"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "Рівень %s"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -4651,6 +4281,7 @@ msgid "column %s"
 msgstr "Стовпчик %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "із {rowCount} рядків і {columnCount} стовпців"
 
@@ -4663,6 +4294,11 @@ msgstr "із %s стовпців"
 #, python-format
 msgid "with %s rows"
 msgstr "із %s рядків"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "Рівень %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4697,21 +4333,36 @@ msgstr "Стиль %s"
 msgid "default style"
 msgstr "Типовий стиль"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} на {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} на {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} Задній фон"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "background pattern {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4720,24 +4371,20 @@ msgid "line %s"
 msgstr "Рядок %s"
 
 #. Translators: Reported when text is marked as having been inserted
-#, fuzzy
 msgid "inserted"
-msgstr "Вставка"
+msgstr "Вставлено"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
-#, fuzzy
 msgid "not inserted"
-msgstr "Не виділено"
+msgstr "Не вставлено"
 
 #. Translators: Reported when text is marked as having been deleted
-#, fuzzy
 msgid "deleted"
-msgstr "деліт"
+msgstr "Видалено"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
-#, fuzzy
 msgid "not deleted"
-msgstr "Не виділено"
+msgstr "Не видалено"
 
 #. Translators: Reported when text is revised.
 #, python-format
@@ -4745,36 +4392,33 @@ msgid "revised %s"
 msgstr "Перевірено %s"
 
 #. Translators: Reported when text is not revised.
-#, fuzzy, python-format
+#, python-format
 msgid "no revised %s"
-msgstr "Перевірено %s"
+msgstr "Не перевірено %s"
 
 #. Translators: Reported when text is marked
-#, fuzzy
 msgid "marked"
-msgstr "Помічено початок"
+msgstr "Помічено"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not marked"
-msgstr "Помічено початок"
+msgstr "Не помічено"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
-msgstr ""
+msgstr "Жирний"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
-#, fuzzy
 msgid "not strong"
-msgstr "Не %s"
+msgstr "Не жирний"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
-msgstr ""
+msgstr "Виділено"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
-msgstr ""
+msgstr "Не виділено"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -4787,6 +4431,11 @@ msgstr "Курсив"
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "не курсив"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "подвійний закреслений"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -4808,7 +4457,6 @@ msgstr "Не підкреслений"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "Базова лінія"
 
@@ -4898,6 +4546,11 @@ msgstr "Вертикальне розподілене вирівнювання"
 msgid "vertical align default"
 msgstr "Типове вертикальне вирівнювання"
 
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "Міжрядковий інтервал %s"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "Поза коментарем"
@@ -4915,6 +4568,7 @@ msgid "out of table"
 msgstr "Поза таблицею"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "таблиця із {columnCount} стовпців і {rowCount} рядків"
 
@@ -4991,22 +4645,27 @@ msgid "object mode"
 msgstr "Об'єктний режим"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "простий {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "подвійний {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "Потрійно {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "Чотирикратно {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} палець {action}"
 
@@ -5060,6 +4719,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "Прокрутити вгору"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "Повідомлення NVDA"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Перевірка оновлень"
@@ -5084,6 +4747,7 @@ msgstr "Оновлення NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Доступна NVDA версія {version}."
 
@@ -5180,9 +4844,11 @@ msgstr ""
 "Вільна програма екранного доступу із відкритим вихідним кодом для Microsoft "
 "Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Авторське право (C) {years} NVDA Contributors"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5228,6 +4894,7 @@ msgstr ""
 "\" у меню NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5236,6 +4903,7 @@ msgstr ""
 "Ви повинні запустити NVDA, аби мати змогу встановлювати додатки."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5246,16 +4914,18 @@ msgstr ""
 "відсотків екрана, висота становить {height:.1f} відсотків екрана"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} як в {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
+msgid "Edge of table"
 msgstr "Межа таблиці"
 
 #. Translators: The description of an NVDA command.
@@ -5404,15 +5074,17 @@ msgid "Waiting for Outlook..."
 msgstr "Очікування запуску Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} до {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Призначення {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
+msgid "Has appointment"
 msgstr "Містить призначення"
 
 #. Translators: the email is a meeting request
@@ -5569,78 +5241,97 @@ msgid "Master Thumbnails"
 msgstr "Майстер мініатюр"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Слайд {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "covers left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "behind left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "covers top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "behind top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "covers right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "behind right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "covers bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "behind bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "covers  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "behind {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} "
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Off left slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} points from top slide edge"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Off top slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} points from right slide edge"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Off right slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} points from bottom slide edge"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Off bottom slide edge by {distance:.3g} points"
 
@@ -5655,10 +5346,12 @@ msgstr ""
 "користувачеві \"прочитати\" інформацію за допомогою NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Нотатки слайдшоу - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Слайдшоу - {slideName}"
 
@@ -5712,6 +5405,12 @@ msgstr "Зупинити"
 msgid "Record"
 msgstr "Запис"
 
+msgid "left"
+msgstr "Лівий"
+
+msgid "right"
+msgstr "Правий"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -5744,6 +5443,7 @@ msgstr "Baum/HumanWare/APH braille displays"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Послідовний порт: {portName}"
 
@@ -5990,11 +5690,11 @@ msgid "Python console"
 msgstr "Консоль Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
-msgstr "Керування &додатками"
+msgid "Manage &add-ons..."
+msgstr "Керування &додатками..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Створити портабельну копію..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6033,8 +5733,8 @@ msgid "C&ontributors"
 msgstr "С&писок розробників"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
-msgstr "Діалог \"&Ласкаво просимо\""
+msgid "We&lcome dialog..."
+msgstr "Діалог \"Ла&скаво просимо\""
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -6181,10 +5881,10 @@ msgid "Add-ons Manager"
 msgstr "Менеджер додатків"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"Тепер всі додатки вимкнено. Аби увімкнути додатки, ви повинні перезапустити "
-"NVDA."
+"Усі додатки вимкнено. Аби увімкнути додатки, ви повинні перезапустити NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -6214,6 +5914,10 @@ msgstr "&Про додаток..."
 msgid "Add-on &help"
 msgstr "Довідка &додатка"
 
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Вимкнути додаток"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "&Встановити..."
@@ -6234,6 +5938,7 @@ msgid "Choose Add-on Package File"
 msgstr "Виберіть пакетний файл додатка"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Пакетний файл додатків NVDA (*.{ext})"
 
@@ -6247,6 +5952,7 @@ msgstr ""
 "неправильний формат файла"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6281,9 +5987,11 @@ msgstr "Зачекайте, будь ласка, поки додаток вст�
 msgid "Failed to install add-on  from %s"
 msgstr "Помилка встановлення додатка з %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Справді видалити вибраний додаток з NVDA?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Вилучити додаток"
 
@@ -6295,7 +6003,15 @@ msgstr "Встановити"
 msgid "remove"
 msgstr "Видалити"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "вимкнено"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "увімкнено"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "Припинений"
 
@@ -6303,19 +6019,24 @@ msgstr "Припинений"
 msgid "running"
 msgstr "Запуск"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Увімкнути додаток"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Додаток додано або видалено. Ви повинні перезавантажити NVDA  для того, щоб "
-"зміни набрали чинності. Бажаєте  виконати цю дію зараз?"
+"До додатків внесено зміни. Щоб вони набули чинності, необхідно "
+"перезавантажити NVDA. Бажаєте це зробити зараз?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
 msgstr "Перезавантажити NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6328,6 +6049,7 @@ msgstr ""
 "Опис: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6589,6 +6311,7 @@ msgstr ""
 "У вашій системі виявлено попередньо встановлену копію NVDA. Її буде оновлено."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6709,6 +6432,10 @@ msgstr "Переглядач журналу NVDA"
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
 msgstr "Оновити\tF5"
+
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "Зберегти &як...\tCtrl+S"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
@@ -6873,6 +6600,10 @@ msgstr "&Синтезатор:"
 msgid "Output &device:"
 msgstr "Пристрій &виводу"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Режим приглушування:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -6985,6 +6716,11 @@ msgstr "Звуковий сигнал для маленьких літер в р
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Промовляти &Командні клавіші"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Відтворювати звук для &граматичних помилок під час введення"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7245,14 +6981,18 @@ msgstr "Промовляти &кольори"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "промовляти ко&ментарі"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Повідомляти про &редакторські ревізії"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#, fuzzy
 msgid "Report e&mphasis"
-msgstr "Промовляти &Сторінки"
+msgstr "Промовляти в&иділення у тексті"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7267,7 +7007,7 @@ msgstr "Промовляти граматичні по&милки"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &pages"
-msgstr "Промовляти &Сторінки"
+msgstr "Повідомляти про &сторінки"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7284,6 +7024,11 @@ msgstr "Промовляти про з&аглиблення рядка"
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "Report &paragraph indentation"
 msgstr "Повідомляти &відступ абзаца"
+
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report line spacing if available.
+msgid "Report &line spacing"
+msgstr "Повідомляти &міжрядкові інтервали"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7367,6 +7112,14 @@ msgstr "&Коментар"
 msgid "&Type"
 msgstr "&Тип"
 
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Помилка регулярного виразу: \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "Помилка словникової статті"
+
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
 msgstr "&Словникові статті"
@@ -7430,9 +7183,17 @@ msgstr "&Таблиця введення:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Розгортати слово під курсором, яке написане скорописом"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "&Показувати курсор"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Швидкість мигання курсора (мс)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Форма &курсора:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7483,6 +7244,11 @@ msgstr "Символ"
 msgid "Level"
 msgstr "Рівень"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Передавати синтезатору"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Змінити символ"
@@ -7490,6 +7256,10 @@ msgstr "Змінити символ"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Рівень"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Відправити поточний символ до синтезатора"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7512,6 +7282,7 @@ msgstr "&Фільтрувати за:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7552,10 +7323,12 @@ msgid "word"
 msgstr "Слово"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "at {x}, {y}"
 
@@ -7572,11 +7345,11 @@ msgid "Refreshes the document content"
 msgstr "Оновлює вміст документа"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
+msgid "Use screen layout on"
 msgstr "Використання екранного представлення увімкнено"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
+msgid "Use screen layout off"
 msgstr "Використання екранного представлення вимкнено"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -7612,6 +7385,7 @@ msgid "Taskbar"
 msgstr "Панель завдань"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB червоний {rgb.red}, зелений {rgb.green}, синій {rgb.blue}"
 
@@ -7625,29 +7399,161 @@ msgstr "Активізувати"
 msgid "Desktop"
 msgstr "робочий стіл"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
+#. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
 msgstr "Типовий колір"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Невідомий колір"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "Автоматично"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "diagonal crosshatch"
+msgstr "diagonal crosshatch"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "thin diagonal crosshatch"
+msgstr "thin diagonal crosshatch"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "reverse diagonal stripe"
+msgstr "reverse diagonal stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 12.5% gray
+#, no-python-format
+msgid "12.5% gray"
+msgstr "12.5% сірий"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+#, no-python-format
+msgid "25% gray"
+msgstr "25% сірий"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+#, no-python-format
+msgid "50% gray"
+msgstr "50% сірий"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+#, no-python-format
+msgid "75% gray"
+msgstr "75% сірий"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 6.25% gray
+#, no-python-format
+msgid "6.25% gray"
+msgstr "6.25% сірий"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "thin horizontal crosshatch"
+msgstr "thin horizontal crosshatch"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal stripe"
+msgstr "horizontal stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "thin reverse diagonal stripe"
+msgstr "thin reverse diagonal stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "thin horizontal stripe"
+msgstr "thin horizontal stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "thin diagonal stripe"
+msgstr "thin diagonal stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "thin vertical stripe"
+msgstr "thin vertical stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "none"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "thick diagonal crosshatch"
+msgstr "thick diagonal crosshatch"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "solid"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "diagonal stripe"
+msgstr "diagonal stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical stripe"
+msgstr "vertical stripe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "linear gradient"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "rectangular gradient"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Показує список діаграм, клітинок з коментарями і клітинок з формулами"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Списки різних типів елементів у цьому листі"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Діаграма"
+msgid "&Charts"
+msgstr "&Діаграми"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "К&оментар"
+msgid "C&omments"
+msgstr "К&оментарі"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Формула"
+msgid "Fo&rmulas"
+msgstr "Фо&рмули"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Поля форми"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheets"
+msgstr "&Листи&Sheets"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} через {end}"
 
@@ -7663,18 +7569,22 @@ msgstr ""
 "таблиці у діалозі \"Форматування документа\"."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Встановити {address} як початковий заголовок стовпчиків"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} вже встановлено як початковий заголовок стовпчиків"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+#, python-brace-format
+msgid "Removed {address}    from column headers"
 msgstr "{address}    видалено з заголовка стовпчиків"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Неможливо знайти {address}    у заголовках стовпчиків"
 
@@ -7688,18 +7598,22 @@ msgstr ""
 "the current column header for this cell."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Встановити {address} як початковий заголовок рядків"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} вже встановлено як початковий заголовок рядків"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+#, python-brace-format
+msgid "Removed {address}    from row headers"
 msgstr "{address}    видалено з заголовка рядків"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Неможливо знайти {address}    в заголовках рядків"
 
@@ -7712,6 +7626,14 @@ msgstr ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 
+#, python-brace-format
+msgid "Input Message is {title}: {message}"
+msgstr "Input Message is {title}: {message}"
+
+#, python-brace-format
+msgid "Input Message is {message}"
+msgstr "Input Message is {message}"
+
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
 msgstr "Не є коментарем"
@@ -7721,10 +7643,12 @@ msgid "Reports the comment on the current cell"
 msgstr "Повідомляє коментар у поточній комірці"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Редагування коментаря для комірки {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} до {lastAddress} {lastContent}"
 
@@ -8087,6 +8011,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Scatter with Smoothed Lines and No Data Markers"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Заголовок діаграми: {chartTitle}, тип: {chartType}"
 
@@ -8114,6 +8039,7 @@ msgstr "Ряди"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "Вісь типу {axisName} з заголовком {axisTitle}"
 
@@ -8127,6 +8053,7 @@ msgid "There are total %d series in this chart"
 msgstr "There are total %d series in this chart"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "series {number} {name}"
 
@@ -8151,6 +8078,7 @@ msgstr "Точка даних"
 msgid "item"
 msgstr "елемент"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Series color: {colorName} "
 
@@ -8240,45 +8168,54 @@ msgstr "Shape"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} ряд {seriesIndex} из {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "немає зміни у точці {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Збільшено на {incrementValue} у точці {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "Зменшено на {decrementValue} у точці {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Категорія {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "значення {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8287,8 +8224,9 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} із {pointCount}"
+msgstr " {segmentType} {pointIndex} з {pointCount}"
 
 #. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
@@ -8299,11 +8237,13 @@ msgid "Secondary"
 msgstr "Secondary"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Вісь діаграми, тип: {axisType}, група: {axisGroup}, заголовок: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Вісь діаграми, тип: {axisType}, група: {axisGroup}"
 
@@ -8321,6 +8261,7 @@ msgid " squared "
 msgstr "У кввадраті"
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Заголовок діаграми: {chartTitle}"
 
@@ -8329,6 +8270,7 @@ msgid "Untitled chart"
 msgstr "Діаграма без назви"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8341,6 +8283,7 @@ msgid "Chart area "
 msgstr "Область діаграми"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8365,12 +8308,14 @@ msgstr "No legend"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 
@@ -8472,37 +8417,69 @@ msgstr "Основний заголовок"
 msgid "Text frame"
 msgstr "Текстовий фрейм"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "коментар: {text} написав {author} в {date}"
 
-#, fuzzy
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} переглянув {author} в {date}"
+msgstr "{revisionType} {description}: {text} переглянув {author} on {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g символів"
+#. Translators: single line spacing
+msgctxt "line spacing value"
+msgid "single"
+msgstr "одинарний"
 
-#. Translators: the value in points for a paragraph indenting
+#. Translators: double line spacing
+msgctxt "line spacing value"
+msgid "double"
+msgstr "подвійний"
+
+#. Translators:  line spacing of 1.5 lines
+msgctxt "line spacing value"
+msgid "1.5 lines"
+msgstr "полуторний інтервал"
+
+#. Translators: exact (minimum) line spacing
+msgctxt "line spacing value"
+msgid "exact"
+msgstr "точний"
+
+#. Translators: line spacing of at least x point
 #, python-format
-msgid "%g pt"
-msgstr "%g знаків пунктуації"
+msgctxt "line spacing value"
+msgid "at least %.1f pt"
+msgstr "принаймні %.1f pt"
+
+#. Translators: line spacing of x lines
+#, python-format
+msgctxt "line spacing value"
+msgid "%.1f lines"
+msgstr "%.1f lines"
+
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "Опис таблиці"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "Set row {rowNumber} column {columnNumber} as start of column headers"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Removed row {rowNumber} column {columnNumber}  from column headers"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 
@@ -8516,20 +8493,24 @@ msgstr ""
 "the current column header for this cell."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "Set row {rowNumber} column {columnNumber} as start of row headers"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Removed row {rowNumber} column {columnNumber}  from row headers"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 
@@ -8582,54 +8563,101 @@ msgstr "Вирівняно справа"
 msgid "Justified"
 msgstr "По ширині"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "Надрядковий"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "Підрядковий"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "Базова лінія"
+
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Переміщено нижче %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Переміщено нижче порожнього абзаца"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Переміщено вище %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Переміщено вище порожнього абзаца"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} style, outline level {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} point font"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} characters"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} дюймів"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} сантиметрів"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} міліметрів"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} точок"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} ціцеро"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
+msgid "No comments"
 msgstr "Немає коментарів"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "Повідомляє текст коментаря у місці розташування системної кареткки."
 
+#. Translators: a message when switching to single line spacing  in Microsoft word
+msgid "Single line spacing"
+msgstr "Одинарний міжрядковий інтервал"
+
+#. Translators: a message when switching to double line spacing  in Microsoft word
+msgid "Double line spacing"
+msgstr "Подвійний міжрядковий інтервал"
+
+#. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
+msgid "1.5 line spacing"
+msgstr "Полуторний міжрядковий інтервал"
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "Поза таблицею"
-
-msgid "Edge of table"
-msgstr "Межа таблиці"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8637,12 +8665,640 @@ msgid "&Annotations"
 msgstr "&Анотація"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE series"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Цю комірку неможливо редагувати"
+
+#~ msgid "checker"
+#~ msgstr "checker"
+
+#~ msgid "crisscross"
+#~ msgstr "crisscross"
+
+#~ msgid "down"
+#~ msgstr "Вниз"
+
+#~ msgid "gray16"
+#~ msgstr "gray16"
+
+#~ msgid "gray25"
+#~ msgstr "gray25"
+
+#~ msgid "gray50"
+#~ msgstr "gray50"
+
+#~ msgid "gray75"
+#~ msgstr "gray75"
+
+#~ msgid "grid"
+#~ msgstr "Сітка"
+
+#~ msgid "light down"
+#~ msgstr "light down"
+
+#~ msgid "light up"
+#~ msgstr "light up"
+
+#~ msgid "light vertical"
+#~ msgstr "light vertical"
+
+#~ msgid "semi gray75"
+#~ msgstr "semi gray75"
+
+#~ msgid "up"
+#~ msgstr "Вгору"
+
+#~ msgid "unknown color"
+#~ msgstr "Невідомий колір"
+
+#~ msgctxt "color name"
+#~ msgid "Alice Blue"
+#~ msgstr "Синій Еліс"
+
+#~ msgctxt "color name"
+#~ msgid "Antique White"
+#~ msgstr "Античний білий"
+
+#~ msgctxt "color name"
+#~ msgid "Aqua"
+#~ msgstr "Колір морської хвилі"
+
+#~ msgctxt "color name"
+#~ msgid "Aquamarine"
+#~ msgstr "Аквамариновий"
+
+#~ msgctxt "color name"
+#~ msgid "Azure"
+#~ msgstr "Блакитний"
+
+#~ msgctxt "color name"
+#~ msgid "Beige"
+#~ msgstr "Бежевий"
+
+#~ msgctxt "color name"
+#~ msgid "Bisque"
+#~ msgstr "Бісквітний"
+
+#~ msgctxt "color name"
+#~ msgid "Blanched Almond"
+#~ msgstr "Очищений мигдаль"
+
+#~ msgctxt "color name"
+#~ msgid "Blue"
+#~ msgstr "Синій"
+
+#~ msgctxt "color name"
+#~ msgid "Blue Violet"
+#~ msgstr "Синьо-фіолетовий"
+
+#~ msgctxt "color name"
+#~ msgid "Burly Wood"
+#~ msgstr "Жовтуватий"
+
+#~ msgctxt "color name"
+#~ msgid "Cadet Blue"
+#~ msgstr "Сіро-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Chartreuse"
+#~ msgstr "Салатовий"
+
+#~ msgctxt "color name"
+#~ msgid "Chocolate"
+#~ msgstr "шоколадний"
+
+#~ msgctxt "color name"
+#~ msgid "Coral"
+#~ msgstr "Кораловий"
+
+#~ msgctxt "color name"
+#~ msgid "Cornflower Blue"
+#~ msgstr "Васильковий"
+
+#~ msgctxt "color name"
+#~ msgid "Cornsilk"
+#~ msgstr "Шовковий відтінок"
+
+#~ msgctxt "color name"
+#~ msgid "Crimson"
+#~ msgstr "Темно-червоний"
+
+#~ msgctxt "color name"
+#~ msgid "Cyan"
+#~ msgstr "Ціановий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Blue"
+#~ msgstr "Темно-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Cyan"
+#~ msgstr "Темно-ціановий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Goldenrod"
+#~ msgstr "Темно-золотий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Green"
+#~ msgstr "Темно-зелений"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Khaki"
+#~ msgstr "Темний з відтінком хакі"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Magenta"
+#~ msgstr "Темно-пурпуровий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Olive Green"
+#~ msgstr "Темний оливково-зелений"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Orange"
+#~ msgstr "темно-помаранчевий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Orchid"
+#~ msgstr "Колір темної орхідеї"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Red"
+#~ msgstr "Темно-червоний"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Salmon"
+#~ msgstr "Темно-помаранчево-рожевий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Sea Green"
+#~ msgstr "Темно-чорно-зелений"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Slate Blue"
+#~ msgstr "Темно-аспідний"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Slate Gray"
+#~ msgstr "Темно-аспідно-сірий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Turquoise"
+#~ msgstr "Темно-бірюзовий"
+
+#~ msgctxt "color name"
+#~ msgid "Dark Violet"
+#~ msgstr "Темно-фіолетовий"
+
+#~ msgctxt "color name"
+#~ msgid "Deep Pink"
+#~ msgstr "Глибокий рожевий"
+
+#~ msgctxt "color name"
+#~ msgid "Deep Sky Blue"
+#~ msgstr "Глибокий небесно-блакитний"
+
+#~ msgctxt "color name"
+#~ msgid "Dim Gray"
+#~ msgstr "Тьмяно-сірий"
+
+#~ msgctxt "color name"
+#~ msgid "Dodger Blue"
+#~ msgstr "Захисно-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Fire Brick"
+#~ msgstr "Цегляний"
+
+#~ msgctxt "color name"
+#~ msgid "Floral White"
+#~ msgstr "Квітково-білий"
+
+#~ msgctxt "color name"
+#~ msgid "Forest Green"
+#~ msgstr "Колір зеленого лісу"
+
+#~ msgctxt "color name"
+#~ msgid "Fuchsia"
+#~ msgstr "Фуксія"
+
+#~ msgctxt "color name"
+#~ msgid "Gainsboro"
+#~ msgstr "Ґейнсборо"
+
+#~ msgctxt "color name"
+#~ msgid "Ghost White"
+#~ msgstr "Тінисто-білий"
+
+#~ msgctxt "color name"
+#~ msgid "Gold"
+#~ msgstr "Золотий"
+
+#~ msgctxt "color name"
+#~ msgid "Goldenrod"
+#~ msgstr "Золотисто-березовий"
+
+#~ msgctxt "color name"
+#~ msgid "Gray"
+#~ msgstr "Сірий"
+
+#~ msgctxt "color name"
+#~ msgid "Green Yellow"
+#~ msgstr "Зелено-жовтий"
+
+#~ msgctxt "color name"
+#~ msgid "Honeydew"
+#~ msgstr "Медовий"
+
+#~ msgctxt "color name"
+#~ msgid "Hot Pink"
+#~ msgstr "Яскраво-рожевий"
+
+#~ msgctxt "color name"
+#~ msgid "Indian Red"
+#~ msgstr "Каштановий"
+
+#~ msgctxt "color name"
+#~ msgid "Indigo"
+#~ msgstr "Колір індіґо"
+
+#~ msgctxt "color name"
+#~ msgid "Ivory"
+#~ msgstr "Колір слонової кістки"
+
+#~ msgctxt "color name"
+#~ msgid "Khaki"
+#~ msgstr "Хакі"
+
+#~ msgctxt "color name"
+#~ msgid "Lavender"
+#~ msgstr "Лавандовий"
+
+#~ msgctxt "color name"
+#~ msgid "Lavender Blush"
+#~ msgstr "Рожево-лавандовий"
+
+#~ msgctxt "color name"
+#~ msgid "Lawn Green"
+#~ msgstr "Колір зеленої галявини"
+
+#~ msgctxt "color name"
+#~ msgid "Lemon Chiffon"
+#~ msgstr "Лимонно-кремовий"
+
+#~ msgctxt "color name"
+#~ msgid "Light Blue"
+#~ msgstr "Світло-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Light Coral"
+#~ msgstr "Світло-кораловий"
+
+#~ msgctxt "color name"
+#~ msgid "Light Cyan"
+#~ msgstr "Світло-ціановий"
+
+#~ msgctxt "color name"
+#~ msgid "Light Goldenrod Yellow"
+#~ msgstr "Світло-золотисто-жовтий"
+
+#~ msgctxt "color name"
+#~ msgid "Light Green"
+#~ msgstr "Світло-зелений"
+
+#~ msgctxt "color name"
+#~ msgid "Light Pink"
+#~ msgstr "Світло-рожевий"
+
+#~ msgctxt "color name"
+#~ msgid "Light Salmon"
+#~ msgstr "Світло-помаранчево-рожевий"
+
+#~ msgctxt "color name"
+#~ msgid "Light Sea Green"
+#~ msgstr "Колір світло-зеленої морської хвилі"
+
+#~ msgctxt "color name"
+#~ msgid "Light Sky Blue"
+#~ msgstr "Світло-небесно-блакитний"
+
+#~ msgctxt "color name"
+#~ msgid "Light Slate Gray"
+#~ msgstr "Світло-аспідно-сірий"
+
+#~ msgctxt "color name"
+#~ msgid "Light Steel Blue"
+#~ msgstr "Колір світло-синьої сталі"
+
+#~ msgctxt "color name"
+#~ msgid "Light Yellow"
+#~ msgstr "Світло-жовтий"
+
+#~ msgctxt "color name"
+#~ msgid "Lime"
+#~ msgstr "Лимонний"
+
+#~ msgctxt "color name"
+#~ msgid "Lime Green"
+#~ msgstr "Лимонно-зелений"
+
+#~ msgctxt "color name"
+#~ msgid "Linen"
+#~ msgstr "Льняний"
+
+#~ msgctxt "color name"
+#~ msgid "Magenta"
+#~ msgstr "Пурпуровий"
+
+#~ msgctxt "color name"
+#~ msgid "Maroon"
+#~ msgstr "Темно-бордовий"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Aquamarine"
+#~ msgstr "Помірно-аквамариновий"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Blue"
+#~ msgstr "Помірно-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Orchid"
+#~ msgstr "Помірно-орхідейний"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Purple"
+#~ msgstr "Помірно-пурпуровий"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Sea Green"
+#~ msgstr "Помірний колір зеленої морської хвилі"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Slate Blue"
+#~ msgstr "Помірний аспітно-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Spring Green"
+#~ msgstr "Помірний зелено-весняний"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Turquoise"
+#~ msgstr "Помірно-бірюзовий"
+
+#~ msgctxt "color name"
+#~ msgid "Medium Violet Red"
+#~ msgstr "Помірний фіолетово-червоний"
+
+#~ msgctxt "color name"
+#~ msgid "Midnight Blue"
+#~ msgstr "Північно-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Mint Cream"
+#~ msgstr "М'ятно-кремовий"
+
+#~ msgctxt "color name"
+#~ msgid "Misty Rose"
+#~ msgstr "Туманно-трояндовий"
+
+#~ msgctxt "color name"
+#~ msgid "Moccasin"
+#~ msgstr "Мокасин"
+
+#~ msgctxt "color name"
+#~ msgid "Navajo White"
+#~ msgstr "Білий навахо"
+
+#~ msgctxt "color name"
+#~ msgid "Navy"
+#~ msgstr "Темно-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Old Lace"
+#~ msgstr "Колір старого мережива"
+
+#~ msgctxt "color name"
+#~ msgid "Olive"
+#~ msgstr "Оливковий"
+
+#~ msgctxt "color name"
+#~ msgid "Olive Drab"
+#~ msgstr "Ніжно-оливковий"
+
+#~ msgctxt "color name"
+#~ msgid "Orange Red"
+#~ msgstr "помаранчево-червоний"
+
+#~ msgctxt "color name"
+#~ msgid "Orchid"
+#~ msgstr "Колір орхідеї"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Goldenrod"
+#~ msgstr "Блідий золотисто-березовий"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Green"
+#~ msgstr "Блідо-зелений"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Turquoise"
+#~ msgstr "Блідо-бірюзовий"
+
+#~ msgctxt "color name"
+#~ msgid "Pale Violet Red"
+#~ msgstr "Блідий фіолетово-червоний"
+
+#~ msgctxt "color name"
+#~ msgid "Papaya Whip"
+#~ msgstr "Papaya Whip"
+
+#~ msgctxt "color name"
+#~ msgid "Peach Puff"
+#~ msgstr "Персиковий"
+
+#~ msgctxt "color name"
+#~ msgid "Peru"
+#~ msgstr "Світло-коричневий"
+
+#~ msgctxt "color name"
+#~ msgid "Pink"
+#~ msgstr "Рожевий"
+
+#~ msgctxt "color name"
+#~ msgid "Plum"
+#~ msgstr "Сливовий"
+
+#~ msgctxt "color name"
+#~ msgid "Powder Blue"
+#~ msgstr "Порохова блакить"
+
+#~ msgctxt "color name"
+#~ msgid "Red"
+#~ msgstr "Червоний"
+
+#~ msgctxt "color name"
+#~ msgid "Rosy Brown"
+#~ msgstr "Трояндово-коричневий"
+
+#~ msgctxt "color name"
+#~ msgid "Royal Blue"
+#~ msgstr "Яскраво-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Saddle Brown"
+#~ msgstr "Шкіряно-коричневий"
+
+#~ msgctxt "color name"
+#~ msgid "Salmon"
+#~ msgstr "Помаранчево-рожевий"
+
+#~ msgctxt "color name"
+#~ msgid "Sandy Brown"
+#~ msgstr "Пісочний"
+
+#~ msgctxt "color name"
+#~ msgid "Sea Green"
+#~ msgstr "Колір зеленої морської хвилі"
+
+#~ msgctxt "color name"
+#~ msgid "Seashell"
+#~ msgstr "Колір морської піни"
+
+#~ msgctxt "color name"
+#~ msgid "Sienna"
+#~ msgstr "Охра"
+
+#~ msgctxt "color name"
+#~ msgid "Silver"
+#~ msgstr "Срібний"
+
+#~ msgctxt "color name"
+#~ msgid "Sky Blue"
+#~ msgstr "Колір небесної блакиті"
+
+#~ msgctxt "color name"
+#~ msgid "Slate Blue"
+#~ msgstr "Аспідно-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Slate Gray"
+#~ msgstr "Аспідно-сірий"
+
+#~ msgctxt "color name"
+#~ msgid "Snow"
+#~ msgstr "Сніжний"
+
+#~ msgctxt "color name"
+#~ msgid "Spring Green"
+#~ msgstr "Весняно-зелений"
+
+#~ msgctxt "color name"
+#~ msgid "Steel Blue"
+#~ msgstr "Сталево-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Tan"
+#~ msgstr "Рудувато-коричневий"
+
+#~ msgctxt "color name"
+#~ msgid "Teal"
+#~ msgstr "Зеленувато-синій"
+
+#~ msgctxt "color name"
+#~ msgid "Thistle"
+#~ msgstr "Колір чортополоху"
+
+#~ msgctxt "color name"
+#~ msgid "Tomato"
+#~ msgstr "Томатний"
+
+#~ msgctxt "color name"
+#~ msgid "Turquoise"
+#~ msgstr "Бірюзовий"
+
+#~ msgctxt "color name"
+#~ msgid "Violet"
+#~ msgstr "Фіолетовий"
+
+#~ msgctxt "color name"
+#~ msgid "Wheat"
+#~ msgstr "Пшеничний"
+
+#~ msgctxt "color name"
+#~ msgid "White Smoke"
+#~ msgstr "Колір білого диму"
+
+#~ msgid "The start marker must reside within the same object"
+#~ msgstr "Помітка початку повинна знаходитися в одному об'єкті з кінцевою"
+
+#, fuzzy
+#~ msgid "report grammar errors off"
+#~ msgstr "Читати фрейми вимкнено"
+
+#, fuzzy
+#~ msgid "report grammar errors on"
+#~ msgstr "Читати фрейми увімкнено"
+
+#, fuzzy
+#~ msgid "Toggles on and off the reporting of grammar errors"
+#~ msgstr "Вмикає або вимикає читання фреймів"
+
+#, fuzzy
+#~ msgid "out of grammar error"
+#~ msgstr "Поза граматичною помилкою"
+
+#, fuzzy
+#~ msgid "Report &grammar errors"
+#~ msgstr "Промовляти граматичні по&милки"
+
+#~ msgid "browse mode"
+#~ msgstr "Режим огляду"
+
+#~ msgid "no caret"
+#~ msgstr "Немає курсору"
+
+#~ msgid "activate"
+#~ msgstr "Активувати"
+
+#~ msgid "no next"
+#~ msgstr "Немає наступного"
+
+#, fuzzy
+#~ msgid "no previous"
+#~ msgstr "Немає попереднього"
+
+#~ msgid "edge of table"
+#~ msgstr "Межа таблиці"
+
+#~ msgid "%g characters"
+#~ msgstr "%g символів"
+
+#~ msgid "%g pt"
+#~ msgstr "%g знаків пунктуації"
+
+#~ msgid "no comments"
+#~ msgstr "Немає коментарів"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Показує список діаграм, клітинок з коментарями і клітинок з формулами"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "Типовий колір"
+
+#~ msgid "unselecting %s"
+#~ msgstr "Невыділено %s"
 
 #~ msgid "unrevised"
 #~ msgstr "Не перевірено"
@@ -8663,10 +9319,6 @@ msgstr "HIMS SyncBraille"
 #~ msgid "%s"
 #~ msgstr "з%s"
 
-#, fuzzy
-#~ msgid "none"
-#~ msgstr "Нічого"
-
 #~ msgid "equation"
 #~ msgstr "рівняння"
 
@@ -8676,23 +9328,11 @@ msgstr "HIMS SyncBraille"
 #~ msgid "Slovak"
 #~ msgstr "Slovak"
 
-#~ msgid "grey"
-#~ msgstr "Сірий"
-
 #~ msgid "navy blue"
 #~ msgstr "темно-синій"
 
-#~ msgid "red"
-#~ msgstr "червоний"
-
-#~ msgid "blue"
-#~ msgstr "синій"
-
 #~ msgid "teal"
 #~ msgstr "зеленувато-блакитний"
-
-#~ msgid "aqua"
-#~ msgstr "колір морської хвилі"
 
 #~ msgid "Report l&ists"
 #~ msgstr "Повідомляти про &Списки"
@@ -9110,9 +9750,6 @@ msgstr "HIMS SyncBraille"
 #~ msgid "Error in keyboardHandler.internal_keyUpEvent"
 #~ msgstr "Помилка у keyboardHandler.internal_keyUpEvent"
 
-#~ msgid "No caret"
-#~ msgstr "Немає курсору"
-
 #~ msgid ""
 #~ "Moves the review cursor to the position of the system caret, in the "
 #~ "current navigator object"
@@ -9334,9 +9971,6 @@ msgstr "HIMS SyncBraille"
 #~ msgid "no selections"
 #~ msgstr "Немає виділення"
 
-#~ msgid "unselected %s"
-#~ msgstr "Не виділено %s"
-
 #~ msgid "Moves and reads the current selection"
 #~ msgstr "переходить і читає поточне виділення"
 
@@ -9362,9 +9996,6 @@ msgstr "HIMS SyncBraille"
 #~ msgid "no more paragraphs"
 #~ msgstr "Більше немає абзаців"
 
-#~ msgid "moves to the next paragraph"
-#~ msgstr "Переходить до наступного абзацу"
-
 #~ msgid "moves to the previous paragraph"
 #~ msgstr "Переходить до попереднього абзацу"
 
@@ -9379,9 +10010,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "no more list items"
 #~ msgstr "Більше немає елементів списку"
-
-#~ msgid "no more form fields"
-#~ msgstr "Більше немає полів форми"
 
 #~ msgid "Moves to the next form field"
 #~ msgstr "Переходить до наступного поля форми"

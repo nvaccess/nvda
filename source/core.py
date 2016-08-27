@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -185,8 +185,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# Set a reasonable timeout for any socket connections NVDA makes.
 	import socket
 	socket.setdefaulttimeout(10)
-	log.debug("Initializing addons system.")
+	log.debug("Initializing add-ons system")
 	addonHandler.initialize()
+	if globalVars.appArgs.disableAddons:
+		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
@@ -205,11 +207,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
-	app = wx.App(redirect=False)
-	# HACK: wx currently raises spurious assertion failures when a timer is stopped but there is already an event in the queue for that timer.
-	# Unfortunately, these assertion exceptions are raised in the middle of other code, which causes problems.
-	# Therefore, disable assertions for now.
-	app.SetAssertMode(wx.PYAPP_ASSERT_SUPPRESS)
+	class App(wx.App):
+		def OnAssert(self,file,line,cond,msg):
+			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
+			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+	app = App(redirect=False)
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):

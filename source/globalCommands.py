@@ -17,6 +17,7 @@ import review
 import controlTypes
 import api
 import textInfos
+import editableText
 import speech
 import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -430,20 +431,6 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportSpellingErrors.__doc__=_("Toggles on and off the reporting of spelling errors")
 	script_toggleReportSpellingErrors.category=SCRCAT_DOCUMENTFORMATTING
 
-	def script_toggleReportGrammarErrors(self,gesture):
-		if config.conf["documentFormatting"]["reportGrammarErrors"]:
-			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors off")
-			config.conf["documentFormatting"]["reportGrammarErrors"]=False
-		else:
-			# Translators: The message announced when toggling the report grammar errors document formatting setting.
-			state = _("report grammar errors on")
-			config.conf["documentFormatting"]["reportGrammarErrors"]=True
-		ui.message(state)
-	# Translators: Input help mode message for toggle report grammar errors command.
-	script_toggleReportGrammarErrors.__doc__=_("Toggles on and off the reporting of grammar errors")
-	script_toggleReportGrammarErrors.category=SCRCAT_DOCUMENTFORMATTING
-
 	def script_toggleReportPage(self,gesture):
 		if config.conf["documentFormatting"]["reportPage"]:
 			# Translators: The message announced when toggling the report pages document formatting setting.
@@ -499,6 +486,20 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle report paragraph indentation command.
 	script_toggleReportParagraphIndentation.__doc__=_("Toggles on and off the reporting of paragraph indentation")
 	script_toggleReportParagraphIndentation.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportLineSpacing(self,gesture):
+		if config.conf["documentFormatting"]["reportLineSpacing"]:
+			# Translators: The message announced when toggling the report line spacing document formatting setting.
+			state = _("report line spacing off")
+			config.conf["documentFormatting"]["reportLineSpacing"]=False
+		else:
+			# Translators: The message announced when toggling the report line spacing document formatting setting.
+			state = _("report line spacing on")
+			config.conf["documentFormatting"]["reportLineSpacing"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report line spacing command.
+	script_toggleReportLineSpacing.__doc__=_("Toggles on and off the reporting of line spacing")
+	script_toggleReportLineSpacing.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportTables(self,gesture):
 		if config.conf["documentFormatting"]["reportTables"]:
@@ -732,6 +733,20 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Script help message for previous review mode command.
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
+
+	def script_toggleSimpleReviewMode(self,gesture):
+		if config.conf["reviewCursor"]["simpleReviewMode"]:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode off")
+			config.conf["reviewCursor"]["simpleReviewMode"]=False
+		else:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode on")
+			config.conf["reviewCursor"]["simpleReviewMode"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle simple review mode command.
+	script_toggleSimpleReviewMode.__doc__=_("Toggles simple review mode on and off")
+	script_toggleSimpleReviewMode.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -1240,8 +1255,8 @@ class GlobalCommands(ScriptableObject):
 		formatConfig={
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
-			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,"reportGrammarErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
+			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
+			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 		}
@@ -1717,35 +1732,86 @@ class GlobalCommands(ScriptableObject):
 	script_reportClipboardText.category=SCRCAT_SYSTEM
 
 	def script_review_markStartForCopy(self, gesture):
-		self._copyStartMarker = api.getReviewPosition().copy()
+		reviewPos = api.getReviewPosition()
+		# attach the marker to obj so that the marker is cleaned up when obj is cleaned up.
+		reviewPos.obj._copyStartMarker = reviewPos.copy() # represents the start location
+		reviewPos.obj._selectThenCopyRange = None # we may be part way through a select, reset the copy range.
 		# Translators: Indicates start of review cursor text to be copied to clipboard.
 		ui.message(_("Start marked"))
-	# Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
-	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be copied")
+	# Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be selected or copied")
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
 	def script_review_copy(self, gesture):
-		if not getattr(self, "_copyStartMarker", None):
+		pos = api.getReviewPosition().copy()
+		if not getattr(pos.obj, "_copyStartMarker", None):
 			# Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 			ui.message(_("No start marker set"))
 			return
-		pos = api.getReviewPosition().copy()
-		if self._copyStartMarker.obj != pos.obj:
-			# Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
-			ui.message(_("The start marker must reside within the same object"))
-			return
-		pos.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
-		pos.setEndPoint(self._copyStartMarker, "startToStart")
-		if pos.compareEndPoints(pos, "startToEnd") < 0 and pos.copyToClipboard():
-			# Translators: Presented when some review text has been copied to clipboard.
-			ui.message(_("Review selection copied to clipboard"))
-		else:
-			# Translators: Presented when there is no text selection to copy from review cursor.
-			ui.message(_("No text to copy"))
-			return
-		self._copyStartMarker = None
-	# Translators: Input help mode message for copy selected review cursor text to clipboard command.
-	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
+		startMarker = api.getReviewPosition().obj._copyStartMarker
+		# first call, try to set the selection.
+		if scriptHandler.getLastScriptRepeatCount()==0 :
+			if getattr(pos.obj, "_selectThenCopyRange", None):
+				# we have already tried selecting the text, dont try again. For now selections can not be ammended.
+				# Translators: Presented when text has already been marked for selection, but not yet copied.
+				ui.message(_("Press twice to copy or reset the start marker"))
+				return
+			copyMarker = startMarker.copy()
+			# Check if the end position has moved
+			if pos.compareEndPoints(startMarker, "endToEnd") > 0: # user has moved the cursor 'forward'
+				# start becomes the original start
+				copyMarker.setEndPoint(startMarker, "startToStart")
+				# end needs to be updated to the current cursor position.
+				copyMarker.setEndPoint(pos, "endToEnd")
+				copyMarker.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+			else:# user has moved the cursor 'backwards' or not at all.
+				# when the cursor is not moved at all we still want to select the character have under the cursor
+				# start becomes the current cursor position position
+				copyMarker.setEndPoint(pos, "startToStart")
+				# end becomes the original start position plus 1
+				copyMarker.setEndPoint(startMarker, "endToEnd")
+				copyMarker.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+			if copyMarker.compareEndPoints(copyMarker, "startToEnd") == 0:
+				# Translators: Presented when there is no text selection to copy from review cursor.
+				ui.message(_("No text to copy"))
+				api.getReviewPosition().obj._copyStartMarker = None
+				return
+			api.getReviewPosition().obj._selectThenCopyRange = copyMarker
+			# for applications such as word, where the selected text is not automatically spoken we must monitor it ourself
+			try:
+				# old selection info must be saved so that its possible to report on the changes to the selection.
+				oldInfo=pos.obj.makeTextInfo(textInfos.POSITION_SELECTION)
+			except Exception as e:
+				log.debug("Error trying to get initial selection information %s" % e)
+				pass
+			try:
+				copyMarker.updateSelection()
+				if isinstance(pos.obj, editableText.EditableTextWithoutAutoSelectDetection):
+					# wait for applications such as word to update their selection so that we can detect it
+					try:
+						pos.obj.waitForAndReportSelectionChange(oldInfo)
+					except Exception as e:
+						log.debug("Error trying to wait for the selection to update and then speak the selection: %s" % e)
+			except NotImplementedError as e:
+				# we are unable to select the text, leave the _copyStartMarker in place in case the user wishes to copy the text.
+				# Translators: Presented when unable to select the marked text.
+				ui.message(_("Can't select text, press twice to copy"))
+				log.debug("Error trying to update selection: %s" % e)
+				return
+		elif scriptHandler.getLastScriptRepeatCount()==1: # the second call, try to copy the text
+			copyMarker = pos.obj._selectThenCopyRange
+			if copyMarker.copyToClipboard():
+				# Translators: Presented when some review text has been copied to clipboard.
+				ui.message(_("Review selection copied to clipboard"))
+			else:
+				# Translators: Presented when unable to copy to the clipboard because of an error.
+				ui.message(_("Unable to copy"))
+			# on the second call always clean up the start marker
+			api.getReviewPosition().obj._selectThenCopyRange = None
+			api.getReviewPosition().obj._copyStartMarker = None
+		return
+	# Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+	script_review_copy.__doc__ = _("If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard")
 	script_review_copy.category=SCRCAT_TEXTREVIEW
 
 	def script_braille_scrollBack(self, gesture):
@@ -1787,6 +1853,23 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for a braille command.
 	script_braille_dots.__doc__= _("Inputs braille dots via the braille keyboard")
 	script_braille_dots.category=SCRCAT_BRAILLE
+
+	def script_braille_toFocus(self, gesture):
+		if braille.handler.tether == braille.handler.TETHER_REVIEW:
+			self.script_navigatorObject_toFocus(gesture)
+		else:
+			if not braille.handler.mainBuffer.regions:
+				return
+			region = braille.handler.mainBuffer.regions[-1]
+			braille.handler.mainBuffer.focus(region)
+			if region.brailleCursorPos is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
+			elif region.brailleSelectionStart is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+			braille.handler.mainBuffer.updateDisplay()
+	# Translators: Input help mode message for a braille command.
+	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
+	script_braille_toFocus.category=SCRCAT_BRAILLE
 
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler

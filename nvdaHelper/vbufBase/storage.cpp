@@ -216,7 +216,7 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	s<<L"_childcount=\""<<childCount<<L"\" _childcontrolcount=\""<<childControlCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
-		text+=i->first;
+		text+=sanitizeXMLAttribName(i->first);
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
 			appendCharToXML(*j,text,true);
