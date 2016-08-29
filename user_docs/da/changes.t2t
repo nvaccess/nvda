@@ -37,13 +37,13 @@ Af væsentlige forbedringer i denne version af NVDA kan nævnes: Muligheden for 
 - Gennemsynstilstand for Microsoft Edge samt søgeforslag i startmenuen er nu igen tilgængelige i Windows 10 for versioner frigivet efter April 2016. (#5955)
 - Automatisk læsning af tabeloverskrifter virker nu bedre i Microsoft Word når der arbejdes med flettede celler. (#5926)
 - NVDA vil ikke længere have problemer med at læse indholdet af beskeder i Windows 10 Mail. (#5635) 
-- Når "oplæs funktionstaste" er slået til, vil låsetaster som CAPS lock ikke annoncéres to gange. (#5490)
+- Når "oplæs funktionstaster" er slået til, vil låsetaster som CAPS lock ikke annoncéres to gange. (#5490)
 - Dialogerne for Windows kontrol af brugerkonti er nu igen oplæst korrekt i Windows 10 anniversary update. (#5942)
 - I Web Conference Plugin (såsom det der benyttes på out-of-sight.net) vil NVDA ikke længere bippe og sige behandlingslinjens opdatering med hensyn til mikrofoninput. (#5888)
 - Når kommandoerne "Find næste" eller "Find forrige" udføres i gennemsynstilstand, vil NVDA nu tage hensyn til, om den oprindelige søgning gjorde forskel på store og små bogstaver. (#5522)
 - Når ordbogsord redigeres, gives der nu feedback hvis det regulære udtryk er ugyldigt. NVDA vil desuden heller ikke længere gå ned, hvis ordbogsfilen indeholder ugyldige regulære udtryk. (#4834)
 - Hvis NVDA ikke er i stand til at kommunikere med et punktdisplay (f.eks. hvis forbindelsen er afbrudt), vil NVDA automatisk deaktivere brugen af dette punktdisplay. (#1555)
-- Forbedret filtrering af elementlisten i gennemsynstilstand i nogle tilfælde. (#6126)
+- Forbedrede filtrering af elementlisten i gennemsynstilstand i nogle tilfælde. (#6126)
 - NVDA annoncérer nu korrekt navne på baggrundsmønstre, der benyttes i Microsoft Excel. (#6092)
 - Forbedret logonskærm i Windows 10. NVDA vil nu rapportere beskeder. Aktivering af adgangskodefeltet ved berøring er også blevet forbedret. (#6010)
 - NVDA vil nu korrekt genkende sekundære markørsammenføringsknapper på ALVA BC640/680 punktdisplays. (#5206)
@@ -52,6 +52,7 @@ Af væsentlige forbedringer i denne version af NVDA kan nævnes: Muligheden for 
 - Hvis annoncéring af linjenumre er slået til i NVDAs dialog for dokumentformatering, vil dette nu fremkomme på punktdisplay hvis forbundet. (#5941)
 - Når taletilstand er slået fra, vil annoncéring af objekter (såsom når der trykkes NVDA+tab for at rapportere fokus) nu blive vist i talevisning som forventet. (#6049)
 - Tilhørende kladeinformation vil ikke længere blive rapporteret i beskedlisten i Outlook 2016. (#6219)
+- Læsning af dokumenter i gennemsynstilstand vil ikke længere mislykkes, når der benyttes Google Chrome eller Chrome-baserede browsere på andre sprog end Engelsk. (#6249)
 
 
 == Ændringer for udviklere ==
