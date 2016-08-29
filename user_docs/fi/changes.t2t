@@ -17,13 +17,13 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. yksittäisten lis�
 - Yksittäisten lisäosien käytöstä poistaminen on nyt mahdollista lisäosien hallinnassa. (#3090)
 - ALVA BC640/680 -pistenäytöille on lisätty näppäinmäärityksiä. (#5206)
 - Pistenäytttö on nyt mahdollista siirtää nykyiseen kohdistukseen. Komennolle on määritelty näppäin Tällä hetkellä vain ALVA BC640/680 -pistenäytöille, mutta se on mahdollista määrittää tarvittaessa muillekin Syöte-eleet-valintaikkunassa. (#5250)
-- Microsoft Excelissä voidaan nyt olla vuorovaikutuksessa lomakekenttien kanssa. Kenttiin siirrytään elementtilistaa tai selaustilassa navigointinäppäimiä käyttäen. (#4953)
+- Microsoft Excelissä on nyt mahdollista olla vuorovaikutuksessa lomakekenttien kanssa. Kenttiin siirrytään elementtilistaa tai selaustilassa navigointinäppäimiä käyttäen. (#4953)
 - Yksinkertaiselle tarkastelutilalle voidaan nyt määrittää syöte-ele Syöte-eleet-valintaikkunaa käyttäen. (#6173)
 
 
 == Muutokset ==
 - NVDA ilmoittaa nyt värit käyttäen paremmin ymmärrettävää 9 sävyn ja 3 voimakkuuden perussarjaa kirkkaus- ja haaleusmuunnelmineen. Aiemmin käytettiin subjektiivisempia ja vähemmän ymmärrettäviä värien nimiä. (#6029)
-- Olemassa oleva NVDA+F9- ja NVDA+F10-toiminnallisuus on muutettu valitsemaan tekstiä ensimmäisellä F10:n painalluksella. Kun F10:tä painetaan kahdesti (nopeasti peräkkäin), teksti kopioidaan leikepöydälle. (#4636)
+- NVDA+F9- ja NVDA+F10-toiminnallisuus on muutettu valitsemaan tekstiä ensimmäisellä F10:n painalluksella. Kun F10:tä painetaan kahdesti (nopeasti peräkkäin), teksti kopioidaan leikepöydälle. (#4636)
 - ESpeak NG Päivitetty versioksi Master 11b1a7b (22. kesäkuuta 2016). (#6037)
 
 
@@ -51,6 +51,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. yksittäisten lis�
 - NVDA ei lakkaa enää ajoittain tunnistamasta Baum-yhteensopivien ja HumanWaren Brailliant B -pistenäyttöjen näppäinpainalluksia. (#6035)
 - Rivinumerot näytetään nyt pistenäytöllä, mikäli niiden ilmoittaminen on otettu käyttöön NVDA:N asiakirjojen muotoiluasetuksista. (#5941)
 - Objektien ilmoittaminen (kuten kohdistuksen NVDA+Sarkain -näppäinyhdistelmää painettaessa) näkyy nyt odotetusti Puheen tarkastelussa, kun puhetilana on "ei puhetta". (#6049)
+- Luonnostietoja ei enää lueta Outlook 2016:n viestiluettelossa. (#6219)
 
 
 == Muutokset kehittäjille (englanniksi) ==

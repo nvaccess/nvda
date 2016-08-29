@@ -307,7 +307,7 @@ Para estes casos, pode usar a navegação por objectos.
 
 A navegação por objectos permite-lhe mover-se entre [objectos #Objects] e obter informações sobre objectos individuais.
 Quando se move para um objecto, o NVDA apresenta-o de maneira semelhante à forma como dá a informação do foco do sistema.
-Para uma forma de rever todo o texto, tal como aparece no ecrã, pode  usar a [revisão de ecrãa #ScreenReview].
+Para uma forma de rever todo o texto, tal como aparece no ecrã, pode  usar a [revisão de ecrã #ScreenReview].
 
 Em vez de ter que se deslocar para trás e para a frente, entre cada objecto no sistema, os objectos estão organizados hierarquicamente.
 Isto significa que se deve mover para dentro de alguns objectos para aceder aos objectos que eles contêm.
@@ -317,12 +317,12 @@ Ao deslocar-se para o objecto que comtém um item de lista, fará com que regres
 Pode então mover-se para fora da lista, se pretender aceder a outros objectos.
 De forma similar, uma barra de ferramentas contém controlos; portanto deve mover-se para dentro da mesma, para aceder aos controlos da barra de ferramentas.
 
-O objecto, que está a ser revisto actualmente, denomina-se objecto de navegação.
+O objecto que está a ser revisto actualmente, denomina-se objecto de navegação.
 Uma vez que tenha navegado para um objecto, pode rever o seu conteúdo com os comandos de [revisão de texto #ReviewingText].
 Por padrão, a navegação de objectos acompanha o foco do sistema, embora este comportamento possa ser activado e desactivado.
 
 Note que, por padrão, o Braille acompanha o [foco #SystemFocus] e o [cursor do sistema #SystemCaret] e não a navegação por objectos e a revisão de texto.
-Se pretender que o Braille siga a navegação por objectos e a revisão de texto, terá que [configurar o Braille para se fixar no #BrailleTether] cursor de revisão.
+Se pretender que o Braille siga a navegação por objectos e a revisão de texto, terá que configurar o [Braille fixar para #BrailleTether] cursor de revisão.
 
 Para navegar pelos objectos, utilize os seguintes comandos:
 
@@ -335,7 +335,7 @@ Para navegar pelos objectos, utilize os seguintes comandos:
 | Mover para o primeiro objecto descendente | NVDA+2 do bloco numérico | NVDA+shift+Seta Abaixo | Varrer para baixo (modo de objectos) | Move para o primeiro objecto contido pelo objecto de navegação actual |
 | Mover para o objecto em foco | NVDA+Menos do bloco numérico | NVDA+Backspace | Nenhum | Move para o objecto que tem o foco do sistema actual e também posiciona o cursor de revisão na posição do cursor do sistema, se o mesmo estiver visível |
 | Activar o objecto de navegação actual | NVDA+Enter do bloco numérico | NVDA+Enter | Toque duplo | Activa o objecto de navegação actual (semelhante ao clicar com o rato ou pressionar espaço quando o mesmo tem o foco do sistema) |
-| Mover o foco do sistema ou o cursor para o objecto actual da revisão| NVDA+Shift+Menos do bloco numérico | NVDA+Shift+Backspace | Nenhum | Ao pressionar uma vez, move o foco para o objecto de navegação actual, ao pressionar duas vezes, move o cursor do sistema para a posição do cursor de revisão |
+| Mover o foco do sistema ou o cursor para o objecto actual da revisão | NVDA+Shift+Menos do bloco numérico | NVDA+Shift+Backspace | Nenhum | Ao pressionar uma vez, move o foco para o objecto de navegação actual, ao pressionar duas vezes, move o cursor do sistema para a posição do cursor de revisão |
 | Anunciar localização do cursor de revisão | NVDA+delete do bloco numérico | NVDA+delete | nenhum | Anuncia informação sobre a posição do texto ou objecto onde se encontra o cursor de revisão. Isto poderá incluir, por exemplo, a percentagem no documento, a distância desde a margem da página ou a posição exacta no ecrã. Premindo duas vezes irá fornecer mais detalhes. |
 %kc:endInclude
 
@@ -1620,9 +1620,9 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Encaminhar para a célula braille | routing |
 | mover para a primeira linha em revisão | t1+t2 |
 | mover para a última linha em revisão | t4+t5 |
-| Fixar Braille Para| t1+t3 |
-| Anunciar o título| etouch2 |
-| Anunciar a Barra de Estado| etouch4 |
+| Fixar Braille Para | t1+t3 |
+| Anunciar o título | etouch2 |
+| Anunciar a Barra de Estado | etouch4 |
 | Teclas shift+tab | sp1 |
 | Tecla alt | sp2 |
 | Tecla escape | sp3 |
@@ -2125,7 +2125,7 @@ Por favor consulte a documentação [EcoBraille em ftp://ftp.once.es/pub/utt/bib
 | Mover para o objecto seguinte | F6 |
 | Mover para o objecto em foco | F7 |
 | Mover para o primeiro objecto contido | F8 |
-| Mover o foco do sistema ou o cursor para o objecto actual da revisão| | F9 |
+| Mover o foco do sistema ou o cursor para o objecto actual da revisão | | F9 |
 | Anunciar localização do cursor de revisão | F0 |
 | Alternar "Braille fixado para" | A |
 %kc:endInclude

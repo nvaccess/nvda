@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-11 12:54+0100\n"
+"PO-Revision-Date: 2016-08-21 00:34+0100\n"
 "Last-Translator: OAron <info@o-soft.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -2401,7 +2401,7 @@ msgstr "Beszéd"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration"
-msgstr "KonfigurációA beállítások elmentve."
+msgstr "Konfiguráció"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Braille"
@@ -2506,7 +2506,7 @@ msgstr "bal egérgomb lenyomva"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
-msgstr "A bal egérgomb lenyomva tartása vagy felengedése"
+msgstr "Bal egérgomb lenyomva tartása vagy felengedése"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
@@ -2519,7 +2519,7 @@ msgstr "jobb egérgomb lenyomva"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
-msgstr "A jobb egérgomb lenyomva tartása vagy felengedése"
+msgstr "Jobb egérgomb lenyomva tartása vagy felengedése"
 
 #, python-format
 msgid "Selected %s"
@@ -2918,8 +2918,7 @@ msgstr "Írásjelszint: %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"Váltogat az írásjelszintek között, melyek meghatározzák, hogy mely írásjelek "
-"hangozzanak el"
+"Írásjelszintek közti váltás, meghatározza, hogy mely írásjelek hangozzanak el"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "Object has no location"
@@ -2991,7 +2990,7 @@ msgid ""
 "information, and pressing three times Copies name and value of this  object "
 "to the clipboard"
 msgstr ""
-"Felolvassa a navigátor kurzornál lévő elemet. Kétszer gyorsan megnyomva "
+"Bemondja a navigátor kurzornál lévő elemet. Kétszer gyorsan megnyomva "
 "betűzi, háromszor gyorsan megnyomva pedig az elem nevét és értékét a "
 "vágólapra másolja"
 
@@ -3004,8 +3003,8 @@ msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"Az áttekintő kurzornál lévő szövegről vagy objektumról közöl pozíció "
-"információkat. Kétszeri gyors megnyomásra további információ hangzik el."
+"Pozícióinformációkat közöl az áttekintőkurzornál lévő szövegről vagy "
+"objektumról. Kétszeri gyors megnyomásra további információ hangzik el."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3092,8 +3091,8 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"Végrehajtja az alapértelmezett műveletet a navigátor kurzornál lévő elemen. "
-"Pl. megnyomja a gombot."
+"Alapértelmezett művelet végrehajtása a navigátor kurzornál lévő elemen. Pl. "
+"megnyomja a gombot."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
@@ -3119,7 +3118,7 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"Bemondja az áttekintő kurzornál lévő sort. Kétszeri megnyomásra betűzi a "
+"Az áttekintőkurzornál lévő sor bemondása. Kétszeri megnyomásra betűzi a "
 "sort, háromszori megnyomásra pedig a karakterleírások felhasználásával "
 "betűzi le azt."
 
@@ -3216,15 +3215,15 @@ msgstr ""
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
-msgstr "Beszéd kikapcsolva"
+msgstr "Csendes üzemmód"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "Speech mode beeps"
-msgstr "beszéd helyett hangjelzés"
+msgstr "Hangjelzés"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
-msgstr "beszéd"
+msgstr "Beszéd"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3232,9 +3231,9 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Váltogat a különböző beszédmódok között. Ha ki van kapcsolva, az NVDA nem "
-"beszél.\n"
-" Hangjelzés állapotban az NVDA csipogással jelzi az információt. \n"
+"Beszédmódok közti váltás. Csendes üzemmódban az NVDA nem beszél.\n"
+" Hangjelzés állapotban az NVDA csipogást hallat minden olyan esetben,amikor "
+"beszéd állapotban beszélne.\n"
 "Beszéd állapotban az NVDA a megszokott módon működik."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
@@ -3248,10 +3247,10 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"Váltás a fókuszmód és a böngészőmód között. Fókuszmódban a leütött "
-"billentyűket az aktív alkalmazás fogadja, lehetővé téve egy vezérlőelem "
-"közvetlen használatát. Böngészőmódban a leütött billentyűket az NVDA kezeli, "
-"lehetővé téve az oldalon való navigálást, és a gyorsbillentyűk használatát."
+"Böngészőmód és fókuszmód közti váltás. Fókuszmódban a leütött billentyűket "
+"az aktív alkalmazás fogadja, lehetővé téve egy vezérlőelem közvetlen "
+"használatát. Böngészőmódban a leütött billentyűket az NVDA kezeli, lehetővé "
+"téve az oldalon való navigálást, és a gyorsbillentyűk használatát."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3266,7 +3265,7 @@ msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"Az áttekintő kurzor pozíciójától a szöveg végéig olvas, az áttekintőkurzor "
+"Olvas az áttekintőkurzor pozíciójától a szöveg végéig, az áttekintőkurzor "
 "mozgatásával."
 
 #. Translators: Input help mode message for say all with system caret command.
@@ -3274,7 +3273,7 @@ msgid ""
 "Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
-"A kurzor jelenlegi pozíciójától a szöveg végéig olvas, a kurzor mozgatásával"
+"Olvas a kurzor jelenlegi pozíciójától a szöveg végéig, a kurzor mozgatásával"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -3289,14 +3288,12 @@ msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document. If pressed twice, presents the information in browse mode"
 msgstr ""
-"Bemondja az áttekintő kurzornál lévő szöveg formázási paramétereit. Kétszeri "
-"lenyomásra ezeket az információkat böngészőmódban teszi elérhetővé."
+"Formázási információkat közöl az áttekintőkurzornál található szövegről. "
+"Kétszeri lenyomásra ezeket az információkat böngészőmódban teszi elérhetővé."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
-msgstr ""
-"Bemondja az aktuális fókuszban lévő vezérlőelemet, vagy objektumot, kétszeri "
-"lenyomásra betűzi."
+msgstr "Aktív elem bemondása, kétszeri lenyomásra betűzése."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3369,7 +3366,7 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"Váltogat a folyamatjelzők változásának jelzési módjai közt: hangjelzés, "
+"Folyamatjelzők változásának jelzési módjai közt váltogat: hangjelzés, "
 "bemondás, hangjelzés és bemondás együtt vagy semmi."
 
 #. Translators: presented when the present dynamic changes is toggled.
@@ -3385,21 +3382,21 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Ki- és bekapcsolja a frissülő tartalom felolvasását. Ez például DOS "
-"ablakokban lehet hasznos."
+"Frissülő tartalom felolvasásának be és kikapcsolása. Parancssorban, chat "
+"ablakban vagy online szöveges közvetítésnél lehet hasznos."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "a kurzor követése az áttekintő kurzorral kikapcsolva"
+msgstr "A rendszerkurzor követése az áttekintő kurzorral kikapcsolva"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "a kurzor követése az áttekintő kurzorral bekapcsolva"
+msgstr "A rendszerkurzor követése az áttekintő kurzorral bekapcsolva"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Be és kikapcsolja a kurzor követését az áttekintő kurzorral."
+msgstr "Rendszerkurzor követése az áttekintő kurzorral be és kikapcsolása."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3412,7 +3409,7 @@ msgstr "Az aktív elem követése a navigátor kurzorral bekapcsolva"
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Be és kikapcsolja az aktív elem követését a navigátor kurzorral."
+msgstr "Aktív elem követése a navigátor kurzorral be és kikapcsolása."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -3550,15 +3547,15 @@ msgstr ""
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Megnyitja az NVDA Python konzolt, amely főként fejlesztőknek hasznos."
+msgstr "Python konzol megnyitása, amely főként fejlesztőknek hasznos."
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
-"Megnyitja az NVDA bővítménykezelőjét, ahol lehetőség van a kiegészítők "
-"telepítésére, felfüggesztésére és eltávolítására."
+"Bővítménykezelő megnyitása, ahol lehetőség van a kiegészítők telepítésére, "
+"felfüggesztésére és eltávolítására."
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -3573,8 +3570,8 @@ msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Ki-vagy bekapcsolja az NVDA beszédnéző funkcióját, melynek használatával egy "
-"lebegő ablakban megjelenik az a szöveg, amit az NVDA kimond."
+"Beszédnéző be és kikapcsolása. Használatával egy lebegő ablakban megjelenik "
+"az a szöveg, amit az NVDA kimond."
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3605,11 +3602,11 @@ msgstr "Braille kurzor be"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
-msgstr "A Braille kurzor be- és kikapcsolása."
+msgstr "Braille kurzor be- és kikapcsolása."
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
-msgstr "A Braille kurzor kikapcsolva."
+msgstr "A Braille kurzor ki van kapcsolva."
 
 #. Translators: Reports which braille cursor shape is activated.
 #, python-format
@@ -3618,7 +3615,7 @@ msgstr "Braille kurzor %s"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
-msgstr "Váltogatás A Braille kurzor megjelenési formái közt."
+msgstr "Braille kurzor megjelenési formái közt váltogat."
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -3633,7 +3630,7 @@ msgstr "A vágólap nagy mennyiségű, %s karakterből álló szöveget tartalma
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
-msgstr "A vágólapon lévő szöveg bemondása"
+msgstr "Vágólapon lévő szöveg bemondása"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
