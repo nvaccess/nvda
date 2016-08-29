@@ -17,7 +17,6 @@ import review
 import controlTypes
 import api
 import textInfos
-import editableText
 import speech
 import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -1786,12 +1785,12 @@ class GlobalCommands(ScriptableObject):
 				pass
 			try:
 				copyMarker.updateSelection()
-				if isinstance(pos.obj, editableText.EditableTextWithoutAutoSelectDetection):
+				if hasattr(pos.obj, "reportSelectionChange"):
 					# wait for applications such as word to update their selection so that we can detect it
 					try:
-						pos.obj.waitForAndReportSelectionChange(oldInfo)
+						pos.obj.reportSelectionChange(oldInfo)
 					except Exception as e:
-						log.debug("Error trying to wait for the selection to update and then speak the selection: %s" % e)
+						log.debug("Error trying to report the updated selection: %s" % e)
 			except NotImplementedError as e:
 				# we are unable to select the text, leave the _copyStartMarker in place in case the user wishes to copy the text.
 				# Translators: Presented when unable to select the marked text.
