@@ -373,7 +373,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	VARIANT varState;
 	VariantInit(&varState);
 	if(pacc->get_accState(varChild,&varState)!=S_OK) {
-		LOG_DEBUG(L"pacc->get_accState returned "<<res);
+		LOG_DEBUG(L"pacc->get_accState failed");
 		varState.vt=VT_I4;
 		varState.lVal=0;
 	}

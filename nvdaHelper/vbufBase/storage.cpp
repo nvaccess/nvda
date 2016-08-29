@@ -897,7 +897,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 		LOG_DEBUGWARNING(L" offset "<<offset<<L" is past end of buffer, returning NULL");
 		return NULL;
 	}
-	LOG_DEBUG(L"find node starting at offset "<<offset<<L", with attributes: "<<attribsString);
+	LOG_DEBUG(L"find node starting at offset "<<offset<<L", with attribute regexp: "<<regexp);
 	int bufferStart, bufferEnd, tempRelativeStart=0;
 	VBufStorage_fieldNode_t* node=NULL;
 	if(offset==-1) {
