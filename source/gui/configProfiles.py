@@ -11,6 +11,7 @@ import gui
 from logHandler import log
 import appModuleHandler
 import globalVars
+import guiHelper
 
 class ProfilesDialog(wx.Dialog):
 	shouldSuspendConfigProfileTriggers = True
@@ -34,8 +35,7 @@ class ProfilesDialog(wx.Dialog):
 		self.profileNames = [None]
 		self.profileNames.extend(config.conf.listProfiles())
 
-		# Translators: The label of the profiles group in the Configuration Profiles dialog.
-		profilesListGroupSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("&Profiles")), wx.HORIZONTAL)
+		profilesListGroupSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.HORIZONTAL)
 
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		item = self.profileList = wx.ListBox(self,
@@ -44,33 +44,35 @@ class ProfilesDialog(wx.Dialog):
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
 		sizer.Add(item, proportion=1.0)
 
-		spaceBetweenButtons = 3
+		spaceBetweenItemsInGroupSizer = 5
+		profilesListGroupSizer.Add(sizer, border=spaceBetweenItemsInGroupSizer, flag = wx.EXPAND | wx.ALL)
+
 		item = self.changeStateButton = wx.Button(self)
 		item.Bind(wx.EVT_BUTTON, self.onChangeState)
 		self.AffirmativeId = item.Id
 		item.SetDefault()
-		sizer.AddSpacer(spaceBetweenButtons)
+		sizer.AddSpacer(spaceBetweenItemsInGroupSizer)	
 		sizer.Add(item)
-
-		profilesListGroupSizer.Add(sizer, flag = wx.EXPAND)
-		profilesListGroupSizer.AddSpacer(5)
 
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of a button to create a new configuration profile.
 		item = newButton = wx.Button(self, label=_("&New"))
 		item.Bind(wx.EVT_BUTTON, self.onNew)
-		sizer.Add(item)
-		sizer.AddSpacer(spaceBetweenButtons)
+		buttonsToAdd = [item,]
+
 		# Translators: The label of a button to rename a configuration profile.
 		item = self.renameButton = wx.Button(self, label=_("&Rename"))
 		item.Bind(wx.EVT_BUTTON, self.onRename)
-		sizer.Add(item)
-		sizer.AddSpacer(spaceBetweenButtons)
+		buttonsToAdd.append(item)
+
 		# Translators: The label of a button to delete a configuration profile.
 		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
 		item.Bind(wx.EVT_BUTTON, self.onDelete)
-		sizer.Add(item)
-		profilesListGroupSizer.Add(sizer)
+		buttonsToAdd.append(item)
+		# these buttons are closely related, and are stacked vertically. They look better closer together
+		spaceBetweenButtons = 3
+		guiHelper.addItemsToSizer(sizer, buttonsToAdd, spaceBetweenButtons)
+		profilesListGroupSizer.Add(sizer, border=spaceBetweenItemsInGroupSizer, flag = wx.ALL)
 
 		mainSizer.Add(profilesListGroupSizer, flag=wx.ALL, border=5)
 

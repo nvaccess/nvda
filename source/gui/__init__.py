@@ -29,6 +29,8 @@ import logViewer
 import speechViewer
 import winUser
 import api
+import guiHelper
+
 try:
 	import updateCheck
 except RuntimeError:
@@ -712,13 +714,13 @@ class ExitDialog(wx.Dialog):
 
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
-			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again."))
+			addonsDisabledText = _("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again.")
+			addonsDisabledLabel=wx.StaticText(self, wx.ID_ANY, label=addonsDisabledText)
 			mainSizer.Add(addonsDisabledLabel)
 
 		actionSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for actions list in the Exit dialog.
-		actionsLabel=wx.StaticText(self,-1,label=_("What would you like to &do?"))
-		actionSizer.Add(actionsLabel,border=10,flag=wx.RIGHT|wx.ALIGN_CENTER_VERTICAL)
+		actionsLabel=wx.StaticText(self,wx.ID_ANY,label=_("What would you like to &do?"))
 		actionsListID=wx.NewId()
 		self.actions = [
 		# Translators: An option in the combo box to choose exit action.
@@ -729,10 +731,11 @@ class ExitDialog(wx.Dialog):
 		_("Restart with add-ons disabled")]
 		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
 		self.actionsList.SetSelection(0)
-		actionSizer.Add(self.actionsList)
-		mainSizer.Add(actionSizer,border=10,flag=wx.ALL)
 
-		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL), border=5, flag=wx.ALL)
+		guiHelper.addLabelAndControlToHorizontalSizer(actionSizer, actionsLabel, self.actionsList)
+		guiHelper.addAllContentSizerToMainSizer(mainSizer, actionSizer)
+		guiHelper.addButtonsSizerToMainSizer(mainSizer, self.CreateButtonSizer(wx.OK | wx.CANCEL))
+
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
