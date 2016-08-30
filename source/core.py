@@ -300,7 +300,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			if sps.ACLineStatus & AC_ONLINE:
 				text = _("Plugged in. Batteri is ")
 			else:
-				text = _("Not plugged in . Battery is ")
+				text = _("Not plugged in. Battery is ")
 			text += _("%d percent full") % sps.BatteryLifePercent
 			ui.message(text)
 
