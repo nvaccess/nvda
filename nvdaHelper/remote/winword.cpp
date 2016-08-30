@@ -175,6 +175,7 @@ using namespace std;
 #define wdInlineShapeEmbeddedOLEObject 1
 #define wdInlineShapePicture 3
 #define wdInlineShapeLinkedPicture 4
+#define wdInlineShapeSmartArt 15
 
 #define formatConfig_reportFontName 1
 #define formatConfig_reportFontSize 2
@@ -802,7 +803,7 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 		}
 		SysFreeString(altText);
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\"";
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeSmartArt?L"smartart":L"object"))<<L"\" value=\""<<altTextStr<<L"\"";
 	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
 		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";
 		IDispatchPtr pOLEFormat=NULL;

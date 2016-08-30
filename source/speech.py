@@ -927,6 +927,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	else:
 		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
+	if role==controlTypes.ROLE_SMARTARTNODE:
+		speakRole=False
 	value=propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber=propertyValues.get('rowNumber')
