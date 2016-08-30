@@ -262,6 +262,48 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
+		batteryCache = None
+		REASON_INITIALIZE = 1
+		def __init__(self, windowName=None):
+			super(MessageWindow, self).__init__(windowName)
+			self.say_battery_status(reason=self.REASON_INITIALIZE)
+	
+		def windowProc(self, hwnd, msg, wParam, lParam):
+			import ui
+			#Just define these constants here, so we don't have to import win32con
+			WM_POWERBROADCAST = 0x218
+			WM_DISPLAYCHANGE = 0x7e
+			PBT_APMPOWERSTATUSCHANGE = 0xA
+			if msg == WM_POWERBROADCAST and wParam == PBT_APMPOWERSTATUSCHANGE:
+				self.say_battery_status()
+			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
+			elif msg == WM_DISPLAYCHANGE:
+				ui.message("Landscape" if lParam%0x10000 > lParam/0x10000 else "Portrait")
+
+
+		def say_battery_status(self, reason=None):
+			#Mostly taken from script_say_battery_status, but modified.
+			import ui
+			import winKernel
+			UNKNOWN_BATTERY_STATUS = 0xFF
+			AC_ONLINE = 0X1
+			NO_SYSTEM_BATTERY = 0X80
+			sps = winKernel.SYSTEM_POWER_STATUS()
+			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
+				return
+			if sps.BatteryFlag & NO_SYSTEM_BATTERY or sps.ACLineStatus == self.batteryCache:
+				return
+			#Necessary because sometimes, this event double fires, and also, if the battery decreases by 3 percent, this event occurs.
+			self.batteryCache = sps.ACLineStatus
+			if reason == self.REASON_INITIALIZE:
+				return #We don't actually want to output anything, just initialize the cache.
+			if sps.ACLineStatus & AC_ONLINE:
+				text = _("Plugged in. Batteri is ")
+			else:
+				text = _("Not plugged in . Battery is ")
+			text += _("%d percent full") % sps.BatteryLifePercent
+			ui.message(text)
+
 	messageWindow = MessageWindow(unicode(versionInfo.name))
 
 	# initialize wxpython localization support
