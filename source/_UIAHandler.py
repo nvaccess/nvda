@@ -265,7 +265,7 @@ class UIAHandler(COMObject):
 		if hwnd == winUser.getDesktopWindow():
 			# #6301: In Windows 10 build >= 14901,
 			# calling UiaHasServerSideProvider with the desktop window sometimes freezes when bringing up NVDA windows.
-			# It will always return False anyway.
+			# Return early if hwnd is the desktop window. UiaHasServerSideProvider would return False anyway.
 			return False
 		# UIA in NVDA's process freezes in Windows 7 and below
 		processID=winUser.getWindowThreadProcessID(hwnd)[0]
