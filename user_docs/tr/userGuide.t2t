@@ -13,7 +13,7 @@ NVDA Sentetik bir ses ya da braille ile geri bildirim sağlayarak, kör ya da az
 NVDA [NV Access tarafından http://www.nvaccess.org/], camiadan ilgili birçok insanın katkısıyla geliştirilmektedir.
 
 ++ Genel Özellikler ++
-NVDA, Görmeyenlerin Windows işletim sistemi ve sistemde kurulu birçok farklı uygulamaya erişimine ve bunlarla etkileşimine imkan vermektedir.
+NVDA, kör ve az görenlerin Windows işletim sistemi ve sistemde kurulu birçok farklı uygulamaya erişimine ve bunlarla etkileşimine imkan vermektedir.
 
 En dikkat çeken özelliklere şunlar dahildir:
 - internet web tarayıcıları, e-posta programları, sohbet programları ve ofis gibi popüler uygulamalara destek
@@ -370,8 +370,8 @@ Metni incelerken, aşağıdaki komutlar kullanılabilir:
 | inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+sağ yön tuşu | sağa kaydırma (metin kipi) | İnceleme imlecini üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
 | inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+end | yok | İnceleme imlecini üzerinde bulunulan satırın sonuna taşır |
 | İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+a | üç parmakla aşağı kaydırma (metin kipi) | İnceleme imlecinde bulunulan noktadan başlayarak metnin sonuna kadar okur |
-| İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | yok | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
-| İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | yok | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
+| İnceleme imlecinin bulunduğu yerden kopyalama ve seçme işlemini başlatma | NVDA+f9 | NVDA+f9 | yok | inceleme imlecinin pozisyonundan itibaren metni seçmeye ya da kopyalamaya başlar. NVDA'ya metnin sonunu belirtmeden işlem gerçekleşmez |
+| İnceleme imlecinin bulunduğu yere kadar seçme ve kopyalama | NVDA+f10 | NVDA+f10 | yok | metnin başladığı yer olarak ayarlanan noktadan, inceleme imlecinin mevcut konumuna kadar olan metni seçer. İki kez basılırsa, metin panoya kopyalanır |
 | Metin biçimini söyle | NVDA+f | NVDA+f | yok | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir. İki kez basılırsa, biçim bilgisi tarama kipinde gösterilir |
 %kc:endInclude
 
@@ -640,6 +640,9 @@ Listelenmiş formüllerden birinin üzerinde enter tuşuna ya da Git düğmesine
 - Çalışma sayfaları: Bu çalışma kitabındaki tüm sayfaları listeler. 
 Listeden seçtiğiniz bir sayfa üzerinde f2 tuşuna basarak sayfanın adını değiştirebilirsiniz. 
 Seçili sayfa üzerinde enter tuşuna ya da Git düğmesine basarak ilgili çalışma sayfasına ulaşabilirsiniz.
+- Form alanları: Etkin çalışma sayfasındaki tüm form alanlarını listeler.
+Her form alanı için, Öğe listesi kapsanan hücre adresleri ile birlikte alanın alternatif metinlerini gösterir.
+Bir form alanını seçip entır tuşuna ya da git düğmesine basarak tarama kipinde o form alanına gidilebilir.
 -
 
 +++ Açıklamaların Bİldirimi +++
@@ -653,6 +656,12 @@ Bir çalışma kitabı korunuyorsa, düzenleme için kilitlenmiş hücrelere ula
 %kc:beginInclude
 Kilitli hücrelere  ulaşılmasını mümkün kılmak için, NVDA+space ile Tarama Kipi'ne geçin ve sonra Standart Excel hareket komutlarını kullanın. Örneğin yön tuşları.
 %kc:endInclude
+
++++ Form Alanları +++
+Excel çalışma kitapları form alanları içerebilir.
+Bunlara öğe listesini kullanarak ya da f ve shift+f form alanı tek dolaşım tuşları ile ulaşabilirsiniz.
+Bir form alanına tarama kipinde ulaştıktan sonra, kontrole bağlı olarak, enter ya da aralık   tuşuna basarak etkinleştirebilir veya etkileşimde bulunabilmek için odak kipine geçebilirsiniz.
+Tarama kipi ve tek dolaşım tuşları hakkında daha fazla bilgi için, [tarama kipi bölümüne #BrowseMode] bakın.
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Etkinleştirildiğinde, fare hareket ettikçe inceleme imleci de onu izleyecekti
 ==== Basit İnceleme Kipi ====
 Etkinleştirildiğinde, görünmez nesneler ve sadece düzenleme amacıyla kullanılan nesneler vb kullanıcıyı ilgilendirmeyecek nesneleri yoksaymak için, NVDA dolaşılabilecek nesne hiyerarşisini filtreleyecektirr.
 
+Herhangi bir yerde basit inceleme kipini açıp kapatmak için, lütfen [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak bir özel hareket atayın.
+
 +++ Nesne Sunumu Ayarları (NVDA+kontrol+o) +++
 Tercihler menüsü içinde "Nesne Sunumu Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
@@ -1190,15 +1201,16 @@ Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür 
 - Yazı tipi özellikleri
 - Metin hizzalaması
 - Renkler
-- editör değişiklikleri
+- Açıklamalar
+- Editör değişiklikleri
 - Vurgu
 - Metin sitilleri
 - Yazım hataları
-- Gramer hataları
 - Sayfa numaraları
 - Satır numaraları
 - Satır girintisi
 - Paragraf girintisi (Örneğin, asılı girinti, ilk satır girintisi)
+- Satır aralığı (tek, çift vs)
 - Tablolar
 - Tablo satır/sütun başlıkları
 - Tablo hücre koordinatları
@@ -1422,7 +1434,7 @@ Ancak, Görüntüleyiciye tıklar veya odaklanırsanız, güncelleme geçici ola
 Konuşma görüntüleyiciyi herhangi bir yerden açıp kapatmak için [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyebilirsiniz.
 
 ++ Eklenti Yöneticisi ++
-NVDA Araçlar menüsü altında, Eklentileri Yönet ögesini seçerek ulaşacağınız Eklenti Yöneticisi, NVDA için geliştirilmiş eklenti paketlerini kurmanıza ve kaldırmanıza olanak tanır.
+NVDA Araçlar menüsü altında, Eklentileri Yönet ögesini seçerek ulaşacağınız Eklenti Yöneticisi, NVDA için geliştirilmiş eklenti paketlerini kurmanıza, etkinleştirip devre dışı bırakmanıza ve kaldırmanıza olanak tanır.
 BU paketler camia tarafından sağlanırlar ve NVDA'nın özelliklerini geliştiren ya da değiştiren kodlar barındırırlar. Hatta extra kabartma ekran ya da sentezleyici için destek sağlayabilirler.
 
 Eklenti yöneticisi, mevcut kullanıcı konfigürasyon dizininde kurulu olan tüm eklentileri listeler. 
@@ -1448,8 +1460,14 @@ NVDA bunu gerçekten yapmak isteyip istemediğinizi soracaktır.
 Kurarken olduğu gibi, eklentinin tamamen kaldırılması için NVDA yeniden başlatılmalıdır.
 Bu yapılana kadar, eklenti durumu Kaldır olarak gösterilecektir.
 
+Bir eklentiyi devre dışı bırakmak için devre dışı bırak düğmesine basın.
+Daha önce devre dışı bırakılmış olan eklentiyi etkinleştirmek için  etkinleştir düğmesine basın.
+Eklenti durumu etkin olarak gösteriliyorsa devre dışı bırakabilir; devre dışı ise tekrar etkinleştirebilirsiniz.
+Etkinleştir / devre dışı bırak düğmesine her basıldığında, NVDA yeniden başladığında ne olacağını belirtmek için eklenti statüsü değişir .
+Aynı Eklenti kurduğunuzda ya da kaldırdığınızdaki gibi, değişikliklerin etkili olması için NVDA'yı yeniden başlatmanız gerekecektir.
+
 Yönetici, iletişim kutusunu kapatmak için kullanacağınız Kapat düğmesini de içerir.
-Bir eklenti kurduysanız ya da kaldırdıysanız, NVDA değişikliklerin etkili olması için yeniden başlatmak isteyip istemediğinizi soracaktır.
+Bir eklenti kurduysanız,  kaldırdıysanız ya da statüsünü değiştirdiyseniz, NVDA değişikliklerin etkili olması için yeniden başlatmak isteyip istemediğinizi soracaktır.
 
 Önceki sürümlerde NVDA'nın işlevlerini zenginleştiren çeşitli plug-in ya da sürücüleri NVDA konfigürasyon dizininde ilgili klasörlere kopyalayarak kullanmak mümkündü.
 NVDA 2012.2 versiyonu için de bu tür plug-in ve sürücüleri kullanabilmenize rağmen, manuel olarak kopyaladığınız bu plug-inler NVDA Eklenti Yöneticisi tarafından görüntülenmez.
@@ -1594,11 +1612,17 @@ Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
 || Ad | Kısayol Tuşu |
-| Braille ekranı geri kaydır back | t1 |
+| Scroll braille display back | t1 or etouch1 |
 | Braille ekran önceki satır | t2 |
+| Move to current focus | t3 |
 | Braille ekran sonraki satır | t4 |
-| Braille ekranı ileri kaydır | t5 |
+| Scroll braille display forward | t5 or etouch3 |
 | Odağı braille konumuna taşı | routing |
+| Move to top line in review | t1+t2 |
+| Move to bottom line in review | t4+t5 |
+| Toggle braille tethered to | t1+t3 |
+| Report title | etouch2 |
+| Report status bar | etouch4 |
 | shift+tab tuşu | sp1 |
 | alt tuşu | sp2 |
 | esc tuşu | sp3 |
@@ -1608,10 +1632,16 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | Sol ok tuşu | spLeft |
 | Sağ ok tuşu | spRight |
 | enter tuşu | spEnter |
+| Report date/time | sp1+sp2 |
 | NVDA Menüsü | sp1+sp3 |
 | windows+d tuşu (Tüm uygulamaları küçült) | sp1+sp4 |
+| windows+b key (focus system tray) | sp3+sp4 |
 | windows tuşu | sp2+sp3 |
 | alt+tab tuşu | sp2+sp4 |
+| control+home key | t3+spUp |
+| control+end key | t3+spDown |
+| home key | t3+spLeft |
+| end key | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech Displays ++

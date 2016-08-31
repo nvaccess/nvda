@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer
 
 import time
 import itertools
@@ -17,7 +17,6 @@ import review
 import controlTypes
 import api
 import textInfos
-import editableText
 import speech
 import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -734,6 +733,20 @@ class GlobalCommands(ScriptableObject):
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
 
+	def script_toggleSimpleReviewMode(self,gesture):
+		if config.conf["reviewCursor"]["simpleReviewMode"]:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode off")
+			config.conf["reviewCursor"]["simpleReviewMode"]=False
+		else:
+			# Translators: The message announced when toggling simple review mode.
+			state = _("Simple review mode on")
+			config.conf["reviewCursor"]["simpleReviewMode"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle simple review mode command.
+	script_toggleSimpleReviewMode.__doc__=_("Toggles simple review mode on and off")
+	script_toggleSimpleReviewMode.category=SCRCAT_OBJECTNAVIGATION
+
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -1242,7 +1255,7 @@ class GlobalCommands(ScriptableObject):
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
+			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 		}
@@ -1254,7 +1267,7 @@ class GlobalCommands(ScriptableObject):
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation))
+			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
@@ -1772,12 +1785,12 @@ class GlobalCommands(ScriptableObject):
 				pass
 			try:
 				copyMarker.updateSelection()
-				if isinstance(pos.obj, editableText.EditableTextWithoutAutoSelectDetection):
+				if hasattr(pos.obj, "reportSelectionChange"):
 					# wait for applications such as word to update their selection so that we can detect it
 					try:
-						pos.obj.waitForAndReportSelectionChange(oldInfo)
+						pos.obj.reportSelectionChange(oldInfo)
 					except Exception as e:
-						log.debug("Error trying to wait for the selection to update and then speak the selection: %s" % e)
+						log.debug("Error trying to report the updated selection: %s" % e)
 			except NotImplementedError as e:
 				# we are unable to select the text, leave the _copyStartMarker in place in case the user wishes to copy the text.
 				# Translators: Presented when unable to select the marked text.
@@ -1839,6 +1852,23 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for a braille command.
 	script_braille_dots.__doc__= _("Inputs braille dots via the braille keyboard")
 	script_braille_dots.category=SCRCAT_BRAILLE
+
+	def script_braille_toFocus(self, gesture):
+		if braille.handler.tether == braille.handler.TETHER_REVIEW:
+			self.script_navigatorObject_toFocus(gesture)
+		else:
+			if not braille.handler.mainBuffer.regions:
+				return
+			region = braille.handler.mainBuffer.regions[-1]
+			braille.handler.mainBuffer.focus(region)
+			if region.brailleCursorPos is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
+			elif region.brailleSelectionStart is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+			braille.handler.mainBuffer.updateDisplay()
+	# Translators: Input help mode message for a braille command.
+	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
+	script_braille_toFocus.category=SCRCAT_BRAILLE
 
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler

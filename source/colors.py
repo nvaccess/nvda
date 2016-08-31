@@ -158,7 +158,8 @@ brightnessLabelsBySaturation={
 	100:{
 		# Translators: a bright color (HSV saturation 100% and value 100%)
 		100:pgettext('color variation','bright {color}'),
-		72:'{color}',
+		# Translators: color (HSV saturation 100% and value 72%)
+		72:pgettext('color variation','{color}'),
 		# Translators: a dark color (HSV saturation 100% and value 44%)
 		44:pgettext('color variation','dark {color}'),
 		# Translators: a very dark color (HSV saturation 100% and value 16%)

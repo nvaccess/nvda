@@ -37,7 +37,7 @@ NVDA允许盲人和低视力人群访问 Windows 操作系统和与许多第三�
 ++ 支持的语音合成器 ++
 除了提供相应语言的消息和界面之外，只要它们有一个能讲述那一种语言的语音合成器，NVDA也可让用户阅读任何语言的内容，
 
-NVDA捆绑的[eSpeak http://espeak.sourceforge.net/]是一个免费且开放源码的多语种语音合成器。
+NVDA捆绑的[eSpeak NG https://github.com/espeak-ng/espeak-ng]是一个免费且开放源码的多语种语音合成器。
 
 有关于 NVDA 所支持的语音合成气的信息，可参看[支持的语音合成气 #SupportedSpeechSynths]章节。
 
@@ -370,8 +370,8 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 | 移动到当前查看对象的下一个字 | 小键盘数字3 | NVDA+左光标 | 向左滑动(文本模式) | 移动浏览光标到文本的当前行的下一个字符 |
 | 移动到查看对象的行尾 | shift+小键盘数字3 | NVDA+行尾 | 无 | 移动浏览光标到文本的当前行的行尾。 |
 | 导航对象全文朗读 | 小键盘加号 | NVDA+shift+a | 三个手指向下滑动(文本模式) | 从浏览光标所在位置开始朗读并随之移动。 |
-| 拷贝浏览光标从 | NVDA+f9 | NVDA+f9 | 无 | 设定当前浏览光标所在位置为开始点，实际的复制并不会执行，除非您告诉 NVDA 结束点在哪里。 |
-| 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
+| 拷贝浏览光标从 | NVDA+f9 | NVDA+f9 | 无 | 设定当前浏览光标所在位置为开始点，实际的复制并不会执行，除非您告诉 NVDA 范围的结束点在哪里。 |
+| 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 按一次，选择开始点和结束点之间的文本；连按两次，把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
 | 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息，连按两次可使用浏览模式在格式信息之间导航。
 %kc:endInclude
 
@@ -657,6 +657,11 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 要想允许锁定单元移动，可使用“NVDA+空格键”切换到浏览模式后，使用标准的 Excel 移动命令如光标键可在当前工作表的所有单元中移动。
 %kc:endInclude
 
++++ 表单 +++
+Excel 工作部可包含表单。
+您可以使用“元素列表”对话框查看他们或字母F 和 shift+F 来跳转。
+当您使用浏览模式移动到某个表单项后，您可以使用回车键或空格键切换到焦点模式，您可以与之交互，方法取决于当前所在处的控件。
+更多有关于浏览模式或单键导航使用方面的信息，请查阅[浏览模式张节 #BrowseMode]。
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -788,8 +793,8 @@ NVDA 支持的合成器列表可以在[支持的语音合成器 #SupportedSpeech
 左光标和上光标允许您向上查看列表，右光标和下光标则允许您向下查看列表。
 
 ==== 变声 ====
-如果您正在使用和 NVDA 一起捆绑的 Espeak，您可以使用此组合框来选择语音输出时采用的声音。
-只要给 Espeak 的声音提供少许的属性改动，就可以令它的声音效果非常接近真实。
+如果您正在使用和 NVDA 一起捆绑的 Espeak NG，您可以使用此组合框来选择语音输出时采用的声音。
+只要给 Espeak NG，您可以使用此组合框来选择语音输出时采用的声音。的声音提供少许的属性改动，就可以令它的声音效果非常接近真实。
 有些声音听起来像女性，有些声音听起来像男性，有的听起来甚至像蛙鸣。
 
 ====速度 ====
@@ -804,12 +809,12 @@ NVDA 支持的合成器列表可以在[支持的语音合成器 #SupportedSpeech
 这是一个从0到100的滑块，0的时候音量最小，100的时候最大。
 
 ==== 声调 ====
-此选项是一个滑块，允许您选择合成器进行语音输出时使用的语调的数值(最高和最低语调)( 在目前提供此选项的合成器仅有 eSpeak)。
+此选项是一个滑块，允许您选择合成器进行语音输出时使用的语调的数值(最高和最低语调)( 在目前提供此选项的合成器仅有 eSpeak NG，您可以使用此组合框来选择语音输出时采用的声音。)。
 
 ==== 自动语言切换 ====
  此复选框允许您切换在朗读定义了自己语言的文字时是否自动切换合成器的语言。
 默认情况下此选项被启用。
-当前，只有 ESpeak 支持自动语言切换。
+当前，只有 ESpeak NG，您可以使用此组合框来选择语音输出时采用的声音。 支持自动语言切换。
 
 ==== 自动方言切换 ====
 此复选框允许您定义是否自动的进行方言切换，而不是语言。
@@ -996,6 +1001,10 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 
 如果启用，NVDA 将读出您在键盘上键入的所有飞字符按键，这也包括组合键，例如 control 加其他字母。
 
+==== 若键入时包含拼写错误则发出提示音 ====
+如果启用，您的键入若包含拼写错误时，将可播放一个短促的风鸣音。
+仅当[文档格式设置的 #DocumentFormattingSettings]对话框的“朗读拼写错误”选项启用时才生效。
+
 ==== 从其他程序获取键盘控制权 ====
 此选项允许您选择，是否希望 NVDA 接管其他程序(如屏幕键盘或语音识别程序)的键盘动作。
 默认情况下，此选项启用，某些特定的用户可能希望将其关闭，如使用 unikey 进行越南语输入会造成错误的字符输入。
@@ -1051,6 +1060,8 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 
 ==== 简易浏览模式 ====
 如果启用，NVDA 会通过过滤可被浏览到的层级对象(例如隐藏对象或者仅起到布局作用的对象)，达到排除用户不感兴趣的对象的目的。
+
+要想随时随地切换浏览模式，您可在[输入手势 dialog #InputGestures]增加新的自定义快捷键。
 
 +++ 对象查看设置 (NVDA+control+o) +++
 可以再“选项”菜单下的“对象查看...”找到。
@@ -1191,6 +1202,7 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 -字体属性
 - 对齐方式
 - 颜色
+- 注释
 - 编辑者修订
 - 强调
 - 文本样式
@@ -1199,6 +1211,7 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 - 行数
 - 缩进
 - 段落缩进 (如悬挂式缩进、首行缩进)
+- 行间距（如单倍行间距，双倍行间距等等）
 - 表格
 - 表格的行/列标题
 - 表格单元的坐标
@@ -1422,7 +1435,7 @@ NVDA 的语音字典比之单词替换更为强大。
 要想在任何地方切换朗读查看器的开关，请在[输入手势对话框 #InputGestures]定义一个自定义手势。
 
 ++ 插件管理器 ++
-您可以通过 NVDA 的“工具”菜单的“插件管理器”访问插件管理器，插件管理器允许您安装或者移除 NVDA 的插件。
+您可以通过 NVDA 的“工具”菜单的“插件管理器”访问插件管理器，插件管理器允许您安装、移除、启用或停用 NVDA 的插件。
 您可以在社区找到这些插件包，它们包含定制的代码，为您添加或更改 NVDA 甚至是额外的点显器和语音合成气的特性。
 
 插件管理器包含 NVDA 当前用户配置中安装的所有插件的列表。
@@ -1448,8 +1461,14 @@ NVDA 会询问您是否真的要这样做。
 当卸载完成之后，NVDA 必须重新启动以使插件能够完全地被移除。
 待这些都完成之后，那个插件的“移除”状态就会显示在列表内。
 
+要想停用插件，点击“停用”按钮
+要想启用先前停用的插件，点击“启用”按钮。
+当插件状态显示为“正在运行”或“已启用”时，您可以停用该插件；当状态显示为“挂起”或“已停用”时，您可以启用该插件。
+每次点击“启用”和“停用”按钮后，插件状态栏都能实时地显示在下次 NVDA 重新启动时会发生什么变化。
+就像是添加或删除插件一样，您必须重新启动 NVDA 才能使之生效。
+
 管理器也包含“关闭”按钮，使用它可以关闭对话框。
-如果您已经安装或者卸载了插件，NVDA 会首先询问您是否要重新启动以使修改生效。
+如果您已经安装卸载插件或修改了插件的状态，NVDA 会首先询问您是否要重新启动以使修改生效。
 
 在过去，您只需单独复制插件或驱动到 NVDA 的用户配置目录即可扩展 NVDA 的功能。
 虽然此版本的 NVDA 仍然会加载他们，但是他们不会被显示在插件管理器。
@@ -1468,13 +1487,13 @@ NVDA Python 控制台可以再 NVDA 的“工具”菜单找到，他是一个�
 此章节包含 NVDA 支持的合成器的信息。
 要想查看更多您可以购买或下载的、可用于 NVDA 的免费或商业语音合成器的列表，请查看页面[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices](译者注：更多的语音合成器资源也可访问：[NVDA语音合成器集中下载 http://www.nvdacn.com/vd/]页获取)。
 
-++ eSpeak ++
-[eSpeak http://espeak.sourceforge.net/] 语音合成气预装在 NVDA 之中，不需要安装特别的驱动或者组件。
-在默认情况下，NVDA 使用 eSpeak 启动。
+++ eSpeak NG++
+[eSpeak NG https://github.com/espeak-ng/espeak-ng] 语音合成气预装在 NVDA 之中，不需要安装特别的驱动或者组件。
+在默认情况下，NVDA 使用 eSpeak NG 启动。
 作为 NVDA 的预装合成器，对于在其他系统通过 U 盘驱动器运行 NVDA来说，这是一个很好的选择。
 
-每个 eSpeak 的语音都可以说一种不同的语言。
-eSpeak 支持超过43种不同的语言。
+每个 eSpeak NG 的语音都可以说一种不同的语言。
+eSpeak NG 支持超过43种不同的语言。
 
 它还包含许多可供选择的、能作用于语音声音的变体。
 
@@ -1594,11 +1613,17 @@ Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | t1 |
+| Scroll braille display back | t1 or etouch1 |
 | Move braille display to previous line | t2 |
+| Move to current focus | t3 |
 | Move braille display to next line | t4 |
-| Scroll braille display forward | t5 |
+| Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
+| Move to top line in review | t1+t2 |
+| Move to bottom line in review | t4+t5 |
+| Toggle braille tethered to | t1+t3 |
+| Report title | etouch2 |
+| Report status bar | etouch4 |
 | shift+tab key | sp1 |
 | alt key | sp2 |
 | escape key | sp3 |
@@ -1608,10 +1633,16 @@ Please see the display's documentation for descriptions of where these keys can 
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
 | enter key | spEnter |
+| Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
+| windows+b key (focus system tray) | sp3+sp4 |
 | windows key | sp2+sp3 |
 | alt+tab key | sp2+sp4 |
+| control+home key | t3+spUp |
+| control+end key | t3+spDown |
+| home key | t3+spLeft |
+| end key | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech Displays ++

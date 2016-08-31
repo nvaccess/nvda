@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2015 NV Access Limited
+#Copyright (C) 2010-2016 NV Access Limited
 
 import time
 from collections import OrderedDict
@@ -87,6 +87,7 @@ USB_IDS_HID = {
 	"VID_0904&PID_4005", # Pronto! 40 V3
 	"VID_0904&PID_4007", # Pronto! 18 V4
 	"VID_0904&PID_4008", # Pronto! 40 V4
+	"VID_0483&PID_A1D3", # Orbit Reader 20
 }
 
 BLUETOOTH_NAMES = (
@@ -99,12 +100,13 @@ BLUETOOTH_NAMES = (
 	"BrailleConnect",
 	"Pronto!",
 	"VarioUltra",
+	"Orbit Reader 20",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
 	# Translators: Names of braille displays.
-	description = _("Baum/HumanWare/APH braille displays")
+	description = _("Baum/HumanWare/APH/Orbit braille displays")
 	isThreadSafe = True
 
 	@classmethod
@@ -143,6 +145,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					continue
 				if usbID not in USB_IDS_SER:
 					continue
+			elif hwID == r"USB\VID_0483&PID_5740&REV_0200":
+				# Generic STMicroelectronics Virtual COM Port used by Orbit Reader 20.
+				portType = "USB serial"
 			elif "bluetoothName" in portInfo:
 				# Bluetooth.
 				portType = "bluetooth"
@@ -174,9 +179,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except EnvironmentError:
 				continue
 			if self.isHid:
-				# Some displays don't support BAUM_PROTOCOL_ONOFF.
+				try:
+					# It's essential to send protocol on for the Orbit Reader 20.
+					self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
+				except EnvironmentError:
+					# Pronto! and VarioUltra don't support BAUM_PROTOCOL_ONOFF.
+					pass
+				# Explicitly request device info.
+				# Even where it's supported, BAUM_PROTOCOL_ONOFF doesn't always return device info.
 				self._sendRequest(BAUM_REQUEST_INFO, 0)
-			else:
+			else: # Serial
 				# If the protocol is already on, sending protocol on won't return anything.
 				# First ensure it's off.
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)

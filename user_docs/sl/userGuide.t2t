@@ -370,8 +370,8 @@ Za pregled besedila so na voljo naslednji ukazi:
 | Pomik na naslednji znak v pregledu | številski del3 | NVDA+Puščica desno | švig desno (delovanje besedila) | Premakne pregledno utripalko na naslednji znak v vrstici z besedilom |
 | Pomik na konec vrstice v pregledu | shift+številski del3 | NVDA+konec | brez | Premakne pregledno utripalko na konec trenutne vrstice z besedilom |
 | Govori vse s pregledom | številski delPlus | NVDA+shift+a | troprstni švig dol (delovanje besedila) | Začetek branja od trenutnega položaja pregledne utripalke in se pri tem premikajoč tako, kot se giblje utripalka |
-| Preslikava od pregledne utripalke | NVDA+f9 | NVDA+f9 | brez | začetek preslikave besedila od trenutnega položaja pregledne utripalke. Aktualna preslikava se ne bo izvedla, dokler ne boste NVDA sporočili, kam naj preslika izbran del |
-| Preslikava do pregledne utripalke | NVDA+f10 | NVDA+f10 | brez | Preslika vsebino od položaja pregledne utripalke v danem trenutku že prej določenega z ukazom  Preslikava od pregledne utripalke, do vključno trenutnega položaja pregledne utripalke. Po pritisku te tipke se bo besedilo preslikalo v odložišče Oken. |
+| Izbor in preslikava od pregledne utripalke | NVDA+f9 | NVDA+f9 | brez | začetek izbora in preslikave besedila od trenutnega položaja pregledne utripalke. Aktualno dejanje se ne bo izvedlo, dokler ne boste NVDA sporočili, kje se konča območje besedila |
+| Izbor in preslikava do pregledne utripalke | NVDA+f10 | NVDA+f10 | brez | Ob prvem pritisku se označi območje od zaznamka, ki zaznamuje začetek besedila do vključno trenutnega položaja pregledne utripalke.ob drugem pritisku, se vsebina preslika v odložišče Oken |
 | Sporoči oblikovanje besedila | NVDA+f | NVDA+f | brez | Poroča o oblikovanju besedila, nad katerim je trenutno postavljena pregledna utripalka. Dvojni pritisk informacijo predstavi v brskalniškem delovanju. |
 %kc:endInclude
 
@@ -640,6 +640,9 @@ Pritisk tipke Enter ali gumba Premakni se na, nad izbrano formulo, vas bo pomakn
 - Delovni listi: Ta izbor razvrsti vse delovne liste v delovnem zvezku.
 Izbrani list lahko s pritiskom tipke f2 preimenujete.
 Pritisk tipke Enter ali gumba Premakni se na, vas bo pomaknil na ta list.
+- Polja v obrazcu: Ta možnost razvrsti vsa polja, ki so del obrazca na aktivnem delovnem listu.
+Ob vsakem polju obrazca Seznam elementov prikaže njegovo alternativno besedilo skupaj z naslovi celic, ki jih polje pokriva.
+Izbor polja v obrazcu in pritisk tipke enter ali gumba Premakni se na, sproži premik na to polje v načinu brskalniškega delovanja.
 -
 
 +++ Sporočanje Komentarjev +++
@@ -653,6 +656,12 @@ Vsi komentarji za delovni list se lahko razvrstijo tudi v NVDA Seznamu Elementov
 %kc:beginInclude
 Za omogočanje premika v zaklenjene celice, preklopite v Brskalniško delovanje s pritiskom kombinacije NVDA+preslednica in potem uporabljajte standardne Excelove ukaze za premikanje, kot so puščice, ki jih uporabljate za premike med vsemi celicami v trenutnem delovnem listu.
 %kc:endInclude
+
++++ Polja Obrazca +++
+Excelovi delovni listi lahko vključujejo tudi polja v obrazcih.
+Do njih lahko dostopate z uporabo Seznama Elementov ali f in shift+f enočrkovne tipke za krmiljenje po poljih obrazca.
+Ko se premaknete na polje v obrazcu v načinu brskalniškega delovanja, lahko to polje s pritiskom preslednice ali tipke enter bodisi aktivirate ali preklopite v delovanje žarišča, tako da lahko spreminjate vrednosti v njem, to je odvisno od tipa polja.
+Več informacij o Brskalniškem delovanju in enočrkovnem krmiljenju poiščite v razdelku [Brskalniško Delovanje #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Ko možnost vključite, bo pregledna utripalka sledila vsem premikom miške.
 ==== Delovanje Enostavnega Pregleda ====
 Ko boste možnost vključili, bo NVDA izvedla filtracijo v hierarhiji predmetov, po katerih se lahko premikamo, z izključitvijo predmetov, ki niso za uporabnika. To so na primer navidezni predmeti in predmeti, ki so tu predvsem zaradi oblikovanja.
 
+Za preklapljanje delovanja enostavnega pregleda od kjerkoli, prosimo, določite kretnjo po meri z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
+
 +++ Nastavitve Predstavitve Predmeta (NVDA+control+o) +++
 Te nastavitve se nahajajo v meniju nastavitev NVDA v meniju "Predstavitev predmeta...".
 To pogovorno okno vsebuje naslednje možnosti:
@@ -1190,6 +1201,7 @@ V NVDA lahko nastavite poročanje za:
 - Lastnosti Pisave
 - Poravnavo Besedila
 - Barve
+- Komentarje
 - Uredniške popravke
 - Poudarke
 - Slog Besedila
@@ -1198,6 +1210,7 @@ V NVDA lahko nastavite poročanje za:
 - Številke Vrstice
 - Zamike Vrstice
 - Zamike odstavka (viseči zamik, zamik prve vrstice...)
+- Razmik med vrsticami (enojni, dvojni ipd.)
 - Tabele
 - Glave in čela Tabel (glave vrstic in stolpcev)
 - Koordinate celic v tabelah
@@ -1421,11 +1434,11 @@ Kakorkoli, če kliknete ali postavite žarišče znotraj prikazovalnika, bo NVDA
 Za vklapljanje in izklapljanje Prikazovalnika Govora od kjer koli, prosimo, dodelite lastno kretnjo z uporabo [pogovornega okna Kretenj Vnosa. #InputGestures]
 
 ++ Upravitelj Dodatkov ++
-Upravitelj dodatkov dostopen preko izbire Orodij v meniju NVDA vam omogoča namestitev in odstranitev paketov z dodatki za NVDA.
+Upravitelj dodatkov, dostopen preko izbire Orodij v meniju NVDA, vam omogoča namestitev in odstranitev paketov z dodatki za NVDA ter njihovo začasno izključitev ali vključitev.
 Te dodatke je oskrbela skupnost in vsebujejo prilagojeno kodo, ki lahko doda ali spremeni značilnosti v NVDA ali celo doda podporo večim brajevim vrsticam ali govornim sintezam.
 
 Upravitelj dodatkov vsebuje seznam, ki prikazuje vse dodatke trenutno nameščene v vaši NVDA uporabniški konfiguraciji.
-Ime paketa, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale informacije, kot je opis in URL pa so vidne ob izbiri dodatka in pritisku gumba O dodatku.
+Ime paketa, njegovo stanje, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale informacije, kot je opis in URL pa so vidne ob izbiri dodatka in pritisku gumba O dodatku.
 Če je pomoč za izbran dodatek na voljo, lahko do nje dostopate tako, da pritisnete gumb Pomoč ob izbranem dodatku.
 
 Za brskanje in prenos dodatkov, ki so na voljo na spletu, pritisnite gumb Pridobi dodatke.
@@ -1447,8 +1460,14 @@ NVDA vas bo vprašala, če res želite to storiti.
 Tako kot pri namestitvi, se mora NVDA znova zagnati, da se dodatek popolnoma odstrani.
 Dokler tega ne naredite, bo stanje dodatka v seznamu prikazano kot "odstrani".
 
+Če želite dodatek samo izključiti, pritisnite gumb onemogoči.
+Ko boste želeli izključeni dodatek znova vključiti, pritisnite gumb omogoči.
+Izključite lahko tiste dodatke, katerih stanje kaže, da tečejo ali pa da so vključeni/omogočeni, ravno tako pa lahko znova vključite tiste dodatke, katerih stanje kaže, da so izključeni/onemogočeni ali suspendirani.
+Ob vsakem pritisku gumba Omogoči/onemogoči, se stanje dodatka spremeni, tako da boste lahko vedeli, v kakšnem stanju bo deloval dodatek, ko boste NVDA ponovno zagnali.
+Tako kot ob namestitvi ali odstranitvi dodatka, je tudi tu potreben ponovni zagon NVDA, da bodo spremembe stopile v veljavo.
+
 Upravitelj dodatkov vsebuje tudi gumb Zapri, s katerim lahko zaprete pogovorno okno.
-Neglede na to, če ste namestili ali odstranili dodatek, vas bo NVDA vprašala, če jo želite ponovno zagnati, da se bodo lahko spremembe, ki ste jih naredili, uveljavile.
+Neglede na to, če ste namestili, spremenili ali odstranili dodatek, vas bo NVDA vprašala, če jo želite ponovno zagnati, da se bodo lahko spremembe, ki ste jih naredili, uveljavile.
 
 V preteklosti je bilo mogoče razširiti zmožnosti NVDA s preslikavo posameznega vtičnika in gonilnika v vaš NVDA uporabniški imenik konfiguracije.
 Čeprav ta različica NVDA še vedno le-te lahko naloži, ti ne bodo prikazani v Upravitelju dodatkov.
@@ -1593,11 +1612,17 @@ Sledeče tipke so pripete k naslednjim ukazom v NVDA.
 Prosimo, preglejte dokumentacijo vrstice, da boste vedeli, kje se posamezna tipka nahaja.
 %kc:beginInclude
 || Ime | Tipka |
-| Pomakni brajevo vrstico nazaj | t1 |
+| Pomakni brajevo vrstico nazaj | t1 ali etouch1 |
 | Premakni brajevo vrstico v prejšnjo vrstico | t2 |
+| Premakni na trenutni položaj žarišča | t3 |
 | Premakni brajevo vrstico v naslednjo vrstico | t4 |
-| Pomakni brajevo vrstico naprej | t5 |
+| Pomakni brajevo vrstico naprej | t5 ali etouch3 |
 | Usmeri na brajevo celico | routing |
+| Premakni v zgornjo vrstico pregleda | t1+t2 |
+| Premakni v spodnjo vrstico pregleda | t4+t5 |
+| Preklopi način delovanja v brajevi metodi | t1+t3 |
+| Sporoči naslov | etouch2 |
+| Sporoči vrstico stanja | etouch4 |
 | tipka shift+tab | sp1 |
 | tipka alt | sp2 |
 | tipka escape | sp3 |
@@ -1607,10 +1632,16 @@ Prosimo, preglejte dokumentacijo vrstice, da boste vedeli, kje se posamezna tipk
 | tipka puščicaLevo | spLeft |
 | tipka puščicaDesno | spRight |
 | tipka enter | spEnter |
+| Sporoči datum/čas | sp1+sp2 |
 | Meni NVDA | sp1+sp3 |
 | tipka windows+d (minimiranje vseh programov) | sp1+sp4 |
+| tipka windows+b (postavi se v sistemski pladenj) | sp3+sp4 |
 | tipka windows | sp2+sp3 |
 | tipka alt+tab | sp2+sp4 |
+| tipka control+home | t3+spUp |
+| tipka control+end | t3+spDown |
+| tipka home | t3+spLeft |
+| tipka end | t3+spRight |
 %kc:endInclude
 
 ++ Vrstice Handy Tech ++
