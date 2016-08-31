@@ -17,7 +17,7 @@ from cursorManager import ReviewCursorManager
 from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
 from textInfos import DocumentWithPageTurns
-from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo, getNVDAObjectFromEvent
+from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 
 class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,BrowseModeDocumentTreeInterceptor):
 
@@ -31,9 +31,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 			self.rootNVDAObject.appModule.inPageTurn=False
 
 	def isAlive(self):
-		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
-			return False
-		return True
+		return winUser.isWindow(self.rootNVDAObject.windowHandle)
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
