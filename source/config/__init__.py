@@ -137,6 +137,13 @@ confspec = ConfigObj(StringIO(
 
 [speechViewer]
 	showSpeechViewerAtStartup = boolean(default=false)
+	autoPositionWindow = boolean(default=True)
+	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	x = integer()
+	y = integer()
+	width = integer()
+	height = integer()
+	displays = string_list()
 
 #Keyboard settings
 [keyboard]
