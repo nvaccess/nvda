@@ -12,7 +12,6 @@ import api
 from scriptHandler import willSayAllResume, isScriptWaiting
 import controlTypes
 import treeInterceptorHandler
-import IAccessibleHandler
 from cursorManager import ReviewCursorManager
 from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
