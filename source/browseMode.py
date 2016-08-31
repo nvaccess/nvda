@@ -677,7 +677,7 @@ class ElementsListDialog(wx.Dialog):
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
 		mainSizer.Add(child,proportion=1)
 
-		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
+		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onTreeLabelEditBegin)

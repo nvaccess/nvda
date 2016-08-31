@@ -1842,7 +1842,8 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.Add(filterSizer, flag=wx.EXPAND)
 		settingsSizer.AddSpacer(5)
 		
-		tree = self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
+		tree = self.tree = wx.TreeCtrl(self, size=wx.Size(600, 400), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE )
+		
 		self.treeRoot = tree.AddRoot("root")
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
