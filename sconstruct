@@ -184,16 +184,6 @@ env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
 
-#Generate all needed comtypes COM interfaces
-#command = ['cd', sourceDir.path, '&&', sys.executable]
-#if release:
-#	command.append('-O')
-#command.append('generateComInterfaces.py')
-#comInterfaces = env.Command(sourceDir.Dir('comInterfaces'), None, [command])
-#env.AlwaysBuild(comInterfaces)
-#env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
-
-
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
 	buildVersionFn = os.path.join(str(source[0]), "_buildVersion.py")

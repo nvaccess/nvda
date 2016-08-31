@@ -370,8 +370,8 @@ Følgende tastekommandoer er tilgængelige for gennemsyn af tekst:
 | Gå til næste tegn i læsetilstand | Numpad3 | NVDA+Højre-pil | Svirp til højre (teksttilstand) | Flytter læsemarkøren til næste tegn på den aktuelle linje i teksten |
 | Gå til slutningen af linje i læsetilstand | Shift+Numpad3 | NVDA+End | Ingen | Flytter læsemarkøren til slutningen af den aktuelle linje i teksten |
 | Sig alt i læsetilstand | Numpad-plus | NVDA+Shift+a | Svirp ned med tre fingre (teksttilstand) | Læser fra læsemarkørens aktuelle position og flytter den under læsningen |
-| Kopier fra læsemarkør | NVDA+f9 | NVDA+f9 | Ingen | Begynder at kopiere tekst fra læsemarkørens aktuelle position. Den faktiske kopiering finder ikke sted, før du fortæller NVDA, hvor teksten skal kopieres hen. |
-| Kopier til læsemarkør | NVDA+f10 | NVDA+f10 | Ingen | Kopierer fra den position, som er blevet sat med funktionen "Kopier fra læsemarkør" til læsemarkørens aktuelle position. Når du trykker på denne tast, bliver teksten kopieret til Windows udklipsholderen. |
+| Vælg og derefter kopier fra læsemarkør | NVDA+f9 | NVDA+f9 | Ingen | Begynder vælge og kopiere processen fra læsemarkørens aktuelle position. Den faktiske handling finder ikke sted, før du fortæller NVDA, hvor udvælgelsen af teksten afsluttes. |
+| Vælg og kopier til læsemarkør | NVDA+f10 | NVDA+f10 | Ingen | Ved et tryk, vil tekst blive valgt fra den tidligere startmarkør, som er blevet sat, til og med læsemarkørens aktuelle position. Når du trykker på denne tast to gange, bliver teksten kopieret til Windows udklipsholderen. |
 | Sig tekstformatering | NVDA+f | NVDA+f | Ingen | Annoncerer formateringen af teksten ved læsemarkørens position. Trykkes dette to gange vil informationen blive vist i gennemsynstilstand |
 %kc:endInclude
 
@@ -640,6 +640,9 @@ Hvis du trykker på Enter eller "Flyt til"-knappen på en formel i listen, komme
 - Ark: Viser en liste over alle ark i projektmappen.
 Du kan omdøbe et ark ved at trykke F2 på arket.
 Tryk på Enter eller "Flyt til"-knappen på et ark for at skifte til arket.
+- Formularfelter: Dette viser en liste over formularfelter i det aktuelle regneark.
+Alternativ tekst vil blive vist for hvert formularfelt, samt celleadresserne formularfeltet omfatter.
+Ved at vælge et formularfelt og derefter trykke på "Flyt til" knappen eller enter, vil fokus flyttes til formularfeltet i gennemsynstilstand.
 -
 
 +++ Annoncering af kommentarer +++
@@ -653,6 +656,12 @@ Hvis en projektmappe er blevet skrivebeskyttet, kan det være, det ikke er mulig
 %kc:beginInclude
 For at kunne navigere til låste celler skal du skifte til gennemsynstilstand ved at trykke NVDA+Mellemrum og så bruge de almindelige flyttekommandoer i Excel, f.eks. piletasterne, til at bevæge dig rundt i alle cellerne i regnearket.
 %kc:endInclude
+
++++ Formularfelter +++
+Excel regneark kan indeholde formularfelter.
+Du kan få adgang til disse ved brug af elementlisten eller F og Skift+F bogstavnavigation for formularfelter.
+Når du flytter til et formularfelt i gennemsynstilstand, kan du benytte enter eller mellemrum til at aktivere eller skifte til fokustilstand, så du kan interagere med feltet, afhængigt af kontrollen.
+For yderligere informationer om gennemsynstilstand samt bogstavnavigation, se [Gennemsynstilstand #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Når dette punkt er markeret, følger læsemarkøren musen, når musen flytter s
 ==== Simpel læsetilstand ====
 Når denne funktion er slået til, vil NVDA filtrere de objekter, du kan navigere til. NVDA vil udelukke de objekter, som i almindelighed ikke er af interesse, fx. usynlige objekter eller objekter, som kun bruges til layoutformål.
 
+For at kunne slå simpel læsetilstand til og fra hvor som helst, tildel en bevælgelse til kommandoen ved brug af [dialogen Input-bevægelser #InputGestures].
+
 +++ Indstillinger for præsentation af objekter +++
 Findes i menuen Indstillinger under "Objektpræsentation...".
 Denne dialog indeholder følgende indstillingsmuligheder:
@@ -1190,6 +1201,7 @@ Du kan tilpasse annoncering af:
 - Skriftegenskaber
 - Tekstjustering 
 - Farver
+- Kommentarer
 - Ændringer
 - fremhævelse
 - Tekstens typografi 
@@ -1198,6 +1210,7 @@ Du kan tilpasse annoncering af:
 - Linjenumre
 - Indrykning af linje
 - Indrykning af afsnit (fx. hængende indryk eller indrykning af første linje)
+- Linjeafstand (f.eks. enkel, dobbel, osv.)
 - tabeller
 - Række- og kolonneoverskrifter i tabeller
 - Koordinater på tabelceller
@@ -1421,7 +1434,7 @@ Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog m
 Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en speciel inputbevægelse med [dialogen inputbevægelser [InputGestures].
 
 ++ Styring af tilføjelsesprogrammer++
-Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installer tilføjelser til skærmlæseren, samt afinstallere tilføjelserne.
+Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installer tilføjelser til skærmlæseren, samt afinstallere, aktivére eller deaktivére tilføjelserne.
 Disse pakker kan indeholde tilpasset kode der kan ændre eller tilføje funktionalitet i NVDA, såsom understøttelse af bestemte talesynteser eller punktdisplays. Pakkerne er udgivet og bliver stillet til rådighed af fællesskabet.
 
 Under Styring af tilføjelsesprogrammer kan du finde en liste over alle de tilføjelser, du har installeret på nuværende tidspunkt i din NVDA brugerkonfiguration.
@@ -1447,8 +1460,14 @@ NvDA spørger, om du ønsker at fortsætte med denne handling.
 Ligesom ved installation skal NVDA genstartes før ændringen træder i kraft.
 Før du udfører denne handling, vil statusen af dit afinstallerede tilføjelsesprogram vise "Fjern."
 
-dialogen har også en Luk-knap.
-Hvis du har tilføjet eller fjernet tilføjelsesprogrammer, vil NVDA spørge om du ønsker at genstarte, så dine ændringer kan træde i kraft.
+For at deaktivére et tilføjelsesprogram, tryk på knappen "Deaktivér".
+For at aktivére et tidligere deaktivéret tilføjelsesprogram, tryk på knappen "Aktivér".
+Du kan deaktivére et tilføjelsesprogram, hvis status indikerer at programmet kører eller er i gang, eller deaktivére det hvis tilføjelsesprogrammet er stoppet eller deaktivéret.
+For hvert tryk af disse knapper vil status ændres, så du ved hvad der vil ske, når NVDA genstartes.
+Hvis du har lavet ændringer til tilføjelsesprogrammer,skal du genstarte NVDA, så dine ændringer kan træde i kraft.
+
+Dialogboksen har også en luk-knap.
+Hvis du har installeret, fjernet eller ændret status af et tilføjelsesprogram, vil NVDA spørge om du ønsker at genstarte, så ændringerne kan træde i kraft.
 
 Det har før i tiden været muligt at udvide funktionaliteten af NVDA ved at kopiere plugins og drivere ind i mappen med brugerkonfigurationen til NVDA.
 Selv om denne version af NVDA kan indlæse dem, vil de ikke figurere i listen over tilføjelsesprogrammer.
@@ -1595,9 +1614,15 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 || Navn | Tast |
 | Rul punktdisplay tilbage | t1 |
 | Flyt punktdisplay to forrige linje | t2 |
+| Flyt til aktuelle fokus | t3 |
 | Flyt punktdisplay til næste linje | t4 |
-| Rul punktdisplay fremad | t5 |
+| Rul punktdisplay fremad | t5 eller etouch3 |
 | Flyt til punktcelle | markørsammenføringsknapper |
+| Flyt til øverste linje i læsning | t1+t2 |
+| Flyt til nederste linje i læsning | t4+t5 |
+| Skift punkt tøjret til | t1+t3 |
+| Rapporter titel | etouch2 |
+| Rapporter statuslinje | etouch4 |
 | shift+tab tast | sp1 |
 | alt tast | sp2 |
 | escape tast | sp3 |
@@ -1607,10 +1632,16 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Venstre-pil | spVenstre |
 | Højre-pil | spHøjre |
 | enter tast | spEnter |
+| Rapporter dato/tid | sp1+sp2 |
 | NVDA-menu | sp1+sp3 |
 | windows+d tast (Minimer alle programmer) | sp1+sp4 |
+| windows+b key (gå til systembakke) | sp3+sp4 |
 | windows tast | sp2+sp3 |
 | alt+tab tast | sp2+sp4 |
+| CTRL+hjem | t3+spUp |
+| CTRL+end | t3+spDown |
+| hjem tast | t3+spLeft |
+| end tast | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech Displays ++

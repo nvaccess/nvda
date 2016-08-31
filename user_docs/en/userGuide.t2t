@@ -640,6 +640,9 @@ Pressing Enter or the Move To button on a listed formula will move directly to t
 - Sheets: This lists all sheets in the workbook. 
 Pressing f2 when on a listed sheet allows you to rename the sheet. 
 Pressing Enter or the Move To button while on the listed sheet will switch to that sheet.
+- Form fields: This lists all form fields in the active worksheet.
+For each form field, the Elements List shows the alternative text of the field along with the addresses of the cells it covers.
+Selecting a form field and pressing enter or the Move to button moves to that field in browse mode.
 -
 
 +++ Reporting Comments +++
@@ -653,6 +656,12 @@ If a workbook has been protected, it may not be possible to move focus to partic
 %kc:beginInclude
 To allow moving to locked cells, switch to Browse Mode by pressing NVDA+space, and then use standard Excel movement commands such as the arrow keys to move around all cells on the current worksheet.
 %kc:endInclude
+
++++ Form Fields +++
+Excel worksheets can include form fields.
+You can access these using the Elements List or the f and shift+f form field single letter navigation keys.
+Once you move to a form field in browse mode, you can press enter or space to either activate it or switch to focus mode so you can interact with it, depending on the control.
+For further information about Browse mode and single letter navigation, see the [Browse Mode section #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ When enabled, the review cursor will follow the mouse as it moves.
 ==== Simple Review mode ====
 When enabled, NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.
 
+To toggle simple review mode from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 +++ Object Presentation Settings (NVDA+control+o) +++
 Found in the Preferences menu under "Object Presentation...".
 This dialog box contains the following options:
@@ -1191,7 +1202,7 @@ You can configure reporting of:
 - Text alignment
 - Colors
 - Comments
-- editor revisions
+- Editor revisions
 - Emphasis
 - Text style
 - Spelling errors
@@ -1220,6 +1231,17 @@ If enabled, this setting tells NVDA to try and detect all the formatting changes
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as Microsoft Word, where formatting is important.
+
+==== Report line indentation with ====
+This option allows you to configure how indentation at the beginning of lines is reported.
+The Report line indentation with combo box has four options.
+
+- Off: NVDA will not treat indentation specially.
+- Speech: If speech is selected, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab."
+- Tones: If Tones is selected, when the  amount of  indentation changes, tones indicate the amount of change in indent.
+The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
+- Both Speech and Tones: This option reads indentation using both of the above methods.
+-
 
 +++ Speech dictionaries +++
 The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases.
@@ -1423,11 +1445,11 @@ However, if you click or focus inside the viewer, NVDA will temporarily stop upd
 To toggle the speech viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ++ Add-ons Manager ++
-The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install and uninstall add-on packages for NVDA.
+The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, enable and disable add-on packages for NVDA.
 These packages are provided by the community and contain custom code that may add or change features in NVDA or even provide support for extra Braille displays or speech synthesizers.
 
 The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
-A package name, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
+Package name, status, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
 If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
 
 To browse and download available add-ons online, press the Get add-ons button.
@@ -1449,8 +1471,14 @@ NVDA will ask if you really wish to do this.
 As with installing, NVDA must be restarted for the add-on to be fully  removed.
 Until you do, a status of "remove" will be shown for that add-on in the list.
 
+To disable an add-on, press the disable button.
+To enable a previously disabled add-on, press the enable button.
+You can disable an add-on if the add-on status indicates it is running or enabled, or enable it if the add-on is suspended or disabled.
+For each press of the enable/disable button, add-on status changes to indicate what will happen when NVDA restarts.
+Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+
 The manager also has a Close button to close the dialog.
-If you have installed or removed add-ons, NVDA will first ask you if you wish to restart so that your changes can take effect.
+If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
 
 In the past it has been possible to extend NVDA's functionality by copying individual plugins and drivers in to your NVDA user Configuration directory.
 Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
@@ -1595,11 +1623,17 @@ Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | t1 |
+| Scroll braille display back | t1 or etouch1 |
 | Move braille display to previous line | t2 |
+| Move to current focus | t3 |
 | Move braille display to next line | t4 |
-| Scroll braille display forward | t5 |
+| Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
+| Move to top line in review | t1+t2 |
+| Move to bottom line in review | t4+t5 |
+| Toggle braille tethered to | t1+t3 |
+| Report title | etouch2 |
+| Report status bar | etouch4 |
 | shift+tab key | sp1 |
 | alt key | sp2 |
 | escape key | sp3 |
@@ -1609,10 +1643,16 @@ Please see the display's documentation for descriptions of where these keys can 
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
 | enter key | spEnter |
+| Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
+| windows+b key (focus system tray) | sp3+sp4 |
 | windows key | sp2+sp3 |
 | alt+tab key | sp2+sp4 |
+| control+home key | t3+spUp |
+| control+end key | t3+spDown |
+| home key | t3+spLeft |
+| end key | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech Displays ++
@@ -1661,19 +1701,25 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt+shift+tab key | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille Displays ++
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
+++ Baum/Humanware/APH/Orbit Braille Displays ++
+Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] and [Orbit http://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
 These include:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Some other displays manufactured by Baum may also work, though this has not been tested.
 
-If connecting via USB to displays other than the VarioUltra, Pronto! or Refreshabraille with USB mode set to HID, you must first install the USB drivers provided by the manufacturer.
+If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
+The VarioUltra and Pronto! use HID.
+The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
+USB HID should generally be used instead.
+
+Following are the key assignments for these displays with NVDA.
+Please see your display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | d2 |

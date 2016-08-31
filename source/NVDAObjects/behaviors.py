@@ -621,7 +621,7 @@ class ToolTip(NVDAObject):
 
 class Notification(NVDAObject):
 	"""Informs the user of non-critical information that does not require immediate action.
-	This is primarily for notifications displayed in the system notification area.
+	This is primarily for notifications displayed in the system notification area, and for Windows 8 and later, toasts.
 	The object should fire a alert or show event when the user should be notified.
 	"""
 

@@ -11,7 +11,7 @@ from logHandler import log
 
 class SpeechViewerFrame(wx.Dialog):
 
-	def __init__(self):
+	def __init__(self, onDestroyCallBack):
 		dialogSize=wx.Size(w=500, h=500)
 		dialogPos=None
 		if not config.conf["speechViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
@@ -20,11 +20,19 @@ class SpeechViewerFrame(wx.Dialog):
 			dialogSize = wx.Size(w=speechViewSection["width"], h=speechViewSection["height"])
 			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
 		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
+		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		self.textCtrl = wx.TextCtrl(self, -1,style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
 		sizer.Add(self.textCtrl, proportion=1, flag=wx.EXPAND)
+		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.NewId(),label=_("&Show Speech Viewer on Startup"))
+		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechViewer"]["showSpeechViewerAtStartup"])
+		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
+		sizer.Add(self.shouldShowOnStartupCheckBox, border=5, flag=wx.ALL)
+		# set the check box as having focus, by default the textCtrl has focus which stops the speechviewer output (even if another window is in focus)
+		self.shouldShowOnStartupCheckBox.SetFocus()
 		self.SetSizer(sizer)
 		self.Show(True)
 
@@ -36,9 +44,13 @@ class SpeechViewerFrame(wx.Dialog):
 			return
 		evt.Veto()
 
+	def onShouldShowOnStartupChanged(self, evt):
+		config.conf["speechViewer"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
+
 	def onDestroy(self, evt):
-		log.debug("SpeechViewer Destroyed")
+		log.debug("SpeechViewer destroyed")
 		self.savePositionInformation()
+		self.onDestroyCallBack()
 		evt.Skip()
 
 	def doDisplaysMatchConfig(self):
@@ -66,7 +78,7 @@ isActive=False
 
 def activate():
 	global _guiFrame, isActive
-	_guiFrame = SpeechViewerFrame()
+	_guiFrame = SpeechViewerFrame(_cleanup)
 	isActive=True
 
 def appendText(text):
@@ -75,15 +87,20 @@ def appendText(text):
 	if not isinstance(text,basestring):
 		return
 	#If the speech viewer text control has the focus, we want to disable updates
-	#Otherwize it would be impossible to select text, or even just read it (as a blind person).
+	#Otherwise it would be impossible to select text, or even just read it (as a blind person).
 	if _guiFrame.FindFocus()==_guiFrame.textCtrl:
 		return
 	_guiFrame.textCtrl.AppendText(text + "\n")
+
+def _cleanup():
+	global _guiFrame, isActive
+	if not isActive:
+		return
+	isActive=False
+	_guiFrame = None
 
 def deactivate():
 	global _guiFrame, isActive
 	if not isActive:
 		return
-	isActive=False
 	_guiFrame.Destroy()
-	_guiFrame = None

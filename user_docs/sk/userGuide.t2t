@@ -370,8 +370,8 @@ Na navigáciu v texte je možné použiť nasledovné príkazy:
 | Prezerací kurzor na nasledujúci znak | numpad3 | NVDA+pravá šípka | Švihnutie vpravo (textový režim) | Presunie prezerací kurzor na nasledujúci znak v aktuálnom riadku textu |
 | Prezerací kurzor na koniec riadku | shift+numpad3 | NVDA+end | Nie je | Presunie prezerací kurzor na koniec aktuálneho riadku textu |
 | Plynulé čítanie prezeracím kurzorom | numpadPlus | NVDA+shift+a | Švihnutie dolu troma prstami (textový režim) | Číta od aktuálnej pozície prezeracieho kurzora a posúva sa smerom dolu. |
-| Začiatok bloku kopírovania prezeracím kurzorom | NVDA+f9 | NVDA+f9 | Nie je | Označí aktuálnu pozíciu ako začiatok bloku na kopírovanie do schránky. Kopírovanie sa neuskutoční kým neurčíte koniec bloku kopírovania. |
-| Koniec bloku kopírovania prezeracím kurzorom | NVDA+f10 | NVDA+f10 | Nie je | Skopíruje text od značky nastavenej ako začiatok kopírovania prezeracím kurzorom po aktuálnu pozíciu vrátane do schránky Windows. |
+| Začiatok bloku kopírovania prezeracím kurzorom | NVDA+f9 | NVDA+f9 | Nie je | Označí aktuálnu pozíciu ako začiatok výberu a bloku na kopírovanie do schránky. Kopírovanie sa neuskutoční kým neurčíte koniec bloku kopírovania. |
+| Koniec bloku kopírovania prezeracím kurzorom | NVDA+f10 | NVDA+f10 | Nie je | Po prvom stlačení označí text  od označeného miesta po aktuálnu pozíciu prezeracieho kurzora. Po dvojitom stlačení skopíruje text od značky po aktuálnu pozíciu  do schránky Windows. |
 | formátovanie textu | NVDA+f | NVDA+f | Nie je | Oznámi formátovanie textu na pozícii prezeracieho kurzora. Po dvojitom stlačení zobrazí informáciu v režime prehliadania.|
 %kc:endInclude
 
@@ -640,6 +640,9 @@ Ak stlačíte enter, alebo aktivujete tlačidlo prejsť na, fokus sa presunie na
 - Hárky: Zobrazí zoznam hárkov v dokumente.
 Klávesom F2 môžete premenovať vybratý hárok.
 Klávesom enter, alebo  aktivovaním tlačidla "prejsť na" sa presuniete na požadovaný hárok.
+- Formuláre: Zobrazí všetky formuláre vo vybratom hárku.
+pre každý prvok formulára sa zobrazuje alternatívny text a tiež súradnice bunky, v ktorej sa formulárové pole nachádza.
+Do požadovaného poľa sa presuniete klávesom enter, alebo aktivovaním tlačidla "prejsť na".
 -
 
 +++ Čítanie komentárov +++
@@ -653,6 +656,12 @@ Ak je dokument programu MS Excel chránený, môžete mať problém prečítať 
 %kc:beginInclude
 Ak si chcete prezerať aj chránené bunky, najprv aktivujte režim prehliadania skratkou NVDA+medzera. Následne použite na prezeranie tabuľky štandardné príkazy (napríklad šípky).
 %kc:endInclude
+
++++ formuláre +++
+V zošite programu MS Excel sa môžu nachádzať formuláre.
+dostanete sa k nim cez zoznam prvkov, alebo skratkami rýchlej navigácie f a shift+f.
+Aj v tomto prípade aktivujete režim fokusu medzerou alebo klávesom enter. V tomto režime môžete napríklad vyplniť editačné pole.
+pre viac informácii o práci v režime prehliadania a o skratkách rýchlej navigácie pozrite časť [Režim prehliadania #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1051,6 +1060,8 @@ Ak je táto voľba zapnutá, prezerací kurzor bude pri posúvaní sledovať kur
 ==== Jednoduchý režim objektovej navigácie ====
 Ak je táto voľba zapnutá, NVDA bude filtrovať stromovú hierarchiu objektovej navigácie a vynechá objekty, ktoré nie sú pre vás dôležité. Sú to objekty, ktoré nie sú viditeľné alebo objekty, ktoré dopĺňajú vzhľad.
 
+jednoduchý režim môžete zapínať a vypínať aj klávesovou skratkou. Stačí, ak ju definujete v dialógu [Klávesové skratky #InputGestures].
+
 +++ Nastavenia prezentácie objektov (NVDA+ctrl+o) +++
 Túto voľbu nájdeme v možnostiach programu NVDA.
 Toto dialógové okno obsahuje:
@@ -1190,15 +1201,16 @@ Takto môžete nastaviť:
 - Vlastnosti písma
 - Zarovnanie textu
 - Farby
+- komentáre
 - sledovanie zmien
 - zvýraznenie
 - Štýl textu
-- gramatické chyby
-- Pravopisné chyby
+- pravopisné chyby
 - Číslovanie strán
 - Číslovanie riadkov
 - Odsadenie textu
 - Odsadenie odseku (napríklad vysunutý riadok a odsadenie prvého riadka)
+- riadkovanie (jednoduché, dvojité...)
 - Tabuľky
 - Hlavičky riadku a stĺpca tabuľky
 - Súradnice buniek tabuľky
@@ -1422,11 +1434,11 @@ Pozastaviť zobrazovanie aktuálneho textu (napr. užitočné pre kopírovanie) 
 Ak potrebujete Zobrazovač reči spúšťať z hociktorého miesta, môžete mu priradiť  skratku v dialógu [Klávesové skratky #InputGestures].
 
 ++ Správca doplnkov ++
-Správcu doplnkov nájdete v podmenu nástroje. Umožňuje vám inštalovať doplnky do programu NVDA.
+Správcu doplnkov nájdete v podmenu nástroje. Umožňuje vám inštalovať, odinštalovať, povoliť a zakázať doplnky.
 Tieto doplnky vytvárajú používatelia NVDA. Doplnky môžu meniť alebo dopĺňať funkcie NVDA a takisto dopĺňať podporu pre hlasové syntetizéry a braillovské riadky.
 
 V správcovi doplnkov sa nachádza zoznam s doplnkami, ktoré sú nainštalované v aktuálnej konfigurácii NVDA.
-Okrem názvu sa zobrazí aj verzia a autor doplnku. Popis a URL adresu môžete zistiť tak, že doplnok vyberiete a aktivujete tlačidlo O doplnku.
+Okrem názvu sa zobrazí  verzia,  autor a stav doplnku. Popis a URL adresu môžete zistiť tak, že doplnok vyberiete a aktivujete tlačidlo O doplnku.
 Ak doplnok obsahuje pomocníka, môžete si ho pozrieť po aktivovaní tlačidla Návod.
 
 Ak si chcete pozrieť dostupné doplnky, aktivujte tlačidlo otvoriť stránku s doplnkami.
@@ -1448,8 +1460,14 @@ NVDA sa vás opýta, či skutočne chcete doplnok odinštalovať.
 Aby ste doplnok definitívne odstránili, je potrebné reštartovať NVDA.
 Kým NVDA nereštartujete, zobrazí sa pri doplnku stav "Odstránený".
 
+Ak chcete doplnok zakázať, aktivujte tlačidlo zakázať.
+Doplnok, ktorý ste zakázali, môžete znovu povoliť aktivovaním tlačidla povoliť.
+Ak je doplnok povolený, zobrazuje sa tlačidlo na jeho zakázanie, ak je zakázaný, zobrazuje sa tlačidlo na jeho povolenie.
+Stav pri doplnku indikuje, čo sa s doplnkom stane pri najbližšom reštarte NVDA.
+Aj v tomto prípade sa zmeny prejavia až po reštarte.
+
 Správcu doplnkov zatvoríte aktivovaním tlačidla Zatvoriť.
-Ak ste pridali alebo odstránili nejaké doplnky, NVDA sa vás opýta, či ho chcete reštartovať, aby boli uložené zmeny.
+Ak ste pridali,  odstránili, zakázali alebo povolili nejaké doplnky, NVDA sa vás opýta, či ho chcete reštartovať, aby boli uložené zmeny.
 
 V minulosti bolo možné funkcie NVDA rozšíriť nakopírovaním pluginov alebo ovládačov do používateľského priečinka s konfiguráciou NVDA.
 Táto verzia NVDA stále tieto pluginy a ovládače načíta, no nebudú zobrazené v okne správcu doplnkov.
@@ -1594,11 +1612,17 @@ Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
 %kc:beginInclude
 || Názov | Klávesová skratka |
-| posunúť riadok späť | t1 |
+| posunúť riadok späť | t1 alebo etouch1 |
 | predchádzajúci riadok | t2 |
+| Presunúť na fokus | t3 |
 | nasledujúci riadok | t4 |
-| posunúť riadok vpred | t5 |
+| posunúť riadok vpred | t5 alebo etouch3 |
 | Prejsť na znak v brailly | smerové tlačidlá |
+| presujúť na prvý riadok v režime prezerania | t1+t2 |
+| Presunúť na posledný riadok v režime prezerania | t4+t5 |
+| prepnúť funkciu braillovský kurzor zviazaný s | t1+t3 |
+| oznámiť názov okna | etouch2 |
+| oznámiť stavový riadok | etouch4 |
 | emulácia shift+tab | sp1 |
 | emulácia alt | sp2 |
 | emulácia escape | sp3 |
@@ -1608,10 +1632,16 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | šípka vľavo | spLeft |
 | šípka vpravo | spRight |
 | enter | spEnter |
+| oznámiť dátum a čas | sp1+sp2 |
 | ponuka NVDA | sp1+sp3 |
 | klávesová skratka windows+d (minimalizovať všetky aplikácie) | sp1+sp4 |
+| windows+b (prechod na systémovú lištu) | sp3+sp4 |
 | kláves windows | sp2+sp3 |
 | klávesová skratka alt+tab | sp2+sp4 |
+| ctrl+home | t3+spUp |
+| ctrl+end | t3+spDown |
+| home | t3+spLeft |
+| end | t3+spRight |
 %kc:endInclude
 
 ++ Zobrazovače od spoločnosti Handy Tech ++

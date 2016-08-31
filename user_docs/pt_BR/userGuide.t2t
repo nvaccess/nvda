@@ -638,7 +638,10 @@ Estando numa fórmula selecionada e pressionando enter ou o botão Mover para, m
 - Planilha: Isso lista todas as planilhas na folha de cálculo. 
 Estando numa planilha selecionada e pressionando f2, permite-lhe renomeá-la. 
 Estando numa planilha selecionada e pressionando enter ou o botão Mover para, irá mover para aquela planilha.
--
+- Campos de Formulário: Lista todos os campos de formulário na folha de cálculo ativa.
+Para cada campo de formulário, a Lista de Elementos mostra o texto alternativo do campo, além dos endereços das células cobertas por ele.
+Selecionando um campo de formulário e pressionando enter ou o botão Mover para, move para aquele campo no modo de navegação.
+ -
 
 +++ Anunciar Comentários +++
 %kc:beginInclude
@@ -1014,6 +1017,8 @@ Se ativado, o cursor de exploração seguirá o mouse quando o mesmo se mover.
 ==== Modo Simples de Exploração ====
 Quando ativado, o NVDA filtrará a hierarquia dos objetos que podem ser navegados para excluir quaisquer objetos inutilizáveis.
 
+Para alternar o modo de revisão simples de qualquer lugar, atribua um gesto de entrada usando o [Diálogo de gestos para entrada #InputGestures].
+
 +++ Opções de Apresentação de Objetos (NVDA+control+o) +++
 Encontra-se no menu Preferências no item "Apresentação de Objeto...".
 Esta caixa de diálogo contém as seguintes opções:
@@ -1152,6 +1157,7 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - Atributos da Fonte
 - Alinhamento
 - Cores
+- Comentários
 - Revisões de editores
 - Ênfase
 - Estilo
@@ -1161,6 +1167,7 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - Número das Linhas
 - Indentação das Linhas
 - indentação do Parágrafo (como hanging indent, first line indent)
+- espaço entre linhas (simples, duplo, etc)
 - Tabelas
 - Cabeçalhos de Linhas e Colunas das Tabelas
 - Coordenadas de Células em Tabelas
@@ -1410,8 +1417,14 @@ O NVDA irá perguntar se você realmente deseja removê-lo.
 Assim como ao instalar, o NVDA precisa ser reiniciado para que o complemento seja completamente removido.
 Até que você faça isso, o status de "removido" será mostrado para aquele complemento na lista.
 
+Para desativar um complemento, pressione o botão desativar.
+Para ativar um complemento anteriormente desativado, pressione o botão ativar.
+Você pode desativar um complemento caso o status deste indique que ele está em execução ou ativado, ou ativá-lo se o complemento estiver suspenso ou desativado.
+para cada pressionamento do botão ativar/desativar, o status do complemento mudará para indicar o que ocorrerá quando o NVDA for reiniciado.
+Semelhante a quando você instala ou remove complementos, é necessário reiniciar o NVDA para que as alterações façam efeito.
+
 O gerenciador também possui um botão "Fechar" para encerrar o diálogo.
-Caso tenha instalado ou removido algum complemento, o NVDA primeiro indagará se você deseja reiniciar, de forma que suas alterações possam fazer efeito. 
+Caso tenha instalado, removido ou alterado o status de algum complemento, o NVDA primeiro indagará se você deseja reiniciar, de forma que suas alterações possam fazer efeito. 
 
 No passado foi possível extender as funcionalidades do NVDA copiando plugins e drivers individuais para sua pasta de Configurações do usuário do NVDA.
 Embora nessa versão do NVDA continue sendo possível carregá-los, eles não serão mostrados no gerenciador de complementos. 
@@ -1559,11 +1572,17 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 
 %kc:beginInclude
 || Nome | Tecla |
-| Mover linha braille para trás | t1 |
+| Mover linha braille para trás | t1 ou etouch1 |
 | Mover linha braille para a linha anterior | t2 |
+| Mover para o foco atual | t3 |
 | Mover linha braille para a linha seguinte | t4 |
-| Mover linha braille para a frente | t5 |
+| Mover linha braille para a frente | t5 ou etouch3 |
 | Guiar para a cela braille  | sensor |
+| Mover para a primeira linha em revisão | t1+t2 |
+| Mover para a última linha em revisão | t4+t5 |
+| Alternar vínculo do braille | t1+t3 |
+| Anunciar título | etouch2 |
+| Ler a barra de status | etouch4 |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
@@ -1573,10 +1592,16 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | tecla seta a esquerda | spLeft |
 | tecla seta a direita | spRight |
 | tecla enter | spEnter |
+| Anunciar data/hora | sp1+sp2 |
 | menu do NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicações) | sp1+sp4 |
+| tecla windows+b (colocar a área de notificação em foco ) | sp3+sp4 |
 | tecla windows | sp2+sp3 |
 | tecla alt+tab | sp2+sp4 |
++| tecla control+home | t3+spUp |
+| tecla control+end | t3+spDown |
+| tecla home | t3+spLeft |
+| tecla end | t3+spRight |
 %kc:endInclude
 
 ++ Linhas Handy Tech ++

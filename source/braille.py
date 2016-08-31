@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2015 NV Access Limited
+#Copyright (C) 2008-2016 NV Access Limited
 
 import sys
 import itertools
@@ -739,11 +739,17 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field):
-	linePrefix = field.get("line-prefix")
-	if linePrefix:
-		return linePrefix
-	return None
+def getFormatFieldBraille(field, isAtStart, formatConfig):
+	textList = []
+	if isAtStart:
+		if formatConfig["reportLineNumber"]:
+			lineNumber = field.get("line-number")
+			if lineNumber:
+				textList.append("%s" % lineNumber)
+		linePrefix = field.get("line-prefix")
+		if linePrefix:
+			textList.append(linePrefix)
+	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):
 
@@ -818,6 +824,7 @@ class TextInfoRegion(Region):
 		typeform = louis.plain_text
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
+				self._isFormatFieldAtStart = False
 				if not command:
 					continue
 				if self._endsWithField:
@@ -849,7 +856,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field)
+					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -920,9 +927,10 @@ class TextInfoRegion(Region):
 		self._rawToContentPos = []
 		self._currentContentPos = 0
 		self.selectionStart = self.selectionEnd = None
+		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-		self._endsWithField = False
 
+		self._endsWithField = False
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -1342,11 +1350,12 @@ def getFocusRegions(obj, review=False):
 		return
 
 	# Late import to avoid circular import.
-	from treeInterceptorHandler import TreeInterceptor
+	from treeInterceptorHandler import TreeInterceptor, DocumentTreeInterceptor
 	from cursorManager import CursorManager
+	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, TreeInterceptor) or NVDAObjectHasUsefulText(obj): 
+	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
@@ -1480,7 +1489,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _writeCells(self, cells):
 		if not self.display.isThreadSafe:
-			self.display.display(cells)
+			try:
+				self.display.display(cells)
+			except:
+				log.error("Error displaying cells. Disabling display", exc_info=True)
+				self.setDisplayByName("noBraille", isFallback=True)
 			return
 		with _BgThread.queuedWriteLock:
 			alreadyQueued = _BgThread.queuedWrite
@@ -1714,7 +1727,11 @@ class _BgThread:
 			_BgThread.queuedWrite = None
 		if not data:
 			return
-		handler.display.display(data)
+		try:
+			handler.display.display(data)
+		except:
+			log.error("Error displaying cells. Disabling display", exc_info=True)
+			handler.setDisplayByName("noBraille", isFallback=True)
 
 	@classmethod
 	def func(cls):
