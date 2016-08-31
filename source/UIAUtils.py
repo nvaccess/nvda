@@ -7,6 +7,13 @@ from comtypes import COMError
 import UIAHandler
 
 def createUIAMultiPropertyCondition(*dicts):
+	"""
+	A helper function that Creates a complex UI Automation Condition matching on various UI Automation properties with both 'and' and 'or'.
+	Arguments to this function are dicts whos keys are UI Automation property IDs, and whos values are a list of possible values for the property ID.
+	The dicts are joined with 'or', the keys in each dict are joined with 'and', and the values  for each key are joined with 'or'.
+	For example,  to create a condition that matches on a controlType of button or edit and where isReadOnly is True, or, className is 'ding', you would provide arguments of:
+	{UIA_ControlTypePropertyId:[UIA_ButtonControlTypeId,UIA_EditControlTypeId],UIA_Value_ValueIsReadOnly:[True]},{UIA_ClassNamePropertyId:['ding']}
+	"""
 	outerOrList=[]
 	for dict in dicts:
 		andList=[]
@@ -40,6 +47,7 @@ def createUIAMultiPropertyCondition(*dicts):
 	return condition
 
 def UIATextRangeFromElement(documentTextPattern,element):
+	"""Wraps IUIAutomationTextRange::getEnclosingElement, returning None on  COMError."""
 	try:
 		childRange=documentTextPattern.rangeFromChild(element)
 	except COMError:
@@ -47,6 +55,9 @@ def UIATextRangeFromElement(documentTextPattern,element):
 	return childRange
 
 def isUIAElementInWalker(element,walker):
+		"""
+		Checks if the given IUIAutomationElement exists in the given IUIAutomationTreeWalker by calling IUIAutomationTreeWalker::normalizeElement and comparing the fetched element with the given element.
+		"""
 		try:
 			newElement=walker.normalizeElement(element)
 		except COMError:
@@ -54,6 +65,9 @@ def isUIAElementInWalker(element,walker):
 		return newElement and UIAHandler.handler.clientObject.compareElements(element,newElement)
 
 def getDeepestLastChildUIAElementInWalker(element,walker):
+	"""
+	Starting from the given IUIAutomationElement, walks to the deepest last child of the given IUIAutomationTreeWalker.
+	"""
 	descended=False
 	while True:
 		lastChild=walker.getLastChildElement(element)
@@ -65,9 +79,13 @@ def getDeepestLastChildUIAElementInWalker(element,walker):
 		return element if descended else None
 
 class UIAMixedAttributeError(ValueError):
+	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 	pass
 
 def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
+	"""
+	Wraps IUIAutomationTextRange::getAttributeValue, returning UIAutomation's reservedNotSupportedValue on COMError, and raising UIAMixedAttributeError if a mixed value would be returned and ignoreMixedValues is False.
+	"""
 	try:
 		val=range.GetAttributeValue(attrib)
 	except COMError:
