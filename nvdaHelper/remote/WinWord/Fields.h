@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #define WIN32_LEAN_AND_MEAN 
 #include <vector>
-#include <common/optional.hpp>
+#include <boost/optional.hpp>
 
 struct IDispatch;
 namespace WinWord {
