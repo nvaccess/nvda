@@ -1111,12 +1111,26 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report line &numbers"))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This message is presented in the document formatting settings dialogue
-		# If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-		#
-		self.lineIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation"))
-		self.lineIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportLineIndentation"])
-		settingsSizer.Add(self.lineIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox controlling the reporting of line indentation in the
+		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report line &indentation with:")))
+		indentChoices=[
+			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+			_("Off"),
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+			_("Speech"),
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+			_("Tones"),
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+			_("Both  Speech and Tones")
+		]
+		self.lineIndentationCombo = wx.Choice(self,wx.ID_ANY,choices=indentChoices)
+		#We use bitwise opperations because it saves us a four way if statement.
+		curChoice = config.conf["documentFormatting"]["reportLineIndentationWithTones"] << 1 |  config.conf["documentFormatting"]["reportLineIndentation"]
+		self.lineIndentationCombo.SetSelection(curChoice)
+		sizer.Add(self.lineIndentationCombo)
+		settingsSizer.Add(sizer)
 		# Translators: This message is presented in the document formatting settings dialogue
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		self.paragraphIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraph indentation"))
@@ -1195,7 +1209,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportLineIndentation"]=self.lineIndentationCheckBox.IsChecked()
+		choice = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["reportLineIndentation"] = choice in (1, 3)
+		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = choice in (2, 3)
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()

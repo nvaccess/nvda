@@ -111,7 +111,7 @@ def findScript(gesture):
 		return func
 	for obj in reversed(api.getFocusAncestors()):
 		func = _getObjScript(obj, gesture, globalMapScripts)
-		if func and getattr(func, 'canPropagate', False): 
+		if func and getattr(func, 'canPropagate', False):
 			return func
 
 	# Global commands.
