@@ -23,6 +23,8 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 	TextInfo=treeInterceptorHandler.RootProxyTextInfo
 
 	def turnPage(self,previous=False):
+		# When in a page turn, Kindle  fires focus on the new page in the table of contents treeview.
+		# We must ignore this focus event as it is a hinderance to a screen reader user while reading the book.
 		try:
 			self.rootNVDAObject.appModule.inPageTurn=True
 			return self.rootNVDAObject.turnPage(previous=previous)
@@ -120,6 +122,8 @@ class BookPageView(DocumentWithPageTurns,IAccessible):
 class PageTurnFocusIgnorer(IAccessible):
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# When in a page turn, Kindle  fires focus on the new page in the table of contents treeview.
+		# We must ignore this focus event as it is a hinderance to a screen reader user while reading the book.
 		if self.appModule.inPageTurn:
 			return False
 		return super(PageTurnFocusIgnorer,self).shouldAllowIAccessibleFocusEvent
