@@ -538,8 +538,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
+		elif isinstance(position,WordDocumentTextInfo):
+			# copying from one textInfo to another
+			self._rangeObj=position._rangeObj.duplicate
 		else:
 			raise NotImplementedError("position: %s"%position)
+
 
 	def getTextWithFields(self,formatConfig=None):
 		if self.isCollapsed: return []

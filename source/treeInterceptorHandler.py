@@ -146,11 +146,13 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def __init__(self,obj,position,**kwargs):
 		super(RootProxyTextInfo,self).__init__(obj,position)
-		self.InnerTextInfoClass=self.obj.rootNVDAObject.TextInfo
 		if isinstance(position,self.InnerTextInfoClass):
 			self.innerTextInfo=position
 		else:
 			self.innerTextInfo=self.InnerTextInfoClass(obj.rootNVDAObject,position,**kwargs)
+
+	def _get_InnerTextInfoClass(self):
+		return self.obj.rootNVDAObject.TextInfo
 
 	def copy(self):
 		innerCopy=self.innerTextInfo.copy()
