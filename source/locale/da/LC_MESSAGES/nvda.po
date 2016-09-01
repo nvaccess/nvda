@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-08-02 11:12-0400\n"
+"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"PO-Revision-Date: 2016-08-27 19:54-0400\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <kontakt@nvda.dk>\n"
 "Language: da_DK\n"
@@ -2966,6 +2966,18 @@ msgid ""
 msgstr ""
 "Skifter til forrige læsetilstand (objekt, tekst eller skærm) og placerer "
 "læsemarkøren på positionen for navigeringsobjektet"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Simpel læsetilstand fra"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Simpel læsetilstand til"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Slår simpel læsetilstand til og fra"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -7416,31 +7428,31 @@ msgstr "omvendt diagonal stribe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "12.5% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "25% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "50% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "75% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "6.25% grå"
 
@@ -7507,10 +7519,6 @@ msgstr "Lineær graduering"
 msgid "rectangular gradient"
 msgstr "rektangulær graduering"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Denne celle kan ikke redigeres"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Liste over forskellige typer elementer i dette ark"
@@ -7529,6 +7537,11 @@ msgstr "K&ommentarer"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Formler"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Formularfelter"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8652,6 +8665,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Denne celle kan ikke redigeres"
 
 #~ msgid "checker"
 #~ msgstr "Skaktern"
