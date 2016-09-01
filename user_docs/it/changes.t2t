@@ -9,6 +9,7 @@ Le principali caratteristiche di questa versione si focalizzano sulla possibilit
 == Novità ==
 - è possibile utilizzare la modalità navigazione per leggere i documenti pdf con il Browser Microsoft Edge in Windows10 Anniversary Update (#5740)
 - Implementato l'annuncio del barrato e del doppio barrato in Microsoft Word. (#5800)
+- In Microsoft Word, viene annunciato correttamente il titolo di una tabella se ne è stato assegnato uno. Se esiste una descrizione, può essere letta utilizzando il comando di lettura long description (NVDA+d) in modalità navigazione. (#5943)
 - In Microsoft Word, NVDA ora è in grado di annunciare le informazioni sulla posizione quando ci si sposta per paragrafi (alt-shift-freccia su/giù). (#5945)
 - In Microsoft Word, NVDA è in grado di annunciare la spaziatura righe, configurabile dalle impostazioni formato documento, e ascoltabile con la solita combinazione NVDA-f. Questo sia quando ci si sposta semplicemente con le frecce, sia quando si modifica la spaziatura righe con i tasti rapidi di Microsoft Word. (#2961)
 - In Internet Explorer, vengono riconosciuti i documenti con struttura HTML5. (#5591)
@@ -51,6 +52,7 @@ Le principali caratteristiche di questa versione si focalizzano sulla possibilit
 - Se viene attivata la lettura dei numeri di riga nelle impostazioni formattazione documento di NVDA, i numeri di riga vengono mostrati anche sulle barre braille. (#5941)
 - Quando la modalità voce è spenta, comandi come NVDA+tab per la lettura del focus vengono visualizzati correttamente nel visualizzatore sintesi vocale. (#6049)
 - Nell'elenco messaggi di Outlook 2016, non vengono più annunciate informazioni associate con le bozze. (#6219)
+- Nel browser Google Chrome, NVDA sarà in grado di funzionare anche quando la lingua del browser è diversa dall'inglese, sebbene questo bug non sia da attribuire a NVDA. (#6249)
 
 
 == Cambiamenti per sviluppatori (in inglese)==
