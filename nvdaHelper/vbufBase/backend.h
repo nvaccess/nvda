@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2007-2016 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -37,7 +37,7 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 /**
  * A callback to manage Initialize and termination of code in the render thread of backends.
  */
-	static LRESULT CALLBACK renderThread_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK renderThread_getMessageHook(int code, WPARAM wParam, LPARAM lParam);
 static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
 
 /**

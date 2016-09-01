@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2007-2016 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -36,11 +36,17 @@ void VBufBackend_t::initialize() {
 	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);
-	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
-	LOG_DEBUG(L"Registered hook, sending message...");
-	SendMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadInitialize,(WPARAM)this,0);
-	LOG_DEBUG(L"Message sent, unregistering hook");
-	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
+	// Using SendMessage here causes outgoing cross-process COM calls to fail with RPC_E_CANTCALLOUT_ININPUTSYNCCALL,
+	// which breaks us for Firefox multi-process. See Mozilla bug 1297549 comment 14.
+	// Use PostMessage instead.
+	registerWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
+	LOG_DEBUG(L"Registered hook, posting message...");
+	HANDLE event=CreateEvent(NULL,TRUE,FALSE,NULL);
+	PostMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadInitialize,(WPARAM)this,(LPARAM)event);
+	LOG_DEBUG(L"Waiting on event for completion");
+	WaitForSingleObject(event,INFINITE);
+	LOG_DEBUG(L"Completed, unregistering hook");
+	unregisterWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
 }
 
 void VBufBackend_t::forceUpdate() {
@@ -66,15 +72,17 @@ LRESULT CALLBACK VBufBackend_t::destroy_callWndProcHook(int code, WPARAM wParam,
 	return 0;
 }
 
-LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
-	if((pcwp->message==wmRenderThreadInitialize)) {
-		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<pcwp->wParam);
-		((VBufBackend_t*)(pcwp->wParam))->renderThread_initialize();
-	} else if((pcwp->message==wmRenderThreadTerminate)) {
-		LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<pcwp->wParam);
-		((VBufBackend_t*)(pcwp->wParam))->renderThread_terminate();
+LRESULT CALLBACK VBufBackend_t::renderThread_getMessageHook(int code, WPARAM wParam,LPARAM lParam) {
+	MSG* pmsg=(MSG*)lParam;
+	if(pmsg->message==wmRenderThreadInitialize) {
+		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<pmsg->wParam);
+		((VBufBackend_t*)(pmsg->wParam))->renderThread_initialize();
+	} else if((pmsg->message==wmRenderThreadTerminate)) {
+		LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<pmsg->wParam);
+		((VBufBackend_t*)(pmsg->wParam))->renderThread_terminate();
 	}
+	LOG_DEBUG(L"Signalling completion using event");
+	SetEvent((HANDLE)pmsg->lParam);
 	return 0;
 }
 
@@ -242,11 +250,14 @@ void VBufBackend_t::terminate() {
 		LOG_DEBUG(L"Render thread not terminated yet");
 		int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 		LOG_DEBUG(L"render threadID "<<renderThreadID);
-		registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
-		LOG_DEBUG(L"Registered hook, sending message...");
-		SendMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadTerminate,(WPARAM)this,0);
-		LOG_DEBUG(L"Message sent, unregistering hook");
-		unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
+		registerWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
+		LOG_DEBUG(L"Registered hook, posting message...");
+		HANDLE event=CreateEvent(NULL,TRUE,FALSE,NULL);
+		PostMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadTerminate,(WPARAM)this,(LPARAM)event);
+		LOG_DEBUG(L"Waiting on event for completion");
+		WaitForSingleObject(event,INFINITE);
+		LOG_DEBUG(L"Completed, unregistering hook");
+		unregisterWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
 	} else {
 		LOG_DEBUG(L"render thread already terminated");
 	}
