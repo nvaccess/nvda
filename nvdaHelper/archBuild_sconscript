@@ -65,6 +65,19 @@ env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we h
 
 Export('env')
 
+import versionInfo
+projectRCSubstDict={
+	'%version_year%':env['version_year'],
+	'%version_major%':env['version_major'],
+	'%version_minor%':env['version_minor'],
+	'%version_build%':env['version_build'],
+	'%copyright%':env['copyright'],
+	'%publisher%':env['publisher'],
+	'%version%':env['version'],
+	'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
+}
+env['projectResFile']=env.RES(env.Substfile('nvda.rc.subst',SUBST_DICT=projectRCSubstDict))
+
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 Export('acrobatAccessRPCStubs')
 if TARGET_ARCH=='x86':

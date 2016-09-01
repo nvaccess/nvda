@@ -20,6 +20,7 @@ Import([
 webKitBackendLib=env.SharedLibrary(
 	target="VBufBackend_webKit",
 	source=[
+		env['projectResFile'],
 		"webKit.cpp",
 	],
 	LIBS=[

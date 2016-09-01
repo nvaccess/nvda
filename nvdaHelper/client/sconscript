@@ -33,6 +33,7 @@ clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' els
 clientLib=env.SharedLibrary(
 	target=clientLibName,
 	source=[
+		env['projectResFile'],
 		"client.cpp",
 		winIPCUtilsObj,
 		controllerRPCClientSource,
