@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Guia d'usuari 
+NVDA NVDA_VERSION Guia d'usuari 
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -574,6 +574,10 @@ Quan vulguis tornar al document, simplement prem la tecla Escapada.
 NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, per facilitar algunes tasques o per donar accés a funcionalitats que altrament no serien accessibles als usuaris de lectors de pantalla.
 
 ++ Microsoft Word ++
+NVDA pot anunciar automàticament els encapçalaments de files i columnes apropiades en navegar per les taules del Microsoft Word.
+Això requereix, en primer lloc, que l'opció d'informar sobre els encapçalaments de la fila / columna de les taules en el diàleg de formatació de documents estigui activada.
+En segon lloc, NVDA necessita conèixer quina fila o columna conté els encapçalaments de la taula.
+Desprès de moure't a la primera cel·la en la columna o fila que conté els encapçalaments, utilitza una de les ordres següents:
 %kc:beginInclude
 || Nom | Tecla | Descripció |
 | Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari que es troba a la posició del cursor del sistema. | 
@@ -581,7 +585,34 @@ NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, pe
 | Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous entre les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament. | 
 %kc:endInclude
 
+Aquestes configuracions es poden emmagatzemar en els documents com a marcadors, compatibles amb altres lectors de pantalla com ara el Jaws. Això vol dir que altres usuraris del lector de pantalla que obrin aquest llibre més endavant, tindran configurats automàticament els encapçalaments de les files i columnes.
+
++++ Mode de navegació en el Microsoft Word +++
+
+%kc:beginInclude
+Per activar i desactivar el mode de navegació al Microsoft Word, prem NVDA+barra espaiadora.
+%kc:endInclude
+Per saber-ne més sobre el mode de navegació i la navegació ràpida, vegeu la [secció mode de navegació #BrowseMode].
+
+++++ La llista d'elements ++++
+%kc:beginInclude
+Mentre estiguis en el mode de navegació en el Microsoft Word, pots accedir a la llista d'elements prement NVDA+f7.
+%kc:endInclude
+La llista d'elements pot llistar encapçalaments, enllaços i anotacions (que inclouen comentaris i seguiment de canvis).
+
++++ Informar dels comentaris +++
+%kc:beginInclude
+Per informar sobre els comentaris en la posició actual del cursor, prem NVDA+alt+c.
+%kc:endInclude
+Tots els comentaris del document incloent-hi altres seguiment de canvis també poden ser llistats en la llista d'elements del NVDA en seleccionar les anotacions com a tipus.
+
 ++ Microsoft Excel ++
+
++++ Lectura automàtica dels encapçalaments de columnes i files +++
+NVDA pot anunciar automàticament els encapçalaments de les files i columnes apropiades al navegar pels fulls de l'Excel.
+Això requereix, primer de tot, activar l'opció Informa dels encapçalaments de files / columnes del diàleg Formatació del document del NVDA.
+En segon lloc, NVDA necessita conèixer quina fila o columna conté els encapçalaments.
+Desprès de moure't a la primera cel·la en la columna o fila que conté els encapçalaments, utilitza una de les ordres següents:
 %kc:beginInclude
 || Nom | Tecla | Descripció |
 | Estableix com a encapçalament de columna | NVDA+Maj+c | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la fila que conté encapçalaments de columna, i així ho hauria d'anunciar automàticament quan et mous entre les columnes sota aquesta fila. Si prems dos cops, deixa de ser l’encapçalament. | 
@@ -589,6 +620,40 @@ NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, pe
 | Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari de la cel·la actual, si és que n'hi ha. | 
 | Diàleg de llista d'elements | NVDA+f7 | Obre el Diàleg de llista d'elements i mostra gràfics, cel·les amb comentaris, cel·les amb fòrmules, o fulls. |
 %kc:endInclude
+Aquesta configuració es pot desar al llibre com un nom de rangs definit, i és compatible amb altres lectors de pantalla com ara el Jaws. Això vol dir que altres usuraris del lector de pantalla que obrin aquest llibre més endavant, tindran configurats automàticament els encapçalaments de les files i columnes.
+
++++ La llista d'elements +++
+
+D'una manera similar al web, NVDA té una llista d'elements per al Microsoft Excel que et permet llistar i accedir a diferents tipus d'informació.
+%kc:beginInclude
+Per accedir a la llista d'elements de l'Excel, prem NVDA+f7.
+%kc:endInclude
+Els tipus d'informació disponibles a la llista d'elements són:
+- Gràfic: la llista de tots els gràfics al llibre.
+Seleccionant un gràfic i prement la tecla d'inserció o movent-te al botó fa que el gràfic rebi el focus per navegar i llegir amb les tecles de direcció.
+- Comentari: la llista de totes les cel·les en el llibre que contenen comentaris.
+L'adreça de la cel·la amb els comentaris es mostra per cadascuna de les cel·les.
+Prémer la tecla d'inserció o movent-te al botó en un comentari llistat et mourà automàticament a aquesta cel·la. 
+- Fórmula: la llista de totes les cel·les en el llibre que contenen una fórmula.
+L'adreça de la cel·la amb la seva fórmula es mostra per cadascuna de les cel·les.
+Prémer la tecla d'inserció o moure't al botó en una fórmula llistada et mourà directament a aquesta cel·la. 
+- Full: la llista de tots els fulls en el llibre. 
+Prémer f2 en un full llistat permet reanomenar-lo.
+Prémer la tecla d'inserció o moure't al botó en el full llistat et permet moure't a aquest full.
+-
+
++++ Informar dels comentaris +++
+%kc:beginInclude
+Per informar sobre els comentaris de la cel·la que té el focus, prem NVDA+alt+c.
+%kc:endInclude
+Tots els comentaris del llibre també poden ser llistats a la llista d'elements del NVDA.
+
++++ Lectura de les cel·les protegides +++
+Si un llibre està protegit, no serà possible moure el focus a les cel·les bloquejades per a l'edició.
+%kc:beginInclude
+Per poder moure't a cel·les bloquejades, canvia al mode de navegació prement NVDA+Barra espaiadora, i desprès utilitza les ordres de moviments estàndards de l'Excel com ara les fletxes de direcció, per moure't al voltant de totes les cel·les del full de càlcul actual.
+%kc:endInclude
+
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
