@@ -796,9 +796,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 		}
-		const auto pageNumberField = currentFields.getEndOfPageNumberFieldAtIndex(chunkEndOffset);
-		if(pageNumberField){
-			chunkEndOffset = *pageNumberField;
+		const auto pageNumFieldEndIndexOptional = currentFields.getEndOfPageNumberFieldAtIndex(chunkEndOffset);
+		if(pageNumFieldEndIndexOptional){
+			chunkEndOffset = *pageNumFieldEndIndexOptional;
 			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,chunkEndOffset);
 		}
 
