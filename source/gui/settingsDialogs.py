@@ -1635,26 +1635,25 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer.Add(self.symbolsList)
 		settingsSizer.Add(sizer)
 
-		# Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
+		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change selected symbol")), wx.VERTICAL)
 
-		# Used to ensure that event handlers call Skip(). In the case of handling EVT_KILL_FOCUS, not calling skip can 
-		# cause focus problems for controls. More generally the advice on the wx documentation is: "In general, it is 
-		# recommended to skip all non-command events to allow the default handling to take place. The command events are,
-		# however, normally not skipped as usually a single command such as a button click or menu item selection must 
-		# only be processed by one handler."
-		def SkipEventAndCall(some_func):
-			def WrapWithEventSkip(event):
+		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More 
+		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
+		# to allow the default handling to take place. The command events are, however, normally not skipped as usually 
+		# a single command such as a button click or menu item selection must only be processed by one handler."
+		def skipEventAndCall(handler):
+			def wrapWithEventSkip(event):
 				if event:
 					event.Skip()
-				return some_func()
-			return WrapWithEventSkip
+				return handler()
+			return wrapWithEventSkip
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
 		self.replacementEdit = wx.TextCtrl(self, wx.ID_ANY)
-		self.replacementEdit.Bind(wx.EVT_TEXT, SkipEventAndCall(self.onSymbolEdited))
+		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 		sizer.Add(self.replacementEdit)
 		changeSizer.Add(sizer)
 
@@ -1664,7 +1663,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[
 			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
-		self.levelList.Bind(wx.EVT_CHOICE, SkipEventAndCall(self.onSymbolEdited))
+		self.levelList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
 
@@ -1674,7 +1673,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
 		self.preserveList = wx.Choice(self, wx.ID_ANY,choices=[
 			symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES])
-		self.preserveList.Bind(wx.EVT_CHOICE, SkipEventAndCall(self.onSymbolEdited))
+		self.preserveList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 		sizer.Add(self.preserveList)
 		changeSizer.Add(sizer)
 
