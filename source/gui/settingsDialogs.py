@@ -34,6 +34,7 @@ try:
 except RuntimeError:
 	updateCheck = None
 import inputCore
+import nvdaControls
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -1600,8 +1601,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label for symbols list in symbol pronunciation dialog.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
-		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols:")))
+		self.symbolsList = nvdaControls.AutoWidthColumnListCtrl(self, wx.ID_ANY, autoSizeColumnIndex=0, style=wx.LC_REPORT | wx.LC_SINGLE_SEL )
 		# Translators: The label for a column in symbols list used to identify a symbol.
 		self.symbolsList.InsertColumn(0, _("Symbol"))
 		self.symbolsList.InsertColumn(1, _("Replacement"))
