@@ -216,8 +216,6 @@ confspec = ConfigObj(StringIO(
 [update]
 	autoCheck = boolean(default=true)
 	startupNotification = boolean(default=true)
-	storeUpdatesDir = string(default="")
-	keepUpdatesFor = integer(default=0)
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
@@ -438,7 +436,7 @@ def _setSystemConfig(fromPath):
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
-			if f.startswith("nvda_update_") and f.endswith(".exe"):
+			if f.endswith(".exe"):
 				continue
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(curDestDir,f)

@@ -728,7 +728,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ==== Show exit options when exiting NVDA ====
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
 When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with addons disabled or Run pending updates (if any).
-When unchecked, NVDA will exit directly. In that case, you will have the option of Running pending updates from the next to last option in the NVDA menu with the same name as the combo box item.
+When unchecked, NVDA will exit immediately.
 
 ==== Play sounds when starting or exiting NVDA ====
 This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
@@ -755,19 +755,9 @@ This option is only available for installed copies of NVDA.
 If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
 You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
 
-==== Notify me for pending updates on startup ====
-If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the option to install it.
-You can also manually run the pending update from the Exit NVDA dialog (if enabled, or from NVDA menu otherwise), or when you perform a new check.
-
-==== Store updates in ====
-This is an edit field with a browse button next to it where you can tell NVDA where to store its updates that have not been installed yet.
-There is also a button called "Use default" for reverting this setting to its defaults, which is a folder called updates under the folder with your user configuration.
-If there are update files which have been stored in this folder and you change it - they will be moved to the new location.
-
-==== Keep downloaded updates for ====
-This field allows you to determin how long the downloaded updates should be kept (in days).
-All update files which have been installed and are older than that period will be removed .
-Default is 0, which meens that update files will be deleted right after installation.
+==== Notify for pending updates on startup ====
+If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
+You can also manually run the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Hel pmenu.
 
 +++ Synthesizer Selection (NVDA+control+s) +++
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.

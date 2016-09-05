@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Zahari Yurukov, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -198,13 +198,13 @@ class MainFrame(wx.Frame):
 		if updateCheck and updateCheck.isPendingUpdate():
 			updateCheck.executeUpdate()
 
-	def onUpdatePendingUpdatesMenuItemCommand(self, evt):
+	def onUpdatePendingUpdateMenuItemCommand(self, evt):
 		try:
-			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.runPendingUpdatesMenuItem)
+			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.runPendingUpdateMenuItem)
 		except:
 			pass
-		if not config.conf["general"]["askToExit"] and updateCheck and updateCheck.isPendingUpdate():
-			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.menu.GetMenuItemCount()-2,self.sysTrayIcon.runPendingUpdatesMenuItem)
+		if updateCheck and updateCheck.isPendingUpdate():
+			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.menu.GetMenuItemCount()-2,self.sysTrayIcon.runPendingUpdateMenuItem)
 
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
@@ -464,10 +464,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
-			# Translators: The label for the menu item to run pending updates.
-			item = self.runPendingUpdatesMenuItem = self.menu.Append(wx.ID_ANY, _("Run pending updates"), _("Start previously downloaded updates, which are still not applyed"))
+			# Translators: The label for the menu item to run a pending update.
+			item = self.runPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY, _("Run pending &update"), _("Execute a previously downloaded NVDA update"))
 			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
-			self.Bind(wx.EVT_UPDATE_UI, frame.onUpdatePendingUpdatesMenuItemCommand, item)
+			self.Bind(wx.EVT_UPDATE_UI, frame.onUpdatePendingUpdateMenuItemCommand, item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
@@ -742,12 +742,11 @@ class ExitDialog(wx.Dialog):
 		# Translators: An option in the combo box to choose exit action.
 		_("Restart"),
 		# Translators: An option in the combo box to choose exit action.
-		_("Restart with addons disabled")]
+		_("Restart with add-ons disabled")]
 		if updateCheck and updateCheck.isPendingUpdate():
 			# Translators: An option in the combo box to choose exit action.
-			self.actions.append(_("Run pending updates"))
-		# Translators: A combo box to choose exit action (possible options are exit, restart, restart with addons disabled).
-		self.actionsList=wx.Choice(self,actionsListID,name=_("Action"),choices=self.actions)
+			self.actions.append(_("Run pending update"))
+		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
 		self.actionsList.SetSelection(0)
 		actionSizer.Add(self.actionsList)
 		mainSizer.Add(actionSizer,border=10,flag=wx.CENTER)
