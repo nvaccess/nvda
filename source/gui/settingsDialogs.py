@@ -1048,7 +1048,7 @@ class DocumentFormattingDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Announce formatting changes after the cursor (can cause a lag)"))
+		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report formatting changes after the cursor (can cause a lag)"))
 		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
 		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
