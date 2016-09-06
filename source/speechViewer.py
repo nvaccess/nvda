@@ -74,12 +74,19 @@ class SpeechViewerFrame(wx.Dialog):
 		config.conf["speechViewer"]["autoPositionWindow"] = False
 
 _guiFrame=None
+_onActiveChanged = lambda isNowActive: None
 isActive=False
 
-def activate():
-	global _guiFrame, isActive
+def activate(onActiveChanged = lambda isNowActive: None):
+	"""
+		Function to call to trigger the speech viewer window to open.
+		onActiveChanged - function object that takes a boolean which is true if the speechviewer is active or false if it is no longer active.
+	"""
+	global _guiFrame, _onActiveChanged, isActive
+	_onActiveChanged = onActiveChanged
 	_guiFrame = SpeechViewerFrame(_cleanup)
 	isActive=True
+	_onActiveChanged(isActive)
 
 def appendText(text):
 	if not isActive:
@@ -93,10 +100,11 @@ def appendText(text):
 	_guiFrame.textCtrl.AppendText(text + "\n")
 
 def _cleanup():
-	global _guiFrame, isActive
+	global _guiFrame, _onActiveChanged, isActive
 	if not isActive:
 		return
 	isActive=False
+	_onActiveChanged(isActive)
 	_guiFrame = None
 
 def deactivate():
