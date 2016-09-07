@@ -189,7 +189,7 @@ class EdgeTextInfo(UIATextInfo):
 				break
 			if parentElement is not enclosingElement:
 				try:
-					obj=UIA(UIAElement=parentElement)
+					obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
 					field=self._getControlFieldForObject(obj)
 				except LookupError:
 					log.debug("Failed to fetch controlField data for parentElement. Breaking")

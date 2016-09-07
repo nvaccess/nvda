@@ -334,7 +334,7 @@ class UIATextInfo(textInfos.TextInfo):
 			startOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,parentRange,UIAHandler.TextPatternRangeEndpoint_Start)<=0
 			endOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)>=0
 			try:
-				obj=UIA(UIAElement=parentElement)
+				obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
 				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
 			except LookupError:
 				log.debug("Failed to fetch controlField data for parentElement. Breaking")
@@ -500,7 +500,7 @@ class UIA(Window):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
-			elif isinstance(self.parent,edge.EdgeHTMLRootContainer):
+			elif self.UIATextPattern and isinstance(self.parent,edge.EdgeHTMLRootContainer):
 				clsList.append(edge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
 				clsList.append(edge.EdgeList)
