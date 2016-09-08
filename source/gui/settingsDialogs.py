@@ -423,8 +423,8 @@ class VoiceSettingsSlider(wx.Slider):
 class VoiceSettingsDialog(SettingsDialog):
 	#Choices for numbers combo box in Voice settings.
 	DIGIT_CHOICES = [
-		# Translators: Choice in a combo box for speaking numbers by word.
-		_("Words"),
+		# Translators: Choice in a combo box for speaking full numbers.
+		_("Full numbers"),
 		# Translators: Choice in a combo box for speaking numbers as digits.
 		_("Digits"),
 		# Translators: Choice in a combo box for speaking numbers as double digits.
