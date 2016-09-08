@@ -3,6 +3,21 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== Noi funcționalități ==
+- NVDA poate acum să indice indentația rândurilor folosind tonuri. Opțiunea poate fi configurată folosind caseta combinată „Anunță indentație rând cu” din fereastra cu preferințe pentru formatarea documentului din NVDA. (#5906)
+- Suport pentru afișajul braille Orbit Reader 20. (#6007)
+- A fost adăugată o opțiune pentru a deschide monitorul de vorbire la pornirea aplicației. (#5050)
+- La redeschiderea monitorului de vorbire, locația pe ecran și dimensiunile sale vor fi restabilite. (#5050)
+- Câmpurile cu referință încrucișată din Microsoft Word sunt acum tratate ca hiperlink-uri. Acestea sunt raportate ca legături și pot fi activate. (#6102)
+
+
+== Rezolvări defecte ==
+- Corectat o situație rară când ieșirea din NVDA în timp ce monitorul de vorbire este deschis, cauza o eroare. (#5050)
+- Hărțile grafice sunt randate în mod corespunzător în mod navigare în Mozilla Firefox. (#6051)
+
+
 = 2016.3 =
 Caracteristicile principale ale acestei lansări includ abilitatea de a dezactiva add-on-uri în mod individual, suport pentru câmpuri de formular în Microsoft Excel, îmbunătățiri semnificative ale raportării culorilor, corectării și îmbunătățiri asociate mai multor afișaje braille și remedieri și îmbunătățiri ale compatibilității cu Microsoft Word.
 

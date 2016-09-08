@@ -3,6 +3,21 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== neue Funktionen ==
+- NVDA kann Zeileneinrückungen nun auch mit Hilfe von Signaltönen ausgeben. Um dies einzustellen, können Sie die neue Optio Zeileneinrückungen ausgeben durch... in den Einstellungen für Dokumentformatierung verwenden. (#5906)
+- Unterstützung für die Braillezeile Orbit Reader 20. (#6007)
+- Eine neue Option zum Anzeigen des Sprachbetrachters beim Start von NVDA wurde hinzugefügt. (#5050)
+- Position und Größe des Sprachbetrachters wird wiederhergestellt, wenn er erneut geöffnet wird. (#5050)
+- Felder mit Querverweisen in Microsoft Word werden von NVDA als Links angezeigt und können wie solche aktiviert werden. (#6102)
+
+
+== Fehlerkorrekturen ==
+- Ein Fehler wurde protokolliert, wenn beim Beenden von NVDA der Sprachbetrachter angezeigt wird. (#5050)
+- in Firefox werden verweissensitive Grafiken wie erwartet angezeigt. (#6051)
+
+
 = 2016.3 =
 Schwerpunkte dieser Version sind u. a. eine Möglichkeit zum Deaktivieren einzelner Erweiterungen; die Unterstützung von Formularfeldern in Microsoft Excel, Verbesserungen bei der Ansage von Farben und Fehlerkorrekturen bzgl. einiger Braillezeilen sowie Fehlerbehebungen und Verbesserungen an der Unterstützung für Microsoft Word.
 

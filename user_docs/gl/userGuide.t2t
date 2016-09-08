@@ -1232,6 +1232,17 @@ De xeito predeterminado, NVDA detectará o formato na posición do cursor do Sis
  
 Activa esta opción mentres comprobas a lectura de documentos en aplicacións como Microsoft Word, onde o formato sexa importante.
 
+==== Anunciar sangría de liñas con ====
+Esta opción permíteche configurar cómo debe lerse a sangría do comezo das liñas.
+A caixa combinada Anunciar sangría de liñas con ten catro opcións.
+
+- Desactivado: NVDA non tratará a sangría especialmente.
+- Voz: se se seleciona voz, cando a cantidade de sangrado cambie, NVDA falará algo como "doce espazos" ou "catro tabuladores."
+- Tons: se se seleciona Tons, cando a cantidade de sangrado cambie, os tons indican a cantidade de cambios na sangría.
+O ton incrementarase en intensidade para cada espazo, e para o tabulador,incrementarase en intensidade equivalente de 4 espazos.
+- Voz e Tons: esta opción le a sangría usando ambo-los dous métodos de máis arriba.
+-
+
 +++ Diccionarios da Fala +++
 O menú de Diccionarios da fala, (atopado no menú Preferencias) contén diálogos que che permiten controlar o modo no que NVDA pronuncia palabras ou frases particulares. 
 Hai actualmente tres tipos diferentes de diccionarios da fala. 
@@ -1632,6 +1643,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | tecla frecha esquerda | spLeft |
 | tecla frecha dereita | spRight |
 | tecla intro | spEnter |
+| Anunciar data/hora | sp1+sp2 |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicacións) | sp1+sp4 |
 | Tecla windows+b (enfocar a bandexa do sistema) | sp3+sp4 |
@@ -1689,16 +1701,22 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Tecla alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Pantallas braille Baum/Humanware/APH ++
-Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] están soportadas cando se conectan a través do USB ou do bluetooth.
+++ Pantallas braille Baum/Humanware/APH/Orbit ++
+Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] e [Orbit http://www.orbitresearch.com/] están soportadas cando se conectan a través dos portos USB, bluetooth ou serie.
 Estas inclúen:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Algunhas outras pantallas manufacturadas por Baum tamén poderían funcionar, aíndaque non foron probadas.
 
-Se conectas a través do USB outras pantallas diferentes a VarioUltra, Pronto! ou Refreshabraille co modo USB configurado a HID, primeiro debes instalar os controladores USB proporcionados polo fabricante.
+Se conectas a través do USB outras pantallas que non usen HID, primeiro debes instalar os controladores USB proporcionados polo fabricante.
+A VarioUltra e a Pronto! usan HID.
+A Refreshabraille e a Orbit Reader 20 poden usar HID se se configuran apropriadamente.
+
+O modo serie USB da Orbit Reader 20 actualmente só se soporta no Windows 10.
+Xeralmente debería usarse USB HID  no seu lugar.
 
 Seguidamente van as asignacións de teclas para esta pantalla co NVDA.
 Por favor consulta a documentación da pantalla braille para descripcións de onde se poden atopar estas teclas.
