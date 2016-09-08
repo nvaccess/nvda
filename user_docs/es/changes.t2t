@@ -3,6 +3,21 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== Nuevas Características ==
+- NVDA ahora puede indicar la sangría de líneas utilizando tonos. Esto se puede configurar utilizando el cuadro combinado "Anunciar Sangría de Líneas con" en las preferencias del diálogo Formateado de documentos de NVDA. (#5906)
+- Soporte para la pantalla braille Orbit Reader 20 . (#6007)
+- Se ha añadido una opción para abrir la ventana del visualizador de voz al arrancar. (#5050)
+- Al reabrir la ventana del visualizador de voz, la localización y las dimensiones ahora se restaurarán. (#5050)
+- Los campos de referencia cruzada en Microsoft Word ahora se tratan como hipervínculos. Se anuncian como enlaces, y se pueden activar. (#6102)
+
+
+== Corrección de Fallos ==
+- Corregido un extraño problema cuando al salir de  NVDA mientras el visualizador de voz está abierto causa un error. (#5050)
+- Los mapas de imagen ahora se procesan como se esperaba en el modo exploración en Mozilla firefox. (#6051)
+
+
 = 2016.3 =
 Lo reseñable de esta versión incluye la capacidad para deshabilitar complementos individuales; el soporte para campos de formulario en Microsoft Excel; mejoras significativas para el anunciado de colores; correcciones y mejoras relacionadas con varias pantallas braille; y correcciones y mejoras para el soporte de Microsoft Word.
 
