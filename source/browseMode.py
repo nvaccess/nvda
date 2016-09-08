@@ -58,7 +58,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 	They are sorted using min or max (__lt__ should be implemented on the L{QuickNavItem} objects).
 	@param iters: the iterators you want to merge. 
 	@type iters: sequence of iterators that emit L{QuicknavItem} objects.
-	@param direction: the direction these iterators are searching (e.g. next, previuos)
+	@param direction: the direction these iterators are searching (e.g. next, previous)
 	@type direction: string
 	"""
 	finder=min if direction=="next" else max
