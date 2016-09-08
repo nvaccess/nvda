@@ -311,6 +311,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
+		"""Adds a script for the given quick nav item.
+		@param itemType: The type of item, I.E. "heading" "Link" ...
+		@param key: The quick navigation key to bind to the script. Shift is automatically added for the previous item gesture.
+		@param nextDoc: The input help mode string to bind to the script that yields the next quick nav item.
+		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
+		@param prevDoc: The input help mode string to bind to the script that yields the previous quick nav item.
+		@param prevError: The error message if there are no more quick nav items of type itemType in this direction.
+		@param readUnit: The unit (One of the textInfos.UNIT_* constants to read. Defaults to None
+		"""
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
