@@ -281,7 +281,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@type itemType: string
 		@param direction: the direction in which to search (next, previous, up)
 		@ type direction: string
-		@param pos: the position in the document from where to seart the search.
+		@param pos: the position in the document from where to start the search.
 		@type pos: Usually an L{textInfos.TextInfo} 
 		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
 		"""
