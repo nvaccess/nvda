@@ -89,7 +89,7 @@ class QuickNavItem(object):
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
 	label=None #: The label that should represent this item in the Elements list.
-	isAfterSelection=False #: Is this item positioned after the caret in the document? Used by the elements list to plae its own selection.
+	isAfterSelection=False #: Is this item positioned after the caret in the document? Used by the elements list to place its own selection.
 
 	def __init__(self,itemType,document):
 		"""
