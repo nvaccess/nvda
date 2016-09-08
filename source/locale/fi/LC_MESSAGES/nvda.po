@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-09 10:43+0200\n"
+"POT-Creation-Date: 2016-09-02 00:10+1000\n"
+"PO-Revision-Date: 2016-09-01 20:28+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1897,7 +1897,7 @@ msgstr "muokattava, tukee muotoiluja"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
-msgstr "viivain"
+msgstr "viivoitin"
 
 #. Translators: Identifies a scroll pane.
 msgid "scroll pane"
@@ -2396,6 +2396,7 @@ msgid "Mouse"
 msgstr "Hiiri"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Puhe"
 
@@ -2594,11 +2595,11 @@ msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen puhumise
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "Komentonäppäimien puhuminen pois"
+msgstr "Komentonäppäinten puhuminen pois"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "Komentonäppäimien puhuminen käytössä"
+msgstr "Komentonäppäinten puhuminen käytössä"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -2606,7 +2607,7 @@ msgid ""
 "characters"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen, jotka "
-"eivät ole kirjaimia, numeroita eivätkä muita merkkejä"
+"eivät ole kirjaimia, numeroita eivätkä muita merkkejä."
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3334,7 +3335,7 @@ msgstr ""
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
-msgstr "Ei otsikkoa"
+msgstr "Ei nimeä"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3342,13 +3343,13 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"Lukee nykyisen sovelluksen taietualalla olevan ikkunan otsikon. Kahdesti "
+"Lukee nykyisen sovelluksen taietualalla olevan ikkunan nimen. Kahdesti "
 "painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan "
 "leikepöydälle."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Speaks the current foreground object"
-msgstr "Ilmoittaa nykyisen objektin"
+msgstr "Ilmoittaa nykyisen etualalla olevan objektin"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3385,49 +3386,49 @@ msgstr ""
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "dynaamisen sisällön muutoksia ei lueta"
+msgstr "Dynaamisen sisällön muutosten lukeminen pois"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "lue dynaamisen sisällön muutokset"
+msgstr "Dynaamisen sisällön muutosten lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön lukemisen, kuten "
-"uuden tekstin DOS-ikkunoissa"
+"Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön muutosten, kuten DOS-"
+"ikkunoiden uuden tekstin, lukemisen."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "järjestelmäkohdistin ei siirrä tarkastelukohdistinta"
+msgstr "Järjestelmäkohdistin ei siirrä tarkastelukohdistinta"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "järjestelmäkohdistin siirtää tarkastelukohdistinta"
+msgstr "Järjestelmäkohdistin siirtää tarkastelukohdistinta"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä tarkastelukohdistimen siirtämisen "
-"järjestelmäkohdistimen mukaan."
+"järjestelmäkohdistimen mukana."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "kohdistus ei siirrä navigointiobjektia"
+msgstr "Kohdistus ei siirrä navigointiobjektia"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "kohdistus siirtää navigointiobjektia"
+msgstr "Kohdistus siirtää navigointiobjektia"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä navigointiobjektin siirtämisen "
-"kohdistusmuutosten mukaan"
+"kohdistusmuutosten mukana."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -3618,7 +3619,7 @@ msgstr "Pistekohdistin käytössä"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
-msgstr "Ota pistekohdistin käyttöön tai poista se käytöstä"
+msgstr "Ottaa pistekohdistimen käyttöön tai poistaa sen käytöstä."
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
@@ -3631,7 +3632,7 @@ msgstr "Pistekohdistin %s"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
-msgstr "Vaihda pistekohdistimen muotoa"
+msgstr "Vaihda pistekohdistimen muotoa."
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4152,7 +4153,7 @@ msgid "unknown %s"
 msgstr "tuntematon %s"
 
 msgid "on"
-msgstr "päällä"
+msgstr "käytössä"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
@@ -4585,6 +4586,10 @@ msgstr "taulukko jossa {columnCount} saraketta ja {rowCount} riviä"
 
 msgid "NVDA Speech Viewer"
 msgstr "Puheen tarkastelu"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&Näytä Puheen tarkastelu käynnistettäessä"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -5447,8 +5452,8 @@ msgid "ALVA BC640/680 series"
 msgstr "Alva BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -7014,11 +7019,22 @@ msgstr "Lue &sivunumerot"
 msgid "Report line &numbers"
 msgstr "Lue rivi&numerot"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Lue r&ivien sisennykset"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "Ilmaise rivi&en sisennykset:"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "pois"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "äänimerkeillä"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "puheella ja äänimerkeillä"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.

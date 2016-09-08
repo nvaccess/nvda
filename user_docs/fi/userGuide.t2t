@@ -1232,6 +1232,17 @@ NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla
  
 Tämä asetus kannattaa ottaa käyttöön oikoluettaessa asiakirjoja sellaisissa sovelluksissa kuin Microsoft Word, kun muotoilut ovat tärkeitä.
 
+§==== Ilmaise rivien sisennykset ====
+This option allows you to configure how indentation at the beginning of lines is reported.
+The Report line indentation with combo box has four options.
+
+- Off: NVDA will not treat indentation specially.
+- Speech: If speech is selected, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab."
+- Tones: If Tones is selected, when the  amount of  indentation changes, tones indicate the amount of change in indent.
+The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
+- Both Speech and Tones: This option reads indentation using both of the above methods.
+-
+
 +++ Puhesanastot +++
 Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita, joista voidaan muuttaa tapaa, jolla NVDA lausuu tietyt sanat tai ilmaisut.
 Puhesanastoja on kolmea eri tyyppiä.
@@ -1690,16 +1701,22 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Alt+Shift+Sarkain-näppäinyhdistelmä | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH ++
-Useita [Baum http://www.baum.de/cms/en/]-, [HumanWare http://www.humanware.com/]- ja [APH http://www.aph.org/]-pistenäyttöjä tuetaan USB-liitäntää tai bluetoothia käytettäessä.
+++ Baum/Humanware/APH/Orbit ++
+Useita [Baum http://www.baum.de/cms/en/]-, [HumanWare http://www.humanware.com/]-, [APH http://www.aph.org/]- ja [Orbit http://www.orbitresearch.com/]-pistenäyttöjä tuetaan USB:llä, Bluetoothilla tai sarjaportin kautta yhdistettäessä.
 Näitä ovat:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
-Muutkin Baum:in valmistamat pistenäytöt voivat toimia, vaikkei tätä olekaan testattu.
+Muutkin Baum:in valmistamat pistenäytöt voivat toimia, vaikkei niitä olekaan testattu.
 
-Mikäli muut pistenäytöt kuin VarioUltra, Pronto! tai Refreshabraille liitetään tietokoneeseen USB:n kautta ja kun USB-tilaksi on määritetty HID, sinun on ensin asennettava valmistajan toimittamat ajurit.
+Mikäli sellainen pistenäyttö, joka ei käytä HID:tä, yhdistetään tietokoneeseen USB:llä, sinun on ensin asennettava valmistajan toimittamat ajurit.
+VarioUltra ja Pronto! käyttävät HID:tä.
+Refreshabraille ja Orbit Reader 20 voivat käyttää HID:tä, mikäli ne on määritelty siten.
+
+Orbit Reader 20:n USB-sarjaporttitilaa tuetaan tällä hetkellä vain Windows 10:ssä.
+Sen sijaan tulisi tavallisesti käyttää USB-HID:tä.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
