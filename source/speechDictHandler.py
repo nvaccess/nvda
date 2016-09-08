@@ -103,12 +103,13 @@ class SpeechDict(list):
 
 def processNumbers(numberSetting, text):
 	#0: processes default behavior. 1-3: splits on single-triple digits.
+	#Use two spaces instead of one, because some locales use space as thousands separator.
 	if numberSetting == 1:
-		text = RE_SINGLE_DIGITS.sub(r"\1 ", text)
+		text = RE_SINGLE_DIGITS.sub(r"\1  ", text)
 	elif numberSetting == 2:
-		text = RE_DOUBLE_DIGITS.sub(r"\1 ", text)
+		text = RE_DOUBLE_DIGITS.sub(r"\1  ", text)
 	elif numberSetting == 3:
-		text = RE_TRIPLE_DIGITS.sub(r"\1 ", text)
+		text = RE_TRIPLE_DIGITS.sub(r"\1  ", text)
 	return text
 
 
