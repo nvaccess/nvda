@@ -260,7 +260,7 @@ class MainFrame(wx.Frame):
 
 	def onToggleSpeechViewerCommand(self, evt):
 		if not speechViewer.isActive:
-			speechViewer.activate(onActiveChanged = lambda nowActive: self.onSpeechViewerEnabled(nowActive))
+			speechViewer.activate()
 		else:
 			speechViewer.deactivate()
 
