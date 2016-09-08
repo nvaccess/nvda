@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #config\__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited
+#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -82,7 +83,7 @@ confspec = ConfigObj(StringIO(
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
-	readNumbersAs=integer(default=0,min=0,max=3)
+	readNumbersAs = integer(default=0,min=0,max=3)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)

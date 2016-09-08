@@ -35,17 +35,6 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 
-#Choices for numbers combo box in Voice settings.
-
-DIGIT_CHOICES = [
-	# Translators: Choice in a combo box for speaking numbers by word.
-	_("Words"),
-	# Translators: Choice in a combo box for speaking numbers as digits.
-	_("Digits"),
-	# Translators: Choice in a combo box for speaking numbers as double digits.
-	_("Double Digits"),
-	# Translators: Choice in a combo box for speaking numbers as triple digits.
-	_("Triple Digits")]
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -432,6 +421,17 @@ class VoiceSettingsSlider(wx.Slider):
 		self.SetValue(newValue)
 
 class VoiceSettingsDialog(SettingsDialog):
+	#Choices for numbers combo box in Voice settings.
+	DIGIT_CHOICES = [
+		# Translators: Choice in a combo box for speaking numbers by word.
+		_("Words"),
+		# Translators: Choice in a combo box for speaking numbers as digits.
+		_("Digits"),
+		# Translators: Choice in a combo box for speaking numbers as double digits.
+		_("Double digits"),
+		# Translators: Choice in a combo box for speaking numbers as triple digits.
+		_("Triple digits")]
+
 	# Translators: This is the label for the voice settings dialog.
 	title = _("Voice Settings")
 
@@ -544,7 +544,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
 		speakDigitsSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: Label for a combo box for setting how nvda speaks numbers.
-		digitsLabel = wx.StaticText(self, wx.ID_ANY, label=_("Speak &Numbers as"))
+		digitsLabel = wx.StaticText(self, wx.ID_ANY, label=_("Speak &numbers as"))
 		speakDigitsSizer.Add(digitsLabel)
 		self.digitsCombo = wx.Choice(self, wx.NewId(), choices = DIGIT_CHOICES)
 		self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
