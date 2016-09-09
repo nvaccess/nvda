@@ -79,7 +79,6 @@ isActive=False
 def activate():
 	"""
 		Function to call to trigger the speech viewer window to open.
-		onActiveChanged - function object that takes a boolean which is true if the speechviewer is active or false if it is no longer active.
 	"""
 	_setActive(True, SpeechViewerFrame(_cleanup) )
 
