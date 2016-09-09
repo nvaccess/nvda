@@ -3,28 +3,19 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2016.3 = 
-Af væsentlige forbedringer i denne version af NVDA kan nævnes: Muligheden for at deaktivere individuelle tilføjelsesprogrammer, understøttelse for formularfelter i Microsoft Excel, store forbedringer til farvegenkendelse, rettelser og forbedringer til punktdisplays, samt forbedringer og rettelser til understøttelsen af Microsoft Word.
+= 2016.4 = 
 
 == Nye Funktioner ==
-- Gennemsynstilstand kan nu bruges til læsning af PDF-dokumenter i Microsoft Edge. (#5740)
-- Gennemstreget og dobbelt genemstreget er nu annoncéret i Microsoft Word hvis passende. (#5800)
-- Titlen af en tabel vil nu blive rapporteret i Microsoft Word hvis tabellen er navngivet. Hvis der er en tabelbeskrivelse, kan den vises ved brug af kommandoen "Åbn lang beskrivelse" (NVDA+D) i gennemsynstilstand. (#5943)
-- NVDA vil nu rapporterer positionsinformation i Microsoft Word  når du flytter afsnit (alt+skift+pil ned og alt+skift+pil op). (#5945)
-- Linjeafstand i Microsoft Word er nu annoncéret ved brug af "Sig tekstformatering" kommandoen, når dette ændres ved brug af Microsoft Words egne genvejstaster, eller hvis der flyttes med markøren til tekst med en anden linjeafstand. Den sidste mulighed kræver, at indstillingen "Annoncér linjeafstand" er slået til i Dokumentformatering. (#2961)
-- HTML5 strukturelle elementer er nu anerkendte i Internet Explorer. (#5591)
-- Annoncéring af kommentarer (som dem i Microsoft Word) kan nu slåes fra ved brug af checkboksen "Annoncér kommentarer" i indstillingerne for dokumentformatering. (#5108)
-- Styring af tilføjelsesprogrammer: Det er nu muligt at slå individuelle tilføjelsesprogrammer fra. (#3090)
-- Yderligere tastetildelinger er blevet tilføjet for ALVA BC640/680 punktdisplays. (#5206)
-- Der er nu en kommando, der flytter punktdisplay til det aktuelle fokus. Kun ALVA BC640/680 punktdisplay har i øjeblikket en tast tildelt til denne kommando, men denne kommando kan blive tildelt i dialogboksen "Input-bevægelser" hvis ønsket. (#5250)
-- Du kan nu interagere med formularfelter i Microsoft Excel. Du flytter til formularfelterne ved brug af elementlisten eller bogstavnavigation i gennemsynstilstand. (#4953)
-- Du kan nu tildele en bevægelse til at slå simpel læsetilstand til og fra ved brug af dialogen Input-bevægelser. (#6173)
+- NVDA kan nu rapportere linjeindrykning ved brug af toner. Dette kan konfigureres ved brug af combo boksen "Rapporter linjeindrykning med" i dialogen med indstillinger for dokumentformatering. (#5906)
+- Understøttelse for Orbit Reader 20 punktdisplay. (#6007)
+- En indstilling til at åbne talevisning ved opstart er blevet tilføjet. (#5050)
+- Når vinduet med talevisning åbnes, vil placeringen og dimensionerne af vinduet blive gendannet. (#5050)
+- Felter til brug af krydshenvisninger behandles nu som links. De rapporteres som links, og kan blive aktiveret. (#6102)
 
 
 == Ændringer ==
-- NVDA vil nu rapportere farver ved brug af et velforstået farvesæt der består af ni farvenuancer, samt tre skyggefarver med klar- og bleghedsvariationer. Dette er frem for at benytte mere subjektive farvenavne, der muligvis ville være sværer at forstå. (#6029)
-- Fremgangsmåden af tastekombinationen NVDA+f9 og derefter NVDA+f10 er blevet ændret. Disse tastetryk vil nu vælge tekst første gang der trykkes F10. Når F10 trykkes hurtigt (lige efter hinanden) vil teksten kopieres til udklipsholderen. (#4636)
-- Opdaterede eSpeakNG til version Master 11b1a7b (22 June 2016). (#6037)
+- Rettede en sjælden fejl der opstod, når talevisning var åben og NVDA afsluttes. (#5050)
+- Billedmapper gengives nu som forventet i gennemsynstilstand i Mozilla Firefox. (#6051)
 
 
 == Fejlrettelser ==

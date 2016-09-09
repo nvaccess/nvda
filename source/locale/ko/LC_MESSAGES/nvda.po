@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 00:10+1000\n"
-"PO-Revision-Date: 2016-08-22 19:13+0900\n"
+"POT-Creation-Date: 2016-09-02 00:10+1000\n"
+"PO-Revision-Date: 2016-09-05 12:58-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2388,6 +2388,7 @@ msgid "Mouse"
 msgstr "마우스"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "음성 출력"
 
@@ -4517,6 +4518,10 @@ msgstr "테이블: {columnCount} 열, {rowCount} 행"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA 음성 출력 뷰어"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr ""
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "언어 (&L)"
@@ -5335,8 +5340,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH 디스플레이"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit 디스플레이"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -6893,11 +6898,22 @@ msgstr "페이지 알림 (&P)"
 msgid "Report line &numbers"
 msgstr "줄수 알림 (&N)"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
 msgstr "줄 들여쓰기 알림 (&I)"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "출력 않함"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "비프음"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "음성 및 비프음"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
