@@ -3,6 +3,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+"""An appModule for the Windows 10 Mail app"""
+
 import appModuleHandler
 import UIAHandler
 from NVDAObjects.UIA.wordDocument import WordDocument

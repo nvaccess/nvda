@@ -23,16 +23,16 @@ class EdgeTextInfo(UIATextInfo):
 
 	def _normalizeUIARange(self,range):
 		"""Move the start of a UIA text range past any element start character stops."""
-		info=self.copy()
-		info._rangeObj=range
-		tempInfo=info.copy()
-		tempInfo.collapse()
-		while super(EdgeTextInfo,tempInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
-			tempInfo.setEndPoint(info,"startToStart")
-			if tempInfo.text or tempInfo._hasEmbedded():
+		lastCharInfo=self.copy()
+		lastCharInfo._rangeObj=range
+		charInfo=lastCharInfo.copy()
+		charInfo.collapse()
+		while super(EdgeTextInfo,charInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
+			charInfo.setEndPoint(lastCharInfo,"startToStart")
+			if charInfo.text or charInfo._hasEmbedded():
 				break
-			info.setEndPoint(tempInfo,"startToEnd")
-			tempInfo.collapse(True)
+			lastCharInfo.setEndPoint(charInfo,"startToEnd")
+			charInfo.collapse(True)
 
 	def _hasEmbedded(self):
 		"""Is this textInfo positioned on an embedded child?"""

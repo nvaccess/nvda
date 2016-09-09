@@ -22,7 +22,6 @@ class WordDocumentTextInfo(UIATextInfo):
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
-		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and (automationID=='Body' or automationID.startswith('UIA_AutomationId_Word_Content')):
 			return None
 		field=super(WordDocumentTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
@@ -71,22 +70,20 @@ class WordDocumentTextInfo(UIATextInfo):
 		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.
-		# This does not cause a loop, but does cause informatin to be doubled
+		# This does not cause a loop, but does cause information to be doubled
 		# Detect these duplicates and remove them from the generated fields.
-		seenStarts=[]
+		seenStarts=set()
 		pendingRemoves=[]
 		index=0
-		while index<len(fields):
-			field=fields[index]
+		for index,field in enumerate(fields):
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
 				runtimeID=field.field['runtimeID']
-				if any(x==runtimeID for x in seenStarts):
+				if runtimeID in seenStarts:
 					pendingRemoves.append(field.field)
 				else:
-					seenStarts.append(runtimeID)
+					seenStarts.add(runtimeID)
 			elif seenStarts:
-				seenStarts=[]
-			index+=1
+				seenStarts.clear()
 		index=0
 		while index<len(fields):
 			field=fields[index]
@@ -96,19 +93,19 @@ class WordDocumentTextInfo(UIATextInfo):
 				index+=1
 		return fields
 
-class WordDocumentBrowseModeDocument(UIABrowseModeDocument):\
+class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
-		return super(WordDocumentBrowseModeDocument,self).shouldSetFocusToObj(obj)
+		return super(WordBrowseModeDocument,self).shouldSetFocusToObj(obj)
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
-		return super(WordDocumentBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
+		return super(WordBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
 
 	def script_tab(self,gesture):
 		oldBookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
@@ -125,5 +122,5 @@ class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
 
 class WordDocument(WordDocumentNode):
-	treeInterceptorClass=WordDocumentBrowseModeDocument
+	treeInterceptorClass=WordBrowseModeDocument
 	shouldCreateTreeInterceptor=False

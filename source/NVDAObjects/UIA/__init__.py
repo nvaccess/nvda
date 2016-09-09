@@ -33,7 +33,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def _getFormatFieldAtRange(self,range,formatConfig,ignoreMixedValues=False):
 		"""
 		Fetches formatting for the given UI Automation Text range.
-		@ param range: the text range who's formatting should be fetched.
+		@ param range: the text range whos formatting should be fetched.
 		@type range: L{UIAutomation.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
@@ -194,7 +194,7 @@ class UIATextInfo(textInfos.TextInfo):
 		@param endOfNode: True if the control field represents the very end of this object.
 		@type endOfNode: bool
 		@return: The control field for this object
-		@rtype: dict containing NVDA control field data.
+		@rtype: textInfos.ControlField containing NVDA control field data.
 		"""
 		role = obj.role
 		field = textInfos.ControlField()
@@ -213,7 +213,6 @@ class UIATextInfo(textInfos.TextInfo):
 		if not text or text.isspace():
 			field['name']=obj.name
 		field["description"] = obj.description
-		#field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
 			field["table-id"] = 1 # FIXME
@@ -249,7 +248,7 @@ class UIATextInfo(textInfos.TextInfo):
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text such that formatting won't have mixed values.
-		@type List of UI Automation Text Units 
+		@type UIAFormatUnits: List of UI Automation Text Units 
 		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
 		log.debug("_getTextWithFields_text start")
@@ -259,7 +258,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
-					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(UIAFormatUnits)<2)
+					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(UIAFormatUnits)==1)
 				except UIAMixedAttributeError:
 					log.debug("Mixed formatting. Trying higher resolution unit")
 					for subfield in self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits[1:]):
@@ -276,7 +275,7 @@ class UIATextInfo(textInfos.TextInfo):
 		Yields start and end control fields, and text, for the given UI Automation text range.
 		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
 		@type rootElement: L{UIAHandler.IUIAutomation}
-		@param textRange: the UI Automation text range who's content should be fetched.
+		@param textRange: the UI Automation text range whos content should be fetched.
 		@type textRange: L{UIAHandler.IUIAutomation}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
@@ -302,7 +301,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if childElements.length==1:
 				childElement=childElements.getElement(0)
 				if childElement and UIAHandler.handler.clientObject.compareElements(childElement,rootElement):
-					log.debug("Detected embedded child. Handling with _getTextWithFields_embedded")
+					log.debug("Detected embedded child")
 					childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 					recurseChildren=False
 		parentElements=[]
@@ -360,6 +359,7 @@ class UIATextInfo(textInfos.TextInfo):
 		del parentElements
 		log.debug("Yielding balanced fields for textRange")
 		# Move through the text range, collecting text and recursing into children
+		#: This variable is used to   span lengths of plain text between child ranges as we iterate over getChildren
 		tempRange=textRange.clone()
 		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
 		if recurseChildren:

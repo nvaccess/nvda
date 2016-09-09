@@ -721,7 +721,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		if value:
-			props['value']=value
 			props['alwaysReportValue']=field.get('alwaysReportValue',False)
 		text = getBrailleTextForProperties(**props)
 		if role == controlTypes.ROLE_MATH:
