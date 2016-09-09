@@ -99,13 +99,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
 		# Thus we must check getChildren before getEnclosingElement.
-		tempRange=position._rangeObj.clone()
-		tempRange.expandToEnclosingUnit(UIAHandler.TextUnit_Character)
-		children=tempRange.getChildren()
-		if children.length==1:
-			element=children.getElement(0)
-		else:
-			element=position._rangeObj.getEnclosingElement()
+		element=position.UIAElementAtStart
 		element=walker.normalizeElement(element)
 		if element and not UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) and not UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):
 			yield UIATextRangeQuickNavItem(itemType,document,element)
@@ -249,7 +243,10 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				yield UIATextRangeQuickNavItem(itemType,document,curElement)
 
 class UIABrowseModeDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
-	pass
+
+	def _get_UIAElementAtStart(self):
+		return self.innerTextInfo.UIAElementAtStart
+
 
 class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 

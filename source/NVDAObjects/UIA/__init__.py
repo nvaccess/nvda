@@ -156,6 +156,16 @@ class UIATextInfo(textInfos.TextInfo):
 		return bool(self._rangeObj.compare(other._rangeObj))
 
 	def _get_NVDAObjectAtStart(self):
+		e=self.UIAElementAtStart
+		if e:
+			return UIA(UIAElement=e) or self.obj
+		return self.obj
+
+	def _get_UIAElementAtStart(self):
+		"""
+		Fetches the deepest UIA element at the start of the text range.
+		This may be via UIA's getChildren (in the case of embedded controls), or GetEnClosingElement.
+		"""
 		tempInfo=self.copy()
 		tempInfo.collapse()
 		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
@@ -167,7 +177,7 @@ class UIATextInfo(textInfos.TextInfo):
 			child=children.getElement(0)
 		else:
 			child=tempRange.getEnclosingElement()
-		return UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)) or self.obj
+		return child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 
 	def _get_bookmark(self):
 		return self.copy()

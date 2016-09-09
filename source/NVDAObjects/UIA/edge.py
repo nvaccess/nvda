@@ -333,26 +333,9 @@ class EdgeHTMLRootContainer(EdgeNode):
 			return
 		return super(EdgeHTMLRootContainer,self).event_gainFocus()
 
-class EdgeHTMLTreeInterceptorTextInfo(UIABrowseModeDocumentTextInfo):
-
-	def _get_focusableNVDAObjectAtStart(self):
-		# Work around MS Edge bug 8246010
-		obj=self.NVDAObjectAtStart
-		condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_IsKeyboardFocusablePropertyId,True)
-		runtimeID=VARIANT()
-		self.obj.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
-		condition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),condition)
-		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
-		e=walker.normalizeElementBuildCache(obj.UIAElement,UIAHandler.handler.baseCacheRequest)
-		if e:
-			obj=UIA(UIAElement=e)
-			if obj:
-				return obj
-		return self.obj.rootNVDAObject
-
 class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
 
-	TextInfo=EdgeHTMLTreeInterceptorTextInfo
+	TextInfo=UIABrowseModeDocumentTextInfo
 
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
