@@ -1,3 +1,4 @@
+#browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2007-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
@@ -72,7 +73,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 		curValues.append((it,val))
 	# Until all iterators have been used up,
 	# Find the first (minimum or maximum) of all the values,
-	# emit that, and update the list with the next available value for the iterator who's value was emitted.
+	# emit that, and update the list with the next available value for the iterator whose value was emitted.
 	while len(curValues)>0:
 		first=finder(curValues,key=lambda x: x[1])
 		curValues.remove(first)
@@ -313,12 +314,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
 		"""Adds a script for the given quick nav item.
 		@param itemType: The type of item, I.E. "heading" "Link" ...
-		@param key: The quick navigation key to bind to the script. Shift is automatically added for the previous item gesture.
-		@param nextDoc: The input help mode string to bind to the script that yields the next quick nav item.
+		@param key: The quick navigation key to bind to the script. Shift is automatically added for the previous item gesture. E.G. h for heading
+		@param nextDoc: The command description to bind to the script that yields the next quick nav item.
 		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
-		@param prevDoc: The input help mode string to bind to the script that yields the previous quick nav item.
+		@param prevDoc: The command description to bind to the script that yields the previous quick nav item.
 		@param prevError: The error message if there are no more quick nav items of type itemType in this direction.
-		@param readUnit: The unit (One of the textInfos.UNIT_* constants to read. Defaults to None
+		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item. 
+			For example, only the line is read when moving to tables to avoid reading a potentially massive table. 
+			If None, the entire item will be announced.
 		"""
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
