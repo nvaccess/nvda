@@ -710,7 +710,10 @@ class ExitDialog(wx.Dialog):
 		ExitDialog._instance = weakref.ref(self)
 		# Translators: The title of the dialog to exit NVDA
 		super(ExitDialog, self).__init__(parent, title=_("Exit NVDA"))
+		dialog = self
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		contentSizerHelper = guiHelper.BoxSizerHelper(wx.VERTICAL)
 
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
@@ -718,10 +721,8 @@ class ExitDialog(wx.Dialog):
 			addonsDisabledLabel=wx.StaticText(self, wx.ID_ANY, label=addonsDisabledText)
 			mainSizer.Add(addonsDisabledLabel)
 
-		actionSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for actions list in the Exit dialog.
-		actionsLabel=wx.StaticText(self,wx.ID_ANY,label=_("What would you like to &do?"))
-		actionsListID=wx.NewId()
+		labelText=_("What would you like to &do?")
 		self.actions = [
 		# Translators: An option in the combo box to choose exit action.
 		_("Exit"),
@@ -729,15 +730,17 @@ class ExitDialog(wx.Dialog):
 		_("Restart"),
 		# Translators: An option in the combo box to choose exit action.
 		_("Restart with add-ons disabled")]
-		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
+		labeledActionList = guiHelper.LabeledControlHelper(dialog, labelText, wx.Choice, choices=self.actions)
+		self.actionsList=labeledActionList.control
 		self.actionsList.SetSelection(0)
+		contentSizerHelper.addAutoSpacedItem(labeledActionList)
 
-		guiHelper.addLabelAndControlToHorizontalSizer(actionSizer, actionsLabel, self.actionsList)
-		guiHelper.addAllContentSizerToMainSizer(mainSizer, actionSizer)
-		guiHelper.addButtonsSizerToMainSizer(mainSizer, self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		contentSizerHelper.addAutoSpacedItem( self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+
+		mainSizer.Add(contentSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.actionsList.SetFocus()

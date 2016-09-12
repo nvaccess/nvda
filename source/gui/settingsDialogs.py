@@ -72,15 +72,17 @@ class SettingsDialog(wx.Dialog):
 		"""
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
-		self.makeSettings(self.settingsSizer)
-		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
+		self.settingsSizerHelper = guiHelper.BoxSizerHelper(wx.VERTICAL)
+		self.settingsSizer=self.settingsSizerHelper.sizer
+		self.makeSettings(self.settingsSizerHelper)
 
-		guiHelper.addAllContentSizerToMainSizer(mainSizer, self.settingsSizer)
+		mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		guiHelper.addButtonsSizerToMainSizer(mainSizer, buttonSizer)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.postInit()
@@ -89,11 +91,11 @@ class SettingsDialog(wx.Dialog):
 	def __del__(self):
 		SettingsDialog._hasInstance=False
 
-	def makeSettings(self, sizer):
+	def makeSettings(self, sizerHelper):
 		"""Populate the dialog with settings controls.
 		Subclasses must override this method.
-		@param sizer: The sizer to which to add the settings controls.
-		@type sizer: wx.Sizer
+		@param sizerHelper: The sizerHelper to which to add the settings controls.
+		@type sizerHelper: guiHelper.BoxSizerHelper
 		"""
 		raise NotImplementedError
 
@@ -131,13 +133,15 @@ class GeneralSettingsDialog(SettingsDialog):
 		(log.DEBUG, _("debug"))
 	)
 
-	def makeSettings(self, settingsSizer):
-		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
+	def makeSettings(self, settingsSizerHelper):
+		self.languageNames = languageHandler.getAvailableLanguages()
+		languageChoices = [x[1] for x in self.languageNames]
 		# Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
-		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take effect):"))
-		self.languageNames=languageHandler.getAvailableLanguages()
+		languageLabelText = _("&Language (requires restart to fully take effect):")
 		# Translators: The list of languages for NVDA.
-		self.languageList=wx.Choice(self,name=_("Language"),choices=[x[1] for x in self.languageNames])
+		languageCtrlName = _("Language")
+		labeledControl=guiHelper.LabeledControlHelper(self, languageLabelText, wx.Choice, name=languageCtrlName, choices=languageChoices)
+		self.languageList = labeledControl.control
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
@@ -145,64 +149,70 @@ class GeneralSettingsDialog(SettingsDialog):
 			self.languageList.SetSelection(index)
 		except:
 			pass
-		guiHelper.addLabelAndControlToHorizontalSizer(languageSizer, languageLabel, self.languageList)
 		if globalVars.appArgs.secure:
 			self.languageList.Disable()
-		itemsToAdd = [languageSizer,]
+		settingsSizerHelper.addAutoSpacedItem(labeledControl)
+
 		# Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
-		self.saveOnExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Save configuration on exit"))
+		self.saveOnExitCheckBox=wx.CheckBox(self,label=_("&Save configuration on exit"))
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
 		if globalVars.appArgs.secure:
 			self.saveOnExitCheckBox.Disable()
-		itemsToAdd.append(self.saveOnExitCheckBox)
+		settingsSizerHelper.addAutoSpacedItem(self.saveOnExitCheckBox)
+
 		# Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
-		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Sho&w exit options when exiting NVDA"))
+		self.askToExitCheckBox=wx.CheckBox(self,label=_("Sho&w exit options when exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
-		itemsToAdd.append(self.askToExitCheckBox)
+		settingsSizerHelper.addAutoSpacedItem(self.askToExitCheckBox)
+
 		# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
-		self.playStartAndExitSoundsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Play sounds when starting or exiting NVDA"))
+		self.playStartAndExitSoundsCheckBox=wx.CheckBox(self,label=_("&Play sounds when starting or exiting NVDA"))
 		self.playStartAndExitSoundsCheckBox.SetValue(config.conf["general"]["playStartAndExitSounds"])
-		itemsToAdd.append(self.playStartAndExitSoundsCheckBox)
-		logLevelSizer=wx.BoxSizer(wx.HORIZONTAL)
+		settingsSizerHelper.addAutoSpacedItem(self.playStartAndExitSoundsCheckBox)
+
 		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
-		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level:"))
+		logLevelLabelText=_("L&ogging level:")
 		# Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-		self.logLevelList=wx.Choice(self,name=_("Log level"),choices=[name for level, name in self.LOG_LEVELS])
+		logLevelChoicesName=_("Log level")
+		logLevelChoices = [name for level, name in self.LOG_LEVELS]
+		labeledControl = guiHelper.LabeledControlHelper(self, logLevelLabelText, wx.Choice, name=logLevelChoicesName, choices=logLevelChoices)
+		self.logLevelList=labeledControl.control
 		curLevel = log.getEffectiveLevel()
 		for index, (level, name) in enumerate(self.LOG_LEVELS):
 			if level == curLevel:
 				self.logLevelList.SetSelection(index)
 				break
 		else:
-			log.debugWarning("Could not set log level list to current log level") 
-		guiHelper.addLabelAndControlToHorizontalSizer(logLevelSizer, logLevelLabel, self.logLevelList)
-		itemsToAdd.append(logLevelSizer)
+			log.debugWarning("Could not set log level list to current log level")
+		settingsSizerHelper.addAutoSpacedItem(labeledControl)
+
 		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-		self.startAfterLogonCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Automatically start NVDA after I log on to Windows"))
+		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("&Automatically start NVDA after I log on to Windows"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
-		itemsToAdd.append(self.startAfterLogonCheckBox)
+		settingsSizerHelper.addAutoSpacedItem(self.startAfterLogonCheckBox)
+
 		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
-		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
+		self.startOnLogonScreenCheckBox = wx.CheckBox(self, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.startOnLogonScreenCheckBox.Disable()
-		itemsToAdd.append(self.startOnLogonScreenCheckBox)
+		settingsSizerHelper.addAutoSpacedItem(self.startOnLogonScreenCheckBox)
+
 		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
-		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
+		self.copySettingsButton= wx.Button(self, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.copySettingsButton.Disable()
-		itemsToAdd.append(self.copySettingsButton)
+		settingsSizerHelper.addAutoSpacedItem(self.copySettingsButton)
 		if updateCheck:
 			# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 			item=self.autoCheckForUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &updates to NVDA"))
 			item.Value=config.conf["update"]["autoCheck"]
 			if globalVars.appArgs.secure:
 				item.Disable()
-			itemsToAdd.append(item)
-		guiHelper.addItemsToSizer(settingsSizer, itemsToAdd)
+			settingsSizerHelper.addAutoSpacedItem(item)
 
 	def postInit(self):
 		self.languageList.SetFocus()
