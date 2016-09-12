@@ -96,6 +96,9 @@ class EdgeTextInfo(UIATextInfo):
 		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
 			field['landmark']=aria.landmarkRoles.get(landmark)
+		# Combo boxes with a text pattern are editable
+		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
+			field['states'].add(controlTypes.STATE_EDITABLE)
 		# Edit controls must expose a name
 		if obj.role==controlTypes.ROLE_EDITABLETEXT:
 			field["name"] = obj.name
