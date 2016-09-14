@@ -8,8 +8,9 @@
 
 import itertools
 import ctypes
-from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD
+from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
 import _winreg as winreg
+import winKernel
 from winKernel import SYSTEMTIME
 import config
 from logHandler import log
@@ -400,6 +401,58 @@ def listUsbDevices(onlyAvailable=True):
 	if _isDebug():
 		log.debug("Finished listing USB devices")
 
+class HIDD_ATTRIBUTES(ctypes.Structure):
+	_fields_ = (
+		("Size", ULONG),
+		("VendorID", USHORT),
+		("ProductID", USHORT),
+		("VersionNumber", USHORT)
+	)
+	def __init__(self, **kwargs):
+		super(HIDD_ATTRIBUTES, self).__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
+
+def _getHidInfo(hwId, path):
+	info = {
+		"hardwareID": hwId,
+		"devicePath": path}
+	hwId = hwId.split("\\", 1)[1]
+	if hwId.startswith("VID"):
+		info["provider"] = "usb"
+		info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
+		return info
+	if not hwId.startswith("{00001124-0000-1000-8000-00805f9b34fb}"): # Not Bluetooth
+		# Unknown provider.
+		info["provider"] = None
+		return info
+	info["provider"] = "bluetooth"
+	# Fetch additional info about the HID device.
+	# This is a bit slow, so we only do it for Bluetooth,
+	# as this info might be necessary to identify Bluetooth devices.
+	from serial.win32 import CreateFile, INVALID_HANDLE_VALUE, FILE_FLAG_OVERLAPPED
+	handle = CreateFile(path, 0,
+		winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE, None,
+		winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+	if handle == INVALID_HANDLE_VALUE:
+		if _isDebug():
+			log.debug(u"Opening device {dev} to get additional info failed: {exc}".format(
+				dev=path, exc=ctypes.WinError()))
+		return info
+	try:
+		attribs = HIDD_ATTRIBUTES()
+		if ctypes.windll.hid.HidD_GetAttributes(handle, ctypes.byref(attribs)):
+			info["vendorID"] = attribs.VendorID
+			info["productID"] = attribs.ProductID
+			info["versionNumber"] = attribs.VersionNumber
+		buf = ctypes.create_unicode_buffer(128)
+		bytes = ctypes.sizeof(buf)
+		if ctypes.windll.hid.HidD_GetManufacturerString(handle, buf, bytes):
+			info["manufacturer"] = buf.value
+		if ctypes.windll.hid.HidD_GetProductString(handle, buf, bytes):
+			info["product"] = buf.value
+	finally:
+		winKernel.closeHandle(handle)
+	return info
+
 _hidGuid = None
 def listHidDevices(onlyAvailable=True):
 	"""List HID devices on the system.
@@ -482,12 +535,7 @@ def listHidDevices(onlyAvailable=True):
 					raise ctypes.WinError()
 			else:
 				hwId = buf.value
-				info = {
-					"hardwareID": hwId,
-					"devicePath": idd.DevicePath}
-				hwId = hwId.split("\\", 1)[1]
-				if hwId.startswith("VID"):
-					info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
+				info = _getHidInfo(hwId, idd.DevicePath)
 				if _isDebug():
 					log.debug("%r" % info)
 				yield info

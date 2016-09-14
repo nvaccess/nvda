@@ -63,10 +63,14 @@ DOT8_KEY = 9
 SPACE_KEY = 10
 
 def _getPorts():
-	# USB HID.
+	# HID.
 	for portInfo in hwPortUtils.listHidDevices():
 		if portInfo.get("usbID") == "VID_1C71&PID_C006":
 			yield "USB HID", portInfo["devicePath"]
+		# In Windows 10, the Bluetooth vendor and product ids don't get recognised.
+		# Use strings instead.
+		elif portInfo.get("manufacturer") == "Humanware" and portInfo.get("product") == "Brailliant HID":
+			yield "Bluetooth HID", portInfo["devicePath"]
 
 	# USB serial.
 	try:
@@ -87,14 +91,14 @@ def _getPorts():
 				except WindowsError:
 					continue
 
-	# Bluetooth.
+	# Bluetooth serial.
 	for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 		try:
 			btName = portInfo["bluetoothName"]
 		except KeyError:
 			continue
 		if btName.startswith("Brailliant B") or btName == "Brailliant 80":
-			yield "bluetooth", portInfo["port"]
+			yield "Bluetooth serial", portInfo["port"]
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailliantB"
@@ -116,7 +120,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 
 		for portType, port in _getPorts():
-			self.isHid = portType == "USB HID"
+			self.isHid = portType.endswith(" HID")
 			# Try talking to the display.
 			try:
 				if self.isHid:
@@ -126,7 +130,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except EnvironmentError:
 				continue
 			if self.isHid:
-				data = self._dev.getFeature(HR_CAPS)
+				try:
+					data = self._dev.getFeature(HR_CAPS)
+				except WindowsError:
+					self._dev.close()
+					continue
 				self.numCells = ord(data[24])
 			else:
 				# This will cause the number of cells to be returned.
