@@ -1321,6 +1321,7 @@ class DictionaryDialog(SettingsDialog):
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
+		self.dictList.Bind(wx.EVT_CHAR, self.onListChar)
 		entriesSizer.Add(self.dictList,proportion=8)
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -1342,6 +1343,16 @@ class DictionaryDialog(SettingsDialog):
 
 	def postInit(self):
 		self.dictList.SetFocus()
+
+	def onListChar(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
+			# Activate the OK button.
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+		else:
+			evt.Skip()
 
 	def onCancel(self,evt):
 		globalVars.speechDictionaryProcessing=True
