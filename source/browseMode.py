@@ -689,32 +689,30 @@ class ElementsListDialog(wx.Dialog):
 		contentsSizer.Add(self.tree,flag=wx.EXPAND)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of an editable text field to filter the elements
 		# in the browse mode Elements List dialog.
-		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
-		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
+		filterText = _("&Filter by:")
+		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
+		self.filterEdit = labeledCtrl.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
-		gui.guiHelper.addLabelAndControlToHorizontalSizer(sizer, label, self.filterEdit)
-		contentsSizer.Add(sizer)
+		contentsSizer.Add(labeledCtrl.sizer)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		bHelper = gui.guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label of a button to activate an element
 		# in the browse mode Elements List dialog.
-		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
+		self.activateButton = bHelper.addButton(self, label=_("&Activate"))
 		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
-		buttonsToAdd = [self.activateButton,]
+		
 		# Translators: The label of a button to move to an element
 		# in the browse mode Elements List dialog.
-		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
+		self.moveButton = bHelper.addButton(self, label=_("&Move to"))
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
-		buttonsToAdd.append(self.moveButton)
-		buttonsToAdd.append(wx.Button(self, wx.ID_CANCEL))
-		gui.guiHelper.addItemsToSizer(sizer, buttonsToAdd, gui.guiHelper.SPACE_BETWEEN_BUTTONS)
-		gui.guiHelper.addButtonsSizerToMainSizer(contentsSizer, sizer)
+		bHelper.addButton(self, id=wx.ID_CANCEL)
 
-		gui.guiHelper.addAllContentSizerToMainSizer(mainSizer, contentsSizer)
+		contentsSizer.Add(bHelper.sizer)
+
+		mainSizer.Add(contentsSizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 

@@ -7,47 +7,6 @@
 
 import wx
 
-# when dialog items are laid out vertically use this much space between them
-SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS = 10
-# put this much space between buttons, vertical or horizontal
-SPACE_BETWEEN_BUTTONS = 7
-
-# put this much space between a label and a control (such as a wx.Choice or wx.TextCtrl) when in a horizontal layout.
-SPACE_BETWEEN_LABEL_CONTROL_HORIZONTAL = 10
-
-def addLabelAndControlToHorizontalSizer(wxSizer, wxLabel, wxControl):
-	''' Add a label and a control (such as a wx.Choice or wx.TextCtrl) to a horizontal layout sizer, with spacers and 
-		alignment set to cater for a horizontal layout.
-	'''
-	wxSizer.Add(wxLabel,flag=wx.ALIGN_CENTER_VERTICAL)
-	wxSizer.AddSpacer(SPACE_BETWEEN_LABEL_CONTROL_HORIZONTAL)
-	wxSizer.Add(wxControl)
-
-
-def addAllContentSizerToMainSizer(wxMainSizer, wxContentSizer):
-	''' Add a sizer containing all the content to the main sizer for the dialog. This ensures that the appropriate 
-		border is added around the content
-	'''
-	Content_BorderSpace = 10
-	wxMainSizer.Add(wxContentSizer,border=Content_BorderSpace,flag=wx.ALL)
-
-def addButtonsSizerToMainSizer(wxMainSizer, wxButtonsSizer):
-	''' Add the given buttons sizer (commonly for OK & Cancel, created with Dialog.CreateButtonSizer) to the main sizer
-		for the dialog. This ensures that the appropriate border is added around the content. The Buttons seem to have a
-		1px border and 4px spacers inserted before and after each button. 
-	'''
-	wxMainSizer.Add(wxButtonsSizer, border=5, flag=wx.ALL)
-
-def addItemsToSizer(wxSizer, itemArray, spaceBetween=SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS):
-	''' Add the array of items to the sizer putting a spacer between each one.
-	'''
-	lastIndex = len(itemArray)-1
-	for i in xrange(0, lastIndex):
-		wxSizer.Add(itemArray[i])
-		wxSizer.AddSpacer(spaceBetween)
-	# don't add a spacer after the last element
-	wxSizer.Add(itemArray[lastIndex])
-
 """ Example usage
 
 class myDialog(class wx.Dialog):
@@ -62,21 +21,21 @@ class myDialog(class wx.Dialog):
 
 		filterElement = guiHelper.LabeledControlHelper(dialog, "Filter:", wx.TextCtrl)
 		symbols = wx.ListCtrl()
-		sHelper.addAutoSpacedItem(guiHelper.associateElement(filterElement, symbols)
+		sHelper.addItem(guiHelper.associateElement(filterElement, symbols)
 
-		sHelper.addAutoSpacedItem(guiHelper.LabeledControlHelper(dialog, "Choose option", wx.Choice, choices=[1,2,3]))
+		sHelper.addItem(guiHelper.LabeledControlHelper(dialog, "Choose option", wx.Choice, choices=[1,2,3]))
 
-		button = sHelper.addAutoSpacedItem( wx.Button("Does stuff"))
+		button = sHelper.addItem( wx.Button("Does stuff"))
 
 		# for general items
-		checkbox = sHelper.addAutoSpacedItem(wx.CheckBox("always do something"))
+		checkbox = sHelper.addItem(wx.CheckBox("always do something"))
 
 		# for groups of buttons
 		buttonGroup = guiHelper.ButtonHelper(wx.VERTICAL)
 		oneButton = buttonHelper.addButton(wx.Button("one"))
 		twoButton = buttonHelper.addButton(wx.Button("one"))
 		threeButton = buttonHelper.addButton(wx.Button("three")
-		sHelper.addAutoSpacedItem(buttonGroup)
+		sHelper.addItem(buttonGroup)
 
 		mainSizer.Add(sHelper.sizer, border=10, flag=wx.ALL)
 		mainSizer.Fit(self)
@@ -101,21 +60,24 @@ SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL = 10
 # put this much space between two vertically associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
 SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL = 3
 
-class ButtonHelper:
+class ButtonHelper(object):
 	def __init__(self, orientation):
-		self.buttonSizer = wx.BoxSizer(orientation)
+		object.__init__(self)
+		self.firstButton = True
+		self.sizer = wx.BoxSizer(orientation)
 		self.space = SPACE_BETWEEN_BUTTONS_HORIZONTAL if orientation is wx.HORIZONTAL else SPACE_BETWEEN_BUTTONS_VERTICALLY
 
 	def addButton(self, *args, **kwargs):
 		wxButton = wx.Button(*args, **kwargs)
-		if not firstButton:
-			self.buttonSizer.AddSpacer(self.space)
-		self.buttonSizer.Add(wxButton)
+		if not self.firstButton:
+			self.sizer.AddSpacer(self.space)
+		self.sizer.Add(wxButton)
+		self.firstButton = False
 		return wxButton
 
 def associateElements( firstElement, secondElement):
 		if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
-			raise NotImplemented("AssociateElements has no implementation for buttonHelper elements")
+			raise NotImplementedError("AssociateElements has no implementation for buttonHelper elements")
 
 		if isinstance(firstElement, LabeledControlHelper):
 			firstElement = firstElement.sizer
@@ -128,45 +90,71 @@ def associateElements( firstElement, secondElement):
 			sizer.Add(firstElement, **kwargs)
 			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 			sizer.Add(secondElement)
-
-		if isinstance(secondElement, (wx.ListCtrl, wx.TextCtrl)):
+		elif isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
 			sizer = wx.BoxSizer(wx.VERTICAL)
 			sizer.Add(firstElement)
 			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 			sizer.Add(secondElement)
+		elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
+			sizer = wx.BoxSizer(wx.HORIZONTAL)
+			sizer.Add(firstElement)
+			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+			sizer.Add(secondElement, flag=wx.ALIGN_CENTER_VERTICAL)
+		else:
+			raise NotImplementedError("The secondElement argument has no implementation")
 
 		return sizer
 
-class LabeledControlHelper:
+class LabeledControlHelper(object):
 	def __init__(self, dialog, labelText, wxCtrlClass, **kwargs):
+		object.__init__(self)
 		self.label = wx.StaticText(dialog, label=labelText)
 		self._ctrl = wxCtrlClass(dialog, **kwargs)
-		self.sizer = associateElements(self.label, self._ctrl)
+		self._sizer = associateElements(self.label, self._ctrl)
 
 	@property
 	def control(self):
 		return self._ctrl
+	@property
+	def sizer(self):
+		return self._sizer
 
-class BoxSizerHelper:
-	def __init__(self, orientation):
-		self.sizer = wx.BoxSizer(orientation)
+class BoxSizerHelper(object):
+	def __init__(self, parent, orientation=None, sizer=None):
+		object.__init__(self)
+		self.parent = parent
 		self.hasFirstItemBeenAdded = False
+		if orientation and sizer:
+			raise ValueError("Supply either orientation OR sizer. Not both.")
+		if orientation and orientation in (wx.VERTICAL, wx.HORIZONTAL):
+			self.sizer = wx.BoxSizer(orientation)
+		elif sizer and isinstance(sizer, wx.BoxSizer):
+			self.sizer = sizer
+		else:
+			ValueError("Orientation OR Sizer must be supplied.")
 
-	def addAutoSpacedItem(self, item):
+	def addItem(self, item):
 		toAdd = item
 		keywordArgs = {}
 		shouldAddSpacer = self.hasFirstItemBeenAdded
 
 		if isinstance(item, ButtonHelper):
 			toAdd = item.sizer
-			keywordArgs.update({'border':buttonBorderAmount, 'flags':wx.ALL})
+			buttonBorderAmount = 5
+			keywordArgs.update({'border':buttonBorderAmount, 'flag':wx.ALL})
 			shouldAddSpacer = False # no need to add a spacer, since the button border has been added.
 
 		if isinstance(item, LabeledControlHelper):
-			toAdd = item.sizer
+			raise NotImplementedError("Use addLabeledControl instead")
 
 		if shouldAddSpacer:
 			self.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		self.sizer.Add(toAdd, **keywordArgs)
 		self.hasFirstItemBeenAdded = True
 		return item
+
+	def addLabeledControl(self, labelText, wxCtrlClass, **kwargs):
+		labeledControl = LabeledControlHelper(self.parent, labelText, wxCtrlClass, **kwargs)
+		self.addItem(labeledControl.sizer)
+		return labeledControl.control
+

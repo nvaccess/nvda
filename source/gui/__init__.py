@@ -713,12 +713,13 @@ class ExitDialog(wx.Dialog):
 		dialog = self
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-		contentSizerHelper = guiHelper.BoxSizerHelper(wx.VERTICAL)
+		contentSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
 			addonsDisabledText = _("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again.")
 			addonsDisabledLabel=wx.StaticText(self, wx.ID_ANY, label=addonsDisabledText)
+			# RTU test here....
 			mainSizer.Add(addonsDisabledLabel)
 
 		# Translators: The label for actions list in the Exit dialog.
@@ -730,12 +731,10 @@ class ExitDialog(wx.Dialog):
 		_("Restart"),
 		# Translators: An option in the combo box to choose exit action.
 		_("Restart with add-ons disabled")]
-		labeledActionList = guiHelper.LabeledControlHelper(dialog, labelText, wx.Choice, choices=self.actions)
-		self.actionsList=labeledActionList.control
+		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
-		contentSizerHelper.addAutoSpacedItem(labeledActionList)
 
-		contentSizerHelper.addAutoSpacedItem( self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		contentSizerHelper.addItem( self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
