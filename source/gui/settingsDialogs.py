@@ -1140,7 +1140,7 @@ class DocumentFormattingDialog(SettingsDialog):
 			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 			_("Off"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-			_("Speech"),
+			pgettext('line indentation setting', "Speech"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 			_("Tones"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
