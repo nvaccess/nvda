@@ -61,68 +61,118 @@ SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL = 10
 SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL = 3
 
 class ButtonHelper(object):
+	""" Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
+	arrangement. This class should be used for groups of buttons. While it wont cause problems to use this class with a
+	single button there is little benefit. Individual buttons can be added directly to a sizer / sizer helper.
+	"""
 	def __init__(self, orientation):
+		"""
+		@param orientation: the orientation for the buttons, either wx.HORIZONTAL or wx.VERTICAL
+		@type itemType: wx.HORIZONTAL or wx.VERTICAL
+		"""
 		object.__init__(self)
-		self.firstButton = True
-		self.sizer = wx.BoxSizer(orientation)
-		self.space = SPACE_BETWEEN_BUTTONS_HORIZONTAL if orientation is wx.HORIZONTAL else SPACE_BETWEEN_BUTTONS_VERTICALLY
+		self._firstButton = True
+		self._sizer = wx.BoxSizer(orientation)
+		self._space = SPACE_BETWEEN_BUTTONS_HORIZONTAL if orientation is wx.HORIZONTAL else SPACE_BETWEEN_BUTTONS_VERTICALLY
+
+	@property
+	def sizer(self):
+		""" Useful if you wish to add this group of buttons to another sizer and provide other arguments 
+		"""
+		return self._sizer
 
 	def addButton(self, *args, **kwargs):
+		""" add another button to the group. Space between the buttons is added automatically.
+			usage hint: 
+				parent = self # a wx window class. EG wx.Dialog
+				myButtonHelper.addButton(dialog, label=_("my new button"))
+			@param args: The formal arguments to pass directly to wx.Button. The only required parameter is 'parent'.
+			@param kwargs: The keyword args passed directly to wx.Button
+		"""
 		wxButton = wx.Button(*args, **kwargs)
-		if not self.firstButton:
-			self.sizer.AddSpacer(self.space)
-		self.sizer.Add(wxButton)
-		self.firstButton = False
+		if not self._firstButton:
+			self._sizer.AddSpacer(self._space)
+		self._sizer.Add(wxButton)
+		self._firstButton = False
 		return wxButton
 
 def associateElements( firstElement, secondElement):
+	""" Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
+		pairings used in the NVDA GUI.
+		Currently handles:
+			wx.StaticText and (wx.Choice or wx.TextCtrl) - Horizontal layout
+			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
+			wx.Button and wx.CheckBox - Horizontal layout
+	"""
 		if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
-			raise NotImplementedError("AssociateElements has no implementation for buttonHelper elements")
+			raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
+		if isinstance(firstElement, LabeledControlHelper) or isinstance(secondElement, LabeledControlHelper)
+			raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
 
-		if isinstance(firstElement, LabeledControlHelper):
-			firstElement = firstElement.sizer
-
-		if isinstance(secondElement, (wx.Choice, wx.TextCtrl)):
+		# staticText and (choice or textCtrl)
+		if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl)):
 			sizer = wx.BoxSizer(wx.HORIZONTAL)
 			kwargs = {}
-			if isinstance(firstElement, wx.StaticText):
-				kwargs.update( {'flag':wx.ALIGN_CENTER_VERTICAL} )
+			kwargs.update( {'flag':wx.ALIGN_CENTER_VERTICAL} )
+			else: raise NotImplementedError("firstElement not supported with secondElement type.")
 			sizer.Add(firstElement, **kwargs)
 			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 			sizer.Add(secondElement)
-		elif isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
+		# staticText and (ListCtrl, ListBox or TreeCtrl)
+		elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
 			sizer = wx.BoxSizer(wx.VERTICAL)
 			sizer.Add(firstElement)
 			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 			sizer.Add(secondElement)
+		# button and checkBox
 		elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
 			sizer = wx.BoxSizer(wx.HORIZONTAL)
 			sizer.Add(firstElement)
 			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 			sizer.Add(secondElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		else:
-			raise NotImplementedError("The secondElement argument has no implementation")
+			raise NotImplementedError("The firstElement and secondElement argument combination has no implementation")
 
 		return sizer
 
 class LabeledControlHelper(object):
-	def __init__(self, dialog, labelText, wxCtrlClass, **kwargs):
+	""" Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
+	the two controls together.
+	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
+	"""
+	def __init__(self, parent, labelText, wxCtrlClass, **kwargs):
+		""" @param parent - An instance of the parent wx window. EG wx.Dialog
+			@param labelText - The text to associate with a wx control.
+			@type labelText - string
+			@param wxCtrlClass - The class to associate with the label, eg: wx.TextCtrl
+			@param kwargs - The keyword arguments used to instantiate the wxCtrlClass
+		"""
 		object.__init__(self)
-		self.label = wx.StaticText(dialog, label=labelText)
-		self._ctrl = wxCtrlClass(dialog, **kwargs)
-		self._sizer = associateElements(self.label, self._ctrl)
+		self._label = wx.StaticText(parent, label=labelText)
+		self._ctrl = wxCtrlClass(parent, **kwargs)
+		self._sizer = associateElements(self._label, self._ctrl)
 
 	@property
 	def control(self):
 		return self._ctrl
+
 	@property
 	def sizer(self):
 		return self._sizer
 
 class BoxSizerHelper(object):
+	""" Used to abstract away spacing logic for a wx.BoxSizer
+	"""
 	def __init__(self, parent, orientation=None, sizer=None):
+	""" Init. Pass in either orientation OR sizer.
+		@param parent - An instance of the parent wx window. EG wx.Dialog
+		@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
+		@type itemType: wx.HORIZONTAL or wx.VERTICAL
+		@param sizer: the sizer to use rather than constructing one.
+		@type sizer: wx.BoxSizer
+	"""
 		object.__init__(self)
-		self.parent = parent
+		self._parent = parent
 		self.hasFirstItemBeenAdded = False
 		if orientation and sizer:
 			raise ValueError("Supply either orientation OR sizer. Not both.")
@@ -134,6 +184,9 @@ class BoxSizerHelper(object):
 			ValueError("Orientation OR Sizer must be supplied.")
 
 	def addItem(self, item):
+		""" Adds an item with space between it and the previous item.
+			Does not handle adding LabledControlHelper, use the convenience method instead.
+		"""
 		toAdd = item
 		keywordArgs = {}
 		shouldAddSpacer = self.hasFirstItemBeenAdded
@@ -154,7 +207,17 @@ class BoxSizerHelper(object):
 		return item
 
 	def addLabeledControl(self, labelText, wxCtrlClass, **kwargs):
-		labeledControl = LabeledControlHelper(self.parent, labelText, wxCtrlClass, **kwargs)
+		""" Convenience method to create a labeled control
+			@param labelText - Text to use when constructing the wx.StaticText to label the control.
+			@type LabelText - String
+			@param wxCtrlClass - Control class to construct and associate with the label
+			@type wxCtrlClass - Some wx control type EG wx.TextCtrl
+			@param kwargs - keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
+
+			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
+			limitations from there.
+		"""
+		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
 		self.addItem(labeledControl.sizer)
 		return labeledControl.control
 
