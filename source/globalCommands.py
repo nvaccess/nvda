@@ -462,20 +462,20 @@ class GlobalCommands(ScriptableObject):
 		lineIndentationSpeech = config.conf["documentFormatting"]["reportLineIndentation"]
 		lineIndentationTones = config.conf["documentFormatting"]["reportLineIndentationWithTones"]
 		if not lineIndentationSpeech and not lineIndentationTones:
-			# Translators: The message announced when cycling through line indentation settings.
+			# Translators: A message reported when cycling through line indentation settings.
 			ui.message(_("Report line indentation with speech"))
 			lineIndentationSpeech = True
 		elif lineIndentationSpeech and not lineIndentationTones:
-			# Translators: The message announced when cycling through line indentation settings.
+			# Translators: A message reported when cycling through line indentation settings.
 			ui.message(_("Report line indentation with tones"))
 			lineIndentationSpeech = False
 			lineIndentationTones = True
 		elif not lineIndentationSpeech and lineIndentationTones:
-			# Translators: The message announced when cycling through line indentation settings.
+			# Translators: A message reported when cycling through line indentation settings.
 			ui.message(_("Report line indentation with speech and tones"))
 			lineIndentationSpeech = True
 		else:
-			# Translators: The message announced when cycling through line indentation settings.
+			# Translators: A message reported when cycling through line indentation settings.
 			ui.message(_("Report line indentation off"))
 			lineIndentationSpeech = False
 			lineIndentationTones = False
