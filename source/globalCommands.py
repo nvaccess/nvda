@@ -462,27 +462,27 @@ class GlobalCommands(ScriptableObject):
 		lineIndentationSpeech = config.conf["documentFormatting"]["reportLineIndentation"]
 		lineIndentationTones = config.conf["documentFormatting"]["reportLineIndentationWithTones"]
 		if not lineIndentationSpeech and not lineIndentationTones:
-			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			ui.message(_("report line indentation with speech"))
+			# Translators: The message announced when cycling through line indentation settings.
+			ui.message(_("Report line indentation with speech"))
 			lineIndentationSpeech = True
 		elif lineIndentationSpeech and not lineIndentationTones:
-			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			ui.message(_("report line indentation with tones"))
+			# Translators: The message announced when cycling through line indentation settings.
+			ui.message(_("Report line indentation with tones"))
 			lineIndentationSpeech = False
 			lineIndentationTones = True
 		elif not lineIndentationSpeech and lineIndentationTones:
-			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			ui.message(_("report line indentation with speech and tones"))
+			# Translators: The message announced when cycling through line indentation settings.
+			ui.message(_("Report line indentation with speech and tones"))
 			lineIndentationSpeech = True
 		else:
-			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			ui.message(_("report line indentation off"))
+			# Translators: The message announced when cycling through line indentation settings.
+			ui.message(_("Report line indentation off"))
 			lineIndentationSpeech = False
 			lineIndentationTones = False
 		config.conf["documentFormatting"]["reportLineIndentation"] = lineIndentationSpeech
 		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = lineIndentationTones
 	# Translators: Input help mode message for toggle report line indentation command.
-	script_toggleReportLineIndentation.__doc__=_("Toggles between speech, tones, speech and tones, and off, for reporting of line indentation")
+	script_toggleReportLineIndentation.__doc__=_("Cycles through line indentation settings")
 	script_toggleReportLineIndentation.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportParagraphIndentation(self,gesture):
