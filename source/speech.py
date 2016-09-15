@@ -1090,7 +1090,15 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText if x])
+		out = []
+		content = attrs.get("content")
+		if content and speakContentFirst:
+			out.append(content)
+		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText) if x)
+		if content and not speakContentFirst:
+			out.append(content)
+		return CHUNK_SEPARATOR.join(out)
+		
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText

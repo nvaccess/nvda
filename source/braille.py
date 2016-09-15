@@ -723,7 +723,12 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if value:
 			props['alwaysReportValue']=field.get('alwaysReportValue',False)
 		text = getBrailleTextForProperties(**props)
-		if role == controlTypes.ROLE_MATH:
+		content = field.get("content")
+		if content:
+			if text:
+				text += " "
+			text += content
+		elif role == controlTypes.ROLE_MATH:
 			import mathPres
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
