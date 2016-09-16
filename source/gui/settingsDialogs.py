@@ -138,9 +138,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		languageChoices = [x[1] for x in self.languageNames]
 		# Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 		languageLabelText = _("&Language (requires restart to fully take effect):")
-		# Translators: The list of languages for NVDA.
-		languageCtrlName = _("Language")
-		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, name=languageCtrlName, choices=languageChoices)
+		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
@@ -170,10 +168,8 @@ class GeneralSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 		logLevelLabelText=_("L&ogging level:")
-		# Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-		logLevelChoicesName=_("Log level")
 		logLevelChoices = [name for level, name in self.LOG_LEVELS]
-		self.logLevelList = settingsSizerHelper.addLabeledControl(logLevelLabelText, wx.Choice, name=logLevelChoicesName, choices=logLevelChoices)
+		self.logLevelList = settingsSizerHelper.addLabeledControl(logLevelLabelText, wx.Choice, choices=logLevelChoices)
 		curLevel = log.getEffectiveLevel()
 		for index, (level, name) in enumerate(self.LOG_LEVELS):
 			if level == curLevel:
@@ -433,7 +429,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		"""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
-		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
+		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
 		self._setSliderStepSizes(slider,setting)
@@ -452,7 +448,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		synth=getSynth()
 		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
 		l=getattr(self,"_%ss"%setting.name)###
-		labeledControl=guiHelper.LabeledControlHelper(self, labelText, wx.Choice, name="%s:"%setting.i18nName, choices=[x.name for x in l])
+		labeledControl=guiHelper.LabeledControlHelper(self, labelText, wx.Choice, choices=[x.name for x in l])
 		lCombo = labeledControl.control
 		setattr(self,"%sList"%setting.name,lCombo)
 		try:
@@ -622,12 +618,10 @@ class KeyboardSettingsDialog(SettingsDialog):
 		# Translators: This is the label for a combobox in the
 		# keyboard settings dialog.
 		kbdLabelText = _("&Keyboard layout:")
-		# Translators: This is the name of a combobox in the keyboard settings dialog.
-		kbdChoicesName = _("Keyboard layout")
 		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
 		self.kbdNames=sorted(layouts)
 		kbdChoices = [layouts[layout] for layout in self.kbdNames]
-		self.kbdList=sHelper.addLabeledControl(kbdLabelText, wx.Choice, name=kbdChoicesName, choices=kbdChoices)
+		self.kbdList=sHelper.addLabeledControl(kbdLabelText, wx.Choice, choices=kbdChoices)
 		try:
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
@@ -759,12 +753,10 @@ class MouseSettingsDialog(SettingsDialog):
 		# Translators: This is the label for a combobox in the
 		# mouse settings dialog.
 		textUnitLabelText=_("Text &unit resolution:")
-		# Translators: This is the name of a combobox in the mouse settings dialog.
-		textUnitsName = _("text reporting unit")
 		import textInfos
 		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
 		textUnitsChoices = [textInfos.unitLabels[x] for x in self.textUnits]
-		self.textUnitComboBox=sHelper.addLabeledControl(textUnitLabelText, wx.Choice, name=textUnitsName, choices=textUnitsChoices)
+		self.textUnitComboBox=sHelper.addLabeledControl(textUnitLabelText, wx.Choice, choices=textUnitsChoices)
 		try:
 			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
 		except:
@@ -943,11 +935,8 @@ class ObjectPresentationDialog(SettingsDialog):
 		# Translators: This is the label for a combobox in the
 		# object presentation settings dialog.
 		progressLabelText = _("Progress &bar output:")
-		# Translators: This is the name of a combobox in the
-		# object presentation settings dialog.
-		progressName=_("Progress bar output")
 		progressChoices = [name for setting, name in self.progressLabels]
-		self.progressList=sHelper.addLabeledControl(progressLabelText, wx.Choice,name=progressName,choices=progressChoices)
+		self.progressList=sHelper.addLabeledControl(progressLabelText, wx.Choice,choices=progressChoices)
 		for index, (setting, name) in enumerate(self.progressLabels):
 			if setting == config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]:
 				self.progressList.SetSelection(index)
@@ -1813,7 +1802,7 @@ class InputGesturesDialog(SettingsDialog):
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
 		filter = wx.TextCtrl(self)
 		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
-		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_LABEL_CONTROL_HORIZONTAL)
+		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		filterSizer.Add(filter, proportion=1)
 		settingsSizer.Add(filterSizer, flag=wx.EXPAND)
 		settingsSizer.AddSpacer(5)
@@ -1828,13 +1817,15 @@ class InputGesturesDialog(SettingsDialog):
 		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
 		self.populateTree()
 
+		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
+
 		buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
 		item = self.addButton = wx.Button(self, label=_("&Add"))
 		item.Bind(wx.EVT_BUTTON, self.onAdd)
 		item.Disable()
 		buttonSizer.Add(item)
-		buttonSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS)
+		buttonSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL)
 		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 		item = self.removeButton = wx.Button(self, label=_("&Remove"))
 		item.Bind(wx.EVT_BUTTON, self.onRemove)
@@ -1842,8 +1833,7 @@ class InputGesturesDialog(SettingsDialog):
 		self.pendingAdds = set()
 		self.pendingRemoves = set()
 		buttonSizer.Add(item)
-		buttonSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS)
-		settingsSizer.Add(buttonSizer, border=guiHelper.SPACE_BETWEEN_BUTTONS, flag=wx.ALL)
+		settingsSizer.Add(buttonSizer)
 
 	def postInit(self):
 		self.tree.SetFocus()

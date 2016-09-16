@@ -104,36 +104,35 @@ def associateElements( firstElement, secondElement):
 			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
 			wx.Button and wx.CheckBox - Horizontal layout
 	"""
-		if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
-			raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
-		if isinstance(firstElement, LabeledControlHelper) or isinstance(secondElement, LabeledControlHelper)
-			raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
+	if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
+		raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
+	if isinstance(firstElement, LabeledControlHelper) or isinstance(secondElement, LabeledControlHelper):
+		raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
 
-		# staticText and (choice or textCtrl)
-		if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl)):
-			sizer = wx.BoxSizer(wx.HORIZONTAL)
-			kwargs = {}
-			kwargs.update( {'flag':wx.ALIGN_CENTER_VERTICAL} )
-			else: raise NotImplementedError("firstElement not supported with secondElement type.")
-			sizer.Add(firstElement, **kwargs)
-			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-			sizer.Add(secondElement)
-		# staticText and (ListCtrl, ListBox or TreeCtrl)
-		elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
-			sizer = wx.BoxSizer(wx.VERTICAL)
-			sizer.Add(firstElement)
-			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-			sizer.Add(secondElement)
-		# button and checkBox
-		elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
-			sizer = wx.BoxSizer(wx.HORIZONTAL)
-			sizer.Add(firstElement)
-			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-			sizer.Add(secondElement, flag=wx.ALIGN_CENTER_VERTICAL)
-		else:
-			raise NotImplementedError("The firstElement and secondElement argument combination has no implementation")
+	# staticText and (choice or textCtrl)
+	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl)):
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		kwargs = {}
+		kwargs.update( {'flag':wx.ALIGN_CENTER_VERTICAL} )
+		sizer.Add(firstElement, **kwargs)
+		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+		sizer.Add(secondElement)
+	# staticText and (ListCtrl, ListBox or TreeCtrl)
+	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		sizer.Add(firstElement)
+		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
+		sizer.Add(secondElement)
+	# button and checkBox
+	elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(firstElement)
+		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+		sizer.Add(secondElement, flag=wx.ALIGN_CENTER_VERTICAL)
+	else:
+		raise NotImplementedError("The firstElement and secondElement argument combination has no implementation")
 
-		return sizer
+	return sizer
 
 class LabeledControlHelper(object):
 	""" Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
@@ -164,13 +163,13 @@ class BoxSizerHelper(object):
 	""" Used to abstract away spacing logic for a wx.BoxSizer
 	"""
 	def __init__(self, parent, orientation=None, sizer=None):
-	""" Init. Pass in either orientation OR sizer.
-		@param parent - An instance of the parent wx window. EG wx.Dialog
-		@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
-		@type itemType: wx.HORIZONTAL or wx.VERTICAL
-		@param sizer: the sizer to use rather than constructing one.
-		@type sizer: wx.BoxSizer
-	"""
+		""" Init. Pass in either orientation OR sizer.
+			@param parent - An instance of the parent wx window. EG wx.Dialog
+			@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
+			@type itemType: wx.HORIZONTAL or wx.VERTICAL
+			@param sizer: the sizer to use rather than constructing one.
+			@type sizer: wx.BoxSizer
+		"""
 		object.__init__(self)
 		self._parent = parent
 		self.hasFirstItemBeenAdded = False
