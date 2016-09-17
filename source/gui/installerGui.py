@@ -182,48 +182,45 @@ class PortableCreaterDialog(wx.Dialog):
 		# Translators: The title of the Create Portable NVDA dialog.
 		super(PortableCreaterDialog, self).__init__(parent, title=_("Create Portable NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+
 		# Translators: An informational message displayed in the Create Portable NVDA dialog.
-		dialogCaption=wx.StaticText(self,label=_("To create a portable copy of NVDA, please select the path and other options and then press Continue")) 
-		mainSizer.Add(dialogCaption)
-		optionsSizer = wx.BoxSizer(wx.VERTICAL)
+		dialogCaption=_("To create a portable copy of NVDA, please select the path and other options and then press Continue")
+		sHelper.addItem(wx.StaticText(self, label=dialogCaption))
+
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
-		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable &directory:")), wx.HORIZONTAL)
-		ctrl = self.portableDirectoryEdit = wx.TextCtrl(self)
-		sizer.Add(ctrl)
+		directoryGroupText = _("Portable &directory:")
+		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=directoryGroupText), wx.VERTICAL)))
 		# Translators: The label of a button to browse for a directory.
-		ctrl = wx.Button(self, label=_("Browse..."))
-		ctrl.Bind(wx.EVT_BUTTON, self.onBrowseForPortableDirectory)
-		sizer.Add(ctrl)
-		optionsSizer.Add(sizer)
-		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-		ctrl = self.copyUserConfigCheckbox = wx.CheckBox(self, label=_("Copy current &user configuration"))
-		ctrl.Value = False
-		if globalVars.appArgs.launcher:
-			ctrl.Disable()
-		optionsSizer.Add(ctrl)
-		mainSizer.Add(optionsSizer)
+		browseText = _("Browse...")
+		# Translators: The title of the dialog presented when browsing for the
+		# destination directory when creating a portable copy of NVDA.
+		dirDialogTitle = _("Select portable  directory")
+		directoryEntryControl = groupHelper.addItem(gui.guiHelper.PathSelectionHelper(self, browseText, dirDialogTitle))
+		self.portableDirectoryEdit = directoryEntryControl.pathControl
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		ctrl = wx.Button(self, label=_("&Continue"), id=wx.ID_OK)
-		ctrl.SetDefault()
-		ctrl.Bind(wx.EVT_BUTTON, self.onCreatePortable)
-		sizer.Add(ctrl)
-		sizer.Add(wx.Button(self, id=wx.ID_CANCEL))
+		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+		copyConfText = _("Copy current &user configuration")
+		self.copyUserConfigCheckbox = sHelper.addItem(wx.CheckBox(self, label=copyConfText))
+		self.copyUserConfigCheckbox.Value = False
+		if globalVars.appArgs.launcher:
+			self.copyUserConfigCheckbox.Disable()
+
+		bHelper = sHelper.addItem(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		
+		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
+		continueButton.SetDefault()
+		continueButton.Bind(wx.EVT_BUTTON, self.onCreatePortable)
+		
+		bHelper.addButton(self, id=wx.ID_CANCEL)
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
-		mainSizer.Add(sizer)
-
+		
+		mainSizer.Add(sHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
-
-	def onBrowseForPortableDirectory(self, evt):
-		# Translators: The title of the dialog presented when browsing for the
-		# destination directory when creating a portable copy of NVDA.
-		with wx.DirDialog(self, _("Select portable  directory"), defaultPath=self.portableDirectoryEdit.Value or "c:\\") as d:
-			if d.ShowModal() == wx.ID_OK:
-				self.portableDirectoryEdit.Value = d.Path
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:

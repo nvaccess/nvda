@@ -1628,10 +1628,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 		self.pendingRemovals = {}
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for symbols list in symbol pronunciation dialog.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
-		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(360, 350))
+		symbolsText = _("&Symbols")
+		self.symbolsList = sHelper.addLabeledControl(symbolsText, wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(360, 350))
 		# Translators: The label for a column in symbols list used to identify a symbol.
 		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
@@ -1645,47 +1645,39 @@ class SpeechSymbolsDialog(SettingsDialog):
 			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
-		sizer.Add(self.symbolsList)
-		settingsSizer.Add(sizer)
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change symbol")), wx.VERTICAL)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
-		self.replacementEdit = wx.TextCtrl(self, wx.ID_ANY)
+		changeSymbolText = _("Change symbol")
+		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=changeSymbolText), wx.VERTICAL)))
+		
+		replacementText = _("&Replacement")
+		self.replacementEdit = changeSymbolHelper.addLabeledControl(replacementText, wx.TextCtrl)
 		self.replacementEdit.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
-		sizer.Add(self.replacementEdit)
-		changeSizer.Add(sizer)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+
 		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
+		levelText = _("&Level")
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
-		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[
-			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
+		levelChoices = [symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS]
+		self.levelList = changeSymbolHelper.addLabeledControl(levelText, wx.Choice, choices=levelChoices)
 		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
-		sizer.Add(self.levelList)
-		changeSizer.Add(sizer)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+
 		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Send actual symbol to synthesizer")))
+		preserveText = _("&Send actual symbol to synthesizer")
 		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
-		self.preserveList = wx.Choice(self, wx.ID_ANY,choices=[
-			symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES])
+		preserveChoices = [symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES]
+		self.preserveList = changeSymbolHelper.addLabeledControl(preserveText, wx.Choice, choices=preserveChoices)
 		self.preserveList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
-		sizer.Add(self.preserveList)
-		changeSizer.Add(sizer)
-		settingsSizer.Add(changeSizer)
-		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
+
+		bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
-		addButton = wx.Button(self, label=_("&Add"))
-		entryButtonsSizer.Add(addButton)
+		addButton = bHelper.addButton(self, label=_("&Add"))
+
 		# Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-		self.removeButton = wx.Button(self, label=_("Re&move"))
+		self.removeButton = bHelper.addButton(self, label=_("Re&move"))
 		self.removeButton.Disable()
-		entryButtonsSizer.Add(self.removeButton)
+
 		addButton.Bind(wx.EVT_BUTTON, self.OnAddClick)
 		self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemoveClick)
-		settingsSizer.Add(entryButtonsSizer)
 
 		self.editingItem = None
 

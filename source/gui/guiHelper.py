@@ -129,6 +129,12 @@ def associateElements( firstElement, secondElement):
 		sizer.Add(firstElement)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		sizer.Add(secondElement, flag=wx.ALIGN_CENTER_VERTICAL)
+	# textCtrl and button
+	elif isinstance(firstElement, wx.TextCtrl) and isinstance(secondElement, wx.Button):
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL, proportion=1)
+		sizer.AddSpacer(SPACE_BETWEEN_BUTTONS_HORIZONTAL)
+		sizer.Add(secondElement, flag=wx.ALIGN_CENTER_VERTICAL)
 	else:
 		raise NotImplementedError("The firstElement and secondElement argument combination has no implementation")
 
@@ -158,6 +164,45 @@ class LabeledControlHelper(object):
 	@property
 	def sizer(self):
 		return self._sizer
+
+class PathSelectionHelper(object):
+	"""
+	Abstracts away details for creating a path selection helper. The path selection helper is a textCtrl with a
+	button in horizontal layout. The Button launches a directory explorer. Its recommended that the 
+	"""
+	def __init__(self, parent, buttonText, browseForDirectoryTitle):
+		""" @param parent - An instance of the parent wx window. EG wx.Dialog
+			@param buttonText - The text for the button to launch a directory dialog (wx.DirDialog). This is typically 'Browse'
+			@type buttonText - string
+			@param browseForDirectoryTitle - The text for the title of the directory dialog (wx.DirDialog)
+			@type browseForDirectoryTitle - string
+		"""
+		object.__init__(self)
+		self._textCtrl = wx.TextCtrl(parent)
+		self._browseButton = wx.Button(parent, label=buttonText)
+		self._browseForDirectoryTitle = browseForDirectoryTitle
+		self._browseButton.Bind(wx.EVT_BUTTON, self.onBrowseForDirectory)
+		self._sizer = associateElements(self._textCtrl, self._browseButton)
+		self._parent = parent
+
+	@property
+	def pathControl(self):
+		return self._textCtrl
+
+	@property
+	def sizer(self):
+		return self._sizer
+
+	def getDefulatBrowseForDirectoryPath(self):
+		return self._textCtrl.Value or "c:\\"
+
+	def onBrowseForDirectory(self, evt):
+		# Translators: The title of the dialog presented when browsing for the
+		# destination directory when creating a portable copy of NVDA.
+		startPath = self.getDefulatBrowseForDirectoryPath()
+		with wx.DirDialog(self._parent, self._browseForDirectoryTitle, defaultPath=startPath) as d:
+			if d.ShowModal() == wx.ID_OK:
+				self._textCtrl.Value = d.Path
 
 class BoxSizerHelper(object):
 	""" Used to abstract away spacing logic for a wx.BoxSizer
@@ -196,8 +241,21 @@ class BoxSizerHelper(object):
 			keywordArgs.update({'border':buttonBorderAmount, 'flag':wx.ALL})
 			shouldAddSpacer = False # no need to add a spacer, since the button border has been added.
 
+		if isinstance(item, BoxSizerHelper):
+			toAdd = item.sizer
+
+		if isinstance(item, PathSelectionHelper):
+			toAdd = item.sizer
+			if self.sizer.GetOrientation() == wx.VERTICAL:
+				keywordArgs.update({'flag':wx.EXPAND,})
+			else:
+				raise NotImplementedError("Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented")
+
 		if isinstance(item, LabeledControlHelper):
 			raise NotImplementedError("Use addLabeledControl instead")
+
+		if isinstance(toAdd, wx.StaticBoxSizer):
+			keywordArgs.update({'flag':wx.EXPAND,})
 
 		if shouldAddSpacer:
 			self.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -219,4 +277,3 @@ class BoxSizerHelper(object):
 		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
 		self.addItem(labeledControl.sizer)
 		return labeledControl.control
-
