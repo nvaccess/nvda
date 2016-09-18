@@ -626,20 +626,22 @@ class LauncherDialog(wx.Dialog):
 	def __init__(self, parent):
 		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
-		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("License Agreement")), wx.VERTICAL)
-		ctrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
-		ctrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
-		sizer.Add(ctrl)
-		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-		ctrl = self.licenseAgreeCheckbox = wx.CheckBox(self, label=_("I &agree"))
-		ctrl.Value = False
-		sizer.Add(ctrl)
-		ctrl.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
-		mainSizer.Add(sizer)
+		groupLabel = _("License Agreement")
+		sizer = sHelper.addItem(wx.StaticBoxSizer(wx.StaticBox(self, label=groupLabel), wx.VERTICAL))
+		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
+		licenseTextCtrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
+		sizer.Add(licenseTextCtrl)
 
-		sizer = wx.GridSizer(rows=2, cols=2)
+		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
+		agreeText = _("I &agree")
+		self.licenseAgreeCheckbox = sHelper.addItem(wx.CheckBox(self, label=agreeText))
+		self.licenseAgreeCheckbox.Value = False
+		self.licenseAgreeCheckbox.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
+
+		sizer = sHelper.addItem(wx.GridSizer(rows=2, cols=2))
 		self.actionButtons = []
 		# Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
@@ -659,10 +661,11 @@ class LauncherDialog(wx.Dialog):
 		sizer.Add(wx.Button(self, label=_("E&xit"), id=wx.ID_CANCEL))
 		# If we bind this on the button, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onExit, id=wx.ID_CANCEL)
-		mainSizer.Add(sizer)
+
 		for ctrl in self.actionButtons:
 			ctrl.Disable()
 
+		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
