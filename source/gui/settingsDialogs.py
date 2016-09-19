@@ -1598,14 +1598,15 @@ class AddSymbolDialog(wx.Dialog):
 		# Translators: This is the label for the add symbol dialog.
 		super(AddSymbolDialog,self).__init__(parent, title=_("Add Symbol"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+
 		# Translators: This is the label for the edit field in the add symbol dialog.
-		sizer.Add(wx.StaticText(self, label=_("Symbol:")))
-		self.identifierTextCtrl = wx.TextCtrl(self)
-		sizer.Add(self.identifierTextCtrl)
-		mainSizer.Add(sizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.TOP)
-		buttonSizer=self.CreateButtonSizer(wx.OK | wx.CANCEL)
-		mainSizer.Add(buttonSizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM)
+		symbolText = _("Symbol:")
+		self.identifierTextCtrl = sHelper.addLabeledControl(symbolText, wx.TextCtrl)
+		
+		sHelper.addItem(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.identifierTextCtrl.SetFocus()
