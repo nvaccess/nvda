@@ -22,7 +22,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <remote/nvdaInProcUtils.h>
 #include <remote/nvdaInProcUtils.h>
 
-#include "Links.h"
+#include "Fields.h"
 #include <remote/WinWord/Constants.h>
 
 namespace WinWord {
@@ -37,7 +37,7 @@ namespace WinWord {
 	Field.Result.Start property
 	Field.Result.End property
 */
-Links::Links(IDispatch* pRange) {
+Fields::Fields(IDispatch* pRange) {
 	IDispatchPtr pDispatchFields = nullptr;
 	auto res = _com_dispatch_raw_propget( pRange, wdDISPID_RANGE_FIELDS, VT_DISPATCH, &pDispatchFields);
 	if( res != S_OK || !pDispatchFields ) {
@@ -67,9 +67,10 @@ Links::Links(IDispatch* pRange) {
 		*/
 		const int CROSS_REFERENCE_TYPE_VALUE = 3; // wdFieldRef 
 		const int HYPERLINK_TYPE_VALUE = 88; // wdFieldHyperlink
+		const int PAGE_NUMBER_TYPE_VALUE = 33; // wdFieldPage
 		int type = -1;
 		res = _com_dispatch_raw_propget( pDispatchItem, wdDISPID_FIELDS_ITEM_TYPE, VT_I4, &type);
-		if( res != S_OK || !(type == CROSS_REFERENCE_TYPE_VALUE || type == HYPERLINK_TYPE_VALUE) ){
+		if( res != S_OK || !(type == CROSS_REFERENCE_TYPE_VALUE || type == HYPERLINK_TYPE_VALUE || type == PAGE_NUMBER_TYPE_VALUE) ){
 			continue;
 		}
 
@@ -87,7 +88,17 @@ Links::Links(IDispatch* pRange) {
 			LOG_DEBUGWARNING(L"error getting range start and end points");
 			continue;
 		}
-		m_links.push_back(std::make_pair(resultStart, resultEnd));
+
+		auto itemRange = std::make_pair(resultStart, resultEnd);
+		switch(type){
+			case CROSS_REFERENCE_TYPE_VALUE: // intentional fall through to hyperlink case
+			case HYPERLINK_TYPE_VALUE:
+				m_links.push_back(itemRange);
+				break;
+			case PAGE_NUMBER_TYPE_VALUE:
+				m_pageNumbers.push_back(itemRange);
+				break;
+		}
 	}
 }
 
@@ -95,7 +106,7 @@ bool inRange (long index, long start, long end) {
 		return index >= start && index <= end;
 	};
 
-bool Links::hasLinks(const int rangeStart, const int rangeEnd){
+bool Fields::hasLinks(const int rangeStart, const int rangeEnd){
 	for( auto&& link : m_links) {
 		if( inRange(link.first, rangeStart, rangeEnd) ||
 			inRange(link.second, rangeStart, rangeEnd) ||
@@ -107,8 +118,18 @@ bool Links::hasLinks(const int rangeStart, const int rangeEnd){
 	return false;
 }
 
-bool Links::hasLinks(){
+bool Fields::hasLinks(){
 	return false == m_links.empty();
+}
+
+
+std::experimental::optional<int> Fields::getEndOfPageNumberFieldAtIndex(const int index){
+	for( auto&& pageNum : m_pageNumbers ){
+		if(inRange(index, pageNum.first, pageNum.second)){
+			return pageNum.second;
+		}
+	}
+	return std::experimental::optional<int>();
 }
 
 } // end namespace WinWord
