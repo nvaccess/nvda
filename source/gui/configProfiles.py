@@ -11,6 +11,7 @@ import gui
 from logHandler import log
 import appModuleHandler
 import globalVars
+import guiHelper
 
 class ProfilesDialog(wx.Dialog):
 	shouldSuspendConfigProfileTriggers = True
@@ -28,59 +29,67 @@ class ProfilesDialog(wx.Dialog):
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
 		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
 		self.profileNames.extend(config.conf.listProfiles())
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of the profile list in the Configuration Profiles dialog.
-		sizer.Add(wx.StaticText(self, label=_("&Profile")))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self,orientation=wx.VERTICAL)
+		profilesListGroupSizer = wx.StaticBoxSizer(wx.StaticBox(self), wx.HORIZONTAL)
+		profilesListGroupContents = wx.BoxSizer(wx.HORIZONTAL)
+
+		#contains the profile list and activation button in vertical arrangement.
+		changeProfilesSizer = wx.BoxSizer(wx.VERTICAL)
 		item = self.profileList = wx.ListBox(self,
 			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames])
 		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		changeProfilesSizer.Add(item, proportion=1.0)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		item = self.changeStateButton = wx.Button(self)
-		item.Bind(wx.EVT_BUTTON, self.onChangeState)
-		sizer.Add(item)
-		self.AffirmativeId = item.Id
-		item.SetDefault()
+		changeProfilesSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_VERTICALLY)
+
+		self.changeStateButton = wx.Button(self)
+		self.changeStateButton.Bind(wx.EVT_BUTTON, self.onChangeState)
+		self.AffirmativeId = self.changeStateButton.Id
+		self.changeStateButton.SetDefault()
+		changeProfilesSizer.Add(self.changeStateButton)
+		
+		profilesListGroupContents.Add(changeProfilesSizer, flag = wx.EXPAND)
+		profilesListGroupContents.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+
+		buttonHelper = guiHelper.ButtonHelper(wx.VERTICAL)
 		# Translators: The label of a button to create a new configuration profile.
-		item = newButton = wx.Button(self, label=_("&New"))
-		item.Bind(wx.EVT_BUTTON, self.onNew)
-		sizer.Add(item)
-		# Translators: The label of a button to rename a configuration profile.
-		item = self.renameButton = wx.Button(self, label=_("&Rename"))
-		item.Bind(wx.EVT_BUTTON, self.onRename)
-		sizer.Add(item)
-		# Translators: The label of a button to delete a configuration profile.
-		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
-		item.Bind(wx.EVT_BUTTON, self.onDelete)
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		newButton = buttonHelper.addButton(self, label=_("&New"))
+		newButton.Bind(wx.EVT_BUTTON, self.onNew)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to rename a configuration profile.
+		self.renameButton = buttonHelper.addButton(self, label=_("&Rename"))
+		self.renameButton.Bind(wx.EVT_BUTTON, self.onRename)
+
+		# Translators: The label of a button to delete a configuration profile.
+		self.deleteButton = buttonHelper.addButton(self, label=_("&Delete"))
+		self.deleteButton.Bind(wx.EVT_BUTTON, self.onDelete)
+
+		profilesListGroupContents.Add(buttonHelper.sizer)
+		profilesListGroupSizer.Add(profilesListGroupContents, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		sHelper.addItem(profilesListGroupSizer)
+
 		# Translators: The label of a button to manage triggers
 		# in the Configuration Profiles dialog.
 		# See the Configuration Profiles section of the User Guide for details.
 		triggersButton = wx.Button(self, label=_("&Triggers..."))
 		triggersButton.Bind(wx.EVT_BUTTON, self.onTriggers)
-		sizer.Add(triggersButton)
+
 		# Translators: The label of a checkbox in the Configuration Profiles dialog.
-		item = self.disableTriggersToggle = wx.CheckBox(self, label=_("Temporarily d&isable all triggers"))
-		item.Value = not config.conf.profileTriggersEnabled
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		self.disableTriggersToggle = wx.CheckBox(self, label=_("Temporarily d&isable all triggers"))
+		self.disableTriggersToggle.Value = not config.conf.profileTriggersEnabled
+		sHelper.addItem(guiHelper.associateElements(triggersButton,self.disableTriggersToggle))
 
 		# Translators: The label of a button to close a dialog.
-		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
-		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(item)
+		closeButton = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
+		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
+		sHelper.addItem(closeButton)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
 
@@ -89,6 +98,7 @@ class ProfilesDialog(wx.Dialog):
 				item.Disable()
 		self.onProfileListChoice(None)
 
+		mainSizer.Add(sHelper.sizer, flag=wx.ALL, border=guiHelper.BORDER_FOR_DIALOGS)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileList.SetFocus()
@@ -274,6 +284,7 @@ class TriggersDialog(wx.Dialog):
 		# Translators: The title of the configuration profile triggers dialog.
 		super(TriggersDialog, self).__init__(parent, title=_("Profile Triggers"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		processed = set()
 		triggers = self.triggers = []
@@ -298,33 +309,29 @@ class TriggersDialog(wx.Dialog):
 				continue
 			triggers.append(TriggerInfo(spec, disp, profile))
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		
 		# Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
-		sizer.Add(wx.StaticText(self, label=_("Triggers")))
-		item = self.triggerList = wx.ListBox(self, choices=[trig.display for trig in triggers])
-		item.Bind(wx.EVT_LISTBOX, self.onTriggerListChoice)
-		item.Selection = 0
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		triggersText = _("Triggers")
+		triggerChoices = [trig.display for trig in triggers]
+		self.triggerList = sHelper.addLabeledControl(triggersText, wx.ListBox, choices=triggerChoices)
+		self.triggerList.Bind(wx.EVT_LISTBOX, self.onTriggerListChoice)
+		self.triggerList.Selection = 0
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the profile list in the Configuration Profile Triggers dialog.
-		sizer.Add(wx.StaticText(self, label=_("Profile")))
-		item = self.profileList = wx.Choice(self,
-			choices=[parent.getProfileDisplay(name) for name in parent.profileNames])
-		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
-		sizer.Add(item)
-		mainSizer.Add(sizer)
+		profileText = _("Profile")
+		profileChoices = [parent.getProfileDisplay(name) for name in parent.profileNames]
+		self.profileList = sHelper.addLabeledControl(profileText, wx.Choice, choices=profileChoices)
+		self.profileList.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 
-		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
-		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(item)
+		closeButton = sHelper.addItem(wx.Button(self, wx.ID_CLOSE, label=_("&Close")))
+		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.AffirmativeId = wx.ID_CLOSE
-		item.SetDefault()
+		closeButton.SetDefault()
 		self.EscapeId = wx.ID_CLOSE
 
 		self.onTriggerListChoice(None)
+		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
@@ -367,10 +374,11 @@ class NewProfileDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a field to enter the name of a new configuration profile.
-		sizer.Add(wx.StaticText(self, label=_("Profile name:")))
+		sizer.Add(wx.StaticText(self, label=_("Profile name:")), flag=wx.ALIGN_CENTER_VERTICAL)
+		sizer.AddSpacer(5)
 		item = self.profileName = wx.TextCtrl(self)
 		sizer.Add(item)
-		mainSizer.Add(sizer)
+		mainSizer.Add(sizer, border=10, flag=wx.ALL)
 
 		# Translators: The label of a radio button to specify that a profile will be used for manual activation
 		# in the new configuration profile dialog.
@@ -381,9 +389,9 @@ class NewProfileDialog(wx.Dialog):
 		item.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
-		mainSizer.Add(item)
+		mainSizer.Add(item, border=5, flag=wx.ALL)
 
-		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL), border=5, flag=wx.ALL)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		mainSizer.Fit(self)

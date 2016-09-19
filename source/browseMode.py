@@ -29,6 +29,7 @@ import sayAllHandler
 import treeInterceptorHandler
 import inputCore
 import api
+import gui.guiHelper
 from NVDAObjects import NVDAObject
 
 REASON_QUICKNAV = "quickNav"
@@ -669,46 +670,49 @@ class ElementsListDialog(wx.Dialog):
 		# Translators: The title of the browse mode Elements List dialog.
 		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 
 		# Translators: The label of a group of radio buttons to select the type of element
 		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
 		child.SetSelection(self.lastSelectedElementType)
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
-		mainSizer.Add(child,proportion=1)
+		contentsSizer.Add(child, flag=wx.EXPAND)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
+		self.tree = wx.TreeCtrl(self, size=wx.Size(500, 600), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onTreeLabelEditBegin)
 		self.tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.onTreeLabelEditEnd)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
+		contentsSizer.Add(self.tree,flag=wx.EXPAND)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of an editable text field to filter the elements
 		# in the browse mode Elements List dialog.
-		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
-		sizer.Add(label)
-		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
+		filterText = _("&Filter by:")
+		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
+		self.filterEdit = labeledCtrl.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
-		sizer.Add(self.filterEdit)
-		mainSizer.Add(sizer,proportion=1)
+		contentsSizer.Add(labeledCtrl.sizer)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		bHelper = gui.guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label of a button to activate an element
 		# in the browse mode Elements List dialog.
-		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
+		self.activateButton = bHelper.addButton(self, label=_("&Activate"))
 		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
-		sizer.Add(self.activateButton)
+		
 		# Translators: The label of a button to move to an element
 		# in the browse mode Elements List dialog.
-		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
+		self.moveButton = bHelper.addButton(self, label=_("&Move to"))
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
-		sizer.Add(self.moveButton)
-		sizer.Add(wx.Button(self, wx.ID_CANCEL))
-		mainSizer.Add(sizer,proportion=1)
+		bHelper.addButton(self, id=wx.ID_CANCEL)
 
+		contentsSizer.Add(bHelper.sizer)
+
+		mainSizer.Add(contentsSizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 
