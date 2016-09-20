@@ -6,7 +6,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2016 NV Access Limited
 
-"""App module for automatic reading of the terminal in all versions of SecureCRT """
+"""App module for automatic reading of terminal windows in all versions of SecureCRT past, present and future
+"""
 
 import oleacc
 import re
