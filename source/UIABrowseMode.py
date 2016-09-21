@@ -19,7 +19,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self,itemType,document,UIAElementOrRange):
 		if isinstance(UIAElementOrRange,UIAHandler.IUIAutomationElement):
-			UIATextRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(UIAElementOrRange)
+			UIATextRange=document.rootNVDAObject.getNormalizedUIATextRangeFromElement(UIAElementOrRange)
 			self._UIAElement=UIAElementOrRange
 		elif isinstance(UIAElementOrRange,UIAHandler.IUIAutomationTextRange):
 			UIATextRange=UIAElementOrRange

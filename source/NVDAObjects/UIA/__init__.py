@@ -182,6 +182,8 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return self.copy()
 
+	UIAControlTypesWhereNameIsContent=set([UIAHandler.UIA_ButtonControlTypeId,UIAHandler.UIA_HyperlinkControlTypeId,UIAHandler.UIA_ImageControlTypeId,UIAHandler.UIA_MenuItemControlTypeId,UIAHandler.UIA_TabItemControlTypeId,UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_SplitButtonControlTypeId])
+
 	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		"""
 		Fetch control field information for the given UIA NVDAObject.
@@ -209,8 +211,8 @@ class UIATextInfo(textInfos.TextInfo):
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_FOCUSED)
 		field["states"] = states
-		text=self.obj.makeTextInfo(obj).text
-		if not text or text.isspace():
+		field['nameIsContent']=nameIsContent=obj.UIAElement.cachedControlType in self.UIAControlTypesWhereNameIsContent
+		if not nameIsContent:
 			field['name']=obj.name
 		field["description"] = obj.description
 		field["level"] = obj.positionInfo.get("level")
@@ -575,6 +577,11 @@ class UIA(Window):
 		kwargs['UIAElement']=UIAElement
 		return True
 
+	def getNormalizedUIATextRangeFromElement(self,UIAElement):
+		"""Simply fetches a UIA text range for the given UIAElement, allowing subclasses to process the range first."""
+		return UIATextRangeFromElement(self.UIATextPattern,UIAElement)
+
+
 	def __init__(self,windowHandle=None,UIAElement=None):
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
@@ -701,16 +708,9 @@ class UIA(Window):
 
 	def _get_description(self):
 		try:
-			helpText=self.UIAElement.currentHelpText
+			return self.UIAElement.currentHelpText or ""
 		except COMError:
-			helpText=""
-		try:
-			fullDescription=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
-		except COMError:
-			fullDescription=""
-		if fullDescription and fullDescription==self.name:
-			fullDescription=""
-		return u"\n".join(x for x in [fullDescription,helpText] if x)
+			return ""
 
 	def _get_keyboardShortcut(self):
 		ret = ""

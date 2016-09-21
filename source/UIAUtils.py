@@ -19,7 +19,7 @@ def createUIAMultiPropertyCondition(*dicts):
 		andList=[]
 		for key,values in dict.iteritems():
 			innerOrList=[]
-			if not isinstance(values,list):
+			if not isinstance(values,(list,set)):
 				values=[values]
 			for value in values:
 				condition=UIAHandler.handler.clientObject.createPropertyCondition(key,value)

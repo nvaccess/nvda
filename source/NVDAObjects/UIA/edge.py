@@ -21,19 +21,6 @@ from . import UIA, UIATextInfo
 
 class EdgeTextInfo(UIATextInfo):
 
-	def _normalizeUIARange(self,range):
-		"""Move the start of a UIA text range past any element start character stops."""
-		lastCharInfo=self.copy()
-		lastCharInfo._rangeObj=range
-		charInfo=lastCharInfo.copy()
-		charInfo.collapse()
-		while super(EdgeTextInfo,charInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
-			charInfo.setEndPoint(lastCharInfo,"startToStart")
-			if charInfo.text or charInfo._hasEmbedded():
-				break
-			lastCharInfo.setEndPoint(charInfo,"startToEnd")
-			charInfo.collapse(True)
-
 	def _hasEmbedded(self):
 		"""Is this textInfo positioned on an embedded child?"""
 		children=self._rangeObj.getChildren()
@@ -47,13 +34,70 @@ class EdgeTextInfo(UIATextInfo):
 					return True
 		return False
 
-	def move(self,unit,direction,endPoint=None):
+	def _get_UIAElementAtStartWithReplacedContent(self):
+		"""Fetches the deepest UIAElement at the start of the text range whos name has been overridden by the author (such as aria-label)."""
+		element=self.UIAElementAtStart
+		condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:self.UIAControlTypesWhereNameIsContent})
+		# A part from the condition given, we must always match on the root of the document so we know when to stop walking
+		runtimeID=VARIANT()
+		self.obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		condition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),condition)
+		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
+		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
+		cacheRequest.addProperty(UIAHandler.UIA_AriaPropertiesPropertyId)
+		element=walker.normalizeElementBuildCache(element,cacheRequest)
+		while element and not UIAHandler.handler.clientObject.compareElements(element,self.obj.UIAElement):
+			ariaProperties=element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+			if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
+				return element
+			try:
+				range=self.obj.UIATextPattern.rangeFromChild(element)
+			except COMEror:
+				return
+			text=range.getText(-1)
+			if not text or text.isspace():
+				return element
+			element=walker.getParentElementBuildCache(element,cacheRequest)
+
+	def _moveToEdgeOfReplacedContent(self,back=False):
+		"""If within replaced content (E.g. aria-label is used), moves to the first or last character covered, so that a following call to move in the same direction will move out of the replaced content, in order to ensure that the content only takes up one character stop.""" 
+		element=self.UIAElementAtStartWithReplacedContent
+		if not element:
+			return
+		try:
+			range=self.obj.UIATextPattern.rangeFromChild(element)
+		except COMError:
+			return
+		if not back:
+			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,range,UIAHandler.TextPatternRangeEndpoint_End)
+		else:
+			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,range,UIAHandler.TextPatternRangeEndpoint_Start)
+			range.move(UIAHandler.TextUnit_Character,1)
+		self._rangeObj=range
+
+	def _collapsedMove(self,unit,direction,skipReplacedContent):
+		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
+		if not skipReplacedContent: 
+			return super(EdgeTextInfo,self).move(unit,direction)
+		if direction==0: 
+			return
+		chunk=1 if direction>0 else -1
+		finalRes=0
+		while finalRes!=direction:
+			self._moveToEdgeOfReplacedContent(back=direction<0)
+			res=super(EdgeTextInfo,self).move(unit,chunk)
+			if res==0:
+				break
+			finalRes+=res
+		return finalRes
+
+	def move(self,unit,direction,endPoint=None,skipReplacedContent=True):
 		# Skip over non-text element starts and ends
 		if not endPoint:
 			if direction>0 and unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
-				return super(EdgeTextInfo,self).move(unit,direction)
+				return self._collapsedMove(unit,direction,skipReplacedContent)
 			elif direction>0:
-				res=super(EdgeTextInfo,self).move(unit,direction)
+				res=self._collapsedMove(unit,direction,skipReplacedContent)
 				if res!=0:
 					# Ensure we move past the start of any elements 
 					tempInfo=self.copy()
@@ -66,15 +110,18 @@ class EdgeTextInfo(UIATextInfo):
 				return res
 			elif direction<0:
 				tempInfo=self.copy()
-				res=super(EdgeTextInfo,self).move(unit,direction)
+				res=self._collapsedMove(unit,direction,skipReplacedContent)
 				if res!=0:
-					tempInfo.setEndPoint(self,"startToStart")
-					if not tempInfo.text and not tempInfo._hasEmbedded():
-						self.move(textInfos.UNIT_CHARACTER,-1)
+					while True:
+						tempInfo.setEndPoint(self,"startToStart")
+						if tempInfo.text or tempInfo._hasEmbedded():
+							break
+						if super(EdgeTextInfo,self).move(textInfos.UNIT_CHARACTER,-1)==0:
+							break
 				return res
 		else:
 			tempInfo=self.copy()
-			res=tempInfo.move(unit,direction)
+			res=tempInfo.move(unit,direction,skipReplacedContent=skipReplacedContent)
 			if res!=0:
 				self.setEndPoint(tempInfo,"endToEnd" if endPoint=="end" else "startToStart")
 			return res
@@ -83,15 +130,28 @@ class EdgeTextInfo(UIATextInfo):
 		# Ensure expanding to character/word correctly covers embedded controls
 		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
 			tempInfo=self.copy()
-			tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end")
+			tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end",skipReplacedContent=False)
 			if tempInfo._hasEmbedded():
 				self.setEndPoint(tempInfo,"endToEnd")
 				return
 		super(EdgeTextInfo,self).expand(unit)
+		if unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
+			# Usually expanding to line or paragraph in Edge incorrectly covers start of element chars at its end, causing content on following lines to be included.
+			# We must fix  it up, but not for edit fields as they handle lines differently. 
+			obj=self.NVDAObjectAtStart
+			if not obj.UIATextPattern or obj==self.obj: 
+				tempInfo=self.copy()
+				self.collapse(end=True)
+				self.move(textInfos.UNIT_CHARACTER,-1)
+				self.expand(textInfos.UNIT_CHARACTER)
+				self.setEndPoint(tempInfo,"startToStart")
+				if self.isCollapsed:
+					self.setEndPoint(tempInfo,"endToEnd")
 		return
 
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field['embedded']=isEmbedded
 		# report landmarks
 		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
@@ -99,41 +159,33 @@ class EdgeTextInfo(UIATextInfo):
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
-		# Edit controls must expose a name
-		if obj.role==controlTypes.ROLE_EDITABLETEXT:
-			field["name"] = obj.name
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
-		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a value.
+		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		ariaProperties=obj.UIAElement.currentAriaProperties
 		hasAriaLabel=('label=' in ariaProperties)
 		hasAriaLabelledby=('labelledby=' in ariaProperties)
-		if hasAriaLabelledby:
-			field['name']=obj.name
-		if hasAriaLabel or hasAriaLabelledby:
-			if obj.role in (controlTypes.ROLE_LINK,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_BUTTON):
-				field['value']=obj.name
-				field['alwaysReportValue']=True
-			elif obj.role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_PANE):
-				field['alwaysReportName']=True
+		if field.get('nameIsContent'):
+			content=""
+			field.pop('name',None)
+			if hasAriaLabel or hasAriaLabelledby:
+				content=obj.name
+			if not content:
+				text=self.obj.makeTextInfo(obj).text
+				if not text or text.isspace():
+					content=obj.name or field.pop('description',None)
+			if content:
+				field['content']=content
+		elif isEmbedded:
+			field['content']=obj.value
+			if field['role']==controlTypes.ROLE_GROUPING:
+				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+				if not obj.value:
+					field['content']=obj.name
 		# Give lists an item count
 		if obj.role==controlTypes.ROLE_LIST:
 			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
 			if child:
 				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
-		if isEmbedded:
-			field['embedded']=True
-			# Embedded groupings are probably things like audio or video tags etc.
-			if obj.role==controlTypes.ROLE_GROUPING:
-				# Force the role to embedded object for now so that value is reported
-				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
-			# As this field will have no text or children itself, set its value to something useful.
-			if obj.role in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_GROUPING):
-				value=field.pop('name',None) or obj.name or field.pop('description',None) or obj.description
-			else:
-				value=obj.value
-			if not value: value=" "
-			field['alwaysReportValue']=True
-			field['value']=value
 		return field
 
 	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
@@ -159,14 +211,13 @@ class EdgeTextInfo(UIATextInfo):
 		else:
 			log.debug("No enclosingElement. Returning")
 			return
-		enclosingRange=self.obj.UIATextPattern.rangeFromChild(enclosingElement)
+		enclosingRange=self.obj.getNormalizedUIATextRangeFromElement(enclosingElement)
 		if not enclosingRange:
 			log.debug("enclosingRange is NULL. Returning")
 			return
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
-		self._normalizeUIARange(enclosingRange)
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 		# check for an embedded child
@@ -187,17 +238,19 @@ class EdgeTextInfo(UIATextInfo):
 			log.debug("isRoot: %s"%isRoot)
 			if not isRoot:
 				hasAncestors=True
-			if not includeRoot and isRoot:
-				log.debug("root not requested. Breaking")
-				break
 			if parentElement is not enclosingElement:
-				try:
-					obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
-					field=self._getControlFieldForObject(obj)
-				except LookupError:
-					log.debug("Failed to fetch controlField data for parentElement. Breaking")
-					break
-				parents.append((parentElement,field))
+				if includeRoot or not isRoot:
+					try:
+						obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
+						field=self._getControlFieldForObject(obj)
+					except LookupError:
+						log.debug("Failed to fetch controlField data for parentElement. Breaking")
+						break
+					parents.append((parentElement,field))
+				else:
+					# This is the root but it was not requested for inclusion
+					# However we still need the root element itself for further recursion
+					parents.append((parentElement,None))
 			if isRoot:
 				log.debug("Hit root. Breaking")
 				break
@@ -206,7 +259,7 @@ class EdgeTextInfo(UIATextInfo):
 		log.debug("Done generating parents")
 		log.debug("Yielding parents in reverse order")
 		for parentElement,field in reversed(parents):
-			yield textInfos.FieldCommand("controlStart",field)
+			if field: yield textInfos.FieldCommand("controlStart",field)
 		log.debug("Done yielding parents")
 		log.debug("Yielding balanced fields for startRange")
 		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementRange=enclosingRange,includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True):
@@ -216,15 +269,9 @@ class EdgeTextInfo(UIATextInfo):
 		for parentElement,field in parents:
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
-			log.debug("is enclosingElement: False")
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-			try:
-				parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
-			except COMError:
-				log.debug("Error fetching parent range")
-				parentRange=None
+			parentRange=self.obj.getNormalizedUIATextRangeFromElement(parentElement)
 			if parentRange:
-				self._normalizeUIARange(parentRange)
 				clippedStart=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
 				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
@@ -232,15 +279,19 @@ class EdgeTextInfo(UIATextInfo):
 					clippedEnd=True
 				else:
 					clippedEnd=False
-				field['_startOfNode']=not clippedStart
-				field['_endOfNode']=not clippedEnd
+				if field:
+					field['_startOfNode']=not clippedStart
+					field['_endOfNode']=not clippedEnd
 				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
 					log.debug("Recursing endRange")
 					for endField in self._getTextWithFieldsForUIARange(parentElement,tempRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True):
 						yield endField
 					log.debug("Done recursing endRange")
-			log.debug("Yielding controlEnd for parent")
-			yield textInfos.FieldCommand("controlEnd",field)
+				else:
+					log.debug("No content after parent")
+			if field:
+				log.debug("Yielding controlEnd for parent")
+				yield textInfos.FieldCommand("controlEnd",field)
 		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
 		log.debug("_getTextWithFieldsForUIARange (unbalanced) end")
 
@@ -263,14 +314,18 @@ class EdgeTextInfo(UIATextInfo):
 					clickableField=field.field
 			elif clickableField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field is clickableField:
 				clickableField=None
-		# Chop extra fields off the end incorrectly put there by Edge
+		# Chop extra whitespace off the end incorrectly put there by Edge
 		numFields=len(fields)
-		for index in xrange(numFields-1,-1,-1):
+		index=0
+		while index<len(fields):
 			field=fields[index]
 			if index>1 and isinstance(field,basestring) and field.isspace():
 				prevField=fields[index-2]
 				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
 					del fields[index-1:index+1]
+			index+=1
+		# chop fields off the end incorrectly placed there by Edge
+		# This can happen if expanding to line covers element start chars at its end
 		startCount=0
 		lastStartIndex=None
 		numFields=len(fields)
@@ -283,22 +338,37 @@ class EdgeTextInfo(UIATextInfo):
 				lastStartIndex=index
 		if lastStartIndex:
 			del fields[lastStartIndex:lastStartIndex+(startCount*2)]
-		# Remove any content from fields with a value
+		# Remove any content from fields with a content attribute
 		numFields=len(fields)
 		curField=None
 		for index in xrange(numFields-1,-1,-1):
 			field=fields[index]
-			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('value'):
+			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
 				curField=field.field
 				endIndex=index
 			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
-				fields[index+1:endIndex]=" " #curField.pop('value')
+				fields[index+1:endIndex]=" "
 				curField=None
 		return fields
 
 class EdgeNode(UIA):
 
 	_TextInfo=EdgeTextInfo
+
+	def getNormalizedUIATextRangeFromElement(self,UIAElement):
+		range=super(EdgeNode,self).getNormalizedUIATextRangeFromElement(UIAElement)
+		#Move the start of a UIA text range past any element start character stops
+		lastCharInfo=EdgeTextInfo(self,None,_rangeObj=range)
+		lastCharInfo._rangeObj=range
+		charInfo=lastCharInfo.copy()
+		charInfo.collapse()
+		while super(EdgeTextInfo,charInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
+			charInfo.setEndPoint(lastCharInfo,"startToStart")
+			if charInfo.text or charInfo._hasEmbedded():
+				break
+			lastCharInfo.setEndPoint(charInfo,"startToEnd")
+			charInfo.collapse(True)
+		return range
 
 	def _get_role(self):
 		role=super(EdgeNode,self).role
@@ -317,6 +387,15 @@ class EdgeNode(UIA):
 		if self.role in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
 			states.add(controlTypes.STATE_CLICKABLE)
 		return states
+
+	def _get_description(self):
+		ariaProperties=self.UIAElement.currentAriaProperties
+		if 'describedby=' in ariaProperties:
+			try:
+				return self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
+			except COMError:
+				pass
+		return super(EdgeNode,self).description
 
 class EdgeList(EdgeNode):
 
