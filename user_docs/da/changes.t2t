@@ -3,21 +3,24 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2016.3 = 
+= 2016.4 = 
 
 == Nye Funktioner ==
-- Gennemsynstilstand kan nu bruges til læsning af PDF-dokumenter i Microsoft Edge. (#5740)
-- Gennemstreget og dobbelt genemstreget er nu annoncéret i Microsoft Word hvis passende. (#5800)
-- Titlen af en tabel vil nu blive rapporteret i Microsoft Word hvis tabellen er navngivet. Hvis der er en tabelbeskrivelse, kan den vises ved brug af kommandoen "Åbn lang beskrivelse" (NVDA+D) i gennemsynstilstand. (#5943)
-- NVDA vil nu rapporterer positionsinformation i Microsoft Word  når du flytter afsnit (alt+skift+pil ned og alt+skift+pil op). (#5945)
+- NVDA kan nu rapportere linjeindrykning ved brug af toner. Dette kan konfigureres ved brug af combo boksen "Rapporter linjeindrykning med" i dialogen med indstillinger for dokumentformatering. (#5906)
+- Understøttelse for Orbit Reader 20 punktdisplay. (#6007)
+- En indstilling til at åbne talevisning ved opstart er blevet tilføjet. (#5050)
+- Når vinduet med talevisning åbnes, vil placeringen og dimensionerne af vinduet blive gendannet. (#5050)
+- Felter til brug af krydshenvisninger behandles nu som links. De rapporteres som links, og kan blive aktiveret. (#6102)
 
 
 == Fejlrettelser ==
-- Når gennemsynstilstand benyttes i Microsoft Word, vil formateringen blive bevaret når tekst kopieres til udklipsholderen. (#5956)
-- NVDA vil nu annoncére passende information når der benyttes Words egne kommandoer for tabelnavigation (Alt+hjem, alt+end, alt+side op og alt+side ned) samt kommandoer for udvælgelse af tabeller (skift tilføjet til ovenstående navigationskommandoer). (#5961)
+- Rettede en sjælden fejl der opstod, når talevisning var åben og NVDA afsluttes. (#5050)
+- Billedmapper gengives nu som forventet i gennemsynstilstand i Mozilla Firefox. (#6051)
+- Rettede en fejl som skrev en advarsel til NVDAs logfil, når CAPS Lock er slået til. 
+(#6127)
 
 
-=== Ændringer for udviklere ===
+== Ændringer for udviklere ==
 For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
 
 

@@ -1078,6 +1078,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.colorCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
+		self.commentsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report co&mments"))
+		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
+		settingsSizer.Add(self.commentsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.revisionsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &editor revisions"))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
 		settingsSizer.Add(self.revisionsCheckBox,border=10,flag=wx.BOTTOM)
@@ -1106,12 +1111,26 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report line &numbers"))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This message is presented in the document formatting settings dialogue
-		# If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-		#
-		self.lineIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation"))
-		self.lineIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportLineIndentation"])
-		settingsSizer.Add(self.lineIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox controlling the reporting of line indentation in the
+		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report line &indentation with:")))
+		indentChoices=[
+			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+			_("Off"),
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+			_("Speech"),
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+			_("Tones"),
+			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+			_("Both  Speech and Tones")
+		]
+		self.lineIndentationCombo = wx.Choice(self,wx.ID_ANY,choices=indentChoices)
+		#We use bitwise opperations because it saves us a four way if statement.
+		curChoice = config.conf["documentFormatting"]["reportLineIndentationWithTones"] << 1 |  config.conf["documentFormatting"]["reportLineIndentation"]
+		self.lineIndentationCombo.SetSelection(curChoice)
+		sizer.Add(self.lineIndentationCombo)
+		settingsSizer.Add(sizer)
 		# Translators: This message is presented in the document formatting settings dialogue
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		self.paragraphIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraph indentation"))
@@ -1182,6 +1201,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
@@ -1189,7 +1209,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportLineIndentation"]=self.lineIndentationCheckBox.IsChecked()
+		choice = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["reportLineIndentation"] = choice in (1, 3)
+		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = choice in (2, 3)
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
@@ -1246,12 +1268,23 @@ class DictionaryEntryDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
 		self.patternTextCtrl.SetFocus()
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 
 	def getType(self):
 		typeRadioValue = self.typeRadioBox.GetSelection()
 		if typeRadioValue == wx.NOT_FOUND:
 			return speechDictHandler.ENTRY_TYPE_ANYWHERE
 		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
+
+	def onOk(self,evt):
+		try:
+			self.dictEntry=speechDictHandler.SpeechDictEntry(self.patternTextCtrl.GetValue(),self.replacementTextCtrl.GetValue(),self.commentTextCtrl.GetValue(),bool(self.caseSensitiveCheckBox.GetValue()),self.getType())
+		except Exception as e:
+			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
+			# Translators: This is an error message to let the user know that the dictionary entry is not valid.
+			gui.messageBox(_("Regular Expression error: \"%s\".")%e, _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+			return 
+		evt.Skip()
 
 	def setType(self, type):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
@@ -1288,6 +1321,7 @@ class DictionaryDialog(SettingsDialog):
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
+		self.dictList.Bind(wx.EVT_CHAR, self.onListChar)
 		entriesSizer.Add(self.dictList,proportion=8)
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
@@ -1310,6 +1344,16 @@ class DictionaryDialog(SettingsDialog):
 	def postInit(self):
 		self.dictList.SetFocus()
 
+	def onListChar(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
+			# Activate the OK button.
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+		else:
+			evt.Skip()
+
 	def onCancel(self,evt):
 		globalVars.speechDictionaryProcessing=True
 		super(DictionaryDialog, self).onCancel(evt)
@@ -1326,7 +1370,7 @@ class DictionaryDialog(SettingsDialog):
 		# Translators: This is the label for the add dictionary entry dialog.
 		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType()))
+			self.tempSpeechDict.append(entryDialog.dictEntry)
 			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],DictionaryDialog.TYPE_LABELS[entryDialog.getType()]))
 			index=self.dictList.GetFirstSelected()
 			while index>=0:
@@ -1351,7 +1395,7 @@ class DictionaryDialog(SettingsDialog):
 		entryDialog.caseSensitiveCheckBox.SetValue(self.tempSpeechDict[editIndex].caseSensitive)
 		entryDialog.setType(self.tempSpeechDict[editIndex].type)
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict[editIndex]=speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType())
+			self.tempSpeechDict[editIndex]=entryDialog.dictEntry
 			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
@@ -1618,32 +1662,53 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer.Add(self.symbolsList)
 		settingsSizer.Add(sizer)
 
-		# Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change symbol")), wx.VERTICAL)
+		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change selected symbol")), wx.VERTICAL)
+
+		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More 
+		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
+		# to allow the default handling to take place. The command events are, however, normally not skipped as usually 
+		# a single command such as a button click or menu item selection must only be processed by one handler."
+		def skipEventAndCall(handler):
+			def wrapWithEventSkip(event):
+				if event:
+					event.Skip()
+				return handler()
+			return wrapWithEventSkip
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
 		self.replacementEdit = wx.TextCtrl(self, wx.ID_ANY)
-		self.replacementEdit.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 		sizer.Add(self.replacementEdit)
 		changeSizer.Add(sizer)
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[
 			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
-		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		self.levelList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Send actual symbol to synthesizer")))
 		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
 		self.preserveList = wx.Choice(self, wx.ID_ANY,choices=[
 			symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES])
-		self.preserveList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		self.preserveList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 		sizer.Add(self.preserveList)
 		changeSizer.Add(sizer)
+
+		# disable the "change symbol" controls until a valid item is selected.
+		self.replacementEdit.Disable()
+		self.levelList.Disable()
+		self.preserveList.Disable()
+
 		settingsSizer.Add(changeSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
@@ -1667,26 +1732,30 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
 		self.symbolsList.SetStringItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
 
-	def onSymbolEdited(self, evt):
-		if self.editingItem is None:
-			return
-		# Update the symbol the user was just editing.
-		item = self.editingItem
-		symbol = self.symbols[item]
-		symbol.replacement = self.replacementEdit.Value
-		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
-		symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
-		self.updateListItem(item, symbol)
+	def onSymbolEdited(self):
+		if self.editingItem is not None:
+			# Update the symbol the user was just editing.
+			item = self.editingItem
+			symbol = self.symbols[item]
+			symbol.replacement = self.replacementEdit.Value
+			symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+			symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
+			self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
 		# Update the editing controls to reflect the newly selected symbol.
 		item = evt.GetIndex()
 		symbol = self.symbols[item]
 		self.editingItem = item
-		self.replacementEdit.Value = symbol.replacement
+		# ChangeValue and Selection property used because they do not cause EVNT_CHANGED to be fired.
+		self.replacementEdit.ChangeValue(symbol.replacement)
 		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
 		self.preserveList.Selection = characterProcessing.SPEECH_SYMBOL_PRESERVES.index(symbol.preserve)
 		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
+		self.replacementEdit.Enable()
+		self.levelList.Enable()
+		self.preserveList.Enable()
+		evt.Skip()
 
 	def onListChar(self, evt):
 		if evt.KeyCode == wx.WXK_RETURN:
@@ -1695,7 +1764,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 			# Therefore, we must catch the enter key here.
 			# Activate the OK button.
 			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-
 		else:
 			evt.Skip()
 
@@ -1747,7 +1815,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.SetFocus()
 
 	def onOk(self, evt):
-		self.onSymbolEdited(None)
+		self.onSymbolEdited()
 		self.editingItem = None
 		for symbol in self.pendingRemovals.itervalues():
 			self.symbolProcessor.deleteSymbol(symbol)

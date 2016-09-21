@@ -418,6 +418,11 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
+			# #6219: Outlook 2016 started exposing the draft column as a text node.
+			# Users reportedly find this extremely annoying.
+			# Thus we filter it out.
+			if self.appModule.outlookVersion>=16 and e.cachedClassName=="DraftFlagField":
+				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
 			if name and config.conf['documentFormatting']['reportTableHeaders']:

@@ -22,6 +22,7 @@ import api
 import winInputHook
 import inputCore
 import tones
+import core
 
 ignoreInjected=False
 
@@ -424,7 +425,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def reportExtra(self):
 		if self.vkCode in self.TOGGLE_KEYS:
-			wx.CallLater(30, self._reportToggleKey)
+			core.callLater(30, self._reportToggleKey)
 
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
