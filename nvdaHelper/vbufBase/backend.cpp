@@ -18,13 +18,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <remote/nvdaHelperRemote.h>
 #include <common/log.h>
 #include <remote/nvdaControllerInternal.h>
+#include <remote/inProcess.h>
 #include "storage.h"
 #include "backend.h"
 
 using namespace std;
-
-const UINT VBufBackend_t::wmRenderThreadInitialize=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadInitialize");
-const UINT VBufBackend_t::wmRenderThreadTerminate=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadTerminate");
 
 VBufBackendSet_t VBufBackend_t::runningBackends;
 
@@ -36,17 +34,13 @@ void VBufBackend_t::initialize() {
 	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);
-	// Using SendMessage here causes outgoing cross-process COM calls to fail with RPC_E_CANTCALLOUT_ININPUTSYNCCALL,
-	// which breaks us for Firefox multi-process. See Mozilla bug 1297549 comment 14.
-	// Use PostMessage instead.
-	registerWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
-	LOG_DEBUG(L"Registered hook, posting message...");
-	HANDLE event=CreateEvent(NULL,TRUE,FALSE,NULL);
-	PostMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadInitialize,(WPARAM)this,(LPARAM)event);
-	LOG_DEBUG(L"Waiting on event for completion");
-	WaitForSingleObject(event,INFINITE);
-	LOG_DEBUG(L"Completed, unregistering hook");
-	unregisterWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
+	auto func = [&] {
+		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<this);
+		this->renderThread_initialize();
+	};
+	LOG_DEBUG(L"Calling execInWindow");
+	execInWindow((HWND)UlongToHandle(rootDocHandle),func);
+	LOG_DEBUG(L"execInWindow complete");
 }
 
 void VBufBackend_t::forceUpdate() {
@@ -69,20 +63,6 @@ LRESULT CALLBACK VBufBackend_t::destroy_callWndProcHook(int code, WPARAM wParam,
 			}
 		}
 	}
-	return 0;
-}
-
-LRESULT CALLBACK VBufBackend_t::renderThread_getMessageHook(int code, WPARAM wParam,LPARAM lParam) {
-	MSG* pmsg=(MSG*)lParam;
-	if(pmsg->message==wmRenderThreadInitialize) {
-		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<pmsg->wParam);
-		((VBufBackend_t*)(pmsg->wParam))->renderThread_initialize();
-	} else if((pmsg->message==wmRenderThreadTerminate)) {
-		LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<pmsg->wParam);
-		((VBufBackend_t*)(pmsg->wParam))->renderThread_terminate();
-	}
-	LOG_DEBUG(L"Signalling completion using event");
-	SetEvent((HANDLE)pmsg->lParam);
 	return 0;
 }
 
@@ -250,14 +230,13 @@ void VBufBackend_t::terminate() {
 		LOG_DEBUG(L"Render thread not terminated yet");
 		int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 		LOG_DEBUG(L"render threadID "<<renderThreadID);
-		registerWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
-		LOG_DEBUG(L"Registered hook, posting message...");
-		HANDLE event=CreateEvent(NULL,TRUE,FALSE,NULL);
-		PostMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadTerminate,(WPARAM)this,(LPARAM)event);
-		LOG_DEBUG(L"Waiting on event for completion");
-		WaitForSingleObject(event,INFINITE);
-		LOG_DEBUG(L"Completed, unregistering hook");
-		unregisterWindowsHook(WH_GETMESSAGE,renderThread_getMessageHook);
+		auto func = [&] {
+			LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<this);
+			this->renderThread_terminate();
+		};
+		LOG_DEBUG(L"Calling execInWindow");
+		execInWindow((HWND)UlongToHandle(rootDocHandle),func);
+		LOG_DEBUG(L"execInWindow complete");
 	} else {
 		LOG_DEBUG(L"render thread already terminated");
 	}

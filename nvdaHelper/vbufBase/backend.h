@@ -31,13 +31,9 @@ typedef std::set<VBufBackend_t*> VBufBackendSet_t;
 class VBufBackend_t  : public VBufStorage_buffer_t {
 	private:
 
-	static const UINT wmRenderThreadInitialize;
-	static const UINT wmRenderThreadTerminate;
-
 /**
- * A callback to manage Initialize and termination of code in the render thread of backends.
+ * A callback to handle windows being destroyed.
  */
-	static LRESULT CALLBACK renderThread_getMessageHook(int code, WPARAM wParam, LPARAM lParam);
 static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
 
 /**
