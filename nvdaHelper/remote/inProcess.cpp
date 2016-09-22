@@ -117,6 +117,14 @@ LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam
 	if(code<0||wParam==PM_NOREMOVE) {
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
+	MSG* pmsg=(MSG*)lParam;
+	if(pmsg->message==wm_execInWindow) {
+		execInWindow_funcType* func=(execInWindow_funcType*)(pmsg->wParam);
+		if(func) (*func)();
+		// Signal completion to execInWindow.
+		SetEvent((HANDLE)pmsg->lParam);
+		return 0;
+	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
 	windowsHookRegistry_t hookProcs=inProcess_registeredGetMessageWindowsHooks;
 	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();++i) {
@@ -129,13 +137,6 @@ LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam
 LRESULT CALLBACK inProcess_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	if(code<0) {
 		return CallNextHookEx(0,code,wParam,lParam);
-	}
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
-	if(pcwp->message==wm_execInWindow) {
-		execInWindow_funcType* func=(execInWindow_funcType*)(pcwp->wParam);
-		void* data=(void*)(pcwp->lParam);
-		if(func) (*func)(data);
-		return 0;
 	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
 	windowsHookRegistry_t hookProcs=inProcess_registeredCallWndProcWindowsHooks;
@@ -156,6 +157,11 @@ void CALLBACK inProcess_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	}
 }
 
-void execInWindow(HWND hwnd, execInWindow_funcType func,void* data) {
-	SendMessage(hwnd,wm_execInWindow,(WPARAM)&func,(LPARAM)data);
+void execInWindow(HWND hwnd, execInWindow_funcType func) {
+	// Using SendMessage here causes outgoing cross-process COM calls to fail with RPC_E_CANTCALLOUT_ININPUTSYNCCALL,
+	// which breaks us for Firefox multi-process. See Mozilla bug 1297549 comment 14.
+	// Use PostMessage instead.
+	HANDLE event=CreateEvent(NULL,TRUE,FALSE,NULL);
+	PostMessage(hwnd,wm_execInWindow,(WPARAM)&func,(LPARAM)event);
+	WaitForSingleObject(event,INFINITE);
 }
