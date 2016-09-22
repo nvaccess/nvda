@@ -1,6 +1,6 @@
 #api.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2016 NV Access Limited, NVDA Contributors, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -181,6 +181,7 @@ def setReviewPosition(reviewPosition,clearNavigatorObject=True):
 	if clearNavigatorObject: globalVars.navigatorObject=None
 	import braille
 	braille.handler.handleReviewMove()
+	eventHandler.executeEvent("becomeReviewObject",globalVars.reviewPositionObj, reviewPosition=globalVars.reviewPosition)
 
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
