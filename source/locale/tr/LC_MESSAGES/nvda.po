@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-12 21:13+0300\n"
+"POT-Creation-Date: 2016-09-02 00:10+1000\n"
+"PO-Revision-Date: 2016-09-21 17:18+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,967,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
@@ -1481,7 +1481,7 @@ msgid "bright {color}"
 msgstr "parlak {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
@@ -2279,11 +2279,11 @@ msgstr "Gizlenmiş"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
-msgstr ""
+msgstr "kırpılmış "
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
-msgstr ""
+msgstr "taşan"
 
 #. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
 msgid "unlocked"
@@ -2390,6 +2390,7 @@ msgid "Mouse"
 msgstr "Fare"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Konuşma"
 
@@ -4395,7 +4396,7 @@ msgstr "İtalik yok"
 #. Translators: Reported when text is formatted with double strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
-msgstr ""
+msgstr "çift üstü çizili"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -4534,6 +4535,10 @@ msgstr "{columnCount} sütunlu ve {rowCount} satırlı tablo"
 
 msgid "NVDA Speech Viewer"
 msgstr "NVDA konuşma görüntüleyici"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&Konuşma Görüntüleyiciyi Başlangıçta Göster"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -5394,8 +5399,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 serisi"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH braille ekranları"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/orbit braille ekranları"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -6970,11 +6975,22 @@ msgstr "&Sayfa değişikliklerini bildir"
 msgid "Report line &numbers"
 msgstr "Satır nu&maralarını bildir"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Satır gi&rintilerini bildir"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "Satır gi&rintilerinin bildirimi"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "Kapalı"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Ses çalarak"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Konuşarak ve ses çalarak"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7375,78 +7391,77 @@ msgstr "Otomatik"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 msgid "diagonal crosshatch"
-msgstr ""
+msgstr "diyagonal çapraz tarama"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "thin diagonal crosshatch"
-msgstr ""
+msgstr "ince diyagonal çapraz tarama "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
 msgid "reverse diagonal stripe"
-msgstr ""
+msgstr "ters çapraz şerit"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
 #, no-python-format
 msgid "12.5% gray"
-msgstr ""
+msgstr "%12.5 gri "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
 #, no-python-format
 msgid "25% gray"
-msgstr ""
+msgstr "% 25 gri "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
 #, no-python-format
 msgid "50% gray"
-msgstr ""
+msgstr "% 50 gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
 #, no-python-format
 msgid "75% gray"
-msgstr ""
+msgstr "% 75 gri "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
 #, no-python-format
 msgid "6.25% gray"
-msgstr ""
+msgstr "%6.25 gri "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
 msgid "thin horizontal crosshatch"
-msgstr ""
+msgstr "ince yatay çapraz tarama "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
 msgid "horizontal stripe"
-msgstr ""
+msgstr "yatay çizgili"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
 msgid "thin reverse diagonal stripe"
-msgstr ""
+msgstr "ince ters diyagonal çizgili "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
 msgid "thin horizontal stripe"
-msgstr ""
+msgstr "ince yatay çizgili "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
 msgid "thin diagonal stripe"
-msgstr ""
+msgstr "ince diyagonal çizgili "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#, fuzzy
 msgid "thin vertical stripe"
-msgstr "Dikey hiza dağıtılmış"
+msgstr "ince dikey çizgili "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7456,31 +7471,30 @@ msgstr "hiçbiri"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "thick diagonal crosshatch"
-msgstr ""
+msgstr "kalın diyagonal çapraz tarama "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
 msgid "solid"
-msgstr ""
+msgstr "Düz"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
 msgid "diagonal stripe"
-msgstr ""
+msgstr "Diyagonal çizgili "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#, fuzzy
 msgid "vertical stripe"
-msgstr "Dikey hiza dağıtılmış"
+msgstr "dikey şerit "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
-msgstr ""
+msgstr "doğrusal Gradyan"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
-msgstr ""
+msgstr "dikdörtgen Gradyan"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
@@ -7614,352 +7628,352 @@ msgstr "{firstAddress} {firstContent} ve {lastAddress} {lastContent} arasında"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
-msgstr ""
+msgstr "3-B Alan"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr ""
+msgstr "3-B Yığılmış Alan "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
-msgstr ""
+msgstr "%100 Yığılmış Alan "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
-msgstr ""
+msgstr "3-B Kümelenmiş Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr ""
+msgstr "3-B Yığılmış Çubuk "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr ""
+msgstr "3-B %100 Yığılmış Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
-msgstr "3D sütun"
+msgstr "3-B sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
-msgstr ""
+msgstr "3-B Kümelenmiş Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr ""
+msgstr "3-B Yığılmış Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr ""
+msgstr "3-B %100 Yığılmış Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr ""
+msgstr "3-B Çizgi"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr ""
+msgstr "3-B Pasta "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
-msgstr ""
+msgstr "Ayrılmış 3-B Pasta "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
-msgstr ""
+msgstr "Alan"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
-msgstr ""
+msgstr "Yığılmış Alan"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
-msgstr ""
+msgstr "Kümelenmiş Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bar of Pie"
-msgstr ""
+msgstr "Pasta çubuğu"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr ""
+msgstr "Yığılmış Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr ""
+msgstr "Yüzde 100 Yığılmış çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
-msgstr ""
+msgstr "Kabarcık"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
-msgstr ""
+msgstr "3-B efektli kabarcık"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
-msgstr ""
+msgstr "Kümelenmiş Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Column"
-msgstr ""
+msgstr "Yığılmış Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr ""
+msgstr "%100 Yığılmış Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
-msgstr ""
+msgstr "Kümelenmiş Koni Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
-msgstr ""
+msgstr "Yığılmış Koni Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
-msgstr ""
+msgstr "Yüzde 100 Koni Yığılmış Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr ""
+msgstr "3D Koni Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Column"
-msgstr ""
+msgstr "Kümelenmiş Koni Sütun "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
-msgstr ""
+msgstr "Yığılmış Koni Sütun "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
-msgstr ""
+msgstr "Yüzde 100 Koni Yığılmış Sütun "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
-msgstr ""
+msgstr "Kümelenmiş Silindir Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
-msgstr ""
+msgstr "Yığılmış Silindir Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
-msgstr ""
+msgstr "Yüzde 100 Silindir Yığılmış Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr ""
+msgstr "3D Silindir Sütun "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
-msgstr ""
+msgstr "Yüzde 100 Silindir Yığılmış Sütun "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
-msgstr ""
+msgstr "Halka"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
-msgstr ""
+msgstr "ayrılmış halka"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr ""
+msgstr "Çizgi"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
-msgstr ""
+msgstr "İşaretçileri olan çizgi"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
-msgstr ""
+msgstr "İşaretçileriyle yığılmış Çizgi "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr ""
+msgstr "İşaretçileriyle ile %100 Yığılmış Çizgi "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
-msgstr ""
+msgstr "Yığılmış Çizgi "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr ""
+msgstr "%100 Yığılmış Çizgi "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie"
-msgstr ""
+msgstr "Pasta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
-msgstr ""
+msgstr "Ayrılmış Pasta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
-msgstr ""
+msgstr "Pasta pastası"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
-msgstr ""
+msgstr "Kümelenmiş Piramit Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
-msgstr ""
+msgstr "Yığılmış Piramit Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
-msgstr ""
+msgstr "Yüzde 100 Piramit Yığılmış Çubuk"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
-msgstr ""
+msgstr "3-B Piramit Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Column"
-msgstr ""
+msgstr "Kümelenmiş Piramit Sütun"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
-msgstr ""
+msgstr "Yığılmış Piramit Sütun "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
-msgstr ""
+msgstr "Yüzde 100 Piramit Yığılmış Sütun "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar"
-msgstr ""
+msgstr "Radar"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
-msgstr ""
+msgstr "Doldurulmuş Radar"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
-msgstr ""
+msgstr "Veri İşaretçileri ile Radar"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
-msgstr ""
+msgstr "High-Low-Close"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr ""
+msgstr "Open-High-Low-Close"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
-msgstr ""
+msgstr "Volume-High-Low-Close"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
-msgstr ""
+msgstr "Volume-Open-High-Low-Close"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
-msgstr ""
+msgstr "3-B Yüzey "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
-msgstr ""
+msgstr "(kontur) Yüzey"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
-msgstr ""
+msgstr "(kontur tel çerçeve) yüzey"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr ""
+msgstr "(Tel çerçeve) 3-B Yüzey "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
-msgstr ""
+msgstr "XY (Dağılım) "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines"
-msgstr ""
+msgstr "Çizgilerle dağılım"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
-msgstr ""
+msgstr "Veri İşaretleri olmadan Çizgilerle dağılım "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
-msgstr ""
+msgstr "Düzgünleştirilmiş çizgilerle dağılım "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr ""
+msgstr "Veri İşaretleri olmadan düz çizgilerle dağılım "
 
 #. Translators: Message reporting the title and type of a chart.
 #, python-brace-format
@@ -7992,7 +8006,7 @@ msgstr "Dizi"
 #. For example, this might report "Category axis is month"
 #, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
-msgstr ""
+msgstr "{axisName} Eksen {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
@@ -8001,7 +8015,7 @@ msgstr "Bu grafikte bir dizi var"
 #. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
-msgstr ""
+msgstr "bu grafikte Toplam %d dizi var"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #, python-brace-format
@@ -8010,16 +8024,16 @@ msgstr "Dizi {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
-msgstr ""
+msgstr "Tanımlanmış dizi yok"
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
-msgstr ""
+msgstr "dilim"
 
 #. Translators: A column in a column chart.
 msgctxt "chart"
 msgid "column"
-msgstr ""
+msgstr "sütun grafik"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
@@ -8035,51 +8049,51 @@ msgstr "Dizi rengi: {colorName} "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
-msgstr ""
+msgstr "Görüntü Birimi Etiketi"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
-msgstr ""
+msgstr "Ana Kılavuz Çizgileri"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Minor Gridlines"
-msgstr ""
+msgstr "İkincil Kılavuz Çizgiler"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Drop Zone"
-msgstr ""
+msgstr "Özet Grafik İndirme Bölgesi"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
-msgstr ""
+msgstr "Özet Grafik Alan Düğmesi"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Down Bars"
-msgstr ""
+msgstr "Aşağıya Çubuklar"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Drop Lines"
-msgstr ""
+msgstr "Damla çizgiler"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
-msgstr ""
+msgstr "Hi Lo Lines"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
-msgstr ""
+msgstr "Radar Eksen Etiketleri"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Series Lines"
-msgstr ""
+msgstr "Dizi Çizgileri"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
-msgstr ""
+msgstr "Up Bars"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
-msgstr ""
+msgstr "Köşeler"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Table"
@@ -8087,31 +8101,31 @@ msgstr "Veri Tablosu"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Floor"
-msgstr ""
+msgstr "Zemin"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Nothing"
-msgstr ""
+msgstr "Hiçbir şey"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
-msgstr ""
+msgstr "Duvarlar"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Label"
-msgstr ""
+msgstr "Veri Etiketi"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Error Bars"
-msgstr ""
+msgstr "Hata Çubukları"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "X Error Bars"
-msgstr ""
+msgstr "X Hata Çubukları"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Y Error Bars"
-msgstr ""
+msgstr "Y Hata Çubukları"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Shape"
@@ -8121,35 +8135,35 @@ msgstr "şekil"
 #. For example, this might report "foo series 1 of 2"
 #, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "{seriesName} dizisi {seriesIndex} bölü {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr ""
+msgstr "{previousIndex} noktasından sonra değişiklik yok "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "{previousIndex} noktasından sonra {incrementValue} artış, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "{previousIndex} noktasından sonra {decrementValue} azalma"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}:"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr "Kategori {categoryAxisData}: "
+msgstr "{categoryAxisData} kategorisi: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
@@ -8162,20 +8176,20 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 #, python-brace-format
 msgid "value {valueAxisData}"
-msgstr "değer {valueAxisData}"
+msgstr "{valueAxisData} değeri"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 #, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
+msgstr " kesir {fractionValue:.2f} Yüzde dilim {pointIndex} bölü {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
 #, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr ""
+msgstr " {segmentType} {pointIndex} bölü {pointCount}"
 
 #. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
@@ -8203,16 +8217,16 @@ msgstr "Grafik eksen başlığı"
 #. Translators: Indicates a trendline in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "trendline"
-msgstr ""
+msgstr "trendline"
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
 msgid " squared "
-msgstr ""
+msgstr " Kare"
 
 #. Translators: Details about a chart title in Microsoft Excel.
 #, python-brace-format
 msgid "Chart title: {chartTitle}"
-msgstr ""
+msgstr "Grafik Başlığı: {chartTitle}"
 
 #. Translators: Indicates an untitled chart in Microsoft Excel.
 msgid "Untitled chart"
@@ -8224,6 +8238,8 @@ msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
+"Grafik alanı, yükseklik: {chartAreaHeight}, genişlik: {chartAreaWidth}, üst: "
+"{chartAreaTop}, sol: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
@@ -8236,25 +8252,29 @@ msgid ""
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
 "{plotAreaInsideLeft:.0f}"
 msgstr ""
+"Çizim alanı, iç yükseklik: {plotAreaInsideHeight:.0f}, iç genişlik: "
+"{plotAreaInsideWidth:.0f}, iç üst: {plotAreaInsideTop:.0f}, sol iç: "
+"{plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
-msgstr ""
+msgstr "Çizim alanı"
 
 #. Translators: Indicates the legend in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend"
-msgstr ""
+msgstr "Gösterge"
 
 #. Translators: Indicates that there is no legend in a Microsoft Excel chart.
 msgid "No legend"
-msgstr ""
+msgstr "Gösterge yok"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
 #, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
+"dizi için gösterge girişi {seriesName} {seriesIndex} bölü {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -8262,6 +8282,7 @@ msgstr ""
 #, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
+"Dizi için gösterge anahtarı {seriesName} {seriesIndex} bölü {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8285,11 +8306,11 @@ msgstr "Görüntüleme alanı"
 
 #. Translators: a Microsoft Word revision type (reconcile)
 msgid "reconcile"
-msgstr "Bağdaştır"
+msgstr "bağdaşma"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
 msgid "conflict"
-msgstr "Bağdaşmazlık"
+msgstr "çatışma"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
@@ -8373,7 +8394,7 @@ msgstr ""
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
-msgstr "Bir"
+msgstr "Tek"
 
 #. Translators: double line spacing
 msgctxt "line spacing value"
