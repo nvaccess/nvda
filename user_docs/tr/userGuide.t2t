@@ -1232,6 +1232,17 @@ Varsayılan olarak NVDA sistem düzenleme imleci veya inceleme imlecinin bulundu
  
 Biçimlendirmenin önemli olduğu Microsoft Word belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
 
+==== Satır girintilerini bildirme alternatifleri ====
+Bu seçenek, satır başlarındaki boşlukların nasıl bildirileceğini belirlemenize olanak tanır.
+Satır girintilerininin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
+
+- Kapalı: NVDA girintilerle ilgili herhangi bir bildirimde bulunmaz.
+- Konuşma: Konuşma seçilirse, girinti miktarı değiştiğinde, NVDA "oniki aralık" veya "dört sekme" gibi bir şey söyler.
+- Ses çalarak: Ses çalarak seçeneği tercih edilirse, girinti miktarı değiştiğinde, çalınan ses girindideki değişim miktarını belirtir.
+Çalınan sesin perdesi  her bir aralık için artar, ve her bir sekme için sesin perdesi  dört aralığa karşılık gelecek şekilde artar.
+- Konuşarak ve ses çalarak: Bu seçenek girintinin yukarıdaki iki yolla da bildirimini sağlar.
+-
+
 +++ Konuşma Sözlükleri +++
 Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük veya öbeklerin NVDA tarafından nasıl söyleneceğini ayarlayabileceğiniz iletişim kutularını içermektedir.
 şu an itibariyle 3 farklı konuşma sözlüğü bulunmaktadır.
@@ -1690,19 +1701,25 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | alt+shift+tab tuşu | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille Ekranlar ++
-Birçok [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] ekran USB veya Bluetooth ile bağlandıklarında desteklenmektedir.
+++ Baum/Humanware/APH Braille/Orbit Ekranlar ++
+Birçok [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/],  [APH http://www.aph.org/] ve [Orbit http://www.orbitresearch.com/] ekran USB veya Bluetooth ile bağlandıklarında desteklenmektedir.
 Bunlardan bazıları şunlardır:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 henüz test edilmemelerine karşın, Baum tarafından desteklenen başka ekranlar da NVDA ile çalışabilir.
 
-Eğer VarioUltra, Pronto! veya Refreshabraille dışındaki ekranlara USB ile bağlanılıyorsa, öncelikle üretici tarafından sağlanan sürücüyü yüklemeniz gerekmektedir.
+If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
+The VarioUltra and Pronto! use HID.
+The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
 
-Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
-Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
+The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
+USB HID should generally be used instead.
+
+Following are the key assignments for these displays with NVDA.
+Please see your display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
 | Braille ekranı geri kaydırma | d2 |
