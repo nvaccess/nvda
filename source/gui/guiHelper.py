@@ -6,6 +6,7 @@
 #See the file COPYING for more details.
 
 import wx
+from wx.lib import scrolledpanel
 
 """ Example usage
 
@@ -254,7 +255,7 @@ class BoxSizerHelper(object):
 		if isinstance(item, LabeledControlHelper):
 			raise NotImplementedError("Use addLabeledControl instead")
 
-		if isinstance(toAdd, wx.StaticBoxSizer):
+		if isinstance(toAdd, (wx.StaticBoxSizer, scrolledpanel.ScrolledPanel)):
 			keywordArgs.update({'flag':wx.EXPAND,})
 
 		if shouldAddSpacer:
