@@ -361,9 +361,9 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Aktuelle Zeile unter dem NVDA-Cursor ansagen | Nummerntaste 8 | NVDA+Umschalt+Punkt | Keine | Sagt die aktuelle Zeile im Text an, in der sich der NVDA-Cursor befindet. Bei zweimal Drücken wird sie buchstabiert, bei dreimaligem Drücken wird die Zeile phonetisch buchstabiert. |
 | Zur nächsten Zeile springen | Nummerntaste 9 | NVDA+Pfeiltaste nach unten | Nach unten streichen (Textmodus) | Zieht den NVDA-Cursor zur nächsten Zeile des Textes. |
 | Zur untersten Zeile springen | Umschalt+Nummerntaste 9 | NVDA+strg+Ende | Keine | Zieht den NVDA-Cursor in die letzte Zeile des Textes. |
-| Zum vorherigen Wort springen | Num 4 | NVDA+STRG+Pfeiltaste nach links | Nach links streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum vorherigen Wort im Text. |
-| Aktuelles Wort unter dem NVDA-Cursor ansagen | Num 5 | NVDA+STRG+Punkt | Keine | Sagt das aktuelle Wort im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird es buchstabiert, bei dreimaligem Drücken wird das Wort phonetisch buchstabiert. |
-| Zum nächsten Wort springen | Num 6 | NVDA+STRG+Pfeiltaste nach rechts | Nach rechts streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum nächsten Wort im Text. |
+| Zum vorherigen Wort springen | Num 4 | NVDA+Strg+Pfeiltaste nach links | Nach links streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum vorherigen Wort im Text. |
+| Aktuelles Wort unter dem NVDA-Cursor ansagen | Num 5 | NVDA+Strg+Punkt | Keine | Sagt das aktuelle Wort im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird es buchstabiert, bei dreimaligem Drücken wird das Wort phonetisch buchstabiert. |
+| Zum nächsten Wort springen | Num 6 | NVDA+Strg+Pfeiltaste nach rechts | Nach rechts streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum nächsten Wort im Text. |
 | Zum Zeilenanfang springen | Umschalt+Nummerntaste 1 | NVDA+Pos1 | Keine | Zieht den NVDA-Cursor zum Zeilenanfang im Text. |
 | Zum vorherigen Zeichen springen | Num 1 | NVDA+NVDA+Pfeiltaste nach links | Nach links streichen (Textmodus) | Zieht den NVDA-Cursor zum vorherigen Zeichen der aktuellen Zeile im Text. |
 | Aktuelles Zeichen unter dem NVDA-Cursor ansagen | Num 2 | NVDA+Punkt | Sagt das aktuelle Zeichen in der Zeile im Text an, an dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird das Zeichen phonetisch buchstabiert, bei dreimaligem Drücken werden die numerischen Dezimal- und Hexadezimalwerte angesagt. |
@@ -465,7 +465,7 @@ Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der
 | Zwischen Lese- und Fokusmodus wechseln | NVDA+Leertaste | Schaltet zwischen Fokus- und Lesemodus um. |
 | Fokus-Modus schließen | Escape-Taste | Schaltet zurück in den Lesemodus, wenn zuvor der Fokusmodus automatisch aktiviert wurde. |
 | Lese-Modus aktualisieren | NVDA+F5 | lädt das aktuelle Dokument neu (sinnvoll, wenn vielleicht einige Elemente auf der Seite fehlen sollten. Dieser Befehl ist in Microsoft Word und in Outlook nicht verfügbar). |
-| Suchen | NVDA+STRG+F | Öffnet ein weiteres Fenster, in dem Sie einen Text eingeben können, der im aktuellen Dokument gesucht werden soll. |
+| Suchen | NVDA+Strg+F | Öffnet ein weiteres Fenster, in dem Sie einen Text eingeben können, der im aktuellen Dokument gesucht werden soll. |
 | Vorwärts suchen | NVDA+F3 | Sucht die nächste Zeichenkette des gesuchten Textes im aktuellen Dokument, welche zuvor eingegeben wurde. |
 | Rückwärts suchen | NVDA+Umschalt+F3 | Sucht die vorherige Zeichenkette des gesuchten Textes im aktuellen Dokument, die zuvor eingegeben wurde. |
 | ausführliche Beschreibung öffnen | NVDA+d | Öffnet ein neues Fenster, welches eine ausführliche Beschreibung für das aktuelle Objekt enthält, fals dieses eine ausführliche Beschreibung aufweist. |
@@ -532,7 +532,7 @@ Sofern das Objekt barierefrei gestaltet wurde, können Sie innerhalb dieses Obje
 Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukehren:
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
-| Zum Inhalt des Lesemodus zurückkehren | NVDA+STRG+Leertaste | Verlässt den Fokus des eingebetteten Objekts und kehrt in den Lesemodus zurück. |
+| Zum Inhalt des Lesemodus zurückkehren | NVDA+Strg+Leertaste | Verlässt den Fokus des eingebetteten Objekts und kehrt in den Lesemodus zurück. |
 %kc:endInclude
 
 + Lesen mathematischer Inhalte +
@@ -694,7 +694,7 @@ Hinweis: Der Befehl "verbleibende Zeit ausgeben" funktioniert nur, wenn die Stan
 %kc:beginInclude
 Innerhalb einer Konversation:
 || Name | Tastenkombination | Beschreibung |
-| Nachricht anzeigen | NVDA+STRG+1-0 | Setzt den NVDA-Cursor auf die zur Nummer passenden Nachricht NVDA+Strg+2 zeigt beispielsweise die vorletzte Nachricht an |
+| Nachricht anzeigen | NVDA+Strg+1 bis 0 | Setzt den NVDA-Cursor auf die zur Nummer passenden Nachricht NVDA+Strg+2 zeigt beispielsweise die vorletzte Nachricht an |
 %kc:endInclude
 
 + NVDA konfigurieren +
@@ -709,7 +709,7 @@ Einige Einstellungen können auch durch Kurztasten geändert werden. Diese Kurzt
 Beachten Sie, dass standardmäßig nicht alle Einstellungsdialoge mittels Tastenkombination, Berührungsgesten, etc.  aufgerufen werden können. 
 Falls Sie Dialoge öffnen wollen, die nicht über zugewiesene Tastenkombinationen verfügen, können Sie den [dialog Eingaben #InputGestures] verwenden, um eigene Tastenkombinationen zuzuweisen.
 
-+++ Allgemeine Einstellungen (NVDA+STRG+G) +++
++++ Allgemeine Einstellungen (NVDA+Strg+G) +++
 Sie finden die allgemeinen Einstellungen im Menü Einstellungen.
 Dieses Dialogfeld enthält die folgenden Optionen:
 
@@ -755,7 +755,7 @@ Diese Option ist nur in der installierten Version verfügbar!
 Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
 Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
 
-+++ Sprachausgabe (NVDA+STRG+S) +++
++++ Sprachausgabe (NVDA+Strg+S) +++
 Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden soll.
 Wenn Sie sich für eine Sprachausgabe Ihrer Wahl entschieden haben, klicken Sie auf die Schaltfläche "OK", damit anschließend die gewählte Sprachausgabe von NVDA geladen wird.
 Falls dabei ein Fehler auftritt, wird Ihnen eine Meldung angezeigt und NVDA verwendet wieder die zuvor verwendete Sprachausgabe.
@@ -781,7 +781,7 @@ Unter Windows 8 und neuer legen Sie mit Hilfe dieser Option fest, ob NVDA die La
 - Immer: NVDA reduziert die Lautstärke anderer Audio-Quellen so lange es läuft.
 -
 
-+++ Stimmeneinstellungen (NVDA+STRG+V) +++[VoiceSettings]
++++ Stimmeneinstellungen (NVDA+Strg+V) +++[VoiceSettings]
 Die Stimmeinstellungen, welche Sie im Menü Einstellungen finden, enthalten Optionen, mit deren Hilfe Sie den Klang der Sprache verändern können.
 Für einen schnellen alternativen Weg zum Ändern der Parameter der Sprachausgabe können Sie im Abschnitt [Einstellungsring der Sprachausgabe #SynthSettingsRing] weiterlesen.
 
@@ -860,10 +860,10 @@ Wenn sie probleme mit der Aussprache mancher Zeichen haben, versuchen Sie, die O
 Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möchten, ohne zuvor extra in das entsprechende Dialogfeld gehen zu wollen, so gibt es die folgenden Tastenkombinationen in NVDA, die Sie von überall aus benutzen können:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
-| Zur nächsten Sprachausgabeneinstellung springen | NVDA+STRG+Pfeiltaste nach rechts | NVDA+STRG+Umschalt+Pfeiltaste nach rechts | Springt zur nächsten verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; begint von vorne, nach dem letzten Eintrag. |
-| Zur vorherigen Sprachausgabeneinstellung springen | NVDA+STRG+Pfeiltaste nach links | NVDA+STRG+Umschalt+Pfeiltaste nach links | Springt zur vorherigen verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; begint von hinten, nach dem ersten Eintrag. |
-| Aktuelle Sprachausgabeneinstellung erhöhen | NVDA+STRG+Pfeiltaste nach oben | NVDA+STRG+Umschalt+Pfeiltaste nach oben | Erhöht die aktuelle Einstellung (zum Beispiel die Sprechgeschwindigkeit erhöhen, die nächste Stimme auswählen, die Lautstärke erhöhen). |
-| Aktuelle Sprachausgabeneinstellung verringern | NVDA+STRG+Pfeiltaste nach unten | NVDA+STRG+Umschalt+Pfeiltaste nach unten | Verringert die aktuelle Einstellung (zum Beispiel die Sprechgeschwindigkeit verringern, wählt die vorherige Stimme aus, verringert die Lautstärke). |
+| Zur nächsten Sprachausgabeneinstellung springen | NVDA+Strg+Pfeiltaste nach rechts | NVDA+Strg+Umschalt+Pfeiltaste nach rechts | Springt zur nächsten verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; begint von vorne, nach dem letzten Eintrag. |
+| Zur vorherigen Sprachausgabeneinstellung springen | NVDA+Strg+Pfeiltaste nach links | NVDA+Strg+Umschalt+Pfeiltaste nach links | Springt zur vorherigen verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; begint von hinten, nach dem ersten Eintrag. |
+| Aktuelle Sprachausgabeneinstellung erhöhen | NVDA+Strg+Pfeiltaste nach oben | NVDA+Strg+Umschalt+Pfeiltaste nach oben | Erhöht die aktuelle Einstellung (zum Beispiel die Sprechgeschwindigkeit erhöhen, die nächste Stimme auswählen, die Lautstärke erhöhen). |
+| Aktuelle Sprachausgabeneinstellung verringern | NVDA+Strg+Pfeiltaste nach unten | NVDA+Strg+Umschalt+Pfeiltaste nach unten | Verringert die aktuelle Einstellung (zum Beispiel die Sprechgeschwindigkeit verringern, wählt die vorherige Stimme aus, verringert die Lautstärke). |
 %kc:endInclude
 
 +++ Braille-Einstellungen +++
@@ -925,7 +925,7 @@ Um die Anzeige von Meldungen abzuschalten, geben Sie hier 0 an.
 
 %kc:setting
 ==== Braillezeile gekoppelt an ====[BrailleTether]
-Tastenkombination: NVDA+STRG+T
+Tastenkombination: NVDA+Strg+T
 
 Diese Option legt fest, ob die Braillezeile dem System-Cursor oder dem Navigator-Objekt / NVDA-Cursor folgen soll.
 
@@ -948,7 +948,7 @@ NVDA zeigt dann den Rest des Wortes im nächsten Bereich an.
 
 Das einschalten dieser Option kann Ihnen ein flüssigeres Lesen ermöglichen, bewirkt aber, dass Sie die Braillezeile öfter weiterschalten müssen.
 
-+++ Tastatureinstellungen (NVDA+STRG+K) +++
++++ Tastatureinstellungen (NVDA+Strg+K) +++
 Dieses Dialogfeld finden Sie im Menü Einstellungen unter Tastatureinstellungen.
 Dieses Dialogfeld enthält die folgenden Optionen:
 
@@ -1008,7 +1008,7 @@ Diese Option funktioniert nur, wenn in den [Einstellung für Dokumentformatierun
 Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NVDA verarbeitet werden sollen. Hierzu zählen beispielsweise Tastendrücke auf einer Bildschirmtastatur oder per Spracherkennung erkannte Zeichen.
 Diese Option ist zwar standardmäßig aktiviert, dennoch kann es sinnvoll sein, sie in bestimmten Fällen zu deaktivieren. Wenn Sie zum Beispiel mit Hilfe der Software Unikey vietnamesische Zeichen eingeben wollen, kann dies zu falsch erkannten Zeichen führen, wenn die Option eingeschaltet ist.
 
-+++ Mauseinstellungen (NVDA+STRG+M) +++[MouseSettings]
++++ Mauseinstellungen (NVDA+Strg+M) +++[MouseSettings]
 Sie finden diesen Dialog im Menü Einstellungen unter Mauseinstellungen.
 Dieser Dialog enthält die folgenden Optionen:
 
@@ -1062,7 +1062,7 @@ Bei eingeschaltetem Modus filtert NVDA nicht wichtige Objekte aus der Hierarchie
 
 Um den einfachen Darstellungsmodus per Tastenkombination  ein- und auszuschalten, können Sie den entsprechenden Befehl an eine Tastenkombination zuweisen. Verwenden Sie hierfür den Dialog [Eingaben #InputGestures].
 
-+++ Einstellungen zur Objektdarstellung (NVDA+STRG+O) +++
++++ Einstellungen zur Objektdarstellung (NVDA+Strg+O) +++
 Zu finden im Menü Einstellungen unter Objektpräsentation.
 Dieses Dialogfeld enthält die folgenden Optionen:
 
@@ -1143,7 +1143,7 @@ Nachdem die Präcompositionsdaten zu einem gültigen piktografischen Zeichen zus
 Mit dieser Option legen Sie fest, ob NVDA Änderungen an den Symbolen im composition string wiedergeben soll.
 Diese Option ist standardmäßig aktiviert.
 
-+++ Einstellungen für den Lesemodus (NVDA+STRG+B) +++
++++ Einstellungen für den Lesemodus (NVDA+Strg+B) +++
 Die Einstellungen für den Lesemodus finden Sie im Einstellungsmenü unter "Lesemodus...".
 
 Dieses Dialogfeld enthält die folgenden Optionen:
@@ -1190,7 +1190,7 @@ Wenn diese Option aktiviert ist, werden Tastenkombinationen, die nicht mit Schne
 Wenn die Option aktiviert ist, wird beispielsweise der Buchstabe "j" vom Dokument ferngehalten, da "j" keine Schnellnavigationstaste sowie warscheinlich kein Tastenkürzel im Programm ist. 
 
 +++ Einstellungen für die Dokumentformatierungen (NVDA+strg+d) +++[DocumentFormattingSettings]
-Die Einstellungen zu den Dokumentformatierungen finden Sie im Menü "Einstellungen" oder Sie erreichen sie auch mit der Tastenkombination "NVDA+STRG+D".
+Die Einstellungen zu den Dokumentformatierungen finden Sie im Menü "Einstellungen" oder Sie erreichen sie auch mit der Tastenkombination "NVDA+Strg+D".
 
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten. Zum Beispiel soll der Name der Schriftart angesagt werden oder die Schriftgröße. Aktivieren Sie dazu die entsprechenden Kontrollfelder und bei jeder auftretenden Änderung im Text des Dokuments werden diese Informationen von NVDA jedes Mal angesagt.
 Wenn Sie zum Beispiel das Kontrollkästchen ""Schriftartennamen ansagen"" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.

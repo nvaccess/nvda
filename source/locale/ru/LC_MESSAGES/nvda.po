@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-05 05:39+0800\n"
+"POT-Creation-Date: 2016-09-02 00:10+1000\n"
+"PO-Revision-Date: 2016-09-10 13:33+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2398,6 +2398,7 @@ msgid "Mouse"
 msgstr "Мышь"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Речь"
 
@@ -2959,19 +2960,16 @@ msgstr ""
 "экран) и располагает позицию просмотра в точке объекта навигатора"
 
 #. Translators: The message announced when toggling simple review mode.
-#, fuzzy
 msgid "Simple review mode off"
-msgstr "Облегченный режим просмотра"
+msgstr "Облегчённый режим просмотра выключен"
 
 #. Translators: The message announced when toggling simple review mode.
-#, fuzzy
 msgid "Simple review mode on"
-msgstr "Облегченный режим просмотра"
+msgstr "Облегчённый режим просмотра включён"
 
 #. Translators: Input help mode message for toggle simple review mode command.
-#, fuzzy
 msgid "Toggles simple review mode on and off"
-msgstr "Включать и выключать курсор брайля"
+msgstr "Включает и выключает облегчённый режим просмотра"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -4580,6 +4578,10 @@ msgstr "Таблица из {columnCount} столбцов и {rowCount} стр�
 msgid "NVDA Speech Viewer"
 msgstr "Просмотрщик Речи NVDA"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&Открывать просмотрщик речи при запуске NVDA"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Язык"
@@ -5442,8 +5444,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -6033,8 +6035,8 @@ msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"В дополнения были внесены изменения. Для того, чтобы изменения вступили в "
-"силу, необходимо перезагрузить NVDA. Хотите сделать это сейчас?"
+"В дополнения были внесены изменения. Для того, чтобы они вступили в силу, "
+"необходимо перезагрузить NVDA. Хотите сделать это сейчас?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6302,11 +6304,11 @@ msgstr "Нажмите кнопку OK, для запуска установле
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
-msgstr "Успешно"
+msgstr "Операция успешно завершена"
 
 #. Translators: The title of the Install NVDA dialog.
 msgid "Install NVDA"
-msgstr "Установить NVDA"
+msgstr "Установка NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
@@ -6804,7 +6806,7 @@ msgstr "Следовать за указателем &мыши"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Simple review mode"
-msgstr "Облегченный режим просмотра"
+msgstr "Облегчённый режим просмотра"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
@@ -7025,11 +7027,22 @@ msgstr "Читать &номера страниц"
 msgid "Report line &numbers"
 msgstr "Читать &номера строк"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Читать &отступы строк"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "Чтение &отступов строк:"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "Выключено"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Звуковые сигналы"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Речь и звуковые сигналы"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7545,7 +7558,7 @@ msgstr "&Диаграммы"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "C&omments"
-msgstr "&Комментарии"
+msgstr "Пр&имечания"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7554,9 +7567,8 @@ msgstr "Фо&рмулы"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Form fields"
-msgstr "Нет следующего поля формы"
+msgstr "&Поля форм"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.

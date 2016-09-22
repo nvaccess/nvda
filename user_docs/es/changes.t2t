@@ -3,6 +3,22 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== Nuevas Características ==
+- NVDA ahora puede indicar la sangría de líneas utilizando tonos. Esto se puede configurar utilizando el cuadro combinado "Anunciar Sangría de Líneas con" en las preferencias del diálogo Formateado de documentos de NVDA. (#5906)
+- Soporte para la pantalla braille Orbit Reader 20 . (#6007)
+- Se ha añadido una opción para abrir la ventana del visualizador de voz al arrancar. (#5050)
+- Al reabrir la ventana del visualizador de voz, la localización y las dimensiones ahora se restaurarán. (#5050)
+- Los campos de referencia cruzada en Microsoft Word ahora se tratan como hipervínculos. Se anuncian como enlaces, y se pueden activar. (#6102)
+
+
+== Corrección de Fallos ==
+- Corregido un extraño problema cuando al salir de  NVDA mientras el visualizador de voz está abierto causa un error. (#5050)
+- Los mapas de imagen ahora se procesan como se esperaba en el modo exploración en Mozilla firefox. (#6051)
+- Corregido un problema que causa una advertencia en el fichero de registro de NVDA cuando se conmuta el bloqueo de mayúsculas. (#6127)
+
+
 = 2016.3 =
 Lo reseñable de esta versión incluye la capacidad para deshabilitar complementos individuales; el soporte para campos de formulario en Microsoft Excel; mejoras significativas para el anunciado de colores; correcciones y mejoras relacionadas con varias pantallas braille; y correcciones y mejoras para el soporte de Microsoft Word.
 
@@ -51,6 +67,8 @@ Lo reseñable de esta versión incluye la capacidad para deshabilitar complement
 - NVDA ya no detiene ocasionalmente el reconocimiento de pulsaciones de teclas en pantallas braille Baum compatible y HumanWare Brailliant B. (#6035)
 - Si está habilitado el anunciado de números de línea en las preferencias de Formato de Documento de NVDA, los números de línea ahora se muestran en una pantalla braille. (#5941)
 - Cuando el modo de voz esté desactivado, el anunciado de objetos (tal como pulsar NVDA+tab para anunciar el foco) ahora aparece en el Visualizador de Voz como se esperaba. (#6049)
+- En la lista de mensajes de Outlook 2016, ya no se anuncia la información asociada al borrador. (#6219)
+- En Google Chrome y navegadores basados en Chrome en un idioma diferente al inglés, el modo exploración ya no falla al trabajar en muchos documentos. (#6249)
 
 
 == Cambios para Desarrolladores ==

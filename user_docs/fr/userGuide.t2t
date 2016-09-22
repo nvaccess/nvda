@@ -1232,6 +1232,17 @@ Par défaut, NVDA détecte la mise en forme sous le curseur système ou le curse
 
 Activez cette option quand vous révisez un document sous une application telle que Microsoft Word et que la mise en forme est importante.
 
+==== Annoncer les retraits de lignes par ====
+Cette option vous permet de configurer la manière dont les retraits en début de ligne sont annoncés.
+La liste déroulante "Annoncer les retraits de ligne par" a quatre options .
+
+- Désactivé : NVDA ne traitera pas les retraits de lignes.
+- Parole : Si parole est sélectionnée, quand le niveau de retrait change, NVDA dit quelque chose comme "douze espaces" ou "quatre tabulations.".
+- Sons : Si sons est sélectionné, quand le niveau de retrait change, des sons indiquent la quantité de changement dans le retrait.
+La hauteur du son montera pour chaque espace, et pour une tabulation, la hauteur montera de l'équivalent de 4 espaces.
+- Parole et sons : Cette option indique les retraits en utilisant les deux méthodes ci-dessus.
+-
+
 +++ Dictionnaires de prononciation +++
 Le menu "Dictionnaires de prononciation" du menu "Préférences" contient des dialogues qui vous permettent de gérer la manière dont NVDA prononce certains mots ou phrases. 
 Il y a actuellement trois types de dictionnaires.
@@ -1690,16 +1701,22 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Touche alt+maj+tab | SUP |
 %kc:endInclude
 
-++ Les terminaux Baum/Humanware/APH ++
-Plusieurs terminaux [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] et [APH http://www.aph.org/] sont pris en charge quand ils sont connectés via USB ou bluetooth.
+++ Les terminaux Baum/Humanware/APH/Orbit ++
+Plusieurs terminaux [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] et [Orbit http://www.orbitresearch.com/] sont pris en charge quand ils sont connectés via USB, bluetooth ou série.
 Les terminaux suivants sont pris en charge :
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, brailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Il est possible que d'autres terminaux fabriqués par Baum fonctionnent, mais cela n'a pas été testé.
 
-Si vous connectez via USB des terminaux autres que les VarioUltra, Pronto! ou Refreshabraille avec le mode USB réglé sur HID, vous devrez d'abord installer les pilotes USB fournis par le constructeur.
+Si vous connectez via USB des terminaux  qui n'utilisent pas le mode HID, vous devrez d'abord installer les pilotes USB fournis par le constructeur.
+Le VarioUltra et le Pronto! utilisent HID.
+Le Refreshabraille et l'Orbit Reader 20 peuvent utiliser HID si configurés de manière appropriée.
+
+Le mode USB série de l'Orbit Reader 20 n'est actuellement pris en charge que sous Windows 10.
+USB HID devrait en général être utilisé à la place.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.

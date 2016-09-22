@@ -640,6 +640,9 @@ Pritišćući enter ili gumb premjesti na će premjestiti izravno na ovu ćeliju
 - radni listovi: ovo popisuje sve radne listove u  radnoj knjizi. 
 Pritišćući f2 na odabranom radnom listu omogućuje preimenovanje radnog lista. 
 Pritišćući enter ili gumb premjesti na kada se nalazite na označenoj ćeliji Premješta na taj radni list.
+- obrazci: ovo popisuje sve obrasce u aktivnom radnom listu.
+za svaki obrazac, u popisu elemenata prikazuje se  alternativan tekst polja, zajedno sa adresama ćelija koje pokriva
+označavajući polje obrazca i pritiščući enter ili gumb premjesti na premještava na to polje u načinu pregleda.
 -
 
 +++ Izvještavanje o komentarima +++
@@ -653,6 +656,12 @@ Ako je radna knjiga zaštićena, neće možda biti moguće premještati fokus na
 %kc:beginInclude
 Kako biste omogućili premještanje po zaključanim ćelijama, Premjestite se u način pregleda pritišćući NVDA+razmak, a potom koristite standardne excelove prečace za kretanje po dokumentu poput strelica kako biste se premještali po trenutnom radnom listu.
 %kc:endInclude
+
++++ Polja obrazaca +++
+Excelovi radni listovi mogu sadržavati obrasce.
+Možete im pristupiti koristeći popis elemenata ili prečace f i shift+f.
+Jedamput kada se premjestite na obrazac u načinu pregleda, možete pritisnuti enter ili razmaknicu kako biste aktivirali ili se prebacili na načim fokusa kako biste mogli manipulirati s time, ovisno o kontroli.
+Za više informacija o načinu pregleda i brzoj navigacii, molimo pogledajte [poglavlje o brzoj navigaciji #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1050,6 +1059,8 @@ Kad je ova opcija uključena, pregledni će kursor pratiti miš kako se isti bud
 
 ==== Način jednostavnog pregleda ====
 Kad je ova opcija uključena, NVDA će filtrirati hijerarhiju objekata po kojima se možete kretati kako bi se izbacili suvišni objekti koji nisu zanimljivi korisniku; Npr. nevidljivi objekti i objekti u estetske svrhe.
+
+Da biste uključili ili isključili način jednostavnog pregleda iz bilo kojeg prozora, molimo dodijelite prilagođeni prečac koristeći [dijaloški okvir ulazne geste #InputGestures].
 
 +++ Prezentacija objekta (NVDA+kontrol+o) +++
 Ovu opciju možete pronaći u izborniku postavke "Prezentacija objekta...".

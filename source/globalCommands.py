@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer
 
 import time
 import itertools
@@ -17,7 +17,6 @@ import review
 import controlTypes
 import api
 import textInfos
-import editableText
 import speech
 import sayAllHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -1256,7 +1255,7 @@ class GlobalCommands(ScriptableObject):
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
+			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 		}
@@ -1268,7 +1267,7 @@ class GlobalCommands(ScriptableObject):
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation))
+			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
@@ -1786,12 +1785,12 @@ class GlobalCommands(ScriptableObject):
 				pass
 			try:
 				copyMarker.updateSelection()
-				if isinstance(pos.obj, editableText.EditableTextWithoutAutoSelectDetection):
+				if hasattr(pos.obj, "reportSelectionChange"):
 					# wait for applications such as word to update their selection so that we can detect it
 					try:
-						pos.obj.waitForAndReportSelectionChange(oldInfo)
+						pos.obj.reportSelectionChange(oldInfo)
 					except Exception as e:
-						log.debug("Error trying to wait for the selection to update and then speak the selection: %s" % e)
+						log.debug("Error trying to report the updated selection: %s" % e)
 			except NotImplementedError as e:
 				# we are unable to select the text, leave the _copyStartMarker in place in case the user wishes to copy the text.
 				# Translators: Presented when unable to select the marked text.
