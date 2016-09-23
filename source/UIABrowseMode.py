@@ -97,8 +97,6 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		return
 	if direction=="up":
 		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
-		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
-		# Thus we must check getChildren before getEnclosingElement.
 		element=position.UIAElementAtStart
 		element=walker.normalizeElement(element)
 		if element and not UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) and not UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):

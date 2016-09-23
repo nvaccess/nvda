@@ -182,7 +182,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return self.copy()
 
-	UIAControlTypesWhereNameIsContent=set([UIAHandler.UIA_ButtonControlTypeId,UIAHandler.UIA_HyperlinkControlTypeId,UIAHandler.UIA_ImageControlTypeId,UIAHandler.UIA_MenuItemControlTypeId,UIAHandler.UIA_TabItemControlTypeId,UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_SplitButtonControlTypeId])
+	UIAControlTypesWhereNameIsContent={UIAHandler.UIA_ButtonControlTypeId,UIAHandler.UIA_HyperlinkControlTypeId,UIAHandler.UIA_ImageControlTypeId,UIAHandler.UIA_MenuItemControlTypeId,UIAHandler.UIA_TabItemControlTypeId,UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_SplitButtonControlTypeId}
 
 	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		"""
@@ -580,7 +580,6 @@ class UIA(Window):
 	def getNormalizedUIATextRangeFromElement(self,UIAElement):
 		"""Simply fetches a UIA text range for the given UIAElement, allowing subclasses to process the range first."""
 		return UIATextRangeFromElement(self.UIATextPattern,UIAElement)
-
 
 	def __init__(self,windowHandle=None,UIAElement=None):
 		if not UIAElement:

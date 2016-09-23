@@ -757,7 +757,9 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 		if formatConfig["reportHeadings"]:
 			headingLevel=field.get('heading-level')
 			if headingLevel:
-				textList.append("h%s"%headingLevel)
+				# Translators: Displayed in braille for a heading with a level.
+				# %s is replaced with the level.
+				textList.append(_("h%s")%headingLevel)
 	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):
