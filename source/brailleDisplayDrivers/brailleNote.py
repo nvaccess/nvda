@@ -127,12 +127,6 @@ _qtKeys= {
 	222:"tick",
 }
 
-def _getQTKeys(key):
-	if key in _qtKeys:
-	 return _qtKeys[key]
-	else:
-		return chr(key)
-
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailleNote"
@@ -254,8 +248,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _readKeys(self):
 		try:
 			while self._serial is not None and self._serial.inWaiting():
-				# #5992: BrailleNote QT sends another two bytes to let the receiver know it is a QT letter with/out modifiers.
-				# All that matters is the character itself.
 				command, arg, arg2 = self._readPacket()
 				if command:
 					self._dispatch(command, arg, arg2)
@@ -271,7 +263,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		command, arg = ord(self._buffer[0]), ord(self._buffer[1])
 		self._buffer = ""
 		# #5992: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
-		arg2 = ord(self._serial.read(2)[-1]) if command == QT_MOD_TAG else None
+		if command == QT_MOD_TAG:
+			key = self._serial.read(2)[-1]
+			arg2 = _qtKeys[ord(key)] if ord(key) in _qtKeys else key
+		else:
+			arg2 = None
 		return command, arg, arg2
 
 	# Data is invoked if we're dealing with a BrailleNote QT.
@@ -370,6 +366,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				if (1 << i) & qtMod)
 		# Make sure to display QT identifiers in mod+char format if this is such a case.
 		if self.qt:
-			self.id = _getQTKeys(qtData) if qtMod == 0 else "+".join(("+".join(names), _getQTKeys(qtData)))
+			self.id = qtData if qtMod == 0 else "+".join(("+".join(names), qtData))
 		else:
 			self.id = "+".join(names)
