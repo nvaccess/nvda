@@ -1195,44 +1195,51 @@ This dialog box is found in the Preferences menu, under "Document Formatting..."
 Most of the checkboxes in this dialog are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
-You can configure reporting of:
-- Font name
-- Font size
-- Font attributes
-- Text alignment
-- Colors
-- Comments
-- Editor revisions
-- Emphasis
-- Text style
-- Spelling errors
-- Page numbers
-- Line numbers
-- Line indentation
-- Paragraph indentation (e.g. hanging indent, first line indent)
-- line spacing (single, double etc)
-- Tables
-- Table row/column headers
-- Table cell coordinates
-- Links
-- Headings
-- Lists
-- Block quotes
-- Landmarks
-- Frames
-- When something is clickable
+The document formatting options are organised into groups, you can configure reporting of:
+- Font
+ - Font name
+ - Font size
+ - Font attributes
+ - Emphasis
+ - Style
+ - Colors
+- Document information
+ - Comments
+ - Editor revisions
+ - Spelling errors
+- Pages and spacing
+ - Page numbers
+ - Line numbers
+ - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
+ - Paragraph indentation (e.g. hanging indent, first line indent)
+ - Line spacing (single, double etc)
+ - Alignment
+- Table information
+ - Tables
+ - Row/column headers
+ - Cell coordinates
+- Elements
+ - Headings
+ - Links
+ - Lists
+ - Block quotes
+ - Landmarks
+ - Frames
+ - Clickable
+ -
 -
+
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
-==== Announce formatting changes after the cursor ====
+==== Report formatting changes after the cursor ====
 If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it speaks it, even if doing this may slow down NVDA's performance.
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as Microsoft Word, where formatting is important.
 
-==== Report line indentation with ====
+==== Line indentation reporting ====[lineIndentationOptions]
 This option allows you to configure how indentation at the beginning of lines is reported.
 The Report line indentation with combo box has four options.
 
