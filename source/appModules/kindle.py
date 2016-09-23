@@ -17,6 +17,7 @@ from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
 from textInfos import DocumentWithPageTurns
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
+from globalCommands import SCRCAT_SYSTEMCARET
 
 class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,BrowseModeDocumentTreeInterceptor):
 
@@ -59,6 +60,31 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 
 	def _tabOverride(self,direction):
 		return False
+
+	def script_finalizeSelection(self, gesture):
+		fakeSel = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		if fakeSel.isCollapsed:
+			# Translators: Reported when there is no text selection.
+			ui.message(_("No selection"))
+			return
+		# Update the selection in Kindle.
+		fakeSel.innerTextInfo.updateSelection()
+		# The selection might have been adjusted to meet word boundaries, so update our fake selection.
+		# we can't just use self.makeTextInfo, as that will use our fake selection.
+		realSel = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION)
+		fakeSel.innerTextInfo = realSel
+		self.selection = fakeSel
+		# Translators: Announces selected text. %s is replaced with the text.
+		speech.speakSelectionMessage(_("selected %s"), fakeSel.text)
+	# Translators: Describes a command.
+	script_finalizeSelection.__doc__ = _("Finalizes selection of text and presents a menu from which you can choose what to do with the selection")
+	script_finalizeSelection.category = SCRCAT_SYSTEMCARET
+
+	__gestures = {
+		"kb:control+c": "finalizeSelection",
+		"kb:applications": "finalizeSelection",
+		"kb:shift+f10": "finalizeSelection",
+	}
 
 class BookPageViewTextInfo(IA2TextTextInfo):
 
