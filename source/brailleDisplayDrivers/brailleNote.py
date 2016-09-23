@@ -254,11 +254,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _readKeys(self):
 		try:
 			while self._serial is not None and self._serial.inWaiting():
-				command, arg = self._readPacket()
+				# #5992: BrailleNote QT sends another two bytes to let the receiver know it is a QT letter with/out modifiers.
+				# All that matters is the character itself.
+				command, arg, arg2 = self._readPacket()
 				if command:
-					# BrailleNote QT sends another two bytes to let the receiver know it is a QT letter.
-					letter = self._readPacket()[1] if command == QT_MOD_TAG else None
-					self._dispatch(command, arg, data=letter)
+					self._dispatch(command, arg, arg2)
 		except serial.SerialException:
 			self._closeComPort()
 			# Reraise to be logged
@@ -267,13 +267,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _readPacket(self):
 		self._buffer += self._serial.read(2 - len(self._buffer))
 		if len(self._buffer) < 2:
-			return None, None
+			return None, None, None
 		command, arg = ord(self._buffer[0]), ord(self._buffer[1])
 		self._buffer = ""
-		return command, arg
+		# #5992: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
+		arg2 = ord(self._serial.read(2)[-1]) if command == QT_MOD_TAG else None
+		return command, arg, arg2
 
 	# Data is invoked if we're dealing with a BrailleNote QT.
-	def _dispatch(self, command, arg, data=None):
+	def _dispatch(self, command, arg, arg2=None):
 		space = False
 		if command == THUMB_KEYS_TAG:
 			gesture = InputGesture(keys=arg)
@@ -291,7 +293,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			gesture = InputGesture(dots=arg, space=space)
 		elif command == QT_MOD_TAG:
 			# BrailleNote QT
-			gesture = InputGesture(qtMod=arg, qtData=data)
+			gesture = InputGesture(qtMod=arg, qtData=arg2)
 		else:
 			log.debugWarning("Unknown command")
 			return
