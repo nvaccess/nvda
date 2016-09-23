@@ -3,6 +3,23 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== New Features ==
+- NVDA can now indicate line indentation using tones. This can be configured using the "Report line indentation with" combo box in NVDA's Document Formatting preferences dialog. (#5906)
+- Support for the Orbit Reader 20 braille display. (#6007)
+- An option to open the speech viewer window on startup has been added. (#5050)
+- When re-opening the speech viewer window, the location and dimensions will now be restored. (#5050)
+- Cross Reference fields in Microsoft Word are now treated like hyperlinks. They are reported as links, and can be activated. (#6102)
+
+
+== Bug Fixes ==
+- Fixed a rare issue when exiting NVDA while the speech viewer is open causing an error. (#5050)
+- Image maps now render as expected in browse mode in Mozilla Firefox. (#6051)
+- Fixed an issue causing a warning in the NVDA log file when caps-lock is toggled. (#6127)
+- While in the dictionary dialog, pressing the enter key now saves changes and exits. (#6206)
+
+
 = 2016.3 =
 Highlights of this release include the ability to disable individual add-ons; support for form fields in Microsoft Excel; significant improvements to reporting of colors; fixes and improvements related to several braille displays; and fixes and improvements to support for Microsoft Word.
 
@@ -51,6 +68,8 @@ Highlights of this release include the ability to disable individual add-ons; su
 - NVDA no longer occasionally stops recognising key presses on Baum compatible and HumanWare Brailliant B braille displays. (#6035)
 - If reporting of line numbers is enabled in NVDA's Document Formatting preferences, line numbers are now shown on a braille display. (#5941)
 - When speech mode is off, reporting objects (such as pressing NVDA+tab to report the focus) now appears in the Speech Viewer as expected. (#6049)
+- In the Outlook 2016 message list,  associated draft information is no longer reported. (#6219)
+- In Google Chrome and Chrome-based browsers in a language other than English, browse mode no longer fails to work in many documents. (#6249)
 
 
 == Changes for Developers ==

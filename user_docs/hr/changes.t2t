@@ -3,6 +3,23 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== Nove značajke ==
+- Nvda sada izvještava o poravnanju redka koristećći zvučne signale. Ovo se podešava koristeći odabirni okvir "izvijesti o poravnanju redaka pomoću"  u postavkama oblikovanja dokumenta. (#5906)
+- Support for the Orbit Reader 20 braille display. (#6007)
+- An option to open the speech viewer window on startup has been added. (#5050)
+- When re-opening the speech viewer window, the location and dimensions will now be restored. (#5050)
+- Cross Reference fields in Microsoft Word are now treated like hyperlinks. They are reported as links, and can be activated. (#6102)
+
+
+== Bug Fixes ==
+- Fixed a rare issue when exiting NVDA while the speech viewer is open causing an error. (#5050)
+- Image maps now render as expected in browse mode in Mozilla Firefox. (#6051)
+- Fixed an issue causing a warning in the NVDA log file when caps-lock is toggled. (#6127)
+- While in the dictionary dialog, pressing the enter key now saves changes and exits. (#6206)
+
+
 = 2016.3 =
 Novosti u ovoj inačici uključuju mogučnost onemogučavanja pojedinačnih dodataka; podršku za polja obrazaca u Microsoft excelu; drastična poboljšanja u izvještavanju boja; popravke i unaprjeđenja pri korištenju nekih brajičnih redaka; a također popravci i unaprjeđenja u Microsoft wordu.
 
@@ -52,6 +69,7 @@ Novosti u ovoj inačici uključuju mogučnost onemogučavanja pojedinačnih doda
 - Ako je izgovaranje brojeva redaka uključeno u postavkama oblikovanja dokumenta, isti se sada prikazuju na brajičnom redku. (#5941)
 - Kada je način govora isključen, izgovoreni objekti (poput pritiska NVDA+tab za izgovaranje fokusa) sada se pojavljuje u pregledniku govora, kako se to očekuje. (#6049)
 - U Outlook 2016 popisu poruka,  pridružena informacija o predlošku više se ne izgovara. (#6219)
+- U Google Chrome-u i web preglednicima baziranima na njemu, na jezicima drukćijima od engleskog, način pregleda više ne odbija poslušnost u većini dokumenata. (#6249)
 
 
 == Izmjene za razvojne programere ==

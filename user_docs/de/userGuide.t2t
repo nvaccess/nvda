@@ -1232,6 +1232,15 @@ Standardmäßig erkennt NVDA die Formatierung an der Position des System-Cursors
 
 Schalten Sie diese Option nur dann ein, wenn beim Lesen in einem Microsoft Word-Dokument die Ansage notwendig ist.
 
+==== Zeileneinrückungen ausgeben durch ====
+Mit dieser Option legen Sie fest, wie Zeileneinrückungen durch NVDA wiedergegeben werden sollen.
+Das Kombinationsfeld enthält vier Einträge:
+
+- aus: NVDA wird Zeileneinrückungen in keiner Weise gesondert ausgeben
+- Sprache: Diese Einstellung bringt NVDA dazu die Anzahl von Zeichen anzusagen, mit denen eine Zeile eingerückt wurde (z. B. 12 Leerzeichen oder 4 Tabulatoren)
+- Signaltöne: Diese Einstellung bringt NVDA dazu, die Einrückung mit Hilfe von Signaltönen anzugeben. Wenn sich die Einrückung ändert, wird der Signalton höher, je stärker eine Zeile eingerückt ist. Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Leerzeichen.
+- beides: dies ist eine Kombination der beiden obigen Optionen.
+
 +++ Aussprachewörterbücher +++
 Im Menü Einstellungen finden Sie den Eintrag Aussprachewörterbücher. Dieses Menü enthält Dialoge mit deren Hilfe Sie festlegen können, wie NVDA einzelne Wörter oder Satzteile ausspricht.
 Derzeit gibt es drei unterschiedliche Formen der Aussprachewörterbücher:
@@ -1691,15 +1700,21 @@ Bitte lesen sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 %kc:endInclude
 
 ++ Braillezeilen von Baum/HumanWare/APH ++
-einige  [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] und [APH http://www.aph.org/]-Braillezeilen werden unterstützt, sofern sie per USB oder Bluetooth mit dem Rechner verbunden werden.
+einige  [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/], [APH http://www.aph.org/] und [Orbit http://www.orbitresearch.com/]-Braillezeilen werden unterstützt, sofern sie seriell, per USB oder Bluetooth mit dem Rechner verbunden werden.
 dies sind u. a.:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Einige andere Baum-Zeilen könnten ebenfalls funktionieren, dies wurde allerdings noch nicht getestet.
 
-Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren. Ausgenommen hiervon sind VarioUltra, Pronto! und Refreshabraille.
+Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus nicht auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren. 
+die Braillezeilenmodelle VarioUltra und Pronto! verwenden das HID-Protokoll.
+Die Braillezeile Refreshabraille kann so eingestellt werden, dass sie das HID-Prookoll verwendet.
+
+Der serielle Modus des orbit Readers 20 wird momentan nur unter Windows 10 unterstützt.
+Sie sollten stattdessen das HID-Protokoll verwenden.
 
 Folgende Tastenzuweisungen sind in NVDA bei diesen Zeilen verfügbar:
 Bitte lesen Sie in der Dokumentation zu Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.

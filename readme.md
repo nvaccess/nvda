@@ -76,6 +76,7 @@ For reference, the following dependencies are included in Git submodules:
 * [NSIS UAC plug-in](http://nsis.sourceforge.net/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
+* [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 ### Other Dependencies
 These dependencies are not included in Git submodules, but aren't needed by most people.
