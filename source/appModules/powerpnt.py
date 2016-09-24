@@ -873,6 +873,8 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField['color']=colors.RGB.fromCOLORREF(font.color.rgb)
 		if formatConfig["reportLinks"] and curRun.actionSettings(ppMouseClick).action==ppActionHyperlink:
 			formatField["link"]=True
+		if formatConfig["reportGraphics"]:
+			formatField["graphic"]=True
 		return formatField,(startOffset,endOffset)
 
 class Table(Shape):

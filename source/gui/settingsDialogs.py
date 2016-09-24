@@ -1163,6 +1163,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
+		self.graphicsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &graphics"))
+		self.graphicsCheckBox.SetValue(config.conf["documentFormatting"]["reportGraphics"])
+		settingsSizer.Add(self.graphicsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.headingsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &headings"))
 		self.headingsCheckBox.SetValue(config.conf["documentFormatting"]["reportHeadings"])
 		settingsSizer.Add(self.headingsCheckBox,border=10,flag=wx.BOTTOM)
@@ -1218,6 +1223,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportGraphics"]=self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
