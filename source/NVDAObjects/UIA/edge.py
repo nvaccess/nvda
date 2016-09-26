@@ -345,6 +345,8 @@ class EdgeNode(UIA):
 
 	def getNormalizedUIATextRangeFromElement(self,UIAElement):
 		range=super(EdgeNode,self).getNormalizedUIATextRangeFromElement(UIAElement)
+		if not range:
+			return
 		#Move the start of a UIA text range past any element start character stops
 		lastCharInfo=EdgeTextInfo(self,None,_rangeObj=range)
 		lastCharInfo._rangeObj=range
