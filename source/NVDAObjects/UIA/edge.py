@@ -135,18 +135,6 @@ class EdgeTextInfo(UIATextInfo):
 				self.setEndPoint(tempInfo,"endToEnd")
 				return
 		super(EdgeTextInfo,self).expand(unit)
-		if unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
-			# Usually expanding to line or paragraph in Edge incorrectly covers start of element chars at its end, causing content on following lines to be included.
-			# We must fix  it up, but not for edit fields as they handle lines differently. 
-			obj=self.NVDAObjectAtStart
-			if not obj.UIATextPattern or obj==self.obj: 
-				tempInfo=self.copy()
-				self.collapse(end=True)
-				self.move(textInfos.UNIT_CHARACTER,-1)
-				self.expand(textInfos.UNIT_CHARACTER)
-				self.setEndPoint(tempInfo,"startToStart")
-				if self.isCollapsed:
-					self.setEndPoint(tempInfo,"endToEnd")
 		return
 
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
