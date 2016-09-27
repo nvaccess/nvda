@@ -1812,21 +1812,22 @@ class InputGesturesDialog(SettingsDialog):
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
-		buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
+		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
-		item = self.addButton = wx.Button(self, label=_("&Add"))
-		item.Bind(wx.EVT_BUTTON, self.onAdd)
-		item.Disable()
-		buttonSizer.Add(item)
-		buttonSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL)
+		self.addButton = bHelper.addButton(self, label=_("&Add"))
+		self.addButton.Bind(wx.EVT_BUTTON, self.onAdd)
+		self.addButton.Disable()
+
 		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
-		item = self.removeButton = wx.Button(self, label=_("&Remove"))
-		item.Bind(wx.EVT_BUTTON, self.onRemove)
-		item.Disable()
+		self.removeButton = bHelper.addButton(self, label=_("&Remove"))
+		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
+		self.removeButton.Disable()
+
 		self.pendingAdds = set()
 		self.pendingRemoves = set()
-		buttonSizer.Add(item)
-		settingsSizer.Add(buttonSizer)
+
+		settingsSizer.Add(bHelper.sizer)
 
 	def postInit(self):
 		self.tree.SetFocus()

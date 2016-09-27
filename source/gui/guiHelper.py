@@ -1,18 +1,17 @@
 # -*- coding: UTF-8 -*-
 #guiHelper.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited
+#Copyright (C) 2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import wx
-
 """ Example usage
+Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
 
 class myDialog(class wx.Dialog):
 
 	def __init__(self,parent):
-		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
+		super(SettingsDialog, self).__init__(parent, title=self.title)
 		dialog = self
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
@@ -42,38 +41,40 @@ class myDialog(class wx.Dialog):
 		self.SetSizer(mainSizer)
 	...
 """
-# border space to be used around all controls in dialogs
+
+import wx
+
+#: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
 
-# when dialog items are laid out vertically use this much space between them
+#: when dialog items are laid out vertically use this much space between them
 SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS = 10
 
-# put this much space between buttons  next to each other horizontally.
+#: put this much space between buttons  next to each other horizontally.
 SPACE_BETWEEN_BUTTONS_HORIZONTAL = 7
 
-# put this much space between buttons next to each other vertically
-SPACE_BETWEEN_BUTTONS_VERTICALLY = 5
+#: put this much space between buttons next to each other vertically
+SPACE_BETWEEN_BUTTONS_VERTICAL = 5
 
-# put this much space between two horizontally associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
+#: put this much space between two horizontally associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
 SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL = 10
 
-# put this much space between two vertically associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
+#: put this much space between two vertically associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
 SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL = 3
 
 class ButtonHelper(object):
 	""" Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
-	arrangement. This class should be used for groups of buttons. While it wont cause problems to use this class with a
+	arrangement. This class should be used for groups of buttons. While it won't cause problems to use this class with a
 	single button there is little benefit. Individual buttons can be added directly to a sizer / sizer helper.
 	"""
 	def __init__(self, orientation):
 		"""
 		@param orientation: the orientation for the buttons, either wx.HORIZONTAL or wx.VERTICAL
-		@type itemType: wx.HORIZONTAL or wx.VERTICAL
 		"""
 		object.__init__(self)
 		self._firstButton = True
 		self._sizer = wx.BoxSizer(orientation)
-		self._space = SPACE_BETWEEN_BUTTONS_HORIZONTAL if orientation is wx.HORIZONTAL else SPACE_BETWEEN_BUTTONS_VERTICALLY
+		self._space = SPACE_BETWEEN_BUTTONS_HORIZONTAL if orientation is wx.HORIZONTAL else SPACE_BETWEEN_BUTTONS_VERTICAL
 
 	@property
 	def sizer(self):
@@ -112,9 +113,7 @@ def associateElements( firstElement, secondElement):
 	# staticText and (choice or textCtrl)
 	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl)):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		kwargs = {}
-		kwargs.update( {'flag':wx.ALIGN_CENTER_VERTICAL} )
-		sizer.Add(firstElement, **kwargs)
+		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		sizer.Add(secondElement)
 	# staticText and (ListCtrl, ListBox or TreeCtrl)
@@ -146,11 +145,11 @@ class LabeledControlHelper(object):
 	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
 	"""
 	def __init__(self, parent, labelText, wxCtrlClass, **kwargs):
-		""" @param parent - An instance of the parent wx window. EG wx.Dialog
-			@param labelText - The text to associate with a wx control.
-			@type labelText - string
-			@param wxCtrlClass - The class to associate with the label, eg: wx.TextCtrl
-			@param kwargs - The keyword arguments used to instantiate the wxCtrlClass
+		""" @param parent: An instance of the parent wx window. EG wx.Dialog
+			@param labelText: The text to associate with a wx control.
+			@type labelText: string
+			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
+			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
 		self._label = wx.StaticText(parent, label=labelText)
@@ -168,14 +167,15 @@ class LabeledControlHelper(object):
 class PathSelectionHelper(object):
 	"""
 	Abstracts away details for creating a path selection helper. The path selection helper is a textCtrl with a
-	button in horizontal layout. The Button launches a directory explorer. Its recommended that the 
+	button in horizontal layout. The Button launches a directory explorer. To get the path selected by the user, use the
+	`pathControl` property which exposes a wx.TextCtrl.
 	"""
 	def __init__(self, parent, buttonText, browseForDirectoryTitle):
-		""" @param parent - An instance of the parent wx window. EG wx.Dialog
-			@param buttonText - The text for the button to launch a directory dialog (wx.DirDialog). This is typically 'Browse'
-			@type buttonText - string
-			@param browseForDirectoryTitle - The text for the title of the directory dialog (wx.DirDialog)
-			@type browseForDirectoryTitle - string
+		""" @param parent: An instance of the parent wx window. EG wx.Dialog
+			@param buttonText: The text for the button to launch a directory dialog (wx.DirDialog). This is typically 'Browse'
+			@type buttonText: string
+			@param browseForDirectoryTitle: The text for the title of the directory dialog (wx.DirDialog)
+			@type browseForDirectoryTitle: string
 		"""
 		object.__init__(self)
 		self._textCtrl = wx.TextCtrl(parent)
@@ -193,13 +193,11 @@ class PathSelectionHelper(object):
 	def sizer(self):
 		return self._sizer
 
-	def getDefulatBrowseForDirectoryPath(self):
+	def getDefaultBrowseForDirectoryPath(self):
 		return self._textCtrl.Value or "c:\\"
 
 	def onBrowseForDirectory(self, evt):
-		# Translators: The title of the dialog presented when browsing for the
-		# destination directory when creating a portable copy of NVDA.
-		startPath = self.getDefulatBrowseForDirectoryPath()
+		startPath = self.getDefaultBrowseForDirectoryPath()
 		with wx.DirDialog(self._parent, self._browseForDirectoryTitle, defaultPath=startPath) as d:
 			if d.ShowModal() == wx.ID_OK:
 				self._textCtrl.Value = d.Path
@@ -209,7 +207,7 @@ class BoxSizerHelper(object):
 	"""
 	def __init__(self, parent, orientation=None, sizer=None):
 		""" Init. Pass in either orientation OR sizer.
-			@param parent - An instance of the parent wx window. EG wx.Dialog
+			@param parent: An instance of the parent wx window. EG wx.Dialog
 			@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
 			@type itemType: wx.HORIZONTAL or wx.VERTICAL
 			@param sizer: the sizer to use rather than constructing one.
@@ -225,11 +223,11 @@ class BoxSizerHelper(object):
 		elif sizer and isinstance(sizer, wx.BoxSizer):
 			self.sizer = sizer
 		else:
-			ValueError("Orientation OR Sizer must be supplied.")
+			raise ValueError("Orientation OR Sizer must be supplied.")
 
 	def addItem(self, item):
 		""" Adds an item with space between it and the previous item.
-			Does not handle adding LabledControlHelper, use the convenience method instead.
+			Does not handle adding LabledControlHelper; use L{addlabelledControl} instead.
 		"""
 		toAdd = item
 		keywordArgs = {}
@@ -240,22 +238,20 @@ class BoxSizerHelper(object):
 			buttonBorderAmount = 5
 			keywordArgs.update({'border':buttonBorderAmount, 'flag':wx.ALL})
 			shouldAddSpacer = False # no need to add a spacer, since the button border has been added.
-
-		if isinstance(item, BoxSizerHelper):
+		elif isinstance(item, BoxSizerHelper):
 			toAdd = item.sizer
-
-		if isinstance(item, PathSelectionHelper):
+		elif isinstance(item, PathSelectionHelper):
 			toAdd = item.sizer
 			if self.sizer.GetOrientation() == wx.VERTICAL:
-				keywordArgs.update({'flag':wx.EXPAND,})
+				keywordArgs['flag'] = wx.EXPAND
 			else:
 				raise NotImplementedError("Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented")
-
-		if isinstance(item, LabeledControlHelper):
+		elif isinstance(item, LabeledControlHelper):
 			raise NotImplementedError("Use addLabeledControl instead")
 
+		# a boxSizerHelper could contain a wx.StaticBoxSizer
 		if isinstance(toAdd, wx.StaticBoxSizer):
-			keywordArgs.update({'flag':wx.EXPAND,})
+			keywordArgs['flag'] = wx.EXPAND
 
 		if shouldAddSpacer:
 			self.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -265,11 +261,11 @@ class BoxSizerHelper(object):
 
 	def addLabeledControl(self, labelText, wxCtrlClass, **kwargs):
 		""" Convenience method to create a labeled control
-			@param labelText - Text to use when constructing the wx.StaticText to label the control.
-			@type LabelText - String
-			@param wxCtrlClass - Control class to construct and associate with the label
-			@type wxCtrlClass - Some wx control type EG wx.TextCtrl
-			@param kwargs - keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
+			@param labelText: Text to use when constructing the wx.StaticText to label the control.
+			@type LabelText: String
+			@param wxCtrlClass: Control class to construct and associate with the label
+			@type wxCtrlClass: Some wx control type EG wx.TextCtrl
+			@param kwargs: keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
 
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
 			limitations from there.

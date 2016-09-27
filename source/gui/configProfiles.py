@@ -47,7 +47,7 @@ class ProfilesDialog(wx.Dialog):
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
 		changeProfilesSizer.Add(item, proportion=1.0)
 
-		changeProfilesSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_VERTICALLY)
+		changeProfilesSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
 
 		self.changeStateButton = wx.Button(self)
 		self.changeStateButton.Bind(wx.EVT_BUTTON, self.onChangeState)
@@ -371,29 +371,28 @@ class NewProfileDialog(wx.Dialog):
 		# Translators: The title of the dialog to create a new configuration profile.
 		super(NewProfileDialog, self).__init__(parent, title=_("New Profile"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a field to enter the name of a new configuration profile.
-		sizer.Add(wx.StaticText(self, label=_("Profile name:")), flag=wx.ALIGN_CENTER_VERTICAL)
-		sizer.AddSpacer(5)
-		item = self.profileName = wx.TextCtrl(self)
-		sizer.Add(item)
-		mainSizer.Add(sizer, border=10, flag=wx.ALL)
+		profileNameText = _("Profile name:")
+		self.profileName = sHelper.addLabeledControl(profileNameText, wx.TextCtrl)
 
 		# Translators: The label of a radio button to specify that a profile will be used for manual activation
 		# in the new configuration profile dialog.
 		self.triggers = triggers = [(None, _("Manual activation"), True)]
 		triggers.extend(parent.getSimpleTriggers())
-		item = self.triggerChoice = wx.RadioBox(self, label=_("Use this profile for:"),
-			choices=[trig[1] for trig in triggers])
-		item.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
+		self.triggerChoice = sHelper.addItem(wx.RadioBox(self, label=_("Use this profile for:"),
+			choices=[trig[1] for trig in triggers]))
+		self.triggerChoice.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
-		mainSizer.Add(item, border=5, flag=wx.ALL)
 
-		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL), border=5, flag=wx.ALL)
+		sHelper.addItem(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+
+		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileName.SetFocus()
