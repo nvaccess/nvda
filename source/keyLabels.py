@@ -164,4 +164,11 @@ localizedKeyLabels = {
 }
 
 def getKeyCombinationLabel(keyCombination):
-	return "+".join(localizedKeyLabels[key.lower()] for key in keyCombination.split("+"))
+	"""
+	Fetches a localized label for a combination of multiple keys.
+	@param keyCombination: The key combination identifier to get the localized label for, usually plus-separated key identifiers.
+	@type keyCombination: string
+	@returns: A localized key combination
+	@rtype: string
+	"""
+	return "+".join(localizedKeyLabels[key.lower()] if key.lower() in localizedKeyLabels.keys() else key.lower() for key in keyCombination.split("+"))

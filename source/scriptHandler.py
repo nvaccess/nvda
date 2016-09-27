@@ -36,7 +36,7 @@ def _makeKbEmulateScript(scriptName):
 		# __name__ must be str; i.e. can't be unicode.
 		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
-	func.__doc__ = _("Emulates pressing %s on the system keyboard") % keyLabels.getKeyCombinationLabel(keyName)
+	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
 
 def _getObjScript(obj, gesture, globalMapScripts):
