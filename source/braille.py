@@ -55,10 +55,10 @@ TABLES = (
 	("cz-cz-g1.utb", _("Czech grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g16.utb", _("Danish 6 dot grade 1"), False),
+	("da-dk-g16.ctb", _("Danish 6 dot grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g18.utb", _("Danish 8 dot grade 1"), False),
+	("da-dk-g18.ctb", _("Danish 8 dot grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("da-dk-g26.ctb", _("Danish 6 dot grade 2"), False),
@@ -205,10 +205,10 @@ TABLES = (
 	("mr-in-g1.utb", _("Marathi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-BE-g1.ctb", _("Dutch (Belgium)"), False),
+	("nl-BE-g0.utb", _("Dutch (Belgium)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-NL-g1.ctb", _("Dutch (Netherlands)"), False),
+	("nl-NL-g0.utb", _("Dutch (Netherlands)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"), True),
@@ -262,7 +262,7 @@ TABLES = (
 	("Se-Se-g1.utb", _("Swedish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("sk-sk-g1.utb", _("Slovak grade 1"), False),
+	("sk-g1.ctb", _("Slovak grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("sl-si-g1.utb", _("Slovene grade 1"), False),
@@ -294,6 +294,18 @@ TABLES = (
 
 #: Braille tables that support input (only computer braille tables yet).
 INPUT_TABLES = tuple(t for t in TABLES if t[2])
+
+#: Maps old table names to new table names for tables renamed in newer versions of liblouis.
+RENAMED_TABLES = {
+	"da-dk-g16.utb":"da-dk-g16.ctb",
+	"da-dk-g18.utb":"da-dk-g18.ctb",
+	"nl-BE-g1.ctb":"nl-BE-g0.utb",
+	"nl-NL-g1.ctb":"nl-NL-g0.utb",
+	"no-no.ctb":"no-no-comp8.ctb",
+	"sk-sk-g1.utb":"sk-g1.ctb",
+	"UEBC-g1.ctb":"en-ueb-g1.ctb",
+	"UEBC-g2.ctb":"en-ueb-g2.ctb",
+}
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
@@ -1764,6 +1776,11 @@ def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
+	# #6140: Migrate to new table names as smoothly as possible.
+	oldTableName = config.conf["braille"]["translationTable"]
+	newTableName = RENAMED_TABLES.get(oldTableName)
+	if newTableName:
+		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
