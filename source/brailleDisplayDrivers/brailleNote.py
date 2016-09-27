@@ -262,15 +262,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return None, None, None
 		command, arg = ord(self._buffer[0]), ord(self._buffer[1])
 		self._buffer = ""
-		# #5992: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
+		# #5993: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
 		if command == QT_MOD_TAG:
 			key = self._serial.read(2)[-1]
-			arg2 = _qtKeys[ord(key)] if ord(key) in _qtKeys else key
+			arg2 = _qtKeys.get(ord(key), key)
 		else:
 			arg2 = None
 		return command, arg, arg2
 
-	# Data is invoked if we're dealing with a BrailleNote QT.
+	# Arg2 is passed in if we're dealing with a BrailleNote QT.
 	def _dispatch(self, command, arg, arg2=None):
 		space = False
 		if command == THUMB_KEYS_TAG:
