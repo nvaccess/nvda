@@ -5,8 +5,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-""" Example usage
-Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
+""" Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
+Example usage:
 
 class myDialog(class wx.Dialog):
 
