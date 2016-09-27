@@ -2058,6 +2058,8 @@ The following models are supported:
 
 Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
 For BrailleNote QT, PC keyboard emulation isn't supported.
+You can also enter braille dots using the QT keyboard.
+Please check the braille terminal section of the BrailleNote manual guide for details.
 
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
@@ -2101,18 +2103,18 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
 
-Following are commands assigned to BrailleNote QT.
-%kc:beginInclude
+Following are commands assigned to BrailleNote QT when it is not in braille input mode.
+
 || Name | Key |
 | NvDA menu | read+n |
-| Up arrow key | up arrow |
-| Down arrow key | down arrow |
-| Left Arrow key | left arrow|
-| Right arrow key | right arrow |
-| Page up key | function+up arrow |
-| Page down key | function+down arrow |
-| Home key | function+left arrow |
-| End key | function+right arrow |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow|
+| Right arrow key | rightArrow |
+| Page up key | function+upArrow |
+| Page down key | function+downArrow |
+| Home key | function+leftArrow |
+| End key | function+rightArrow |
 | Control+home keys | read+t |
 | Control+end keys | read+b |
 | Enter key | enter |
@@ -2124,12 +2126,12 @@ Following are commands assigned to BrailleNote QT.
 | Toggle input help | read+1 |
 
 Following are commands assigned to the scroll wheel:
-%kc:beginInclude
+
 || Name | Key |
-| Up arrow key | up arrow |
-| Down arrow key | down arrow |
-| Left Arrow key | left arrow |
-| Right arrow key | right arrow |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow |
+| Right arrow key | rightArrow |
 | Enter key | center button |
 | Tab key | scroll wheel clockwise |
 | Shift+tab keys | scroll wheel counterclockwise |
