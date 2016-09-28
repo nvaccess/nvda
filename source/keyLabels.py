@@ -171,4 +171,5 @@ def getKeyCombinationLabel(keyCombination):
 	@returns: A localized key combination
 	@rtype: string
 	"""
-	return "+".join(localizedKeyLabels[key.lower()] if key.lower() in localizedKeyLabels.keys() else key.lower() for key in keyCombination.split("+"))
+	keys = keyCombination.lower().split("+")
+	return "+".join(localizedKeyLabels.get(key, key) for key in keys)
