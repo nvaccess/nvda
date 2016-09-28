@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner
 
 from collections import namedtuple
 from ctypes import c_short
@@ -20,7 +20,45 @@ from NVDAObjects.behaviors import RowWithFakeNavigation
 from . import IA2TextTextInfo
 from . import ia2Web
 
+class MozillaRawTextInfo(IA2TextTextInfo):
+	"""Work around bugs in Mozilla's IAccessibleText implementation.
+	"""
+
+	def _getLineOffsets(self, offset):
+		start, end = super(MozillaRawTextInfo, self)._getLineOffsets(offset)
+		if end - start >= 2:
+			# The line is at least 2 characters long.
+			# Work around Mozilla bug 1177014: When there is a list after some other block ,
+			# the line offsets for the block include the list, even though the list is on another line.
+			# Compare the y screen coordinate of the last two characters.
+			lastPoint = self._getPointFromOffset(end - 1)
+			secondLastPoint = self._getPointFromOffset(end - 2)
+			if lastPoint.y - 5 > secondLastPoint.y:
+				newEnd = end - 1
+				log.debugWarning("Line returned for {offset} was ({start}, {end})\n"
+					"Last char's y point ({lastY}) is > second last char's y point ({secondLastY})\n"
+					"Last char must be on a different line\n"
+					"Truncating end to {newend}"
+					.format(offset=offset, start=start, end=end,
+					lastY=lastPoint.y, secondLastY=secondLastPoint.y,
+					newend=newEnd))
+				return start, newEnd
+		return start, end
+
+	def _getWordOffsets(self,offset):
+		start, end = super(MozillaRawTextInfo, self)._getWordOffsets(offset)
+		if start>offset:
+			# Work around Mozilla bug 872397: When there is punctuation at the start of a word,
+			# the word offsets for the punctuation exclude the punctuation.
+			log.debugWarning("Word returned for {offset} was ({start}, {end})\n"
+				"start is > offset\n"
+				"Adjusting start to {offset}".format(
+				offset=offset, start=start, end=end))
+			start = offset
+		return start,end
+
 class Mozilla(ia2Web.Ia2Web):
+	ia2TextInfoClass = MozillaRawTextInfo
 
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
