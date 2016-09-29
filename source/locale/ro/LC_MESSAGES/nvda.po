@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3899\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
-"PO-Revision-Date: 2016-09-15 20:41+0300\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-09-23 19:15+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com\n"
 "Language: ro_RO\n"
@@ -3814,7 +3814,7 @@ msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "Locație web NVDA"
+msgstr "Site-ul web NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
@@ -4994,6 +4994,16 @@ msgstr "Nu este redată nicio melodie"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anunță timpul rămas din melodia redată acum, dacă există"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, locație {curLocation} din {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Pagină {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -7149,6 +7159,7 @@ msgid "&Pattern"
 msgstr "&Şablon"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "Î&nlocuire"
 
@@ -7297,9 +7308,9 @@ msgstr "Nivel"
 msgid "Preserve"
 msgstr "Menține"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Schimbă simbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Schimbă simbolul selectat"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"

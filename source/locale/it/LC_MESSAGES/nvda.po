@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
-"PO-Revision-Date: 2016-09-02 09:31+0200\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-09-23 09:39+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -4979,6 +4979,16 @@ msgstr "Nessun brano in riproduzione"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Legge il tempo rimanente del brano in riproduzione"
 
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, posizione {curLocation} di {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Pagina {pageNumber}"
+
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
 msgstr "Nessun messaggio"
@@ -7139,6 +7149,7 @@ msgid "&Pattern"
 msgstr "&Voce"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Voce in sostituzione"
 
@@ -7287,9 +7298,9 @@ msgstr "Livello"
 msgid "Preserve"
 msgstr "conserva"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Cambia simbolo"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Cambia simbolo selezionato"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"

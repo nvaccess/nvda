@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
-"PO-Revision-Date: 2016-09-18 17:22+0900\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-09-26 19:19+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -4901,6 +4901,16 @@ msgstr "何も再生されていません"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "もし何か再生されている場合は、現在再生中のトラックの残り時間を報告"
 
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}パーセント 場所 {curLocation}の{maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "ページ {pageNumber}"
+
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
 msgstr "メッセージはまだありません"
@@ -7017,6 +7027,7 @@ msgid "&Pattern"
 msgstr "パターン(&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "読み方(&R)"
 
@@ -7165,9 +7176,9 @@ msgstr "最低読み上げレベル"
 msgid "Preserve"
 msgstr "音声エンジンに記号を送る"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "読み方を変更"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "選択した記号の読みを変更"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"

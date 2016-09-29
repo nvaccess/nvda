@@ -76,9 +76,17 @@ _guiFrame=None
 isActive=False
 
 def activate():
+	"""
+		Function to call to trigger the speech viewer window to open.
+	"""
+	_setActive(True, SpeechViewerFrame(_cleanup) )
+
+def _setActive(isNowActive, speechViewerFrame=None):
 	global _guiFrame, isActive
-	_guiFrame = SpeechViewerFrame(_cleanup)
-	isActive=True
+	isActive = isNowActive
+	_guiFrame = speechViewerFrame
+	if gui and gui.mainFrame:
+		gui.mainFrame.onSpeechViewerEnabled(isNowActive)
 
 def appendText(text):
 	if not isActive:
@@ -92,11 +100,10 @@ def appendText(text):
 	_guiFrame.textCtrl.AppendText(text + "\n")
 
 def _cleanup():
-	global _guiFrame, isActive
+	global isActive
 	if not isActive:
 		return
-	isActive=False
-	_guiFrame = None
+	_setActive(False)
 
 def deactivate():
 	global _guiFrame, isActive

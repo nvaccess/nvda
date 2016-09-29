@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-09 13:54+0200\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-09-22 18:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -2377,6 +2377,7 @@ msgid "Mouse"
 msgstr "أوامر مؤشر الفأرة"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "أوامر النطق"
 
@@ -4480,6 +4481,10 @@ msgstr "جدول به {columnCount} أعمدة و {rowCount} صفوف"
 msgid "NVDA Speech Viewer"
 msgstr "عارض النطق الخاص بالبرنامج"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "ظ&هور عارض النطق عند بدأ التشغيل"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "اللغة"
@@ -4860,6 +4865,15 @@ msgstr "لا يوجد ملف صوتي يعمل"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "الإعلان عن الوقت المتبقى من الملف الصوتي الحالي, إن وجد"
+
+#. Translators: A position in a Kindle book
+#, no-python-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, المكان {curLocation} من {maxLocation}"
+
+#. Translators: a page in a Kindle book
+msgid "Page {pageNumber}"
+msgstr "صفحة {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5303,8 +5317,8 @@ msgid "ALVA BC640/680 series"
 msgstr "عائلة آلفا بيسي640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "الأسطر الإلكترونية Baum/HumanWare/aph"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "الأسطر الإلكترونية Baum/HumanWare/APH/Orbit "
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -6850,11 +6864,22 @@ msgstr "الإعلان عن ال&صفحات"
 msgid "Report line &numbers"
 msgstr "الإعلان عن ر&قم السطر"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "الإعلان عن إزاحة الس&طر"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "الإعلان عن إزاحة الس&طر عبر"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "تعطيل"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "النغمات"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "النغمات والنطق"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -6937,6 +6962,7 @@ msgid "&Pattern"
 msgstr "ال&كلمة الأصلية"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&استبدال بِ"
 
@@ -7085,9 +7111,9 @@ msgstr "مستوى "
 msgid "Preserve"
 msgstr "غير معدل"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "تغيير الرمز"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "تغيير الرمز المحدد"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
