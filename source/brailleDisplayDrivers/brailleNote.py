@@ -364,8 +364,5 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		elif qtMod is not None:
 			names.update(_qtKeyNames[1 << i] for i in xrange(4)
 				if (1 << i) & qtMod)
-		# Make sure to display QT identifiers in mod+char format if this is such a case.
-		if self.qt:
-			self.id = qtData if qtMod == 0 else "+".join(("+".join(names), qtData))
-		else:
-			self.id = "+".join(names)
+			names.add(qtData)
+		self.id = "+".join(names)
