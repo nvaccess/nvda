@@ -11,6 +11,7 @@ Qué hay de Nuevo en NVDA
 - Se ha añadido una opción para abrir la ventana del visualizador de voz al arrancar. (#5050)
 - Al reabrir la ventana del visualizador de voz, la localización y las dimensiones ahora se restaurarán. (#5050)
 - Los campos de referencia cruzada en Microsoft Word ahora se tratan como hipervínculos. Se anuncian como enlaces, y se pueden activar. (#6102)
+- Soporte inicial para la próxima versión de la applicación Kindle. (#6247)
 
 
 == Corrección de Fallos ==
@@ -18,6 +19,15 @@ Qué hay de Nuevo en NVDA
 - Los mapas de imagen ahora se procesan como se esperaba en el modo exploración en Mozilla firefox. (#6051)
 - Corregido un problema que causa una advertencia en el fichero de registro de NVDA cuando se conmuta el bloqueo de mayúsculas. (#6127)
 - Mientras se esté en el diálogo de diccionario, pulsando la tecla intro ahora se guardan los cambios y se sale. (#6206)
+- Ahora se muestran los mensajes en braille al cambiar los modos de entrada para un método de entrada (entrada nativa/alfanumérica, forma completa/ forma media, etc.). (#5892, #5893)
+- Al deshabilitar y luego inmediatamente rehabilitar un complemento o viceversa, el estado del complemento  ahora vuelve a tal y como estaba anteriormente. (#6299)
+- Al utilizar Microsoft Word, los campos de número de página en encabezados ahora pueden leerse. (#6004)
+- El ratón ahora puede utilizarse para mover el foco entre la lista de símbolos y los campos de edición en el diálogo pronunciación de símbolos. (#6312)
+- Corregido un problema que detiene la aparición de la lista de elementos cuando Microsoft Word contiene un hipervínculo inválido. (#5886)
+
+
+== Cambios para Desarrolladores ==
+- Ahora es posible proporcionar app modules para ejecutables que contengan un punto (.) en sus nombres. Los puntos se reemplazan con subrayados (_). (#5323)
 
 
 = 2016.3 =
