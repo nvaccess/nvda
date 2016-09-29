@@ -11,6 +11,7 @@
 - En indstilling til at åbne talevisning ved opstart er blevet tilføjet. (#5050)
 - Når vinduet med talevisning åbnes, vil placeringen og dimensionerne af vinduet blive gendannet. (#5050)
 - Felter til brug af krydshenvisninger behandles nu som links. De rapporteres som links, og kan blive aktiveret. (#6102)
+- Initial støtte for den kommende Kindle app. (#6247)
 
 
 == Fejlrettelser ==
@@ -19,6 +20,11 @@
 - Rettede en fejl som skrev en advarsel til NVDAs logfil, når CAPS Lock er slået til. 
 (#6127)
 - Hvis du befinder dig i en dialog, som omfatter ordbøgerne til NVDA, kan du nu trykke på enter-tasten for at gemme ændringerne og lukke dialogen. (#6206)
+- Beskeder er nu vist på punkt når der ændres indtastningstilstand for en indtastningsmetode (lokalt tegnsæt, alfanumerisk indtastning, full shaped/half shaped osv.) (#5892, #5893)
+- Hvis en tilføjelsespakke slås fra og straks slås til igen eller omvendt, vil tilføjelsespakkens status nu korrekt vende tilbage til hvad den var tidligere. (#6299)
+- Når der benyttes Microsoft Word, kan felter til sidetal nu blive læst i sidehoveder. (#6004)
+- Musen kan nu benyttes til at flytte fokus imellem symbollisten og editfelterne i dialogen til Udtale af Sætningstegn og Symboler. (#6312)
+- Rettede en fejl der gjorde elementlisten ikke kunne vises hvis Microsoft Word indeholdte et ugyldigt link. (#5886)
 
 
 == Ændringer for udviklere ==
