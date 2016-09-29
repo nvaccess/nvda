@@ -11,6 +11,7 @@
 - An option to open the speech viewer window on startup has been added. (#5050)
 - When re-opening the speech viewer window, the location and dimensions will now be restored. (#5050)
 - Cross Reference fields in Microsoft Word are now treated like hyperlinks. They are reported as links, and can be activated. (#6102)
+- Initial support for the upcoming version of the Kindle app. (#6247)
 
 
 == Bug Fixes ==
@@ -18,6 +19,15 @@
 - Image maps now render as expected in browse mode in Mozilla Firefox. (#6051)
 - Fixed an issue causing a warning in the NVDA log file when caps-lock is toggled. (#6127)
 - While in the dictionary dialog, pressing the enter key now saves changes and exits. (#6206)
+- Messages are now displayed in braille when changing input modes for an input method (native input/alphanumeric, full shaped/half shaped, etc.). (#5892, #5893)
+- When disabling and then immediately re-enabling an add-on or vice versa, the add-on status now correctly reverts to what it was previously. (#6299)
+- When using Microsoft Word, page-number fields in headers can now be read. (#6004)
+- The mouse can now be used to move focus between the symbol list and the edit fields in the symbol pronunciation dialog. (#6312)
+- Fixed an issue that stops the the elements list from appearing when Microsoft Word contains an invalid hyperlink. (#5886)
+
+
+== Izmjene za razvojne programere ==
+Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
 
 
 = 2016.3 =

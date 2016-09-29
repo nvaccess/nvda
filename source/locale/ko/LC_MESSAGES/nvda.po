@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
-"PO-Revision-Date: 2016-09-05 12:58-0800\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-09-24 10:47-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -4520,7 +4520,7 @@ msgstr "NVDA 음성 출력 뷰어"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr ""
+msgstr "NVDA 시작시 음성 출력 뷰어 실행 (&S)"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -4897,6 +4897,16 @@ msgstr "재생되는 트랙 없음"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "만약 트랙이 재생되는 경우 현재 트랙의 남은 시간을 알려줍니다. "
+
+#. Translators: A position in a Kindle book
+#, no-python-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr ""
+
+#. Translators: a page in a Kindle book
+#, fuzzy
+msgid "Page {pageNumber}"
+msgstr "Slide {slideNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -6996,6 +7006,7 @@ msgid "&Pattern"
 msgstr "기존값 (&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "변환값 (&R)"
 
@@ -7146,9 +7157,9 @@ msgstr "레벨"
 msgid "Preserve"
 msgstr "엔진에서 처리"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "기호 변경"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "선택된 기호 출력 변경"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
