@@ -44,6 +44,7 @@ class myDialog(class wx.Dialog):
 
 import wx
 from wx.lib import scrolledpanel
+import nvdaControls
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -122,7 +123,7 @@ def associateElements( firstElement, secondElement):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizer.Add(firstElement)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-		sizer.Add(secondElement)
+		sizer.Add(secondElement, flag=wx.EXPAND)
 	# button and checkBox
 	elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -226,12 +227,11 @@ class BoxSizerHelper(object):
 		else:
 			raise ValueError("Orientation OR Sizer must be supplied.")
 
-	def addItem(self, item):
+	def addItem(self, item, **keywordArgs):
 		""" Adds an item with space between it and the previous item.
 			Does not handle adding LabledControlHelper; use L{addlabelledControl} instead.
 		"""
 		toAdd = item
-		keywordArgs = {}
 		shouldAddSpacer = self.hasFirstItemBeenAdded
 
 		if isinstance(item, ButtonHelper):
@@ -272,5 +272,8 @@ class BoxSizerHelper(object):
 			limitations from there.
 		"""
 		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
-		self.addItem(labeledControl.sizer)
+		if(isinstance(labeledControl.control, nvdaControls.AutoWidthColumnListCtrl)):
+			self.addItem(labeledControl.sizer, flag=wx.EXPAND)
+		else:
+			self.addItem(labeledControl.sizer)
 		return labeledControl.control
