@@ -43,6 +43,7 @@ class myDialog(class wx.Dialog):
 """
 
 import wx
+from wx.lib import scrolledpanel
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -250,7 +251,7 @@ class BoxSizerHelper(object):
 			raise NotImplementedError("Use addLabeledControl instead")
 
 		# a boxSizerHelper could contain a wx.StaticBoxSizer
-		if isinstance(toAdd, wx.StaticBoxSizer):
+		if isinstance(toAdd, (wx.StaticBoxSizer, scrolledpanel.ScrolledPanel)):
 			keywordArgs['flag'] = wx.EXPAND
 
 		if shouldAddSpacer:

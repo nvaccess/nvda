@@ -1206,33 +1206,41 @@ This dialog box is found in the Preferences menu, under "Document Formatting..."
 Most of the checkboxes in this dialog are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
+The document formatting options are organised into groups.
 You can configure reporting of:
-- Font name
-- Font size
-- Font attributes
-- Text alignment
-- Colors
-- Comments
-- Editor revisions
-- Emphasis
-- Text style
-- Spelling errors
-- Page numbers
-- Line numbers
-- Line indentation
-- Paragraph indentation (e.g. hanging indent, first line indent)
-- line spacing (single, double etc)
-- Tables
-- Table row/column headers
-- Table cell coordinates
-- Links
-- Headings
-- Lists
-- Block quotes
-- Landmarks
-- Frames
-- When something is clickable
+- Font
+ - Font name
+ - Font size
+ - Font attributes
+ - Emphasis
+ - Style
+ - Colors
+- Document information
+ - Comments
+ - Editor revisions
+ - Spelling errors
+- Pages and spacing
+ - Page numbers
+ - Line numbers
+ - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
+ - Paragraph indentation (e.g. hanging indent, first line indent)
+ - Line spacing (single, double etc)
+ - Alignment
+- Table information
+ - Tables
+ - Row/column headers
+ - Cell coordinates
+- Elements
+ - Headings
+ - Links
+ - Lists
+ - Block quotes
+ - Landmarks
+ - Frames
+ - Clickable
+ -
 -
+
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
@@ -1243,7 +1251,7 @@ By default, NVDA will detect the formatting at the position of the System caret 
 
 Enable this option while proof reading documents in applications such as Wordpad, where formatting is important.
 
-==== Report line indentation with ====
+==== Line indentation reporting ====[lineIndentationOptions]
 This option allows you to configure how indentation at the beginning of lines is reported.
 The Report line indentation with combo box has four options.
 

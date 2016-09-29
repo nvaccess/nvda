@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -10,6 +10,7 @@ import os
 import copy
 import re
 import wx
+from wx.lib import scrolledpanel
 import winUser
 import logHandler
 import installer
@@ -1074,75 +1075,106 @@ class DocumentFormattingDialog(SettingsDialog):
 	title = _("Document Formatting")
 
 	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: This is a label appearing on the document formatting settings dialog.
+		dialogText =_("The following options control the types of document formatting reported by NVDA.")
+		sHelper.addItem(wx.StaticText(self, label=dialogText))
+
+		scrolledPanel = scrolledpanel.ScrolledPanel(self, size = (500,400), style = wx.TAB_TRAVERSAL | wx.BORDER_THEME)
+		self.scrolledPanel = scrolledPanel
+		scrolledItems = guiHelper.BoxSizerHelper(scrolledPanel, orientation=wx.VERTICAL)
+		scrolledItemsBorder = wx.BoxSizer(wx.VERTICAL)
+		scrolledItemsBorder.Add(scrolledItems.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag = wx.ALL|wx.EXPAND)
+		scrolledPanel.SetSizer(scrolledItemsBorder)
+
+		# Translators: This is the label for a group of document formatting options in the 
+		# document formatting settings dialog
+		fontGroupText = _("Font")
+		fontGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=fontGroupText), wx.VERTICAL))
+		scrolledItems.addItem(fontGroup)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report formatting changes after the cursor (can cause a lag)"))
-		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
-		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
-		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &font name"))
+		fontNameText = _("&Font name")
+		self.fontNameCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel, label=fontNameText))
 		self.fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
-		settingsSizer.Add(self.fontNameCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.fontSizeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font &size"))
+		fontSizeText = _("Font &size")
+		self.fontSizeCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=fontSizeText))
 		self.fontSizeCheckBox.SetValue(config.conf["documentFormatting"]["reportFontSize"])
-		settingsSizer.Add(self.fontSizeCheckBox,border=10,flag=wx.BOTTOM)
+		
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.fontAttrsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font attri&butes"))
+		fontAttributesText = _("Font attri&butes")
+		self.fontAttrsCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=fontAttributesText))
 		self.fontAttrsCheckBox.SetValue(config.conf["documentFormatting"]["reportFontAttributes"])
-		settingsSizer.Add(self.fontAttrsCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.alignmentCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &alignment"))
-		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
-		settingsSizer.Add(self.alignmentCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
-		self.colorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &colors"))
-		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
-		settingsSizer.Add(self.colorCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
-		self.commentsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report co&mments"))
-		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
-		settingsSizer.Add(self.commentsCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
-		self.revisionsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &editor revisions"))
-		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
-		settingsSizer.Add(self.revisionsCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
-		self.emphasisCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report e&mphasis"))
+		emphasisText=_("E&mphasis")
+		self.emphasisCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=emphasisText))
 		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
-		settingsSizer.Add(self.emphasisCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.styleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report st&yle"))
+		styleText =_("St&yle")
+		self.styleCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=styleText))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
-		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
+		
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.spellingErrorsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report spelling e&rrors"))
+		colorsText = _("&Colors")
+		self.colorCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=colorsText))
+		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
+
+		# Translators: This is the label for a group of document formatting options in the 
+		# document formatting settings dialog
+		documentInfoGroupText = _("Document information")
+		docInfoGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=documentInfoGroupText), wx.VERTICAL))
+		scrolledItems.addItem(docInfoGroup)
+		
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
+		commentsText = _("Co&mments")
+		self.commentsCheckBox=docInfoGroup.addItem(wx.CheckBox(scrolledPanel,label=commentsText))
+		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
+		
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
+		revisionsText = _("&Editor revisions")
+		self.revisionsCheckBox=docInfoGroup.addItem(wx.CheckBox(scrolledPanel,label=revisionsText))
+		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
+		spellingErrorText = _("Spelling e&rrors")
+		self.spellingErrorsCheckBox=docInfoGroup.addItem(wx.CheckBox(scrolledPanel,label=spellingErrorText))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
-		settingsSizer.Add(self.spellingErrorsCheckBox,border=10,flag=wx.BOTTOM)
+
+		# Translators: This is the label for a group of document formatting options in the 
+		# document formatting settings dialog
+		pageAndSpaceGroupText = _("Pages and spacing")
+		pageAndSpaceGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=pageAndSpaceGroupText), wx.VERTICAL))
+		scrolledItems.addItem(pageAndSpaceGroup)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.pageCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &pages"))
+		pageText = _("&Pages")
+		self.pageCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=pageText))
 		self.pageCheckBox.SetValue(config.conf["documentFormatting"]["reportPage"])
-		settingsSizer.Add(self.pageCheckBox,border=10,flag=wx.BOTTOM)
+		
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report line &numbers"))
+		lineText = _("Line &numbers")
+		self.lineNumberCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=lineText))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
-		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
-		sizer=wx.BoxSizer(wx.HORIZONTAL)
+
 		# Translators: This is the label for a combobox controlling the reporting of line indentation in the
 		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Report line &indentation with:")))
+		lineIndentationText = _("Line &indentation reporting:")
 		indentChoices=[
 			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 			_("Off"),
@@ -1153,75 +1185,105 @@ class DocumentFormattingDialog(SettingsDialog):
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 			_("Both  Speech and Tones")
 		]
-		self.lineIndentationCombo = wx.Choice(self,wx.ID_ANY,choices=indentChoices)
-		#We use bitwise opperations because it saves us a four way if statement.
+		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(lineIndentationText, wx.Choice, choices=indentChoices)
+		#We use bitwise operations because it saves us a four way if statement.
 		curChoice = config.conf["documentFormatting"]["reportLineIndentationWithTones"] << 1 |  config.conf["documentFormatting"]["reportLineIndentation"]
 		self.lineIndentationCombo.SetSelection(curChoice)
-		sizer.Add(self.lineIndentationCombo)
-		settingsSizer.Add(sizer)
+
 		# Translators: This message is presented in the document formatting settings dialogue
 		# If this option is selected, NVDA will report paragraph indentation if available. 
-		self.paragraphIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraph indentation"))
+		paragraphIndentationText = _("&Paragraph indentation")
+		self.paragraphIndentationCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=paragraphIndentationText))
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
-		settingsSizer.Add(self.paragraphIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		
 		# Translators: This message is presented in the document formatting settings dialogue
 		# If this option is selected, NVDA will report line spacing if available. 
-		self.lineSpacingCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &line spacing"))
+		lineSpacingText=_("&Line spacing")
+		self.lineSpacingCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=lineSpacingText))
 		self.lineSpacingCheckBox.SetValue(config.conf["documentFormatting"]["reportLineSpacing"])
-		settingsSizer.Add(self.lineSpacingCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.tablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tables"))
+		alignmentText = _("&Alignment")
+		self.alignmentCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=alignmentText))
+		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
+
+		# Translators: This is the label for a group of document formatting options in the 
+		# document formatting settings dialog
+		tablesGroupText = _("Table information")
+		tablesGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=tablesGroupText), wx.VERTICAL))
+		scrolledItems.addItem(tablesGroup)
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
+		self.tablesCheckBox=tablesGroup.addItem(wx.CheckBox(scrolledPanel,label=_("&Tables")))
 		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
-		settingsSizer.Add(self.tablesCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.tableHeadersCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table row/column h&eaders"))
+		self.tableHeadersCheckBox=tablesGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Row/column h&eaders")))
 		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
-		settingsSizer.Add(self.tableHeadersCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.tableCellCoordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table cell c&oordinates"))
+		self.tableCellCoordsCheckBox=tablesGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Cell c&oordinates")))
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
-		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
+
+		# Translators: This is the label for a group of document formatting options in the 
+		# document formatting settings dialog
+		elementsGroupText = _("Elements")
+		elementsGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=elementsGroupText), wx.VERTICAL))
+		scrolledItems.addItem(elementsGroup)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lin&ks"))
-		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
-		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings dialog.
-		self.headingsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &headings"))
+		self.headingsCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("&Headings")))
 		self.headingsCheckBox.SetValue(config.conf["documentFormatting"]["reportHeadings"])
-		settingsSizer.Add(self.headingsCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &lists"))
+		self.linksCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Lin&ks")))
+		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
+		self.listsCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("&Lists")))
 		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
-		settingsSizer.Add(self.listsCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.blockQuotesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report block &quotes"))
+		self.blockQuotesCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Block &quotes")))
 		self.blockQuotesCheckBox.SetValue(config.conf["documentFormatting"]["reportBlockQuotes"])
-		settingsSizer.Add(self.blockQuotesCheckBox,border=10,flag=wx.BOTTOM)
+		
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.landmarksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lan&dmarks"))
+		self.landmarksCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Lan&dmarks")))
 		self.landmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportLandmarks"])
-		settingsSizer.Add(self.landmarksCheckBox,border=10,flag=wx.BOTTOM)
+		
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		item=self.framesCheckBox=wx.CheckBox(self,label=_("Report fra&mes"))
-		item.Value=config.conf["documentFormatting"]["reportFrames"]
-		settingsSizer.Add(item,border=10,flag=wx.BOTTOM)
+		self.framesCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Fra&mes")))
+		self.framesCheckBox.Value=config.conf["documentFormatting"]["reportFrames"]
+		
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		item=self.clickableCheckBox=wx.CheckBox(self,label=_("Report if &clickable"))
-		item.Value=config.conf["documentFormatting"]["reportClickable"]
-		settingsSizer.Add(item,border=10,flag=wx.BOTTOM)
+		self.clickableCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("&Clickable")))
+		self.clickableCheckBox.Value=config.conf["documentFormatting"]["reportClickable"]
+
+		sHelper.addItem(scrolledPanel)
+		scrolledPanel.SetAutoLayout(True)
+		scrolledPanel.Layout()
+		scrolledPanel.SetupScrolling()
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
+		detectFormatAfterCursorText =_("Report formatting changes after the cursor (can cause a lag)")
+		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self, label=detectFormatAfterCursorText)
+		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
+		sHelper.addItem(self.detectFormatAfterCursorCheckBox)
 
 	def postInit(self):
-		self.detectFormatAfterCursorCheckBox.SetFocus()
+		self.scrolledPanel.SetFocus()
 
 	def onOk(self,evt):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()
