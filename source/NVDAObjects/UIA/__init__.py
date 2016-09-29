@@ -309,8 +309,12 @@ class UIATextInfo(textInfos.TextInfo):
 		parentElements=[]
 		if alwaysWalkAncestors:
 			log.debug("Fetching parents starting from enclosingElement")
-			parentElement=textRange.getEnclosingElement()
-			parentElement=parentElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			try:
+				parentElement=textRange.getEnclosingElement()
+			except COMError:
+				parentElement=None
+			if parentElement:
+				parentElement=parentElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 			while parentElement:
 				isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 				if log.isEnabledFor(log.DEBUG):
