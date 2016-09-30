@@ -517,8 +517,8 @@ class VoiceSettingsDialog(SettingsDialog):
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabel=wx.StaticText(self,-1,label=_("Capital pitch change percentage"))
 		settingsSizer.Add(capPitchChangeLabel)
-		self.capPitchChangeEdit=wx.TextCtrl(self,wx.NewId())
-		self.capPitchChangeEdit.SetValue(str(config.conf["speech"][getSynth().name]["capPitchChange"]))
+		self.capPitchChangeEdit=wx.SpinCtrl(self, min=0, max=100,
+			initial=config.conf["speech"][getSynth().name]["capPitchChange"])
 		settingsSizer.Add(self.capPitchChangeEdit,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# voice settings dialog.
@@ -970,15 +970,15 @@ class BrowseModeDialog(SettingsDialog):
 		# browse mode settings dialog.
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
 		settingsSizer.Add(maxLengthLabel)
-		self.maxLengthEdit=wx.TextCtrl(self,wx.NewId())
-		self.maxLengthEdit.SetValue(str(config.conf["virtualBuffers"]["maxLineLength"]))
+		self.maxLengthEdit=wx.SpinCtrl(self,min=1, max=100000,
+			initial=config.conf["virtualBuffers"]["maxLineLength"])
 		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a textfield in the
 		# browse mode settings dialog.
 		pageLinesLabel=wx.StaticText(self,-1,label=_("&Number of lines per page"))
 		settingsSizer.Add(pageLinesLabel)
-		self.pageLinesEdit=wx.TextCtrl(self,wx.NewId())
-		self.pageLinesEdit.SetValue(str(config.conf["virtualBuffers"]["linesPerPage"]))
+		self.pageLinesEdit=wx.SpinCtrl(self, min=0, max=100000,
+			initial=config.conf["virtualBuffers"]["linesPerPage"])
 		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings dialog.
@@ -1485,8 +1485,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor blink rate (ms)"))
 		sizer.Add(label)
-		self.cursorBlinkRateEdit = wx.TextCtrl(self, wx.ID_ANY)
-		self.cursorBlinkRateEdit.SetValue(str(config.conf["braille"]["cursorBlinkRate"]))
+		self.cursorBlinkRateEdit = wx.SpinCtrl(self, min=0, max=2000,
+			initial=config.conf["braille"]["cursorBlinkRate"])
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorBlinkRateEdit.Disable()
 		sizer.Add(self.cursorBlinkRateEdit)
@@ -1512,8 +1512,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Message timeout (sec)"))
 		sizer.Add(label)
-		self.messageTimeoutEdit = wx.TextCtrl(self, wx.ID_ANY)
-		self.messageTimeoutEdit.SetValue(str(config.conf["braille"]["messageTimeout"]))
+		self.messageTimeoutEdit = wx.SpinCtrl(self, min=0, max=20,
+			initial=config.conf["braille"]["messageTimeout"])
 		sizer.Add(self.messageTimeoutEdit)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
