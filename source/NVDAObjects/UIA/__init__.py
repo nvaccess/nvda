@@ -26,7 +26,11 @@ from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDete
 import braille
 
 #: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
-UIAFormatUnits=[UIAHandler.TextUnit_Format,UIAHandler.TextUnit_Word,UIAHandler.TextUnit_Character]
+UIAFormatUnits=[
+	UIAHandler.TextUnit_Format,
+	UIAHandler.TextUnit_Word,
+	UIAHandler.TextUnit_Character
+] if UIAHandler.isUIAAvailable else None 
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -182,7 +186,16 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return self.copy()
 
-	UIAControlTypesWhereNameIsContent={UIAHandler.UIA_ButtonControlTypeId,UIAHandler.UIA_HyperlinkControlTypeId,UIAHandler.UIA_ImageControlTypeId,UIAHandler.UIA_MenuItemControlTypeId,UIAHandler.UIA_TabItemControlTypeId,UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_SplitButtonControlTypeId}
+	UIAControlTypesWhereNameIsContent={
+		UIAHandler.UIA_ButtonControlTypeId,
+		UIAHandler.UIA_HyperlinkControlTypeId,
+		UIAHandler.UIA_ImageControlTypeId,
+		UIAHandler.UIA_MenuItemControlTypeId,
+		UIAHandler.UIA_TabItemControlTypeId,
+		UIAHandler.UIA_TextControlTypeId,
+		UIAHandler.UIA_SplitButtonControlTypeId
+	} if UIAHandler.isUIAAvailable else None
+
 
 	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		"""
