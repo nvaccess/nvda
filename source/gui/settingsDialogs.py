@@ -253,13 +253,6 @@ class GeneralSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
-		if newLanguage!=self.oldLanguage:
-			try:
-				languageHandler.setLanguage(newLanguage)
-			except:
-				log.error("languageHandler.setLanguage", exc_info=True)
-				gui.messageBox(_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING,self)
-				return
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
