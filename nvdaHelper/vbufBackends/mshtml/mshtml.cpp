@@ -1254,7 +1254,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	{
 		wstring wNameAttribute=tempIter->second;
 		wstring nameAttribute;
-		transform(wNameAttribute.begin(), wNameAttribute.end(),wNameAttribute.begin(), tolower);
+		//transform(wNameAttribute.begin(), wNameAttribute.end(),wNameAttribute.begin(), tolower);
 //		for (wstring::const_iterator it = wNameAttribute.begin(); it != wNameAttribute.end(); ++it)
 //					{
 //						if (*it != L':' && *it != L'/' && *it != L'.')
@@ -1262,24 +1262,25 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 //							nameAttribute.push_back(*it);
 //						}
 //					}
-		for (wstring::const_iterator it = wNameAttribute.begin(); it != wNameAttribute.end(); ++it)
-		{
-			if (*it != L':')
-			{
-				nameAttribute.push_back(*it);
-			}
-			else
-			{
-				nameAttribute.append(L"_");
-			}
-		}
+//		for (wstring::const_iterator it = wNameAttribute.begin(); it != wNameAttribute.end(); ++it)
+//		{
+//			if (*it != L':')
+//			{
+//				nameAttribute.push_back(*it);
+//			}
+//			else
+//			{
+//				nameAttribute.append(L"_");
+//			}
+//		}
 		//LOG_INFO(L"nameAttribute is:"<<nameAttribute);
+		nameAttribute=wNameAttribute;
 		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
 			{
 				wstring key = it->first;
 				wstring value = it->second;
-				//LOG_INFO(L"key is:"<<key);
-				//LOG_INFO(L"value is:"<<nameAttribute.compare(key));
+				LOG_INFO(L"key is:"<<key);
+				LOG_INFO(L"nameAttribute is:"<<nameAttribute);
 				//transform(nameAttribute.begin(), nameAttribute.end(), nameAttribute.begin(), tolower);
 				//transform(key.begin(), key.end(), key.begin(), tolower);
 				if (nameAttribute.compare(key)==0)

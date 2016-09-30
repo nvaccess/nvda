@@ -1036,14 +1036,14 @@ class MSHTML(IAccessible):
 		log.info("\nScreen Layout Testing: %s %s",browseObj.HTMLNode.nodeName,browseObj.value)
 		if (browseObj.HTMLNode.nodeName=="IMG"):
 			customLabelKey=browseObj.HTMLAttributes['src']
-			customLabelKey=customLabelKey.replace(':','\:')
+# 			customLabelKey=customLabelKey.replace(':','\:')
  			#customLabelKey=customLabelKey.replace(':','_')
 # 			nameAttribute=None
 # 			linkAttribute=None
 #  			log.info("srcAttribute is: %s",srcAttribute)
 		elif (browseObj.HTMLNode.nodeName=="A"):
 			customLabelKey=browseObj.HTMLAttributes['href']
-			customLabelKey=customLabelKey.replace(':','\:')
+# 			customLabelKey=customLabelKey.replace(':','\:')
 			#customLabelKey=customLabelKey.replace(':','_')
 # 			log.info("before Please work: %s",customLabelKey)
 # 			parsed_customLabelKey = urlparse( customLabelKey )
@@ -1110,6 +1110,8 @@ class MSHTML(IAccessible):
 # 		customLabelKey='"'+customLabelKey+'"'
 # 		log.info("name Attributeis: %s",nameAttribute)
 			
+		if customLabelKey:
+			customLabelKey=customLabelKey.replace(':','\:')
 		filename=self.getFilenameFromElementDomain()
 		
 		#####################################################
