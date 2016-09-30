@@ -559,8 +559,7 @@ class WelcomeDialog(wx.Dialog):
 	This dialog is displayed the first time NVDA is started with a new configuration.
 	"""
 
-	WELCOME_MESSAGE = _(
-		"Welcome to NVDA!\n"
+	WELCOME_MESSAGE_DETAIL = _(
 		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
 		"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
@@ -572,8 +571,15 @@ class WelcomeDialog(wx.Dialog):
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super(WelcomeDialog, self).__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		welcomeText = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE)
-		mainSizer.Add(welcomeText,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		# Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+		# bold lettering 
+		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
+		welcomeTextHeader.SetFont(wx.Font(18, wx.DECORATIVE, wx.NORMAL, wx.BOLD))
+		mainSizer.AddSpacer(10)
+		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.LEFT|wx.RIGHT)
+		mainSizer.AddSpacer(10)
+		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
+		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.LEFT|wx.RIGHT)
 		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
 		self.capsAsNVDAModifierCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Use CapsLock as an NVDA modifier key"))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
@@ -588,7 +594,7 @@ class WelcomeDialog(wx.Dialog):
 		self.showWelcomeDialogAtStartupCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Show this dialog when NVDA starts"))
 		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
 		optionsSizer.Add(self.showWelcomeDialogAtStartupCheckBox,flag=wx.TOP|wx.LEFT,border=10)
-		mainSizer.Add(optionsSizer,flag=wx.LEFT|wx.TOP|wx.RIGHT,border=20)
+		mainSizer.Add(optionsSizer,flag=wx.LEFT|wx.TOP|wx.RIGHT|wx.EXPAND,border=20)
 		mainSizer.Add(self.CreateButtonSizer(wx.OK),flag=wx.TOP|wx.BOTTOM|wx.ALIGN_CENTER_HORIZONTAL,border=20)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
