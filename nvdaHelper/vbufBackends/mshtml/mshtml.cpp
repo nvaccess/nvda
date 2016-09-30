@@ -449,6 +449,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	IHTMLDOMAttribute* tempAttribNode=NULL;
 	VARIANT tempVar;
 	macro_addHTMLAttributeToMap(L"id",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"name",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	if(nodeName.compare(L"TABLE")==0) {
 		macro_addHTMLAttributeToMap(L"summary",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"A")==0) {
@@ -1083,35 +1084,63 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 			// The graphic is unlabelled, but we should try to derive a name for it.
 			contentString=getNameForURL(IAValue);
 		}
-
 		//////////////////////////////////
-		if ((tempIter = attribsMap.find(L"HTMLAttrib::src")) != attribsMap.end()) {
-			renderChildren=true;
-			wstring wSrcAttribute=tempIter->second;
-			wstring srcAttribute;
-			for (wstring::const_iterator it = wSrcAttribute.begin(); it != wSrcAttribute.end(); ++it)
-			{
-				if (*it != L':' && *it != L'/' && *it != L'.')
-				{
-					srcAttribute.push_back(*it);
-				}
-			}
-			for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
-			{
-				wstring key = it->first;
-				wstring value = it->second;
-				if (srcAttribute.compare(key)==0)
-				{
-					contentString=it->second;
-					renderChildren=false;
-				}
-//				else {
-//					renderChildren=true;
-//				}
-			}
-		}
-		/////////////////////////////////
-
+						if ((tempIter = attribsMap.find(L"HTMLAttrib::src")) != attribsMap.end()) {
+							renderChildren=true;
+							wstring wSrcAttribute=tempIter->second;
+							wstring srcAttribute;
+							//LOG_INFO(L"image source from DOM: "<<wSrcAttribute);
+//							for (wstring::const_iterator it = wSrcAttribute.begin(); it != wSrcAttribute.end(); ++it)
+//							{
+//								if (*it != L':')
+//								{
+//									srcAttribute.push_back(*it);
+//								}
+//								else
+//								{
+//									srcAttribute.append(L"_");
+//								}
+//							}
+							//std::string src( srcAttribute.begin(), srcAttribute.end() );
+							//LOG_INFO(L"src:"<<src);
+							//LOG_INFO(L"srcAttribute:"<<srcAttribute);
+//							for (wstring::const_iterator it = wSrcAttribute.begin(); it != wSrcAttribute.end(); ++it)
+//							{
+//								if (*it != L' ' && leadingSpaces==true)
+//								{
+//
+//								}
+//								else
+//								{
+//									srcAttribute.push_back(*it);
+//									leadingSpaces==true
+//								}
+//							}
+//							string srcAttribute( wSrcAttribute.begin(), wSrcAttribute.end() );
+//							size_t p = srcAttribute.find_first_not_of(" \t");
+//							srcAttribute.erase(0, p);
+							srcAttribute=wSrcAttribute;
+							//srcAttribute= L" "+srcAttribute;
+							//transform(srcAttribute.begin(), srcAttribute.end(),srcAttribute.begin(), tolower);
+							for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
+							{
+								wstring key = it->first;
+								wstring value = it->second;
+								LOG_INFO(L"srcAttribute:"<<srcAttribute);
+								LOG_INFO(L"key:"<<key);
+								if (srcAttribute.compare(key)==0)
+								{
+									contentString=it->second;
+									LOG_INFO(L"Compared");
+									LOG_INFO(L"content string:"<<contentString);
+									renderChildren=false;
+								}
+				//				else {
+				//					renderChildren=true;
+				//				}
+							}
+						}
+						/////////////////////////////////
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
 		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"file")==0) {
@@ -1166,20 +1195,39 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		tempIter = attribsMap.find(L"HTMLAttrib::href");
 		wstring wLinkAttribute=tempIter->second;
 		wstring linkAttribute;
-		for (wstring::const_iterator it = wLinkAttribute.begin(); it != wLinkAttribute.end(); ++it)
-		{
-			if (*it != L':' && *it != L'/' && *it != L'.')
-			{
-				linkAttribute.push_back(*it);
-			}
-		}
+		//LOG_INFO(L"wLinkAttribute from DOM: "<<wLinkAttribute);
+//		for (wstring::const_iterator it = wLinkAttribute.begin(); it != wLinkAttribute.end(); ++it)
+//		{
+//			if (*it != L':' && *it != L'/' && *it != L'.')
+//			{
+//				linkAttribute.push_back(*it);
+//			}
+//		}
+//		for (wstring::const_iterator it = wLinkAttribute.begin(); it != wLinkAttribute.end(); ++it)
+//		{
+//			if (*it != L':')
+//			{
+//				linkAttribute.push_back(*it);
+//		    }
+//			else
+//			{
+//				linkAttribute.append(L"_");
+//			}
+//		}
+		//LOG_INFO(L"linkAttribute from DOM: "<<linkAttribute);
+//		transform(linkAttribute.begin(), linkAttribute.end(),linkAttribute.begin(), tolower);
+		linkAttribute=wLinkAttribute;
 		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
 		{
 			wstring key = it->first;
 			wstring value = it->second;
+			LOG_INFO(L"linkAttribute: "<<linkAttribute);
+			LOG_INFO(L"key: "<<key);
 			if (linkAttribute.compare(key)==0)
 			{
 				contentString=it->second;
+				LOG_INFO(L"Compared");
+				LOG_INFO(L"contentString: "<<contentString);
 				renderChildren=false;
 			}
 //			else {
@@ -1198,29 +1246,49 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
 	)))
 		{attribsMap[L"name"]=IAName;
-		LOG_INFO(L"attribs1:"<<attribsMap[L"name"]);
+		//LOG_INFO(L"attribs1:"<<attribsMap[L"name"]);
 		}
 
 	tempIter = attribsMap.find(L"HTMLAttrib::name");
 	if(tempIter!=attribsMap.end())
 	{
-		wstring nameAttribute=tempIter->second;
-		transform(nameAttribute.begin(), nameAttribute.end(),nameAttribute.begin(), tolower);
-		LOG_INFO(L"nameAttribute is:"<<nameAttribute);
+		wstring wNameAttribute=tempIter->second;
+		wstring nameAttribute;
+		transform(wNameAttribute.begin(), wNameAttribute.end(),wNameAttribute.begin(), tolower);
+//		for (wstring::const_iterator it = wNameAttribute.begin(); it != wNameAttribute.end(); ++it)
+//					{
+//						if (*it != L':' && *it != L'/' && *it != L'.')
+//						{
+//							nameAttribute.push_back(*it);
+//						}
+//					}
+		for (wstring::const_iterator it = wNameAttribute.begin(); it != wNameAttribute.end(); ++it)
+		{
+			if (*it != L':')
+			{
+				nameAttribute.push_back(*it);
+			}
+			else
+			{
+				nameAttribute.append(L"_");
+			}
+		}
+		//LOG_INFO(L"nameAttribute is:"<<nameAttribute);
 		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
 			{
 				wstring key = it->first;
 				wstring value = it->second;
-			//	LOG_INFO(L"key is:"<<key);
-			//	LOG_INFO(L"value is:"<<value);
-				transform(key.begin(), key.end(), key.begin(), tolower);
+				//LOG_INFO(L"key is:"<<key);
+				//LOG_INFO(L"value is:"<<nameAttribute.compare(key));
+				//transform(nameAttribute.begin(), nameAttribute.end(), nameAttribute.begin(), tolower);
+				//transform(key.begin(), key.end(), key.begin(), tolower);
 				if (nameAttribute.compare(key)==0)
 				{
-					LOG_INFO(L"Compared");
+					//LOG_INFO(L"Compared");
 					contentString=it->second;
-					//LOG_INFO(L"Content:"<<contentString);
+					//LOG_INFO(L"Content name:"<<contentString);
 					attribsMap[L"name"]=it->second;
-					LOG_INFO(L"attribs:"<<attribsMap[L"name"]);
+					//LOG_INFO(L"attribs:"<<attribsMap[L"name"]);
 					renderChildren=false;
 				}
 			}

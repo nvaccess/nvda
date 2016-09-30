@@ -43,6 +43,7 @@ import os
 import globalVars
 import wx
 import gui
+import configobj
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -380,15 +381,32 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
    		  	domain=domain.replace(':','_')
    		  	domain=domain.replace('\\','_')
    		  	filename=domain+'.ini'
-   		  	labels={}
-  		  	config = SafeConfigParser()
-		  	config.read(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
-		  	try:
-		  		options = config.options('Section')
-		  		for option in options:
-		  			labels[option]=config.get('Section', option)
-		  	except Exception as e:
-		  		pass
+   		  	#labels={}
+   		  	labels=""
+   		  	##########################################
+   		  	config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
+#    		  	validationResult=config.validate(validator,preserve_errors=True)
+# 			log.info("config keys are: %s",config.keys())
+   		  	for k,v in config.iteritems():
+#     		  		log.info("Validator k: %s",k)
+#     		  		log.info("Validator v: %s",v)
+				log.info("k from virtual Buffer: %s",k)
+				#labels[k]=v
+				labels+=k+":"+v+","
+			log.info("labels from virtual Buffer: %s",labels)
+# 			for m,n in labels.iteritems():
+# 				log.info("Label k: %s",m)
+#      		  	log.info("Label v: %s",n)
+   		  	#config.filename = os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename)
+   		  	##########################################
+#   		  	config = SafeConfigParser()
+# 		  	config.read(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
+# 		  	try:
+# 		  		options = config.options('Section')
+# 		  		for option in options:
+# 		  			labels[option]=config.get('Section', option)
+# 		  	except Exception as e:
+# 		  		pass
 			
 			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),unicode(labels))
 			if not self.VBufHandle:
@@ -710,6 +728,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			if fieldId == objId:
 				return item.field
 		raise LookupError
+	
+# 	def script_assignCustomLabel(self, gesture):
+# 		ui.message(_("Screipt called"))
+# 		log.info("\nSelf is: %s",self.rootNVDAObject)
+# 		pass
 
 	__gestures = {
 		"kb:NVDA+f5": "refreshBuffer",
@@ -718,4 +741,5 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
+# 		"kb:NVDA+control+tab": "assignCustomLabel",
 	}

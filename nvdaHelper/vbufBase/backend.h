@@ -21,6 +21,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "storage.h"
 #include <common/lock.h>
 
+#include "utils.h"
+
 class VBufBackend_t;
 
 typedef std::set<VBufBackend_t*> VBufBackendSet_t;
@@ -114,7 +116,8 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 	virtual ~VBufBackend_t();
 
-	std::map<std::wstring,std::wstring> labelsMap;
+	//std::map<std::wstring,std::wstring> labelsMap;
+	multiValueAttribsMap labelsMap;
 
 	public:
 
