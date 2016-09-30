@@ -18,11 +18,11 @@ import appModuleHandler
 MATCHER = re.compile ("AfxFrameOrView\d{2,}u")
 class AppModule(appModuleHandler.AppModule):
 
-		def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-			#perform the match with the compiled object
-			if MATCHER.match (obj.windowClassName) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT: 
-				try:
-					clsList.remove(DisplayModelEditableText)
-				except ValueError:
-					pass
-				clsList[0:0] = (Terminal, DisplayModelLiveText)
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+	#perform the match with the compiled object
+		if MATCHER.match (obj.windowClassName) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT: 
+			try:
+				clsList.remove(DisplayModelEditableText)
+			except ValueError:
+				pass
+			clsList[0:0] = (Terminal, DisplayModelLiveText)
