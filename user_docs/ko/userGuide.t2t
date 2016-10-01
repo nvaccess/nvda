@@ -1232,6 +1232,17 @@ NVDA가 마우스의 움직임에 따라서 텍스트를 읽도록 설정된 경
 
 마이크로소프트 워드처럼 서식이 중요한 애플리케이션에서 문서를 읽으면서 검토하는 동안에는 이 옵션을 선택하세요.
 
+==== 줄 들여쓰기 알림 ====
+본 옵션을 사용하여 줄 들여쓰기 알림 방식을 설정합니다.
+다음 네가지 옵션 중 선택할 수 있습니다.
+
+- 출력 않함: 줄 들여쓰기를 출력하지 않습니다.
+- 음성: 줄 들여쓰기 값이 변경될때마다 새 값(예: 12 스페이스 또는 4 탭)이 출력됩니다.
+- 비프음: 줄 들여쓰기 값을 비프음으로 출력합니다.
+들여쓰기 방식에 따라 비프음 고저가 달라집니다(스페이스는 반음, 탭은 4 스페이스로 인식).
+- 음성 및 비프음: 위에 설명한 방식이 동시에 적용됩니다.
+-
+
 +++ 음성 발음 사전 +++
 설정 메뉴에 있는 음성 발음 사전 메뉴는 NVDA가 특정한 단어나 구를 어떻게 읽을 것인지를 관리하는 대화상자를 포함합니다.
 현재 세가지 서로다른 타입의 음성 발음 사전이 있습니다.
@@ -1690,16 +1701,22 @@ NVDA에서는 [MDV http://www.mdvbologna.it/]에서 출시한 Lilli 디스플레
 | alt+shift+tab 키 | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH ++
-[Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/]에서 출시된 여러 디스플레이를 USB나 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
+++ Baum/Humanware/APH/Orbit ++
+[Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/], [Orbit http://www.orbitresearch.com/]에서 출시된 여러 디스플레이를 USB, 블루투스나 시리얼로 연결하여 NVDA와 연동시킬 수 있습니다.
 지원되는 디스플레이 모델은 다음과 같습니다:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Baum에서 제작한 다른 디스플레이는 지원여부가 다를 수 있습니다.
 
-만약 USB로 연결하려면 먼저 회사에서 보급한 USB 드라이버를 설치하십시요(VarioUltra, Pronto! 및 Refreshabraille USB HID 모드 제외).
+
+USB HID를 사용하지 않는 디스플레이를 USB로 연결하려면 먼저 회사에서 보급한 USB 드라이버를 설치하십시요(VarioUltra와 Pronto!는 HID 지원, Refreshabraille와 Orbit Reader 20은 HID 모드로 설정 가능).
+
+
+Orbit Reader 20 사용시 USB 시리얼 모드를 사용하려면 윈도우 10을 사용하여야 합니다.
+일반적으로 USB HID 사용을 권장합니다.
 
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.

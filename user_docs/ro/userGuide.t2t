@@ -1232,6 +1232,17 @@ Implicit, NVDA va detecta formatarea de la poziția cursorului sistemului sau a 
 
 Activând această opțiune, NVDA va corecta documentele din aplicații precum Microsoft Word, unde formatarea este importantă.
 
+==== Anunță indentație rând cu ====
+Această opțiune vă permite să configurați cum se face raportarea indentației la început de rând.
+Caseta combinată pentru opțiunea de anunț a indentației are patru variante.
+
+- Dezactivat: NVDA nu va trata în mod special indentația.
+- Vorbire: Dacă este selectată opțiunea, când indentația se modifică, NVDA va anunța dimensiunea în genul „douăsprezece spații” sau „patru taburi”.
+- Tonuri: Dacă este selectată această opțiune, când indentația se modifică, va fi anunțată prin sunete graduale.
+Sunetul își va mări amplitudinea cu fiecare spațiu adăugat, iar pentru un tab își va mări amplitudinea cu echivalentul a 4 caractere spațiu.
+- Atât vorbire cât și tonuri: Această opțiune semnalează indentația folosind ambele metode de mai sus.
+-
+
 +++ Dicționare de vorbire +++
 Meniul dicționarelor de vorbire (găsit în meniul „Preferințe”), conține ferestre de dialog care vă permit să alegeți modul în care NVDA pronunță anumite cuvinte sau fraze.
 În prezent sunt trei tipuri diferite de dicționare de vorbire.
@@ -1690,16 +1701,23 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | tasta alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Afișaje braille Baum/Humanware/APH ++
-Mai multe ecrane [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] și [APH http://www.aph.org/] sunt suportate atunci când sunt conectate prin USB sau bluetooth.
+++ Afișaje braille Baum/Humanware/APH/Orbit ++
+Mai multe ecrane [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] și [Orbit http://www.orbitresearch.com/] sunt suportate atunci când sunt conectate prin USB, bluetooth sau port serial.
 Acestea includ:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 S-ar putea să funcționeze și alte afișaje produse de Baum, deși nu s-a testat acest aspect.
 
 Dacă vă conectați prin USB la alte afișaje decât VarioUltra, Pronto! sau Refreshbraille cu modul USB setat la HID, va trebui să instalați mai întâi driverele USB puse la dispoziție de producător.
+Dacă vă conectați prin USB la afișaje care nu folosesc HID, va trebui să instalați mai întâi driverele USB puse la dispoziție de producător.
+Afișajele VarioUltra și Pronto! folosesc HID.
+Refreshabraille și Orbit Reader 20 pot folosi HID dacă sunt configurate corespunzător.
+
+Modul USB serial pentru Orbit Reader 20 este compatibil doar în Windows 10 momentan.
+În general ar trebui folosit modul USB HID.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2230,6 +2248,8 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --install-silent | Instalează NVDA în mod discret (nu pornește copia nou-instalată) |
 
 + Informații suplimentare +
-Dacă aveți nevoie de informații suplimentare sau asistență in privința NVDA, vizitați site-ul web al NVDA la NVDA_URL.
+Dacă aveți nevoie de informații suplimentare sau asistență în privința NVDA, vizitați site-ul web al NVDA la NVDA_URL.
 Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității.
 Acest site furnizează, de asemeni, informații și resurse privind dezvoltarea NVDA.
+
+Ultima actualizare a manualului: %%date(%d %b %Y), traducere realizată de Dan Pungă, Florian Ionașcu și Nicușor Untilă

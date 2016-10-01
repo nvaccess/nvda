@@ -59,9 +59,9 @@ For yderligere oplysninger, kan du [læse den fulde licens. http://www.gnu.org/l
 - Operativsystemer: alle 32-bit og 64-bit versioner af Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 og Windows 10 (inkl. server-styresystemer).
  - For Windows XP 32-bit kræver NVDA Service Pack 2 eller højere.
  - For Windows Server 2003 kræver NVDA Service Pack 1 eller højere.
-- For Windows Vista kræver NVDA Service Pack 2 og [KB2763674 https://support.microsoft.com/en-us/kb/2763674] opdatering.
+ - For Windows Vista kræves NVDA Service Pack 2 og [KB2763674 https://support.microsoft.com/en-us/kb/2763674] opdatering.
  begge disse skulle være installeret hvis alle tilgængelige opdateringer er anvendt via Windows update.
- - Hukommelse: 256 MB eller mere RAM
+- Hukommelse: 256 MB eller mere RAM
 - Processor hastighed: 1,0 GHz eller højere
 - Omkring 90 MB lagerplads.
 -
@@ -1232,6 +1232,17 @@ NVDA vil som standard spore ændringer i formateringen på markørens eller den 
  
 Slå denne funktion til ved korrekturlæsning af dokumenter i programmer som Microsoft Word, hvor formatering har betydning.  
 
+==== Rapporter linjeindrykning med ====
+Denne indstilling lader dig konfigurere hvordan linjeindrykning rapporteres.
+Denne combo boks har fire muligheder.
+
+- Fra: NVDA ignorere rapportering af linjeindrykning.
+- Tale: Hvis denne mulighed er valgt og indrykningen ændres, vil NVDA rapportere noget lignende "12 mellemrum" eller "4 tab."
+- Toner: Hvis denne mulighed er valgt og indrykningen ændres, vil toner rapportere mængden af linjeindrykning.
+Tonens toneleje vil forøges ved hvert mellemrum, og for tab vil tonen forøges fire mellemrum.
+- Tale og toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
+-
+
 +++ Udtaleordbøger  +++
 Menuen Udtaleordbøger, som findes i menuen Indstillinger, indeholder dialogbokse, der giver mulighed for at styre,  hvordan NVDA udtaler bestemte ord eller tekstbidder. 
 Der er i øjeblikket 3 typer af udtaleordbøger.
@@ -1690,16 +1701,22 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | alt+shift+tab Tast | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille Displays ++
-Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] samt [APH http://www.aph.org/] displays er understøttet hvis de kobles til via USB eller Bluetooth.
+++ Baum/Humanware/APH/Orbit Punktdisplays ++
+Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] og [Orbit http://www.orbitresearch.com/] displays er understøttet hvis de kobles til via USB eller Bluetooth.
 Det omfatter:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Nogle andre displays, som er  fremstillet af Baum, virker måske også, men dette er ikke testet.
 
-Hvis du ønsker at koble displayet til ved brug af USB udover VarioUltra, Pronto! eller Refreshabraille  med USB-tilstanden sat til HID, skal du først installere driveren fra leverandøren.
+Hvis du kobler til displayes med USB som ikke bruger HID, skal du først installere driveren fra leverandøren.
+VarioUltra og Pronto! bruger HID.
+Refreshabraille og Orbit Reader 20 kan bruge HID hvis konfigueret korrekt.
+
+USB serieltilstand af Orbit Reader 20 er på nuværende tidspunkt kun understøttet i Windows 10.
+USB HID skal som udgangspunkt bruges i stedet.
 
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.

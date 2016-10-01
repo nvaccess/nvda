@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-09 17:31+0200\n"
-"Last-Translator: zvonimmir stanecic <zvonimirek222@yandex.com>\n"
+"POT-Creation-Date: 2016-09-02 00:10+1000\n"
+"PO-Revision-Date: 2016-09-05 17:38+0200\n"
+"Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
 "Language: hr_HR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2398,6 +2398,7 @@ msgid "Mouse"
 msgstr "Miš"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Govor"
 
@@ -4586,6 +4587,10 @@ msgstr "tablica od {columnCount} stupaca i {rowCount} redova"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA Preglednik Govora"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "Prikaži preglednik govora pri pokretanju"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Jezik"
@@ -5444,8 +5449,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 series"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH brajični redci"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit brajični redci"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -7026,11 +7031,22 @@ msgstr "Izvijesti o &stranicama"
 msgid "Report line &numbers"
 msgstr "Izvijesti o broju &retka"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Izvijesti o uvlačenju &redaka"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "izvijesti o širini redka i uvlačenju istog:"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "isključeno"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Zvučni signali"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Govor i zvučni signali"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 00:10+1000\n"
-"PO-Revision-Date: 2016-08-02 11:12-0400\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-09-23 19:02-0400\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <kontakt@nvda.dk>\n"
 "Language: da_DK\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2399,6 +2399,7 @@ msgid "Mouse"
 msgstr "Mus"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Tale"
 
@@ -2966,6 +2967,18 @@ msgid ""
 msgstr ""
 "Skifter til forrige læsetilstand (objekt, tekst eller skærm) og placerer "
 "læsemarkøren på positionen for navigeringsobjektet"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Simpel læsetilstand fra"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Simpel læsetilstand til"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Slår simpel læsetilstand til og fra"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -4563,6 +4576,10 @@ msgstr "tabel med {columnCount} kolonner og {rowCount} rækker"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA Speech Viewer"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&Vis talevisning ved opstart"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Sprog"
@@ -4660,12 +4677,12 @@ msgstr "{action} med {numFingers} fingre"
 #. Translators: a very quick touch and release of a finger on a touch screen
 msgctxt "touch action"
 msgid "tap"
-msgstr "tap"
+msgstr "tryk"
 
 #. Translators: a very quick touch and release, then another touch with no release, on a touch screen
 msgctxt "touch action"
 msgid "tap and hold"
-msgstr "tap og hold"
+msgstr "tryk og hold"
 
 #. Translators: a touch with no release, on a touch screen.
 msgctxt "touch action"
@@ -4780,7 +4797,7 @@ msgstr "Fejl under hentning af opdatering"
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
 msgid "Update downloaded. It will now be installed."
-msgstr "Opdatering hentet. Installerer nu."
+msgstr "Opdatering hentet. Den vil nu blive installeret."
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
 msgid "Install Update"
@@ -4953,6 +4970,16 @@ msgstr "Intet spor afspilles"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oplæser den resterende tid for det igangværende spor, hvis det findes"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, placering {curLocation} af {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Side Page {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5419,8 +5446,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 series"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH punktdisplays"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit punktdisplays"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -6695,7 +6722,7 @@ msgstr "Tillad skimlæsning under sig alt"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Bip hvis der skrives med små bogstaver når Caps Lock er slået til."
+msgstr "Bip hvis der skrives med små bogstaver når Caps Lock er slået til"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6997,11 +7024,22 @@ msgstr "Annoncér &sider"
 msgid "Report line &numbers"
 msgstr "Oplæs linje&numre"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Oplæs &indrykning"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "Rapporter &indrykning med"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "Fra"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Toner"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Tale og toner"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7084,6 +7122,7 @@ msgid "&Pattern"
 msgstr "&mønster"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Erstatning"
 
@@ -7232,9 +7271,9 @@ msgstr "Niveau"
 msgid "Preserve"
 msgstr "Bevar"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Ændre symbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Ændre valgte symbol"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -7416,31 +7455,31 @@ msgstr "omvendt diagonal stribe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
-#, python-format
+#, no-python-format
 msgid "12.5% gray"
 msgstr "12.5% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, python-format
+#, no-python-format
 msgid "25% gray"
 msgstr "25% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-#, python-format
+#, no-python-format
 msgid "50% gray"
 msgstr "50% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, python-format
+#, no-python-format
 msgid "75% gray"
 msgstr "75% grå"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, python-format
+#, no-python-format
 msgid "6.25% gray"
 msgstr "6.25% grå"
 
@@ -7507,10 +7546,6 @@ msgstr "Lineær graduering"
 msgid "rectangular gradient"
 msgstr "rektangulær graduering"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Denne celle kan ikke redigeres"
-
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
 msgstr "Liste over forskellige typer elementer i dette ark"
@@ -7529,6 +7564,11 @@ msgstr "K&ommentarer"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Formler"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Formularfelter"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8652,6 +8692,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Denne celle kan ikke redigeres"
 
 #~ msgid "checker"
 #~ msgstr "Skaktern"

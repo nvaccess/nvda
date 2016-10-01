@@ -253,13 +253,16 @@ class MainFrame(wx.Frame):
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
+	def onSpeechViewerEnabled(self, isEnabled):
+		# its possible for this to be called after the sysTrayIcon is destroyed if we are exiting NVDA
+		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleSpeechViewer:
+			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(isEnabled)
+
 	def onToggleSpeechViewerCommand(self, evt):
 		if not speechViewer.isActive:
 			speechViewer.activate()
-			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(True)
 		else:
 			speechViewer.deactivate()
-			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(False)
 
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole

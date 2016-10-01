@@ -1232,6 +1232,17 @@ De traza predeterminada, o NVDA detectará o formato en a posición d'o cursor d
  
 Activa ista opción mientras comprebas a lectura de documentos en aplicacions tals como lo Microsoft Word, do lo formato siga important.
 
+==== Anunciar a sangría d'a linia con ====
+Ista opción te permite configurar cómow s'anuncia a sangría en o prencipio d'as linias.
+O quadro combinau d'"anunciar a sangría d'a linia con" tien quatro opcions.
+
+- Desenchegau: O NVDA no tractará a sangría de traza especial.
+- Voz: Si se triga voz, en que a cantidat d'a sangría cambeye o NVDA dirá bella cosa como "dotze espacio" u "quatro tabulación."
+- Tons: Si se triga tons, en que a cantidat de sangría cambeye os tons indicarán a cantidat de cambeyo en a sangría.
+O ton puyará de ton cada espacio, y pa una tabulación, puyará os tons equivalents a 4 espacios.
+- Todas dos, voz y tons: Ista opción leye a sangría fendo servir totz dos metodos debantditos.
+-
+
 +++ Diccionarios d'a Fabla +++
 O menú de Diccionarios d'a fabla, (trobau en o menú Preferencias) contién dialogos que te permiten controlar o modo en que o NVDA pronuncia parolas u frases particulars. 
 Bi ha actualment tres menas diferents de diccionarios d'a fabla. 
@@ -1690,19 +1701,25 @@ Porfavor mira a documentación d'a linia ta descripcions de do se pueden trobar 
 | Tecla alt+mayus+tabulador | SUP |
 %kc:endInclude
 
-++ Linias braille Baum/Humanware/APH ++
-Quantas linias braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] son suportadas quan se connectan a traviés de l'USB u d'o bluetooth.
+++ Linias braille Baum/Humanware/APH/Orbit ++
+Quantas linias braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] y [Orbit http://www.orbitresearch.com/]. As linias son suportadas quan se connectan a traviés de l'USB, d'o bluetooth u d'o puerto serie.
 Istas incluyen:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Belatras linias fabricadas por Baum tamién podrían funcionar, encara que no son estadas prebadas.
 
-Si se connecta a traviés d'USB as linias difuera d'a VarioUltra, Pronto! u Refreshabraille con o modo d'USB establiu a HID, en primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+Si se connecta a traviés d'USB as linias que no fan servir l'HID, en primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+A VarioUltra y a Pronto! fan servir l'HID.
+A Refreshabraille y a Orbit Reader 20 pueden fer servir l'HID si son configuradas apropiadament.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira a documentación d'a linia braille pa descripcions de do se puet trobar istas teclas.
+O modo de serie USB d'a Orbit Reader 20 actualment no ye suportau que en o Windows 10.
+Cheneralment s'habría de fer servir l'USB HID en cuenta.
+
+Contino van as asignacions de teclas pa istas linias con o NVDA.
+Por favor mira-te a tuya documentación d'a linia braille pa descripcions de do se puet trobar istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta zaga | d2 |

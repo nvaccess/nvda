@@ -3,6 +3,33 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== Noi funcționalități ==
+- NVDA poate acum să indice indentația rândurilor folosind tonuri. Opțiunea poate fi configurată folosind caseta combinată „Anunță indentație rând cu” din fereastra cu preferințe pentru formatarea documentului din NVDA. (#5906)
+- Suport pentru afișajul braille Orbit Reader 20. (#6007)
+- A fost adăugată o opțiune pentru a deschide monitorul de vorbire la pornirea aplicației. (#5050)
+- La redeschiderea monitorului de vorbire, locația pe ecran și dimensiunile sale vor fi restabilite. (#5050)
+- Câmpurile cu referință încrucișată din Microsoft Word sunt acum tratate ca hiperlink-uri. Acestea sunt raportate ca legături și pot fi activate. (#6102)
+- Suport inițial pentru versiunea upcoming a aplicației Kindle. (#6247)
+
+
+== Rezolvări defecte ==
+- Corectat o situație rară când ieșirea din NVDA în timp ce monitorul de vorbire este deschis, cauza o eroare. (#5050)
+- Hărțile grafice sunt randate în mod corespunzător în mod navigare în Mozilla Firefox. (#6051)
+- Corectat o situație din cauza unui avertisment în fișierul jurnalului NVDA când tasta caps-lock este activată. (#6127)
+- Atunci când vă aflați în fereastra dicționarului, apăsarea tastei enter salvează modificările închizând în mod automat fereastra. (#6206)
+- Mesajele sunt acum afișate în braille când se modifică moduri de intrare pentru o metodă de intrare (metodă introducere nativă/alfanumerică, Mod formă integrală/parțială, etc.). (#5892, #5893)
+- Când dezactivați și reactivați imediat o extensie add-on sau vice versa, starea extensiei add-on revine în mod corect la ceea ce a fost înainte. (#6299)
+- Când se folosește Microsoft Word, câmpurile de pagină în numărul antetului pot fi acum citite. (#6004)
+- Mausul poate fi acum folosit pentru a deplasa focalizarea între lista de simboluri și câmpurile de editare în fereastra de dialog cu pronunțarea simbolurilor. (#6312)
+- Corectat o situație care oprește lista de elemente de la apariție când Microsoft Word conține hiperlink invalid. (#5886)
+
+
+== Modificări pentru Dezvoltatori ==
+- Acum este posibil să furnizeze module app pentru executabile care conțin un punct (.) în numele lor. Punctele sunt înlocuite cu liniuțe joase (_). (#5323)
+
+
 = 2016.3 =
 Caracteristicile principale ale acestei lansări includ abilitatea de a dezactiva add-on-uri în mod individual, suport pentru câmpuri de formular în Microsoft Excel, îmbunătățiri semnificative ale raportării culorilor, corectării și îmbunătățiri asociate mai multor afișaje braille și remedieri și îmbunătățiri ale compatibilității cu Microsoft Word.
 
@@ -51,6 +78,8 @@ Caracteristicile principale ale acestei lansări includ abilitatea de a dezactiv
 - NVDA nu se mai oprește din a recunoaște câteodată apăsări de taste pe afișaje braille Baum-compatibile și HumanWare Brailliant B. (#6035)
 - Dacă raportarea numerelor de rând este activată în opțiunile de formatare a documentului ale NVDA, sunt arătate numerele de rând pe afișajele braille. (#5941)
 - Când modul vorbire este dezactivat, raportarea obiectelor (cum ar fi apăsarea NVDA+tab pentru anunțul focalizării) apare acum în Monitorul de vorbire așa cum este de așteptat. (#6049)
+- În lista de mesaje din Outlook 2016, informația legată de schiță numai este raportată. (#6219)
+- În Google Chrome sau alte navigatoare Chrome bazate pe acesta care au interfața în altă limbă decât engleză, modul navigare numai eșuează la deschiderea documentelor multiple. (#6249)
 
 
 == Modificări pentru Dezvoltatori ==

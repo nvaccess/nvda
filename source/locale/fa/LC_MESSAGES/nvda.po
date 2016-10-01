@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-10 02:02+0330\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-09-23 09:42+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -2393,6 +2393,7 @@ msgid "Mouse"
 msgstr "موس"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "گفتار"
 
@@ -4555,6 +4556,10 @@ msgstr "جدولی با {columnCount} ستون و {rowCount} سطر"
 msgid "NVDA Speech Viewer"
 msgstr "سخن‌نمای NVDA"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "نشان دادَنِ &نمایشگرِ گفتار در آغاز"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&زبان"
@@ -4945,6 +4950,16 @@ msgstr "هیچ تِرَکی پخش نمی‌شود"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "زمانِ باقیمانده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%، {curLocation} از {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "صفحه‌ی {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5412,8 +5427,8 @@ msgid "ALVA BC640/680 series"
 msgstr "سِریِ ALVA BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "نمایشگر‌های بریلِ Baum/HumanWare/APH"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "نمایشگر‌های بریلِ Baum/HumanWare/APH/Orbit"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -6975,11 +6990,22 @@ msgstr "اعلامِ &صفحه‌ها"
 msgid "Report line &numbers"
 msgstr "اعلامِ &شماره‌ی خط‌ها"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "اعلامِ تورفتگیِ &خط"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "اعلامِ تورفتگیِ &خط با"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "خاموش"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "بوق"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "گفتار و بوق"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -6989,7 +7015,7 @@ msgstr "اعلامِ تورفتگیِ &پاراگراف"
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "Report &line spacing"
-msgstr "اعلامِ فاصله‌ی خط&وط"
+msgstr "اعلامِ &فاصله‌ی خط‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7029,7 +7055,7 @@ msgstr "ا&علامِ نقلِ قول‌ها"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report lan&dmarks"
-msgstr "اعلامِ بخش‌های اصلیِ ص&فحه"
+msgstr "اعلامِ &بخش‌های اصلیِ صفحه"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7062,6 +7088,7 @@ msgid "&Pattern"
 msgstr "&الگو"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&جایگزین"
 
@@ -7176,7 +7203,7 @@ msgstr "&جلوگیری از از‌هم‌جدا شدنِ واژه ها در ص
 
 #, python-format
 msgid "Could not load the %s display."
-msgstr "نمایشگر %s را نمیتوانم بارگزاری کنم."
+msgstr "نمایشگرِ %s را نمیتوانم بارگزاری کنم."
 
 msgid "Braille Display Error"
 msgstr "خطا در نمایشگرِ بریل"
@@ -7212,9 +7239,9 @@ msgstr "سطح"
 msgid "Preserve"
 msgstr "ارسالِ خودِ نشانه"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "تغییرِ نشانه"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "تغییرِ نشانه‌ی انتخاب‌شده"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"

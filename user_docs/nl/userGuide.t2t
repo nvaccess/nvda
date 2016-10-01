@@ -513,7 +513,7 @@ Gebruik de volgende toetscombinaties om naar het begin resp. het einde van conta
 Webapplicaties zoals Gmail, Twitter en Facebook kunnen met lettertoetsnavigatie worden geactiveerd.
 Als u hiermee wilt werken terwijl u ook   uw cursortoetsen wilt kunnen gebruiken voor het lezen in bladermodus,  kunt u de lettertoetsnavigatie in NVDA tijdelijk uitschakelen.
 %kc:beginInclude
-Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen drukt u op de NVDA-toets + de spatiebalk.
+Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen drukt u op NVDA+shift+spatiebalk.
 %kc:endInclude
 
 ++ De lijst met elementen ++
@@ -1060,7 +1060,9 @@ Als het selectievakje is aangevinkt, volgt de leescursor (review cursor) automat
 Als het selectievakje aangevinkt is, zal de leescursor (review cursor) de muis volgen wanneer deze wordt verplaatst.
 
 ==== Vereenvoudigde leesmodus (Simple review mode)====
-Als het selectievakje aangevinkt is, zorgt NVDA ervoor dat ontoegankelijke objecten worden uitgefilterd zodat alleen de bruikbare objecten kunnen worden benaderd.
+Als het selectievakje aangevinkt is, zorgt NVDA ervoor dat objecten die voor de gebruiker niet van belang zijn, zoals verborgen objecten of die welke slechts een lay-out technisch doel dienen, worden uitgefilterd.
+
+Om de vereenvoudigde leesmodus vanaf een willekeurige plaats aan- of uit te zetten kunt u via het dialoogvenster [Invoerhandelingen #InputGestures] een aangepaste handeling hiervoor aanmaken.
 
 +++ Objectweergave-instellingen(NVDA+control+o) +++
 Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Objectweergave.
@@ -1232,6 +1234,17 @@ Als het selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de op
 Standaard wordt de opmaak bij de systeemcursor / review cursor gedetecteerd, maar in bepaalde gevallen wordt ook de opmaak in de rest van de regel gedetecteerd voor zover dit geen nadelige invloed heeft op de prestatie.
 
 Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals Microsoft Word waar opmaak van belang is.
+
+==== Regelinspringing melden met ====
+Met deze optie kunt u bepalen hoe de inspringing van een regel wordt gemeld.
+Het vervolgkeuzemenu voor het melden van regelinspringing heeft 4 keuzemogelijkheden.
+
+- uit: NVDA maakt niet apart melding van inspringing.
+- Spraak: Als u spraak kiest, hoort u NVDA iets zeggen als "twaalf spatie"of "vier tab" wanneer de afstand van de inspringing verandert."
+- Tonen: Als u tonen kiest, wordt met behulp van tonen aangegeven in welke mate er verandering optreedt in de ingesprongen afstand.
+De toonhoogte stijgtvoor elke spatie, en voor een tab, gaat de toon evenveel omhoog als voor 4 spaties.
+- Zowel spraak als tonen: Deze optie is een combinatie van de twee hiervoor genoemde mogelijkheden.
+-
 
 +++ Uitspraakwoordenboeken +++
 Via het menu-item Uitspraakwoordenboeken dat te vinden is onder Opties kunt u aangeven hoe NVDA bepaalde woorden of woordgroepen moet uitspreken.
@@ -1691,19 +1704,25 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Alt+Shift+Tabtoets | SUP |
 %kc:endInclude
 
-++ Brailleleesregels van Baum/HumanWare/APH ++
-Verscheidene brailleleesregels van [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] en [APH http://www.aph.org/] worden ondersteund, voor zover deze  via usb of Bluetooth verbonden worden.
-dit geldt o.a. voor:
+++ Brailleleesregels van Baum/HumanWare/APH/Orbit ++
+Verscheidene brailleleesregels van [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] en van  [Orbit http://www.orbitresearch.com/]worden ondersteund, voor zover deze  via usb of Bluetooth dan wel serieel verbonden worden.
+Hiertoe behoren:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Enkele andere Baum-leesregels zouden wellicht ook  kunnen werken, maar dit is nog niet getest.
 
-Als u andere leesregels dan de  VarioUltra, Pronto! of Refreshabraille via USB aansluit waarbij de USB-modus op HID moet staan, moett u eerst de USB drivers installeren die door de fabrikant beschikbaar worden gesteld.
+Als u  leesregels die geen gebruik maken van HID via USB aansluit , moett u eerst de USB drivers installeren die door de fabrikant beschikbaar worden gesteld.
+De VarioUltra en Pronto! gebruiken HID.
+De Refreshabraille en Orbit Reader 20 kunnen  van HID gebruik maken als ze op de juiste manier worden geconfigureerd.
 
-Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
-(Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
+De USB seriële modus van de Orbit Reader 20 wordt momenteel alleen in Windows 10 ondersteund.
+Doorgaans moet in plaats daarvan de USB HID-modus worden gebruikt.
+
+Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing.
+Waar de toetsen zich bevinden, leest u   in de documentatie bij de leesregels.
 %kc:beginInclude
 || Naam | Toets |
 | Brailleregel terugscrollen | d2 |
