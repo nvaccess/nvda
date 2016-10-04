@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
 Example usage:
 
@@ -41,8 +42,8 @@ class myDialog(class wx.Dialog):
 		self.SetSizer(mainSizer)
 	...
 """
-
 import wx
+from wx.lib import scrolledpanel
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -250,7 +251,7 @@ class BoxSizerHelper(object):
 			raise NotImplementedError("Use addLabeledControl instead")
 
 		# a boxSizerHelper could contain a wx.StaticBoxSizer
-		if isinstance(toAdd, wx.StaticBoxSizer):
+		if isinstance(toAdd, (wx.StaticBoxSizer, scrolledpanel.ScrolledPanel)):
 			keywordArgs['flag'] = wx.EXPAND
 
 		if shouldAddSpacer:
