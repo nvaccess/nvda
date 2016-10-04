@@ -84,7 +84,7 @@ class AddonsDialog(wx.Dialog):
 		# Translators: The label of a button to close the Addons dialog.
 		closeButton = wx.Button(self, label=_("&Close"), id=wx.ID_CLOSE)
 		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER)
+		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER|wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
 		mainSizer.Fit(self)

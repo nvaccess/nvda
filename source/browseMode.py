@@ -710,7 +710,7 @@ class ElementsListDialog(wx.Dialog):
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
 		bHelper.addButton(self, id=wx.ID_CANCEL)
 
-		contentsSizer.Add(bHelper.sizer)
+		contentsSizer.Add(bHelper.sizer, flag=wx.ALIGN_RIGHT)
 
 		mainSizer.Add(contentsSizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)

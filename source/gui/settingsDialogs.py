@@ -78,7 +78,7 @@ class SettingsDialog(wx.Dialog):
 
 		mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
 
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
@@ -1336,7 +1336,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
 		self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
 		
-		sHelper.addItem(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer,border=20,flag=wx.ALL)
 		mainSizer.Fit(self)
@@ -1666,7 +1666,7 @@ class AddSymbolDialog(wx.Dialog):
 		symbolText = _("Symbol:")
 		self.identifierTextCtrl = sHelper.addLabeledControl(symbolText, wx.TextCtrl)
 		
-		sHelper.addItem(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
