@@ -87,6 +87,17 @@ USB_IDS_HID = {
 	"VID_0904&PID_4005", # Pronto! 40 V3
 	"VID_0904&PID_4007", # Pronto! 18 V4
 	"VID_0904&PID_4008", # Pronto! 40 V4
+	"VID_0904&PID_6001", # SuperVario2 40
+	"VID_0904&PID_6002", # SuperVario2 24
+	"VID_0904&PID_6003", # SuperVario2 32
+	"VID_0904&PID_6004", # SuperVario2 64
+	"VID_0904&PID_6005", # SuperVario2 80
+	"VID_0904&PID_6006", # Brailliant2 40
+	"VID_0904&PID_6007", # Brailliant2 24
+	"VID_0904&PID_6008", # Brailliant2 32
+	"VID_0904&PID_6009", # Brailliant2 64
+	"VID_0904&PID_600A", # Brailliant2 80
+	"VID_0904&PID_6201", # Vario 340
 	"VID_0483&PID_A1D3", # Orbit Reader 20
 }
 
