@@ -210,7 +210,7 @@ class BoxSizerHelper(object):
 		""" Init. Pass in either orientation OR sizer.
 			@param parent: An instance of the parent wx window. EG wx.Dialog
 			@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
-			@type itemType: wx.HORIZNOTAL or wx.VERTICAL
+			@type itemType: wx.HORIZONTAL or wx.VERTICAL
 			@param sizer: the sizer to use rather than constructing one.
 			@type sizer: wx.BoxSizer
 		"""
@@ -281,11 +281,11 @@ class BoxSizerHelper(object):
 		return labeledControl.control
 
 	def addDialogDismissButtons(self, buttons):
-		""" Adds and aligns the buttons for dismissing the dialog. These buttons may be "ok | cancel" and are expected
+		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
 		the last item should be added via L{addItem}
 		@param buttons: the buttons to add
-		@type buttons: wx.Sizer or guiHelper.ButtonHelper
+		@type buttons: wx.Sizer or guiHelper.ButtonHelper or single wx.Button
 		"""
 		if isinstance(buttons, ButtonHelper):
 			toAdd = buttons.sizer
