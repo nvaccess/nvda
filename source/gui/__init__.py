@@ -559,6 +559,7 @@ class WelcomeDialog(wx.Dialog):
 	This dialog is displayed the first time NVDA is started with a new configuration.
 	"""
 
+	# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 	WELCOME_MESSAGE_DETAIL = _(
 		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
 		"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
