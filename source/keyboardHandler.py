@@ -7,11 +7,14 @@
 
 """Keyboard support"""
 
+import ctypes
+import sys
 import time
 import re
 import wx
 import winUser
 import vkCodes
+import eventHandler
 import speech
 import ui
 from keyLabels import localizedKeyLabels
@@ -162,6 +165,20 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				return False
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
+	finally:
+		# #6017: handle typed characters for apps in Win10 RS1 and above where we can't inject in-process
+		focus=api.getFocusObject()
+		if sys.getwindowsversion().build>=14393 and not focus.appModule.helperLocalBindingHandle:
+			keyStates=(ctypes.c_byte*256)()
+			for k in xrange(256):
+				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
+			charBuf=ctypes.create_unicode_buffer(5)
+			# Normally calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
+			# However in Win 10 rs1 and above, a magic flag (0x4) was added to stop ToUnicodeEx from affecting the buffer. 
+			hkl=ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
+			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,5,0x4,hkl)
+			if res>0:
+				eventHandler.queueEvent("typedCharacter",focus,ch=charBuf[:res])
 	return True
 
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
