@@ -34,12 +34,12 @@ void VBufBackend_t::initialize() {
 	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);
-	auto func = [&] {
+	auto func = [&] (void* data) {
 		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<this);
 		this->renderThread_initialize();
 	};
 	LOG_DEBUG(L"Calling execInWindow");
-	execInWindow((HWND)UlongToHandle(rootDocHandle),func);
+	execInWindow((HWND)UlongToHandle(rootDocHandle),func, NULL);
 	LOG_DEBUG(L"execInWindow complete");
 }
 
@@ -230,12 +230,12 @@ void VBufBackend_t::terminate() {
 		LOG_DEBUG(L"Render thread not terminated yet");
 		int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 		LOG_DEBUG(L"render threadID "<<renderThreadID);
-		auto func = [&] {
+		auto func = [&] (void* data) {
 			LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<this);
 			this->renderThread_terminate();
 		};
 		LOG_DEBUG(L"Calling execInWindow");
-		execInWindow((HWND)UlongToHandle(rootDocHandle),func);
+		execInWindow((HWND)UlongToHandle(rootDocHandle),func, NULL);
 		LOG_DEBUG(L"execInWindow complete");
 	} else {
 		LOG_DEBUG(L"render thread already terminated");
