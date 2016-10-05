@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1119,7 +1119,7 @@ class DocumentFormattingDialog(SettingsDialog):
 			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 			_("Off"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-			_("Speech"),
+			pgettext('line indentation setting', "Speech"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 			_("Tones"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
