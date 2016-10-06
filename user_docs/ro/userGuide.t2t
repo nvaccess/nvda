@@ -16,7 +16,7 @@ NVDA este dezvoltat de [NV Access http://www.nvaccess.org/], cu contribuții din
 NVDA permite nevăzătorilor și persoanelor cu deficiență de vedere să interacționeze și să aibă acces la sistemul de operare Windows și multe alte terțe aplicații.
 
 Trăsăturile importante includ:
-- Suport pentru aplicații populare incluzând browsere de internet, clienți de e-mail, programe de chat pe internet și pachete office
+- Suport pentru aplicații populare incluzând browsere de internet, clienți de poștă electronică, programe de chat pe internet și pachete office
 - Sintetizator de voce încorporat care funcționează cu peste 80 de limbi
 - Pronunțarea formatării textului, unde este posibil, cum ar fi numele și dimensiunea fontului, stilul și erorile de ortografie
 - Pronunțarea automată a textului de sub cursorul mausului și identificarea audio opțională a poziției mausului
@@ -1438,6 +1438,10 @@ Pentru programatorii văzători sau persoanele care prezintă NVDA unui public v
 
 Pentru a activa monitorul de vorbire, bifați elementul „Monitor vorbire” din Instrumente, în meniul NVDA.
 Debifați acest element pentru a-l dezactiva.
+
+Fereastra monitorului de vorbire conține o căsuță de bifat cu eticheta „Arată monitorul de vorbire la pornire”.
+Dacă aceasta este bifată, monitorul de vorbire se va deschide la pornirea NVDA.
+Fereastra monitorului de vorbire va încerca întotdeauna să se redeschidă cu aceleași dimensiuni și la aceeași locație ca la pornirea anterioară.
 
 Cât timp monitorul de vorbire este activ, se actualizează constant pentru a vă arăta cât mai mult text vorbit în momentul respectiv.
 Totuși, dacă faceți clic sau focalizați în ecranul de vorbire, NVDA va opri temporar actualizarea textului, pentru ca dv. să puteți selecta sau copia cu ușurință conținutul existent.
