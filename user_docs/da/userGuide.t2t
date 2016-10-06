@@ -18,10 +18,10 @@ NVDA giver blinde og svagsynede mulighed for at få adgang til og interagere med
 Af væsentlige funktioner kan nævnes:
 - Understøttelse af populære applikationer som web-browsere, email-programmer, internet-chat- programmer og office suites
 - Indbygget talesyntese der understøtter over 80 sprog
-- Rapportering af tekstformatering hvor det er muligt, såsom skrifttype og størrelse, typografi og stavefejl.
+- Rapportering af tekstformatering hvor det er muligt, såsom skrifttype og størrelse, typografi og stavefejl
 - Læser automatisk teksten under musen op og kan angive musens position akustisk
 - Understøttelse af mange punktdisplays, herunder indtastning af computer-braille på punktdisplays med et punkttastatur
-- Kan køre fra en USB-stik eller andet bærbart medie uden 	installation
+- Kan køre fra et USB-stik eller andet bærbart medie uden installation
 - Talende installation der er let at bruge
 - Oversat til 47 sprog
 - Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
@@ -34,7 +34,7 @@ Af væsentlige funktioner kan nævnes:
 Det er vigtigt, at folk overalt i verden, uanset hvilket sprog de taler, får lige adgang til teknologi.
 Udover Engelsk er NVDA blevet oversat til 47 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, koreansk, Nepali, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
 
-++ Understøttelse af 	talesynteser ++
+++ Understøttelse af talesynteser ++
 Udover at programmets meddelelser og brugerflade findes på flere sprog, kan NVDA også sætte brugeren i stand til at læse tekster på alle sprog, så længe de har en talesyntese, der kan tale det pågældende sprog.
 
 NVDA leveres med [eSpeak NG https://github.com/espeak-ng/espeak-ng], en gratis, open-source, flersproget talesyntese.
@@ -52,7 +52,7 @@ NVDA er ophavsret NVDA_COPYRIGHT_YEARS NVDA bidragydere.
 
 NVDA er dækket under GNU General Public License (version 2).
 Du kan frit dele eller ændre denne software så længe du distribuerer licensen sammen med softwaren og stiller hele kildekoden til rådighed for alle, der ønsker det.
-Dette gælder både originale og modificerede kopier af softwaren, plus software, der anvender kode taget fra denne software.
+Dette gælder både originale og modificerede kopier af softwaren, plus software der anvender kode taget fra denne software.
 For yderligere oplysninger, kan du [læse den fulde licens. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systemkrav +
@@ -72,13 +72,13 @@ Hvis du endnu ikke har fået en kopi af NVDA, kan du hente den fra [Www.nvaccess
 Gå til download sektionen, hvor du finder et link til at downloade den nyeste version af NVDA.
 
 Når du kører den fil du lige har hentet, starter du en midlertidig kopi af NVDA.
-Du bliver så spurgt om du ønsker at installere NVDA, oprette en flytbar kopi af NVDA eller fortsætte med at benytte den midlertidige kopi.
+Du bliver så spurgt om du ønsker at installere NVDA, oprette en flytbar kopi af NVDA, eller fortsætte med at benytte den midlertidige kopi.
 
 Hvis du har planer om altid at benytte NVDA på denne computer, skal du vælge at installere NVDA.
 Installation af NVDA giver mulighed for yderligere funktionalitet, såsom automatisk start efter logon, evnen til at læse Windows Logon og Windows Beskyttet Skrivebord skærme (dette kan ikke gøres med flytbare og midlertidige kopier) og oprettelse af Start Menu og genveje på skrivebordet.
 Med den installerede kopi af NVDA kan du også oprette en flytbar kopi når som helst.
 
-Hvis du ønsker, at tage NVDA med dig på en USB-drev eller andre skrivbare medier, skal du vælge at oprette en flytbar kopi.
+Hvis du ønsker, at tage NVDA med dig på et USB-drev eller andre skrivbare medier, skal du vælge at oprette en flytbar kopi.
 Den flytbare kopi kan desuden også installere sig selv på en computer på et senere tidspunkt.
 Ønsker du dog at kopiere NVDA til et skrivebeskyttet medie såsom en CD, skal du blot kopiere den hentede fil.
 Kørsel af den flytbare version fra skrivebeskyttede medier er på nuværende tidspunkt ikke understøttet.
@@ -1436,8 +1436,12 @@ Disse funktioner kan findes under viserens Log menu.
 ++ Talevisning ++
 Af hensyn til seende software-udviklere og personer, der ønsker at demonstrere NVDA for seende indeholder NVDA et flydende vindue, der giver mulighed for at se al den tekst, som NVDA i øjeblikket læser op.
 
-Talevisning slås til ved at markere menupunktet  "Talevisning" under Værktøjer" i NVDa-menuen.
+Talevisning slås til ved at markere menupunktet  "Talevisning" under Værktøjer" i NVDA-menuen.
 Fjern markeringen fra punktet for at slå det fra.
+
+Vinduet til talevisning viser en tjekboks med navnet "Vis talevisning ved opstart".
+Hvis denne er valgt, vil talevisning automatisk åbnes når NVDA startes.
+Dette vindue vil altid forsøge at åbne med samme dimensioner og samme placering, som de var, da vinduet blev lukket.
 
 Så længe talevisning er slået til, opdateres den konstant med den tekst, der netop nu læses op.
 Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog midlertidigt, så det er muligt at markere eller kopiere det aktuelle indhold.

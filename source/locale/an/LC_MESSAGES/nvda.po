@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -4988,6 +4988,16 @@ msgstr ""
 "Anuncia o tiempo remanent d'a pista actualment en reproducción, si bi'n hese "
 "beluna"
 
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, ubicación {curLocation} de {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Pachina {pageNumber}"
+
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
 msgstr "No bi ha encara garra mensache"
@@ -7137,6 +7147,7 @@ msgid "&Pattern"
 msgstr "&Patrón"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Substituir"
 
@@ -7285,9 +7296,9 @@ msgstr "Libel"
 msgid "Preserve"
 msgstr "preservar"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Cambiar o simbolo"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Cambiar o simbolo seleccionau"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"

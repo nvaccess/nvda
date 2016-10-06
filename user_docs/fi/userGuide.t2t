@@ -1232,15 +1232,15 @@ NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla
  
 Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja sellaisissa sovelluksissa kuin Microsoft Word, kun muotoilut ovat tärkeitä.
 
-§==== Ilmaise rivien sisennykset ====
-This option allows you to configure how indentation at the beginning of lines is reported.
-The Report line indentation with combo box has four options.
+==== Ilmoita rivien sisennykset ====
+Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmoitetaan.
+Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 
-- Off: NVDA will not treat indentation specially.
-- Speech: If speech is selected, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab."
-- Tones: If Tones is selected, when the  amount of  indentation changes, tones indicate the amount of change in indent.
-The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
-- Both Speech and Tones: This option reads indentation using both of the above methods.
+- ei käytössä: NVDA ei varta vasten käsittele sisennyksiä.
+- puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".
+- äänimerkeillä: Jos tämä on valittuna, äänimerkit ilmaisevat sisennysten määrän sen muuttuessa.
+Äänimerkin korkeus nousee jokaisen välilyönnin kohdalla, ja sarkainmerkki vastaa neljää välilyöntiä.
+- puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
 -
 
 +++ Puhesanastot +++
@@ -1438,6 +1438,10 @@ Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esittelevi
 
 Toiminto otetaan käyttöön valitsemalla Puheen tarkastelu -vaihtoehto NVDA-valikon Työkalut-alavalikosta.
 Toiminto poistetaan käytöstä poistamalla vaihtoehdon valinta.
+
+Puheentarkasteluikkunassa on  "Näytä Puheen tarkastelu käynnistettäessä" -valintaruutu.
+Mikäli se on valittuna, Puheen tarkastelu avataan, kun NVDA käynnistetään.
+Ikkuna yrittää aina avautua uudelleen samoilla mitoilla ja samassa sijainnissa, mitkä sillä olivat sitä suljettaessa.
 
 Kun Puheen tarkastelu -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
