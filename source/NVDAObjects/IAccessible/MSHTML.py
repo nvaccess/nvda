@@ -1023,6 +1023,7 @@ class MSHTML(IAccessible):
   	
 	def script_assignCustomLabel(self, gesture):
 #   		obj=globalVars.reviewPosition.NVDAObjectAtStart
+		log.info("Entered function")
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
 		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
@@ -1033,7 +1034,7 @@ class MSHTML(IAccessible):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 # 		log.info("\nInfo: %s",info)
 		browseObj=info.NVDAObjectAtStart
-		log.info("\nScreen Layout Testing: %s %s",browseObj.HTMLNode.nodeName,browseObj.value)
+ 		log.info("\nScreen Layout Testing: %s %s",browseObj.HTMLNode.nodeName,browseObj.value)
 		if (browseObj.HTMLNode.nodeName=="IMG"):
 			customLabelKey=browseObj.HTMLAttributes['src']
 # 			customLabelKey=customLabelKey.replace(':','\:')
@@ -1053,7 +1054,13 @@ class MSHTML(IAccessible):
 # 			srcAttribute=None
 #  			log.info("linkAttributeis: %s",linkAttribute)
 		else:
-			customLabelKey=browseObj.HTMLAttributes['name']
+# 			customLabelKey=browseObj.HTMLAttributes['name']              #########################
+			if browseObj.HTMLAttributes['id'] and browseObj.HTMLAttributes['name']:
+				customLabelKey=browseObj.HTMLAttributes['id']+browseObj.HTMLAttributes['name']
+			elif not browseObj.HTMLAttributes['name']:
+				customLabelKey=browseObj.HTMLAttributes['id']
+			elif not browseObj.HTMLAttributes['id']:
+				customLabelKey=browseObj.HTMLAttributes['name']
 			if (not customLabelKey):
 				log.info("\nCannot assign custom label")
 # 			linkAttribute=None

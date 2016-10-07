@@ -1250,10 +1250,25 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		}
 
 	tempIter = attribsMap.find(L"HTMLAttrib::name");
-	if(tempIter!=attribsMap.end())
+	map<wstring,wstring>::const_iterator tempIterId;
+	tempIterId=attribsMap.find(L"HTMLAttrib::id");
+	if(tempIter!=attribsMap.end() || tempIterId!=attribsMap.end())
 	{
-		wstring wNameAttribute=tempIter->second;
 		wstring nameAttribute;
+		if (tempIterId==attribsMap.end())
+		{
+			nameAttribute=tempIter->second;
+		}
+		else if (tempIter==attribsMap.end())
+		{
+			nameAttribute=tempIterId->second;
+		}
+		else
+		{
+			nameAttribute=tempIterId->second+tempIter->second;
+		}
+//		wstring wNameAttribute=tempIter->second;
+//		wstring nameAttribute;
 		//transform(wNameAttribute.begin(), wNameAttribute.end(),wNameAttribute.begin(), tolower);
 //		for (wstring::const_iterator it = wNameAttribute.begin(); it != wNameAttribute.end(); ++it)
 //					{
@@ -1274,7 +1289,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 //			}
 //		}
 		//LOG_INFO(L"nameAttribute is:"<<nameAttribute);
-		nameAttribute=wNameAttribute;
+//		nameAttribute=tempIterId->second+wNameAttribute;
 		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
 			{
 				wstring key = it->first;
