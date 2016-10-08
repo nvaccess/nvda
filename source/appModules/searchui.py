@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 NV Access Limited
+#Copyright (C) 2015-2016 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -7,6 +7,7 @@ import appModuleHandler
 import controlTypes
 import api
 import speech
+import braille
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.edge import EdgeList
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
@@ -22,6 +23,9 @@ class SuggestionListItem(UIA):
 			speech.cancelSpeech()
 			api.setNavigatorObject(self)
 			self.reportFocus()
+			# #6414: Briefly show suggestion item in braille.
+			# Manually include position info here, as this is a list item with clealry defined position information.
+			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
 
 class AppModule(appModuleHandler.AppModule):
 
