@@ -8,7 +8,7 @@ Quoi de Neuf dans NVDA
 == Nouvelles Fonctionnalités ==
 - NVDA peut maintenant indiquer le retrait des lignes par des sons. Ceci peut être configuré en utilisant la liste déroulante "annoncer les retraits de ligne par" dans le dialogue Mise en Forme des Documents de NVDA. (#5906)
 - Support de l'afficheur braille Orbit Reader 20. (#6007)
-- Une option permettant d'ouvrir la visionneuse de parole au démarrage a été ajoutée. (#5050)
+- Une option permettant d'ouvrir la visionneuse de parole au démarrage a été ajoutée. Elle peut être activée via une case à cocher dans la fenêtre de la visionneuse de parole. (#5050)
 - Quand on rouvre la fenêtre de la visionneuse de parole, sa position et ses dimensions sont maintenant restaurées. (#5050)
 - Les champs de Renvoi sous Microsoft Word sont maintenant traités comme des hyperliens. Ils sont annoncés comme des liens et peuvent être activés. (#6102)
 - début de support de la version de l'application Kindle en préparation. (#6247)
@@ -24,6 +24,7 @@ Quoi de Neuf dans NVDA
 - Quand on utilise Microsoft Word, les numéros de page dans les titres peuvent maintenant être lus. (#6004)
 - La souris peut maintenant être utilisée pour déplacer le focus entre la liste des symboles et les champs de saisie dans le dialogue prononciation des symboles. (#6312)
 - Correction d'un problème qui empêche la liste d'éléments d'apparaître quand Microsoft Word contient des liens hypertexte invalides. (#5886)
+- Après sa fermeture via la barre des tâches ou le raccourci alt+F4, l'état de la case à cocher de la visionneuse de parole dans le menu NVDA reflètera maintenant la visibilité réel de la fenêtre. (#6340)
 
 
 == Changements pour les Développeurs ==

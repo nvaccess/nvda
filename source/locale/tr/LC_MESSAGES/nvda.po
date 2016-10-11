@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-28 20:26+0300\n"
+"PO-Revision-Date: 2016-10-05 11:56+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -6843,7 +6843,7 @@ msgstr "Mevcut değilse nesne &konum bilgisini tahmin et"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &descriptions"
-msgstr "Nesne &tariflerini bildir"
+msgstr "Nesne &açıklamalarını bildir"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
@@ -8100,7 +8100,7 @@ msgstr "Dizi Çizgileri"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
-msgstr "Up Bars"
+msgstr "Yukarıya Çubuklar"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
@@ -8161,7 +8161,7 @@ msgstr "{previousIndex} noktasından sonra {incrementValue} artış, "
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} noktasından sonra {decrementValue} azalma"
+msgstr "{previousIndex} noktasından sonra {decrementValue} azalma "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -8174,7 +8174,7 @@ msgstr "{categoryAxisTitle} {categoryAxisData}:"
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr "{categoryAxisData} kategorisi: "
+msgstr "kategori: {categoryAxisData},"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
@@ -8187,14 +8187,15 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 #, python-brace-format
 msgid "value {valueAxisData}"
-msgstr "{valueAxisData} değeri"
+msgstr " değer {valueAxisData},"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 #, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr " kesir {fractionValue:.2f} Yüzde dilim {pointIndex} bölü {pointCount}"
+msgstr ""
+" kesir {fractionValue:.2f}, Yüzdelik dilim {pointIndex} bölü {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"

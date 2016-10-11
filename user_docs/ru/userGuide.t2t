@@ -1232,6 +1232,17 @@ NVDA спросит вас, хотите ли вы перезапустить п
 
 Включите эту опцию для чтения текста при проверках в приложениях таких как Microsoft Word, где форматирование является важным.
 
+==== Чтение отступов строк ====
+Эта опция позволяет выбрать способ чтения отступов в начале строк.
+Комбинированный список содержит четыре варианта для выбора:
+
+- Выключено: NVDA не будет обрабатывать отступы.
+- Речь: При изменении отступа, NVDA будет говорить его новый размер. Например "двенадцать пробел" или "четыре таб".
+- Звуковые сигналы: При изменении отступа, NVDA будет воспроизводить короткий звуковой сигнал указывающий величину нового отступа.
+Высота сигнала зависит от количества пробелов и символов табуляции. Высота для одного символа табуляции эквивалентна четырём пробелам.
+- Речь и звуковые сигналы: Этот вариант использует для чтения отступов оба предыдущих способа.
+-
+
 +++ Речевые словари подменю +++
 Это диалоговое окно можно найти в меню NVDA "Параметры > Речевые словари >", при помощи которого вы можете управлять чтением NVDA отдельных слов или фраз.
 На текущий момент поддерживается три типа речевых словарей различного назначения.
@@ -1427,6 +1438,10 @@ NVDA не учитывает регистр букв по умолчанию.
 
 Чтобы активировать просмотрщик речи, установите галочку на пункте меню NVDA "Сервис -> Просмотрщик речи".
 Сбросьте галочку на пункте меню NVDA "Сервис -> Просмотрщик речи", чтобы деактивировать просмотрщик речи.
+
+Окно просмотрщика речи содержит флажок "Открывать просмотрщик речи при запуске NVDA".
+Если этот флажок установлен, то просмотрщик речи будет автоматически открываться при каждом запуске NVDA.
+Окно просмотрщика речи всегда будет пытаться открываться с теми же размерами и расположением, которые были при его последнем закрытии.
 
 Пока просмотрщик речи активирован, он постоянно обновляется, чтобы вы могли видеть текст, проговариваемый NVDA на текущий момент времени.
 Но если вы произведете щелчок или переместите системный фокус внутри просмотрщика, NVDA временно прекратит обновлять текст, так что у вас появится возможность легко выделить и скопировать существующее содержимое.
@@ -1690,19 +1705,25 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt+shift+tab key | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille Displays ++
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
+++ Baum/Humanware/APH/Orbit Braille Displays ++
+Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] and [Orbit http://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
 These include:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Some other displays manufactured by Baum may also work, though this has not been tested.
 
-If connecting via USB to displays other than the VarioUltra, Pronto! or Refreshabraille with USB mode set to HID, you must first install the USB drivers provided by the manufacturer.
+If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
+The VarioUltra and Pronto! use HID.
+The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
+USB HID should generally be used instead.
+
+Following are the key assignments for these displays with NVDA.
+Please see your display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | d2 |

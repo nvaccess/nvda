@@ -8,7 +8,7 @@ Qué hay de Nuevo en NVDA
 == Nuevas Características ==
 - NVDA ahora puede indicar la sangría de líneas utilizando tonos. Esto se puede configurar utilizando el cuadro combinado "Anunciar Sangría de Líneas con" en las preferencias del diálogo Formateado de documentos de NVDA. (#5906)
 - Soporte para la pantalla braille Orbit Reader 20 . (#6007)
-- Se ha añadido una opción para abrir la ventana del visualizador de voz al arrancar. (#5050)
+- Se ha añadido una opción para abrir la ventana del visualizador de voz al arrancar. Esto puede habilitarse a través de una casilla de verificación en la ventana del visualizador de voz. (#5050)
 - Al reabrir la ventana del visualizador de voz, la localización y las dimensiones ahora se restaurarán. (#5050)
 - Los campos de referencia cruzada en Microsoft Word ahora se tratan como hipervínculos. Se anuncian como enlaces, y se pueden activar. (#6102)
 - Soporte inicial para la próxima versión de la applicación Kindle. (#6247)
@@ -24,6 +24,7 @@ Qué hay de Nuevo en NVDA
 - Al utilizar Microsoft Word, los campos de número de página en encabezados ahora pueden leerse. (#6004)
 - El ratón ahora puede utilizarse para mover el foco entre la lista de símbolos y los campos de edición en el diálogo pronunciación de símbolos. (#6312)
 - Corregido un problema que detiene la aparición de la lista de elementos cuando Microsoft Word contiene un hipervínculo inválido. (#5886)
+- Después de ser cerrado a través de la barra de tareas o del atajo de teclado alt+F4, el estado de la casilla de verificación visualizador de voz en el menú NVDA ahora reflejará la visibilidad actual de la ventana. (#6340)
 
 
 == Cambios para Desarrolladores ==
