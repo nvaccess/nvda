@@ -23,6 +23,13 @@ as there are built-in gesture bindings for braille input.
 
 DOT7 = 1 << 6
 DOT8 = 1 << 7
+#: This bit flag must be added to all braille cells when using liblouis with dotsIO.
+LOUIS_DOTS_IO_START = 0x8000
+#: The start of the Unicode braille range.
+UNICODE_BRAILLE_START = 0x2800
+#: The letters "zz" in braille (dot 1 3 5 6 twice).
+#: This is used by L{brailleInputHandler._translateForReportContractedCell}.
+BRAILLE_ZZ = [0b110101] * 2 
 
 #: The singleton BrailleInputHandler instance.
 #: @type: L{BrailleInputHandler}
@@ -56,6 +63,8 @@ class BrailleInputHandler(object):
 		#: The cells in L{bufferBraille} that have not yet been translated
 		#: or were translated but did not produce any text.
 		#: This is used to show these cells to the user while they're entering braille.
+		#: This is a string of Unicode braille.
+		#: @type: unicode
 		self.untranslatedBraille = ""
 		#: The position in L{brailleBuffer} where untranslated braille begins.
 		self.untranslatedStart = 0
@@ -89,8 +98,7 @@ class BrailleInputHandler(object):
 			self.bufferText = u""
 		oldTextLen = len(self.bufferText)
 		pos = self.untranslatedStart + self.untranslatedCursorPos
-		# liblouis requires us to set the highest bit for proper use of dotsIO.
-		data = u"".join([unichr(cell | 0x8000) for cell in self.bufferBraille[:pos]])
+		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		self.bufferText = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
 			"braille-patterns.cti"],
@@ -121,17 +129,14 @@ class BrailleInputHandler(object):
 
 		return False
 
-	
-	BRAILLE_ZZ = [0b110101] * 2 # The letters "zz" in braille (dot 1 3 5 6 twice)
 	def _translateForReportContractedCell(self, pos):
 		"""Translate text for current input as required by L{_reportContractedCell}.
 		@return: The previous translated text.
 		@rtype: unicode
 		"""
 		# Append braille "zz" so full word contractions don't take effect.
-		cells = self.bufferBraille[:pos + 1] + self.BRAILLE_ZZ
-		# liblouis requires us to set the highest bit for proper use of dotsIO.
-		data = u"".join([unichr(cell | 0x8000) for cell in cells])
+		cells = self.bufferBraille[:pos + 1] + BRAILLE_ZZ
+		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
@@ -145,13 +150,14 @@ class BrailleInputHandler(object):
 		"""Report a guess about the character(s) produced by a cell of contracted braille.
 		It's not possible to report the exact characters because later cells might change text produced by earlier cells.
 		However, it's helpful for the user to have a rough idea.
-		For example, when typing "alw" for always in English, the user will hear a, l, w.
+		For example, in English contracted braille, "alw" is the contraction for "always".
+		As the user types "alw", the characters a, l, w will be spoken.
 		@return: C{True} if a guess was reported, C{False} if not (e.g. a number sign).
 		@rtype: bool
 		"""
-		oldTextLen = len(self.bufferText)
 		oldText = self._translateForReportContractedCell(pos)
-		if oldText[:oldTextLen] != self.bufferText[:oldTextLen]:
+		oldTextLen = len(oldText)
+		if oldText != self.bufferText[:oldTextLen]:
 			# This cell caused the text before it to change, so we can't make a useful guess.
 			return False
 		newText = self.bufferText[oldTextLen:]
@@ -210,7 +216,7 @@ class BrailleInputHandler(object):
 		"""Update the untranslated braille to be shown to the user.
 		If the display will not otherwise be updated, L{updatedisplay} should be called after this.
 		"""
-		self.untranslatedBraille = "".join([unichr(0x2800 + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
+		self.untranslatedBraille = "".join([unichr(UNICODE_BRAILLE_START + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
 
 	def updateDisplay(self):
 		"""Update the braille display to reflect untranslated input.

@@ -681,10 +681,12 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(sel, "endToStart")
 		self._addTextWithFields(chunk, formatConfig)
 		# If the user is entering braille, place any untranslated braille before the selection.
+		# Import late to avoid circular import.
 		import brailleInput
 		text = brailleInput.handler.untranslatedBraille
 		if text:
 			rawInputStart = len(self.rawText)
+			# _addFieldText adds text to self.rawText and updates other state accordingly.
 			self._addFieldText(text, None, separate=False)
 			rawInputEnd = len(self.rawText)
 		else:
@@ -724,6 +726,7 @@ class TextInfoRegion(Region):
 		super(TextInfoRegion, self).update()
 
 		if rawInputStart is not None:
+			assert rawInputEnd is not None, "rawInputStart set but rawInputEnd isn't"
 			self._brailleInputStart = self.rawToBraillePos[rawInputStart]
 			self._brailleInputEnd = self.rawToBraillePos[rawInputEnd]
 			self.brailleCursorPos = self._brailleInputStart + brailleInput.handler.untranslatedCursorPos
@@ -733,6 +736,7 @@ class TextInfoRegion(Region):
 	def routeTo(self, braillePos):
 		if self._brailleInputStart is not None and self._brailleInputStart <= braillePos <= self._brailleInputEnd:
 			# The user is moving within untranslated braille input.
+			# Import late to avoid circular import.
 			import brailleInput
 			brailleInput.handler.untranslatedCursorPos = braillePos - self._brailleInputStart
 			self.brailleCursorPos = self._brailleInputStart + brailleInput.handler.untranslatedCursorPos

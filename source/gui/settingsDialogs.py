@@ -1450,7 +1450,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.tables = brailleTables.listTables()
 		self.tableNames = [table.fileName for table in self.tables]
 		tableChoices = [table.displayName for table in self.tables]
-		self.tableList = wx.Choice(self, wx.ID_ANY, choices=tableChoices)
+		self.tableList = wx.Choice(self, choices=tableChoices)
 		try:
 			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
 			self.tableList.SetSelection(selection)
@@ -1463,7 +1463,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("&Input table:"))
-		self.inputTableList = wx.Choice(self, wx.ID_ANY, choices=tableChoices)
+		self.inputTableList = wx.Choice(self, choices=tableChoices)
 		try:
 			selection = self.tables.index(brailleInput.handler.table)
 			self.inputTableList.SetSelection(selection)

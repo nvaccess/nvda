@@ -1891,6 +1891,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_braille_enter(self, gesture):
 		brailleInput.handler.enter()
+	# Translators: Input help mode message for a braille command.
 	script_braille_enter.__doc__= _("Translates any braille input and presses the enter key")
 	script_braille_enter.category=SCRCAT_BRAILLE
 

@@ -605,9 +605,10 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				# Translators: Reported when selection is removed.
 				speakMessage(_("selection removed"))
 
-#: The number of typed characters for which to suppress speech
-#: and the time at which they were sent.
-_suppressSpeakTypedCharactersData = None
+#: The number of typed characters for which to suppress speech.
+_suppressSpeakTypedCharactersNumber = 0
+#: The time at which suppressed typed characters were sent.
+_suppressSpeakTypedCharactersTime = None
 def _suppressSpeakTypedCharacters(number):
 	"""Suppress speaking of typed characters.
 	This should be used when sending a string of characters to the system
@@ -615,8 +616,9 @@ def _suppressSpeakTypedCharacters(number):
 	@param number: The number of characters to suppress.
 	@type number: int
 	"""
-	global _suppressSpeakTypedCharactersData
-	_suppressSpeakTypedCharactersData = (number, time.time())
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	_suppressSpeakTypedCharactersNumber += number
+	_suppressSpeakTypedCharactersTime = time.time()
 
 def speakTypedCharacters(ch):
 	global curWordChars
@@ -640,18 +642,16 @@ def speakTypedCharacters(ch):
 			log.io("typed word: %s"%typedWord)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
-	global _suppressSpeakTypedCharactersData
-	if _suppressSpeakTypedCharactersData:
-		number, supTime = _suppressSpeakTypedCharactersData
-		# We primarily suppress based on character count,
-		# but time out after a short while just in case.
-		timeOk = time.time() - supTime <= 0.1
-		suppress = number > 0 and timeOk
-		number -= 1
-		if number > 0 and timeOk:
-			_suppressSpeakTypedCharactersData = (number, supTime)
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	if _suppressSpeakTypedCharactersNumber > 0:
+		# We primarily suppress based on character count and still have characters to suppress.
+		# However, we time out after a short while just in case.
+		suppress = time.time() - _suppressSpeakTypedCharactersTime <= 0.1
+		if suppress:
+			_suppressSpeakTypedCharactersNumber -= 1
 		else:
-			_suppressSpeakTypedCharactersData = None
+			_suppressSpeakTypedCharactersNumber = 0
+			_suppressSpeakTypedCharactersTime = None
 	else:
 		suppress = False
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
