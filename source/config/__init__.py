@@ -530,6 +530,8 @@ class ConfigManager(object):
 			return
 		import synthDriverHandler
 		synthDriverHandler.handleConfigProfileSwitch()
+		import brailleInput
+		brailleInput.handler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
 		import audioDucking

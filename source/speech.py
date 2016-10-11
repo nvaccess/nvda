@@ -11,6 +11,7 @@
 import itertools
 import weakref
 import unicodedata
+import time
 import colors
 import globalVars
 from logHandler import log
@@ -604,8 +605,21 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				# Translators: Reported when selection is removed.
 				speakMessage(_("selection removed"))
 
+#: The number of typed characters for which to suppress speech
+#: and the time at which they were sent.
+_suppressSpeakTypedCharactersData = None
+def _suppressSpeakTypedCharacters(number):
+	"""Suppress speaking of typed characters.
+	This should be used when sending a string of characters to the system
+	and those characters should not be spoken individually as if the user were typing them.
+	@param number: The number of characters to suppress.
+	@type number: int
+	"""
+	global _suppressSpeakTypedCharactersData
+	_suppressSpeakTypedCharactersData = (number, time.time())
+
 def speakTypedCharacters(ch):
-	global curWordChars;
+	global curWordChars
 	typingIsProtected=api.isTypingProtected()
 	if typingIsProtected:
 		realChar="*"
@@ -626,7 +640,21 @@ def speakTypedCharacters(ch):
 			log.io("typed word: %s"%typedWord)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
-	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
+	global _suppressSpeakTypedCharactersData
+	if _suppressSpeakTypedCharactersData:
+		number, supTime = _suppressSpeakTypedCharactersData
+		# We primarily suppress based on character count,
+		# but time out after a short while just in case.
+		timeOk = time.time() - supTime <= 0.1
+		suppress = number > 0 and timeOk
+		number -= 1
+		if number > 0 and timeOk:
+			_suppressSpeakTypedCharactersData = (number, supTime)
+		else:
+			_suppressSpeakTypedCharactersData = None
+	else:
+		suppress = False
+	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 		speakSpelling(realChar)
 
 class SpeakTextInfoState(object):

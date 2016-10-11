@@ -1883,6 +1883,17 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE
 
+	def script_braille_eraseLastCell(self, gesture):
+		brailleInput.handler.eraseLastCell()
+	# Translators: Input help mode message for a braille command.
+	script_braille_eraseLastCell.__doc__= _("Erases the last entered braille cell or character")
+	script_braille_eraseLastCell.category=SCRCAT_BRAILLE
+
+	def script_braille_enter(self, gesture):
+		brailleInput.handler.enter()
+	script_braille_enter.__doc__= _("Translates any braille input and presses the enter key")
+	script_braille_enter.category=SCRCAT_BRAILLE
+
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
@@ -2168,6 +2179,8 @@ class GlobalCommands(ScriptableObject):
 
 		# Braille keyboard
 		"bk:dots" : "braille_dots",
+		"bk:dot7" : "braille_eraseLastCell",
+		"bk:dot8" : "braille_enter",
 
 		# Tools
 		"kb:NVDA+f1": "navigatorObject_devInfo",
