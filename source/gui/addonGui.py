@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2016 NV Access Limited, Beqa Gozalishvili, Joseph Lee
+#Copyright (C) 2012-2016 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
 
 import os
 import wx
@@ -60,7 +60,7 @@ class AddonsDialog(wx.Dialog):
 		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
 		entryButtonsSizer.Add(self.helpButton)
 		# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-		self.enableDisableButton=wx.Button(self,label=_("Disable add-on"))
+		self.enableDisableButton=wx.Button(self,label=_("&Disable add-on"))
 		self.enableDisableButton.Disable()
 		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
 		entryButtonsSizer.Add(self.enableDisableButton)
@@ -227,7 +227,7 @@ class AddonsDialog(wx.Dialog):
 		# #3090: Change toggle button label to indicate action to be taken if clicked.
 		if addon is not None:
 			# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-			self.enableDisableButton.SetLabel(_("Enable add-on") if not self._shouldDisable(addon) else _("Disable add-on"))
+			self.enableDisableButton.SetLabel(_("&Enable add-on") if not self._shouldDisable(addon) else _("&Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove)
@@ -282,7 +282,7 @@ Description: {description}
 		shouldDisable = self._shouldDisable(addon)
 		# Counterintuitive, but makes sense when context is taken into account.
 		addon.enable(not shouldDisable)
-		self.enableDisableButton.SetLabel(_("Enable add-on") if shouldDisable else _("Disable add-on"))
+		self.enableDisableButton.SetLabel(_("&Enable add-on") if shouldDisable else _("&Disable add-on"))
 		self.refreshAddonsList(activeIndex=index)
 
 	def onGetAddonsClick(self,evt):
