@@ -620,11 +620,13 @@ def _suppressSpeakTypedCharacters(number):
 	_suppressSpeakTypedCharactersNumber += number
 	_suppressSpeakTypedCharactersTime = time.time()
 
+#: The character to use when masking characters in protected fields.
+PROTECTED_CHAR = "*"
 def speakTypedCharacters(ch):
 	global curWordChars
 	typingIsProtected=api.isTypingProtected()
 	if typingIsProtected:
-		realChar="*"
+		realChar=PROTECTED_CHAR
 	else:
 		realChar=ch
 	if unicodedata.category(ch)[0] in "LMN":

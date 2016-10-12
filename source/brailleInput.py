@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #brailleInput.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -14,6 +15,7 @@ import winUser
 import inputCore
 import speech
 import keyboardHandler
+import api
 
 """Framework for handling braille input from the user.
 All braille input is represented by a {BrailleInputGesture}.
@@ -26,7 +28,11 @@ DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
 LOUIS_DOTS_IO_START = 0x8000
 #: The start of the Unicode braille range.
+#: @type: int
 UNICODE_BRAILLE_START = 0x2800
+#: The Unicode braille character to use when masking cells in protected fields.
+#: @type: unicode
+UNICODE_BRAILLE_PROTECTED = u"⣿" # All dots down
 #: The letters "zz" in braille (dot 1 3 5 6 twice).
 #: This is used by L{brailleInputHandler._translateForReportContractedCell}.
 BRAILLE_ZZ = [0b110101] * 2 
@@ -171,12 +177,17 @@ class BrailleInputHandler(object):
 	def _reportUntranslated(self, pos):
 		"""Report a braille cell which hasn't yet been translated into text.
 		"""
-		dots = self.bufferBraille[pos]
-		if  config.conf["keyboard"]["speakTypedCharacters"]:
-			if not self._table.contracted or not self._reportContractedCell(pos):
+		speakTyped = config.conf["keyboard"]["speakTypedCharacters"]
+		protected = api.isTypingProtected()
+		if speakTyped:
+			if protected:
+				speech.speakSpelling(speech.PROTECTED_CHAR)
+			elif not self._table.contracted or not self._reportContractedCell(pos):
+				dots = self.bufferBraille[pos]
 				speakDots(dots)
-		elif self._table.contracted:
-			# Even if speak typed characters is disabled, the user might enable it midword.
+		if self._table.contracted and (not speakTyped or protected):
+			# Even if we're not speaking contracted cells, we might need to start doing so midword.
+			# For example, the user might have speak typed characters disabled, but enable it midword.
 			# Update state needed to report contracted cells.
 			self._translateForReportContractedCell(pos)
 		self._updateUntranslated()
@@ -222,7 +233,10 @@ class BrailleInputHandler(object):
 		"""Update the untranslated braille to be shown to the user.
 		If the display will not otherwise be updated, L{updatedisplay} should be called after this.
 		"""
-		self.untranslatedBraille = "".join([unichr(UNICODE_BRAILLE_START + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
+		if api.isTypingProtected():
+			self.untranslatedBraille = UNICODE_BRAILLE_PROTECTED * (len(self.bufferBraille) - self.untranslatedStart)
+		else:
+			self.untranslatedBraille = "".join([unichr(UNICODE_BRAILLE_START + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
 
 	def updateDisplay(self):
 		"""Update the braille display to reflect untranslated input.
