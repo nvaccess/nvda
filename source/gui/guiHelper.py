@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
 Example usage:
 
@@ -41,7 +42,6 @@ class myDialog(class wx.Dialog):
 		self.SetSizer(mainSizer)
 	...
 """
-
 import wx
 from wx.lib import scrolledpanel
 import nvdaControls
@@ -226,11 +226,17 @@ class BoxSizerHelper(object):
 			self.sizer = sizer
 		else:
 			raise ValueError("Orientation OR Sizer must be supplied.")
+		self.dialogDismissButtonsAdded = False
 
 	def addItem(self, item, **keywordArgs):
 		""" Adds an item with space between it and the previous item.
 			Does not handle adding LabledControlHelper; use L{addlabelledControl} instead.
+			@param item: the item to add to the sizer
+			@param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is 
+				normally not necessary.
 		"""
+		assert not self.dialogDismissButtonsAdded, "Buttons to dismiss the dialog already added, they should be the last item added."
+
 		toAdd = item
 		shouldAddSpacer = self.hasFirstItemBeenAdded
 
@@ -277,3 +283,21 @@ class BoxSizerHelper(object):
 		else:
 			self.addItem(labeledControl.sizer)
 		return labeledControl.control
+
+	def addDialogDismissButtons(self, buttons):
+		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
+		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
+		the last item should be added via L{addItem}
+		@param buttons: the buttons to add
+		@type buttons: wx.Sizer or guiHelper.ButtonHelper or single wx.Button
+		"""
+		if isinstance(buttons, ButtonHelper):
+			toAdd = buttons.sizer
+		elif isinstance(buttons, (wx.Sizer, wx.Button)):
+			toAdd = buttons
+		else:
+			raise NotImplementedError("Unknown type: {}".format(buttons))
+		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
+		self.dialogDismissButtonsAdded = True
+		return buttons
+
