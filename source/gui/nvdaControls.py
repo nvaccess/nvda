@@ -14,7 +14,7 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 	This makes editing the values quicker.
 	"""
 	def __init__(self, parent, id=wx.ID_ANY, value=wx.EmptyString, pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.SP_ARROW_KEYS|wx.ALIGN_RIGHT, min=0, max=100, initial=0, name=wx.SpinCtrlNameStr):
-		""" initialiser - Takes the same parameter as a wx.SpinCtrl.
+		""" initialiser - Takes the same parameters as a wx.SpinCtrl.
 		"""
 		wx.SpinCtrl.__init__(self, parent, id, value, pos, size, style, min, max, initial, name)
 		self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
