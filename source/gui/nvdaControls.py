@@ -6,8 +6,6 @@
 
 import wx
 
-from logHandler import log
-
 class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 	"""
 	A spin control that automatically selects the value when the control gains focus.
