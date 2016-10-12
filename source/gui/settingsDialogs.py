@@ -1277,6 +1277,10 @@ class DictionaryEntryDialog(wx.Dialog):
 		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
 
 	def onOk(self,evt):
+		if not self.patternTextCtrl.GetValue():
+			# Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+			gui.messageBox(_("A pattern is required."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+			return 
 		try:
 			self.dictEntry=speechDictHandler.SpeechDictEntry(self.patternTextCtrl.GetValue(),self.replacementTextCtrl.GetValue(),self.commentTextCtrl.GetValue(),bool(self.caseSensitiveCheckBox.GetValue()),self.getType())
 		except Exception as e:
