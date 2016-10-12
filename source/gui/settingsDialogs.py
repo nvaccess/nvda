@@ -19,6 +19,7 @@ import config
 import languageHandler
 import speech
 import gui
+from gui import nvdaControls
 import globalVars
 from logHandler import log
 import nvwave
@@ -517,8 +518,8 @@ class VoiceSettingsDialog(SettingsDialog):
 		
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
-		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText,wx.TextCtrl)
-		self.capPitchChangeEdit.SetValue(str(config.conf["speech"][getSynth().name]["capPitchChange"]))
+		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			min=-100, max=100, initial=config.conf["speech"][getSynth().name]["capPitchChange"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings dialog.
@@ -609,12 +610,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
-		capPitchChange=self.capPitchChangeEdit.Value
-		try:
-			capPitchChange=int(capPitchChange)
-		except ValueError:
-			capPitchChange=0
-		config.conf["speech"][getSynth().name]["capPitchChange"]=min(max(capPitchChange,-100),100)
+		config.conf["speech"][getSynth().name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"]["readNumbersAs"]=self.digitsCombo.GetSelection()
@@ -992,15 +988,15 @@ class BrowseModeDialog(SettingsDialog):
 		# browse mode settings dialog.
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
 		settingsSizer.Add(maxLengthLabel)
-		self.maxLengthEdit=wx.TextCtrl(self,wx.NewId())
-		self.maxLengthEdit.SetValue(str(config.conf["virtualBuffers"]["maxLineLength"]))
+		self.maxLengthEdit=nvdaControls.SelectOnFocusSpinCtrl(self,min=10, max=250,
+			initial=config.conf["virtualBuffers"]["maxLineLength"])
 		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a textfield in the
 		# browse mode settings dialog.
 		pageLinesLabel=wx.StaticText(self,-1,label=_("&Number of lines per page"))
 		settingsSizer.Add(pageLinesLabel)
-		self.pageLinesEdit=wx.TextCtrl(self,wx.NewId())
-		self.pageLinesEdit.SetValue(str(config.conf["virtualBuffers"]["linesPerPage"]))
+		self.pageLinesEdit=nvdaControls.SelectOnFocusSpinCtrl(self, min=5, max=150,
+			initial=config.conf["virtualBuffers"]["linesPerPage"])
 		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings dialog.
@@ -1042,18 +1038,8 @@ class BrowseModeDialog(SettingsDialog):
 		self.maxLengthEdit.SetFocus()
 
 	def onOk(self,evt):
-		try:
-			newMaxLength=int(self.maxLengthEdit.GetValue())
-		except:
-			newMaxLength=0
-		if newMaxLength >=10 and newMaxLength <=250:
-			config.conf["virtualBuffers"]["maxLineLength"]=newMaxLength
-		try:
-			newPageLines=int(self.pageLinesEdit.GetValue())
-		except:
-			newPageLines=0
-		if newPageLines >=5 and newPageLines <=150:
-			config.conf["virtualBuffers"]["linesPerPage"]=newPageLines
+		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
+		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]=self.autoSayAllCheckBox.IsChecked()
 		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
@@ -1555,8 +1541,8 @@ class BrailleSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		cursorBlinkRateLabelText = _("Cursor blink rate (ms)")
-		self.cursorBlinkRateEdit = sHelper.addLabeledControl(cursorBlinkRateLabelText, wx.TextCtrl)
-		self.cursorBlinkRateEdit.SetValue(str(config.conf["braille"]["cursorBlinkRate"]))
+		self.cursorBlinkRateEdit = sHelper.addLabeledControl(cursorBlinkRateLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			min=0, max=2000, initial=config.conf["braille"]["cursorBlinkRate"])
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorBlinkRateEdit.Disable()
 
@@ -1575,8 +1561,8 @@ class BrailleSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message timeout (sec)")
-		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, wx.TextCtrl)
-		self.messageTimeoutEdit.SetValue(str(config.conf["braille"]["messageTimeout"]))
+		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
+			min=0, max=20, initial=config.conf["braille"]["messageTimeout"])
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("Braille tethered to:")
@@ -1618,19 +1604,9 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
-		try:
-			val = int(self.cursorBlinkRateEdit.GetValue())
-		except (ValueError, TypeError):
-			val = None
-		if 0 <= val <= 2000:
-			config.conf["braille"]["cursorBlinkRate"] = val
+		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
-		try:
-			val = int(self.messageTimeoutEdit.GetValue())
-		except (ValueError, TypeError):
-			val = None
-		if 0 <= val <= 20:
-			config.conf["braille"]["messageTimeout"] = val
+		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
