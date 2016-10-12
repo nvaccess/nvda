@@ -199,7 +199,8 @@ class BrailleInputHandler(object):
 		# but "tgr" produces "together".
 		if not self._table.contracted or endWord:
 			if self._translate(endWord):
-				self.cellsWithText.add(pos)
+				if not endWord:
+					self.cellsWithText.add(pos)
 			else:
 				# This cell didn't produce any text; e.g. number sign.
 				self._reportUntranslated(pos)
