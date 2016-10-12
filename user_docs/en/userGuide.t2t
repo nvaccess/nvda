@@ -622,6 +622,8 @@ You can select the translation table used to translate braille into text using t
 
 When uncontracted braille is being used, text is inserted as soon as it is entered.
 When using contracted braille, text is inserted when you press space or enter at the end of a word.
+Note that translation can only reflect the braille word you are typing and cannot consider existing text.
+For example, if you are using a braille code that begins numbers with a number sign and you press backspace to move to the end of a number, you will need to type the number sign again to enter additional numbers.
 
 %kc:beginInclude
 Pressing dot 7 erases the last entered braille cell or character.
