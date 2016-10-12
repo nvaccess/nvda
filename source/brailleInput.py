@@ -213,6 +213,11 @@ class BrailleInputHandler(object):
 		self._translate(True)
 		inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName("enter"))
 
+	def translate(self):
+		"""Translates any braille input without inserting a space or new line.
+		"""
+		self._translate(True)
+
 	def _updateUntranslated(self):
 		"""Update the untranslated braille to be shown to the user.
 		If the display will not otherwise be updated, L{updatedisplay} should be called after this.
@@ -329,16 +334,20 @@ class BrailleInputGesture(inputCore.InputGesture):
 	space = False
 
 	def _makeDotsId(self):
-		return "+".join("dot%d" % (i+1) for i in xrange(8) if self.dots & (1 << i))
+		# Items separated by a plus sign need to be in Python set order.
+		items = {"dot%d" % (i+1) for i in xrange(8) if self.dots & (1 << i)}
+		if self.space:
+			items.add("space")
+		return "bk:" + "+".join(items)
 
 	def _get_identifiers(self):
 		if self.space and self.dots:
-			return ("bk:space+%s" % self._makeDotsId(),
-				"bk:space+dots")
-		elif self.dots in (DOT7, DOT8):
-			# Allow bindings to dots 7 or 8 by themselves.
-			return ("bk:" + self._makeDotsId(),
-				"bk:dots")
+			# Items separated by a plus sign need to be in Python set order.
+			generic = "bk:" + "+".join({"space", "dots"})
+			return (self._makeDotsId(), generic)
+		elif self.dots in (DOT7, DOT8, DOT7 | DOT8):
+			# Allow bindings to dots 7 and/or 8 by themselves.
+			return (self._makeDotsId(), "bk:dots")
 		elif self.dots or self.space:
 			return ("bk:dots",)
 		else:

@@ -1895,6 +1895,12 @@ class GlobalCommands(ScriptableObject):
 	script_braille_enter.__doc__= _("Translates any braille input and presses the enter key")
 	script_braille_enter.category=SCRCAT_BRAILLE
 
+	def script_braille_translate(self, gesture):
+		brailleInput.handler.translate()
+	# Translators: Input help mode message for a braille command.
+	script_braille_translate.__doc__= _("Translates any braille input")
+	script_braille_translate.category=SCRCAT_BRAILLE
+
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
@@ -2182,6 +2188,7 @@ class GlobalCommands(ScriptableObject):
 		"bk:dots" : "braille_dots",
 		"bk:dot7" : "braille_eraseLastCell",
 		"bk:dot8" : "braille_enter",
+		"bk:dot7+dot8" : "braille_translate",
 
 		# Tools
 		"kb:NVDA+f1": "navigatorObject_devInfo",
