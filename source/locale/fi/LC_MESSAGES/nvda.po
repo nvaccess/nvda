@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-10-01 09:38+0200\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
+"PO-Revision-Date: 2016-10-07 08:45+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1163,19 +1163,19 @@ msgstr "Ei edellisiä grafiikoita"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "Siirtää seuraavaan sisennettyyn kappaleeseen."
+msgstr "Siirtää seuraavaan sisennettyyn lainaukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
-msgstr "Ei enempää sisennettyjä kappaleita"
+msgstr "Ei enempää sisennettyjä lainauksia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "Siirtää edelliseen sisennettyyn kappaleeseen."
+msgstr "Siirtää edelliseen sisennettyyn lainaukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
-msgstr "Ei edellisiä sisennettyjä kappaleita"
+msgstr "Ei edellisiä sisennettyjä lainauksia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
@@ -1759,7 +1759,7 @@ msgstr "kappale"
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr "sisennetty kappale"
+msgstr "sisennetty lainaus"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
@@ -2396,7 +2396,6 @@ msgid "Mouse"
 msgstr "Hiiri"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Puhe"
 
@@ -2743,17 +2742,25 @@ msgstr "Rivinumeroiden lukeminen käytössä"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Ottaa käyttöön rivinumeroiden lukemisen tai poistaa sen käytöstä."
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "Rivin sisennyksen lukeminen pois"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Ilmoita rivien sisennykset puheella"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Rivin sisennyksen lukeminen käytössä"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Ilmoita rivien sisennykset äänimerkeillä"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Ilmoita rivien sisennykset puheella ja äänimerkeillä"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Rivien sisennysten ilmoittaminen pois"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Ottaa käyttöön rivin sisennyksen lukemisen tai poistaa sen käytöstä."
+msgid "Cycles through line indentation settings"
+msgstr "Vaihtaa rivien sisennysten ilmoittamisen asetusta."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -2870,16 +2877,16 @@ msgstr "Ottaa käyttöön otsikoiden lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "Sisennettyjen kappaleiden lukeminen pois"
+msgstr "Sisennettyjen lainausten lukeminen pois"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "Sisennettyjen kappaleiden lukeminen käytössä"
+msgstr "Sisennettyjen lainausten lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
 msgstr ""
-"Ottaa käyttöön sisennettyjen kappaleiden lukemisen tai poistaa sen käytöstä."
+"Ottaa käyttöön sisennettyjen lainausten lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
@@ -5519,7 +5526,7 @@ msgstr "Papenmeier BRAILLEX (uudet mallit)"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
-msgstr "Siirrä pistesoluun ja lue muotoilutiedot"
+msgstr "Siirrä pistesoluun ja lue muotoilut."
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7013,7 +7020,7 @@ msgstr "Ilmoita k&orostus"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report st&yle"
-msgstr "Lue t&yylimääreet"
+msgstr "Lue t&yyli"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7038,6 +7045,11 @@ msgstr "Ilmoita rivi&en sisennykset:"
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "ei käytössä"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "puheella"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -8698,6 +8710,10 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr ""
+#~ "Ottaa käyttöön rivin sisennyksen lukemisen tai poistaa sen käytöstä."
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Tätä solua ei voi muokata"
