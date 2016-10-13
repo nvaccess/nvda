@@ -1686,7 +1686,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for symbols list in symbol pronunciation dialog.
 		symbolsText = _("&Symbols")
-		self.symbolsList = sHelper.addLabeledControl(symbolsText, nvdaControls.AutoWidthColumnListCtrl, autoSizeColumnIndex=0, style=wx.LC_REPORT | wx.LC_SINGLE_SEL )
+		self.symbolsList = sHelper.addLabeledControl(symbolsText, nvdaControls.AutoWidthColumnListCtrl, autoSizeColumnIndex=0, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
 		# Translators: The label for a column in symbols list used to identify a symbol.
 		self.symbolsList.InsertColumn(0, _("Symbol"))
 		self.symbolsList.InsertColumn(1, _("Replacement"))
