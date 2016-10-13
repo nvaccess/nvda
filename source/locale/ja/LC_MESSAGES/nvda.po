@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-26 19:19+0900\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
+"PO-Revision-Date: 2016-10-09 10:59+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -2390,7 +2390,6 @@ msgid "Mouse"
 msgstr "マウス"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "音声"
 
@@ -2721,16 +2720,24 @@ msgstr "行番号を報告する"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "行番号の報告の切り替え"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "行インデントを報告しない"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "行インデントを読み上げで報告"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "行インデントを報告する"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "行インデントをビープ音で報告"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "行インデントをビープ音と読み上げで報告"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "行インデントの報告なし"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
+msgid "Cycles through line indentation settings"
 msgstr "行インデントの報告の切り替え"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
@@ -3186,7 +3193,7 @@ msgstr "読み上げなし"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "Speech mode beeps"
-msgstr "ビープ"
+msgstr "ビープ音"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
@@ -3198,9 +3205,9 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"読み上げモードをなし、ビープ、読み上げの順に切り替え。なしに設定するとNVDAは"
-"なにも読み上げない。ビープに設定するとNVDAは音声のかわりにビープ音を鳴らす。"
-"読み上げに設定するとNVDAは通常通り読み上げ"
+"読み上げモードをなし、ビープ音、読み上げの順に切り替え。なしに設定するとNVDA"
+"はなにも読み上げない。ビープ音に設定するとNVDAは音声のかわりにビープ音を鳴ら"
+"す。読み上げに設定するとNVDAは通常通り読み上げ"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -6753,7 +6760,7 @@ msgstr "読み上げ"
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "Beep"
-msgstr "ビープ"
+msgstr "ビープ音"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
@@ -6938,13 +6945,18 @@ msgstr "行インデントの報告(&I)"
 msgid "Off"
 msgstr "なし"
 
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "読み上げ"
+
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
 msgstr "ビープ音"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both  Speech and Tones"
-msgstr "読み上げとビープ音"
+msgstr "ビープ音と読み上げ"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -8573,7 +8585,7 @@ msgstr "テーブル内ではありません"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "注釈(&A)"
+msgstr "コメント(&A)"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -8582,6 +8594,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "行インデントの報告の切り替え"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "このセルは編集できません"
