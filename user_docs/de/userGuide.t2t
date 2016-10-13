@@ -1238,8 +1238,10 @@ Das Kombinationsfeld enthält vier Einträge:
 
 - aus: NVDA wird Zeileneinrückungen in keiner Weise gesondert ausgeben
 - Sprache: Diese Einstellung bringt NVDA dazu die Anzahl von Zeichen anzusagen, mit denen eine Zeile eingerückt wurde (z. B. 12 Leerzeichen oder 4 Tabulatoren)
-- Signaltöne: Diese Einstellung bringt NVDA dazu, die Einrückung mit Hilfe von Signaltönen anzugeben. Wenn sich die Einrückung ändert, wird der Signalton höher, je stärker eine Zeile eingerückt ist. Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Leerzeichen.
+- Signaltöne: Diese Einstellung bringt NVDA dazu, die Einrückung mit Hilfe von Signaltönen anzugeben. Wenn sich die Einrückung ändert, wird der Signalton höher, je stärker eine Zeile eingerückt ist. 
+Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Leerzeichen.
 - beides: dies ist eine Kombination der beiden obigen Optionen.
+-
 
 +++ Aussprachewörterbücher +++
 Im Menü Einstellungen finden Sie den Eintrag Aussprachewörterbücher. Dieses Menü enthält Dialoge mit deren Hilfe Sie festlegen können, wie NVDA einzelne Wörter oder Satzteile ausspricht.
@@ -1436,6 +1438,10 @@ Für sehende Softwareentwickler oder für diejenigen, die NVDA anderen Sehenden 
 
 Um den Sprachbetrachter einzuschalten, aktivieren Sie den Eintrag Sprachbetrachter, welchen Sie im Menü Extras des NVDA-Menü's finden.
 Deaktivieren Sie den Menüpunkt, um ihn wieder auszuschalten.
+
+Das Sprachbetrachter-Fenster enthällt das Kontrollkästchen "Sprachbetrachter beim Start anzeigen".
+Wenn dieses Kontrollkästchen aktiviert ist, wird der Sprachbetrachter geöffnet, sobald NVDA gestartet wird.
+Sofern möglich, wird dessen Fenster die selbe Position sowie die gleiche Größe wie bei der letzten Verwendung einnehmen.	
 
 Während der Sprachbetrachter eingeschaltet ist, aktualisiert sich sogleich der Text beim Sprechen.
 Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
@@ -1699,11 +1705,11 @@ Bitte lesen sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 | Alt+Umschalt+Tabulatortaste | SUP |
 %kc:endInclude
 
-++ Braillezeilen von Baum/HumanWare/APH ++
+++ Braillezeilen von Baum/HumanWare/APH/Orbit ++
 einige  [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/], [APH http://www.aph.org/] und [Orbit http://www.orbitresearch.com/]-Braillezeilen werden unterstützt, sofern sie seriell, per USB oder Bluetooth mit dem Rechner verbunden werden.
 dies sind u. a.:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
@@ -1711,7 +1717,7 @@ Einige andere Baum-Zeilen könnten ebenfalls funktionieren, dies wurde allerding
 
 Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus nicht auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren. 
 die Braillezeilenmodelle VarioUltra und Pronto! verwenden das HID-Protokoll.
-Die Braillezeile Refreshabraille kann so eingestellt werden, dass sie das HID-Prookoll verwendet.
+Die Braillezeilen Refreshabraille und Orbit Reader 20 können so eingestellt werden, dass sie das HID-Protokoll verwenden.
 
 Der serielle Modus des orbit Readers 20 wird momentan nur unter Windows 10 unterstützt.
 Sie sollten stattdessen das HID-Protokoll verwenden.
