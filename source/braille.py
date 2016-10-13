@@ -22,278 +22,7 @@ import api
 import textInfos
 import brailleDisplayDrivers
 import inputCore
-
-#: The directory in which liblouis braille tables are located.
-TABLES_DIR = r"louis\tables"
-
-#: The table file names and information.
-TABLES = (
-	# (fileName, displayName, supportsInput),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ar-ar-g1.utb", _("Arabic grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ar-fa.utb", _("Farsi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("as-in-g1.utb", _("Assamese grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("be-in-g1.utb", _("Bengali grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("bg.ctb", _("Bulgarian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("cy-cy-g1.utb", _("Welsh grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("cy-cy-g2.ctb", _("Welsh grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("cz-cz-g1.utb", _("Czech grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g16.ctb", _("Danish 6 dot grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g18.ctb", _("Danish 8 dot grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g26.ctb", _("Danish 6 dot grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g28.ctb", _("Danish 8 dot grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-comp8.ctb", _("German 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-g0.utb", _("German grade 0"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-g1.ctb", _("German grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-g2.ctb", _("German grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-gb-comp8.ctb", _("English (U.K.) 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-gb-g1.utb", _("English (U.K.) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-GB-g2.ctb", _("English (U.K.) grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-comp8.ctb", _("English (U.S.) 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-g1.ctb", _("English (U.S.) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-g2.ctb", _("English (U.S.) grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Es-Es-G0.utb", _("Spanish 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("es-g1.ctb", _("Spanish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("et-g0.utb", _("Estonian grade 0"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ethio-g1.ctb", _("Ethiopic grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fi.utb", _("Finnish 6 dot"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-bfu-g2.ctb", _("French (unified) Grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-ca-g1.utb", _("French (Canada) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Fr-Ca-g2.ctb", _("French (Canada) grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ga-g1.utb", _("Irish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ga-g2.ctb", _("Irish grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("gu-in-g1.utb", _("Gujarati grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("gr-bb.ctb", _("Koine Greek"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("gr-gr-g1.utb", _("Greek (Greece) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("he.ctb", _("Hebrew 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hi-in-g1.utb", _("Hindi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hr.ctb", _("Croatian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hu-hu-comp8.ctb", _("Hungarian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hu-hu-g1.ctb", _("Hungarian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("is.ctb", _("Icelandic 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("it-it-comp6.utb", _("Italian 6 dot computer braille"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("it-it-comp8.utb", _("Italian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ka-in-g1.utb", _("Kannada grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-2006-g1.ctb", _("Korean grade 1 (2006)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-2006-g2.ctb", _("Korean grade 2 (2006)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-g1.ctb", _("Korean grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-g2.ctb", _("Korean grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ks-in-g1.utb", _("Kashmiri grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Lv-Lv-g1.utb", _("Latvian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ml-in-g1.utb", _("Malayalam grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("mn-in-g1.utb", _("Manipuri grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("mn-MN.utb", _("Mongolian"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("mr-in-g1.utb", _("Marathi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("nl-BE-g0.utb", _("Dutch (Belgium)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("nl-NL-g0.utb", _("Dutch (Netherlands)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g0.utb", _("Norwegian grade 0"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g1.ctb", _("Norwegian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g2.ctb", _("Norwegian grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g3.ctb", _("Norwegian grade 3"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("np-in-g1.utb", _("Nepali grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("or-in-g1.utb", _("Oriya grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("pl-pl-comp8.ctb", _("Polish 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Pl-Pl-g1.utb", _("Polish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("pt-pt-comp8.ctb", _("Portuguese 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Pt-Pt-g1.utb", _("Portuguese grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Pt-Pt-g2.ctb", _("Portuguese grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("pu-in-g1.utb", _("Punjabi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ru-compbrl.ctb", _("Russian braille for computer code"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ru-ru-g1.utb", _("Russian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sa-in-g1.utb", _("Sanskrit grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Se-Se-g1.utb", _("Swedish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sk-g1.ctb", _("Slovak grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sl-si-g1.utb", _("Slovene grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sr-g1.ctb", _("Serbian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ta-ta-g1.ctb", _("Tamil grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("te-in-g1.utb", _("Telugu grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("tr.ctb", _("Turkish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-ueb-g2.ctb", _("Unified English Braille Code grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"), False),
-)
-
-#: Braille tables that support input (only computer braille tables yet).
-INPUT_TABLES = tuple(t for t in TABLES if t[2])
+import brailleTables
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {
@@ -491,7 +220,7 @@ class Region(object):
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
-			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
+			[os.path.join(brailleTables.TABLES_DIR, config.conf["braille"]["translationTable"]),
 				"braille-patterns.cti"],
 			text,
 			# liblouis mutates typeform if it is a list.
@@ -833,8 +562,8 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addFieldText(self, text, contentPos):
-		if self.rawText:
+	def _addFieldText(self, text, contentPos, separate=True):
+		if separate and self.rawText:
 			# Separate this field text from the rest of the text.
 			text = " " + text
 		self.rawText += text
@@ -962,6 +691,17 @@ class TextInfoRegion(Region):
 		chunk.collapse()
 		chunk.setEndPoint(sel, "endToStart")
 		self._addTextWithFields(chunk, formatConfig)
+		# If the user is entering braille, place any untranslated braille before the selection.
+		# Import late to avoid circular import.
+		import brailleInput
+		text = brailleInput.handler.untranslatedBraille
+		if text:
+			rawInputStart = len(self.rawText)
+			# _addFieldText adds text to self.rawText and updates other state accordingly.
+			self._addFieldText(text, None, separate=False)
+			rawInputEnd = len(self.rawText)
+		else:
+			rawInputStart = None
 		# Now, the selection itself.
 		self._addTextWithFields(sel, formatConfig, isSelection=True)
 		# Finally, get the chunk from the end of the selection to the end of the reading unit.
@@ -996,7 +736,24 @@ class TextInfoRegion(Region):
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
+		if rawInputStart is not None:
+			assert rawInputEnd is not None, "rawInputStart set but rawInputEnd isn't"
+			self._brailleInputStart = self.rawToBraillePos[rawInputStart]
+			self._brailleInputEnd = self.rawToBraillePos[rawInputEnd]
+			self.brailleCursorPos = self._brailleInputStart + brailleInput.handler.untranslatedCursorPos
+		else:
+			self._brailleInputStart = None
+
 	def routeTo(self, braillePos):
+		if self._brailleInputStart is not None and self._brailleInputStart <= braillePos <= self._brailleInputEnd:
+			# The user is moving within untranslated braille input.
+			# Import late to avoid circular import.
+			import brailleInput
+			brailleInput.handler.untranslatedCursorPos = braillePos - self._brailleInputStart
+			self.brailleCursorPos = self._brailleInputStart + brailleInput.handler.untranslatedCursorPos
+			brailleInput.handler.updateDisplay()
+			return
+
 		if braillePos == self.brailleCursorPos:
 			# The cursor is already at this position,
 			# so activate the position.
@@ -1789,7 +1546,7 @@ def initialize():
 	log.info("Using liblouis version %s" % louis.version())
 	# #6140: Migrate to new table names as smoothly as possible.
 	oldTableName = config.conf["braille"]["translationTable"]
-	newTableName = RENAMED_TABLES.get(oldTableName)
+	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
