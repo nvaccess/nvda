@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-24 23:01+0200\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
+"PO-Revision-Date: 2016-10-07 05:49+0200\n"
 "Last-Translator:  <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -2392,7 +2392,6 @@ msgid "Mouse"
 msgstr "עכבר"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr " דיבור"
 
@@ -2720,17 +2719,25 @@ msgstr "הקראת מספר שורה"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "מיתוג הקראת מספר שורה"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "ללא הקראת מידע על כניסת שורה"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "דיווח קולי על כניסות"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "הקראת מידע על כניסת שורה"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "דיווח על כניסות באמצעות צלילים"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "דיווח על כניסות בעזרת צלילים ודיבור גם יחד"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "ללא דיווח על כניסת שורה"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "מיתוג הקראת מידע על כניסת שורה"
+msgid "Cycles through line indentation settings"
+msgstr "החלפת רמת הדיווח על כניסת שורה"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -6886,6 +6893,11 @@ msgstr "הקראת כניסות :"
 msgid "Off"
 msgstr "ללא כניסה"
 
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "הקראה"
+
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
 msgstr "באמצעות צלילים"
@@ -8529,3 +8541,6 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "מיתוג הקראת מידע על כניסת שורה"
