@@ -278,7 +278,7 @@ class BoxSizerHelper(object):
 			limitations from there.
 		"""
 		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
-		if(isinstance(labeledControl.control, nvdaControls.AutoWidthColumnListCtrl)):
+		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
 			self.addItem(labeledControl.sizer, flag=wx.EXPAND)
 		else:
 			self.addItem(labeledControl.sizer)

@@ -1703,8 +1703,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
-		changeSizer = sHelper.addItem(guiHelper.BoxSizerHelper(self,
-			sizer=wx.StaticBoxSizer( wx.StaticBox(self, label=changeSymbolText), wx.VERTICAL)))
+		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=changeSymbolText), wx.VERTICAL)))
 
 		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More 
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
@@ -1717,9 +1716,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 				return handler()
 			return wrapWithEventSkip
 
+		
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
-		self.replacementEdit = changeSizer.addLabeledControl(replacementText, wx.TextCtrl)
+		self.replacementEdit = changeSymbolHelper.addLabeledControl(replacementText, wx.TextCtrl)
 		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 
 		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
@@ -1733,16 +1733,16 @@ class SpeechSymbolsDialog(SettingsDialog):
 		preserveText = _("&Send actual symbol to synthesizer")
 		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
 		preserveChoices = [symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES]
-		self.preserveList = changeSizer.addLabeledControl(preserveText, wx.Choice, choices=preserveChoices)
+		self.preserveList = changeSymbolHelper.addLabeledControl(preserveText, wx.Choice, choices=preserveChoices)
 		self.preserveList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
-
-		bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
 
 		# disable the "change symbol" controls until a valid item is selected.
 		self.replacementEdit.Disable()
 		self.levelList.Disable()
 		self.preserveList.Disable()
 
+
+		bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 		addButton = bHelper.addButton(self, label=_("&Add"))
 
