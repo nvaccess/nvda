@@ -1726,7 +1726,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		levelText = _("&Level")
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		levelChoices = [symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS]
-		self.levelList = changeSizer.addLabeledControl(levelText, wx.Choice, choices=levelChoices)
+		self.levelList = changeSymbolHelper.addLabeledControl(levelText, wx.Choice, choices=levelChoices)
 		self.levelList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 
 		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
