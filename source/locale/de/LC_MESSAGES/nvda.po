@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -2406,7 +2406,6 @@ msgid "Mouse"
 msgstr "Maus"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Sprache"
 
@@ -2753,17 +2752,26 @@ msgstr "Zeilennummern ausgeben"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Schaltet die Ausgabe von Zeilennummern ein oder aus."
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Zeileneinrückung ausgeben durch: Sprache"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Zeileneinrückung ausgeben durch: Signaltöne"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Zeilen&einrückung ausgeben durch: Sprache und Signaltöne"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
 msgstr "Zeileneinrückungen nicht ausgeben"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Zeileneinrückung ausgeben"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Schaltet die Ausgabe von Zeileneinrückungen ein oder aus."
+#, fuzzy
+msgid "Cycles through line indentation settings"
+msgstr "Wechselt durch die Zeileneinrückung-Einstellungen"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -5013,6 +5021,16 @@ msgstr ""
 "Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, fals einer "
 "abgespielt wird."
 
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr ""
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Seite {pageNumber}"
+
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
 msgstr "Keine Nachricht vorhanden."
@@ -7105,6 +7123,11 @@ msgstr "Zeilen&einrückung ausgeben durch:"
 msgid "Off"
 msgstr "Aus"
 
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Sprache"
+
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
 msgstr "Töne"
@@ -7194,6 +7217,7 @@ msgid "&Pattern"
 msgstr "&Muster"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Ersetzen durch"
 
@@ -7342,9 +7366,9 @@ msgstr "Stufe"
 msgid "Preserve"
 msgstr "beibehalten"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Symbol ändern"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "ausgewähltes Symbol ändern"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -8782,6 +8806,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Schaltet die Ausgabe von Zeileneinrückungen ein oder aus."
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Diese Zelle ist nicht editierbar"
