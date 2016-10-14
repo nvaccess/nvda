@@ -427,7 +427,7 @@ roleLabels={
 	# Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 	ROLE_ALERT:_("alert"),
 	# Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-	ROLE_INTERNALFRAME:_("IFrame"),
+	ROLE_INTERNALFRAME:_("frame"),
 	# Translators: Identifies desktop pane (the desktop window).
 	ROLE_DESKTOPPANE:_("desktop pane"),
 	# Translators: Identifies an option pane.
