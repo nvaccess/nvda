@@ -231,7 +231,9 @@ def listComPorts(onlyAvailable=True):
 			):
 				# Ignore ERROR_INSUFFICIENT_BUFFER
 				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-					raise ctypes.WinError()
+					# #6007: SPDRP_FRIENDLYNAME sometimes doesn't exist/isn't valid.
+					log.debugWarning("Couldn't get SPDRP_FRIENDLYNAME for %s: %s" % (port, ctypes.WinError()))
+					entry["friendlyName"] = port
 			else:
 				entry["friendlyName"] = buf.value
 
