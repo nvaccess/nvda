@@ -1457,6 +1457,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		try:
 			item = next(self._iterNodesByType("container", "up", range))
 		except (NotImplementedError,StopIteration):
+			pass
+		try:
+			item = next(self._iterNodesByType("landmark", "up", range))
+		except (NotImplementedError,StopIteration):
 			return
 		return item.textInfo
 
