@@ -1,6 +1,6 @@
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2016 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -514,6 +514,12 @@ def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
 	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
+
+def ClientToScreen(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ClientToScreen(hwnd, byref(point))
+	return point.x, point.y
+
 
 class STICKYKEYS(Structure):
 	_fields_ = (
