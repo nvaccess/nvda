@@ -1512,24 +1512,27 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
 		self.updatePossiblePorts()
 
+		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		self.tables = brailleTables.listTables()
-		self.tableNames = [table.fileName for table in self.tables]
-		tableChoices = [table.displayName for table in self.tables]
-		self.tableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=tableChoices)
+		outTables = [table for table in tables if table.output]
+		self.outTableNames = [table.fileName for table in outTables]
+		outTableChoices = [table.displayName for table in outTables]
+		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		try:
-			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
-			self.tableList.SetSelection(selection)
+			selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			self.outTableList.SetSelection(selection)
 		except:
 			pass
 
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
-		self.inputTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=tableChoices)
+		self.inTables = [table for table in tables if table.input]
+		inTableChoices = [table.displayName for table in self.inTables]
+		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		try:
-			selection = self.tables.index(brailleInput.handler.table)
-			self.inputTableList.SetSelection(selection)
+			selection = self.inTables.index(brailleInput.handler.table)
+			self.inTableList.SetSelection(selection)
 		except:
 			pass
 
@@ -1605,8 +1608,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
-		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
-		brailleInput.handler.table = self.tables[self.inputTableList.GetSelection()]
+		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
+		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		try:

@@ -17,21 +17,28 @@ TABLES_DIR = r"louis\tables"
 #: * fileName: The file name of the table.
 #: * displayname: The name of the table as displayed to the user. This should be translatable.
 #: * contracted: C{True} if the table is contracted, C{False} if uncontracted.
-BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName", "contracted"))
+BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName", "contracted", "output", "input"))
 
 #: Maps file names to L{BrailleTable} objects.
 _tables = {}
 
-def addTable(fileName, displayName, contracted=False):
+def addTable(fileName, displayName, contracted=False, output=True, input=True):
 	"""Register a braille translation table.
+	At least one of C{input} or C{output} must be C{True}.
 	@param fileName: The file name of the table.
 	@type fileName: basestring
 	@param displayname: The name of the table as displayed to the user. This should be translatable.
 	@type displayName: unicode
 	@param contracted: C{True} if the table is contracted, C{False} if uncontracted.
 	@type cContracted: bool
+	@param output: C{True} if this table can be used for output, C{False} if not.
+	@type output: bool
+	@param input: C{True} if this table can be used for input, C{False} if not.
+	@type input: bool
 	"""
-	table = BrailleTable(fileName, displayName, contracted)
+	if not output and not input:
+		raise ValueError("input and output cannot both be False")
+	table = BrailleTable(fileName, displayName, contracted, output, input)
 	_tables[fileName] = table
 
 def getTable(fileName):
@@ -319,6 +326,9 @@ addTable("te-in-g1.utb", _("Telugu grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("tr.ctb", _("Turkish grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("unicode-braille.utb", _("Unicode braille"), output=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"))
