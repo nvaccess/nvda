@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 00:10+1000\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jovic <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -1487,6 +1487,12 @@ msgctxt "color variation"
 msgid "bright {color}"
 msgstr "Svetlo {color}"
 
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}{color}"
+
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #, python-brace-format
 msgctxt "color variation"
@@ -2738,17 +2744,25 @@ msgstr "uključen izgovor broja redova"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Uključuje i isključuje izgovor broja redova"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "isključen izgovor uvlačenje reda"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Prijavi uvlačenje reda izgovorom"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "uključen izgovor uvlačenje reda"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Prijavi uvlačenje reda Tonovima"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Prijavi uvlačenje reda izgovaranjem i tonovima"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "isključen izgovor uvlačenja reda"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Uključuje i isključuje izgovor uvlačenja redova"
+msgid "Cycles through line indentation settings"
+msgstr "Kruži kroz podešavanja za izgovor uvlačenja reda"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -2963,6 +2977,18 @@ msgid ""
 msgstr ""
 "Prelazi na prethodni režim pregleda (npr. objekat, dokument ili ekran) i "
 "postavlja lokaciju za pregled na mesto navigacionog objekta"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Jednostavan režim pregleda isključen"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Jednostavan režim pregleda uključen"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "uključuje ili isključuje Režim jednostavnog pregleda"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3691,6 +3717,10 @@ msgstr "Pomera brajeve redove na sledeći red"
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Unosi brajeve tačke preko brajeve tastature"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "Pomera brajev red na trenutni fokus"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4556,6 +4586,10 @@ msgstr "tabela sa {columnCount} kolona i {rowCount} redova"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA preglednik govora"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "Prikaži preglednik govora pri pokretanju "
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Jezik"
@@ -4944,6 +4978,16 @@ msgstr "Nijedan zapis se trenutno ne reprodukuje"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Izveštava o preostalom vremenu trenutno reprodukovanog zapisa, ako ga ima"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, lokacija {curLocation} od{maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Stranica {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5410,8 +5454,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 serija"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH brajevi redovi"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH /Orbit brajevi redovi"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -5855,7 +5899,8 @@ msgid "Add-ons Manager"
 msgstr "Upravljanje dodacima"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr "Svi dodaci su onemogućeni. Da ih omogućite, ponovo pokrenite NVDA"
 
 #. Translators: the label for the installed addons list in the addons manager.
@@ -5885,6 +5930,10 @@ msgstr "&O dodatku..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "&Pomoć za dodatak"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Disable add-on"
+msgstr "Onemogući dodatak "
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5956,9 +6005,11 @@ msgstr "Molimo sačekajte dok se dodatak instalira"
 msgid "Failed to install add-on  from %s"
 msgstr "Nije moguće instalirati dodatak iz %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Da li ste sigurni da želite da uklonite izabrani dodatak iz NVDA?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Ukloni dodatak"
 
@@ -5970,7 +6021,15 @@ msgstr "instaliran"
 msgid "remove"
 msgstr "uklonjen"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "Onemogući"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "Omogući"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "suspendovan"
 
@@ -5978,10 +6037,14 @@ msgstr "suspendovan"
 msgid "running"
 msgstr "aktivan"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "Enable add-on"
+msgstr "Omogući dodatak"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
 "Dodaci su instalirani ili uklonjeni. Morate ponovo pokrenuti NVDA da bi ove "
 "promene bile primenjene. Da li želite to sada da uradite?"
@@ -6933,6 +6996,11 @@ msgstr "Prijavi &boje"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report co&mments"
+msgstr "Prijavi ko&mentare"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Prijavi ure&đivačke revizije"
 
@@ -6961,11 +7029,27 @@ msgstr "Prijavi &stranice"
 msgid "Report line &numbers"
 msgstr "Prijavi broj red&ova"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
 msgstr "Prijavi uv&lačenje reda"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "Isključeno"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Govor"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Tonovi"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Govor i tonovi"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7048,6 +7132,7 @@ msgid "&Pattern"
 msgstr "&Šablon"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Zamena"
 
@@ -7058,6 +7143,14 @@ msgstr "&Komentar"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&Tip"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Greška u regularnom izrazu : \"%s\"."
+
+msgid "Dictionary Entry Error"
+msgstr "Greška unosa u rečniku"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7188,9 +7281,9 @@ msgstr "Nivo"
 msgid "Preserve"
 msgstr "Zadrži"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Promeni simbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Promeni izabrani simbol"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -7357,73 +7450,81 @@ msgstr "automatski"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
-msgid "checker"
-msgstr "štriklirano"
+msgid "diagonal crosshatch"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
-msgid "crisscross"
+msgid "thin diagonal crosshatch"
 msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
-msgid "down"
-msgstr "dole"
+msgid "reverse diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 16% gray
-msgid "gray16"
-msgstr "siv 16"
+#. 12.5% gray
+#, no-python-format
+msgid "12.5% gray"
+msgstr "12.5% siva"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-msgid "gray25"
-msgstr "siv25 "
+#, no-python-format
+msgid "25% gray"
+msgstr "25%  siv"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
-msgid "gray50"
-msgstr "siv50"
+#, no-python-format
+msgid "50% gray"
+msgstr "50%  siv"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-msgid "gray75"
-msgstr "siv 75"
+#, no-python-format
+msgid "75% gray"
+msgstr "75%  siv"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#. 8% gray
-msgid "gray8"
-msgstr "siv8"
+#. 6.25% gray
+#, no-python-format
+msgid "6.25% gray"
+msgstr "6.25% siva"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-msgid "grid"
-msgstr "mreža "
+msgid "thin horizontal crosshatch"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-msgid "horizontal"
+#, fuzzy
+msgid "horizontal stripe"
 msgstr "horizontalno"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-msgid "light down"
-msgstr "dijagonalne linije nadole"
+msgid "thin reverse diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-msgid "light horizontal"
+#, fuzzy
+msgid "thin horizontal stripe"
 msgstr "horizontalne linije "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-msgid "light up"
-msgstr "dijagonalne linije nagore"
+msgid "thin diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-msgid "light vertical"
-msgstr "uspravne linije"
+#, fuzzy
+msgid "thin vertical stripe"
+msgstr "uspravno distribuirano poravnanje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7432,8 +7533,8 @@ msgstr "nijedan"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
-msgid "semi gray75"
-msgstr "polu siv"
+msgid "thick diagonal crosshatch"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -7442,12 +7543,13 @@ msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-msgid "up"
-msgstr "gore"
+msgid "diagonal stripe"
+msgstr ""
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-msgid "vertical"
+#, fuzzy
+msgid "vertical stripe"
 msgstr "uspravno "
 
 #. Translators: A type of background pattern in Microsoft Excel.
@@ -7457,10 +7559,6 @@ msgstr ""
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
 msgstr ""
-
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Ova ćelija nije izmenjiva"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
@@ -7480,6 +7578,11 @@ msgstr "K&omentari"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Formule"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "polja za &uređivanje"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8604,6 +8707,48 @@ msgstr "HIMS Braille Sense/Braille EDGE /Smart Beetle serije"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Uključuje i isključuje izgovor uvlačenja redova"
+
+#~ msgid "This cell is non-editable"
+#~ msgstr "Ova ćelija nije izmenjiva"
+
+#~ msgid "checker"
+#~ msgstr "štriklirano"
+
+#~ msgid "down"
+#~ msgstr "dole"
+
+#~ msgid "gray16"
+#~ msgstr "siv 16"
+
+#~ msgid "gray25"
+#~ msgstr "siv25 "
+
+#~ msgid "gray50"
+#~ msgstr "siv50"
+
+#~ msgid "gray75"
+#~ msgstr "siv 75"
+
+#~ msgid "grid"
+#~ msgstr "mreža "
+
+#~ msgid "light down"
+#~ msgstr "dijagonalne linije nadole"
+
+#~ msgid "light up"
+#~ msgstr "dijagonalne linije nagore"
+
+#~ msgid "light vertical"
+#~ msgstr "uspravne linije"
+
+#~ msgid "semi gray75"
+#~ msgstr "polu siv"
+
+#~ msgid "up"
+#~ msgstr "gore"
 
 #~ msgid "unknown color"
 #~ msgstr "nepoznata boja"

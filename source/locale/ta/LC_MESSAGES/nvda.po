@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-22 21:29+0530\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
+"PO-Revision-Date: 2016-10-08 11:17+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -2381,7 +2381,6 @@ msgid "Mouse"
 msgstr "சொடுக்கி"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "பேச்சு"
 
@@ -2721,17 +2720,25 @@ msgstr "வரி எண்களை அறிவிக்கும்"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "வரி எண்களை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "பேச்சைக் கொண்டு வரியோரச் சீர்மையை அறிவிக்கவும் "
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "ஒலிகளைக் கொண்டு வரியோரச் சீர்மையை அறிவிக்கவும்"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "பேச்சையும் ஒலிகளையும் கொண்டு வரியோரச் சீர்மையை அறிவிக்கவும்"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
 msgstr "வரியோரச் சீர்மையை அறிவிக்காது"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "வரியோரச் சீர்மையை அறிவிக்கும்"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "வரியோரச் சீர்மையை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+msgid "Cycles through line indentation settings"
+msgstr "வரியோரச் சீர்மை அமைப்புகளுக்கிடையே சுழல்கிறது"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -2902,12 +2909,12 @@ msgstr "குறியெழுத்துகளின் நிலை %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"எந்தக் குறியெழுத்துகளைப் படிக்க வேண்டுமென்று தீர்மானிக்கும் குறியெழுத்துகளின் நிலைகளின் "
-"ஊடாகச் சுழலும்"
+"எந்தக் குறியெழுத்துகளைப் படிக்க வேண்டுமென்று தீர்மானிக்கும் குறியெழுத்துகளின் "
+"நிலைகளுக்கிடையே சுழல்கிறது"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "Object has no location"
-msgstr "பொருளுக்கு இருப்பிடம் ஏதுமில்லை"
+msgstr "பொருளுக்கு அமைவிடம் ஏதுமில்லை"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -2983,14 +2990,14 @@ msgstr ""
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
-msgstr "சீராய்வுச் சுட்டியின் இருப்பிடத் தகவல் ஏதுமில்லை"
+msgstr "சீராய்வுச் சுட்டியின் அமைவிடத் தகவல் ஏதுமில்லை"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"சீராய்வுச் சுட்டியின் கீழிருக்கும் உரை, அல்லது பொறுளின் இருப்பிடம் குறித்த தகவலை "
+"சீராய்வுச் சுட்டியின் கீழிருக்கும் உரை, அல்லது பொறுளின் அமைவிடம் குறித்த தகவலை "
 "அறிவிக்கும். இரு முறை அழுத்தினால், கூடுதல் தகவல்களை அறிவிக்கும்."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
@@ -6972,6 +6979,11 @@ msgstr "இதைக் கொண்டு வரியோரச் சீர்
 msgid "Off"
 msgstr "அறிவிக்காது"
 
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "பேச்சு"
+
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
 msgstr "ஒலிகள்"
@@ -8585,6 +8597,9 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "வரியோரச் சீர்மையை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "இச்சிறுகட்டம் தொகுக்கப்பட இயலாதது"
