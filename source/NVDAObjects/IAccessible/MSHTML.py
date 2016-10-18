@@ -624,9 +624,23 @@ class MSHTML(IAccessible):
 	def _get_name(self):
 		##########################################
 		nameAttribute=self.HTMLAttributes['name']
- 		name=self.getCustomLabel(nameAttribute)
- 		name=self.getCustomLabel(nameAttribute)
+		log.info("Inside getname nameAttribute: %s",nameAttribute)
+		idAttribute=self.HTMLAttributes['id']
+		log.info("Inside getname idAttribute: %s", idAttribute)
+#  		name=self.getCustomLabel(nameAttribute)
+#  		name=self.getCustomLabel(nameAttribute)
+		if idAttribute and nameAttribute:
+			name=self.getCustomLabel(idAttribute+nameAttribute)
+			log.info("Name is id + name: %s",idAttribute+nameAttribute)
+		elif not nameAttribute:
+			name=self.getCustomLabel(idAttribute)
+			log.info("Name is id : %s",name)
+		elif not idAttribute:
+			name=self.getCustomLabel(nameAttribute)
+			log.info("Name is name: %s",name)
+ 		log.info("Name from getname function: %s",name)
  		if name:
+ 			log.info("Name from getname function: %s",name)
   			return name
  		###################################################
 		ariaLabelledBy=self.HTMLAttributes['aria-labelledBy']
@@ -993,6 +1007,7 @@ class MSHTML(IAccessible):
 			return None
 		
 	def getCustomLabel(self,nameAttribute):
+		#log.info("getCustomLabel:%s",nameAttribute)
   		filename=self.getFilenameFromElementDomain()
 #   		config = SafeConfigParser()
 #   		config.read(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
@@ -1003,9 +1018,17 @@ class MSHTML(IAccessible):
 #  		except Exception as e:
 #  			log.info("\nError is:%s\n",e)
 #   			pass
+		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
 		try:
-			if config[nameAttribute]:
-				return config[nameAttribute]
+			for k,v in config.iteritems():
+				#log.info("\nk: %s",k)
+				#log.info("\nnameAttributeblah: %s",nameAttribute)
+				if (k==nameAttribute):
+					#log.info("\nInside if")
+					return v
+			#if config[nameAttribute]:
+			#	log.info("\nInside if")
+			#	return config[nameAttribute]
 		except Exception as e:
 #  			log.info("\nError is:%s\n",e)
    			pass
