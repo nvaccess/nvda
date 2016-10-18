@@ -119,10 +119,17 @@ def getGeckoVersion(obj):
 	try:
 		full = obj.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(IAccessibleHandler.IAccessibleApplication._iid_, IAccessibleHandler.IAccessibleApplication).toolkitVersion
 	except COMError:
+		log.debugWarning("Error getting IAccessibleApplication.toolkitVersion", exc_info=True)
+		return None
+	if not full:
+		log.debugWarning("IAccessibleApplication.toolkitVersion returned %r" % full)
+		# The return value isn't going to change, so don't bother fetching it again.
+		appMod._geckoVersion = None
 		return None
 	try:
 		major = int(full.split(".", 1)[0])
 	except ValueError:
+		log.debugWarning("Couldn't get major version from string: %r" % full)
 		major = None
 	ver = appMod._geckoVersion = GeckoVersion(full, major)
 	return ver
