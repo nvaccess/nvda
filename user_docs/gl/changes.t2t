@@ -3,6 +3,35 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== Novas Características ==
+- NVDA agora pode indicar a sangría de liñas utilizando tons. Esto pódese configurar usando a caixa combinada "Anunciar Sangría de Liñas con" nas preferencias do diálogo Formateado de documentos do NVDA. (#5906)
+- Soporte para a pantalla braille Orbit Reader 20 . (#6007)
+- Engadiuse unha opción para abrir a ventá do visualizador de voz ao arrincar. Esto pode habilitarse a través dunha caixa de verificación na ventá do visualizador de voz. (#5050)
+- Ao reabrir a ventá do visualizador de voz, a localización e as dimensións agora restauraranse. (#5050)
+- Os campos de referencia cruzada no Microsoft Word agora trátanse coma hipervínculos. anúncianse coma ligas, e pódense activar. (#6102)
+- Soporte inicial para a próxima versión da applicación Kindle. (#6247)
+- Soporte para as pantallas braille Baum SuperVario2, Baum Vario 340 e HumanWare Brailliant2. (#6116)
+
+
+== Correción de Fallos ==
+- Correxido un extrano problema cando ao saír do  NVDA mentras o visualizador de voz está aberto causa un erro. (#5050)
+- Os mapas de imaxe agora procésanse coma se esperaba no modo exploración no Mozilla firefox. (#6051)
+- Correxido un problema que causa unha advertencia no ficheiro de rexistro do NVDA cando se conmuta o bloqueo de maiúsculas. (#6127)
+- Mentres se estea no diálogo de diccionario, premendo a tecla intro agora gárdanse os cambios e sáese. (#6206)
+- Agora amósanse as mensaxes en braille ao cambiar os modos de entrada para un método de entrada (entrada nativa/alfanumérica, forma completa/ forma media, etc.). (#5892, #5893)
+- Ao deshabilitar e logo inmediatamente rehabilitar un complemento ou viceversa, o estado do complemento  agora volta a tal e como estaba anteriormente. (#6299)
+- Ao se usar Microsoft Word, os campos de número de páxina en cabeceiras agora poden lerse. (#6004)
+- O rato agora pode usarse para mover o foco entre a lista de símbolos e os campos de edición no diálogo pronunciación de símbolos. (#6312)
+- Correxido un problema que detén a aparición da lista de elementos cando o Microsoft Word contén un hipervínculo inválido. (#5886)
+- Despois de seren pechado a través da barra de tarefas ou do atallo de teclado alt+F4, o estado da caixa de verificación visualizador de voz no menú NVDA agora reflitirá a visibilidade actual da ventá. (#6340)
+
+
+== Cambios para Desenvolvedores ==
+- Agora é posible proporcionar app modules para executables que conteñan un ponto (.) nos seus nomes. Os pontos reemplázanse con subliñados (_). (#5323)
+
+
 = 2016.3 =
 O subliñable desta versión inclúe a capacidade para deshabilitar complementos individuais; o soporte para campos de formulario No Microsoft Excel; melloras significativas para o anunciado das cores; correcións e melloras relacionadas con varias pantallas braille; e correcións e melloras para o soporte do Microsoft Word.
 

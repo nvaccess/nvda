@@ -434,7 +434,15 @@ class WinWordCollectionQuicknavIterator(object):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
-			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			try:
+				item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			except COMError:
+				message = ("Error iterating over item with "
+					"type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
+					"\nThis could be caused by an issue with some element within or a corruption of the word document."
+					).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
+				log.debugWarning(message ,exc_info=True)
+				continue
 			itemRange=item.rangeObj
 			# Skip over the item we're already on.
 			if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
@@ -587,6 +595,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
+		elif isinstance(position,WordDocumentTextInfo):
+			# copying from one textInfo to another
+			self._rangeObj=position._rangeObj.duplicate
 		else:
 			raise NotImplementedError("position: %s"%position)
 

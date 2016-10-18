@@ -389,6 +389,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		return self.obj
 
+	def _get_focusableNVDAObjectAtStart(self):
+		"""retreaves the deepest focusable NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+		@returns: the NVDAObject at the start
+		"""
+		return self.obj
+
 	def _get_pointAtStart(self):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
 		raise NotImplementedError

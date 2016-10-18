@@ -1232,6 +1232,17 @@ Po podrazumjevanom, NVDA će prepoznati oblikovanje na poziciji kursora sustava 
 
 Uključite ovu opciju kad radite na korekciji teksta u aplikacijama kao što je Microsoft Word, gdje je oblikovanje važno.
 
+==== Izvijesti o poravnanju redka uz pomoć ====
+Ova vam opcija omogućava podešavanje načina izvještavanja poravnanja redka.
+Odabirni okvir "izvijesti o poravnanju redka uz pomoć", ima četiri opcije.
+
+- isključeno: NVDA neće obraćati pažnju na poravnanje redka.
+- govor: Ako je ova opcija označena, kada se broj uvlaka promijeni, nvda će izgovoriti na primjer "dvanaest razmaka" ili "četiri tabulatora."
+- zvučni signali: ako su zvučni signali označeni, kada se vrijednost uvlake promijeni, zvučni signali obavještavaju o promjeni uvlake.
+Zvuk se povećava u visini za svaki razmak, a za tabulator, povećavat će se ekvivalentno četirima razmacima.
+- zvučni signali i govor: Ova opcija čita izmjene koristeći obje metode.
+-
+
 +++ Govorni rječnici +++
 Izbornik govorni rječnici (kojeg možete pronaći u izborniku postavke) sadrži dijaloške okvire koji vam omogućuju upravljanje načinom na koji NVDA izgovara određene riječi ili fraze.
 Trenutno postoje tri vrste govornih rječnika.
@@ -1427,6 +1438,10 @@ Za programere koji normalno vide ili za ljude koji prezentiraju NVDA publici nor
 
 Da biste omogućili preglednik govora, označite stavku "Preglednik govora" koja se nalazi u izborniku Alati u NVDA izborniku.
 Maknite kvačicu sa stavke izbornika pomoću tipke enter da biste je onemogučili.
+
+Prozor preglednika govora sadrži odabirni okvir obilježen "prikaži preglednik govora pri pokretanju".
+Ako je ova opcija označena, preglednik govora će se otvoriti kada je nvda pokrenut.
+Preglednik govora pokušat će se otvoriti sa istim dimenzijama i pozicijom kao što je bio otvoren.
 
 Kad je preglednik govora omogućen, on se stalno osvježava da bi vam prikazao tekst koji se trenutno izgovara.
 Međutim, ako kliknete ili se fokusirate na preglednik, NVDA će privremeno zaustaviti osvježavanje teksta, tako da možete označiti ili kopirati postojeći sadržaj.
@@ -1690,16 +1705,22 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste ustanovili gd
 | alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Brajični Retci ++
-Nekoliko [Baum-ovih http://www.baum.de/cms/en/], [HumanWare-ovih http://www.humanware.com/] i [APH-ovih http://www.aph.org/] brajičnih redaka su podržani kada su spojeni USB ili Bluetooth vezom.
+++ Baum/Humanware/APH/Orbit Brajični Retci ++
+Nekoliko [Baumovih http://www.baum.de/cms/en/], [HumanWare-ovih http://www.humanware.com/], [APH-ovih http://www.aph.org/] i [Orbitovih http://www.orbitresearch.com/] brajičnih redaka su podržani kada su spojeni putem usb, bluetooth ili serijske veze.
 Slijedeći brajični retci su podržani:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Neki brajični retci, koje je proizveo baum mogu također raditi, premda to nije isprobano.
 
-Ako se spajaju brajični redci drukčiji od VarioUltra, Pronto! ili Refreshabraille sa usb načinom postavljenim na HID, morate instalirati  usb upravljačke programe koje nudi proizvođač.
+Ako spajate brajične redke koji ne koriste hid preko usb veze, morate instalirati usb upravljačke programe proizvođača.
+VarioUltra i Pronto! brajični redci koriste HID.
+Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su konfigurirani na određeni način.
+
+ USB serijski način u Orbit Reader 20 brajičnom redku, trenutno je podržan samo u Windows 10 operacijskom sustavu.
+Umjesto toga, trebali biste koristiti USB HID.
 
 Sljede prečaci za ovaj brajični redak za korištenje uz pomoć NVDA.
 Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste saznali opise i smještaj tipaka na brajičnom retku.

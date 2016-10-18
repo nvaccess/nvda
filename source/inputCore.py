@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010 James Teh <jamie@jantrid.net>
+#Copyright (C) 2010-2016 NV Access Limited, Babbage B.V.
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -28,6 +28,7 @@ from logHandler import log
 import globalVars
 import languageHandler
 import controlTypes
+import keyLabels
 
 #: Script category for emulated keyboard keys.
 # Translators: The name of a category of NVDA commands.
@@ -613,7 +614,7 @@ class _AllGestureMappingsRetriever(object):
 	def makeKbEmuScriptInfo(self, cls, scriptName):
 		info = AllGesturesScriptInfo(cls, scriptName)
 		info.category = SCRCAT_KBEMU
-		info.displayName = scriptName[3:]
+		info.displayName = keyLabels.getKeyCombinationLabel(scriptName[3:])
 		return info
 
 	def makeNormalScriptInfo(self, cls, scriptName, script):

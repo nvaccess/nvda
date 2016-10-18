@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-09 17:31+0200\n"
-"Last-Translator: zvonimmir stanecic <zvonimirek222@yandex.com>\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
+"PO-Revision-Date: 2016-10-07 11:40+0100\n"
+"Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
 "Language: hr_HR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2742,17 +2742,25 @@ msgstr "Izvijesti o broju retka uključeno"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Uključuje i isključuje izgovor brojeva redaka"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "Izvijesti o uvlačenju redaka isključeno"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Izvijesti o poravnanju redka uz pomoć govora"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Izvijesti o uvlačenju redaka uključeno"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Izvijesti o poravnanju redka uz pomoć zvuka"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Izvijesti o poravnanju redka uz pomoć govora i zvuka"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Izvijesti o uvlačenju redka isključeno"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Uključuje i isključuje izgovor uvlačenja redaka"
+msgid "Cycles through line indentation settings"
+msgstr "Kruži po postavkama poravnanja redka"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -4586,6 +4594,10 @@ msgstr "tablica od {columnCount} stupaca i {rowCount} redova"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA Preglednik Govora"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "Prikaži preglednik govora pri pokretanju"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Jezik"
@@ -4978,6 +4990,16 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Izvještava o preostalom vremenu trake koja se trenutno reproducira, ukoliko "
 "postoji"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, pozicija {curLocation} od {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Stranica {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5444,8 +5466,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 series"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH brajični redci"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit brajični redci"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -7026,11 +7048,27 @@ msgstr "Izvijesti o &stranicama"
 msgid "Report line &numbers"
 msgstr "Izvijesti o broju &retka"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Izvijesti o uvlačenju &redaka"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "izvijesti o širini redka i uvlačenju istog:"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "isključeno"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Govor"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Zvučni signali"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Govor i zvučni signali"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7113,6 +7151,7 @@ msgid "&Pattern"
 msgstr "&Uzorak"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Zamjena"
 
@@ -7261,9 +7300,9 @@ msgstr "Razina"
 msgid "Preserve"
 msgstr "sačuvaj"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Promjena simbola"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Izmijeni označeni simbol"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -8679,6 +8718,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Uključuje i isključuje izgovor uvlačenja redaka"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Ova se ćelija ne može urediti"

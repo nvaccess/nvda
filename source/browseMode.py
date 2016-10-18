@@ -1,3 +1,4 @@
+#browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2007-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
@@ -29,6 +30,7 @@ import sayAllHandler
 import treeInterceptorHandler
 import inputCore
 import api
+import gui.guiHelper
 from NVDAObjects import NVDAObject
 
 REASON_QUICKNAV = "quickNav"
@@ -58,7 +60,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 	They are sorted using min or max (__lt__ should be implemented on the L{QuickNavItem} objects).
 	@param iters: the iterators you want to merge. 
 	@type iters: sequence of iterators that emit L{QuicknavItem} objects.
-	@param direction: the direction these iterators are searching (e.g. next, previuos)
+	@param direction: the direction these iterators are searching (e.g. next, previous)
 	@type direction: string
 	"""
 	finder=min if direction=="next" else max
@@ -72,7 +74,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 		curValues.append((it,val))
 	# Until all iterators have been used up,
 	# Find the first (minimum or maximum) of all the values,
-	# emit that, and update the list with the next available value for the iterator who's value was emitted.
+	# emit that, and update the list with the next available value for the iterator whose value was emitted.
 	while len(curValues)>0:
 		first=finder(curValues,key=lambda x: x[1])
 		curValues.remove(first)
@@ -89,7 +91,7 @@ class QuickNavItem(object):
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
 	label=None #: The label that should represent this item in the Elements list.
-	isAfterSelection=False #: Is this item positioned after the caret in the document? Used by the elements list to plae its own selection.
+	isAfterSelection=False #: Is this item positioned after the caret in the document? Used by the elements list to place its own selection.
 
 	def __init__(self,itemType,document):
 		"""
@@ -281,7 +283,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@type itemType: string
 		@param direction: the direction in which to search (next, previous, up)
 		@ type direction: string
-		@param pos: the position in the document from where to seart the search.
+		@param pos: the position in the document from where to start the search.
 		@type pos: Usually an L{textInfos.TextInfo} 
 		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
 		"""
@@ -311,6 +313,17 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
+		"""Adds a script for the given quick nav item.
+		@param itemType: The type of item, I.E. "heading" "Link" ...
+		@param key: The quick navigation key to bind to the script. Shift is automatically added for the previous item gesture. E.G. h for heading
+		@param nextDoc: The command description to bind to the script that yields the next quick nav item.
+		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
+		@param prevDoc: The command description to bind to the script that yields the previous quick nav item.
+		@param prevError: The error message if there are no more quick nav items of type itemType in this direction.
+		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item. 
+			For example, only the line is read when moving to tables to avoid reading a potentially massive table. 
+			If None, the entire item will be announced.
+		"""
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
@@ -669,46 +682,49 @@ class ElementsListDialog(wx.Dialog):
 		# Translators: The title of the browse mode Elements List dialog.
 		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 
 		# Translators: The label of a group of radio buttons to select the type of element
 		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
 		child.SetSelection(self.lastSelectedElementType)
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
-		mainSizer.Add(child,proportion=1)
+		contentsSizer.Add(child, flag=wx.EXPAND)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
+		self.tree = wx.TreeCtrl(self, size=wx.Size(500, 600), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onTreeLabelEditBegin)
 		self.tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.onTreeLabelEditEnd)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
+		contentsSizer.Add(self.tree,flag=wx.EXPAND)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of an editable text field to filter the elements
 		# in the browse mode Elements List dialog.
-		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
-		sizer.Add(label)
-		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
+		filterText = _("&Filter by:")
+		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
+		self.filterEdit = labeledCtrl.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
-		sizer.Add(self.filterEdit)
-		mainSizer.Add(sizer,proportion=1)
+		contentsSizer.Add(labeledCtrl.sizer)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		bHelper = gui.guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label of a button to activate an element
 		# in the browse mode Elements List dialog.
-		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
+		self.activateButton = bHelper.addButton(self, label=_("&Activate"))
 		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
-		sizer.Add(self.activateButton)
+		
 		# Translators: The label of a button to move to an element
 		# in the browse mode Elements List dialog.
-		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
+		self.moveButton = bHelper.addButton(self, label=_("&Move to"))
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
-		sizer.Add(self.moveButton)
-		sizer.Add(wx.Button(self, wx.ID_CANCEL))
-		mainSizer.Add(sizer,proportion=1)
+		bHelper.addButton(self, id=wx.ID_CANCEL)
 
+		contentsSizer.Add(bHelper.sizer)
+
+		mainSizer.Add(contentsSizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 

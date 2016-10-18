@@ -1232,6 +1232,17 @@ Privzeto bo NVDA zaznavala spremembe na položaju pregledne utripalke/sistemske 
 
 Omogočite to možnost v programih, kot je Microsoft Word med postopkom postavitve besedila, kjer je oblikovanje pomembno.
 
+==== Sporočaj zamik vrstice prek ====
+Ta možnost vam omogoča nastavitev, kako naj NVDA sporoča zamik vrstice na njenem začetku.
+Spustni seznam Sporočaj zamik vrstice prek ima 4 možnosti.
+
+- Izključeno: NVDA zamika ne bo posebej sporočala.
+-Govora: Če je ta možnost izbrana, bo, ko se bo zamik vrstice spremenil, NVDA povedala nekaj takega kot "12 presledek" ali "4 tabulator."
+- Tonov: Ko bo izbrana ta možnost, bo NVDA oddala ton, ko se bo zamik vrstice spremenil.
+Višina tona se bo spreminjala z vsakim presledkom, medtem, ko bo tabulator zvišal ton za vrednost štirih presledkov.
+- Govora in Tonov: Ta možnost vključi obe prej opisani metodi.
+-
+
 +++ Slovarji govora +++
 Meni slovarjev govora, ki se nahaja v Nastavitvah, vsebuje pogovorna okna, ki vam omogočajo upravljanje, kako NVDA izgovarja različne besede ali fraze.
 Trenutno obstajajo trije različni slovarji govora.
@@ -1690,18 +1701,24 @@ Prosimo, poglejte si dokumentacijo za opis položaja tipk.
 | tipka alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Brajeve Vrstice Baum/Humanware/APH ++
-Precej [Baumovih http://www.baum.de/cms/en/], [HumanWarovih http://www.humanware.com/] in [APH http://www.aph.org/] vrstic je podprtih, ko jih priključimo prek USB ali bluetooth povezave.
+++ Brajeve Vrstice Baum/Humanware/APH/Orbit ++
+Precej [Baumovih http://www.baum.de/cms/en/], [HumanWarovih http://www.humanware.com/], [APH http://www.aph.org/] in vrstic [Orbit http://www.orbitresearch.com/] je podprtih, ko jih priključimo prek USB ali bluetooth povezave.
 To vključuje:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Verjetno dela še nekaj drugih vrstic izdelovalca Baum, vendar niso bile testirane.
 
-Če boste vrstice priključili prek USB povezave (razen VarioUltra, Pronto!) ali pa boste priključili vrstico prek vključenega delovanja "HID", boste morali najprej namestiti gonilnik, ki ga je oskrbel izdelovalec.
+Če boste priključili vrstice prek USB povezave in te ne bodo uporabljale "HID", boste morali najprej namestiti gonilnik, ki ga je oskrbel izdelovalec.
+Za VarioUltra, Pronto! uporabite HID.
+Refreshabraille in Orbit Reader 20 lahko uporabljata HID če bosta pravilno nastavljeni.
 
-Sledeče tipke so prirejene za delovanje skupaj z NVDA.
+USB serial delovanje vrstice Orbit Reader 20 je trenutno podprto samo v sistemu Windows 10.
+Namesto tega raje v drugih primerih uporabite USB HID.
+
+Sledeče tipke teh vrstic so prirejene za delovanje skupaj z NVDA.
 Prosimo, poglejte si dokumentacijo vrstice za točen opis položaja posamezne tipke.
 %kc:beginInclude
 || Ime | Tipka |
@@ -1881,6 +1898,172 @@ Prosimo, oglejte si dokumentacijo vrstic za opis točne lokacije, kjer lahko pos
 | Usmeri na brajevo celico | routing |
 %kc:endInclude
 
+++ Papenmeier BRAILLEX Novejši Modeli ++
+Podprte so naslednje Brajeve vrstice:
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB and bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
+-
+
+Če je bil BrxCom nameščen, bo NVDA BrxCom uporabila.
+BrxCom je orodje, ki omogoča neodvisno uporabo tipkovnice brajeve vrstice, od bralnika zaslona.
+Nova različica orodja BrxCom, ki dela z NVDA, bo kmalu na voljo prek njegovega izdelovalca Papenmeier.
+Vnašanje prek tipkovnice je mogoče z vrsticami Trio in BRAILLEX Live.
+
+Večina vrstic ima t.i. lahko dostopni trak (v angleščini Easy Access Bar - EAB), ki omogoča hitro in intuitivno izvajanje operacij.
+Trak se lahko premakne v štiri smeri in vsaka smer ima v splošnem dve stikali.
+Seriji C in Live sta edini izjemi tega pravila.
+
+Serija c in nekaj drugih vrstic ima dvojno vrsto napotitvenih tipk, pri čemer zgornja vrsta igra vlogo sporočevalke informacij o oblikovanju izbrane celice.
+Držanje ene od zgornjih napotitvenih tipk in pritisk EAB na napravah serije c, oponaša drugo stanje stikala.
+Serija Live ima samo eno vrsto napotitvenih tipk in EAB se lahko premakne samo za en korak v izbrani smeri.
+Drugo stanje lahko dosežete tako, da pritisnete eno od napotitvenih tipk in trak potisnete v izbrani smeri.
+Pritisk in držanje tipk gor, dol, levo in desno, ali pritisk EAB, povzroči ponavljanje odgovarjajočega dejanja posamezni tipki.
+
+V splošnem so na voljo naslednje tipke za te vrstice:
+|| Ime | Tipka |
+| l1 | tipka Levo spredaj |
+| l2 | tipka Levo zadaj |
+| r1 | tipka Desno spredaj |
+| r2 | tipka Desno zadaj |
+| up | 1 korak navzgor |
+| up2 | 2 koraka navzgor |
+| left | 1 korak levo |
+| left2 | 2 koraka levo |
+| right | 1 korak desno |
+| right2 | 2 koraka desno |
+| dn | 1 korak navzdol |
+| dn2 | 2 Koraka navzdol |
+
+Sledijo s strani proizvajalca Papenmeier določeni ukazi za NVDA:
+%kc:beginInclude
+|| Ime | Tipka |
+| Zavrti brajevo vrstico nazaj | left |
+| Zavrti brajevo vrstico naprej | right |
+| Premakni brajevo vrstico v predhodno vrstico | up |
+| Premakni brajevo vrstico v naslednjo vrstico | dn |
+| Usmeri na brajevo celico | routing |
+| Sporoči trenutni znak v pogledu | l1 |
+| Sproži trenutni predmet krmiljenja | l2 |
+| preklapljaj brajevo navezavo | r2 |
+| Sporoči naslov | l1+up |
+| Sporoči Vrstico Stanja | l2+down |
+| Premakni se na predmet z vsebino | up2 |
+| Premakni se na prvi predmet znotraj vsebine | dn2 |
+| Premakni se na predhodni predmet | left2 |
+| Premakni se na naslednji predmet | right2 |
+| Sporoči oblikovanje besedila | upper routing row |
+%kc:endInclude
+
+Model Trio ima štiri dodatne tipke, ki se nahajajo na sprednji strani tipkovnice.
+Te so (od leve proti desni):
+- leva palčna tipka (lt)
+- preslednica
+- preslednica
+- desna palčna tipka (rt)
+-
+Trenutno NVDA desne palčne tipke ne uporablja.
+Notranji tipki obe služita kot presledek.
+
+|| Ime | Tipka |
+%kc:beginInclude
+| tipka backspace | dot 7 |
+| tipka enter | dot 8 |
+| tipka escape | space z dot 7 |
+| tipka Puščica gor | space z dot 2 |
+| tipka Puščica levo | space z dot 1 |
+| tipka Puščica desno | space z dot 4 |
+| tipka Puščica dol | space z dot 5 |
+| tipka control | lt+dot2 |
+| tipka alt | lt+dot3 |
+| tipka control+escape | space with dot 1 2 3 4 5 6 |
+| tipka tabulator | space z dot 3 7 |
+%kc:endInclude 
+
+++ Papenmeier Braille BRAILLEX Starejši Modeli ++
+Podprte so naslednje Brajeve vrstice: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Opozarjamo, da te vrstice lahko priključite samo prek serijskih vrat.
+Torej morate, vrata, na katera je vrstica priključena, določiti, ko izberete vrstico v Nastavitvah Braja.
+
+Nekaj teh vrstic ima lahko dostopni trak (v Angleščini Easy Access Bar - EAB), ki omogoča hitro in intuitivno izvajanje operacij.
+Trak se lahko premakne v štiri smeri in vsaka smer ima v splošnem dve stikali.
+Pritisk in držanje tipk gor, dol, levo in desno, ali pritisk EAB, povzroči ponavljanje odgovarjajočega dejanja posamezni tipki.
+Starejši modeli nimajo EAB, zato se uporabljajo tipke na sprenji plošči.
+
+V splošnem so na voljo naslednje tipke:
+
+|| Ime | Tipka |
+| l1 | tipka Levo spredaj |
+| l2 | tipka Levo zadaj |
+| r1 | tipka Desno spredaj |
+| r2 | tipka Desno zadaj |
+| up | 1 Korak navzgor |
+| up2 | 2 Koraka navzgor |
+| left | 1 Korak levo |
+| left2 | 2 Koraka levo |
+| right | 1 Korak desno |
+| right2 | 2 Koraka desno |
+| dn | 1 Korak navzdol |
+| dn2 | 2 Koraka navzdol |
+
+Sledijo s strani proizvajalca Papenmeier določeni ukazi za NVDA:
+
+%kc:beginInclude
+Naprave z EAB:
+|| Ime | Tipka |
+| Zavrti brajevo vrstico nazaj | left |
+| Zavrti brajevo vrstico naprej | right |
+| Premakni brajevo vrstico v predhodno vrstico | up |
+| Premakni brajevo vrstico v naslednjo vrstico | dn |
+| Usmeri na brajevo celico | routing |
+| Sporoči trenutni znak v pogledu | l1 |
+| Sproži trenutni predmet krmiljenja | l2 |
+| Sporoči naslov | l1up |
+| Sporoči Vrstico Stanja | l2down |
+| Premakni se na predmet z vsebino | up2 |
+| Premakni se na prvi predmet znotraj vsebine | dn2 |
+| Premakni se na naslednji predmet | right2 |
+| Premakni se na predhodni predmet | left2 |
+| Sporoči oblikovanje besedila | Zgornja usmerjevalna vrsta |
+
+BRAILLEX Tiny:
+|| Ime | Tipka |
+| Sporoči trenutni znak v pogledu | l1 |
+| Sproži trenutni predmet krmiljenja | l2 |
+| Zavrti brajevo vrstico nazaj | left |
+| Zavrti brajevo vrstico naprej | right |
+| Premakni brajevo vrstico v predhodno vrstico | up |
+| Premakni brajevo vrstico v naslednjo vrstico | dn |
+| Preklapljaj brajevo navezavo na | r2 |
+| Premakni se na predmet z vsebino | r1+up |
+| Premakni se na prvi predmet znotraj vsebine | r1+dn |
+| Premakni se na predhodni predmet | r1+left |
+| Premakni se na naslednji predmet | r1+right |
+| Sporoči oblikovanje besedila | reportf |
+| Sporoči naslov | l1+up |
+| Sporoči Vrstico Stanja | l2+down |
+
+BRAILLEX 2D Screen:
+|| Ime | Tipka |
+| Sporoči trenutni znak v pogledu | l1 |
+| Sproži trenutni predmet krmiljenja | l2 |
+| Preklapljaj brajevo navezavo na | r2 |
+| Sporoči oblikovanje besedila | reportf |
+| Premakni brajevo vrstico v predhodno vrstico | up |
+| Zavrti brajevo vrstico nazaj | left |
+| Zavrti brajevo vrstico naprej | right |
+| Premakni brajevo vrstico v naslednjo vrstico | dn |
+| Premakni se na naslednji predmet | left2 |
+| Premakni se na predmet z vsebino | up2 |
+| Premakni se na prvi predmet znotraj vsebine | dn2 |
+| Premakni se na predhodni predmet | right2 |
+%kc:endInclude
+
 ++ HumanWare BrailleNote ++
 NVDA podpira beležnice iz podjetja [Humanware http://www.humanware.com], ko se obnašajo kot prikazni terminali za bralnik zaslona.
 Podprti so naslednji modeli:
@@ -2040,7 +2223,6 @@ Nekatere možnosti ukazne vrstice (stikala) poznajo tako kratko kot dolgo obliko
 Tiste, ki imajo tudi kratko obliko, lahko med sebojno kombinirate na naslednji način
 | nvda -rm | To bo zaprlo trenutno kopijo NVDA, ki teče in NVDA zagnalo z onemogočenimi zvočnimi opozorili ipd. |
 | nvda -rm --disable-addons | Enako kot zgoraj, vendar bodo zraven onemogočeni tudi dodatki. |
-
 
 Nekatere možnosti ukazne vrstice sprejemajo tudi dodatne parametre; npr. kako podrobno naj se piše dnevnik, ali pot do uporabnikove konfiguracijske mape ali imenika.
 Ti parametri se morajo nahajati za možnostjo in morajo biti ločeni od možnosti s presledkom, ko se uporablja kratka različica možnosti ali s simbolom = (enačajem), ko se uporablja daljša različica; npr.:

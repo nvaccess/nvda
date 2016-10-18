@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3899\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-09 10:29+0300\n"
+"POT-Creation-Date: 2016-10-07 00:10+1000\n"
+"PO-Revision-Date: 2016-10-10 18:47+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com\n"
 "Language: ro_RO\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -268,7 +268,7 @@ msgstr "Spaniolă grad 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Estonian grade 0"
-msgstr "Estoniană grad 0"
+msgstr "Estonă grad 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1586,7 +1586,7 @@ msgstr "dialog"
 
 #. Translators: The text used to identify check boxes such as select check box.
 msgid "check box"
-msgstr "căsuță"
+msgstr "casetă de bifat"
 
 #. Translators: The text used to identify radio buttons such as yes or no radio button.
 msgid "radio button"
@@ -1619,7 +1619,7 @@ msgstr "meniu"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr "căsuță combinată"
+msgstr "casetă combinată"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
@@ -1656,7 +1656,7 @@ msgstr "obiect din lista extinsă"
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "tab"
+msgstr "tabulator"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
@@ -1676,7 +1676,7 @@ msgstr "bară derulare"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
-msgstr "bară stare"
+msgstr "bară de stare"
 
 #. Translators: Identifies a table such as ones used in various websites.
 msgid "table"
@@ -1704,11 +1704,11 @@ msgstr "bară instrumente"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
-msgstr "cap de coloană"
+msgstr "capăt de coloană"
 
 #. Translators: Identifies a row header in tables and spreadsheets.
 msgid "row header"
-msgstr "cap de rând"
+msgstr "capăt de rând"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
@@ -1786,7 +1786,7 @@ msgstr "aplicație"
 
 #. Translators: Identifies a box element.
 msgid "box"
-msgstr "căsuță, casetă"
+msgstr "casetă"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
@@ -2087,7 +2087,7 @@ msgstr "culoare prim plan"
 
 #. Translators: Describes text formatting.
 msgid "background color"
-msgstr "culoare fundal"
+msgstr "culoare de fundal"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
@@ -2742,17 +2742,25 @@ msgstr "anunța numere rând activat"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Activează sau dezactivează raportarea numerelor de rând"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "anunță indentație rând dezactivat"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Anunță indentație rând cu vorbire"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "anunță indentație rând activat"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Anunță indentație rând cu tonuri"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Raportați indentație rând cu vorbire și tonuri"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Anunță indentație rând dezactivat"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Activează sau dezactivează raportarea indentației de rând"
+msgid "Cycles through line indentation settings"
+msgstr "Cicluri prin intermediul setărilor rândului de indentație"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3913,7 +3921,7 @@ msgstr "aplicație personală 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "șterge înapoi"
+msgstr "șterge/înapoi"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
@@ -3937,11 +3945,11 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "enter"
+msgstr "intrare"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "enter bloc numeric"
+msgstr "intrare bloc numeric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
@@ -4146,7 +4154,7 @@ msgstr "spațiu"
 #. Translators: This is the name of a key on the keyboard.
 msgctxt "keyLabel"
 msgid "tab"
-msgstr "tab"
+msgstr "tabulator"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
@@ -4252,7 +4260,7 @@ msgstr "Emulează apăsarea %s pe tastatura sistemului"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "spațiu gol"
+msgstr "gol"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -4596,6 +4604,10 @@ msgstr "tabel cu {columnCount} coloane și {rowCount} rânduri"
 
 msgid "NVDA Speech Viewer"
 msgstr "monitor vorbire NVDA"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&Arată monitorul de vorbire la pornire"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -4989,6 +5001,16 @@ msgstr "Nu este redată nicio melodie"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anunță timpul rămas din melodia redată acum, dacă există"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, locație {curLocation} din {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Pagină {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5456,7 +5478,7 @@ msgid "ALVA BC640/680 series"
 msgstr "Gama ALVA BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Afișaje Braille Baum/HumanWare/APH"
 
 #. Translators: Name of a serial communications port.
@@ -7046,11 +7068,27 @@ msgstr "Anunță &pagini"
 msgid "Report line &numbers"
 msgstr "Anunță &numerele rândurilor"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Anunță indentație &rând"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "Anunță indentație &rând cu:"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "dezactivat"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Vorbire"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Tonuri"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Atât vorbire cât și tonuri"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7133,6 +7171,7 @@ msgid "&Pattern"
 msgstr "&Şablon"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "Î&nlocuire"
 
@@ -7281,9 +7320,9 @@ msgstr "Nivel"
 msgid "Preserve"
 msgstr "Menține"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Schimbă simbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Schimbă simbolul selectat"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -7415,7 +7454,7 @@ msgid "moves to the previous table column"
 msgstr "mută la coloana anterioară din tabel"
 
 msgid "Taskbar"
-msgstr "Bară de sarcini"
+msgstr "Bară de activități"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
 #, python-brace-format
@@ -8712,6 +8751,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Activează sau dezactivează raportarea indentației de rând"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Celula curentă nu este editabilă"
