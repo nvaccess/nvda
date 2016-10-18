@@ -25,14 +25,14 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
 import braille
 
-#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
-UIAFormatUnits=[
-	UIAHandler.TextUnit_Format,
-	UIAHandler.TextUnit_Word,
-	UIAHandler.TextUnit_Character
-] if UIAHandler.isUIAAvailable else None 
-
 class UIATextInfo(textInfos.TextInfo):
+
+	#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
+	UIAFormatUnits=[
+		UIAHandler.TextUnit_Format,
+		UIAHandler.TextUnit_Word,
+		UIAHandler.TextUnit_Character
+	] if UIAHandler.isUIAAvailable else []
 
 	def _getFormatFieldAtRange(self,range,formatConfig,ignoreMixedValues=False):
 		"""
@@ -122,7 +122,10 @@ class UIATextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.clone()
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			sel=self.obj.UIATextPattern.GetSelection()
+			try:
+				sel=self.obj.UIATextPattern.GetSelection()
+			except COMError:
+				raise RuntimeError("No selection available")
 			if sel.length>0:
 				self._rangeObj=sel.getElement(0).clone()
 			else:
@@ -255,28 +258,36 @@ class UIATextInfo(textInfos.TextInfo):
 		"""
 		return range.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=UIAFormatUnits):
+	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
 		@type textRange: L{UIAHandler.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
-		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text such that formatting won't have mixed values.
-		@type UIAFormatUnits: List of UI Automation Text Units 
+		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text such that formatting won't have mixed values. If None, then self.UIAFormatUnits will be used.
+		@type UIAFormatUnits: List of UI Automation Text Units or None
 		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
 		log.debug("_getTextWithFields_text start")
-		log.debug("Walking by UIA unit %s"%UIAFormatUnits[0])
-		for tempRange in iterUIARangeByUnit(textRange,UIAFormatUnits[0]):
+		if UIAFormatUnits:
+			unit=UIAFormatUnits[0]
+			furtherUIAFormatUnits=UIAFormatUnits[1:]
+		else:
+			unit=None
+			furtherUIAFormatUnits=self.UIAFormatUnits if UIAFormatUnits is None else []
+		log.debug("Walking by unit %s"%unit)
+		log.debug("With further units of: %s"%furtherUIAFormatUnits)
+		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
+		for tempRange in rangeIter:
 			text=self._getTextFromUIARange(tempRange)
 			if text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
-					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(UIAFormatUnits)==1)
+					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
 				except UIAMixedAttributeError:
 					log.debug("Mixed formatting. Trying higher resolution unit")
-					for subfield in self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits[1:]):
+					for subfield in self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits=furtherUIAFormatUnits):
 						yield subfield
 					log.debug("Done yielding higher resolution unit")
 					continue
