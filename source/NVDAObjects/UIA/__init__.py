@@ -265,7 +265,10 @@ class UIATextInfo(textInfos.TextInfo):
 		@type textRange: L{UIAHandler.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
-		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text such that formatting won't have mixed values. If None, then self.UIAFormatUnits will be used.
+		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
+			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
+			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
+			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter. 
 		@type UIAFormatUnits: List of UI Automation Text Units or None
 		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
@@ -274,6 +277,7 @@ class UIATextInfo(textInfos.TextInfo):
 			unit=UIAFormatUnits[0]
 			furtherUIAFormatUnits=UIAFormatUnits[1:]
 		else:
+			# Fetching text and formatting from the entire range will be tried once before any possible splitting.
 			unit=None
 			furtherUIAFormatUnits=self.UIAFormatUnits if UIAFormatUnits is None else []
 		log.debug("Walking by unit %s"%unit)
