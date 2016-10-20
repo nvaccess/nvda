@@ -92,9 +92,10 @@ class UIATextInfo(textInfos.TextInfo):
 		@rtype: L{textInfos.FormatField}
 		"""
 		formatField=textInfos.FormatField()
+		fetcher=BulkUIATextRangeAttributeValueFetcher(range,[UIAHandler.UIA_LinkAttributeId,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.UIA_AnnotationTypesAttributeId])
 		if formatConfig["reportFontName"]:
 			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontNameAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["font-name"]=val
 		if formatConfig["reportFontSize"]:
 			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontSizeAttributeId,ignoreMixedValues=ignoreMixedValues)
@@ -105,21 +106,21 @@ class UIATextInfo(textInfos.TextInfo):
 			if isinstance(val,int):
 				formatField['bold']=(val>=700)
 			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsItalicAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['italic']=val
 			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_UnderlineStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['underline']=bool(val)
 			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StrikethroughStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['strikethrough']=bool(val)
 			textPosition=None
 			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
+			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
 				textPosition='super'
 			else:
 				val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
-				if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
+				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
 					textPosition="sub"
 				else:
 					textPosition="baseline"
@@ -148,16 +149,16 @@ class UIATextInfo(textInfos.TextInfo):
 			if isinstance(val,int):
 				formatField['color']=colors.RGB.fromCOLORREF(val)
 		if formatConfig['reportLinks']:
-			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_LinkAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+			val=fetcher.getValue(UIAHandler.UIA_LinkAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				if val:
 					formatField['link']
 		if formatConfig["reportHeadings"]:
-			styleIDValue=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
+			styleIDValue=fetcher.getValue(UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 		if formatConfig["reportSpellingErrors"]:
-			annotationTypes=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
+			annotationTypes=fetcher.getValue(UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
 				formatField["invalid-spelling"]=True
 		return textInfos.FieldCommand("formatChange",formatField)
@@ -224,12 +225,12 @@ class UIATextInfo(textInfos.TextInfo):
 		# Thus we must check getChildren before getEnclosingElement.
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
 		tempRange=tempInfo._rangeObj
-		children=tempRange.getChildren()
+		children=getChildrenWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
 		if children.length==1:
 			child=children.getElement(0)
 		else:
-			child=tempRange.getEnclosingElement()
-		return child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			child=getEnclosingElementWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
+		return child
 
 	def _get_bookmark(self):
 		return self.copy()
@@ -259,8 +260,8 @@ class UIATextInfo(textInfos.TextInfo):
 		@return: The control field for this object
 		@rtype: textInfos.ControlField containing NVDA control field data.
 		"""
-		role = obj.role
 		field = textInfos.ControlField()
+		role = obj.role
 		# Ensure this controlField is unique to the object
 		field['runtimeID']=obj.UIAElement.getRuntimeID()
 		field['_startOfNode']=startOfNode
@@ -345,7 +346,7 @@ class UIATextInfo(textInfos.TextInfo):
 				yield text
 		log.debug("Done _getTextWithFields_text")
 
-	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None,_children=None):
 		"""
 		Yields start and end control fields, and text, for the given UI Automation text range.
 		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
@@ -362,15 +363,16 @@ class UIATextInfo(textInfos.TextInfo):
 		@type recurseChildren: bool
 		@param _rootElementRange: Optimization argument: the actual text range for the root element, as it is usually already known when making recursive calls.
 		@type rootElementRange: L{UIAHandler.IUIAutomationTextRange} 
+		@param _children: Optimization argument: the children already fetched from textRange.getChildren / getChildrenBuildCache
+		@type _children: UIA elementArray
 		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
-		
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("_getTextWithFieldsForUIARange")
 			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType if rootElement else None)
 			log.debug("full text: %s"%textRange.getText(-1))
 		if recurseChildren:
-			childElements=textRange.getChildren()
+			childElements=_children if _children else getChildrenWithCacheFromUIATextRange(textRange,self._controlFieldUIACacheRequest)
 			# Specific check for embedded elements (checkboxes etc)
 			# Calling getChildren on their childRange always gives back the same child.
 			if childElements.length==1:
@@ -383,11 +385,9 @@ class UIATextInfo(textInfos.TextInfo):
 		if alwaysWalkAncestors:
 			log.debug("Fetching parents starting from enclosingElement")
 			try:
-				parentElement=textRange.getEnclosingElement()
+				parentElement=getEnclosingElementWithCacheFromUIATextRange(textRange,self._controlFieldUIACacheRequest)
 			except COMError:
 				parentElement=None
-			if parentElement:
-				parentElement=parentElement.buildUpdatedCache(self._controlFieldUIACacheRequest)
 			while parentElement:
 				isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 				if log.isEnabledFor(log.DEBUG):
@@ -450,7 +450,6 @@ class UIATextInfo(textInfos.TextInfo):
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
 					continue
-				childElement=childElement.buildUpdatedCache(self._controlFieldUIACacheRequest)
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
 				childRange=self.obj.UIATextPattern.rangeFromChild(childElement)
@@ -582,6 +581,8 @@ class UIA(Window):
 			return valueCache[key]
 		except KeyError:
 			pass
+		else:
+			log.info("Was value cached")
 		elementCache=self._coreCycleUIAPropertyCacheElementCache
 		# If we have a UIAElement who's own cache contains the property, fetch the value from there
 		cacheElement=elementCache.get(ID,None)
@@ -589,8 +590,7 @@ class UIA(Window):
 			value=cacheElement.getCachedPropertyValueEx(ID,ignoreDefault)
 		elif not onlyCached:
 			# The value is cached nowhere, so ask the UIAElement for its current value for the property
-			#name=UIAHandler.handler.clientObject.GetPropertyProgrammaticName(ID)
-			#log.debug("Fetching non-cached value for UIA %s"%name)
+			log.info("Fetching non-cached value")
 			value=self.UIAElement.getCurrentPropertyValueEx(ID,ignoreDefault)
 		else:
 			raise ValueError("UIA property value not cached")
@@ -599,6 +599,7 @@ class UIA(Window):
 		return value
 
 	def _prefetchUIACacheForPropertyIDs(self,IDs):
+		#log.info("Requesting cache prefetch for properties: %s"%[UIAHandler.handler.clientObject.GetPropertyProgrammaticName(x) for x in IDs])
 		valueCache=self._coreCycleUIAPropertyValueCache
 		elementCache=self._coreCycleUIAPropertyCacheElementCache
 		# Ignore any IDs we already have cached values or cache UIAElements for 
@@ -610,6 +611,7 @@ class UIA(Window):
 		for ID in IDs:
 			cacheRequest.addProperty(ID)
 		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		#log.info("adding cacheRequest for properties: %s"%[UIAHandler.handler.clientObject.GetPropertyProgrammaticName(x) for x in IDs])
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
@@ -721,6 +723,7 @@ class UIA(Window):
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
 
+		self.initialUIACachedPropertyIDs=initialUIACachedPropertyIDs
 		if initialUIACachedPropertyIDs:
 			elementCache=self._coreCycleUIAPropertyCacheElementCache
 			for ID in initialUIACachedPropertyIDs:

@@ -193,10 +193,8 @@ class EdgeTextInfo(UIATextInfo):
 			log.debug("includeRoot: %s"%includeRoot)
 		startRange=textRange.clone()
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		enclosingElement=startRange.getEnclosingElement()
-		if enclosingElement:
-			enclosingElement=enclosingElement.buildUpdatedCache(self._controlFieldUIACacheRequest)
-		else:
+		enclosingElement=getEnclosingElementWithCacheFromUIATextRange(startRange,self._controlFieldUIACacheRequest)
+		if not enclosingElement:
 			log.debug("No enclosingElement. Returning")
 			return
 		enclosingRange=self.obj.getNormalizedUIATextRangeFromElement(enclosingElement)
@@ -209,7 +207,7 @@ class EdgeTextInfo(UIATextInfo):
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 		# check for an embedded child
-		childElements=startRange.getChildren()
+		childElements=getChildrenWithCacheFromUIATextRange(startRange,self._controlFieldUIACacheRequest)
 		if childElements.length==1 and UIAHandler.handler.clientObject.compareElements(rootElement,childElements.getElement(0)):
 			log.debug("Using single embedded child as enclosingElement")
 			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementRange=_rootElementRange,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False):
@@ -250,7 +248,7 @@ class EdgeTextInfo(UIATextInfo):
 			if field: yield textInfos.FieldCommand("controlStart",field)
 		log.debug("Done yielding parents")
 		log.debug("Yielding balanced fields for startRange")
-		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementRange=enclosingRange,includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True):
+		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementRange=enclosingRange,includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True,_children=childElements):
 			yield field
 		tempRange=startRange.clone()
 		log.debug("Walking parents to yield controlEnds and recurse unbalanced endRanges")
