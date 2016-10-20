@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 00:10+1000\n"
-"PO-Revision-Date: 2016-10-07 08:45+0200\n"
+"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"PO-Revision-Date: 2016-10-18 16:21+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -433,13 +433,13 @@ msgstr "marathi, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "hollanti (Belgia), taso 1"
+msgid "Dutch (Belgium)"
+msgstr "hollanti (Belgia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "hollanti (Alankomaat), taso 1"
+msgid "Dutch (Netherlands)"
+msgstr "hollanti (Alankomaat)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -548,7 +548,7 @@ msgstr "tamili, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "telugu, taso 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1243,16 +1243,22 @@ msgstr "Ei edellisiä selitteitä"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Otsikot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "Kii&ntopisteet"
 
@@ -2063,11 +2069,11 @@ msgstr "rivi"
 
 #. Translators: Identifies a font name.
 msgid "font name"
-msgstr "fontti"
+msgstr "fontin nimi"
 
 #. Translators: Identifies font size.
 msgid "font size"
-msgstr "fonttikoko"
+msgstr "fontin koko"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
@@ -2610,11 +2616,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "Fontin lukeminen pois"
+msgstr "Fontin nimen lukeminen pois"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "Fontin lukeminen käytössä"
+msgstr "Fontin nimen lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -2764,16 +2770,16 @@ msgstr "Vaihtaa rivien sisennysten ilmoittamisen asetusta."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "Kappalesisennyksen lukeminen pois"
+msgstr "Kappalesisennysten lukeminen pois"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "Kappalesisennyksen lukeminen käytössä"
+msgstr "Kappalesisennysten lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr ""
-"Ottaa käyttöön kappalesisennyksen ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön kappalesisennysten ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -3603,6 +3609,7 @@ msgid "review"
 msgstr "tarkastelukohdistinta"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "kohdistusta"
 
@@ -5947,8 +5954,8 @@ msgid "Add-on &help"
 msgstr "&Ohje"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "Poista käytöstä"
+msgid "&Disable add-on"
+msgstr "&Poista käytöstä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6053,8 +6060,8 @@ msgid "running"
 msgstr "käytössä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "Ota käyttöön"
+msgid "&Enable add-on"
+msgstr "&Ota käyttöön"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6093,10 +6100,6 @@ msgstr "Lisäosan tiedot"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Asetusprofiilit"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profiili"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6408,14 +6411,14 @@ msgstr "Massamuistiversion &hakemisto:"
 msgid "Browse..."
 msgstr "Selaa..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Kopioi &käyttäjän nykyiset asetukset"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Valitse massamuistiversion hakemisto"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Kopioi &käyttäjän nykyiset asetukset"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6501,10 +6504,6 @@ msgstr "virheenkorjaus"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Kieli (edellyttää uudelleenkäynnistystä):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Kieli"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Tallenna asetukset suljettaessa"
@@ -6520,10 +6519,6 @@ msgstr "&Toista ääni käynnistettäessä ja suljettaessa"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "L&okitaso:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Lokitaso"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6691,10 +6686,6 @@ msgstr "Näppäimistöasetukset"
 msgid "&Keyboard layout:"
 msgstr "&Näppäimistöasettelu:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Näppäimistöasettelu"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6773,10 +6764,6 @@ msgstr "Käytä hiiren &seurantaa"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Teksti&yksikön tarkkuus:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "tekstinlukuyksikkö"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6903,11 +6890,6 @@ msgstr "Lue objektien k&uvaukset"
 msgid "Progress &bar output:"
 msgstr "E&distymispalkkien päivitykset:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Edistymispalkkien päivitykset"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6971,153 +6953,171 @@ msgstr "Estä mui&den kuin komentoeleiden pääsy dokumenttiin"
 msgid "Document Formatting"
 msgstr "Dokumenttien muotoiluasetukset"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
 msgstr ""
-"Lue kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
+"Seuraavat asetukset määrittävät, minkä tyyppisiä dokumenttien muotoiluja "
+"NVDA ilmoittaa."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Fontti"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Lue &fontti"
+msgid "&Font name"
+msgstr "&Fontin nimi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "L&ue fonttikoko"
+msgid "Font &size"
+msgstr "Fontin &koko"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Lu&e fontin määreet"
+msgid "Font attri&butes"
+msgstr "Fontin mää&reet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Lue &tasaus"
+msgid "E&mphasis"
+msgstr "K&orostus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Lue &värit"
+msgid "St&yle"
+msgstr "T&yyli"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Lue ko&mmentit"
+msgid "&Colors"
+msgstr "V&ärit"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Dokumentin tiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Lue &muokkaajan muokkaukset"
+msgid "Co&mments"
+msgstr "Ko&mmentit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Ilmoita k&orostus"
+msgid "&Editor revisions"
+msgstr "M&uokkaajan muokkaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Lue t&yyli"
+msgid "Spelling e&rrors"
+msgstr "Kirjoitusv&irheet"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Sivut ja välit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Lue &kirjoitusvirheet"
+msgid "&Pages"
+msgstr "&Sivut"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Lue &sivunumerot"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Lue rivi&numerot"
+msgid "Line &numbers"
+msgstr "Rivi&numerot"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "Ilmoita rivi&en sisennykset:"
+msgid "Line &indentation reporting:"
+msgstr "Rivien &sisennysten ilmoittaminen:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
-msgstr "ei käytössä"
+msgstr "Ei käytössä"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
-msgstr "puheella"
+msgstr "Puheella"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
-msgstr "äänimerkeillä"
+msgstr "Äänimerkeillä"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both  Speech and Tones"
-msgstr "puheella ja äänimerkeillä"
+msgstr "Puheella ja äänimerkeillä"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Lue ka&ppalesisennykset"
+msgid "&Paragraph indentation"
+msgstr "Ka&ppalesisennykset"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Ilmoita &rivivälit"
+msgid "&Line spacing"
+msgstr "Ri&vivälit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Lue t&aulukot"
+msgid "&Alignment"
+msgstr "T&asaus"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Taulukon tiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Lue taulukon rivi- &ja sarakeotsikot"
+msgid "&Tables"
+msgstr "Ta&ulukot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Lue taulukon solujen koor&dinaatit"
+msgid "Row/column h&eaders"
+msgstr "Rivi- ja sarak&eotsikot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Lue &linkit"
+msgid "Cell c&oordinates"
+msgstr "Solujen koor&dinaatit"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Elementit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "Lue &otsikot"
+msgid "&Lists"
+msgstr "&Luettelot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Ilmoita l&uettelot"
+msgid "Block &quotes"
+msgstr "Sisennetyt &lainaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Lue sis&ennetyt kappaleet"
+msgid "Fra&mes"
+msgstr "Ke&hykset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Lue kii&ntopisteet"
+msgid "&Clickable"
+msgstr "&Napsautettavat kohteet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Lue ke&hykset"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Lue napsa&utettavat kohteet"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -8710,6 +8710,81 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "&Profile"
+#~ msgstr "&Profiili"
+
+#~ msgid "Language"
+#~ msgstr "Kieli"
+
+#~ msgid "Log level"
+#~ msgstr "Lokitaso"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "Näppäimistöasettelu"
+
+#~ msgid "text reporting unit"
+#~ msgstr "tekstinlukuyksikkö"
+
+#~ msgid "Progress bar output"
+#~ msgstr "Edistymispalkkien päivitykset"
+
+#~ msgid "Report &font name"
+#~ msgstr "Lue &fontti"
+
+#~ msgid "Report font &size"
+#~ msgstr "L&ue fonttikoko"
+
+#~ msgid "Report &alignment"
+#~ msgstr "Lue &tasaus"
+
+#~ msgid "Report &colors"
+#~ msgstr "Lue &värit"
+
+#~ msgid "Report co&mments"
+#~ msgstr "Lue ko&mmentit"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "Ilmoita k&orostus"
+
+#~ msgid "Report st&yle"
+#~ msgstr "Lue t&yyli"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "Lue &kirjoitusvirheet"
+
+#~ msgid "Report &pages"
+#~ msgstr "Lue &sivunumerot"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "Ilmoita &rivivälit"
+
+#~ msgid "Report &tables"
+#~ msgstr "Lue t&aulukot"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "Lue taulukon rivi- &ja sarakeotsikot"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "Lue &linkit"
+
+#~ msgid "Report &headings"
+#~ msgstr "Lue &otsikot"
+
+#~ msgid "Report &lists"
+#~ msgstr "Ilmoita l&uettelot"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "Lue sis&ennetyt kappaleet"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "Lue kii&ntopisteet"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "Lue ke&hykset"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "Lue napsa&utettavat kohteet"
 
 #~ msgid "Toggles on and off the reporting of line indentation"
 #~ msgstr ""
