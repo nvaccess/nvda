@@ -27,6 +27,51 @@ import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
+	# UIA property IDs that should be automatically cached for control fields
+	_controlFieldUIACachedPropertyIDs={
+		UIAHandler.UIA_IsValuePatternAvailablePropertyId,
+		UIAHandler.UIA_HasKeyboardFocusPropertyId,
+		UIAHandler.UIA_NamePropertyId,
+		UIAHandler.UIA_ToggleToggleStatePropertyId,
+		UIAHandler.UIA_HelpTextPropertyId,
+		UIAHandler.UIA_AccessKeyPropertyId,
+		UIAHandler.UIA_AcceleratorKeyPropertyId,
+		UIAHandler.UIA_HasKeyboardFocusPropertyId,
+		UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
+		UIAHandler.UIA_IsDataValidForFormPropertyId,
+		UIAHandler.UIA_IsRequiredForFormPropertyId,
+		UIAHandler.UIA_ValueIsReadOnlyPropertyId,
+		UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,
+		UIAHandler.UIA_ToggleToggleStatePropertyId,
+		UIAHandler.UIA_IsKeyboardFocusablePropertyId,
+		UIAHandler.UIA_IsPasswordPropertyId,
+		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
+		UIAHandler.UIA_GridItemRowPropertyId,
+		UIAHandler.UIA_TableItemRowHeaderItemsPropertyId,
+		UIAHandler.UIA_GridItemColumnPropertyId,
+		UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId,
+		UIAHandler.UIA_GridRowCountPropertyId,
+		UIAHandler.UIA_GridColumnCountPropertyId,
+		UIAHandler.UIA_GridItemContainingGridPropertyId,
+		UIAHandler.UIA_RangeValueValuePropertyId,
+		UIAHandler.UIA_RangeValueMinimumPropertyId,
+		UIAHandler.UIA_RangeValueMaximumPropertyId,
+		UIAHandler.UIA_ValueValuePropertyId,
+		UIAHandler.UIA_PositionInSetPropertyId,
+		UIAHandler.UIA_SizeOfSetPropertyId,
+		UIAHandler.UIA_AriaRolePropertyId,
+		UIAHandler.UIA_LocalizedLandmarkTypePropertyId,
+		UIAHandler.UIA_AriaPropertiesPropertyId,
+		UIAHandler.UIA_LevelPropertyId,
+	} if UIAHandler.isUIAAvailable else set()
+
+	def _get__controlFieldUIACacheRequest(self):
+		cacheRequest=UIAHandler.handler.baseCacheRequest.clone()
+		for ID in self._controlFieldUIACachedPropertyIDs:
+			cacheRequest.addProperty(ID)
+		self._controlFieldUIACacheRequest=cacheRequest
+		return cacheRequest
+
 	#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
 	UIAFormatUnits=[
 		UIAHandler.TextUnit_Format,
@@ -332,7 +377,7 @@ class UIATextInfo(textInfos.TextInfo):
 				childElement=childElements.getElement(0)
 				if childElement and UIAHandler.handler.clientObject.compareElements(childElement,rootElement):
 					log.debug("Detected embedded child")
-					childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+					childElement=childElement.buildUpdatedCache(self._controlFieldUIACacheRequest)
 					recurseChildren=False
 		parentElements=[]
 		if alwaysWalkAncestors:
@@ -342,7 +387,7 @@ class UIATextInfo(textInfos.TextInfo):
 			except COMError:
 				parentElement=None
 			if parentElement:
-				parentElement=parentElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+				parentElement=parentElement.buildUpdatedCache(self._controlFieldUIACacheRequest)
 			while parentElement:
 				isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 				if log.isEnabledFor(log.DEBUG):
@@ -361,7 +406,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if isRoot:
 					log.debug("Hit root. Breaking")
 					break
-				parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
+				parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,self._controlFieldUIACacheRequest)
 		else: # not alwaysWalkAncestors
 			if includeRoot:
 				log.debug("Using rootElement as only parent")
@@ -377,7 +422,7 @@ class UIATextInfo(textInfos.TextInfo):
 			startOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,parentRange,UIAHandler.TextPatternRangeEndpoint_Start)<=0
 			endOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)>=0
 			try:
-				obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
+				obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
 				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
 			except LookupError:
 				log.debug("Failed to fetch controlField data for parentElement. Breaking")
@@ -405,7 +450,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
 					continue
-				childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+				childElement=childElement.buildUpdatedCache(self._controlFieldUIACacheRequest)
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
 				childRange=self.obj.UIATextPattern.rangeFromChild(childElement)
@@ -521,6 +566,53 @@ class UIATextInfo(textInfos.TextInfo):
 
 class UIA(Window):
 
+	def _get__coreCycleUIAPropertyValueCache(self):
+		"""A dictionary per core cycle, that is ready to map (propertyID,ignoreDefault) pares to property values."""
+		return {}
+
+	def _get__coreCycleUIAPropertyCacheElementCache(self):
+		"""A dictionary per core cycle that is ready to map UIA property IDs to UIAElements with that property already cached."""
+		return {}
+
+	def _getUIACacheablePropertyValue(self,ID,ignoreDefault=False,onlyCached=False):
+		valueCache=self._coreCycleUIAPropertyValueCache
+		key=(ID,ignoreDefault)
+		# If we have cached the value for this property in this core cycle already, return it.
+		try:
+			return valueCache[key]
+		except KeyError:
+			pass
+		elementCache=self._coreCycleUIAPropertyCacheElementCache
+		# If we have a UIAElement who's own cache contains the property, fetch the value from there
+		cacheElement=elementCache.get(ID,None)
+		if cacheElement:
+			value=cacheElement.getCachedPropertyValueEx(ID,ignoreDefault)
+		elif not onlyCached:
+			# The value is cached nowhere, so ask the UIAElement for its current value for the property
+			#name=UIAHandler.handler.clientObject.GetPropertyProgrammaticName(ID)
+			#log.debug("Fetching non-cached value for UIA %s"%name)
+			value=self.UIAElement.getCurrentPropertyValueEx(ID,ignoreDefault)
+		else:
+			raise ValueError("UIA property value not cached")
+		# cache and return the value
+		valueCache[key]=value
+		return value
+
+	def _prefetchUIACacheForPropertyIDs(self,IDs):
+		valueCache=self._coreCycleUIAPropertyValueCache
+		elementCache=self._coreCycleUIAPropertyCacheElementCache
+		# Ignore any IDs we already have cached values or cache UIAElements for 
+		IDs={x for x in IDs if x not in valueCache and x not in elementCache}
+		if len(IDs)<2:
+			# Creating  a UIA cache request for 1 or 0 properties is pointless
+			return
+		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
+		for ID in IDs:
+			cacheRequest.addProperty(ID)
+		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		for ID in IDs:
+			elementCache[ID]=cacheElement
+
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
@@ -568,7 +660,7 @@ class UIA(Window):
 			clsList.append(TreeviewItem)
 		elif UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId:
 			try:
-				if not self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
+				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
 			except COMError:
 				pass
@@ -613,7 +705,7 @@ class UIA(Window):
 		"""Simply fetches a UIA text range for the given UIAElement, allowing subclasses to process the range first."""
 		return UIATextRangeFromElement(self.UIATextPattern,UIAElement)
 
-	def __init__(self,windowHandle=None,UIAElement=None):
+	def __init__(self,windowHandle=None,UIAElement=None,initialUIACachedPropertyIDs=None):
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
 
@@ -629,6 +721,11 @@ class UIA(Window):
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
 
+		if initialUIACachedPropertyIDs:
+			elementCache=self._coreCycleUIAPropertyCacheElementCache
+			for ID in initialUIACachedPropertyIDs:
+				elementCache[ID]=self.UIAElement
+
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
 			return False
@@ -639,7 +736,7 @@ class UIA(Window):
 
 	def _get_shouldAllowUIAFocusEvent(self):
 		try:
-			return bool(self.UIAElement.currentHasKeyboardFocus)
+			return bool(self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId))
 		except COMError:
 			return True
 
@@ -718,7 +815,7 @@ class UIA(Window):
 
 	def _get_name(self):
 		try:
-			return self.UIAElement.currentName
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_NamePropertyId)
 		except COMError:
 			return ""
 
@@ -726,7 +823,7 @@ class UIA(Window):
 		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
 		if role==controlTypes.ROLE_BUTTON:
 			try:
-				s=self.UIACachedStatesElement.getCachedPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
+				s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
 			except COMError:
 				s=UIAHandler.handler.reservedNotSupportedValue
 			if s!=UIAHandler.handler.reservedNotSupportedValue:
@@ -739,87 +836,66 @@ class UIA(Window):
 
 	def _get_description(self):
 		try:
-			return self.UIAElement.currentHelpText or ""
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_HelpTextPropertyId) or ""
 		except COMError:
 			return ""
 
 	def _get_keyboardShortcut(self):
 		ret = ""
 		try:
-			ret += self.UIAElement.currentAccessKey
+			ret += self._getUIACacheablePropertyValue(UIAHandler.UIA_AccessKeyPropertyId)
 		except COMError:
 			pass
 		if ret:
 			#add a double space to the end of the string
 			ret +="  "
 		try:
-			ret += self.UIAElement.currentAcceleratorKey
+			ret += self._getUIACacheablePropertyValue(UIAHandler.UIA_AcceleratorKeyPropertyId)
 		except COMError:
 			pass
 		return ret
 
-	def _get_UIACachedStatesElement(self):
-		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
-		for prop in (UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
-			statesCacheRequest.addProperty(prop)
-		return self.UIAElement.buildUpdatedCache(statesCacheRequest)
+	_UIAStatesPropertyIDs={UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId}
 
 	def _get_states(self):
 		states=set()
-		e=self.UIACachedStatesElement
-		try:
-			hasKeyboardFocus=e.cachedHasKeyboardFocus
-		except COMError:
-			hasKeyboardFocus=False
-		if hasKeyboardFocus:
+		self._prefetchUIACacheForPropertyIDs(self._UIAStatesPropertyIDs)
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId,onlyCached=True):
 			states.add(controlTypes.STATE_FOCUSED)
-		if e.cachedIsKeyboardFocusable:
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId,onlyCached=True):
 			states.add(controlTypes.STATE_FOCUSABLE)
-		if e.cachedIsPassword:
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId,onlyCached=True):
 			states.add(controlTypes.STATE_PROTECTED)
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role=None
-		if e.getCachedPropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,onlyCached=True):
 			role=self.role
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
-			if e.getCachedPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
+			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId,onlyCached=True):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
-		try:
-			isDataValid=e.getCachedPropertyValueEx(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
-		except COMError:
-			isDataValid=UIAHandler.handler.reservedNotSupportedValue
-		if not isDataValid:
+		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,ignoreDefault=True,onlyCached=True):
 			states.add(controlTypes.STATE_INVALID_ENTRY)
-		if e.getCachedPropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId,onlyCached=True):
 			states.add(controlTypes.STATE_REQUIRED)
-		try:
-			isReadOnly=e.getCachedPropertyValueEx(UIAHandler.UIA_ValueIsReadOnlyPropertyId,True)
-		except COMError:
-			isReadOnly=UIAHandler.handler.reservedNotSupportedValue
+		isReadOnly=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId,ignoreDefault=True,onlyCached=True)
 		if isReadOnly and isReadOnly!=UIAHandler.handler.reservedNotSupportedValue:
 			states.add(controlTypes.STATE_READONLY)
-		try:
-			s=e.getCachedPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
-		except COMError:
-			s=UIAHandler.handler.reservedNotSupportedValue
-		if s!=UIAHandler.handler.reservedNotSupportedValue:
-			if s==UIAHandler.ExpandCollapseState_Collapsed:
+		expandCollapseState=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,ignoreDefault=True,onlyCached=True)
+		if expandCollapseState!=UIAHandler.handler.reservedNotSupportedValue:
+			if expandCollapseState==UIAHandler.ExpandCollapseState_Collapsed:
 				states.add(controlTypes.STATE_COLLAPSED)
-			elif s==UIAHandler.ExpandCollapseState_Expanded:
+			elif expandCollapseState==UIAHandler.ExpandCollapseState_Expanded:
 				states.add(controlTypes.STATE_EXPANDED)
-		try:
-			s=e.getCachedPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
-		except COMError:
-			s=UIAHandler.handler.reservedNotSupportedValue
-		if s!=UIAHandler.handler.reservedNotSupportedValue:
+		toggleState=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,ignoreDefault=True,onlyCached=True)
+		if toggleState!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
 			if role==controlTypes.ROLE_TOGGLEBUTTON:
-				if s==UIAHandler.ToggleState_On:
+				if toggleState==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_PRESSED)
 			else:
 				states.add(controlTypes.STATE_CHECKABLE)
-				if s==UIAHandler.ToggleState_On:
+				if toggleState==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
 		return states
 
@@ -905,13 +981,13 @@ class UIA(Window):
 		return children
 
 	def _get_rowNumber(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemRowPropertyId,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val+1
 		raise NotImplementedError
 
 	def _get_rowHeaderText(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
 		if val==UIAHandler.handler.reservedNotSupportedValue:
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -925,13 +1001,13 @@ class UIA(Window):
 		return " ".join(textList)
 
 	def _get_columnNumber(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemColumnPropertyId,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemColumnPropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val+1
 		raise NotImplementedError
 
 	def _get_columnHeaderText(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId ,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId ,True)
 		if val==UIAHandler.handler.reservedNotSupportedValue:
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -945,19 +1021,19 @@ class UIA(Window):
 		return " ".join(textList)
 
 	def _get_rowCount(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridRowCountPropertyId,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridRowCountPropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		raise NotImplementedError
 
 	def _get_columnCount(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridColumnCountPropertyId,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridColumnCountPropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		raise NotImplementedError
 
 	def _get_table(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemContainingGridPropertyId ,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemContainingGridPropertyId ,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return UIA(UIAElement=val)
 		raise NotImplementedError
@@ -967,7 +1043,7 @@ class UIA(Window):
 
 	def _get_location(self):
 		try:
-			r=self.UIAElement.currentBoundingRectangle
+			r=self._getUIACacheablePropertyValue(UIAHandler.UIA_BoundingRectanglePropertyId)
 		except COMError:
 			return None
 		left=r.left
@@ -977,16 +1053,16 @@ class UIA(Window):
 		return left,top,width,height
 
 	def _get_value(self):
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueValuePropertyId,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
-			minVal=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
-			maxVal=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
+			minVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
+			maxVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
 			if minVal==maxVal:
 				# There is no range.
 				return "0"
 			val=((val-minVal)/(maxVal-minVal))*100.0
 			return "%d"%round(val,4)
-		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ValueValuePropertyId,True)
+		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
 
@@ -1017,7 +1093,7 @@ class UIA(Window):
 
 	def _get_hasFocus(self):
 		try:
-			return self.UIAElement.currentHasKeyboardFocus
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId)
 		except COMError:
 			return False
 
@@ -1025,20 +1101,20 @@ class UIA(Window):
 		info=super(UIA,self).positionInfo or {}
 		itemIndex=0
 		try:
-			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_PositionInSetPropertyId)
+			itemIndex=self._getUIACacheablePropertyValue(UIAHandler.UIA_PositionInSetPropertyId)
 		except COMError:
 			pass
 		if itemIndex>0:
 			info['indexInGroup']=itemIndex
 			itemCount=0
 			try:
-				itemCount=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+				itemCount=self._getUIACacheablePropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
 			except COMError:
 				pass
 			if itemCount>0:
 				info['similarItemsInGroup']=itemCount
 		try:
-			level=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LevelPropertyId)
+			level=self._getUIACacheablePropertyValue(UIAHandler.UIA_LevelPropertyId)
 		except COMError:
 			level=None
 		if level is not None and level>0:
@@ -1049,7 +1125,7 @@ class UIA(Window):
 		pass
 
 	def _get_controllerFor(self):
-		e=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
 		if UIAHandler.handler.clientObject.checkNotSupported(e):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -1096,7 +1172,7 @@ class UIColumnHeader(UIA):
 	def _get_description(self):
 		description=super(UIColumnHeader,self).description
 		try:
-			itemStatus=self.UIAElement.currentItemStatus
+			itemStatus=self._getUIACacheablePropertyValue(UIAHandler.UIA_ItemStatusPropertyId)
 		except COMError:
 			itemStatus=""
 		return " ".join([x for x in (description,itemStatus) if x and not x.isspace()])
@@ -1108,13 +1184,13 @@ class UIItem(UIA):
 		info={}
 		itemIndex=0
 		try:
-			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+			itemIndex=self._getUIACacheablePropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
 		except COMError:
 			pass
 		if itemIndex>0:
 			info['indexInGroup']=itemIndex
 			try:
-				e=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemSelectionContainerPropertyId)
+				e=self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemSelectionContainerPropertyId)
 				if e: e=e.QueryInterface(UIAHandler.IUIAutomationElement)
 			except COMError:
 				e=None

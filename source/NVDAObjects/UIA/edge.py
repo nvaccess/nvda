@@ -141,7 +141,7 @@ class EdgeTextInfo(UIATextInfo):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
 		# report landmarks
-		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
+		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
 			field['landmark']=aria.landmarkRoles.get(landmark)
 		# Combo boxes with a text pattern are editable
@@ -149,7 +149,7 @@ class EdgeTextInfo(UIATextInfo):
 			field['states'].add(controlTypes.STATE_EDITABLE)
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
-		ariaProperties=obj.UIAElement.currentAriaProperties
+		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		hasAriaLabel=('label=' in ariaProperties)
 		hasAriaLabelledby=('labelledby=' in ariaProperties)
 		if field.get('nameIsContent'):
@@ -195,7 +195,7 @@ class EdgeTextInfo(UIATextInfo):
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_Start)
 		enclosingElement=startRange.getEnclosingElement()
 		if enclosingElement:
-			enclosingElement=enclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			enclosingElement=enclosingElement.buildUpdatedCache(self._controlFieldUIACacheRequest)
 		else:
 			log.debug("No enclosingElement. Returning")
 			return
@@ -229,7 +229,7 @@ class EdgeTextInfo(UIATextInfo):
 			if parentElement is not enclosingElement:
 				if includeRoot or not isRoot:
 					try:
-						obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
+						obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
 						field=self._getControlFieldForObject(obj)
 					except LookupError:
 						log.debug("Failed to fetch controlField data for parentElement. Breaking")
@@ -243,7 +243,7 @@ class EdgeTextInfo(UIATextInfo):
 				log.debug("Hit root. Breaking")
 				break
 			log.debug("Fetching next parentElement")
-			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
+			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,self._controlFieldUIACacheRequest)
 		log.debug("Done generating parents")
 		log.debug("Yielding parents in reverse order")
 		for parentElement,field in reversed(parents):
@@ -364,7 +364,7 @@ class EdgeNode(UIA):
 		role=super(EdgeNode,self).role
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
-		ariaRole=self.UIAElement.currentAriaRole
+		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId)
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
@@ -379,10 +379,10 @@ class EdgeNode(UIA):
 		return states
 
 	def _get_description(self):
-		ariaProperties=self.UIAElement.currentAriaProperties
+		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		if 'describedby=' in ariaProperties:
 			try:
-				return self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
+				return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
 			except COMError:
 				pass
 		return super(EdgeNode,self).description
