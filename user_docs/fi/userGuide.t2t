@@ -1195,52 +1195,60 @@ Tämä valintaikkuna löytyy Asetukset-valikon "Dokumenttien muotoilu..." -kohda
 Useimmilla tämän valintaikkunan valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla liikuttaessasi kohdistinta dokumenteissa.
 Jos esimerkiksi valitset Lue fontti -valintaruudun, joka kerta, kun siirryt nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta, NVDA kertoo fontin nimen.
 
+Dokumentin muotoiluasetukset on järjestetty ryhmiin.
 Seuraavien tietojen lukeminen voidaan määrittää:
 - Fontti
-- Fonttikoko
-- Fontin määreet
-- Tekstin tasaus
-- Värit
-- Comments
-- Muokkaajan muokkaukset
-- Korostus
-- Tekstityyli
-- Kirjoitusvirheet
-- Sivunumerot
-- Rivinumerot
-- Rivien sisennykset
-- Kappalesisennykset (esim. riippuva ja ensimmäisen rivin sisennys)
-- rivivälit (yksinkertainen, kaksinkertainen jne.)
-- Taulukot
-- Taulukon rivi- ja sarakeotsikot
-- Taulukon solun koordinaatit
-- Linkit
-- Otsikot
-- Luettelot
-- Sisennetyt lainaukset
-- Kiintopisteet
-- Kehykset
-- Kun jokin kohde on napsautettava
--
+ - Fontin nimi
+ - Fontin koko
+ - Fontin määreet
+ - Korostus
+ - Tyyli
+ - Värit
+- Dokumentin tiedot
+ - Kommentit
+ - Muokkaajan muokkaukset
+ - Kirjoitusvirheet
+- Sivut ja välit
+ - Sivunumerot
+ - Rivinumerot
+ - Rivien sisennysten ilmoittaminen [(ei käytössä, puheella, äänimerkeillä, puheella ja äänimerkeillä) #lineIndentationOptions]
+ - Kappalesisennykset (esim. riippuva ja ensimmäisen rivin sisennys)
+ - Rivivälit (yksin- ja kaksinkertainen jne.)
+ - Tasaus
+- Taulukon tiedot
+ - Taulukot
+ - Rivi- ja sarakeotsikot
+ - Solujen koordinaatit
+- Elementit
+ - Otsikot
+ - Linkit
+ - Luettelot
+ - Sisennetyt lainaukset
+ - Kiintopisteet
+ - Kehykset
+ - Napsautettavat kohteet
+ -
+ -
+
 
 Voit ottaa nämä asetukset käyttöön tai poistaa ne käytöstä mistä tahansa Määrittämällä niille omat eleet [Syöte-eleet-valintaikkunaa käyttäen. #InputGestures]
 
-==== Lue kohdistimen jälkeiset muotoilumuutokset ====
+==== Ilmoita kohdistimen jälkeiset muotoilumuutokset ====
 Jos tämä asetus on käytössä, NVDA yrittää havaita kaikki rivillä olevat muotoilumuutokset sitä lukiessaan, vaikka se voikin hidastaa NVDA:n suorituskykyä.
 
 NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla olevat muotoilut, ja joissakin tapauksissa lopunkin rivin, mutta vain, jos se ei aiheuta suorituskyvyn heikkenemistä.
  
 Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja sellaisissa sovelluksissa kuin Microsoft Word, kun muotoilut ovat tärkeitä.
 
-==== Ilmoita rivien sisennykset ====
+==== Rivien sisennysten ilmoittaminen ====
 Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmoitetaan.
 Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 
-- ei käytössä: NVDA ei varta vasten käsittele sisennyksiä.
-- puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".
-- äänimerkeillä: Jos tämä on valittuna, äänimerkit ilmaisevat sisennysten määrän sen muuttuessa.
+- Ei käytössä: NVDA ei käsittele sisennyksiä.
+- Puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".
+- Äänimerkeillä: Jos tämä on valittuna, äänimerkit ilmaisevat sisennysten määrän sen muuttuessa.
 Äänimerkin korkeus nousee jokaisen välilyönnin kohdalla, ja sarkainmerkki vastaa neljää välilyöntiä.
-- puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
+- Puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
 -
 
 +++ Puhesanastot +++

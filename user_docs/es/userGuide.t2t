@@ -1195,33 +1195,41 @@ Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Formato de 
 La mayoría de las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos. 
 Por Ejemplo, si marcas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
 
+Las opciones de formateado de documento se organizan en grupos.
 Puedes configurar el anunciado de:
-- Nombre de fuente
-- Tamaño de fuente
-- Atributos de fuente
-- Alineación del texto
-- Colores
-- Comentarios
-- Revisiones del editor
-- Énfasis
-- Estilo del texto
-- Errores de ortografía
-- Números de página
-- Números de línea
-- Sangría de línea
-- Sangría de párrafo (por ejemplo: sangría francesa, sangría de primera línea)
-- Espaciado de línea (simple, doble etc)
-- Tablas
-- Encabezados de fila/columna de tabla
-- Coordenadas de celdas de tabla
-- Enlaces
-- Encabezados
-- Listas
-- Citas
-- Puntos de referencia
-- Marcos
-- Cuando algo admite clic
+- Fuente
+ - Nombre de fuente
+ - Tamaño de fuente
+ - Atributos de fuente
+ - Énfasis
+ - Estilo
+ - Colores
+- Información de documento
+ - Comentarios
+ - Revisiones del editor
+ - Errores de ortografía
+- Páginas y espaciado
+ - Números de página
+ - Números de línea
+ - Anunciado de sangría de línea [(Desactivado, voz, Tonos, voz y tonos) #lineIndentationOptions]
+ - Sangría de párrafo (ej.: sangría, sangría de primera línea)
+ - Espaciado de línea (simple, doble etc)
+ - Alineación
+- Información de tabla
+ - Tablas
+ - Encabezados de fila/columna
+ - Coordenadas de celda
+- Elementos
+ - Encabezados
+ - Enlaces
+ - Listas
+ - Citas
+ - Puntos de referencia
+ - Marcos
+ - Admite clic
+ -
 -
+ 
 
 Para conmutar estas  opciones desde cualquier lugar, por favor asigna gestos personalizados utilizando el [diálogo Gestos de Entrada #InputGestures].
 
@@ -1232,7 +1240,7 @@ De forma predeterminada, NVDA detectará el formato en la posición del cursor d
  
 Activa esta opción mientras compruebas la lectura de documentos en aplicaciones tales como Microsoft Word, donde el formato sea importante.
 
-==== Anunciar sangría de líneas con ====
+==== Anunciado de sangría de líneas ====[lineIndentationOptions]
 Esta opción te permite configurar cómo debe leerse la sangría del principio de las líneas.
 El cuadro combinado Anunciar sangría de líneas con tiene cuatro opciones.
 

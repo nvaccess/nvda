@@ -15,6 +15,14 @@
 - Die Unterstützung für folgende Braillezeilen wurde hinzugefügt: Baum SuperVario2, Baum Vario 340 and HumanWare Brailliant2. (#6116)
 
 
+== Änderungen ==
+- Libluis wurde auf Version 3.0.0 aktualisiert. (#6109, #4194, #6220, #6140)
+- Die Schalter zum (de)aktivieren von Erweiterungen besitzen nun Tastenkombinationen. (#6388)
+- einige (kosmetische) Änderungen wurde vorgenommen. (#6317, #5548, #6342, #6343, #6349)
+- Die Einstellungen für Dokumentformatierung werden korrekt gescrollt. (#6348)
+- Der Dialog für die Aussprache von Symbolen und Sonderzeichen besitzt jetzt die korrekte Breite. (#6101)
+
+
 == Fehlerkorrekturen ==
 - Ein Fehler wurde behoben, wenn beim Beenden von NVDA der Sprachbetrachter angezeigt wird. (#5050)
 - in Firefox werden verweissensitive Grafiken wie erwartet angezeigt. (#6051)
@@ -26,6 +34,7 @@
 - Sie können nun die Maus benutzen, um in dem Dialog für die Aussprache von Symbolen den Fokus zwischen der Liste der Symbole und dem Suchfeld zu wechseln. (#6312)
 - Die Elementliste von Microsoft Word funktioniert nun korrekt, wenn das Dokument einen ungültigen Link enthält. (#5886)
 - Nach dem Schließen des Sprachbetrachters mit Alt+F4 spiegelt das Kontrollfeld für den Sprachbetrachter dessen Status korrekt wider. (#6340)
+- Probleme beim erneuten Laden von Erweiterungen mit Hilfe der Tastenkombination nvda+strg+f3 wurden behoben. (#2892, #5380)
 
 
 == Änderungen für Entwickler ==

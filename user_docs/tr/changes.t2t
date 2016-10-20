@@ -15,6 +15,14 @@
 - Support for the Baum SuperVario2, Baum Vario 340 and HumanWare Brailliant2 braille displays. (#6116)
 
 
+== Changes ==
+- Updated liblouis braille translator to 3.0.0. This includes significant enhancements to Unified English Braille. (#6109, #4194, #6220, #6140)
+- In the Add-ons Manager, the Disable add-on and Enable add-on buttons now have keyboard shortcuts (alt+d and alt+e, respectively). (#6388)
+- Various padding and alignment issues have been resolved. (#6317, #5548, #6342, #6343, #6349)
+- The document formatting dialog has been adjusted so that the contents scrolls. (#6348)
+- Adjusted the layout of the symbols pronunciation dialog so the full width of the dialog is used for the symbols list. (#6101)
+
+
 == Bug Fixes ==
 - Fixed a rare issue when exiting NVDA while the speech viewer is open causing an error. (#5050)
 - Image maps now render as expected in browse mode in Mozilla Firefox. (#6051)
@@ -26,6 +34,7 @@
 - The mouse can now be used to move focus between the symbol list and the edit fields in the symbol pronunciation dialog. (#6312)
 - Fixed an issue that stops the the elements list from appearing when Microsoft Word contains an invalid hyperlink. (#5886)
 - After being closed via the task bar or the alt+F4 shortcut, the speech viewer checkbox status in the NVDA menu will now reflect the actual visibility of the window. (#6340)
+- The reload plugins command no longer causes problems for triggered configuration profiles, new documents in web browsers and screen review. (#2892, #5380)
 
 
 == Changes for Developers ==

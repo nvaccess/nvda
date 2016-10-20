@@ -1195,33 +1195,41 @@ Denne dialogboks findes i menuen Indstillinger under "Dokumentformatering...".
 De fleste checkbokse i denne dialog bruges til at angive, hvilke typer formatering, du ønsker oplæst automatisk, når du flytter markøren rundt inden i dokumenter.
 Hvis du fx markerer checkboksen "oplæs skrifttypenavn", hører du navnet på skrifttypen, hver gang du med piletasterne bevæger dig hen over tekst med en anden skrifttype.
 
+Indstillingerne for dokumentformatering er organiseret i grupper.
 Du kan tilpasse annoncering af:
-- Navn på skrifttype 
-- Størrelse på skrifttype 
-- Skriftegenskaber
-- Tekstjustering 
-- Farver
-- Kommentarer
-- Ændringer
-- fremhævelse
-- Tekstens typografi 
-- Stavefejl 
-- Sidetal 
-- Linjenumre
-- Indrykning af linje
-- Indrykning af afsnit (fx. hængende indryk eller indrykning af første linje)
-- Linjeafstand (f.eks. enkel, dobbel, osv.)
-- tabeller
-- Række- og kolonneoverskrifter i tabeller
-- Koordinater på tabelceller
-- links
-- overskrifter 
-- lister
-- Blokcitater
-- Landmærker
-- Rammer
-- Når noget kan klikkes på (er klikbart)
+- Skrifttype
+ - Navn på skrifttype 
+ - Størrelse på skrifttype 
+ - Skrifttypeattributter
+ - fremhævelse
+ - Typografi 
+ - Farve
+- Dokumentinformation
+ - Kommentarer
+ - Redaktørændringer
+ - Stavefejl
+ - Sider og linjeafstand
+ - Sidetal
+ - Linjenumre
+ - Rapportering af linjeindrykning (fra, tale, toner eller både tale og toner) #lineIndentationOptions]
+ - Indrykning af afsnit (f.eks. hængende indrykning, indrykning af første linje)
+ - Linjeafstand (enkelt, dobbel, osv.)
+ - Justering
+- Tabelinformation
+ - Tabeller
+ - Ræke/kolonneoverskræfter
+ - Cellekoordinater
+ - Elementer
+ - Overskrifter
+ - Links
+ - Lister
+ - Bloksitater
+ - Landmærker
+ - Rammer
+ - Klikbart
+ -
 -
+
 
 Hvis du gerne vil kunne slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen inputbevægelser #InputGestures].
 
@@ -1706,10 +1714,10 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit Punktdisplays ++
-Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] og [Orbit http://www.orbitresearch.com/] displays er understøttet hvis de kobles til via USB eller Bluetooth.
+Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] og [Orbit http://www.orbitresearch.com/] displays er understøttet hvis de kobles til via USB, Bluetooth eller serielport.
 Det omfatter:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

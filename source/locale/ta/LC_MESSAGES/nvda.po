@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 00:10+1000\n"
-"PO-Revision-Date: 2016-10-08 11:17+0530\n"
+"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"PO-Revision-Date: 2016-10-14 20:14+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -431,13 +431,13 @@ msgstr "மராத்தி படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "டச் (பெல்ஜியம்) படிநிலை 1"
+msgid "Dutch (Belgium)"
+msgstr "டச் (பெல்ஜியம்)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "டச் (நெதர்லாந்து) படிநிலை 1"
+msgid "Dutch (Netherlands)"
+msgstr "டச் (நெதர்லாந்து)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -546,7 +546,7 @@ msgstr "தமிழ் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "தெலுங்கு படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1240,16 +1240,22 @@ msgstr "முந்தைய விளக்கவுரை ஏதுமில�
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "தொடுப்புகள் (&K)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "தலைப்புகள் (&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "நிலக்குறிகள் (&D)"
 
@@ -3570,6 +3576,7 @@ msgid "review"
 msgstr "சீராய்வு"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "குவிமையம்"
 
@@ -5872,8 +5879,8 @@ msgid "Add-on &help"
 msgstr "கூட்டுக்கூறு உதவி (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "கூட்டுக்கூறினைச் செயலிழக்கச் செய்க "
+msgid "&Disable add-on"
+msgstr "கூட்டுக்கூறினைச் செயலிழக்கச் செய்க (&D)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5978,8 +5985,8 @@ msgid "running"
 msgstr "ஓடிக் கொண்டிருக்கிறது"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "கூட்டுக்கூறினைச் செயற்படுத்துக"
+msgid "&Enable add-on"
+msgstr "கூட்டுக்கூறினைச் செயற்படுத்துக (&E)"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6016,10 +6023,6 @@ msgstr "கூட்டுக்கூறுத் தகவல்"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "அமைவடிவ தனியமைப்புகள்"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "தனியமைப்பு (&P)"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6334,14 +6337,14 @@ msgstr "பெயர்த்தகு அடைவு (&D)"
 msgid "Browse..."
 msgstr "உலாவுக..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "தற்போதைய பயனர் அமைவடிவத்தைப் படியெடுக்கவும் (&U)"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "பெயர்த்தகு அடைவைத் தெரிவுச் செய்க"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "தற்போதைய பயனர் அமைவடிவத்தைப் படியெடுக்கவும் (&U)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6427,10 +6430,6 @@ msgstr "வழுத்திருத்தம்"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "மொழி (முழுமையாக செயற்பட, என்விடிஏ மறுதுவக்கப்பட வேண்டும்) (&L):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "மொழி"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "வெளியேறும்பொழுது அமைவடிவத்தைச் சேமிக்கவும் (&S)"
@@ -6447,10 +6446,6 @@ msgstr "என்விடிஏவை இயக்கும்பொழுத�
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "செயற்குறிப்பேட்டுப் பதிவு நிலை (&O)"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "செயற்குறிப்பேட்டுப் பதிவு நிலை"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6622,10 +6617,6 @@ msgstr "விசைப்பலகை அமைப்புகள்"
 msgid "&Keyboard layout:"
 msgstr "விசைப்பலகைத் தளவமைப்பு (&K):"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "விசைப்பலகைத் தளவமைப்பு"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6704,10 +6695,6 @@ msgstr "சொடுக்கியின் பின்தொடருதல�
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "உரைத் தொகுதியின் துல்லியம் (&U)"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "உரையை அறிவிக்கும் தொகுதி"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6836,11 +6823,6 @@ msgstr "பொருள் விளக்கங்களை அறிவிக�
 msgid "Progress &bar output:"
 msgstr "முன்னேற்றப் பட்டையின் வெளியீடு (&B)"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "முன்னேற்றப் பட்டையின் வெளியீடு"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6904,76 +6886,88 @@ msgstr "கட்டளைகள் அல்லாத எல்லா சைக
 msgid "Document Formatting"
 msgstr "ஆவண வடிவூட்டம்"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
 msgstr ""
-"சுட்டிக்குப் பிறகு ஏற்படும் வடிவூட்ட மாற்றங்களை அறிவிக்கவும் (இது தேக்கத்தை ஏற்படுத்தலாம்)"
+"என்விடிஏ அறிவிக்கும் ஆவண வடிவூட்ட வகைகளை, கீழ்க்காணும் விருப்பத் தேர்வுகள் "
+"கட்டுப்படுத்துகின்றன. "
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "எழுத்துரு"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "எழுத்துரு பெயரை அறிவிக்கவும் (&F)"
+msgid "&Font name"
+msgstr "எழுத்துருப் பெயர் (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "எழுத்துரு அளவை அறிவிக்கவும் (&S)"
+msgid "Font &size"
+msgstr "எழுத்துரு அளவு (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "எழுத்துரு பண்புகளை அறிவிக்கவும் (&B)"
+msgid "Font attri&butes"
+msgstr "எழுத்துரு பண்புகள் (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "ஒழுங்கினை அறிவிக்கவும் (&A)"
+msgid "E&mphasis"
+msgstr "வலியுறுத்தல்கள் (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "நிரங்களை அறிவிக்கவும் (&C)"
+msgid "St&yle"
+msgstr "பாங்கு (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "கருத்துரைகளை அறிவிக்கவும் (&M)"
+msgid "&Colors"
+msgstr "நிறங்கள் (&C)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "ஆவணத் தகவல்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "தொகுப்பாளர் திருத்தங்களை அறிவிக்கவும் (&E)"
+msgid "Co&mments"
+msgstr "கருத்துரைகள் (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "வலியுறுத்தல்களை அறிவிக்கவும் (&M)"
+msgid "&Editor revisions"
+msgstr "தொகுப்பாளர் திருத்தங்கள் (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
+msgid "Spelling e&rrors"
+msgstr "எழுத்துப் பிழைகள் (&R)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "பக்கங்களும் இடைவெளியும்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும் (&R)"
+msgid "&Pages"
+msgstr "பக்கங்கள் (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "பக்கங்களை அறிவிக்கவும் (&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "வரி எண்களை அறிவிக்கவும் (&N)"
+msgid "Line &numbers"
+msgstr "வரி எண்கள் (&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "இதைக் கொண்டு வரியோரச் சீர்மையை அறிவிக்கவும் (&I):"
+msgid "Line &indentation reporting:"
+msgstr "வரியோரச் சீர்மையை அறிவித்தல் (&I):"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
@@ -6994,63 +6988,69 @@ msgstr "பேச்சும் ஒலிகளும்"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "பத்தியோரச் சீர்மையை அறிவிக்கவும் (&P)"
+msgid "&Paragraph indentation"
+msgstr "பத்தியோரச் சீர்மையை அறிவித்தல் (&P)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "வரி இடைவெளியை அறிவிக்கவும் (&L)"
+msgid "&Line spacing"
+msgstr "வரி இடைவெளி (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "அட்டவணைகளை அறிவிக்கவும் (&T)"
+msgid "&Alignment"
+msgstr "ஒழுங்கமைப்பு (&A)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "அட்டவணைத் தகவல்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "அட்டவணையின் கிடைவரிசை/நெடுவரிசைகளின் தலைப்பை அறிவிக்கவும் (&E)"
+msgid "&Tables"
+msgstr "அட்டவணைகள் (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "சிறுகட்டத்தின் சந்தி நிலையை அறிவிக்கவும் (&O)"
+msgid "Row/column h&eaders"
+msgstr "கிடைவரிசை / நெடுவரிசை தலைப்புரைகள் (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "தொடுப்புகளை அறிவிக்கவும் (&K)"
+msgid "Cell c&oordinates"
+msgstr "சிறுகட்டத்தின் சந்தி நிலை (&O)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "கூறுகள்"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "தலைப்புகளை அறிவிக்கவும் (&H)"
+msgid "&Lists"
+msgstr "வரிசைப் பட்டியல்கள் (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "வரிசைப் பட்டியல்களை அறிவிக்கவும் (&L)"
+msgid "Block &quotes"
+msgstr "உரைத் தொகுதி (&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "உரைத் தொகுதிகளை அறிவிக்கவும் (&Q)"
+msgid "Fra&mes"
+msgstr "சட்டகங்கள் (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "நிலக்குறிகளை அறிவிக்கவும் (&D)"
+msgid "&Clickable"
+msgstr "சொடுக்கப்படக் கூடியது (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "சட்டகங்களை அறிவிக்கவும் (&M)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "சொடுக்கப்படக்கூடியதா என்பதை அறிவிக்கவும் (&C)"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"சுட்டிக்குப் பிறகு ஏற்படும் வடிவூட்ட மாற்றங்களை அறிவிக்கவும் (இது தேக்கத்தை ஏற்படுத்தலாம்)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -8597,6 +8597,81 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "&Profile"
+#~ msgstr "தனியமைப்பு (&P)"
+
+#~ msgid "Language"
+#~ msgstr "மொழி"
+
+#~ msgid "Log level"
+#~ msgstr "செயற்குறிப்பேட்டுப் பதிவு நிலை"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "விசைப்பலகைத் தளவமைப்பு"
+
+#~ msgid "text reporting unit"
+#~ msgstr "உரையை அறிவிக்கும் தொகுதி"
+
+#~ msgid "Progress bar output"
+#~ msgstr "முன்னேற்றப் பட்டையின் வெளியீடு"
+
+#~ msgid "Report &font name"
+#~ msgstr "எழுத்துரு பெயரை அறிவிக்கவும் (&F)"
+
+#~ msgid "Report font &size"
+#~ msgstr "எழுத்துரு அளவை அறிவிக்கவும் (&S)"
+
+#~ msgid "Report &alignment"
+#~ msgstr "ஒழுங்கினை அறிவிக்கவும் (&A)"
+
+#~ msgid "Report &colors"
+#~ msgstr "நிரங்களை அறிவிக்கவும் (&C)"
+
+#~ msgid "Report co&mments"
+#~ msgstr "கருத்துரைகளை அறிவிக்கவும் (&M)"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "வலியுறுத்தல்களை அறிவிக்கவும் (&M)"
+
+#~ msgid "Report st&yle"
+#~ msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும் (&R)"
+
+#~ msgid "Report &pages"
+#~ msgstr "பக்கங்களை அறிவிக்கவும் (&P)"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "வரி இடைவெளியை அறிவிக்கவும் (&L)"
+
+#~ msgid "Report &tables"
+#~ msgstr "அட்டவணைகளை அறிவிக்கவும் (&T)"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "அட்டவணையின் கிடைவரிசை/நெடுவரிசைகளின் தலைப்பை அறிவிக்கவும் (&E)"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "தொடுப்புகளை அறிவிக்கவும் (&K)"
+
+#~ msgid "Report &headings"
+#~ msgstr "தலைப்புகளை அறிவிக்கவும் (&H)"
+
+#~ msgid "Report &lists"
+#~ msgstr "வரிசைப் பட்டியல்களை அறிவிக்கவும் (&L)"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "உரைத் தொகுதிகளை அறிவிக்கவும் (&Q)"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "நிலக்குறிகளை அறிவிக்கவும் (&D)"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "சட்டகங்களை அறிவிக்கவும் (&M)"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "சொடுக்கப்படக்கூடியதா என்பதை அறிவிக்கவும் (&C)"
 
 #~ msgid "Toggles on and off the reporting of line indentation"
 #~ msgstr "வரியோரச் சீர்மையை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"

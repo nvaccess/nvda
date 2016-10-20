@@ -1195,33 +1195,41 @@ Ce dialogue se trouve dans le menu des "Préférences", sous "Mise en forme des 
 La plupart des cases à cocher de ce dialogue servent à définir quelles informations de mise en forme on souhaite entendre automatiquement lorsqu'on parcourt un document.
 Par exemple, si on coche la case "Annoncer le nom de la police", à chaque fois que les flèches amènent sur un texte avec une police différente, le nom de la police est annoncé.
 
+Les options de mise en forme des document sont organisées en deux groupes;
 On peut configurer les annonces suivantes :
-- nom de la police,
-- taille de la police,
-- attributs de la police,
-- alignement du texte,
-- couleurs,
-- commentaires
-- révisions de l'éditeur,
-- emphase
-- style du texte,
-- fautes d'orthographe,
-- numéro de page,
-- numéro de ligne,
-- retrait de ligne,
-- retrait de paragraphe (ex : retrait en cours, retrait de première ligne),
-- interligne (simple, double etc)
-- tableaux,
-- titres des lignes et colonnes d'un tableau,
-- coordonnées des cellules d'un tableau,
-- liens,
-- titres,
-- listes,
-- citations,
-- régions,
-- cadres.
-- quand quelque chose est cliquable
+- Police,
+ - Nom de la police
+ - Taille de la police,
+ - Attributs de la police,
+ - Emphase
+ - Style
+ - Couleurs
+- Informations sur le document
+ - Commentaires
+ - Révisions de l'éditeur
+ - Fautes d'orthographe
+- Pages et espacement
+ - Numéros de page
+ - Numéros de ligne
+ - Annonce du retrait de ligne [(Désactivé, Parole, Sons, Parole et Sons) #lineIndentationOptions]
+ - Retrait des paragraphes (ex. retrait négatif, retrait de première ligne)
+ - interligne (simple, double etc)
+ - Alignement
+- Informations sur les tableaux
+ - Tableaux
+ - En-têtes des lignes et colonnes
+ - Coordonnées des cellules
+- Éléments
+ - Titres
+ - Liens
+ - Listes
+ - Citations
+ - Régions
+ - Cadres
+ - Cliquable
+ -
 -
+
 
 Pour modifier ces paramètres de n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
@@ -1232,7 +1240,7 @@ Par défaut, NVDA détecte la mise en forme sous le curseur système ou le curse
 
 Activez cette option quand vous révisez un document sous une application telle que Microsoft Word et que la mise en forme est importante.
 
-==== Annoncer les retraits de lignes par ====
+==== Annonce des retraits de lignes ====[lineIndentationOptions]
 Cette option vous permet de configurer la manière dont les retraits en début de ligne sont annoncés.
 La liste déroulante "Annoncer les retraits de ligne par" a quatre options .
 

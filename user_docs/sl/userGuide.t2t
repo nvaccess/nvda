@@ -1195,44 +1195,52 @@ To pogovorno okno se nahaja v meniju Nastavitev pod "Oblikovanje Dokumentov...".
 Večina izbirnikov v tem pogovornem oknu določa, kako poročati o tipih oblikovanja, ko se z utripalko sprehajate po dokumentih.
 Na primer, ko izberete izbirnik ime pisave, bo vedno, ko se boste premaknili na besedilo z drugačno pisavo od prejšnje, NVDA sporočila ime pisave v uporabi.
 
+Možnosti oblikovanja dokumenta so razvrščene v skupine.
 V NVDA lahko nastavite poročanje za:
-- Ime Pisave
-- Velikost Pisave
-- Lastnosti Pisave
-- Poravnavo Besedila
-- Barve
-- Komentarje
-- Uredniške popravke
-- Poudarke
-- Slog Besedila
-- Napake črkovanja
-- Številke Strani
-- Številke Vrstice
-- Zamike Vrstice
-- Zamike odstavka (viseči zamik, zamik prve vrstice...)
-- Razmik med vrsticami (enojni, dvojni ipd.)
-- Tabele
-- Glave in čela Tabel (glave vrstic in stolpcev)
-- Koordinate celic v tabelah
-- Povezave
-- Naslove
-- Sezname
-- Navedke
-- Mejnike
-- Okvirje
-- Ko je nekaj klikljivo
+- Pisava
+ - Ime Pisave
+ - Velikost Pisave
+ - Lastnosti Pisave
+ - Poudarke
+ - Slog
+ - Barve
+- Informacije dokumenta
+ - Komentarje
+ - Uredniške popravke
+ - Napake črkovanja
+- Strani in razmiki
+ - Številke Strani
+ - Številke Vrstice
+ - Sporočanje zamika Vrstice [(Izključeno, Govor, Toni, tako Govor kot Toni) #lineIndentationOptions]
+ - Zamike odstavka (viseči zamik, zamik prve vrstice...)
+ - Razmik med vrsticami (enojni, dvojni ipd.)
+ - Poravnavo
+- Informacije tabele
+ - Tabele
+ - Glave in čela Tabel (glave vrstic in stolpcev)
+ - Koordinate celic v tabelah
+- Elementi
+ - Naslove
+ - Povezave
+ - Sezname
+ - Navedke
+ - Mejnike
+ - Okvirje
+ - Ko je nekaj klikljivo
+ -
 -
 
+ 
 Za preklapljanje stanja teh nastavitev od kjerkoli, prosimo, dodelite lastne kretnje vnosa prek [pogovornega okna Kretenj Vnosa. #InputGestures]
 
-==== Naznani spremembe oblikovanja za utripalko ====
+==== Sporočaj spremembe oblikovanja za utripalko ====
 Če je izbrana, ta nastavitev pove NVDA, naj poskuša zaznati vse spremembe v oblikovanju v vrstici, ki jo trenutno izgovarja, čeprav to lahko zniža učinkovitost NVDA.
 
 Privzeto bo NVDA zaznavala spremembe na položaju pregledne utripalke/sistemske kazalke in včasih bo zaznavala oblikovanje v drugih delih vrstice samo, če to ne bo vpočasnilo njenega delovanja.
 
 Omogočite to možnost v programih, kot je Microsoft Word med postopkom postavitve besedila, kjer je oblikovanje pomembno.
 
-==== Sporočaj zamik vrstice prek ====
+==== Sporočanje zamika vrstice ====[lineIndentationOptions]
 Ta možnost vam omogoča nastavitev, kako naj NVDA sporoča zamik vrstice na njenem začetku.
 Spustni seznam Sporočaj zamik vrstice prek ima 4 možnosti.
 
@@ -1438,6 +1446,10 @@ Za videče razvijalce ali za tiste, ki predstavljajo NVDA videči publiki, je na
 
 Če želite omogočiti prikazovalnik govora, označite menijsko postavko "Prikazovalnik Govora" v Orodjih menija NVDA.
 Če ga želite izključiti, menijsko postavko odznačite.
+
+Okno prikazovalnika govora vsebuje izbirnik, ki je naznačen kot "Pokaži prikazovalnik govora ob zagonu".
+Če ga izberete, se bo prikazovalnik govora pokazal takoj ob zagonu NVDA.
+Prikazovalnik govora se bo vedno poskušal odpreti na enaki lokaciji in v enakih dimenzijah, kot jih je zavzemal ob času zadnjega zaprtja.
 
 Ko je prikazovalnik govora omogočen, se stalno posodablja, da vam pokaže besedilo, ki se pravkar izgovarja.
 Kakorkoli, če kliknete ali postavite žarišče znotraj prikazovalnika, bo NVDA začasno prenehala posodabljati besedilo, tako da ga boste lažje izbrali ali preslikali.
@@ -1704,8 +1716,8 @@ Prosimo, poglejte si dokumentacijo za opis položaja tipk.
 ++ Brajeve Vrstice Baum/Humanware/APH/Orbit ++
 Precej [Baumovih http://www.baum.de/cms/en/], [HumanWarovih http://www.humanware.com/], [APH http://www.aph.org/] in vrstic [Orbit http://www.orbitresearch.com/] je podprtih, ko jih priključimo prek USB ali bluetooth povezave.
 To vključuje:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
