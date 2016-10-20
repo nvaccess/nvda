@@ -1198,44 +1198,50 @@ U vindt het dialoogvenster Documentopmaak in het NVDA-menu onder Opties.
 U kunt de meeste selectievakjes gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
 Als u bij voorbeeld Lettertype vermelden inschakelt, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
 
+De documentopmaakinstellingen zijn onderverdeeld in groepen. 
 U kunt de vermelding laten horen van:
 - Lettertype
-- Lettergrootte
-- Lettertype-eigenschappen
-- Tekstuitlijning
-- Kleuren
-- Opmerkingen
-- Aangebrachte wijzigingen in de tekst
-- Nadruk
-- Tekststijl
-- Spelfouten
-- Paginanummers
-- Regelnummers
-- Regel inspringen
-- Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
-- Regelafstand ( enkel, dubbel, etc.)
-- Tabellen
-- Rij- en kolomhoofden van tabellen
-- Tabel celcoördinaten
-- Links
-- Koppen
-- Lijsten
-- Blokcitaten
-- Oriëntatiepunten
-- Kaders
-- Wat klikbaar is
+ - Naam
+ - Lettergrootte
+ - Lettertype-eigenschappen
+ - Nadruk
+ - Stijl
+ - Kleuren
+- Documentinformatie
+ - Opmerkingen
+ - Aangebrachte wijzigingen in de tekst
+ - Spelfouten
+- Pagina's en Afstand
+ - Paginanummers
+ - Regelnummers
+ - Regel inspringen melden [(Uit, Spraak, Tonen, Zowel Spraak als Tonen) #lineIndentationOptions]
+ - Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
+ - Regelafstand ( enkel, dubbel, etc.)
+ - Uitlijning
+- Tabelinformatie
+ - Tabellen
+ - Rij- en kolomhoofden
+ - Celcoördinaten
+- Elementen
+ - Links
+ - Koppen
+ - Lijsten
+ - Blokcitaten
+ - Oriëntatiepunten
+ - Kaders
+ - Wat klikbaar is
 -
 
 Als u vermelding van bovenstaande kenmerken altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-==== Wijzigingen in documentopmaak achter de cursor weergeven (kan vertraging veroorzaken)====
+==== Wijzigingen in documentopmaak achter de cursor melden ====
 Als het selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de opmaak van een regel te melden bij het lezen van de regel ook als dit de prestatie vertraagt.
 
 Standaard wordt de opmaak bij de systeemcursor / review cursor gedetecteerd, maar in bepaalde gevallen wordt ook de opmaak in de rest van de regel gedetecteerd voor zover dit geen nadelige invloed heeft op de prestatie.
 
 Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals Microsoft Word waar opmaak van belang is.
 
-==== Regelinspringing melden met ====
+==== Regelinspringing melden ==== [lineIndentationOptions]
 Met deze optie kunt u bepalen hoe de inspringing van een regel wordt gemeld.
 Het vervolgkeuzemenu voor het melden van regelinspringing heeft 4 keuzemogelijkheden.
 
@@ -1711,8 +1717,8 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 ++ Brailleleesregels van Baum/HumanWare/APH/Orbit ++
 Verscheidene brailleleesregels van [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] en van  [Orbit http://www.orbitresearch.com/]worden ondersteund, voor zover deze  via usb of Bluetooth dan wel serieel verbonden worden.
 Hiertoe behoren:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
