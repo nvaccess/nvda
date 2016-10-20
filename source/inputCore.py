@@ -553,6 +553,8 @@ class _AllGestureMappingsRetriever(object):
 		gmap = braille.handler.display.gestureMap
 		if gmap:
 			self.addGlobalMap(gmap)
+		if isinstance(braille.handler.display, baseObject.ScriptableObject):
+			self.addObj(braille.handler.display)
 
 		# Global plugins.
 		import globalPluginHandler
