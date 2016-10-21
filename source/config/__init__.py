@@ -194,6 +194,8 @@ confspec = ConfigObj(StringIO(
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)
 	reportTableCellCoords = boolean(default=True)
+	reportBorderStyle = boolean(default=True)
+	reportBorderColor = boolean(default=True)
 	reportLinks = boolean(default=true)
 	reportComments = boolean(default=true)
 	reportLists = boolean(default=true)
