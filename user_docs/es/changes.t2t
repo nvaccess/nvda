@@ -15,6 +15,14 @@ Qué hay de Nuevo en NVDA
 - Soporte para las pantallas braille Baum SuperVario2, Baum Vario 340 y HumanWare Brailliant2. (#6116)
 
 
+== Cambios ==
+- Actualizado el transcriptor braille liblouis a 3.0.0. Esto incluye mejoras significativas para el Braille Inglés Unificado. (#6109, #4194, #6220, #6140)
+- En el administrador de complementos, los botones Deshabilitar complemento y Habilitar complemento ahora tienen atajos de teclado (alt+d y alt+e, respectivamente). (#6388)
+- Se han resuelto varios problemas de relleno y alineación. (#6317, #5548, #6342, #6343, #6349)
+- El diálogo formateado de documento se ha ajustado de manera que el contenido se deslice. (#6348)
+- Ajustada la distribución del diálogo pronunciación de símbolos por lo que se utiliza todo el ancho del diálogo para la lista de símbolos. (#6101)
+
+
 == Corrección de Fallos ==
 - Corregido un extraño problema cuando al salir de  NVDA mientras el visualizador de voz está abierto causa un error. (#5050)
 - Los mapas de imagen ahora se procesan como se esperaba en el modo exploración en Mozilla firefox. (#6051)
@@ -25,7 +33,8 @@ Qué hay de Nuevo en NVDA
 - Al utilizar Microsoft Word, los campos de número de página en encabezados ahora pueden leerse. (#6004)
 - El ratón ahora puede utilizarse para mover el foco entre la lista de símbolos y los campos de edición en el diálogo pronunciación de símbolos. (#6312)
 - Corregido un problema que detiene la aparición de la lista de elementos cuando Microsoft Word contiene un hipervínculo inválido. (#5886)
-- Después de ser cerrado a través de la barra de tareas o del atajo de teclado alt+F4, el estado de la casilla de verificación visualizador de voz en el menú NVDA ahora reflejará la visibilidad actual de la ventana. (#6340)
+- Después de cerrarse a través de la barra de tareas o del atajo de teclado alt+F4, el estado de la casilla de verificación visualizador de voz en el menú NVDA ahora reflejará la visibilidad actual de la ventana. (#6340)
+- La orden recargar plugins ya no causa problemas para los perfiles de configuración disparados, en los documentos nuevos en navegadores web y en revisión de pantalla. (#2892, #5380)
 
 
 == Cambios para Desarrolladores ==

@@ -15,6 +15,14 @@ Quoi de Neuf dans NVDA
 - Support des afficheurs braille Baum SuperVario2, Baum Vario 340 et HumanWare Brailliant2. (#6116)
 
 
+== Changements ==
+- Convertisseur braille liblouis mis à jour à la version 3.0.0. Cela inclut des améliorations significatives du Braille Anglais Unifié. (#6109, #4194, #6220, #6140)
+- Dans le Gestionnaire de Modules Complémentaires, les boutons Activer le module et Désactiver le module ont maintenant des raccourcis clavier (alt+d et alt+d, respectivement). (#6388)
+- Divers problèmes de remplissage et d'alignement ont été résolus. (#6317, #5548, #6342, #6343, #6349)
+- Le dialogue de mise en forme des documents a été ajusté pour que le contenu puisse défiler. (#6348)
+- Ajustement de la disposition du dialogue Prononciation des symboles pour que toute la largeur du dialogue soit utilisée pour la liste des symboles. (#6101)
+
+
 == Corrections de Bogues ==
 - Correction d'un problème rare causant unerreur quand on ferme NVDA avec la visionneuse de parole ouverte. (#5050)
 - Les images interactives sont maintenant rendues comme prévu en mode navigation sous Mozilla Firefox. (#6051)
@@ -26,6 +34,7 @@ Quoi de Neuf dans NVDA
 - La souris peut maintenant être utilisée pour déplacer le focus entre la liste des symboles et les champs de saisie dans le dialogue prononciation des symboles. (#6312)
 - Correction d'un problème qui empêche la liste d'éléments d'apparaître quand Microsoft Word contient des liens hypertexte invalides. (#5886)
 - Après sa fermeture via la barre des tâches ou le raccourci alt+F4, l'état de la case à cocher de la visionneuse de parole dans le menu NVDA reflètera maintenant la visibilité réel de la fenêtre. (#6340)
+- La commande de rechargement des modules complémentaires ne causse plus de problèmes aux profils de configuration déclenchés, aux nouveaux documents dans les navigateurs web et à la revue d'écran. (#2892, #5380)
 
 
 == Changements pour les Développeurs ==
