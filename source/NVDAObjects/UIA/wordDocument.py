@@ -14,12 +14,15 @@ from . import UIA, UIATextInfo
 
 class WordDocumentTextInfo(UIATextInfo):
 
+	def _get_controlFieldNVDAObjectClass(self):
+		return WordDocumentNode
+
 	# UIA text range comparison for bookmarks works okay in this MS Word implementation
 	# Thus __ne__ is useful
 	def __ne__(self,other):
 		return not self==other
 
-	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+	def old_getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and (automationID=='Body' or automationID.startswith('UIA_AutomationId_Word_Content')):
@@ -66,7 +69,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Therefore class a range as collapsed if it has no text
 		return not bool(self.text)
 
-	def getTextWithFields(self,formatConfig=None):
+	def old_getTextWithFields(self,formatConfig=None):
 		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.

@@ -27,6 +27,9 @@ import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
+	def _get_controlFieldNVDAObjectClass(self):
+		return UIA
+
 	# UIA property IDs that should be automatically cached for control fields
 	_controlFieldUIACachedPropertyIDs={
 		UIAHandler.UIA_IsValuePatternAvailablePropertyId,
@@ -70,6 +73,12 @@ class UIATextInfo(textInfos.TextInfo):
 		for ID in self._controlFieldUIACachedPropertyIDs:
 			cacheRequest.addProperty(ID)
 		self._controlFieldUIACacheRequest=cacheRequest
+		return cacheRequest
+
+	def _get__controlFieldUIACacheRequestWithChildren(self):
+		cacheRequest=self._controlFieldUIACacheRequest.clone()
+		cacheRequest.treeScope=UIAHandler.TreeScope_Subtree
+		self._controlFieldUIACacheRequestWithChildren=cacheRequest
 		return cacheRequest
 
 	#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
@@ -372,7 +381,7 @@ class UIATextInfo(textInfos.TextInfo):
 			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType if rootElement else None)
 			log.debug("full text: %s"%textRange.getText(-1))
 		if recurseChildren:
-			childElements=_children if _children else getChildrenWithCacheFromUIATextRange(textRange,self._controlFieldUIACacheRequest)
+			childElements=_children if _children else getChildrenWithCacheFromUIATextRange(textRange,self._controlFieldUIACacheRequestWithChildren)
 			# Specific check for embedded elements (checkboxes etc)
 			# Calling getChildren on their childRange always gives back the same child.
 			if childElements.length==1:
@@ -422,7 +431,7 @@ class UIATextInfo(textInfos.TextInfo):
 			startOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,parentRange,UIAHandler.TextPatternRangeEndpoint_Start)<=0
 			endOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)>=0
 			try:
-				obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
+				obj=self.controlFieldNVDAObjectClass(windowHandle=self.obj.windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
 				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
 			except LookupError:
 				log.debug("Failed to fetch controlField data for parentElement. Breaking")
@@ -440,12 +449,15 @@ class UIATextInfo(textInfos.TextInfo):
 		# Move through the text range, collecting text and recursing into children
 		#: This variable is used to   span lengths of plain text between child ranges as we iterate over getChildren
 		tempRange=textRange.clone()
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
 		if recurseChildren:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("Child count: %s"%childElements.length)
 				log.debug("Walking children")
-			for index in xrange(childElements.length):
+			childCount=childElements.length
+			lastChildIndex=childCount-1
+			lastChildEndDelta=0
+			for index in xrange(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
@@ -456,13 +468,15 @@ class UIATextInfo(textInfos.TextInfo):
 				if not childRange:
 					log.debug("NULL childRange. Skipping")
 					continue
-				if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+				if index==lastChildIndex and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
 					log.debug("Child at or past end of textRange. Breaking")
 					break
 				origChildRange=childRange.clone()
-				if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
-					log.debug("textRange ended part way through the child. Crop end of childRange to fit")
-					childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+				if index==lastChildIndex:
+					lastChildEndDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+					if lastChildEndDelta>0:
+						log.debug("textRange ended part way through the child. Crop end of childRange to fit")
+						childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 				childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 				if childStartDelta>0:
 					# plain text before this child
@@ -473,11 +487,11 @@ class UIATextInfo(textInfos.TextInfo):
 				elif childStartDelta<0:
 					log.debug("textRange started part way through child. Cropping Start of child range to fit" )
 					childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-				if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
+				if (index==0 or index==lastChildIndex) and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
 					log.debug("childRange is degenerate. Skipping")
 					continue
 				log.debug("Recursing into child %s"%index)
-				for field in self._getTextWithFieldsForUIARange(childElement,childRange,formatConfig,_rootElementRange=origChildRange,includeRoot=True,alwaysWalkAncestors=False):
+				for field in self._getTextWithFieldsForUIARange(childElement,childRange,formatConfig,_rootElementRange=origChildRange,includeRoot=True,alwaysWalkAncestors=False,_children=childElement.getCachedChildren()):
 					yield field
 				log.debug("Done recursing into child %s"%index)
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
@@ -485,7 +499,7 @@ class UIATextInfo(textInfos.TextInfo):
 		else: #isEmbeddedChild==True
 			log.debug("isEmbeddedChild, not recursing children.")
 		# Plain text after the final child
-		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
+		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End):
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 			log.debug("Yielding final text")
 			for field in self._getTextWithFields_text(tempRange,formatConfig):

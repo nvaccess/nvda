@@ -148,7 +148,7 @@ class CacheableUIAElementArray(object):
 	def getElement(self,index):
 		e=self._elementArray.getElement(index)
 		if e and self._cacheRequest:
-			pass #e=e.buildUpdatedCache(self._cacheRequest)
+			e=e.buildUpdatedCache(self._cacheRequest)
 		return e
 
 def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
@@ -160,7 +160,7 @@ def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
 		except COMError:
 			import tones; tones.beep(550,50)
 			c=textRange.getChildren()
-			c=CacheableUIAElementArray(c) #,cacheRequest)
+			c=CacheableUIAElementArray(c,cacheRequest)
 			return c
 	c=textRange.getChildrenBuildCache(cacheRequest)
 	c=CacheableUIAElementArray(c)

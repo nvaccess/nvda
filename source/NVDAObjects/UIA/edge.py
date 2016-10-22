@@ -176,7 +176,7 @@ class EdgeTextInfo(UIATextInfo):
 				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
 		return field
 
-	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None,_children=None):
 		# Edge zooms into its children at the start.
 		# Thus you are already in the deepest first child.
 		# Therefore get the deepest enclosing element at the start, get its content, Then do the whole thing again on the content from the end of the enclosing element to the end of its parent, and repete!
@@ -207,7 +207,7 @@ class EdgeTextInfo(UIATextInfo):
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 		# check for an embedded child
-		childElements=getChildrenWithCacheFromUIATextRange(startRange,self._controlFieldUIACacheRequest)
+		childElements=_children if _children else getChildrenWithCacheFromUIATextRange(startRange,self._controlFieldUIACacheRequestWithChildren)
 		if childElements.length==1 and UIAHandler.handler.clientObject.compareElements(rootElement,childElements.getElement(0)):
 			log.debug("Using single embedded child as enclosingElement")
 			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementRange=_rootElementRange,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False):
