@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2016 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -11,6 +11,8 @@ Copyright 2006-2010 NVDA contributers.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
+
+#pragma once
 
 // See https://github.com/nvaccess/nvda/wiki/Using-COM-with-NVDA-and-Microsoft-Word
 constexpr int wdDISPID_APPLICATION_ISSANDBOX = 492;
@@ -145,6 +147,7 @@ constexpr int wdCollapseEnd = 0;
 constexpr int wdCollapseStart = 1;
 
 constexpr int wdActiveEndAdjustedPageNumber = 1;
+constexpr int wdActiveEndSectionNumber = 2;
 constexpr int wdFirstCharacterLineNumber = 10;
 constexpr int wdWithInTable = 12;
 constexpr int wdStartOfRangeRowNumber = 13;

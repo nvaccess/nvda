@@ -781,6 +781,15 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		}
 	}
 
+	const auto shouldReportSections = (initialFormatConfig&formatConfig_reportPage);
+	if(shouldReportSections) {
+		int sectionNumber = -1;
+		auto res = _com_dispatch_raw_method( pDispatchRange, wdDISPID_RANGE_INFORMATION, DISPATCH_PROPERTYGET, VT_I4, &sectionNumber, L"\x0003", wdActiveEndSectionNumber);
+		if( S_OK == res && sectionNumber >= 0) {
+			initialFormatAttribsStream << L"section-number=\""<<sectionNumber << "\" ";
+		}
+	}
+
 	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
@@ -860,6 +869,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 
 			{	// scope for xmlAttribsFormatConfig
 				const auto xmlAttribsFormatConfig = formatConfig&(~curDisabledFormatConfig);
+
 				generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,xmlAttribsFormatConfig,XMLStream);
 				const auto shouldReportLinks = (xmlAttribsFormatConfig&formatConfig_reportLinks);
 				if( shouldReportLinks && currentFields.hasLinks(chunkStartOffset, chunkEndOffset) ) {

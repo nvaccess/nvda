@@ -1139,6 +1139,13 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# %s will be replaced with the page number.
 			text=_("page %s")%pageNumber
 			textList.append(text)
+		sectionNumber=attrs.get("section-number")
+		oldSectionNumber=attrsCache.get("section-number") if attrsCache is not None else None
+		if sectionNumber and sectionNumber!=oldSectionNumber:
+			# Translators: Indicates the section number in a document.
+			# %s will be replaced with the section number.
+			text=_("section %s")%sectionNumber
+			textList.append(text)
 	if  formatConfig["reportHeadings"]:
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
