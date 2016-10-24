@@ -622,27 +622,17 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
-		##########################################
 		nameAttribute=self.HTMLAttributes['name']
-		log.info("Inside getname nameAttribute: %s",nameAttribute)
 		idAttribute=self.HTMLAttributes['id']
-		log.info("Inside getname idAttribute: %s", idAttribute)
-#  		name=self.getCustomLabel(nameAttribute)
-#  		name=self.getCustomLabel(nameAttribute)
 		if idAttribute and nameAttribute:
 			name=self.getCustomLabel(idAttribute+nameAttribute)
-			log.info("Name is id + name: %s",idAttribute+nameAttribute)
 		elif not nameAttribute:
 			name=self.getCustomLabel(idAttribute)
-			log.info("Name is id : %s",name)
 		elif not idAttribute:
 			name=self.getCustomLabel(nameAttribute)
-			log.info("Name is name: %s",name)
- 		log.info("Name from getname function: %s",name)
+
  		if name:
- 			log.info("Name from getname function: %s",name)
   			return name
- 		###################################################
 		ariaLabelledBy=self.HTMLAttributes['aria-labelledBy']
 		if ariaLabelledBy:
 			try:
@@ -1007,30 +997,13 @@ class MSHTML(IAccessible):
 			return None
 		
 	def getCustomLabel(self,nameAttribute):
-		#log.info("getCustomLabel:%s",nameAttribute)
   		filename=self.getFilenameFromElementDomain()
-#   		config = SafeConfigParser()
-#   		config.read(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
-#   		try:
-#   			if config.get('Section', str(nameAttribute)):
-#   				return config.get('Section', str(nameAttribute))
-# 
-#  		except Exception as e:
-#  			log.info("\nError is:%s\n",e)
-#   			pass
 		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
 		try:
 			for k,v in config.iteritems():
-				#log.info("\nk: %s",k)
-				#log.info("\nnameAttributeblah: %s",nameAttribute)
 				if (k==nameAttribute):
-					#log.info("\nInside if")
 					return v
-			#if config[nameAttribute]:
-			#	log.info("\nInside if")
-			#	return config[nameAttribute]
 		except Exception as e:
-#  			log.info("\nError is:%s\n",e)
    			pass
 	
 	def getFilenameFromElementDomain(self):
@@ -1041,12 +1014,9 @@ class MSHTML(IAccessible):
   		domain=domain.replace(':','_')
   		domain=domain.replace('\\','_')
   		filename=domain+'.ini'
-  		#filename="testing.ini"
   		return filename
   	
 	def script_assignCustomLabel(self, gesture):
-#   		obj=globalVars.reviewPosition.NVDAObjectAtStart
-		log.info("Entered function")
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
 		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
@@ -1055,29 +1025,12 @@ class MSHTML(IAccessible):
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
-# 		log.info("\nInfo: %s",info)
 		browseObj=info.NVDAObjectAtStart
- 		log.info("\nScreen Layout Testing: %s %s",browseObj.HTMLNode.nodeName,browseObj.value)
 		if (browseObj.HTMLNode.nodeName=="IMG"):
 			customLabelKey=browseObj.HTMLAttributes['src']
-# 			customLabelKey=customLabelKey.replace(':','\:')
- 			#customLabelKey=customLabelKey.replace(':','_')
-# 			nameAttribute=None
-# 			linkAttribute=None
-#  			log.info("srcAttribute is: %s",srcAttribute)
 		elif (browseObj.HTMLNode.nodeName=="A"):
 			customLabelKey=browseObj.HTMLAttributes['href']
-# 			customLabelKey=customLabelKey.replace(':','\:')
-			#customLabelKey=customLabelKey.replace(':','_')
-# 			log.info("before Please work: %s",customLabelKey)
-# 			parsed_customLabelKey = urlparse( customLabelKey )
-#  			customLabelKey='{uri.netloc}'.format(uri=parsed_customLabelKey)
-#  			log.info("Please work: %s",customLabelKey)
-# 			nameAttribute=None
-# 			srcAttribute=None
-#  			log.info("linkAttributeis: %s",linkAttribute)
 		else:
-# 			customLabelKey=browseObj.HTMLAttributes['name']              #########################
 			if browseObj.HTMLAttributes['id'] and browseObj.HTMLAttributes['name']:
 				customLabelKey=browseObj.HTMLAttributes['id']+browseObj.HTMLAttributes['name']
 			elif not browseObj.HTMLAttributes['name']:
@@ -1085,148 +1038,29 @@ class MSHTML(IAccessible):
 			elif not browseObj.HTMLAttributes['id']:
 				customLabelKey=browseObj.HTMLAttributes['name']
 			if (not customLabelKey):
-				log.info("\nCannot assign custom label")
-# 			linkAttribute=None
-# 			srcAttribute=None
-#  			log.info("name Attributeis: %s",nameAttribute)
-				
-# 		log.info("\nObj1: %s",obj1)
-#		obj=self.innerTextInfo.NVDAObjectAtStart
-#  		log.info("\ntest variable is:%s %s %s %s",obj1.HTMLNode.nodeName,obj1.name,obj1.firstChild.HTMLNode.nodeName,obj1.lastChild.HTMLNode.nodeName)
-#  		log.info("\ntest variable is:%s",obj.HTMLNode.nodeName)
-# 		log.info("\nself is:%s",self.HTMLNode.nodeName)
-# 		obj=api.getNavigatorObject
-# 		log.info("Navigator Object is: %s",obj.HTMLNode.nodeName)
-		###################################
-# 		if (self.HTMLNode.nodeName=="IMG"):
-# 			srcAttribute=self.HTMLAttributes['src']
-# 			nameAttribute=None
-# 			linkAttribute=None
-#  			log.info("srcAttribute is: %s",srcAttribute)
-# 		elif (self.HTMLNode.nodeName=="A"):
-# 			linkAttribute=self.HTMLAttributes['href']
-# 			nameAttribute=None
-# 			srcAttribute=None
-#  			log.info("linkAttributeis: %s",linkAttribute)
-# 		else:
-# 			nameAttribute=self.HTMLAttributes['name']
-# 			linkAttribute=None
-# 			srcAttribute=None
-#  			log.info("name Attributeis: %s",nameAttribute)
-		###################################
-# 		if linkAttribute:
-# 			linkAttribute=linkAttribute.replace(':','')
-# 			linkAttribute=linkAttribute.replace('/','')
-# 			linkAttribute=linkAttribute.replace('.','')
-# 			
-# 		if srcAttribute:
-# 			srcAttribute=srcAttribute.replace(':','')
-# 			srcAttribute=srcAttribute.replace('/','')
-# 			srcAttribute=srcAttribute.replace('.','')
-# 			srcAttribute=srcAttribute.replace(';','')
-# 			srcAttribute=srcAttribute.replace('?','')
-# 			srcAttribute=srcAttribute.replace('%','')
-# 			
-# 		if nameAttribute:
-# 			nameAttribute=nameAttribute.replace('.','')
-# 		if customLabelKey:
-# 			customLabelKey=customLabelKey.replace(':','')
-# 			customLabelKey=customLabelKey.replace('/','')
-# 			customLabelKey=customLabelKey.replace('.','')
-# 			customLabelKey=customLabelKey.replace(';','')
-# 			customLabelKey=customLabelKey.replace('?','')
-# 			customLabelKey=customLabelKey.replace('%','')
-
-# 		customLabelKey='"'+customLabelKey+'"'
-# 		log.info("name Attributeis: %s",nameAttribute)
-			
+				log.debugWarning("\nCannot assign custom label")			
 		if customLabelKey:
 			customLabelKey=customLabelKey.replace(':','\:')
 		filename=self.getFilenameFromElementDomain()
-		
-		#####################################################
-		log.info("filename: %s",filename)
 		if not os.path.exists(os.path.join(globalVars.appArgs.configPath, "webLabels")):
 			os.makedirs(os.path.join(globalVars.appArgs.configPath, "webLabels"))
 		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
-# 		config.filename = os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename)
 		try:
-# 			if (self.HTMLNode.nodeName=="IMG"):
-# 				defaultCustomLabel=config.get('Section', str(srcAttribute))
-# 			elif (self.HTMLNode.nodeName=="A"):
-# 				defaultCustomLabel=config.get('Section', str(linkAttribute))
-# 			else:
-# 				defaultCustomLabel=config.get('Section', str(nameAttribute))
 			defaultCustomLabel=config[customLabelKey]
 		except Exception as e:
 			defaultCustomLabel=u""
-		
-# 		if nameAttribute or linkAttribute or srcAttribute:
 		if customLabelKey:
 			d = wx.TextEntryDialog(gui.mainFrame, 
 			# Translators: Dialog text for 
 			_("Custom Label Edit"),
-			# Translators: Title of a dialog edit an Excel comment 
 			_("Custom Label"),
 			defaultValue=defaultCustomLabel,
 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
-			#btn1 = wx.Button(d, label = "Delete") 
 			def callback(result):
 				if result == wx.ID_OK:
-# 					if (self.HTMLNode.nodeName=="IMG"):
-# 						config.set('Section', srcAttribute, d.Value)
-# 					if (self.HTMLNode.nodeName=="A"):
-# 						config.set('Section', linkAttribute, d.Value)
-# 					else:
-# 						config.set('Section', nameAttribute, d.Value)
 					config[customLabelKey] = d.Value
 					config.write()
 			gui.runScriptModalDialog(d, callback)
-		#####################################################
-		
-# 		config = SafeConfigParser()
-# 		
-# 		if not os.path.exists(os.path.join(globalVars.appArgs.configPath, "webLabels")):
-# 			os.makedirs(os.path.join(globalVars.appArgs.configPath, "webLabels"))
-# 			
-# 		config.read(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
-# 		
-# 		if not config.has_section('Section'):
-# 			config.add_section('Section')
-# 			
-# 		try:
-# # 			if (self.HTMLNode.nodeName=="IMG"):
-# # 				defaultCustomLabel=config.get('Section', str(srcAttribute))
-# # 			elif (self.HTMLNode.nodeName=="A"):
-# # 				defaultCustomLabel=config.get('Section', str(linkAttribute))
-# # 			else:
-# # 				defaultCustomLabel=config.get('Section', str(nameAttribute))
-# 			defaultCustomLabel=config.get('Section', str(customLabelKey))
-# 		except Exception as e:
-# 			defaultCustomLabel=u""
-# 		
-# # 		if nameAttribute or linkAttribute or srcAttribute:
-# 		if customLabelKey:
-# 			d = wx.TextEntryDialog(gui.mainFrame, 
-# 			# Translators: Dialog text for 
-# 			_("Custom Label Edit"),
-# 			# Translators: Title of a dialog edit an Excel comment 
-# 			_("Custom Label"),
-# 			defaultValue=defaultCustomLabel,
-# 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
-# 			#btn1 = wx.Button(d, label = "Delete") 
-# 			def callback(result):
-# 				if result == wx.ID_OK:
-# # 					if (self.HTMLNode.nodeName=="IMG"):
-# # 						config.set('Section', srcAttribute, d.Value)
-# # 					if (self.HTMLNode.nodeName=="A"):
-# # 						config.set('Section', linkAttribute, d.Value)
-# # 					else:
-# # 						config.set('Section', nameAttribute, d.Value)
-# 					config.set('Section', customLabelKey, d.Value)
-# 					with open(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename),'w') as configfile:
-# 						config.write(configfile)
-# 			gui.runScriptModalDialog(d, callback)
 		
 	__gestures = {
 		"kb:NVDA+control+tab": "assignCustomLabel",

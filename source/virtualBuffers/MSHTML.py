@@ -62,7 +62,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			customLabel=self.obj.rootNVDAObject.getCustomLabel(nameAttribute)
 		elif (not nameAttribute):
 			customLabel=self.obj.rootNVDAObject.getCustomLabel(idAttribute)
-		
 		if customLabel:
 			attrs["name"]=customLabel
 		

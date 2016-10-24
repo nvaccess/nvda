@@ -116,7 +116,6 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 	virtual ~VBufBackend_t();
 
-	//std::map<std::wstring,std::wstring> labelsMap;
 	multiValueAttribsMap labelsMap;
 
 	public:
