@@ -15,6 +15,14 @@
 - Tuki Baum SuperVario2-, Baum Vario 340- ja HumanWare Brailliant2 -pistenäytöille. (#6116)
 
 
+== Muutokset ==
+- Liblouis-pistekääntäjä päivitetty versioksi 3.0.0, joka sisältää merkittäviä laajennuksia yhdenmukaistettuun englantilaiseen pistekirjoitusmerkistöön (UEB). (#6109, #4194, #6220, #6140)
+- Lisäosien hallinnan Poista käytöstä- ja Ota käyttöön -painikkeilla on nyt pikanäppäimet (Alt+P ja Alt+O). (#6388)
+- Useita täyte- ja tasausongelmia on ratkaistu. (#6317, #5548, #6342, #6343, #6349)
+- Dokumenttien muotoiluasetukset -valintaikkunaa on muutettu siten, että sen sisältöä on mahdollista vierittää. (#6348)
+- Symboleiden puhuminen -valintaikkunan ulkoasua on muutettu siten, että sen koko leveyttä käytetään symboliluettelolle. (#6101)
+
+
 == Korjatut ohjelmavirheet ==
 - Korjattu harvinainen ongelma, jossa NVDA:n sulkeminen aiheutti virheen Puheen tarkastelun ollessa aktiivisena. (#5050)
 - Kuvakartat hahmontuvat nyt odotetusti selaustilassa Mozilla Firefoxissa. (#6051)
@@ -26,6 +34,7 @@
 - Hiirtä on nyt mahdollista käyttää kohdistuksen siirtämiseen Symbolien puhuminen -valintaikkunan symboliluettelon ja muokkauskenttien välillä. (#6312)
 - Korjattu ongelma, joka esti elementtiluettelon avautumisen Microsoft Wordissa, jos dokumentti sisälsi virheellisen hyperlinkin. (#5886)
 - Kun  puheentarkasteluikkuna on suljettu tehtäväpalkista tai Alt+F4-näppäinyhdistelmällä, NVDA-valikon Puheen tarkastelu-valintaruutu vaikuttaa nyt ikkunan näkymiseen. (#6340)
+- Lataa liitännäiset uudelleen -komento ei enää aiheuta ongelmia käynnistimillä käyttöön otettavissa profiileissa, uusissa dokumenteissa verkkoselaimissa tai ruututarkastelussa. (#2892, #5380)
 
 
 == Muutokset kehittäjille (englanniksi) ==

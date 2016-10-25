@@ -12,6 +12,15 @@
 - Når vinduet med talevisning åbnes, vil placeringen og dimensionerne af vinduet blive gendannet. (#5050)
 - Felter til brug af krydshenvisninger behandles nu som links. De rapporteres som links, og kan blive aktiveret. (#6102)
 - Initial støtte for den kommende Kindle app. (#6247)
+- Støtte for Baum SuperVario2, Baum Vario 340 og HumanWare Brailliant2 punktdisplays. (#6116)
+
+
+== Ændringer ==
+- Opdaterede liblouis punktoversætter til 3.0.0. Denne version indeholder store forbedringer til Unified English Braille. (#6109, #4194, #6220, #6140)
+- Genvejstaster er nu tilknyttet knapperne "Aktiver Tilføjelsespakke" og "Deaktiver Tilføjelsespakke" ved administrering af tilføjelsespakker (Alt+A og Alt+D). (#6388)
+- Forskellige problemer med hensyn til den indre margen samt justering er blevet rettet. (#6317, #5548, #6342, #6343, #6349)
+- Indholdet af dialogen til dokumentformatering er blevet justeret således, at indholdet ruller. (#6348)
+- Justerede layout i dialogen for Udtale af sætningstegn og symboler således, at den fulde bredte af dialogen er brugt til listen over symboler. (#6101)
 
 
 == Fejlrettelser ==
@@ -26,6 +35,7 @@
 - Musen kan nu benyttes til at flytte fokus imellem symbollisten og editfelterne i dialogen til Udtale af Sætningstegn og Symboler. (#6312)
 - Rettede en fejl der gjorde elementlisten ikke kunne vises hvis Microsoft Word indeholdte et ugyldigt link. (#5886)
 - Efter lukning af talevisning ved hjælp af processlinjen eller genvejen ALT+F4, vil tjekboksens status i NVDA-menuen nu reflektere den aktuelle synlighed af vinduet. (#6340)
+- Kommandoen til genindlæsning af plugins vil ikke længere skabe problemer for udløste konfigurationsprofiler, nye dokumenter i web-browsere samt skærmlæsning. (#2892, #5380)
 
 
 == Ændringer for udviklere ==

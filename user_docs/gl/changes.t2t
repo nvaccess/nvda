@@ -15,6 +15,14 @@ Que hai de Novo no NVDA
 - Soporte para as pantallas braille Baum SuperVario2, Baum Vario 340 e HumanWare Brailliant2. (#6116)
 
 
+== Cambios ==
+- Actualizado o transcriptor braille liblouis a 3.0.0. Esto inclúe melloras significativas para o Braille Inglés Unificado. (#6109, #4194, #6220, #6140)
+- No administrador de complementos, os botóns Deshabilitar complemento e Habilitar complemento agora teñen atallos de teclado (alt+d e alt+e, respectivamente). (#6388)
+- Resolvéronse varios problemas de recheo e alineamento. (#6317, #5548, #6342, #6343, #6349)
+- O diálogo formateado de documento axustouse de xeito que o contido se deslice. (#6348)
+- Axustada a distribución do diálogo pronunciación de símbolos polo que se utiliza todo o ancho do diálogo para a lista de símbolos. (#6101)
+
+
 == Correción de Fallos ==
 - Correxido un extrano problema cando ao saír do  NVDA mentras o visualizador de voz está aberto causa un erro. (#5050)
 - Os mapas de imaxe agora procésanse coma se esperaba no modo exploración no Mozilla firefox. (#6051)
@@ -26,6 +34,7 @@ Que hai de Novo no NVDA
 - O rato agora pode usarse para mover o foco entre a lista de símbolos e os campos de edición no diálogo pronunciación de símbolos. (#6312)
 - Correxido un problema que detén a aparición da lista de elementos cando o Microsoft Word contén un hipervínculo inválido. (#5886)
 - Despois de seren pechado a través da barra de tarefas ou do atallo de teclado alt+F4, o estado da caixa de verificación visualizador de voz no menú NVDA agora reflitirá a visibilidade actual da ventá. (#6340)
+- A orde recargar plugins xa non causa problemas para os perfís de configuración disparados, nos documentos novos en navegadores web e na revisión de pantalla. (#2892, #5380)
 
 
 == Cambios para Desenvolvedores ==

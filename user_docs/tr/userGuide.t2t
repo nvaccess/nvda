@@ -1195,33 +1195,41 @@ Bu iletişim kutusu tercihler menüsü içindeki "Belge Formatları..." altında
 Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür biçimlendirmeleri otomatik olarak duymak istediğinizi ayarlamanızı sağlamak içindir.
 Örneğin, yazı Tipi Adını Bildir onay kutusunu işaretlerseniz, oklarla başka bir yazı tipiyle yazılan bir metne her gittiğinizde, yazı tipi adı bildirilecektir.
 
+Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 Şunların bildirimini ayarlayabilirsiniz:
+- Yazı tipi
 - Yazı tipi adı
 - Yazı tipi boyutu
 - Yazı tipi özellikleri
-- Metin hizzalaması
-- Renkler
-- Açıklamalar
-- Editör değişiklikleri
 - Vurgu
-- Metin sitilleri
+ Stil
+- Renkler
+- Belge Bilgileri
+- Açıklamalar
+- Editör düzeltmeleri
 - Yazım hataları
+- Sayfalar ve Aralık
 - Sayfa numaraları
-- Satır numaraları
-- Satır girintisi
-- Paragraf girintisi (Örneğin, asılı girinti, ilk satır girintisi)
-- Satır aralığı (tek, çift vs)
+- Satır Numaraları
+- Satır girintilerinin bildirimi [(Kapalı, Konuşma, Ses çalarak, Konuşarak ve Ses çalarak) #lineIndentationOptions]
+ - Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
+ - Satır aralığı (tek, çift vs)
+ --- Hizzalama
+ Tablo bilgileri
 - Tablolar
-- Tablo satır/sütun başlıkları
-- Tablo hücre koordinatları
-- Bağlantılar
+- Satır/sütun başlıkları
+- Hücre koordinatları
+- Öğeler
 - Başlıklar
+- Bağlantılar
 - Listeler
 - Alıntılar
 - Sınır imleri
 - Çerçeveler
 - Bir ögenin tıklanabilir olup olmadığı
 -
+-
+
 
 Bu ayarları herhangi bir yerdeyken değiştirebilmek için, lütfen [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyin.
 
@@ -1232,9 +1240,9 @@ Varsayılan olarak NVDA sistem düzenleme imleci veya inceleme imlecinin bulundu
  
 Biçimlendirmenin önemli olduğu Microsoft Word belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
 
-==== Satır girintilerini bildirme alternatifleri ====
+==== Satır girintilerinin bildirimi ====[lineIndentationOptions]
 Bu seçenek, satır başlarındaki boşlukların nasıl bildirileceğini belirlemenize olanak tanır.
-Satır girintilerininin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
+Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 
 - Kapalı: NVDA girintilerle ilgili herhangi bir bildirimde bulunmaz.
 - Konuşma: Konuşma seçilirse, girinti miktarı değiştiğinde, NVDA "oniki aralık" veya "dört sekme" gibi bir şey söyler.
