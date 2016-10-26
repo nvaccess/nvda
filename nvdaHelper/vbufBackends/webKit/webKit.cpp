@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <comdef.h>
 #include <comip.h>
+#include <comutil.h>
 #include <windows.h>
 #include <oleacc.h>
 #include <ia2.h>
@@ -61,8 +62,7 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 	varChild.lVal=0;
 
 	// Get role with accRole
-	VARIANT varRole;
-	VariantInit(&varRole);
+	_variant_t varRole;
 	pacc->get_accRole(varChild, &varRole);
 
 	if (varRole.vt == VT_I4 && varRole.lVal == ROLE_SYSTEM_COLUMN) {
@@ -71,7 +71,6 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 		// We never want the column representation.
 		return NULL;
 	}
-	// varRole is still needed. It will be cleaned up later.
 
 	int id;
 	if(pacc->get_uniqueID((long*)&id) != S_OK)
@@ -79,7 +78,6 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,id)!=NULL) {
-		VariantClear(&varRole);
 		pacc->Release();
 		return NULL;
 	}
@@ -103,7 +101,6 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 		role = varRole.lVal;
 	}
 	parentNode->addAttribute(L"IAccessible::role",s.str());
-	VariantClear(&varRole);
 
 	// Get states with accState
 	varChild.lVal=0;
