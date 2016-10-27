@@ -112,7 +112,7 @@ def associateElements( firstElement, secondElement):
 		raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
 
 	# staticText and (choice or textCtrl)
-	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl)):
+	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl, wx.SpinCtrl)):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
