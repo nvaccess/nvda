@@ -521,7 +521,8 @@ class VoiceSettingsDialog(SettingsDialog):
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
 		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=-100, max=100, initial=config.conf["speech"][getSynth().name]["capPitchChange"])
+			min=-100, max=100,
+			initial=config.conf["speech"][getSynth().name]["capPitchChange"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings dialog.
@@ -1548,7 +1549,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		cursorBlinkRateLabelText = _("Cursor blink rate (ms)")
 		self.cursorBlinkRateEdit = sHelper.addLabeledControl(cursorBlinkRateLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=0, max=2000, initial=config.conf["braille"]["cursorBlinkRate"])
+			min=0, max=2000,
+			initial=config.conf["braille"]["cursorBlinkRate"])
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorBlinkRateEdit.Disable()
 
@@ -1568,7 +1570,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=0, max=20, initial=config.conf["braille"]["messageTimeout"])
+			min=0, max=20,
+			initial=config.conf["braille"]["messageTimeout"])
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("Braille tethered to:")
