@@ -1166,13 +1166,13 @@ Denne indstilling er slået til som standard.
 
 ==== Inkluder layouttabeller ====
 Denne indstilling bestemmer, hvordan NVDA håndterer tabeller, som kun er lavet af hensyn til det visuelle layout.
-Når den er slået til, vil NVDA håndtere disse tabeller som normale tabellerog indikere dem afhængigt af [Dokumentformateringsindstillinger #DocumentFormattingSettings] og finde dem med hurtignavigeringskommandoer.
+Når den er slået til, vil NVDA håndtere disse tabeller som normale tabeller og indikere dem afhængigt af [Dokumentformateringsindstillinger #DocumentFormattingSettings] og finde dem med hurtignavigeringskommandoer.
 Når indstillingern er slået fra, vil layouttabeller ikke blive indikeret og ikke blive fundet med hurtignavigering.
 Tabellernes indhold vil imidlertid stadig blive læst op som normal tekst.
 Denne indstilling er slået fra som standard.
 
 ==== Konfigurer annoncering af felter som links og overskrifter ====
-Hvis du vil konfigurere disse indstillinger til rapportering af områder når du navigerer, så som links, overskrifter og tabeller, skal du åbne dialogboksen [dialogen Dokument formatering #DocumentFormattingSettings] for at finde disse indstillinger.
+Se venligst indstillingerne i dialogen for [Dokumentformatering #DocumentFormattingSettings] for at konfigurere rapportéring for felter så som links, overskrifter og tabeller.
 
 ==== Automatisk fokustilstand ved ændringer af fokus ====
 Denne funktion gør det muligt automatisk at fremkalde fokustilstand, når fokus ændrer sig.
@@ -1231,16 +1231,16 @@ Du kan tilpasse annoncering af:
 -
 
 
-Hvis du gerne vil kunne slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen inputbevægelser #InputGestures].
+For at slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen inputbevægelser #InputGestures].
 
-==== Annoncer ændringer i formatering efter markøren ====
-Hvis denne indstilling er slået til, betyder det at NVDA forsøger at spore alle ændringer i formateringen på en linje, når den læses op, selvom dette måtte sænke NVDAs hastighed.   
+==== Rapportér ændringer i formatering efter markøren ====
+Hvis denne indstilling er slået til, betyder det at NVDA forsøger at spore alle ændringer i formateringen på en linje, når den rapportérers, selvom dette måtte sænke NVDAs hastighed.   
 
 NVDA vil som standard spore ændringer i formateringen på markørens eller den ubegrænsede markørs position og af og til også på resten af linjen, med mindre hastigheden derved reduceres.
  
-Slå denne funktion til ved korrekturlæsning af dokumenter i programmer som Microsoft Word, hvor formatering har betydning.  
+Slå denne funktion til ved korrekturlæsning af dokumenter i programmer som Wordpad, hvor formatering har betydning.  
 
-==== Rapporter linjeindrykning med ====
+==== Rapportering af linjeindrykning ====[lineIndentationOptions]
 Denne indstilling lader dig konfigurere hvordan linjeindrykning rapporteres.
 Denne combo boks har fire muligheder.
 
@@ -1248,7 +1248,7 @@ Denne combo boks har fire muligheder.
 - Tale: Hvis denne mulighed er valgt og indrykningen ændres, vil NVDA rapportere noget lignende "12 mellemrum" eller "4 tab."
 - Toner: Hvis denne mulighed er valgt og indrykningen ændres, vil toner rapportere mængden af linjeindrykning.
 Tonens toneleje vil forøges ved hvert mellemrum, og for tab vil tonen forøges fire mellemrum.
-- Tale og toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
+- Både Tale og Toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
 -
 
 +++ Udtaleordbøger  +++
