@@ -122,7 +122,7 @@ def associateElements( firstElement, secondElement):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizer.Add(firstElement)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-		sizer.Add(secondElement)
+		sizer.Add(secondElement, flag=wx.EXPAND)
 	# button and checkBox
 	elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -277,7 +277,10 @@ class BoxSizerHelper(object):
 			limitations from there.
 		"""
 		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
-		self.addItem(labeledControl.sizer)
+		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
+			self.addItem(labeledControl.sizer, flag=wx.EXPAND)
+		else:
+			self.addItem(labeledControl.sizer)
 		return labeledControl.control
 
 	def addDialogDismissButtons(self, buttons):

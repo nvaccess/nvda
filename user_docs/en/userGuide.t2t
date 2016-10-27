@@ -78,7 +78,7 @@ If you plan to  always use NVDA on this computer, you will want to choose to ins
 Installing NVDA will allow for additional functionality such as automatic starting after logon, the ability to read the Windows Logon and Windows security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
 The installed copy is also able to create a portable copy itself at any time.
 
-If you want to take NVDA with you on a USB thum drive or other writable  media, then you  should choose to create a portable copy.
+If you want to take NVDA with you on a USB thumb drive or other writable  media, then you  should choose to create a portable copy.
 The portable copy also has the ability to install itself on any computer at a later time.
 However, if you wish to copy NVDA onto read-only media such as a CD, you should just copy the download package.
 Running the portable version directly from read-only media is not supported at this time.
@@ -1234,11 +1234,11 @@ You can configure reporting of:
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
 ==== Report formatting changes after the cursor ====
-If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it speaks it, even if doing this may slow down NVDA's performance.
+If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it reports it, even if doing this may slow down NVDA's performance.
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
-Enable this option while proof reading documents in applications such as Microsoft Word, where formatting is important.
+Enable this option while proof reading documents in applications such as Wordpad, where formatting is important.
 
 ==== Line indentation reporting ====[lineIndentationOptions]
 This option allows you to configure how indentation at the beginning of lines is reported.
@@ -1446,6 +1446,10 @@ For sighted software developers or people demoing NVDA to sighted audiences, a f
 
 To enable the speech viewer, check the "Speech Viewer" menu item under Tools in the NVDA menu.
 Uncheck the menu item to disable it.
+
+The speech viewer window contains a check box labeled "Show speech viewer on startup".
+If this is checked, the speech viewer will open when NVDA is started.
+The speech viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
 
 While the speech viewer is enabled, it constantly updates to show you the most current text being spoken.
 However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
@@ -1712,8 +1716,8 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ Baum/Humanware/APH/Orbit Braille Displays ++
 Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] and [Orbit http://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
 These include:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

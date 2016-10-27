@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.6.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1451,7 +1451,6 @@ msgid "aqua-blue"
 msgstr "blau-aigua"
 
 #. Translators: The color blue (HSV hue 240 degrees)
-#, fuzzy
 msgctxt "color hue"
 msgid "blue"
 msgstr "blau"
@@ -2401,6 +2400,7 @@ msgid "Mouse"
 msgstr "Ratolí"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Veu"
 
@@ -3699,7 +3699,6 @@ msgid "Review selection copied to clipboard"
 msgstr "Selecció de la revisió copiada al porta-retalls"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
-#, fuzzy
 msgid "Unable to copy"
 msgstr "No hi ha cap text per copiar"
 
@@ -4606,6 +4605,10 @@ msgstr "taula amb {columnCount} columnes i {rowCount} files"
 msgid "NVDA Speech Viewer"
 msgstr "Visor de veu de NVDA"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&Mostra el visor de veu en la posada en marxa"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Idioma"
@@ -4656,7 +4659,6 @@ msgid "&Pitch"
 msgstr "&To"
 
 #. Translators: Label for a setting in synth settings ring.
-#, fuzzy
 msgctxt "synth setting"
 msgid "Pitch"
 msgstr "To"
@@ -4998,6 +5000,16 @@ msgstr "No s'està reproduint cap pista"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Informa del temps restant de la pista actual, si es que en queda."
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, posició {curLocation} de {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Pàgina {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5465,8 +5477,8 @@ msgid "ALVA BC640/680 series"
 msgstr "sèries ALVA BC640/680 "
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Línies braille Baum/HumanWare/APH"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Línies braille Baum/HumanWare/APH/Orbit"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -5833,7 +5845,7 @@ msgstr ""
 "NVDA.\n"
 "Prem NVDA+n en qualsevol moment per activar el menú NVDA.\n"
 " Des d’aquest menú, pots configurar NVDA, consultar l'ajuda i accedir a "
-"altres funcions de NVDA.\n"
+"d'altres funcions de NVDA.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -7051,11 +7063,22 @@ msgstr "Informa de les &pàgines"
 msgid "Report line &numbers"
 msgstr "Informa dels &números de línia"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Informa del sagnat de la línia"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Report line &indentation with:"
+msgstr "Informa del &sagnat de la línia amb:"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "Desactivat"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Tons"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Tant Veu, com tons"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7138,6 +7161,7 @@ msgid "&Pattern"
 msgstr "&Patró"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Reemplaçament"
 
@@ -7286,9 +7310,9 @@ msgstr "Nivell"
 msgid "Preserve"
 msgstr "Preserva"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Canvia el símbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Canvia el símbol seleccionat"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"

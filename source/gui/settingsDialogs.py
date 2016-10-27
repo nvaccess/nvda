@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -36,6 +36,7 @@ try:
 except RuntimeError:
 	updateCheck = None
 import inputCore
+import nvdaControls
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -256,13 +257,6 @@ class GeneralSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
-		if newLanguage!=self.oldLanguage:
-			try:
-				languageHandler.setLanguage(newLanguage)
-			except:
-				log.error("languageHandler.setLanguage", exc_info=True)
-				gui.messageBox(_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING,self)
-				return
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
@@ -1161,7 +1155,7 @@ class DocumentFormattingDialog(SettingsDialog):
 			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 			_("Off"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-			_("Speech"),
+			pgettext('line indentation setting', "Speech"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 			_("Tones"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
@@ -1694,42 +1688,61 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for symbols list in symbol pronunciation dialog.
 		symbolsText = _("&Symbols")
-		self.symbolsList = sHelper.addLabeledControl(symbolsText, wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(360, 350))
+		self.symbolsList = sHelper.addLabeledControl(symbolsText, nvdaControls.AutoWidthColumnListCtrl, autoSizeColumnIndex=0, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
 		# Translators: The label for a column in symbols list used to identify a symbol.
-		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
-		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
+		self.symbolsList.InsertColumn(0, _("Symbol"))
+		self.symbolsList.InsertColumn(1, _("Replacement"))
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-		self.symbolsList.InsertColumn(2, _("Level"), width=60)
+		self.symbolsList.InsertColumn(2, _("Level"))
 		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-		self.symbolsList.InsertColumn(3, _("Preserve"), width=60)
+		self.symbolsList.InsertColumn(3, _("Preserve"))
 		for symbol in symbols:
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
 
-		# Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-		changeSymbolText = _("Change symbol")
+		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+		changeSymbolText = _("Change selected symbol")
 		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=changeSymbolText), wx.VERTICAL)))
+
+		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More 
+		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
+		# to allow the default handling to take place. The command events are, however, normally not skipped as usually 
+		# a single command such as a button click or menu item selection must only be processed by one handler."
+		def skipEventAndCall(handler):
+			def wrapWithEventSkip(event):
+				if event:
+					event.Skip()
+				return handler()
+			return wrapWithEventSkip
+
 		
+		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
 		self.replacementEdit = changeSymbolHelper.addLabeledControl(replacementText, wx.TextCtrl)
-		self.replacementEdit.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 
 		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 		levelText = _("&Level")
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		levelChoices = [symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS]
 		self.levelList = changeSymbolHelper.addLabeledControl(levelText, wx.Choice, choices=levelChoices)
-		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		self.levelList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 
 		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 		preserveText = _("&Send actual symbol to synthesizer")
 		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
 		preserveChoices = [symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES]
 		self.preserveList = changeSymbolHelper.addLabeledControl(preserveText, wx.Choice, choices=preserveChoices)
-		self.preserveList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		self.preserveList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
+
+		# disable the "change symbol" controls until a valid item is selected.
+		self.replacementEdit.Disable()
+		self.levelList.Disable()
+		self.preserveList.Disable()
+
 
 		bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
@@ -1752,26 +1765,30 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
 		self.symbolsList.SetStringItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
 
-	def onSymbolEdited(self, evt):
-		if self.editingItem is None:
-			return
-		# Update the symbol the user was just editing.
-		item = self.editingItem
-		symbol = self.symbols[item]
-		symbol.replacement = self.replacementEdit.Value
-		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
-		symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
-		self.updateListItem(item, symbol)
+	def onSymbolEdited(self):
+		if self.editingItem is not None:
+			# Update the symbol the user was just editing.
+			item = self.editingItem
+			symbol = self.symbols[item]
+			symbol.replacement = self.replacementEdit.Value
+			symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+			symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
+			self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
 		# Update the editing controls to reflect the newly selected symbol.
 		item = evt.GetIndex()
 		symbol = self.symbols[item]
 		self.editingItem = item
-		self.replacementEdit.Value = symbol.replacement
+		# ChangeValue and Selection property used because they do not cause EVNT_CHANGED to be fired.
+		self.replacementEdit.ChangeValue(symbol.replacement)
 		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
 		self.preserveList.Selection = characterProcessing.SPEECH_SYMBOL_PRESERVES.index(symbol.preserve)
 		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
+		self.replacementEdit.Enable()
+		self.levelList.Enable()
+		self.preserveList.Enable()
+		evt.Skip()
 
 	def onListChar(self, evt):
 		if evt.KeyCode == wx.WXK_RETURN:
@@ -1780,7 +1797,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 			# Therefore, we must catch the enter key here.
 			# Activate the OK button.
 			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-
 		else:
 			evt.Skip()
 
@@ -1832,7 +1848,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.SetFocus()
 
 	def onOk(self, evt):
-		self.onSymbolEdited(None)
+		self.onSymbolEdited()
 		self.editingItem = None
 		for symbol in self.pendingRemovals.itervalues():
 			self.symbolProcessor.deleteSymbol(symbol)

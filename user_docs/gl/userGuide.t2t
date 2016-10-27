@@ -1195,33 +1195,41 @@ Esta caixa de diálogo atópase no menú Preferencias, baixo "Formato de Documen
 A maioría das caixas de verificación neste diálogo son para configurar que tipo de formato desexas escoitar automáticamente cando movas o cursor polos documentos. 
 Por Exemplo, se verificas a caixa de verificación anunciar o nome da fonte, cada vez que navegues polo texto cunha fonte diferente, o nome da fonte serache anunciado.
 
+As opcións de formateado de documento organízanse en grupos.
 Podes configurar o anunciado de:
-- Nome de fonte
-- Tamano de fonte
-- Atributos de fonte
-- Alineamento do texto
-- Cores
-- Comentarios
-- Revisións do editor
-- Énfase
-- Estilo do texto
-- Erros de ortografía
-- Números de páxina
-- Números de liña
-- Sangría de liña
-- Sangría de parágrafo (por exemplo: sangría francesa, sangría de primeira liña)
-- espaciado de liña (simple, doble etc)
-- Táboas
-- Cabeceiras de fila/columna de táboa
-- Coordinadas de celdas da táboa
-- Ligas
-- Cabeceiras
-- Listas
-- Citas
-- Pontos de referencia
-- Marcos
-- Cando se pode facer clic en algo
+- Fonte
+ - Nome de fonte
+ - Tamano de fonte
+ - Atributos de fonte
+ - Énfase
+ - Estilo
+ - Cores
+- Información de documento
+ - Comentarios
+ - Revisiones do editor
+ - Erros de ortografía
+- Páxinas e espaciado
+ - Números de páxina
+ - Números de liña
+ - Anunciado de sangría de liña [(Desactivado, voz, Tons, voz e tons) #lineIndentationOptions]
+ - Sangría de parágrafo (ex.: sangría, sangría de primeira liña)
+ - Espaciado de liña (simple, doble etc)
+ - Alineamento
+- Información de táboa
+ - Táboas
+ - Cabeceiras de fila/columna
+ - Coordenadas de celda
+- Elementos
+ - Cabeceiras
+ - Ligas
+ - Listas
+ - Citas
+ - Pontos de referencia
+ - Marcos
+ - Admite clic
+ -
 -
+
 
 Para conmutar estas  opcións dende calquera lugar, por favor asigna xestos persoalizados utilizando o [diálogo Xestos de Entrada #InputGestures].
 
@@ -1232,7 +1240,7 @@ De xeito predeterminado, NVDA detectará o formato na posición do cursor do Sis
  
 Activa esta opción mentres comprobas a lectura de documentos en aplicacións como Microsoft Word, onde o formato sexa importante.
 
-==== Anunciar sangría de liñas con ====
+==== Anunciado de sangría de liñas ====[lineIndentationOptions]
 Esta opción permíteche configurar cómo debe lerse a sangría do comezo das liñas.
 A caixa combinada Anunciar sangría de liñas con ten catro opcións.
 
@@ -1438,6 +1446,10 @@ Para desenroladores de Software videntes ou xente demostrando NVDA a unha audien
 
 Para activar o visualizador de voz, marca o elemento de menú "Visualizador de Voz" baixo Ferramentas no menú NVDA.
 Desmarca o elemento de menú para desactivalo.
+
+A ventá do visualizador de voz contén unha caixa de verificación etiquetada "Amosar visualizador de voz ao arrancar".
+Se esta está marcada, o visualizador de voz abrirase cando NVDA arranque.
+A ventá do visualizador de voz sempre tentará reabrirse coas mesmas dimensións e localización que cando se pechou.
 
 Mentres o visualizador de voz estea activado, actualízase constantemente para amosarche o texto máis recente que está a ser falado.
 Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deterá temporalmente a actualización do texto, tal que poderás seleccionar ou copiar sinxelamente o contido existente.
@@ -1704,8 +1716,8 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 ++ Pantallas braille Baum/Humanware/APH/Orbit ++
 Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] e [Orbit http://www.orbitresearch.com/] están soportadas cando se conectan a través dos portos USB, bluetooth ou serie.
 Estas inclúen:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

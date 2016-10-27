@@ -287,7 +287,7 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 				destModel->setFocusRect(&newFocusRect);
 			}
 		}
-		free(srcFocusRect);
+		delete srcFocusRect;
 	}
 }
 

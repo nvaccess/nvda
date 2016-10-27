@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
-"PO-Revision-Date: 2016-09-06 09:11+0800\n"
+"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"PO-Revision-Date: 2016-10-18 17:22+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -435,13 +435,13 @@ msgstr "馬拉地語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "比利時荷蘭語一級點字"
+msgid "Dutch (Belgium)"
+msgstr "荷蘭語（比利時）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "荷蘭語一級點字"
+msgid "Dutch (Netherlands)"
+msgstr "荷蘭語（荷蘭）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -550,7 +550,7 @@ msgstr "坦米爾語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "泰盧固語一級點字"
 
 #. Translators: The name of a braille table displayed in the
@@ -1245,16 +1245,22 @@ msgstr "沒有前一個標記了"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "連結(&K)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "標題(&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "地標(&D)"
 
@@ -2067,11 +2073,11 @@ msgstr "單行"
 
 #. Translators: Identifies a font name.
 msgid "font name"
-msgstr "字體名稱"
+msgstr "字型名稱"
 
 #. Translators: Identifies font size.
 msgid "font size"
-msgstr "字體大小"
+msgstr "字型大小"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
@@ -2396,7 +2402,6 @@ msgid "Mouse"
 msgstr "滑鼠"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "語音"
 
@@ -2592,39 +2597,39 @@ msgstr "切換讀出指令鍵的開關"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "讀出字體名稱 關"
+msgstr "讀出字型名稱 關"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "讀出字體名稱 開"
+msgstr "讀出字型名稱 開"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
-msgstr "切換讀出字體名稱的開關"
+msgstr "切換讀出字型名稱的開關"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "讀出字體大小 關"
+msgstr "讀出字型大小 關"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "讀出字體大小 開"
+msgstr "讀出字型大小 開"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
-msgstr "切換讀出字體大小的開關"
+msgstr "切換讀出字型大小的開關"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "讀出字體屬性 關"
+msgstr "讀出字型屬性 關"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "讀出字體屬性 開"
+msgstr "讀出字型屬性 開"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "切換讀出字體屬性的開關"
+msgstr "切換讀出字型屬性的開關"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
@@ -2722,17 +2727,25 @@ msgstr "讀出第幾行 開"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "切換讀出第幾行的開關"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "讀出行縮排"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "提示音-行縮排"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "提示音及讀出行縮排"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
 msgstr "讀出行縮排 關"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "讀出行縮排 開"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "切換讀出行縮排的開關"
+msgid "Cycles through line indentation settings"
+msgstr "循環切換行縮排的設定"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3486,6 +3499,7 @@ msgid "review"
 msgstr "瀏覽焦點"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "系統焦點"
 
@@ -4850,6 +4864,16 @@ msgstr "目前沒有播放曲目"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "讀出目前播放曲目的剩餘時間"
 
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%，位置在 {maxLocation} 之 {curLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "第 {pageNumber} 頁"
+
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
 msgstr "沒有新訊息"
@@ -5778,8 +5802,8 @@ msgid "Add-on &help"
 msgstr "附加元件說明 (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "停用附加元件"
+msgid "&Disable add-on"
+msgstr "停用附加元件 (&D)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5880,8 +5904,8 @@ msgid "running"
 msgstr "正在執行"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "啟用附加元件"
+msgid "&Enable add-on"
+msgstr "啟用附加元件 (&E)"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -5918,10 +5942,6 @@ msgstr "附加元件資訊"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "組態設定"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "設定檔(&P)"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6225,14 +6245,14 @@ msgstr "可攜版目錄 (&D)"
 msgid "Browse..."
 msgstr "瀏覽..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "複製目前的使用者設定檔(&U)"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "選擇可攜式版目錄"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "複製目前的使用者設定檔(&U)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6318,10 +6338,6 @@ msgstr "偵錯"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "語言(需重新啟動才可套用設定)(&L):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "語言"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "關閉時儲存設定(&S)"
@@ -6337,10 +6353,6 @@ msgstr "啟動或關閉 NVDA 時播放音效(&P)"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "事件記錄等級(&O):"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "事件記錄等級"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6501,10 +6513,6 @@ msgstr "鍵盤設定"
 msgid "&Keyboard layout:"
 msgstr "鍵盤配置(&K):"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "鍵盤配置"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6582,10 +6590,6 @@ msgstr "啟動讀出鼠標所指文字或物件(&T)"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "讀出文字範圍(&U):"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "文字讀出單元"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6712,11 +6716,6 @@ msgstr "讀出物件說明(&D)"
 msgid "Progress &bar output:"
 msgstr "進度列輸出(&B):"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "進度列輸出"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6780,79 +6779,95 @@ msgstr "將所有的非手勢指令失效(&T)"
 msgid "Document Formatting"
 msgstr "文件格式"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "讀出游標經過後的格式變換（可能導致系統反應變慢） "
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "下列的選項可控制由 NVDA 讀出各種文件型態的格式"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "字型"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "讀出字體名稱(&F)"
+msgid "&Font name"
+msgstr "字型名稱 (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "讀出字體大小(&S)"
+msgid "Font &size"
+msgstr "字型大小 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "讀出字體屬性(&B)"
+msgid "Font attri&butes"
+msgstr "字型屬性 (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "讀出對齊方式(&A)"
+msgid "E&mphasis"
+msgstr "強調標記 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "讀出色彩(&C)"
+msgid "St&yle"
+msgstr "樣式 (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "讀出註解 (&M)"
+msgid "&Colors"
+msgstr "色彩 (&C)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "文件資訊"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "讀出修訂(&E)"
+msgid "Co&mments"
+msgstr "註解 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "讀出強調(&M)"
+msgid "&Editor revisions"
+msgstr "修訂 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "讀出文字樣式(&Y)"
+msgid "Spelling e&rrors"
+msgstr "拼錯字 (&R)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "頁碼及段落間距"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "讀出拼錯字 (&R)"
+msgid "&Pages"
+msgstr "頁碼 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "讀出頁碼(&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "讀出第幾行(&N)"
+msgid "Line &numbers"
+msgstr "行號 (&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "讀出行縮排使用(&I)："
+msgid "Line &indentation reporting:"
+msgstr "讀出行縮排 (&I)："
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "關"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "語音"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -6864,63 +6879,68 @@ msgstr "語音及提示音"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "讀出段落縮排 (&P)"
+msgid "&Paragraph indentation"
+msgstr "段落縮排 (&P)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "讀出行距 (&L)"
+msgid "&Line spacing"
+msgstr "行距 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "讀出表格(&T)"
+msgid "&Alignment"
+msgstr "對齊 (&A)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "表格資訊"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "讀出列及欄標題(&E)"
+msgid "&Tables"
+msgstr "表格 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "讀出儲存格的座標(&C)"
+msgid "Row/column h&eaders"
+msgstr "列及欄標題 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "讀出連結(&K)"
+msgid "Cell c&oordinates"
+msgstr "儲存格座標 (&O)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "元件"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "讀出標題(&H)"
+msgid "&Lists"
+msgstr "清單 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "讀出清單(&L)"
+msgid "Block &quotes"
+msgstr "引述 (&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "讀出引述(&Q)"
+msgid "Fra&mes"
+msgstr "頁框 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "讀出地標(&D)"
+msgid "&Clickable"
+msgstr "可點擊 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "讀出頁框(&M)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "讀出可點擊(&C)"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "讀出游標經過後的格式變換（可能導致系統反應變慢）"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -6943,6 +6963,7 @@ msgid "&Pattern"
 msgstr "原來文字(&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "代替文字(&R)"
 
@@ -7091,9 +7112,9 @@ msgstr "等級"
 msgid "Preserve"
 msgstr "保留狀態"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "變更符號讀法 "
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "變更已選取的符號"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -8493,6 +8514,84 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "&Profile"
+#~ msgstr "設定檔(&P)"
+
+#~ msgid "Language"
+#~ msgstr "語言"
+
+#~ msgid "Log level"
+#~ msgstr "事件記錄等級"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "鍵盤配置"
+
+#~ msgid "text reporting unit"
+#~ msgstr "文字讀出單元"
+
+#~ msgid "Progress bar output"
+#~ msgstr "進度列輸出"
+
+#~ msgid "Report &font name"
+#~ msgstr "讀出字體名稱(&F)"
+
+#~ msgid "Report font &size"
+#~ msgstr "讀出字體大小(&S)"
+
+#~ msgid "Report &alignment"
+#~ msgstr "讀出對齊方式(&A)"
+
+#~ msgid "Report &colors"
+#~ msgstr "讀出色彩(&C)"
+
+#~ msgid "Report co&mments"
+#~ msgstr "讀出註解 (&M)"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "讀出強調(&M)"
+
+#~ msgid "Report st&yle"
+#~ msgstr "讀出文字樣式(&Y)"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "讀出拼錯字 (&R)"
+
+#~ msgid "Report &pages"
+#~ msgstr "讀出頁碼(&P)"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "讀出行距 (&L)"
+
+#~ msgid "Report &tables"
+#~ msgstr "讀出表格(&T)"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "讀出列及欄標題(&E)"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "讀出連結(&K)"
+
+#~ msgid "Report &headings"
+#~ msgstr "讀出標題(&H)"
+
+#~ msgid "Report &lists"
+#~ msgstr "讀出清單(&L)"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "讀出引述(&Q)"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "讀出地標(&D)"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "讀出頁框(&M)"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "讀出可點擊(&C)"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "切換讀出行縮排的開關"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "儲存格不可編輯"

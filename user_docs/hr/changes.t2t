@@ -3,6 +3,35 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+
+== Nove značajke ==
+- Nvda sada izvještava o poravnanju redka koristeći zvučne signale. Ovo se podešava koristeći odabirni okvir "izvijesti o poravnanju redaka pomoću"  u postavkama oblikovanja dokumenta. (#5906)
+- Podrška za Orbit Reader 20 brajični redak. (#6007)
+- Opcija koja omogućuje otvaranje preglednika govora pri pokretanju je dodana. Ovo se može uključiti pomoću odabirnog okvira u pregledniku govora. (#5050)
+- Prilikom ponovnog otvaranja dijaloškog okvira preglednika govora, Sada će dimenzije biti vrećene. (#5050)
+- Polja unakrsnih referenci sada se tretiraju kao hiperveze. Iste se mogu aktivirati. (#6102)
+- Prvobitna podrška za nadolazeću inačicu  Kindle aplikacije. (#6247)
+- Podrška za Baum SuperVario2, Baum Vario 340 i HumanWare Brailliant2 brajične retke. (#6116)
+
+
+== Ispravke grešaka ==
+- Ispravljena rijetka greška prilikom isključivanja NVDA kada je preglednik govora otvoren prouzrokujući grešku. (#5050)
+- Grafički linkovi se sada prikazuju u načinu pregleda u Mozilla Firefoxu. (#6051)
+- Ispravljena pogreška koja je prouzrokovala upozorenje u datoteci nvda zapisnika prilikom uključivanja /isključivanja caps locka. (#6127)
+- Kada se nalazite u dijaloškom okviru rječnika, pritisak na tipku enter sada posprema promjene i isključuje. (#6206)
+- Sada se prikazuju poruke na brajičnom retku prilikom izmjene načina unosa za azijske metode unosa (izvorni unos /alfanumerički, puni oblik/polovičan, itd.). (#5892, #5893)
+- Prilikom onemogućavanja a potom ponovnog omogućavanja dodatka, status dodatka sada se ponovno vraća na onu vrijednost na koju je bio postavnjen prije. (#6299)
+- Prilikom korištenja Microsoft Worda, brojevi stranica u zaglavjima sada se mogu čitati. (#6004)
+- Miš se sada može koristiti za pomicanje fokusa između popisa znakova  i uređivačkih polja u dijaloškom okviru izgovora simbola. (#6312)
+- Ispravljena greška koja onemogućuje prikazivanje popisa elemenata kada microsoft wordow dokument sadrži neispravnu hipervezu. (#5886)
+- Bio on zatvoren sa alatne trake ili pomoću prečaca alt+f4, stanje odabirnog okvira preglednika govora u nvda izborniku će sada odražavati trenutnu vidljivost prozora. (#6340)
+
+
+== Izmjene za razvojne programere ==
+Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
+
+
 = 2016.3 =
 Novosti u ovoj inačici uključuju mogučnost onemogučavanja pojedinačnih dodataka; podršku za polja obrazaca u Microsoft excelu; drastična poboljšanja u izvještavanju boja; popravke i unaprjeđenja pri korištenju nekih brajičnih redaka; a također popravci i unaprjeđenja u Microsoft wordu.
 
@@ -52,6 +81,7 @@ Novosti u ovoj inačici uključuju mogučnost onemogučavanja pojedinačnih doda
 - Ako je izgovaranje brojeva redaka uključeno u postavkama oblikovanja dokumenta, isti se sada prikazuju na brajičnom redku. (#5941)
 - Kada je način govora isključen, izgovoreni objekti (poput pritiska NVDA+tab za izgovaranje fokusa) sada se pojavljuje u pregledniku govora, kako se to očekuje. (#6049)
 - U Outlook 2016 popisu poruka,  pridružena informacija o predlošku više se ne izgovara. (#6219)
+- U Google Chrome-u i web preglednicima baziranima na njemu, na jezicima drukćijima od engleskog, način pregleda više ne odbija poslušnost u većini dokumenata. (#6249)
 
 
 == Izmjene za razvojne programere ==

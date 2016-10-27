@@ -11,6 +11,16 @@
 - En indstilling til at åbne talevisning ved opstart er blevet tilføjet. (#5050)
 - Når vinduet med talevisning åbnes, vil placeringen og dimensionerne af vinduet blive gendannet. (#5050)
 - Felter til brug af krydshenvisninger behandles nu som links. De rapporteres som links, og kan blive aktiveret. (#6102)
+- Initial støtte for den kommende Kindle app. (#6247)
+- Støtte for Baum SuperVario2, Baum Vario 340 og HumanWare Brailliant2 punktdisplays. (#6116)
+
+
+== Ændringer ==
+- Opdaterede liblouis punktoversætter til 3.0.0. Denne version indeholder store forbedringer til Unified English Braille. (#6109, #4194, #6220, #6140)
+- Genvejstaster er nu tilknyttet knapperne "Aktiver Tilføjelsespakke" og "Deaktiver Tilføjelsespakke" ved administrering af tilføjelsespakker (Alt+A og Alt+D). (#6388)
+- Forskellige problemer med hensyn til den indre margen samt justering er blevet rettet. (#6317, #5548, #6342, #6343, #6349)
+- Indholdet af dialogen til dokumentformatering er blevet justeret således, at indholdet ruller. (#6348)
+- Justerede layout i dialogen for Udtale af sætningstegn og symboler således, at den fulde bredte af dialogen er brugt til listen over symboler. (#6101)
 
 
 == Fejlrettelser ==
@@ -18,6 +28,14 @@
 - Billedmapper gengives nu som forventet i gennemsynstilstand i Mozilla Firefox. (#6051)
 - Rettede en fejl som skrev en advarsel til NVDAs logfil, når CAPS Lock er slået til. 
 (#6127)
+- Hvis du befinder dig i en dialog, som omfatter ordbøgerne til NVDA, kan du nu trykke på enter-tasten for at gemme ændringerne og lukke dialogen. (#6206)
+- Beskeder er nu vist på punkt når der ændres indtastningstilstand for en indtastningsmetode (lokalt tegnsæt, alfanumerisk indtastning, full shaped/half shaped osv.) (#5892, #5893)
+- Hvis en tilføjelsespakke slås fra og straks slås til igen eller omvendt, vil tilføjelsespakkens status nu korrekt vende tilbage til hvad den var tidligere. (#6299)
+- Når der benyttes Microsoft Word, kan felter til sidetal nu blive læst i sidehoveder. (#6004)
+- Musen kan nu benyttes til at flytte fokus imellem symbollisten og editfelterne i dialogen til Udtale af Sætningstegn og Symboler. (#6312)
+- Rettede en fejl der gjorde elementlisten ikke kunne vises hvis Microsoft Word indeholdte et ugyldigt link. (#5886)
+- Efter lukning af talevisning ved hjælp af processlinjen eller genvejen ALT+F4, vil tjekboksens status i NVDA-menuen nu reflektere den aktuelle synlighed af vinduet. (#6340)
+- Kommandoen til genindlæsning af plugins vil ikke længere skabe problemer for udløste konfigurationsprofiler, nye dokumenter i web-browsere samt skærmlæsning. (#2892, #5380)
 
 
 == Ændringer for udviklere ==
