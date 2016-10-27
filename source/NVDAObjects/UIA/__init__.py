@@ -1255,14 +1255,12 @@ class SearchField(UIA):
 
 	def event_UIA_controllerFor(self):
 		# Only useful if suggestions appear and disappear.
-		focus = api.getFocusObject()
-		if len(self.controllerFor)>0:
+		if self == api.getFocusObject() and len(self.controllerFor)>0:
 			# Translators: Announced when suggestions appear when search term is entered in various search fields in Windows 10.
 			ui.message(_("Suggestions"))
 		else:
 			# Translators: Announced when suggestions disappear when search term is entered in various search fields in Windows 10.
 			ui.message(_("Suggestions closed"))
-
 
 
 class SuggestionListItem(UIA):
