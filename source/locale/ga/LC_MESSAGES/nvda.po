@@ -7,17 +7,17 @@
 # Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2016.3\n"
+"Project-Id-Version: NVDA 2016.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-20 17:12+0100\n"
+"POT-Creation-Date: 2016-09-23 00:10+1000\n"
+"PO-Revision-Date: 2016-10-02 17:44+0100\n"
 "Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -133,17 +133,19 @@ msgstr "Réigiún"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr ""
+msgstr "Ná ísligh aired chlosáin ó feidhmchláir eile"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
 msgstr ""
+"Ísligh aired chlosáin ó fheidhmchláir eile agus NVDA ag labhairt nó ag "
+"déanamh fuaime  "
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
-msgstr ""
+msgstr "ísligh aired chlosáin ó feidhmchlair eile I gcónaí"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1509,10 +1511,10 @@ msgid "light pale {color}"
 msgstr ""
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
-msgstr "{color}"
+msgstr "{color} geal"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
 #, python-brace-format
@@ -2399,6 +2401,7 @@ msgid "Mouse"
 msgstr "Luch"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Urlabhra"
 
@@ -2762,19 +2765,16 @@ msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "Tuairiscigh nó ná tuairiscigh eang pharagraif"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
-#, fuzzy
 msgid "report line spacing off"
-msgstr "Ná léigh nascanna"
+msgstr "Ná tabhair tuairisc ar spásáil línte "
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
-#, fuzzy
 msgid "report line spacing on"
-msgstr "Léigh nascanna"
+msgstr "Tabhair tuairisc ar spásáil línte"
 
 #. Translators: Input help mode message for toggle report line spacing command.
-#, fuzzy
 msgid "Toggles on and off the reporting of line spacing"
-msgstr "Léigh nó ná léigh nascanna"
+msgstr "Léigh nó ná léigh spásáil línte"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -4568,9 +4568,9 @@ msgid "vertical align default"
 msgstr "        réamhshochrú ailíúcháin ingreachailíniú "
 
 #. Translators: a type of line spacing (E.g. single line spacing)
-#, fuzzy, python-format
+#, python-format
 msgid "line spacing %s"
-msgstr "%s á roghnú"
+msgstr "spásáil línte %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -4595,6 +4595,10 @@ msgstr "tábla ina bhfuil {columnCount} colún agus {rowCount} ró"
 
 msgid "NVDA Speech Viewer"
 msgstr "Amharcán Cainte NVDA"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "Taispeáin amharcán urlabhra agus NVDA á tosú."
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -4990,6 +4994,16 @@ msgstr "Níl aon amhrán ag seinm"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Tabhair tuairisc ar an méid ama fágtha san amhrán reatha"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr ""
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "leathanach {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5460,7 +5474,8 @@ msgid "ALVA BC640/680 series"
 msgstr "Sraith ALVA BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
+#, fuzzy
+msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Taispeántais Bhraille Baum/HumanWare/APH"
 
 #. Translators: Name of a serial communications port.
@@ -6380,6 +6395,9 @@ msgid ""
 "should first cancel this installation and completely uninstall NVDA before "
 "installing the earlier version."
 msgstr ""
+"Tá tú ag iarraidh seanleagan NVDA a shuiteáil. Más mian leat é sin a "
+"dhéanamh, ní foláir  cealaigh as NVDA ar dtús agus ansin, díshuiteáil NVDA.  "
+"É sin déanta, beidh tú in an seanleagan a shuiteáil. "
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -6747,7 +6765,7 @@ msgstr "Léigh &eochracha ordaithe"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Play sound for &spelling errors while typing"
-msgstr ""
+msgstr "Sein fuaim do bhutúin litrithe agus clóscríobh á dhéanamh agat."
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7047,11 +7065,24 @@ msgstr "Tabhair tuairisc ar leat&hanaigh"
 msgid "Report line &numbers"
 msgstr "Léigh &uimhreacha líne"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+#, fuzzy
+msgid "Report line &indentation with:"
 msgstr "Tabhair tuairisc ar ea&ngú"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#, fuzzy
+msgid "Off"
+msgstr "as"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr ""
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr ""
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -7060,9 +7091,8 @@ msgstr "Tuairiscigh eang pharagraif"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-#, fuzzy
 msgid "Report &line spacing"
-msgstr "Léig&h ceanntásca"
+msgstr "Tabhair tuairisc ar spásáil línte"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7135,6 +7165,7 @@ msgid "&Pattern"
 msgstr "&Patrún"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Ionadaí"
 
@@ -7284,9 +7315,9 @@ msgstr "Leibhéal"
 msgid "Preserve"
 msgstr "caomhnaigh"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Athraigh siombail"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Athraigh an siombail roghnaithe"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -8459,12 +8490,12 @@ msgstr "{revisionType}: {description}:  {text} le {author} ar {date}"
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
-msgstr ""
+msgstr "singil"
 
 #. Translators: double line spacing
 msgctxt "line spacing value"
 msgid "double"
-msgstr ""
+msgstr "dúbalta"
 
 #. Translators:  line spacing of 1.5 lines
 msgctxt "line spacing value"
@@ -8480,13 +8511,13 @@ msgstr ""
 #, python-format
 msgctxt "line spacing value"
 msgid "at least %.1f pt"
-msgstr ""
+msgstr "%.1f pt ar a laghad"
 
 #. Translators: line spacing of x lines
 #, python-format
 msgctxt "line spacing value"
 msgid "%.1f lines"
-msgstr ""
+msgstr "%.1f línte "
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
@@ -8684,15 +8715,15 @@ msgstr "tuairiscítear   nóta tráchta an áit ina bhfuil an carait suite."
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
-msgstr ""
+msgstr "spásáil línte singilte"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
 msgid "Double line spacing"
-msgstr ""
+msgstr "spásáil línte dúbalta"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr ""
+msgstr "spásáil línte 1.5"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.

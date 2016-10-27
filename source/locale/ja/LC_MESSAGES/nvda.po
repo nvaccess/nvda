@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-26 19:19+0900\n"
+"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"PO-Revision-Date: 2016-10-14 15:22+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -425,7 +425,7 @@ msgstr "マニプリ語1級点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian"
-msgstr "モンゴル語"
+msgstr "モンゴル語点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -434,13 +434,13 @@ msgstr "マラーティー語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "オランダ語(ベルギー)1級点字"
+msgid "Dutch (Belgium)"
+msgstr "オランダ語(ベルギー)点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "オランダ語(オランダ)1級点字"
+msgid "Dutch (Netherlands)"
+msgstr "オランダ語(オランダ)点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -549,7 +549,7 @@ msgstr "タミル語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "テルグ語1級点字"
 
 #. Translators: The name of a braille table displayed in the
@@ -1242,16 +1242,22 @@ msgstr "前の注釈がありません"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "リンク(&K)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "見出し(&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "ランドマーク(&D)"
 
@@ -2390,7 +2396,6 @@ msgid "Mouse"
 msgstr "マウス"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "音声"
 
@@ -2721,16 +2726,24 @@ msgstr "行番号を報告する"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "行番号の報告の切り替え"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "行インデントを報告しない"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "行インデントを読み上げで報告"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "行インデントを報告する"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "行インデントをビープ音で報告"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "行インデントをビープ音と読み上げで報告"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "行インデントの報告なし"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
+msgid "Cycles through line indentation settings"
 msgstr "行インデントの報告の切り替え"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
@@ -3186,7 +3199,7 @@ msgstr "読み上げなし"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "Speech mode beeps"
-msgstr "ビープ"
+msgstr "ビープ音"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
@@ -3198,9 +3211,9 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"読み上げモードをなし、ビープ、読み上げの順に切り替え。なしに設定するとNVDAは"
-"なにも読み上げない。ビープに設定するとNVDAは音声のかわりにビープ音を鳴らす。"
-"読み上げに設定するとNVDAは通常通り読み上げ"
+"読み上げモードをなし、ビープ音、読み上げの順に切り替え。なしに設定するとNVDA"
+"はなにも読み上げない。ビープ音に設定するとNVDAは音声のかわりにビープ音を鳴ら"
+"す。読み上げに設定するとNVDAは通常通り読み上げ"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -3529,6 +3542,7 @@ msgid "review"
 msgstr "レビュー"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "フォーカス"
 
@@ -5841,8 +5855,8 @@ msgid "Add-on &help"
 msgstr "アドオンのヘルプ(&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "アドオンの無効化"
+msgid "&Disable add-on"
+msgstr "アドオンの無効化(&D)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5946,8 +5960,8 @@ msgid "running"
 msgstr "実行中"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "アドオンの有効化"
+msgid "&Enable add-on"
+msgstr "アドオンの有効化(&E)"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -5986,10 +6000,6 @@ msgstr "アドオンの情報"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "設定プロファイル"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "プロファイル(&P)"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6304,14 +6314,14 @@ msgstr "ポータブル版を作成する場所(&D)"
 msgid "Browse..."
 msgstr "参照..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "現在のユーザー設定をコピー(&U)"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "ポータブル版を作成する場所"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "現在のユーザー設定をコピー(&U)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6397,10 +6407,6 @@ msgstr "デバッグ"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "言語(設定を有効にするには再起動が必要)(&L)"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "言語"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "終了時に設定情報を保存(&S)"
@@ -6416,10 +6422,6 @@ msgstr "NVDAの起動と終了のサウンド(&P)"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "ログ記録レベル(&O)"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "ログ記録レベル"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6585,10 +6587,6 @@ msgstr "キーボード設定"
 msgid "&Keyboard layout:"
 msgstr "キーボード配列(&K)"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "キーボード配列"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6666,10 +6664,6 @@ msgstr "マウスカーソル位置のテキストの報告(&T)"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "テキストの読み上げ範囲(&U)"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "テキストの読み上げ範囲"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6753,7 +6747,7 @@ msgstr "読み上げ"
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "Beep"
-msgstr "ビープ"
+msgstr "ビープ音"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
@@ -6795,11 +6789,6 @@ msgstr "オブジェクトの説明の報告(&D)"
 #. object presentation settings dialog.
 msgid "Progress &bar output:"
 msgstr "プログレスバー出力(&B)"
-
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "プログレスバー出力"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -6864,79 +6853,95 @@ msgstr "ドキュメントでコマンド以外の操作による入力を防止
 msgid "Document Formatting"
 msgstr "書式情報"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "カーソル移動後に書式の変化を報告(&A)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "ドキュメントの中の移動時に報告する書式情報の種類"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "フォント"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "フォント名の報告(&F)"
+msgid "&Font name"
+msgstr "フォント名(&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "フォントサイズの報告(&S)"
+msgid "Font &size"
+msgstr "フォントサイズ(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "フォント属性の報告(&B)"
+msgid "Font attri&butes"
+msgstr "フォント属性(&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "配置の報告(&A)"
+msgid "E&mphasis"
+msgstr "強調(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "色の報告(&C)"
+msgid "St&yle"
+msgstr "スタイル(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "コメントの報告(&M)"
+msgid "&Colors"
+msgstr "色(&C)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "ドキュメント情報"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "校閲者による更新の報告(&E)"
+msgid "Co&mments"
+msgstr "コメント(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "強調などのマークの報告(&M)"
+msgid "&Editor revisions"
+msgstr "校閲者による更新(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "スタイルの報告(&Y)"
+msgid "Spelling e&rrors"
+msgstr "スペルの間違い(&R)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "ページと間隔"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "スペルの間違いの報告(&R)"
+msgid "&Pages"
+msgstr "ページ(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "ページ番号の報告(&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "行番号の報告(&N)"
+msgid "Line &numbers"
+msgstr "行番号(&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
+msgid "Line &indentation reporting:"
 msgstr "行インデントの報告(&I)"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "なし"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "読み上げ"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -6944,67 +6949,72 @@ msgstr "ビープ音"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both  Speech and Tones"
-msgstr "読み上げとビープ音"
+msgstr "ビープ音と読み上げ"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "段落インデントの報告(&P)"
+msgid "&Paragraph indentation"
+msgstr "段落インデント(&P)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "行間の報告(&L)"
+msgid "&Line spacing"
+msgstr "行間(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "テーブルの報告(&T)"
+msgid "&Alignment"
+msgstr "配置(&A)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "テーブル情報"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "テーブルの行列見出しの報告(&E)"
+msgid "&Tables"
+msgstr "テーブル(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "テーブルのセル番地の報告(&O)"
+msgid "Row/column h&eaders"
+msgstr "行と列の見出し(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "リンクの報告(&K)"
+msgid "Cell c&oordinates"
+msgstr "セル番地(&O)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "要素"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "見出しの報告(&H)"
+msgid "&Lists"
+msgstr "リスト(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "リストの報告(&L)"
+msgid "Block &quotes"
+msgstr "引用(&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "引用の報告(&Q)"
+msgid "Fra&mes"
+msgstr "フレーム(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "ランドマークの報告(&D)"
+msgid "&Clickable"
+msgstr "クリック可能(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "フレームの報告(&M)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "クリック可能の報告(&C)"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "カーソル移動後に書式の変化を報告"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -8573,7 +8583,7 @@ msgstr "テーブル内ではありません"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "注釈(&A)"
+msgstr "コメント(&A)"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -8582,613 +8592,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "このセルは編集できません"
-
-#~ msgid "checker"
-#~ msgstr "市松模様"
-
-#~ msgid "crisscross"
-#~ msgstr "十字模様"
-
-#~ msgid "down"
-#~ msgstr "右下がり斜線"
-
-#~ msgid "gray16"
-#~ msgstr "16パーセント灰色"
-
-#~ msgid "gray25"
-#~ msgstr "25パーセント灰色"
-
-#~ msgid "gray50"
-#~ msgstr "50パーセント灰色"
-
-#~ msgid "gray75"
-#~ msgstr "75パーセント灰色"
-
-#~ msgid "grid"
-#~ msgstr "格子模様"
-
-#~ msgid "light down"
-#~ msgstr "薄い右下がり斜線"
-
-#~ msgid "light up"
-#~ msgstr "薄い右上がり線"
-
-#~ msgid "light vertical"
-#~ msgstr "薄い縦縞"
-
-#~ msgid "semi gray75"
-#~ msgstr "75パーセント灰色"
-
-#~ msgid "up"
-#~ msgstr "右上がり斜線"
-
-#~ msgid "unknown color"
-#~ msgstr "不明な色"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "アリスブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "アンティークホワイトの色"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "アクアの色"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "アクアマリンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "アジュールの色"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "ベージュの色"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "ビスクの色"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "ブランチドアーモンドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "ブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "ブルーバイオレットの色"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "バーリーウッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "カデットブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "シャルトリューズの色"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "チョコレートの色"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "コラールの色"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "コーンフラワーブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "コーンシルクの色"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "クリムゾンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "シアンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "暗いブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "暗いシアンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "暗いゴールデンロッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "暗いグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "暗いカーキの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "暗いマゼンタの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "暗いオリーブグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "暗いオレンジの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "暗いオーキッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "暗いレッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "暗いサーモンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "暗いシーグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "暗いスレートブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "暗いスレートグレイの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "暗いターコイズの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "暗いバイオレットの色"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "濃いピンクの色"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "濃いスカイブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "ディムグレイの色"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "ドジャーブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "ファイヤーブリックの色"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "フローラルホワイトの色"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "フォレストグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "フクシアの色"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "ゲインズボロの色"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "ゴーストホワイトの色"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "ゴールドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "ゴールデンロッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "グレイの色"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "グリーンイエローの色"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "ハネデューの色"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "ホットピンクの色"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "インディアンレッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "インディゴの色"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "アイボリーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "カーキの色"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "ラベンダーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "ラベンダーブラッシュの色"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "ローングリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "レモンシフォンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "薄いブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "薄いコラールの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "薄いシアンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "薄いゴールデンロッドイエローの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "薄いグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "薄いピンクの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "薄いサーモンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "薄いシーグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "薄いスカイブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "薄いスレートグレイの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "薄いスチールブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "薄いイエローの色"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "ライムの色"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "ライムグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "リネンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "マゼンタの色"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "マルーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "ミディアムアクアマリンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "ミディアムブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "ミディアムオーキッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "ミディアムパープルの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "ミディアムシーグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "ミディアムスレートブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "ミディアムスプリンググリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "ミディアムターコイズの色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "ミディアムバイオレットレッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "ミッドナイトブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "ミントクリームの色"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "ミスティーローズの色"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "モカシンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "ナバホホワイトの色"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "ネイビーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "オールドレースの色"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "オリーブの色"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "オリーブドラブの色"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "オレンジレッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "オーキッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "ペールゴールデンロッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "ペールグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "ペールターコイズの色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "ペールバイオレットレッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "パパイヤホイップの色"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "ピーチパフの色"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "ペルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "ピンクの色"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "プラムの色"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "パウダーブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "レッドの色"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "ロージーブラウンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "ロイヤルブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "サドルブラウンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "サーモンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "サンディーブラウンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "シーグリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "シーシェルの色"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "シェンナの色"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "シルバーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "スカイブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "スレートブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "スレートグレイの色"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "スノーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "スプリンググリーンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "スチールブルーの色"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "タンの色"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "ティールの色"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "シスルの色"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "トマトの色"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "ターコイズの色"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "バイオレットの色"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "ウィートの色"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "ホワイトスモークの色"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "開始位置は同じオブジェクトの中でなければなりません"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "文章校正の結果を報告しない"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "文章校正の結果を報告する"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "文章校正の結果の報告の切り替え"
-
-#~ msgid "grammar error"
-#~ msgstr "文章校正の結果"
-
-#~ msgid "out of grammar error"
-#~ msgstr "文章校正の結果の外"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "文章校正の結果の報告(&G)"
-
-#~ msgid "browse mode"
-#~ msgstr "ブラウズモード"
-
-#~ msgid "activate"
-#~ msgstr "アクティブ化"
-
-#~ msgid "no next"
-#~ msgstr "次のオブジェクトなし"
-
-#~ msgid "no previous"
-#~ msgstr "前のオブジェクトなし"
-
-#~ msgid "edge of table"
-#~ msgstr "テーブルの端"
-
-#~ msgid "%g characters"
-#~ msgstr "%g文字"
-
-#~ msgid "%g pt"
-#~ msgstr "%gポイント"
-
-#~ msgid "no comments"
-#~ msgstr "コメントなし"

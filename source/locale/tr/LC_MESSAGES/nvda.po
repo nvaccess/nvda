@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-28 20:26+0300\n"
+"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"PO-Revision-Date: 2016-10-16 19:33+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.10\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,967,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
@@ -432,13 +432,13 @@ msgstr "Marathi grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "Belçika Almancası Derece 1"
+msgid "Dutch (Belgium)"
+msgstr "Flamanca (Belçika)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "Dutch (Netherlands) grade 1"
+msgid "Dutch (Netherlands)"
+msgstr "Flamanca (Hollanda) "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -547,8 +547,8 @@ msgstr "Tamil Derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
-msgstr "Telegu derece 1"
+msgid "Telugu grade 1"
+msgstr "Telugu grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1241,16 +1241,22 @@ msgstr "Geride açıklama yok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "Bağ&lantılar"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Başlıklar"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "Sını&r imleri"
 
@@ -2390,7 +2396,6 @@ msgid "Mouse"
 msgstr "Fare"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Konuşma"
 
@@ -2724,17 +2729,25 @@ msgstr "Satır numaralarını bildir"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Satır numaralarının bildirimini açıp kapatır"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Satır girintilerini konuşarak bildir"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Satır girintilerini bip sesiyle bildir"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Satır girintilerini konuşarak ve bip sesiyle bildir"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
 msgstr "Satır girintilerini bildirme"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Satır girintilerini bildir"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Satır girintisinin bildirimini açıp kapatır"
+msgid "Cycles through line indentation settings"
+msgstr "Satır girintilerinin bildirim seçenekleri arasında geçiş yapar"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3548,6 +3561,7 @@ msgid "review"
 msgstr "inceleme imleci"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "Sistem odağı"
 
@@ -5887,8 +5901,8 @@ msgid "Add-on &help"
 msgstr "Eklenti &yardımı"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "Devre dışı bırak"
+msgid "&Disable add-on"
+msgstr "Eklentiyi &Devre dışı bırak"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5992,8 +6006,8 @@ msgid "running"
 msgstr "çalışıyor"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "Etkinleştir"
+msgid "&Enable add-on"
+msgstr "Eklentiyi &Etkinleştir"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6033,10 +6047,6 @@ msgstr "Eklenti Bilgisi"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Konfigürasyon Profilleri"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profil"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6352,14 +6362,14 @@ msgstr "Taşınabilir kopya &dizini:"
 msgid "Browse..."
 msgstr "Gözat..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Mevcut k&ullanıcı konfigürasyonunu kopyala"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Taşınabilir kopya için dizin seçin"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Mevcut k&ullanıcı konfigürasyonunu kopyala"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6447,10 +6457,6 @@ msgstr ""
 "&Dil seçimi (tam olarak etkili olması için, NVDA'nın yeniden başlatılması "
 "gerekir)"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Dil"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "NVDA kapatılırken  konfigürasyonu kaydet"
@@ -6466,10 +6472,6 @@ msgstr "NVDA başlarken veya ka&panırken ses çal"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "&Günlük tutma seviyesi"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Log seviyesi"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6638,10 +6640,6 @@ msgstr "Klavye ayarları"
 msgid "&Keyboard layout:"
 msgstr "&Klavye düzeni"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Klavye düzeni"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6720,10 +6718,6 @@ msgstr "Fare izlemeyi e&tkinleştir"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Metin &birim çözünürlüğü:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "Metin bildirim birimi"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6843,17 +6837,12 @@ msgstr "Mevcut değilse nesne &konum bilgisini tahmin et"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &descriptions"
-msgstr "Nesne &tariflerini bildir"
+msgstr "Nesne &açıklamalarını bildir"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 msgid "Progress &bar output:"
 msgstr "Aşama Çub&uğu bildirimi"
-
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Aşama Çubuğu bildirimi"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -6919,80 +6908,97 @@ msgstr "&Komut tuşu olmayan tuşların belgeye ulaşmasını engelle"
 msgid "Document Formatting"
 msgstr "Belge Formatları"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
 msgstr ""
-"İmleçten sonraki yazı biçimi değişikliklerini bildir (NVDA'yı yavaşlatabilir)"
+"Aşağıdaki seçenekler yazı biçimiyle ilgili özellik değişiklikleirnin NVDA "
+"tarafından nasıl bildirileceğini kontrol eder."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Yazı tipi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Yazı tipi adı&nı bildir"
+msgid "&Font name"
+msgstr "&Yazı tipi adı"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Yazı tipi büyüklü&ğünü bildir"
+msgid "Font &size"
+msgstr "Yazı tipi &boyutu "
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Yazı &tipi özelliklerini bildir"
+msgid "Font attri&butes"
+msgstr "Yazı tipi &öznitelikleri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "&Hizayı bildir"
+msgid "E&mphasis"
+msgstr "&Vurgu"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Renk&leri bildir"
+msgid "St&yle"
+msgstr "St&il"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "A&çıklamaları bildir"
+msgid "&Colors"
+msgstr "&Renkler"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Belge Bilgileri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "&Editör revizyonlarını bildir"
+msgid "Co&mments"
+msgstr "A&çıklamalar"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "&Vurguyu bildir"
+msgid "&Editor revisions"
+msgstr "&Editör düzeltmeleri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "stilleri b&ildir"
+msgid "Spelling e&rrors"
+msgstr "Yazım &hataları"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Sayfalar ve Aralık bilgisi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "&Yazım hatalarını bildir"
+msgid "&Pages"
+msgstr "&Sayfalar"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "&Sayfa değişikliklerini bildir"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Satır nu&maralarını bildir"
+msgid "Line &numbers"
+msgstr "Satır nu&maraları"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
+msgid "Line &indentation reporting:"
 msgstr "Satır gi&rintilerinin bildirimi"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "Kapalı"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Konuşma"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -7004,63 +7010,69 @@ msgstr "Konuşarak ve ses çalarak"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "&Paragraf girintilerini bildir"
+msgid "&Paragraph indentation"
+msgstr "&Paragraf girintileri"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Sat&ır aralığını bildir"
+msgid "&Line spacing"
+msgstr "Satır aralı&ğı"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Tabl&oları bildir"
+msgid "&Alignment"
+msgstr "&Hizalama"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Tablo bilgileri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Tablo satır v&e sütun başlıklarını bildir"
+msgid "&Tables"
+msgstr "&Tablolar"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Tablo hücre k&oordinatlarını bildir"
+msgid "Row/column h&eaders"
+msgstr "Satır/s&ütun başlıkları"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Ba&ğlantıları bildir"
+msgid "Cell c&oordinates"
+msgstr "Hücre k&oordinatları"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "ögeler"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "B&aşlıkları bildir"
+msgid "&Lists"
+msgstr "&Listeler"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Listeleri bi&ldir"
+msgid "Block &quotes"
+msgstr "Alıntı &Blokları"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Alın&tıları bildir"
+msgid "Fra&mes"
+msgstr "&Çerçeveler"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Sınır İ&mlerini bildir"
+msgid "&Clickable"
+msgstr "T&ıklanabilir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Çer&çeveleri Bildir"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Tıklanabilir olup olmadı&ğını bildir"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"İmleçten sonraki yazı biçimi değişikliklerini bildir (NVDA'yı yavaşlatabilir)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -8088,7 +8100,7 @@ msgstr "Damla çizgiler"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
-msgstr "Hi Lo Lines"
+msgstr "Hi Lo Çizgiler"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
@@ -8100,7 +8112,7 @@ msgstr "Dizi Çizgileri"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
-msgstr "Up Bars"
+msgstr "Yukarıya Çubuklar"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
@@ -8161,7 +8173,7 @@ msgstr "{previousIndex} noktasından sonra {incrementValue} artış, "
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} noktasından sonra {decrementValue} azalma"
+msgstr "{previousIndex} noktasından sonra {decrementValue} azalma "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -8174,7 +8186,7 @@ msgstr "{categoryAxisTitle} {categoryAxisData}:"
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr "{categoryAxisData} kategorisi: "
+msgstr "kategori: {categoryAxisData},"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
@@ -8187,14 +8199,15 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 #, python-brace-format
 msgid "value {valueAxisData}"
-msgstr "{valueAxisData} değeri"
+msgstr " değer {valueAxisData},"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 #, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr " kesir {fractionValue:.2f} Yüzde dilim {pointIndex} bölü {pointCount}"
+msgstr ""
+" kesir {fractionValue:.2f}, Yüzdelik dilim {pointIndex} bölü {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -8650,6 +8663,84 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serisi"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "&Profile"
+#~ msgstr "&Profil"
+
+#~ msgid "Language"
+#~ msgstr "Dil"
+
+#~ msgid "Log level"
+#~ msgstr "Log seviyesi"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "Klavye düzeni"
+
+#~ msgid "text reporting unit"
+#~ msgstr "Metin bildirim birimi"
+
+#~ msgid "Progress bar output"
+#~ msgstr "Aşama Çubuğu bildirimi"
+
+#~ msgid "Report &font name"
+#~ msgstr "Yazı tipi adı&nı bildir"
+
+#~ msgid "Report font &size"
+#~ msgstr "Yazı tipi büyüklü&ğünü bildir"
+
+#~ msgid "Report &alignment"
+#~ msgstr "&Hizayı bildir"
+
+#~ msgid "Report &colors"
+#~ msgstr "Renk&leri bildir"
+
+#~ msgid "Report co&mments"
+#~ msgstr "A&çıklamaları bildir"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "&Vurguyu bildir"
+
+#~ msgid "Report st&yle"
+#~ msgstr "stilleri b&ildir"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "&Yazım hatalarını bildir"
+
+#~ msgid "Report &pages"
+#~ msgstr "&Sayfa değişikliklerini bildir"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "Sat&ır aralığını bildir"
+
+#~ msgid "Report &tables"
+#~ msgstr "Tabl&oları bildir"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "Tablo satır v&e sütun başlıklarını bildir"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "Ba&ğlantıları bildir"
+
+#~ msgid "Report &headings"
+#~ msgstr "B&aşlıkları bildir"
+
+#~ msgid "Report &lists"
+#~ msgstr "Listeleri bi&ldir"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "Alın&tıları bildir"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "Sınır İ&mlerini bildir"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "Çer&çeveleri Bildir"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "Tıklanabilir olup olmadı&ğını bildir"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Satır girintisinin bildirimini açıp kapatır"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Bu hücre düzenlenebilir değil"

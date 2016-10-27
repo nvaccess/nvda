@@ -6,18 +6,39 @@
 = 2016.4 =
 
 == neue Funktionen ==
-- NVDA kann Zeileneinrückungen nun auch mit Hilfe von Signaltönen ausgeben. Um dies einzustellen, können Sie die neue Optio Zeileneinrückungen ausgeben durch... in den Einstellungen für Dokumentformatierung verwenden. (#5906)
+- NVDA kann Zeileneinrückungen nun auch mit Hilfe von Signaltönen ausgeben. Um dies einzustellen, können Sie die neue Option Zeileneinrückungen ausgeben durch... in den Einstellungen für Dokumentformatierung verwenden. (#5906)
 - Unterstützung für die Braillezeile Orbit Reader 20. (#6007)
-- Eine neue Option zum Anzeigen des Sprachbetrachters beim Start von NVDA wurde hinzugefügt. (#5050)
-- Position und Größe des Sprachbetrachters wird wiederhergestellt, wenn er erneut geöffnet wird. (#5050)
+- Eine neue Option zum Anzeigen des Sprachbetrachters beim Start von NVDA wurde hinzugefügt. Dies kann mittels eines Kontrollkästchens im Sprachbetrachter eingeschaltet werden. (#5050)
+- Die Position und Größe des Sprachbetrachters wird wiederhergestellt, wenn er erneut geöffnet wird. (#5050)
 - Felder mit Querverweisen in Microsoft Word werden von NVDA als Links angezeigt und können wie solche aktiviert werden. (#6102)
+- Grundsätzliche Unterstützung für die kommende Version der Kindle-App hinzugefügt. (#6247)
+- Die Unterstützung für folgende Braillezeilen wurde hinzugefügt: Baum SuperVario2, Baum Vario 340 and HumanWare Brailliant2. (#6116)
+
+
+== Änderungen ==
+- Libluis wurde auf Version 3.0.0 aktualisiert. (#6109, #4194, #6220, #6140)
+- Die Schalter zum (de)aktivieren von Erweiterungen besitzen nun Tastenkombinationen. (#6388)
+- einige (kosmetische) Änderungen wurde vorgenommen. (#6317, #5548, #6342, #6343, #6349)
+- Die Einstellungen für Dokumentformatierung werden korrekt gescrollt. (#6348)
+- Der Dialog für die Aussprache von Symbolen und Sonderzeichen besitzt jetzt die korrekte Breite. (#6101)
 
 
 == Fehlerkorrekturen ==
-- Ein Fehler wurde protokolliert, wenn beim Beenden von NVDA der Sprachbetrachter angezeigt wird. (#5050)
+- Ein Fehler wurde behoben, wenn beim Beenden von NVDA der Sprachbetrachter angezeigt wird. (#5050)
 - in Firefox werden verweissensitive Grafiken wie erwartet angezeigt. (#6051)
 - Beim Ein-/Ausschalten der Dauergroßschreibung wird keine Warnung mehr in das NVDA-Protokoll geschrieben. (#6127)
 - Das Drücken der Eingabetaste in Wörterbuchdialogen führt nun wie erwartet zum Speichern der Einträge. (#6206)
+- Beim Wechsel der Eingabemethode werden Meldungen in Braille angezeigt. (#5892, #5893)
+- Wenn Sie eine Erweiterung aus- und wieder einschalten, wird deren Status korrekt angezeigt. (#6299)
+- in  Microsoft Word werden Seitenzahlen korrekt angezeigt. (#6004)
+- Sie können nun die Maus benutzen, um in dem Dialog für die Aussprache von Symbolen den Fokus zwischen der Liste der Symbole und dem Suchfeld zu wechseln. (#6312)
+- Die Elementliste von Microsoft Word funktioniert nun korrekt, wenn das Dokument einen ungültigen Link enthält. (#5886)
+- Nach dem Schließen des Sprachbetrachters mit Alt+F4 spiegelt das Kontrollfeld für den Sprachbetrachter dessen Status korrekt wider. (#6340)
+- Probleme beim erneuten Laden von Erweiterungen mit Hilfe der Tastenkombination nvda+strg+f3 wurden behoben. (#2892, #5380)
+
+
+== Änderungen für Entwickler ==
+- Sie können nun Anwendungsmodule für Programme erstellen, deren Namen einen Punkt enthalten. der Punkt muss im Namen des Anwendungsmoduls durch einen Unterstrich ersetzt werden. (#5323)
 
 
 = 2016.3 =
@@ -72,7 +93,7 @@ Schwerpunkte dieser Version sind u. a. eine Möglichkeit zum Deaktivieren einzel
 - In Chrome und Chrome-basierten Browsern funktioniert der Lesemodus nun korrekt, wenn der Browser in einer anderen Sprache als Englisch verwendet wird. (#6249)
 
 == Änderungen für Entwickler ==
-- Informationen zur Protokollierung von bestimmten Eigenschaften werden nicht länger mehr rekursiv in einer Endlosschleife behandelt. (#6122)
+- Informationen zur Protokollierung von bestimmten Eigenschaften werden nicht mehr rekursiv in einer Endlosschleife behandelt. (#6122)
 
 
 = 2016.2.1 =

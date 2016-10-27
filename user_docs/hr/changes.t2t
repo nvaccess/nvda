@@ -6,24 +6,26 @@
 = 2016.4 =
 
 == Nove značajke ==
-- Nvda sada izvještava o poravnanju redka koristećći zvučne signale. Ovo se podešava koristeći odabirni okvir "izvijesti o poravnanju redaka pomoću"  u postavkama oblikovanja dokumenta. (#5906)
-- Support for the Orbit Reader 20 braille display. (#6007)
-- An option to open the speech viewer window on startup has been added. (#5050)
-- When re-opening the speech viewer window, the location and dimensions will now be restored. (#5050)
-- Cross Reference fields in Microsoft Word are now treated like hyperlinks. They are reported as links, and can be activated. (#6102)
-- Initial support for the upcoming version of the Kindle app. (#6247)
+- Nvda sada izvještava o poravnanju redka koristeći zvučne signale. Ovo se podešava koristeći odabirni okvir "izvijesti o poravnanju redaka pomoću"  u postavkama oblikovanja dokumenta. (#5906)
+- Podrška za Orbit Reader 20 brajični redak. (#6007)
+- Opcija koja omogućuje otvaranje preglednika govora pri pokretanju je dodana. Ovo se može uključiti pomoću odabirnog okvira u pregledniku govora. (#5050)
+- Prilikom ponovnog otvaranja dijaloškog okvira preglednika govora, Sada će dimenzije biti vrećene. (#5050)
+- Polja unakrsnih referenci sada se tretiraju kao hiperveze. Iste se mogu aktivirati. (#6102)
+- Prvobitna podrška za nadolazeću inačicu  Kindle aplikacije. (#6247)
+- Podrška za Baum SuperVario2, Baum Vario 340 i HumanWare Brailliant2 brajične retke. (#6116)
 
 
-== Bug Fixes ==
-- Fixed a rare issue when exiting NVDA while the speech viewer is open causing an error. (#5050)
-- Image maps now render as expected in browse mode in Mozilla Firefox. (#6051)
-- Fixed an issue causing a warning in the NVDA log file when caps-lock is toggled. (#6127)
-- While in the dictionary dialog, pressing the enter key now saves changes and exits. (#6206)
-- Messages are now displayed in braille when changing input modes for an input method (native input/alphanumeric, full shaped/half shaped, etc.). (#5892, #5893)
-- When disabling and then immediately re-enabling an add-on or vice versa, the add-on status now correctly reverts to what it was previously. (#6299)
-- When using Microsoft Word, page-number fields in headers can now be read. (#6004)
-- The mouse can now be used to move focus between the symbol list and the edit fields in the symbol pronunciation dialog. (#6312)
-- Fixed an issue that stops the the elements list from appearing when Microsoft Word contains an invalid hyperlink. (#5886)
+== Ispravke grešaka ==
+- Ispravljena rijetka greška prilikom isključivanja NVDA kada je preglednik govora otvoren prouzrokujući grešku. (#5050)
+- Grafički linkovi se sada prikazuju u načinu pregleda u Mozilla Firefoxu. (#6051)
+- Ispravljena pogreška koja je prouzrokovala upozorenje u datoteci nvda zapisnika prilikom uključivanja /isključivanja caps locka. (#6127)
+- Kada se nalazite u dijaloškom okviru rječnika, pritisak na tipku enter sada posprema promjene i isključuje. (#6206)
+- Sada se prikazuju poruke na brajičnom retku prilikom izmjene načina unosa za azijske metode unosa (izvorni unos /alfanumerički, puni oblik/polovičan, itd.). (#5892, #5893)
+- Prilikom onemogućavanja a potom ponovnog omogućavanja dodatka, status dodatka sada se ponovno vraća na onu vrijednost na koju je bio postavnjen prije. (#6299)
+- Prilikom korištenja Microsoft Worda, brojevi stranica u zaglavjima sada se mogu čitati. (#6004)
+- Miš se sada može koristiti za pomicanje fokusa između popisa znakova  i uređivačkih polja u dijaloškom okviru izgovora simbola. (#6312)
+- Ispravljena greška koja onemogućuje prikazivanje popisa elemenata kada microsoft wordow dokument sadrži neispravnu hipervezu. (#5886)
+- Bio on zatvoren sa alatne trake ili pomoću prečaca alt+f4, stanje odabirnog okvira preglednika govora u nvda izborniku će sada odražavati trenutnu vidljivost prozora. (#6340)
 
 
 == Izmjene za razvojne programere ==
