@@ -1195,44 +1195,52 @@ Această fereastră de dialog se găsește în meniul „Preferințe”, la „F
 Majoritatea casetelor de bifat din această fereastră de dialog sunt pentru a configura ce tip de formatare doriți să auziți automat când mișcați cursorul prin documente.
 De exemplu, dacă bifați caseta pentru raportarea numelui fontului, de fiecare dată când ajungeți la un text cu un font diferit, numele fontului va fi anunțat.
 
+Opțiunile de formatare a documentului sunt organizate pe grupuri.
 Puteți configura anunțarea pentru:
-- nume font
-- dimensiune font
-- atribute font
-- aliniere text
-- culori
-- comentarii
-- revizii de editor
-- accentuare
-- stil text
-- erori de ortografie
-- număr de pagină
-- număr de rând
-- indentație rând
-- indentație paragraf (de ex. negativă, a primului rând)
-- spațiere între linii (simplă, dublă, etc)
-- tabele
-- anteturi rânduri/coloane tabele
-- coordonate celule tabel
-- legături
-- rubrici
-- liste
-- citate bloc
-- repere
-- cadre
-- când se poate face clic pe ceva
+- Font
+ - nume font
+ - dimensiune font
+ - atribute font
+ - accentuare
+ - stil
+ - culori
+- Informații document
+ - comentarii
+ - revizii de editor
+ - erori de ortografie
+- Pagini și spațiere
+ - număr de pagină
+ - număr de rând
+ - raportarea indentației de rând [(dezactivat, vorbire, tonuri, atât vorbire cât și tonuri) #optiuniIndentRand]
+ - indentație paragraf (de ex. negativă, a primului rând)
+ - spațiere între linii (simplă, dublă, etc)
+ - aliniere
+- Informații despre tabele
+ - tabele
+ - anteturi rânduri/coloane
+ - coordonate celule
+- Elemente
+ - rubrici
+ - legături
+ - liste
+ - citate bloc
+ - repere
+ - cadre
+ - când se poate face clic pe ceva
+ -
 -
+
 
 Pentru activarea acestor opțiuni de oriunde, vă rugăm să atribuiți gesturi personalizate din [fereastra de dialog pentru Gesturi de intrare #GesturiIntrare].
 
-==== Anunță schimbări de formatare după cursor ====
-Dacă este activată, această setare va instrui NVDA să încerce să detecteze toate schimbările de formatare de pe un rând pe măsură ce-l pronunță, chiar dacă făcând asta ar putea slăbi performanța NVDA.
+==== Raportează schimbări de formatare după cursor ====
+Dacă este activată, această setare va instrui NVDA să încerce să detecteze toate schimbările de formatare de pe un rând pe măsură ce-l anunță, chiar dacă făcând asta ar putea slăbi performanța NVDA.
 
 Implicit, NVDA va detecta formatarea de la poziția cursorului sistemului sau a cursorului de examinare, și în unele situații poate detecta formatarea de pe restul rândului, doar dacă nu va provoca o încetinire în rularea NVDA.
 
-Activând această opțiune, NVDA va corecta documentele din aplicații precum Microsoft Word, unde formatarea este importantă.
+Activând această opțiune, NVDA va corecta documentele din aplicații precum Wordpad, unde formatarea este importantă.
 
-==== Anunță indentație rând cu ====
+==== Anunță indentație rând ====[optiuniIndentRand]
 Această opțiune vă permite să configurați cum se face raportarea indentației la început de rând.
 Caseta combinată pentru opțiunea de anunț a indentației are patru variante.
 
@@ -1708,14 +1716,13 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 ++ Afișaje braille Baum/Humanware/APH/Orbit ++
 Mai multe ecrane [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] și [Orbit http://www.orbitresearch.com/] sunt suportate atunci când sunt conectate prin USB, bluetooth sau port serial.
 Acestea includ:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
 S-ar putea să funcționeze și alte afișaje produse de Baum, deși nu s-a testat acest aspect.
 
-Dacă vă conectați prin USB la alte afișaje decât VarioUltra, Pronto! sau Refreshbraille cu modul USB setat la HID, va trebui să instalați mai întâi driverele USB puse la dispoziție de producător.
 Dacă vă conectați prin USB la afișaje care nu folosesc HID, va trebui să instalați mai întâi driverele USB puse la dispoziție de producător.
 Afișajele VarioUltra și Pronto! folosesc HID.
 Refreshabraille și Orbit Reader 20 pot folosi HID dacă sunt configurate corespunzător.

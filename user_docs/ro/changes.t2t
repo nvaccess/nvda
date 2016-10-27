@@ -12,15 +12,17 @@ Ce este nou în NVDA
 - La redeschiderea monitorului de vorbire, locația pe ecran și dimensiunile sale vor fi restabilite. (#5050)
 - Câmpurile cu referință încrucișată din Microsoft Word sunt acum tratate ca hiperlink-uri. Acestea sunt raportate ca legături și pot fi activate. (#6102)
 - Suport inițial pentru versiunea upcoming a aplicației Kindle. (#6247)
--Suport pentru afișajele braille Baum SuperVario2, Baum Vario 340 și HumanWare Brailliant2. (#6116)
+- Suport pentru afișajele braille Baum SuperVario2, Baum Vario 340 și HumanWare Brailliant2. (#6116)
 
 
 == Modificări ==
-- A fost actualizat traducătorul liblouis braille la versiunea 3.0.0. Aceasta include îmbunătățiri semnificative la Braille-ul englezesc unificat. (#6109, #4194, #6220, #6140)
+- A fost actualizat liblouis, traducătorul braille, la versiunea 3.0.0. Aceasta include îmbunătățiri semnificative la Braille-ul englezesc unificat. (#6109, #4194, #6220, #6140)
 - În managerul de add-on-uri butoanele Dezactivare și Activare extensie add-on au acum comenzi rapide (alt+d și alt+e, respectiv). (#6388)
-- Diferite probleme de aliniere au fost rezolvate. (#6317, #5548, #6342, #6343, #6349)
-- Fereastra de dialog a formătării documentului a fost ajustată. (#6348)
-- A fost ajustat aspectul casetei de dialog al pronunțării simbolurilor, așa încât întreaga lățime a dialogului este folosit pentru lista de simboluri. (#6101)
+- Diferite probleme de aliniere și completare cu caractere au fost rezolvate în ferestrele de dialog ale NVDA. (#6317, #5548, #6342, #6343, #6349)
+- Fereastra de dialog a formătării documentului a fost ajustată astfel încât conținutul poate fi derulat. (#6348)
+- A fost ajustat aspectul casetei de dialog al pronunțării simbolurilor, așa încât întreaga lățime a ferestrei este folosită pentru lista de simboluri. (#6101)
+- În mod navigare în browserele de internet, comenzile de navigare cu o singură literă pentru câmpul de editare (e și shift+e) și câmpul formular (f și shift+f), mută acum la câmpuri de editare în mod doar citire (care pot fi doar parcurse și nu modificate). (#4164)
+- În setările de formatare a documentelor, opțiunea „Anunță schimbări de formatare după cursor” a fost redenumită în „Raportează schimbări de formatare după cursor” deoarece afectează atât vorbirea cât și scrierea braille. (#6336)
 
 
 == Rezolvări defecte ==
@@ -34,6 +36,9 @@ Ce este nou în NVDA
 - Mausul poate fi acum folosit pentru a deplasa focalizarea între lista de simboluri și câmpurile de editare în fereastra de dialog cu pronunțarea simbolurilor. (#6312)
 - Corectat o situație care oprește lista de elemente de la apariție când Microsoft Word conține un hiperlink invalid. (#5886)
 - După ce a fost închisă fereastra din bara de activități sau cu scurtătura alt+F4, starea căsuței de bifat a monitorului de vorbire din meniul NVDA va reflecta vizibilitatea curentă a ferestrei. (#6340)
+- Comanda de reîncărcare a plug-inurilor nu mai provoacă probleme pentru profilurile de configurare declanșate, documente noi în browsere de internet și la examinarea ecranului. (#2892, #5380)
+- În lista de limbi din fereastra NVDA a Setărilor generale, limbi precum aragoneza sunt acum afișate corect în Windows 10. (#6259)
+- Tastele emulate de sistem (de ex. un buton de pe afișajul braille care emulează apăsarea tastei Tab) sunt acum prezentate în ferestrele de configurare pentru limbă și ajutor pentru intrări precum și dialogul cu gesturi de intrare. Anterior acestea erau tot timpul afișate în engleză. (#6212)
 
 
 == Modificări pentru Dezvoltatori ==

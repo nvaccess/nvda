@@ -207,7 +207,7 @@ class UpdateResultDialog(wx.Dialog):
 			message = _("No update available.")
 		sHelper.addItem(wx.StaticText(self, label=message))
 
-		bHelper = sHelper.addItem(guiHelper.ButtonHelper(wx.HORIZONTAL))
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if updateInfo:
 			if self.isInstalled:
 				# Translators: The label of a button to download and install an NVDA update.
