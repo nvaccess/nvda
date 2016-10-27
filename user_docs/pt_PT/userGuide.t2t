@@ -1195,32 +1195,39 @@ Esta caixa de diálogo está no menu Preferências, em "Formatação de Document
 A maioria das caixas de verificação, neste diálogo, permitem-lhe configurar qual é o tipo de formatação que pretende ouvir automaticamente, conforme se move com o cursor pelos documentos.
 Por exemplo, se seleccionar a caixa de verificação para anunciar o nome do tipo de letra, de cada vez que anda pelo texto com tipos de letra diferentes, o nome do tipo de letra será anunciado. 
 
+As várias opções estão organizadas em grupos.
 Pode configurar o anúncio de:
-- Nome do tipo de letra
-- Tamanho do tipo de letra
-- Atributos do tipo de letra
-- Alinhamento de texto
-- Cores
-- Revisões do editor
-- Comentários
-- Ênfase
-- Estilo de texto
-- Erros ortográficos
-- Números de página
-- Números de linha
-- Indentação da linha
-- Indentação do parágrafo (i.e. indentação suspensa, indentação da primeira linha)
-- Espaçamento das linhas (simples, duplo, etc)
+- Tipo de letra:
+ - Nome do tipo de letra
+ - Tamanho do tipo de letra
+ - Atributos do tipo de letra
+ - Ênfase
+ - Estilo
+ - Cores
+- Informação do documento:
+ - Comentários
+ - Revisões do editor
+ - Erros ortográficos
+- Paginação :
+ - Números de página
+ - Números de linha
+ - Indentação da linha [(Desligado, Voz, Sons, ou ambos) #lineIndentationOptions]
+ - Indentação do parágrafo (i.e. indentação suspensa, indentação da primeira linha)
+ - Espaçamento das linhas (simples, duplo, etc)
+ - Alinhamento
+- Informação de tabelas
  - Tabelas
-- Títulos de linha e coluna na tabela
-- Coordenadas da célula na tabela
-- Links
-- Títulos
-- Listas
-- Blocos de citação
-- Marcadores
-- Frames
-- Se clicável
+ - Títulos de linha e coluna
+ - Coordenadas da célula
+- Elementos
+ - Títulos
+ - Links
+ - Listas
+ - Blocos de citação
+ - Marcadores
+ - Frames
+ - Se clicável
+ -
 -
 
 Para alternar estas configurações a qualquer momento, por favor crie uma associação de teclas usando a opção [Definir comandos #InputGestures].
@@ -1231,6 +1238,17 @@ Se activada, esta definição transmite ao NVDA para que tente detectar todas as
 Por padrão, o NVDA irá detectar a formatação na posição do cursor do sistema/cursor de revisão e, em alguns casos, poderá detectar a formatação do resto da linha, desde que não diminua o seu desempenho.
 
 Active esta opção, enquanto verifica documentos em aplicações como o Microsoft Word, em que a formatação seja importante.
+
+==== Anúnncio da indentação das linhas ====
+Esta opção permite configurar como a indentação no início da linha é anunciada.
+A caixa combinada tem 4 opções:
+
+- Desligado: O NVDA não anunciará a indentação;
+- Voz: Quando a indentação variar, o NVDA anunciará algo como "doze espaços" ou "quatro tabs";
+- Sons: Quando a indentação variar, os sons indicarão o nível de alteração na indentação;
+O som aumentará a tonalidade cada espaço e para cada Tab aumentará o equivalente a 4 espaços;
+- Voz e sons: O NVDA usará, em simultâneo, os dois métodos acima descritos.
+-
 
 +++ Dicionários de voz +++
 O menu dos Dicionários de voz (que se encontra no menu Preferências) contém diálogos que lhe permitem controlar o modo como o NVDA pronuncia palavras ou expressões em particular.
@@ -1427,6 +1445,10 @@ Para os programadores com visão ou para as pessoas que estão a demonstrar o NV
 
 Para activar o Visualizador de Discurso, marque o item de menu "Visualizador de Discurso", em Ferramentas no Menu do NVDA.
 Ao desmarcar este item, desactiva-o.
+
+A janela do Visualizador de discurso contém uma caixa de verificação chamada "Mostrar o Visualizador de discurso no arranque".
+Se esta caixa estiver marcada, o Visualizador de discurso será aberto juntamente com o NVDA.
+A janela do Visualizador de discurso tentará sempre abrir no mesmo local e com as mesmas dimensões que tinha quando foi fechada.
 
 Enquanto o Visualizador de Discurso estiver activo, o mesmo actualizar-se-á, constantemente, para lhe apresentar o texto mais recente que estáa ser falado.
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA pára, temporariamente, a actualização do texto, de forma a que possa seleccionar facilmente ou copiar o conteúdo existente.
@@ -1690,16 +1712,22 @@ Por favor consulte a documentação desta linha braille para obter a descrição
 | Teclas alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille Displays ++
-São suportadas várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] quando conectadas via USB ou bluetooth.
+++ Linhas Braille Baum/Humanware/APH/Orbit ++
+São suportadas várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] e [Orbit http://www.orbitresearch.com/] quando ligadas via USB, porta série ou bluetooth.
 Incluem-se:
-- Baum: SuperVario, PocketVario, VarioUltra e Pronto!
-- HumanWare: Brailliant e BrailleConnect
-- APH: Refreshabraille
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2 e Vario 340;
+- HumanWare: Brailliant, BrailleConnect e Brailliant2;
+- APH: Refreshabraille;
+- Orbit: Orbit Reader 20
 -
 Outras linhas braille fabricadas pela Baum poderão igualmente funcionar, porém tal não foi testado.
 
-Se está a ligar a linha via USB, excepto para as VarioUltra, Pronto! ou Refreshabraille with modo USB configurado para HID, deverá, primeiro, instalar os drivers USB, fornecidos pelo fabricante.
+Se for ligar uma linha, que não use o modo HID, via USB, deverá, primeiro, instalar os drivers USB fornecidos pelo fabricante.
+As VarioUltra e Pronto! usam HID.
+As Refreshabraille e Orbit Reader 20 podem usar HID, se devidamente configuradas.
+
+O modo USB serial da Orbit Reader 20 só é actualmente suportado no Windows 10.
+Regra geral, deve ser usado o modo USB HID.
 
 Seguem-se as associações de teclas para estas linhas Braille com o NVDA.
 Por favor consulte a documentação da sua linha Braille para obter a descrição de onde estas teclas podem ser encontradas.
