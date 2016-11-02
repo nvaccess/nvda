@@ -9,6 +9,7 @@ from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import sys
+import numbers
 import UIAHandler
 import globalVars
 import eventHandler
@@ -18,6 +19,7 @@ import speech
 import api
 import textInfos
 from logHandler import log
+from UIAUtils import *
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
@@ -25,29 +27,94 @@ import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
-	def _getFormatFieldAtRange(self,range,formatConfig):
+	#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
+	UIAFormatUnits=[
+		UIAHandler.TextUnit_Format,
+		UIAHandler.TextUnit_Word,
+		UIAHandler.TextUnit_Character
+	] if UIAHandler.isUIAAvailable else []
+
+	def _getFormatFieldAtRange(self,range,formatConfig,ignoreMixedValues=False):
+		"""
+		Fetches formatting for the given UI Automation Text range.
+		@ param range: the text range whos formatting should be fetched.
+		@type range: L{UIAutomation.IUIAutomationTextRange}
+		@param formatConfig: the types of formatting requested.
+		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included. If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute value signifying that the caller may want to try again with a smaller range. 
+		@type: bool
+		@return: The formatting for the given text range.
+		@rtype: L{textInfos.FormatField}
+		"""
 		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
-			try:
-				fontNameValue=range.GetAttributeValue(UIAHandler.UIA_FontNameAttributeId)
-			except COMError:
-				fontNameValue=UIAHandler.handler.reservedNotSupportedValue
-			if fontNameValue!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField["font-name"]=fontNameValue
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontNameAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField["font-name"]=val
 		if formatConfig["reportFontSize"]:
-			try:
-				fontSizeValue=range.GetAttributeValue(UIAHandler.UIA_FontSizeAttributeId)
-			except COMError:
-				fontSizeValue=UIAHandler.handler.reservedNotSupportedValue
-			if fontSizeValue!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField['font-size']="%g pt"%float(fontSizeValue)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontSizeAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if isinstance(val,numbers.Number):
+				formatField['font-size']="%g pt"%float(val)
+		if formatConfig["reportFontAttributes"]:
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_FontWeightAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if isinstance(val,int):
+				formatField['bold']=(val>=700)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsItalicAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField['italic']=val
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_UnderlineStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField['underline']=bool(val)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StrikethroughStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				formatField['strikethrough']=bool(val)
+			textPosition=None
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
+				textPosition='super'
+			else:
+				val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
+				if not UIAHandler.handler.clientObject.checkNotSupported(val) and val:
+					textPosition="sub"
+				else:
+					textPosition="baseline"
+			if textPosition:
+				formatField['text-position']=textPosition
+		if formatConfig["reportAlignment"]:
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if val==UIAHandler.HorizontalTextAlignment_Left:
+				val="left"
+			elif val==UIAHandler.HorizontalTextAlignment_Centered:
+				val="center"
+			elif val==UIAHandler.HorizontalTextAlignment_Right:
+				val="right"
+			elif val==UIAHandler.HorizontalTextAlignment_Justified:
+				val="justify"
+			else:
+				val=None
+			if val:
+				formatField['text-align']=val
+		if formatConfig["reportColor"]:
+			import colors
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if isinstance(val,int):
+				formatField['background-color']=colors.RGB.fromCOLORREF(val)
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_ForegroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if isinstance(val,int):
+				formatField['color']=colors.RGB.fromCOLORREF(val)
+		if formatConfig['reportLinks']:
+			val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_LinkAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if not UIAHandler.handler.clientObject.checkNotSupported(val):
+				if val:
+					formatField['link']
 		if formatConfig["reportHeadings"]:
-			try:
-				styleIDValue=range.GetAttributeValue(UIAHandler.UIA_StyleIdAttributeId)
-			except COMError:
-				styleIDValue=UIAHandler.handler.reservedNotSupportedValue
+			styleIDValue=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
+		if formatConfig["reportSpellingErrors"]:
+			annotationTypes=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+				formatField["invalid-spelling"]=True
 		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position,_rangeObj=None):
@@ -55,7 +122,10 @@ class UIATextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.clone()
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			sel=self.obj.UIATextPattern.GetSelection()
+			try:
+				sel=self.obj.UIATextPattern.GetSelection()
+			except COMError:
+				raise RuntimeError("No selection available")
 			if sel.length>0:
 				self._rangeObj=sel.getElement(0).clone()
 			else:
@@ -77,6 +147,8 @@ class UIATextInfo(textInfos.TextInfo):
 				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
 			except COMError:
 				raise LookupError
+			# sometimes rangeFromChild can return a NULL range
+			if not self._rangeObj: raise LookupError
 		elif isinstance(position,textInfos.Point):
 			#rangeFromPoint causes a freeze in UIA client library!
 			#p=POINT(position.x,position.y)
@@ -91,24 +163,63 @@ class UIATextInfo(textInfos.TextInfo):
 		return bool(self._rangeObj.compare(other._rangeObj))
 
 	def _get_NVDAObjectAtStart(self):
-		tempRange=self._rangeObj.clone()
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		e=self.UIAElementAtStart
+		if e:
+			return UIA(UIAElement=e) or self.obj
+		return self.obj
+
+	def _get_UIAElementAtStart(self):
+		"""
+		Fetches the deepest UIA element at the start of the text range.
+		This may be via UIA's getChildren (in the case of embedded controls), or GetEnClosingElement.
+		"""
+		tempInfo=self.copy()
+		tempInfo.collapse()
 		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
 		# Thus we must check getChildren before getEnclosingElement.
-		tempRange.expandToEnclosingUnit(UIAHandler.TextUnit_Character)
+		tempInfo.expand(textInfos.UNIT_CHARACTER)
+		tempRange=tempInfo._rangeObj
 		children=tempRange.getChildren()
 		if children.length==1:
 			child=children.getElement(0)
 		else:
 			child=tempRange.getEnclosingElement()
-		return UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)) or self.obj
+		return child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 
 	def _get_bookmark(self):
 		return self.copy()
 
-	def _getControlFieldForObject(self, obj):
+	UIAControlTypesWhereNameIsContent={
+		UIAHandler.UIA_ButtonControlTypeId,
+		UIAHandler.UIA_HyperlinkControlTypeId,
+		UIAHandler.UIA_ImageControlTypeId,
+		UIAHandler.UIA_MenuItemControlTypeId,
+		UIAHandler.UIA_TabItemControlTypeId,
+		UIAHandler.UIA_TextControlTypeId,
+		UIAHandler.UIA_SplitButtonControlTypeId
+	} if UIAHandler.isUIAAvailable else None
+
+
+	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+		"""
+		Fetch control field information for the given UIA NVDAObject.
+		@ param obj: the NVDAObject the control field is for.
+		@type obj: L{UIA}
+		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
+		@ type isEmbedded: bool
+		@param startOfNode: True if the control field represents the very start of this object.
+		@type startOfNode: bool
+		@param endOfNode: True if the control field represents the very end of this object.
+		@type endOfNode: bool
+		@return: The control field for this object
+		@rtype: textInfos.ControlField containing NVDA control field data.
+		"""
 		role = obj.role
 		field = textInfos.ControlField()
+		# Ensure this controlField is unique to the object
+		field['runtimeID']=obj.UIAElement.getRuntimeID()
+		field['_startOfNode']=startOfNode
+		field['_endOfNode']=endOfNode
 		field["role"] = obj.role
 		states = obj.states
 		# The user doesn't care about certain states, as they are obvious.
@@ -116,12 +227,10 @@ class UIATextInfo(textInfos.TextInfo):
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_FOCUSED)
 		field["states"] = states
-		# Only include name if the object's inner text is empty.
-		# could be unperformant.
-		text=self.obj.makeTextInfo(obj).text
-		if not text or text.isspace():
-			field["name"] = obj.name
-		#field["_childcount"] = obj.childCount
+		field['nameIsContent']=nameIsContent=obj.UIAElement.cachedControlType in self.UIAControlTypesWhereNameIsContent
+		if not nameIsContent:
+			field['name']=obj.name
+		field["description"] = obj.description
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
 			field["table-id"] = 1 # FIXME
@@ -142,127 +251,224 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return field
 
-	def _iterUIARangeByUnit(self,rangeObj,unit):
-		tempRange=rangeObj.clone()
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
-		endRange=tempRange.Clone()
-		while endRange.Move(unit,1)>0:
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,endRange,UIAHandler.TextPatternRangeEndpoint_Start)
-			pastEnd=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0
-			if pastEnd:
-				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-			yield tempRange.clone()
-			if pastEnd:
-				return
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
-		# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
-		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-			yield tempRange.clone()
+	def _getTextFromUIARange(self,range):
+		"""
+		Fetches plain text from the given UI Automation text range.
+		Just calls getText(-1). This only exists to be overridden for filtering.
+		"""
+		return range.getText(-1)
 
-	allowGetFormatFieldsAndTextOnDegenerateUIARanges=False #: _getFormatFieldsAndText should not return anything for degenerate ranges.
-	def _getFormatFieldsAndText(self,tempRange,formatConfig):
-		if not self.allowGetFormatFieldsAndTextOnDegenerateUIARanges and tempRange.compareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
-			return
-		formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
-		if formatConfig["reportSpellingErrors"]:
-			try:
-				annotationTypes=tempRange.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
-			except COMError:
-				annotationTypes=UIAHandler.handler.reservedNotSupportedValue
-			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
-				formatField.field["invalid-spelling"]=True
-				yield formatField
-				yield tempRange.GetText(-1)
-			elif annotationTypes==UIAHandler.handler.ReservedMixedAttributeValue:
-				for r in self._iterUIARangeByUnit(tempRange,UIAHandler.TextUnit_Word):
-					text=r.GetText(-1)
-					if not text:
-						continue
-					r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
-					r.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
-					try:
-						annotationTypes=r.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
-					except COMError:
-						annotationTypes=UIAHandler.handler.reservedNotSupportedValue
-					newField=textInfos.FormatField()
-					newField.update(formatField.field)
-					if annotationTypes==UIAHandler.AnnotationType_SpellingError:
-						newField["invalid-spelling"]=True
-					yield textInfos.FieldCommand("formatChange",newField)
-					yield text
-			else:
-				yield formatField
-				yield tempRange.GetText(-1)
+	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+		"""
+		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
+		@param textRange: the UI Automation text range to walk.
+		@type textRange: L{UIAHandler.IUIAutomationTextRange}
+		@param formatConfig: the types of formatting requested.
+		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
+			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
+			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
+			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter. 
+		@type UIAFormatUnits: List of UI Automation Text Units or None
+		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
+		"""
+		log.debug("_getTextWithFields_text start")
+		if UIAFormatUnits:
+			unit=UIAFormatUnits[0]
+			furtherUIAFormatUnits=UIAFormatUnits[1:]
 		else:
-			yield formatField
-			yield tempRange.GetText(-1)
+			# Fetching text and formatting from the entire range will be tried once before any possible splitting.
+			unit=None
+			furtherUIAFormatUnits=self.UIAFormatUnits if UIAFormatUnits is None else []
+		log.debug("Walking by unit %s"%unit)
+		log.debug("With further units of: %s"%furtherUIAFormatUnits)
+		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
+		for tempRange in rangeIter:
+			text=self._getTextFromUIARange(tempRange)
+			if text:
+				log.debug("Chunk has text. Fetching formatting")
+				try:
+					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
+				except UIAMixedAttributeError:
+					log.debug("Mixed formatting. Trying higher resolution unit")
+					for subfield in self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits=furtherUIAFormatUnits):
+						yield subfield
+					log.debug("Done yielding higher resolution unit")
+					continue
+				log.debug("Yielding formatting and text")
+				yield field
+				yield text
+		log.debug("Done _getTextWithFields_text")
 
-	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
-		#Graphics usually have no actual text, so render the name instead
-		if rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)==0 and obj!=self.obj:
-			for x in obj.makeTextInfo("all").getTextWithFields(formatConfig):
-				yield x
-			return
-		tempRange=rangeObj.clone()
-		children=rangeObj.getChildren()
-		for index in xrange(children.length):
-			child=children.getElement(index)
-			childObj=UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-			#Sometimes a child range can contain the same children as its parent (causing an infinite loop)
-			# Example: checkboxes, graphics, in Edge.
-			if childObj==obj:
+	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+		"""
+		Yields start and end control fields, and text, for the given UI Automation text range.
+		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
+		@type rootElement: L{UIAHandler.IUIAutomation}
+		@param textRange: the UI Automation text range whos content should be fetched.
+		@type textRange: L{UIAHandler.IUIAutomation}
+		@param formatConfig: the types of formatting requested.
+		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param includeRoot: If true, then a control start and end will be yielded for the root element.
+		@ type includeRoot: bool
+		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
+		@type alwaysWalkAncestors: bool
+		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
+		@type recurseChildren: bool
+		@param _rootElementRange: Optimization argument: the actual text range for the root element, as it is usually already known when making recursive calls.
+		@type rootElementRange: L{UIAHandler.IUIAutomationTextRange} 
+		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
+		"""
+		
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("_getTextWithFieldsForUIARange")
+			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType if rootElement else None)
+			log.debug("full text: %s"%textRange.getText(-1))
+		if recurseChildren:
+			childElements=textRange.getChildren()
+			# Specific check for embedded elements (checkboxes etc)
+			# Calling getChildren on their childRange always gives back the same child.
+			if childElements.length==1:
+				childElement=childElements.getElement(0)
+				if childElement and UIAHandler.handler.clientObject.compareElements(childElement,rootElement):
+					log.debug("Detected embedded child")
+					childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+					recurseChildren=False
+		parentElements=[]
+		if alwaysWalkAncestors:
+			log.debug("Fetching parents starting from enclosingElement")
+			try:
+				parentElement=textRange.getEnclosingElement()
+			except COMError:
+				parentElement=None
+			if parentElement:
+				# #6450: IE 11 on Windows 7 raises COMError here
+				try:
+					parentElement=parentElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+				except COMError:
+					parentElement=None
+			while parentElement:
+				isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
+				if log.isEnabledFor(log.DEBUG):
+					log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
+				if isRoot and not includeRoot:
+					log.debug("Is root, and root not requested. Breaking")
+					break
+				try:
+					parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
+				except COMError:
+					parentRange=None
+				if not parentRange:
+					log.debug("parentRange is NULL. Breaking")
+					break
+				parentElements.append((parentElement,parentRange))
+				if isRoot:
+					log.debug("Hit root. Breaking")
+					break
+				parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
+		else: # not alwaysWalkAncestors
+			if includeRoot:
+				log.debug("Using rootElement as only parent")
+				rootElementRange=_rootElementRange if _rootElementRange else self.obj.UIATextPattern.rangeFromChild(rootElement)
+				parentElements.append((rootElement,rootElementRange))
+		log.debug("Done fetching parents")
+		enclosingElement=parentElements[0][0] if parentElements else rootElement
+		parentFields=[]
+		log.debug("Generating controlFields for parents")
+		for index,(parentElement,parentRange) in enumerate(parentElements):
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
+			startOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,parentRange,UIAHandler.TextPatternRangeEndpoint_Start)<=0
+			endOfNode=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)>=0
+			try:
+				obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
+				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
+			except LookupError:
+				log.debug("Failed to fetch controlField data for parentElement. Breaking")
 				continue
-			childRange=self.obj.UIATextPattern.rangeFromChild(child)
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<=0 or childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+			if not field:
 				continue
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0:
-				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0:
-				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
-			for f in self._getFormatFieldsAndText(tempRange,formatConfig):
-				yield f
-			field=self._getControlFieldForObject(childObj) if childObj else None
-			if field:
-				yield textInfos.FieldCommand("controlStart",field)
-			for x in self._getTextWithFieldsForRange(childObj,childRange,formatConfig):
-				yield x
-			if field:
-				yield textInfos.FieldCommand("controlEnd",None)
-			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
-		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-		for f in self._getFormatFieldsAndText(tempRange,formatConfig):
-			yield f
+			parentFields.append(field)
+		log.debug("Done generating controlFields for parents")
+		log.debug("Yielding control starts for parents")
+		for field in reversed(parentFields):
+			yield textInfos.FieldCommand("controlStart",field)
+		log.debug("Done yielding control starts for parents")
+		del parentElements
+		log.debug("Yielding balanced fields for textRange")
+		# Move through the text range, collecting text and recursing into children
+		#: This variable is used to   span lengths of plain text between child ranges as we iterate over getChildren
+		tempRange=textRange.clone()
+		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		if recurseChildren:
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("Child count: %s"%childElements.length)
+				log.debug("Walking children")
+			for index in xrange(childElements.length):
+				childElement=childElements.getElement(index)
+				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
+					log.debug("NULL childElement. Skipping")
+					continue
+				childElement=childElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+				if log.isEnabledFor(log.DEBUG):
+					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
+				childRange=self.obj.UIATextPattern.rangeFromChild(childElement)
+				if not childRange:
+					log.debug("NULL childRange. Skipping")
+					continue
+				if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+					log.debug("Child at or past end of textRange. Breaking")
+					break
+				origChildRange=childRange.clone()
+				if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
+					log.debug("textRange ended part way through the child. Crop end of childRange to fit")
+					childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+				childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+				if childStartDelta>0:
+					# plain text before this child
+					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
+					log.debug("Plain text before child")
+					for field in self._getTextWithFields_text(tempRange,formatConfig):
+						yield field
+				elif childStartDelta<0:
+					log.debug("textRange started part way through child. Cropping Start of child range to fit" )
+					childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+				if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
+					log.debug("childRange is degenerate. Skipping")
+					continue
+				log.debug("Recursing into child %s"%index)
+				for field in self._getTextWithFieldsForUIARange(childElement,childRange,formatConfig,_rootElementRange=origChildRange,includeRoot=True,alwaysWalkAncestors=False):
+					yield field
+				log.debug("Done recursing into child %s"%index)
+				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
+			log.debug("children done")
+		else: #isEmbeddedChild==True
+			log.debug("isEmbeddedChild, not recursing children.")
+		# Plain text after the final child
+		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+			log.debug("Yielding final text")
+			for field in self._getTextWithFields_text(tempRange,formatConfig):
+				yield field
+		log.debug("Done yielding final text")
+		log.debug("Done yielding balanced fields for textRange")
+		for field in reversed(parentFields):
+			log.debug("Yielding controlEnd for parentElement")
+			yield textInfos.FieldCommand("controlEnd",field)
+		log.debug("_getTextWithFieldsForUIARange end")
 
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=[]
-		try:
-			e=self._rangeObj.getEnclosingElement().buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		except COMError:
-			e=None
-		fields=[]
-		if e:
-			obj=UIA(UIAElement=e)
-			while obj and obj!=self.obj:
-				try:
-					field=self._getControlFieldForObject(obj)
-				except LookupError:
-					break
-				if field:
-					field=textInfos.FieldCommand("controlStart",field)
-					fields.append(field)
-				obj=obj.parent
-			fields.reverse()
-		ancestorCount=len(fields)
-		fields.extend(self._getTextWithFieldsForRange(self.obj,self._rangeObj,formatConfig))
-		fields.extend(textInfos.FieldCommand("controlEnd",None) for x in xrange(ancestorCount))
+		for field in self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig):
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("Field: %s"%field)
+			fields.append(field)
 		return fields
 
 	def _get_text(self):
-		return self._rangeObj.GetText(-1)
+		return self._getTextFromUIARange(self._rangeObj)
 
 	def expand(self,unit):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
@@ -327,6 +533,12 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif EditableTextWithoutAutoSelectDetection in clsList and (UIAClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+			from .wordDocument import WordDocument, WordDocumentNode
+			if self.role==controlTypes.ROLE_DOCUMENT:
+				clsList.append(WordDocument)
+			else:
+				clsList.append(WordDocumentNode)
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
 			clsList.append(Toast_win8)
@@ -336,7 +548,7 @@ class UIA(Window):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
-			elif isinstance(self.parent,edge.EdgeHTMLRootContainer):
+			elif self.UIATextPattern and isinstance(self.parent,edge.EdgeHTMLRootContainer):
 				clsList.append(edge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
 				clsList.append(edge.EdgeList)
@@ -345,7 +557,7 @@ class UIA(Window):
 		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
 				# PDFs
 				import edge
-				clsList.append(edge.EdgePDFRoot)
+				clsList.append(edge.EdgeHTMLRoot)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -400,6 +612,10 @@ class UIA(Window):
 			return False
 		kwargs['UIAElement']=UIAElement
 		return True
+
+	def getNormalizedUIATextRangeFromElement(self,UIAElement):
+		"""Simply fetches a UIA text range for the given UIAElement, allowing subclasses to process the range first."""
+		return UIATextRangeFromElement(self.UIATextPattern,UIAElement)
 
 	def __init__(self,windowHandle=None,UIAElement=None):
 		if not UIAElement:
@@ -462,8 +678,9 @@ class UIA(Window):
 		self.UIALegacyIAccessiblePattern=self._getUIAPattern(UIAHandler.UIA_LegacyIAccessiblePatternId,UIAHandler.IUIAutomationLegacyIAccessiblePattern)
 		return self.UIALegacyIAccessiblePattern
 
+	_TextInfo=UIATextInfo
 	def _get_TextInfo(self):
-		if self.UIATextPattern: return UIATextInfo
+		if self.UIATextPattern: return self._TextInfo
 		textInfo=super(UIA,self).TextInfo
 		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
 			import displayModel
@@ -526,7 +743,7 @@ class UIA(Window):
 
 	def _get_description(self):
 		try:
-			return self.UIAElement.currentHelpText
+			return self.UIAElement.currentHelpText or ""
 		except COMError:
 			return ""
 
@@ -579,7 +796,11 @@ class UIA(Window):
 			states.add(controlTypes.STATE_INVALID_ENTRY)
 		if e.getCachedPropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
-		if e.getCachedPropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId):
+		try:
+			isReadOnly=e.getCachedPropertyValueEx(UIAHandler.UIA_ValueIsReadOnlyPropertyId,True)
+		except COMError:
+			isReadOnly=UIAHandler.handler.reservedNotSupportedValue
+		if isReadOnly and isReadOnly!=UIAHandler.handler.reservedNotSupportedValue:
 			states.add(controlTypes.STATE_READONLY)
 		try:
 			s=e.getCachedPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
