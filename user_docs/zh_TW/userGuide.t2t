@@ -1195,33 +1195,41 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 大部分在此對話方塊中的核取方塊控制項，都是用來設定在游標移動時，要讀出哪些文件格式。
 例如，如果勾選「讀出字體名稱」這個控制項，當游標移到有字體名稱改變的地方，就會自動報讀出來。
 
+「文件格式」內的所有的選項是以分群組方式排列。
 可以設定報讀的項目包括以下：
-- 字體名稱
-- 字體大小
-- 字體屬性
-- 對齊方式
-- 顏色
-- 註解
-- 修訂
-- 強調
-- 文字樣式
-- 拼錯字
-- 頁碼
-- 行數
-- 行縮排
-- 段落縮排
-- 行距 
-- 表格
-- 列及欄標題
-- 儲存格座標
-- 連結
-- 層級標題
-- 清單
-- 引述
-- 地標
-- 頁框
-- 可點擊物件
+- 「字型群組」
+ - 字型名稱
+ - 字型大小
+ - 字型屬性
+ - 強調標記
+ - 樣式
+ - 色彩
+- 「文件資訊」群組
+ - 註解
+ - 修訂
+ - 拼錯字
+- 「頁碼及段落間距」群組
+ - 頁碼
+ - 行號
+ - 讀出行縮排 [（有4種不同的選項，包括：關、語音、提示音、語音及提示音） #lineIndentationOptions]
+ - 段落縮排 （例如：凸排縮排、第一行縮排）
+ - 行距 （單行間距、兩倍行高等）
+ - 對齊
+- 「表格資訊」群組
+ - 表格
+ - 列及欄標題
+ - 儲存格座標
+- 「元件」群組
+ - 標題
+ - 連結
+ - 清單
+ - 引述
+ - 地標
+ - 頁框
+ - 可點擊
+ -
 - 
+
 
 要在任何處切換以上這些控制項的設定，請透過 [輸入手勢 #InputGestures] 對話方塊來指派手勢指令。
 
@@ -1230,9 +1238,9 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 
 NVDA 會偵測到編輯游標／瀏覽游標所在位置的格式，在某些情況下如果不影響 NVDA 的效能，將會讀出整行格式的變化。
 
-當文件格式很重要，例如使用微軟 Word 來校訂文件，即可啟用這個功能。
+當文件格式很重要，例如使用 Wordpad 來校訂文件，即可啟用這個功能。
 
-==== 讀出行縮排 ====
+==== 讀出行縮排 ====[lineIndentationOptions]
 這個選項允許您設定可從 NVDA 的語音提示，得知在每行開頭有多少縮排的資訊。
 「讀出行縮排」的下拉式選單共有以下4個選項：
 
@@ -1708,8 +1716,8 @@ Nuance Vocalizer 是一個商業化的高品質語音合成軟體，它是由 Nu
 ++ Baum/Humanware/APH/Orbit 點字顯示器 ++
 當透過 USB、藍芽或 serial 連接時，一些 [Baum http://www.baum.de/cms/en/]、[HumanWare http://www.humanware.com/]、[APH http://www.aph.org/] 以及 [Orbit http://www.orbitresearch.com/] 顯示器可以被支援。
 這些包括：
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

@@ -21,6 +21,8 @@
 - Forskellige problemer med hensyn til den indre margen samt justering er blevet rettet. (#6317, #5548, #6342, #6343, #6349)
 - Indholdet af dialogen til dokumentformatering er blevet justeret således, at indholdet ruller. (#6348)
 - Justerede layout i dialogen for Udtale af sætningstegn og symboler således, at den fulde bredte af dialogen er brugt til listen over symboler. (#6101)
+- Når gennemsynstilstand benyttes i browsere, vil bogstavnavigering for editfelter (E og Skift+E), samt formularfelter (F og Skift+F), nu også flytte mellem skrivebeskyttede felter. (#4164)
+- Tjekboksen "Oplæs ændringer i formatering efter markør" er blevet omdøbt til "Rapportér ændringer i formatering efter markør", eftersom denne indstilling påvirker tale såvel som punkt. (#6336)
 
 
 == Fejlrettelser ==
@@ -36,6 +38,8 @@
 - Rettede en fejl der gjorde elementlisten ikke kunne vises hvis Microsoft Word indeholdte et ugyldigt link. (#5886)
 - Efter lukning af talevisning ved hjælp af processlinjen eller genvejen ALT+F4, vil tjekboksens status i NVDA-menuen nu reflektere den aktuelle synlighed af vinduet. (#6340)
 - Kommandoen til genindlæsning af plugins vil ikke længere skabe problemer for udløste konfigurationsprofiler, nye dokumenter i web-browsere samt skærmlæsning. (#2892, #5380)
+- I listen over sprog i NVDAs generelle indstillinger, vil sprog som Aragonsk nu vises rigtigt på Windows 10. (#6259)
+- Emulerede systemtastaturtaster (f.eks. en knap på punkttastaturet der emulere et tryk på tab-tasten) præsenteres nu på det konfigurerede sprog, i tastaturhjælp samt dialogen for input-bevægelser. Tidligere blev disse kun vist på Engelsk. (#6212)
 
 
 == Ændringer for udviklere ==

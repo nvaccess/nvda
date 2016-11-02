@@ -18,9 +18,11 @@
 == Muutokset ==
 - Liblouis-pistekääntäjä päivitetty versioksi 3.0.0, joka sisältää merkittäviä laajennuksia yhdenmukaistettuun englantilaiseen pistekirjoitusmerkistöön (UEB). (#6109, #4194, #6220, #6140)
 - Lisäosien hallinnan Poista käytöstä- ja Ota käyttöön -painikkeilla on nyt pikanäppäimet (Alt+P ja Alt+O). (#6388)
-- Useita täyte- ja tasausongelmia on ratkaistu. (#6317, #5548, #6342, #6343, #6349)
+- Useita NVDA:n valintaikkunoiden täyte- ja tasausongelmia on ratkaistu. (#6317, #5548, #6342, #6343, #6349)
 - Dokumenttien muotoiluasetukset -valintaikkunaa on muutettu siten, että sen sisältöä on mahdollista vierittää. (#6348)
 - Symboleiden puhuminen -valintaikkunan ulkoasua on muutettu siten, että sen koko leveyttä käytetään symboliluettelolle. (#6101)
+- Selaustilan pikanavigointikomennot E ja Shift+E (muokkauskentät) sekä F ja Shift+F (lomakekentät) siirtävät nyt myös vain luku -muokkauskenttiin verkkoselaimissa. (#4164)
+- NVDA:n Dokumenttien muotoiluasetukset -valintaikkunan "Lue kohdistimen jälkeiset muotoilumuutokset" -asetus on nimetty uudelleen muotoon "Ilmoita kohdistimen jälkeiset muotoilumuutokset", sillä se vaikuttaa puheen lisäksi myös pistekirjoitukseen. (#6336)
 
 
 == Korjatut ohjelmavirheet ==
@@ -35,6 +37,8 @@
 - Korjattu ongelma, joka esti elementtiluettelon avautumisen Microsoft Wordissa, jos dokumentti sisälsi virheellisen hyperlinkin. (#5886)
 - Kun  puheentarkasteluikkuna on suljettu tehtäväpalkista tai Alt+F4-näppäinyhdistelmällä, NVDA-valikon Puheen tarkastelu-valintaruutu vaikuttaa nyt ikkunan näkymiseen. (#6340)
 - Lataa liitännäiset uudelleen -komento ei enää aiheuta ongelmia käynnistimillä käyttöön otettavissa profiileissa, uusissa dokumenteissa verkkoselaimissa tai ruututarkastelussa. (#2892, #5380)
+- Jotkin kielet, kuten aragonia, näytetään nyt oikein NVDA:n Yleiset asetukset -valintaikkunan kieliluettelossa Windows 10:ssä. (#6259)
+- Emuloidut näppäimet (esim. pistenäytön painike, joka emuloi Sarkain-näppäimen painamista) ilmaistaan nyt syöteohjeessa ja Syöte-eleet-valintaikkunassa NVDA:ssa määritetyllä kielellä. Aiemmin ne näytettiin englanniksi. (#6212)
 
 
 == Muutokset kehittäjille (englanniksi) ==

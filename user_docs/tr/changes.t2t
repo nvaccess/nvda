@@ -18,9 +18,11 @@
 == Changes ==
 - Updated liblouis braille translator to 3.0.0. This includes significant enhancements to Unified English Braille. (#6109, #4194, #6220, #6140)
 - In the Add-ons Manager, the Disable add-on and Enable add-on buttons now have keyboard shortcuts (alt+d and alt+e, respectively). (#6388)
-- Various padding and alignment issues have been resolved. (#6317, #5548, #6342, #6343, #6349)
+- Various padding and alignment issues in NVDA's dialogs have been resolved. (#6317, #5548, #6342, #6343, #6349)
 - The document formatting dialog has been adjusted so that the contents scrolls. (#6348)
 - Adjusted the layout of the symbols pronunciation dialog so the full width of the dialog is used for the symbols list. (#6101)
+- In browse mode in web browsers, the edit field (e and shift+e) and form field (f and shift+f) single letter navigation commands now move to read-only edit fields. (#4164)
+- In NVDA's Document Formatting settings, "Announce formatting changes after the cursor" has been renamed to "Report formatting changes after the cursor", as it affects braille as well as speech. (#6336)
 
 
 == Bug Fixes ==
@@ -35,6 +37,8 @@
 - Fixed an issue that stops the the elements list from appearing when Microsoft Word contains an invalid hyperlink. (#5886)
 - After being closed via the task bar or the alt+F4 shortcut, the speech viewer checkbox status in the NVDA menu will now reflect the actual visibility of the window. (#6340)
 - The reload plugins command no longer causes problems for triggered configuration profiles, new documents in web browsers and screen review. (#2892, #5380)
+- In the list of languages in NVDA's General Settings dialog, languages such as Aragonese are now displayed correctly on Windows 10. (#6259)
+- Emulated system keyboard keys (e.g. a button on a braille display which emulates pressing the tab key) are now presented in the configured NVDA language in input help and the Input Gestures dialog. Previously, they were always presented in English. (#6212)
 
 
 == Changes for Developers ==

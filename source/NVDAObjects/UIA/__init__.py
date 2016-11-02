@@ -342,7 +342,11 @@ class UIATextInfo(textInfos.TextInfo):
 			except COMError:
 				parentElement=None
 			if parentElement:
-				parentElement=parentElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+				# #6450: IE 11 on Windows 7 raises COMError here
+				try:
+					parentElement=parentElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+				except COMError:
+					parentElement=None
 			while parentElement:
 				isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 				if log.isEnabledFor(log.DEBUG):
