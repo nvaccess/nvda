@@ -46,6 +46,7 @@
 - Emulated system keyboard keys (e.g. a button on a braille display which emulates pressing the tab key) are now presented in the configured NVDA language in input help and the Input Gestures dialog. Previously, they were always presented in English. (#6212)
 - Changing the NVDA language (from the General Settings dialog) now has no effect until NVDA is restarted. (#4561)
 - The "pattern" field for a new dictionary entry is no longer allowed to be left blank. (#6412)
+- Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6462)
 
 
 == Changes for Developers ==
