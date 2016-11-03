@@ -23,6 +23,9 @@ Que hai de Novo no NVDA
 - Axustada a distribución do diálogo pronunciación de símbolos polo que se utiliza todo o ancho do diálogo para a lista de símbolos. (#6101)
 - No modo exploración en navegadores web, as ordes de navegación dunha soa letra dos campos de edición (e e shift+e) e dos campos de formulario (f e shift+f) agora moven a campos de edición de só lectura. (#4164)
 - Nas opcións de formateado de documentos do NVDA, "Anunciar cambios de formato despois do cursor" renomeouse a "Anunciar cambios de formato despois  do cursor", de xeito que afecte tanto ao braille como á voz. Nota: esto non afecta á traducción ao galego xa que usamos announce e report como sinónimos. (#6336)
+- Axustada a aparenza do "diálogo Benvida" do NVDA. (#6350)
+- As caixas de diálogo do NVDA agora teñen os seus botóns "Aceptar" e "Cancelar" aliñados cara a dereita do diálogo. (#6333)
+- Agora utilízanse controis de xiro para os campos de entrada numérica. (#6099)
 
 
 == Correción de Fallos ==
@@ -39,6 +42,8 @@ Que hai de Novo no NVDA
 - A orde recargar plugins xa non causa problemas para os perfís de configuración disparados, nos documentos novos en navegadores web e na revisión de pantalla. (#2892, #5380)
 - Na lista de linguas no diálogo Opcións Xerais do NVDA, linguas como o Aragonés agora amósanse correctamente en Windows 10. (#6259)
 - As teclas de sistema de emulación de teclado (ex.: un botón nunha pantalla braille que emule a pulsación da tecla tab) agora preséntanse na lingua configurada no NVDA na axuda de entrada e no diálogo Xestos de Entrada. Anteriormente, sempre se presentaban en inglés. (#6212)
+- Ao cambiar a lingua do NVDA (dende o diálogo Opcións Xerais) agora non ten efecto ata que NVDA se reinicie. (#4561)
+- O campo "patrón" para unha entrada de diccionario nova xa non permite estar en branco á esquerda. (#6412)
 
 
 == Cambios para Desenvolvedores ==
