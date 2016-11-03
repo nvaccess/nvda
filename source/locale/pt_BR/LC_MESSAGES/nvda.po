@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-13 19:41-0300\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-10-27 19:04-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clcaul@live.com>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever97@gmail.com>\n"
@@ -5810,7 +5810,6 @@ msgid "Exit NVDA"
 msgstr "encerrar o NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5820,7 +5819,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Bem-vindo ao NVDA !\n"
 "Grande parte dos comandos para controlar o NVDA requer que se pressione a "
 "tecla NVDA e outra ao mesmo tempo.\n"
 "Por padrão, tanto a tecla insert do teclado numérico como o insert principal "
@@ -5833,6 +5831,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Bem-vindo ao NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Bem-vindo ao NVDA !"
 
 msgid "Options"
 msgstr "Opções"
@@ -6571,13 +6574,6 @@ msgstr "Erro ao copiar as configurações de usuário do NVDA"
 msgid "Successfully copied NVDA user settings"
 msgstr "Configurações do usuário copiadas com sucesso"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Erro no arquivo de idioma %s"
-
-msgid "Language Error"
-msgstr "Erro no idioma"
-
 msgid "This change requires administrator privileges."
 msgstr "Esta alteração exige privilégios administrativos no sistema"
 
@@ -7144,13 +7140,17 @@ msgstr "&Comentário"
 msgid "&Type"
 msgstr "Tipo:"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "É necessário uma entrada."
+
+msgid "Dictionary Entry Error"
+msgstr "Erro na entrada de dicionário"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Erro na expressão regular: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Erro na entrada de dicionário"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8711,6 +8711,12 @@ msgstr "Série HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Erro no arquivo de idioma %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Erro no idioma"
 
 #~ msgid "&Profile"
 #~ msgstr "&Perfis"
