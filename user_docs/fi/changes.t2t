@@ -23,6 +23,9 @@
 - Symboleiden puhuminen -valintaikkunan ulkoasua on muutettu siten, että sen koko leveyttä käytetään symboliluettelolle. (#6101)
 - Selaustilan pikanavigointikomennot E ja Shift+E (muokkauskentät) sekä F ja Shift+F (lomakekentät) siirtävät nyt myös vain luku -muokkauskenttiin verkkoselaimissa. (#4164)
 - NVDA:n Dokumenttien muotoiluasetukset -valintaikkunan "Lue kohdistimen jälkeiset muotoilumuutokset" -asetus on nimetty uudelleen muotoon "Ilmoita kohdistimen jälkeiset muotoilumuutokset", sillä se vaikuttaa puheen lisäksi myös pistekirjoitukseen. (#6336)
+- NVDA:n Tervetuloa-valintaikkunan ulkoasua on korjattu. (#6350)
+- NVDA:n valintaikkunoiden  OK- ja Peruuta-painikkeet tasataan nyt ikkunoiden oikeaan reunaan. (#6333)
+- Numeeristen arvojen syöttökentissä käytetään nyt kiertosäätimiä. (#6099)
 
 
 == Korjatut ohjelmavirheet ==
@@ -39,6 +42,8 @@
 - Lataa liitännäiset uudelleen -komento ei enää aiheuta ongelmia käynnistimillä käyttöön otettavissa profiileissa, uusissa dokumenteissa verkkoselaimissa tai ruututarkastelussa. (#2892, #5380)
 - Jotkin kielet, kuten aragonia, näytetään nyt oikein NVDA:n Yleiset asetukset -valintaikkunan kieliluettelossa Windows 10:ssä. (#6259)
 - Emuloidut näppäimet (esim. pistenäytön painike, joka emuloi Sarkain-näppäimen painamista) ilmaistaan nyt syöteohjeessa ja Syöte-eleet-valintaikkunassa NVDA:ssa määritetyllä kielellä. Aiemmin ne näytettiin englanniksi. (#6212)
+- Kielen  vaihtamisella (Yleiset asetukset -valintaikkunasta) ei ole nyt vaikutusta ennen kuin NVDA käynnistetään uudelleen. (#4561)
+- Uuden puhesanastomäärityksen "Korvattava teksti" -kentän tyhjäksi jättäminen ei ole enää sallittua. (#6412)
 
 
 == Muutokset kehittäjille (englanniksi) ==
@@ -83,7 +88,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. yksittäisten lis�
 - Käyttäjätilien valvonnan valintaikkunat luetaan taas oikein Windows 10:n Anniversary update -versiossa. (#5942)
 - NVDA ei enää anna äänimerkkejä ja ilmoita mikrofonisyötteeseen liittyviä edistymispalkkien päivityksiä Web Conference -lisäosassa (käytetään esim. out-of-sight.netissä). (#5888)
 - Etsi seuraava- tai Etsi edellinen -komennon suorittaminen selaustilassa suorittaa nyt asianmukaisesti kirjainkoon huomioivan haun, mikäli alkuperäinen haku oli sellainen. (#5522)
-- Virheellisistä säännöllisistä lausekkeista annetaan nyt palautetta sanastomäärityksiä muokattaessa. NVDA ei enää kaadu, mikäli sanastotiedosto sisältää virheellisen säännöllisen lausekkeen. (#4834)
+- Virheellisistä sääntölausekkeista annetaan nyt palautetta sanastomäärityksiä muokattaessa. NVDA ei enää kaadu, mikäli sanastotiedosto sisältää virheellisen sääntölausekkeen. (#4834)
 - Mikäli NVDA ei pysty kommunikoimaan pistenäytön kanssa (esim. koska se on irrotettu), näyttö poistetaan automaattisesti käytöstä. (#1555)
 - Selaustilan elementtiluettelon suodattamisen suorituskykyä paranneltu hieman joissakin tilanteissa. (#6126)
 - NVDA:n Microsoft Excelissä ilmoittamat taustakuvion nimet vastaavat nyt Excelin käyttämiä. (#6092)
@@ -1368,7 +1373,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teksti
 
 == Korjatut ohjelmavirheet ==
 - Kun puhesanastoon lisätään uusi merkintä, valintaikkunan nimi on nyt "Lisää sanastomerkintä" aiemman "Muokkaa sanastomerkintää" -nimen sijasta. (#924)
-- Puhesanastovalintaikkunoiden sanastomerkintälistan Säännöllinen lauseke - ja Sama kirjainkoko-sarakkeiden sisältö  näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi.
+- Puhesanastovalintaikkunoiden sanastomerkintälistan Sääntölauseke - ja Sama kirjainkoko-sarakkeiden sisältö  näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi.
 - Sijaintitiedot luetaan nyt AIM-pikaviestimen puunäkymissä.
 - Ääniasetukset-valintaikkunan liukusäätimissä ylänuoli/page up/home suurentavat nyt asetusta ja alanuoli/page down/end pienentävät. Aiemmin tapahtui juuri päinvastoin, mikä ei ollut loogista ja oli lisäksi ristiriidassa syntetisaattorin asetusrenkaan kanssa. (#221)
 - Näennäispuskureissa ei enää näytetä ylimääräisiä tyhjiä rivejä, kun ruutuasettelu on poistettu käytöstä.
@@ -1751,7 +1756,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Tuki IAccessible2-rajapintaa käyttäville sovelluksille, kuten Firefoxille käytettäessä NVDA:ta siirrettävältä medialta.
 - Korjattu näennäispuskurin linkkiluettelon kaatumisongelma Gecko-sovelluksissa. (#48)
 - NVDA:n ei pitäisi enää kaataa Mozilla Gecko -sovelluksia, kuten Firefoxia ja Thunderbirdiä, jos NVDA on käynnissä suuremmilla oikeuksilla kuin kyseessä oleva sovellus.
-- Puhesanastot (aiemmin käyttäjän sanastot) voivat nyt olla joko kirjainkoon huomioivia tai sellaisia, joissa kirjainkoolla ei ole väliä, ja korvattavat merkkijonot voivat olla valinnaisesti säännöllisiä lausekkeita. (#39)
+- Puhesanastot (aiemmin käyttäjän sanastot) voivat nyt olla joko kirjainkoon huomioivia tai sellaisia, joissa kirjainkoolla ei ole väliä, ja korvattavat merkkijonot voivat olla valinnaisesti sääntölausekkeita. (#39)
 - Ruutuasettelun käyttäminen näennäispuskureissa voidaan nyt määrittää asetusvalintaikkunasta.
 - Ilman href-viittausta olevia anchor-tageja ei enää ilmoiteta linkkeinä Gecko-näennäispuskureissa. (#47)
 - NVDA:n Etsi-komento muistaa nyt viimeisimmän haun kaikkien sovellusten välillä. (#53)
@@ -1854,7 +1859,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Lisätty virtuaalipuhesyntetisaattori, joka tulostaa tekstin ikkunaan sen puhumisen sijasta. Tämä on miellyttävämpää näkeville kehittäjille, jotka eivät ole tottuneet puhesynteesiin, mutta jotka haluavat tietää, mitä NVDA puhuu. Vikoja vielä luultavasti on, joten palaute on ehdottomasti tervetullutta.
 - NVDA ei enää oletusarvoisesti lue välimerkkejä, niiden lukeminen voidaan ottaa käyttöön painamalla NVDA+P.
 - eSpeak puhuu nyt oletusarvoisesti hiukan hitaammin, mikä pitäisi olla helpompaa sitä ensi kertaa käyttäville.
-- Lisätty käyttäjäsanastoja, joiden avulla NVDA saadaan lukemaan tietyt sanat eri tavalla. Sanastoja on kolmea eri tyyppiä: oletus, puheäänikohtainen ja tilapäinen. Oletussanastoon lisätyt sanat vaikuttavat NVDA:han jatkuvasti ja puheäänikohtaiset sanastot vain nykyiseen puheääneen. Tilapäissanasto on sellaisia tilanteita varten, joissa halutaan nopeasti lisätä sana jotakin tiettyä tehtävää varten, mutta sitä ei haluta pysyväksi (se häviää kun NVDA suljetaan). Sanastoihin lisättävät säännöt ovat toistaiseksi säännöllisiä lausekkeita.
+- Lisätty käyttäjäsanastoja, joiden avulla NVDA saadaan lukemaan tietyt sanat eri tavalla. Sanastoja on kolmea eri tyyppiä: oletus, puheäänikohtainen ja tilapäinen. Oletussanastoon lisätyt sanat vaikuttavat NVDA:han jatkuvasti ja puheäänikohtaiset sanastot vain nykyiseen puheääneen. Tilapäissanasto on sellaisia tilanteita varten, joissa halutaan nopeasti lisätä sana jotakin tiettyä tehtävää varten, mutta sitä ei haluta pysyväksi (se häviää kun NVDA suljetaan). Sanastoihin lisättävät säännöt ovat toistaiseksi sääntölausekkeita.
 - Puhesyntetisaattorin käyttämä äänilaite voidaan nyt valita Syntetisaattori-valintaikkunasta.
 
 
