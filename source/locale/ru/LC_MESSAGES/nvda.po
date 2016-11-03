@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-27 14:59+0800\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-10-28 05:06+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2005,7 +2005,7 @@ msgstr "Индикатор"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr "Кнопка вращения"
+msgstr "Счётчик"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
@@ -5817,7 +5817,6 @@ msgid "Exit NVDA"
 msgstr "Завершение работы NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5827,13 +5826,12 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Добро пожаловать в NVDA!\n"
 "Большинство команд NVDA вводятся с удержанием клавиши-модификатора NVDA при "
 "нажатии других клавиш.\n"
-"По умолчанию, используется insert на цифровом блоке и обычный insert как "
+"По умолчанию, используется insert на цифровом блоке и основной insert как "
 "клавиша-модификатор NVDA.\n"
-"Также, можно настроить NVDA на использование CapsLock как клавиши-"
-"модификатора NVDA.\n"
+"Вы также можете настроить NVDA на использование CapsLock как клавиши-"
+"модификатора.\n"
 "Нажимайте NVDA+n в любое время для вызова меню NVDA.\n"
 "Из этого меню вы можете настраивать NVDA, получать доступ к справке и другим "
 "функциям программы.\n"
@@ -5841,6 +5839,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Добро пожаловать в NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Добро пожаловать в NVDA!"
 
 msgid "Options"
 msgstr "Параметры"
@@ -6584,13 +6587,6 @@ msgstr "Ошибка при копировании пользовательск�
 msgid "Successfully copied NVDA user settings"
 msgstr "Пользовательские настройки NVDA успешно скопированы"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Ошибка в языковом файле %s"
-
-msgid "Language Error"
-msgstr "Ошибка языка"
-
 msgid "This change requires administrator privileges."
 msgstr "Это изменение требует прав администратора"
 
@@ -7159,13 +7155,17 @@ msgstr "&Комментарий"
 msgid "&Type"
 msgstr "&Тип"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Необходимо заполнить поле шаблон."
+
+msgid "Dictionary Entry Error"
+msgstr "Ошибка словарной статьи"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Ошибка в регулярном выражении: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Ошибка словарной статьи"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8734,6 +8734,12 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Ошибка в языковом файле %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Ошибка языка"
 
 #~ msgid "&Profile"
 #~ msgstr "&Профили"
