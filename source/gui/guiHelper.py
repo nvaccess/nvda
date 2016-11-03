@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #guiHelper.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NV Access Limited
+#Copyright (C) 2016 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -112,7 +112,7 @@ def associateElements( firstElement, secondElement):
 		raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
 
 	# staticText and (choice or textCtrl)
-	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl, wx.SpinCtrl)):
+	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl, wx.SpinCtrl, wx.SpinCtrlDouble)):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
