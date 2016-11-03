@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-09 18:27+0200\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-10-27 19:51+0200\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -433,13 +433,13 @@ msgstr "marathi stopień 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "holenderski (Belgia) stopień 1"
+msgid "Dutch (Belgium)"
+msgstr "holenderski (Belgia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "holenderski (Holandia) stopień 1"
+msgid "Dutch (Netherlands)"
+msgstr "holenderski (Holandia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -548,8 +548,8 @@ msgstr "tamilski stopień 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
-msgstr "telegu stopień 1"
+msgid "Telugu grade 1"
+msgstr "Telugu stopień 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1242,16 +1242,22 @@ msgstr "brak poprzedniej adnotacji"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "Lin&ki"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Nagłówki"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "Punkty &orientacyjne"
 
@@ -2731,17 +2737,25 @@ msgstr "odczytuj numery linii włączone"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Włącza i wyłącza odczytywanie numerów linii"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "informuj o wcięciach wyłączone"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Zgłaszaj mową wcięcia linii"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "informuj o wcięciach włączone"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Zgłaszaj dźwiękiem wcięcia linii"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Zgłaszaj mową i dźwiękiem wcięcia linii"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Nie zgłaszaj wcięć linii"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Włącza i wyłącza informowanie o wcięciach"
+msgid "Cycles through line indentation settings"
+msgstr "Przełącza tryby zgłaszania wcięć linii"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3571,6 +3585,7 @@ msgid "review"
 msgstr "Przeglądanie"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "punkt uwagi"
 
@@ -4561,6 +4576,10 @@ msgstr "tabela kolumn {columnCount}, wierszy {rowCount}"
 msgid "NVDA Speech Viewer"
 msgstr "Podgląd mowy NVDA"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&Pokaż podgląd mowy przy starcie"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Język"
@@ -4943,6 +4962,16 @@ msgstr "Brak odtwarzanego utworu"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Odczytuje pozostały czas aktualnie odtwarzanego utworu"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, pozycja {curLocation} z {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Strona {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5408,8 +5437,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 series"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Monitory brajlowskie Baum/HumanWare/APH"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Monitory brajlowskie Baum/HumanWare/APH/Orbit"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -5751,7 +5780,6 @@ msgid "Exit NVDA"
 msgstr "Zakończ NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5761,23 +5789,22 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Witaj w NVDA - Darmowym, wolnym i otwartym programie udźwiękawiającym dla "
-"systemu Windows.\n"
-"Podczas pracy z tym programem będziesz często korzystać z kombinacji "
-"specjalnego klawisza NVDA z innymi klawiszami.\n"
-"Domyślnie rolę klawisza NVDA pełni klawisz Insert obecny w pobliżu klawiszy "
-"strzałek lub na klawiaturze numerycznej (numpad).\n"
-"Możesz również zmienić ustawienia tak, aby rolę klawisza NVDA pełnił "
-"CapsLock.\n"
-"Większość poleceń programu możesz wydawać trzymając wciśnięty klawisz NVDA i "
-"naciskając inne klawisze (podobnie, jak robisz to z Shiftem).\n"
-"Naciśnij NVDA + n w dowolnym momencie, aby wejść do głównego menu programu.\n"
-"W tym menu znajdziesz pomoc, zmienisz ustawienia NVDA i uzyskasz dostęp do "
-"innych funkcji.\n"
+"Większość komend kontroli NVDA wymaga wciśniętego klawisza NVDA  przy "
+"naciskanych innych klawiszach.\n"
+"Domyślnie, numeryczny Insert i główny Insert są używane jako klawisz NVDA.\n"
+"Możesz ustawić NVDA aby używał klawisza CapsLock jako klawisz NVDA.\n"
+"Naciśnij NVDA+n aby w każdej chwili wejść do menu NVDA.\n"
+"Z tego menu, możesz konfigurować NVDA, uzyskać pomoci mieć dostęp do innych "
+"funkcji programu.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Witaj w NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Witaj w NVDA!"
 
 msgid "Options"
 msgstr "Opcje"
@@ -5883,7 +5910,7 @@ msgid "Add-on &help"
 msgstr "Pomo&c dodatku"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
+msgid "&Disable add-on"
 msgstr "W&yłącz dodatek"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
@@ -5988,7 +6015,7 @@ msgid "running"
 msgstr "uruchomiony"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
+msgid "&Enable add-on"
 msgstr "&Włącz dodatek"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
@@ -6028,10 +6055,6 @@ msgstr "Informacja o wtyczce"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Profile konfiguracji"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profil"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6350,14 +6373,14 @@ msgstr "&Folder przenośny"
 msgid "Browse..."
 msgstr "Przeglądaj..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Skopiuj bieżące &ustawienia użytkownika"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Wybierz folder przenośny"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Skopiuj bieżące &ustawienia użytkownika"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6443,10 +6466,6 @@ msgstr "debugowanie"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Język (wymaga restartu NVDA)"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Język"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Zapisuj ustawienia przy wyjściu"
@@ -6462,10 +6481,6 @@ msgstr "O&dtwarzaj dźwięk przy uruchamianiu i zamykaniu NVDA"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Poziom &logowania"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Poziom logu"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6523,13 +6538,6 @@ msgstr "Błąd podczas kopiowania ustawień użytkownika NVDA"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "Pomyślnie skopiowano ustawienia użytkownika NVDA."
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "Błąd w pliku językowym %s"
-
-msgid "Language Error"
-msgstr "Błąd języka"
 
 msgid "This change requires administrator privileges."
 msgstr "Zmiana ta wymaga uprawnień administratora."
@@ -6633,10 +6641,6 @@ msgstr "Ustawienia klawiatury"
 msgid "&Keyboard layout:"
 msgstr "&Układ klawiatury:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Układ klawiatury"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6714,10 +6718,6 @@ msgstr "Włącz ś&ledzenie myszy"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "&Rozdzielczość tekstu:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "&Jednostka oznajmiania tekstu"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6844,11 +6844,6 @@ msgstr "Czytaj op&isy obiektów"
 msgid "Progress &bar output:"
 msgstr "&Sygnał paska postępu:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Sygnał paska postępu"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6912,136 +6907,169 @@ msgstr "Nie p&rzekazuj do dokumentu zdarzeń wejścia niebędących poleceniami"
 msgid "Document Formatting"
 msgstr "Formatowanie dokumentów"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Zgłaszaj zmiany &formatowania za kursorem (może spowalniać)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr ""
+"Poniższe opcje kontrolują typy formatowania dokumentów zgłaszane przez NVDA."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Czcionka"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Odczytuj nazwy &czcionek"
+msgid "&Font name"
+msgstr "&Nazwa czcionki"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Odczytuj &rozmiar czcionek"
+msgid "Font &size"
+msgstr "&Rozmiar czcionki"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Odczytuj &atrybuty czcionek"
+msgid "Font attri&butes"
+msgstr "Atry&buty czcionki"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Informuj o &wyrównaniu tekstu"
+msgid "E&mphasis"
+msgstr "Pod&kreślenie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Sygnalizuj &kolory"
+msgid "St&yle"
+msgstr "St&yl"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Czytaj ko&mentarze"
+msgid "&Colors"
+msgstr "&Kolory"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Informacje o dokumencie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Zgłaszaj zmiany &edycyjne"
+msgid "Co&mments"
+msgstr "Ko&mentarze"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Zgłaszaj po&dkreślenie"
+msgid "&Editor revisions"
+msgstr "Zmiany &edycyjne"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Informuj o st&ylach"
+msgid "Spelling e&rrors"
+msgstr "Błędy &pisowni"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Strony i odstępy"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Informuj o &błędach pisowni"
+msgid "&Pages"
+msgstr "&strony"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Odczytuj &numery stron"
+msgid "Line &numbers"
+msgstr "Numery &linii"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Odczytuj numery &linii"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Line &indentation reporting:"
+msgstr "Zgłaszanie wc&ięć:"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "&Informuj o wcięciach"
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "Wyłączone"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Mowa"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Dźwięki"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Mowa i dźwięki"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Oznajmiaj wcięcia akapitu"
+msgid "&Paragraph indentation"
+msgstr "Wcięcia aka&pitu"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Zgłaszaj &interlinię"
+msgid "&Line spacing"
+msgstr "&odstępy między wierszami"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Informuj o &tabelach"
+msgid "&Alignment"
+msgstr "&Wyrównanie"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Informacje o tabeli"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Odczytuj na&główki tabel"
+msgid "&Tables"
+msgstr "&Tabele"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Odczytuj ws&półrzędne komórek tabeli"
+msgid "Row/column h&eaders"
+msgstr "Na&główki wierszy i kolumn"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Informuj o &linkach"
+msgid "Cell c&oordinates"
+msgstr "Ws&półrzędne komórki"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Elementy"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "Informuj o nagłówkac&h"
+msgid "&Lists"
+msgstr "&Listy"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Informuj o li&stach"
+msgid "Block &quotes"
+msgstr "C&ytaty"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Informuj o c&ytatach"
+msgid "Fra&mes"
+msgstr "Ra&mki"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Informuj o punktach &orientacyjnych"
+msgid "&Clickable"
+msgstr "&Klikalne"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Zgłaszaj ra&mki"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "&Zgłaszaj jeśli klikalne"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "Zgłaszaj zmiany &formatowania za kursorem (może spowalniać)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7064,6 +7092,7 @@ msgid "&Pattern"
 msgstr "&Wzorzec"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Zamień na:"
 
@@ -7075,13 +7104,17 @@ msgstr "&Komentarz:"
 msgid "&Type"
 msgstr "Typ:"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Wzorzec jest wymagany."
+
+msgid "Dictionary Entry Error"
+msgstr "Błąd wpisu słownika"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Błąd wyrażenia regularnego: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Błąd wpisu słownika"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7212,9 +7245,9 @@ msgstr "Poziom"
 msgid "Preserve"
 msgstr "Zachowaj"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Zmień symbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Zmień wybrany symbol"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -8636,6 +8669,90 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Błąd w pliku językowym %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Błąd języka"
+
+#~ msgid "&Profile"
+#~ msgstr "&Profil"
+
+#~ msgid "Language"
+#~ msgstr "Język"
+
+#~ msgid "Log level"
+#~ msgstr "Poziom logu"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "Układ klawiatury"
+
+#~ msgid "text reporting unit"
+#~ msgstr "&Jednostka oznajmiania tekstu"
+
+#~ msgid "Progress bar output"
+#~ msgstr "Sygnał paska postępu"
+
+#~ msgid "Report &font name"
+#~ msgstr "Odczytuj nazwy &czcionek"
+
+#~ msgid "Report font &size"
+#~ msgstr "Odczytuj &rozmiar czcionek"
+
+#~ msgid "Report &alignment"
+#~ msgstr "Informuj o &wyrównaniu tekstu"
+
+#~ msgid "Report &colors"
+#~ msgstr "Sygnalizuj &kolory"
+
+#~ msgid "Report co&mments"
+#~ msgstr "Czytaj ko&mentarze"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "Zgłaszaj po&dkreślenie"
+
+#~ msgid "Report st&yle"
+#~ msgstr "Informuj o st&ylach"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "Informuj o &błędach pisowni"
+
+#~ msgid "Report &pages"
+#~ msgstr "Odczytuj &numery stron"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "Zgłaszaj &interlinię"
+
+#~ msgid "Report &tables"
+#~ msgstr "Informuj o &tabelach"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "Odczytuj na&główki tabel"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "Informuj o &linkach"
+
+#~ msgid "Report &headings"
+#~ msgstr "Informuj o nagłówkac&h"
+
+#~ msgid "Report &lists"
+#~ msgstr "Informuj o li&stach"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "Informuj o c&ytatach"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "Informuj o punktach &orientacyjnych"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "Zgłaszaj ra&mki"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "&Zgłaszaj jeśli klikalne"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Włącza i wyłącza informowanie o wcięciach"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Ta komórka nie jest edytowalna"
