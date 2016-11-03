@@ -23,6 +23,9 @@ Quoi de Neuf dans NVDA
 - Ajustement de la disposition du dialogue Prononciation des symboles pour que toute la largeur du dialogue soit utilisée pour la liste des symboles. (#6101)
 - En mode navigation dans les navigateurs internet, les commandes de navigation vers les zones d'édition (e et maj+e) et les champs de formulaire (f et maj+f) peuvent maintenant atteindre les champs en lecture seule. (#4164)
 - Dans le dialogue Mise en Forme des Documents de NVDA, "Annoncer les changements de mise en forme après le curseur" a été renommé en "Signaler  les changements de mise en forme après le curseur", puisque cela affecte le braille autant que la voix. (#6336)
+- Amélioration de l'apparence du dialogue de bienvenue de NVDA. (#6350)
+- Dans les dialogues de NVDA, les boutons "Ok" et "Annuler" sont maintenant alignés à droite du dialogue. (#6333)
+- Des contrôles rotatifs sont maintenant utilisés pour les champs de saisie numériques. (#6099)
 
 
 == Corrections de Bogues ==
@@ -39,6 +42,8 @@ Quoi de Neuf dans NVDA
 - La commande de rechargement des modules complémentaires ne causse plus de problèmes aux profils de configuration déclenchés, aux nouveaux documents dans les navigateurs web et à la revue d'écran. (#2892, #5380)
 - Dans la liste de langues du dialogue Paramètres Généraux de NVDA, les langues tel que l'Aragonais sont maintenant correctement affichées sous Windows 10. (#6259)
 - Les touches système émulées (ex : Un bouton sur un afficheur braille émulant la touche tab) sont maintenant présentées dans la langue configurée pour NVDA dans l'aide à la saisie et le dialogue Gestes de Commandes. Avant, elles étaient toujours présentées en Anglais. (#6212)
+- Changer la langue de NVDA (depuis le dialogue Paramètres Généraux) n'a maintenant plus d'effet avant le redémarrage de NVDA. (#4561)
+- Le champ "modèle" d'une nouvelle entrée de dictionnaire ne peut plus être laissé à blanc. (#6412)
 
 
 == Changements pour les Développeurs ==
