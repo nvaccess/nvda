@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-14 10:00+0200\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-10-28 09:37+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -5819,7 +5819,6 @@ msgid "Exit NVDA"
 msgstr "Esci da NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5829,19 +5828,24 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Benvenuto in NVDA!\n"
 "La maggior parte dei comandi per controllare NVDA richiedono di premere e "
-"mantenere premuto il tasto NVDA mentre si digitano altri tasti. Per "
-"impostazione predefinita si utilizzano i tasti insert (del tastierino "
-"numerico e della tastiera estesa) come tasto NVDA. Puoi anche scegliere di "
-"usare CapsLock come tasto NVDA.\n"
-"Puoi premere in qualsiasi momento NVDA+n per attivare il menu di nvda. Da "
-"questo menu puoi configurare NVDA, ottenere aiuto e accedere ad altre "
+"mantenere premuto il tasto NVDA mentre si digitano altri tasti.\n"
+"Per impostazione predefinita si utilizzano i tasti insert (del tastierino "
+"numerico e della tastiera estesa) come tasto NVDA.\n"
+"è anche possibile configurare NVDA in modo tale da usare il blocca maiuscole "
+"come tasto NVDA.\n"
+"Premere in qualsiasi momento NVDA+n per attivare il menu di NVDA.\n"
+"Da questo menu si può configurare NVDA, ottenere aiuto e accedere ad altre "
 "funzioni.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Benvenuto in NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Benvenuto in NVDA!"
 
 msgid "Options"
 msgstr "Opzioni"
@@ -6590,13 +6594,6 @@ msgstr "Errore nella copia delle impostazioni utente di NVDA"
 msgid "Successfully copied NVDA user settings"
 msgstr "Impostazioni utente di NVDA copiate con successo"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Errore nel file di lingua %s"
-
-msgid "Language Error"
-msgstr "Errore di lingua"
-
 msgid "This change requires administrator privileges."
 msgstr "Questa modifica richiede privilegi di amministratore"
 
@@ -7173,13 +7170,17 @@ msgstr "&Commento"
 msgid "&Type"
 msgstr "&Tipo"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "è richiesto un valore."
+
+msgid "Dictionary Entry Error"
+msgstr "Errore nella voce del dizionario"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Errore nell'espressione regolare: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Errore nella voce del dizionario"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8736,6 +8737,12 @@ msgstr "HIMS serie Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Errore nel file di lingua %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Errore di lingua"
 
 #~ msgid "&Profile"
 #~ msgstr "&Profilo"

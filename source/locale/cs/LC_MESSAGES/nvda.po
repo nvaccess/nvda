@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-21 17:02+0100\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-11-01 22:39+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -5721,7 +5721,6 @@ msgid "Exit NVDA"
 msgstr "Ukončit NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5731,7 +5730,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Vítejte v programu NVDA!\n"
 "Většina příkazů pro ovládání programu NVDA je tvořena soustiskem tzv. "
 "klávesy NVDA spolu s dalšími klávesami.\n"
 "Jako klávesa NVDA je standardně přednastavena klávesa Insert - buď hlavní "
@@ -5744,6 +5742,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Vítejte  v programu NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Vítejte  v programu NVDA!"
 
 msgid "Options"
 msgstr "Možnosti dialogu"
@@ -6473,13 +6476,6 @@ msgstr "Chyba při kopírování uživatelského nastavení NVDA"
 msgid "Successfully copied NVDA user settings"
 msgstr "Uživatelské nastavení NVDA bylo úspěšně zkopírováno"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Chyba v jazykovém souboru %s"
-
-msgid "Language Error"
-msgstr "Chyba jazyka"
-
 msgid "This change requires administrator privileges."
 msgstr "Tato změna vyžaduje administrátorská oprávnění."
 
@@ -7046,13 +7042,17 @@ msgstr "&Komentář"
 msgid "&Type"
 msgstr "Typ"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Je nutné zadat vzor."
+
+msgid "Dictionary Entry Error"
+msgstr "chyba položky slovníku"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Chyba regulárního výrazu: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "chyba položky slovníku"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8539,6 +8539,12 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE/Smart Beetle"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid "Error in %s language file"
+#~ msgstr "Chyba v jazykovém souboru %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Chyba jazyka"
+
 #~ msgid "&Profile"
 #~ msgstr "Profil"
 
@@ -9458,9 +9464,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "loads the saved NVDA configuration, overriding current changes"
 #~ msgstr "Načte uložené nastavení a přepíše naposledy provedené změny"
-
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "Vítejte  v programu NVDA"
 
 #~ msgid "Your gesture map file contains errors.\n"
 #~ msgstr "Chyba souboru mapy vstupních příkazů"
