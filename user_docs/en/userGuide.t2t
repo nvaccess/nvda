@@ -91,6 +91,7 @@ Apart from the  inability to automatically start during and/or after log-on, the
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 - Windows 8 and later: the inability to support input from a touch screen.
 - Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+- Windows 8 and later: audio ducking is not supported.
 -
 
 ++ Installing NVDA ++
@@ -780,6 +781,9 @@ On Windows 8 and above, this option allows you to choose if NVDA should lower th
 - Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers. 
 - Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
 -
+
+This option is only available if NVDA has been installed.
+It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
 +++ Voice Settings (NVDA+control+v) +++[VoiceSettings]
 The Voice Settings dialog, found in the Preferences menu, contains options that let you change the sound of the speech.
