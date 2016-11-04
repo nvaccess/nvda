@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-14 20:14+0530\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-10-28 20:16+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -5750,7 +5750,6 @@ msgid "Exit NVDA"
 msgstr "என்விடிஏவை விட்டு வெளியேறுக"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5760,7 +5759,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"என்விடிஏவிற்கு வருக!\n"
 "என்விடிஏவைக் கட்டுப்படுத்த, பிற விசைகளை அழுத்தும்பொழுது என்விடிஏ விசையையும் அழுத்த "
 "வேண்டும்.\n"
 "இயல்பில், நீட்டிக்கப்பட்ட செருகு விசை, எண் திட்டு செருகு விசை ஆகிய இரு விசைகளும் "
@@ -5773,6 +5771,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "என்விடிஏவிற்கு வருக"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "என்விடிஏவிற்கு வருக! "
 
 msgid "Options"
 msgstr "விருப்பத்தேர்வுகள்"
@@ -6507,13 +6510,6 @@ msgstr "என்விடிஏ பயனர் அமைப்புகளை�
 msgid "Successfully copied NVDA user settings"
 msgstr "என்விடிஏ பயனர் அமைப்புகள் வெற்றிகரமாக படியெடுக்கப்பட்டது"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "%s மொழிக் கோப்பில் பிழை"
-
-msgid "Language Error"
-msgstr "மொழிப் பிழை"
-
 msgid "This change requires administrator privileges."
 msgstr "இம்மாற்றத்திற்கு நிர்வாகியின் சிறப்புரிமைகள் தேவைப்படுகிறது"
 
@@ -7085,13 +7081,17 @@ msgstr "கருத்துரை (&C)"
 msgid "&Type"
 msgstr "வகை (&T)"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "ொரு வடிவவிதம் தேவைப்படுகிறது"
+
+msgid "Dictionary Entry Error"
+msgstr "அகரமுதலி உள்ளீட்டுப் பிழை"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "சுருங்குறித்தொடர் பிழை: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "அகரமுதலி உள்ளீட்டுப் பிழை"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8598,6 +8598,12 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 
+#~ msgid "Error in %s language file"
+#~ msgstr "%s மொழிக் கோப்பில் பிழை"
+
+#~ msgid "Language Error"
+#~ msgstr "மொழிப் பிழை"
+
 #~ msgid "&Profile"
 #~ msgstr "தனியமைப்பு (&P)"
 
@@ -9537,9 +9543,6 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 
 #~ msgid "We need your help in order to continue to improve NVDA.\n"
 #~ msgstr "என்விடிஏவைத் தொடர்ந்து மேம்படுத்த, தங்களின் உதவித் தேவைப்படுகிறது.\n"
-
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "என்விடிஏவிற்கு வருக!\n"
 
 #~ msgid "Your gesture map file contains errors.\n"
 #~ msgstr "தங்களின் gesture வரைப்பட கோப்பு பிழைகளைக் கொண்டுள்ளது.\n"

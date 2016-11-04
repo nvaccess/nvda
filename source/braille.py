@@ -733,7 +733,12 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getBrailleTextForProperties(**props)
-		if role == controlTypes.ROLE_MATH:
+		content = field.get("content")
+		if content:
+			if text:
+				text += " "
+			text += content
+		elif role == controlTypes.ROLE_MATH:
 			import mathPres
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
@@ -761,6 +766,12 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 		linePrefix = field.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
+		if formatConfig["reportHeadings"]:
+			headingLevel=field.get('heading-level')
+			if headingLevel:
+				# Translators: Displayed in braille for a heading with a level.
+				# %s is replaced with the level.
+				textList.append(_("h%s")%headingLevel)
 	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):

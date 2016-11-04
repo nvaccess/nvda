@@ -23,6 +23,9 @@ Ce este nou în NVDA
 - A fost ajustat aspectul casetei de dialog al pronunțării simbolurilor, așa încât întreaga lățime a ferestrei este folosită pentru lista de simboluri. (#6101)
 - În mod navigare în browserele de internet, comenzile de navigare cu o singură literă pentru câmpul de editare (e și shift+e) și câmpul formular (f și shift+f), mută acum la câmpuri de editare în mod doar citire (care pot fi doar parcurse și nu modificate). (#4164)
 - În setările de formatare a documentelor, opțiunea „Anunță schimbări de formatare după cursor” a fost redenumită în „Raportează schimbări de formatare după cursor” deoarece afectează atât vorbirea cât și scrierea braille. (#6336)
+- A fost ajustat aspectul dialogului „bun venit” din NVDA. (#6350)
+- Casetele de dialog NVDA au acum butoanele lor „OK” și „Anulare” aliniate la dreapta dialogului. (#6333)
+- Controalele Spin sunt acum utilizate pentru câmpurile numerice de intrare. (#6099)
 
 
 == Rezolvări defecte ==
@@ -39,6 +42,8 @@ Ce este nou în NVDA
 - Comanda de reîncărcare a plug-inurilor nu mai provoacă probleme pentru profilurile de configurare declanșate, documente noi în browsere de internet și la examinarea ecranului. (#2892, #5380)
 - În lista de limbi din fereastra NVDA a Setărilor generale, limbi precum aragoneza sunt acum afișate corect în Windows 10. (#6259)
 - Tastele emulate de sistem (de ex. un buton de pe afișajul braille care emulează apăsarea tastei Tab) sunt acum prezentate în ferestrele de configurare pentru limbă și ajutor pentru intrări precum și dialogul cu gesturi de intrare. Anterior acestea erau tot timpul afișate în engleză. (#6212)
+- Modificarea limbii NVDA-ului (din dialogul setărilor generale) acum nu are niciun efect până când NVDA este repornit. (#4561)
+- Câmpul „model” pentru o nouă intrare în dicționar nu mai este permis să fie lăsat gol. (#6412)
 
 
 == Modificări pentru Dezvoltatori ==
