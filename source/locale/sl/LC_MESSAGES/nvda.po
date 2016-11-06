@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-19 12:41+0100\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-10-27 17:14+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -5806,7 +5806,6 @@ msgid "Exit NVDA"
 msgstr "Izhod iz NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5816,19 +5815,23 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Dobrodošli v NVDA!\n"
 "Večina ukazov za nadzor NVDA zahteva, da držite tipko NVDA, ko pritisnete "
 "druge tipke.\n"
 "Kot privzeti tipki NVDA lahko uporabite glavni insert in tistega na "
 "številski strani.\n"
-"NVDA lahko nastavite tako, da bo CapsLock tipka NVDA.\n"
-"Pritisnite NVDA+n kadarkoli želite odpreti meni NVDA.\n"
+"NVDA lahko nastavite tudi tako, da bo CapsLock tipka NVDA.\n"
+"Pritisnite NVDA+n, kadarkoli želite odpreti meni NVDA.\n"
 "S tega menija lahko upravljate z NVDA, pridobite pomoč in dostopate do "
 "drugih dejanj v NVDA.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Dobrodošli v NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Dobrodošli v NVDA!"
 
 msgid "Options"
 msgstr "Možnosti"
@@ -6563,13 +6566,6 @@ msgstr "Napaka pri preslikavi NVDA uporabniških nastavitev"
 msgid "Successfully copied NVDA user settings"
 msgstr "NVDA uporabniške nastavitve so se uspešno preslikale"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Napaka v jezikovni datoteki %s"
-
-msgid "Language Error"
-msgstr "Napaka jezika"
-
 msgid "This change requires administrator privileges."
 msgstr "Ta sprememba potrebuje skrbniške pravice."
 
@@ -7144,14 +7140,18 @@ msgstr "&Komentar"
 msgid "&Type"
 msgstr "&Tip"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Vzorec je potreben."
+
+msgid "Dictionary Entry Error"
+msgstr "Napaka Slovarskega Vnosa"
+
 # boljšega prevoda trenutno ne najdem
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Napaka Regularnega Izraza: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Napaka Slovarskega Vnosa"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8672,6 +8672,12 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Napaka v jezikovni datoteki %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Napaka jezika"
 
 #~ msgid "&Profile"
 #~ msgstr "&Profil"

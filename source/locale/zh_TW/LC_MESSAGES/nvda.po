@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-18 17:22+0800\n"
+"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"PO-Revision-Date: 2016-11-01 14:00+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -5675,7 +5675,6 @@ msgid "Exit NVDA"
 msgstr "關閉 NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5685,18 +5684,21 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"歡迎使用 NVDA！\n"
-"多數的 NVDA 的按鍵指令需要同時按住一個 NVDA 鍵及其它的一個按鍵。\n"
+"多數的 NVDA 的按鍵指令需要同時按住一個 NVDA 鍵及其它的按鍵。\n"
 "所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0（也是 insert 鍵），其預設"
 "狀態均是啟用。\n"
 "您也可將 Caps Lock 設定為 NVDA 鍵。\n"
 "您可隨時按 NVDA+n 開啟 NVDA 的功能表，\n"
-"此功能表可讓您設定 NVDA 的各種選項，取得開發工具相關資訊及使用說明等資"
-"訊。\\\n"
+"此功能表可讓您設定 NVDA 的各種選項，取得開發工具相關資訊及使用說明等資訊。\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "歡迎使用 NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "歡迎使用 NVDA！"
 
 msgid "Options"
 msgstr "選項"
@@ -6405,13 +6407,6 @@ msgstr "複製NVDA使用者設定時發生錯誤"
 msgid "Successfully copied NVDA user settings"
 msgstr "已成功複製NVDA使用者設定"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "在%s語言檔案中有誤"
-
-msgid "Language Error"
-msgstr "語言錯誤"
-
 msgid "This change requires administrator privileges."
 msgstr "需要系統管理員權限才可變更"
 
@@ -6975,13 +6970,17 @@ msgstr "註解(&C)"
 msgid "&Type"
 msgstr "類別(&T)"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "項目必填。"
+
+msgid "Dictionary Entry Error"
+msgstr "字庫項目錯誤"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "正規表達式錯誤 \"%s\""
-
-msgid "Dictionary Entry Error"
-msgstr "字庫項目錯誤"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8514,6 +8513,12 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "在%s語言檔案中有誤"
+
+#~ msgid "Language Error"
+#~ msgstr "語言錯誤"
 
 #~ msgid "&Profile"
 #~ msgstr "設定檔(&P)"
