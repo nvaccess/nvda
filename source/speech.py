@@ -1146,6 +1146,24 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# %s will be replaced with the section number.
 			text=_("section %s")%sectionNumber
 			textList.append(text)
+	sectionBreakType=attrs.get("section-break")
+	if sectionBreakType:
+		if sectionBreakType == "0" : # Continuous section break.
+			text=_("continuous section break")
+		elif sectionBreakType == "1" : # New column section break.
+			text=_("new column section break")
+		elif sectionBreakType == "2" : # New page section break.
+			text=_("new page section break")
+		elif sectionBreakType == "3" : # Even pages section break.
+			text=_("even pages section break")
+		elif sectionBreakType == "4" : # Odd pages section break.
+			text=_("odd pages section break")
+		else:
+			text=""
+		textList.append(text)
+	columnBreakType=attrs.get("column-break")
+	if columnBreakType:
+		textList.append(_("column break"))
 	if  formatConfig["reportHeadings"]:
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None

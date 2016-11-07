@@ -21,6 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <oleacc.h>
 #include <common/xml.h>
 #include <common/log.h>
+#include <boost/optional.hpp>
 #include "nvdaHelperRemote.h"
 #include "nvdaInProcUtils.h"
 #include "nvdaInProcUtils.h"
@@ -53,6 +54,9 @@ constexpr int formatConfig_reportLineSpacing = 0x40000;
 
 constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
 constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
+
+constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
+constexpr wchar_t COLUMN_BREAK_VALUE = L'\x0e';
 
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -690,6 +694,72 @@ inline bool generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream
 	return true;
 }
 
+std::experimental::optional<int> getPageBreakType(IDispatchPtr pDispatchRange ) {
+	// The following case should handle where we have the page break character ('0x0c') shown with '|p|'
+	//	first section|p|
+	//	second section.
+	// range.Sections[1].pageSetup.SectionStart tells you how the section started, so we need to know
+	// the next sections start type to report what kind of break this is. To do this we need to expand
+	// the range, get the section start type, remove the page break character, and insert an attribute
+	// for the break type.
+	IDispatchPtr pDispatchRangeDup = nullptr;
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
+	if( res != S_OK || !pDispatchRangeDup ) {
+		LOG_DEBUGWARNING(L"error duplicating the range.");
+		return {};
+	}
+
+	// we assume that we are 1 character away from the next section, this should be the value for PAGE_BREAK_VALUE ("0x0c")
+	const int unitsToMove = 1;
+	int unitsMoved=-1;
+	res = _com_dispatch_raw_method(pDispatchRangeDup,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacter,unitsToMove);
+	if( res !=S_OK || unitsMoved<=0 || !pDispatchRangeDup) {
+		LOG_DEBUGWARNING(L"error moving the end of the range");
+		return {};
+	}
+
+	IDispatchPtr pDispatchSections = nullptr;
+	res = _com_dispatch_raw_propget( pDispatchRangeDup, wdDISPID_RANGE_SECTIONS, VT_DISPATCH, &pDispatchSections);
+	if( res != S_OK || !pDispatchSections ) {
+		LOG_DEBUGWARNING(L"error getting sections from range");
+		return {};
+	}
+
+	int count = -1;
+	res = _com_dispatch_raw_propget( pDispatchSections, wdDISPID_SECTIONS_COUNT, VT_I4, &count);
+	if( res != S_OK || count != 2 ) { 
+		LOG_DEBUGWARNING(L"error getting section count. There should be exactly 2 sections, count: " << count);
+		return {};
+	}
+
+	// we make the assumption that the second section will always be the one we want. We also assume that the section
+	// count was 1 before expanding the range.
+	const int sectionToGet = 2;
+	IDispatchPtr pDispatchItem = nullptr;
+	res = _com_dispatch_raw_method( pDispatchSections, wdDISPID_SECTIONS_ITEM, DISPATCH_METHOD, VT_DISPATCH, &pDispatchItem, L"\x0003", sectionToGet);
+	if( res != S_OK || !pDispatchItem){
+		LOG_DEBUGWARNING(L"error getting section item");
+		return {};
+	}
+
+	IDispatchPtr pDispatchPageSetup = nullptr;
+	res = _com_dispatch_raw_propget( pDispatchItem, wdDISPID_SECTION_PAGESETUP,  VT_DISPATCH, &pDispatchPageSetup);
+	if( res != S_OK || !pDispatchPageSetup){
+		LOG_DEBUGWARNING(L"error getting pageSetup");
+		return {};
+	}
+
+	int type = -1;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_SECTIONSTART, VT_I4, &type);
+	if( res != S_OK || type < 0){
+		LOG_DEBUGWARNING(L"error getting section start");
+		return {};
+	}
+
+	LOG_DEBUGWARNING(L"Got Type: " << type);
+	return type;
+}
+
 UINT wm_winword_getTextInRange=0;
 typedef struct {
 	int startOffset;
@@ -788,6 +858,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if( S_OK == res && sectionNumber >= 0) {
 			initialFormatAttribsStream << L"section-number=\""<<sectionNumber << "\" ";
 		}
+		else
+		{
+			LOG_DEBUGWARNING("Error getting the current section number. Res: "<< res <<" SectionNumber: " << sectionNumber);
+		}
 	}
 
 	bool firstLoop=true;
@@ -826,6 +900,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(text) {
 			int noteCharOffset=-1;
 			bool isNoteChar=false;
+			std::experimental::optional<int> pageBreakCharIndex;
+			std::experimental::optional<int> columnBreakCharIndex;
 			if(!isFormField) {
 				//Force a new chunk before and after control+b (note characters)
 				for(int i=0;text[i]!=L'\0';++i) {
@@ -837,6 +913,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 						text[i]=L'\0';
 						//Collecting revision info does not work on cell delimiters
 						curDisabledFormatConfig|=formatConfig_reportRevisions;
+					} else if( text[i] == PAGE_BREAK_VALUE) { // page break
+						pageBreakCharIndex = i;
+					} else if( text[i] == COLUMN_BREAK_VALUE) { // column break
+						columnBreakCharIndex = i;
 					}
 				}
 				isNoteChar=(noteCharOffset==0);
@@ -869,6 +949,18 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 
 			{	// scope for xmlAttribsFormatConfig
 				const auto xmlAttribsFormatConfig = formatConfig&(~curDisabledFormatConfig);
+
+				if( pageBreakCharIndex ){
+					auto type = getPageBreakType(pDispatchRange);
+					if(type){
+						text[*pageBreakCharIndex] = '\0';
+						XMLStream << L"section-break=\"" << *type << "\" ";
+					}
+				}
+				if (columnBreakCharIndex){
+					text[*columnBreakCharIndex] = '\0';
+					XMLStream << L"column-break=\"" << 1 << "\" ";
+				}
 
 				generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,xmlAttribsFormatConfig,XMLStream);
 				const auto shouldReportLinks = (xmlAttribsFormatConfig&formatConfig_reportLinks);
