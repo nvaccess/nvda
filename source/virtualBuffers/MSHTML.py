@@ -83,9 +83,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 					descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedById)
 				except (COMError,NameError):
 					descNode=None	
-				if descNode:
-					pass
-				else:
+				if not descNode:
 					try:
 						descNode=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.obj.rootNVDAObject.HTMLNode.document, ariaDescribedById)
 					except (COMError,NameError):
