@@ -75,15 +75,17 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_REQUIRED)
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
-		if ariaDescribedBy:
+		if ariaDescribedBy:			
 			ariaDescribedByIds=ariaDescribedBy.split(" ")
 			for ariaDescribedById in ariaDescribedByIds:
 				descNode=None				
 				try:
-					descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
+					descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedById)
 				except (COMError,NameError):
 					descNode=None	
-				if !descNode:
+				if descNode:
+					pass
+				else:
 					try:
 						descNode=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.obj.rootNVDAObject.HTMLNode.document, ariaDescribedById)
 					except (COMError,NameError):
