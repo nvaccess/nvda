@@ -76,7 +76,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
 		if ariaDescribedBy:			
-			ariaDescribedByIds=ariaDescribedBy.split(" ")
+			ariaDescribedByIds=ariaDescribedBy.split()
+			description=""
 			for ariaDescribedById in ariaDescribedByIds:
 				descNode=None				
 				try:
@@ -92,7 +93,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 					try:
 						description=description+" "+self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
 					except:
-						pass
+						pass			
 		ariaSort=attrs.get('HTMLAttrib::aria-sort')
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
