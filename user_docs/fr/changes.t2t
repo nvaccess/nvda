@@ -13,6 +13,8 @@ Quoi de Neuf dans NVDA
 - Les champs de Renvoi sous Microsoft Word sont maintenant traités comme des hyperliens. Ils sont annoncés comme des liens et peuvent être activés. (#6102)
 - début de support de la version de l'application Kindle en préparation. (#6247)
 - Support des afficheurs braille Baum SuperVario2, Baum Vario 340 et HumanWare Brailliant2. (#6116)
+- Support initial de la mise à jour anniversaire de Microsoft Edge. (#6271)
+- Le mode navigation est maintenant utilisé pour la lecture des courriels dans l'application mail de Windows 10. (#6271)
 
 
 == Changements ==
@@ -44,6 +46,7 @@ Quoi de Neuf dans NVDA
 - Les touches système émulées (ex : Un bouton sur un afficheur braille émulant la touche tab) sont maintenant présentées dans la langue configurée pour NVDA dans l'aide à la saisie et le dialogue Gestes de Commandes. Avant, elles étaient toujours présentées en Anglais. (#6212)
 - Changer la langue de NVDA (depuis le dialogue Paramètres Généraux) n'a maintenant plus d'effet avant le redémarrage de NVDA. (#4561)
 - Le champ "modèle" d'une nouvelle entrée de dictionnaire ne peut plus être laissé à blanc. (#6412)
+- Correction d'un problème rare durant la recherche des ports série sur certains systèmes qui rendait certains pilotes d'afficheurs braille inutilisables. (#6462)
 
 
 == Changements pour les Développeurs ==
