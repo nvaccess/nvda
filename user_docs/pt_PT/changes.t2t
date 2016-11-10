@@ -15,6 +15,8 @@ Tradução de Rui Fontes
 - Suporte inicial para a próxima versão da aplicação Kindle. (#6247)
 - Suporte para a linha Braille  Orbit Reader 20. (#6007)
 - Suporte para as linhas Braille Baum SuperVario2, Baum Vario 340 e HumanWare Brailliant2. (#6116)
+- Suporte inicial para a versão Aniversário do Microsoft Edge. (#6271)
+- O modo de navegação passa a ser usado ao ler e-mails no correio do Windows 10. (#6271)
 
 
 == Alterações ==
@@ -25,6 +27,9 @@ Tradução de Rui Fontes
 - Ajustado o layout do diálogo Pronúncia de pontuação/símbolo, para que toda a sua largura possa ser usada pela lista de símbolos. (#6101)
 - No modo de navegação, nos navegadores web, as teclas de navegação rápida, para campos de edição (e e shift+e) e de formulário (f e shift+f) agora também movem para campos de texto só de leitura. (#4164)
 - No diálogo Formatação de documentos do NVDA, "Announce formatting changes after the cursor" has been renamed to "Report formatting changes after the cursor", as it affects braille as well as speech. (#6336)
+- Ajustada a aparência do diálogo de boas vindas ao NVDA. (#6350)
+- Os diálogos do NVDA passam a ter os botões "ok" e "cancelar" alinhados à direita. (#6333)
+- Passam a ser usadas barras deslizantes para os campos numéricos. (#6099)
 
 
 == Correcções ==
@@ -41,6 +46,9 @@ Tradução de Rui Fontes
 - O comando Recarregar extras não causa mais problemas para os perfis de configuração activados, para os novos documentos em navegadores web nem para a revisão de ecrã. (#2892, #5380)
 - Na lista de idiomas no diálogo Definições gerais do NVDA, idiomas como o Aragonês passam a ser exibidos correctamente no Windows 10. (#6259)
 - As teclas de sistema emuladas por teclas de uma linha Braille, por exemplo, uma tecla simulando o Tab, passam a ser apresentadas no idioma do NVDA na Ajuda de entrada e no diálogo Definir Comandos. Antes eram sempre apresentadas em inglês. (#6212)
+- Alterar o idioma do NVDA a parttir das Definições Gerais apenas tem efeito após reiniciar o NVDA. (#4561)
+- O campo Texto original de uma nova entrada de dicionário já não pode ficar em branco. (#6412)
+- Corrigido um problema raro, ao pesquisar por portas série em alguns sistemas que impossibilitava o uso de algumas linhas Braille. (#6462)
 
 
 == Alterações para desenvolvedores ==

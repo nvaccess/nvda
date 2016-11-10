@@ -13,6 +13,8 @@ Qué hay de Nuevo en NVDA
 - Los campos de referencia cruzada en Microsoft Word ahora se tratan como hipervínculos. Se anuncian como enlaces, y se pueden activar. (#6102)
 - Soporte inicial para la próxima versión de la applicación Kindle. (#6247)
 - Soporte para las pantallas braille Baum SuperVario2, Baum Vario 340 y HumanWare Brailliant2. (#6116)
+- Soporte inicial para la actualización Anniversary de Microsoft Edge. (#6271)
+- Ahora se utiliza el modo exploración al leer correos electrónicos en la aplicación correo de Windows 10. (#6271)
 
 
 == Cambios ==
@@ -44,6 +46,7 @@ Qué hay de Nuevo en NVDA
 - Las teclas de sistema de emulación de teclado (ej.: un botón en una pantalla braille que emule la pulsación de la tecla tab) ahora se presentan en el idioma configurado en NVDA en la ayuda de entrada y en el diálogo Gestos de Entrada. Anteriormente, siempre se presentaban en inglés. (#6212)
 - Al cambiar el idioma de NVDA (desde el diálogo Opciones Generales) ahora no tiene efecto hasta que NVDA se reinicie. (#4561)
 - El campo "patrón" para una entrada de diccionario nueva ya no permite estar en blanco a la izquierda. (#6412)
+- Corregido un extraño problema al escanear puertos serie en algunos sistemas que hacía algunos controladores de pantallas braille inusables. (#6462)
 
 
 == Cambios para Desarrolladores ==
