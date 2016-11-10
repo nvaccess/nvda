@@ -13,6 +13,8 @@
 - Pola odsyłacza w Microsoft Word są teraz traktowane jak hiperlinki. Są zgłaszane jako linki, i mogą być aktywowane. (#6102)
 - Wstępna obsługa nadchodzącej wersji aplikacji Kindle. (#6247)
 - Obsługa monitorów brajlowskich Baum SuperVario2, Baum Vario 340 i HumanWare Brailliant2. (#6116)
+- Wstępna obsługa rocznicowej aktualizacji Microsoft Edge. (#6271)
+- Tryb czytania jest teraz używany podczas czytania poczty w aplikacji Windows 10 mail. (#6271)
 
 
 == Zmiany ==
@@ -25,11 +27,11 @@
 - w oknie ustawień formatowania dokumentów NVDA, opcja "Oznajmiaj zmiany edycyjne za kursorem" została zmieniona na "zgłaszaj zmiany formatowania za kursorem", ponieważ dotyczy brajla, a nie tylko mowy. W polskiej wersji językowej, nowa nazwa tej opcji istniała już dawniej. (#6336)
 - Poprawiony wizualny układ powitalnego okna dialogowego NVDA. (#6350)
 - Okna dialogowe NVDA mają teraz przyciski "ok" i "Anuluj" wyrównane do prawej strony okna. (#6333)
-- Pokrętła są teraz używane wprowadzania wartości pól numerycznych. (#6099)
+- Pokrętła są teraz używane do wprowadzania wartości pól numerycznych. (#6099)
 
 
 == Poprawki błędów ==
-- Poprawiony rzadki problem przy wyjściu z NVDA gdy otwarty był podgląd mowy. (#5050)
+- Poprawiony rzadki problem przy wyjściu z NVDA, gdy otwarty był podgląd mowy. (#5050)
 - Mapy obrazkowe są teraz renderowane zgodnie z oczekiwaniami w trybie czytania w Mozilla Firefox. (#6051)
 - Naprawiony błąd powodujący ostrzeżenie w pliku logu NVDA, gdy przełączano caps-lock. (#6127)
 - W oknie słownika, naciśnięcie klawisza Enter zapisuje zmiany i zamyka okno. (#6206)
@@ -44,6 +46,7 @@
 - Emulowane klawisze systemowe (np. przycisk na monitorze brajlowskim, który emuluje naciśnięcie klawisza tab) są teraz prezentowane w wybranym języku NVDA w pomocy klawiatury i oknie zdarzeń wejścia. Poprzednio były zawsze wyświetlane po angielsku. (#6212)
 - Zmiana języka w ogólnych ustawieniach NVDA odnosi skutek dopiero po restarcie programu. (#4561)
 - Pole wzorca dla nowego wpisu słownika nie może być pozostawione puste. (#6412)
+- Naprawiono rzadki błąd skanowania portów szeregowych na niektórych systemach, sprawiający, że sterownik monitora brajlowskiego nie mógł być używany. (#6462)
 
 
 == Zmiany dla programistów ==
