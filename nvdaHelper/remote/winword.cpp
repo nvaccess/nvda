@@ -864,6 +864,153 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		}
 	}
 
+	if(true) {
+		long left = -1;
+		long top = -1;
+		long width = -1;
+		long height = -1;
+		const int wdDISPID_WINDOW_GETPOINT = 112;
+		auto res = _com_dispatch_raw_method( pDispatchWindow, wdDISPID_WINDOW_GETPOINT, DISPATCH_METHOD, VT_EMPTY, nullptr,
+			L"\x4003\x4003\x4003\x4003\x0009", &left, &top, &width, &height, pDispatchRange);
+		if( S_OK != res) {
+			LOG_DEBUGWARNING("Error getting range point from window. res: "<< res);
+		}
+
+		IDispatchPtr pDispatchApplication = nullptr;
+		if( S_OK == res ) {
+			res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_APPLICATION, VT_DISPATCH, &pDispatchApplication);
+			if( res != S_OK || !pDispatchApplication){
+				LOG_DEBUGWARNING(L"error getting application. res: "<< res);
+				res = E_FAIL;
+			}
+		}
+
+		float rangePos = -1;
+		if( S_OK == res ) {
+			POINT topLeft;
+			topLeft.x = left;
+			topLeft.y = top;
+
+			LOG_DEBUGWARNING(L"GetPoint left: " << left);
+			// to handle RIGHT TO LEFT, this might need to be done for the right of the range position:
+			auto ret = MapWindowPoints(HWND_DESKTOP, hwnd, &topLeft, 1);
+			if (ret == 0){
+				LOG_DEBUGWARNING(L"Probable error during MapWindowPoints, call SetLastError to check.");
+				res = E_FAIL;
+			} else {
+				LOG_DEBUGWARNING(L"MapWindowPoints topLeft.x: " << topLeft.x);
+
+				res = _com_dispatch_raw_method( pDispatchApplication, wdDISPID_APPLICATION_PIXELSTOPOINTS,
+					DISPATCH_METHOD, VT_R4, &rangePos, L"\x0003", topLeft.x);
+				if( res != S_OK ){
+					LOG_DEBUGWARNING(L"error converting pixels to points. res: "<< res);
+					res = E_FAIL;
+				}
+				LOG_DEBUGWARNING(L"rangePos: " << rangePos);
+			}
+		}
+
+		IDispatchPtr pDispatchPageSetup = nullptr;
+		if( S_OK == res ) {
+			res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_PAGESETUP, VT_DISPATCH, &pDispatchPageSetup);
+			if( res != S_OK || !pDispatchPageSetup){
+				LOG_DEBUGWARNING(L"error getting pageSetup. res: "<< res);
+				res = E_FAIL;
+			}
+		}
+
+		float pageWidth = -1.0f;
+		if( S_OK == res ) {
+			// page width necessary for calculating right to left positions.
+			res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_PAGEWIDTH, VT_R4, &pageWidth);
+			if( res != S_OK || pageWidth <0){
+				LOG_DEBUGWARNING(L"error getting pageWidth. res: "<< res << " pageWidth: " << pageWidth);
+				res = E_FAIL;
+			}
+		}
+
+		float leftMargin = -1.0f;
+		if( S_OK == res ) {
+			res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_LEFTMARGIN, VT_R4, &leftMargin);
+			if( res != S_OK || leftMargin <0){
+				LOG_DEBUGWARNING(L"error getting leftMargin. res: "<< res << " leftMargin: " << leftMargin);
+				res = E_FAIL;
+			}
+		}
+
+		// ALSO NEED TO CONSIDER GUTTER.
+
+		float rightMargin = -1.0f;
+		if( S_OK == res ) {
+			// right margin necessary for calculating right to left positions.
+			res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_RIGHTMARGIN, VT_R4, &rightMargin);
+			if( res != S_OK || rightMargin <0){
+				LOG_DEBUGWARNING(L"error getting rightMargin. res: "<< res << " rightMargin: " << rightMargin);
+				res = E_FAIL;
+			}
+		}
+
+		IDispatchPtr pDispatchTextColumns = nullptr;
+		if( S_OK == res ) {
+			res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_TEXTCOLUMNS, VT_DISPATCH, &pDispatchTextColumns);
+			if( res != S_OK || !pDispatchTextColumns){
+				LOG_DEBUGWARNING(L"error getting textColumns. res: "<< res);
+				res = E_FAIL;
+			}
+		}
+
+		int count = -1;
+		if( S_OK == res ) {
+			res = _com_dispatch_raw_propget( pDispatchTextColumns, wdDISPID_TEXTCOLUMNS_COUNT, VT_I4, &count);
+			if( res != S_OK || count < 0){
+				LOG_DEBUGWARNING(L"error getting textColumn count. res: "<< res << " count: " << count);
+				res = E_FAIL;
+			}
+		}
+
+		if( S_OK == res ) {
+			float colStartPos = leftMargin;
+			// assumption: the textcolumn furthest right is last in the collection
+			const int lastItemNumber = count;
+			for(int itemNumber = 1; itemNumber <= lastItemNumber && S_OK == res; ++itemNumber){
+				if (colStartPos <= rangePos){
+					LOG_DEBUGWARNING(L"Range start is past column number: " << itemNumber);
+				}
+				IDispatchPtr pDispatchTextColumnItem = nullptr;
+				res = _com_dispatch_raw_method( pDispatchTextColumns, wdDISPID_TEXTCOLUMNS_ITEM,
+					DISPATCH_METHOD, VT_DISPATCH, &pDispatchTextColumnItem, L"\x0003", itemNumber);
+				if( res != S_OK || !pDispatchTextColumnItem){
+					LOG_DEBUGWARNING(L"error getting textColumn item number: "<< itemNumber << " res: "<< res);
+					res = E_FAIL;
+				}
+
+				float columnWidth = -1.0f;
+				if( S_OK == res ) {
+					res = _com_dispatch_raw_propget( pDispatchTextColumnItem, wdDISPID_TEXTCOLUMN_WIDTH, VT_R4, &columnWidth);
+					if( res != S_OK || columnWidth < 0){
+						LOG_DEBUGWARNING(L"error getting textColumn width for item number: "<< itemNumber << " res: "<< res << " columnWidth: " << columnWidth);
+						res = E_FAIL;
+					} else {
+						colStartPos += columnWidth;
+						LOG_DEBUGWARNING(L"ItemNumber: " << itemNumber << " rangePos: " << rangePos << " columnWidth: "<< columnWidth << " colStartPos: " << colStartPos);
+					}
+				}
+
+				float spaceAfterColumn = -1.0f;
+				if( S_OK == res && itemNumber < lastItemNumber ) { // the spaceAfter property is only valid between columns
+					res = _com_dispatch_raw_propget( pDispatchTextColumnItem, wdDISPID_TEXTCOLUMN_SPACEAFTER, VT_R4, &spaceAfterColumn);
+					if( res != S_OK || spaceAfterColumn < 0){
+						LOG_DEBUGWARNING(L"error getting textColumn spaceAfterColumn for item number: "<< itemNumber << " res: "<< res << " spaceAfterColumn: " << columnWidth);
+						res = E_FAIL;
+					} else {
+						colStartPos += spaceAfterColumn;
+						LOG_DEBUGWARNING(L"ItemNumber: " << itemNumber << " rangePos: " << rangePos << " spaceAfterColumn: "<< spaceAfterColumn << " colStartPos: " << colStartPos);
+					}
+				}
+			}
+		}
+	}
+
 	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
