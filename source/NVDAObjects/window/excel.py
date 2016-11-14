@@ -869,6 +869,8 @@ class ExcelWorksheet(ExcelBase):
 	__changeSelectionGestures = (
 		"kb:tab",
 		"kb:shift+tab",
+		"kb:enter",
+		"kb:numpadEnter",
 		"kb:upArrow",
 		"kb:downArrow",
 		"kb:leftArrow",
