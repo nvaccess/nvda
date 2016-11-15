@@ -18,16 +18,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <map>
 #include <vbufBase/backend.h>
 
-class WebKitVBufStorage_controlFieldNode_t;
-
 class WebKitVBufBackend_t: public VBufBackend_t {
 	private:
 
-	VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
+	VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible2* pacc, VBufStorage_buffer_t* buffer,
 		VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode
 	);
-
-	int idCounter;
 
 	protected:
 
@@ -39,19 +35,9 @@ class WebKitVBufBackend_t: public VBufBackend_t {
 
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode);
 
-	//virtual ~WebKitVBufBackend_t();
-
-	std::map<IAccessible*, WebKitVBufStorage_controlFieldNode_t*> accessiblesToNodes;
-
-	friend class WebKitVBufStorage_controlFieldNode_t;
-
 	public:
 
 	WebKitVBufBackend_t(int docHandle, int ID);
-
-	virtual int getNativeHandleForNode(VBufStorage_controlFieldNode_t* node);
-
-	virtual VBufStorage_controlFieldNode_t* getNodeForNativeHandle(int nativeHandle);
 
 };
 
