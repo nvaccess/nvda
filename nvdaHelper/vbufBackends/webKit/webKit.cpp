@@ -44,7 +44,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int id) {
 	}
 	VariantClear(&varChild);
 	IServiceProviderPtr serv = NULL;
-	if (acc.QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
+	if (acc.QueryInterface(IID_IServiceProvider, &serv) != S_OK)
 		return NULL;
 	IAccessible2* pacc2 = NULL;
 	serv->QueryService(IID_IAccessible, IID_IAccessible2, (void**)&pacc2);
