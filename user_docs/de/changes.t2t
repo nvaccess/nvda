@@ -11,8 +11,10 @@
 - Eine neue Option zum Anzeigen des Sprachbetrachters beim Start von NVDA wurde hinzugefügt. Dies kann mittels eines Kontrollkästchens im Sprachbetrachter eingeschaltet werden. (#5050)
 - Die Position und Größe des Sprachbetrachters wird wiederhergestellt beim er erneuten Öffnen. (#5050)
 - Felder mit Querverweisen in Microsoft Word werden von NVDA als Links angezeigt und können wie solche aktiviert werden. (#6102)
-- Grundsätzliche Unterstützung für die kommende Version der Kindle-App hinzugefügt. (#6247)
+- Grundlegende Unterstützung für die kommende Version der Kindle-App hinzugefügt. (#6247)
 - Die Unterstützung für folgende Braillezeilen wurden hinzugefügt: Baum SuperVario2, Baum Vario 340 und HumanWare Brailliant2. (#6116)
+- Grundlegende Unterstützung für die jährliche Aktualisierung von Microsoft Edge. (#6271)
+- Zum Lesen von Mails in der Windows-10-Mail-App wird nun der Lesemodus verwendet. (#6271)
 
 
 == Änderungen ==
@@ -21,6 +23,11 @@
 - Einige (kosmetische) Änderungen wurden vorgenommen. (#6317, #5548, #6342, #6343, #6349)
 - Die Einstellungen für Dokumentformatierung werden korrekt gescrollt. (#6348)
 - Der Dialog für die Aussprache von Symbolen und Sonderzeichen besitzt jetzt die korrekte Breite. (#6101)
+- Die Schnellnavigaionstasten für Formularfelder und Eingabefelder berücksichtigen nun auch schreibgeschützte Felder. (#4164)
+- Die Option "Formatierungen hinter dem Cursor ansagen" wurde umbenannt in "Formatänderungen hinter dem Cursor ausgeben", weil die Meldungen auch in Braille ausgegeben werden. (#6336)
+- Das Erscheinungsbild des Willkommensdialogs wurde korrigiert. (#6350)
+- in sämtlichen Dialogen werden die Schalter "ok" und "abbrechen" nun rechtsbündig angezeigt. (#6333)
+- Für numerische Eingaben werden nun Drehknöpfe verwendet. (#6099)
 
 
 == Fehlerkorrekturen ==
@@ -35,6 +42,11 @@
 - Die Elementliste von Microsoft Word funktioniert nun korrekt, wenn das Dokument einen ungültigen Link enthält. (#5886)
 - Nach dem Schließen des Sprachbetrachters mit Alt+F4 spiegelt das Kontrollfeld für den Sprachbetrachter dessen Status korrekt wider. (#6340)
 - Probleme beim erneuten Laden von Erweiterungen mit Hilfe der Tastenkombination nvda+strg+f3 wurden behoben. (#2892, #5380)
+- In der Sprachenliste in den allgemeinen Einstellungen werden einige Sprachen (wie z. B. Aragonesisch) richtig angezeigt. (#6259)
+- im Dialog Einstellungen/Eingaben... werden emulierte Tasten(kombinationen) in der in NVDA eingestellten Sprache angezeigt. (#6212)
+- Das Umstellen der Sprache in NVDA wirkt sich nun erst nach dem Neustart von NVDA aus. (#4561)
+- Im Dialog zum Hinzufügen neuer Wörterbucheinträge darf das Feld für das Muster nicht mehr leer bleiben. (#6412)
+- Probleme bei der Suche nach seriellen Anschlüssen bei einigen Braillezeilentreibern wurden behoben. (#6462)
 
 
 == Änderungen für Entwickler ==
