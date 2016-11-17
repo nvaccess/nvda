@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-28 00:10+1000\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
 "PO-Revision-Date: 2016-10-27 19:51+0200\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
@@ -1700,6 +1700,7 @@ msgid "row"
 msgstr "wiersz"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "ramka"
 
@@ -2026,10 +2027,6 @@ msgstr "ikona pulpitu"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "ostrzeżenie"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "ramka"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -4895,7 +4892,7 @@ msgid ""
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
 "Nie można zainstalować dodatku NVDA ze ścieszki {path}.\n"
-"Musisz uruchomić NVDA, by muc instalować dodatki."
+"Musisz uruchomić NVDA, aby móc instalować dodatki."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
@@ -8669,6 +8666,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "ramka"
 
 #~ msgid "Error in %s language file"
 #~ msgstr "Błąd w pliku językowym %s"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-23 16:08+0100\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-16 14:05+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -1703,6 +1703,7 @@ msgid "row"
 msgstr "redak"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "okvir"
 
@@ -2029,10 +2030,6 @@ msgstr "ikona radne površine"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "upozorenje"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "okvir"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -5822,7 +5819,6 @@ msgid "Exit NVDA"
 msgstr "Izaći iz programa NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5847,6 +5843,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Dobrodošli u NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Dobrodošli u NVDA!"
 
 msgid "Options"
 msgstr "Izbor"
@@ -5954,7 +5955,7 @@ msgstr "&Pomoć za dodatak"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
-msgstr "&omogući dodatak"
+msgstr "&onemogući dodatak"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6587,13 +6588,6 @@ msgstr "Greška prilikom kopiranja NVDA korisničkih postavki"
 msgid "Successfully copied NVDA user settings"
 msgstr "NVDA korisničke postavke su uspješno kopirane"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Greška u jezičnoj datoteci %s"
-
-msgid "Language Error"
-msgstr "Jezična Greška"
-
 msgid "This change requires administrator privileges."
 msgstr "Ova promjena zahtijeva administrativne privilegije."
 
@@ -7163,13 +7157,17 @@ msgstr "&Komentar"
 msgid "&Type"
 msgstr "&Vrsta"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Potreban je uzorak."
+
+msgid "Dictionary Entry Error"
+msgstr "Greška rječničkog unosa"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Greška u pravilnom izrazu: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Greška rječničkog unosa"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8718,6 +8716,15 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "okvir"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Greška u jezičnoj datoteci %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Jezična Greška"
 
 #~ msgid "&Profile"
 #~ msgstr "&Profil"

@@ -91,6 +91,7 @@ Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai 
 - Käyttäjätilien valvonnan kehotteiden lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksin.
 - Windows 8 ja uudemmat käyttöjärjestelmät: kosketusnäyttösyötteiden käyttäminen ei ole mahdollista.
 - Windows 8 ja uudemmat käyttöjärjestelmät: selaustila ja kirjoitettujen merkkien puhuminen eivät toimi Windows-kaupasta ladatuissa sovelluksissa.
+- Windows 8 ja uudemmat käyttöjärjestelmät: taustaäänien vaimennusta ei tueta.
 -
 
 ++ Asentaminen ++
@@ -780,6 +781,9 @@ Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä va
 - Vaimenna puhuttaessa ja ääntä toistettaessa: NVDA alentaa muiden äänien voimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
 - Vaimenna aina: NVDA alentaa muiden äänien voimakkuutta koko ajan käynnissä ollessaan.
 -
+
+Tämä asetus on käytettävissä vain, jos käytetään NVDA:n asennettua versiota.
+Massamuisti- ja väliaikaisversiot eivät tue taustaäänien vaimennusta.
 
 +++ Puheäänen asetukset (NVDA+Control+V) +++[VoiceSettings]
 Puheäänen asetukset -valintaikkuna, joka avataan Asetukset-valikosta kohdasta "Puheääni...", sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
