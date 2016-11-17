@@ -1218,7 +1218,7 @@ class ExcelCell(ExcelBase):
 		ctypes.windll.gdi32.DeleteDC(tempDC)
 		#Retrieve the text width
 		textWidth = StructText.width
-		return textWidth #ctypes.windll.kernel32.MulDiv(textWidth, 96, dpi)
+		return textWidth
 
 	def _get__overlapInfo(self):
 		textWidth = self.getCellTextWidth()
