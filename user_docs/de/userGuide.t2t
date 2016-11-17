@@ -1,5 +1,6 @@
-﻿NVDA-Benutzerhandbuch
-Version NVDA_VERSION
+﻿Benutzerhandbuch
+
+NVDA Version NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -92,6 +93,7 @@ Abgesehen vom fehlenden automatischen Starten während und/oder nach der Anmeldu
 - Die Dialoge der Benutzerkontensteuerung können nicht ausgelesen werden, wenn Sie bspw. ein Programm mit administrativen Rechten ausführen möchten.
 - TouchScreens werden unter Windows 8 und neuer nicht unterstützt.
 - Windows 8 und neuer: In Windows-Store-Anwendungen funktioniert der Lesemodus nicht. Gleiches gilt auch für die Ansage eingegebener Zeichen.
+- Windows 8 und neuer: das Reduzieren der Lautstärke anderer Anwendungen wird nicht unterstützt.
 -
 
 ++ NVDA installieren ++
@@ -781,6 +783,9 @@ Unter Windows 8 und neuer legen Sie mit Hilfe dieser Option fest, ob NVDA die La
 - Beim Sprechen und Abspielen von nVDA-Klängen: NVDA reduziert die Lautstärke anderer Audio-Quelle nur, wenn NVDA spricht oder Klänge abspielt. Dies funktioniert möglicherweise nicht für alle Sprachausgaben.
 - Immer: NVDA reduziert die Lautstärke anderer Audio-Quellen so lange es läuft.
 -
+
+Diese Option ist nur in installierten Versionen von NVDA verfügbar.
+In temporären oder portablen Kopien von NVDA wird das Reduzieren der lautstärke anderer Anwendungen nicht unterstützt.
 
 +++ Stimmeneinstellungen (NVDA+Steuerung+V) +++[VoiceSettings]
 Die Stimmeinstellungen, welche Sie im Menü Einstellungen finden, enthalten Optionen, mit deren Hilfe Sie den Klang der Sprache verändern können.
