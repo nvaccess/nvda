@@ -428,6 +428,9 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
+	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+	disableAutoPassThrough=True
+
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
 		self.passThrough=True
