@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.4 =
+Zu den Schwerpunkten dieser Version gehören Verbesserungen in der Unterstützung von Microsoft Edge; der Lesemodus in der Windows 10 Mail app; sowie Verbesserungen in NVDAs Dialogfeldern.
 
 == Neue Funktionen ==
 - NVDA kann Zeileneinrückungen nun auch mit Hilfe von Signaltönen ausgeben. Um dies einzustellen, können Sie die neue Option "Zeileneinrückungen ausgeben durch..." in den Einstellungen für Dokumentformatierung verwenden. (#5906)
@@ -28,6 +29,7 @@
 - Das Erscheinungsbild des Willkommensdialogs wurde korrigiert. (#6350)
 - in sämtlichen Dialogen werden die Schalter "ok" und "abbrechen" nun rechtsbündig angezeigt. (#6333)
 - Für numerische Eingaben werden nun Drehknöpfe verwendet. (#6099)
+- Eingebettete Rahmen werden in Firefox nun als Rahmen erkannt. (#6047)
 
 
 == Fehlerkorrekturen ==
@@ -47,11 +49,17 @@
 - Das Umstellen der Sprache in NVDA wirkt sich nun erst nach dem Neustart von NVDA aus. (#4561)
 - Im Dialog zum Hinzufügen neuer Wörterbucheinträge darf das Feld für das Muster nicht mehr leer bleiben. (#6412)
 - Probleme bei der Suche nach seriellen Anschlüssen bei einigen Braillezeilentreibern wurden behoben. (#6462)
+- in Microsoft Word werden numerierte Listen korrekt erkannt, wenn sie sich innerhalb von Tabellenzellen befinden. (#6446)
+- Sie können den Dialog Einstellungen/Eingaben verwenden, um NVDA-Befehle an Tasten(Kombinationen) von Handytech-Braillezeilen zuzuweisen. (#6461)
+- Wenn Sie in Microsoft Excel innerhalb einer Tabelle die Eingabetaste drücken, erkennt NVDA korrekt, dass sich der Fokus in die nächste Zeile bewegt hat. (#6500)
+- Itunes friert nicht mehr ein, wenn Sie im Itunes Store, Apple Music etc. den Lesemodus verwenden. (#6502)
+- Probleme mit Abstürzen von 64-Bit-Versionen von Mozilla- und Chrome-basierten Anwendungen behoben. (#6497)
+- in Firefox mit aktivierter Multi-Prozessunterstützung funktioniert der lesemodus korrekt. (#6380)
 
 
 == Änderungen für Entwickler ==
 - Sie können nun Anwendungsmodule für Programme erstellen, deren Namen einen Punkt enthalten. der Punkt muss im Namen des Anwendungsmoduls durch einen Unterstrich ersetzt werden. (#5323)
-
+- Das Modul gui.guihelper enthält Funktionen, mit denen die Erstellung neuer WX-Oberflächen vereinfacht wird. Dies betrifft Größen und Abstände von wx-Elementen. (#6287)
 
 = 2016.3 =
 Schwerpunkte dieser Version sind u. a. eine Möglichkeit zum Deaktivieren einzelner Erweiterungen; die Unterstützung von Formularfeldern in Microsoft Excel, Verbesserungen bei der Ansage von Farben und Fehlerkorrekturen bzgl. einiger Braillezeilen sowie Fehlerbehebungen und Verbesserungen an der Unterstützung für Microsoft Word.

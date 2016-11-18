@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Leonard de Ruijter <dev@systeemdenker.nl>\n"
+"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.7.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1704,6 +1704,7 @@ msgid "row"
 msgstr "rij"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "frame"
 
@@ -2030,10 +2031,6 @@ msgstr "bureaubladpictogram"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "bericht"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "IFrame"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -5823,7 +5820,6 @@ msgid "Exit NVDA"
 msgstr "NVDA afsluiten"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5833,20 +5829,23 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Welkom bij NVDA!\n"
-"Om NVDA commando's uit te voeren dient u de NVDA-toets in te drukken samen "
-"met de andere toetsen die deel uitmaken van de sneltoetscombinatie.\n"
-" Als standaard instelling kunnen zowel de nummerieke, alsook de standaard "
-"insert-toets gebruikt worden.\n"
-"NVDA kan ook geconfigureerd worden om de Capslock-toets als NVDA-toets te "
-"gebruiken.\n"
-"Om het NVDA menu te openen, drukt u \"NVDA-toets+n\"\n"
+"Om de meeste NVDA-commando's uit te voeren, moet u de NVDA-toets ingedrukt "
+"houden terwijl u andere toetsen indrukt.\n"
+"Standaard kunt u als NVDA-toets zowel de nummerieke, als de standaard insert-"
+"toets gebruiken.\n"
+"U kunt ook de Capslock-toets als NVDA-toets instellen.\n"
+"Om het NVDA-menu te openen, drukt u \"NVDA-toets+n\"\n"
 "Via dit menu kunt u NVDA configureren, de help raadplegen en andere functies "
 "uitvoeren.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Welkom bij NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Welkom bij NVDA!"
 
 msgid "Options"
 msgstr "Opties"
@@ -6589,13 +6588,6 @@ msgstr ""
 msgid "Successfully copied NVDA user settings"
 msgstr "NVDA-instellingen succesvol gekopieerd."
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Fout in het taalbestand %s"
-
-msgid "Language Error"
-msgstr "Taalfout"
-
 msgid "This change requires administrator privileges."
 msgstr "Deze wijziging vereist administrator rechten."
 
@@ -7169,13 +7161,17 @@ msgstr "&Opmerking"
 msgid "&Type"
 msgstr "&Type"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Een patroon is vereist."
+
+msgid "Dictionary Entry Error"
+msgstr "Fout bij toevoegen van woordenboekregel"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Foute reguliere expressie: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Fout bij toevoegen van woordenboekregel"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8726,6 +8722,15 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "IFrame"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Fout in het taalbestand %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Taalfout"
 
 #~ msgid "&Profile"
 #~ msgstr "&Profiel"
