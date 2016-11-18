@@ -1203,7 +1203,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 				if (nameAttribute.compare(key)==0)
 				{
 					contentString=it->second;
-					attribsMap[L"name"]=it->second;
+					//attribsMap[L"name"]=it->second;
 					renderChildren=false;
 				}
 			}

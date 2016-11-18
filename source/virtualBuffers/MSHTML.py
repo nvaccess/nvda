@@ -54,16 +54,16 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		
-		idAttribute=attrs.get('HTMLAttrib::id')
-		nameAttribute=attrs.get('HTMLAttrib::name')
-		if (idAttribute and nameAttribute):
-			customLabel=self.obj.rootNVDAObject.getCustomLabel(idAttribute+nameAttribute)
-		elif (not idAttribute):
-			customLabel=self.obj.rootNVDAObject.getCustomLabel(nameAttribute)
-		elif (not nameAttribute):
-			customLabel=self.obj.rootNVDAObject.getCustomLabel(idAttribute)
-		if customLabel:
-			attrs["name"]=customLabel
+# 		idAttribute=attrs.get('HTMLAttrib::id')
+# 		nameAttribute=attrs.get('HTMLAttrib::name')
+# 		if (idAttribute and nameAttribute):
+# 			customLabel=self.obj.rootNVDAObject.getCustomLabel(idAttribute+nameAttribute)
+# 		elif (not idAttribute):
+# 			customLabel=self.obj.rootNVDAObject.getCustomLabel(nameAttribute)
+# 		elif (not nameAttribute):
+# 			customLabel=self.obj.rootNVDAObject.getCustomLabel(idAttribute)
+# 		if customLabel:
+# 			attrs["name"]=customLabel
 		
 		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		#choose role
