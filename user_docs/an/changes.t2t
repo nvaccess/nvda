@@ -4,15 +4,18 @@ Qué bi ha de Nuevo en o NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.4 =
+Lo resinyable d'ista versión inclui a millora d'o refirme pa o Microsoft Edge, modo de navegación en l'aplicación Correo d'o Windows 10 y milloras significativas en os dialogos d'o NVDA.
 
 == Nuevas caracteristicas ==
-- O NVDA agora puet endicar a sangría de linia fendo servir tons. Ixo se puet configurar fendo servir o quadro combinau "anunciar a sangría de linia con" en o dialogo de preferencias de formatiau de documentos d'o NVDA. (#5906)
+- O NVDA agora puet endicar a sangría de linia fendo servir tons. Ixo se puet configurar fendo servir o quadro combinau d'anunciar a sangría de linia en o dialogo de preferencias de formatiau de documentos d'o NVDA. (#5906)
 - Refirme pa la linia braille Orbit Reader 20. (#6007)
 - S'ha adhibiu una opción pa ubrir a finestra d'o visor d'a voz en rancar. Ixo se puet enchegar a traviés d'una caixeta de verificación en a finestra d'o visor d'a voz. (#5050)
 - Agora se restaurará la ubicación y as dimensions en reubrir a finestra d'o visor d'a voz. (#5050)
 - Os campos de referencia cruzada en o Microsoft Word agora se tractan como hipervinclos. S'anuncian como vinclos y pueden estar activaus. (#6102)
 - Refirme inicial pa la vinient versión de l'aplicación Kindle. (#6247)
 - Refirme pa las linias braille Baum SuperVario2, Baum Vario 340 y HumanWare Brailliant2. (#6116)
+- Refirme Inicial pa l'actualización Anniversary d'o Microsoft Edge. (#6271)
+- Agora s'emplega o modo de navegación quan se leye correus electronicos en l'aplicación Correo d'o Windows 10. (#6271)
 
 
 == Cambeos ==
@@ -21,27 +24,36 @@ Qué bi ha de Nuevo en o NVDA
 - S'ha resuelto qualques problemas de repleno y aliniación en os dialogos d'o NVDA. (#6317, #5548, #6342, #6343, #6349)
 - S'ha achustau o dialogo de formatiau de documentos de traza que o conteniu s'eslice. (#6348)
 - S'ha achustau a distribución d'o dialogo de pronuncia de simbolos de traza que l'amplo completo d'o dialogo s'emplegue pa la lista de simbolos. (#6101)
-- os comandos de navegación d'una sola letra pa campos d'edición (e y mayus+e) y pa campos de formulario (f y mayus+f) agora se'n mueven ta campos d'edición de nomás lectura en o modo de navegación en os navegadors web. (#4164)
+- os comandos de navegación d'una sola letra pa campos d'edición (e y mayus+e) y pa campos de formulario (f y mayus+f) agora se pueden fer servir pa mover-se-ne ta campos d'edición de nomás lectura en o modo de navegación en os navegadors web. (#4164)
 - En o dialogo de formatiau de documentos d'o NVDA "Anunciar os cambeos dimpués d'o cursor" s'ha renombrau pa que afecte tanto a lo braille como a la voz (en a traducción aragonesa no bi ha diferencia). (#6336)
+- S'ha achustau l'apariencia d'o dialogo de bienvenida d'o NVDA. (#6350)
+- Os quadros de dialogo d'o NVDA agora tienen os botons d'acceptar y cancelar aliniaus a la dreita d'o dialogo. (#6333)
+- Agora s'emplega controls de chiro pa os campos de texto numericos como a opción "porcentache de cambeo en o ton pa las mayusclas" en o dialogo d'opcions de voz. Puetz ficar-ie a valor desiada u fer servir as teclas de flecha alto u abaixo pa achustar-ie a valor. (#6099)
+- O modo d'anunciar os IFrames s'ha feito mas consistent pa os navegadors. Os IFrames agora s'anuncian como "bastida" en o Firefox. (#6047)
 
 
 == Corrección d'errors ==
-- S'ha apanyau un problema raro quan salir d'o NVDA entre que o visor d'a voz ye ubierto produz una error. (#5050)
+- S'ha apanyau una error rara en salir d'o NVDA entre que o visor d'a voz ye ubierto. (#5050)
 - Os mapas d'imachen agora se procesan como s'aspera en o modo de navegación en o Mozilla Firefox. (#6051)
-- S'ha apanyau un problema que produciba una alerta en o fichero de rechistro d'o NVDA quan se cambia o bloqueyo de mayusclas. (#6127)
-- Estando en o dialogo d'o diccionario, pretar a tecla intro agora alza y en sale. (#6206)
+- Estando en o dialogo d'o diccionario, pretar a tecla intro agora alza qualsiquier cambio que haigas feito y zarra o dialogo. Antis pretar-ie l'intro no feba cosa. (#6206)
 - Agora s'amuestra en braille mensaches en cambiar os modos de dentrada pa bell metodo de dentrada (dentrada nativa/alfanumerica, forma completa/meya forma, etc.). (#5892, #5893)
 - En desenchegar y reenchegar immediatament, u viceversa,  bell complemento agora o suyo estau torna correctament t'o que yera anteriorment. (#6299)
 - Quan s'emplega o Microsoft Word agora se puet leyer os campos de numero de pachina en as capiteras. (#6004)
 - Agora se puet fer servir o churi pa mover o foco entre a lista de simbolos y os campos d'edición en o dialogo de pronuncia de simbolos. (#6312)
-- S'ha apanyau un problema que feba que deixase d'apareixer a lista d'elementos quan o Microsoft Word conteneba un hipervinclo invaliu. (#5886)
+- En o modo de navegación en o Microsoft Word s'ha apanyau un problema que feba que deixase d'apareixer a lista d'elementos quan un documento conteneba un hipervinclo invaliu. (#5886)
+- Dimpués d'haber-se zarrau a traviés d'a barra de quefers u l'alcorce alt+F4, a caixeta de verificación d'o visualizador d'a voz en o menú d'o NVDA refleixará a visibilidat real d'a finestra. (#6340)
 - O comando de reenchegar complementos ya no causa problemas pa os perfils de configuración disparaus, os nuevos documentos en os navegadors web y a revisión de pantalla. (#2892, #5380)
 - En a lista d'idiomas en o dialogo d'opcions chenerals d'o NVDA, idiomas como l'aragonés agora s'amuestran correctament en o Windows 10. (#6259)
 - As teclas emuladas d'o teclau d'o sistema (p. eix. un botón en una linia braille que emula pretar a tecla tabulador) agora se presentan en l'idioma configurau n o NVDA en l'aduya de dentrada y en o dialogo de cenyos de dentrada. Anteriorment siempre se presentaban en anglés. (#6212)
+- Agora cambiar l'idioma d'o NVDA (dende o dialogo d'opcions chenerals) no fa efecto dica que se reenchega o NVDA. (#4561)
+- O campo "patrón" ya no se puet deixar laso pa una nueva dentrada de diccionario. (#6412)
+- S'ha apanyau un problema raro en escaniar os puertos serie en bels sistemas que feba inemplegables bells controladors de linias braille. (#6462)
+- Agora se leye as vinyetas Numeradas dende as celdas de tabla en o Microsoft Word en mover-se-ne por celdas. (#6446)
 
 
 == Cambeos pa Desembolicadors ==
 - Agora ye posible furnir modulos d'aplicación pa executables que contiengan un punto (.) en os suyos nombres. Os puntos s'han reemplazau por guions baixos (_). (#5323)
+- O nuevo modulo gui.guiHelper inclui utilidatz pa fer simpla la creyación de GUIs de wxPython, incluindo a chestión automatica d'o espaciau. Ixo fa muito mas facil l'apariencia visual y a consistencia, igual como a creyación facil de nuevas GUIs pa desembolicadors ciegos. (#6287)
 
 
 = 2016.3 =
