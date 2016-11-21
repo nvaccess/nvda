@@ -4,14 +4,32 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.4 =
+Caracteristicile principale ale acestei lansări includ suport îmbunătățit pentru Microsoft Edge, mod de navigare în aplicația Windows 10 Mail și îmbunătățiri semnificative la dialogurile NVDA-ului.
 
 == Noi funcționalități ==
 - NVDA poate acum să indice indentația rândurilor folosind tonuri. Opțiunea poate fi configurată folosind caseta combinată „Anunță indentație rând cu” din fereastra cu preferințe pentru formatarea documentului din NVDA. (#5906)
 - Suport pentru afișajul braille Orbit Reader 20. (#6007)
-- A fost adăugată o opțiune pentru a deschide monitorul de vorbire la pornirea aplicației. (#5050)
+- A fost adăugată o opțiune pentru a deschide monitorul de vorbire la pornirea aplicației. Opțiunea poate fi activată printr-o căsuță de bifat din fereastra monitorului de vorbire. (#5050)
 - La redeschiderea monitorului de vorbire, locația pe ecran și dimensiunile sale vor fi restabilite. (#5050)
 - Câmpurile cu referință încrucișată din Microsoft Word sunt acum tratate ca hiperlink-uri. Acestea sunt raportate ca legături și pot fi activate. (#6102)
 - Suport inițial pentru versiunea upcoming a aplicației Kindle. (#6247)
+- Suport pentru afișajele braille Baum SuperVario2, Baum Vario 340 și HumanWare Brailliant2. (#6116)
+- Suport inițial pentru actualizarea aniversară a navigatorului web Microsoft Edge. (#6271)
+- Modul de navigare este acum utilizat la citirea mesajelor de poștă electronică în aplicația Windows 10 mail. (#6271)
+
+
+== Modificări ==
+- A fost actualizat liblouis, traducătorul braille, la versiunea 3.0.0. Aceasta include îmbunătățiri semnificative la Braille-ul englezesc unificat. (#6109, #4194, #6220, #6140)
+- În managerul de add-on-uri butoanele Dezactivare și Activare extensie add-on au acum comenzi rapide (alt+d și alt+e, respectiv). (#6388)
+- Diferite probleme de aliniere și completare cu caractere au fost rezolvate în ferestrele de dialog ale NVDA. (#6317, #5548, #6342, #6343, #6349)
+- Fereastra de dialog a formătării documentului a fost ajustată astfel încât conținutul poate fi derulat. (#6348)
+- A fost ajustat aspectul casetei de dialog al pronunțării simbolurilor, așa încât întreaga lățime a ferestrei este folosită pentru lista de simboluri. (#6101)
+- În mod navigare în browserele de internet, comenzile de navigare cu o singură literă pentru câmpul de editare (e și shift+e) și câmpul formular (f și shift+f), mută acum la câmpuri de editare în mod doar citire (care pot fi doar parcurse și nu modificate). (#4164)
+- În setările de formatare a documentelor, opțiunea „Anunță schimbări de formatare după cursor” a fost redenumită în „Raportează schimbări de formatare după cursor” deoarece afectează atât vorbirea cât și scrierea braille. (#6336)
+- A fost ajustat aspectul dialogului „bun venit” din NVDA. (#6350)
+- Casetele de dialog NVDA au acum butoanele lor „OK” și „Anulare” aliniate la dreapta dialogului. (#6333)
+- Controalele Spin sunt acum utilizate pentru câmpurile numerice de intrare. (#6099)
+- Modul în care sunt raportate IFram-urile a fost realizat mai consistent pe diferite browsere. IFram-urile sunt acum raportate ca „cadru” în Firefox. (#6047)
 
 
 == Rezolvări defecte ==
@@ -23,11 +41,25 @@ Ce este nou în NVDA
 - Când dezactivați și reactivați imediat o extensie add-on sau vice versa, starea extensiei add-on revine în mod corect la ceea ce a fost înainte. (#6299)
 - Când se folosește Microsoft Word, câmpurile de pagină în numărul antetului pot fi acum citite. (#6004)
 - Mausul poate fi acum folosit pentru a deplasa focalizarea între lista de simboluri și câmpurile de editare în fereastra de dialog cu pronunțarea simbolurilor. (#6312)
-- Corectat o situație care oprește lista de elemente de la apariție când Microsoft Word conține hiperlink invalid. (#5886)
+- Corectat o situație care oprește lista de elemente de la apariție când Microsoft Word conține un hiperlink invalid. (#5886)
+- După ce a fost închisă fereastra din bara de activități sau cu scurtătura alt+F4, starea căsuței de bifat a monitorului de vorbire din meniul NVDA va reflecta vizibilitatea curentă a ferestrei. (#6340)
+- Comanda de reîncărcare a plug-inurilor nu mai provoacă probleme pentru profilurile de configurare declanșate, documente noi în browsere de internet și la examinarea ecranului. (#2892, #5380)
+- În lista de limbi din fereastra NVDA a Setărilor generale, limbi precum aragoneza sunt acum afișate corect în Windows 10. (#6259)
+- Tastele emulate de sistem (de ex. un buton de pe afișajul braille care emulează apăsarea tastei Tab) sunt acum prezentate în ferestrele de configurare pentru limbă și ajutor pentru intrări precum și dialogul cu gesturi de intrare. Anterior acestea erau tot timpul afișate în engleză. (#6212)
+- Modificarea limbii NVDA-ului (din dialogul setărilor generale) acum nu are niciun efect până când NVDA este repornit. (#4561)
+- Câmpul „model” pentru o nouă intrare în dicționar nu mai este permis să fie lăsat gol. (#6412)
+- Corectat o situație rară la scanarea porturilor serialelor pe unele sisteme care făceau unele drivere ale afișajelor braille inutilizabile. (#6462)
+- Bulinele numerotate sunt acum citite din celulele tabelului în Microsoft Word la deplasarea prin celulă. (#6446)
+- Acum este posibil să atribuiți gesturi la comenzi pentru afișajul braille Handy Tech în dialogul gesturilor de intrare al NVDA-ului. (#6461)
+- În Microsoft Excel, apăsarea tastelor Enter sau numpadEnter când se navighează pe o foaie de calcul corectează rapoartele de navigare la rândul următor. (#6500)
+- iTunes Nu mai îngheață intermitent pentru totdeauna când se utilizează modul de navigare pentru magazinul iTunes, Muzica Apple, etc. (#6502)
+- Au fost reparate erorile în Mozilla pe 64 biți și în aplicațiile bazate pe Chrome. (#6497)
+- În Firefox cu multi-procesul activat, modul navigare și câmpurile de text editabil funcționează corect. (#6380)
 
 
 == Modificări pentru Dezvoltatori ==
 - Acum este posibil să furnizeze module app pentru executabile care conțin un punct (.) în numele lor. Punctele sunt înlocuite cu liniuțe joase (_). (#5323)
+- Noul modul gui.guiHelper include utilități pentru a simplifica crearea GUI-urilor wxPython, incluzând gestionarea automată a spațierii. Acest lucru facilitează un aspect vizual mai bun și consistență, precum și facilitarea creerii unor noi GUI-uri pentru dezvoltatorii nevăzători. (#6287)
 
 
 = 2016.3 =

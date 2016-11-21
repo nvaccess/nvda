@@ -91,6 +91,7 @@ Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai 
 - Käyttäjätilien valvonnan kehotteiden lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksin.
 - Windows 8 ja uudemmat käyttöjärjestelmät: kosketusnäyttösyötteiden käyttäminen ei ole mahdollista.
 - Windows 8 ja uudemmat käyttöjärjestelmät: selaustila ja kirjoitettujen merkkien puhuminen eivät toimi Windows-kaupasta ladatuissa sovelluksissa.
+- Windows 8 ja uudemmat käyttöjärjestelmät: taustaäänien vaimennusta ei tueta.
 -
 
 ++ Asentaminen ++
@@ -448,7 +449,7 @@ Tällaisia ovat Mozilla Firefoxissa, Microsoft Internet Explorerissa, Mozilla Th
 Selaustila on käytettävissä valinnaisesti myös Microsoft Wordissa.
 
 Selaustilassa dokumentin sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstidokumentti.
-Kaikki NVDA:n [järjestelmäkohdistimen #SystemCaret] näppäinkomennot, kuten esim. lue kaikki, lue muotoilutiedot, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
+Kaikki NVDA:n [järjestelmäkohdistimen #SystemCaret] näppäinkomennot, kuten esim. lue kaikki ja lue muotoilut, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
 Dokumentissa liikuttaessa luetaan siinä olevan tekstin lisäksi myös muita tietoja, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
 Toisinaan on tarpeen olla suorassa vuorovaikutuksessa tällaisissa dokumenteissa olevien säädinten kanssa.
@@ -492,7 +493,7 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Shift-näppäimen kanssa p
 - x: valintaruutu
 - c: yhdistelmäruutu
 - r: valintapainike
-- q: sisennetty kappale
+- q: sisennetty lainaus
 - s: erotin
 - m: kehys
 - g: grafiikka
@@ -780,6 +781,9 @@ Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä va
 - Vaimenna puhuttaessa ja ääntä toistettaessa: NVDA alentaa muiden äänien voimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
 - Vaimenna aina: NVDA alentaa muiden äänien voimakkuutta koko ajan käynnissä ollessaan.
 -
+
+Tämä asetus on käytettävissä vain, jos käytetään NVDA:n asennettua versiota.
+Massamuisti- ja väliaikaisversiot eivät tue taustaäänien vaimennusta.
 
 +++ Puheäänen asetukset (NVDA+Control+V) +++[VoiceSettings]
 Puheäänen asetukset -valintaikkuna, joka avataan Asetukset-valikosta kohdasta "Puheääni...", sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
@@ -1195,52 +1199,60 @@ Tämä valintaikkuna löytyy Asetukset-valikon "Dokumenttien muotoilu..." -kohda
 Useimmilla tämän valintaikkunan valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla liikuttaessasi kohdistinta dokumenteissa.
 Jos esimerkiksi valitset Lue fontti -valintaruudun, joka kerta, kun siirryt nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta, NVDA kertoo fontin nimen.
 
+Dokumentin muotoiluasetukset on järjestetty ryhmiin.
 Seuraavien tietojen lukeminen voidaan määrittää:
 - Fontti
-- Fonttikoko
-- Fontin määreet
-- Tekstin tasaus
-- Värit
-- Comments
-- Muokkaajan muokkaukset
-- Korostus
-- Tekstityyli
-- Kirjoitusvirheet
-- Sivunumerot
-- Rivinumerot
-- Rivien sisennykset
-- Kappalesisennykset (esim. riippuva ja ensimmäisen rivin sisennys)
-- rivivälit (yksinkertainen, kaksinkertainen jne.)
-- Taulukot
-- Taulukon rivi- ja sarakeotsikot
-- Taulukon solun koordinaatit
-- Linkit
-- Otsikot
-- Luettelot
-- Sisennetyt kappaleet
-- Kiintopisteet
-- Kehykset
-- Kun jokin kohde on napsautettava
--
+ - Fontin nimi
+ - Fontin koko
+ - Fontin määreet
+ - Korostus
+ - Tyyli
+ - Värit
+- Dokumentin tiedot
+ - Kommentit
+ - Muokkaajan muokkaukset
+ - Kirjoitusvirheet
+- Sivut ja välit
+ - Sivunumerot
+ - Rivinumerot
+ - Rivien sisennysten ilmoittaminen [(ei käytössä, puheella, äänimerkeillä, puheella ja äänimerkeillä) #lineIndentationOptions]
+ - Kappalesisennykset (esim. riippuva ja ensimmäisen rivin sisennys)
+ - Rivivälit (yksin- ja kaksinkertainen jne.)
+ - Tasaus
+- Taulukon tiedot
+ - Taulukot
+ - Rivi- ja sarakeotsikot
+ - Solujen koordinaatit
+- Elementit
+ - Otsikot
+ - Linkit
+ - Luettelot
+ - Sisennetyt lainaukset
+ - Kiintopisteet
+ - Kehykset
+ - Napsautettavat kohteet
+ -
+ -
+
 
 Voit ottaa nämä asetukset käyttöön tai poistaa ne käytöstä mistä tahansa Määrittämällä niille omat eleet [Syöte-eleet-valintaikkunaa käyttäen. #InputGestures]
 
-==== Lue kohdistimen jälkeiset muotoilumuutokset ====
+==== Ilmoita kohdistimen jälkeiset muotoilumuutokset ====
 Jos tämä asetus on käytössä, NVDA yrittää havaita kaikki rivillä olevat muotoilumuutokset sitä lukiessaan, vaikka se voikin hidastaa NVDA:n suorituskykyä.
 
 NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla olevat muotoilut, ja joissakin tapauksissa lopunkin rivin, mutta vain, jos se ei aiheuta suorituskyvyn heikkenemistä.
  
-Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja sellaisissa sovelluksissa kuin Microsoft Word, kun muotoilut ovat tärkeitä.
+Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja esim. WordPadissa, kun muotoilut ovat tärkeitä.
 
-§==== Ilmaise rivien sisennykset ====
-This option allows you to configure how indentation at the beginning of lines is reported.
-The Report line indentation with combo box has four options.
+==== Rivien sisennysten ilmoittaminen ====
+Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmoitetaan.
+Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 
-- Off: NVDA will not treat indentation specially.
-- Speech: If speech is selected, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab."
-- Tones: If Tones is selected, when the  amount of  indentation changes, tones indicate the amount of change in indent.
-The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
-- Both Speech and Tones: This option reads indentation using both of the above methods.
+- Ei käytössä: NVDA ei käsittele sisennyksiä.
+- Puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".
+- Äänimerkeillä: Jos tämä on valittuna, äänimerkit ilmaisevat sisennysten määrän sen muuttuessa.
+Äänimerkin korkeus nousee jokaisen välilyönnin kohdalla, ja sarkainmerkki vastaa neljää välilyöntiä.
+- Puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
 -
 
 +++ Puhesanastot +++
@@ -1270,12 +1282,12 @@ Puhesanastoja on mahdollista käyttää paljon muuhunkin kuin yksinkertaiseen sa
 Säännönlisäysvalintaikkunassa on myös valintaruutu, jolla voit määrittää, onko isoilla ja pienillä kirjaimilla merkitystä säännön toiminnan kannalta.
 Oletusarvoisesti kirjainkokoa ei huomioida.
 
-Viimeisenä on joukko valintapainikkeita, joiden avulla voit määrittää, täsmääkö korvattava merkkijono kaikkialla, vain kokonaisena sanana vai käsitelläänkö sitä säännöllisenä lausekkeena.
+Viimeisenä on joukko valintapainikkeita, joiden avulla voit määrittää, täsmääkö korvattava merkkijono kaikkialla, vain kokonaisena sanana vai käsitelläänkö sitä sääntölausekkeena.
 Korvattavan tekstin määrittäminen kokonaiseksi sanaksi tarkoittaa, että se korvataan vain, jos se ei esiinny pidemmän sanan osana, ts. sen edellä ja/tai jäljessä ei ole muu kuin aakkosnumeerinen merkki tai alaviiva.
 Eli käyttääksemme aiempaa esimerkkiä lintu-sanan korvaamisesta sanalla sammakko, jos tekisit siitä koko sanan korvauksen, se ei täsmäisi "lintuja"- tai "sinilintu"-sanoihin.
 
-Säännöllinen lauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
-Säännöllisiä lausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
+Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
+Sääntölausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
 
 +++ Välimerkkien ja symboleiden puhuminen +++[SymbolPronunciation]
 Tässä valintaikkunassa voit muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
@@ -1438,6 +1450,10 @@ Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esittelevi
 
 Toiminto otetaan käyttöön valitsemalla Puheen tarkastelu -vaihtoehto NVDA-valikon Työkalut-alavalikosta.
 Toiminto poistetaan käytöstä poistamalla vaihtoehdon valinta.
+
+Puheentarkasteluikkunassa on  "Näytä Puheen tarkastelu käynnistettäessä" -valintaruutu.
+Mikäli se on valittuna, Puheen tarkastelu avataan, kun NVDA käynnistetään.
+Ikkuna yrittää aina avautua uudelleen samoilla mitoilla ja samassa sijainnissa, mitkä sillä olivat sitä suljettaessa.
 
 Kun Puheen tarkastelu -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
@@ -1704,8 +1720,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 ++ Baum/Humanware/APH/Orbit ++
 Useita [Baum http://www.baum.de/cms/en/]-, [HumanWare http://www.humanware.com/]-, [APH http://www.aph.org/]- ja [Orbit http://www.orbitresearch.com/]-pistenäyttöjä tuetaan USB:llä, Bluetoothilla tai sarjaportin kautta yhdistettäessä.
 Näitä ovat:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

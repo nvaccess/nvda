@@ -2,6 +2,8 @@
 # Copyright (C) 2005, 2006  Matthew A. Nicholson
 # Copyright (C) 2006  Tim Blechmann
 #Copyright (C) 2011 Michael Curran
+#Copyright (C) 2014 Alberto Buffolino
+#Copyright (C) 2016 Babbage B.V.
 #Based on code from http://www.scons.org/wiki/DoxygenBuilder
 #
 # This library is free software; you can redistribute it and/or
@@ -25,7 +27,7 @@ import _winreg
 
 def fetchDoxygenPath():
 	try:
-		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1") as doxygenKey:
+		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1", 0, _winreg.KEY_READ | _winreg.KEY_WOW64_64KEY) as doxygenKey:
 			doxygenPath= '"%s"'%os.path.join(_winreg.QueryValueEx(doxygenKey, "InstallLocation")[0], "Bin", "doxygen.exe")
 	except WindowsError:
 		return 'doxygen'

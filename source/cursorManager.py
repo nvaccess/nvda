@@ -49,7 +49,7 @@ class FindDialog(wx.Dialog):
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
 		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
 
-		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL), flag=wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		mainSizer.Fit(self)

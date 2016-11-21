@@ -89,9 +89,10 @@ Utilizar la copia temporal de NVDA es también una opción, ej.: con propósitos
 Además de la incapacidad de iniciarse automáticamente durante y/o después de la autentificación, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
 - La incapacidad para interactuar con aplicaciones que se ejecuten con privilegios de administrador, al menos que, por supuesto, el mismo NVDA también haya sido ejecutado con estos privilegios (no es recomendable).
 - La incapacidad de leer las pantallas del Control de Cuentas de Usuario (UAC) cuando trate de iniciar una aplicación con privilegios de administrador.
-- Windows 8 y superior: la incapacidad para soportar la entrada desde una pantalla táctil.
-- Windows 8 y superior: la incapacidad de proporcionar características tales como modo exploración y verbalización de caracteres al escribir en Windows Store apps.
-
+- Windows 8 y posterior: la incapacidad para soportar la entrada desde una pantalla táctil.
+- Windows 8 y posterior: la incapacidad de proporcionar características tales como modo exploración y verbalización de caracteres al escribir en Windows Store apps.
+- Windows 8 y posterior: la atenuación de audio no se soporta.
+-
 
 ++ Instalando NVDA ++
 Si se instala NVDA directamente desde el paquete descargado de NVDA, pulsa el botón Instalar NVDA.
@@ -775,11 +776,14 @@ Esta opción te permite elegir la tarjeta de sonido a través de la que NVDA deb
 ==== Modo de Atenuación de Audio ====
 Tecla: NVDA+shift+d
 
-En Windows 8 y superiores, esta opción te permite elegir si NVDA debería bajar el volumen de otras aplicaciones mientras NVDA esté hablando, o todo el tiempo mientras NVDA esté en ejecución.
+En Windows 8 y posteriores, esta opción te permite elegir si NVDA debería bajar el volumen de otras aplicaciones mientras NVDA esté hablando, o todo el tiempo mientras NVDA esté en ejecución.
 - Sin atenuación: NVDA nunca bajará el volumen de otro audio. 
 - Atenuar cuando salgan voz y sonidos: NVDA sólo bajará el volumen de otro audio cuando NVDA esté hablando o reproduciendo sonidos. Esto podrá no funcionar en todos los sintetizadores. 
 - Atenuar siempre: NVDA conservará el volumen de otro audio más bajo todo el tiempo que NVDA esté en ejecución.
 -
+
+Esta opción sólo está disponible si NVDA se ha instalado.
+No es posible soportar la atenuación de audio para copias portables y temporales de NVDA.
 
 +++ Opciones de Voz (NVDA+control+v) +++[VoiceSettings]
 El diálogo Opciones de Voz, que se encuentra en el menú Preferencias, contiene opciones que te permiten modificar el sonido de la voz. 
@@ -1195,44 +1199,52 @@ Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Formato de 
 La mayoría de las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos. 
 Por Ejemplo, si marcas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
 
+Las opciones de formateado de documento se organizan en grupos.
 Puedes configurar el anunciado de:
-- Nombre de fuente
-- Tamaño de fuente
-- Atributos de fuente
-- Alineación del texto
-- Colores
-- Comentarios
-- Revisiones del editor
-- Énfasis
-- Estilo del texto
-- Errores de ortografía
-- Números de página
-- Números de línea
-- Sangría de línea
-- Sangría de párrafo (por ejemplo: sangría francesa, sangría de primera línea)
-- Espaciado de línea (simple, doble etc)
-- Tablas
-- Encabezados de fila/columna de tabla
-- Coordenadas de celdas de tabla
-- Enlaces
-- Encabezados
-- Listas
-- Citas
-- Puntos de referencia
-- Marcos
-- Cuando algo admite clic
+- Fuente
+ - Nombre de fuente
+ - Tamaño de fuente
+ - Atributos de fuente
+ - Énfasis
+ - Estilo
+ - Colores
+- Información de documento
+ - Comentarios
+ - Revisiones del editor
+ - Errores de ortografía
+- Páginas y espaciado
+ - Números de página
+ - Números de línea
+ - Anunciado de sangría de línea [(Desactivado, voz, Tonos, voz y tonos) #lineIndentationOptions]
+ - Sangría de párrafo (ej.: sangría, sangría de primera línea)
+ - Espaciado de línea (simple, doble etc)
+ - Alineación
+- Información de tabla
+ - Tablas
+ - Encabezados de fila/columna
+ - Coordenadas de celda
+- Elementos
+ - Encabezados
+ - Enlaces
+ - Listas
+ - Citas
+ - Puntos de referencia
+ - Marcos
+ - Admite clic
+ -
 -
+ 
 
 Para conmutar estas  opciones desde cualquier lugar, por favor asigna gestos personalizados utilizando el [diálogo Gestos de Entrada #InputGestures].
 
 ==== Anunciar cambios de formato después del cursor ====
-Si está activada, esta opción dice a NVDA que pruebe y detecte todos los cambios de formato en una línea según la verbaliza, si se hace esto podría enlentecerse la respuesta de NVDA.
+Si está activada, esta opción dice a NVDA que pruebe y detecte todos los cambios de formato en una línea según la anuncia, si se hace esto podría enlentecerse la respuesta de NVDA.
 
 De forma predeterminada, NVDA detectará el formato en la posición del cursor del Sistema / Revisión, y en algunos casos podría detectar el formato en el resto de la línea, sólo si no está causando un decremento de la respuesta.
  
-Activa esta opción mientras compruebas la lectura de documentos en aplicaciones tales como Microsoft Word, donde el formato sea importante.
+Activa esta opción mientras compruebas la lectura de documentos en aplicaciones tales como Worpad, donde el formato sea importante.
 
-==== Anunciar sangría de líneas con ====
+==== Anunciado de sangría de líneas ====[lineIndentationOptions]
 Esta opción te permite configurar cómo debe leerse la sangría del principio de las líneas.
 El cuadro combinado Anunciar sangría de líneas con tiene cuatro opciones.
 
@@ -1438,6 +1450,10 @@ Para desarrolladores de Software videntes o gente demostrando NVDA a una audienc
 
 Para activar el visualizador de voz, marca el elemento de menú "Visualizador de Voz" bajo Herramientas en el menú NVDA.
 Desmarca el elemento de menú para desactivarlo.
+
+La ventana del visualizador de voz contiene una casilla de verificación etiquetada "Mostrar visualizador de voz al arrancar".
+Si esta está marcada, el visualizador de voz se abrirá cuando NVDA arranque.
+La ventana del visualizador de voz siempre intentará reabrirse con las mismas dimensiones y localización que cuando se cerró.
 
 Mientras el visualizador de voz está activado, se actualiza constantemente para mostrarte el texto más reciente que está siendo hablado.
 No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA detendrá temporalmente la actualización del texto, tal que podrás seleccionar o copiar fácilmente el contenido existente.
@@ -1704,8 +1720,8 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 ++ Pantallas braille Baum/Humanware/APH/Orbit  ++
 Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] y [Orbit http://www.orbitresearch.com/] están soportadas cuando se conecten a través de los puertos USB, bluetooth o serie.
 Estas incluyen:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

@@ -35,7 +35,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.11, 32 bit
+* [Python](http://www.python.org/), version 2.7.12, 32 bit
 * Microsoft Visual Studio 2015 (Express for Desktop with VC++ and Windows SDK 7.1A support, or Community with VC++ and Windows XP support):
 	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
 
@@ -54,7 +54,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 2.6.5
+* [liblouis](http://www.liblouis.org/), version 3.0.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

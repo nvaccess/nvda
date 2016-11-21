@@ -157,5 +157,17 @@ void CALLBACK inProcess_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 }
 
 void execInWindow(HWND hwnd, execInWindow_funcType func,void* data) {
-	SendMessage(hwnd,wm_execInWindow,(WPARAM)&func,(LPARAM)data);
+	// Using SendMessage here causes outgoing cross-process COM calls to fail with RPC_E_CANTCALLOUT_ININPUTSYNCCALL,
+	// which breaks us for Firefox multi-process. See Mozilla bug 1297549 comments 14 and 18.
+	// Use SendMessageCallback instead.
+	SENDASYNCPROC callback = [] (HWND hwnd, UINT msg, ULONG_PTR data, LRESULT result) {
+		// Signal the waiting message loop to exit.
+		PostQuitMessage(0);
+	};
+	if (!SendMessageCallback(hwnd,wm_execInWindow,(WPARAM)&func,(LPARAM)data, callback, NULL))
+		return;
+	MSG msg;
+	// Wait in a message loop until the callback fires and sends WM_QUIT.
+	// We also abort the loop if WaitMessage fails for some reason.
+	while (GetMessage(&msg, NULL, WM_QUIT, WM_QUIT) > 0);
 }

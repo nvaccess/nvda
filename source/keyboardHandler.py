@@ -168,17 +168,17 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
 	finally:
-		# #6017: handle typed characters for apps in Win10 RS1 and above where we can't inject in-process
+		# #6017: handle typed characters for UWP apps in Win10 RS2 and above where we can't detect typed characters in-process 
 		focus=api.getFocusObject()
-		if sys.getwindowsversion().build>=14946 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
+		if sys.getwindowsversion().build>=14971 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
 			keyStates=(ctypes.c_byte*256)()
 			for k in xrange(256):
 				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
 			charBuf=ctypes.create_unicode_buffer(5)
 			# Normally calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
-			# However in Win RT apps in Windows 10 RS1 and above, wm_keydown / wm_char is never processed, thus NVDA will be the only one calling it. 
+			# However in UWP apps in Windows 10 RS2 and above, wm_keydown / wm_char is never processed, thus NVDA will be the only one calling it. 
 			hkl=ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
-			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,5,0,hkl)
+			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,5,4,hkl)
 			if res>0:
 				for ch in charBuf[:res]: 
 					eventHandler.queueEvent("typedCharacter",focus,ch=ch)

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-22 16:32+0100\n"
+"POT-Creation-Date: 2016-11-15 11:41+1000\n"
+"PO-Revision-Date: 2016-11-10 23:26+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -85,6 +85,7 @@ msgid "unknown input method"
 msgstr "neznámá metoda vstupu"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -433,13 +434,13 @@ msgstr "Maráthský plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "Belgická holandština - plnopis"
+msgid "Dutch (Belgium)"
+msgstr "Holandština (Belgie)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "Holandský plnopis"
+msgid "Dutch (Netherlands)"
+msgstr "Holandština (Nizozemsko)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -548,7 +549,7 @@ msgstr "Tamilský plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "Telugský plnopis"
 
 #. Translators: The name of a braille table displayed in the
@@ -722,6 +723,7 @@ msgstr "ne%s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} z {total}"
 
@@ -1241,18 +1243,24 @@ msgstr "žádná předchozí anotace"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "&Odkazy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Nadpisy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
-msgstr "Oblasti"
+msgstr "Ob&lasti"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
@@ -1266,7 +1274,7 @@ msgstr "Typ:"
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "&Filter by:"
-msgstr "Filtrovat podle:"
+msgstr "&Filtrovat podle:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1475,61 +1483,73 @@ msgid "pink-red"
 msgstr "růžově červená"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "jasně {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "tmavě {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "velmi tmavě {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "světle bledě {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "bledě {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "tmavě bledě {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "velmi tmavě bledě {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} bílá"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} šedá"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "tmavě {color} šedá"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "velmi tmavě {color} šedá"
@@ -1681,6 +1701,7 @@ msgid "row"
 msgstr "řádek"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "rám"
 
@@ -2008,10 +2029,6 @@ msgstr "ikona na ploše"
 msgid "alert"
 msgstr "upozornění"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "Vnitřní rám"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "panel plochy"
@@ -2219,7 +2236,7 @@ msgid "clickable"
 msgstr "kliknutelné"
 
 msgid "editable"
-msgstr "editovatelné"
+msgstr "upravitelné"
 
 msgid "checkable"
 msgstr "zaškrtávací"
@@ -2378,7 +2395,6 @@ msgid "Mouse"
 msgstr "Myš"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Mluvení"
 
@@ -2418,15 +2434,13 @@ msgstr "Ohlašování formátování dokumentu"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
-msgstr "Tlumení audia není podporováno"
+msgstr "Tlumení zvuku není podporováno"
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
-msgstr ""
-"Přepíná mezi režimy tlumení audia určujícími, kdy má NVDA snížit hlasitost "
-"jiných zvuků"
+msgstr "Přepíná mezi režimy tlumení zvuku pro snížení hlasitosti jiných zvuků"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2718,17 +2732,25 @@ msgstr "hlásit čísla řádků zapnuto"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Zapíná a vypíná hlášení čísel řádků"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "hlásit odsazení vypnuto"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Hlásit zarovnání mluvením"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "hlásit odsazení zapnuto"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Hlásit zarovnání zvuky"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Hlásit zarovnání mluvením i zvuky"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Nehlásit zarovnání"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Zapíná a vypíná hlášení odsazení"
+msgid "Cycles through line indentation settings"
+msgstr "Přepíná mezi nastaveními odsazení"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3399,6 +3421,7 @@ msgid "AC power on"
 msgstr "Napájení zapnuto"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "zbývá {hours:d} hodin a {minutes:d} minut"
 
@@ -3550,6 +3573,7 @@ msgid "review"
 msgstr "čtecím kurzorem"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "systémovým fokusem"
 
@@ -4245,6 +4269,7 @@ msgid "column %s"
 msgstr "sloupec %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "s {rowCount} řádky a {columnCount} sloupci"
 
@@ -4300,25 +4325,30 @@ msgstr "výchozí styl"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
+#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} na {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} na {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} pozadí"
 
+#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "Vzor pozadí {pattern}"
 
@@ -4526,6 +4556,7 @@ msgid "out of table"
 msgstr "vně tabulky"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabulka s {columnCount} sloupci a {rowCount} řádky"
 
@@ -4534,7 +4565,7 @@ msgstr "Zobrazení řeči NVDA"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "Zobrazení řeči při startu"
+msgstr "Zobrazení &řeči při startu"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -4606,22 +4637,27 @@ msgid "object mode"
 msgstr "objektový režim"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "jedno {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "dvojí {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "trojité {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "čtyřnásobné {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} prsty {action}"
 
@@ -4703,6 +4739,7 @@ msgstr "Aktualizace NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "K dispozici je nová verze {version}."
 
@@ -4781,7 +4818,7 @@ msgstr "Prosím přispějte"
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 msgid "&Donate"
-msgstr "Přispět"
+msgstr "&Přispět"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
@@ -4799,9 +4836,11 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Otevřený a volně šiřitelný odečítač obrazovky pro Microsoft Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Tým"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4846,6 +4885,7 @@ msgstr ""
 "hlavní nabídky NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4854,20 +4894,23 @@ msgstr ""
 "Pro instalaci doplňků je třeba používat NVDA."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
 "Umístění okrajů objektu {left:.1f} procent zleva doprava, {top:.1f} procent "
-"odshora dolů, {width:.1f} procent zprava doleva, {height:.1f} procent zdola "
+"shora dolů, {width:.1f} procent zprava doleva, {height:.1f} procent zdola "
 "nahoru"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} jako v {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4917,11 +4960,12 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oznámí zbývající čas u právě hrající stopy"
 
 #. Translators: A position in a Kindle book
-#, no-python-format
+#, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, umístění {curLocation} z {maxLocation}"
 
 #. Translators: a page in a Kindle book
+#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Strana {pageNumber}"
 
@@ -5031,10 +5075,12 @@ msgid "Waiting for Outlook..."
 msgstr "Čekám na Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} do {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Schůzka {subject}, {time}"
 
@@ -5196,78 +5242,97 @@ msgid "Master Thumbnails"
 msgstr "Předloha s náhledy"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Snímek {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá levou stranu {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "za levou stranou {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá vršek {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "za vrškem {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá pravou stranu {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "za pravou stranou {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá spodek {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "za spodkem {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "zakrývá  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "za {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} bodů od levého okraje snímku"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Mimo levý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} bodů od vrchního okraje snímku"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Mimo vrchní okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} bodů od pravého okraje snímku"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Mimo pravý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} bodů od spodního okraje snímku"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Mimo spodní okraj snímku o {distance:.3g} bodů"
 
@@ -5277,14 +5342,16 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"Přepíná mezi hlášením poznámek a obsahem snímku. To, co je vidět na "
-"obrazovce, se tím nemění, jen to, co můžete číst s NVDA."
+"Přepíná mezi hlášením poznámek a obsahem snímku. Co je vidět na obrazovce se "
+"tím nemění, jen co můžete číst s NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Poznámky pro prezentaci - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Prezentace - {slideName}"
 
@@ -5373,6 +5440,7 @@ msgstr "Braillské řádky Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Sériový: {portName}"
 
@@ -5523,7 +5591,7 @@ msgstr "Nastavuje chování čtecího kurzoru"
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "Nastavení složení vstupu..."
+msgstr "Nastavení složení &vstupu..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -5594,7 +5662,7 @@ msgstr "Výslovnost &interpunkčních znaků..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "Vstupní příkazy..."
+msgstr "V&stupní příkazy..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -5634,7 +5702,7 @@ msgstr "Nás&troje"
 
 #. Translators: The label of a menu item to open NVDA user guide.
 msgid "&User Guide"
-msgstr "Uživatelská příručka"
+msgstr "&Uživatelská příručka"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -5642,10 +5710,10 @@ msgstr "Seznam &klávesových zkratek"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
-msgstr "Co je nového"
+msgstr "Co je &nového"
 
 msgid "NVDA &web site"
-msgstr "Webová stránka programu NVDA"
+msgstr "&Webová stránka programu NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -5653,7 +5721,7 @@ msgstr "&Licence"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
-msgstr "Tým NVDA"
+msgstr "T&ým NVDA"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog..."
@@ -5661,7 +5729,7 @@ msgstr "Uvítací &dialog..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "Zkontrolovat aktualizace..."
+msgstr "&Zkontrolovat aktualizace..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -5673,7 +5741,7 @@ msgstr "&Nápověda"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "Uživatelské profily..."
+msgstr "Uživatelské &profily..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -5685,7 +5753,7 @@ msgstr "Vrátit nastavení na uložené hodnoty"
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "Vrátit nastavení na původní hodnoty"
+msgstr "Vrátit nastavení na &původní hodnoty"
 
 msgid "Reset all settings to default state"
 msgstr "Vrátit nastavení na výchozí hodnoty"
@@ -5709,7 +5777,6 @@ msgid "Exit NVDA"
 msgstr "Ukončit NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5719,9 +5786,8 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Vítejte v programu NVDA!\n"
-"Většina příkazů, které lze použít pro ovládání programu NVDA je tvořena "
-"soustiskem tzv. klávesy NVDA spolu s dalšími klávesami.\n"
+"Většina příkazů pro ovládání programu NVDA je tvořena soustiskem tzv. "
+"klávesy NVDA spolu s dalšími klávesami.\n"
 "Jako klávesa NVDA je standardně přednastavena klávesa Insert - buď hlavní "
 "Insert nebo Insert na numerickém bloku klávesnice.\n"
 "Jako klávesu NVDA lze místo Insertu též nastavit klávesu CapsLock.\n"
@@ -5732,6 +5798,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Vítejte  v programu NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Vítejte  v programu NVDA!"
 
 msgid "Options"
 msgstr "Možnosti dialogu"
@@ -5744,7 +5815,7 @@ msgstr "Použít CapsLock jako NVDA klávesu"
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Spouštět nvda po přihlášení do systému"
+msgstr "Spouštět nvda po přih&lášení do systému"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
@@ -5780,7 +5851,7 @@ msgstr ""
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
-msgstr "Co chcete udělat?"
+msgstr "Co chcete u&dělat?"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
@@ -5835,11 +5906,11 @@ msgstr "&O doplňku..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "Nápověda doplňku"
+msgstr "&Nápověda doplňku"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "Zakázat doplněk"
+msgid "&Disable add-on"
+msgstr "&Zakázat doplněk"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5861,6 +5932,7 @@ msgid "Choose Add-on Package File"
 msgstr "Vyberte balíček s doplňkem"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Balíček s doplňkem (*.{ext})"
 
@@ -5874,6 +5946,7 @@ msgstr ""
 "neplatný formát souboru"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -5941,22 +6014,23 @@ msgid "running"
 msgstr "spuštěno"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "Povolit doplněk"
+msgid "&Enable add-on"
+msgstr "&Povolit doplněk"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"Byly provedeny změny u doplňků. Aby se tyto změny projevily, je nutné "
-"restartovat NVDA. Restartovat nyní?"
+"Byly provedeny změny u doplňků. Pro změny je nutné restartovat NVDA. "
+"Restartovat nyní?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
 msgstr "Restart NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -5969,6 +6043,7 @@ msgstr ""
 "Popis: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -5980,31 +6055,27 @@ msgstr "Informace o doplňku"
 msgid "Configuration Profiles"
 msgstr "Uživatelské profily"
 
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "Profil"
-
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
-msgstr "Nový"
+msgstr "&Nový"
 
 #. Translators: The label of a button to rename a configuration profile.
 msgid "&Rename"
-msgstr "Přejmenovat"
+msgstr "&Přejmenovat"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "Odstranit"
+msgstr "&Odstranit"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "Události..."
+msgstr "&Události..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "Dočasně zakázat všechny události"
+msgstr "Dočasně &zakázat všechny události"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -6229,6 +6300,7 @@ msgstr ""
 "aktualizována."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6236,11 +6308,11 @@ msgstr "Cesta pro instalaci NVDA se změnila. Nyní bude nainstalován v {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "Spouštět nvda při zobrazení přihlašovací obrazovky"
+msgstr "Spouštět nvda při zobrazení přih&lašovací obrazovky"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
-msgstr "Zachovat klávesovou zkratku na ploše"
+msgstr "&Zachovat klávesovou zkratku na ploše"
 
 #. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 #. If the shortcut key has been changed for this locale,
@@ -6274,7 +6346,7 @@ msgstr ""
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
 msgid "&Proceed with installation (not recommended)"
-msgstr "Pokračovat v instalaci (nedoporučeno)"
+msgstr "&Pokračovat v instalaci (nedoporučeno)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6291,20 +6363,20 @@ msgstr ""
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Portable &directory:"
-msgstr "Adresář přenosné kopie:"
+msgstr "&Adresář přenosné kopie:"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
 msgstr "Procházet..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "&Zkopírovat aktuální uživatelské nastavení"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Vyberte adresář pro přenosnou verzi"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "&Zkopírovat aktuální uživatelské nastavení"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6390,17 +6462,13 @@ msgstr "debug"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Jazyk (vyžaduje restart NVDA):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Jazyk"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Uložit nastavení při ukončení"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
-msgstr "Zobrazit možnosti ukončení při ukončení NVDA"
+msgstr "Zobrazit možnosti &ukončení při ukončení NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -6409,10 +6477,6 @@ msgstr "Oznámit &zvukem spuštění nebo ukončení NVDA"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Úroveň &logování:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Úroveň logování"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6473,13 +6537,6 @@ msgstr "Chyba při kopírování uživatelského nastavení NVDA"
 msgid "Successfully copied NVDA user settings"
 msgstr "Uživatelské nastavení NVDA bylo úspěšně zkopírováno"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Chyba v jazykovém souboru %s"
-
-msgid "Language Error"
-msgstr "Chyba jazyka"
-
 msgid "This change requires administrator privileges."
 msgstr "Tato změna vyžaduje administrátorská oprávnění."
 
@@ -6494,7 +6551,7 @@ msgid ""
 msgstr ""
 "Aby se projevilo nové nastavení jazyka, je třeba uložit nastavení a "
 "restartovat NVDA. Stiskněte Enter pro uložení a restart nebo Storno pro "
-"ruční uložení a ukončení v pozdějším čase."
+"ruční uložení a ukončení později."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -6518,7 +6575,7 @@ msgstr "&Výstupní zařízení:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 msgid "Audio &ducking mode:"
-msgstr "Režim tlumení audia"
+msgstr "Režim &tlumení zvuku"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -6547,7 +6604,7 @@ msgstr "Automaticky přepínat &dialekt (je-li podporováno)"
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
-msgstr "Úroveň interpunkce:"
+msgstr "&Úroveň interpunkce:"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
@@ -6571,7 +6628,7 @@ msgstr "&Pípat před hláskováním velkých písmen"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Use &spelling functionality if supported"
-msgstr "Hláskování řídí hlasový výstup, je-li podporováno"
+msgstr "&Hláskování řídí hlasový výstup, je-li podporováno"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
@@ -6581,10 +6638,6 @@ msgstr "Nastavení klávesnice"
 #. keyboard settings dialog.
 msgid "&Keyboard layout:"
 msgstr "&Rozložení klávesnice:"
-
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Rozložení klávesnice"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6619,7 +6672,7 @@ msgstr "Přerušení řeči pro klávesu enter"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Povolit dynamické čtení v režimu plynulého čtení"
+msgstr "Povolit dynamické &čtení v režimu plynulého čtení"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6639,7 +6692,7 @@ msgstr "Při psaní oznámit zvukem &pravopisné chyby"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Handle keys from other &applications"
-msgstr "Zpracovávat klávesy z jiných aplikací"
+msgstr "Zpracovávat klávesy z jiných &aplikací"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -6663,10 +6716,6 @@ msgstr "Povolit &sledování myši"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "&Jednotka ohlašování u zaměřeného textu:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "jednotka ohlašování textu"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6729,12 +6778,12 @@ msgstr "Při oznamování návrhů vždy zahrnout krátký &popis znaků"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &reading string"
-msgstr "Hlásit změny v okně s výslovností"
+msgstr "Hlásit změny v okně s &výslovností"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &composition string"
-msgstr "Hlásit změny ve složených řetězcích"
+msgstr "Hlásit změny ve &složených řetězcích"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
@@ -6792,11 +6841,6 @@ msgstr "Hlásit popisky &objektů"
 #. object presentation settings dialog.
 msgid "Progress &bar output:"
 msgstr "&Indikátor průběhu:"
-
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Ohlašovat indikátor průběhu"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -6863,147 +6907,168 @@ msgstr ""
 msgid "Document Formatting"
 msgstr "Ohlašování formátování dokumentu"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Při pohybu kurzoru oznamovat změny &formátování"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "Následující možnosti určují typy ohlašování formátování dokumentu."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Písmo"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Hlásit &jméno písma"
+msgid "&Font name"
+msgstr "&Jméno písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Hlásit &velikost písma"
+msgid "Font &size"
+msgstr "&Velikost písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Hlásit vl&astnosti písma"
+msgid "Font attri&butes"
+msgstr "Vl&astnosti písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Hlásit &zarovnání"
+msgid "E&mphasis"
+msgstr "Zv&ýraznění"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Hlásit &barvy"
+msgid "St&yle"
+msgstr "&Styl"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Hlásit ko&mentáře"
+msgid "&Colors"
+msgstr "&Barvy"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Informace o dokumentu"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Hlásit změny"
+msgid "Co&mments"
+msgstr "Ko&mentáře"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Hlásit zvýraznění"
+msgid "&Editor revisions"
+msgstr "Zm&ěny"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Hlásit &styl"
+msgid "Spelling e&rrors"
+msgstr "Pravopisné &chyby"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Strany a řádkování"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Hlásit pravopisné chyby"
+msgid "&Pages"
+msgstr "Stran&y"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Hlásit stran&y"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Hlásit &čísla &řádků"
+msgid "Line &numbers"
+msgstr "&Čísla řádků"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "Hlásit odsazení s:"
+msgid "Line &indentation reporting:"
+msgstr "Hlášení &odsazení:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "Vypnuto"
 
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Mluvení"
+
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
-msgstr "Tóny"
+msgstr "Zvuky"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both  Speech and Tones"
-msgstr "Řečí i tóny"
+msgstr "Mluvení i zvuky"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Hlásit odsazení odstavců"
+msgid "&Paragraph indentation"
+msgstr "Odsazení o&dstavců"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Hlásit &řádkování"
+msgid "&Line spacing"
+msgstr "&Řádkování"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Hlásit &datové tabulky"
+msgid "&Alignment"
+msgstr "&Zarovnání"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Informace o tabulce"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Hlásit zá&hlaví řádků a  sloupců v tabulkách"
+msgid "&Tables"
+msgstr "&Datové tabulky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Hlásit souřadnice buněk v &tabulkách"
+msgid "Row/column h&eaders"
+msgstr "Zá&hlaví řádků a sloupců"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Hlásit &odkazy"
+msgid "Cell c&oordinates"
+msgstr "S&ouřadnice buněk"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Prvky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "Hlásit &nadpisy"
+msgid "&Lists"
+msgstr "&Seznamy"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Hlás&it seznamy"
+msgid "Block &quotes"
+msgstr "&Citace"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Hlásit &citace"
+msgid "Fra&mes"
+msgstr "&Rámce"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "H&lásit oblasti"
+msgid "&Clickable"
+msgstr "&Kliknutelné"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Hlásit &rámce"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Hlásit &kliknutelné"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "Při pohybu kurzoru oznamovat změny &formátování"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7036,19 +7101,23 @@ msgstr "&Komentář"
 
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
-msgstr "Typ"
+msgstr "&Typ"
+
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Je nutné zadat vzor."
+
+msgid "Dictionary Entry Error"
+msgstr "chyba položky slovníku"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Chyba regulárního výrazu: \"%s\"."
 
-msgid "Dictionary Entry Error"
-msgstr "chyba položky slovníku"
-
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
-msgstr "Položky slovníku"
+msgstr "Položky &slovníku"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 #. Translators: Title of a dialog edit an Excel comment
@@ -7095,15 +7164,15 @@ msgstr "Braillský &řádek:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
-msgstr "&Port"
+msgstr "&Port:"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr "Výstupní tabulka:"
+msgstr "&Výstupní tabulka:"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
-msgstr "Vstupní tabulka:"
+msgstr "V&stupní tabulka:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
@@ -7111,7 +7180,7 @@ msgstr "&Slovo, na kterém je kurzor, zobrazit počítačovým braillovým písm
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
-msgstr "Zobrazit kurzor"
+msgstr "&Zobrazit kurzor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -7119,7 +7188,7 @@ msgstr "&Rychlost blikání kurzoru v milisekundách"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
-msgstr "Tvar kurzoru"
+msgstr "&Tvar kurzoru"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7189,7 +7258,7 @@ msgstr "&Aktuální znak se řídí hlasovým výstupem"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
-msgstr "Odstranit"
+msgstr "&Odstranit"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 #, python-format
@@ -7203,11 +7272,12 @@ msgstr "Vstupní příkazy"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "Filtrovat podle:"
+msgstr "&Filtrovat podle:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7247,10 +7317,12 @@ msgid "word"
 msgstr "slovo"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
 
@@ -7306,6 +7378,7 @@ msgid "Taskbar"
 msgstr "Úlohová lišta"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB červená {rgb.red}, zelená {rgb.green}, modrá {rgb.blue}"
 
@@ -7473,6 +7546,7 @@ msgid "&Sheets"
 msgstr "&Listy"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
 
@@ -7488,18 +7562,22 @@ msgstr ""
 "ohlašování formátování dokumentu."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "{address} nastaveno jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} již nastaveno jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address}    odstraněno ze záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Nelze najít {address}    v záhlaví sloupců"
 
@@ -7512,18 +7590,22 @@ msgstr ""
 "buňky níže a vpravo v této oblasti. Dvojitým stiskem se toto nastavení zruší."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "{address} nastaveno jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} již nastaveno jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address}    odstraněno ze záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Nelze najít {address}    v záhlaví řádků"
 
@@ -7535,9 +7617,11 @@ msgstr ""
 "Stiskne-li se jednou, nastaví se tato buňka jako první záhlaví řádků pro "
 "buňky níže a vpravo v této oblasti. Dvojitým stiskem se toto nastavení zruší."
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Vstupní zpráva je {title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Vstupní zpráva je {message}"
 
@@ -7550,10 +7634,12 @@ msgid "Reports the comment on the current cell"
 msgstr "Přečte komentář v aktuální buňce"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
-msgstr "Editovat komentář pro buňku {address}"
+msgstr "Upravit komentář pro buňku {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} do {lastAddress} {lastContent}"
 
@@ -7908,6 +7994,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Bodový s vyhlazenými spojnicemi a bez datových značek"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Název grafu: {chartTitle}, typ: {chartType}"
 
@@ -7935,6 +8022,7 @@ msgstr "Řada"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} Osa je {axisTitle}"
 
@@ -7948,6 +8036,7 @@ msgid "There are total %d series in this chart"
 msgstr "Celkem %d řad v tomto grafu"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "řada {number} {name}"
 
@@ -7972,6 +8061,7 @@ msgstr "datový bod"
 msgid "item"
 msgstr "položka"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Barva řady: {colorName} "
 
@@ -8061,51 +8151,61 @@ msgstr "Obdélník"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} řada {seriesIndex} z {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "žádná změna od bodu {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Zvýšeno o {incrementValue} od bodu {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "sníženo o {decrementValue} od bodu {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Kategorie {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "hodnota {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " zlomek {fractionValue:.2f} výseč procent {pointIndex} z {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} z {pointCount}"
 
@@ -8118,10 +8218,12 @@ msgid "Secondary"
 msgstr "Vedlejší"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "Osa grafu, typ: {axisType}, skupina: {axisGroup}, název: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Osa grafu, typ: {axisType}, skupina: {axisGroup}"
 
@@ -8139,6 +8241,7 @@ msgid " squared "
 msgstr " čtvercový "
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Název grafu: {chartTitle}"
 
@@ -8147,6 +8250,7 @@ msgid "Untitled chart"
 msgstr "Bez názvu"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8159,6 +8263,7 @@ msgid "Chart area "
 msgstr "Oblast grafu "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8183,12 +8288,14 @@ msgstr "Bez legendy"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Položka legendy pro řadu {seriesName} {seriesIndex} z {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Klíč legendy pro řadu {seriesName} {seriesIndex} z {seriesCount}"
 
@@ -8290,9 +8397,11 @@ msgstr "Primární záhlaví"
 msgid "Text frame"
 msgstr "Textový rámeček"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentář: {text} od {author} dne {date}"
 
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dne {date}"
 
@@ -8333,12 +8442,14 @@ msgid "Table description"
 msgstr "Popis tabulky"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Řádek {rowNumber} sloupec {columnNumber} nastaven jako začátek záhlaví "
 "sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8346,10 +8457,12 @@ msgstr ""
 "sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Řádek {rowNumber} sloupec {columnNumber}  odstraněn ze záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví sloupců"
@@ -8363,11 +8476,13 @@ msgstr ""
 "buňky níže a vpravo v této tabulce. Dvojitým stiskem se toto nastavení zruší."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Řádek {rowNumber} sloupec {columnNumber} nastaven jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8375,10 +8490,12 @@ msgstr ""
 "řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Řádek {rowNumber} sloupec {columnNumber}  odstraněn ze záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví řádků"
 
@@ -8461,35 +8578,43 @@ msgid "Moved above blank paragraph"
 msgstr "Přesunuto nad prázdný odstavec"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "styl {styleName}, úroveň zobrazení {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "písmo {size:g} bodů"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} znaků"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} inčů"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetrů"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetrů"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} bodů"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pící"
 
@@ -8521,7 +8646,7 @@ msgstr "Mimo tabulku"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "anotace"
+msgstr "&Anotace"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -8530,6 +8655,93 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "Vnitřní rám"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Chyba v jazykovém souboru %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Chyba jazyka"
+
+#~ msgid "&Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Language"
+#~ msgstr "Jazyk"
+
+#~ msgid "Log level"
+#~ msgstr "Úroveň logování"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "Rozložení klávesnice"
+
+#~ msgid "text reporting unit"
+#~ msgstr "jednotka ohlašování textu"
+
+#~ msgid "Progress bar output"
+#~ msgstr "Ohlašovat indikátor průběhu"
+
+#~ msgid "Report &font name"
+#~ msgstr "Hlásit &jméno písma"
+
+#~ msgid "Report font &size"
+#~ msgstr "Hlásit &velikost písma"
+
+#~ msgid "Report &alignment"
+#~ msgstr "Hlásit &zarovnání"
+
+#~ msgid "Report &colors"
+#~ msgstr "Hlásit &barvy"
+
+#~ msgid "Report co&mments"
+#~ msgstr "Hlásit ko&mentáře"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "Hlásit zvýraznění"
+
+#~ msgid "Report st&yle"
+#~ msgstr "Hlásit &styl"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "Hlásit pravopisné chyby"
+
+#~ msgid "Report &pages"
+#~ msgstr "Hlásit stran&y"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "Hlásit &řádkování"
+
+#~ msgid "Report &tables"
+#~ msgstr "Hlásit &datové tabulky"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "Hlásit zá&hlaví řádků a  sloupců v tabulkách"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "Hlásit &odkazy"
+
+#~ msgid "Report &headings"
+#~ msgstr "Hlásit &nadpisy"
+
+#~ msgid "Report &lists"
+#~ msgstr "Hlás&it seznamy"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "Hlásit &citace"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "H&lásit oblasti"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "Hlásit &rámce"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "Hlásit &kliknutelné"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Zapíná a vypíná hlášení odsazení"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Tuto buňku nelze upravit"
@@ -9372,9 +9584,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "loads the saved NVDA configuration, overriding current changes"
 #~ msgstr "Načte uložené nastavení a přepíše naposledy provedené změny"
-
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "Vítejte  v programu NVDA"
 
 #~ msgid "Your gesture map file contains errors.\n"
 #~ msgstr "Chyba souboru mapy vstupních příkazů"

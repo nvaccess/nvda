@@ -4,30 +4,61 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.4 =
+Les points fort de cette version incluent un support amélioré de Microsoft Edge; le mode navigation dans l'application Courrier de Windows 10; et des améliorations significatives dans les dialogues de NVDA.
 
 == Nouvelles Fonctionnalités ==
 - NVDA peut maintenant indiquer le retrait des lignes par des sons. Ceci peut être configuré en utilisant la liste déroulante "annoncer les retraits de ligne par" dans le dialogue Mise en Forme des Documents de NVDA. (#5906)
 - Support de l'afficheur braille Orbit Reader 20. (#6007)
-- Une option permettant d'ouvrir la visionneuse de parole au démarrage a été ajoutée. (#5050)
+- Une option permettant d'ouvrir la visionneuse de parole au démarrage a été ajoutée. Elle peut être activée via une case à cocher dans la fenêtre de la visionneuse de parole. (#5050)
 - Quand on rouvre la fenêtre de la visionneuse de parole, sa position et ses dimensions sont maintenant restaurées. (#5050)
-- Les champs de Renvoi sous Microsoft Word sont maintenant traités comme des hyperliens. Ils sont annoncés comme des liens et peuvent être activés. (#6102)
+- Les champs de Renvoi sous Microsoft Word sont maintenant traités comme des liens hypertexte. Ils sont annoncés comme des liens et peuvent être activés. (#6102)
 - début de support de la version de l'application Kindle en préparation. (#6247)
+- Support des afficheurs braille Baum SuperVario2, Baum Vario 340 et HumanWare Brailliant2. (#6116)
+- Support initial de la mise à jour anniversaire de Microsoft Edge. (#6271)
+- Le mode navigation est maintenant utilisé pour la lecture des courriels dans l'application mail de Windows 10. (#6271)
+
+
+== Changements ==
+- Convertisseur braille liblouis mis à jour à la version 3.0.0. Cela inclut des améliorations significatives du Braille Anglais Unifié. (#6109, #4194, #6220, #6140)
+- Dans le Gestionnaire de Modules Complémentaires, les boutons Activer le module et Désactiver le module ont maintenant des raccourcis clavier (alt+d et alt+d, respectivement). (#6388)
+- Dans les dialogues de NVDA, divers problèmes de remplissage et d'alignement ont été résolus. (#6317, #5548, #6342, #6343, #6349)
+- Le dialogue de mise en forme des documents a été ajusté pour que le contenu puisse défiler. (#6348)
+- Ajustement de la disposition du dialogue Prononciation des symboles pour que toute la largeur du dialogue soit utilisée pour la liste des symboles. (#6101)
+- En mode navigation dans les navigateurs internet, les commandes de navigation vers les zones d'édition (e et maj+e) et les champs de formulaire (f et maj+f) peuvent maintenant atteindre les champs en lecture seule. (#4164)
+- Dans le dialogue Mise en Forme des Documents de NVDA, "Annoncer les changements de mise en forme après le curseur" a été renommé en "Signaler  les changements de mise en forme après le curseur", puisque cela affecte le braille autant que la voix. (#6336)
+- Amélioration de l'apparence du dialogue de bienvenue de NVDA. (#6350)
+- Dans les dialogues de NVDA, les boutons "Ok" et "Annuler" sont maintenant alignés à droite du dialogue. (#6333)
+- Des contrôles rotatifs sont maintenant utilisés pour les champs de saisie numériques tels que le changement de la hauteur pour indiquer les majuscules dans le dialogue Paramètres Vocaux. Vous pouvez entrer une valeur ou utiliser les flèches haut et bas pour ajuster la valeur. (#6099)
+- La manière dont les IFrames (documents inclus dans des documents) sont signalés a été rendue plus cohérente entre les différents navigateurs. Les IFrames sont maintenant signalés comme "cadre" sous Firefox. (#6047)
 
 
 == Corrections de Bogues ==
-- Correction d'un problème rare causant unerreur quand on ferme NVDA avec la visionneuse de parole ouverte. (#5050)
+- Correction d'une erreur rare quand on ferme NVDA avec la visionneuse de parole ouverte. (#5050)
 - Les images interactives sont maintenant rendues comme prévu en mode navigation sous Mozilla Firefox. (#6051)
-- Correction d'un problème provoquant un avertissement dans le journal de NVDA quand le verrouillage majuscule est activé. (#6127)
-- Dans le dialogue des dictionnaires, l'appui sur la touche entrée sauvegarde maintenant les changements et ferme le dialogue. (#6206)
+- Dans le dialogue des dictionnaires, l'appui sur la touche entrée sauvegarde maintenant les changements et ferme le dialogue. Précédemment, l'appui sur entrée n'avait aucun effet. (#6206)
 - Les messages sont maintenant affichés en braille quand on change de mode de saisie pour une méthode de saisie (saisie native/alphanumérique, mode plein/mode demi, etc.). (#5892, #5893)
 - Quand on désactive et réactive immédiatement un module complémentaire ou vice versa, l'état du module retourne maintenant correctement à sa valeur précédente. (#6299)
-- Quand on utilise Microsoft Word, les numéros de page dans les titres peuvent maintenant être lus. (#6004)
+- Sous Microsoft Word, les numéros de page dans les titres peuvent maintenant être lus. (#6004)
 - La souris peut maintenant être utilisée pour déplacer le focus entre la liste des symboles et les champs de saisie dans le dialogue prononciation des symboles. (#6312)
-- Correction d'un problème qui empêche la liste d'éléments d'apparaître quand Microsoft Word contient des liens hypertexte invalides. (#5886)
+- Sous Microsoft Word en mode navigation, Correction d'un problème qui empêche la liste d'éléments d'apparaître quand le document contient un lien hypertexte invalide. (#5886)
+- Après sa fermeture via la barre des tâches ou le raccourci alt+F4, l'état de la case à cocher de la visionneuse de parole dans le menu NVDA reflètera maintenant la visibilité réel de la fenêtre. (#6340)
+- La commande de rechargement des modules complémentaires ne causse plus de problèmes aux profils de configuration déclenchés, aux nouveaux documents dans les navigateurs web et à la revue d'écran. (#2892, #5380)
+- Dans la liste de langues du dialogue Paramètres Généraux de NVDA, les langues tel que l'Aragonais sont maintenant correctement affichées sous Windows 10. (#6259)
+- Les touches système émulées (ex : Un bouton sur un afficheur braille émulant la touche tab) sont maintenant présentées dans la langue configurée pour NVDA dans l'aide à la saisie et le dialogue Gestes de Commandes. Avant, elles étaient toujours présentées en Anglais. (#6212)
+- Changer la langue de NVDA (depuis le dialogue Paramètres Généraux) n'a maintenant plus d'effet avant le redémarrage de NVDA. (#4561)
+- Le champ "modèle" d'une nouvelle entrée de dictionnaire ne peut plus être laissé à blanc. (#6412)
+- Correction d'un problème rare durant la recherche des ports série sur certains systèmes qui rendait certains pilotes d'afficheurs braille inutilisables. (#6462)
+- Sous Microsoft Word, les puces numérotées sont maintenant annoncées dans les tableaux quand on se déplace par cellule. (#6446)
+- Il est maintenant possible d'assigner des gestes de commandes pour le pilote d'afficheurs braille Handy Tech dans le dialogue Gestes de Commandes de NVDA. (#6461)
+- Sous Microsoft Excel, l'appui sur entrée ou sur entrée du pavé numérique quand on navigue dans une feuille de calcul annonce maintenant navigation à la ligne suivante. (#6500)
+- iTunes ne se bloque plus de façon intermittente quand on utilise le mode navigation pour l'iTunes Store, Apple Music, etc. (#6502)
+- Correction des plantages dans les applications Mozilla 64 bits et les applications basées sur Chrome. (#6497)
+- Sous Firefox avec multi-processus activé, le mode navigation et les champs d'édition fonctionnent maintenant correctement. (#6380)
 
 
 == Changements pour les Développeurs ==
 - Il est maintenant possible de fournir des modules applicatifs pour les exécutables contenant un point (.) dans leur nom. Les points sont remplacés par des soulignés (_). (#5323)
+- Le nouveau module gui.guiHelper inclut des utilitaires pour simplifier la création d'interfaces utilisateur graphiques wxPython, incluant la gestion automatique de l'espacement. Cela apporte une meilleure cohérence et apparence visuelle, ainsi que la simplification dans la création d'interfaces graphiques pour les développeurs non-voyants. (#6287)
 
 
 = 2016.3 =

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-24 23:01+0200\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-10 14:27+0200\n"
 "Last-Translator:  <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -435,13 +435,13 @@ msgstr "מראתית שיטת ברייל 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "הולנדית (בלגיה) שיטת ברייל 1"
+msgid "Dutch (Belgium)"
+msgstr "הולנדית (בלגיה"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "הולנדית (הולנד) שיטת ברייל 1"
+msgid "Dutch (Netherlands)"
+msgstr "הולנדית (הולנד"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -550,7 +550,8 @@ msgstr "טמילית שיטת ברייל 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+#, fuzzy
+msgid "Telugu grade 1"
 msgstr "טלגו שיטת ברייל 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1243,16 +1244,22 @@ msgstr "אין הערה קודמת"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "&קישורים"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&כותרות"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "ציוני &דרך"
 
@@ -1695,6 +1702,7 @@ msgid "row"
 msgstr "שורה"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "מסגרת"
 
@@ -2021,10 +2029,6 @@ msgstr "סמל שולחן עבודה"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "אזהרה"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "מסגרת"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2392,7 +2396,6 @@ msgid "Mouse"
 msgstr "עכבר"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr " דיבור"
 
@@ -2720,17 +2723,25 @@ msgstr "הקראת מספר שורה"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "מיתוג הקראת מספר שורה"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "ללא הקראת מידע על כניסת שורה"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "דיווח קולי על כניסות"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "הקראת מידע על כניסת שורה"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "דיווח על כניסות באמצעות צלילים"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "דיווח על כניסות בעזרת צלילים ודיבור גם יחד"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "ללא דיווח על כניסת שורה"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "מיתוג הקראת מידע על כניסת שורה"
+msgid "Cycles through line indentation settings"
+msgstr "החלפת רמת הדיווח על כניסת שורה"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3494,6 +3505,7 @@ msgid "review"
 msgstr "סקירה"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "פוקוס"
 
@@ -5678,8 +5690,8 @@ msgstr "י&ציאה"
 msgid "Exit NVDA"
 msgstr "יציאה מNVDA"
 
+#, fuzzy
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5700,6 +5712,12 @@ msgstr ""
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
+msgstr "ברוכים הבאים לNVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+#, fuzzy
+msgid "Welcome to NVDA!"
 msgstr "ברוכים הבאים לNVDA"
 
 msgid "Options"
@@ -5804,7 +5822,8 @@ msgid "Add-on &help"
 msgstr "&עזרה על התוסף"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
+#, fuzzy
+msgid "&Disable add-on"
 msgstr "ביטול פעולת התוסף"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
@@ -5906,7 +5925,8 @@ msgid "running"
 msgstr "בריצה"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
+#, fuzzy
+msgid "&Enable add-on"
 msgstr "הפעלת התוסף"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
@@ -5944,10 +5964,6 @@ msgstr "מידע על התוסף"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "פרופילי תצורה"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&פרופיל"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6253,14 +6269,14 @@ msgstr "תיקיית העותק הנייד"
 msgid "Browse..."
 msgstr "עיון"
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "העתקת הגדרות המשתמש הנוכחיות"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "בחירת התיקייה לעותק הנייד"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "העתקת הגדרות המשתמש הנוכחיות"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6346,10 +6362,6 @@ msgstr "debug"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "שינוי השפה דורש הפעלה מחדש של התוכנה כדי לעבוד באופן מלא."
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "שפה"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&שמור שינויים בעת יציאה"
@@ -6365,10 +6377,6 @@ msgstr "השמע צלילים בעת  כניסה ויציאה"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "רמת &דיווח"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "רמת דיווח"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6423,13 +6431,6 @@ msgstr "שגיאה בעת העתקת הגדרות משתמש של NVDA"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "הגדרות המשתמש של NVDA הועתקו בהצלחה"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "שגיאה בקובץ השפה %s"
-
-msgid "Language Error"
-msgstr "שגיאת שפה"
 
 msgid "This change requires administrator privileges."
 msgstr "שינוי זה דורש זכויות מנהל על התחנה"
@@ -6533,10 +6534,6 @@ msgstr "הגדרות מקלדת"
 msgid "&Keyboard layout:"
 msgstr "&פריסת מקלדת:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "פריסת מקלדת"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6614,10 +6611,6 @@ msgstr "עקוב אחרי סמן ה&עכבר"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "מידת גודל הגופנים"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "מידת גודל הטקסטים"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6744,11 +6737,6 @@ msgstr "הקראת &תיאור האובייקטים"
 msgid "Progress &bar output:"
 msgstr "הקראת את פסי ההתקדמות"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "הקראת את פסי ההתקדמות"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6812,79 +6800,106 @@ msgstr "לכוד את כל מחוות שאינן פקודות בעת טעינת 
 msgid "Document Formatting"
 msgstr "עיצוב מסמך"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "הקראת שינויי עיצוב לאחר תנועת הסמן (תכונה זו עלולה לגרום להאטה)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "בעזרת האפשרויות להלן תוכל לשלוט בעיצוב המסמך"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "גופן"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "הקראת שמות ה&גופנים"
+#, fuzzy
+msgid "&Font name"
+msgstr "שם הגופן"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "הקראת &גודל הגופן"
+#, fuzzy
+msgid "Font &size"
+msgstr "גודל הגופן"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
+#, fuzzy
+msgid "Font attri&butes"
 msgstr "הקראת &מאפייני גופן"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "הקראת &יישור"
+#, fuzzy
+msgid "E&mphasis"
+msgstr "מודגש"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "הקרא&צבעים"
+msgid "St&yle"
+msgstr "סגנון"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "הקראת הערות"
+msgid "&Colors"
+msgstr "צבעים"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+#, fuzzy
+msgid "Document information"
+msgstr "עיצוב מסמך"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
+#, fuzzy
+msgid "Co&mments"
+msgstr "הערה"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "&Editor revisions"
 msgstr "הקראת שינויים"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "הקראת שינוי הדגשה"
+#, fuzzy
+msgid "Spelling e&rrors"
+msgstr "שגיאת איות"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+#, fuzzy
+msgid "Pages and spacing"
+msgstr "מרווח של שורה"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "הקראת סגנון"
+msgid "&Pages"
+msgstr "עמודים"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "הקראת &שגיאות איות"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "הקראת מעבר עמוד"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
+#, fuzzy
+msgid "Line &numbers"
 msgstr "הקראת מספרי שורה"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
+#, fuzzy
+msgid "Line &indentation reporting:"
 msgstr "הקראת כניסות :"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "ללא כניסה"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "הקראה"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -6896,63 +6911,78 @@ msgstr "בדיבור ובצלילים"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
+#, fuzzy
+msgid "&Paragraph indentation"
 msgstr "הקראת כניסות פיסקה"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "הקראת מרחק בין שורות"
+msgid "&Line spacing"
+msgstr "מרחק בין שורות"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "הקראת מידע על טבלאות"
+#, fuzzy
+msgid "&Alignment"
+msgstr "יישור"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+#, fuzzy
+msgid "Table information"
+msgstr "אין מידע עבור המיקום"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "הקראת &כותרות שורות ועמודות בטבלאות"
+#, fuzzy
+msgid "&Tables"
+msgstr "טבלה"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
+#, fuzzy
+msgid "Row/column h&eaders"
+msgstr "כותרת עמודה"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "Cell c&oordinates"
 msgstr "הקראת &קואורדינטות של שורות ועמודות בטבלאות"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "הקראת ק&ישורים"
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+#, fuzzy
+msgid "Elements"
+msgstr "רשימת אובייקטים"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "הקראת כו&תרות"
+msgid "&Lists"
+msgstr "רשימות"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "הקראת &רשימות"
+#, fuzzy
+msgid "Block &quotes"
+msgstr "גוש ציטוט"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "הקראת &ציטוטים"
+msgid "Fra&mes"
+msgstr "מסגרות"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "הקראת ציוני &דרך"
+#, fuzzy
+msgid "&Clickable"
+msgstr "ניתן ללחיצה"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "הקראת מס&גרות"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "הקראת אובייקטים &לחיצים"
+#, fuzzy
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "הקראת שינויי עיצוב לאחר תנועת הסמן (תכונה זו עלולה לגרום להאטה)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -6987,13 +7017,17 @@ msgstr "&הערה"
 msgid "&Type"
 msgstr "&סוג:"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "יש למלה תבנית"
+
+msgid "Dictionary Entry Error"
+msgstr "שגיאה במונח במילון"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "שגיאה בביטוי רגיל %s"
-
-msgid "Dictionary Entry Error"
-msgstr "שגיאה במונח במילון"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8529,3 +8563,90 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "מסגרת"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "שגיאה בקובץ השפה %s"
+
+#~ msgid "Language Error"
+#~ msgstr "שגיאת שפה"
+
+#~ msgid "&Profile"
+#~ msgstr "&פרופיל"
+
+#~ msgid "Language"
+#~ msgstr "שפה"
+
+#~ msgid "Log level"
+#~ msgstr "רמת דיווח"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "פריסת מקלדת"
+
+#~ msgid "text reporting unit"
+#~ msgstr "מידת גודל הטקסטים"
+
+#~ msgid "Progress bar output"
+#~ msgstr "הקראת את פסי ההתקדמות"
+
+#~ msgid "Report &font name"
+#~ msgstr "הקראת שמות ה&גופנים"
+
+#~ msgid "Report font &size"
+#~ msgstr "הקראת &גודל הגופן"
+
+#~ msgid "Report &alignment"
+#~ msgstr "הקראת &יישור"
+
+#~ msgid "Report &colors"
+#~ msgstr "הקרא&צבעים"
+
+#~ msgid "Report co&mments"
+#~ msgstr "הקראת הערות"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "הקראת שינוי הדגשה"
+
+#~ msgid "Report st&yle"
+#~ msgstr "הקראת סגנון"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "הקראת &שגיאות איות"
+
+#~ msgid "Report &pages"
+#~ msgstr "הקראת מעבר עמוד"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "הקראת מרחק בין שורות"
+
+#~ msgid "Report &tables"
+#~ msgstr "הקראת מידע על טבלאות"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "הקראת &כותרות שורות ועמודות בטבלאות"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "הקראת ק&ישורים"
+
+#~ msgid "Report &headings"
+#~ msgstr "הקראת כו&תרות"
+
+#~ msgid "Report &lists"
+#~ msgstr "הקראת &רשימות"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "הקראת &ציטוטים"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "הקראת ציוני &דרך"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "הקראת מס&גרות"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "הקראת אובייקטים &לחיצים"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "מיתוג הקראת מידע על כניסת שורה"

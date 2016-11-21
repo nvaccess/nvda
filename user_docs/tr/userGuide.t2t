@@ -91,6 +91,7 @@ Windows'a giriş yaparken ya da giriş sonrasında otomatik olarak çalıştır�
 - Bir uygulama yönetici yetkisi istediğinde karşılaşılan kullanıcı hesap kontrol (UAC) ekranlarının okunamaması.
 - Windows 8 ve sonrası: dokunmatik ekranlarda dokunma hareketlerinin çalışmaması.
 - Windows 8 ve sonrası: Windows Store apps gibi uygulamalarda, tarama kipi gibi özelliklerin çalışmaması ya da karakter girişlerinin seslendirilmemesi.
+- Windows 8 ve sonrası: Ses zayıflaması özelliği desteklenmez.
 -
 
 ++ NVDA'yı Kurma ++
@@ -540,36 +541,36 @@ Design Science tarafından geliştirilen MathPlayer 4 kullanarak, NVDA desteklen
 Bu, bilgisayarda MathPlayer 4'un kurulu olmasını gerektirir.
 MathPlayer uygulamasını aşağıdan ücretsiz olarak indirebilirsiniz: http://www.dessci.com/en/products/mathplayer/
 
-NVDA supports the following types of mathematical content:
-- MathML in Mozilla Firefox and Microsoft Internet Explorer.
-- Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient..
-- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+NVDA aşağıdaki matematiksel içerik türlerini destekler:
+- Mozilla Firefox ve Microsoft Internet Explorer'da MathML.
+- Microsoft Word ve PowerPoint'de Design Science MathType . bunun çalışabilmesi için MathType'ın yüklenmiş olması gerekir. Deneme sürümü yeterlidir.
+- Adobe Reader'de MathML . Bunun henüz resmi bir standart olmadığını not edin, dolayısıyla  şu anda bu içeriği üretebilen hiçbir kamuya açık yazılım bulunmuyor.
 -
 
-When reading a document, NVDA will speak any supported mathematical content where it occurs.
-If you are using a braille display, it will also be displayed in braille.
+Bir belgeyi okurken, NVDA mevcut  desteklenen herhangi bir matematiksel içeriği seslendirecektir.
+Braille ekran kullanıyorsanız, ayrıca braille olarak da görüntülenir.
 
-++ Interactive Navigation ++
-If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+++ Etkileşimli Navigasyon ++
+Öncelikli olarak konuşma ile çalışıyorsanız, çoğu durumda, muhtemelen tüm ifadeyi bir kerede dinlemek yerine, daha küçük segmentlerde incelemek isteyebilirsiniz.
 
-If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+Tarama kipindeyseniz, matematiksel içerik üzerine gelip enter tuşuna basarak bunu yapabilirsiniz.
 
-If you are not in browse mode:
-+ move the review cursor to the mathematical content.
-By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
-+ Then, activate the following command:
+Tarama kipinde değilseniz:
++ İnceleme imlecini matematiksel içerik üzerine getirin.
+Varsayılan olarak, inceleme imleci sistem imlecini  izler, yani genellikle istenilen içerik üzerine  gitmek için sistem düzeltme imlecini kullanabilirsiniz.
++ Sonra, aşağıdaki komutu gerçekleştirin:
 +
 
 %kc:beginInclude
-|| Name | Key | Description |
-| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+|| Ad | Tuş | Tarif |
+| Matematik içeriği ile etkileşim | NVDA+alt+m | Matematik içeriği ile etkileşim başlar. |
 %kc:endInclude
 
-At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
-For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the MathPlayer documentation for further information.
+Bu noktada, ifadeyi incelemek  için yön tuşları dahil  MathPlayer komutlarını kullanabilirsiniz.
+Örneğin, ifade üzerinde sol ve sağ Ok tuşları ile hareket edebilirsiniz ve kesir vb ifadenin bir bölümünü daha yakından incelemek  için aşağı ok tuşuna basabilirsiniz.
+Lütfen daha fazla bilgi için MathPlayer belgelerine bakın.
 
-When you wish to return to the document, simply press the escape key.
+Matematiksel içeriğe sahip olan belgeye geri dönmek istediğinizde, basitçe escape tuşuna basmanız yeterli.
 
 + Uygulamaya Özgü Özellikler +
 NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu kullanıcıları için erişilebilir olmayan işlevleri onlar için de ulaşılabilir kılmak için bazı uygulamalara özgü ek olanaklar sağlamaktadır.
@@ -780,6 +781,9 @@ Windows 8 ve sonrası için, bu seçenek NVDA'nın diğer seslerin seviyesini d�
 - Ses zayıflaması açık, konuşurken ya da ses çalarken: NVDA, diğer seslerin seviyesini yalnızca NVDA konuşurken ya da ses çalarken düşürür. Tüm sentezleyiciler desteklemeyebilir. 
 - Ses zayıflaması açık, her zaman : NVDA, NVDA açıkken diğer seslerin seviyesini her zaman düşük tutar.
 -
+
+Bu seçenek yalnızca kurulu NVDA için geçerlidir.
+NVDA taşınabilir ve geçici kopyaları  için ses zayıflamasının desteği mümkün değildir.
 
 +++ Ses Ayarları (NVDA+kontrol+v) +++[VoiceSettings]
 Tercihler menüsü içinde bulunan Ses Ayarları iletişim kutusu, konuşma sesini değiştirmenizi sağlayan seçenekler içerir.
@@ -1195,33 +1199,41 @@ Bu iletişim kutusu tercihler menüsü içindeki "Belge Formatları..." altında
 Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür biçimlendirmeleri otomatik olarak duymak istediğinizi ayarlamanızı sağlamak içindir.
 Örneğin, yazı Tipi Adını Bildir onay kutusunu işaretlerseniz, oklarla başka bir yazı tipiyle yazılan bir metne her gittiğinizde, yazı tipi adı bildirilecektir.
 
+Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 Şunların bildirimini ayarlayabilirsiniz:
+- Yazı tipi
 - Yazı tipi adı
 - Yazı tipi boyutu
 - Yazı tipi özellikleri
-- Metin hizzalaması
-- Renkler
-- Açıklamalar
-- Editör değişiklikleri
 - Vurgu
-- Metin sitilleri
+ Stil
+- Renkler
+- Belge Bilgileri
+- Açıklamalar
+- Editör düzeltmeleri
 - Yazım hataları
+- Sayfalar ve Aralık
 - Sayfa numaraları
-- Satır numaraları
-- Satır girintisi
-- Paragraf girintisi (Örneğin, asılı girinti, ilk satır girintisi)
-- Satır aralığı (tek, çift vs)
+- Satır Numaraları
+- Satır girintilerinin bildirimi [(Kapalı, Konuşma, Ses çalarak, Konuşarak ve Ses çalarak) #lineIndentationOptions]
+ - Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
+ - Satır aralığı (tek, çift vs)
+ --- Hizzalama
+ Tablo bilgileri
 - Tablolar
-- Tablo satır/sütun başlıkları
-- Tablo hücre koordinatları
-- Bağlantılar
+- Satır/sütun başlıkları
+- Hücre koordinatları
+- Öğeler
 - Başlıklar
+- Bağlantılar
 - Listeler
 - Alıntılar
 - Sınır imleri
 - Çerçeveler
 - Bir ögenin tıklanabilir olup olmadığı
 -
+-
+
 
 Bu ayarları herhangi bir yerdeyken değiştirebilmek için, lütfen [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyin.
 
@@ -1230,11 +1242,11 @@ Bu seçenek NVDA'ya konuştuğu satırda herhangi bir biçim değişikliği vars
 
 Varsayılan olarak NVDA sistem düzenleme imleci veya inceleme imlecinin bulunduğu konumdaki biçim değişikliklerini bildirecektir, ve bazı durumlarda yalnızca performansı yavaşlatmayacaksa satırın geri kalanındaki değişiklikleri belirtebilir.
  
-Biçimlendirmenin önemli olduğu Microsoft Word belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
+Biçimlendirmenin önemli olduğu Wordpad belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
 
-==== Satır girintilerini bildirme alternatifleri ====
+==== Satır girintilerinin bildirimi ====[lineIndentationOptions]
 Bu seçenek, satır başlarındaki boşlukların nasıl bildirileceğini belirlemenize olanak tanır.
-Satır girintilerininin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
+Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 
 - Kapalı: NVDA girintilerle ilgili herhangi bir bildirimde bulunmaz.
 - Konuşma: Konuşma seçilirse, girinti miktarı değiştiğinde, NVDA "oniki aralık" veya "dört sekme" gibi bir şey söyler.
@@ -1427,10 +1439,10 @@ NVDA'nın logon ve kullanıcı hesapları ekranlarındaki ayarlarını değişti
 
 + Ekstra Araçlar +
 
-++ Kayıt Görüntüleyicisi ++
-Araçlar menüsü altında bulunan kayıt görüntüleyicisi, NVDA'yı en son başlattığınızdan şimdiye kadar gerçekleşen tüm NVDA oturum açma çıktılarını görmenizi sağlar.
+++ Log Görüntüleyicisi ++
+Araçlar menüsü altında bulunan Log dosyasını göster öğesi, NVDA'yı en son başlattığınızdan şimdiye kadar gerçekleşen tüm NVDA oturum açma çıktılarını görmenizi sağlar.
 
-İçeriği okuyabilmenin yanısıra, Kayıt dosyasının bir kopyasını farklı kaydedebilir ya da kayıt görüntüleyicisi açık olduğundan bu yana En son çıktı görüntüsünü görebilmek için ekranı güncelleyebilirsiniz.
+İçeriği okuyabilmenin yanısıra, Kayıt dosyasının bir kopyasını farklı kaydedebilir ya da log dosyası açık olduğundan bu yana En son çıktı görüntüsünü görebilmek için ekranı güncelleyebilirsiniz.
 Bu işlemler görüntüleyicinin Log menüsünde bulunmaktadır.
 
 ++ Konuşma Görüntüleyicisi ++
@@ -1438,6 +1450,10 @@ Gören geliştiriciler ve NVDA'yı görenlere gösteren kişiler için, NVDA'nı
 
 Konuşma görüntüleyicisini etkinleştirmek için, NVDA menüsündeki araçlar menüsü altında bulunan "Konuşma Görüntüleyicisi" ögesini işaretleyin.
 Devre dışı bırakmak için bu menü ögesinin işaretini kaldırın.
+
+Konuşma Görüntüleyicisi penceresi "konuşma görüntüleyiciyi Başlangıçta göster" adlı bir onay kutusu içerir.
+Bu işaretli ise, NVDA başlatıldığında konuşma görüntüleyici de açılır.
+Kapatılırsa, konuşma görüntüleyici aynı boyutlarda ve konumda tekrar açılacaktır.
 
 Konuşma görüntüleyicisi etkinken, konuşulan metinleri göstermek için düzenli bir biçimde güncellenecektir.
 Ancak, Görüntüleyiciye tıklar veya odaklanırsanız, güncelleme geçici olarak duracak ve böylece mevcut içeriği kopyalama şansınız olacaktır.
@@ -1704,8 +1720,8 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 ++ Baum/Humanware/APH Braille/Orbit Ekranlar ++
 Birçok [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/],  [APH http://www.aph.org/] ve [Orbit http://www.orbitresearch.com/] ekran USB veya Bluetooth ile bağlandıklarında desteklenmektedir.
 Bunlardan bazıları şunlardır:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

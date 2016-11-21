@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-02 00:10+1000\n"
-"PO-Revision-Date: 2016-09-05 14:23+0800\n"
+"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"PO-Revision-Date: 2016-10-24 20:21+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -432,13 +432,13 @@ msgstr "马拉地语一级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "荷兰语 (比利时) 一级点字"
+msgid "Dutch (Belgium)"
+msgstr "荷兰语 (比利时)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "荷兰语(荷兰)一级点字"
+msgid "Dutch (Netherlands)"
+msgstr "荷兰语(荷兰)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -547,7 +547,7 @@ msgstr "坦尼尔语一级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "特卢固语一级点字"
 
 #. Translators: The name of a braille table displayed in the
@@ -1240,16 +1240,22 @@ msgstr "往上没有批注"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "链接(&K)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "标题(&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "路标(&D)"
 
@@ -2388,7 +2394,6 @@ msgid "Mouse"
 msgstr "鼠标"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "语音"
 
@@ -2714,17 +2719,25 @@ msgstr "读出行号"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "切换行号朗读的开关"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "使用语音提示缩进"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "使用声音提示缩进"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "使用声音和语音提示缩进"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
 msgstr "不读缩进"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "读出缩进"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "切换缩进朗读的开关"
+msgid "Cycles through line indentation settings"
+msgstr "在缩进设置之间循环切换"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3495,6 +3508,7 @@ msgid "review"
 msgstr "浏览光标"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "系统焦点"
 
@@ -4858,6 +4872,16 @@ msgstr "没有播放轨道"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "读出当前播放曲目的剩余时间。"
 
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%， 当前位置{curLocation}  ，最大位置{maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "第{pageNumber}页"
+
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
 msgstr "依然没有新消息"
@@ -5781,8 +5805,8 @@ msgid "Add-on &help"
 msgstr "插件帮助(&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "已停用的插件"
+msgid "&Disable add-on"
+msgstr "停用插件(&D)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5883,8 +5907,8 @@ msgid "running"
 msgstr "正在运行"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "启用的插件"
+msgid "&Enable add-on"
+msgstr "启用插件(&E)"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -5923,10 +5947,6 @@ msgstr "插件信息"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "配置管理"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "配置"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6228,14 +6248,14 @@ msgstr "便携版位置(&D):"
 msgid "Browse..."
 msgstr "浏览(&B)..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "拷贝当前用户配置(&U)"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "选择便携版位置"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "拷贝当前用户配置(&U)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6321,10 +6341,6 @@ msgstr "调试"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "语言（重启生效）(&L)："
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "语言"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "退出时保存设置(&S)"
@@ -6340,10 +6356,6 @@ msgstr "退出或启用 NVDA 时播放声音(&P)"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "日志记录级别(&O):"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "日志记录级别"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6503,10 +6515,6 @@ msgstr "键盘设置"
 msgid "&Keyboard layout:"
 msgstr "键盘配置(&K):"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "键盘配置"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6584,10 +6592,6 @@ msgstr "启用鼠标导航(&T)"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "文本识别单元(&U):"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "文本读出单元(&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6714,11 +6718,6 @@ msgstr "读出对象描述(&D)"
 msgid "Progress &bar output:"
 msgstr "进度栏更新提示(&B):"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "进度栏提示"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6782,79 +6781,95 @@ msgstr "拦截所有非命令手势，以防止意外的文档写入(&A)"
 msgid "Document Formatting"
 msgstr "文档格式"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "朗读光标经过后的文本格式变化（可能造成反应迟缓）"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "下面的选项控制了NVDA对各类型文档格式信息朗读的开关"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "字体"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "朗读字体名称(&F)"
+msgid "&Font name"
+msgstr "字体名称(&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "朗读字体大小(&S)"
+msgid "Font &size"
+msgstr "字体大小(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "朗读字体属性(&B)"
+msgid "Font attri&butes"
+msgstr "字体属性(&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "朗读对齐方式(&A)"
+msgid "E&mphasis"
+msgstr "强调(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "朗读颜色(&C)"
+msgid "St&yle"
+msgstr "样式(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "读出注释(&C)"
+msgid "&Colors"
+msgstr "颜色(&C)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "文档信息"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "朗读编辑者修订(&E)"
+msgid "Co&mments"
+msgstr "注释(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "朗读标注(&M)"
+msgid "&Editor revisions"
+msgstr "编辑者修订(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "朗读文本样式(&Y)"
+msgid "Spelling e&rrors"
+msgstr "拼写错误(&R)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "页面距离和行间距离"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "朗读拼写错误(&R)"
+msgid "&Pages"
+msgstr "页码(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "朗读页码(&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "朗读行号(&N)"
+msgid "Line &numbers"
+msgstr "行号(&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "缩进提示方式(&I)"
+msgid "Line &indentation reporting:"
+msgstr "行缩进提示朗读(&I)："
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "关"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "语音"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -6866,63 +6881,68 @@ msgstr "朗读和提示音"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "朗读段落缩进(&P)"
+msgid "&Paragraph indentation"
+msgstr "段落缩进(&P)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "朗读行间距(&L)"
+msgid "&Line spacing"
+msgstr "行间距(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "朗读表格(&T)"
+msgid "&Alignment"
+msgstr "对齐方式(&A)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "表格信息"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "朗读表格的行、列标题(&E)"
+msgid "&Tables"
+msgstr "表格(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "朗读表格的单元坐标(&O)"
+msgid "Row/column h&eaders"
+msgstr "行/列标题(&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "朗读链接(&K)"
+msgid "Cell c&oordinates"
+msgstr "表格的单元坐标(&O)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "元素"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "朗读标题(&H)"
+msgid "&Lists"
+msgstr "列表(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "朗读列表(&L)"
+msgid "Block &quotes"
+msgstr "引用区(&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "朗读引用区(&Q)"
+msgid "Fra&mes"
+msgstr "框架(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "朗读路标(&D)"
+msgid "&Clickable"
+msgstr "可点击(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "朗读框架(&M)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "朗读可点击(&C)"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "朗读光标经过后的文本格式变化（可能造成反应迟缓）"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -6945,6 +6965,7 @@ msgid "&Pattern"
 msgstr "原文本(&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "替换文本(&R)"
 
@@ -7093,9 +7114,9 @@ msgstr "级别"
 msgid "Preserve"
 msgstr "传递"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "更改符号"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "更改所选符号"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -8491,6 +8512,84 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "&Profile"
+#~ msgstr "配置"
+
+#~ msgid "Language"
+#~ msgstr "语言"
+
+#~ msgid "Log level"
+#~ msgstr "日志记录级别"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "键盘配置"
+
+#~ msgid "text reporting unit"
+#~ msgstr "文本读出单元(&D)"
+
+#~ msgid "Progress bar output"
+#~ msgstr "进度栏提示"
+
+#~ msgid "Report &font name"
+#~ msgstr "朗读字体名称(&F)"
+
+#~ msgid "Report font &size"
+#~ msgstr "朗读字体大小(&S)"
+
+#~ msgid "Report &alignment"
+#~ msgstr "朗读对齐方式(&A)"
+
+#~ msgid "Report &colors"
+#~ msgstr "朗读颜色(&C)"
+
+#~ msgid "Report co&mments"
+#~ msgstr "读出注释(&C)"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "朗读标注(&M)"
+
+#~ msgid "Report st&yle"
+#~ msgstr "朗读文本样式(&Y)"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "朗读拼写错误(&R)"
+
+#~ msgid "Report &pages"
+#~ msgstr "朗读页码(&P)"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "朗读行间距(&L)"
+
+#~ msgid "Report &tables"
+#~ msgstr "朗读表格(&T)"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "朗读表格的行、列标题(&E)"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "朗读链接(&K)"
+
+#~ msgid "Report &headings"
+#~ msgstr "朗读标题(&H)"
+
+#~ msgid "Report &lists"
+#~ msgstr "朗读列表(&L)"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "朗读引用区(&Q)"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "朗读路标(&D)"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "朗读框架(&M)"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "朗读可点击(&C)"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "切换缩进朗读的开关"
 
 #~ msgid "unknown color"
 #~ msgstr "未知颜色"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-24 10:47-0800\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-14 18:22-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -435,13 +435,13 @@ msgstr "마라타어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "네델란드어 (벨기에) 1종"
+msgid "Dutch (Belgium)"
+msgstr "네델란드어 (벨기에)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "네덜란드어 (네덜란드) 1종"
+msgid "Dutch (Netherlands)"
+msgstr "네덜란드어 (네덜란드)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -550,7 +550,7 @@ msgstr "타밀어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "텔루구어 1종"
 
 #. Translators: The name of a braille table displayed in the
@@ -1242,16 +1242,22 @@ msgstr "이전 주석 없음"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "링크 (&K)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "헤딩 (&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "랜드마크 (&D)"
 
@@ -1690,6 +1696,7 @@ msgid "row"
 msgstr "행"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "프레임"
 
@@ -2016,10 +2023,6 @@ msgstr "바탕화면 아이콘"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "경고"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "IFrame"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2388,7 +2391,6 @@ msgid "Mouse"
 msgstr "마우스"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "음성 출력"
 
@@ -2727,17 +2729,25 @@ msgstr "줄수 알림"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "줄수 알림을 토글합니다"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "음성으로 줄 들여쓰기 알림"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "비프음으로 줄 들여쓰기 알림"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "음성과 비프음으로 줄 들여쓰기 알림"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
 msgstr "줄 들여쓰기 알림 해제"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "줄 들여쓰기 알림"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "줄 들여쓰기 알림을 토글합니다"
+msgid "Cycles through line indentation settings"
+msgstr "줄 들여쓰기 알림을 설정합니다"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3540,6 +3550,7 @@ msgid "review"
 msgstr "리뷰"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "포커스"
 
@@ -4904,9 +4915,8 @@ msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr ""
 
 #. Translators: a page in a Kindle book
-#, fuzzy
 msgid "Page {pageNumber}"
-msgstr "Slide {slideNumber}"
+msgstr "Page {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5694,7 +5704,6 @@ msgid "Exit NVDA"
 msgstr "NVDA 종료"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5704,7 +5713,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"NVDA에 오신 것을 환영합니다.\n"
 "NVDA를 사용하려면 NVDA키와 다른 키를 같이 누르십시오.\n"
 "기본적으로 숫자 키패드 insert와 main insert가 NVDA키로 쓰일 수 있습니다.\n"
 "또한 Caps럭키를 NVDA키로 사용하도록 설정할 수도 있습니다.\n"
@@ -5714,6 +5722,11 @@ msgstr ""
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
+msgstr "NVDA에 오신것을 환영합니다!"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
 msgstr "NVDA에 오신것을 환영합니다!"
 
 msgid "Options"
@@ -5822,8 +5835,8 @@ msgid "Add-on &help"
 msgstr "도움말 읽기 (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "사용 안 함"
+msgid "&Disable add-on"
+msgstr "사용 안 함 (&D)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5929,8 +5942,8 @@ msgid "running"
 msgstr "사용 중"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "사용"
+msgid "&Enable add-on"
+msgstr "사용 (&E)"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -5967,10 +5980,6 @@ msgstr "추가 기능 정보"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "환경 설정 프로필"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "프로필 (&P)"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6278,14 +6287,14 @@ msgstr "휴대용 버전 설치 폴더 (&D)"
 msgid "Browse..."
 msgstr "파일 탐색..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "현재 사용자 환경 복사 (&U)"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "휴대용 버전 설치 폴더를 선택하십시오"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "현재 사용자 환경 복사 (&U)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6371,10 +6380,6 @@ msgstr "디버그"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "사용 언어 (언어 변경은 NVDA를 다시 실행하면 적용됩니다) (&L):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "언어"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "NVDA 종료시 환경설정 저장 (&S)"
@@ -6390,10 +6395,6 @@ msgstr "NVDA 시작 및 종료음 재생 (&P)"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "실행 로그 기록 레벨 (&O)"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "로그 레벨"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6450,13 +6451,6 @@ msgstr "사용자 설정 복사 오류"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "사용자 설정 복사 성공"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "%s 언어 파일에 문제 있음"
-
-msgid "Language Error"
-msgstr "언어 오류"
 
 msgid "This change requires administrator privileges."
 msgstr "이 설정 변경은 관리자 권한이 있어야 가능합니다. "
@@ -6560,10 +6554,6 @@ msgstr "키보드 설정"
 msgid "&Keyboard layout:"
 msgstr "키보드 레이아웃 (&K)"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "키보드 배열"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6641,10 +6631,6 @@ msgstr "마우스 위치 추적 사용 (&T)"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "마우스 추적 시에 텍스트 단위 설정 (&U)"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "text reporting unit"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6775,11 +6761,6 @@ msgstr "객체 설명 알림 (&D)"
 msgid "Progress &bar output:"
 msgstr "진행률 표시 (&B)"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "징행률 표시"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6843,79 +6824,95 @@ msgstr "브라우즈 모드외 명령을 문서가 처리하지 않도록 함 (&
 msgid "Document Formatting"
 msgstr "문서 서식 알림"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "커서 이동시 서식 변경 알림 (속도 저하 가능성 있음)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "본 대화상자내 설정을 통해 NVDA의 문서 서식 출력을 설정합니다."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "글꼴"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "글꼴 이름 알림 (&F)"
+msgid "&Font name"
+msgstr "글꼴 이름 (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "글꼴 크기 알림 (&S)"
+msgid "Font &size"
+msgstr "글꼴 크기 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "글꼴 속성 알림 (&B)"
+msgid "Font attri&butes"
+msgstr "글꼴 속성 (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "문자 배치 알림 (&A)"
+msgid "E&mphasis"
+msgstr "텍스트 강조 &M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "문자 색깔 알림 (&C)"
+msgid "St&yle"
+msgstr "스타일 (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "주석 알림 (&M)"
+msgid "&Colors"
+msgstr "색상 (&C)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "문서 정보"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "문서 변경 추적 알림 (&E)"
+msgid "Co&mments"
+msgstr "주석 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "텍스트 강조 알림 (&M)"
+msgid "&Editor revisions"
+msgstr "문서 변경 추적 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "글꼴 스타일 알림 (&Y)"
+msgid "Spelling e&rrors"
+msgstr "철자 오류 (&R)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "쪽 및 줄 간격"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "철자 오류 알림 (&R)"
+msgid "&Pages"
+msgstr "쪽 수 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "페이지 알림 (&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "줄수 알림 (&N)"
+msgid "Line &numbers"
+msgstr "줄 수 (&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
+msgid "Line &indentation reporting:"
 msgstr "줄 들여쓰기 알림 (&I)"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "출력 않함"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "음성 출력"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -6927,63 +6924,68 @@ msgstr "음성 및 비프음"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "문단 들여쓰기 알림 (&P)"
+msgid "&Paragraph indentation"
+msgstr "문단 들여쓰기 (&P)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "줄 간격 알림 (&L)"
+msgid "&Line spacing"
+msgstr "줄 간격 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "표 알림 (&T)"
+msgid "&Alignment"
+msgstr "텍스트 배치 (&A)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "표 정보"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "표 행 및 열의 머릿말 알림 (&E)"
+msgid "&Tables"
+msgstr "표 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "현재 표 셀의 위치 알림 (&O)"
+msgid "Row/column h&eaders"
+msgstr "표 행 및 열 머리말 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "링크 알릶 (&K)"
+msgid "Cell c&oordinates"
+msgstr "표 셀 위치 (&O)"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "요소"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "헤딩 알림 (&H)"
+msgid "&Lists"
+msgstr "목록 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "목록 알림 (&L)"
+msgid "Block &quotes"
+msgstr "인용문 (&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "인용구역 알림 (&Q)"
+msgid "Fra&mes"
+msgstr "프레임 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "랜드마크 알림 (&D)"
+msgid "&Clickable"
+msgstr "클릭가능 요소 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "프레임 알림 (&M)"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "클릭 가능 요소 알림 (&C)"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "커서 이동시 서식 변경 알림 (속도 저하 가능성 있음)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7018,13 +7020,17 @@ msgstr "설명 (&C)"
 msgid "&Type"
 msgstr "적용 방식 (&T)"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "기존값이 없습니다."
+
+msgid "Dictionary Entry Error"
+msgstr "발음 사전 항목 오류"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "정규 표현 오류: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "발음 사전 항목 오류"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8306,7 +8312,7 @@ msgstr ""
 #, python-format
 msgctxt "line spacing value"
 msgid "%.1f lines"
-msgstr ""
+msgstr "%.1f 줄"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
@@ -8504,6 +8510,93 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "IFrame"
+#~ msgstr "IFrame"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "%s 언어 파일에 문제 있음"
+
+#~ msgid "Language Error"
+#~ msgstr "언어 오류"
+
+#~ msgid "&Profile"
+#~ msgstr "프로필 (&P)"
+
+#~ msgid "Language"
+#~ msgstr "언어"
+
+#~ msgid "Log level"
+#~ msgstr "로그 레벨"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "키보드 배열"
+
+#~ msgid "text reporting unit"
+#~ msgstr "text reporting unit"
+
+#~ msgid "Progress bar output"
+#~ msgstr "징행률 표시"
+
+#~ msgid "Report &font name"
+#~ msgstr "글꼴 이름 알림 (&F)"
+
+#~ msgid "Report font &size"
+#~ msgstr "글꼴 크기 알림 (&S)"
+
+#~ msgid "Report &alignment"
+#~ msgstr "문자 배치 알림 (&A)"
+
+#~ msgid "Report &colors"
+#~ msgstr "문자 색깔 알림 (&C)"
+
+#~ msgid "Report co&mments"
+#~ msgstr "주석 알림 (&M)"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "텍스트 강조 알림 (&M)"
+
+#~ msgid "Report st&yle"
+#~ msgstr "글꼴 스타일 알림 (&Y)"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "철자 오류 알림 (&R)"
+
+#~ msgid "Report &pages"
+#~ msgstr "페이지 알림 (&P)"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "줄 간격 알림 (&L)"
+
+#~ msgid "Report &tables"
+#~ msgstr "표 알림 (&T)"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "표 행 및 열의 머릿말 알림 (&E)"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "링크 알릶 (&K)"
+
+#~ msgid "Report &headings"
+#~ msgstr "헤딩 알림 (&H)"
+
+#~ msgid "Report &lists"
+#~ msgstr "목록 알림 (&L)"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "인용구역 알림 (&Q)"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "랜드마크 알림 (&D)"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "프레임 알림 (&M)"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "클릭 가능 요소 알림 (&C)"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "줄 들여쓰기 알림을 토글합니다"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "읽기 전용 셀"
