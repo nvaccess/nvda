@@ -1157,10 +1157,10 @@ class ExcelCell(ExcelBase):
 		return states
 
 	def event_typedCharacter(self,ch):
-		# # 6570: You cannot type into protected cells.
-		# A part from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
-		# Therefore for any non-control char on protected cells, play the default sound rather than speaking the character
-		if ord(ch)>26 and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
+		# #6570: You cannot type into protected cells.
+		# Apart from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
+		# Therefore for any character from space upwards (not control characters)  on protected cells, play the default sound rather than speaking the character
+		if ch>=" " and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
 			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
 			return
 		super(ExcelCell,self).event_typedCharacter(ch)
