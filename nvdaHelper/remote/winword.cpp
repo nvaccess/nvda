@@ -786,8 +786,8 @@ calculatePreAndPostColumnOffsets(IDispatchPtr pDispatchPageSetup) {
 	}
 
 	float rightMargin = -1.0f;
-	// right margin necessary for calculating right to left positions, and to validate
-	// that the full width of the document has been taken into account.
+	// right margin necessary to validate that the full width of the document has been 
+	// taken into account.
 	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_RIGHTMARGIN,
 		VT_R4, &rightMargin);
 	if( res != S_OK || rightMargin <0){
