@@ -760,6 +760,206 @@ std::experimental::optional<int> getPageBreakType(IDispatchPtr pDispatchRange ) 
 	return type;
 }
 
+std::experimental::optional<int>
+getStartOfRangeDistanceFromStartOfDocument(IDispatchPtr pDispatchRange) {
+	int rangePos = -1;
+	auto res = _com_dispatch_raw_method( pDispatchRange, wdDISPID_RANGE_INFORMATION,
+		DISPATCH_PROPERTYGET, VT_I4, &rangePos, L"\x0003", wdHorizontalPositionRelativeToPage);
+		if( S_OK != res && rangePos < 0) {
+			LOG_ERROR(L"error getting wdHorizontalPositionRelativeToPage."
+				<< " res: " << res
+				<< " rangePos: " << rangePos);
+			return {};
+		}
+	return rangePos;
+}
+
+std::experimental::optional< std::pair<float, float> >
+calculatePreAndPostColumnOffsets(IDispatchPtr pDispatchPageSetup) {
+	float leftMargin = -1.0f;
+	auto res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_LEFTMARGIN,
+		VT_R4, &leftMargin);
+	if( res != S_OK || leftMargin <0){
+		LOG_ERROR(L"error getting leftMargin. res: "<< res
+			<< " leftMargin: " << leftMargin);
+		return {};
+	}
+
+	float rightMargin = -1.0f;
+	// right margin necessary to validate that the full width of the document has been 
+	// taken into account.
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_RIGHTMARGIN,
+		VT_R4, &rightMargin);
+	if( res != S_OK || rightMargin <0){
+		LOG_ERROR(L"error getting rightMargin. res: "<< res
+			<< " rightMargin: " << rightMargin);
+		return {};
+	}
+
+	float gutter = -1.0f;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_GUTTER,
+		VT_R4, &gutter);
+	if( res != S_OK || gutter <0){
+		LOG_ERROR(L"error getting gutter. res: "<< res
+			<< " gutter: " << gutter);
+		return {};
+	}
+
+	int gutterPos = -1;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_GUTTERPOS,
+		VT_R4, &gutterPos);
+	if( res != S_OK || gutterPos <0){
+		LOG_ERROR(L"error getting gutterPos. res: "<< res
+			<< " gutterPos: " << gutterPos);
+		return {};
+	}
+
+	int mirrorMargins = wdUndefined;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_MIRRORMARGINS,
+		VT_R4, &mirrorMargins);
+	if( res != S_OK || mirrorMargins == wdUndefined){
+		LOG_ERROR(L"error getting mirrorMargins. res: "<< res
+			<< " mirrorMargins: " << mirrorMargins);
+		return {};
+	}
+
+	// We do not handle mirror margins being set since the gutter alternates between the
+	// left and the right making it unclear which side to add it to.
+	if( mirrorMargins != FALSE) {
+		LOG_DEBUGWARNING(L"Unable to calculate the start and \
+ end margins due to mirror margins being enabled.");
+		return {};
+	}
+
+	switch (gutterPos) {
+		case wdGutterPosLeft:
+			return std::make_pair(gutter + leftMargin, rightMargin);
+		case wdGutterPosRight:
+			return std::make_pair(leftMargin, rightMargin + gutter);
+		default:
+			return std::make_pair(leftMargin, rightMargin);
+	}
+}
+
+void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstream& xmlStream) {
+	// 1. Get the count of columns, its important we do this first so that in the event that
+	// calculating the column we are in fails, we are still able to report the overall count
+	IDispatchPtr pDispatchPageSetup = nullptr;
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_PAGESETUP,
+		VT_DISPATCH, &pDispatchPageSetup);
+	if( res != S_OK || !pDispatchPageSetup){
+		LOG_ERROR(L"error getting pageSetup. res: "<< res);
+		return;
+	}
+
+	// Get columns collection
+	IDispatchPtr pDispatchTextColumns = nullptr;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_TEXTCOLUMNS,
+		VT_DISPATCH, &pDispatchTextColumns);
+	if( res != S_OK || !pDispatchTextColumns){
+		LOG_ERROR(L"error getting textColumns. res: "<< res);
+		return;
+	}
+
+	// Count of columns
+	int count = -1;
+	res = _com_dispatch_raw_propget( pDispatchTextColumns, wdDISPID_TEXTCOLUMNS_COUNT,
+		VT_I4, &count);
+	if( res != S_OK || count < 0){
+		LOG_ERROR(L"error getting textColumn count. res: "<< res
+			<< " count: " << count);
+		return;
+	}
+	xmlStream <<L"text-column-count=\"" << count << "\" ";
+
+	// 2. Get the start position (IN POINTS) of the range. This is relative to the start
+	// of the document.
+	auto rangeStart = getStartOfRangeDistanceFromStartOfDocument(pDispatchRange);
+	if(!rangeStart) {
+		return;
+	}
+
+	// 3. Get the offsets that come before and after the columns, this is a combination
+	// of left margin, gutter and right margin.
+	auto prePostColumnOffsets = calculatePreAndPostColumnOffsets(pDispatchPageSetup);
+	if(!prePostColumnOffsets){
+		return;
+	}
+
+	// 4. Iterate through the columns, look for the final column where the range start
+	// position is greater or equal to the start position of the column
+	const float rangePos = static_cast<float>(*rangeStart);
+	float colStartPos = prePostColumnOffsets->first;
+	// assumption: the textcolumn furthest right is last in the collection
+	const int lastItemNumber = count;
+	int columnNumber = 0;
+	for(int itemNumber = 1; itemNumber <= lastItemNumber && S_OK == res; ++itemNumber){
+		LOG_DEBUGWARNING(L"ItemNumber: " << itemNumber
+			<< " rangePos: " << rangePos
+			<< " colStartPos: " << colStartPos);
+		if (colStartPos <= rangePos){
+			columnNumber = itemNumber;
+		}
+		IDispatchPtr pDispatchTextColumnItem = nullptr;
+		res = _com_dispatch_raw_method( pDispatchTextColumns, wdDISPID_TEXTCOLUMNS_ITEM,
+			DISPATCH_METHOD, VT_DISPATCH, &pDispatchTextColumnItem, L"\x0003", itemNumber);
+		if( res != S_OK || !pDispatchTextColumnItem){
+			LOG_ERROR(L"error getting textColumn item number: "<< itemNumber
+				<< " res: "<< res);
+			return;
+		}
+
+		float columnWidth = -1.0f;
+		res = _com_dispatch_raw_propget( pDispatchTextColumnItem, wdDISPID_TEXTCOLUMN_WIDTH,
+			VT_R4, &columnWidth);
+		if( res != S_OK || columnWidth < 0){
+			LOG_ERROR(L"error getting textColumn width for item number: "<< itemNumber
+				<< " res: "<< res << " columnWidth: " << columnWidth);
+			return;
+		} else {
+			colStartPos += columnWidth;
+		}
+
+		float spaceAfterColumn = -1.0f;
+		// the spaceAfter property is only valid between columns
+		if( itemNumber < lastItemNumber ) {
+			res = _com_dispatch_raw_propget( pDispatchTextColumnItem, wdDISPID_TEXTCOLUMN_SPACEAFTER,
+				VT_R4, &spaceAfterColumn);
+			if( res != S_OK || spaceAfterColumn < 0){
+				LOG_ERROR(L"error getting textColumn spaceAfterColumn"
+					<< "for item number: "<< itemNumber
+					<< " res: "<< res
+					<< " spaceAfterColumn: " << columnWidth);
+				return;
+			} else {
+				colStartPos += spaceAfterColumn;
+			}
+		}
+	}
+	xmlStream <<L"text-column-number=\"" << columnNumber << "\" ";
+
+	// Finally, double check that we calculated the full width of the document
+	float pageWidth = -1.0f;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_PAGEWIDTH,
+		VT_R4, &pageWidth);
+	if( res != S_OK || pageWidth <0){
+		LOG_ERROR(L"error getting pageWidth. res: "<< res << " pageWidth: " << pageWidth);
+		return;
+	}
+
+	colStartPos += prePostColumnOffsets->second;
+
+	// validation that some margin, gutter or offset was not missed.
+	// This does not check that they were added in the right order, only
+	// that they were added at all.
+	if( pageWidth != colStartPos) {
+		LOG_ERROR(L"pageWidth does not equal the calculated page"
+			<< " width. Some margin or offset me be missed, this may mean"
+			<< " that some column numbers reported were incorrect."
+			<< " pageWidth: " << pageWidth << " colStartPos: " << colStartPos);
+	}
+}
+
 UINT wm_winword_getTextInRange=0;
 typedef struct {
 	int startOffset;
@@ -863,6 +1063,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			LOG_DEBUGWARNING("Error getting the current section number. Res: "<< res <<" SectionNumber: " << sectionNumber);
 		}
 	}
+
+	detectAndGenerateColumnFormatXML(pDispatchRange, initialFormatAttribsStream);
 
 	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units

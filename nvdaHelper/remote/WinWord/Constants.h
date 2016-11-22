@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 // See https://github.com/nvaccess/nvda/wiki/Using-COM-with-NVDA-and-Microsoft-Word
 constexpr int wdDISPID_APPLICATION_ISSANDBOX = 492;
 constexpr int wdDISPID_APPLICATION_SCREENUPDATING = 26;
+constexpr int wdDISPID_APPLICATION_PIXELSTOPOINTS = 388;
 constexpr int wdDISPID_BORDERS_ENABLE = 2;
 constexpr int wdDISPID_CELL_COLUMNINDEX = 5;
 constexpr int wdDISPID_CELL_RANGE = 0;
@@ -67,7 +68,15 @@ constexpr int wdDISPID_INLINESHAPES_COUNT = 1;
 constexpr int wdDISPID_INLINESHAPES_ITEM = 0;
 constexpr int wdDISPID_LISTFORMAT_LISTSTRING = 75;
 constexpr int wdDISPID_OLEFORMAT_PROGID = 22;
+constexpr int wdDISPID_PAGESETUP_GUTTER = 104;
+constexpr int wdDISPID_PAGESETUP_GUTTERPOS = 1222;
+constexpr int wdDISPID_PAGESETUP_GUTTERSTYLE = 129;
+constexpr int wdDISPID_PAGESETUP_LEFTMARGIN = 102;
+constexpr int wdDISPID_PAGESETUP_RIGHTMARGIN = 103;
+constexpr int wdDISPID_PAGESETUP_MIRRORMARGINS = 111;
+constexpr int wdDISPID_PAGESETUP_PAGEWIDTH = 105;
 constexpr int wdDISPID_PAGESETUP_SECTIONSTART = 114;
+constexpr int wdDISPID_PAGESETUP_TEXTCOLUMNS = 119;
 constexpr int wdDISPID_PARAGRAPH_OUTLINELEVEL = 202;
 constexpr int wdDISPID_PARAGRAPH_RANGE = 0;
 constexpr int wdDISPID_PARAGRAPH_STYLE = 100;
@@ -99,6 +108,7 @@ constexpr int wdDISPID_RANGE_LANGUAGEID = 153;
 constexpr int wdDISPID_RANGE_LISTFORMAT = 68;
 constexpr int wdDISPID_RANGE_MOVE = 109;
 constexpr int wdDISPID_RANGE_MOVEEND = 111;
+constexpr int wdDISPID_RANGE_PAGESETUP = 1101;
 constexpr int wdDISPID_RANGE_PARAGRAPHFORMAT = 1102;
 constexpr int wdDISPID_RANGE_PARAGRAPHS = 59;
 constexpr int wdDISPID_RANGE_REVISIONS = 150;
@@ -135,12 +145,21 @@ constexpr int wdDISPID_TABLE_RANGE = 0;
 constexpr int wdDISPID_TABLE_ROWS = 101;
 constexpr int wdDISPID_TABLE_TITLE = 209;
 constexpr int wdDISPID_TABLES_ITEM = 0;
+constexpr int wdDISPID_TEXTCOLUMN_WIDTH = 100;
+constexpr int wdDISPID_TEXTCOLUMNS_COUNT = 2;
+constexpr int wdDISPID_TEXTCOLUMNS_ITEM = 0;
+constexpr int wdDISPID_TEXTCOLUMN_SPACEAFTER = 101;
 constexpr int wdDISPID_WINDOW_APPLICATION = 1000;
 constexpr int wdDISPID_WINDOW_DOCUMENT = 2;
 constexpr int wdDISPID_WINDOW_SELECTION = 4;
 
+// WdConstants Enumeration
+constexpr int wdUndefined = 9999999;
+
+// WdStoryType Enumeration
 constexpr int wdCommentsStory = 4;
 
+// WdUnits Enumeration
 constexpr int wdCharacter = 1;
 constexpr int wdWord = 2;
 constexpr int wdParagraph = 4;
@@ -148,9 +167,11 @@ constexpr int wdLine = 5;
 constexpr int wdStory = 6;
 constexpr int wdCharacterFormatting = 13;
 
+// WdCollapseDirection Enumeration
 constexpr int wdCollapseEnd = 0;
 constexpr int wdCollapseStart = 1;
 
+// WdInformation Enumeration values
 constexpr int wdActiveEndAdjustedPageNumber = 1;
 constexpr int wdActiveEndSectionNumber = 2;
 constexpr int wdFirstCharacterLineNumber = 10;
@@ -159,15 +180,25 @@ constexpr int wdStartOfRangeRowNumber = 13;
 constexpr int wdMaximumNumberOfRows = 15;
 constexpr int wdStartOfRangeColumnNumber = 16;
 constexpr int wdMaximumNumberOfColumns = 18;
+constexpr int wdHorizontalPositionRelativeToPage = 5;
 
+// WdParagraphAlignment Enumeration
 constexpr int wdAlignParagraphLeft = 0;
 constexpr int wdAlignParagraphCenter = 1;
 constexpr int wdAlignParagraphRight = 2;
 constexpr int wdAlignParagraphJustify = 3;
+
+// WdLanguageID Enumeration
 constexpr int wdLanguageNone = 0;  //&H0
 constexpr int wdNoProofing = 1024;  //&H400
 constexpr int wdLanguageUnknown = 9999999;
 
+// WdInlineShapeType Enumeration
 constexpr int wdInlineShapeEmbeddedOLEObject = 1;
 constexpr int wdInlineShapePicture = 3;
 constexpr int wdInlineShapeLinkedPicture = 4;
+
+// WdGutterStyle Enermeration
+constexpr int wdGutterPosLeft = 0;
+constexpr int wdGutterPosRight = 2;
+constexpr int wdGutterPosTop = 1;
