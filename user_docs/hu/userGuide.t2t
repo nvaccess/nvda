@@ -86,6 +86,7 @@ Azon túl, hogy az NVDA hordozható változatban és ideiglenes példányban nem
 - Az NVDA nem képes felolvasni a felhasználói fiók felügyeleti (UAC) képernyőket, ha egy alkalmazást rendszergazdai jogokal próbálunk meg elindítani.  
 - Windows 8-ban az NVDA ilyenkor nem képes támogatni az érintőképernyőről történő bevitelt.
 - Windows 8-ban ilyenkor az NVDA nem képes a Windows Store alkalmazásokban visszaolvasni a begépelt karaktereket, és böngésző módban felolvasni a tartalmakat.
+- A hangerő-igazítás a hordozható verzióban nem támogatott.
 -
 
 ++Az NVDA telepítése ++
@@ -617,6 +618,10 @@ Az enter billentyű lenyomásával, vagy az Ugrás gomb aktiválásával lehet a
 - Munkalap: Kilistázza a munkafüzet összes munkalapját.
 Egy kiválasztott munkalapot az F2 billentyű lenyomása után át lehet nevezni.
 Az enter billentyű lenyomásával, vagy az Ugrás gomb aktiválásával lehet a kiválasztott munkalapra navigálni.
+- Űrlapmezők: Kilistázza az összes űrlapmezőt az aktív munkalapon.
+Az elemlistában elérhető az űrlapmezőkhöz tartozó alternatív szöveg, ill. azon cellák koordinátái, melyek az adott űrlapmezőt tartalmazzák.
+A kijelölt űrlapmezőre navigáláshoz nyomja meg az entert, vagy az ugrás gombot.
+-
 
 
 +++ Megjegyzések bemondása +++
@@ -1034,6 +1039,8 @@ A beállítás engedélyezésével az áttekintő kurzor mindig az egér alatt l
 ==== Egyszerű áttekintőmód ====
 A beállítás engedélyezésével az NVDA kiszűri a közvetlenül nem hozzáférhető és használható objektumokat, egyszerűbbé téve ezzel a navigálást a navigátor kurzorral.
 
+Az egyszerű áttekitnőmód bekapcsolásához rendeljen hozzá billentyűparancsot a Beviteli parancsok párbeszédablakon.
+
 +++ Objektumok megjelenítése (NVDA+control+o) +++
 
 Ez a párbeszédpanel a beállítások menü Objektumok megjelenítése parancsával érhető el, és a következő beállítási lehetőségeket tartalmazza:
@@ -1154,36 +1161,57 @@ Ha bekapcsolja ezt a beállítást, akkor a fókuszmód és a böngészőmód k�
 +++ Dokumentumformázás (NVDA+control+d) +++
 
 E párbeszédpanel a beállítások menü Dokumentumformázás... parancsával nyitható meg. Az itt található jelölőnégyzetekkel lehet beállítani, hogy az NVDA milyen formázási információkat olvasson fel, ha egy Word vagy Wordpad dokumentumban mozog a nyíl billentyűkkel. pl.: ha bejelöli a betűtípus bemondása jelölőnégyzetet, az NVDA bemondja a betűtípus nevét, ha a kurzorral új betűtípusú szövegrészre lép.
-Be lehet állítani a: 
-- betűtípus,
-- betűméret,
-- betűtípus állapota,
-- színek jelzése,
-- szövegigazítás,
-- szerkesztői változások jelzése,
-- Kiemelések jelzése,
-- helyesírási hibák,
-- oldalszámok,
-- Sorszámok,
-- Sorigazítás,
-- Bekezdés igazítás (pl. változó sorigazítás, első sorigazítás),
-- táblázatok,
-- táblázat fejlécei,
-- táblázatcella koordinátái,
-- címsorok,
-- hivatkozások,
-- listák,
-- idézetblokkok,
-- jelző pontok
-- kattintható elemek
--
-bemondását.
+
+A dokumentumformázási opciók csoportokba vannak sorolva.
+- Betűtípus
+ - Betűtípus neve
+ - Betűméret
+ - Betűtípus paraméterek (dőlt, áthúzott, felső index stb.)
+ - Kiemelés
+ - Stílus (Címsor 1, Címsor 2 stb.)
+ - Színek
+- Dokumentum
+ - Megjegyzések
+ - Szerkesztői változások
+ - Helyesírási hibák
+- Oldalak és sorköz
+ - Oldalszámok
+ - Sorszámok
+ - Sorok behúzásának jelzése [(Kikapcsolva, Beszéd, Hangjelzés, Beszéd és hangjelzés) #lineIndentationOptions]
+ - Bekezdés-behúzás (függő behúzás, első sor behúzás stb.)
+ - Sorköz (szimpla, dupla stb.)
+ - Bekezdés-igazítás (balra zárt, jobbra zárt stb.)
+- Táblázat
+ - Táblázatok
+ - Sor/oszlop fejlécek
+ - Cellakoordináták
+- Elemek
+ - Címsorok
+ - Hivatkozások
+ - Listák
+ - Idézetblokkok
+ - Jelzőpontok
+ - Keretek
+ - Kattintható
+ -
+
 
 ==== A kurzor pozíciójánál lévő formázások változásának jelzése (a beszéd késését okozhatja) ====
 E jelölőnégyzet bejelölésével az NVDA a sorok felolvasásakor bemondja a formázási változásokat (pl. eltérő betűméret, betűtípus, stb). Ez az NVDA lassabb működését eredményezheti.
 
 Alapértelmezettként az NVDA az aktuális karakter formázásait észleli (rendszer vagy áttekintő kurzor használatakor), esetenként az egész sorra kiterjedő formázást is, ha az nem vezet az NVDA működésének lelassulásához.
-Engedélyezze ezt a lehetőséget pl. Microsoft Word esetén, ahol fontos a formázás.
+Engedélyezze ezt a lehetőséget pl. Wordpad esetén, ahol fontos a formázás.
+
+==== Sorok behúzásának jelzése ====
+Ezzel az opcióval beállíthatja, hogyan jelezze az NVDA a sorok behúzását.
+A kombinált listamezőben négy lehetőség közül választhat:
+
+- Kikapcsolva: Az NVDA nem jelzi a sorok behúzását.
+- Beszéd: Az NVDA bemondja a sorok elején található szóközök és tabok számát, pl.: "12 szóköz" vagy "4 tab" akkor is, ha vegyesen állnak "tab 2 szóköz 3 tab"
+- Hangjelzés: Az NVDA hangjelzéssel jelzi a sorok behúzását. A behúzás mértékére a hangjelzés magasságából lehet következtetni.
+Minden szóköz egy egységgel magasítja a hangot, egy tab 4 egységgel. Tehát ha van a sor elején 2 szóköz és egy tab, a hang 6 egységnyi magasan szólal meg.
+- Beszéd és hangjelzés: Az NVDA mindkét fenti módszerrel jelzi a sorok elején található tabokat és szóközöket.
+-
 
 +++ Kivételszótárak +++
 
@@ -1328,11 +1356,15 @@ E funkció engedélyezéséhez jelölje be a beszédnéző lehetőséget az eszk
 
 A beszédnéző használatakor a lebegő ablak tartalma folyamatosan frissül, attól függően, mit mond épp a beszédszintetizátor. Ha azonban az ablakon belülre kattint, az ablak tartalma nem frissül, lehetővé téve annak tartalmát áttekinteni vagy másolni.
 
+A Beszédnéző ablaka tartalmaz egy "A beszédnéző megnyitása az NVDA indulásakor" címkéjű jelölőnégyzetet.
+Ha be van jelölve, akkor a Beszédnéző az NVDA indulásakor automatikusan megnyílik.
+A beszédnéző ablaka mindig megőrzi a legutolsó bezáráskor érvényes méretét és pozícióját a képernyőn. Mindig ott és úgy nyílik meg, ahol, és ahogy a legutolsó bezáráskor hagyta.
+
 ++ Bővítmények kezelése ++
-A bővítmény kezelőben (amelyet az NVDA menü -eszközök almenüjében érhet el) megnézheti a feltelepített bővítmények listáját, hozzáathat egy újat, vagy eltávolíthatja őket a programból.
+A bővítmény kezelőben (amelyet az NVDA menü -eszközök almenüjében érhet el) megnézheti a feltelepített bővítmények listáját, hozzáathat egy újat, letilthatja/engedélyezheti, vagy eltávolíthatja őket a programból.
 Ezeket az NVDA közössége készíti, amivel a program funkcióit igyekeznek kibővíteni. Lehet ez egy egyszerűbb script (időjárás jelentés lekérdező program), vagy egy új beszédszintetizátor támogatása is.
 
-A bővítmény kezelő egy listában jeleníti meg a már feltelepített bővítményeket. A csomag nevét és annak verzióját már a listából is megtudhatja, a kiegészítő hosszabb leírását a "bővítmény névjegye" gomb aktiválásával érheti el.
+A bővítmény kezelő egy listában jeleníti meg a már feltelepített bővítményeket. A csomag nevét, státuszát  és  verzióját már a listából is megtudhatja, a kiegészítő hosszabb leírását a "bővítmény névjegye" gomb aktiválásával érheti el.
 Ha tartozik a kiegészítőhöz súgó, azt a "bővítmény súgója" gomb aktiválásával érheti el.
 
 Egy új bővítmény telepítéséhez nyomja meg a "hozzáadás" gombot. Ekkor egy fájlválasztó ablak jelenik meg, ahol kiválaszthatja a telepítendő bővítmény fájlját. Amikor ez megtörtént, a "bezárás" gomb aktiválásával tudja véglegesíteni a műveletet. A bővítmény betöltéséhez az NVDA újraindítása szükséges, ezt a bezárás után fel is ajánlja a program.
@@ -1340,6 +1372,12 @@ Egy új bővítmény telepítéséhez nyomja meg a "hozzáadás" gombot. Ekkor e
 Figyelem! Az ön és adatainak biztonsága érdekében csak olyan bővítményt telepítsen fel, ami megbízható forrásból származik!
 
 Egy bővítmény eltávolításához válassza ki azt a kurzor mozgató billentyűk segítségével, majd aktiválja az "eltávolítás" gombot. Ekkor az NVDA rákérdez még egyszer a bővítmény eltávolítása előtt. A művelet befejezéséhez a program újraindításaszükséges, addig a listában az "eltávolítás" jelenik meg a kiegészítő  státuszaként.
+
+Egy bővítmény letiltásához nyomja meg a Bővítmény letiltása gombot.
+Egy korábban letiltott bővítmény engedélyezéséhez nyomja meg a bővítmény engedélyezése gombot.
+Akkor tilthat le egy bővítményt, ha annak állapota fut vagy engedélyezés. Akkor engedélyezhet egy bővítményt, ha annak állapota  felfüggesztve vagy letiltás.
+A Bővítmény letiltása/engedélyezése gomb minden egyes lenyomásakor a kijelölt bővítmény állapota is megváltozik. Ez az állapot jelzi, hogy mi fog történni a bővítménnyel az NVDA újraindítása után.
+A bővítmények letiltása és engedélyezése, a telepítéshez és az eltávolításhoz hasonlóan, csak az NVDA újraindítása után lép életbe.
 
 +++ Pár szó a régebbi bővítményekről +++
 Az NVDA kiegészítő fájl megjelenése előtt is lehetőség volt egyes kiegészítők hozzáadására az NVDA programhoz, amelyeket a felhasználó NVDA konfigurációs mappájába kellett bemásolni. Ezeket a bővítmény kezelő nem mutatja, bár a program betölti őket, de a zavartalan működés érdekében kérjük, távolítsa el a program mappájából, és ha létezik, telepítse fel a csomagok hivatalos változatát.
@@ -1411,11 +1449,14 @@ Az [Optelec http://www.optelec.com/] ALVABC 640 és 680 kijelzőket támogatja a
 Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és a hozzájuk tartozó parancsokat), amiket az NVDA programban használhat. A kijelző dokumentációjában találhatja meg, hogy ezek a billentyűk hol helyezkednek el.
 %kc:beginInclude
 || Leírás | Billentyű |
-| Egy kijelzőnyivel visszalépés | t1 |
+| Egy kijelzőnyivel visszalépés | t1 vagy etouch1 |
 | A kijelzőt az előző sorhoz helyezi | t2 |
+| Mozgatás a jelenlegi fókuszhoz | t3 |
 | A kijelzőt a következő sorhoz helyezi | t4 |
-| Egy kijelzőnyivel visszalép | t5 |
+| Egy kijelzőnyivel visszalép | t5 vagy etouch3 |
 | A kurzor az aktuális braille cellához helyezése | routing |
+| A kurzor a legfelső sorhoz helyezése áttekintő módban | t1+t2 |
+| A kurzor legalsó sorhoz helyezése áttekintő módban | t4+t5 |
 | shift+tab billentyű | sp1 |
 | alt billentyű | sp2 |
 | Escape billentyű | sp3 |
@@ -1474,12 +1515,13 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 | alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille kijelzők ++
-Néhány [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] és [APH http://www.aph.org/] kijelzővel az NVDA képes együttműködni, ha ezek usb vagy bluetooth kapcsolódással csatlakoznak a számítógéphez.
+++ Baum/Humanware/APH/Orbit Braille kijelzők ++
+Néhány [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] és and [Orbit http://www.orbitresearch.com/] kijelzővel az NVDA képes együttműködni, ha ezek usb vagy bluetooth kapcsolódással csatlakoznak a számítógéphez.
 A következőket tartalmazzák:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Néhány egyéb Baum kijelző is működhet, bár ezek nem voltak tesztelve a programmal.
 Az APH Refreshabraille használata előtt az USB mód serial állapotban kell hogy legyen.

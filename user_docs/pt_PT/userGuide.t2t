@@ -91,6 +91,7 @@ Para além da impossibilidade de arrancar automaticamente com o windows, as cóp
 - Impossibilidade de ler as janelas do Controlo de Conta de Utilizador (UAC), ao tentar iniciar uma aplicação com privilégios de administrador;
 - Windows 8 e seguintes: Impossibilidade de suportar a utilização do ecrã táctil;
 - Windows 8 e seguintes: Impossibilidade de usar as funcionalidades de modo de navegação e de anunciar os caracteres escritos nas aplicações Windows Store.
+- Windows 8 e seguintes: O Modo de diminuição do volume não é suportado.
 -
 
 ++ Instalar O NVDA ++
@@ -781,6 +782,9 @@ No Windows 8 e superiores, esta opção permite definir se o NVDA deve diminuir 
 - Diminuir sempre: O NVDA diminuirá todos os sons de outros programas enquanto estiver em execução.
 -
 
+Esta opção só está disponível se o NVDA estiver instalado.
+Não é possível suportar o Modo de diminuição do volume para cópias portáteis ou temporárias do NVDA.
+
 +++ Definições de Voz (NVDA+Ctrl+V) +++[VoiceSettings]
 O diálogo das definições de voz, que se encontra no menu Preferências, contém opções que lhe permitem alterar o som da voz.
 Para uma alternativa mais rápida de controlar os parâmetros de voz, a partir de qualquer local, por favor, consulte a secção [Anel de Definições de Voz #SynthSettingsRing].
@@ -1215,11 +1219,11 @@ Pode configurar o anúncio de:
  - Indentação do parágrafo (i.e. indentação suspensa, indentação da primeira linha)
  - Espaçamento das linhas (simples, duplo, etc)
  - Alinhamento
-- Informação de tabelas
+- Informação de tabelas:
  - Tabelas
  - Títulos de linha e coluna
  - Coordenadas da célula
-- Elementos
+- Elementos:
  - Títulos
  - Links
  - Listas
@@ -1229,6 +1233,7 @@ Pode configurar o anúncio de:
  - Se clicável
  -
 -
+
 
 Para alternar estas configurações a qualquer momento, por favor crie uma associação de teclas usando a opção [Definir comandos #InputGestures].
 

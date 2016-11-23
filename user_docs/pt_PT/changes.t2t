@@ -6,6 +6,10 @@
 Tradução de Rui Fontes
 
 = 2016.4 =
+Os destaques desta versão são:
+- Suporte melhorado ao Microsoft Edge;
+- Modo de navegação no programa Correio do Windows 10;
+Melhorias várias nos diálogos do NVDA.
 
 == Novas Funcionalidades ==
 - O NVDA pode agora anunciar a identação das linhas usando sons. Isto pode ser configurado através da caixa combinada Anúnncio da identação das linhas no diálogo de Formatação de documentos das preferências do NVDA. (#5906)
@@ -26,22 +30,22 @@ Tradução de Rui Fontes
 - O diálogo de Formatação de documentos foi ajustado para que o conteúdo  possa rolar. (#6348)
 - Ajustado o layout do diálogo Pronúncia de pontuação/símbolo, para que toda a sua largura possa ser usada pela lista de símbolos. (#6101)
 - No modo de navegação, nos navegadores web, as teclas de navegação rápida, para campos de edição (e e shift+e) e de formulário (f e shift+f) agora também movem para campos de texto só de leitura. (#4164)
-- No diálogo Formatação de documentos do NVDA, "Announce formatting changes after the cursor" has been renamed to "Report formatting changes after the cursor", as it affects braille as well as speech. (#6336)
 - Ajustada a aparência do diálogo de boas vindas ao NVDA. (#6350)
 - Os diálogos do NVDA passam a ter os botões "ok" e "cancelar" alinhados à direita. (#6333)
 - Passam a ser usadas barras deslizantes para os campos numéricos. (#6099)
+- Amaneira como são reportadas as IFrames (documentos integrados em documentos) é agora mais consistente nos vários navegadores web. As IFrames passam a ser reportadas como "frame" no Firefox. (#6047)
 
 
 == Correcções ==
 - Corrigido um problema raro, ao sair do NVDA enquanto o visualizador de discurso está aberto, causando um erro. (#5050)
 - Os "Image maps" são agora apresentados correctamente no modo de navegação no Mozilla Firefox. (#6051)
-- Corrigido um problema que causava um aviso no log do NVDA, quando se alternava o estado do capsLock . (#6127)
+- Corrigido um problema que causava um aviso no log do NVDA, quando se alternava o estado do capsLock. (#6127)
 - No diálogo dos dicionários, ao pressionar enter agora guarda as alterações e sai. (#6206)
 - Passam a ser mostradas em Braille as mensagens de alteração do modo de introdução para um modo de introdução (nativo, input/alphanumeric, full shaped/half shaped, etc.). (#5892, #5893)
 - Ao desabilitar, e imediatamente voltar a habilitar, um extra, ou vice-versa, o seu estado agora corretamente reverte para o que era anteriormente. (#6299)
-- Ao utilizar o Microsoft Word, page-number fields in headers can now be read. (#6004)
+- Ao utilizar o Microsoft Word, os campos de número de página nos cabeçalhos já podem ser lidos. (#6004)
 - O rato agora pode ser usado para mover o foco entre a lista de símbolos e os campos de edição no diálogo de Pronúncia de pontuação/símbolo. (#6312)
-- Corrigido um problema que impede o aparecimento da lista de elementos quando o Microsoft Word contém um link inválido. (#5886)
+- Corrigido um problema que impedia o aparecimento da lista de elementos quando o documento do Microsoft Word contém um link inválido. (#5886)
 - Após fechar o Visualizador de discurso, através da barra de tarefas ou com Alt+F4, a indicação do seu estado no menu do NVDA passa a reflectir a realidade da sua visibilidade. (#6340)
 - O comando Recarregar extras não causa mais problemas para os perfis de configuração activados, para os novos documentos em navegadores web nem para a revisão de ecrã. (#2892, #5380)
 - Na lista de idiomas no diálogo Definições gerais do NVDA, idiomas como o Aragonês passam a ser exibidos correctamente no Windows 10. (#6259)
@@ -49,6 +53,12 @@ Tradução de Rui Fontes
 - Alterar o idioma do NVDA a parttir das Definições Gerais apenas tem efeito após reiniciar o NVDA. (#4561)
 - O campo Texto original de uma nova entrada de dicionário já não pode ficar em branco. (#6412)
 - Corrigido um problema raro, ao pesquisar por portas série em alguns sistemas que impossibilitava o uso de algumas linhas Braille. (#6462)
+- No Microsoft Word, a numeração das listas em células de tabelas são agora lidos ao mover por células. (#6446)
+- Passa a ser possível associar comandos ao pressionar de teclas das linhas Braille HandyTech através da opção Definir comandos do NVDA. (#6461)
+- No Microsoft Excel, ao pressionar enter, ao navegar numa folha, agora é corretamente anunciada a mudança para a linha de baixo. (#6500)
+- O iTunes já não crasha intermitentemente ao usar o modo de navegação para a iTunes Store, Apple Music, etc. (#6502)
+- Corrigidos crashes em applicações de 64 bit baseadas em Mozilla ou Chrome. (#6497)
+- No Firefox com o multi-process activo, o modo de navegação e os campos de edição já funcionam corretamente. (#6380)
 
 
 == Alterações para desenvolvedores ==

@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
+"Last-Translator: Chorche Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
 "Language: an\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1702,6 +1702,7 @@ msgid "row"
 msgstr "ringlera"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "bastida"
 
@@ -2028,10 +2029,6 @@ msgstr "icono d'o escritorio"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "alerta"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "Bastida en linia"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -5826,7 +5823,6 @@ msgid "Exit NVDA"
 msgstr "salir d'o NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5836,7 +5832,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Bienveniu en o NVDA!\n"
 "A gran parti d'as ordens pa controlar o NVDA requieren que mantiengas preta "
 "la tecla NVDA entre que pretas atras teclas.\n"
 "De traza Predeterminada las teclas insert d'o teclau numerico y d'o "
@@ -5848,6 +5843,11 @@ msgstr ""
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
+msgstr "Bienveniu en o NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
 msgstr "Bienveniu en o NVDA"
 
 msgid "Options"
@@ -6590,13 +6590,6 @@ msgstr "Error en copiar as opcions d'usuario d'o NVDA"
 msgid "Successfully copied NVDA user settings"
 msgstr "S'han copiau as opcions d'usuario d'o NVDA satisfactoriament"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Error en o fichero d'idioma %s"
-
-msgid "Language Error"
-msgstr "Error d'idioma"
-
 msgid "This change requires administrator privileges."
 msgstr "Iste cambeo requier premisos d'administrador."
 
@@ -7171,13 +7164,17 @@ msgstr "&Comentario"
 msgid "&Type"
 msgstr "&Mena"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Se requier un patrón"
+
+msgid "Dictionary Entry Error"
+msgstr "Error de dentrada de diccionario"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Error en a expresión regular: %s"
-
-msgid "Dictionary Entry Error"
-msgstr "Error de dentrada de diccionario"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8738,6 +8735,15 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "Bastida en linia"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Error en o fichero d'idioma %s"
+
+#~ msgid "Language Error"
+#~ msgstr "Error d'idioma"
 
 #~ msgid "&Profile"
 #~ msgstr "&Perfil"

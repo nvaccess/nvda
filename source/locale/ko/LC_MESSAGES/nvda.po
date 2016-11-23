@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-04 00:10+1000\n"
-"PO-Revision-Date: 2016-11-03 07:13-0800\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-14 18:22-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -1696,6 +1696,7 @@ msgid "row"
 msgstr "행"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "프레임"
 
@@ -2022,10 +2023,6 @@ msgstr "바탕화면 아이콘"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "경고"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "IFrame"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -6831,7 +6828,7 @@ msgstr "문서 서식 알림"
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
-msgstr ""
+msgstr "본 대화상자내 설정을 통해 NVDA의 문서 서식 출력을 설정합니다."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7025,7 +7022,7 @@ msgstr "적용 방식 (&T)"
 
 #. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
 msgid "A pattern is required."
-msgstr ""
+msgstr "기존값이 없습니다."
 
 msgid "Dictionary Entry Error"
 msgstr "발음 사전 항목 오류"
@@ -8315,7 +8312,7 @@ msgstr ""
 #, python-format
 msgctxt "line spacing value"
 msgid "%.1f lines"
-msgstr ""
+msgstr "%.1f 줄"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
@@ -8513,6 +8510,9 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "IFrame"
+#~ msgstr "IFrame"
 
 #~ msgid "Error in %s language file"
 #~ msgstr "%s 언어 파일에 문제 있음"

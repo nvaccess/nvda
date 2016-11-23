@@ -4,6 +4,7 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.4 =
+Caracteristicile principale ale acestei lansări includ suport îmbunătățit pentru Microsoft Edge, mod de navigare în aplicația Windows 10 Mail și îmbunătățiri semnificative la dialogurile NVDA-ului.
 
 == Noi funcționalități ==
 - NVDA poate acum să indice indentația rândurilor folosind tonuri. Opțiunea poate fi configurată folosind caseta combinată „Anunță indentație rând cu” din fereastra cu preferințe pentru formatarea documentului din NVDA. (#5906)
@@ -28,6 +29,7 @@ Ce este nou în NVDA
 - A fost ajustat aspectul dialogului „bun venit” din NVDA. (#6350)
 - Casetele de dialog NVDA au acum butoanele lor „OK” și „Anulare” aliniate la dreapta dialogului. (#6333)
 - Controalele Spin sunt acum utilizate pentru câmpurile numerice de intrare. (#6099)
+- Modul în care sunt raportate IFram-urile a fost realizat mai consistent pe diferite browsere. IFram-urile sunt acum raportate ca „cadru” în Firefox. (#6047)
 
 
 == Rezolvări defecte ==
@@ -47,10 +49,17 @@ Ce este nou în NVDA
 - Modificarea limbii NVDA-ului (din dialogul setărilor generale) acum nu are niciun efect până când NVDA este repornit. (#4561)
 - Câmpul „model” pentru o nouă intrare în dicționar nu mai este permis să fie lăsat gol. (#6412)
 - Corectat o situație rară la scanarea porturilor serialelor pe unele sisteme care făceau unele drivere ale afișajelor braille inutilizabile. (#6462)
+- Bulinele numerotate sunt acum citite din celulele tabelului în Microsoft Word la deplasarea prin celulă. (#6446)
+- Acum este posibil să atribuiți gesturi la comenzi pentru afișajul braille Handy Tech în dialogul gesturilor de intrare al NVDA-ului. (#6461)
+- În Microsoft Excel, apăsarea tastelor Enter sau numpadEnter când se navighează pe o foaie de calcul corectează rapoartele de navigare la rândul următor. (#6500)
+- iTunes Nu mai îngheață intermitent pentru totdeauna când se utilizează modul de navigare pentru magazinul iTunes, Muzica Apple, etc. (#6502)
+- Au fost reparate erorile în Mozilla pe 64 biți și în aplicațiile bazate pe Chrome. (#6497)
+- În Firefox cu multi-procesul activat, modul navigare și câmpurile de text editabil funcționează corect. (#6380)
 
 
 == Modificări pentru Dezvoltatori ==
 - Acum este posibil să furnizeze module app pentru executabile care conțin un punct (.) în numele lor. Punctele sunt înlocuite cu liniuțe joase (_). (#5323)
+- Noul modul gui.guiHelper include utilități pentru a simplifica crearea GUI-urilor wxPython, incluzând gestionarea automată a spațierii. Acest lucru facilitează un aspect vizual mai bun și consistență, precum și facilitarea creerii unor noi GUI-uri pentru dezvoltatorii nevăzători. (#6287)
 
 
 = 2016.3 =
