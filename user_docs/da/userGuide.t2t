@@ -91,6 +91,7 @@ Udover den manglende evne til at starte på og efter logon-skærmen, har en flyt
 - Manglende evne til at læse Kontrol af Brugerkonti (UAC) skærme når du forsøger at starte et program med administratorrettigheder.
 - Windows 8 og senere: Understøtter ikke input for touchskærme.
 - Windows 8: NVDA er ikke i stand til at benytte funktioner såsom gennemsynstilstand, samt evnen til at udtale indtastede tegn i Windows Store apps.
+- Windows 8 og senere: Lyddæmpning er ikke understøttet.
 -
 
 ++ Installation af NVDA ++
@@ -780,6 +781,9 @@ Hvis du bruger Windows 8 eller derover lader denne indstilling dig vælge om NVD
 - Dæmp når der udsendes tale og lyde: NVDA vil kun dæmpe lyden, hvis NVDA afspiller lyde eller taler. Dette virker muligvist ikke for alle talesynteser. 
 - Altid dæmp: NVDA vil sænke lyden fra alle andre lydkilder så længe NVDA kører.
 -
+
+Denne indstilling er kun tilgængelig, hvis NVDA er installeret.
+Det er ikke muligt at understøtte lyddæmpning for midlertidige og flytbare kopier af NVDA.
 
 +++ Stemmeindstillinger (NVDA+Ctrl+v) +++[VoiceSettings]
 Dialogen Stemmeindstillinger, som findes i menuen Indstillinger, rumer valgmuligheder til ændring af, hvordan talen lyder.
