@@ -3,16 +3,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-27 13:09+0100\n"
-"Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-23 11:13+0100\n"
+"Last-Translator: Ondrej rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -432,13 +432,13 @@ msgstr "Maráthčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "Belgická holandčina plnopis"
+msgid "Dutch (Belgium)"
+msgstr "Holandčina (Belgicko)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "Holandčina plnopis"
+msgid "Dutch (Netherlands)"
+msgstr "Holandčina (Holandsko)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -547,7 +547,7 @@ msgstr "Tamilčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "Telugčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
@@ -1241,18 +1241,24 @@ msgstr "Žiadna predchádzajúca revízia alebo komentár"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
-msgstr "Od&kazy"
+msgstr "Odk&azy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Nadpisy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
-msgstr "&Oblasti stránky"
+msgstr "Ob&lasti stránky"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
@@ -1697,6 +1703,7 @@ msgid "row"
 msgstr "riadok"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "rámik"
 
@@ -2024,10 +2031,6 @@ msgstr "ikona pracovnej plochy"
 msgid "alert"
 msgstr "upozornenie"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "vnorený rámik"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "panel pracovnej plochy"
@@ -2232,7 +2235,7 @@ msgstr "Nadobúda fokus"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
-msgstr "pri kliknutí"
+msgstr "Pri kliknutí"
 
 msgid "editable"
 msgstr "editovateľný"
@@ -2730,17 +2733,25 @@ msgstr "oznamovať čísla riadkov"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Zapína alebo vypína oznamovanie čísel riadkov"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Oznamovať odsadenie"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Pípať pri odsadení"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Oznamovať a pípať pri odssadení"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
 msgstr "neoznamovať odsadenie"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "oznamovať odsadenie"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Zapína alebo vypína oznamovanie odsadenia riadkov"
+msgid "Cycles through line indentation settings"
+msgstr "Prepína nastavenia pre odsadenie riadka"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3583,6 +3594,7 @@ msgid "review"
 msgstr "prezeracím kurzorom"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "systémovým kurzorom"
 
@@ -4573,6 +4585,10 @@ msgstr "Tabuľka s {columnCount} stĺpcami a {rowCount} riadkami"
 msgid "NVDA Speech Viewer"
 msgstr "Zobrazovač reči NVDA"
 
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "&spustiť pri štarte zobrazovač reči"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
 msgstr "&Jazyk"
@@ -4966,6 +4982,16 @@ msgstr "Nie je prehrávaná žiadna skladba"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "V prípade, že je práve prehrávaná skladba, oznámi zostávajúci čas"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, prečítané {curLocation} z {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "Strana {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5431,8 +5457,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH "
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Riadky Baum/HumanWare/APH/Orbit braille displays"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -5782,7 +5808,6 @@ msgid "Exit NVDA"
 msgstr "Ukončiť nvda"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5792,7 +5817,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Vitajte v NVDA!\n"
 "Väčšina príkazov, ktoré sa používajú na ovládanie programu NVDA sú "
 "kombináciou stlačeného klávesu NVDA s ďalšími klávesmi.\n"
 "Predvolene ako kláves NVDA môžete použiť hlavný insert alebo insert na "
@@ -5806,6 +5830,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Vitajte v NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Vitajte v NVDA!"
 
 msgid "Options"
 msgstr "Možnosti"
@@ -5912,8 +5941,8 @@ msgid "Add-on &help"
 msgstr "&Návod"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "Zakázať doplnok"
+msgid "&Disable add-on"
+msgstr "&Zakázať doplnok"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6017,8 +6046,8 @@ msgid "running"
 msgstr "Spustený"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "Povoliť doplnok"
+msgid "&Enable add-on"
+msgstr "*Povoliť doplnok"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6057,10 +6086,6 @@ msgstr "Informácie o doplnku"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Konfiguračné profily"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profil"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6380,14 +6405,14 @@ msgstr "Priečinok pre prenosnú verziu:"
 msgid "Browse..."
 msgstr "Prehľadávať..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Skopírovať akt&uálne používateľské nastavenia"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Vyberte priečinok"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Skopírovať akt&uálne používateľské nastavenia"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6473,10 +6498,6 @@ msgstr "Debug"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Jazyk (vyžaduje reštart):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Jazyk"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Uložiť nastavenia pri ukončení"
@@ -6492,10 +6513,6 @@ msgstr "Prehrať &zvuk pri spustení a ukončení NVDA"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Úr&oveň záznamu:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Úroveň záznamu"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6553,13 +6570,6 @@ msgstr "Chyba pri kopírovaní používateľských nastavení NVDA"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "Používateľské nastavenia NVDA boli úspešne skopírované."
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "Chybný jazykový súbor \"%s\"."
-
-msgid "Language Error"
-msgstr "Chyba Jazyka"
 
 msgid "This change requires administrator privileges."
 msgstr "Zmena tohoto nastavenia si vyžaduje práva administrátora."
@@ -6664,10 +6674,6 @@ msgstr "Nastavenie klávesnice"
 msgid "&Keyboard layout:"
 msgstr "Rozloženie &klávesnice:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Rozloženie klávesnice"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6745,10 +6751,6 @@ msgstr "Povoliť sledovanie &kurzora myši"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Jednotka oznamovania pri &zameraní textu:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "Jednotka oznamovania textu"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6875,11 +6877,6 @@ msgstr "Oznamovať pop&isky objektov"
 msgid "Progress &bar output:"
 msgstr "Oznamovanie aktualizácie prie&behu:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "oznamovanie indikátora priebehu"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6943,136 +6940,168 @@ msgstr "&Ignorovať skratky mimo rýchlej navigácie"
 msgid "Document Formatting"
 msgstr "Nastavenia Čítania Textu"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Oznamovať zmeny form&átovania pri pohybe kurzorom (môže zaostávať)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "tieto možnosti určunú, aké zmeny formátovania bude NVDA oznamovať."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Písmo"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Oznamovať názov p&ísma"
+msgid "&Font name"
+msgstr "n&ázov písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Oznamovať ve&ľkosť písma"
+msgid "Font &size"
+msgstr "ve&ľkosť písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Oznamovať v&lastnosti písma"
+msgid "Font attri&butes"
+msgstr "Vlastnosti &písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Oznamovať &zarovnanie"
+msgid "E&mphasis"
+msgstr "Zv&ýraznenie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Oznamovať &farby"
+msgid "St&yle"
+msgstr "&Štýl"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "oznamovať ko&mentáre"
+msgid "&Colors"
+msgstr "&Farby"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Informácie o dokumente"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Sledovať zm&eny"
+msgid "Co&mments"
+msgstr "&Komentáre"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Oznamovať zv&ýraznenie"
+msgid "&Editor revisions"
+msgstr "Zmen&y"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Oznamovať š&týl"
+msgid "Spelling e&rrors"
+msgstr "Pravopisn&é chyby"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Strany a riadkovanie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Oznamovať pravopisné &chyby"
+msgid "&Pages"
+msgstr "&Strany"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Oznamovať st&rany"
+msgid "Line &numbers"
+msgstr "Č&ísla riadkov"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Oznamovať čísla ria&dkov"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Line &indentation reporting:"
+msgstr "o&dsadenie riadka:"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "&Oznamovať odsadenie"
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "Vypnuté"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Reč"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Pípať"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Oznamovať a pípať"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Oz&namovať odsadenie odsekov"
+msgid "&Paragraph indentation"
+msgstr "&Odsadenie odsekov"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Oznamovať riadko&vanie"
+msgid "&Line spacing"
+msgstr "R&iadkovanie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Oznamovať tab&uľky"
+msgid "&Alignment"
+msgstr "&Zarovnanie"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Informácie o tabuľke"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Oznamovať &hlavičky riadkov / stĺpcov tabuľky"
+msgid "&Tables"
+msgstr "&Tabuľky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Oznamovať s&úradnice buniek tabuľky"
+msgid "Row/column h&eaders"
+msgstr "&hlavičky stĺpcov a riadkov"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Oznamovať od&kazy"
+msgid "Cell c&oordinates"
+msgstr "Súradnice &buniek tabuľky"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Prvky"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "Oznamovať n&adpisy"
+msgid "&Lists"
+msgstr "Zozna&my"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Oznamovať zoznam&y"
+msgid "Block &quotes"
+msgstr "&Citácie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Oznamovať c&itácie"
+msgid "Fra&mes"
+msgstr "Rámc&e"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Oznamovať o&blasti stránky"
+msgid "&Clickable"
+msgstr "P&ri kliknutí"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Oznamova&ť rámce"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Oznamovať udalosť &pri kliknutí"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "Oznamovať zmeny formátovania pri pohybe k&urzorom (môže zaostávať)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7095,6 +7124,7 @@ msgid "&Pattern"
 msgstr "&Vzor"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Nahradiť s"
 
@@ -7106,13 +7136,17 @@ msgstr "&Komentár"
 msgid "&Type"
 msgstr "&Typ"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Musíte zadať reťazec."
+
+msgid "Dictionary Entry Error"
+msgstr "chyba"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "nesprávny regulárny výraz: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "chyba"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7243,8 +7277,8 @@ msgstr "Úroveň"
 msgid "Preserve"
 msgstr "Uprednostniť"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
 msgstr "Zmeniť symbol"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
@@ -8665,6 +8699,93 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "vnorený rámik"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "Chybný jazykový súbor \"%s\"."
+
+#~ msgid "Language Error"
+#~ msgstr "Chyba Jazyka"
+
+#~ msgid "&Profile"
+#~ msgstr "&Profil"
+
+#~ msgid "Language"
+#~ msgstr "Jazyk"
+
+#~ msgid "Log level"
+#~ msgstr "Úroveň záznamu"
+
+#~ msgid "Keyboard layout"
+#~ msgstr "Rozloženie klávesnice"
+
+#~ msgid "text reporting unit"
+#~ msgstr "Jednotka oznamovania textu"
+
+#~ msgid "Progress bar output"
+#~ msgstr "oznamovanie indikátora priebehu"
+
+#~ msgid "Report &font name"
+#~ msgstr "Oznamovať názov p&ísma"
+
+#~ msgid "Report font &size"
+#~ msgstr "Oznamovať ve&ľkosť písma"
+
+#~ msgid "Report &alignment"
+#~ msgstr "Oznamovať &zarovnanie"
+
+#~ msgid "Report &colors"
+#~ msgstr "Oznamovať &farby"
+
+#~ msgid "Report co&mments"
+#~ msgstr "oznamovať ko&mentáre"
+
+#~ msgid "Report e&mphasis"
+#~ msgstr "Oznamovať zv&ýraznenie"
+
+#~ msgid "Report st&yle"
+#~ msgstr "Oznamovať š&týl"
+
+#~ msgid "Report spelling e&rrors"
+#~ msgstr "Oznamovať pravopisné &chyby"
+
+#~ msgid "Report &pages"
+#~ msgstr "Oznamovať st&rany"
+
+#~ msgid "Report &line spacing"
+#~ msgstr "Oznamovať riadko&vanie"
+
+#~ msgid "Report &tables"
+#~ msgstr "Oznamovať tab&uľky"
+
+#~ msgid "Report table row/column h&eaders"
+#~ msgstr "Oznamovať &hlavičky riadkov / stĺpcov tabuľky"
+
+#~ msgid "Report lin&ks"
+#~ msgstr "Oznamovať od&kazy"
+
+#~ msgid "Report &headings"
+#~ msgstr "Oznamovať n&adpisy"
+
+#~ msgid "Report &lists"
+#~ msgstr "Oznamovať zoznam&y"
+
+#~ msgid "Report block &quotes"
+#~ msgstr "Oznamovať c&itácie"
+
+#~ msgid "Report lan&dmarks"
+#~ msgstr "Oznamovať o&blasti stránky"
+
+#~ msgid "Report fra&mes"
+#~ msgstr "Oznamova&ť rámce"
+
+#~ msgid "Report if &clickable"
+#~ msgstr "Oznamovať udalosť &pri kliknutí"
+
+#~ msgid "Toggles on and off the reporting of line indentation"
+#~ msgstr "Zapína alebo vypína oznamovanie odsadenia riadkov"
 
 #~ msgid "This cell is non-editable"
 #~ msgstr "Zamknutá bunka"
