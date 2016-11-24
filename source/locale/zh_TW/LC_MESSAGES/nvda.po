@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-28 00:10+1000\n"
-"PO-Revision-Date: 2016-11-01 14:00+0800\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-22 11:52+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -1705,6 +1705,7 @@ msgid "row"
 msgstr "列"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "頁框"
 
@@ -2032,10 +2033,6 @@ msgstr "桌面圖示"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "請注意"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "內嵌頁框"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -5552,7 +5549,7 @@ msgstr "可新增讀音項目至暫存語音字庫的對話方塊"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "讀音字庫 (&d)"
+msgstr "讀音字庫 (&D)"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
@@ -5564,7 +5561,7 @@ msgstr "輸入手勢 (&N)..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "偏好設定(&P)"
+msgstr "偏好設定 (&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -8513,6 +8510,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "內嵌頁框"
 
 #~ msgid "Error in %s language file"
 #~ msgstr "在%s語言檔案中有誤"
