@@ -21,8 +21,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "storage.h"
 #include "backend.h"
 
-//#include "utils.h"
-
 using namespace std;
 
 const UINT VBufBackend_t::wmRenderThreadInitialize=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadInitialize");

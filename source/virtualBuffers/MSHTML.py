@@ -369,3 +369,4 @@ class MSHTML(VirtualBuffer):
 		except COMError:
 			pass
 		return super(MSHTML, self).shouldPassThrough(obj, reason)
+	
