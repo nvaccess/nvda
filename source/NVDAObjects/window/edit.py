@@ -474,14 +474,6 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getLanguageFromLcid(self, lcid):
-		"""
-		gets a normalized locale from a lcid
-		"""
-		lang = locale.windows_locale[lcid]
-		if lang:
-			return languageHandler.normalizeLanguage(lang)
-
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
 		fontObj=None
@@ -541,16 +533,15 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField['background-color']=_("Unknown color")
 			else:
 				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
-		if True:
-			if not fontObj: fontObj=range.font
-			try:
-				langId = fontObj.languageID
-			except:
-				log.debugWarning("language error",exc_info=True)
-				pass
-			else:
-				if langId:
-					formatField['language']=self._getLanguageFromLcid(langId)
+		if not fontObj: fontObj=range.font
+		try:
+			langId = fontObj.languageID
+		except:
+			log.debugWarning("language error",exc_info=True)
+			pass
+		else:
+			if langId:
+				formatField['language']=languageHandler.windowsLCIDToLocaleName(langId)
 		return formatField
 
 	def _expandFormatRange(self,range,formatConfig):
