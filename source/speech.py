@@ -1159,12 +1159,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Indicates the text column number in a document.
 				# {0} will be replaced with the text column number.
 				# {1} will be replaced with the number of text columns.
-				text=_("text column {0} of {1}").format(textColumnNumber,textColumnCount)
+				text=_("column {0} of {1}").format(textColumnNumber,textColumnCount)
 				textList.append(text)
 			elif textColumnCount:
 				# Translators: Indicates the text column number in a document.
 				# %s will be replaced with the number of text columns.
-				text=_("%s text columns")%(textColumnCount)
+				text=_("%s columns")%(textColumnCount)
 				textList.append(text)
 
 	sectionBreakType=attrs.get("section-break")

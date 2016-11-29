@@ -198,7 +198,7 @@ constexpr int wdInlineShapeEmbeddedOLEObject = 1;
 constexpr int wdInlineShapePicture = 3;
 constexpr int wdInlineShapeLinkedPicture = 4;
 
-// WdGutterStyle Enermeration
+// WdGutterStyle Enumeration
 constexpr int wdGutterPosLeft = 0;
 constexpr int wdGutterPosRight = 2;
 constexpr int wdGutterPosTop = 1;

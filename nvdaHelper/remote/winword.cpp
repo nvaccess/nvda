@@ -694,7 +694,7 @@ inline bool generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream
 	return true;
 }
 
-std::experimental::optional<int> getPageBreakType(IDispatchPtr pDispatchRange ) {
+std::experimental::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange ) {
 	// The following case should handle where we have the page break character ('0x0c') shown with '|p|'
 	//	first section|p|
 	//	second section.
@@ -756,15 +756,15 @@ std::experimental::optional<int> getPageBreakType(IDispatchPtr pDispatchRange ) 
 		return {};
 	}
 
-	LOG_DEBUGWARNING(L"Got Type: " << type);
+	LOG_DEBUG(L"Got section break type: " << type);
 	return type;
 }
 
-std::experimental::optional<int>
-getStartOfRangeDistanceFromStartOfDocument(IDispatchPtr pDispatchRange) {
-	int rangePos = -1;
+std::experimental::optional<float>
+getStartOfRangeDistanceFromEdgeOfDocument(IDispatchPtr pDispatchRange) {
+	float rangePos = -1.0f;
 	auto res = _com_dispatch_raw_method( pDispatchRange, wdDISPID_RANGE_INFORMATION,
-		DISPATCH_PROPERTYGET, VT_I4, &rangePos, L"\x0003", wdHorizontalPositionRelativeToPage);
+		DISPATCH_PROPERTYGET, VT_R4, &rangePos, L"\x0003", wdHorizontalPositionRelativeToPage);
 		if( S_OK != res && rangePos < 0) {
 			LOG_ERROR(L"error getting wdHorizontalPositionRelativeToPage."
 				<< " res: " << res
@@ -874,7 +874,7 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 
 	// 2. Get the start position (IN POINTS) of the range. This is relative to the start
 	// of the document.
-	auto rangeStart = getStartOfRangeDistanceFromStartOfDocument(pDispatchRange);
+	auto rangeStart = getStartOfRangeDistanceFromEdgeOfDocument(pDispatchRange);
 	if(!rangeStart) {
 		return;
 	}
@@ -888,7 +888,7 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 
 	// 4. Iterate through the columns, look for the final column where the range start
 	// position is greater or equal to the start position of the column
-	const float rangePos = static_cast<float>(*rangeStart);
+	const float rangePos = *rangeStart;
 	float colStartPos = prePostColumnOffsets->first;
 	// assumption: the textcolumn furthest right is last in the collection
 	const int lastItemNumber = count;
@@ -897,7 +897,9 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 		LOG_DEBUGWARNING(L"ItemNumber: " << itemNumber
 			<< " rangePos: " << rangePos
 			<< " colStartPos: " << colStartPos);
-		if (colStartPos <= rangePos){
+
+		constexpr float COL_START_TOLERENCE_POINTS = 1.0f;
+		if (rangePos - colStartPos + COL_START_TOLERENCE_POINTS > 0){
 			columnNumber = itemNumber;
 		}
 		IDispatchPtr pDispatchTextColumnItem = nullptr;
@@ -952,7 +954,8 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 	// validation that some margin, gutter or offset was not missed.
 	// This does not check that they were added in the right order, only
 	// that they were added at all.
-	if( pageWidth != colStartPos) {
+	constexpr int PAGE_WIDTH_TOLERENCE_POINTS = 1;
+	if( std::abs(pageWidth - colStartPos) > PAGE_WIDTH_TOLERENCE_POINTS ) {
 		LOG_ERROR(L"pageWidth does not equal the calculated page"
 			<< " width. Some margin or offset me be missed, this may mean"
 			<< " that some column numbers reported were incorrect."
@@ -1153,7 +1156,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				const auto xmlAttribsFormatConfig = formatConfig&(~curDisabledFormatConfig);
 
 				if( pageBreakCharIndex ){
-					auto type = getPageBreakType(pDispatchRange);
+					auto type = getSectionBreakType(pDispatchRange);
 					if(type){
 						text[*pageBreakCharIndex] = '\0';
 						XMLStream << L"section-break=\"" << *type << "\" ";
