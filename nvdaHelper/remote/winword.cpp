@@ -894,7 +894,7 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 	const int lastItemNumber = count;
 	int columnNumber = 0;
 	for(int itemNumber = 1; itemNumber <= lastItemNumber && S_OK == res; ++itemNumber){
-		LOG_DEBUGWARNING(L"ItemNumber: " << itemNumber
+		LOG_DEBUG(L"ItemNumber: " << itemNumber
 			<< " rangePos: " << rangePos
 			<< " colStartPos: " << colStartPos);
 
