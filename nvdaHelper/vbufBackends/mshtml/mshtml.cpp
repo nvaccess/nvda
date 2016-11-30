@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+wstring findLabel(multiValueAttribsMap,wstring);
+
 HINSTANCE backendLibHandle=NULL;
 UINT WM_HTML_GETOBJECT;
 
@@ -1085,18 +1087,11 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		}
 		if ((tempIter = attribsMap.find(L"HTMLAttrib::src")) != attribsMap.end()) {
 			renderChildren=true;
-			wstring wSrcAttribute=tempIter->second;
-			wstring srcAttribute;
-			srcAttribute=wSrcAttribute;
-			for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
-			{
-				wstring key = it->first;
-				wstring value = it->second;
-				if (srcAttribute.compare(key)==0)
-				{
-					contentString=it->second;
-					renderChildren=false;
-				}
+			wstring srcAttribute=tempIter->second;
+			wstring labelForNode=findLabel(labelsMap,srcAttribute);
+			if (!labelForNode.empty()){
+				contentString=labelForNode;
+				renderChildren=false;
 			}
 	}
 	} else if(nodeName.compare(L"INPUT")==0) {
@@ -1151,18 +1146,13 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	} else if((nodeName.compare(L"A")==0)&&(attribsMap.find(L"HTMLAttrib::href")!=attribsMap.end())) {
 		renderChildren=true;
 		tempIter = attribsMap.find(L"HTMLAttrib::href");
-		wstring wLinkAttribute=tempIter->second;
-		wstring linkAttribute;
-		linkAttribute=wLinkAttribute;
-		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
-		{
-			wstring key = it->first;
-			wstring value = it->second;
-			if (linkAttribute.compare(key)==0)
-			{
-				contentString=it->second;
-				renderChildren=false;
-			}
+		wstring linkAttribute=tempIter->second;
+		//wstring linkAttribute;
+		//linkAttribute=wLinkAttribute;
+		wstring labelForNode=findLabel(labelsMap,linkAttribute);
+		if (!labelForNode.empty()){
+			contentString=labelForNode;
+			renderChildren=false;
 		}
 
 	} else {
@@ -1196,17 +1186,11 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		{
 			nameAttribute=tempIterId->second+tempIter->second;
 		}
-		for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
-			{
-				wstring key = it->first;
-				wstring value = it->second;
-				if (nameAttribute.compare(key)==0)
-				{
-					contentString=it->second;
-					//attribsMap[L"name"]=it->second;
+		wstring labelForNode=findLabel(labelsMap,nameAttribute);
+		if (!labelForNode.empty()){
+					contentString=labelForNode;
 					renderChildren=false;
 				}
-			}
 	}
 
 	//Add a textNode to the buffer containing any special content retreaved
@@ -1374,6 +1358,21 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	}
 
 	return parentNode;
+}
+
+wstring findLabel(multiValueAttribsMap labelsMap,wstring attributeValue) {
+	wstring key ;
+	wstring value;
+	for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
+	{
+		key = it->first;
+		value = it->second;
+		if (attributeValue.compare(key)==0)
+		{
+			return value;
+		}
+	}
+	return L"";
 }
 
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
