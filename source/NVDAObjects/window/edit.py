@@ -17,6 +17,7 @@ import globalVars
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
+import languageHandler
 import config
 import speech
 import winKernel
@@ -532,6 +533,15 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField['background-color']=_("Unknown color")
 			else:
 				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
+		if not fontObj: fontObj=range.font
+		try:
+			langId = fontObj.languageID
+		except:
+			log.debugWarning("language error",exc_info=True)
+			pass
+		else:
+			if langId:
+				formatField['language']=languageHandler.windowsLCIDToLocaleName(langId)
 		return formatField
 
 	def _expandFormatRange(self,range,formatConfig):

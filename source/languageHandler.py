@@ -40,6 +40,14 @@ def localeNameToWindowsLCID(localeName):
 			LCID=0
 	return LCID
 
+def windowsLCIDToLocaleName(lcid):
+	"""
+	gets a normalized locale from a lcid
+	"""
+	lang = locale.windows_locale[lcid]
+	if lang:
+		return normalizeLanguage(lang)
+
 def getLanguageDescription(language):
 	"""Finds out the description (localized full name) of a given local name"""
 	desc=None
