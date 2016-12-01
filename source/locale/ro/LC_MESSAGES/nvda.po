@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3899\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-28 00:10+1000\n"
-"PO-Revision-Date: 2016-11-06 10:33+0200\n"
-"Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-30 19:58+0200\n"
+"Last-Translator: DanP <dan.punga@gmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1701,6 +1701,7 @@ msgid "row"
 msgstr "rând"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "cadru"
 
@@ -1710,11 +1711,11 @@ msgstr "bară instrumente"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
-msgstr "capăt de coloană"
+msgstr "antet de coloană"
 
 #. Translators: Identifies a row header in tables and spreadsheets.
 msgid "row header"
-msgstr "capăt de rând"
+msgstr "antet de rând"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
@@ -1768,7 +1769,7 @@ msgstr "citat bloc"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
-msgstr "titlu tabel"
+msgstr "antet de tabel"
 
 #. Translators: Identifies a table body (the main body of the table).
 msgid "table body"
@@ -2027,10 +2028,6 @@ msgstr "iconiță ecran"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "alarmă"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "IFrame"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -3799,7 +3796,7 @@ msgstr ""
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Arată fereastra de dialog a profilurilor de configurare NVDA"
+msgstr "Arată fereastra de dialog a configurării de profiluri NVDA"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -6115,7 +6112,7 @@ msgstr "Informație extensie add-on"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
-msgstr "Profiluri de configurare"
+msgstr "Configurarea profilurilor"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6216,8 +6213,8 @@ msgstr "Rostește tot"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Eroare la salvarea declanșatoarelor pentru profilurile de configurare - "
-"probabil sistemul de fișiere este în mod exclusiv citire"
+"Eroare la salvarea declanșatoarelor pentru profilul configurat - probabil "
+"sistemul de fișiere este în mod exclusiv citire"
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -7061,7 +7058,7 @@ msgstr "&numere de rânduri"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "&Anunțareindentație rând"
+msgstr "&Anunțare indentație rând"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
@@ -7181,7 +7178,7 @@ msgstr "&Scrie"
 
 #. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
 msgid "A pattern is required."
-msgstr "Un model este necesar."
+msgstr "Este necesar un model."
 
 msgid "Dictionary Entry Error"
 msgstr "Eroare la introducere în dicționar"
@@ -8751,6 +8748,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "IFrame"
 
 #~ msgid "Error in %s language file"
 #~ msgstr "Eroare în fișierul de limbă %s"
