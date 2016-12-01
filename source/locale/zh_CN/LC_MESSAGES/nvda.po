@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-24 20:21+0800\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-11-29 19:18+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -1698,6 +1698,7 @@ msgid "row"
 msgstr "行"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "框架"
 
@@ -2024,10 +2025,6 @@ msgstr "桌面图标"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "警告："
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "内嵌框架"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -5683,7 +5680,6 @@ msgid "Exit NVDA"
 msgstr "退出 NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5693,7 +5689,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"欢迎使用 NVDA！\n"
 "控制 NVDA 的大多数命令热键都要求在按下“NVDA”键的同时按下其他的键。\n"
 "默认情况下，主键盘的“Insert”键和“数字键盘 0”键被同时定义为“NVDA”键。\n"
 "您也可以把“CapsLock”键设置为“NVDA”键。\n"
@@ -5703,6 +5698,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "欢迎使用 NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "欢迎使用 NVDA！"
 
 msgid "Options"
 msgstr "选项"
@@ -6407,13 +6407,6 @@ msgstr "错误:复制 NVDA 用户设置失败"
 msgid "Successfully copied NVDA user settings"
 msgstr "复制 NVDA 用户设置成功"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "%s 语言文件错误"
-
-msgid "Language Error"
-msgstr "语言错误"
-
 msgid "This change requires administrator privileges."
 msgstr "此更改要求系统权限。"
 
@@ -6977,13 +6970,17 @@ msgstr "注释(&C)"
 msgid "&Type"
 msgstr "类型(&T):"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "必须提供来源文本"
+
+msgid "Dictionary Entry Error"
+msgstr "字典条目错误"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "正则表达式错误： \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "字典条目错误"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8512,6 +8509,15 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "内嵌框架"
+
+#~ msgid "Error in %s language file"
+#~ msgstr "%s 语言文件错误"
+
+#~ msgid "Language Error"
+#~ msgstr "语言错误"
 
 #~ msgid "&Profile"
 #~ msgstr "配置"
