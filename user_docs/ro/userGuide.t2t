@@ -91,6 +91,7 @@ Pe lângă incapacitatea de a porni automat în timpul și/sau după autentifica
 - Incapacitatea de a citi ferestre de Controlul Contului Utilizatorului (UAC) când se încearcă pornirea unei aplicații cu privilegii de administrator.
 - Windows 8 și mai nou: incapacitatea de a primi intrări de la un ecran tactil.
 - Windows 8 și mai nou: incapacitatea de a oferi funcționalități precum mod examinare și pronunție a caracterelor tipărite în aplicațiile Magazinului Windows (Windows Store)
+- Windows 8 și mai nou: atenuarea audio nu este suportată.
 -
 
 ++ Instalarea NVDA ++
@@ -164,7 +165,7 @@ Dacă doriți să faceți ca una dintre tastele de modificare NVDA să aibă fun
 
 +++ Formate de tastatură +++
 În prezent, NVDA vine cu două seturi de taste de comandă (denumite și formate de tastatură): formatul de calculator de birou și cel pentru laptop.
-Implicit, NVDA este configurat să folosească formatul de birou, dar îl puteți schimba cu cel de laptop din meniul NVDA de „Preferințe”, submeniul „Opțiuni Tastatură”.
+Implicit, NVDA este configurat să folosească formatul de birou, dar îl puteți schimba cu cel de laptop din meniul NVDA de „Preferințe”, submeniul „Setări Tastatură”.
 
 Formatul de birou folosește frecvent tastele blocului numeric (cu bloc numeric dezactivat).
 Cu toate că majoritatea laptopurilor nu au un bloc numeric pe tastatură, unele pot emula prezența acestuia prin combinații cu tasta „FN” și apăsând litere și cifre din partea dreaptă a tastaturii (7, 8, 9, u, i, o, j, k, l, etc.).
@@ -429,7 +430,7 @@ Cu cât mausul se află mai sus pe ecran, cu atât amplitudinea sunetului va fi 
 Cu cât mai la stânga sau la dreapta se află pe ecran, cu atât sunetul se va auzi mai la stânga sau mai la dreapta (presupunând că utilizatorul are difuzoare stereo).
 
 Aceste caracteristici adiționale ale mausului nu sunt activat implicit de NVDA.
-Dacă doriți să profitați de ele, le puteți configura din fereastra de dialog pentru [Opțiuni maus #OptiuniMaus], aflată în meniul „Preferințe” din meniul NVDA.
+Dacă doriți să profitați de ele, le puteți configura din fereastra de dialog pentru [Setări maus #OptiuniMaus], aflată în meniul „Preferințe” din meniul NVDA.
 
 Cu toate că un dispozitiv fizic de maus sau un trackpad ar trebui folosit pentru navigarea cu mausul, NVDA are câteva comenzi din taste asociate mausului:
 %kc:beginInclude
@@ -781,8 +782,11 @@ Tastă: NVDA+shift+d
 - Atenuează totdeauna: NVDA va menține volumul altor surse audio scăzut tot timpul cât va rula.
 -
 
-+++ Opțiuni voce (NVDA+Control+v) +++[OptiuniVoce]
-Fereastra de dialog a opțiunilor pentru voce, găsită în meniul „Preferințe”, conține opțiuni care vă lasă să schimbați sunetul vorbirii.
+Această opțiune este disponibilă doar dacă NVDA a fost instalată.
+Atenuarea audio nu este suportată pentru copiile portabile sau temporare ale NVDA.
+
++++ Setări voce (NVDA+Control+v) +++[OptiuniVoce]
+Fereastra de dialog a setărilor pentru voce, găsită în meniul „Preferințe”, conține opțiuni care vă lasă să schimbați sunetul vorbirii.
 Pentru un mod alternativ mai rapid de control al parametrilor de vorbire de oriunde, vă rugăm citiți secțiunea [Inelul setărilor sintetizatorului #InelSintetizator].
 
 Fereastra de dialog pentru setările vocii conține următoarele opțiuni:
@@ -866,8 +870,8 @@ Dacă doriți să schimbați rapid setările vocii fără să intrați în ferea
 | Scade setarea curentă a sintetizatorului | NVDA+control+săgeată jos | NVDA+shift+control+săgeată jos | Scade setarea curentă a vorbirii. De exemplu scade viteza, alege vocea anterioară, scade volumul |
 %kc:endInclude
 
-+++ Opțiuni Braille +++
-Fereastra de dialog a setărilor Braille poate fi afișată intrând în meniul „Preferințe” și apoi în „Opțiuni Braille...”.
++++ Setări Braille +++
+Fereastra de dialog a setărilor Braille poate fi afișată intrând în meniul „Preferințe” și apoi în „Setări Braille...”.
 
 ==== Afișaj Braille ====
 Prima opțiune întâlnită în fereastra de dialog braille este o listă de selecție pe care scrie „Afișaj Braille”.
@@ -948,8 +952,8 @@ După ce derulați afișajul, veți putea citi și restul cuvântului.
 
 Activarea acestei opțiuni ar putea permite un citit mai cursiv, dar în general este nevoie să derulați afișajul mai mult.
 
-+++ Opțiuni tastatură (NVDA+control+k) +++
-Această fereastră de dialog se găsește în meniul „Preferințe”, „Opțiuni tastatură...”.
++++ Setări tastatură (NVDA+control+k) +++
+Această fereastră de dialog se găsește în meniul „Preferințe”, „Setări tastatură...”.
 Conține următoarele opțiuni:
 
 ==== Schemă tastatură ====
@@ -965,7 +969,7 @@ Dacă este bifată această casetă, tasta Insert principală (aflată de obicei
 Dacă este bifată această casetă, tasta Insert de pe tastele numerice poate fi folosită ca tastă de modificare NVDA.
 
 Dacă nu este aleasă nicio tastă ca tastă NVDA, ar putea fi imposibil de accesat anumite comenzi NVDA.
-În consecință, fereastra de dialog cu Opțiunile tastaturii va afișa un mesaj de eroare dacă toate tastele rămân deselectate când apăsați butonul OK.
+În consecință, fereastra de dialog cu Setările tastaturii va afișa un mesaj de eroare dacă toate tastele rămân deselectate când apăsați butonul OK.
 După ce revocați mesajul de eroare, va trebui să selectați cel puțin una din taste înainte de a putea apăsa OK și închide cum trebui fereastra de dialog. 
 
 %kc:setting
@@ -1008,8 +1012,8 @@ Această opțiune este disponibilă doar dacă raportarea erorilor de ortografie
 Acestă opțiune permite utilizatorului să controleze dacă apăsările de tastă generate de aplicații, cum ar fi tastaturi pe ecran și aplicații de recunoaștere a vorbirii, ar trebui să fie procesate de NVDA. 
 Opțiunea este activată implcit, deși anumiți utilizatori vor dori să o dezactiveze, cum ar fi cei care tastează în Vietnameză cu software-ul de tastare Unikey, pentru care se vor produce intrări de caractere incorecte.
 
-+++ Opțiuni maus (NVDA+control+m) +++[OptiuniMaus]
-Fereastra de dialog pentru setările mausului se găsește în meniul „Preferințe”, la „Opțiuni maus...”.
++++ Setări maus (NVDA+control+m) +++[OptiuniMaus]
+Fereastra de dialog pentru setările mausului se găsește în meniul „Preferințe”, la „Setări maus...”.
 Conține următoarele opțiuni:
 
 ==== Anunță schimbările formei cursorului ====
@@ -1039,7 +1043,7 @@ Dacă este bifată caseta „Redă audio coordonatele mausului când se mișcă�
 Aceasta este dezactivată implicit.
 
 +++ Setările cursorului de examinare +++
-Se găsesc în meniul „Preferințe”, la „Opțiuni cursor examinare...”.
+Se găsesc în meniul „Preferințe”, la „Cursor de examinare...”.
 Această fereastră de dialog conține următoarele opțiuni:
 
 %kc:setting
@@ -1112,8 +1116,8 @@ Tastă: NVDA+5
 
 Activează anunțurile de conținut nou în obiecte specifice cum ar fi ferestre terminal de comandă și controlul istoricului în programele de conversație.
 
-+++ Opțiuni pentru compunerea de intrări +++
-Fereastra de dialog „Opțiuni pentru Compunere Intrări” se află în meniul de „Preferințe”.
++++ Setări pentru compunerea de intrări +++
+Fereastra de dialog „Setări pentru Compunere Intrări” se află în meniul de „Preferințe”.
 Această fereastră vă permite să controlați modul în care NVDA anunță intrările de caractere asiatice, cum ar fi folosind IME sau metode de scriere „Text Service”.
 De notat că, datorită faptului că metodele de introducere variază foarte mult în ceea ce privește funcționalitățile disponibile sau cum este prezentată informația, va fi necesar, cel mai probabil, să configurați diferit aceste opțiuni pentru fiecare metodă de introducere, pentru a obține cea mai eficientă formă de tastat.
 
@@ -1289,7 +1293,7 @@ Expresiile regulate nu sunt explicate în acest ghid, dar există multe document
 Această fereastră de dialog vă permite schimbarea modului de rostire a punctuației și a altor simboluri, precum și nivelul de simbol la care sunt rostite.
 
 Limba, pentru care pronunția simbolurilor este editată, va fi pusă în titlul ferestrei de dialog.
-De notat că acestă fereastră de dialog respectă opțiunea „Bazează-te pe limba vocii când se procesează caractere și simboluri” definită în [dialogul pentru Opțiuni de voce #OptiuniVoce]. Adică folosește mai degrabă limba vocii decât configurația globală a NVDA privind limba, când această opțiune este activată.
+De notat că acestă fereastră de dialog respectă opțiunea „Bazează-te pe limba vocii când se procesează caractere și simboluri” definită în [dialogul de Setări pentru voce #OptiuniVoce]. Adică folosește mai degrabă limba vocii decât configurația globală a NVDA privind limba, când această opțiune este activată.
 
 Pentru a modifica un simbol, mai întâi selectați-l din Lista de simboluri.
 
@@ -1349,22 +1353,22 @@ De asemenea, puteți să reveniți la configurația inițială a aplicației, al
 | Revino la configurația salvată | NVDA+control+r | NVDA+control+r | Apăsând o dată, reface setările NVDA care existau când ați salvat ultima dată configurația NVDA. Apăsând de trei, va reveni la configurația inițială a aplicației. |
 %kc:endInclude
 
-++ Profiluri de configurare ++
+++ Configurarea profilurilor ++
 Vă veți dori, uneori, să aveți configurări diferite în diverse situații.
 De exemplu se poate să vă doriți să aveți activat anunțul indentațiilor când editați, sau anunțul atributelor de font când faceți o citire de verificare.
-NVDA vă permite asta prin folosirea profilurilor de configurare.
+NVDA vă permite asta prin folosirea configurării de profiluri.
 
 Un profil de configurare conține doar acele opțiuni care sunt schimbate în timp ce profilul este modificat.
-Majoritatea opțiunilor pot fi modificate în profilurile de configurare, mai puțin cele din fereastra de dialog a Setărilor generale, care sunt aplicate pentru întreaga aplicație NVDA.
+Majoritatea opțiunilor pot fi modificate în configurarea profilurilor, mai puțin cele din fereastra de dialog a Setărilor generale, care sunt aplicate pentru întreaga aplicație NVDA.
 
-Profilurile de configurare pot fi activate manual.
+Profilurile configurate pot fi activate manual.
 De asemenea, pot fi și activate automat pentru acțiuni ca schimbarea la o aplicație anume.
 
 +++ Idei fundamentale de administrare +++
-Gestionați profilurile de configurare prin selectarea opțiunii „Profiluri de configurare...” din meniul NVDA.
+Gestionați profilurile configurate prin selectarea opțiunii „Configurarea profilurilor...” din meniul NVDA.
 Puteți folosi, de asemenea și o tastă de comandă:
 %kc:beginInclude
-- NVDA+control+p: Arată fereastra de dialog a Profilurilor de configurare
+- NVDA+control+p: Arată fereastra de dialog a Configurării profilurilor
 -
 %kc:endInclude
 
@@ -1394,10 +1398,10 @@ Odată activat, și alte profile pot fi activate datorită declanșatoarelor, da
 De exemplu, dacă un profil este declanșat de aplicația curentă și raportarea legăturilor este activată în acel profil dar dezactivată în profilul activat manual, atunci legăturile nu vor fi anunțate.
 Cu toate acestea, dacă ați schimbat vocea în profilul declanșat dar nu ați schimbat-o în cel activat manual, vocea din profilul declanșat va fi folosită.
 Orice preferință schimbată de dumneavoastră va fi salvată în profilul activat manual. 
-Pentru a dezactiva un profil activat manual, selectați-l din fereastra „Profiluri configurare” și apăsați butonul „Dezactivează manual”.
+Pentru a dezactiva un profil activat manual, selectați-l din fereastra „Configurarea profilurilor” și apăsați butonul „Dezactivează manual”.
 
 +++ Declanșatoare +++[DeclansatoareProfil]
-Apăsând butonul „Declanșatoare...” din fereastra „Profiluri configurare” vă permite să schimbați profilurile care ar trebui să fie activate automat de diferite declanșatoare.
+Apăsând butonul „Declanșatoare...” din fereastra „Configurarea profilurilor” vă permite să schimbați profilurile care ar trebui să fie activate automat de diferite declanșatoare.
 
 Lista declanșatoarelor le prezintă pe cele disponibile, care sunt după cum urmează:
 - Aplicația curentă: Declanșat când schimbați pe aplicația curentă.
@@ -1407,7 +1411,7 @@ Lista declanșatoarelor le prezintă pe cele disponibile, care sunt după cum ur
 Pentru a schimba profilul care ar trebui activat automat de un declanșator, selectați declanșatorul și apoi profilul dorit din Lista de profiluri.
 Puteți alege (configurație normală) dacă nu doriți folosirea unui profil.
 
-Apăsați butonul „Închide” pentru a reveni la fereastra „Profiluri de configurare”.
+Apăsați butonul „Închide” pentru a reveni la fereastra „Configurarea profilurilor”.
 
 +++ Modificarea unui profil +++
 Dacă ați activat manual un profil, orice opțiune pe care o modificați va fi salvată în acel profil.
@@ -2000,7 +2004,7 @@ Următoarele afișaje Braille sunt suportate:
 -
 
 De notat că aceste afișaje pot fi conectate doar printr-un port serial.
-În consecință, ar trebui să alegeți portul la care este conectat afișajul după ce ați ales acest driver în fereastra de dialog cu Opțiunile braille.
+În consecință, ar trebui să alegeți portul la care este conectat afișajul după ce ați ales acest driver în fereastra de dialog cu Setările braille.
 
 Unele dintre aceste dispozitive au o Bară de acces facil (Easy Access Bar - EAB) care permite o operare rapidă și intuitivă.
 EAB poate fi mutată în patru direcții și, în general, fiecare direcție are două comutatoare.
@@ -2087,7 +2091,7 @@ Următoarele modele sunt suportate:
 
 Dacă, după ce conectați BrailleNote la NVDA, dispozitivul dumneavoastră este compatibil cu mai mult de un tip de conexiune, trebuie să stabiliți portul terminalului braille în opțiunile terminalului braille.
 Consultați manualul BrailleNote pentru detalii.
-În NVDA, s-ar putea să fie necesară stabilirea portului în fereastra de dialog cu Opțiuni pentru braille.
+În NVDA, s-ar putea să fie necesară stabilirea portului în fereastra de dialog cu Setării pentru braille.
 Dacă vă conectați prin USB sau bluetooth, puteți stabili portul la una din valorile: „Automat”, „USB” sau „Bluetooth”, în funcție de opțiunile disponibile.
 Dacă faceți conexiunea folosind unul dintre porturile seriale moștenite (sau un adaptor USB la serial) sau dacă nu apare niciuna dintre opțiunile precedente, trebuie să alegeți în mod explicit portul de comunicații ce va fi folosit, din lista porturilor hardware.
 
@@ -2133,7 +2137,7 @@ Următoarele modele sunt suportate:
 - EcoBraille Plus
 -
 
-În NVDA, puteți stabili portul serial la care este conectat afișajul din fereastra de dialog cu Opțiunile braille.
+În NVDA, puteți stabili portul serial la care este conectat afișajul din fereastra de dialog cu Setările braille.
 
 Urmează asocierile de comenzi pentru BrailleNote și NVDA.
 Vă rugăm să consultați [documentația EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/]  pentru informații despre localizarea tastelor pe dispozitiv.
