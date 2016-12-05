@@ -323,3 +323,17 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def event_caret(self,obj,nextHandler):
 		pass
+
+	def _getTableCellAt(self,tableID,row,column):
+		# for UIA, tableID is actually a UIA NVDAObject
+		tableElement=tableID.UIAGridPattern
+		try:
+			cellElement=tableElement.getItem(row-1,column-1)
+		except COMError:
+			cellElement=None
+		if not cellElement:
+			raise LookupError
+		cellRange=UIATextRangeFromElement(self.rootNVDAObject.UIATextPattern,cellElement)
+		if not cellRange:
+			raise LookupError
+		return self.makeTextInfo(cellRange)

@@ -7,6 +7,7 @@
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
+from comtypes.automation import VARIANT
 import weakref
 import sys
 import numbers
@@ -154,6 +155,8 @@ class UIATextInfo(textInfos.TextInfo):
 			#p=POINT(position.x,position.y)
 			#self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
 			raise NotImplementedError
+		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
+			self._rangeObj=position.clone()
 		else:
 			raise ValueError("Unknown position %s"%position)
 
@@ -217,7 +220,7 @@ class UIATextInfo(textInfos.TextInfo):
 		role = obj.role
 		field = textInfos.ControlField()
 		# Ensure this controlField is unique to the object
-		field['runtimeID']=obj.UIAElement.getRuntimeID()
+		runtimeID=field['runtimeID']=obj.UIAElement.getRuntimeId()
 		field['_startOfNode']=startOfNode
 		field['_endOfNode']=endOfNode
 		field["role"] = obj.role
@@ -233,7 +236,9 @@ class UIATextInfo(textInfos.TextInfo):
 		field["description"] = obj.description
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
-			field["table-id"] = 1 # FIXME
+			tableID=VARIANT()
+			obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(tableID))
+			field["table-id"] = obj
 			try:
 				field["table-rowcount"] = obj.rowCount
 				field["table-columncount"] = obj.columnCount
@@ -242,8 +247,10 @@ class UIATextInfo(textInfos.TextInfo):
 		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
 			try:
 				field["table-rownumber"] = obj.rowNumber
+				field["table-rowsspanned"] = obj.rowSpan
 				field["table-columnnumber"] = obj.columnNumber
-				field["table-id"] = 1 # FIXME
+				field["table-columnsspanned"] = obj.columnSpan
+				field["table-id"] = obj.table
 				field['role']=controlTypes.ROLE_TABLECELL
 				field['table-columnheadertext']=obj.columnHeaderText
 				field['table-rowheadertext']=obj.rowHeaderText
@@ -656,6 +663,10 @@ class UIA(Window):
 		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
 		return self.UIAInvokePattern
 
+	def _get_UIAGridPattern(self):
+		self.UIAGridPattern=self._getUIAPattern(UIAHandler.UIA_GridPatternId,UIAHandler.IUIAutomationGridPattern)
+		return self.UIAGridPattern
+
 	def _get_UIATogglePattern(self):
 		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
 		return self.UIATogglePattern
@@ -914,6 +925,12 @@ class UIA(Window):
 			return val+1
 		raise NotImplementedError
 
+	def _get_rowSpan(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemRowSpanPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		return 1
+
 	def _get_rowHeaderText(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
 		if val==UIAHandler.handler.reservedNotSupportedValue:
@@ -933,6 +950,12 @@ class UIA(Window):
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val+1
 		raise NotImplementedError
+
+	def _get_columnSpan(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemColumnSpanPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		return 1
 
 	def _get_columnHeaderText(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId ,True)
@@ -962,8 +985,9 @@ class UIA(Window):
 
 	def _get_table(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemContainingGridPropertyId ,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
-			return UIA(UIAElement=val)
+		if val and val!=UIAHandler.handler.reservedNotSupportedValue:
+			e=val.QueryInterface(UIAHandler.IUIAutomationElement).buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			return UIA(UIAElement=e)
 		raise NotImplementedError
 
 	def _get_processID(self):
