@@ -83,3 +83,10 @@ landmarkRoles = {
 	# Translators: Reported for a significant region, normally found on web pages.
 	"region": _("region"),
 }
+
+htmlNodeNameToAriaLandmarkRoles = {
+	"header": "banner",
+	"nav": "navigation",
+	"main": "main",
+	"footer": "contentinfo",
+}

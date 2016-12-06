@@ -4,114 +4,102 @@
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
-# identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
-# Others
-decimal point	(?<![^\d -])\.(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+
 
 symbols:
-# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	dot	all	always
-! sentence ending	bang	all	always
-? sentence ending	question	all	always
-; phrase ending	semi	most	always
-: phrase ending	colon	most	always
-decimal point		none	always
-in-word '	tick	all	norep
-negative number	minus	none	norep
+. sentence ending	נקודה	all	always
+! sentence ending	סימן קריאה	all	always
+? sentence ending	סימן שאלה	all	always
+; phrase ending	נקודה פסיק	most	always
+: phrase ending	נקודתיים	most	always
+decimal point	נקודה עשרונית	none	always
+in-word '	גרש	all	norep
+negative number	מינוס	none	norep
 
 # Whitespace
 \0	blank	char	# null
-\t	tab
-\n	line feed	char
-\f	page break	none
+\t	טאב
+\n	שורה חדשה	char
+\f	עמוד חדש	none
 \r	carriage return	char
- 	space	char
- 	space	char	# no-break space
+ 	רווח	char
+ 	רווח	char	# no-break space
 
 # Standard punctuation/symbols
 !	bang	all
-"	quote	most
-\#	number	most
-$	dollar	all	norep
-£	pound	all	norep
-€	euro	all	norep
-¢	Cents	all	norep
-¥	Yen	all	norep
-%	percent	some
-&	and	some
-'	tick	all
-(	left paren	most
-)	right paren	most
-*	star	some
-+	plus	some
-,	comma	all	always
--	dash	most
-.	dot	some
-/	slash	some
-:	colon	most	norep
-;	semi	most
-<	less	most
->	greater	most
-=	equals	some
-?	question	all
-@	at	some
-[	left bracket	most
-]	right bracket	most
-\\	backslash	most
-^	caret	most
-_	line	most
-`	graav	most
-{	left brace	most
-}	right brace	most
-|	bar	most
-~	tilda	most
+"	מרכאות	most
+\#	מספר	most
+$	דולר	all	norep
+£	פאונד	all	norep
+€	יורו	all	norep
+¢	סנט	all	norep
+¥	יין	all	norep
+%	אחוז	some
+&	וגם	some
+'	גרש	all
+(	סוגר שמאלי	most
+)	סוגר ימני	most
+*	כוכבית	some
++	פלוס	some
+,	פסיק	all	always
+-	מקף	most
+.	נקודה	some
+/	קו נטוי	some
+:	נקודתיים	most	norep
+;	נקודה פסיק	most
+<	קטן מ 	most
+>	גדול מ	most
+=	שווה	some
+?	סימן שאלה	all
+@	שטרודל	some
+[	סוגר שמאלי מרובע		most
+]	סוגר ימיני מרובע	most
+\\	לוכסן אחורי	most
+^	גג	most
+_	קו תחתון	most
+`	פסיק עליון ימיני	most
+{	סוגר מסולסל שמאלי	most
+}	סוגר מסולסל ימני	most
+|	קו ניצב	most
+~	טילדה	most
 
 # Other characters
-•	bullet	some
-…	dot dot dot	all	always
-...	dot dot dot	all	always
-	bullet	some
-“	left quote	most
-”	right quote	most
-‘	left tick	most
-’	right tick	most
-–	en dash	most
-—	em dash	most
-●	circle	most
-¨	diaeresis	most
-‎	left to right mark	char
-‏	right to left mark	char
-■	black square	some
-▪	black square	some
-◾	black square	some
-◦	white bullet	some
-➔	right arrow	some
-§	section	all
-°	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
-µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-®	registered	some
+•	נקודה מודגשת	some
+…	שלוש נקודות	all	always
+...	שלוש נקודות	all	always
+	נקודה מודגשת	some
+“	מרכאות שמאלי	most
+”	מרכאות ימני quote	most
+‘	גרש שמאלי	most
+’	גרש ימני	most
+–	מקף	most
+—	קו מפריד	most
+●	נקודה מודגשת	most
+¨	שתי נקודות מעל אות	most
+‎	סימון שמאל לימין	char
+‏	סימון ימין לשמאל	char
+■	ריבוע שחור	some
+▪	ריבוע שחור	some
+◾	ריבוע שחור	some
+◦	נקודה מודגשת 	some
+➔	חץ מצביע לימין	some
+§	סימן הסעיף	all
+°	סימון מעלה	some
+«	סוגר משלוש כפול שמאלי bracket
+»	סוגר משלוש כפול ימני bracket
+µ	סימון מיקרו	some
+¹	סימון 1 מעל לקו	some
+²	סימון 2 מעל לקו	some
+³	סימון 3 מעל לקו	some
+®	סימון רשום	some
 ™	Trademark	some
-©	Copyright	some
-±	Plus or Minus	most
-×	times	most
-÷	divide by	most
-←	left arrow	some
-→	right arrow	some
-✓	check	some
-✔	check	some
+©	זכויות יוצרים	some
+±	פלוס מינוס	most
+×	כפול	most
+÷	חלקי	most
+←	שמאלה arrow	some
+→	ימינה arrow	some
+✓	וי	some
+✔	וי	some

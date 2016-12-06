@@ -446,22 +446,25 @@ def accParent(ia,child):
 	except:
 		return None
 
-def accNavigate(ia,child,direction):
-	res=None
+def accNavigate(pacc,childID,direction):
 	try:
-		res=ia.accNavigate(direction,child)
-		if isinstance(res,int):
-			new_ia=ia
-			new_child=res
-		elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res)
-			new_child=0
-		else:
-			raise RuntimeError
-		return (new_ia,new_child)
-	except:
-		pass
-
+		res=pacc.accNavigate(direction,childID)
+	except COMError:
+		res=None
+	if not res:
+		return None
+	elif isinstance(res,int):
+		if childID==0 and oleacc.NAVDIR_UP<=direction<=oleacc.NAVDIR_PREVIOUS:
+			parentRes=accParent(pacc,0)
+			if not parentRes:
+				return None
+			pacc=parentRes[0]
+		return pacc,res
+	elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		return normalizeIAccessible(res,0),0
+	else:
+		log.debugWarning("Unknown IAccessible type: %s"%res,stack_info=True)
+		return None
 
 winEventIDsToNVDAEventNames={
 winUser.EVENT_SYSTEM_DESKTOPSWITCH:"desktopSwitch",
@@ -491,6 +494,7 @@ winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
 IA2_EVENT_TEXT_CARET_MOVED:"caret",
 IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
 IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:"IA2AttributeChange",
+IA2_EVENT_PAGE_CHANGED:"pageChange",
 }
 
 def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):

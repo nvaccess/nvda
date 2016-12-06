@@ -67,7 +67,13 @@ class SpeechDict(list):
 			else:
 				temp=line.split("\t")
 				if len(temp) ==4:
-					self.append(SpeechDictEntry(temp[0].replace(r'\#','#'),temp[1].replace(r'\#','#'),comment,bool(int(temp[2])),int(temp[3])))
+					pattern = temp[0].replace(r'\#','#')
+					replace = temp[1].replace(r'\#','#')
+					try:
+						dictionaryEntry=SpeechDictEntry(pattern, replace, comment, caseSensitive=bool(int(temp[2])), type=int(temp[3]))
+						self.append(dictionaryEntry)
+					except Exception as e:
+						log.exception("Dictionary (\"%s\") entry invalid for \"%s\" error raised: \"%s\"" % (fileName, line, e))
 					comment=""
 				else:
 					log.warning("can't parse line '%s'" % line)

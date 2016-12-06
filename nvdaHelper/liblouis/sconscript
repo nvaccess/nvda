@@ -51,6 +51,7 @@ sourceFiles = [
 	"lou_backTranslateString.c",
 	"wrappers.c",
 	"logging.c",
+	"pattern.c",
 ]
 objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
 louisLib = env.SharedLibrary("liblouis", objs + ["liblouis.def"])

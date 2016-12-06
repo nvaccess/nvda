@@ -3,6 +3,117 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+Ebben a kiadásban: javított támogatás a Microsoft Edge-hez; böngészőmód a Win 10 Üzenetek alkalmazáshoz, ill. jelentős javítások az NVDA párbeszédpanelein.
+
+== Újdonságok ==
+- Az NVDA már képes hangjelzéssel is jelezni a behúzásokat. Ez beállítható az NVDA Dokumentumformázás párbeszédpanelén a "Behúzások jelzése" kombinált listamező segítségével. (#5906)
+- Támogatás az Orbit Reader 20 braille kijelzőhöz. (#6007)
+- Új opció a beszédnéző ablakán: A jelölőnégyzet bejelölésével a beszédnéző az NVDA indulásakor automatikusan megnyílik. (#5050)
+- A Beszédnéző ablaka már megjegyzi a legutóbbi pozícióját és méretét. (#5050)
+- Microsoft Word: Az NVDA most már a kereszthivatkozásokat is úgy kezeli, mint a hiperhivatkozásokat, linkként jelenti be őket, és aktiválhatók. (#6102)
+- Kezdeti támogatás a Kindle alkalmazás következő verziójához. (#6247)
+- Támogatás a Baum SuperVario2, Baum Vario 340 és HumanWare Brailliant2 braille kijelzőkhöz. (#6116)
+- Kezdeti támogatás a Microsoft Edge évfordulós frissítéséhez. (#6271)
+- Win 10: Már böngészőmódban olvashatók az e-mailek az Üzenetek alkalmazásban. (#6271)
+
+
+== Változások ==
+- Frissítették a liblouis braille fordítót a 3.0.0 verzióra. Jelentős változások az egységes angol Braille kapcsán. (#6109, #4194, #6220, #6140)
+- A Bővítménykezelő opcióihoz gyorsgombokat rendeltünk: e: engedélyezés, l: letiltás, t: eltávolítás, s: súgó, n: névjegy, h: hozzáadás, b: beszerzés a weboldalról. (#6388)
+- Helykitöltési és igazítási hibákat javítottak az NVDA különböző párbeszédpanelein. (#6317, #5548, #6342, #6343, #6349)
+- A Dokumentumformázás párbeszédpanel felépítésén sokat javítottak. (#6348)
+- Javítottak az Írásjelkiejtés párbeszédpanel kinézetén, most már az ablak teljes szélességét kitölti az írásjelek listája. (#6101)
+- Böngészőmódban a szerkesztőmezők (e és shift+e), ill. az űrlapmezők (f és shift+f) közti navigálásra szolgáló gyorsgombok mostantól a csak olvasható szerkesztőmezők közti navigálásra is képesek. (#4164)
+- Dokumentumformázás párbeszédpanel: "A kurzor pozíciójánál lévő formázások változásának jelzése (a visszajelzés késését okozhatja)" opció korábbi elnevezésén finomítottunk, hogy egyaránt vonatkozzon a beszéd ill. a braille visszajelzésre is. (#6336)
+- Javítottak az NVDA üdvözlőképernyő kinézetén. (#6350)
+- Az NVDA párbeszédpanelein az "Ok" és a "Mégse" gombokat a jobb oldalra igazították. (#6333)
+- Az NVDA most már léptetőgombokat használ a numerikus beviteli mezőkhöz a párbeszédpanelein, pl.: "Hangmagasság változtatása nagybetűknél" opció a Beszéd párbeszédpanelen. Beírhatja a kívánt értéket, vagy a fel és le nyilakkal változtathatja azt értelemszerűen. (#6099)
+- Az IFrame objektumok jelzése egységesebb lett az egyes böngészőkben. A Firefoxban keretként jelzi az NVDA. (#6047)
+
+
+== Hibajavítások ==
+- Javítottak egy hibát, mely az NVDA bezárásakor jelentkezett olyankor, amikor nyitva volt a beszédnéző. (#5050)
+- Mozilla Firefox: Böngészőmódban már az elvárt módon kezeli az NVDA az image map objektumokat (interaktív képek). (#6051)
+- A kivételszótárak ablakában az enter lenyomása menti a változásokat, és bezárja az ablakot. Korábban az enter lenyomására nem történt semmi. (#6206)
+- Az üzenetek megjelennek braille-ben, amikor összetett beviteli módra váltunk (alapértelmezett bevitel/alfanumerikus, teljes alakos/félalakos, stb.). (#5892, #5893)
+- Ha egy bővítmény állapotát megváltoztatjuk (letiltjuk/engedélyezzük), majd gyorsan vissza is változtatjuk az eredeti állapotára, akkor az NVDA már helyesen jelzi az aktuális állapotot. (#6299)
+- Microsoft Word: Az NVDA már jelzi az oldalszám mezőket a fejlécekben. (#6004)
+- Írásjelkiejtés párbeszédpanel: Már az egérrel is áthelyezhető a fókusz az írásjelek listája és a szerkesztőmezők közt. (#6312)
+- Microsoft Word: Böngészőmódban már nem akadályozza meg az elemlista megnyitását, ha a dokumentum tartalmaz egy érvénytelen hiperhivatkozást. (#5886)
+- Ha a Beszédnézőt a tálcáról, vagy az alt+F4 paranccsal zárjuk be, a vonatkozó jelölőnégyzet az NVDA menüjében már az ablak aktuális állapotát jelzi. (#6340)
+- A bővítmények újratöltése parancs már nem okoz problémákat a beállítási profiloknál, új dokumentumoknál webböngészőkben, és a képernyőáttekintésben sem. (#2892, #5380)
+- Az NVDA általános beállítások párbeszédpanelén a nyelvek már helyesen jelennek meg Windows 10 alatt. (#6259)
+- Az emulált rendszerbillentyűk (pl.: egy gomb a braille kijelzőn, ami a tab gomb lenyomását emulálja) már az NVDA-ban beállított nyelven jelennek meg a bevitelsúgóban és a beviteli parancsok párbeszédpanelen. Korábban ezek kizárólag angolul jelentek meg. (#6212)
+- Az NVDA nyelvének megváltoztatása az általános beállítások párbeszédpanelen az NVDA újraindulásáig nem okoz semmilyen változást. (#4561)
+- Már nem lehet üresen hagyni a tényleges kifejezést új kivételszótár-bejegyzéseknél. (#6412)
+- Braille: Javítottak egy hibát, mely bizonyos rendszereken a soros port keresése közben jelentkezett. Emiatt használhatatlanok voltak bizonyos típusú braille kijelzők. (#6462)
+- Microsoft Word: Az NVDA már jelzi a számozott felsorolást a táblázatcellákban, amennyiben a cellákon navigálunk. (#6446)
+- Microsoft Excel: Amikor egy munkafüzetben navigálunk, az enter vagy a numpad enter lenyomása után az NVDA már bejelenti az aktív cellát. (#6500)
+- iTunes: Böngészőmódban már nem fagy le a program, iTunes Store, Apple Music, stb. használatakor. (#6502)
+- Hibajavítások 64 bites Mozilla és Chrome-alapú alkalmazásokban. (#6497)
+- Mozilla Firefox: többfolyamatos futás engedélyezése esetén a böngészőmód és a szerkesztőmezők már helyesen működnek. (#6380)
+
+
+= 2016.3 =
+
+E kiadás főbb újdonságai: bővítmények külön-külön történő felfüggesztése, űrlapmezők támogatása Microsoft Excelben, jelentős fejlesztések a színek bemondása kapcsán, fejlesztések és javítások több braille kijelzőhöz, valamint a Microsoft Wordhöz.
+
+== Újdonságok ==
+- A Windows 10 éves frissítésében lehetővé válik a Microsoft Edge-ben a böngészőmód használata pdf dokumentumok olvasásakor. (#5740)
+- A program Microsoft wordben már megfelelően jelenti be az áthúzott és duplán áthúzott formátumot. (#5800)
+- Microsoft Word: Ha egy táblázatnak van címe, az NVDA azt már megfelelően jelenti be. Ha van hozzá leírás, az a hosszúleírás megnyitása (NVDA+d) billentyűparanccsal böngészőmódban elérhető. (#5943)
+- Microsoft Word: Az NVDA már ad visszajelzést a bekezdések mozgatására szolgáló billentyűparancsok használatakor. (alt+shift+le vagy alt+shift+felnyíl). (#5945)
+- Microsoft Word: Az NVDA már bemondja a sorközök nagyságát. Új opció a Dokumentumformázás párbeszédpanelen: Sorköz jelzése. (#2961)
+- Az internet explorerben az NVDA már felismeri a html5 szerkezeti elemeket. (#5591)
+- A megjegyzések jelzése (pl. Microsoft Wordben) már kikapcsolható  a megjegyzések jelzése jelölőnégyzettel a Dokumentumformázás párbeszédpanelen. (#5108)
+- Most már lehetőség van a bővítmények külön-külön történő felfüggesztésére a bővítménykezelőben. (#3090)
+- További billentyű-hozzárendeléseket adtak hozzá az ALVA BC640/680 sorozatba tartozó braille kijelzőkhöz. (#5206)
+- Van egy új parancs, amellyel a braille kijelzőt az aktuális fókuszhoz lehet mozgatni. Jelenleg ez csak az ALVA BC640/680 sorozatú braille kijelzőkhöz van hozzárendelve, azonban a beviteli parancsok párbeszédpanelen kézzel igény szerint más kijelzőkhöz is hozzá rendelhető. (#5250)
+- A Microsoft Excelben már lehetőség van kezelni az űrlapmezőket. Ehhez vagy az elemlistában, vagy böngészőmódban kell navigációs gyorsbillentyűvel megkeresni azokat. (#4953)
+- A beviteli parancsok párbeszédpanelen most már billentyűparancsot lehet rendelni az egyszerű áttekintőmód bekapcsolásához. (#6173)
+
+
+== Változások ==
+- Változás a színek bemondásánál: Az NVDA innentől a színkör/színkerék logikáját követve kezeli a színeket. 9 szín, 3 árnyalat, kiegészítve fényes és fakó változatokkal. Ez talán jobban érthető, és kevésbé szubjektív rendszer. (#6029)
+- Megváltozott az NVDA+F9 és NVDA+F10 parancs működése. Az NVDA+f9 továbbra is a kijelölés kezdetét határozza meg, az NVDA+F10 egyszer megnyomva a kijelölést befejezi abban a pozícióban, ahol az áttekintőkurzor van, kétszer megnyomva pedig a vágólapra másolja a szöveget. (#4636)
+- Frissült  az eSpeak NG Master 11b1a7b (22 June 2016) verzióra. (#6037)
+
+
+== Javítások ==
+- Ha Microsoft Wordben böngészőmódban a vágólapra másolunk, a program már megőrzi a formázást. (#5956)
+- Microsoft Word: Az NVDA már az elvárt módon működik a Word saját táblázat-navigációs parancsainak használatakor (alt+home, alt+end, alt+pageUp és alt+pageDown), ill. a táblázat kijelölésére szolgáló parancsok használatakor (Az iménti parancsok kiegészítve a shift billentyűvel). (#5961)
+- Nagy mértékben fejlődött a Microsoft Word párbeszédpanelein az NVDA elemnavigációs képessége. (#6036)
+- Bizonyos alkalmazásokban, mint pl. a Visual Studio 2015, a billentyűparancsokat, gyorsgombokat, mint pl. a kontroll +c-t másolásnál, az elvárásoknak megfelelően mondja be a program. (#6021)
+- Braille kijelzők: Javítva egy, a soros portok keresésénél jelentkező hiba, mely bizonyos braille kijelzőket használhatatlanná tett. (#6015)
+- Microsoft Word: A színek bemondása sokkal pontosabb lett dokumentumtémák alkalmazása esetén. (#5997)
+- A Microsoft Edge-ben a böngészőmód, valamint a startmenü keresési javaslatainak a támogatása újra elérhető a windows 10 áprilisi kiadásától kezdve. (#5955)
+- Microsoft wordben jobban működik a táblázatok fejléceinek automatikus felolvasása, ha egyesített cellákkal dolgozunk. (#5926)
+- A Windows 10 levelezőprogramjában most már nem hiúsul meg az üzenetek tartalmának felolvasása. (#5635) 
+- Ha a parancsbillentyűk bemondása be van kapcsolva, az NVDA most már nem mondja kétszer a zárolható billentyűket, pl. capslockot. (#5490)
+- A Windows 10 éves frissítésekor a felhasználói felügyeleti párbeszédpaneleket az NVDA újra megfelelően olvassa fel. (#5942)
+- A Webkonferencia bővítményben (pl. amit az out-of-sight.net weboldal is használ) az NVDA már nem jelzi sem beszéddel, sem hanggal a mikrofon bemenethez kapcsolódó folyamatjelző változását. (#5888)
+- Most már az előző vagy következő keresés parancsok böngészőmódban figyelembe veszik a kis- és nagybetűket, ha eredetileg is kértük a kereséskor ezek megkülönböztetését. (#5522)
+- Szótárbejegyzések szerkesztésekor az NVDA visszajelzést ad érvénytelen regex kifejezések esetén. Az NVDA már nem fagy le, ha egy szótárbejegyzés szabálytalan regex kifejezést tartalmaz. (#4834)
+- Ha az NVDA nem tud kommunikálni egy braille kijelzővel például azért, mert azt eltávolították, a program tiltja a kijelző használatát. (#1555)
+- Bizonyos esetekben kissé növekszik az NVDA teljesítménye böngészőmódban az elemek szűrésekor. (#6126)
+- Microsoft Excel: A háttérmintázatok bejelentése összhangba került az Excelben használt elnevezésekkel. (megjegyzés: A honosított változatban ez eddig is így volt, változás csak az angol nyelvű felületen történt.) (#6092)
+- Fejlődött a Windows 10 bejelentkező képernyő támogatása, ideértve az értesítések felolvasását, vagy a jelszó szerkesztőmező érintéssel történő aktiválását. (#6010)
+- Braille kijelzők: Az NVDA helyesen érzékeli a másodlagos kurzormozgató gombokat az ALVA BC640/680 series braille kijelzőknél. (#5206)
+- Az NVDA újra rendesen felolvassa a bejelentési értesítéseket a Windows 10 legújabb kiadásában. (#6096)
+- Az NVDA most már nem mulasztja el felismerni a billentyűparancsokat alkalmanként a Baum kompatibilis és a HumanWare Brailliant B braille kijelzők használata során. (#6035)
+- Ha a sorszámok bemondása be van kapcsolva a dokumentumformázás párbeszédpanelen, a sorszámok a braille kijelzőn is megjelennek. (#5941)
+- Ha a beszéd ki van kapcsolva, az objektumok megjelenítése, mint pl. az NVDA+tab a fókusz bemondására, most már megjelennek a beszédnézőben, ahogy azt elvárnánk.(#6049)
+
+
+= 2016.2.1 =
+Ez a kiadás kijavít néhány súlyos hibát, mely a Microsoft Word összeomlását okozta:
+
+
+- A Microsoft Word már nem omlik össze rögtön az induláskor Windows Xp használata esetén. (#6033)
+- A nyelvhelyességi hibák jelzése eltávolításra került az NVDA-ból, ugyanis a Microsoft Word összeomlását okozta. (#5954, #5877)
+
+
 = 2016.2 =
 Ebben a kiadásban: Hangjelzés gépelési hibánál; nyelvhelyességi hibák jelzése a Microsoft Wordben; ill. kisebb-nagyobb fejlesztések a Microsoft Office támogatás terén.
 
