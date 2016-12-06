@@ -1147,8 +1147,6 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		renderChildren=true;
 		tempIter = attribsMap.find(L"HTMLAttrib::href");
 		wstring linkAttribute=tempIter->second;
-		//wstring linkAttribute;
-		//linkAttribute=wLinkAttribute;
 		wstring labelForNode=findLabel(labelsMap,linkAttribute);
 		if (!labelForNode.empty()){
 			contentString=labelForNode;
