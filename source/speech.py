@@ -257,8 +257,6 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 		if args: buf.append(args)
 
 def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allowedProperties):
-	if speechMode==speechMode_off:
-		return
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
@@ -408,23 +406,31 @@ def splitTextIndentation(text):
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
 RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
-def getIndentationSpeech(indentation):
+IDT_BASE_FREQUENCY = 220 #One octave below middle A.
+IDT_TONE_DURATION = 80 #Milleseconds
+IDT_MAX_SPACES = 72
+def getIndentationSpeech(indentation, formatConfig):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
 	@type indentation: unicode
+	@param formatConfig: The configuration to use.
+	@type formatConfig: dict
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
-	# Translators: no indent is spoken when the user moves from a line that has indentation, to one that 
-	# does not.
+	speechIndentConfig = formatConfig["reportLineIndentation"]
+	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
 	if not indentation:
+		if toneIndentConfig:
+			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
 		# Translators: This is spoken when the given line has no indentation.
-		return _("no indent")
+		return (_("no indent") if speechIndentConfig else "")
 
 	#The non-breaking space is semantically a space, so we replace it here.
 	indentation = indentation.replace(u"\xa0", u" ")
 	res = []
 	locale=languageHandler.getLanguage()
+	quarterTones = 0
 	for m in RE_INDENTATION_CONVERT.finditer(indentation):
 		raw = m.group()
 		symbol = characterProcessing.processSpeechSymbol(locale, raw[0])
@@ -436,8 +442,18 @@ def getIndentationSpeech(indentation):
 			res.append(symbol)
 		else:
 			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
+		quarterTones += (count*4 if raw[0]== "\t" else count)
 
-	return " ".join(res)
+	speak = speechIndentConfig
+	if toneIndentConfig: 
+		if quarterTones <= IDT_MAX_SPACES:
+			#Remove me during speech refactor.
+			pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
+			tones.beep(pitch, IDT_TONE_DURATION)
+		else: 
+			#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
+			speak = True
+	return (" ".join(res) if speak else "")
 
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
@@ -666,7 +682,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	if extraDetail:
 		formatConfig=formatConfig.copy()
 		formatConfig['extraDetail']=True
-	reportIndentation=unit==textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]
+	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
 
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
@@ -769,7 +785,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
-	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail,initialFormat=True)
 	if text:
 		speechSequence.append(text)
 	if autoLanguageSwitching:
@@ -827,7 +843,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				if commonFieldCount>len(newControlFieldStack):
 					commonFieldCount=len(newControlFieldStack)
 			elif command.command=="formatChange":
-				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail)
 				if fieldText:
 					inTextChunk=False
 				if autoLanguageSwitching:
@@ -848,7 +864,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
 	if reportIndentation and speakTextInfoState and allIndentation!=speakTextInfoState.indentationCache:
-		indentationSpeech=getIndentationSpeech(allIndentation)
+		indentationSpeech=getIndentationSpeech(allIndentation, formatConfig)
 		if autoLanguageSwitching and speechSequence[-1].lang is not None:
 			# Indentation must be spoken in the default language,
 			# but the initial format field specified a different language.
@@ -1092,7 +1108,15 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText if x])
+		out = []
+		content = attrs.get("content")
+		if content and speakContentFirst:
+			out.append(content)
+		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText) if x)
+		if content and not speakContentFirst:
+			out.append(content)
+		return CHUNK_SEPARATOR.join(out)
+		
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
@@ -1105,7 +1129,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False , separator=CHUNK_SEPARATOR):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,unit=None,extraDetail=False , initialFormat=False, separator=CHUNK_SEPARATOR):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -1126,7 +1150,9 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if  formatConfig["reportHeadings"]:
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
-		if headingLevel and headingLevel!=oldHeadingLevel:
+		# headings should be spoken not only if they change, but also when beginning to speak lines or paragraphs
+		# Ensuring a similar experience to if a heading was a controlField
+		if headingLevel and (initialFormat and (reason==controlTypes.REASON_FOCUS or unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH)) or headingLevel!=oldHeadingLevel):
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text=_("heading level %d")%headingLevel
 			textList.append(text)

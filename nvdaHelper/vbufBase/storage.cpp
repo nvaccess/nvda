@@ -216,7 +216,7 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	s<<L"_childcount=\""<<childCount<<L"\" _childcontrolcount=\""<<childControlCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
-		text+=i->first;
+		text+=sanitizeXMLAttribName(i->first);
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
 			appendCharToXML(*j,text,true);
@@ -897,7 +897,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 		LOG_DEBUGWARNING(L" offset "<<offset<<L" is past end of buffer, returning NULL");
 		return NULL;
 	}
-	LOG_DEBUG(L"find node starting at offset "<<offset<<L", with attributes: "<<attribsString);
+	LOG_DEBUG(L"find node starting at offset "<<offset<<L", with attribute regexp: "<<regexp);
 	int bufferStart, bufferEnd, tempRelativeStart=0;
 	VBufStorage_fieldNode_t* node=NULL;
 	if(offset==-1) {

@@ -9,7 +9,7 @@
 
 + Introducción +
 O NonVisual Desktop Access (NVDA) ye un lector de pantalla libre y de codigo ubierto  t'o Sistema Operativo  Microsoft Windows.
-Proporcionando retroalimentación a traviés de voz sintetica y Braille, posibilita a la chent ciega u deficient visual accedir a ordinadors executando Windows por un coste no mayor a lo d'una persona vident.
+Furnindo retroalimentación a traviés de voz sintetica y Braille, posibilita a la chent ciega u deficient visual accedir a ordinadors executando lo Windows por un coste no mayor a lo d'una persona vident.
 O NVDA ye desembolicau por [NV Access http://www.nvaccess.org/], con  colaboracions d'a comunidat.
 
 ++ Caracteristicas chenerals ++
@@ -90,6 +90,7 @@ Amás d'a incapacidat d'encetar-se automaticament entre y/u dimpués de l'autent
 - A incapacidat pa interactuar con as aplicacions que s'executen con privilechios d'administrador, a lo menos que, profés, o mesmo NVDA tamién siga estau executau con istos privilechios (no ye recomendable).
 - A incapacidat de leyer as pantallas d'o Control de Cuentas d'Usuario (UAC) quan tracte d'encetar una aplicación con privilechios d'administrador.
 - Windows 8 y superiors: a incapacidat pa suportar a dentrada dende una pantalla tactil.
+- Windows 8 y superior: L'achiquida d'audio no ye suportada.
 - Windows 8 y superiors: a incapacidat d'amanir caracteristicas tals como lo modo de navegación y verbalización de caracters en escribir en aplicacions d'o Windows Store.
 
 
@@ -370,8 +371,8 @@ As siguients ordens son disponibles ta revisión de texto:
 | Mover-se-ne t'o siguient caracter en revisión | 3 teclau numerico | NVDA+punto | eslizar ta la dreita (modo de texto) | Mueve o cursor de revisión t'o siguient caracter en a linia actual de texto |
 | Mover-se-ne t'a fin d'a linia en revisión | mayus+3 teclau numerico | NVDA+mayus+u | no | Mueve o cursor de revisión t'a fin d'a linia actual de texto |
 | Leyer-lo tot con revisión | Mas teclau numerico | NVDA+mayus+Flecha abaixo | eslizar con 3 didos enta abaixo (modo de texto) | Leye dende a posición actual d'o cursor de revisión, movendo-lo seguntes baixa |
-| copiar dende o cursor de revisión | NVDA+f9 | NVDA+f9 | no | Prencipia o copiau de texto dende a posición actual d'o cursor de revisión. La copia actual no se leva a cabo dica que digas a NVDA do copiar-ne |
-| Copiar en o cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia dende a posición previament  fixada con Copiar dende o cursor de revisión dica la posición actual d'o cursor de revisión incluindo-la.  Dimpués de pretar ista tecla o texto se copiará en o portafuellas d'o Windows |
+| Seleccionar y copiar dende o cursor de revisión | NVDA+f9 | NVDA+f9 | no | Prencipia o proceso de selección y copia dende a posición actual d'o cursor de revisión. L'acción actual no se leva ta cabo dica que digas a NVDA dó ye o final de rango de texto |
+| Seleccionar y copiar en o cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia En a primer pretada se copia o texto dende a posición previament  establida como marcador d'inicio dica la posición actual d'o cursor de revisión incluindo-la.  Dimpués de pretar ista tecla una segunda vez se copiará o texto  en o portafuellas d'o Windows |
 | Anunciar o formato d'o texto | NVDA+f | NVDA+f | no | Informa d'o formato d'o texto an siga situau actualment o cursor de revisión. Pretando-lo dos vegadas amuestra a información en o modo de navegación |
 %kc:endInclude
 
@@ -638,21 +639,30 @@ Pretando l'intro u lo botón mover ta en estar en un comentario listau se'n move
 S'amuestra l'adreza d'a celda de conchunta con a suya formula ta cada celda.
 Pretando l'intro u lo botón mover ta en una formula listada se'n moverá dreitament t'a ixa celda. 
 - Fuellas: Isto lista todas as fuellas en o libro de treballo. 
-+Pretar f2 en estar en una fuella listada te permit renombrar a fuella. 
-Pretando l'intro u lo botón mover ta en estar en a fuella listada seleccionará ista fuella.
+Pretar f2 en estar en una fuella listada te permit renombrar a fuella. 
+Pretando l'intro u lo botón de mover ta en estar en a fuella listada seleccionará ixa fuella.
+- Campos de formulario: Isto lista totz os campos de formulario en a fuella de treballo activa.
+Pa cada campo de formulario, a lista d'elementos amuestra o texto alternativo d'o campo de conchunta con as adrezas d'as celdas que cubre.
+Seleccionando un campo de formulario y pretando l'intro u lo botón de mover ta se'n mueve ta ixe campo en modo de navegación.
 -
 
 +++ Anunciau de Comentarios +++
 %kc:beginInclude
-T'anunciar qualsiquier comentario t'a celda actualment enfocada preta NVDA+alt+c.
+Pa anunciar qualsiquier comentario pa la celda actualment enfocada preta NVDA+alt+c.
 %kc:endInclude
 Totz os comentarios d'a fuella de treballo pueden listar-sen tamién en a lista d'elementos d'o NVDA.
 
 +++ Leyer as celdas protechidas +++
 Si un libro de treballo fuó protechiu, puet estar imposible mover o foco t'a celdas particulars que fuoron blocadas ta edición.
 %kc:beginInclude
-Ta permitir mover-se-ne ta celdas blocadas cambea t'o modo de navegación pretando NVDA+espacio y allora fe servir os comandos estandar de movimiento de l'Excel como as teclas de flecha ta por todas as flechas en a fuella de treballo actual.
+Pa permitir mover-se-ne ta celdas blocadas cambea t'o modo de navegación pretando NVDA+espacio y allora fe servir os comandos estandar de movimiento de l'Excel como as teclas de flecha por todas as celdas en a fuella de treballo actual.
 %kc:endInclude
+
++++ Campos de formulario +++
+As fuellas de treballo de l'Excel pueden incluir campos de formulario.
+Puetz accedir ta ells fendo servir a lista d'elementos u as teclas de navegación d'una sola letra de campos de formulario; f y mayus+f.
+Una vez que te'n has moviu ta un campo de formulario en o modo de navegación puetz pretar l'intro u o espacio pa activar-lo u bien cambiar t'o modo de foco pa poder interactuar con ell, pendendo d'o control.
+Pa mas información sobre o modo de navegación y a navegación d'una sola letra mira-te a [sección d'o modo de navegación #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -757,7 +767,7 @@ Ista opción te permite trigar o sintetizador  que deseyas que emplegue o NVDA t
 Ta una lista d'os sintetizadors que suporta lo NVDA, por favor uella la sección [Sintetizadors de Voz Suportaus #SupportedSpeechSynths].
 
 Un elemento especial que amaneixerá siempre en ista lista ye "Sin Voz", que te permite emplegar o NVDA sin salida de voz beluna.
-Isto podría estar util ta belún que deseye emplegar nomás o NVDA con Braille, u  talment ta desembolicadors vidents que solament deseyen emplegar o Visualizador de Voz.
+Ixo podría estar util pa belún que deseye emplegar nomás o NVDA con Braille, u  talment pa desembolicadors vidents que solament deseyen emplegar o Visor d'a Voz.
  
 ==== Dispositivo de Salida ====
 Ista opción te permite trigar a tarcheta de son a traviés d'a quala NVDA habría de mandar charrar a o sintetizador seleccionau.
@@ -770,7 +780,10 @@ En o Windows 8 y superiors, ista opción te permit esleyir si o NVDA habría de 
 - No achiquir: O NVDA nunca no baixará o volumen d'atros sons. 
 - Achiquir quan salga fabla y sons: O NVDA nomás baixará o volumen d'atros sons quan o NVDA siga charrando u reproducindo sons. Ixo puet no marchar pa totz os sintetizadors. 
 - Achiquir siempre: O NVDA mantendrá o volumen d'atros sons más baixo tot o tiempo que siga correndo.
+-
 
+Ista opción nomás ye disponible si o NVDA ye instalau.
+No ye posible suportar l'achiquida d'audio en as copias portables y temporals d'o NVDA.
 
 +++ Opcions de Voz (NVDA+control+v) +++[VoiceSettings]
 O dialogo Opcions de Voz, que se troba en o menú Preferencias, contién opcions que te permiten modificar o son d'a voz. 
@@ -1049,7 +1062,9 @@ Quan s'activa, o cursor de revisión se moverá automaticament t'a posición d'o
 Quan s'activa, o cursor de revisión seguirá a lo churi seguntes se mueva.
 
 ==== Modo de Revisión Simpla ====
-Quan s'activa, o NVDA filtrará a hierarquía d'obchectos que puet navegar-sen, ta excluir qualsiquier obchecto que no siga de l'intrés ta l'usuario; p. eix.: obchectos inveyibles y obchectos utilizaus solament con propositos de disenyo.
+Quan s'activa, o NVDA filtrará a hierarquía d'obchectos que puet navegar-se, pa excluir qualsiquier obchecto que no siga de l'intrés ta l'usuario; p. eix.: obchectos inveyibles y obchectos utilizaus solament con propositos de disenyo.
+
+Pa alternar o modo de revisión dende do siga asigna un cenyo personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
 
 +++ Opcions de Presentación d'Obchectos (NVDA+control+u) +++
 Se'n troba en o menú Preferencias baixo "Presentación d'Obchectos..." 
@@ -1147,7 +1162,7 @@ Iste campo achusta a cantidat de linias que moverás quan pretes Abance de pachi
 ==== Fer servir disenyo de pantalla ====
 Tecla: NVDA+v
 
-Ista opción te permite especificar si o conteniu en o modo de navegación habría de colocar cosetas tals como vinclos y atros campos en a suya propia linia, u si habría de conservar-los en o fluxo de texto seguntes en siga amostrau visualment. Si a opción ye activada, allora as cosetas remanirán seguntes sigan amostradas visualment, pero si en ye desactivada, allora os campos serán colocaus en a suya propia linia.
+Ista opción te permite d'especificar si o conteniu en o modo de navegación habría de colocar cosetas tals como vinclos y atros campos en a suya propia linia, u si habría de conservar-los en o fluixo de texto seguntes en siga amostrau visualment. Si a opción ye activada, allora as cosetas remanirán seguntes sigan amostradas visualment, pero si ye desactivada, allora os campos serán colocaus en a suya propia linia.
 
 ==== Charrar-lo Tot Automaticament en Cargar a Pachina ====
 Ista caixeta de verificación commuta a verbalización automatica d'una pachina dimpués de cargar-la en o modo de navegación.
@@ -1181,43 +1196,64 @@ Como un eixemplo, en estar activada, si se pretó a letra j habría de capturar-
 +++ Formatiau de Documentos (NVDA+control+d) +++[DocumentFormattingSettings]
 Iste quadro de dialogo se troba en o menú Preferencias, baixo "Formatiau de Documentos...". 
 
-A mayoría d'as caixetas de verificación en iste dialogo son ta configurar qué tipo de formato deseyas escuitar automaticament en que muevas o cursor por os documentos. 
+A mayoría d'as caixetas de verificación en iste dialogo son pa configurar qué tipo de formato deseyas escuitar automaticament en que muevas o cursor por os documentos. 
 Por Eixemplo, si marcas a caixeta de verificación anunciar o nombre d'a fuent, cada vegada que navegues por o texto con una fuent diferent, o nombre d'a fuent será anunciau.
 
+As opcions de formatiau de documentos son organizadas en grupos.
 Puetz configurar l'anunciau de:
-- Nombre d'a fuent
-- Grandaria d'a fuent
-- Atributos d'a fuent
-- Aliniación d'o texto
-- Colors
-- Revisions de l'editor
-- Enfasi
-- Estilo d'o texto
-- Errors d'ortografía
-- Numers de pachina
-- Numers de linia
-- Sangría de linia
-- Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
-- Tablas
-- Capiters de ringlera y columna de tabla
-- Coordenadas de celdas de tabla
-- Vinclos
-- Capiters
-- Listas
-- Citas
-- Zonas
-- Bastidas
-- Quan bella cosa ye clicable
+- Fuent
+ - Nombre d'a fuent
+ - Grandaria d'a fuent
+ - Atributos d'a fuent
+ - Enfasi
+ - Estilo
+ - Colors
+- Información de documento
+ - Comentarios
+ - Revisions de l'editor
+ - Errors d'ortografía
+- Pachinas y espaciau
+ - Numers de pachina
+ - Numers de linia
+ - Anunciau d'a sangría de linia (desenchegau, fabla, tons, todas dos fabla y tons)
+ - Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
+ - Espaciau de linia (simple, dople, etc.)
+ - Aliniación
+- Información de tabla
+ - Tablas
+ - Capiters de ringlera y columna
+ - Coordenadas de celdas
+- Elementos
+ - Capiters
+ - Vinclos
+ - Listas
+ - Citas
+ - Zonas
+ - Bastidas
+ - Clicable
+ -
 -
 
-Ta trigar istas opcions dende qualsiquier puesto, por favor asigna cenyos personalizaus fendo servir o [dialogo de cenyos de dentrada #InputGestures].
+
+Pa trigar istas opcions dende qualsiquier puesto asigna cenyos personalizaus fendo servir o [dialogo de cenyos de dentrada #InputGestures].
 
 ==== Anunciar os cambeos de formato dimpués d'o cursor ====
-Si en ye activada, ista opción diz a lo NVDA que prebe y detecte totz os cambeos de formato en una linia seguntes a charra, si se fa isto podría ralentizar-se a rispuesta d'o NVDA.
+Si ye activada, ista opción diz a lo NVDA que prebe y detecte totz os cambeos de formato en una linia seguntes l'anuncia, si se fa isto podría ralentizar-se a rispuesta d'o NVDA.
 
-De traza predeterminada, o NVDA detectará o formato en a posición d'o cursor d'o Sistema / Revisión, y en qualques casos podría detectar o formato en a resta d'a linia, nomás si no'n ye causando un decremento d'a respuesta.
- 
-Activa ista opción mientras comprebas a lectura de documentos en aplicacions tals como lo Microsoft Word, do lo formato siga important.
+De traza predeterminada, o NVDA detectará o formato en a posición d'o cursor d'o Sistema / Revisión, y en qualques casos podría detectar o formato en a resta d'a linia, nomás si no bi ye causando un decremento d'a respuesta.
+
+Activa ista opción mientras comprebas a lectura de documentos en aplicacions tals como lo Wordpad, en do lo formato ye important.
+
+==== Anunciau d'a sangría d'a linia ====[lineIndentationOptions]
+Ista opción te permite configurar cómow s'anuncia a sangría en o prencipio d'as linias.
+O quadro combinau d'"anunciar a sangría d'a linia con" tien quatro opcions.
+
+- Desenchegau: O NVDA no tractará a sangría de traza especial.
+- Voz: Si se triga voz, en que a cantidat d'a sangría cambeye o NVDA dirá bella cosa como "dotze espacio" u "quatro tabulación."
+- Tons: Si se triga tons, en que a cantidat de sangría cambeye os tons indicarán a cantidat de cambeyo en a sangría.
+O ton puyará de ton cada espacio, y pa una tabulación, puyará os tons equivalents a 4 espacios.
+- Todas dos, voz y tons: Ista opción leye a sangría fendo servir totz dos metodos debantditos.
+-
 
 +++ Diccionarios d'a Fabla +++
 O menú de Diccionarios d'a fabla, (trobau en o menú Preferencias) contién dialogos que te permiten controlar o modo en que o NVDA pronuncia parolas u frases particulars. 
@@ -1403,58 +1439,68 @@ Ta cambiar cómo se configura o NVDA en as pantallas de logon/UAC, configura lo 
 
 + Ferramientas Extra +
 
-++ Visualizador d'o rechistro ++
-O visualizador d'o rechistro, trobau en Ferramientas en o menú NVDA, te permiten veyer toda la salida que haiga ocurriu dica agora dende quan encetés NVDA por zaguera vegada.
+++ Visor d'o rechistro ++
+O visor d'o rechistro, trobau en Ferramientas en o menú NVDA, te permiten veyer toda la salida que haiga ocurriu dica agora dende quan encetés NVDA por zaguera vegada.
 
-Amás de leyer o conteniu, tamién puetz alzar una copia d'o fichero de rechistro, u refrescar o visualizador tal que s'amuestre a salida mas recient dende que o visualizador de rechistro estió ubierto.
-Istas accions son disponibles baixo o menú de visualizador de rechistro.
+Amás de leyer o conteniu, tamién puetz alzar una copia d'o fichero de rechistro, u refrescar o visor pa que s'amuestre a salida mas recient dende que s'ubrió lo visor d'o rechistro.
+Istas accions son disponibles baixo o menú d'o visor d'o rechistro.
 
-++ Visualizador de Voz ++
-Ta desembolicadors de Software vidents u chent contrimostrando lo NVDA a una audiencia vident, ye disponible una finestra flotant que te permite veyer tot o texto que o NVDA siga charrando actualment.
+++ Visor d'a Voz ++
+Pa desembolicadors vidents de Software u chent contrimostrando lo NVDA a una audiencia vident, ye disponible una finestra flotant que te permite veyer tot o texto que o NVDA siga charrando actualment.
 
-T'activar o visualizador de voz, marca l'elemento de menú "Visualizador de Voz" baixo Ferramientas en o menú NVDA.
-Desmarca l'elemento de menú ta desactivar-lo.
+Pa activar o visor d'a voz, marca l'elemento de menú "Visor d'a Voz" baixo Ferramientas en o menú NVDA.
+Desmarca l'elemento de menú pa desactivar-lo.
 
-Mientras o visualizador de voz ye activau, s'actualiza constantment t'amostrar-te o texto mas recient que ye estando charrau.
-Manimenos, si fas clic u colocas o foco adintro d'o visualizador,  o NVDA aturará temporalment l'actualización d'o texto, tal que podrás seleccionar u copiar facilment o conteniu existent.
+A finestra d'o visor d'a voz contién una caixeta de verificación clamada "Amostrar o visor d'a voz en rancar".
+Si ye enchegada, o visor d'a voz s'ubrirá en que o NVDA ranque.
+A finestra d'o visor d'a voz mirará de reubrir-se siempre con as mesmas dimensions y ubicación que quan se zarró.
 
-Ta trigar o visor d'a fabla dende qualsiquier puesto, por favor asigna un cenyo personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
+Mientras o visor de voz ye activau, s'actualiza constantment t'amostrar-te o texto mas recient que ye estando charrau.
+Manimenos, si fas clic u colocas o foco adintro d'o visor,  o NVDA aturará temporalment l'actualización d'o texto, tal que podrás seleccionar u copiar facilment o conteniu existent.
+
+Pa trigar o visor d'a voz dende qualsiquier puesto asigna un cenyo personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
 
 ++ Administrador de Complementos ++
-L'Administrador de Complementos, a lo que s'accedeix seleccionando Administrador de complementos baixo Ferramientas en o menú NVDA, te permite instalar y desinstalar paquetz de complementos t'o NVDA.
-Istos paquetz son proporcionaus por a comunidat y contienen codigo personalizau que podrá adhibir u cambiar caracteristicas en o NVDA u tamién proporcionan suporte ta linias Braille u sintetizadors de voz extra.
+L'Administrador de Complementos, t'o que s'accede seleccionando l'administrador de complementos baixo as ferramientas en o menú d'o NVDA, te permite instalar, desinstalar, enchegar y desenchegar paquetz de complementos pa o NVDA.
+Ixos paquetz son furnius por a comunidat y contienen codigo personalizau que podrá adhibir u cambiar caracteristicas en o NVDA u tamién proporcionan suporte pa linias Braille u sintetizadors de voz extra.
 
 L'Administrador de Complementos contién una lista que amuestra totz os complementos instalaus actualment en a tuya configuración d'usuario d'o NVDA. 
-S'amuestra un nombre de paquet, versión y autor ta cada complemento, encara que se puet veyer mas información tal como una descripción y una URL seleccionando lo complemento y pretando lo botón Sobre o complemento.
-Si bi ha aduya disponible t'o complemento seleccionau puetz acceder ta ella pretando o botón d'aduya d'o complemento.
+S'amuestra o nombre d'o paquet, o estau, a versión y l'autor pa cada complemento, encara que se puet veyer mas información como una descripción y una URL seleccionando lo complemento y pretando lo botón arredol d'o complemento.
+Si bi ha aduya disponible pa o complemento seleccionau puetz acceder ta ella pretando o botón d'aduya d'o complemento.
 
-Ta examinar y descargar os complementos disponibles online, preta o botón Obtener Complementos.
-Iste botón ubre a [pachina de complementos d'o NVDA http://addons.nvda-project.org/].
-Si o NVDA ye instalau y correndo en o tuyo sistema puetz ubrir dreitament o complemento dende l'examinador ta prencipiar o proceso d'instalación como se describe contino.
+Pa examinar y descargar os complementos disponibles en linia preta o botón d'obtener complementos.
+Ixe botón ubre a [pachina de complementos d'o NVDA http://addons.nvda-project.org/].
+Si o NVDA ye instalau y correndo en o tuyo sistema puetz ubrir dreitament o complemento dende o navegador pa prencipiar o proceso d'instalación como se describe contino.
 En caso contrario, alza o paquet de complemento y sigue as instruccions mas abaixo.
 
-Ta instalar un complemento que obteniés previament, preta o botón Instalar.
+Pa instalar bell complemento que obteniés previament, preta o botón d'instalar.
 Ixo te permitirá examinar un paquet de complemento  (fichero .nvda-addon) en o tuyo ordinador u en un ret.
-Una vegada que pretes Ubrir, o proceso d'instalación empecipiará.
+Una vegada que pretes ubrir, empecipiará o proceso d'instalación.
 
-En que un complemento se'n va a instalar, NVDA en primeras te pedirá que confirmes que realment deseyas instalar-lo.
+En que se va a instalar un complemento, o NVDA en primeras te pedirá que confirmes que realment deseyas instalar-lo.
 A causa que a funcionalidat d'os complementos no tien restriccions adintro d'o NVDA, que en teoría podría incluir l'acceso t'os tuyos datos personals u mesmo ta tot o sistema si o NVDA ye una copia instalada, ye muit important que instales nomás complementos dende fuents fiables.
 Una vegada que o complemento siga instalau, o NVDA debe reenchegar-se ta que o complemento prencipie a suya execución. 
-Malas que lo faigas, un estau de "instalar" s'amostrará ta ixe complemento en a lista.
+Malas que lo fagas, un estau d'"instalar" s'amostrará ta ixe complemento en a lista.
 
-Ta eliminar un complemento, selecciona o complemento dende a lista y preta o botón Eliminar.
-O NVDA te preguntará si realment deseyas fer isto.
+Pa eliminar bell complemento, selecciona o complemento dende a lista y preta o botón d'eliminar.
+O NVDA te preguntará si realment deseyas fer ixo.
 Igual que con a instalación, o NVDA debe reenchegar-se ta que o complemento siga eliminau completament.
-Malas que lo faigas, un estau de "eliminar" s'amostrará ta ixe complemento en a lista.
+Malas que lo fagas, un estau d'"eliminar" s'amostrará pa ixe complemento en a lista.
 
-L'administrador tamién tien un botón Zarrar ta zarrar o dialogo.
-Si has instalau u eliminau complementos, o NVDA en primeras te preguntará si deseyas reenchegar-lo ta que os cambeos puedan levar-se a cabo.
+Pa desenchegar bell complemento preta o botón de desenchegar.
+Pa enchegar bell complemento previament desenchegau preta o botón d'enchegar.
+Puetz desenchegar bell complemento si o estau d'o complemento indica que ye correndo u enchegau, u enchegar-lo si o complemento ye suspendiu u desenchegau.
+Pa cada pretada d'o botón d'enchegar u desenchegar cambia o estau d'o complemento pa indicar qué pasará en que o NVDA se reenchegue.
+Igual como quan instales u elimines complementos te caldrá reenchegar o NVDA pa que os cambeos fagan efecto.
+
+L'administrador tamién tien un botón de zarrar pa zarrar o dialogo.
+Si has instalau, eliminau u cambiau o estau de bell complemento, o NVDA en primeras te preguntará si deseyas reenchegar-lo pa que os cambeos puedan fer efecto.
 
 En o pasau estió posible extender a funcionalidat d'o NVDA copiando plugins y controladors individuals en o tuyo directorio de configuración de l'usuario d'o NVDA.
 Encara que ista versión d'o NVDA encara podrá cargar-los, No s'amostrarán en l'Administrador de Complementos.
 Ye millor eliminar istos fichers d'a tuya configuración y instalar o complemento apropiau si bi'n ha belún disponible.
 
-T'acceder t'o Administrador de complementos dende qualsiquier puesto, por favor asigna un cenyos personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
+Pa acceder t'o Administrador de complementos dende qualsiquier puesto, por favor asigna un cenyo personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
 
 ++ Consola de Python ++
 A consola de Python d'o NVDA, trobada baixo Ferramientas en o menú NVDA, ye una ferramienta de desembolique que ye util ta depuración, inspección cheneral de l'interior  d'o NVDA u inspeción d'a hierarquía d'accesibilidat  d'una aplicación.
@@ -1583,21 +1629,27 @@ Solament t'a Focus 80:
 
 ++ Optelec ALVA BC640/680 ++
 Todas dos linias ALVA BC640 y BC680 d'[Optelec http://www.optelec.com/] son suportadas.
-No amenestes instalar garra controlador en especial ta emplegar istas linias.
-Nomás enchega la linia y configura o NVDA ta emplegar-la.
+No te cal instalar garra controlador en especial ta emplegar istas linias.
+Nomás enchega la linia y configura o NVDA pa emplegar-la.
 
 Entre que istas linias tiengan un teclau braille, manean a transcripción de braille ta texto por ellas mesmas.
 Por tanto, a configuración d'a tabla de dentrada braille d'o NVDA ye irrelevant.
 
 Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira a documentación d'a linia ta descripcions de do pueden trobar-se istas teclas.
+Por favor mira a documentación d'a linia pa descripcions de dó puet trobar-se istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar a linia braille enta zaga | t1 |
+| Desplazar a linia braille enta zaga | t1 u etouch1 |
 | Mover a linia braille t'a linia anterior | t2 |
+| Mover-se-ne t'o foco actual | t3 |
 | Mover a linia braille t'a linia siguient | t4 |
-| Desplazar a linia braille enta debant | t5 |
+| Desplazar a linia braille enta debant | t5 u etouch3 |
 | Guidar t'a celda braille | sensor |
+| Mover-se-ne t'a linia d'alto en a revisión | t1+t2 |
+| Mover-se-ne t'a linia d'abaixo en a revisión | t4+t5 |
+| Alternar o braille ancorau ta | t1+t3 |
+| Anunciar o titol | etouch2 |
+| Anunciar a barra d'estau | etouch4 |
 | tecla mayus+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
@@ -1607,10 +1659,16 @@ Por favor mira a documentación d'a linia ta descripcions de do pueden trobar-se
 | tecla flecha cucha | spLeft |
 | tecla flecha dreita | spRight |
 | tecla intro | spEnter |
+| Anunciar a calendata u a hora | sp1+sp2 |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicacions) | sp1+sp4 |
+| Tecla windows+b (servilla de sistema d'o foco) | sp3+sp4 |
 | tecla windows | sp2+sp3 |
 | tecla alt+tabuladorb | sp2+sp4 |
+| control+tecla d'inicio | t3+spUp |
+| control+tecla de fin | t3+spDown |
+| tecla d'inicio | t3+spLeft |
+| tecla de fin | t3+spRight |
 %kc:endInclude
 
 ++ Linias Handy Tech ++
@@ -1659,19 +1717,25 @@ Porfavor mira a documentación d'a linia ta descripcions de do se pueden trobar 
 | Tecla alt+mayus+tabulador | SUP |
 %kc:endInclude
 
-++ Linias braille Baum/Humanware/APH ++
-Quantas linias braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] son suportadas quan se connectan a traviés de l'USB u d'o bluetooth.
+++ Linias braille Baum/Humanware/APH/Orbit ++
+Quantas linias braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] y [Orbit http://www.orbitresearch.com/]. As linias son suportadas quan se connectan a traviés de l'USB, d'o bluetooth u d'o puerto serie.
 Istas incluyen:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Belatras linias fabricadas por Baum tamién podrían funcionar, encara que no son estadas prebadas.
 
-Si se connecta a traviés d'USB as linias difuera d'a VarioUltra, Pronto! u Refreshabraille con o modo d'USB establiu a HID, en primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+Si se connecta a traviés d'USB as linias que no fan servir l'HID, en primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+A VarioUltra y a Pronto! fan servir l'HID.
+A Refreshabraille y a Orbit Reader 20 pueden fer servir l'HID si son configuradas apropiadament.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira a documentación d'a linia braille pa descripcions de do se puet trobar istas teclas.
+O modo de serie USB d'a Orbit Reader 20 actualment no ye suportau que en o Windows 10.
+Cheneralment s'habría de fer servir l'USB HID en cuenta.
+
+Contino van as asignacions de teclas pa istas linias con o NVDA.
+Por favor mira-te a tuya documentación d'a linia braille pa descripcions de do se puet trobar istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta zaga | d2 |

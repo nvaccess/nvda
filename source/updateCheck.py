@@ -28,6 +28,7 @@ import ssl
 import wx
 import languageHandler
 import gui
+from gui import guiHelper
 from logHandler import log
 import config
 import shellapi
@@ -192,6 +193,7 @@ class UpdateResultDialog(wx.Dialog):
 		super(UpdateResultDialog, self).__init__(parent, title=_("NVDA Update"))
 		self.updateInfo = updateInfo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		if updateInfo:
 			self.isInstalled = config.isInstalledCopy()
@@ -203,8 +205,9 @@ class UpdateResultDialog(wx.Dialog):
 		else:
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
-		mainSizer.Add(wx.StaticText(self, label=message))
+		sHelper.addItem(wx.StaticText(self, label=message))
 
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if updateInfo:
 			if self.isInstalled:
 				# Translators: The label of a button to download and install an NVDA update.
@@ -212,25 +215,22 @@ class UpdateResultDialog(wx.Dialog):
 			else:
 				# Translators: The label of a button to download an NVDA update.
 				label = _("&Download update")
-			item = wx.Button(self, label=label)
-			item.Bind(wx.EVT_BUTTON, self.onDownloadButton)
-
-			mainSizer.Add(item)
+			downloadButton = bHelper.addButton(self, label=label)
+			downloadButton.Bind(wx.EVT_BUTTON, self.onDownloadButton)
 
 			if auto:
 				# Translators: The label of a button to remind the user later about performing some action.
-				item = wx.Button(self, label=_("Remind me &later"))
-				item.Bind(wx.EVT_BUTTON, self.onLaterButton)
-				mainSizer.Add(item)
-				item.SetFocus()
+				remindMeButton = bHelper.addButton(self, label=_("Remind me &later"))
+				remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
+				remindMeButton.SetFocus()
 
 		# Translators: The label of a button to close a dialog.
-		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
-		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(item)
+		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Close"))
+		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 		self.Bind(wx.EVT_CLOSE, lambda evt: self.Destroy())
 		self.EscapeId = wx.ID_CLOSE
 
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)

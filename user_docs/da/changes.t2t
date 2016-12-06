@@ -3,50 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2016.3 = 
+= 2016.4 = 
+Af væsentlige forbedringer i denne version af NVDA kan nævnes: Forbedret understøttelse af Microsoft Edge, gennemsynstilstand i appen Windows 10 Mail, samt markante forbedringer til nVDAs dialoger.
 
 == Nye Funktioner ==
-- Gennemsynstilstand kan nu bruges til læsning af PDF-dokumenter i Microsoft Edge. (#5740)
-- Gennemstreget og dobbelt genemstreget er nu annoncéret i Microsoft Word hvis passende. (#5800)
-- Titlen af en tabel vil nu blive rapporteret i Microsoft Word hvis tabellen er navngivet. Hvis der er en tabelbeskrivelse, kan den vises ved brug af kommandoen "Åbn lang beskrivelse" (NVDA+D) i gennemsynstilstand. (#5943)
-- NVDA vil nu rapporterer positionsinformation i Microsoft Word  når du flytter afsnit (alt+skift+pil ned og alt+skift+pil op). (#5945)
-- Linjeafstand i Microsoft Word er nu annoncéret ved brug af "Sig tekstformatering" kommandoen, når dette ændres ved brug af Microsoft Words egne genvejstaster, eller hvis der flyttes med markøren til tekst med en anden linjeafstand. Den sidste mulighed kræver, at indstillingen "Annoncér linjeafstand" er slået til i Dokumentformatering. (#2961)
-- HTML5 strukturelle elementer er nu anerkendte i Internet Explorer. (#5591)
-- Annoncéring af kommentarer (som dem i Microsoft Word) kan nu slåes fra ved brug af checkboksen "Annoncér kommentarer" i indstillingerne for dokumentformatering. (#5108)
-- Styring af tilføjelsesprogrammer: Det er nu muligt at slå individuelle tilføjelsesprogrammer fra. (#3090)
-- Yderligere tastetildelinger er blevet tilføjet for ALVA BC640/680 punktdisplays. (#5206)
-- Der er nu en kommando, der flytter punktdisplay til det aktuelle fokus. Kun ALVA BC640/680 punktdisplay har i øjeblikket en tast tildelt til denne kommando, men denne kommando kan blive tildelt i dialogboksen "Input-bevægelser" hvis ønsket. (#5250)
+- NVDA kan nu rapportere linjeindrykning ved brug af toner. Dette kan konfigureres ved brug af combo boksen "Rapporter linjeindrykning med" i dialogen med indstillinger for dokumentformatering. (#5906)
+- Understøttelse for Orbit Reader 20 punktdisplay. (#6007)
+- En indstilling til at åbne talevisning ved opstart er blevet tilføjet. (#5050)
+- Når vinduet med talevisning åbnes, vil placeringen og dimensionerne af vinduet blive gendannet. (#5050)
+- Felter til brug af krydshenvisninger behandles nu som links. De rapporteres som links, og kan blive aktiveret. (#6102)
+- Støtte for Baum SuperVario2, Baum Vario 340 og HumanWare Brailliant2 punktdisplays. (#6116)
+- Understøttelse for Anniversary-opdateringen af Microsoft Edge. (#6271)
+- Gennemsynstilstand er nu brugt i appen Windows 10 Mail. (#6271)
 
 
 == Ændringer ==
-- NVDA vil nu rapportere farver ved brug af et velforstået farvesæt der består af ni farvenuancer, samt tre skyggefarver med klar- og bleghedsvariationer. Dette er frem for at benytte mere subjektive farvenavne, der muligvis ville være sværer at forstå. (#6029)
-- Fremgangsmåden af tastekombinationen NVDA+f9 og derefter NVDA+f10 er blevet ændret. Disse tastetryk vil nu vælge tekst første gang der trykkes F10. Når F10 trykkes hurtigt (lige efter hinanden) vil teksten kopieres til udklipsholderen. (#4636)
-- Opdaterede eSpeakNG til version Master 11b1a7b (22 June 2016). (#6037)
+- Opdaterede liblouis punktoversætter til 3.0.0. Denne version indeholder store forbedringer til Unified English Braille. (#6109, #4194, #6220, #6140)
+- Genvejstaster er nu tilknyttet knapperne "Aktiver Tilføjelsespakke" og "Deaktiver Tilføjelsespakke" ved administrering af tilføjelsespakker (Alt+A og Alt+D). (#6388)
+- Forskellige problemer med hensyn til den indre margen samt justering af NVDAs dialoger er blevet rettet. (#6317, #5548, #6342, #6343, #6349)
+- Indholdet af dialogen til dokumentformatering er blevet justeret således, at indholdet ruller. (#6348)
+- Justerede layout i dialogen for Udtale af sætningstegn og symboler således, at den fulde bredte af dialogen er brugt til listen over symboler. (#6101)
+- Når gennemsynstilstand benyttes i browsere, vil bogstavnavigering for editfelter (E og Skift+E), samt formularfelter (F og Skift+F), nu også flytte mellem skrivebeskyttede felter. (#4164)
+- Tjekboksen "Oplæs ændringer i formatering efter markør" i dialogen for dokumentformatering er blevet omdøbt til "Rapportér ændringer i formatering efter markør", eftersom denne indstilling påvirker tale såvel som punkt. (#6336)
+- Justerede visningen af NVDAs Velkommen dialog. (#6350)
+- NVDA-dialoger har nu "OK" og "Afbryd" knapperne justeret til højre for dialogen. (#6333)
+- Rotationsbokse benyttes nu i felter, hvor numerisk indtastning er påkrævet, såsom "Procent ændring i tonehøjde" i stemmeindstillingerne. Du kan indtaste den ønskede værdi, eller bruge pil op og ned for at justere værdien. (#6099)
+- Måden IFrames (dokumenter indlejrede i dokumenter) rapporteres på er blevet gjort konsekvent uafhængigt af webbrowsere. IFrames er nu rapporteret som "Ramme" i Firefox. (#6047)
 
 
 == Fejlrettelser ==
-- Når gennemsynstilstand benyttes i Microsoft Word, vil formateringen blive bevaret når tekst kopieres til udklipsholderen. (#5956)
-- NVDA vil nu annoncére passende information når der benyttes Words egne kommandoer for tabelnavigation (Alt+hjem, alt+end, alt+side op og alt+side ned) samt kommandoer for udvælgelse af tabeller (skift tilføjet til ovenstående navigationskommandoer). (#5961)
-- NVDAs objektnavigation er blevet forbedret når det benyttes i dialogbokse i Microsoft Word. (#6036)
-- I nogle applikationer såsom Visual Studio, genvejstaster (f.eks. CTRL+C for at kopiere) vil nu blive annoncéret som forventet. (#6021)
-- Rettet en sjælden fejl der opstod når der blev scannet for seriel porte på nogle systemer. Dette gjorde i disse tilfælde nogle punktdisplay-drivere ubruglige. (#6015)
-- Farverapportering er nu mere præcis i Microsoft Word, da der nu tages hensyn til ændringerne af temaerne i Microsoft Office. (#5997)
-- Gennemsynstilstand for Microsoft Edge samt søgeforslag i startmenuen er nu igen tilgængelige i Windows 10 for versioner frigivet efter April 2016. (#5955)
-- Automatisk læsning af tabeloverskrifter virker nu bedre i Microsoft Word når der arbejdes med flettede celler. (#5926)
-- NVDA vil ikke længere have problemer med at læse indholdet af beskeder i Windows 10 Mail. (#5635) 
-- Når "oplæs funktionstaste" er slået til, vil låsetaster som CAPS lock ikke annoncéres to gange. (#5490)
-- Dialogerne for Windows kontrol af brugerkonti er nu igen oplæst korrekt i Windows 10 anniversary update. (#5942)
-- I Web Conference Plugin (såsom det der benyttes på out-of-sight.net) vil NVDA ikke længere bippe og sige behandlingslinjens opdatering med hensyn til mikrofoninput. (#5888)
-- Når kommandoerne "Find næste" eller "Find forrige" udføres i gennemsynstilstand, vil NVDA nu tage hensyn til, om den oprindelige søgning gjorde forskel på store og små bogstaver. (#5522)
-- Når ordbogsord redigeres, gives der nu feedback hvis det regulære udtryk er ugyldigt. NVDA vil desuden heller ikke længere gå ned, hvis ordbogsfilen indeholder ugyldige regulære udtryk. (#4834)
-- Hvis NVDA ikke er i stand til at kommunikere med et punktdisplay (f.eks. hvis forbindelsen er afbrudt), vil NVDA automatisk deaktivere brugen af dette punktdisplay. (#1555)
-- Forbedret filtrering af elementlisten i gennemsynstilstand i nogle tilfælde. (#6126)
-- NVDA annoncérer nu korrekt navne på baggrundsmønstre, der benyttes i Microsoft Excel. (#6092)
-- Forbedret logonskærm i Windows 10. NVDA vil nu rapportere beskeder. Aktivering af adgangskodefeltet ved berøring er også blevet forbedret. (#6010)
-- NVDA vil nu korrekt genkende sekundære markørsammenføringsknapper på ALVA BC640/680 punktdisplays. (#5206)
+- Rettede en sjælden fejl der opstod, når talevisning var åben og NVDA afsluttes. (#5050)
+- Billedmapper gengives nu som forventet i gennemsynstilstand i Mozilla Firefox. (#6051)
+- Rettede en fejl som skrev en advarsel til NVDAs logfil, når CAPS Lock er slået til. 
+(#6127)
+- Hvis du befinder dig i en dialog, som omfatter ordbøgerne til NVDA, kan du nu trykke på enter-tasten for at gemme ændringerne og lukke dialogen. (#6206)
+- Beskeder er nu vist på punkt når der ændres indtastningstilstand for en indtastningsmetode (lokalt tegnsæt, alfanumerisk indtastning, full shaped/half shaped osv.) (#5892, #5893)
+- Hvis en tilføjelsespakke slås fra og straks slås til igen eller omvendt, vil tilføjelsespakkens status nu korrekt vende tilbage til hvad den var tidligere. (#6299)
+- Når der benyttes Microsoft Word, kan felter til sidetal nu blive læst i sidehoveder. (#6004)
+- Musen kan nu benyttes til at flytte fokus imellem symbollisten og editfelterne i dialogen til Udtale af Sætningstegn og Symboler. (#6312)
+- Rettede en fejl der gjorde elementlisten ikke kunne vises hvis Microsoft Word indeholdte et ugyldigt link. (#5886)
+- Efter lukning af talevisning ved hjælp af processlinjen eller genvejen ALT+F4, vil tjekboksens status i NVDA-menuen nu reflektere den aktuelle synlighed af vinduet. (#6340)
+- Kommandoen til genindlæsning af plugins vil ikke længere skabe problemer for udløste konfigurationsprofiler, nye dokumenter i web-browsere samt skærmlæsning. (#2892, #5380)
+- I listen over sprog i NVDAs generelle indstillinger, vil sprog som Aragonsk nu vises rigtigt på Windows 10. (#6259)
+- Emulerede systemtastaturtaster (f.eks. en knap på punkttastaturet der emulere et tryk på tab-tasten) præsenteres nu på det konfigurerede sprog, i tastaturhjælp samt dialogen for input-bevægelser. Tidligere blev disse kun vist på Engelsk. (#6212)
+- Skift af NVDAs sprog (fra dialogen for generelle indstillinger) har nu ingen indflydelse, før NVDA genstartes. (#4561)
+- Det er ikke længere muligt at efterlade feltet til mønstret blankt for et nyt emne i udtaleordbøgerne. (#6412)
+- Rettede en sjælden fejl der gjorde nogle punktdisplay-drivere ubruglige, når der blev scannet efter serielporte på nogle systemer. (#6462)
+- Nummerede punkter i tabeller i Microsoft Word er nu læst, når der flyttes i tabelceller. (#6446)
+- Det er nu muligt at tildele bevægelser til Handy Tech punktdisplay-driveren ved brug af NVDA-dialogen "Input-bevægelser". (#6461)
+- Når du trykker Enter eller NumpadEnter i Microsoft Excel, vil flytning til den næste række nu blive rapporteret som forventet. (#6500)
+- iTunes vil ikke længere fryse uregelmæssigt, når der benyttes gennemsynstilstand i iTunes Store, Apple Music, osv. (#6502)
+- Rettede nedbrud af 64-bit Mozilla- og Chrome-baserede applikationer. (#6497)
+- Gennemsynstilstand og redigerbare tekstfelter fungerer nu som forventet, når multi-process er slået til i Firefox. (#6380)
 
 
-=== Ændringer for udviklere ===
+== Ændringer for udviklere ==
 For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
 
 

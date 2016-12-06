@@ -90,8 +90,10 @@ Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het progr
 - Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
 - UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
 - Windows 8 en later: Geen ondersteuning voor invoer via het aanraakscherm,
-- Windows 8 en later: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
+		- Windows 8 en later: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
+- Windows 8 en later: Audio ducking (volume van het ene audiosignaal verlagen t.o.v. het andere) wordt niet ondersteund.
 -
+
 
 ++ NVDA installeren ++
 Als u NVDA direct vanuit het downloadbestand installeert, drukt u op de knop NVDA Installeren.  
@@ -513,7 +515,7 @@ Gebruik de volgende toetscombinaties om naar het begin resp. het einde van conta
 Webapplicaties zoals Gmail, Twitter en Facebook kunnen met lettertoetsnavigatie worden geactiveerd.
 Als u hiermee wilt werken terwijl u ook   uw cursortoetsen wilt kunnen gebruiken voor het lezen in bladermodus,  kunt u de lettertoetsnavigatie in NVDA tijdelijk uitschakelen.
 %kc:beginInclude
-Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen drukt u op de NVDA-toets + de spatiebalk.
+Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen drukt u op NVDA+shift+spatiebalk.
 %kc:endInclude
 
 ++ De lijst met elementen ++
@@ -579,17 +581,17 @@ NVDA beschikt over een aantal applicatie-specifieke kenmerken om het gebruik van
 
 ++ Microsoft Word ++
 
-+++ Automatisch Lezen van Kolom- en Rijhoofden +++
-Bij het navigeren in Microsoft Word-tabellen  kan NVDA de toepasselijke  kolom- en rijhoofden automatisch melden.
-Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijhoofden Melden” in het dialoogvenster Documentopmaak ingeschakeld is. 
-Ten tweede moet NVDA voor elke tabel weten in welke kolom of rij de kolom-/rijhoofden staan.
-Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijhoofden zich bevinden, kunt u de volgende commando’s gebruiken:
++++ Automatisch Lezen van Kolom- en Rijkoppen +++
+Bij het navigeren in Microsoft Word-tabellen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
+Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in het dialoogvenster Documentopmaak ingeschakeld is. 
+Ten tweede moet NVDA voor elke tabel weten in welke kolom of rij de kolom-/rijkoppen staan.
+Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijkoppen zich bevinden, kunt u de volgende commando’s gebruiken:
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
-|| Kolomhoofden instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomhoofden in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
-| Rijhoofden instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de kolom waar de rijhoofden in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |  
+|| Kolomkoppen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomkoppen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijkoppen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de kolom waar de rijkoppen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |  
 %kc:endInclude
-Deze instellingen worden als bladwijzers die compatibel zijn  met andere schermlezers zoals Jaws, in het document opgeslagen. Dit houdt in dat andere  gebruikers die het document op een later moment openen  direct gebruik kunnen maken van de reeds ingestelde kolom- en rijhoofden.  
+Deze instellingen worden als bladwijzers die compatibel zijn  met andere schermlezers zoals Jaws, in het document opgeslagen. Dit houdt in dat andere  gebruikers die het document op een later moment openen  direct gebruik kunnen maken van de reeds ingestelde kolom- en rijkoppen.  
 
 +++ Bladermodus in Microsoft Word +++
 
@@ -613,17 +615,17 @@ Om eventuele opmerkingen op de positie waar de cursor op dat moment staat te lat
 
 ++ Microsoft Excel ++
 
-+++ Automatisch Lezen van Kolom- en Rijhoofden +++
-Bij het navigeren in Microsoft Excel-werkbladen  kan NVDA de toepasselijke  kolom- en rijhoofden automatisch melden.
-Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijhoofden Melden” in het dialoogvenster Documentopmaak ingeschakeld is. 
-Ten tweede moet NVDA voor elk werkblad weten in welke kolom of rij de kolom-/rijhoofden staan.
-Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijhoofden zich bevinden, kunt u een van de volgende commando’s gebruiken:
++++ Automatisch Lezen van Kolom- en Rijkoppen +++
+Bij het navigeren in Microsoft Excel-werkbladen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
+Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in het dialoogvenster Documentopmaak ingeschakeld is. 
+Ten tweede moet NVDA voor elk werkblad weten in welke kolom of rij de kolom-/rijkoppen staan.
+Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijkoppen zich bevinden, kunt u een van de volgende commando’s gebruiken:
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
-| Kolomhoofden instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomhoofden in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
-| Rijhoofden instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de kolom waar de rijhoofden in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |  
+| Kolomkoppen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomkoppen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijkoppen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de kolom waar de rijkoppen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |  
 %kc:endInclude
-Deze instellingen worden als gedefiniëede naambereiken, die compatibel zijn met andere schermleesprogramma's zoals Jaws,  opgeslagen in de werkmap. Dit houdt in dat andere  gebruikers die de werkmap op een later moment openen  direct gebruik kunnen maken van de reeds ingestelde kolom- en rijhoofden. 
+Deze instellingen worden als gedefiniëede naambereiken, die compatibel zijn met andere schermleesprogramma's zoals Jaws,  opgeslagen in de werkmap. Dit houdt in dat andere  gebruikers die de werkmap op een later moment openen  direct gebruik kunnen maken van de reeds ingestelde kolom- en rijkoppen. 
 
 +++ De Elementenlijst +++
 
@@ -643,7 +645,9 @@ Door op Enter of de knop Ga Naar te drukken wanneer u zich op een weergegeven fo
 - Bladen: Voor het weergeven van alle bladen in de werkmap. 
 Door f2 te drukken wanneer u zich op een weergegeven blad bevindt, kunt u de naam van het desbetreffende blad wijzigen. 
 Een druk op de Enter- of de Ga Naar-knop terwijl u zich op een weergegeven blad bevindt, brengt u naar dat blad.
--
+- Formuliervelden: Voor het weergeven van alle formuliervelden op het actieve werkblad.
+De Elementenlijst laat voor elk formulierveld, de alternatieve tekst van het veld zien samen met de adressen van de erbijbehorende cellen.
+Door een formulierveld te selecteren en op Enter of de Ga naar knop te drukken, gaat u in de Bladermodus naar het desbetreffende veld.-
 
 +++ Opmerkingen Melden +++
 %kc:beginInclude
@@ -656,6 +660,12 @@ Als een werkmap beveiligd is, kan het zijn dat bepaalde cellen  die niet mogen w
 %kc:beginInclude
 Om naar beveiligde cellen te gaan, schakelt u over naar Bladermodus door op NVDA+spatiebalk te drukken, en vervolgens  gebruikt u standaard Excel navigatieopties zoals de pijltjestoetsen om door de cellen te gaan op het huidige werkblad.
 %kc:endInclude
+
++++ Formuliervelden +++
+Excel werkbladen kunnen formuliervelden bevatten.
+Door middel van de Elementenlijst of, de toetsen f en shift+f in letternavigatie kunt u toegang tot het formulierveld  krijgen.
+Wanneer u in bladermodus naar een formulierveld gaat kunt u op Enter of de spatiebalk drukken om of het veld te activeren of naar focusmodus te wisselen  zodat, afhankelijk van het besturingselement, handelingen kunnen worden uitgevoerd.
+Voor verdere informatie over Bladermodus en letternavigatie, raadpleegt u de paragraaf [[Bladermodus #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -773,7 +783,9 @@ Als u Windows 8 of  hoger gebruikt, kunt u, met deze optie bepalen of NVDA het v
 - Geluidsniveau verlagen bij uitvoer van spraak en geluiden: NVDA zal alleen het volume van andere audiobronnen verlagen wanneer  NVDA aan het spreken is of geluiden afspeelt. Mogelijk dat dit niet bij alle synthesizers werkt. 
 - Altijd geluidsniveau verlagen: NVDA zal het volume van andere audiobronnen  steeds op een lager niveau houden zolang NVDA actief is.
 -
- 
+Deze optie is alleen beschikbaar als u de geïnstalleerde versie van NVDA gebruikt.
+audio ducking kan niet worden ondersteund bij gebruik van de draagbare en de tijdelijke versie van NVDA. 
+
 +++ Stem (NVDA+control+v) +++[VoiceSettings]
 Onder “Opties” in het NVDA-menu gaat u naar “Stem”  om instellingen aan te passen die te maken hebben met de gebruikte stem(men).
 Een snellere, alternatieve manier om steminstellingen te wijzigen vindt u onder [Synth Settings Ring #SynthSettingsRing].
@@ -1052,7 +1064,9 @@ Als het selectievakje is aangevinkt, volgt de leescursor (review cursor) automat
 Als het selectievakje aangevinkt is, zal de leescursor (review cursor) de muis volgen wanneer deze wordt verplaatst.
 
 ==== Vereenvoudigde leesmodus (Simple review mode)====
-Als het selectievakje aangevinkt is, zorgt NVDA ervoor dat ontoegankelijke objecten worden uitgefilterd zodat alleen de bruikbare objecten kunnen worden benaderd.
+Als het selectievakje aangevinkt is, zorgt NVDA ervoor dat objecten die voor de gebruiker niet van belang zijn, zoals verborgen objecten of die welke slechts een lay-out technisch doel dienen, worden uitgefilterd.
+
+Om de vereenvoudigde leesmodus vanaf een willekeurige plaats aan- of uit te zetten kunt u via het dialoogvenster [Invoerhandelingen #InputGestures] een aangepaste handeling hiervoor aanmaken.
 
 +++ Objectweergave-instellingen(NVDA+control+o) +++
 Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Objectweergave.
@@ -1188,42 +1202,59 @@ U vindt het dialoogvenster Documentopmaak in het NVDA-menu onder Opties.
 U kunt de meeste selectievakjes gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
 Als u bij voorbeeld Lettertype vermelden inschakelt, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
 
+De documentopmaakinstellingen zijn onderverdeeld in groepen. 
 U kunt de vermelding laten horen van:
 - Lettertype
-- Lettergrootte
-- Lettertype-eigenschappen
-- Tekstuitlijning
-- Kleuren
-- Opmerkingen
-- Aangebrachte wijzigingen in de tekst
-- Nadruk
-- Tekststijl
-- Spelfouten
-- Paginanummers
-- Regelnummers
-- Regel inspringen
-- Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
-- Regelafstand ( enkel, dubbel, etc.)
-- Tabellen
-- Rij- en kolomhoofden van tabellen
-- Tabel celcoördinaten
-- Links
-- Koppen
-- Lijsten
-- Blokcitaten
-- Oriëntatiepunten
-- Kaders
-- Wat klikbaar is
+ - Naam
+ - Lettergrootte
+ - Lettertype-eigenschappen
+ - Nadruk
+ - Stijl
+ - Kleuren
+- Documentinformatie
+ - Opmerkingen
+ - Aangebrachte wijzigingen in de tekst
+ - Spelfouten
+- Pagina's en Afstand
+ - Paginanummers
+ - Regelnummers
+ - Regel inspringen melden [(Uit, Spraak, Tonen, Zowel Spraak als Tonen) #lineIndentationOptions]
+ - Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
+ - Regelafstand ( enkel, dubbel, etc.)
+ - Uitlijning
+- Tabelinformatie
+ - Tabellen
+ - Rij- en kolomhoofden
+ - Celcoördinaten
+- Elementen
+ - Links
+ - Koppen
+ - Lijsten
+ - Blokcitaten
+ - Oriëntatiepunten
+ - Kaders
+ - Wat klikbaar is
 -
 
 Als u vermelding van bovenstaande kenmerken altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-==== Wijzigingen in documentopmaak achter de cursor weergeven (kan vertraging veroorzaken)====
+==== Wijzigingen in documentopmaak achter de cursor melden ====
 Als het selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de opmaak van een regel te melden bij het lezen van de regel ook als dit de prestatie vertraagt.
 
 Standaard wordt de opmaak bij de systeemcursor / review cursor gedetecteerd, maar in bepaalde gevallen wordt ook de opmaak in de rest van de regel gedetecteerd voor zover dit geen nadelige invloed heeft op de prestatie.
 
-Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals Microsoft Word waar opmaak van belang is.
+Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals Wordpad waar opmaak van belang is.
+
+==== Regelinspringing melden ==== [lineIndentationOptions]
+Met deze optie kunt u bepalen hoe de inspringing van een regel wordt gemeld.
+Het vervolgkeuzemenu voor het melden van regelinspringing heeft 4 keuzemogelijkheden.
+
+- uit: NVDA maakt niet apart melding van inspringing.
+- Spraak: Als u spraak kiest, hoort u NVDA iets zeggen als "twaalf spatie"of "vier tab" wanneer de afstand van de inspringing verandert."
+- Tonen: Als u tonen kiest, wordt met behulp van tonen aangegeven in welke mate er verandering optreedt in de ingesprongen afstand.
+De toonhoogte stijgtvoor elke spatie, en voor een tab, gaat de toon evenveel omhoog als voor 4 spaties.
+- Zowel spraak als tonen: Deze optie is een combinatie van de twee hiervoor genoemde mogelijkheden.
+-
 
 +++ Uitspraakwoordenboeken +++
 Via het menu-item Uitspraakwoordenboeken dat te vinden is onder Opties kunt u aangeven hoe NVDA bepaalde woorden of woordgroepen moet uitspreken.
@@ -1421,6 +1452,10 @@ Goed-ziende software-ontwikkelaars of mensen die NVDA demonstreren voor een goed
 
 Om het spraakweergavevenster in te schakelen zet u een vinkje voor spraakweergavevenster onder Extra in het NVDA-menu.
 Haal dit vinkje weg om de speech viewer uit te schakelen.
+
+In het spraakweergavevenster treft u een selectievakje aan met de tekst "spraakweergave tonen bij opstarten". 
+Als het vakje is aangevinkt, opent het spraakweergavevenster zich zodra NVDA wordt gestart.
+Het spraakweergavevenster zal in principe elke keer dat het wordt geopend dezelfde plaats en grootte hebben als toen het de laatste keer gesloten werd.
 
 Als het spraakweergavevenster ingeschakeld is, wordt de getoonde tekst voortdurend vernieuwd om het voorlezen bij te houden.
 Maar klikt u in of verplaatst u de focus naar het viewer venster, dan wordt het verversen van de tekst tijdelijk gestopt. U kunt zo gemakkelijk de getoonde tekst selecteren en kopiëren.
@@ -1683,19 +1718,25 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Alt+Shift+Tabtoets | SUP |
 %kc:endInclude
 
-++ Brailleleesregels van Baum/HumanWare/APH ++
-Verscheidene brailleleesregels van [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] en [APH http://www.aph.org/] worden ondersteund, voor zover deze  via usb of Bluetooth verbonden worden.
-dit geldt o.a. voor:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+++ Brailleleesregels van Baum/HumanWare/APH/Orbit ++
+Verscheidene brailleleesregels van [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] en van  [Orbit http://www.orbitresearch.com/]worden ondersteund, voor zover deze  via usb of Bluetooth dan wel serieel verbonden worden.
+Hiertoe behoren:
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Enkele andere Baum-leesregels zouden wellicht ook  kunnen werken, maar dit is nog niet getest.
 
-Als u andere leesregels dan de  VarioUltra, Pronto! of Refreshabraille via USB aansluit waarbij de USB-modus op HID moet staan, moett u eerst de USB drivers installeren die door de fabrikant beschikbaar worden gesteld.
+Als u  leesregels die geen gebruik maken van HID via USB aansluit , moett u eerst de USB drivers installeren die door de fabrikant beschikbaar worden gesteld.
+De VarioUltra en Pronto! gebruiken HID.
+De Refreshabraille en Orbit Reader 20 kunnen  van HID gebruik maken als ze op de juiste manier worden geconfigureerd.
 
-Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
-(Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
+De USB seriële modus van de Orbit Reader 20 wordt momenteel alleen in Windows 10 ondersteund.
+Doorgaans moet in plaats daarvan de USB HID-modus worden gebruikt.
+
+Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing.
+Waar de toetsen zich bevinden, leest u   in de documentatie bij de leesregels.
 %kc:beginInclude
 || Naam | Toets |
 | Brailleregel terugscrollen | d2 |
@@ -2153,7 +2194,7 @@ Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgen
 | afb | afbeelding |
 | kN | tabelkolomnnummer (N), bijv. k1, k2. |
 | rN | tabelrijnummer (N), bijv. r1, r2. |
-| hN | hoofding op niveau (N), bijv. h1, h2. |
+| kN | kop op niveau (N), bijv. k1, k2. |
 | lnk | link |
 | li | lijst |
 | blnk | bezochte link |
@@ -2174,7 +2215,7 @@ Verder worden de volgende gebruiksstatusaanduidingen gebruikt:
 | - | wordt weergegeven wanneer een object zoals een boomstructuuritem kan worden samengevouwen |
 | + | wordt weergegeven wanneer een object zoals een boomstructuuritem kan worden uitgevouwen |
 | klb | wordt weergegeven wanneer een objectklikbaar is |
-| al | wordt weergegeven wanneer een object (bijv. een tekstinvoerveld ) het kenmerk "alleen leze" heeft |
+| al | wordt weergegeven wanneer een object (bijv. een tekstinvoerveld ) het kenmerk "alleen lezen" heeft |
 | sel | wordt weergegeven wanneer object is geselecteerd |
 | submnu | wordt weergegeven wanneer een object kan worden uitgeschoven, meestal in de vorm van een sub-menu |
 

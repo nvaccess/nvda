@@ -3,45 +3,123 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2016.3 =
+= 2016.4 =
+Poboljšanja u ovoj inačici uključuju unaprjeđenu podršku za Microsoft edge; način pregleda u windows mail e-mail klijentu (windows 10); i značajna poboljšanja u NVDA dijaloškim okvirima.
 
 == Nove značajke ==
-- Način pregleda se može koristiti za čitanje pdf dokumenata u Microsoft edge'u. (#5740)
-- U microsoft Wordu, Jednostruko i dvostruko podcrtavanje se sada izgovara ako je to spodržano. (#5800)
-- Naslov tablice u microsoft wordu se sada izgovara ako je isti ugrađen.Ako postoji opis, može mu se pristupiti koristeći prečac za otvaranje dugih opisa (insert+d) u načinu pregleda. (#5943)
-- U Microsoft Wordu, NVDA sada izgovara informaciju o poziciji prilikom premještanja između odlomaka (alt+shift+StrelicaDolje i alt+shift+strelicaGore). (#5945)
-- U Microsoft wordu, prored se sada izgovara pomoću nvda komande za izgovor oblikovanja, prilikom mjenjanja istog uz pomoć raznih tipkovničkih prečaca, i prilikom premještanja u tekstu koji sadrži različite prorede ako je uključena opcija "izvjesti o proredima" u nvda postavkama oblikovanja dokumenata. (#2961)
-- U Internet Exploreru, HTML5 elementi strukture su sada normalno prepoznati. (#5591)
-- Izgovaranje komentara (kao na primjer u Microsoft Wordu) može se sada isključiti preko odabirnog okvira izvještavaj o komentarima u NVDA dijaloškom okviru. (#5108)
+- NVDA sada može izvještavati o poravnanju /uvlaci redka koristeći zvučne signale. Ovo se može konfigurirati koristeći "Izvještavanje o uvlačenju redka" odabirni okvir u NVDA's postavkama oblikovanja dokumenta. (#5906)
+- Podrška za Orbit Reader 20 brajični redak. (#6007)
+- Opcija koja omogućuje otvaranje preglednika govora pri pokretanju je dodana. Ovo se može uključiti pomoću odabirnog okvira u pregledniku govora. (#5050)
+- Prilikom ponovnog otvaranja dijaloškog okvira preglednika govora, Sada će dimenzije biti vrećene. (#5050)
+- Polja unakrsnih referenci u Microsoft Word sada se tretiraju poput linkova. One se izgovaraju kao linkovi i mogu se aktivirati. (#6102)
+- Podrška za Baum SuperVario2, Baum Vario 340 i HumanWare Brailliant2 brajične retke. (#6116)
+- Početna podrška za jubilarnu inačicu Microsoft Edgea. (#6271)
+- Način pregleda se sada koristi prilikom čitanja poruka u windows 10 Mail aplikaciji. (#6271)
 
 
-== izmjene ==
-- NVDA now reports colors using a basic well-understood set of 9 color hues and 3 shades, with brightness and paleness variations. This is rather than using more subjective and less understood color names. (#6029)
-- The existing NVDA+F9 then NVDA+F10 behavior has been modified to select text on the first press of F10. When F10 is pressed twice (in quick succession) the text is copied to the clipboard. (#4636)
+== Izmjene ==
+- Nadograđen liblouis braille translator na inačicu 3.0.0. Ovo uključuje podršku za unificiranu englesku brajicu. (#6109, #4194, #6220, #6140)
+- U upravitelju dodataka, gumbi "onemogući dodatak" i omogući dodatak sada imaju tipkovničke prečace (alt+o i alt+m ). (#6388)
+- Razni vizualni konflikti su ispravljeni. (#6317, #5548, #6342, #6343, #6349)
+- Dijaloški okvir oblikovanje dokumenta sada je prilagođen tako da se sadržaj istog može pomicati. (#6348)
+- Prilagođen izgled dijaloškog okvira za izgovor simbola tako da se puna širina dijaloškog okvira koristi za popis simbola. (#6101)
+- U načinu pregleda u web preglednicima, komande za polje uređivanja (e i shift+e) i formular (f and shift+f) sada se mogu koristiti kako biste se mogli premještati između uređivačkih polja samo za čitanje. (#4164)
+- U postavkama oblikovanja dokumenta, "izvjesti o promjenama oblikovanja poslije kursora" preimenovano je u "izgovori izmjene oblikovanja poslije kursora", zato što ova opcija utjeće kako na govor, tako i na brajicu. (#6336)
+- Prilagođen izgled NVDA dijaloškog okvira dobrodošlice. (#6350)
+- NVDA dijaloški okviri sada imaju poravnane svoje gumbe "U redu" i "odustani" na desnoj strani  zaslona. (#6333)
+- pokretne kontrole sada se koriste za uređivačka polja poput "postotka izmjene visine za velika slova" postavku u dijaloškom okviru glasovnih postavki. You can enter the desired value or use the up and down arrow keys to adjust the value. (#6099)
 
 
-== ispravke grešaka ==
-- In browse mode in Microsoft Word, copying to the clipboard now preserves formatting. (#5956)
-- In Microsoft Word, NVDA now reports appropriately when using Word's own table navigation commands (alt+home, alt+end, alt+pageUp and alt+pageDown) and table selection commands (shift added to the navigation commands). (#5961)
-- In Microsoft Word dialog boxes, NVDA's object navigation has been greatly improved. (#6036)
-- In some applications such as Visual Studio 2015, shortcut keys (e.g. control+c for Copy) are now reported as expected. (#6021)
-- Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6015)
-- Reporting colors in Microsoft Word is now more accurate as changes in Microsoft Office Themes are now taken into account. (#5997)
-- Browse mode for Microsoft Edge and support for Start Menu search suggestions, is again available on Windows 10 builds after April 2016. (#5955)
-- In Microsoft Word, automatic table header reading works better when dealing with merged cells. (#5926)
-- In the Windows 10 Mail app, NVDA no longer fails to read the content of messages. (#5635) 
-- When speak command keys is on, lock keys such as caps lock are no longer announced twice. (#5490)
-- Windows User Account Control dialogs are again read correctly in the Windows 10 Anniversary update. (#5942)
-- In the Web Conference Plugin (such as used on out-of-sight.net) NVDA no longer beeps and speaks progress bar updates related to microphone input. (#5888)
-- Performing a Find Next or Find Previous command in Browse Mode will now correctly do a  case sensitive search if the original Find was case sensitive. (#5522)
-- When editing dictionary entries, feedback is now given for invalid regular expressions. NVDA no longer crashes if a dictionary file contains an invalid regular expression. (#4834)
+== Ispravke grešaka ==
+- Ispravljena rijetka greška prilikom isključivanja NVDA kada je preglednik govora otvoren. (#5050)
+- Grafički linkovi se sada prikazuju u načinu pregleda u Mozilla Firefoxu. (#6051)
++- Nalazeći se u dijaloškom okviru uređivača rječnika, prilikom pritiska na gumb enter sada se spremaju sve izmjene napravljene tokom uređivanja i zatvara dijaloški okvir. Prije, enter nije radio ništa. (#6206)
+- Sada se prikazuju poruke na brajičnom retku prilikom izmjene načina unosa za azijske metode unosa (izvorni unos /alfanumerički, puni oblik/polovičan, itd.). (#5892, #5893)
+- Prilikom onemogućavanja a potom ponovnog omogućavanja dodatka, status dodatka sada se ponovno vraća na onu vrijednost na koju je bio postavnjen prije. (#6299)
+- Prilikom korištenja Microsoft Worda, brojevi stranica u zaglavjima sada se mogu čitati. (#6004)
+- Miš se sada može koristiti za pomicanje fokusa između popisa znakova  i uređivačkih polja u dijaloškom okviru izgovora simbola. (#6312)
+- Ispravljena greška koja onemogućuje prikazivanje popisa elemenata kada microsoft wordow dokument sadrži neispravnu hipervezu. (#5886)
+- Bio on zatvoren sa alatne trake ili pomoću prečaca alt+f4, stanje odabirnog okvira preglednika govora u nvda izborniku će sada odražavati trenutnu vidljivost prozora. (#6340)
+- Komanda za ponovno učitavanje dodataka više ne prouzrokuje probleme  za konfiguracijske profile koji se okidaju, nove dokumente u internetskom pregledniku i pregled zaslona. (#2892, #5380)
+- U popisu jezika, u nvda dijaloškom okviru "opće postavke",, jezici poput Aragonskog sada se prikazuju ispravno  u Windowsima 10. (#6259)
+- Tipke na tipkovnici koje su emulirane, (npr. gumbi na brajičnom retku koji oponašaju tipku tab) sada se prikazuju u podešenom NVDA jeziku u pomoći ri unosu i u dijaloškom okviru "Ulazne geste". Prije su iste bile prikazane samo na engleskom. (#6212)
+- Promjena NVDA jezika (iz dijaloškog okvira za odabir jezika) više se ne primjenjuje sve dok se NVDA ponovno ne pokrene. (#4561)
+- Više nije moguće ostavljanje polja za uzorak praznim u novom unosu govornog rječnika. (#6412)
+- Ispravljena rijetka greška prilikom skeniranja serijskih priključaka na nekim sustavima koja je rezultirala u neiskoristivosti nekih brajičnih redaka. (#6462)
+- U Microsoft Word-u, numerirane liste u ćelijama tablica sada se čitaju prilikom pomicanja po ćeliji. (#6446)
+- Way IFrames (dokumenti ugrađeni unutar dokumenata) se sada izgovaraju što je učinilo preciznost između preglednika. IFrames sada se izgovaraju kao "okvir" u Firefox-u. (#6047)
+- Sada je moguće dodjeljivati ulazne geste za komande na Handy Tech brajičnom retku u NVDA dijaloškom okviru "ulazne geste. (#6461)
+- U Microsoft Excelu, pritisak entera ili numeričkog entera prilikom navigacije u tablici sada se korektno vrši navigacija na slijedeći redak. (#6500)
+- iTunes više se ne smrzava prilikom korištenja internetskog preglednika za iTunes trgovinu, Apple glazbu, ITD. (#6502)
+- ispravljenja rušenja u 64 bitnim Mozilla i Chrome-baziranim aplikacijama. (#6497)
+- u Firefoxu sa uključenom višeprocesnošću, način pregleda i tekstualna polja za uređivanje sada funkcioniraju korektno. (#6380)
+
+
+== Izmjene za razvojne programere ==
+Za više informacija, molimo Vas, pogledajte dokument na engleskom jeziku.
+
+
+= 2016.3 =
+Novosti u ovoj inačici uključuju mogučnost onemogučavanja pojedinačnih dodataka; podršku za polja obrazaca u Microsoft excelu; drastična poboljšanja u izvještavanju boja; popravke i unaprjeđenja pri korištenju nekih brajičnih redaka; a također popravci i unaprjeđenja u Microsoft wordu.
+
+== nove značajke ==
+- Način pregleda se sada može koristiti za čitanje PDF dokumenata u Microsoft edge. (#5740)
+- Podcrtavanje i dvostruko podcrtavanje se sada izgovara ako je to moguće u Microsoft Wordu. (#5800)
+- U Microsoft Wordu, naslov tablice se sada izgovara ako je isti omogućen. Ako postoji opis, istom se može pristupiti koristeći prečac "otvori dugi opis", (Insert+d) in browse mode. (#5943)
+- U Microsoft Wordu, NVDA sada izgovara informaciju o poziciji prilikom premještanja između odlomaka (alt+shift+StrelicaDolje i alt+shift+StrelicaGore). (#5945)
+- U Microsoft Wordu, proredi se sada izgovaraju preko nvda izprečaca za izvještavanje o oblikovanju, priliko mijenjanja istih uz pomoć raznih pračaca u microsoft wordu, i prilikom premještanja na tekst sa drukčijim proredom ako je uključena opcija izvjesti o proredima u nvda postavkama oblikovanja dokumenata. (#2961)
+- U Internet Exploreru, HTML5 strukturni elementi se sada prepoznaju. (#5591)
+- Izvještavanje o komentarima, (kao na primjer u Microsoft Wordu) sada se mogu onemogućiti pomoću potvrdnog okvira u nvda  dijaloškom okviru oblikovanje dokumenta. (#5108)
+- Sada je moguće onemogućivanje pojedinačnih dodataka. (#3090)
+- Dodatni tipkovnički prečaci su dodani za ALVA BC640/680 series brajeve retke. (#5206)
+- Sada postoji prečac za premještanje brajičnog retka na trenutan fokus. Trenutno , ALVA BC640/680 series ima prečac pridjeljen toj komandi, ali on se može ručno pridijeliti ručno za druge brajične retke u dijaloškom okviru ulazne geste ako želite. (#5250)
+- U Microsoft Excelu, sada možete se koristiti polja obrazaca. You move to form fields using the Elements List or single letter navigation in browse mode. (#4953)
+- Sada možete pridijeliti prečac za jednostavan način kretanja koristeći dijaloški obkvir ulazne geste. (#6173)
+
+
+== Izmjene ==
+- NVDA sada izgovara boje koristeći osnovne dobro razumljive boje koje se sastoje od 9 varijacija boja i 3 sjene, sa svjetlim i tamnim varijacijama. Ovo je bolje od korištenja subjektivnih i malo razumljivih imena boja. (#6029)
+- postojeća reakcija NVDA+F9 potom NVDA+F10 je izmjenjena kako bi se mogao označiti tekst na prvi pritisak na F10. kada je F10 pritisnut dva put tekst se kopira u međuspremnik. (#4636)
+- Nadograđen eSpeakNG na inačicu Master 11b1a7b (22 lipnja 2016). (#6037)
+
+
+== Ispravke grešaka ==
+- U načinu pregleda u Microsoft Wordu, kopiranje u međuspremnik sada čuva oblikovanje teksta. (#5956)
+- U Microsoft Wordu, nvda sada pravilno čita koristeći wordove prečace za kretanje po tablicama (alt+home, alt+end, alt+pageUp i alt+pageDown) i prečace za označavanje tablica (shift pritisnut sa prečacom za kretanje). (#5961)
+- U Microsoft word dijaloškim okvirima, NVDA objektna navigacija je drastično poboljšana. (#6036)
+- U nekim aplikacijama poput Visual Studio 2015, prečaci (npr control+c za kopiranje) sada se izgovaraju onako kako se to očekuje. (#6021)
+- ispravljena rijetka greška prilikom skeniranja serijskih portova na nekim sustavima, što je činilo večinu brajičnih redaka neupotrebljivim. (#6015)
+- Izgovaranje boja u microsoft wordu sada je točnije, jer se i teme u microsoft officeu uzimaju u obzir. (#5997)
+- Način pregleda u  Microsoft Edgeu i podrška za prijedloge pretrage u start izborniku, su sada dostupne na Windows 10 verzijama izdanim poslije travnja 2016. (#5955)
+- U Microsoft Wordu, automatsko čitanje zaglavlja tablica sada radi bolje pri radu sa spojenim ćelijama. (#5926)
+- U Windows 10 aplikaciji "pošta", NVDA više nema problema sa čitanjem sadržaja poruka. (#5635) 
+- kada je uključen izgovor tipkovničkih prečaca, tipke poput caps locka, više se ne izgovaraju dva puta. (#5490)
+- Dijaloški okviri kontrole korisničkog računa sada se ponovno ispravno čitaju U Windows 10 anniversary nadogradnji. (#5942)
+- U Web Conference dodatku (koristi se na out-of-sight.net) NVDA više ne signalizira zvukom i govorom izmjene trake napredovanja koje se odnose na mikrofonski ulaz. (#5888)
+- Izvodeći komandu traži prethodno ili traži slijedeće u načinu pregleda će sada ispravno pokretati pretragu osjetljivu na velika slova ako je izvorna pretraga osjetljiva na velika slova. (#5522)
+- Prilikom uređivanja upisa u riječnik, sada ćete dobivati povratnu informaciju o nepravilnom regularnom izrazu. NVDA se više ne urušava, ako u datoteci postoji nepravilan regularni izraz. (#4834)
+- Ako NVDA ne može komunicirati sa brajičnim retkom (npr. ako je odspojen), automatski će se onemogućiti korištenje istog. (#1555)
+- znatno unapređene performanse u popisu elemenata u načinu pregleda u većini slučajeva. (#6126)
+- U Microsoft Excelu, imena pozadinskih uzoraka, koje izgovara NVDA sada se poklapaju sa imenima koja se koriste u excelu. (#6092)
+- Unaprjeđena podrška za Windows 10 zaslon prijave, uključujući obavještenja o upozorenjima i aktiviranja polja za lozinku uz pomoć dodira. (#6010)
+- NVDA sada ispravno detektira sekundarne routing tipke na ALVA BC640/680 series brajičnim redcima. (#5206)
+- NVDA može ponovno čitati windowsove obavijesti u posljednjim inačicama windows 10. (#6096)
+- NVDA više slučajno ne zaustavlja pritiske tipaka na Baum kompatibilnim i HumanWare Brailliant B brajičnim redcima. (#6035)
+- Ako je izgovaranje brojeva redaka uključeno u postavkama oblikovanja dokumenta, isti se sada prikazuju na brajičnom redku. (#5941)
+- Kada je način govora isključen, izgovoreni objekti (poput pritiska NVDA+tab za izgovaranje fokusa) sada se pojavljuje u pregledniku govora, kako se to očekuje. (#6049)
+- U Outlook 2016 popisu poruka,  pridružena informacija o predlošku više se ne izgovara. (#6219)
+- U Google Chrome-u i web preglednicima baziranima na njemu, na jezicima drukćijima od engleskog, način pregleda više ne odbija poslušnost u većini dokumenata. (#6249)
+
+
+== Izmjene za razvojne programere ==
+Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
 
 
 = 2016.2.1 =
-This release fixes crashes in Microsoft Word:
+Ova inačica ispravlja rušenja u Microsoft wordu:
 
-- NVDA no longer causes Microsoft Word to crash immediately after it starts in Windows XP. (#6033)
-- Removed reporting of grammar errors, as this causes crashes in Microsoft Word. (#5954, #5877)
+- NVDA više ne prouzrokuje rušenje microsoft worda poslije pokretanja istog. (#6033)
+- Uklonjena mogućnost izgovaranja gramatičkih pogrešaka, zato što je to uzrok rušenja Microsoft worda.(#5954, #5877)
 
 
 = 2016.2 =

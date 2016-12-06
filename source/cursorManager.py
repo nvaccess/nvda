@@ -23,6 +23,7 @@ import braille
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
+from textInfos import DocumentWithPageTurns
 
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
@@ -48,7 +49,7 @@ class FindDialog(wx.Dialog):
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
 		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
 
-		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL), flag=wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
@@ -121,7 +122,13 @@ class CursorManager(baseObject.ScriptableObject):
 		if direction is not None:
 			info.expand(unit)
 			info.collapse(end=posUnitEnd)
-			info.move(unit,direction)
+			if info.move(unit,direction)==0 and isinstance(self,DocumentWithPageTurns):
+				try:
+					self.turnPage(previous=direction<0)
+				except RuntimeError:
+					pass
+				else:
+					info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
 		self.selection=info
 		info.expand(unit)
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
@@ -312,6 +319,11 @@ class CursorManager(baseObject.ScriptableObject):
 		if info.copyToClipboard():
 			# Translators: Message presented when text has been copied to clipboard.
 			ui.message(_("Copied to clipboard"))
+
+	def reportSelectionChange(self, oldTextInfo):
+		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		speech.speakSelectionChange(oldTextInfo,newInfo)
+		braille.handler.handleCaretMove(self)
 
 	__gestures = {
 		"kb:pageUp": "moveByPage_back",

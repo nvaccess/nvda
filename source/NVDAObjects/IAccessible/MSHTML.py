@@ -95,7 +95,7 @@ class HTMLAttribCache(object):
 
 nodeNamesToNVDARoles={
 	"FRAME":controlTypes.ROLE_FRAME,
-	"IFRAME":controlTypes.ROLE_FRAME,
+	"IFRAME":controlTypes.ROLE_INTERNALFRAME,
 	"FRAMESET":controlTypes.ROLE_DOCUMENT,
 	"BODY":controlTypes.ROLE_DOCUMENT,
 	"TH":controlTypes.ROLE_TABLECELL,

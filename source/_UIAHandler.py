@@ -28,10 +28,18 @@ StyleId_Heading1=70001
 StyleId_Heading9=70009
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
+UIA_FullDescriptionPropertyId=30159
 UIA_LevelPropertyId=30154
 UIA_PositionInSetPropertyId=30152
 UIA_SizeOfSetPropertyId=30153
+UIA_LocalizedLandmarkTypePropertyId=30158
+UIA_LandmarkTypePropertyId=30157
 
+HorizontalTextAlignment_Left=0
+HorizontalTextAlignment_Centered=1
+HorizontalTextAlignment_Right=2
+HorizontalTextAlignment_Justified=3
+  
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -156,7 +164,7 @@ class UIAHandler(COMObject):
 			try:
 				self.clientObject=CoCreateInstance(CUIAutomation8._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 				isUIA8=True
-			except (COMError,WindowsError):
+			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
 				try:

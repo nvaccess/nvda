@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2016 NV Access Limited
+#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
 
 import sys
 import itertools
@@ -55,10 +55,10 @@ TABLES = (
 	("cz-cz-g1.utb", _("Czech grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g16.utb", _("Danish 6 dot grade 1"), False),
+	("da-dk-g16.ctb", _("Danish 6 dot grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g18.utb", _("Danish 8 dot grade 1"), False),
+	("da-dk-g18.ctb", _("Danish 8 dot grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("da-dk-g26.ctb", _("Danish 6 dot grade 2"), False),
@@ -205,13 +205,13 @@ TABLES = (
 	("mr-in-g1.utb", _("Marathi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-BE-g1.ctb", _("Dutch (Belgium) grade 1"), False),
+	("nl-BE-g0.utb", _("Dutch (Belgium)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-NL-g1.ctb", _("Dutch (Netherlands) grade 1"), False),
+	("nl-NL-g0.utb", _("Dutch (Netherlands)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("no-no.ctb", _("Norwegian 8 dot computer braille"), True),
+	("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("No-No-g0.utb", _("Norwegian grade 0"), False),
@@ -262,7 +262,7 @@ TABLES = (
 	("Se-Se-g1.utb", _("Swedish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("sk-sk-g1.utb", _("Slovak grade 1"), False),
+	("sk-g1.ctb", _("Slovak grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("sl-si-g1.utb", _("Slovene grade 1"), False),
@@ -274,16 +274,16 @@ TABLES = (
 	("ta-ta-g1.ctb", _("Tamil grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("te-in-g1.utb", _("Telegu grade 1"), False),
+	("te-in-g1.utb", _("Telugu grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("tr.ctb", _("Turkish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("UEBC-g1.utb", _("Unified English Braille Code grade 1"), False),
+	("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("UEBC-g2.ctb", _("Unified English Braille Code grade 2"), False),
+	("en-ueb-g2.ctb", _("Unified English Braille Code grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"), False),
@@ -294,6 +294,18 @@ TABLES = (
 
 #: Braille tables that support input (only computer braille tables yet).
 INPUT_TABLES = tuple(t for t in TABLES if t[2])
+
+#: Maps old table names to new table names for tables renamed in newer versions of liblouis.
+RENAMED_TABLES = {
+	"da-dk-g16.utb":"da-dk-g16.ctb",
+	"da-dk-g18.utb":"da-dk-g18.ctb",
+	"nl-BE-g1.ctb":"nl-BE-g0.utb",
+	"nl-NL-g1.ctb":"nl-NL-g0.utb",
+	"no-no.ctb":"no-no-comp8.ctb",
+	"sk-sk-g1.utb":"sk-g1.ctb",
+	"UEBC-g1.ctb":"en-ueb-g1.ctb",
+	"UEBC-g2.ctb":"en-ueb-g2.ctb",
+}
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
@@ -721,7 +733,12 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getBrailleTextForProperties(**props)
-		if role == controlTypes.ROLE_MATH:
+		content = field.get("content")
+		if content:
+			if text:
+				text += " "
+			text += content
+		elif role == controlTypes.ROLE_MATH:
 			import mathPres
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
@@ -739,15 +756,28 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field):
-	linePrefix = field.get("line-prefix")
-	if linePrefix:
-		return linePrefix
-	return None
+def getFormatFieldBraille(field, isAtStart, formatConfig):
+	textList = []
+	if isAtStart:
+		if formatConfig["reportLineNumber"]:
+			lineNumber = field.get("line-number")
+			if lineNumber:
+				textList.append("%s" % lineNumber)
+		linePrefix = field.get("line-prefix")
+		if linePrefix:
+			textList.append(linePrefix)
+		if formatConfig["reportHeadings"]:
+			headingLevel=field.get('heading-level')
+			if headingLevel:
+				# Translators: Displayed in braille for a heading with a level.
+				# %s is replaced with the level.
+				textList.append(_("h%s")%headingLevel)
+	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):
 
 	pendingCaretUpdate=False #: True if the cursor should be updated for this region on the display
+	allowPageTurns=True #: True if a page turn should be tried when a TextInfo cannot move anymore and the object supports page turns.
 
 	def __init__(self, obj):
 		super(TextInfoRegion, self).__init__()
@@ -818,6 +848,7 @@ class TextInfoRegion(Region):
 		typeform = louis.plain_text
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
+				self._isFormatFieldAtStart = False
 				if not command:
 					continue
 				if self._endsWithField:
@@ -849,7 +880,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field)
+					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -920,9 +951,10 @@ class TextInfoRegion(Region):
 		self._rawToContentPos = []
 		self._currentContentPos = 0
 		self.selectionStart = self.selectionEnd = None
+		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-		self._endsWithField = False
 
+		self._endsWithField = False
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -987,7 +1019,15 @@ class TextInfoRegion(Region):
 		dest = self._readingInfo.copy()
 		moved = dest.move(self._getReadingUnit(), 1)
 		if not moved:
-			return
+			if self.allowPageTurns and isinstance(dest.obj,textInfos.DocumentWithPageTurns):
+				try:
+					dest.obj.turnPage()
+				except RuntimeError:
+					pass
+				else:
+					dest=dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
+			else: # no page turn support
+				return
 		dest.collapse()
 		self._setCursor(dest)
 
@@ -1001,7 +1041,16 @@ class TextInfoRegion(Region):
 			unit = textInfos.UNIT_CHARACTER
 		moved = dest.move(unit, -1)
 		if not moved:
-			return
+			if self.allowPageTurns and isinstance(dest.obj,textInfos.DocumentWithPageTurns):
+				try:
+					dest.obj.turnPage(previous=True)
+				except RuntimeError:
+					pass
+				else:
+					dest=dest.obj.makeTextInfo(textInfos.POSITION_LAST)
+					dest.expand(unit)
+			else: # no page turn support
+				return
 		dest.collapse()
 		self._setCursor(dest)
 
@@ -1017,6 +1066,8 @@ class CursorManagerRegion(TextInfoRegion):
 		self.obj.selection = info
 
 class ReviewTextInfoRegion(TextInfoRegion):
+
+	allowPageTurns=False
 
 	def _getCursor(self):
 		return api.getReviewPosition().copy()
@@ -1342,11 +1393,12 @@ def getFocusRegions(obj, review=False):
 		return
 
 	# Late import to avoid circular import.
-	from treeInterceptorHandler import TreeInterceptor
+	from treeInterceptorHandler import TreeInterceptor, DocumentTreeInterceptor
 	from cursorManager import CursorManager
+	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, TreeInterceptor) or NVDAObjectHasUsefulText(obj): 
+	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
@@ -1735,6 +1787,11 @@ def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
+	# #6140: Migrate to new table names as smoothly as possible.
+	oldTableName = config.conf["braille"]["translationTable"]
+	newTableName = RENAMED_TABLES.get(oldTableName)
+	if newTableName:
+		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
