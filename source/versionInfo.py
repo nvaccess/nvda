@@ -1,6 +1,6 @@
 #versionInfo.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited
+#Copyright (C) 2006-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -31,16 +31,20 @@ def _updateVersionFromVCS():
 # Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2015.4dev"
+version_year=2016
+version_major=4
+version_minor=0
+version_build=0
+version="%s.%s.%sdev"%(version_year,version_major,version_minor)
 publisher="unknown"
 updateVersionType=None
 try:
-	from _buildVersion import version, publisher, updateVersionType
+	from _buildVersion import version, publisher, updateVersionType, version_build
 except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
 url="http://www.nvaccess.org/"
-copyrightYears="2006-2015"
+copyrightYears="2006-2016"
 copyright=_("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
 aboutMessage=_(u"""{longName} ({name})

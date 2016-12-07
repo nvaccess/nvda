@@ -16,6 +16,8 @@ from validate import Validator
 from logHandler import log
 import shlobj
 import baseObject
+import easeOfAccess
+import winKernel
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	"""
@@ -81,13 +83,19 @@ confspec = ConfigObj(StringIO(
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
 
+# Audio settings
+[audio]
+	audioDuckingMode = integer(default=0)
+
 # Braille settings
 [braille]
 	display = string(default=noBraille)
 	translationTable = string(default=en-us-comp8.ctb)
 	inputTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
+	showCursor = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
+	cursorShape = integer(default=192,min=1,max=255)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
 	readByParagraph = boolean(default=false)
@@ -127,6 +135,16 @@ confspec = ConfigObj(StringIO(
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
 
+[speechViewer]
+	showSpeechViewerAtStartup = boolean(default=false)
+	autoPositionWindow = boolean(default=True)
+	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	x = integer()
+	y = integer()
+	width = integer()
+	height = integer()
+	displays = string_list()
+
 #Keyboard settings
 [keyboard]
 	useCapsLockAsNVDAModifierKey = boolean(default=false)
@@ -140,6 +158,7 @@ confspec = ConfigObj(StringIO(
 	speechInterruptForCharacters = boolean(default=true)
 	speechInterruptForEnter = boolean(default=true)
 	allowSkimReadingInSayAll = boolean(default=False)
+	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
 
 [virtualBuffers]
@@ -159,14 +178,17 @@ confspec = ConfigObj(StringIO(
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	reportFontAttributes = boolean(default=false)
-	reportRevisions = boolean(default=false)
+	reportRevisions = boolean(default=true)
+	reportEmphasis = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
+	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
 	reportSpellingErrors = boolean(default=true)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	reportLineIndentation = boolean(default=False)
+	reportLineIndentationWithTones = boolean(default=False)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
@@ -200,6 +222,10 @@ confspec = ConfigObj(StringIO(
 	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
 	reportReadingStringChanges = boolean(default=True)
 	reportCompositionStringChanges = boolean(default=True)
+
+[debugLog]
+	hwIo = boolean(default=false)
+	audioDucking = boolean(default=false)
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
@@ -292,6 +318,9 @@ def initConfigPath(configPath=None):
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
+	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
+			and easeOfAccess.willAutoStart(_winreg.HKEY_CURRENT_USER)):
+		return True
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
 		val = _winreg.QueryValueEx(k, u"nvda")[0]
@@ -302,11 +331,23 @@ def getStartAfterLogon():
 def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
+	if easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch:
+		easeOfAccess.setAutoStart(_winreg.HKEY_CURRENT_USER, enable)
+		if enable:
+			return
+		# We're disabling, so ensure the run key is cleared,
+		# as it might have been set by an old version.
+		run = False
+	else:
+		run = enable
 	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
-	if enable:
+	if run:
 		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
 	else:
-		_winreg.DeleteValue(k, u"nvda")
+		try:
+			_winreg.DeleteValue(k, u"nvda")
+		except WindowsError:
+			pass
 
 SERVICE_FILENAME = u"nvda_service.exe"
 
@@ -320,10 +361,12 @@ def isServiceInstalled():
 	except (WindowsError, OSError):
 		return False
 
+def canStartOnSecureScreens():
+	return isInstalledCopy() and (easeOfAccess.isSupported or isServiceInstalled())
+
 def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
 	import shellapi
-	import winKernel
 	import winUser
 	if params is not None:
 		params = subprocess.list2cmdline(params)
@@ -351,6 +394,8 @@ SLAVE_FILENAME = u"nvda_slave.exe"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
+	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(_winreg.HKEY_LOCAL_MACHINE):
+		return True
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
 		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
@@ -358,8 +403,13 @@ def getStartOnLogonScreen():
 		return False
 
 def _setStartOnLogonScreen(enable):
-	k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
-	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
+	if easeOfAccess.isSupported:
+		# The installer will have migrated service config to EoA if appropriate,
+		# so we only need to deal with EoA here.
+		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, enable)
+	else:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
+		_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)
@@ -482,6 +532,8 @@ class ConfigManager(object):
 		synthDriverHandler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
+		import audioDucking
+		audioDucking.handleConfigProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -1115,3 +1167,17 @@ class ProfileTrigger(object):
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
+
+TokenUIAccess = 26
+def hasUiAccess():
+	token = ctypes.wintypes.HANDLE()
+	ctypes.windll.advapi32.OpenProcessToken(ctypes.windll.kernel32.GetCurrentProcess(),
+		winKernel.MAXIMUM_ALLOWED, ctypes.byref(token))
+	try:
+		val = ctypes.wintypes.DWORD()
+		ctypes.windll.advapi32.GetTokenInformation(token, TokenUIAccess,
+			ctypes.byref(val), ctypes.sizeof(ctypes.wintypes.DWORD),
+			ctypes.byref(ctypes.wintypes.DWORD()))
+		return bool(val.value)
+	finally:
+		ctypes.windll.kernel32.CloseHandle(token)

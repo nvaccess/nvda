@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -53,6 +53,8 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
+	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
+		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
@@ -71,16 +73,18 @@ def restart(disableAddons=False):
 	import winUser
 	import shellapi
 	options=[]
-	try:
-		sys.argv.index('-r')
-	except:
+	if "-r" not in sys.argv:
 		options.append("-r")
 	try:
-		sys.argv.pop(sys.argv.index('--disable-addons'))
-	except:
+		sys.argv.remove('--disable-addons')
+	except ValueError:
 		pass
 	if disableAddons:
 		options.append('--disable-addons')
+	try:
+		sys.argv.remove("--ease-of-access")
+	except ValueError:
+		pass
 	shellapi.ShellExecute(None, None,
 		sys.executable.decode("mbcs"),
 		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
@@ -120,7 +124,11 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
+	import audioDucking
+	if audioDucking.isAudioDuckingSupported():
+		audioDucking.handleConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
+	
 
 def _setInitialFocus():
 	"""Sets the initial focus if no focus event was received at startup.
@@ -179,8 +187,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# Set a reasonable timeout for any socket connections NVDA makes.
 	import socket
 	socket.setdefaulttimeout(10)
-	log.debug("Initializing addons system.")
+	log.debug("Initializing add-ons system")
 	addonHandler.initialize()
+	if globalVars.appArgs.disableAddons:
+		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
@@ -199,11 +209,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
-	app = wx.App(redirect=False)
-	# HACK: wx currently raises spurious assertion failures when a timer is stopped but there is already an event in the queue for that timer.
-	# Unfortunately, these assertion exceptions are raised in the middle of other code, which causes problems.
-	# Therefore, disable assertions for now.
-	app.SetAssertMode(wx.PYAPP_ASSERT_SUPPRESS)
+	class App(wx.App):
+		def OnAssert(self,file,line,cond,msg):
+			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
+			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+	app = App(redirect=False)
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
@@ -229,6 +239,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
+	import audioDucking
+	if audioDucking.isAudioDuckingSupported():
+		# the GUI mainloop must be running for this to work so delay it
+		wx.CallAfter(audioDucking.initialize)
 
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.
@@ -449,9 +463,13 @@ def callLater(delay, callable, *args, **kwargs):
 	This is currently a thin wrapper around C{wx.CallLater},
 	but this should be used instead for calls which aren't just for UI,
 	as it notifies watchdog appropriately.
+	This function can be safely called from any thread.
 	"""
 	import wx
-	return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+	if thread.get_ident() == mainThreadId:
+		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+	else:
+		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
 
 def _callLaterExec(callable, args, kwargs):
 	import watchdog

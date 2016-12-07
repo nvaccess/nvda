@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner
 
 from collections import namedtuple
 from ctypes import c_short
@@ -15,11 +15,12 @@ import eventHandler
 import controlTypes
 from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
+import textInfos.offsets
 from NVDAObjects.behaviors import RowWithFakeNavigation
+from . import IA2TextTextInfo
+from . import ia2Web
 
-class Mozilla(IAccessible):
-
-	IAccessibleTableUsesTableCellIndexAttrib=True
+class Mozilla(ia2Web.Ia2Web):
 
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
@@ -55,15 +56,6 @@ class Mozilla(IAccessible):
 				presType=self.presType_layout
 		return presType
 
-	def _get_positionInfo(self):
-		info=super(Mozilla,self).positionInfo
-		level=info.get('level',None)
-		if not level:
-			level=self.IA2Attributes.get('level',None)
-			if level:
-				info['level']=level
-		return info
-
 class Gecko1_9(Mozilla):
 
 	def _get_description(self):
@@ -93,9 +85,7 @@ class RootApplication(Mozilla):
 		# As far as NVDA is concerned, this is a useless object.
 		return False
 
-class Document(Mozilla):
-
-	value=None
+class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self):
 		ver=getGeckoVersion(self)
@@ -108,9 +98,6 @@ class Document(Mozilla):
 			else:
 				return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
-
-	def _get_shouldCreateTreeInterceptor(self):
-		return controlTypes.STATE_READONLY in self.states
 
 class EmbeddedObject(Mozilla):
 
@@ -169,9 +156,6 @@ class TextLeaf(Mozilla):
 	role = controlTypes.ROLE_STATICTEXT
 	beTransparentToMouse = True
 
-class Application(Document):
-	shouldCreateTreeInterceptor = False
-
 class Math(Mozilla):
 
 	def _get_mathMl(self):
@@ -202,6 +186,7 @@ def findExtraOverlayClasses(obj, clsList):
 		return
 
 	iaRole = obj.IAccessibleRole
+
 	cls = None
 	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
 		try:
@@ -215,12 +200,8 @@ def findExtraOverlayClasses(obj, clsList):
 		# Text leaves are never focusable.
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
 		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
-			try:
-				ia2States = obj.IAccessibleObject.states
-			except COMError:
-				ia2States = 0
 			# This excludes a non-focusable @role="textbox".
-			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
+			if not (obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE):
 				cls = TextLeaf
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
@@ -249,27 +230,14 @@ def findExtraOverlayClasses(obj, clsList):
 	if ver and ver.full.startswith("1.9"):
 		clsList.append(Gecko1_9)
 
-	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_PROPERTYPAGE):
-		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-		if "dialog" in xmlRoles or "tabpanel" in xmlRoles:
-			# #2390: Don't try to calculate text for ARIA dialogs.
-			# #4638: Don't try to calculate text for ARIA tab panels.
-			try:
-				clsList.remove(Dialog)
-			except ValueError:
-				pass
-
-	clsList.append(Mozilla)
+	ia2Web.findExtraOverlayClasses(obj, clsList,
+		baseClass=Mozilla, documentClass=Document)
 
 #: Maps IAccessible roles to NVDAObject overlay classes.
 _IAccessibleRolesToOverlayClasses = {
-	oleacc.ROLE_SYSTEM_ALERT: Dialog,
-	oleacc.ROLE_SYSTEM_DOCUMENT: Document,
 	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
 	"object": EmbeddedObject,
-	oleacc.ROLE_SYSTEM_APPLICATION: Application,
-	oleacc.ROLE_SYSTEM_DIALOG: Application,
 	oleacc.ROLE_SYSTEM_EQUATION: Math,
 }
 

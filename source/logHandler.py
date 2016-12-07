@@ -10,7 +10,7 @@ from logging import _levelNames as levelNames
 import inspect
 import winsound
 import traceback
-from types import MethodType
+from types import MethodType, FunctionType
 import globalVars
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
@@ -51,12 +51,33 @@ def getCodePath(f):
 	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
 		arg0=f.f_locals[f.f_code.co_varnames[0]]
-		try:
-			attr=getattr(arg0,funcName)
-		except:
-			attr=None
-		if attr and type(attr) is MethodType and attr.im_func.func_code is f.f_code:
-			className=arg0.__class__.__name__
+		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any) 
+		# Rather than an instance member of its first argument.
+		# This stops infinite recursions if fetching data descriptors,
+		# And better reflects the actual source code definition.
+		topCls=arg0 if isinstance(arg0,type) else type(arg0)
+		# find the deepest class this function's name is reachable as a method from
+		if hasattr(topCls,funcName):
+			for cls in topCls.__mro__:
+				member=cls.__dict__.get(funcName)
+				if not member:
+					continue
+				memberType=type(member)
+				if memberType is FunctionType and member.func_code is f.f_code:
+					# the function was found as a standard method
+					className=cls.__name__
+				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.func_code is f.f_code:
+					# function was found as a class method
+					className=cls.__name__
+				elif memberType is property:
+					if type(member.fget) is FunctionType and member.fget.func_code is f.f_code:
+						# The function was found as a property getter
+						className=cls.__name__
+					elif type(member.fset) is FunctionType and member.fset.func_code is f.f_code:
+						# the function was found as a property setter
+						className=cls.__name__
+				if className:
+					break
 	return ".".join([x for x in path,className,funcName if x])
 
 # Function to strip the base path of our code from traceback text to improve readability.

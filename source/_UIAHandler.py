@@ -28,10 +28,18 @@ StyleId_Heading1=70001
 StyleId_Heading9=70009
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
+UIA_FullDescriptionPropertyId=30159
 UIA_LevelPropertyId=30154
 UIA_PositionInSetPropertyId=30152
 UIA_SizeOfSetPropertyId=30153
+UIA_LocalizedLandmarkTypePropertyId=30158
+UIA_LandmarkTypePropertyId=30157
 
+HorizontalTextAlignment_Left=0
+HorizontalTextAlignment_Centered=1
+HorizontalTextAlignment_Right=2
+HorizontalTextAlignment_Justified=3
+  
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -119,9 +127,10 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
 	#UIA_Text_TextSelectionChangedEventId:"caret",
-	UIA_ToolTipOpenedEventId:"alert",
+	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
+	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 }
 
 class UIAHandler(COMObject):
@@ -151,7 +160,18 @@ class UIAHandler(COMObject):
 	def MTAThreadFunc(self):
 		try:
 			oledll.ole32.CoInitializeEx(None,comtypes.COINIT_MULTITHREADED) 
-			self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			isUIA8=False
+			try:
+				self.clientObject=CoCreateInstance(CUIAutomation8._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+				isUIA8=True
+			except (COMError,WindowsError,NameError):
+				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			if isUIA8:
+				try:
+					self.clientObject=self.clientObject.QueryInterface(IUIAutomation3)
+				except COMError:
+					self.clientObject=self.clientObject.QueryInterface(IUIAutomation2)
+			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
 			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)
@@ -161,8 +181,9 @@ class UIAHandler(COMObject):
 			import UIAHandler
 			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),u"ItemIndex",1)
 			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),u"ItemCount",1)
-			for propertyId in (UIA_FrameworkIdPropertyId,UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsSelectionItemPatternAvailablePropertyId,UIA_IsTextPatternAvailablePropertyId):
+			for propertyId in (UIA_FrameworkIdPropertyId,UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
+			self.baseCacheRequest.addPattern(UIA_TextPatternId)
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
@@ -190,10 +211,7 @@ class UIAHandler(COMObject):
 			return
 		if not self.isNativeUIAElement(sender):
 			return
-		try:
-			window=sender.cachedNativeWindowHandle
-		except COMError:
-			window=None
+		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
 		import NVDAObjects.UIA
@@ -219,10 +237,7 @@ class UIAHandler(COMObject):
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
 			if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
 				return
-		try:
-			window=sender.cachedNativeWindowHandle
-		except COMError:
-			window=None
+		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent("gainFocus",windowHandle=window):
 			return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
@@ -242,10 +257,7 @@ class UIAHandler(COMObject):
 			return
 		if not self.isNativeUIAElement(sender):
 			return
-		try:
-			window=sender.cachedNativeWindowHandle
-		except COMError:
-			window=None
+		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
 		import NVDAObjects.UIA
@@ -293,13 +305,19 @@ class UIAHandler(COMObject):
 			# Called previously. Use cached result.
 			return UIAElement._nearestWindowHandle
 		try:
-			new=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
-		except COMError:
-			return None
-		try:
-			window=new.cachedNativeWindowHandle
+			window=UIAElement.cachedNativeWindowHandle
 		except COMError:
 			window=None
+		if not window:
+			# This element reports no window handle, so use the nearest ancestor window handle.
+			try:
+				new=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
+			except COMError:
+				return None
+			try:
+				window=new.cachedNativeWindowHandle
+			except COMError:
+				window=None
 		# Cache for future use to improve performance.
 		UIAElement._nearestWindowHandle=window
 		return window
@@ -314,13 +332,7 @@ class UIAHandler(COMObject):
 		if processID==windll.kernel32.GetCurrentProcessId():
 			return False
 		# Whether this is a native element depends on whether its window natively supports UIA.
-		try:
-			windowHandle=UIAElement.cachedNativeWindowHandle
-		except COMError:
-			windowHandle=None
-		if not windowHandle:
-			# Some elements report no window handle, so use the nearest ancestor window handle in this case.
-			windowHandle=self.getNearestWindowHandle(UIAElement)
+		windowHandle=self.getNearestWindowHandle(UIAElement)
 		if windowHandle:
 			if self.isUIAWindow(windowHandle):
 				return True

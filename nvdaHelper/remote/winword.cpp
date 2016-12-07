@@ -24,168 +24,35 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaHelperRemote.h"
 #include "nvdaInProcUtils.h"
 #include "nvdaInProcUtils.h"
+#include <remote/WinWord/Constants.h>
+#include <remote/WinWord/Fields.h>
 #include "winword.h"
 
 using namespace std;
 
-#define wdDISPID_DOCUMENT_RANGE 2000
-#define wdDISPID_WINDOW_DOCUMENT 2
-#define wdDISPID_WINDOW_APPLICATION 1000
-#define wdDISPID_WINDOW_SELECTION 4
-#define wdDISPID_APPLICATION_SCREENUPDATING 26
-#define wdDISPID_SELECTION_RANGE 400
-#define wdDISPID_SELECTION_SETRANGE 100
-#define wdDISPID_SELECTION_STARTISACTIVE 404
-#define wdDISPID_SELECTION_STARTOF 107
-#define wdDISPID_SELECTION_ENDOF 108
-#define wdDISPID_RANGE_INRANGE 126
-#define wdDISPID_RANGE_DUPLICATE 6
-#define wdDISPID_RANGE_REVISIONS 150
-#define wdDISPID_REVISIONS_ITEM 0
-#define wdDISPID_REVISION_TYPE 4
-#define wdDISPID_RANGE_STORYTYPE 7
-#define wdDISPID_RANGE_MOVE 109
-#define wdDISPID_RANGE_MOVEEND 111
-#define wdDISPID_RANGE_COLLAPSE 101
-#define wdDISPID_RANGE_TEXT 0
-#define wdDISPID_RANGE_EXPAND 129
-#define wdDISPID_RANGE_SELECT 65535
-#define wdDISPID_RANGE_SETRANGE 100
-#define wdDISPID_RANGE_START 3
-#define wdDISPID_RANGE_END 4
-#define wdDISPID_RANGE_INFORMATION 313
-#define wdDISPID_RANGE_STYLE 151
-#define wdDISPID_RANGE_LANGUAGEID 153
-#define wdDISPID_RANGE_DUPLICATE 6
-#define wdDISPID_RANGE_FORMFIELDS 65
-#define wdDISPID_RANGE_CONTENTCONTROLS 424
-#define wdDISPID_FORMFIELDS_ITEM 0
-#define wdDISPID_FORMFIELD_RANGE 17
-#define wdDISPID_FORMFIELD_TYPE 0
-#define wdDISPID_FORMFIELD_RESULT 10
-#define wdDISPID_FORMFIELD_STATUSTEXT 8
-#define wdDISPID_CONTENTCONTROLS_ITEM 0
-#define wdDISPID_CONTENTCONTROL_RANGE 1
-#define wdDISPID_CONTENTCONTROL_TYPE 5
-#define wdDISPID_CONTENTCONTROL_CHECKED 28
-#define wdDISPID_CONTENTCONTROL_TITLE 12
-#define wdDISPID_STYLE_NAMELOCAL 0
-#define wdDISPID_RANGE_SPELLINGERRORS 316
-#define wdDISPID_SPELLINGERRORS_ITEM 0
-#define wdDISPID_SPELLINGERRORS_COUNT 1
-#define wdDISPID_RANGE_APPLICATION 1000
-#define wdDISPID_APPLICATION_ISSANDBOX 492
+// See https://github.com/nvaccess/nvda/wiki/Using-COM-with-NVDA-and-Microsoft-Word
+constexpr int formatConfig_reportFontName = 0x1;
+constexpr int formatConfig_reportFontSize = 0x2;
+constexpr int formatConfig_reportFontAttributes = 0x4;
+constexpr int formatConfig_reportColor = 0x8;
+constexpr int formatConfig_reportAlignment = 0x10;
+constexpr int formatConfig_reportStyle = 0x20;
+constexpr int formatConfig_reportSpellingErrors = 0x40;
+constexpr int formatConfig_reportPage = 0x80;
+constexpr int formatConfig_reportLineNumber = 0x100;
+constexpr int formatConfig_reportTables = 0x200;
+constexpr int formatConfig_reportLists = 0x400;
+constexpr int formatConfig_reportLinks = 0x800;
+constexpr int formatConfig_reportComments = 0x1000;
+constexpr int formatConfig_reportHeadings = 0x2000;
+constexpr int formatConfig_reportLanguage = 0x4000;
+constexpr int formatConfig_reportRevisions = 0x8000;
+constexpr int formatConfig_reportParagraphIndentation = 0x10000;
+constexpr int formatConfig_includeLayoutTables = 0x20000;
+constexpr int formatConfig_reportLineSpacing = 0x40000;
 
-#define wdDISPID_RANGE_FONT 5
-#define wdDISPID_FONT_COLOR 159
-#define wdDISPID_FONT_BOLD 130
-#define wdDISPID_FONT_ITALIC 131
-#define wdDISPID_FONT_UNDERLINE 140
-#define wdDISPID_FONT_NAME 142
-#define wdDISPID_FONT_SIZE 141
-#define wdDISPID_FONT_SUBSCRIPT 138
-#define wdDISPID_FONT_SUPERSCRIPT 139
-#define wdDISPID_RANGE_PARAGRAPHFORMAT 1102
-#define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
-#define wdDISPID_RANGE_LISTFORMAT 68
-#define wdDISPID_LISTFORMAT_LISTSTRING 75
-#define wdDISPID_RANGE_PARAGRAPHS 59
-#define wdDISPID_PARAGRAPHS_ITEM 0
-#define wdDISPID_PARAGRAPH_RANGE 0
-#define wdDISPID_PARAGRAPH_OUTLINELEVEL 202
-#define wdDISPID_RANGE_FOOTNOTES 54
-#define wdDISPID_FOOTNOTES_ITEM 0
-#define wdDISPID_FOOTNOTES_COUNT 2
-#define wdDISPID_FOOTNOTE_INDEX 6
-#define wdDISPID_RANGE_ENDNOTES 55
-#define wdDISPID_ENDNOTES_ITEM 0
-#define wdDISPID_ENDNOTES_COUNT 2
-#define wdDISPID_ENDNOTE_INDEX 6
-#define wdDISPID_RANGE_INLINESHAPES 319
-#define wdDISPID_INLINESHAPES_COUNT 1
-#define wdDISPID_INLINESHAPES_ITEM 0 
-#define wdDISPID_INLINESHAPE_OLEFORMAT 5
-#define wdDISPID_INLINESHAPE_TYPE 6
-#define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
-#define wdDISPID_INLINESHAPE_TITLE 158
-#define wdDISPID_RANGE_HYPERLINKS 156
-#define wdDISPID_HYPERLINKS_COUNT 1
-#define wdDISPID_RANGE_COMMENTS 56
-#define wdDISPID_COMMENTS_COUNT 2
-#define wdDISPID_COMMENTS_ITEM 0
-#define wdDISPID_COMMENT_SCOPE 1005
-#define wdDISPID_RANGE_TABLES 50
-#define wdDISPID_TABLES_ITEM 0
-#define wdDISPID_TABLE_NESTINGLEVEL 108
-#define wdDISPID_TABLE_RANGE 0
-#define wdDISPID_TABLE_BORDERS 1100
-#define wdDISPID_BORDERS_ENABLE 2
-#define wdDISPID_RANGE_CELLS 57
-#define wdDISPID_CELLS_ITEM 0
-#define wdDISPID_CELL_RANGE 0
-#define wdDISPID_CELL_ROWINDEX 4
-#define wdDISPID_CELL_COLUMNINDEX 5
-#define wdDISPID_TABLE_COLUMNS 100
-#define wdDISPID_COLUMNS_COUNT 2
-#define wdDISPID_TABLE_ROWS 101
-#define wdDISPID_ROWS_COUNT 2
-#define wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT 106
-#define wdDISPID_PARAGRAPHFORMAT_LEFTINDENT 107
-#define wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT 108
-#define wdDISPID_OLEFORMAT_PROGID 22
-
-#define wdCommentsStory 4
-
-#define wdCharacter 1
-#define wdWord 2
-#define wdParagraph 4
-#define wdLine 5
-#define wdCharacterFormatting 13
-
-#define wdCollapseEnd 0
-#define wdCollapseStart 1
-
-#define wdActiveEndAdjustedPageNumber 1
-#define wdFirstCharacterLineNumber 10
-#define wdWithInTable 12
-#define wdStartOfRangeRowNumber 13
-#define wdMaximumNumberOfRows 15
-#define wdStartOfRangeColumnNumber 16
-#define wdMaximumNumberOfColumns 18
-
-#define wdAlignParagraphLeft 0
-#define wdAlignParagraphCenter 1
-#define wdAlignParagraphRight 2
-#define wdAlignParagraphJustify 3
-#define wdLanguageNone 0  //&H0
-#define wdNoProofing 1024  //&H400
-#define wdLanguageUnknown 9999999
-
-#define wdInlineShapeEmbeddedOLEObject 1
-#define wdInlineShapePicture 3
-#define wdInlineShapeLinkedPicture 4
-
-#define formatConfig_reportFontName 1
-#define formatConfig_reportFontSize 2
-#define formatConfig_reportFontAttributes 4
-#define formatConfig_reportColor 8
-#define formatConfig_reportAlignment 16
-#define formatConfig_reportStyle 32
-#define formatConfig_reportSpellingErrors 64
-#define formatConfig_reportPage 128
-#define formatConfig_reportLineNumber 256
-#define formatConfig_reportTables 512
-#define formatConfig_reportLists 1024
-#define formatConfig_reportLinks 2048
-#define formatConfig_reportComments 4096
-#define formatConfig_reportHeadings 8192
-#define formatConfig_reportLanguage 16384
-#define formatConfig_reportRevisions 32768
-#define formatConfig_reportParagraphIndentation 65536
-#define formatConfig_includeLayoutTables 131072
- 
-#define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables)
+constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
+constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
 
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -259,12 +126,8 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
-BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, int& chunkEnd) {
-	IDispatchPtr pDispatchRange2=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_DUPLICATE,VT_DISPATCH,&pDispatchRange2)!=S_OK||!pDispatchRange2) {
-		return false;
-	}
-	_com_dispatch_raw_method(pDispatchRange2,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph,1);
+BOOL generateFormFieldXML(IDispatch* pDispatchRange, IDispatchPtr pDispatchRangeExpandedToParagraph, wostringstream& XMLStream, int& chunkEnd) {
+	IDispatchPtr pDispatchRange2=pDispatchRangeExpandedToParagraph;
 	BOOL foundFormField=false;
 	IDispatchPtr pDispatchFormFields=NULL;
 	_com_dispatch_raw_propget(pDispatchRange2,wdDISPID_RANGE_FORMFIELDS,VT_DISPATCH,&pDispatchFormFields);
@@ -358,12 +221,56 @@ bool collectSpellingErrorOffsets(IDispatchPtr pDispatchRange, vector<pair<long,l
 	return !errorVector.empty();
 }
 
-int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagraphRange, int startOffset, int endOffset, wostringstream& XMLStream) {
-	int level=0;
-	if(!pDispatchParagraph||_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
+// #6033: This must not be a static variable inside the function
+// because that causes crashes on Windows XP (Visual Studio bug 1941836).
+vector<wstring> headingStyleNames;
+int getHeadingLevelFromParagraph(IDispatch* pDispatchParagraph) {
+	IDispatchPtr pDispatchStyle=NULL;
+	// fetch the localized style name for the given paragraph
+	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_STYLE,VT_DISPATCH,&pDispatchStyle)!=S_OK||!pDispatchStyle) {
 		return 0;
 	}
-	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\" ";
+	BSTR nameLocal=NULL;
+	_com_dispatch_raw_propget(pDispatchStyle,wdDISPID_STYLE_NAMELOCAL,VT_BSTR,&nameLocal);
+	if(!nameLocal) {
+		return 0;
+	}
+	// If not fetched already, fetch all builtin heading style localized names (1 through 9).
+	if(headingStyleNames.empty()) {
+		IDispatchPtr pDispatchDocument=NULL;
+		IDispatchPtr pDispatchStyles=NULL;
+		if(_com_dispatch_raw_propget(pDispatchStyle,wdDISPID_STYLE_PARENT,VT_DISPATCH,&pDispatchDocument)==S_OK&&pDispatchDocument&&_com_dispatch_raw_propget(pDispatchDocument,wdDISPID_DOCUMENT_STYLES,VT_DISPATCH,&pDispatchStyles)==S_OK&&pDispatchStyles) {
+			for(int i=-2;i>=-10;--i) {
+				IDispatchPtr pDispatchBuiltinStyle=NULL;
+				_com_dispatch_raw_method(pDispatchStyles,wdDISPID_STYLES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchBuiltinStyle,L"\x0003",i);
+				if(pDispatchBuiltinStyle) {
+					BSTR builtinNameLocal=NULL;
+					_com_dispatch_raw_propget(pDispatchBuiltinStyle,wdDISPID_STYLE_NAMELOCAL,VT_BSTR,&builtinNameLocal);
+					if(!builtinNameLocal) continue;
+					headingStyleNames.push_back(builtinNameLocal);
+					SysFreeString(builtinNameLocal);
+				}
+			}
+		}
+	}
+	int level=0;
+	int count=1;
+	// See if the style name matches one of the builtin heading styles
+	for(auto i=headingStyleNames.cbegin();i!=headingStyleNames.cend();++i) {
+		if(i->compare(nameLocal)==0) {
+			level=count;
+			break;
+		}
+		count+=1;
+	}
+	SysFreeString(nameLocal);
+	return level;
+}
+
+int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagraphRange, int startOffset, int endOffset, wostringstream& XMLStream) {
+	int headingLevel=getHeadingLevelFromParagraph(pDispatchParagraph);
+	if(!headingLevel) return 0;
+	XMLStream<<L"<control role=\"heading\" level=\""<<headingLevel<<L"\" ";
 	if(pDispatchParagraphRange) {
 		long iVal=0;
 		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
@@ -396,16 +303,19 @@ int getRevisionType(IDispatch* pDispatchOrigRange) {
 	return revisionType;
 }
 
-int getHyperlinkCount(IDispatch* pDispatchRange) {
-	IDispatchPtr pDispatchHyperlinks=NULL;
-	int count=0;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_HYPERLINKS,VT_DISPATCH,&pDispatchHyperlinks)!=S_OK||!pDispatchHyperlinks) {
-		return 0;
+IDispatchPtr CreateExpandedDuplicate(IDispatch* pDispatchRange, const int expandTo) {
+	IDispatchPtr pDispatchRangeDup = nullptr;
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
+	if( res != S_OK || !pDispatchRangeDup ) {
+		LOG_DEBUGWARNING(L"error duplicating the range.");
 	}
-	if(_com_dispatch_raw_propget(pDispatchHyperlinks,wdDISPID_HYPERLINKS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
-		return 0;
+	else {
+		res = _com_dispatch_raw_method( pDispatchRangeDup, wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003", expandTo);
+		if( res != S_OK || !pDispatchRangeDup ) {
+			LOG_DEBUGWARNING(L"error expanding the range");
+		}
 	}
-	return count;
+	return pDispatchRangeDup;
 }
 
 bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& commentVector) {
@@ -506,6 +416,26 @@ int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int st
 	if(!inTableCell) return numTags;
 	numTags+=2;
 	XMLStream<<L"<control role=\"table\" table-id=\"1\" table-rowcount=\""<<rowCount<<L"\" table-columncount=\""<<columnCount<<L"\" level=\""<<nestingLevel<<L"\" ";
+	wstring altTextStr=L"";
+	BSTR altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_TITLE,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		SysFreeString(altText);
+	}
+	if(!altTextStr.empty()) {
+		XMLStream<<L"alwaysReportName=\"1\" name=\""<<altTextStr<<L"\" ";
+		altTextStr=L"";
+	}
+	altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_DESCR,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		XMLStream<<L"longdescription=\""<<altTextStr<<L"\" ";
+		SysFreeString(altText);
+	}
 	IDispatchPtr pDispatchTableRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_RANGE,VT_DISPATCH,&pDispatchTableRange)==S_OK&&pDispatchTableRange) {
 		if(_com_dispatch_raw_propget(pDispatchTableRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
@@ -531,17 +461,13 @@ int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int st
 
 void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
-	// #4165: font size is needed to calculate paragraph indenting
-	if(formatConfig&formatConfig_reportParagraphIndentation) {
-		formatConfig|=formatConfig_reportFontSize;
-	}
 	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)&&iVal>0) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
 	}
 	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
-	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)) {
+	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)||(formatConfig&formatConfig_reportLineSpacing)) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
 			if(formatConfig&formatConfig_reportAlignment) {
@@ -562,8 +488,8 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					}
 				}
 			}
+			float fVal=0.0;
 			if(formatConfig&formatConfig_reportParagraphIndentation) {
-				float fVal=0.0;
 				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT,VT_R4,&fVal)==S_OK) {
 					formatAttribsStream<<L"right-indent=\"" << fVal <<L"\" ";
 				}
@@ -578,6 +504,14 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LEFTINDENT,VT_R4,&fVal)==S_OK) {
 					if(firstLineIndent<0) fVal+=firstLineIndent;
 					formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
+				}
+			}
+			if(formatConfig&formatConfig_reportLineSpacing) {
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE,VT_I4,&iVal)==S_OK) {
+					formatAttribsStream<<L"wdLineSpacingRule=\"" << iVal <<L"\" ";
+				}
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LINESPACING,VT_R4,&fVal)==S_OK) {
+					formatAttribsStream<<L"wdLineSpacing=\"" << fVal <<L"\" ";
 				}
 			}
 		}
@@ -597,15 +531,16 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 						&&_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange\
 						&&_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
 					) {
-						formatAttribsStream<<L"line-prefix=\""<<listString<<L"\" ";
+						wstring tempText;
+						for(int i=0;listString[i]!=L'\0';++i) {
+							appendCharToXML(listString[i],tempText,true);
+						}
+						formatAttribsStream<<L"line-prefix=\""<<tempText<<L"\" ";
 					}
 				}
 				SysFreeString(listString);
 			}
 		}
-	}
-	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)>0) {
-		formatAttribsStream<<L"link=\"1\" ";
 	}
 	if(formatConfig&formatConfig_reportRevisions) {
 		long revisionType=getRevisionType(pDispatchRange);
@@ -651,6 +586,11 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					formatAttribsStream<<L"text-position=\"super\" ";
 				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"text-position=\"sub\" ";
+				}
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_STRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"1\" ";
+				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_DOUBLESTRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"strikethrough=\"double\" ";
 				}
 			}
 		}
@@ -791,9 +731,14 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Collapse the range
 	int initialFormatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
-	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)==0) {
+
+	IDispatchPtr paragraphRange = CreateExpandedDuplicate(pDispatchRange, wdParagraph);
+	WinWord::Fields currentFields(paragraphRange);
+
+	if((formatConfig&formatConfig_reportLinks) && false == currentFields.hasLinks() ) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
+
 	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory)) {
 		formatConfig&=~formatConfig_reportComments;
 	}
@@ -829,6 +774,13 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		neededClosingControlTagCount+=generateHeadingXML(pDispatchParagraph,pDispatchParagraphRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
+	{	//scope for shouldReportLinks
+		const auto shouldReportLinks = (initialFormatConfig&formatConfig_reportLinks);
+		if( shouldReportLinks && currentFields.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+			initialFormatAttribsStream<<L"link=\"1\" ";
+		}
+	}
+
 	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
@@ -836,7 +788,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		int curDisabledFormatConfig=0;
 		//generated form field xml if in a form field
 		//Also automatically extends the range and chunkEndOffset to the end of the field
-		BOOL isFormField=generateFormFieldXML(pDispatchRange,XMLStream,chunkEndOffset);
+		const bool isFormField = TRUE == generateFormFieldXML(pDispatchRange,paragraphRange,XMLStream,chunkEndOffset);
 		if(!isFormField) {
 			//Move the end by word
 			if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK||unitsMoved<=0) {
@@ -844,6 +796,12 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 		}
+		const auto pageNumFieldEndIndexOptional = currentFields.getEndOfPageNumberFieldAtIndex(chunkEndOffset);
+		if(pageNumFieldEndIndexOptional){
+			chunkEndOffset = *pageNumFieldEndIndexOptional;
+			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,chunkEndOffset);
+		}
+
 		//Make sure  that the end is not past the requested end after the move
 		if(chunkEndOffset>(args->endOffset)) {
 			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
@@ -899,7 +857,16 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
-			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream);
+
+			{	// scope for xmlAttribsFormatConfig
+				const auto xmlAttribsFormatConfig = formatConfig&(~curDisabledFormatConfig);
+				generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,xmlAttribsFormatConfig,XMLStream);
+				const auto shouldReportLinks = (xmlAttribsFormatConfig&formatConfig_reportLinks);
+				if( shouldReportLinks && currentFields.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+					XMLStream<<L"link=\"1\" ";
+				}
+			}
+
 			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
 				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
 					XMLStream<<L" invalid-spelling=\"1\" ";
@@ -1000,25 +967,25 @@ LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, const long windowHandle, const int offset, int* lineStart, int* lineEnd) {
+error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, const unsigned long windowHandle, const int offset, int* lineStart, int* lineEnd) {
 	winword_expandToLine_args args={offset,-1,-1};
 	DWORD_PTR wmRes=0;
-	SendMessage((HWND)windowHandle,wm_winword_expandToLine,(WPARAM)&args,0);
+	SendMessage((HWND)UlongToHandle(windowHandle),wm_winword_expandToLine,(WPARAM)&args,0);
 	*lineStart=args.lineStart;
 	*lineEnd=args.lineEnd;
 	return RPC_S_OK;
 }
 
-error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) { 
+error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const unsigned long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) { 
 	winword_getTextInRange_args args={startOffset,endOffset,formatConfig,NULL};
-	SendMessage((HWND)windowHandle,wm_winword_getTextInRange,(WPARAM)&args,0);
+	SendMessage((HWND)UlongToHandle(windowHandle),wm_winword_getTextInRange,(WPARAM)&args,0);
 	*text=args.text;
 	return RPC_S_OK;
 }
 
-error_status_t nvdaInProcUtils_winword_moveByLine(handle_t bindingHandle, const long windowHandle, const int offset, const int moveBack, int* newOffset) {
+error_status_t nvdaInProcUtils_winword_moveByLine(handle_t bindingHandle, const unsigned long windowHandle, const int offset, const int moveBack, int* newOffset) {
 	winword_moveByLine_args args={offset,moveBack,NULL};
-	SendMessage((HWND)windowHandle,wm_winword_moveByLine,(WPARAM)&args,0);
+	SendMessage((HWND)UlongToHandle(windowHandle),wm_winword_moveByLine,(WPARAM)&args,0);
 	*newOffset=args.newOffset;
 	return RPC_S_OK;
 }

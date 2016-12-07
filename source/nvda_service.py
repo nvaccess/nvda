@@ -159,10 +159,7 @@ def nvdaLauncher():
 def startNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())
 	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
-	args = [desktop, token, nvdaExec, "-m", "-c", nvdaSystemConfigDir, "--no-sr-flag"]
-	if not isDebug:
-		args.append("--secure")
-	return executeProcess(*args)
+	return executeProcess(desktop, token, nvdaExec)
 
 def exitNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())

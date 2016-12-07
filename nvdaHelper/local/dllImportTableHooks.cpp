@@ -99,7 +99,7 @@ BOOL DllImportTableHooks::unhookFunctions() {
 		return TRUE;
 	}
 	LOG_DEBUG(L"apiHook_unhookFunctions: unhooking functions on module at address 0X" << targetModule << L"\n");
-	for(funcToThunk_t::iterator i=this->hookedFunctions.begin();i!=this->hookedFunctions.end();i++) {
+	for(funcToThunk_t::iterator i=this->hookedFunctions.begin();i!=this->hookedFunctions.end();++i) {
 		LOG_DEBUG(L"apiHook_unhookFunctions: restoring thunk at address 0X" << i->second << L" back to original function at address 0X" << i->first << L"\n");
 		DWORD oldProtect;
 		VirtualProtect(i->second,sizeof(IMAGE_THUNK_DATA),PAGE_READWRITE,&oldProtect);
@@ -109,4 +109,20 @@ BOOL DllImportTableHooks::unhookFunctions() {
 	this->hookRequests.clear();
 	this->hookedFunctions.clear();
 	return TRUE;
+}
+
+void* dllImportTableHooks_hookSingle(char* targetDll, char* importDll, char* funcName, void* newFunction) {
+	HMODULE targetHandle=LoadLibraryA(targetDll);
+	if(!targetHandle) return NULL;
+	DllImportTableHooks* hooks=new DllImportTableHooks(targetHandle);
+	hooks->requestFunctionHook(importDll,funcName,newFunction);
+	hooks->hookFunctions();
+	return (void*)hooks;
+}
+
+void dllImportTableHooks_unhookSingle(void* hook) {
+	DllImportTableHooks* hooks=(DllImportTableHooks*)hook;
+	hooks->unhookFunctions();
+	FreeLibrary(hooks->targetModule);
+	delete hooks;
 }

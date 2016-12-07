@@ -345,7 +345,7 @@ class CalendarView(IAccessible):
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
 				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
-				speech.speakMessage(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
+				ui.message(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
 			else:
 				v=e.currentView
 				try:
@@ -362,8 +362,8 @@ class CalendarView(IAccessible):
 				i.IncludeRecurrences =True
 				if i.find(query):
 					# Translators: a message when the current time slot on an Outlook Calendar has an appointment
-					timeSlotText=_("has appointment")+" "+timeSlotText
-				speech.speakMessage(timeSlotText)
+					timeSlotText=_("Has appointment")+" "+timeSlotText
+				ui.message(timeSlotText)
 		else:
 			self.event_valueChange()
 
@@ -418,6 +418,11 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
+			# #6219: Outlook 2016 started exposing the draft column as a text node.
+			# Users reportedly find this extremely annoying.
+			# Thus we filter it out.
+			if self.appModule.outlookVersion>=16 and e.cachedClassName=="DraftFlagField":
+				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
 			if name and config.conf['documentFormatting']['reportTableHeaders']:
@@ -506,3 +511,5 @@ class OutlookWordDocument(WordDocument):
 
 	def _get_role(self):
 		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
+
+	ignoreEditorRevisions=True

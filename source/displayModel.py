@@ -556,5 +556,5 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
 	def _setSelectionOffsets(self,start,end):
 		if start!=end:
-			raise TypeError("Expanded selections not supported")
+			raise NotImplementedError("Expanded selections not supported")
 		self._setCaretOffset(start)

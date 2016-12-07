@@ -1,7 +1,7 @@
-﻿# Catalan symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2014 NVDA contributors.
-#This file is covered by the GNU General Public License.
+#locale/ca/symbols.dic
+#Part de NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#Aquest fitxer queda cobert per la llicència GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
@@ -9,17 +9,13 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
-… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
-# Phrase endings.
+# Finals de frase
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
-
-# Others
-decimal point	(?<=\d)\.(?=\d)
-in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
-dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+# Altres
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -28,18 +24,14 @@ symbols:
 . sentence ending	punt	all	always
 ! sentence ending	signe d'admiració	all	always
 ? sentence ending	signe d'interrogació	all	always
-... sentence ending	punts suspensius	all	always	
-… sentence ending	punts suspensius	all	always	
 ; phrase ending	punt i coma	most	always
 : phrase ending	dos punts	most	always
-decimal point	signe decimal	none	always
+signe decimal		none	always
 in-word '	apòstrof	all	norep
-in-word -	guió	all	norep
 negative number	menys	none	norep
-dates /	 barra inclinada	all	always
 
-# Whitespace
-\0	en blanc	char
+# Espai en blanc
+\0	en blanc	char	# null
 \t	tabulador
 \n	línia nova	char
 \f	salt de pàgina	none
@@ -47,15 +39,16 @@ dates /	 barra inclinada	all	always
  	espai	char
  	espai inseparable	char	# no-break space
 
-# Standard punctuation/symbols
+# Puntuació estàndard/símbols
 !	signe d'admiració	all
 "	cometes	most
 \#	coixinet	most
 $	dòlar	all	norep
 £	lliura esterlina	all	norep
 €	euro	all	norep
-¢	cèntim d'euro	all	norep
+¢	cèntim	all	norep
 ¥	ien	all	norep
+₹	rúpia	some	norep
 %	percentatge	some
 &	i comercial	some
 '	apòstrof	all
@@ -66,9 +59,9 @@ $	dòlar	all	norep
 ,	coma	all	always
 -	guionet	most
 .	punt	some
-/	barra inclinada 	some
+/	barra inclinada	some
 :	dos punts	most	norep
-;	punt i coma	most
+;punt i coma	most
 <	menor que	most
 >	major que	most
 =	igual	some
@@ -84,10 +77,8 @@ _	guió baix	most
 }	tancar clau	most
 |	barra pleca	most
 ~	titlla	most
-¿	signe d'interrogació d'obertura	all
-¡	signe d'admiració d'obertura	all
 
-# Other characters
+# Altres caràcters
 •	pic	some
 …	punts suspensius	all	always
 ...	punts suspensius	all	always
@@ -101,7 +92,7 @@ _	guió baix	most
 ●	pic	most
 ¨	dièresi	most
 ‎	marca d'esquerra a dreta	char
-‏	marca de dreta a esquerra	char
+	marca de dreta a esquerra	char
 ■	quadrat negre	some
 ▪	quadrat negre	some
 ◾	quadrat negre	some
@@ -117,11 +108,57 @@ _	guió baix	most
 ³	superíndex 3	some
 ®	registrada	some
 ™	marca registrada	some
-©	copyright	some	norep
+©	copyright	some
 ±	Més o menys	most
 ×	signe de multiplicar	most
-÷	signe de dividir	most
+÷	signe de dividir by	most
 ←	fletxa esquerra	some
 →	fletxa dreta	some
 ✓	vist	some
 ✔	vist	some
+#Operadors matemàtics U+2200 to U+220F
+
+∀	per a tot 	none
+∁	Complement	none
+∂	Derivada parcial	none
+∃	existeix	none
+∄	no existeix	none
+∅	CONJUNT BUIT	none
+∆	INCREMENT	none
+∇	NABLA	none
+∈	PERTANY	none
+∉	NO PERTANY	none
+∊	PERTANY	none
+∋	CONTÉ	none
+∌	NO CONTÉ	none
+∍	CONTÉ	none
+∍	FI DEMOSTRACIÓ	none
+∏	PRODUCTE	none
+
+# Altres operadors matemàtics
+
+∑	SUMATORI	none
+√	ARREL QUADRADA	none
+∛	ARREL CÚBICA	none
+∜	ARREL BIQUADRADA	none
+∝	PROPORCIONAL	none
+∞	INFINIT	none
+∟	ANGLE RECTE	none
+∠	ANGLE	none
+∥	PARAL·LEL	none
+∦	NO PARAL·LEL	none
+∧	I LÒGIC	none
+∨	O LÒGICA	none
+∩	INTERSECCIÓ	none
+∪	UNIÓ	none
+∫	INTEGRAL	none
+∴	PER TANT	none
+∵	JA QUE	none
+∶	RAÓ	none
+∷	PROPORCIÓ	none
+≤	MENOR O IGUAL	none
+≥	MAJOR O IGUAL	none
+⊂	INCLÒS	none
+⊃	INCLOU	none
+⊆	INCLÒS O IGUAL	none
+⊇	INCLOU O IGUAL A	none

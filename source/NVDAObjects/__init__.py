@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -471,8 +471,11 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		Exactly like parent, however another object at this same sibling level may be retreaved first (e.g. a groupbox). Mostly used when presenting context such as focus ancestry.
 		"""
-		return self.parent
- 
+		# Cache parent.
+		parent = self.parent
+		self.parent = parent
+		return parent
+
 	def _get_next(self):
 		"""Retreaves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
@@ -608,7 +611,7 @@ class NVDAObject(baseObject.ScriptableObject):
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE,controlTypes.ROLE_BORDER):
 			return self.presType_layout
 		name = self.name
 		description = self.description
@@ -777,16 +780,6 @@ Tries to force this object to take the focus.
 		"""
 		raise NotImplementedError
 
-	def _get_embeddingTextInfo(self):
-		"""Retrieve the parent text range which embeds this object.
-		The returned text range will have its start positioned on the embedded object character associated with this object.
-		That is, calling L{textInfos.TextInfo.getEmbeddedObject}() on the returned text range will return this object.
-		@return: The text range for the embedded object character associated with this object or C{None} if this is not an embedded object.
-		@rtype: L{textInfos.TextInfo}
-		@raise NotImplementedError: If not supported.
-		"""
-		raise NotImplementedError
-
 	def _get_isPresentableFocusAncestor(self):
 		"""Determine if this object should be presented to the user in the focus ancestry.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
@@ -810,7 +803,39 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
+	def _reportErrorInPreviousWord(self):
+		try:
+			# self might be a descendant of the text control; e.g. Symphony.
+			# We want to deal with the entire text, so use the caret object.
+			info = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+			# This gets called for characters which might end a word; e.g. space.
+			# The character before the caret is the word end.
+			# The one before that is the last of the word, which is what we want.
+			info.move(textInfos.UNIT_CHARACTER, -2)
+			info.expand(textInfos.UNIT_CHARACTER)
+			fields = info.getTextWithFields()
+		except RuntimeError:
+			return
+		except:
+			# Focus probably moved.
+			log.debugWarning("Error fetching last character of previous word", exc_info=True)
+			return
+		for command in fields:
+			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
+				break
+		else:
+			# No error.
+			return
+		import nvwave
+		nvwave.playWaveFile(r"waves\textError.wav")
+
 	def event_typedCharacter(self,ch):
+		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
+			# Not alpha, apostrophe or control.
+			ch.isspace() or (ch >= u" " and ch not in u"'\x7f" and not ch.isalpha())
+		):
+			# Reporting of spelling errors is enabled and this character ends a word.
+			self._reportErrorInPreviousWord()
 		speech.speakTypedCharacters(ch)
 		import winUser
 		if config.conf["keyboard"]["beepForLowercaseWithCapslock"] and ch.islower() and winUser.getKeyState(winUser.VK_CAPITAL)&1:
