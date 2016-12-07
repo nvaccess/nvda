@@ -3,6 +3,64 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+Le principali caratteristiche di questa versione si focalizzano su un supporto molto migliorato per Microsoft Edge; modalità navigazione nell'app Posta di Windows10; miglioramenti significativi all'interfaccia delle finestre di dialogo di NVDA.
+
+== Novità ==
+- NVDA è in grado di indicare i rientri delle righe utilizzando dei toni, ossia segnali acustici. Questa funzione può essere configurata tramite l'opzione "Annuncia rientri righe con", presente nella finestra formattazione documento all'interno delle preferenze di NVDA. (#5906)
+- Supporto per il Display Braille Orbit Reader 20. (#6007)
+- è stata introdotta una funzione che permette all'occorrenza di aprire all'avvio il visualizzatore sintesi vocale. è possibile configurarla tramite una casella di controllo nella finestra "Visualizzatore sintesi vocale". (#5050)
+- Quando si riapre la finestra visualizzatore sintesi vocale, verranno ora ripristinate la posizione e le dimensioni. (#5050)
+- I campi contenenti riferimenti incrociati in Microsoft Word vengono ora trattati come collegamenti ipertestuali. Vengono annunciati come "link" e naturalmente possono essere attivati. (#6102)
+- Supporto iniziale per la versione imminente dell'app Kindle. (#6247) 
+- Supporto per i Display Braille della Baum Supervario2, Vario340 e HumanWare Brailliant2. (#6116)
+- Supporto iniziale per Microsoft Edge Anniversary Update. (#6271)
+- Durante la lettura delle email, verrà utilizzata la modalità navigazione nell'app Posta di Windows10. (#6271)
+
+
+== Cambiamenti ==
+- Aggiornate le librerie Braille di traduzione liblouis alla versione 3.0.0. Questo comporta un miglioramento significativo per il braille inglese, Unified English Braille. (#6109, #4194, #6220, #6140)
+- Nel gestore componenti aggiuntivi, i pulsanti Abilita e Disabilita componente aggiuntivo sono provvisti di tasto rapido (alt-a e alt-d). (#6388)
+- Risolti molti problemi di visualizzazione e a llineamento nelle finestre di dialogo di NVDA. (#6317, #5548, #6342, #6343, #6349)
+- La finestra di dialogo formattazione documento è stata sistemata in modo da poter scorrere fluidamente mentre si esplorano le opzioni. (#6348)
+- Sistemato il layout della finestra "pronuncia/punteggiatura simboli" di modo da utilizzare l'intera larghezza della finestra per l'elenco dei simboli. (#6101)
+- Nella modalità navigazione dei browser web, i tasti rapidi per muoversi tra i campi editazione "e, shift-e, f e shift-f" ora supportano anche i campi di sola lettura, per cui la loro pressione farà in modo che ci si sposti anche su quei campi se esistenti. (#4164)
+- Nella finestra formattazione documento di NVDA, la funzione "Leggi i cambiamenti di formattazione dopo il cursore", è stata rinominata in "Notifica cambiamenti di formattazione dopo il cursore", in quanto il messaggio appare anche sui Display Braille oltre che annunciato tramite sintesi vocale. (#4164)
+- Effettuate correzioni sull'aspetto della finestra di benvenuto di NVDA. (#6350)
+- I pulsanti "ok" e "annulla" delle finestre di dialogo di NVDA vengono ora allineati a destra rispetto alla finestra. (#6333)
+- Per i campi ad immissione numerica vengono ora utilizzati i pulsanti spin, un esempio è il parametro "percentuale cambio di tono per le maiuscole" della finestra impostazioni voce. Per inserire il valore sarà possibile o utilizzare le frecce su/giù, oppure digitarlo direttamente come si trattasse di un campo editazione. (#6099)
+- Migliorato nei browser web il sistema di analisi e gestione degli iframe (documenti incorporati all'interno di altri documenti). In Firefox un "iframe" viene annunciato come "frame". (#6047)
+
+
+== Bug Corretti ==
+- Sistemato un errore insolito che accadeva quando si usciva da NVDA con il visualizzatore sintesi vocale attivo. (#5050)
+- Le mappe immagini vengono riportate correttamente ora in Mozilla Firefox. (#6051)
+- Mentre ci si trova nella finestra di dialogo dizionari, la pressione del tasto invio salverà ogni cambiamento effettuato e chiuderà la finestra. In precedenza, il tasto invio non aveva alcuna funzione. (#6206)
+- Vengono mostrati in braille i messaggi inerenti il cambio del metodo di immissione (immissione con caratteri alfanumerici, Modalità cursore a forma piena, Modalità cursore  a forma dimezzata, etc). (#5892, #5893)
+- Quando si disabilita e si riabilita velocemente un componente aggiuntivo, o viceversa, lo stato del componente si aggiorna correttamente. (#6299)
+- Quando si utilizza Microsoft Word, possono essere letti i campi dei numeri di pagina nelle intestazioni. (#6004)
+- Il mouse può venir utilizzato per spostare il focus tra l'elenco simboli e i campi editazione nella finestra pronuncia punteggiatura/simboli. (#6312)
+- In modalità navigazione in Microsoft Word, sistemato un problema che impediva l'apertura dell'elenco elementi nel caso un documento contenesse un collegamento ipertestuale non corretto. (#5886)
+- Dopo essere stata chiusa attraverso la barra delle applicazioni o con alt-f4, la casella di controllo visualizzatore sintesi vocale nel menu di NVDA rispecchierà lo stato della finestra. (#6340)
+- Il comando ricarica componenti aggiuntivi non causerà più problemi ai profili con eventi associati, ai nuovi documenti nei browser web e allamodalità di navigazione in linea. (#2892, #5380)
+- Nell'elenco delle lingue delle impostazioni generali di NVDA, alcune lingue come l'Aragonese vengono visualizzate correttamente in Windows10. (#6259)
+- I tasti di sistema emulati (ad esempio un pulsante di un display braille che simula la pressione del tasto tab) vengono ora mostrati nella lingua configurata per NVDA sia nell'aiuto tastiera che nella finestra di dialogo gesti di immissione. In precedenza, venivano presentati sempre in inglese.  (#6212)
+- La modifica della lingua di NVDA (dalla finestra di dialogo impostazioni generali) non avrà alcun effetto fino al riavvio dello screen reader. (#4561)
+- Non è più possibile lasciare vuoto il campo "voce", ossia il primo,  nella finestra di inserimento nuovi termini nei dizionari di NVDA. (#6412)
+- Sistemato un problema occasionale che impediva il corretto riconoscimento di alcuni display braille su porta seriale. (#6462)
+- In Microsoft Word, gli elenchi numerati nelle celle di una tabella vengono letti correttamente quando ci si sposta tra le celle. (#6446)
+- Ora è possibile assegnare gesti personalizzati ai comandi forniti dal driver del	 display braille Handy Tech nella finestra Gesti di immissione di NVDA. (#6461)
+- In Microsoft Excel, durante l'esplorazione di un foglio elettronico, la pressione di Invio o dell'Invio del tastierino numerico farà annunciare correttamente la linea successiva. (#6500)
+- Risolto un problema che provocava talvolta il blocco di Itunes con NVDA in modalità navigazione in iTunes Store, Apple Music, etc. (#6502)
+- Sistemati i crash nelle applicazioni a 64 bit basate su Google Chrome e Mozilla. (#6497)
+- In Firefox con la modalità multiprocesso attiva, ora funzionano correttamente la modalità navigazione e i campi editazione. (#6380)
+
+
+== Cambiamenti per sviluppatori (in inglese) ==
+- It is now possible to provide app modules for executables containing a dot (.) in their names. Dots are replaced with underscores (_). (#5323)
+- The new gui.guiHelper module includes utilities to simplify the creation of wxPython GUIs, including automatic management of spacing. This facilitates better visual appearance and consistency, as well as easing creation of new GUIs for blind developers. (#6287)
+
+
 = 2016.3 =
 Le principali caratteristiche di questa versione si focalizzano sulla possibilità di disabilitare i singoli componenti aggiuntivi, sul supporto per i campi modulo in Microsoft Excel, su un grosso miglioramento inerente la gestione e l'individuazione dei colori, sulla risoluzione e l'aggiunta di funzioni per alcuni display braille ed infine su un ulteriore sviluppo delle funzionalità per microsoft Word.
 
