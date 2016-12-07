@@ -926,19 +926,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		except:
 			raise LookupError("Couldn't get MathML from MathType")
 
-class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
-
-	def _get_shouldIncludeLayoutTables(self):
-		return config.conf['documentFormatting']['includeLayoutTables']
-
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
-
-	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
