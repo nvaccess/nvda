@@ -1,4 +1,5 @@
-#include "speak_lib.h"
+#include <espeak-ng/espeak_ng.h>
+#include <espeak-ng/speak_lib.h>
 #include "speech.h"
 #include "klatt.h"
 #include "phoneme.h"
@@ -6,8 +7,8 @@
 #include "voice.h"
 #include <speechPlayer/src/speechPlayer.h>
 
-extern WGEN_DATA wdata;
-extern voice_t *wvoice;
+extern "C" WGEN_DATA wdata;
+extern "C" voice_t *wvoice;
 extern unsigned char *out_ptr;
 extern unsigned char *out_end;
 
@@ -94,7 +95,7 @@ void KlattReset(int control) {
 	speechPlayerHandle=speechPlayer_initialize(22050);
 }
 
-int Wavegen_Klatt2(int length, int modulation, int resume, frame_t *fr1, frame_t *fr2){
+int Wavegen_Klatt2(int length, int resume, frame_t *fr1, frame_t *fr2){
 	if(!resume) {
 		speechPlayer_frame_t spFrame1={0};
 		fillSpeechPlayerFrame(fr1,&spFrame1);

@@ -87,6 +87,8 @@ sonicLib=env.StaticLibrary(
 	source='sonic.c',
 )
 
+speechPlayerCpp=env.Command(espeakSrcDir.Dir('libespeak-ng').File('speechPlayer.cpp'),"speechPlayer.cpp",Copy("$TARGET","$SOURCE"))
+
 espeakLib=env.SharedLibrary(
 	target='espeak',
 	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
@@ -106,7 +108,7 @@ espeakLib=env.SharedLibrary(
 		"voices.c",
 		"wavegen.c",
 		"phonemelist.c",
-		"klatt.c",
+		#replaced by speechPlayer: "klatt.c",
 		"compiledata.c",
 		"compilembrola.c",
 		"ieee80.c",
@@ -114,12 +116,20 @@ espeakLib=env.SharedLibrary(
 		"espeak_api.c",
 		"error.c",
 		sonicLib,
+		speechPlayerCpp,
 	],
-	LIBS=[speechPlayerLib[0],'advapi32'],
+	LIBS=[
+		'advapi32',
+		speechPlayerLib[0],
+	],
 )
 
 phonemeData=env.espeak_compilePhonemeData(espeakRepo.Dir('espeak-ng-data'),espeakRepo.Dir('phsource'))
 env.Depends(phonemeData,espeakLib)
+
+#Copy in the extra variants
+for f in env.Glob(Dir('variants').abspath+'/*'):
+	env.Command(synthDriversDir.Dir('espeak-ng-data').File('voices\\!v\\%s'%f.name),f,Copy("$TARGET","$SOURCE"))
 
 # Move any extra dictionaries into dictsource for compilation
 env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspath,'dictsource','extra','*_*')))
