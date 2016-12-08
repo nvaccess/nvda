@@ -536,12 +536,11 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if not fontObj: fontObj=range.font
 		try:
 			langId = fontObj.languageID
+			if langId:
+				formatField['language']=languageHandler.windowsLCIDToLocaleName(langId)
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
-		else:
-			if langId:
-				formatField['language']=languageHandler.windowsLCIDToLocaleName(langId)
 		return formatField
 
 	def _expandFormatRange(self,range,formatConfig):
