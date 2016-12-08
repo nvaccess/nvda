@@ -1152,9 +1152,13 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		textColumnNumber=attrs.get("text-column-number")
 		oldTextColumnNumber=attrsCache.get("text-column-number") if attrsCache is not None else None
 
-		if ((textColumnNumber and textColumnNumber!=oldTextColumnNumber) or
-			(textColumnCount and textColumnCount!=oldTextColumnCount)):
-
+		# Because we do not want to report the number of columns when a document is just opened and there is only 
+		# one column. This would be verbose, in the standard case.
+		# column number has changed, or the columnCount has changed
+		# but not if the columnCount is 1 or less and there is no old columnCount.
+		if (((textColumnNumber and textColumnNumber!=oldTextColumnNumber) or
+			(textColumnCount and textColumnCount!=oldTextColumnCount)) and not
+			(textColumnCount and int(textColumnCount) <=1 and oldTextColumnCount == None)) :
 			if textColumnNumber and textColumnCount:
 				# Translators: Indicates the text column number in a document.
 				# {0} will be replaced with the text column number.
