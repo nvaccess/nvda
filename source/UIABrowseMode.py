@@ -256,6 +256,9 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 		elif nodeType=="link":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="button":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_ButtonControlTypeId)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="checkBox":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_CheckBoxControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
