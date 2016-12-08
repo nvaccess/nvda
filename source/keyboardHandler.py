@@ -170,7 +170,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	finally:
 		# #6017: handle typed characters for UWP apps in Win10 RS2 and above where we can't detect typed characters in-process 
 		focus=api.getFocusObject()
-		if sys.getwindowsversion().build>=14971 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
+		if sys.getwindowsversion().build>=14986 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
 			keyStates=(ctypes.c_byte*256)()
 			for k in xrange(256):
 				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
