@@ -4,61 +4,61 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.4 =
-Zu den Schwerpunkten dieser Version gehören Verbesserungen in der Unterstützung von Microsoft Edge; der Lesemodus in der Windows 10 Mail app; sowie Verbesserungen in NVDAs Dialogfeldern.
+Zu den Schwerpunkten dieser Version gehören Verbesserungen in der Unterstützung von Microsoft Edge; der Lesemodus in der Mail-App in Windows 10 sowie Verbesserungen in Dialogfeldern von NVDA.
 
 == Neue Funktionen ==
 - NVDA kann Zeileneinrückungen nun auch mit Hilfe von Signaltönen ausgeben. Um dies einzustellen, können Sie die neue Option "Zeileneinrückungen ausgeben durch..." in den Einstellungen für Dokumentformatierung verwenden. (#5906)
 - Unterstützung für die Braillezeile Orbit Reader 20. (#6007)
 - Eine neue Option zum Anzeigen des Sprachbetrachters beim Start von NVDA wurde hinzugefügt. Dies kann mittels eines Kontrollkästchens im Sprachbetrachter eingeschaltet werden. (#5050)
-- Die Position und Größe des Sprachbetrachters wird wiederhergestellt beim er erneuten Öffnen. (#5050)
+- Die Position und Größe des Sprachbetrachters wird beim erneuten Öffnen wiederhergestellt. (#5050)
 - Felder mit Querverweisen in Microsoft Word werden von NVDA als Links angezeigt und können wie solche aktiviert werden. (#6102)
 - Die Unterstützung für folgende Braillezeilen wurden hinzugefügt: Baum SuperVario2, Baum Vario 340 und HumanWare Brailliant2. (#6116)
 - Grundlegende Unterstützung für die jährliche Aktualisierung von Microsoft Edge. (#6271)
-- Zum Lesen von Mails in der Windows-10-Mail-App wird nun der Lesemodus verwendet. (#6271)
+- Zum Lesen von Mails in der Mail-App in Windows 10 wird nun der Lesemodus verwendet. (#6271)
 
 
 == Änderungen ==
 - Libluis wurde auf Version 3.0.0 aktualisiert. Dies enthällt signifikante Verbesserungen der vereinheitlichten englischen Braille-schrift. (#6109, #4194, #6220, #6140)
-- Die Schalter zum aktivieren und deaktivieren von Erweiterungen besitzen nun Tastenkombinationen. (#6388)
+- Die Schalter zum Aktivieren und Deaktivieren von Erweiterungen besitzen nun Tastenkombinationen. (#6388)
 - Einige (kosmetische) Änderungen wurden vorgenommen. (#6317, #5548, #6342, #6343, #6349)
 - Die Einstellungen für Dokumentformatierung werden korrekt gescrollt. (#6348)
 - Der Dialog für die Aussprache von Symbolen und Sonderzeichen besitzt jetzt die korrekte Breite. (#6101)
-- Die Schnellnavigaionstasten für Formularfelder und Eingabefelder berücksichtigen nun auch schreibgeschützte Felder. (#4164)
+- Die Schnellnavigationstasten für Formularfelder und Eingabefelder berücksichtigen nun auch schreibgeschützte Felder. (#4164)
 - Die Option "Formatierungen hinter dem Cursor ansagen" wurde umbenannt in "Formatänderungen hinter dem Cursor ausgeben", weil die Meldungen auch in Braille ausgegeben werden. (#6336)
 - Das Erscheinungsbild des Willkommensdialogs wurde korrigiert. (#6350)
-- in sämtlichen Dialogen werden die Schalter "ok" und "abbrechen" nun rechtsbündig angezeigt. (#6333)
+- In sämtlichen Dialogen werden die Schalter "OK" und "Abbrechen" nun rechtsbündig angezeigt. (#6333)
 - Für numerische Eingaben werden nun Drehknöpfe verwendet. (#6099)
 - Eingebettete Rahmen werden in Firefox nun als Rahmen erkannt. (#6047)
 
 
 == Fehlerkorrekturen ==
-- Ein Fehler wurde behoben, wenn beim Beenden von NVDA der Sprachbetrachter angezeigt wird. (#5050)
+- Ein Fehler wurde behoben, wenn beim Beenden von NVDA der Sprachbetrachter angezeigt wurde. (#5050)
 - In Firefox werden verweissensitive Grafiken wie erwartet angezeigt. (#6051)
 - Beim Ein-/Ausschalten der Dauergroßschreibung wird keine Warnung mehr in das NVDA-Protokoll geschrieben. (#6127)
-- Das Drücken der Eingabetaste in Wörterbuchdialoge führt nun wie erwartet zum Speichern der Einträge. (#6206)
+- Das Drücken der Eingabetaste in Wörterbuchdialogen führt nun wie erwartet zum Speichern der Einträge. (#6206)
 - Beim Wechsel der Eingabemethode werden Meldungen in Braille angezeigt. (#5892, #5893)
 - Wenn Sie eine Erweiterung aus- und wieder einschalten, wird deren Status korrekt angezeigt. (#6299)
-- In  Microsoft Word werden Seitenzahlen korrekt ausgegeben, auch wenn sich diese in Überschriften befinden. (#6004)
-- Im Dialog Aussprache von Symbolen und Satzzeichen können Sie nun die Maus benutzen, um den Fokus auf  die Liste der Symbole und auf die Eingabefelder zu setzen. (#6312)
+- In Microsoft Word werden Seitenzahlen korrekt ausgegeben, auch wenn sich diese in Überschriften befinden. (#6004)
+- Im Dialog "Aussprache von Symbolen und Satzzeichen" können Sie nun die Maus benutzen, um den Fokus auf  die Liste der Symbole und auf die Eingabefelder zu setzen. (#6312)
 - Die Elementliste von Microsoft Word funktioniert nun korrekt, wenn das Dokument einen ungültigen Link enthält. (#5886)
 - Nach dem Schließen des Sprachbetrachters mit Alt+F4 spiegelt das Kontrollfeld für den Sprachbetrachter dessen Status korrekt wider. (#6340)
-- Probleme beim erneuten Laden von Erweiterungen mit Hilfe der Tastenkombination nvda+strg+f3 wurden behoben. (#2892, #5380)
+- Probleme beim erneuten Laden von Erweiterungen mit Hilfe der Tastenkombination NVDA+Strg+F3 wurden behoben. (#2892, #5380)
 - In der Sprachenliste in den allgemeinen Einstellungen werden einige Sprachen (wie z. B. Aragonesisch) richtig angezeigt. (#6259)
-- im Dialog Einstellungen/Eingaben... werden emulierte Tasten(kombinationen) in der in NVDA eingestellten Sprache angezeigt. (#6212)
+- Im Dialog "Einstellungen/Eingaben..." werden emulierte Tastendrücke und Tastenkombinationen in der in NVDA eingestellten Sprache angezeigt. (#6212)
 - Das Umstellen der Sprache in NVDA wirkt sich nun erst nach dem Neustart von NVDA aus. (#4561)
 - Im Dialog zum Hinzufügen neuer Wörterbucheinträge darf das Feld für das Muster nicht mehr leer bleiben. (#6412)
 - Probleme bei der Suche nach seriellen Anschlüssen bei einigen Braillezeilentreibern wurden behoben. (#6462)
-- in Microsoft Word werden numerierte Listen korrekt erkannt, wenn sie sich innerhalb von Tabellenzellen befinden. (#6446)
-- Sie können den Dialog Einstellungen/Eingaben verwenden, um NVDA-Befehle an Tasten(Kombinationen) von Handytech-Braillezeilen zuzuweisen. (#6461)
+- In Microsoft Word werden numerierte Listen korrekt erkannt, wenn sie sich innerhalb von Tabellenzellen befinden. (#6446)
+- Sie können den Dialog "Einstellungen/Eingaben..." verwenden, um NVDA-Befehle an Tasten(Kombinationen) von Handytech-Braillezeilen zuzuweisen. (#6461)
 - Wenn Sie in Microsoft Excel innerhalb einer Tabelle die Eingabetaste drücken, erkennt NVDA korrekt, dass sich der Fokus in die nächste Zeile bewegt hat. (#6500)
-- Itunes friert nicht mehr ein, wenn Sie im Itunes Store, Apple Music etc. den Lesemodus verwenden. (#6502)
+- iTunes friert nicht mehr ein, wenn Sie im iTunes Store, Apple Music, etc. den Lesemodus verwenden. (#6502)
 - Probleme mit Abstürzen von 64-Bit-Versionen von Mozilla- und Chrome-basierten Anwendungen behoben. (#6497)
-- in Firefox mit aktivierter Multi-Prozessunterstützung funktioniert der lesemodus korrekt. (#6380)
+- In Firefox mit aktivierter Multi-Prozessunterstützung funktioniert der lesemodus korrekt. (#6380)
 
 
 == Änderungen für Entwickler ==
 - Sie können nun Anwendungsmodule für Programme erstellen, deren Namen einen Punkt enthalten. der Punkt muss im Namen des Anwendungsmoduls durch einen Unterstrich ersetzt werden. (#5323)
-- Das Modul gui.guihelper enthält Funktionen, mit denen die Erstellung neuer WX-Oberflächen vereinfacht wird. Dies betrifft Größen und Abstände von wx-Elementen. (#6287)
+- Das Modul "gui.guihelper" enthält Funktionen, mit denen die Erstellung neuer WX-Oberflächen vereinfacht wird. Dies betrifft Größen und Abstände von wx-Elementen. (#6287)
 
 = 2016.3 =
 Schwerpunkte dieser Version sind u. a. eine Möglichkeit zum Deaktivieren einzelner Erweiterungen; die Unterstützung von Formularfeldern in Microsoft Excel, Verbesserungen bei der Ansage von Farben und Fehlerkorrekturen bzgl. einiger Braillezeilen sowie Fehlerbehebungen und Verbesserungen an der Unterstützung für Microsoft Word.
