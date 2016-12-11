@@ -9,7 +9,7 @@ Tradução de Rui Fontes
 Os destaques desta versão são:
 - Suporte melhorado ao Microsoft Edge;
 - Modo de navegação no programa Correio do Windows 10;
-Melhorias várias nos diálogos do NVDA.
+- Melhorias várias nos diálogos do NVDA.
 
 == Novas Funcionalidades ==
 - O NVDA pode agora anunciar a identação das linhas usando sons. Isto pode ser configurado através da caixa combinada Anúnncio da identação das linhas no diálogo de Formatação de documentos das preferências do NVDA. (#5906)
@@ -62,6 +62,7 @@ Melhorias várias nos diálogos do NVDA.
 
 == Alterações para desenvolvedores ==
 - Já é possível criar appModules para executáveis que contenham um ponto (.) no seu nome. Os pontos serão substituidos por sublinhados (_). (#5323)
+- O novo módulo gui.guiHelper inclui utilitários para simplificar a criação de GUI's do wxPython, incluindo gestão automática do espaçamento, o que facilita a apresentação dum melhor visual e mais consistência, e também facilita a criação de novas GUIs por desenvolvedores cegos. (#6287)
 
 
 = 2016.3 =
