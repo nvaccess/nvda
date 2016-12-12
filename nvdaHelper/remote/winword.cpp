@@ -1065,9 +1065,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		{
 			LOG_DEBUGWARNING("Error getting the current section number. Res: "<< res <<" SectionNumber: " << sectionNumber);
 		}
+		detectAndGenerateColumnFormatXML(pDispatchRange, initialFormatAttribsStream);
 	}
-
-	detectAndGenerateColumnFormatXML(pDispatchRange, initialFormatAttribsStream);
 
 	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units
