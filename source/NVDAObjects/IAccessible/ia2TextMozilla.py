@@ -201,14 +201,17 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				yield item
 			elif isinstance(item, int): # Embedded object.
 				embedded = _getEmbedded(ti.obj, item)
+				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
 				if controlStack is not None:
 					controlField = self._getControlFieldForObject(embedded)
 					controlStack.append(controlField)
 					if controlField:
+						if notText:
+							controlField["content"] = embedded.name
 						controlField["_startOfNode"] = True
 						yield textInfos.FieldCommand("controlStart", controlField)
-				if _getRawTextInfo(embedded) is NVDAObjectTextInfo: # No text
-					yield embedded.basicText
+				if notText:
+					yield u" "
 				else:
 					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
 						yield subItem

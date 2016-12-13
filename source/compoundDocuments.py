@@ -139,7 +139,6 @@ class CompoundTextInfo(textInfos.TextInfo):
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_FOCUSED)
 		field["states"] = states
-		field["name"] = obj.name
 		field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
@@ -259,7 +258,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 						embedIndex += 1
 					field = ti.obj.getChild(embedIndex)
 					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
-					controlField["alwaysReportName"] = True
+					controlField["content"] = field.name
 					fields.extend((textInfos.FieldCommand("controlStart", controlField),
 						u"\uFFFC",
 						textInfos.FieldCommand("controlEnd", None)))
