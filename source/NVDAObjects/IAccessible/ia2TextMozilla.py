@@ -103,26 +103,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			self._start = self._end = caretTi
 			self._startObj = self._endObj = caretObj
 		elif position == textInfos.POSITION_SELECTION:
-			# The caret is usually within the selection,
-			# so start from the caret for better performance/tolerance of server brokenness.
-			tempTi, tempObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
-			try:
-				tempTi = self._makeRawTextInfo(tempObj, position)
-			except RuntimeError:
-				# The caret is just before this object.
-				# There is never a selection in this case.
-				pass
-			else:
-				if tempTi.isCollapsed:
-					# No selection, but perhaps the caret is at the start of the next/previous object.
-					# This happens when you, for example, press shift+rightArrow at the end of a block.
-					# Try from the root.
-					rootTi = self._makeRawTextInfo(obj, position)
-					if not rootTi.isCollapsed:
-						# There is definitely a selection.
-						tempTi, tempObj = rootTi, obj
+			tempTi, tempObj = self._getSelectionBase()
 			if tempTi.isCollapsed:
-				# No selection, so use the caret.
+				# No selection, so return the caret.
 				self._start = self._end = tempTi
 				self._startObj = self._endObj = tempObj
 			else:
@@ -140,6 +123,46 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			self._endObj = self._startObj
 		else:
 			raise NotImplementedError
+
+	def _getSelectionBase(self):
+		"""Get an NVDAObject and TextInfo somewhere within the selection.
+		This is just a base point to start from.
+		It will often be necessary to expand outwards and/or descend to get the complete selection.
+		"""
+		# The caret is usually within the selection,
+		# so start from the caret for better performance/tolerance of server brokenness.
+		try:
+			ti, obj = self._findContentDescendant(self.obj, textInfos.POSITION_CARET)
+		except LookupError:
+			# No caret.
+			ti = None
+		else:
+			try:
+				ti = self._makeRawTextInfo(obj, textInfos.POSITION_SELECTION)
+			except RuntimeError:
+				# The caret is just before this object.
+				# There is never a selection in this case.
+				return ti, obj
+			else:
+				if not ti.isCollapsed:
+					# There was a selection on the caret object.
+					return ti, obj
+		# At this point, we're in one of two situations:
+		# 1. There was no caret.
+		# This happens for non-navigable text; e.g. Kindle.
+		# However, this doesn't mean there's no selection.
+		# 2. There was a caret, but there was no selection on the caret object.
+		# Perhaps the caret is at the start of the next/previous object.
+		# This happens when you, for example, press shift+rightArrow at the end of a block.
+		# Try from the root.
+		rootTi = self._makeRawTextInfo(self.obj, textInfos.POSITION_SELECTION)
+		if not rootTi.isCollapsed:
+			# There is definitely a selection.
+			return rootTi, self.obj
+		if ti:
+			# No selection, but there's a caret, so return that.
+			return ti, obj
+		raise RuntimeError("No selection or caret")
 
 	def _makeRawTextInfo(self, obj, position):
 		return _getRawTextInfo(obj)(obj, position)
