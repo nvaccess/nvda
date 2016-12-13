@@ -11,6 +11,7 @@ import review
 import textInfos
 import config
 import braille
+import speech
 
 runningTable=set()
 
@@ -217,3 +218,6 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.innerTextInfo.focusableNVDAObjectAtStart
+
+	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=speech.CHUNK_SEPARATOR):
+		return self.innerTextInfo.getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
