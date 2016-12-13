@@ -546,7 +546,10 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# Find the edge of the current unit in the requested direction.
 			moveTi, moveObj = self._findUnitEndpoints(moveTi, unit, findStart=moveBack, findEnd=not moveBack)
 
-			if not moveBack:
+			if moveBack:
+				# Collapse to the start of the previous unit.
+				moveTi.collapse()
+			else:
 				# Collapse to the start of the next unit.
 				moveTi.collapse(end=True)
 				if moveTi.compareEndPoints(self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
