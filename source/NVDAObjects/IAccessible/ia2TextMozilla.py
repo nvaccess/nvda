@@ -58,9 +58,20 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
 		if isinstance(position, NVDAObject):
-			# FIXME
-			position = textInfos.POSITION_CARET
-		if isinstance(position, self.__class__):
+			try:
+				self._start, self._startObj = self._findContentDescendant(position, textInfos.POSITION_FIRST)
+				self._end, self._endObj = self._findContentDescendant(position, textInfos.POSITION_LAST)
+				# This is the last character. Move to the end.
+				self._end.move(textInfos.UNIT_CHARACTER, 1)
+			except LookupError:
+				# This might be an embedded object that doesn't support text such as a graphic.
+				if position not in obj:
+					raise ValueError("Object %s not in document" % position)
+				# Use the point where this is embedded.
+				self._start = self._end = self._getEmbedding(position)
+				self._startObj = self._endObj = self._start.obj
+			self._normalizeStartAndEnd()
+		elif isinstance(position, self.__class__):
 			self._start = position._start.copy()
 			self._startObj = position._startObj
 			if position._end is position._start:
