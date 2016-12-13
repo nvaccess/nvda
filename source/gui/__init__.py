@@ -577,12 +577,12 @@ class WelcomeDialog(wx.Dialog):
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
 		# bold lettering 
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(18, wx.DECORATIVE, wx.NORMAL, wx.BOLD))
+		welcomeTextHeader.SetFont(wx.Font(18, wx.NORMAL, wx.NORMAL, wx.BOLD))
 		mainSizer.AddSpacer(10)
-		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.LEFT|wx.RIGHT)
+		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 		mainSizer.AddSpacer(10)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
-		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.LEFT|wx.RIGHT)
+		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
 		self.capsAsNVDAModifierCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Use CapsLock as an NVDA modifier key"))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
