@@ -90,6 +90,7 @@ SectionEnd
 Function PlaySound
 ; Retrieve the file to play
 pop $9
+; The code below is derived from the code example at http://nsis.sourceforge.net/WinAPI:winmm:PlaySound
 IntOp $0 "SND_ASYNC" || 1
 System::Call 'winmm::PlaySound(t r9, i 0, i r0) b'
 FunctionEnd
