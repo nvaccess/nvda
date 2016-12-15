@@ -42,6 +42,7 @@ VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
+
 class VBufStorage_findMatch_word(unicode):
 	pass
 VBufStorage_findMatch_notEmpty = object()
@@ -114,25 +115,20 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 		value = super(VirtualBufferQuickNavItem,self).label
 		# Translators: Reported label in the elements list for an element which which has no name and value
 		unlabeled = _("Unlabeled")
-		if self.itemType not in ("heading","graphic"):
+		if self.itemType is not "heading":
 			name = attrs.get("name", "")
 			realStates=attrs["states"]
 			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(roleRaw, realStates, controlTypes.REASON_ELEMENTSLIST, realStates))
-			if self.itemType in ("formField","checkBox","radioButton"):
-				negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, controlTypes.REASON_ELEMENTSLIST, realStates))
 			if self.itemType == "landmark":
 				labelParts=(name, aria.landmarkRoles[attrs["landmark"]])
 			elif self.itemType == "formField":
 				if roleRaw == controlTypes.ROLE_BUTTON:
 					labelParts = (value or unlabeled, role, positiveStates)
 				else:
+					negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, controlTypes.REASON_ELEMENTSLIST, realStates))
 					labelParts = (name or unlabeled, value, role, positiveStates, negativeStates)
 			elif self.itemType in ("link","button"):
 				labelParts = (value or unlabeled, positiveStates)
-			elif self.itemType in ("checkBox","radioButton"):
-				labelParts = (name or unlabeled, positiveStates, negativeStates)
-			else:
-				labelParts = (name or unlabeled, value, positiveStates)
 			label = " ".join(lp for lp in labelParts if lp)
 		else:
 			label = value or unlabeled
