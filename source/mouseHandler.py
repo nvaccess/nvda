@@ -1,6 +1,5 @@
-#mouseHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2016 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -20,6 +19,7 @@ import config
 import winInputHook
 import core
 import ui
+from math import floor
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -49,16 +49,22 @@ def updateMouseShape(name):
 		_shapeTimer.Stop()
 		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
 
-def playAudioCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,blurFactor=0):
+def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBrightness=True,blurFactor=0):
+	""" play audio coordinates:
+	- left to right adjusting the volume between left and right speakers
+	- top to bottom adjusts the pitch of the sound
+	- brightness adjusts the volume of the sound
+	Coordinates (x, y) should be positive assuming the minimum monitor position is (0,0)
+	"""
 	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
 	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
 	if detectBrightness:
-		startX=min(max(x-blurFactor,0),screenWidth)
-		width=min((x+blurFactor+1)-startX,screenWidth)
+		startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
+		width=min(blurFactor+1,screenWidth)+screenMinPos.y
 		startY=min(max(y-blurFactor,0),screenHeight)
-		height=min((y+blurFactor+1)-startY,screenHeight)
-		grey=screenBitmap.rgbPixelBrightness(scrBmpObj.captureImage(startX,startY,width,height)[0][0])
+		height=min(blurFactor+1,screenHeight)
+		grey=screenBitmap.rgbPixelBrightness(scrBmpObj.captureImage( startX, startY, width, height)[0][0])
 		brightness=grey/255.0
 		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
 		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
@@ -89,14 +95,122 @@ def internal_mouseEvent(msg,x,y,injected):
 		log.error("", exc_info=True)
 	return True
 
+def getMouseRestrictedToScreens(x, y, displays):
+	""" Ensures that the mouse position is within the area of one of the displays, relative to (0,0) 
+		but not necessarily positive (which is as expected for mouse coordinates)
+
+		We need to first get the closest point on the edge of each display rectangle (if the mouse
+		is outside the rectangle). This is done by clamping the mouse position to the extents of each
+		screen. The distance from this point to the actual mouse position can then be calculated. The
+		smallest adjustment to get the mouse within the screen bounds is desired.
+	"""
+	mpos =wx.RealPoint(x,y)
+	closestDistValue = None
+	newXY = None
+	for screenRect in displays:
+		halfWidth = wx.RealPoint(0.5*screenRect.GetWidth(),0.5*screenRect.GetHeight())
+		tl = screenRect.GetTopLeft()
+		# tl is an integer based wx.Point, so convert to float based wx.RealPoint
+		screenMin =  wx.RealPoint(tl.x, tl.y)
+		screenCenter = screenMin + halfWidth
+		scrCenterToMouse = mpos - screenCenter
+		mouseLimitedToScreen = wx.RealPoint( # this value is relative to the center of screenRect
+			max(min(scrCenterToMouse.x, halfWidth.x), -halfWidth.x),
+			max(min(scrCenterToMouse.y, halfWidth.y), -halfWidth.y))
+		closestPointOnEdgeOfRect = screenCenter + mouseLimitedToScreen # make this relative to origin
+		edgeToMouse = mpos - closestPointOnEdgeOfRect
+		distFromRectToMouseSqd = abs(edgeToMouse.x) + abs(edgeToMouse.y)
+		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:
+			closestDistValue = distFromRectToMouseSqd
+			newXY = closestPointOnEdgeOfRect
+
+	# drop any partial position information. Even the 99% of the way to the edge of a 
+	# pixel is still in the pixel.
+	return (int(floor(newXY.x)), int(floor(newXY.y)))
+
+def getMinMaxPoints(screenRect):
+	screenMin = screenRect.GetTopLeft()
+	screenDim = wx.Point(screenRect.GetWidth(),screenRect.GetHeight())
+	screenMax = screenMin+screenDim
+	return (screenMin, screenMax)
+
+def getUniqueNonOverlappingLineSegments(lineSegments):
+	""" lineSegments: a list of tuples holding axis min and axis max """
+	segmentsDone = [lineSegments.pop(0)]
+	for segMin, segMax in lineSegments:
+		shouldAdd = True
+		# any overlapping parts of the ranges should be removed
+		for (testMin, testMax) in segmentsDone:
+			segMinInRange = segMin >= testMin and segMin <  testMax
+			segMaxInRange = segMax >  testMin and segMax <= testMax
+			if segMinInRange and segMaxInRange:
+				shouldAdd = False # this range is totally overlapped by the test range
+				break
+			elif segMinInRange and segMax > testMax:
+				segMin = testMax
+			elif segMaxInRange and segMin < testMin:
+				segMax = testMin
+			elif segMin < testMin and segMax > testMax:
+				# this range totally overlaps the test range. So split it into two ranges (the
+				# part less than min and the part more than max) and add it to the displays
+				# list to test again.
+				lineSegments.append((segMin, testMin))
+				lineSegments.append((testMax, segMax))
+				shouldAdd = False
+				break
+			# else neither in range but not overlapping, no conflict.
+
+			if segMin == segMax:
+				shouldAdd = False
+				break
+		if shouldAdd:
+			segmentsDone.append((segMin, segMax))
+	return segmentsDone
+
+def getTotalWidthAndHeightAndMinimumPosition(displays):
+	""" Calculate the total screen width and height.
+
+	Depending on screen layouts the rectangles may overlap on the vertical or 
+	horizontal axis. Screens may also have a gap between them. """
+	xRangesToTest = []
+	yRangesToTest = []
+	smallestX, smallestY = (None, None)
+	for screenRect in displays:
+		(screenMin, screenMax) = getMinMaxPoints(screenRect)
+		xRangesToTest.append((screenMin.x, screenMax.x))
+		yRangesToTest.append((screenMin.y, screenMax.y))
+		if smallestX == None or screenMin.x < smallestX: smallestX = screenMin.x
+		if smallestY == None or screenMin.y < smallestY: smallestY = screenMin.y
+
+	horizRanges = getUniqueNonOverlappingLineSegments(xRangesToTest)
+	vertRanges = getUniqueNonOverlappingLineSegments(yRangesToTest)
+
+	# sum the ranges
+	totalWidth, totalHeight = (0, 0)
+	for (rangeMin, rangeMax) in horizRanges:
+		totalWidth  += (rangeMax - rangeMin)
+	for (rangeMin, rangeMax) in vertRanges:
+		totalHeight  += (rangeMax - rangeMin)
+
+	return (totalWidth, totalHeight, wx.Point(smallestX, smallestY))
+
 def executeMouseMoveEvent(x,y):
 	global currentMouseWindow
 	desktopObject=api.getDesktopObject()
-	screenLeft,screenTop,screenWidth,screenHeight=desktopObject.location
-	x=min(max(screenLeft,x),(screenLeft+screenWidth)-1)
-	y=min(max(screenTop,y),(screenTop+screenHeight)-1)
+	displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
+	x, y = getMouseRestrictedToScreens(x, y, displays)
+	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
+
+	# make relative to (0,0) and positive
+	adjustedX = x - minPos.x
+	adjustedY = y - minPos.y
+
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-		playAudioCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
+		playAudioCoordinates(adjustedX,adjustedY,
+			screenWidth,screenHeight, minPos,
+			config.conf['mouse']['audioCoordinates_detectBrightness'],
+			config.conf['mouse']['audioCoordinates_blurFactor'])
+
 	oldMouseObject=api.getMouseObject()
 	mouseObject=desktopObject.objectFromPoint(x,y)
 	while mouseObject and mouseObject.beTransparentToMouse:
