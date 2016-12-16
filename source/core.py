@@ -262,47 +262,53 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
-		batteryCache = None
-		REASON_INITIALIZE = 1
+		oldBatteryStatus = None
+		hasBeenInitialized = False
+		#Just define these constants here, so we don't have to import win32con
+		WM_POWERBROADCAST = 0x218
+		WM_DISPLAYCHANGE = 0x7e
+		PBT_APMPOWERSTATUSCHANGE = 0xA
+		UNKNOWN_BATTERY_STATUS = 0xFF
+		AC_ONLINE = 0X1
+		NO_SYSTEM_BATTERY = 0X80
+
 		def __init__(self, windowName=None):
 			super(MessageWindow, self).__init__(windowName)
-			self.say_battery_status(reason=self.REASON_INITIALIZE)
-	
+			self.handlePowerStatusChange()
+
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			import ui
-			#Just define these constants here, so we don't have to import win32con
-			WM_POWERBROADCAST = 0x218
-			WM_DISPLAYCHANGE = 0x7e
-			PBT_APMPOWERSTATUSCHANGE = 0xA
-			if msg == WM_POWERBROADCAST and wParam == PBT_APMPOWERSTATUSCHANGE:
-				self.say_battery_status()
+			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
+				self.handlePowerStatusChange()
 			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
-			elif msg == WM_DISPLAYCHANGE:
-				ui.message("Landscape" if lParam%0x10000 > lParam/0x10000 else "Portrait")
+			elif msg == self.WM_DISPLAYCHANGE:
+				if lParam%0x10000 > lParam/0x10000:
+					#Translators: The screen is oriented so that it is wider than it is tall.
+					ui.message(_("Landscape" ))
+				else:
+					#Translators: The screen is oriented in such a way that the height is taller than it is wide.
+					ui.message(_("Portrait"))
 
-
-		def say_battery_status(self, reason=None):
+		def handlePowerStatusChange(self):
 			#Mostly taken from script_say_battery_status, but modified.
 			import ui
 			import winKernel
-			UNKNOWN_BATTERY_STATUS = 0xFF
-			AC_ONLINE = 0X1
-			NO_SYSTEM_BATTERY = 0X80
 			sps = winKernel.SYSTEM_POWER_STATUS()
-			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
+			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is self.UNKNOWN_BATTERY_STATUS:
 				return
-			if sps.BatteryFlag & NO_SYSTEM_BATTERY or sps.ACLineStatus == self.batteryCache:
+			if sps.BatteryFlag & self.NO_SYSTEM_BATTERY or sps.ACLineStatus == self.oldBatteryStatus:
 				return
-			#Necessary because sometimes, this event double fires, and also, if the battery decreases by 3 percent, this event occurs.
-			self.batteryCache = sps.ACLineStatus
-			if reason == self.REASON_INITIALIZE:
+			#Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
+			MessageWindow.oldBatteryStatus = sps.ACLineStatus
+			if MessageWindow.hasBeenInitialized == False:
+				MessageWindow.hasBeenInitialized = True
 				return #We don't actually want to output anything, just initialize the cache.
-			if sps.ACLineStatus & AC_ONLINE:
-				text = _("Plugged in. Batteri is ")
+			if sps.ACLineStatus & self.AC_ONLINE:
+				#Translators: Reported when the battery is plugged in, and now is charging.
+				ui.message(_("Charging battery. %d percent") % sps.BatteryLifePercent)
 			else:
-				text = _("Not plugged in. Battery is ")
-			text += _("%d percent full") % sps.BatteryLifePercent
-			ui.message(text)
+				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
+				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
 
 	messageWindow = MessageWindow(unicode(versionInfo.name))
 
