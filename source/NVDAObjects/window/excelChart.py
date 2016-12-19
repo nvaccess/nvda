@@ -43,43 +43,6 @@ class ChartEvents(IDispatch):
 			( ['in'], ctypes.c_int, 'Arg2' )),
 		]
 
-# values for enumeration 'XlChartItem'
-xlDataLabel = 0
-xlChartArea = 2
-xlSeries = 3
-xlChartTitle = 4
-xlWalls = 5
-xlCorners = 6
-xlDataTable = 7
-xlTrendline = 8
-xlErrorBars = 9
-xlXErrorBars = 10
-xlYErrorBars = 11
-xlLegendEntry = 12
-xlLegendKey = 13
-xlShape = 14
-xlMajorGridlines = 15
-xlMinorGridlines = 16
-xlAxisTitle = 17
-xlUpBars = 18
-xlPlotArea = 19
-xlDownBars = 20
-xlAxis = 21
-xlSeriesLines = 22
-xlFloor = 23
-xlLegend = 24
-xlHiLoLines = 25
-xlDropLines = 26
-xlRadarAxisLabels = 27
-xlNothing = 28
-xlLeaderLines = 29
-xlDisplayUnitLabel = 30
-xlPivotChartFieldButton = 31
-xlPivotChartDropZone = 32
-XlChartItem = ctypes.c_int # enum
-
-
-
 class ExcelChart(excel.ExcelBase):
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelChartObject=None):
 		self.windowHandle = windowHandle
@@ -228,27 +191,27 @@ class ExcelChart(excel.ExcelBase):
 	def elementChanged( self , ElementID ,arg1,arg2):
 		selectedChartElement = None
 		if ElementID == xlAxis:
-			selectedChartElement = ExcelChartElementAxis( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementAxis( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlAxisTitle:  
-			selectedChartElement = ExcelChartElementAxisTitle( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementAxisTitle( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlSeries:
-			selectedChartElement = ExcelChartElementSeries( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementSeries( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlTrendline:
-			selectedChartElement = ExcelChartElementTrendline( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementTrendline( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlChartTitle:
-			selectedChartElement = ExcelChartElementChartTitle( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementChartTitle( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlChartArea:
-			selectedChartElement = ExcelChartElementChartArea( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementChartArea( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlPlotArea:
-			selectedChartElement = ExcelChartElementPlotArea( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementPlotArea( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlLegend:
-			selectedChartElement = ExcelChartElementLegend( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementLegend( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlLegendEntry:
-			selectedChartElement = ExcelChartElementLegendEntry( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementLegendEntry( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlLegendKey:
-			selectedChartElement = ExcelChartElementLegendKey( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementLegendKey( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		else:
-			selectedChartElement = ExcelChartElementBase( windowHandle= self.windowHandle , excelChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementBase( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 
 		if selectedChartElement :
 			selectedChartElement.parent = self
@@ -266,309 +229,5 @@ class ExcelChartEventHandler(comtypes.COMObject):
 	def ChartEvents_Select(self, this, ElementID ,arg1,arg2):
 		self.owner.elementChanged( ElementID ,arg1,arg2)
 
-class ExcelChartElementBase(Window):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		self.excelChartObject = excelChartObject
-		self.elementID = elementID 
-		self.arg1 = arg1
-		self.arg2 = arg2
-		super(ExcelChartElementBase ,self).__init__(windowHandle=windowHandle)
-
-	def GetChartSegment(self):
-		chartType = self.excelChartObject.ChartType
-		if chartType in (xl3DPie, xl3DPieExploded, xlPie, xlPieExploded, xlPieOfPie):
-			# Translators: A slice in a pie chart.
-			text=_("slice")
-		elif chartType in (xl3DColumn, xl3DColumnClustered, xl3DColumnStacked, xl3DColumnStacked100, xlColumnClustered, xlColumnStacked100, xlColumnStacked):
-			# Translators: A column in a column chart.
-			text=pgettext('chart','column')
-		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
-			# Translators: A data point in a line chart.
-			text=_("data point")
-		else:
-			# Translators: A segment of a chart for charts which don't have a specific name for segments.
-			text=_("item")
-		return text
-
-	def _get_role(self):
-		return controlTypes.ROLE_UNKNOWN
-
-	def _get_name(self):
-		return self._getChartElementText(self.elementID , self.arg1 , self.arg2)
-
-	def script_reportCurrentChartElementWithExtraInfo(self,gesture):
-		ui.message( self._getChartElementText(self.elementID , self.arg1 , self.arg2 , True ) )
-
-	def script_reportCurrentChartElementColor(self,gesture):
-		if self.elementID == xlSeries:
-			if self.arg2 == -1:
-				ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.excelChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
-
-	ELEMENT_IDS = {
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlDisplayUnitLabel:  _("Display Unit Label"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlMajorGridlines:  _("Major Gridlines"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlMinorGridlines: _("Minor Gridlines"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlPivotChartDropZone: _("Pivot Chart Drop Zone"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlPivotChartFieldButton: _("Pivot Chart Field Button"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlDownBars: _("Down Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlDropLines: _("Drop Lines"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlHiLoLines:  _("Hi Lo Lines"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlRadarAxisLabels: _("Radar Axis Labels"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlSeriesLines: _("Series Lines"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlUpBars: _("Up Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlCorners: _("Corners"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlDataTable: _("Data Table"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlFloor:  _("Floor"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlNothing: _("Nothing"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlWalls: _("Walls"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlDataLabel: _("Data Label"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlErrorBars: _("Error Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlXErrorBars: _("X Error Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlYErrorBars: _("Y Error Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
-		xlShape: _("Shape"),
-	}
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		return self.ELEMENT_IDS[ElementID]
-
-	__gestures = {
-		"kb:NVDA+d" : "reportCurrentChartElementWithExtraInfo",
-		"kb:NVDA+f" : "reportCurrentChartElementColor",
-	}
-
-
-
-
-# end class ExcelChartEventHandler
-
-class ExcelChartElementSeries(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super(ExcelChartElementSeries,self).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlSeries:
-			if arg2 == -1:
-				# Translators: Details about a series in a chart.
-				# For example, this might report "foo series 1 of 2"
-				return _( "{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count )
-			else:
-				# if XValue is a float, change it to int, else dates are shown with points. hope this does not introduce another bug
-				if isinstance( self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] , float): 
-					excelSeriesXValue = int(self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] )
-				else:
-					excelSeriesXValue = self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] 
-
-				output=""
-				if self.excelChartObject.ChartType in (xlLine, xlLineMarkers , xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
-					if arg2 > 1:
-
-						if self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] == self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
-							# Translators: For line charts, indicates no change from the previous data point on the left
-							output += _( "no change from point {previousIndex}, ").format( previousIndex = arg2 - 1 )
-						elif self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] > self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
-							# Translators: For line charts, indicates an increase from the previous data point on the left
-							output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] , previousIndex = arg2 - 1 ) 
-						else:
-							# Translators: For line charts, indicates a decrease from the previous data point on the left
-							output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] , previousIndex = arg2 - 1 ) 
-
-				if self.excelChartObject.HasAxis(xlCategory) and self.excelChartObject.Axes(xlCategory).HasTitle:
-					# Translators: Specifies the category of a data point.
-					# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
-					output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.excelChartObject.Axes(xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue ) 
-				else:
-					# Translators: Specifies the category of a data point.
-					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
-					output += _( "Category {categoryAxisData}: ").format( categoryAxisData = excelSeriesXValue ) 
-
-				if self.excelChartObject.HasAxis(xlValue) and self.excelChartObject.Axes(xlValue).HasTitle:
-					# Translators: Specifies the value of a data point.
-					# {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-					# {valueAxisData} will be replaced with the value itself; e.g. "1000".
-					output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.excelChartObject.Axes(xlValue).AxisTitle.Text , valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
-				else:
-					# Translators: Specifies the value of a data point.
-					# {valueAxisData} will be replaced with the value itself; e.g. "1000".
-					output +=  _( "value {valueAxisData}").format( valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
-
-				if self.excelChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
-					total = math.fsum( self.excelChartObject.SeriesCollection(arg1).Values ) 
-					# Translators: Details about a slice of a pie chart.
-					# For example, this might report "fraction 25.25 percent slice 1 of 5"
-					output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
-				else:
-					# Translators: Details about a segment of a chart.
-					# For example, this might report "column 1 of 5"
-					output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
-
-				return  output 
-
-class ExcelChartElementAxis(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementAxis , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlAxis:
-			if arg1 == xlPrimary: 
-				# Translators: The primary axis group in a Microsoft Excel chart.
-				axisGroup = _("Primary")
-			elif arg1 == xlSecondary :
-				# Translators: The secondary axis group in a Microsoft Excel chart.
-				axisGroup = _("Secondary")
-
-			if arg2 == xlCategory: 
-				# Translators: The category axis in a Microsoft Excel chart.
-				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-				axisType= _("Category")
-			elif arg2 == xlValue:
-				# Translators: The value axis in a Microsoft Excel chart.
-				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-				axisType= _("Value")
-			elif arg2 == xlSeriesAxis: 
-				# Translators: The series axis in a Microsoft Excel chart.
-				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-				axisType= _("Series")
-
-			axisDescription =""
-			if self.excelChartObject.HasAxis( arg2 ) and self.excelChartObject.Axes( arg2 ).HasTitle:
-				# Translators: Details about an axis in a chart.
-				axisDescription += _("Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}").format( axisType = axisType , axisGroup = axisGroup , axisTitle = self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text )
-			else:
-				# Translators: Details about an untitled axis in a chart.
-				axisDescription += _("Chart axis, type: {axisType}, group: {axisGroup}").format( axisType = axisType , axisGroup = axisGroup)
-
-			return  axisDescription 
-
-class ExcelChartElementAxisTitle(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementAxisTitle , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlAxisTitle:  
-			# Translators: Indicates a chart axis title in Microsoft Excel.
-			axisTitle=_("Chart axis title")
-			if self.excelChartObject.HasAxis( arg2 ) and self.excelChartObject.Axes( arg2 ).HasTitle:
-				axisTitle += ": " + self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text 
-
-			return  axisTitle 
-
-class ExcelChartElementTrendline(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementTrendline , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlTrendline:
-			# Translators: Indicates a trendline in a Microsoft Excel chart.
-			# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-			text = _("trendline")
-			if self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DisplayEquation    or self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DisplayRSquared:
-				# Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-				text += " " + self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DataLabel.Text.replace(u"²", _( " squared " ) )
-			return text
-
-class ExcelChartElementChartTitle(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementChartTitle , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlChartTitle:
-			if self.excelChartObject.HasTitle:
-				# Translators: Details about a chart title in Microsoft Excel.
-				return _( "Chart title: {chartTitle}").format ( chartTitle = self.excelChartObject.ChartTitle.Text )
-			else:
-				# Translators: Indicates an untitled chart in Microsoft Excel.
-				return _( "Untitled chart" )
-
-class ExcelChartElementChartArea(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementChartArea , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlChartArea:
-			if reportExtraInfo:
-				# Translators: Details about the chart area in a Microsoft Excel chart.
-				return _( "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: {chartAreaLeft}").format ( chartAreaHeight = self.excelChartObject.ChartArea.Height , chartAreaWidth = self.excelChartObject.ChartArea.Width , chartAreaTop = self.excelChartObject.ChartArea.Top , chartAreaLeft = self.excelChartObject.ChartArea.Left)
-			else:
-				# Translators: Indicates the chart area of a Microsoft Excel chart.
-				return _( "Chart area ")
-
-class ExcelChartElementPlotArea(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementPlotArea , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlPlotArea:
-			if reportExtraInfo:
-				# useing {:.0f} to remove fractions
-				# Translators: Details about the plot area of a Microsoft Excel chart.
-				return _( "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}").format ( plotAreaInsideHeight = self.excelChartObject.PlotArea.InsideHeight , plotAreaInsideWidth = self.excelChartObject.PlotArea.InsideWidth , plotAreaInsideTop = self.excelChartObject.PlotArea.InsideTop , plotAreaInsideLeft = self.excelChartObject.PlotArea.InsideLeft )
-			else:
-				# Translators: Indicates the plot area of a Microsoft Excel chart.
-				return _( "Plot area " )
-
-class ExcelChartElementLegend(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementLegend , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlLegend:
-			if self.excelChartObject.HasLegend:
-				# Translators: Indicates the legend in a Microsoft Excel chart.
-				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-				return _( "Legend" ) 
-			else:
-				# Translators: Indicates that there is no legend in a Microsoft Excel chart.
-				return _( "No legend" )
-
-class ExcelChartElementLegendEntry(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementLegendEntry , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlLegendEntry:
-			# Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-			# For example, this might report "Legend entry for series Temperature 1 of 2"
-			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count ) 
-
-class ExcelChartElementLegendKey(ExcelChartElementBase):
-
-	def __init__(self, windowHandle=None , excelChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( ExcelChartElementLegendKey , self ).__init__( windowHandle=windowHandle , excelChartObject=excelChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
-
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlLegendKey:
-			# Translators: Details about a legend key for a series in a Microsoft Excel chart.
-			# For example, this might report "Legend key for series Temperature 1 of 2"
-			# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-			return _( "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count )
+		# end class ExcelChartEventHandler
+		
