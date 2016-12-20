@@ -346,7 +346,7 @@ devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	"--quiet", "--html", "--include-log", "--no-frames",
 	"--name", "NVDA", "--url", "http://www.nvaccess.org/",
 	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-	"config", "globalPlugins", "gui", "NVDAObjects",
+	"config", "globalPlugins", "gui", "mathPres", "NVDAObjects",
 	"synthDrivers", "textInfos", "virtualBuffers",
 ]])
 
