@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2010-2014 NV Access Limited.
+#URL: http://www.nvaccess.org/
+#Copyright 2010-2016 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -344,7 +344,7 @@ devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
 	"--output", "${TARGET.abspath}",
 	"--quiet", "--html", "--include-log", "--no-frames",
-	"--name", "NVDA", "--url", "http://www.nvda-project.org/",
+	"--name", "NVDA", "--url", "http://www.nvaccess.org/",
 	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
 	"config", "globalPlugins", "gui", "NVDAObjects",
 	"synthDrivers", "textInfos", "virtualBuffers",
