@@ -20,6 +20,20 @@ Os destaques desta versão incluem melhoras no suporte para o Microsoft Edge; mo
 - O modo de navegação agora é usado ao ler emails no aplicativo de e-mail do Windows 10. (#6271)
 
 
+== Alterações ==
+- Atualizado o transccritor braille liblouis para a versão 3.0.0. Isso inclui implementações significativas no Braille Inglês Unificado. (#6109, #4194, #6220, #6140)
+- No Gerenciador de complementos, os botões desativar e ativar complementos agora possuem teclas de atalho (alt+d e alt+e, respectivamente). (#6388)
+- Resolvidos vários problemas de localização e alinhamentto  nos diálogos do NVDA. (#6317, #5548, #6342, #6343, #6349)
+- O Diálogo de formatação de documentos foi ajustado de modo a que seu conteúdo seja deslocável. (#6348)
+- Adjusted the layout of the Symbol Pronunciation dialog so the full width of the dialog is used for the symbols list. (#6101)
+- No modo de navegação em navegadores web, os comandos de navegação por caractere para campos de edição (e e shift+e) e para campos de formulários (f e shift+f) agora podem ser usados para mover-se para campos de edição somente leitura. (#4164)
+- No Diálogo de opções de formatação de documentos do NVDA, "Anunciar mudanças de formato conforme cursor" agora afeta tanto o braille como a fala. (#6336)
+- Ajustada a aparência do "Diálogo de boas vindas" do NVDA. (#6350)
+- As caixas de diálogo do NVDA agora têm seus botões "ok" e "cancelar" alinhados à direita do diálogo. (#6333)
+- Controles de rotação agora são usados em campos de entrada numérica tais como o da opção "Percentagem para mudança de tom em maiúsculas" no Diálogo de opções de voz. Você pode inserir o valor desejado ou usar as setas para cima e para baixo para definir o valor. (#6099)
+- Foi tornado mais consistente o modo como IFrames (documentos embutidos dentro de documentos) são anunciadas nos navegadores web. IFrames agora são anunciadas como "frame" no Firefox. (#6047)
+
+
 = 2016.3 =
  Os destaques desta versão incluem a possibilidade de desabilitar coplementos individualmente; suporte para campos de formulário no Microsoft Excel; implementações significativas no anúncio das cores; correções e implementações relacionadas a várias linhas braille; e correções e implementações no suporte para o Microsoft Word.
 
