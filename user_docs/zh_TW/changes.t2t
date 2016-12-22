@@ -3,6 +3,63 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+Highlights of this release include improved support for Microsoft Edge; browse mode in the Windows 10 Mail app; and significant improvements to NVDA's dialogs. 本次改版的重點包括加強對Microsoft Edge瀏覽器的支援；以及在Windows 10 Mail app中的瀏覽模式; 和NVDA針對「對話方塊」的重大改進。
+
+== New Features ==
+- NVDA can now indicate line indentation using tones. This can be configured using the "Line indentation reporting" combo box in NVDA's Document Formatting preferences dialog. (#5906) NVDA現在可以用音調來提示行縮排，您可以在設定裡的「文件格式」中的「讀出行縮排」下拉式選單進行設定。
+- Support for the Orbit Reader 20 braille display. (#6007) 支援Orbit Reader 20點字顯示器。
+- An option to open the speech viewer window on startup has been added. This can be enabled via a check box in the speech viewer window. (#5050) 新增在「語音報讀」視窗裡的「在啟動時顯示檢視報讀」選項，您可以勾選此選項來啟用。
+- When re-opening the speech viewer window, the location and dimensions will now be restored. (#5050) 當您重新打開「語音報讀」視窗時，視窗會還原至您上一次關閉前的位置和尺寸。
+- Cross-reference fields in Microsoft Word are now treated like hyperlinks. They are reported as links and can be activated. (#6102) Microsoft Word中的「交互參照」字段，可視為超連結。它們會被報讀成連結，並且可以被點擊。
+- Support for the Baum SuperVario2, Baum Vario 340 and HumanWare Brailliant2 braille displays. (#6116) 支援Baum SuperVario2，Baum Vario 340和HumanWare Brailliant2點字顯示器。
+- Initial support for the Anniversary update of Microsoft Edge. (#6271) 開始支持Microsoft Edge的年度更新版。
+- Browse mode is now used when reading emails in the Windows 10 mail app. (#6271) 在Windows 10 mail app中閱讀電子郵件時，可使用瀏覽模式。
+
+
+== Changes ==
+- Updated liblouis braille translator to 3.0.0. This includes significant enhancements to Unified English Braille. (#6109, #4194, #6220, #6140) 將liblouis點字翻譯器更新到3.0.0。這包括對英語點字的顯著增強。
+- In the Add-ons Manager, the Disable add-on and Enable add-on buttons now have keyboard shortcuts (alt+d and alt+e, respectively). (#6388) 在「管理附加元件」中，停用附加元件和啟用附加元件的按鈕，現在具有鍵盤快速鍵。(分別為alt+d 和 alt+e)
+- Various padding and alignment issues in NVDA's dialogs have been resolved. (#6317, #5548, #6342, #6343, #6349) NVDA視窗中的各種填空和對齊問題已解決。
+- The document formatting dialog has been adjusted so that the contents scrolls. (#6348) 已調整「文件格式」視窗，以便垂直滾動內容。
+- Adjusted the layout of the Symbol Pronunciation dialog so the full width of the dialog is used for the symbols list. (#6101) 調整「符號讀音」視窗的版面配置，使視窗的完整寬度能用於符號列表。
+- In browse mode in web browsers, the edit field (e and shift+e) and form field (f and shift+f) single letter navigation commands can now be used to move to read-only edit fields. (#4164) 在網頁瀏覽器的瀏覽模式下，單鍵瀏覽的指令，包括跳至編輯區（e和shift + e），及跳至表單區（f和shift + f）已可用於唯讀模式了。
+- In NVDA's Document Formatting settings, "Announce formatting changes after the cursor" has been renamed to "Report formatting changes after the cursor", as it affects braille as well as speech. (#6336) 在NVDA的文件格式的設定中，“宣告游標經過後的格式變換”已重命名為“讀出游標經過後的格式變換”，此會影響點字和語音。
+- Adjusted the appearance of the NVDA "Welcome dialog". (#6350) 調整NVDA“歡迎”視窗的外觀。
+- NVDA dialog boxes now have their "ok" and "cancel" buttons aligned to the right of the dialog. (#6333) NVDA視窗現在的“確定”和“取消”按鈕會對齊在視窗的右側。
+- Spin Controls are now used for numeric input fields such as the "Capital pitch change percentage" setting  in the Voice Settings dialog. You can enter the desired value or use the up and down arrow keys to adjust the value. (#6099) 旋轉控制項已用於數字控制區，如“語音設定”視窗中的“大寫字母音調改變百分比”等的設定。 您可以輸入所需的值，或使用向上和向下箭來調整。
+- The way IFrames (documents embedded within documents) are reported has been made more consistent across web browsers. IFrames are now reported as "frame" in Firefox. (#6047) IFrames（嵌入文件中的文件）的方式已經在Web瀏覽器中報讀變得更加一致。 現在，在Firefox中，iframe被報讀為“框架”。 
+
+
+== Bug Fixes ==
+- Fixed a rare error when exiting NVDA while the speech viewer is open. (#5050)
+- Image maps now render as expected in browse mode in Mozilla Firefox. (#6051)
+- While in the dictionary dialog, pressing the enter key now saves any changes you have made and closes the dialog. Previously, pressing enter did nothing. (#6206)
+- Messages are now displayed in braille when changing input modes for an input method (native input/alphanumeric, full shaped/half shaped, etc.). (#5892, #5893)
+- When disabling and then immediately re-enabling an add-on or vice versa, the add-on status now correctly reverts to what it was previously. (#6299)
+- When using Microsoft Word, page number fields in headers can now be read. (#6004)
+- The mouse can now be used to move focus between the symbol list and the edit fields in the symbol pronunciation dialog. (#6312)
+- In browse mode in Microsoft Word, Fixed an issue that stops the elements list from appearing when a document contains an invalid hyperlink. (#5886)
+- After being closed via the task bar or the alt+F4 shortcut, the speech viewer check box in the NVDA menu will now reflect the actual visibility of the window. (#6340)
+- The reload plugins command no longer causes problems for triggered configuration profiles, new documents in web browsers and screen review. (#2892, #5380)
+- In the list of languages in NVDA's General Settings dialog, languages such as Aragonese are now displayed correctly on Windows 10. (#6259)
+- Emulated system keyboard keys (e.g. a button on a braille display which emulates pressing the tab key) are now presented in the configured NVDA language in input help and the Input Gestures dialog. Previously, they were always presented in English. (#6212)
+- Changing the NVDA language (from the General Settings dialog) now has no effect until NVDA is restarted. (#4561)
+- It is no longer possible to leave the Pattern field blank for a new speech dictionary entry. (#6412)
+- Fixed a rare issue when scanning for serial ports on some systems which made some braille display drivers unusable. (#6462)
+- In Microsoft Word, Numbered bullets in table cells are now read  when moving by cell. (#6446)
+- It is now possible to assign gestures to commands for the Handy Tech braille display driver in the NVDA Input Gestures dialog. (#6461)
+- In Microsoft Excel, pressing enter or numpadEnter when navigating a spreadsheet now correctly reports navigation to the next row. (#6500)
+- iTunes no longer intermittently freezes forever when using browse mode for the iTunes Store, Apple Music, etc. (#6502)
+- Fixed crashes in 64 bit Mozilla and Chrome-based applications. (#6497)
+- In Firefox with multi-process enabled, browse mode and editable text fields now function correctly. (#6380)
+
+
+== Changes for Developers ==
+- It is now possible to provide app modules for executables containing a dot (.) in their names. Dots are replaced with underscores (_). (#5323)
+- The new gui.guiHelper module includes utilities to simplify the creation of wxPython GUIs, including automatic management of spacing. This facilitates better visual appearance and consistency, as well as easing creation of new GUIs for blind developers. (#6287)
+
+
 = 2016.3 =
 
 == New Features ==
