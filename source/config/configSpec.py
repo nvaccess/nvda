@@ -11,7 +11,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 0
+latestSchemaVersion = 1
 
 #: The configuration specification string
 #: @type: String
@@ -54,7 +54,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	inputTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
 	showCursor = boolean(default=true)
-	cursorBlinkRate = integer(default=500,min=0,max=2000)
+	cursorBlink = boolean(default=true)
+	cursorBlinkRate = integer(default=500,min=200,max=2000)
 	cursorShape = integer(default=192,min=1,max=255)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
