@@ -273,4 +273,8 @@ class AppModule(appModuleHandler.AppModule):
 			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
 			return
 
+		if wClass == "WorkerW" and obj.role == controlTypes.ROLE_PANE and obj.name is None:
+			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
+			return
+
 		nextHandler()
