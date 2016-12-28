@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-28 00:10+1000\n"
-"PO-Revision-Date: 2016-10-28 12:32+0200\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-12-13 13:21+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1702,6 +1702,7 @@ msgid "row"
 msgstr "rivi"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "kehys"
 
@@ -2028,10 +2029,6 @@ msgstr "työpöydän kuvake"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "ilmoitus"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "kehys"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -4174,7 +4171,7 @@ msgstr "käytössä"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "off"
-msgstr "ei käytössä"
+msgstr "pois"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -8710,6 +8707,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "IFrame"
+#~ msgstr "kehys"
 
 #~ msgid "Error in %s language file"
 #~ msgstr "Virhe kielitiedostossa %s"
