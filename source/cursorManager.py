@@ -123,25 +123,24 @@ class CursorManager(baseObject.ScriptableObject):
 			info.expand(unit)
 			info.collapse(end=posUnitEnd)
 			while True:
-				if info.move(unit,direction)==0 and isinstance(self,DocumentWithPageTurns):
+				moved = info.move(unit,direction)
+				if moved == 0 and isinstance(self,DocumentWithPageTurns):
 					try:
 						self.turnPage(previous=direction<0)
 					except RuntimeError:
 						pass
 					else:
 						info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
+				if moved == 0:
+					break
 				if self._shouldSkipBlankLines(info):
 					blankLineInfo = info.copy()
 					blankLineInfo.expand(textInfos.UNIT_LINE)
-					print blankLineInfo.text
 					if speech.isBlank(blankLineInfo.text):
 						direction = (1 if direction > 0 else -1)
-						print "It's blank", direction
 					else:
-						print "not blank"
 						break
 				else:
-					print "Blank Lines not being skipped"
 					break
 		self.selection=info
 		info.expand(unit)

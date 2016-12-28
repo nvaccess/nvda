@@ -989,6 +989,11 @@ class BrowseModeDialog(SettingsDialog):
 		settingsSizer.Add(self.useScreenLayoutCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings dialog.
+		self.skipBlankLinesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Skip &Blank Lines"))
+		self.skipBlankLinesCheckBox.SetValue(config.conf["virtualBuffers"]["skipBlankLines"])
+		settingsSizer.Add(self.skipBlankLinesCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings dialog.
 		self.autoSayAllCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Automatic &Say All on page load"))
 		self.autoSayAllCheckBox.SetValue(config.conf["virtualBuffers"]["autoSayAllOnPageLoad"])
 		settingsSizer.Add(self.autoSayAllCheckBox,border=10,flag=wx.BOTTOM)
@@ -1025,6 +1030,7 @@ class BrowseModeDialog(SettingsDialog):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["skipBlankLines"]=self.skipBlankLinesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]=self.autoSayAllCheckBox.IsChecked()
 		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
