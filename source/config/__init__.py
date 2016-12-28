@@ -165,6 +165,7 @@ confspec = ConfigObj(StringIO(
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
 	useScreenLayout = boolean(default=True)
+	skipBlankLines = boolean(default=True)
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)

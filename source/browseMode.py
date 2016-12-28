@@ -22,6 +22,7 @@ import cursorManager
 from scriptHandler import isScriptWaiting, willSayAllResume
 import aria
 import controlTypes
+from controlTypes import *
 import config
 import textInfos
 import braille
@@ -32,6 +33,7 @@ import inputCore
 import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
+
 
 REASON_QUICKNAV = "quickNav"
 
@@ -1016,6 +1018,30 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			except AttributeError:
 				# The app module died.
 				pass
+
+	def _shouldSkipBlankLines(self, info):
+		if not config.conf["virtualBuffers"]["skipBlankLines"]:
+			return False
+		states = info.NVDAObjectAtStart.states
+		print info.NVDAObjectAtStart.name
+		if controlTypes.STATE_EDITABLE in states:
+			return False
+		obj = info.NVDAObjectAtStart
+		#Some roles are no-no for the leaf case, but okay as an ancestor.
+		if obj.role in {ROLE_APPLICATION, ROLE_DIALOG, ROLE_DOCUMENT, ROLE_EMBEDDEDOBJECT}:
+			return False
+		while obj != self.rootNVDAObject:
+			if obj.role in {
+				ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_EDITABLETEXT, ROLE_BUTTON, ROLE_MENUBAR, ROLE_MENUITEM, ROLE_POPUPMENU, 
+				ROLE_COMBOBOX, ROLE_LINK, ROLE_TREEVIEW, ROLE_TREEVIEWITEM, ROLE_TAB, ROLE_TABCONTROL, ROLE_SLIDER, ROLE_DROPDOWNBUTTON, 
+				ROLE_CHECKMENUITEM, ROLE_INPUTWINDOW, ROLE_RADIOMENUITEM, ROLE_EDITBAR, ROLE_TERMINAL, ROLE_RICHEDIT, ROLE_TEAROFFMENU, ROLE_TOGGLEBUTTON,
+				ROLE_DROPLIST, ROLE_SPLITBUTTON, ROLE_MENUBUTTON, ROLE_DROPDOWNBUTTONGRID, ROLE_MATH, ROLE_EQUATION, ROLE_SPINBUTTON, ROLE_TREEVIEWBUTTON,
+				ROLE_COLORCHOOSER, ROLE_FILECHOOSER, ROLE_MENU, ROLE_PASSWORDEDIT, ROLE_FONTCHOOSER, ROLE_DATAITEM, 
+				ROLE_DROPLIST, ROLE_SPLITBUTTON, ROLE_MENUBUTTON, ROLE_DROPDOWNBUTTONGRID, 
+				}:
+				return False
+			obj = obj.parent
+		return True
 
 	def _get_currentNVDAObject(self):
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart

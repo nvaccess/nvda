@@ -122,18 +122,40 @@ class CursorManager(baseObject.ScriptableObject):
 		if direction is not None:
 			info.expand(unit)
 			info.collapse(end=posUnitEnd)
-			if info.move(unit,direction)==0 and isinstance(self,DocumentWithPageTurns):
-				try:
-					self.turnPage(previous=direction<0)
-				except RuntimeError:
-					pass
+			while True:
+				if info.move(unit,direction)==0 and isinstance(self,DocumentWithPageTurns):
+					try:
+						self.turnPage(previous=direction<0)
+					except RuntimeError:
+						pass
+					else:
+						info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
+				if self._shouldSkipBlankLines(info):
+					blankLineInfo = info.copy()
+					blankLineInfo.expand(textInfos.UNIT_LINE)
+					print blankLineInfo.text
+					if speech.isBlank(blankLineInfo.text):
+						direction = (1 if direction > 0 else -1)
+						print "It's blank", direction
+					else:
+						print "not blank"
+						break
 				else:
-					info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
+					print "Blank Lines not being skipped"
+					break
 		self.selection=info
 		info.expand(unit)
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
+
+	def _shouldSkipBlankLines(self, info):
+		"""
+		Indicates whether the current line should be skipped while navigating. If currently in browse mode, this should be true, unless this object is editable, or if for some reason blank lines are significant here.
+		@param info: the text info to check skip blank lines for.
+		"""
+		#By default, we don't want to skip blank lines, because not all cursor managers want this behavior.
+		return False
 
 	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:
