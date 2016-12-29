@@ -617,6 +617,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
 			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
+		if self.obj.ignorePageNumbers:
+			formatConfigFlags&=~formatConfigFlagsMap['reportPage']
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -1085,6 +1087,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ignore=False
 		self.ignoreEditorRevisions=ignore
 		return ignore
+
+	#: True if page numbers (as well as section numbers and column numbers) should be ignored. Such as in outlook.
+	ignorePageNumbers = False
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False

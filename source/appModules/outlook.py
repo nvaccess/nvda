@@ -513,3 +513,4 @@ class OutlookWordDocument(WordDocument):
 		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
 
 	ignoreEditorRevisions=True
+	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
