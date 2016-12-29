@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-20 16:11+0800\n"
+"PO-Revision-Date: 2016-12-28 20:58-0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -86,7 +86,6 @@ msgid "unknown input method"
 msgstr "未知的輸入法"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{layout} - {language}"
 
@@ -724,7 +723,6 @@ msgstr "沒 %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{total} 之 {number}"
 
@@ -1487,73 +1485,61 @@ msgstr "粉紅偏紅色"
 
 # 取自維基百科，將Bright Green譯成明綠
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "明 {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "暗 {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "非常暗 {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "亮灰 {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "灰 {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "暗灰 {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "非常暗灰 {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} 白色"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} 灰色"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "暗 {color} 灰色"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "非常暗 {color} 灰色"
@@ -3354,7 +3340,6 @@ msgid "AC power on"
 msgstr "交流電源已接通"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "剩餘{hours:d}小時{minutes:d}分鐘"
 
@@ -4182,7 +4167,6 @@ msgid "column %s"
 msgstr "%s欄"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "有{rowCount}列{columnCount}欄"
 
@@ -4238,30 +4222,25 @@ msgstr "預設樣式"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} 到 {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color}，背景色為{backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "背景色為{backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "背景圖案 {pattern}"
 
@@ -4469,7 +4448,6 @@ msgid "out of table"
 msgstr "離開表格"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "表格有{columnCount}欄{rowCount}列"
 
@@ -4550,27 +4528,22 @@ msgid "object mode"
 msgstr "物件模式"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "{action} 1次"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "{action} 兩次"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action} 3次"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "{action} 4次"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers}  指 {action}"
 
@@ -4652,7 +4625,6 @@ msgstr "NVDA更新"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "NVDA版本{version}已可供使用"
 
@@ -4744,11 +4716,9 @@ msgstr "非視覺桌面存取應用程式"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "在微軟視窗作業系統下，一套自由且開放原始碼的螢幕報讀軟體"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "版權 (C) {years} NVDA 的貢獻者"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4788,7 +4758,6 @@ msgstr ""
 "表] 中的 [請贊助] 選項，即可開啟捐款頁面。"
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4797,7 +4766,6 @@ msgstr ""
 "。您必須執行NVDA以便安裝附加元件"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4807,12 +4775,10 @@ msgstr ""
 "度為百分之{width:.1f}，高度為百分之{height:.1f}"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{description}的{symbol}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4862,12 +4828,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "讀出目前播放曲目的剩餘時間"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%，位置在 {maxLocation} 之 {curLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "第 {pageNumber} 頁"
 
@@ -4977,12 +4942,10 @@ msgid "Waiting for Outlook..."
 msgstr "正在等待 Outlook"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "從 {startTime} 到 {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "預約時間 {subject}，{time}"
 
@@ -5144,97 +5107,78 @@ msgid "Master Thumbnails"
 msgstr "母片縮圖"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "第{slideNumber}頁"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "左側覆蓋{otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "左側露出 {otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "上緣覆蓋{otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "上緣露出{otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "右側覆蓋{otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "右側露出{otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "下緣覆蓋{otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "下緣露出{otherShape}{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "在{otherShape}之上"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "在{otherShape}之下"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "距離投影片左側邊緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "投影片左側超出{distance:.3g}點"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "從投影片上緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "距離投影片上緣{distance:.3g}點"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "從投影片右側邊緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "距離投影片右側邊緣{distance:.3g}點"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "從投影片下緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "距離投影片下緣{distance:.3g}點"
 
@@ -5248,12 +5192,10 @@ msgstr ""
 "讀"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "投影片放映備忘稿- {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "投影片放映- {slideName}"
 
@@ -5342,7 +5284,6 @@ msgstr "Baum/HumanWare/APH/Orbit braille 點顯器"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "串列埠: {portName}"
 
@@ -5824,7 +5765,6 @@ msgid "Choose Add-on Package File"
 msgstr "選取附加元件檔案"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA附加元件(*.{ext})"
 
@@ -5836,7 +5776,6 @@ msgid ""
 msgstr "無法開啟%s附加元件檔案-檔案可能遺失或無效的格式"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -5917,7 +5856,6 @@ msgid "Restart NVDA"
 msgstr "重新啟動NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -5930,7 +5868,6 @@ msgstr ""
 "描述: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "網址:{url}"
 
@@ -6180,7 +6117,6 @@ msgid ""
 msgstr "在系統中找到前一個版本的NVDA，此版本將會進行更新。"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7141,7 +7077,6 @@ msgstr "輸入篩選字串(&F):"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7180,12 +7115,10 @@ msgid "word"
 msgstr "單字"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "百分之{curPercent:.0f}"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "在螢幕座標 {x}，{y}"
 
@@ -7241,7 +7174,6 @@ msgid "Taskbar"
 msgstr "工作列"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB 紅 {rgb.red}、綠 {rgb.green}、藍 {rgb.blue}"
 
@@ -7409,7 +7341,6 @@ msgid "&Sheets"
 msgstr "工作表 (&S)"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} 到 {end}"
 
@@ -7423,22 +7354,18 @@ msgid ""
 msgstr "無法設定標題，請勾選文件格式設定中的讀出表格的列及欄標題"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "設定 {address} 為欄標題"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "已設定 {address} 為欄標題開頭了！ "
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "清除 {address} 欄標題"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "在欄標題無法找到 {address} "
 
@@ -7451,22 +7378,18 @@ msgstr ""
 "標題名稱。 連續按二下即清除此設定。"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "設定{address}為列標題"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "已設定{address}為列標題"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "清除列標題{address}"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "在列標題無法找到{address}"
 
@@ -7478,11 +7401,9 @@ msgstr ""
 "按一下設定此儲存格為其右側及以下儲存格所形成的區域之列標題。 連續按二下即清除"
 "此設定。"
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "輸入訊息是 {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "輸入訊息是 {message}"
 
@@ -7495,12 +7416,10 @@ msgid "Reports the comment on the current cell"
 msgstr "讀出目前儲存格的註解"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "編輯儲存格{address}註解"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstContent} {firstAddress}到{lastContent} {lastAddress}"
 
@@ -7855,7 +7774,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "帶有平滑曲線的XY散佈圖"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "圖表的標題是：{chartTitle} 類型為：{chartType}"
 
@@ -7883,7 +7801,6 @@ msgstr "數列"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} 軸的名稱是 {axisTitle}"
 
@@ -7897,7 +7814,6 @@ msgid "There are total %d series in this chart"
 msgstr "此圖表共有 %d 個數列"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "數列 {number} {name}"
 
@@ -7922,7 +7838,6 @@ msgstr "資料點"
 msgid "item"
 msgstr "項目"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "數列顏色為：{colorName} "
 
@@ -8012,61 +7927,51 @@ msgstr "形狀"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} 數列，第 {seriesCount} 之 {seriesIndex}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "{previousIndex} 點並沒有改變，"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "增加了 {incrementValue} 來自於 {previousIndex} 點，"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "減少了 {decrementValue}來自於 {previousIndex} 點， "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}： "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "類別 {categoryAxisData}： "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "數值 {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr "分數佔百分之 {fractionValue:.2f} 扇區 第 {pointCount} 之 {pointIndex}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} 第 {pointCount} 之 {pointIndex}"
 
@@ -8079,13 +7984,11 @@ msgid "Secondary"
 msgstr "次要"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "圖表座標軸，類型為： {axisType}，群組為: {axisGroup}， 標題為： {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "圖表坐標軸，類型為: {axisType}，群組為: {axisGroup}"
 
@@ -8103,7 +8006,6 @@ msgid " squared "
 msgstr "平方"
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "圖表名稱： {chartTitle}"
 
@@ -8112,7 +8014,6 @@ msgid "Untitled chart"
 msgstr "未命名的圖表"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8125,7 +8026,6 @@ msgid "Chart area "
 msgstr "圖表區"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8150,14 +8050,12 @@ msgstr "沒有圖例"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "數列的圖例條目 {seriesName} 第 {seriesCount} 之 {seriesIndex}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "數列的圖例符號 {seriesName} 第 {seriesCount} 之 {seriesIndex}"
 
@@ -8260,11 +8158,9 @@ msgstr "主要頁首"
 msgid "Text frame"
 msgstr "文字框"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "註解: 由 {author} 於 {date} 加註的 {text}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} 由 {author} 於 {date} 修訂"
 
@@ -8305,23 +8201,19 @@ msgid "Table description"
 msgstr "表格說明"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "設定{rowNumber}列{columnNumber}欄為欄標題"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "已設定{rowNumber}列{columnNumber}欄為欄標題!"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "清除{rowNumber}列{columnNumber}欄的欄標題"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "無法找到{rowNumber}列{columnNumber}欄的欄標題"
 
@@ -8334,23 +8226,19 @@ msgstr ""
 "此設定。"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "設定{rowNumber}列{columnNumber}欄為列標題"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "已設定{rowNumber}列{columnNumber}欄為列標題"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "清除{rowNumber}列{columnNumber}欄的列標題"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "無法找到{rowNumber}列{columnNumber}欄的列標題"
 
@@ -8433,43 +8321,35 @@ msgid "Moved above blank paragraph"
 msgstr "移到上一個空白段落"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} 樣式，大綱階層 {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g}pt 字型 "
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} 個字元"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} 英吋"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} 公分"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g}毫米"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g}點"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 皮卡"
 
@@ -8510,843 +8390,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "內嵌頁框"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "在%s語言檔案中有誤"
-
-#~ msgid "Language Error"
-#~ msgstr "語言錯誤"
-
-#~ msgid "&Profile"
-#~ msgstr "設定檔(&P)"
-
-#~ msgid "Language"
-#~ msgstr "語言"
-
-#~ msgid "Log level"
-#~ msgstr "事件記錄等級"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "鍵盤配置"
-
-#~ msgid "text reporting unit"
-#~ msgstr "文字讀出單元"
-
-#~ msgid "Progress bar output"
-#~ msgstr "進度列輸出"
-
-#~ msgid "Report &font name"
-#~ msgstr "讀出字體名稱(&F)"
-
-#~ msgid "Report font &size"
-#~ msgstr "讀出字體大小(&S)"
-
-#~ msgid "Report &alignment"
-#~ msgstr "讀出對齊方式(&A)"
-
-#~ msgid "Report &colors"
-#~ msgstr "讀出色彩(&C)"
-
-#~ msgid "Report co&mments"
-#~ msgstr "讀出註解 (&M)"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "讀出強調(&M)"
-
-#~ msgid "Report st&yle"
-#~ msgstr "讀出文字樣式(&Y)"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "讀出拼錯字 (&R)"
-
-#~ msgid "Report &pages"
-#~ msgstr "讀出頁碼(&P)"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "讀出行距 (&L)"
-
-#~ msgid "Report &tables"
-#~ msgstr "讀出表格(&T)"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "讀出列及欄標題(&E)"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "讀出連結(&K)"
-
-#~ msgid "Report &headings"
-#~ msgstr "讀出標題(&H)"
-
-#~ msgid "Report &lists"
-#~ msgstr "讀出清單(&L)"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "讀出引述(&Q)"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "讀出地標(&D)"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "讀出頁框(&M)"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "讀出可點擊(&C)"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "切換讀出行縮排的開關"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "儲存格不可編輯"
-
-#~ msgid "checker"
-#~ msgstr "檢查工具"
-
-#~ msgid "crisscross"
-#~ msgstr "縱橫交錯線"
-
-# 儲存格內用以從左上到右下的深分隔線
-#~ msgid "down"
-#~ msgstr "右斜線"
-
-#~ msgid "gray16"
-#~ msgstr "百分之16灰色"
-
-#~ msgid "gray25"
-#~ msgstr "百分之25灰色"
-
-#~ msgid "gray50"
-#~ msgstr "百分之50灰色"
-
-#~ msgid "gray75"
-#~ msgstr "百分之75灰色"
-
-#~ msgid "grid"
-#~ msgstr "方格"
-
-# 儲存格內用以從左上到右下的淺分隔線
-#~ msgid "light down"
-#~ msgstr "淺右斜線"
-
-# 儲存格內用以從左下到右上的淺分隔線
-#~ msgid "light up"
-#~ msgstr "淺左斜線"
-
-#~ msgid "light vertical"
-#~ msgstr "淺垂直線條"
-
-#~ msgid "semi gray75"
-#~ msgstr "百分之75半灰色"
-
-# 儲存格內用以從左下到右上的深分隔線
-#~ msgid "up"
-#~ msgstr "左斜線"
-
-#~ msgid "unknown color"
-#~ msgstr "未知的色彩"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "愛麗絲藍"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "古董白"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "水藍色"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "藍綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "天藍色"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "米色"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "陶坯黃"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "杏仁白"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "藍色"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "藍紫色"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "硬木色"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "軍服藍"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "淺黃綠"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "巧克力色"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "珊瑚紅"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "矢車菊藍"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "玉米絲色"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "緋紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "青色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "暗藍色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "暗青色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "暗金菊色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "暗綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "暗卡其色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "暗洋紅"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "暗橄欖綠"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "暗橙色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "暗蘭紫"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "暗紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "暗鮭紅"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "暗海綠"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "暗岩藍"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "暗岩灰"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "暗綠松石色"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "暗紫色"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "深粉紅"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "深天藍"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "暗灰色"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "道奇藍"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "耐火磚紅"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "花卉白"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "森林綠"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "品紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "庚斯博羅灰"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "幽靈白"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "金色"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "金菊色"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "灰色"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "綠黃色"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "蜜瓜綠"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "暖粉紅"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "印度紅"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "靛色"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "象牙色"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "卡其色"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "薰衣草紫"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "薰衣草紫紅"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "草坪綠"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "檸檬綢色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "亮藍色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "亮珊瑚色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "亮青色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "亮金菊黃"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "亮綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "亮粉紅"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "亮鮭紅"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "亮海綠"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "亮天藍"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "亮岩灰"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "亮鋼藍"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "亮黃色"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "鮮綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "檸檬綠"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "亞麻色"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "洋紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "栗色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "中碧藍色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "中藍"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "中蘭紫"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "中紫紅"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "中海綠"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "中岩藍"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "中春綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "中綠松石色"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "中青紫紅"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "午夜藍"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "薄荷奶油色"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "霧玫瑰色"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "鹿皮鞋色"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "那瓦霍白"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "海軍藍"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "舊蕾絲色"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "橄欖色"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "橄欖軍服綠"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "橘紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "蘭紫色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "灰金菊色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "灰綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "灰綠松石色"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "灰紫紅"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "蕃木瓜色"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "粉撲桃色"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "秘魯色"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "粉紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "梅紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "粉末藍"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "玫瑰褐"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "品藍"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "鞍褐色"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "鮭紅色"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "砂褐色"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "海綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "海貝色"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "赭黃色"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "銀色"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "天藍色"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "岩藍"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "岩灰"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "雪色"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "春綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "鋼青色"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "日曬色"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "鴨綠色"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "薊紫色"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "番茄紅"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "綠松石色"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "紫羅蘭色"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "小麥色"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "白煙色"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "標記的開頭位置應在同一物件內"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "關閉讀出文法錯誤"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "開啟讀出文法錯誤"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "切換讀出報告文法錯誤的開關"
-
-#~ msgid "grammar error"
-#~ msgstr "文法錯誤"
-
-#~ msgid "out of grammar error"
-#~ msgstr "離開文法錯誤"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "讀出文法錯誤 (&R)"
-
-#~ msgid "browse mode"
-#~ msgstr "瀏覽模式"
-
-#~ msgid "activate"
-#~ msgstr "啟動"
-
-#~ msgid "no next"
-#~ msgstr "沒有後一個物件了"
-
-#~ msgid "no previous"
-#~ msgstr "沒有前一個物件了"
-
-#~ msgid "edge of table"
-#~ msgstr "表格的邊緣了"
-
-#~ msgid "%g characters"
-#~ msgstr "%g 個字元"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "沒有註解"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr "顯示一個含有圖表、註解及公式的清單。"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "預設色彩"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s沒選取"
-
-#~ msgid "unrevised"
-#~ msgstr "未修訂"
-
-#~ msgid "unknown author"
-#~ msgstr "未知的作者"
-
-#~ msgid "unknown date"
-#~ msgstr "未知的日期"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType}由{revisionAuthor}修訂於{revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "讀出焦點物件"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} 數列，第 {} 之 {} 數列"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "數值 {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} 之 {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " {} 趨勢線"
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr "圖表區域的高度為 {}, 寬度為 {}， 上邊界為 {}， 左邊界為 {}"
-
-#~ msgid "equation"
-#~ msgstr "公式"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "顯示連結、標題、地標元件的清單"
-
-#~ msgid "Slovak"
-#~ msgstr "斯洛法克語"
-
-#~ msgid "navy blue"
-#~ msgstr "深藍色"
-
-#~ msgid "teal"
-#~ msgstr "藍綠色"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "在 NVDA 2013.1，為了使筆記型電腦的鍵盤配置更加直覺和一致，已徹底重新設"
-#~ "計。\n"
-#~ "若您需要使用筆記型電腦的鍵盤配置，請參閱\"新版資訊\"文件以取得更多訊息"
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "新版筆記型電腦鍵盤配置"
-
-#~ msgid "Read What's New"
-#~ msgstr "閱讀新版資訊"
-
-#~ msgid "&Acceleration"
-#~ msgstr "加速(&A)"
-
-#~ msgid "male 1"
-#~ msgstr "男聲一"
-
-#~ msgid "female 1"
-#~ msgstr "女聲1"
-
-#~ msgid "male 2"
-#~ msgstr "男聲二"
-
-#~ msgid "female 2"
-#~ msgstr "女聲二"
-
-#~ msgid "lime"
-#~ msgstr "萊姆綠"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "確定要結束NVDA嗎?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "關閉NVDA前提示(&W)"
-
-#~ msgid "Regexp"
-#~ msgstr "正規表達式"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "沒有瀏覽物件的位置資訊"
-
-#~ msgid "No location information for screen"
-#~ msgstr "沒有畫面的位置資訊"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "讀出目前瀏覽物件的大小以及所在位置"
-
-#~ msgid "Set column header row"
-#~ msgstr "設定該列為欄標題"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "列的欄標題已清除"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr "按一下將該列設定為欄標題，連按兩下清除設定"
-
-#~ msgid "Set row header column"
-#~ msgstr "設定該欄為列標題"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr "按一下將該欄設定為列標題，連按兩下清除設定"
