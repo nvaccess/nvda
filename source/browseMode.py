@@ -38,14 +38,16 @@ from NVDAObjects import NVDAObject
 REASON_QUICKNAV = "quickNav"
 
 BAD_ROLES = {
-				ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_EDITABLETEXT, ROLE_BUTTON, ROLE_MENUBAR, ROLE_MENUITEM, ROLE_POPUPMENU, 
+				ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_BUTTON, ROLE_MENUBAR, ROLE_MENUITEM, ROLE_POPUPMENU, 
 				ROLE_COMBOBOX, ROLE_LINK, ROLE_TREEVIEW, ROLE_TREEVIEWITEM, ROLE_TAB, ROLE_TABCONTROL, ROLE_SLIDER, ROLE_DROPDOWNBUTTON, 
 				ROLE_CHECKMENUITEM, ROLE_INPUTWINDOW, ROLE_RADIOMENUITEM, ROLE_EDITBAR, ROLE_TERMINAL, ROLE_RICHEDIT, ROLE_TEAROFFMENU, ROLE_TOGGLEBUTTON,
 				ROLE_DROPLIST, ROLE_SPLITBUTTON, ROLE_MENUBUTTON, ROLE_DROPDOWNBUTTONGRID, ROLE_MATH, ROLE_EQUATION, ROLE_SPINBUTTON, ROLE_TREEVIEWBUTTON,
 				ROLE_COLORCHOOSER, ROLE_FILECHOOSER, ROLE_MENU, ROLE_PASSWORDEDIT, ROLE_FONTCHOOSER, ROLE_DATAITEM, 
 				ROLE_DROPLIST, ROLE_SPLITBUTTON, ROLE_MENUBUTTON, ROLE_DROPDOWNBUTTONGRID, 
 				}
-
+BAD_LEAF_ROLES = {
+	ROLE_APPLICATION, ROLE_DIALOG, ROLE_LIST, ROLE_EDITABLETEXT,
+}
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""Reports the pass through mode if it has changed.
@@ -1032,16 +1034,18 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	def _shouldSkipBlankLines(self, info):
 		if not config.conf["virtualBuffers"]["skipBlankLines"]:
 			return False
-		obj = info.NVDAObjectAtStart
-		if controlTypes.STATE_EDITABLE in obj.states:
+		blankInfo = info.copy()
+		blankInfo.expand(textInfos.UNIT_LINE)
+		#Get control Starts
+		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart"]
+		if controlFields[-1].field["role"] in BAD_LEAF_ROLES:
 			return False
-		#Some roles are no-no for the leaf case, but okay as an ancestor.
-		if obj.role in {ROLE_APPLICATION, ROLE_DIALOG, ROLE_DOCUMENT, ROLE_EMBEDDEDOBJECT}:
-			return False
-		while obj != self.rootNVDAObject:
-			if obj.role in BAD_ROLES:
+		for field in controlFields:
+			if len(field.field["states"].intersection({STATE_CLICKABLE, STATE_EDITABLE})) > 0 or ROLE_EDITABLETEXT == field.field["role"]:
 				return False
-			obj = obj.parent
+			if (field.field["role"] in BAD_ROLES and  
+				(field.field["_startOfNode"] and field.field["_endOfNode"])):
+				return False
 		return True
 
 	def _get_currentNVDAObject(self):
