@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-16 14:05+0100\n"
+"PO-Revision-Date: 2016-12-28 20:40-0800\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -87,7 +87,6 @@ msgid "unknown input method"
 msgstr "nepoznata metoda unosa"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -725,7 +724,6 @@ msgstr "nije %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} od {total}"
 
@@ -1485,73 +1483,61 @@ msgid "pink-red"
 msgstr "ružičasto crvena"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "svjetlo {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "tamno {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "vrlo tamna {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "svjetlo blijeda {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "blijeda {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "tamno blijeda {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "vrlo tamno blijeda {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} bijela"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} siva"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "tamno {color} siva"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "vrlo tamno {color} siva"
@@ -3450,7 +3436,6 @@ msgid "AC power on"
 msgstr "Električno napajanje priključeno"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "preostalo je {hours:d} sati i {minutes:d} minuta"
 
@@ -4304,7 +4289,6 @@ msgid "column %s"
 msgstr "stupac %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "od {rowCount} redova i {columnCount} stupaca"
 
@@ -4360,30 +4344,25 @@ msgstr "početni stil"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} na {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} na {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} pozadina"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "pozadinski uzorak {pattern}"
 
@@ -4591,7 +4570,6 @@ msgid "out of table"
 msgstr "izvan tablice"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tablica od {columnCount} stupaca i {rowCount} redova"
 
@@ -4672,27 +4650,22 @@ msgid "object mode"
 msgstr "mod objekta"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "jednostruki {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "dvostruki {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "trostruki {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "četverostruki {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} s {numFingers} prsta"
 
@@ -4774,7 +4747,6 @@ msgstr "NVDA ažuriranje"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Dostupna je NVDA inačica {version}."
 
@@ -4870,11 +4842,9 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Besplatan open-source čitač ekrana za sustav MS Windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Autorska prava (C) {years} NVDA Doprinositelji"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4919,7 +4889,6 @@ msgstr ""
 "odaberete opciju Donirajte iz NVDA izbornika."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4928,7 +4897,6 @@ msgstr ""
 "Morate imati pokrenut NVDA da biste mogli instalirati dodatke."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4939,12 +4907,10 @@ msgstr ""
 "centimetru zaslona, visina je {height:.1f} po centimetru zaslona"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} kao u {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4996,12 +4962,11 @@ msgstr ""
 "postoji"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, pozicija {curLocation} od {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Stranica {pageNumber}"
 
@@ -5111,12 +5076,10 @@ msgid "Waiting for Outlook..."
 msgstr "Čekam Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "Od {startTime} do {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Dogovoreni termin {subject}, u {time}"
 
@@ -5278,97 +5241,78 @@ msgid "Master Thumbnails"
 msgstr "Sličice u slajdu matrice"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Slajd {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "covers left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "behind left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "covers top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "behind top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "covers right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "behind right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "covers bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "behind bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "covers  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "behind {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} points from left slide edge"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Off left slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} points from top slide edge"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Off top slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} points from right slide edge"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Off right slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} points from bottom slide edge"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Off bottom slide edge by {distance:.3g} points"
 
@@ -5383,12 +5327,10 @@ msgstr ""
 "korisnik može čitati pomoću NVDA programa."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Bilješke Prikaza Slajda - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Prikaz Slajda - {slideName}"
 
@@ -5477,7 +5419,6 @@ msgstr "Baum/HumanWare/APH/Orbit brajični redci"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serijski priključak: {portName}"
 
@@ -5977,7 +5918,6 @@ msgid "Choose Add-on Package File"
 msgstr "Odaberite datoteku paketa s NVDA dodacima"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Paket s NVDA dodacima (*.{ext})"
 
@@ -5991,7 +5931,6 @@ msgstr ""
 "neispravan format datoteke"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6075,7 +6014,6 @@ msgid "Restart NVDA"
 msgstr "Ponovo pokreni NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6088,7 +6026,6 @@ msgstr ""
 "Opis: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL adresa: {url}"
 
@@ -6351,7 +6288,6 @@ msgstr ""
 "Na vašem sustavu pronađena je prethodna NVDA kopija. Ista će biti ažurirana."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7331,7 +7267,6 @@ msgstr "pretražuj po slijedećim ključnim riječima:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7372,12 +7307,10 @@ msgid "word"
 msgstr "riječ"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
 
@@ -7435,7 +7368,6 @@ msgid "Taskbar"
 msgstr "Traka zadataka"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB crvena {rgb.red}, zelena {rgb.green}, plava {rgb.blue}"
 
@@ -7603,7 +7535,6 @@ msgid "&Sheets"
 msgstr "&radni listovi"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "od {start} do {end}"
 
@@ -7619,22 +7550,18 @@ msgstr ""
 "tablice u postavkama oblikovanja dokumenta."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Postavi adresu {address} kao početak zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Adresa {address} već je postavljena kao početak zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "uklonjena adresa {address} iz zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Ne mogu naći {address} u zaglavljima stupaca"
 
@@ -7648,22 +7575,18 @@ msgstr ""
 "pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Postavi {address} kao početak zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Adresa {address} već je postavljena kao početak zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "Adresa {address} je uklonjena iz zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Ne mogu naći {address} u zaglavljima redaka"
 
@@ -7676,11 +7599,9 @@ msgstr ""
 "redaka za svaku ćeliju niže i desno od nje unutar ove regije. Kada se "
 "pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "ulazna poruka je {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Ulazna poruka je {message}"
 
@@ -7693,12 +7614,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Izvještava o komentaru na trenutnoj ćeliji"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Uređivanje komentara za ćeliju {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "od {firstAddress} {firstContent} do {lastAddress} {lastContent}"
 
@@ -8053,7 +7972,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "meteor sa produženim linijama ali bez oznaka podataka"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "naslov grafa: {chartTitle}, tip: {chartType}"
 
@@ -8081,7 +7999,6 @@ msgstr "serije"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} os je {axisTitle}"
 
@@ -8095,7 +8012,6 @@ msgid "There are total %d series in this chart"
 msgstr "trenutno postoji %d serije u ovom grafu"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "serija {number} {name}"
 
@@ -8120,7 +8036,6 @@ msgstr "podatkovna točka"
 msgid "item"
 msgstr "stavka"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "boja serije: {colorName} "
 
@@ -8210,61 +8125,51 @@ msgstr "oblik"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} serije {seriesIndex} od {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "nema promjene od {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "povećano za{incrementValue} od točke {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "smanjeno za {decrementValue} od točke {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "kategorija {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "vrijednost {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " veličina {fractionValue:.2f} Posto rez {pointIndex} od {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} od {pointCount}"
 
@@ -8277,12 +8182,10 @@ msgid "Secondary"
 msgstr "sekundarna"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "os grafa, vrsta: {axisType}, grupa: {axisGroup}, naslov: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "os grafa, vrsta: {axisType}, grupa: {axisGroup}"
 
@@ -8300,7 +8203,6 @@ msgid " squared "
 msgstr "kvadratno"
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "naslov grafa: {chartTitle}"
 
@@ -8309,7 +8211,6 @@ msgid "Untitled chart"
 msgstr "neimenovani graf"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8322,7 +8223,6 @@ msgid "Chart area "
 msgstr "mjesto grafa"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8347,14 +8247,12 @@ msgstr "Nema legende"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "zapis legende za seriju {seriesName} {seriesIndex} od {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "ključ legende za seriju {seriesName} {seriesIndex} od {seriesCount}"
 
@@ -8456,11 +8354,9 @@ msgstr "Primarno zaglavlje"
 msgid "Text frame"
 msgstr "Tekstualni okvir"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} od strane {author} datuma {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} datuma {date}"
 
@@ -8501,13 +8397,11 @@ msgid "Table description"
 msgstr "opis tablice"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8515,12 +8409,10 @@ msgstr ""
 "zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "Ne mogu naći {rowNumber} stupac {columnNumber} u zaglavljima stupaca"
 
@@ -8534,13 +8426,11 @@ msgstr ""
 "pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8548,12 +8438,10 @@ msgstr ""
 "zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Ne mogu naći redak {rowNumber} stupac {columnNumber} u zaglavljima redaka"
@@ -8638,43 +8526,35 @@ msgid "Moved above blank paragraph"
 msgstr "premješteno iznad praznog odlomka"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "Stil {styleName}, razina obrisa {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "Font {size:g} točaka"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} znakova"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} inča"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetara"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetara"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} točaka"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pica"
 
@@ -8716,926 +8596,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "okvir"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Greška u jezičnoj datoteci %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Jezična Greška"
-
-#~ msgid "&Profile"
-#~ msgstr "&Profil"
-
-#~ msgid "Language"
-#~ msgstr "Jezik"
-
-#~ msgid "Log level"
-#~ msgstr "razina loga"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Profil tipkovnice"
-
-#~ msgid "text reporting unit"
-#~ msgstr "jedinica tekstualnog izvještavanja"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Odziv trake napredovanja"
-
-#~ msgid "Report &font name"
-#~ msgstr "Izvijesti o nazivu &fonta"
-
-#~ msgid "Report font &size"
-#~ msgstr "Izvijesti o veličini fon&ta"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Izvijesti o poravnan&ju"
-
-#~ msgid "Report &colors"
-#~ msgstr "Izvijesti o &bojama"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Izgovaraj kom&entare"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Izvijesti o is&ticanju"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Izvijesti o stil&u"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Izvijesti o pravopisnim &pogreškama"
-
-#~ msgid "Report &pages"
-#~ msgstr "Izvijesti o &stranicama"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Izvijesti o &proredima"
-
-#~ msgid "Report &tables"
-#~ msgstr "Izvijesti o &tablicama"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Izvijesti o &zaglavljima redova/stupaca tabele"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Izvijesti o &linkovima"
-
-#~ msgid "Report &headings"
-#~ msgstr "Izvijesti o &naslovima"
-
-#~ msgid "Report &lists"
-#~ msgstr "Izvijesti o po&pisima"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Izvijesti o &citatima"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Izvijesti o &orijentirima"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Izvijesti o ok&virima"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Izvijesti ukoliko se radi o &klikajućem objektu"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Uključuje i isključuje izgovor uvlačenja redaka"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Ova se ćelija ne može urediti"
-
-#~ msgid "checker"
-#~ msgstr "provjera"
-
-#~ msgid "crisscross"
-#~ msgstr "cik-cak"
-
-#~ msgid "down"
-#~ msgstr "dolje"
-
-#~ msgid "gray16"
-#~ msgstr "sivo"
-
-#~ msgid "gray25"
-#~ msgstr "sivo"
-
-#~ msgid "gray50"
-#~ msgstr "sivo"
-
-#~ msgid "gray75"
-#~ msgstr "sivo"
-
-#~ msgid "grid"
-#~ msgstr "podatkovna mreža"
-
-#~ msgid "light down"
-#~ msgstr "kratko klizanje prema dolje"
-
-#~ msgid "light up"
-#~ msgstr "svijetlo gore"
-
-#~ msgid "light vertical"
-#~ msgstr "svjetlo vertikalna"
-
-#~ msgid "semi gray75"
-#~ msgstr "poluseva"
-
-#~ msgid "up"
-#~ msgstr "gore"
-
-#~ msgid "unknown color"
-#~ msgstr "nepoznata boja"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Alice Plava"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Antički bijela"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Aqua"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Aquamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "plavetna"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "bež"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "boja neocakljenog porculana"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "blijedi badem"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "plava"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "plavo ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Burly Wood"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "kadet plava"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "šartrez"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "čokoladna"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "koraljna"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "kukuruzni cvijet"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "žitna boja"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Crimson"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "tamno plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Tamni Cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "tamni Goldenrod"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "tamno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "tamann Khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "tamna magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "tamno maslinasto zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "tamno narančasta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "tamno orhidejna"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "tamno crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "tamni salmon"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "tamno morsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "tamna tablično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "tamna tablično siva"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "tamno tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "tamno ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "dubokoroza"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "nebesko duboka plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Dim siva"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Dodger Plava"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Fire Brick"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "cvijetno bijela"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "zelena šuma"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fuksija"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "bijeloduhna"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "zlatna"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "goldenrot"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "siva"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "zeleno žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "medljika"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "vruće roza"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "indijska crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "bjelokosna"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "lavanda"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "lavanda blush"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "travnato zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "limun šifon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "svijetlo plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "svjetlo koraljna"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "svijetli cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Light Goldenrod žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "svijetlo zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "svijetlo roza"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "svjetla salmon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "svjetlo morsko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "svjetlo nebesko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "svjetlo tablična siva"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "svjetlo plavi steel"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "svijetlo žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "boja lima"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "limena zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "lanena"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "kestenjasta"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "srednje akvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "srednje plava"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "srednje orhidejna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "srednje ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "srednje morsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "srednje tablična plava"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "srednje proljetno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "srednje tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "srednje žuto ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "plava sumrak"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Mint Cream"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Misty Rose"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Moccasin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "navaho bijela"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "mornarička"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "stara čipka"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "maslinasta"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "boja maslinasto siva"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "narančastocrvena"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "orhideja"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Pale Goldenrod"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "tamno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "ljubičasto crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "boja papaja whip"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "boja peach puff"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "roza"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "boja šljive"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Powder Plava"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "rosy smeđa"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "kraljevsko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Saddle smeđa"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Salmon"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Sandy Brown"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "morsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "boja školjke"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "siena"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "srebrna"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "nebesko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "tablično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "tablično siva"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "boja snijega"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "proljetno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "čelično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "žutomrka boja"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "boja grogotovca"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "boja čkalja"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "boja rajčice"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "boja pšenice"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "boja bijelog dima"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Početna oznaka mora biti smještena unutar istog objekta"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Izvijesti o gramatičkim pogreškama isključeno"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "izvjesti o gramatičkim pogreškama uključeno"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Uključuje i isključuje izgovor gramatičkih pogrešaka"
-
-#~ msgid "grammar error"
-#~ msgstr "Gramatička greška"
-
-#~ msgid "out of grammar error"
-#~ msgstr "izvan gramatičke greške"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Izvijesti o &gramatičkim pogreškama"
-
-#~ msgid "browse mode"
-#~ msgstr "mod pretraživanja"
-
-#~ msgid "activate"
-#~ msgstr "aktivirati"
-
-#~ msgid "no next"
-#~ msgstr "nema sljedećeg"
-
-#~ msgid "no previous"
-#~ msgstr "Nema prethodnog"
-
-#~ msgid "edge of table"
-#~ msgstr "rub tablice"
-
-#~ msgid "%g characters"
-#~ msgstr "%g znakova"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "nema komentara"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Prikazuje popis grafova, ćelija sa komentarima i ćelija sa formulama"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "početna boja"
-
-#~ msgid "unselecting %s"
-#~ msgstr "nema odabira %s"
-
-#~ msgid "unrevised"
-#~ msgstr "nerevidirano"
-
-#~ msgid "unknown author"
-#~ msgstr "nepoznat autor"
-
-#~ msgid "unknown date"
-#~ msgstr "nepoznat datum"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} autora {revisionAuthor} na datum {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "izvještava o objektu s fokusom"
-
-#, fuzzy
-#~ msgid "%s"
-#~ msgstr "nasl.%s"
-
-#~ msgid "equation"
-#~ msgstr "jednadžba"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Prikazuje popis linkova, naslova ili orijentira"
-
-#~ msgid "Slovak"
-#~ msgstr "Slovački puno pismo"
-
-#~ msgid "navy blue"
-#~ msgstr "tamno plava"
-
-#~ msgid "teal"
-#~ msgstr "tirkizna"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "U NVDA inačici 2013.1, raspored tipkovnice za prijenosna računala je u "
-#~ "potpunosti redizajniran kako bi smo ga učinili intuitivnijim i "
-#~ "dosljednijim.\n"
-#~ "Ukoliko se služite rasporedom tipkovnice za prijenosna računala, molimo "
-#~ "pročitajte dokument \"što je novo\" (What's New) za više informacija."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Novi raspored tipkovnice za prijenosna računala"
-
-#~ msgid "Read What's New"
-#~ msgstr "Pročitaj što je novo"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Akceleracija"
-
-#~ msgid "male 1"
-#~ msgstr "muški 1"
-
-#~ msgid "female 1"
-#~ msgstr "ženski 1"
-
-#~ msgid "male 2"
-#~ msgstr "muški 2"
-
-#~ msgid "female 2"
-#~ msgstr "ženski 2"
-
-#~ msgid "lime"
-#~ msgstr "lime"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Jeste li sigurni da želite izaći iz programa NvDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Upozorenje prije izlaza iz programa NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "prav.izr."
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Nema informacije olokaciji za navigator objekta"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nema informacije o lokaciji za prevođenje ekrana"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Izvještava o visini, širini i položaju trenutnog objekta navigatora"
-
-#~ msgid "Set column header row"
-#~ msgstr "Postavi red zaglavlja stupca"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Obrisan red zaglavlja stupca"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Ukoliko se pritisne jednom, postavit će trenutni red kao red gdje treba "
-#~ "pronaći zaglavlja stupca. Ukoliko se pritisne dvaput, obrisat će postavku."
-
-#~ msgid "Set row header column"
-#~ msgstr "Postavi stupac zaglavlja reda"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Ukoliko se pritisne jednom, postavit će trenutni stupac kao stupac gdje "
-#~ "treba pronaći zaglavlja retka. Ukoliko se pritisne dvaput, obrisat će "
-#~ "postavku."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "od %s %s do %s %s"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Vaša konfiguracijska datoteka sadrži pogreške. \n"
-#~ "Pritisnite 'U redu' da biste ispravili te pogreške, ili odaberite "
-#~ "'Odustani' ukoliko želite kasnije ručno urediti vašu konfiguracijsku "
-#~ "datoteku za izvršavanje ispravaka. Više detalja o pogreškama možete "
-#~ "pronaći u datoteci loga.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Nema automatskih komentara."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Ne mogu pronaći prozor automatskih komentara."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr ""
-#~ "Izvještava o automatskim komentarima u prozoru automatskih komentara"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automatski komentari:"
-
-#~ msgid "Translation:"
-#~ msgstr "Prijevod:"
-
-#~ msgid "Comments:"
-#~ msgstr "Komentari:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nema fiksnog pregleda za ovaj objekt"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nema objekta na položaju fiksnog pregleda"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Premiješta objekt navigatora na objekt predstavljen od strane teksta na "
-#~ "položaju kursora unutar flat prikaza"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Molimo prvo zatvorite drugi dijalog sa NVDA postavkama"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&Tablica za prevođenje"
-
-#~ msgid "beeps"
-#~ msgstr "zvučni signali"
-
-#~ msgid "talk"
-#~ msgstr "izgovor"
-
-#~ msgid "layout %s"
-#~ msgstr "raspored %s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s od %s"
-
-#~ msgid "default action failed"
-#~ msgstr "Početna akcija nije uspjela"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "Učitava spremljenu NVDA konfiguraciju prepravljajući trenutne promjene"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Loše formirana konfiguracijska datoteka"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, postavljanje zadanih vrijednosti na %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Greška prilikom raščlanjivanja konfiguracijske datoteke: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Greške u konfiguracijskoj datoteci '%s':\n"
-#~ "%s"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Slijedi fokus &tipkovnice"
-
-#~ msgid "No parents"
-#~ msgstr "nema roditelja"
-
-#~ msgid "No children"
-#~ msgstr "Nema djece"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "Povisi intonaciju na velikim slovima"

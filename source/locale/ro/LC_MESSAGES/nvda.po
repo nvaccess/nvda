@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: NVDA R3899\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-17 17:09+0200\n"
+"PO-Revision-Date: 2016-12-28 20:50-0800\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com\n"
 "Language: ro_RO\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -83,7 +83,6 @@ msgid "unknown input method"
 msgstr "metodă de introducere necunoscută"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -433,12 +432,12 @@ msgstr "Marathi grad 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Belgium)"
-msgstr "Olandeză (Belgia)"
+msgstr "Neerlandeză (Belgia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Netherlands)"
-msgstr "Olandeză (Olanda)"
+msgstr "Neerlandeză (Țările de Jos)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -721,7 +720,6 @@ msgstr "nu este %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} din {total}"
 
@@ -1483,73 +1481,61 @@ msgid "pink-red"
 msgstr "roz-roșu"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "{color} luminos"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "{color} închis"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "{color} foarte întunecat"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "{color} pal luminos"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "{color} pal"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "{color} pal închis"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "{color} pal foarte întunecat"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "alb cu tentă de {color}"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "gri cu tentă de {color}"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "{color} - gri întunecat"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "{color} - gri foarte întunecat"
@@ -3457,7 +3443,6 @@ msgid "AC power on"
 msgstr "alimentare de la priză activată"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} ore și {minutes:d} minute rămase"
 
@@ -4315,7 +4300,6 @@ msgid "column %s"
 msgstr "coloană %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "cu {rowCount} rânduri și {columnCount} coloane"
 
@@ -4371,30 +4355,25 @@ msgstr "stil implicit"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} la {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} pe {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "culoare fundal {backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "tipar de fundal {pattern}"
 
@@ -4602,7 +4581,6 @@ msgid "out of table"
 msgstr "în afara tabelului"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabel cu {columnCount} coloane și {rowCount} rânduri"
 
@@ -4683,27 +4661,22 @@ msgid "object mode"
 msgstr "mod obiect"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "{action} o dată"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "{action} dublu"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action} triplu"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "{action} cvadruplu"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} cu {numFingers} degete"
 
@@ -4785,7 +4758,6 @@ msgstr "Actualizare NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Versiunea {version} pentru NVDA este disponibilă"
 
@@ -4882,11 +4854,9 @@ msgid "A free and open source screen reader for Microsoft Windows"
 msgstr ""
 "Un cititor de ecran gratuit și cu sursă disponibilă pentru Microsoft Windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C)  {years} NVDA Contributors"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4931,7 +4901,6 @@ msgstr ""
 "Puteți face asta, selectând Donează din meniul NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4940,7 +4909,6 @@ msgstr ""
 "Trebuie să rulezi NVDA pentru a putea instala extensii add-on."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4952,12 +4920,10 @@ msgstr ""
 "procente din ecran"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} ca în {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -5007,12 +4973,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anunță timpul rămas din melodia redată acum, dacă există"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, locație {curLocation} din {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Pagină {pageNumber}"
 
@@ -5122,12 +5087,10 @@ msgid "Waiting for Outlook..."
 msgstr "Inițializare Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "de la {startTime} la {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Programare {subject}, {time}"
 
@@ -5290,97 +5253,78 @@ msgid "Master Thumbnails"
 msgstr "Coordonator miniaturi"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Diapozitiv {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "acoperă partea stângă a {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "ascuns în spatele-stânga a {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "acoperă partea superioară a {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "ascuns în spatele vârfului lui {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "acoperă partea dreaptă a {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "ascuns în spatele-dreapta a {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "acoperă baza {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "ascuns în spatele bazei lui {otherShape} cu {distance:.3g} puncte"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "acoperă  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "ascuns de {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "la {distance:.3g} puncte față de marginea stânga a diapozitivului"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "la {distance:.3g} puncte în afara marginii stânga a diapozitivului"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "la {distance:.3g} puncte față de marginea de sus a diapozitivului"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "la {distance:.3g} puncte în afara marginii de sus a diapozitivului"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "la {distance:.3g} puncte față de marginea dreapta a diapozitivului"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "la {distance:.3g} puncte în afara marginii dreapta a diapozitivului"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "la {distance:.3g} puncte față de marginea de jos a diapozitivului"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "la {distance:.3g} puncte în afara marginii de jos a diapozitivului"
 
@@ -5395,12 +5339,10 @@ msgstr ""
 "doar ceea ce poate citi utilizatorul cu NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Notele proiecției - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Proiecție - {slideName}"
 
@@ -5489,7 +5431,6 @@ msgstr "Afișaje Braille Baum/HumanWare/APH"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Port serial: {portName}"
 
@@ -5989,7 +5930,6 @@ msgid "Choose Add-on Package File"
 msgstr "Alegeți fișier cu pachetul extensiei add-on"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Pachet NVDA cu extensie add-on (*.{ext})"
 
@@ -6003,7 +5943,6 @@ msgstr ""
 "format invalid de fișier"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6089,7 +6028,6 @@ msgid "Restart NVDA"
 msgstr "Repornire NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6102,7 +6040,6 @@ msgstr ""
 "Descriere: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6366,7 +6303,6 @@ msgstr ""
 "actualizată."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7350,7 +7286,6 @@ msgstr "&Fltrează după:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7391,12 +7326,10 @@ msgid "word"
 msgstr "cuvânt"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "la {x}, {y}"
 
@@ -7454,7 +7387,6 @@ msgid "Taskbar"
 msgstr "Bară de activități"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB roșu {rgb.red}, verde {rgb.green}, albastru {rgb.blue}"
 
@@ -7622,7 +7554,6 @@ msgid "&Sheets"
 msgstr "&Foi"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "de la {start} până la {end}"
 
@@ -7638,22 +7569,18 @@ msgstr ""
 "Opțiunile de formatare a documentului "
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Stabilește {address} ca început de anteturi coloană"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} deja stabilită ca început pentru anteturile coloană"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address}  eliminată din anteturile coloană"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Nu s-a putut găsi {address} în anteturile coloană"
 
@@ -7667,22 +7594,18 @@ msgstr ""
 "Apăsând de două ori se va renunța la antetul coloană curent acestei celule."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Stabilește {address} ca început pentru anteturile rând"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} deja stabilită ca început pentru anteturile rând"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address}  eliminată din anteturile rând"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Nu s-a putut găsi {address} în anteturile rând"
 
@@ -7695,11 +7618,9 @@ msgstr ""
 "toate celulele aflate mai jos și la dreapta ei în interiorul acestei regiuni."
 "Apăsând de două ori se va omite antetul de rând curent acestei celule."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Mesajul de intrare este {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Mesajul de intrare este {message}"
 
@@ -7712,12 +7633,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Anunță comentariul din celula curentă"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Editare comentariu pentru celula {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} până la {lastAddress} {lastContent}"
 
@@ -8075,7 +7994,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Prin puncte cu linii netede și fără marcaje de date"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Titlu diagramă: {chartTitle}, tip: {chartType}"
 
@@ -8103,7 +8021,6 @@ msgstr "Serie"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "Axa {axisName} este {axisTitle}"
 
@@ -8117,7 +8034,6 @@ msgid "There are total %d series in this chart"
 msgstr "Sunt %d serii în total în această diagramă"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "serie {number} {name}"
 
@@ -8142,7 +8058,6 @@ msgstr "punct de date"
 msgid "item"
 msgstr "element"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Culoarea seriei: {colorName} "
 
@@ -8232,54 +8147,45 @@ msgstr "Formă"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "seria {seriesName} {seriesIndex} din {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "fără modificare de la punctul {previousIndex},"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "mărit cu {incrementValue} față de punctul {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "scăzut cu {decrementValue} față de punctul {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Categorie {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "valoare {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8287,7 +8193,6 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} din {pointCount}"
 
@@ -8300,12 +8205,10 @@ msgid "Secondary"
 msgstr "Secundar"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "Axă diagramă, tip: {axisType}, grup: {axisGroup}, titlu: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Axă diagramă, tip: {axisType}, grup: {axisGroup}"
 
@@ -8323,7 +8226,6 @@ msgid " squared "
 msgstr "pătrat"
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Titlu diagramă: {chartTitle}"
 
@@ -8332,7 +8234,6 @@ msgid "Untitled chart"
 msgstr "Diagramă fără titlu"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8345,7 +8246,6 @@ msgid "Chart area "
 msgstr "Zonă diagramă"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8371,7 +8271,6 @@ msgstr "Fără legendă"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Element legendă pentru seria {seriesName} {seriesIndex} din {seriesCount}"
@@ -8379,7 +8278,6 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Cheie legendă pentru seria {seriesName} {seriesIndex} din {seriesCount}"
@@ -8482,11 +8380,9 @@ msgstr "Antet principal"
 msgid "Text frame"
 msgstr "Cadru text"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "comentariu: {text} de către {author} în {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} de {author} în {date}"
 
@@ -8527,14 +8423,12 @@ msgid "Table description"
 msgstr "Descriere tabel"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Stabilește rândul {rowNumber} coloana {columnNumber} ca început de anteturi "
 "coloană"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8542,13 +8436,11 @@ msgstr ""
 "de anteturi coloană "
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "Eliminat rândul {rowNumber} coloana {columnNumber} din anteturile coloană"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Rândul {rowNumber} coloana {columnNumber} nu au putut fi găsite în "
@@ -8564,14 +8456,12 @@ msgstr ""
 "se va renunța la antetul coloană curent acestei celule."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Stabilește rândul {rowNumber} coloana {columnNumber} ca început de anteturi "
 "rând"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8579,12 +8469,10 @@ msgstr ""
 "de anteturi rând"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Eliminat rândul {rowNumber} coloana {columnNumber} din anteturile rând"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Rândul {rowNumber} coloana {columnNumber} nu au putut fi găsite în "
@@ -8670,43 +8558,35 @@ msgid "Moved above blank paragraph"
 msgstr "Mutat deasupra unui paragraf fără conținut"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "stil {styleName}, nivel subliniere {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "font {size:g} puncte"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} caractere"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} inchi"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetri"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetri"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} puncte"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} unități pica"
 
@@ -8748,1001 +8628,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "IFrame"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Eroare în fișierul de limbă %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Eroare de limbă"
-
-#~ msgid "&Profile"
-#~ msgstr "&Profil"
-
-#~ msgid "Language"
-#~ msgstr "Limbă"
-
-#~ msgid "Log level"
-#~ msgstr "Nivelul jurnalului"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Schemă tastatură"
-
-#~ msgid "text reporting unit"
-#~ msgstr "unitate de raportare a textului"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Anunț bară de progres"
-
-#~ msgid "Report &font name"
-#~ msgstr "Anunță &nume font"
-
-#~ msgid "Report font &size"
-#~ msgstr "Anunță &mărime font"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Anunță &alinierea"
-
-#~ msgid "Report &colors"
-#~ msgstr "Anunță &culori"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Anunță co&mentarii"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Anunță a&ccentuarea"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Anunță st&il"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Anunță &erori de ortografie"
-
-#~ msgid "Report &pages"
-#~ msgstr "Anunță &pagini"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Anunță spațiere &linie"
-
-#~ msgid "Report &tables"
-#~ msgstr "Anunță &tabele"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Anunță &anteturi de rând sau coloană din tabel"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Anunță le&gături"
-
-#~ msgid "Report &headings"
-#~ msgstr "Anunță &rubrici"
-
-#~ msgid "Report &lists"
-#~ msgstr "Anunță &liste"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Anunță &citate în bloc"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Anunță r&epere"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Anunță &cadre"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Anunță dacă e &clicabil"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Activează sau dezactivează raportarea indentației de rând"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Celula curentă nu este editabilă"
-
-#~ msgid "checker"
-#~ msgstr "tablă de șah"
-
-#~ msgid "crisscross"
-#~ msgstr "intersectat"
-
-#~ msgid "down"
-#~ msgstr "jos"
-
-#~ msgid "gray16"
-#~ msgstr "gri16"
-
-#~ msgid "gray25"
-#~ msgstr "gri25"
-
-#~ msgid "gray50"
-#~ msgstr "gri50"
-
-#~ msgid "gray75"
-#~ msgstr "gri75"
-
-#~ msgid "grid"
-#~ msgstr "grilă"
-
-#~ msgid "light down"
-#~ msgstr "deschis spre jos"
-
-#~ msgid "light up"
-#~ msgstr "deschis spre sus"
-
-#~ msgid "light vertical"
-#~ msgstr "deschis vertical"
-
-#~ msgid "semi gray75"
-#~ msgstr "semi gri75"
-
-#~ msgid "up"
-#~ msgstr "sus"
-
-#~ msgid "unknown color"
-#~ msgstr "culoare necunoscută"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "albastru Alice"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "alb antic"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "aqua"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "acvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "azur"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "bej"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "roz-portocaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "migdale înălbite"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "albastru"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "albastru-violaceu"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "nisipiu"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "albastru-cenușiu"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "galben-verzui"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "ciocolatiu"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "corai"
-
-# sună cam forțat
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "de culoarea albăstrelei"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "galben-deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "carmin"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "albastru închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "cyan închis"
-
-# traducere forțată...
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "culoarea splinuței închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "verde închis"
-
-# varianta "kaki" are pronunție dificilă pe sintetizator
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "kakiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "magenta închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "verde-măsliniu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "portocaliu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "orhidee închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "roșu închis"
-
-# forțată
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "culoarea somonului închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "verde-marin închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "albastru-cenușiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "gri-cenușiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "turcoaz închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "violet închis"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "roz intens"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "azur intens"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "gri pal"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "azur-luminos Dodger"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "cărămiziu"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "alb-rozaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "verde de pădure"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fucsia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "albastru-cenușiu Gainsboro"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "alb de fantomă"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "auriu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "culoarea splinuței"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "gri"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "galben-verzui"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "pepene galben"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "roz viu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "roșu oxid de fier"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "fildeș"
-
-# varianta "kaki" are pronunție dificilă pe sintetizator
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "kakiu"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "levănțică"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "levănțică rozalie"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "verde gazon"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Șifon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "albastru deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "corai deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "cyan deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "splinuță deschis gălbui"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "verde deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "roz deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "culoarea somonului deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "verde-marin deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "azur deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "gri-cenușiu deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "albastru-metalic deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "galben deschis"
-
-# sau "limetă" ?
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "limetă"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "limetă verzuie"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "pânză de in"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "maro"
-
-# "pronunțat" fiind mai mic pe scara intensității decât "închis"="dark"
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "acvamarin pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "albastru pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "orhidee pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "purpuriu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "verde-marin pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "albastru-cenușiu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "verde de primăvară pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "turcoaz pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "violet-cărămiziu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "albastru miezu-nopții"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "verde lichior de mentă"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "roz pal"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "mocasin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "alb-portocaliu Navajo"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "bleumarin"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "dantelă ștearsă"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "oliv"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "olive-kakiu"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "roșu-portocaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "orhidee"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "culoarea splinuței pală"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "verde pal"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "turcoaz pal"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "violet-cărămiziu pal"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "portocaliu pal Papaya"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "puf de piersică"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "brun Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "roz"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "prună"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "albastru foarte pal"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "roșu"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "brun-rozaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "albastru intens regal"
-
-# sau..."brun-bronz pronunțat"?
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "brun ca șaua"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "culoarea somonului"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "brun-nisipiu"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "verde marin"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "scoică"
-
-# nu cunosc culoarea...
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "sienna"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "argintiu"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "azur"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "albastru-cenușiu"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "gri-cenușiu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "culoare de nea"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "verde-primăvăratec"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "albastru-metalic"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "cafeniu"
-
-# "cyan închis"
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "albastru-verzui închis"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "violet ciulin"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "roșu tomată"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "turcoaz"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "violet"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "culoarea grâului"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "culoare fum-alb"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Marcarea începutului trebuie să se afle în același obiect"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "anunță erori ortografie dezactivat"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "anunță erori ortografie activat"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Activează sau dezactivează raportarea erorilor de ortografie"
-
-#~ msgid "grammar error"
-#~ msgstr "eroare de ortografie"
-
-#~ msgid "out of grammar error"
-#~ msgstr "în afara erorii de ortografie"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Anunță &erori de ortografie"
-
-#~ msgid "browse mode"
-#~ msgstr "mod navigare"
-
-#~ msgid "activate"
-#~ msgstr "activează"
-
-#~ msgid "no next"
-#~ msgstr "următor inexistent"
-
-#~ msgid "no previous"
-#~ msgstr "anterior inexistent"
-
-#~ msgid "edge of table"
-#~ msgstr "marginea tabelului"
-
-#~ msgid "%g characters"
-#~ msgstr "%g caractere"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "fără comentarii"
-
-#~ msgid "layout %s"
-#~ msgstr "plan %s"
-
-#~ msgid "%s embedded object"
-#~ msgstr "%s obiect incorporat"
-
-#~ msgid "NVDA Excel Cell Editor"
-#~ msgstr "Editor NVDA în celule de Excel"
-
-#~ msgid "Enter cell contents"
-#~ msgstr "Introduceți conținutul celulei"
-
-#~ msgid "Extends the selection and speaks the last selected cell"
-#~ msgstr "Extinde selecțiunea și pronunță ultima celulă selectată"
-
-#~ msgid "%s %s through %s %s"
-#~ msgstr "%s %s prin %s %s"
-
-#~ msgid "Slovak"
-#~ msgstr "slovacă"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s din %s"
-
-#~ msgid "line feed"
-#~ msgstr "introducere rând"
-
-#~ msgid "page break"
-#~ msgstr "pagină nouă"
-
-#~ msgid "carriage return"
-#~ msgstr "de la capăt"
-
-#~ msgid "quote"
-#~ msgstr "ghilimele"
-
-#~ msgid "number"
-#~ msgstr "număr"
-
-#~ msgid "dollar"
-#~ msgstr "dolar"
-
-#~ msgid "percent"
-#~ msgstr "procent"
-
-#~ msgid "tick"
-#~ msgstr "bifă"
-
-#~ msgid "left paren"
-#~ msgstr "paranteză stânga"
-
-#~ msgid "plus"
-#~ msgstr "plus"
-
-#~ msgid "comma"
-#~ msgstr "virgulă"
-
-#~ msgid "dash"
-#~ msgstr "cratimă"
-
-#~ msgid "slash"
-#~ msgstr "bară diagonală"
-
-#~ msgid "semi"
-#~ msgstr "punct și virgulă"
-
-#~ msgid "less"
-#~ msgstr "minus"
-
-#~ msgid "equals"
-#~ msgstr "egal"
-
-#~ msgid "greater"
-#~ msgstr "plus"
-
-#~ msgid "question"
-#~ msgstr "semn de întrebare"
-
-#~ msgid "at"
-#~ msgstr "la"
-
-#~ msgid "left bracket"
-#~ msgstr "paranteză dreaptă stânga"
-
-#~ msgid "back slash"
-#~ msgstr "bară diagonală inversă"
-
-#~ msgid "right bracket"
-#~ msgstr "paranteză dreaptă dreapta"
-
-#~ msgid "left brace"
-#~ msgstr "acoladă stânga"
-
-#~ msgid "bar"
-#~ msgstr "bară"
-
-#~ msgid "right brace"
-#~ msgstr "acoladă dreapta"
-
-#~ msgid "tilda"
-#~ msgstr "tildă"
-
-#~ msgid "bullet"
-#~ msgstr "bulet"
-
-#~ msgid "dot dot dot"
-#~ msgstr "puncte puncte"
-
-#~ msgid "lime"
-#~ msgstr "verde deschis"
-
-#~ msgid "navy blue"
-#~ msgstr "bleumarin"
-
-#~ msgid "teal"
-#~ msgstr "albastru verzui"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Fișier de configurare format greșit"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, devine implicit %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Eroare la analizarea fișierului de configurare: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Erori în fișierul de configurare '%s':\n"
-#~ "%s"
-
-#~ msgid "equation"
-#~ msgstr "ecuație"
-
-#~ msgid "speak punctuation"
-#~ msgstr "citește punctuația"
-
-#~ msgid ""
-#~ "Toggles on and off the speaking of punctuation. When on NVDA will say the "
-#~ "names of punctuation symbols, when off it will be up to the synthesizer "
-#~ "as to how it speaks punctuation"
-#~ msgstr ""
-#~ "Pornește sau oprește citirea punctuației. Când e activat, NVDA va spune "
-#~ "numele semnelor de punctuație, când e dezactivat sintetizatorul va alege "
-#~ "cum citește punctuația."
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nu există descriere simplă pentru acest obiect"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nu există obiect la poziția descrierii simple"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Nu există informație asupra locației pentru obiectul navigator"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nu există informație asupra locației pentru ecran"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Anunță înălțimea, lățimea și poziția obiectului navigator curent"
-
-#~ msgid "Sets the keyboard focus to the navigator object"
-#~ msgstr "Pune punctul focalizat din taste pe obiectul navigator"
-
-#~ msgid "No parents"
-#~ msgstr "Nu există surse"
-
-#~ msgid ""
-#~ "Sets the navigator object to the parent of the object it is currently on "
-#~ "and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe sursa obiectului pe care se află pe moment și "
-#~ "îl pronunță"
-
-#~ msgid ""
-#~ "Sets the navigator object to the object previous to the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe obiectul dinaintea celui pe care se află pe "
-#~ "moment și îl pronunță"
-
-#~ msgid "No children"
-#~ msgstr "Nu există rezultate"
-
-#~ msgid ""
-#~ "Sets the navigator object to the first child object of the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe primul obiect rezultat din cel pe care se află "
-#~ "pe moment și îl pronunță"
-
-#~ msgid "default action failed"
-#~ msgstr "acțiune implicită eșuată"
-
-#~ msgid ""
-#~ "Moves the system caret to the position of the review cursor , in the "
-#~ "current navigator object"
-#~ msgstr ""
-#~ "Mută cursorul de scriere al sistemului la poziția cursorului de examinare "
-#~ "în obiectul navigator curent"
-
-#~ msgid "beeps"
-#~ msgstr "semnale sonore"
-
-#~ msgid "talk"
-#~ msgstr "vorbește"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "anunță obiectul cu punctul focalizat"
-
-#~ msgid "Shows the NVDA virtual buffers settings dialog"
-#~ msgstr ""
-#~ "Arată fereastra de dialog a setărilor zonei tampon virtuale din NVDA"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "încarcă configurația salvată a NVDA, suprascriind schimbările curente"
-
-#, fuzzy
-#~ msgid "Please close  the other NVDA settings dialog first"
-#~ msgstr "Arată fereastra de dialog a setărilor mousului din NVDA"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Sigur doriți să închideți NVDA?"
-
-#~ msgid "copyright"
-#~ msgstr "copyright"
-
-#~ msgid "url"
-#~ msgstr "url"
-
-#~ msgid "Virtual &buffers..."
-#~ msgstr "&Zone tampon virtuale..."
-
-#~ msgid "Readme"
-#~ msgstr "Citește-mă"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Avertizează înainte de închiderea NVDA"
-
-#~ msgid "&Speak all punctuation"
-#~ msgstr "&Pronunță toate semnele de punctuație"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "Crește amplitudinea sunetului pentru majuscule"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Urmărește &focalizarea din taste"
-
-#~ msgid "virtual buffers"
-#~ msgstr "zone tampon virtuale"
-
-#~ msgid "Regular &expression"
-#~ msgstr "&Expresii obișnuite"
-
-#~ msgid "&edit"
-#~ msgstr "&editează"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&Tabel traducere:"
-
-#~ msgid "unselecting %s"
-#~ msgstr "deselectare %s"
-
-#~ msgid "female 1"
-#~ msgstr "femeie 1"
-
-#~ msgid "female 2"
-#~ msgstr "femeie 2"
-
-#~ msgid "male 1"
-#~ msgstr "bărbat 1"
-
-#~ msgid "male 2"
-#~ msgstr "bărbat 2"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Prezintă o listă de linkuri, titluri și repere"

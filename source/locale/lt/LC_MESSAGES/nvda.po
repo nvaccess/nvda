@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-15 21:06+0200\n"
+"PO-Revision-Date: 2016-12-28 20:45-0800\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "Language: lt\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -86,7 +86,6 @@ msgid "unknown input method"
 msgstr "nežinomas įvesties metodas"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} – {layout}"
 
@@ -724,7 +723,6 @@ msgstr "ne %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} iš {total}"
 
@@ -791,8 +789,8 @@ msgstr "Žvalgymas viena raide įjungtas"
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
 "Toggles single letter navigation on and off. When on, single letter keys in "
-"browse mode jump to various kinds of elements on the page. When off, these keys "
-"are passed to the application"
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
 msgstr ""
 "Įjungia arba išjungia žvalgymą viena raide. Įjungus ir esant naršymo "
 "veiksenoje, vienos raidės paspaudimu galima pasiekti įvairius dokumento "
@@ -1484,73 +1482,61 @@ msgid "pink-red"
 msgstr "rožiniai raudona"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "ryški {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "tamsi {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "labai tamsi {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "šviesi blyški {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "blyški {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "tamsi blyški {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "labai tamsi blyški {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} balta"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} pilka"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "tamsi {color} pilka"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "labai tamsi {color} pilka"
@@ -2305,8 +2291,8 @@ msgstr "nepažymėtas"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
-"Your configuration file contains errors. Your configuration has been reset to "
-"factory defaults.\n"
+"Your configuration file contains errors. Your configuration has been reset "
+"to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
 "Konfigūracijos faile yra klaidų. Bus naudojama numatytoji konfigūracija.\n"
@@ -2360,8 +2346,8 @@ msgstr "ieškoti teksto fragmento, pradedant nuo esamos teksto žymeklio vietos"
 
 #. Translators: Input help message for find next command.
 msgid ""
-"find the next occurrence of the previously entered text string from the current "
-"cursor's position"
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr ""
 "pakartotinai ieškoti anksčiau įvesto teksto fragmento, pradedant nuo esamos "
 "teksto žymeklio vietos"
@@ -2442,11 +2428,11 @@ msgstr "Garso tildymas negalimas"
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
-"Cycles through audio ducking modes which determine when NVDA lowers the volume "
-"of other sounds"
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
 msgstr ""
-"Cikliškai keičia garso tildymo parametro reikšmę, nurodančią, kokiais atvejais "
-"„NVDA“ programa turi pritildyti kitus garsus"
+"Cikliškai keičia garso tildymo parametro reikšmę, nurodančią, kokiais "
+"atvejais „NVDA“ programa turi pritildyti kitus garsus"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2479,11 +2465,11 @@ msgstr "Įjungia arba išjungia miego veikseną aktyviai programai."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
-"Reports the current line under the application cursor. Pressing this key twice "
-"will spell the current line"
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
 msgstr ""
-"Perskaito esamąją eilutę, esančią po programos žymekliu. Nuspaudus du kartus, "
-"eilutę ištaria paraidžiui."
+"Perskaito esamąją eilutę, esančią po programos žymekliu. Nuspaudus du "
+"kartus, eilutę ištaria paraidžiui."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2531,8 +2517,8 @@ msgstr "Pažymėta „%s“"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
-"Announces the current selection in edit controls and documents. If there is no "
-"selection it says so."
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
 msgstr ""
 "Perskaito aktyviame teksto lauke ar dokumente pažymėtą tekstą. Jei nieko "
 "nepažymėta, informuoja apie tai."
@@ -2602,7 +2588,8 @@ msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
-"Įjungia arba išjungia nuspaudžiamų klavišų, kuriais neįvedami simboliai, tarimą."
+"Įjungia arba išjungia nuspaudžiamų klavišų, kuriais neįvedami simboliai, "
+"tarimą."
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -2924,8 +2911,8 @@ msgstr "Simbolių tarimo lygis: %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"Cikliškai keičia pranešimų apie simbolius lygį, įtakojantį, kurie simboliai bus "
-"ištariami"
+"Cikliškai keičia pranešimų apie simbolius lygį, įtakojantį, kurie simboliai "
+"bus ištariami"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "Object has no location"
@@ -2955,8 +2942,8 @@ msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Įjungia tolesnę peržiūros veikseną (objekto, dokumento arba ekrano peržiūrą) ir "
-"perkelia peržiūros žymeklį ties žvalgomuoju objektu"
+"Įjungia tolesnę peržiūros veikseną (objekto, dokumento arba ekrano peržiūrą) "
+"ir perkelia peržiūros žymeklį ties žvalgomuoju objektu"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -2967,8 +2954,8 @@ msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Įjungia ankstesnę peržiūros veikseną (objekto, dokumento arba ekrano peržiūrą) "
-"ir perkelia peržiūros žymeklį ties žvalgomuoju objektu"
+"Įjungia ankstesnę peržiūros veikseną (objekto, dokumento arba ekrano "
+"peržiūrą) ir perkelia peržiūros žymeklį ties žvalgomuoju objektu"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
@@ -2994,8 +2981,9 @@ msgstr "Nukopijuota į iškarpinę: %s"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information, "
-"and pressing three times Copies name and value of this  object to the clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "Praneša apie žvalgomąjį objektą. Spustelėjus dukart, šią informaciją ištaria "
 "paraidžiui, o triskart – nukopijuoja objekto vardą ir reikšmę į iškarpinę"
@@ -3043,8 +3031,8 @@ msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Nuspaudus vieną kartą, perkelia židinį į žvalgomąjį objektą; nuspaudus dukart, "
-"perkelia teksto žymeklį į peržiūros žymeklio vietą"
+"Nuspaudus vieną kartą, perkelia židinį į žvalgomąjį objektą; nuspaudus "
+"dukart, perkelia teksto žymeklį į peržiūros žymeklio vietą"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3090,8 +3078,8 @@ msgstr "Veiksmų nėra"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
-"Performs the default action on the current navigator object (example: presses "
-"it if it is a button)."
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
 msgstr ""
 "Atlieka numatytąjį veiksmą su žvalgomuoju objektu (pavyzdžiui, jei tai "
 "mygtukas, jį spusteli)."
@@ -3131,12 +3119,13 @@ msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Perkelia peržiūros žymeklį ties žvalgomojo objekto kita eilute ir ją perskaito"
+"Perkelia peržiūros žymeklį ties žvalgomojo objekto kita eilute ir ją "
+"perskaito"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
-"Moves the review cursor to the bottom line of the current navigator object and "
-"speaks it"
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
 msgstr ""
 "Perkelia peržiūros žymeklį ties žvalgomojo objekto paskutiniąja eilute ir ją "
 "perskaito"
@@ -3146,14 +3135,14 @@ msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr ""
-"Perkelia peržiūros žymeklį ties žvalgomojo objekto ankstesniuoju žodžiu ir jį "
-"perskaito"
+"Perkelia peržiūros žymeklį ties žvalgomojo objekto ankstesniuoju žodžiu ir "
+"jį perskaito"
 
 #. Translators: Input help mode message for report current word under review cursor command.
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
-"situated. Pressing twice spells the word. Pressing three times spells the word "
-"using character descriptions"
+"situated. Pressing twice spells the word. Pressing three times spells the "
+"word using character descriptions"
 msgstr ""
 "Perskaito žvalgomojo objekto žodį, ties kuriuo yra peržiūros žymeklis. "
 "Nuspaudus klavišą dukart, žodis ištariamas paraidžiui. Nuspaudus pasakomas "
@@ -3173,8 +3162,8 @@ msgstr "Kairė"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
-"Moves the review cursor to the first character of the line where it is situated "
-"in the current navigator object and speaks it"
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
 msgstr ""
 "Perkelia peržiūros žymeklį ties žvalgomojo objekto eilutės, kurioje jis yra, "
 "pirmuoju simboliu, ir jį ištaria"
@@ -3184,19 +3173,20 @@ msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Perkelia peržiūros žymeklį ties ankstesniuoju žvalgomojo objekto simboliu ir jį "
-"perskaito"
+"Perkelia peržiūros žymeklį ties ankstesniuoju žvalgomojo objekto simboliu ir "
+"jį perskaito"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
-"Reports the character of the current navigator object where the review cursor "
-"is situated. Pressing twice reports a description or example of that character. "
-"Pressing three times reports the numeric value of the character in decimal and "
-"hexadecimal"
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
 msgstr ""
 "Perskaito žvalgomojo objekto simbolį, ties kuriuo yra peržiūros žymeklis. "
-"Nuspaudus klavišą dukart, pasakomas simbolio aprašymas ar pavyzdys. Nuspaudus "
-"triskart, pasakoma simbolio reikšmė dešimtainėje ir šešioliktainėje sistemose"
+"Nuspaudus klavišą dukart, pasakomas simbolio aprašymas ar pavyzdys. "
+"Nuspaudus triskart, pasakoma simbolio reikšmė dešimtainėje ir "
+"šešioliktainėje sistemose"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 msgid "Right"
@@ -3204,16 +3194,16 @@ msgstr "Dešinė"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
-"Moves the review cursor to the next character of the current navigator object "
-"and speaks it"
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
 msgstr ""
 "Perkelia peržiūros žymeklį ties žvalgomojo objekto tolesniu simboliu ir jį "
 "perskaito"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
-"Moves the review cursor to the last character of the line where it is situated "
-"in the current navigator object and speaks it"
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
 msgstr ""
 "Perkelia peržiūros žymeklį ties žvalgomojo objekto eilutės, kurioje jis yra, "
 "paskutiniuoju simboliu ir jį perskaito"
@@ -3233,13 +3223,13 @@ msgstr "Šnekos veiksena"
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it its "
-"supposed to speak something. If talk then NVDA wil just speak normally."
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
 "Cikliškai keičia garsinę veikseną tarp tyliosios, pypsėjimo ir kalbėjimo. "
-"Tyliojoje veiksenoje programa „NVDA“ neskleidžia jokių garsų. Įjungus pypsėjimo "
-"veikseną, ji pypteli kaskart, kai turėtų ką nors pasakyti. Kalbėjimo veiksenoje "
-"programa kalba kaip įprasta."
+"Tyliojoje veiksenoje programa „NVDA“ neskleidžia jokių garsų. Įjungus "
+"pypsėjimo veikseną, ji pypteli kaskart, kai turėtų ką nors pasakyti. "
+"Kalbėjimo veiksenoje programa kalba kaip įprasta."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -3247,15 +3237,15 @@ msgstr "Perkelia židinį į kitą artimiausią dokumentą, turintį židinį"
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
-"Toggles between browse mode and focus mode. When in focus mode, keys will pass "
-"straight through to the application, allowing you to interact directly with a "
-"control. When in browse mode, you can navigate the document with the cursor, "
-"quick navigation keys, etc."
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
 msgstr ""
-"Keičia veikseną tarp naršymo ir fokusavimo. Fokusavimo veiksenoje visi klavišų "
-"nuspaudimai perduodami tiesiai programai, taip suteikiant jums galimybę dirbti "
-"su ja tiesiogiai. Naršymo veiksenoje po dokumentą galima naršyti žymekliu, "
-"sparčiojo navigavimo klavišais ir pan."
+"Keičia veikseną tarp naršymo ir fokusavimo. Fokusavimo veiksenoje visi "
+"klavišų nuspaudimai perduodami tiesiai programai, taip suteikiant jums "
+"galimybę dirbti su ja tiesiogiai. Naršymo veiksenoje po dokumentą galima "
+"naršyti žymekliu, sparčiojo navigavimo klavišais ir pan."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3275,8 +3265,8 @@ msgstr ""
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"Reads from the system caret up to the end of the text, moving the caret as it "
-"goes"
+"Reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
 msgstr ""
 "Perskaito tekstą nuo sistemos teksto žymeklio iki pabaigos. Teksto žymeklis "
 "perkeliamas sulig skaitomu tekstu"
@@ -3333,9 +3323,9 @@ msgstr "Be antraštės"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
-"Reports the title of the current application or foreground window. If pressed "
-"twice, spells the title. If pressed three times, copies the title to the "
-"clipboard"
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
 "Perskaito aktyvaus lango antraštę. Nuspaudus dukart, ją ištaria paraidžiui. "
 "Nuspaudus triskart, ją nukopijuoja į iškarpinę"
@@ -3374,8 +3364,8 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"Cikliškai keičia eigos juostų įgarsinimo būdą tarp pypsėjimo, balso, pypsėjimo "
-"ir balso bei tylos"
+"Cikliškai keičia eigos juostų įgarsinimo būdą tarp pypsėjimo, balso, "
+"pypsėjimo ir balso bei tylos"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -3387,8 +3377,8 @@ msgstr "Pranešimai apie dinaminius turinio pakeitimus įjungti"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new text "
-"in dos console windows"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
 "Įjungia arba išjungia pranešimus apie dinaminius turinio pakeitimus, tokius, "
 "kaip naujai atsirandantis tekstas komandinės eilutės lange"
@@ -3405,7 +3395,8 @@ msgstr "Peržiūros žymeklis susietas su teksto žymekliu"
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
-"Įjungia arba išjungia peržiūros žymeklio perkėlimą, perkeliant teksto žymeklį."
+"Įjungia arba išjungia peržiūros žymeklio perkėlimą, perkeliant teksto "
+"žymeklį."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3434,7 +3425,6 @@ msgid "AC power on"
 msgstr "Įjungta į elektros tinklą"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "liko {hours:d} val. ir {minutes:d} min."
 
@@ -3551,20 +3541,21 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
-"Nuspaudus vieną kartą, atkuria paskutinį kartą įrašytus parametrus. Nuspaudus "
-"triskart, atkuria numatytuosius gamyklinius parametrus."
+"Nuspaudus vieną kartą, atkuria paskutinį kartą įrašytus parametrus. "
+"Nuspaudus triskart, atkuria numatytuosius gamyklinius parametrus."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Aktyvina „NVDA“ „Python“ pultą. Tai naudinga daugiausia programuotojams"
+msgstr ""
+"Aktyvina „NVDA“ „Python“ pultą. Tai naudinga daugiausia programuotojams"
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages for "
-"NVDA"
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
 msgstr ""
-"Aktyvina „NVDA“ papildinių tvarkytuvę, kurioje galima įdiegti ir šalinti „NVDA“ "
-"papildinius"
+"Aktyvina „NVDA“ papildinių tvarkytuvę, kurioje galima įdiegti ir šalinti "
+"„NVDA“ papildinius"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -3576,11 +3567,11 @@ msgstr "Šnekos stebyklė įjungta"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
-"Toggles the NVDA Speech viewer, a floating window that allows you to view all "
-"the text that NVDA is currently speaking"
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
 msgstr ""
-"Įjungia arba išjungia „NVDA“ šnekos stebyklę – slankųjį langą, kuriame rodomas "
-"visas „NVDA“ šnekos sintezatoriaus sakomas tekstas"
+"Įjungia arba išjungia „NVDA“ šnekos stebyklę – slankųjį langą, kuriame "
+"rodomas visas „NVDA“ šnekos sintezatoriaus sakomas tekstas"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3632,7 +3623,8 @@ msgstr "Iškarpinėje nėra teksto."
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Iškarpinėje yra labai daug teksto – %s simb."
 
 #. Translators: Input help mode message for report clipboard text command.
@@ -3648,8 +3640,8 @@ msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
-"Nuo esamosios peržiūros žymeklio vietos pradeda teksto atranką žymėjimui arba "
-"kopijavimui."
+"Nuo esamosios peržiūros žymeklio vietos pradeda teksto atranką žymėjimui "
+"arba kopijavimui."
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
@@ -3658,7 +3650,8 @@ msgstr "Teksto atranka nebuvo pradėta."
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
 msgstr ""
-"Nuspauskite dukart, jei norite nukopijuoti tekstą arba pradėti atranką iš naujo."
+"Nuspauskite dukart, jei norite nukopijuoti tekstą arba pradėti atranką iš "
+"naujo."
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
@@ -3666,7 +3659,8 @@ msgstr "Nėra kopijuotino teksto."
 
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
-msgstr "Teksto pažymėti negalima. Nuspauskite dukart, kad jis būtų nukopijuotas."
+msgstr ""
+"Teksto pažymėti negalima. Nuspauskite dukart, kad jis būtų nukopijuotas."
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
@@ -3728,7 +3722,8 @@ msgstr ""
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
-"Moves to the next object in a flattened view of the object navigation hierarchy"
+"Moves to the next object in a flattened view of the object navigation "
+"hierarchy"
 msgstr "Pereina prie kito objekto plokščiame objektų žvalgymo medyje"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -3752,8 +3747,8 @@ msgstr "Informuoja apie objektą ir turinį, esantį tiesiai po jūsų pirštu"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
-"Reports the new object or content under your finger if different to where your "
-"finger was last"
+"Reports the new object or content under your finger if different to where "
+"your finger was last"
 msgstr ""
 "Informuoja apie objektą ir turinį, esantį tiesiai po jūsų pirštu, jei ši "
 "informacija skiriasi nuo ankstesnės"
@@ -4279,7 +4274,6 @@ msgid "column %s"
 msgstr "%s-asis stulpelis"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "iš {rowCount} eilučių ir {columnCount} stulpelių"
 
@@ -4335,30 +4329,25 @@ msgstr "numatytasis stilius"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "nuo {color1} iki {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color}, fono spalva – {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "fono spalva – {backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "fono ornamentas – {pattern}"
 
@@ -4566,7 +4555,6 @@ msgid "out of table"
 msgstr "lentelės pabaiga"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "lentelė iš {columnCount} stulpelių ir {rowCount} eilučių"
 
@@ -4647,27 +4635,22 @@ msgid "object mode"
 msgstr "objektų veiksena"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "viengubas {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "dvigubas {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "trigubas {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "keturgubas {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} {numFingers} pirštais"
 
@@ -4749,7 +4732,6 @@ msgstr "„NVDA“ naujinimas"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Išleista „NVDA“ programos {version} versija."
 
@@ -4804,15 +4786,15 @@ msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are "
 "helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the "
-"ongoing costs of the project.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
 "All donations are received by NV Access, the non-profit organisation which "
 "develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "„NVDA“ programos nuolatiniam tobulinimui mums reikalinga jūsų pagalba.\n"
-"Pagrindinis šio projekto finansavimo šaltinis – grantai ir aukos. Aukodami, jūs "
-"prisidėtumėte prie galimybės šią programą vystyti visą darbo dieną.\n"
+"Pagrindinis šio projekto finansavimo šaltinis – grantai ir aukos. Aukodami, "
+"jūs prisidėtumėte prie galimybės šią programą vystyti visą darbo dieną.\n"
 "Jei kiekvienas parsisiunčiantis programą paaukotų bent po 10 dolerių, šio "
 "projekto vystymo kaštai būtų visiškai padengti.\n"
 "Visas aukas priima ir administruoja „NV Access“ – nepelno siekianti "
@@ -4842,24 +4824,23 @@ msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr "Laisvoji, atvirojo kodo ekrano skaitytuvė „Microsoft Windows“ platformai"
+msgstr ""
+"Laisvoji, atvirojo kodo ekrano skaitytuvė „Microsoft Windows“ platformai"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} „NVDA“ bendraautoriai"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free "
-"to share or change this software in any way you like as long as it is "
-"accompanied by the license and you make all source code available to anyone who "
-"wants it. This applies to both original and modified copies of this software, "
-"plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
 "It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
@@ -4868,7 +4849,8 @@ msgid ""
 "helping and promoting free and open source solutions for blind and vision "
 "impaired people.\n"
 "If you find NVDA useful and want it to continue to improve, please consider "
-"donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "„{longName}“ ({name})\n"
 "{version} versija\n"
@@ -4887,15 +4869,14 @@ msgstr ""
 "Be to, GPL licenciją galite skaityti ir internete adresu http://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html.\n"
 "\n"
-"Programą „{name}“ vysto „NV Access“ – ne pelno siekianti organizacija, kurios "
-"tikslas – kurti ir populiarinti laisvuosius (atvirojo kodo) programinius "
-"sprendimus, skirtus akliesiems ir silpnaregiams.\n"
+"Programą „{name}“ vysto „NV Access“ – ne pelno siekianti organizacija, "
+"kurios tikslas – kurti ir populiarinti laisvuosius (atvirojo kodo) "
+"programinius sprendimus, skirtus akliesiems ir silpnaregiams.\n"
 "Jei programa „{name}“ jums pravertė ir norite, kad ji toliau tobulėtų, mes "
-"prašome paaukoti „NV Access“ organizacijai. Tai galite atlikti, programos meniu "
-"pasirinkę punktą „Paaukoti“."
+"prašome paaukoti „NV Access“ organizacijai. Tai galite atlikti, programos "
+"meniu pasirinkę punktą „Paaukoti“."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4904,23 +4885,20 @@ msgstr ""
 "Kad galėtumėte diegti papildinius, turite būti paleidę „NVDA“."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} "
-"per cent from top edge of screen, width is {width:.1f} per cent of screen, "
-"height is {height:.1f} per cent of screen"
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
 msgstr ""
 "Objekto kraštinės atitrauktos {left:.1f}% nuo ekrano kairiojo krašto ir "
 "{top:.1f}% nuo viršutiniojo krašto, jo plotis atitinka {width:.1f}% ekrano "
 "pločio, o aukštis – {height:.1f}% ekrano aukščio"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "„{symbol}“, kaip „{description}“"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4943,7 +4921,8 @@ msgstr "Nustato tolesnę eilutę kaip žvalgomąjį objektą ir perkelia į ją 
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "Nustato ankstesnę eilutę kaip žvalgomąjį objektą ir perkelia į ją židinį"
+msgstr ""
+"Nustato ankstesnę eilutę kaip žvalgomąjį objektą ir perkelia į ją židinį"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -4970,12 +4949,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Praneša likusį atkuriamo įrašo laiką, jeigu šiuo metu grojama"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, vieta {curLocation} iš {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "{pageNumber}-asis puslapis"
 
@@ -5085,12 +5063,10 @@ msgid "Waiting for Outlook..."
 msgstr "Laukiama „Outlook“ programos…"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "Nuo {startTime} iki {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Susitikimas {subject}, {time}"
 
@@ -5252,125 +5228,110 @@ msgid "Master Thumbnails"
 msgstr "Ruošinių miniatiūros"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "{slideNumber}-oji skaidrė"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "pridengia elemento „{otherShape}“ kairiojo krašto {distance:.3g} punktų ruožą"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr ""
-"pridengtas elemento „{otherShape}“ kairiojo krašto {distance:.3g} punktų ruože"
+"pridengtas elemento „{otherShape}“ kairiojo krašto {distance:.3g} punktų "
+"ruože"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr ""
-"pridengia elemento „{otherShape}“ viršutinio krašto {distance:.3g} punktų ruožą"
+"pridengia elemento „{otherShape}“ viršutinio krašto {distance:.3g} punktų "
+"ruožą"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr ""
-"pridengtas elemento „{otherShape}“ viršutinio krašto {distance:.3g} punktų ruože"
+"pridengtas elemento „{otherShape}“ viršutinio krašto {distance:.3g} punktų "
+"ruože"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr ""
-"pridengia elemento „{otherShape}“ dešiniojo krašto {distance:.3g} punktų ruožą"
+"pridengia elemento „{otherShape}“ dešiniojo krašto {distance:.3g} punktų "
+"ruožą"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr ""
-"pridengtas elemento „{otherShape}“ dešiniojo krašto {distance:.3g} punktų ruože"
+"pridengtas elemento „{otherShape}“ dešiniojo krašto {distance:.3g} punktų "
+"ruože"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
 "pridengia elemento „{otherShape}“ apatinio krašto {distance:.3g} punktų ruožą"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
-"pridengtas elemento „{otherShape}“ apatinio krašto {distance:.3g} punktų ruože"
+"pridengtas elemento „{otherShape}“ apatinio krašto {distance:.3g} punktų "
+"ruože"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "pridengia elementą „{otherShape}“"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "pridengtas elemento „{otherShape}“"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} punktai nuo skaidrės kairiojo krašto"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Nustumtas nuo skaidrės kairiojo krašto per {distance:.3g} punktus"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} punktai nuo skaidrės viršutinio krašto"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Nustumtas nuo skaidrės viršutinio krašto per {distance:.3g} punktus"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} punktai nuo skaidrės dešiniojo krašto"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Nustumtas nuo skaidrės dešiniojo krašto per {distance:.3g} punktus"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} punktai nuo skaidrės apatinio krašto"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Nustumtas nuo skaidrės apatinio krašto per {distance:.3g} punktus"
 
 #. Translators: The description for a script
 msgid ""
-"Toggles between reporting the speaker notes or the actual slide content. This "
-"does not change what is visible on-screen, but only what the user can read with "
-"NVDA"
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
 msgstr ""
 "Perjungia tarp pranešėjo pastabų ir pačios skaidrės turinio skaitymo. Ši "
 "funkcija neįtakoja ekrane matomo turinio, bet keičia, ką naudotojui skaito "
 "„NVDA“ programa."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Pastabos skaidrių rodymui – „{slideName}“"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Skaidrių rodymas – „{slideName}“"
 
@@ -5459,7 +5420,6 @@ msgstr "„Baum“/„HumanWare“/„APH“/„Orbit“ Brailio eilutės"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Nuoseklusis – {portName}"
 
@@ -5528,7 +5488,8 @@ msgstr "Atstatyti numatytieji gamykliniai parametrai"
 
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "Nepavyko įrašyti parametrų – programa „NVDA“ veikia saugioje veiksenoje"
+msgstr ""
+"Nepavyko įrašyti parametrų – programa „NVDA“ veikia saugioje veiksenoje"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -5592,10 +5553,11 @@ msgid "&Keyboard settings..."
 msgstr "&Klaviatūros parametrai…"
 
 msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command keys"
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
 msgstr ""
-"Keisti klaviatūros išdėstymo ir įvedamų simbolių, žodžių bei komandinių klavišų "
-"tarimo parametrus"
+"Keisti klaviatūros išdėstymo ir įvedamų simbolių, žodžių bei komandinių "
+"klavišų tarimo parametrus"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
@@ -5650,8 +5612,8 @@ msgid "&Default dictionary..."
 msgstr "&Numatytasis žodynas…"
 
 msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries to "
-"the list"
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr "Peržiūrėti ir keisti numatytojo žodyno įrašus"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
@@ -5668,8 +5630,8 @@ msgid "&Temporary dictionary..."
 msgstr "&Laikinasis žodynas…"
 
 msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries to "
-"the edit box"
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
 msgstr "Peržiūrėti ir keisti laikinojo žodyno įrašus"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
@@ -5797,10 +5759,10 @@ msgid "Exit NVDA"
 msgstr "Programos „NVDA“ darbo pabaiga"
 
 msgid ""
-"Most commands for controlling NVDA require you to hold down the NVDA key while "
-"pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA "
-"key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA "
@@ -5810,7 +5772,8 @@ msgstr ""
 "kartu su kitais klavišais.\n"
 "Numatytuoju atveju, „NVDA“ klavišo funkciją atlieka bet kuris iš dviejų "
 "įterpimo klavišų – pagrindinis arba esantis skaitmenų srityje.\n"
-"Jeigu norite, „NVDA“ klavišu taip pat galite skirti Didžiųjų raidžių klavišą.\n"
+"Jeigu norite, „NVDA“ klavišu taip pat galite skirti Didžiųjų raidžių "
+"klavišą.\n"
 "„NVDA“ programos meniu bet kuriuo metu galite iškviesti klavišų kombinacijos "
 "NVDA+N pagalba.\n"
 "Naudodamiesi šiuo meniu, galite konfigūruoti „NVDA“ programą, išsikviesti "
@@ -5954,27 +5917,27 @@ msgid "Choose Add-on Package File"
 msgstr "Pasirinkite papildinio failą"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "„NVDA“ papildinys (*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
 msgid ""
-"Failed to open add-on package file at %s - missing file or invalid file format"
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
 msgstr ""
-"Nepavyko atverti papildinio paketo „%s“ – trūksta failų arba netinkamas formatas"
+"Nepavyko atverti papildinio paketo „%s“ – trūksta failų arba netinkamas "
+"formatas"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted "
-"sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Ar tikrai norite įdiegti šį papildinį? Diekite tik iš patikimų šaltinių gautus "
-"papildinius.\n"
+"Ar tikrai norite įdiegti šį papildinį? Diekite tik iš patikimų šaltinių "
+"gautus papildinius.\n"
 "Papildinys – {summary} {version}\n"
 "Autorius – {author}"
 
@@ -6039,8 +6002,8 @@ msgstr "Į&jungti papildinį"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Changes were made to add-ons. You must restart NVDA for these changes to take "
-"effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
 "Papildinių būsena pakeista. Kad šie pakeitimai įsigaliotų, turite perleisti "
 "„NVDA“ programą. Ar norite ją perleisti dabar?"
@@ -6050,7 +6013,6 @@ msgid "Restart NVDA"
 msgstr "Perleisti „NVDA“"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6063,7 +6025,6 @@ msgstr ""
 "Aprašas – {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "Svetainė: {url}"
 
@@ -6218,8 +6179,8 @@ msgid ""
 "will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Ši aktyvinimo sąlyga jau susieta su kitu profiliu. Jei nuspręsite tęsti, ji bus "
-"pašalinta iš kito profilio aktyvinimo sąlygų sąrašo ir susieta su šiuo "
+"Ši aktyvinimo sąlyga jau susieta su kitu profiliu. Jei nuspręsite tęsti, ji "
+"bus pašalinta iš kito profilio aktyvinimo sąlygų sąrašo ir susieta su šiuo "
 "profiliu.\n"
 "Ar tikrai norite tęsti?"
 
@@ -6230,7 +6191,8 @@ msgstr "Įspėjimas"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
-msgstr "Klaida kuriant profilį – galbūt failų sistema pasiekiama tik skaitymui."
+msgstr ""
+"Klaida kuriant profilį – galbūt failų sistema pasiekiama tik skaitymui."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -6268,14 +6230,14 @@ msgstr "Luktelėkite, kol bus įdiegta „NVDA“ programa"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
-"The installation is unable to remove or overwrite a file. Another copy of NVDA "
-"may be running on another logged-on user account. Please make sure all "
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
 "Įdiegimo programai nepavyko pašalinti arba perrašyti failo. Gali būti, jog "
 "„NVDA“ programos kopija yra paleista kito prisijungusio naudotojo teisėmis. "
-"Užbaikite visų paleistų „NVDA“ kopijų darbą, tada bandykite pradėti diegimą iš "
-"naujo."
+"Užbaikite visų paleistų „NVDA“ kopijų darbą, tada bandykite pradėti diegimą "
+"iš naujo."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -6325,9 +6287,9 @@ msgstr ""
 "Kompiuteryje aptikta ankstesnė „NVDA“ programos kopija. Ji bus atnaujinta."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
-"The installation path for NVDA has changed. it will now  be installed in {path}"
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
 msgstr ""
 "Programos „NVDA“ įdiegimo aplankas pakeistas. Dabar ji bus įdiegta į aplanką "
 "„{path}“."
@@ -6379,11 +6341,11 @@ msgstr "Perkeliamosios „NVDA“ kopijos kūrimas"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
-"To create a portable copy of NVDA, please select the path and other options and "
-"then press Continue"
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
 msgstr ""
-"Jei norite sukurti perkeliamąją „NVDA“ programos kopiją, pasirinkite įdiegimo "
-"aplanką ir kitas parinktis, o tada spustelėkite mygtuką „Tęsti“."
+"Jei norite sukurti perkeliamąją „NVDA“ programos kopiją, pasirinkite "
+"įdiegimo aplanką ir kitas parinktis, o tada spustelėkite mygtuką „Tęsti“."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -6406,7 +6368,8 @@ msgstr "Kopijuoti esamuosius &naudotojo parametrus"
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "Pasirinkite aplanką, į kurį norite įdiegti perkeliamąją programos kopiją."
+msgstr ""
+"Pasirinkite aplanką, į kurį norite įdiegti perkeliamąją programos kopiją."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -6504,18 +6467,19 @@ msgid "L&ogging level:"
 msgstr "Žurnalo pranešimų &lygmuo:"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
-"Leisti „NVDA“ programą „Windows“ prisijungimo ekrane (būtinos administratoriaus "
-"teisės)"
+"Leisti „NVDA“ programą „Windows“ prisijungimo ekrane (būtinos "
+"administratoriaus teisės)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Naudoti šiuo metu įrašytus parametrus prisijungimo ekrane ir kitose padidinto "
-"saugumo lygio aplinkose (būtinos administratoriaus teisės)"
+"Naudoti šiuo metu įrašytus parametrus prisijungimo ekrane ir kitose "
+"padidinto saugumo lygio aplinkose (būtinos administratoriaus teisės)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -6540,8 +6504,8 @@ msgstr "Luktelėkite, kol į sistemos profilį bus nukopijuoti parametrai."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 msgid ""
-"Unable to copy a file. Perhaps it is currently being used by another process or "
-"you have run out of disc space on the drive you are copying to."
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
 msgstr ""
 "Nepavyko nukopijuoti failo. Gali būti, kad jis naudojamas kito proceso, arba "
 "paskirties diske nepakanka laisvos vietos."
@@ -6566,9 +6530,9 @@ msgstr "Nepakanka teisių"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
 msgid ""
-"For the new language to take effect, the configuration must be saved and NVDA "
-"must be restarted. Press enter to save and restart NVDA, or cancel to manually "
-"save and exit at a later time."
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
 msgstr ""
 "Kad pakeista programos sąsajos kalba visiškai įsigaliotų, būtina įrašyti "
 "parametrus ir iš naujo paleisti „NVDA“ programą. Ar atlikti tai dabar?"
@@ -6698,7 +6662,8 @@ msgstr "Skaitant viską, leisti &greitąjį skaitymą"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Pyptelėti, jei įvedama mažoji raidė esant įjungtoms didžiosioms raidėms"
+msgstr ""
+"Pyptelėti, jei įvedama mažoji raidė esant įjungtoms didžiosioms raidėms"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6794,7 +6759,8 @@ msgstr "Anonsuoti &pasirinktąjį simbolį"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
-msgstr "Vardijant galimus simbolius, visada perskaityti ir jų trumpąjį &aprašymą"
+msgstr ""
+"Vardijant galimus simbolius, visada perskaityti ir jų trumpąjį &aprašymą"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -6928,10 +6894,11 @@ msgstr "Dokumentų formatavimas"
 
 #. Translators: This is a label appearing on the document formatting settings dialog.
 msgid ""
-"The following options control the types of document formatting reported by NVDA."
+"The following options control the types of document formatting reported by "
+"NVDA."
 msgstr ""
-"Šie parametrai įtakoja, kokią informaciją apie dokumentų formatavimą programa "
-"„NVDA“ pateiks."
+"Šie parametrai įtakoja, kokią informaciją apie dokumentų formatavimą "
+"programa „NVDA“ pateiks."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7299,7 +7266,6 @@ msgstr "&Filtruoti sąrašą:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7340,12 +7306,10 @@ msgid "word"
 msgstr "žodis"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "pozicija {x}, {y}"
 
@@ -7403,7 +7367,6 @@ msgid "Taskbar"
 msgstr "Užduočių juosta"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RŽM raudona {rgb.red}, žalia {rgb.green}, mėlyna {rgb.blue}"
 
@@ -7572,7 +7535,6 @@ msgid "&Sheets"
 msgstr "&Lapai"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "Nuo {start} iki {end}"
 
@@ -7588,51 +7550,43 @@ msgstr ""
 "antraštes dokumentų formatavimo parametrų skyriuje."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Langelis {address} nustatytas kaip stulpelių antraščių pradžia"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Langelis {address} jau yra nustatytas kaip stulpelių antraščių pradžia"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "Langelis {address} pašalintas iš stulpelių antraščių aibės"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Stulpelių antraščių aibėje nepavyko rasti langelio {address}"
 
 msgid ""
-"Pressing once will set this cell as the first column header for any cells lower "
-"and to the right of it within this region. Pressing twice will forget the "
-"current column header for this cell."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmojo stulpelio antraštę "
-"visiems langeliams, šiame regione esantiems žemiau ir dešiniau nei jis. "
-"Nuspaudus dukart, pašalina šį langelį iš stulpelių antraščių aibės."
+"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmojo stulpelio "
+"antraštę visiems langeliams, šiame regione esantiems žemiau ir dešiniau nei "
+"jis. Nuspaudus dukart, pašalina šį langelį iš stulpelių antraščių aibės."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Langelis {address} nustatytas kaip eilučių antraščių pradžia"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Langelis {address} jau yra nustatytas kaip eilučių antraščių pradžia"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "Langelis {address} pašalintas iš eilučių antraščių aibės"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Eilučių antraščių aibėje nepavyko rasti langelio {address}"
 
@@ -7641,15 +7595,13 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmosios eilutės antraštę "
-"visiems langeliams, šiame regione esantiems žemiau ir dešiniau nei jis. "
-"Nuspaudus dukart, pašalina šį langelį iš eilučių antraščių aibės."
+"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmosios eilutės "
+"antraštę visiems langeliams, šiame regione esantiems žemiau ir dešiniau nei "
+"jis. Nuspaudus dukart, pašalina šį langelį iš eilučių antraščių aibės."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Įvesties pranešimas yra „{title}: {message}“"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Įvesties pranešimas yra „{message}“"
 
@@ -7662,12 +7614,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Perskaito einamojo langelio komentarą"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Langelio {address} komentaro taisa"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "Nuo {firstAddress} {firstContent} iki {lastAddress} {lastContent}"
 
@@ -8022,7 +7972,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Sklaidos diagrama su glotniomis linijomis be žymeklių"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Diagramos pavadinimas – „{chartTitle}“, tipas – {chartType}"
 
@@ -8050,7 +7999,6 @@ msgstr "Sekos"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} ašis yra „{axisTitle}“"
 
@@ -8064,7 +8012,6 @@ msgid "There are total %d series in this chart"
 msgstr "Šioje diagramoje yra %d sekos (-ų)"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "{number}-oji seka – {name}"
 
@@ -8089,7 +8036,6 @@ msgstr "duomenų taškas"
 msgid "item"
 msgstr "elementas"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Sekos spalva – {colorName}"
 
@@ -8179,60 +8125,51 @@ msgstr "Figūra"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "Seka „{seriesName}“ – {seriesIndex} iš {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "Pokyčio nuo ankstesniojo taško {previousIndex} nėra, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Padidėjimas per {incrementValue} punktų nuo {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "Sumažėjimas per {decrementValue} punktų nuo {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData} – "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Kategorija {categoryAxisData} – "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "reikšmė {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " dalis {fractionValue:.2f}%, išpjova Nr. {pointIndex} iš {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} Nr. {pointIndex} iš {pointCount}"
 
@@ -8245,14 +8182,12 @@ msgid "Secondary"
 msgstr "Antrinė"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Diagramos ašis, tipas – {axisType}, grupė – {axisGroup}, pavadinimas – "
 "{axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Diagramos ašis, tipas – {axisType}, grupė – {axisGroup}"
 
@@ -8270,7 +8205,6 @@ msgid " squared "
 msgstr " kvadratu "
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Diagramos pavadinimas – „{chartTitle}“"
 
@@ -8279,7 +8213,6 @@ msgid "Untitled chart"
 msgstr "Bevardė diagrama"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8292,7 +8225,6 @@ msgid "Chart area "
 msgstr "Diagramos sritis "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8317,16 +8249,16 @@ msgstr "Legendos nėra"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "Legendos įrašas sekai „{seriesName}“, Nr. {seriesIndex} iš {seriesCount}"
+msgstr ""
+"Legendos įrašas sekai „{seriesName}“, Nr. {seriesIndex} iš {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "Legendos raktas sekai „{seriesName}“, Nr. {seriesIndex} iš {seriesCount}"
+msgstr ""
+"Legendos raktas sekai „{seriesName}“, Nr. {seriesIndex} iš {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8426,11 +8358,9 @@ msgstr "Pirminė antraštė"
 msgid "Text frame"
 msgstr "Teksto rėmelis"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "Komentaras: „{text}“, autorius – {author}, data – {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType} {description}: „{text}“, autorius „{author}“, data – {date}"
@@ -8472,66 +8402,59 @@ msgid "Table description"
 msgstr "Lentelės aprašas"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"Eilutės {rowNumber} langelis {columnNumber} nustatytas kaip stulpelių antraščių "
-"pradžia"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Eilutės {rowNumber} langelis {columnNumber} jau yra nustatytas kaip stulpelių "
+"Eilutės {rowNumber} langelis {columnNumber} nustatytas kaip stulpelių "
 "antraščių pradžia"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"Eilutės {rowNumber} langelis {columnNumber} pašalintas iš stulpelių antraščių "
-"aibės"
+"Eilutės {rowNumber} langelis {columnNumber} jau yra nustatytas kaip "
+"stulpelių antraščių pradžia"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Eilutės {rowNumber} langelis {columnNumber} pašalintas iš stulpelių "
+"antraščių aibės"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Stulpelių antraščių aibėje nepavyko rasti eilutės {rowNumber} langelio "
 "{columnNumber}"
 
 msgid ""
-"Pressing once will set this cell as the first column header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current column header for this cell."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmojo stulpelio antraštę "
-"visiems langeliams, lentelėje esantiems žemiau ir dešiniau nei jis. Nuspaudus "
-"dukart, pašalins šį langelį iš stulpelių antraščių aibės."
+"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmojo stulpelio "
+"antraštę visiems langeliams, lentelėje esantiems žemiau ir dešiniau nei jis. "
+"Nuspaudus dukart, pašalins šį langelį iš stulpelių antraščių aibės."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
-"Eilutės {rowNumber} langelis {columnNumber} nustatytas kaip eilučių antraščių "
-"pradžia"
+"Eilutės {rowNumber} langelis {columnNumber} nustatytas kaip eilučių "
+"antraščių pradžia"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Eilutės {rowNumber} langelis {columnNumber} jau yra nustatytas kaip eilučių "
 "antraščių pradžia"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "Eilutės {rowNumber} langelis {columnNumber} pašalintas iš eilučių antraščių "
 "aibės"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Eilučių antraščių aibėje nepavyko rasti eilutės {rowNumber} langelio "
@@ -8542,9 +8465,9 @@ msgid ""
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmosios eilutės antraštę "
-"visiems langeliams, lentelėje esantiems žemiau ir dešiniau nei jis. Nuspaudus "
-"dukart, pašalins šį langelį iš stulpelių antraščių aibės."
+"Nuspaudus vieną kartą, nustato esamąjį langelį kaip pirmosios eilutės "
+"antraštę visiems langeliams, lentelėje esantiems žemiau ir dešiniau nei jis. "
+"Nuspaudus dukart, pašalins šį langelį iš stulpelių antraščių aibės."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -8617,43 +8540,35 @@ msgid "Moved above blank paragraph"
 msgstr "Perkelta virš tuščios pastraipos"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "Stilius „{styleName}“, struktūros lygis – {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} punktų šriftas"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} simb."
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} col."
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} cm"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} mm"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pc"
 
@@ -8694,35 +8609,3 @@ msgstr "„HIMS Braille Sense“/„Braille EDGE“/„Smart Beetle“ serijos"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "„HIMS SyncBraille“"
-
-#~ msgid "IFrame"
-#~ msgstr "kadras"
-
-#~ msgid ""
-#~ "Welcome to NVDA!\n"
-#~ "Most commands for controlling NVDA require you to hold down the NVDA key "
-#~ "while pressing other keys.\n"
-#~ "By default, the numpad insert and main insert keys may both be used as the "
-#~ "NVDA key.\n"
-#~ "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
-#~ "Press NVDA+n at any time to activate the NVDA menu.\n"
-#~ "From this menu, you can configure NVDA, get help and access other NVDA "
-#~ "functions.\n"
-#~ msgstr ""
-#~ "Sveiki! Tai – programa „NVDA“.\n"
-#~ "Daugumai programos valdymo komandų iškviesti reikia nuspausti „NVDA“ klavišą "
-#~ "kartu su kitais klavišais.\n"
-#~ "Numatytuoju atveju, „NVDA“ klavišo funkciją atlieka bet kuris iš dviejų "
-#~ "įterpimo klavišų – pagrindinis arba esantis skaitmenų srityje.\n"
-#~ "Jeigu norite, „NVDA“ klavišu taip pat galite skirti Didžiųjų raidžių "
-#~ "klavišą.\n"
-#~ "„NVDA“ programos meniu bet kuriuo metu galite iškviesti klavišų kombinacijos "
-#~ "NVDA+N pagalba.\n"
-#~ "Naudodamiesi šiuo meniu, galite konfigūruoti „NVDA“ programą, išsikviesti "
-#~ "žinyną ir pasiekti kitas programos funkcijas.\n"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Klaida kalbos faile „%s“."
-
-#~ msgid "Language Error"
-#~ msgstr "Kalbos failo klaida"
