@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -85,7 +85,6 @@ msgid "unknown input method"
 msgstr "onbekende invoermethode"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -723,7 +722,6 @@ msgstr "niet %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} van {total}"
 
@@ -1486,73 +1484,61 @@ msgid "pink-red"
 msgstr "rozerood"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "helder{color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "donker{color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "zeer donker{color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "lichtbleek{color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "bleek{color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "donkerbleek{color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "zeer donkerbleek {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color}wit"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color}grijs"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "donker{color}grijs"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "zeer donker{color}grijs"
@@ -3452,7 +3438,6 @@ msgid "AC power on"
 msgstr "Op netstroom"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} uur en {minutes:d} minuten resterend"
 
@@ -4304,7 +4289,6 @@ msgid "column %s"
 msgstr "kolom %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "met {rowCount} rijen en {columnCount} kolommen"
 
@@ -4360,30 +4344,25 @@ msgstr "standaardstijl"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} naar {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} op {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "achtergrond {backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "Achtergrondpatroon {pattern}"
 
@@ -4591,7 +4570,6 @@ msgid "out of table"
 msgstr "buiten de tabel"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabel met {columnCount} kolommen en {rowCount} rijen"
 
@@ -4672,27 +4650,22 @@ msgid "object mode"
 msgstr "objectmodus"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "eenmaal {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "tweemaal {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "driemaal {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "viermaal {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} vinger {action}"
 
@@ -4774,7 +4747,6 @@ msgstr "NVDA update"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Versie {version} van NVDA is beschikbaar."
 
@@ -4869,11 +4841,9 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Een gratis en opensource schermuitleesprogramma voor Microsoft Windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C)  {years} NVDA Vrijwilligers"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4918,7 +4888,6 @@ msgstr ""
 "het NVDA menu te kiezen voor Doneer."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4927,7 +4896,6 @@ msgstr ""
 "NVDA moet actief zijn om add-ons te kunnen installeren."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4939,12 +4907,10 @@ msgstr ""
 "scherm."
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} zoals in {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4995,12 +4961,11 @@ msgstr ""
 "Meldt de resterende tijd van het nummer dat op dit moment wordt afgespeeld"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, locatie {curLocation} van {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Pagina {pageNumber}"
 
@@ -5110,12 +5075,10 @@ msgid "Waiting for Outlook..."
 msgstr "Wachten op Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} tot {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Afspraak {subject}, {time}"
 
@@ -5277,97 +5240,78 @@ msgid "Master Thumbnails"
 msgstr "Modelminiaturen"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Dia {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "overlapt met linkerkant van {otherShape} met {distance:.3g} punten"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "achter linkerkant van {otherShape} voor {distance:.3g} punten"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "overlapt met bovenkant van {otherShape} met {distance:.3g} punten"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "achter bovenkant van {otherShape} voor {distance:.3g} punten"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "overlapt met rechterkant van {otherShape} met {distance:.3g} punten"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "achter rechterkant van {otherShape} voor {distance:.3g} punten"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "overlapt met onderkant van {otherShape} met {distance:.3g} punten"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "achter onderkant van {otherShape} voor {distance:.3g} punten"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "overlapt met {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "achter {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} punten van linkerrand van dia"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punten buiten linkerrand van dia"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} punten van bovenrand van dia"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punten buiten bovenrand van dia"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} punten van rechterrand van dia"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punten buiten rechterrand van dia"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} punten van onderrand van dia"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punten buiten onderrand van dia"
 
@@ -5382,12 +5326,10 @@ msgstr ""
 "gebruiker leest."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Notities diavoorstelling - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Diavoorstelling - {slideName}"
 
@@ -5476,7 +5418,6 @@ msgstr "Baum/HumanWare/APH/Orbit brailleleesregels"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serieel: {portName}"
 
@@ -5975,7 +5916,6 @@ msgid "Choose Add-on Package File"
 msgstr "Kies het Add-on Package bestand"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA Add-on Pakket (*.{ext})"
 
@@ -5989,7 +5929,6 @@ msgstr ""
 "bestandsformaat is ongeldig"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6073,7 +6012,6 @@ msgid "Restart NVDA"
 msgstr "Herstart NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6086,7 +6024,6 @@ msgstr ""
 "Beschrijving: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6350,7 +6287,6 @@ msgstr ""
 "bijgewerkt"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7335,7 +7271,6 @@ msgstr "&Filter op:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7376,12 +7311,10 @@ msgid "word"
 msgstr "woord"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "op {x}, {y}"
 
@@ -7439,7 +7372,6 @@ msgid "Taskbar"
 msgstr "Taakbalk"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB rood {rgb.red}, groen {rgb.green}, blauw {rgb.blue}"
 
@@ -7607,7 +7539,6 @@ msgid "&Sheets"
 msgstr "&Bladen"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} tot en met {end}"
 
@@ -7623,22 +7554,18 @@ msgstr ""
 "Documentopmaak instellingen"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Stel {address} in als begin van kolomkoppen"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} is al ingesteld als begin van kolomkoppen"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address} verwijderd van kolomkoppen"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Kan {address} niet vinden in kolomkoppen"
 
@@ -7652,22 +7579,18 @@ msgstr ""
 "huidige kolomkop voor deze cel."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Stel {address} in als begin van rijkoppen"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} is al ingesteld als begin van rijkoppen"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address} verwijderd van rijkoppen"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Kan {address} niet vinden in rijkoppen"
 
@@ -7680,11 +7603,9 @@ msgstr ""
 "eronder en rechts ervan, binnen dit gebied. Tweemaal drukken vergeet de "
 "huidige rijkop voor deze cel."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Invoerbericht is {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Invoerbericht is {message}"
 
@@ -7697,12 +7618,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Leest de opmerking bij de huidige cel"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Opmerking bewerken bij cel {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "van {firstAddress} {firstContent} tot {lastAddress} {lastContent}"
 
@@ -8057,7 +7976,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "spreidingsdiagram met vloeiende lijnen en zonder gegevensmarkeringen"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Grafiektitel: {chartTitle}, type: {chartType}"
 
@@ -8085,7 +8003,6 @@ msgstr "reeksen"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} As is {axisTitle}"
 
@@ -8099,7 +8016,6 @@ msgid "There are total %d series in this chart"
 msgstr "Er zijn totaal %d reeksen in deze grafiek"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "reeks {number} {name}"
 
@@ -8124,7 +8040,6 @@ msgstr "gegevenspunt"
 msgid "item"
 msgstr "item"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Reekskleur: {colorName} "
 
@@ -8214,54 +8129,45 @@ msgstr "Vorm"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} reeks {seriesIndex} van {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "Geen verandering vanaf punt {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Toegenomen met {incrementValue} vanaf point {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "Afgenomen met {decrementValue} vanaf point {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Categorie {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "waarde {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8269,7 +8175,6 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} van {pointCount}"
 
@@ -8282,12 +8187,10 @@ msgid "Secondary"
 msgstr "Secundair"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "Grafiekas, type: {axisType}, groep: {axisGroup}, titel: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Grafiekas, type: {axisType}, groep: {axisGroup}"
 
@@ -8305,7 +8208,6 @@ msgid " squared "
 msgstr " kwadraat "
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Grafiektitel: {chartTitle}"
 
@@ -8314,7 +8216,6 @@ msgid "Untitled chart"
 msgstr "Naamloze grafiek"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8327,7 +8228,6 @@ msgid "Chart area "
 msgstr "Grafiekgebied "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8352,7 +8252,6 @@ msgstr "geen legenda"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Legendagegevens voor reeks {seriesName} {seriesIndex} van {seriesCount}"
@@ -8360,7 +8259,6 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Legendasleutel voor reeks {seriesName} {seriesIndex} van {seriesCount}"
 
@@ -8462,11 +8360,9 @@ msgstr "Koptekst op eerste pagina"
 msgid "Text frame"
 msgstr "Tekstkader"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "opmerking: {text} door {author} op {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} door {author} op {date}"
 
@@ -8507,13 +8403,11 @@ msgid "Table description"
 msgstr "tabelbeschrijving"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Stel rij {rowNumber} en kolom {columnNumber} in als begin van kolomkoppen"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8521,12 +8415,10 @@ msgstr ""
 "kolomkoppen"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Rij {rowNumber} en kolom {columnNumber} verwijderd van kolomkoppen"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "Kan rij {rowNumber} en kolom {columnNumber} niet vinden in kolomkoppen"
 
@@ -8540,13 +8432,11 @@ msgstr ""
 "huidige kolomkop voor deze cel."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Stel rij {rowNumber} en kolom {columnNumber} in als begin van rijkoppen"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8554,12 +8444,10 @@ msgstr ""
 "rijkoppen"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Rij {rowNumber} en kolom {columnNumber} verwijderd van rijkoppen"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "Kan rij {rowNumber} en kolom {columnNumber} niet vinden in rijkoppen"
 
@@ -8643,43 +8531,35 @@ msgid "Moved above blank paragraph"
 msgstr "Verplaatst boven lege paragraaf"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} stijl, kopniveau {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "lettergrootte {size:g} punten"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} karakters"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} inches"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimeter"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} millimeter"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} punten"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picas"
 
@@ -8720,892 +8600,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "IFrame"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Fout in het taalbestand %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Taalfout"
-
-#~ msgid "&Profile"
-#~ msgstr "&Profiel"
-
-#~ msgid "Language"
-#~ msgstr "Taal"
-
-#~ msgid "Log level"
-#~ msgstr "Niveau van loggen"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Toetsenbordindeling"
-
-#~ msgid "text reporting unit"
-#~ msgstr "Weer te geven tekst&eenheid"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Weergave voortgangsbalk"
-
-#~ msgid "Report &font name"
-#~ msgstr "&Lettertype melden"
-
-#~ msgid "Report font &size"
-#~ msgstr "Letter&grootte melden"
-
-#~ msgid "Report &alignment"
-#~ msgstr "&Uitlijning melden"
-
-#~ msgid "Report &colors"
-#~ msgstr "&Kleuren melden"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Op&merkingen melden"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "&Nadruk melden"
-
-#~ msgid "Report st&yle"
-#~ msgstr "&Stijl melden"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Spel&fouten melden"
-
-#~ msgid "Report &pages"
-#~ msgstr "&Paginanummers melden"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "&Regelafstand melden"
-
-#~ msgid "Report &tables"
-#~ msgstr "&Tabellen melden"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Rij- en kolom&koppen melden"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Lin&ks melden"
-
-#~ msgid "Report &headings"
-#~ msgstr "&Koppen melden"
-
-#~ msgid "Report &lists"
-#~ msgstr "&Lijsten melden"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "&Citaatblokken melden"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "&Oriëntatiepunten melden"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "&Frames melden"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Meld indien &klikbaar"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Schakelt het uitspreken van regelinspringing in en uit"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Dit is een niet-bewerkbare cel"
-
-#~ msgid "unknown color"
-#~ msgstr "onbekende kleur"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Aliceblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Antiekwit"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Cyaan"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Aquamarijn"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Azuur"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Beige"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "Biscuit"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Gebleekt amandel"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Blauw"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Blauwviolet"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Hardhout"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Cadetblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Chartreuse"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Chocolade"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Koraal"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Korenbloemblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Mais"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Karmozijn"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Cyaan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Donkerblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Donkercyaan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Donkerguldenroede"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "Donkergroen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Donkerkaki"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Donkermagenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "Donkerolijfgroen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Donkeroranje"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Donkerorchidee"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Donkerrood"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Donkerzalm"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "Donkerzeegroen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Donkerleisteenblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Donkerleisteengrijs"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Donkerturkoois"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Donkerviolet"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Dieproze"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Diephemelsblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Matgrijs"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Dodgerblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Steenrood"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Bloemenwit"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Bosgroen"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "Fuchsia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Spookwit"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Goud"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Guldenroede"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Grijs"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "Groengeel"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Meloen"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Warmroze"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Indisch rood"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Ivoor"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Kaki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Lavendel"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Lavendelblos"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Grasgroen"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Citroengarnering"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Lichtblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Lichtkoraal"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Lichtcyaan"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Lichtguldenroedegeel"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Lichtgroen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Lichtroze"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Lichtzalm"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Lichtzeegroen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Lichthelemsblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Lichtleisteengrijs"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Lichtstaalblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Lichtgeel"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Limoen"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Limoengroen"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Linnen"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Kastanjebruin"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Middenaquamarijn"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Middenblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Middenorchidee"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Middenpurper"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Middenzeegroen"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Middenleisteenblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Midlentegroen"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Middenturkoois"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Middenvioletrood"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Middernachtsblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Muntcrème"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Zachtroze"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "mocassin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navajowit"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Marineblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Oudkant"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Olijf"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Legergroen"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Oranjerood"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Orchidee"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Vaal guldenroede"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Vaalgroen"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Vaalturkoois"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Vaalvioletrood"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Papaja-oranje"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Perzikachtig"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Roze"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Pruim"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Poederblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Rood"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Rozigbruin"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Koningsblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Zadelbruin"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Zalm"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Zandbruin"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Zeegroen"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "Schelp"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Sienna"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Zilver"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Hemelsblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Leisteenblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Leisteengrijs"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Sneeuw"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Lentegroen"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Staalblauw"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Zand"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Blauwgroen"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Distel"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Tomaat"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Turkoois"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Violet"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Tarwe"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Rookwit"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "De startpositie moet zich binnen hetzelfde object bevinden"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Grammaticafouten niet melden"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Grammaticafouten melden"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Schakelt het uitspreken van grammaticafouten in en uit"
-
-#~ msgid "grammar error"
-#~ msgstr "Grammaticafout"
-
-#~ msgid "out of grammar error"
-#~ msgstr "buiten grammaticafout"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "&Grammaticafouten melden"
-
-#~ msgid "browse mode"
-#~ msgstr "bladermodus"
-
-#~ msgid "activate"
-#~ msgstr "Activeer"
-
-#~ msgid "no next"
-#~ msgstr "Geen volgend"
-
-#~ msgid "no previous"
-#~ msgstr "Geen vorig"
-
-#~ msgid "edge of table"
-#~ msgstr "Grens van tabel"
-
-#~ msgid "%g characters"
-#~ msgstr "%g karakters"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "geen opmerkingen"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Toont een lijst van grafieken, cellen met opmerkingen en cellen met "
-#~ "formules"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "standaardkleur"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s niet geselecteerd"
-
-#~ msgid "unrevised"
-#~ msgstr "niet gewijzigd"
-
-#~ msgid "unknown author"
-#~ msgstr "auteur onbekend"
-
-#~ msgid "unknown date"
-#~ msgstr "Datum onbekend"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} door {revisionAuthor} op {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Geeft het object weer dat de focus heeft"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "equation"
-#~ msgstr "vergelijking"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Toont een lijst van links, koppen of oriëntatiepunten"
-
-#~ msgid "Slovak"
-#~ msgstr "Slovaaks"
-
-#~ msgid "navy blue"
-#~ msgstr "marineblauw"
-
-#~ msgid "teal"
-#~ msgstr "groenblauw"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "In NVDA 2013.1 is de toetsenbordindeling voor laptops grondig gewijzigd "
-#~ "om ze meer intuïtief en consistenter te maken.\n"
-#~ "Als u de indeling voor laptops gebruikt, lees dan het document dat "
-#~ "beschrijft wat er nieuw is in deze versie."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Nieuwe toetsenbordindeling voor laptop"
-
-#~ msgid "Read What's New"
-#~ msgstr "Lees wat er nieuw is in deze versie"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Acceleratie"
-
-#~ msgid "male 1"
-#~ msgstr "Man 1"
-
-#~ msgid "female 1"
-#~ msgstr "Vrouw 1"
-
-#~ msgid "male 2"
-#~ msgstr "Man 2"
-
-#~ msgid "female 2"
-#~ msgstr "Vrouw 2"
-
-#~ msgid "lime"
-#~ msgstr "lijm"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Weet u zeker dat u NVDA wilt afsluiten?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Waarschuwen bij afsluiten van NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "Reguliere expressie"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Geen informatie over de locatie van het navigatorobject"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Geen informatie over de locatie van het scherm"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Geeft de hoogte, de breette en de positie weer van het huidige "
-#~ "navigatorobject"
-
-#~ msgid "Set column header row"
-#~ msgstr "Huidige rij bevat kolomkoppen"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Dit is niet langer de rij die kolomkoppen bevat."
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Een keer drukken, stelt de huidige rij in als de rij die de kolomkoppen "
-#~ "bevat. Tweemaal drukken, maakt de instelling ongedaan."
-
-#~ msgid "Set row header column"
-#~ msgstr "Huidige kolom bevat rijkoppen"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Een keer drukken, stelt de huidige kolom in als de kolom die de rijkoppen "
-#~ "bevat. Tweemaal drukken, maakt de instelling ongedaan."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s tot %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "Handmatig activeren/bewerken"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Uw configuratiebestand bevat fouten. \n"
-#~ "Klik 'Ok' om deze fouten op te lossen, of klik 'annuleren' als u op een "
-#~ "later ogenblik uw configuratiebestand handmatig wilt bijwerken om "
-#~ "correcties uit te voeren. Meer details over de fouten vindt u in het "
-#~ "logbestand.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Geen automatische opmerkingen."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Kon het venster voor automatische opmerkingen niet vinden."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr ""
-#~ "Geeft alle opmerkingen in het venster voor automatische commentaren weer"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automatische opmerkingen:"
-
-#~ msgid "Translation:"
-#~ msgstr "Vertaling:"
-
-#~ msgid "Comments:"
-#~ msgstr "Opmerkingen:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Geen platte overzichtsmodus voor dit object"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Geen object op de positie van de platte overzichtsmodus"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "In platte overzichtsmodus, verplaatst navigatorobject naar het object dat "
-#~ "wordt voorgesteld door de tekst op de positie van de leescursor"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Sluit eerst het andere dialoogvenster met NVDA-instellingen aub"
-
-#~ msgid "Translation &table:"
-#~ msgstr "Braille&tabel"
-
-#~ msgid "beeps"
-#~ msgstr "pieptonen"
-
-#~ msgid "talk"
-#~ msgstr "spreek"
-
-#~ msgid "default action failed"
-#~ msgstr "standaard actie mislukt"
-
-#~ msgid "layout %s"
-#~ msgstr "weergave %s"
-
-#~ msgid "%s device found"
-#~ msgstr "%s apparaat gevonden"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, gebruiken van standaard instelling %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "foutief aangemaakt configuratie-bestand"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "fout tijdens verwerken van configuratie-bestand: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Fouten in het configuratie-bestand '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s of %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Het lijkterop dat deze add-on al is geïnstalleerd. Verwijder aub de "
-#~ "bestaande add-on en probeer het opnieuw."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "Laden van de de opgeslagen configuratie van NVDA, waardoor niet "
-#~ "opgeslagen instellingen verloren gaan"
