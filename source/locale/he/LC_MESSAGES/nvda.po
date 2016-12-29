@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-18 19:54+0200\n"
+"PO-Revision-Date: 2016-12-28 20:39-0800\n"
 "Last-Translator:  <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -86,7 +86,6 @@ msgid "unknown input method"
 msgstr "שיטת קלט לא ידועה"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -724,7 +723,6 @@ msgstr "לא %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} מתוך {total}"
 
@@ -1483,73 +1481,61 @@ msgid "pink-red"
 msgstr "ורוד אדום"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "{color} בהיר"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "{color}} כהה"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "{color} כהה מאוד"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "{color} חיוור בהיר"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "{color} חיוור"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "{color} חיוור כהה"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "{color} חיוור כהה מאוד"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} לבן"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} אפור"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "{color} אפור כהה"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "{color} אפור כהה מאוד"
@@ -3367,7 +3353,6 @@ msgid "AC power on"
 msgstr "חיבור לחשמל פעיל"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} שעות ו {minutes:d} דקות נותרו "
 
@@ -4195,7 +4180,6 @@ msgid "column %s"
 msgstr "עמודה %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "מכיל {rowCount} שורות ו {columnCount} עמודות"
 
@@ -4251,30 +4235,25 @@ msgstr "סגנון ברירת מחדל"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} עד {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} על רקע  {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "על  רקע {backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "תבנית רקע  {pattern}"
 
@@ -4482,7 +4461,6 @@ msgid "out of table"
 msgstr "מחוץ לטבלה"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "טבלה בעלת {columnCount} עמודות ו  {rowCount} שורות"
 
@@ -4563,27 +4541,22 @@ msgid "object mode"
 msgstr "הצגה לפי אובייקטים"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "{action} פעם אחת"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "{action} פעמיים"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action} שלוש פעמים"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "{action} ארבע פעמים"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} בעזרת  {numFingers} finger  אצבעות"
 
@@ -4665,7 +4638,6 @@ msgstr "עדכון NVDA זמין"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "גרסה {version} של NVDA זמינה"
 
@@ -4757,11 +4729,9 @@ msgstr "גישה למחשב ללא שימוש בראייה"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "קורא מסך חופשי בעל קוד פתוח עבור Microsoft Windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "כל הזכויות שמורות (C) {years} למתנדבי פרוייקט NVDA"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4806,7 +4776,6 @@ msgstr ""
 "menu."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4815,7 +4784,6 @@ msgstr ""
 "התוספים."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4826,12 +4794,10 @@ msgstr ""
 "המסך,  ובגובה {height:.1f}  באחוזים מגובה המסך."
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} כמו  ב{description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4881,12 +4847,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "דיווח על זמן הנגינה הנותר, אם בכלל"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, מיקום נוכחי  {curLocation} מתך  {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Page {pageNumber}עמוד {pageNumber}"
 
@@ -4996,12 +4961,10 @@ msgid "Waiting for Outlook..."
 msgstr "ממתין לOutlook"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} to {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "פגישה {subject}, {time}"
 
@@ -5163,97 +5126,78 @@ msgid "Master Thumbnails"
 msgstr "תמונות ממוזערות"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "שקופית מספר {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "מכסה את האיזור השמאלי של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "מאחורי האיזור השמאלי של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "מכסה את האיזור העליון של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "מאחורי האיזור העליון של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "מכסה את האיזור הימני של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "מאחורי האיזור הימני של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "מכסה את האיזור התחתון של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "מאחורי האיזור התחתון של   {otherShape} במרחק {distance:.3g}  נקודות"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "מכסה {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "מאחורי {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g}  נקודות מהגבול השמאלי של השקופית"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "במרחק של {distance:.3g}  נקודות מהגבול השמאלי של השקופית"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "במרחק של {distance:.3g}  נקודות מהגבול העליון של השקופית"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "במרחק של {distance:.3g}  נקודות מהגבול העליון של השקופית"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "במרחק של {distance:.3g}  נקודות מהגבול הימני של השקופית"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "במרחק של {distance:.3g}  נקודות מהגבול הימני של השקופית"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "במרחק של {distance:.3g}  נקודות מהגבול התחתון של השקופית"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "במרחק של {distance:.3g}  נקודות מהגבול התחתון של השקופית"
 
@@ -5267,12 +5211,10 @@ msgstr ""
 "אינו משפיע עלתצוגת המסך אלא רק על מה שNVDA  משמיע"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "הצגת ההערות בשקופית  {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "הצגת השקופית  {slideName}"
 
@@ -5361,7 +5303,6 @@ msgstr "צגי ברייל של Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "יציאה טורית: : {portName}"
 
@@ -5846,7 +5787,6 @@ msgid "Choose Add-on Package File"
 msgstr "בחירת קובץ חבילת תוספים"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "חבילת תוספים של NVDA  (*.{ext})"
 
@@ -5858,7 +5798,6 @@ msgid ""
 msgstr "פתיחת חבילת התוסף %s נכשלה.  ייתכן כי הקובץ חסר או פגום."
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -5940,7 +5879,6 @@ msgid "Restart NVDA"
 msgstr "הפעלת NVDA מחדש"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -5953,7 +5891,6 @@ msgstr ""
 "Description: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "כתובת אינטרנט {url}"
 
@@ -6204,7 +6141,6 @@ msgid ""
 msgstr "גרסה קודמת של NVDA נמצאה במחשבך. עותק זה יתעדכן."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7170,7 +7106,6 @@ msgstr "&סינון לפי:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7210,12 +7145,10 @@ msgid "word"
 msgstr "מילה"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "במקום  {x}, {y}"
 
@@ -7271,7 +7204,6 @@ msgid "Taskbar"
 msgstr "שורת משימות"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "צבעי יסוד אדום  {rgb.red}, ירוק {rgb.green}, כחול {rgb.blue}"
 
@@ -7439,7 +7371,6 @@ msgid "&Sheets"
 msgstr "&גליונות"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} עד {end}"
 
@@ -7453,22 +7384,18 @@ msgid ""
 msgstr "לא ניתן לקבוע כותרות. נא הפוך אפשרות זו לזמינה בהגדרות מסמך."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "קבע את  {address}  כההתחלת כותרות העמודות"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr " {address}   כבר נקבע כהתחלת כותרות העמודות"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address}     הוסר מכותרות העמודות"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "לא ניתן לאתר את  {address} בתוך כותרות העמודות"
 
@@ -7481,22 +7408,18 @@ msgstr ""
 "תגרום לביטול הגדרה זו."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "קבע את  {address}  כהתחלת כותרות השורות"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr " {address}  כבר נקבע ככותרת השורות"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address}     הוסר מכותרות השורות"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "לא ניתן לאתר את  {address}  בכותרות השורות"
 
@@ -7508,11 +7431,9 @@ msgstr ""
 "לחיצה פעם אחת תגדיר את התא ככותרת השורה מהתא שלידו והלאה. לחיצה פעמיים תגרום "
 "לביטול הגדרה זו."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "ההודעה מתייחסת אל  {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "ההודעה מתייחסת אל {message}"
 
@@ -7525,12 +7446,10 @@ msgid "Reports the comment on the current cell"
 msgstr "הקראת ההערה הקשורה לתא שבפוקוס"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "עריכת ההערה הקשורה לתא {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} עד {lastAddress} {lastContent}"
 
@@ -7885,7 +7804,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "פיזור עם קווים מרוככים וללא מצייני נתונים"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "כותרת תרשים: {chartTitle}, סוג: {chartType}"
 
@@ -7913,7 +7831,6 @@ msgstr "סדרה"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "הציר {axisName} הוא {axisTitle}"
 
@@ -7927,7 +7844,6 @@ msgid "There are total %d series in this chart"
 msgstr "ישנו סך הכל %d סדרות בגיליון זה"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "סדרה  {number} {name}"
 
@@ -7952,7 +7868,6 @@ msgstr "נקודת נתונים"
 msgid "item"
 msgstr "פריט "
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "צבע הסדרה הוא  {colorName} "
 
@@ -8042,61 +7957,51 @@ msgstr "צורה"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "סדרה   {seriesName} {seriesIndex} מתוך {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "אין שינויים מהנקודה {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "הוגדל בשיעור  {incrementValue} מהנקודה  {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "הוקטן בשיעור {decrementValue} מהנקודה {previousIndex},"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "קטגוריה  {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "ערך  {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " שבר  {fractionValue:.2f}  חלק באחוזים {pointIndex} מתוך  {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} מתוך {pointCount}"
 
@@ -8109,12 +8014,10 @@ msgid "Secondary"
 msgstr "משני"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "ציר גיליון,  סוג:  {axisType}, קבוצה: {axisGroup}, כותרת: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "ציר גיליון, סוג: {axisType}, קבוצה: {axisGroup}"
 
@@ -8132,7 +8035,6 @@ msgid " squared "
 msgstr "מרובע"
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "כותרת גיליון: {chartTitle}"
 
@@ -8141,7 +8043,6 @@ msgid "Untitled chart"
 msgstr "גיליון ללא כותרת"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8154,7 +8055,6 @@ msgid "Chart area "
 msgstr "איזור גיליון"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8179,14 +8079,12 @@ msgstr "אין מקראה"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "פריט במקראה עבור סדרה {seriesName} {seriesIndex} מתוך {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "מפתח מקראה עבור סדרה  {seriesName} {seriesIndex} מתוך {seriesCount}"
 
@@ -8288,11 +8186,9 @@ msgstr "כותרת ראשית"
 msgid "Text frame"
 msgstr "מסגרת טקסט"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "הערה: {text} מאת {author} בתאריך {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} מאת {author} בתאריך {date}"
 
@@ -8333,24 +8229,20 @@ msgid "Table description"
 msgstr "תיאור טבלה"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "קבע שורה  {rowNumber} ועמודה {columnNumber} כהתחלת כותרות העמודות"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "שורה  {rowNumber} ועמודה {columnNumber} כבר נקבעו כהתחלת כותרות העמודות"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "הסר שורה  {rowNumber} ועמודה {columnNumber} מכותרות העמודות"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "לא ניתן לאתר שורה  {rowNumber} ועמודה {columnNumber} בתוך כותרות העמודות"
@@ -8364,23 +8256,19 @@ msgstr ""
 "תגרום לביטול הגדרה זו."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "קבע שורה  {rowNumber} ועמודה {columnNumber} כהתחלת כותרות השורות"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "שורה  {rowNumber} ועמודה {columnNumber} כבר נקבעו כהתחלת כותרות השורות"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "הסר שורה  {rowNumber} ועמודה {columnNumber} מכותרות השורות"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "לא ניתן לאתר שורה  {rowNumber} ועמודה {columnNumber} בתוך כותרות השורות"
@@ -8464,43 +8352,35 @@ msgid "Moved above blank paragraph"
 msgstr "מעבר מעל פיסקה ריקה"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "סגנון {styleName}  רמת פריסה  {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "גודל הגופן {size:g}  נקודות"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g}  תווים"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g}  אינצ'ים"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g}  סנטימטרים"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} מילימטרים"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g}  נקודות"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g}  פיקות"
 
@@ -8541,90 +8421,3 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "מסגרת"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "שגיאה בקובץ השפה %s"
-
-#~ msgid "Language Error"
-#~ msgstr "שגיאת שפה"
-
-#~ msgid "&Profile"
-#~ msgstr "&פרופיל"
-
-#~ msgid "Language"
-#~ msgstr "שפה"
-
-#~ msgid "Log level"
-#~ msgstr "רמת דיווח"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "פריסת מקלדת"
-
-#~ msgid "text reporting unit"
-#~ msgstr "מידת גודל הטקסטים"
-
-#~ msgid "Progress bar output"
-#~ msgstr "הקראת את פסי ההתקדמות"
-
-#~ msgid "Report &font name"
-#~ msgstr "הקראת שמות ה&גופנים"
-
-#~ msgid "Report font &size"
-#~ msgstr "הקראת &גודל הגופן"
-
-#~ msgid "Report &alignment"
-#~ msgstr "הקראת &יישור"
-
-#~ msgid "Report &colors"
-#~ msgstr "הקרא&צבעים"
-
-#~ msgid "Report co&mments"
-#~ msgstr "הקראת הערות"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "הקראת שינוי הדגשה"
-
-#~ msgid "Report st&yle"
-#~ msgstr "הקראת סגנון"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "הקראת &שגיאות איות"
-
-#~ msgid "Report &pages"
-#~ msgstr "הקראת מעבר עמוד"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "הקראת מרחק בין שורות"
-
-#~ msgid "Report &tables"
-#~ msgstr "הקראת מידע על טבלאות"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "הקראת &כותרות שורות ועמודות בטבלאות"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "הקראת ק&ישורים"
-
-#~ msgid "Report &headings"
-#~ msgstr "הקראת כו&תרות"
-
-#~ msgid "Report &lists"
-#~ msgstr "הקראת &רשימות"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "הקראת &ציטוטים"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "הקראת ציוני &דרך"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "הקראת מס&גרות"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "הקראת אובייקטים &לחיצים"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "מיתוג הקראת מידע על כניסת שורה"
