@@ -763,7 +763,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
-				field['language']=self._getLanguageFromLcid(languageId)
+				field['language']=languageHandler.windowsLCIDToLocaleName(languageId)
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
@@ -777,14 +777,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
 		return field
-
-	def _getLanguageFromLcid(self, lcid):
-		"""
-		gets a normalized locale from a lcid
-		"""
-		lang = locale.windows_locale[lcid]
-		if lang:
-			return languageHandler.normalizeLanguage(lang)
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE: 
