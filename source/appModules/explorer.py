@@ -26,7 +26,7 @@ class MultitaskingViewFrameWindow(UIA):
 	shouldAllowUIAFocusEvent=False
 
 
-# suppress focus ancestry for task switching list items if alt is held down (alt+tab)
+# Suppress focus ancestry for task switching list items if alt is held down (alt+tab)
 class MultitaskingViewFrameListItem(UIA):
 
 	def _get_container(self):
@@ -36,7 +36,7 @@ class MultitaskingViewFrameListItem(UIA):
 			return super(MultitaskingViewFrameListItem,self).container
 
 
-# support for Win8 start screen search suggestions.
+# Support for Win8 start screen search suggestions.
 class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
@@ -46,12 +46,12 @@ class SuggestionListItem(UIA):
 		super(SuggestionListItem,self).event_UIA_elementSelected()
 
 
-#win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
+# Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
 	shouldAllowIAccessibleFocusEvent=False
 
 
-#Class for menu items  for Windows Places and Frequently used Programs (in start menu)
+# Class for menu items  for Windows Places and Frequently used Programs (in start menu)
 class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 
 	# #474: When focus moves to these items, an extra focus is fired on the parent
@@ -135,8 +135,8 @@ class GridGroup(UIA):
 	"""
 	presentationType=UIA.presType_content
 
-	#Normally the name is the first tile which is rather redundant
-	#However some groups have custom header text which should be read instead
+	# Normally the name is the first tile which is rather redundant
+	# However some groups have custom header text which should be read instead
 	def _get_name(self):
 		child=self.firstChild
 		if isinstance(child,UIA):
@@ -149,8 +149,8 @@ class GridGroup(UIA):
 
 
 class ImmersiveLauncher(UIA):
-	#When the win8 start screen opens, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
-	#Ignore focus events on this object.
+	# When the Windows 8 start screen opens, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
+	# Ignore focus events on this object.
 	shouldAllowUIAFocusEvent=False
 
 
@@ -190,7 +190,7 @@ class AppModule(appModuleHandler.AppModule):
 		if windowClass == "ToolbarWindow32":
 			# Check whether this is the notification area, a.k.a. system tray.
 			if isinstance(obj.parent, ClassicStartMenu):
-				return #This can't be a notification area
+				return # This can't be a notification area
 			try:
 				# The toolbar's immediate parent is its window object, so we need to go one further.
 				toolbarParent = obj.parent.parent
@@ -254,8 +254,8 @@ class AppModule(appModuleHandler.AppModule):
 			obj.description = None
 			return
 
-		#The Address bar is embedded inside a progressbar, how strange.
-		#Lets hide that
+		# The Address bar is embedded inside a progressbar, how strange.
+		# Lets hide that
 		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
 			obj.presentationType=obj.presType_layout
 
