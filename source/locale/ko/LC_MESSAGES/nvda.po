@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 00:10+1000\n"
-"PO-Revision-Date: 2016-12-19 13:04-0800\n"
+"POT-Creation-Date: 2016-12-28 22:27-0800\n"
+"PO-Revision-Date: 2016-12-28 22:33-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -4276,6 +4276,43 @@ msgstr "%s 끝"
 msgid "page %s"
 msgstr "페이지 %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, fuzzy, python-format
+msgid "section %s"
+msgstr "section"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+msgid "column {0} of {1}"
+msgstr "열 {0}/{1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, fuzzy, python-format
+msgid "%s columns"
+msgstr "%s 열"
+
+msgid "continuous section break"
+msgstr "연속 섹션 끝"
+
+msgid "new column section break"
+msgstr "새 열 섹션 끝"
+
+msgid "new page section break"
+msgstr "새 쪽 섹션 끝"
+
+msgid "even pages section break"
+msgstr "짝수 쪽 섹션 끝"
+
+msgid "odd pages section break"
+msgstr "홀수 쪽 섹션 끝"
+
+#, fuzzy
+msgid "column break"
+msgstr "열 머리말"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4912,7 +4949,7 @@ msgstr "만약 트랙이 재생되는 경우 현재 트랙의 남은 시간을 �
 #. Translators: A position in a Kindle book
 #, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
-msgstr ""
+msgstr "{bookPercentage}%, {curLocation}/{maxLocation}"
 
 #. Translators: a page in a Kindle book
 msgid "Page {pageNumber}"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-10 06:01+0400\n"
+"PO-Revision-Date: 2016-12-28 20:42-0800\n"
 "Last-Translator: gode\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Initial-Author: Beqa Gozalishvili <beqaprogger@gmail.com>\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -83,7 +83,6 @@ msgid "unknown input method"
 msgstr "შეყვანის უცნობი  მეთოდი"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -721,7 +720,6 @@ msgstr "არა %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} {total}დან"
 
@@ -1486,73 +1484,61 @@ msgid "pink-red"
 msgstr "მოვარდისფრო წითელი"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "ნათელი {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "მუქი {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "ძალიან მუქი {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "ღია ფერმკრთალი {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "ფერმკრთალი {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "მუქი ფერმკრთალი {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "ძალიან მუქი ფერმკრთალი {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} თეთრი"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} ნაცრისფერი"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "მუქი {color} ნაცრისფერი"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "ძალიან მუქი {color} ნაცრისფერი"
@@ -3442,7 +3428,6 @@ msgid "AC power on"
 msgstr "ელექტრო ქსელიდან კვება ჩართულია"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "დარჩენილია {hours:d} საათი და {minutes:d} წუთი"
 
@@ -4298,7 +4283,6 @@ msgid "column %s"
 msgstr "სვეტი %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "{rowCount} ხაზითა და {columnCount} სვეტით"
 
@@ -4354,30 +4338,25 @@ msgstr "სტანდარტული სტილი"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} {color2}-ზე"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} {backgroundColor}ზე"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "ფონის ფერი {backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "ჩუქურთმა {pattern}"
 
@@ -4585,7 +4564,6 @@ msgid "out of table"
 msgstr "ცხრილს გარეთ"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "ცხრილი {columnCount} სვეტით და {rowCount} ხაზით"
 
@@ -4666,27 +4644,22 @@ msgid "object mode"
 msgstr "ობიექტის რეჟიმი"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "ერთხელ {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "ორჯერ {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "სამჯერ {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "ოთხჯერ {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} თითით შესასრულებელი {action}  "
 
@@ -4768,7 +4741,6 @@ msgstr "NVDA-ს განახლება"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "ხელმისაწვდომია NVDA ვერსია {version}."
 
@@ -4864,11 +4836,9 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "თავისუფალი ხმოვანი პროგრამა windowsსთვის გახსნილი კოდით"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "საავტორო უფლება (C) {years} NVDA დამმუშავებლები"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4913,7 +4883,6 @@ msgstr ""
 "გაკეთდეს nvda მენიუდან \"შესაწირის\"  არჩევისას."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4922,7 +4891,6 @@ msgstr ""
 "იმისათვის, რომ დააყენოთ NVDA-ს დამატება, თქვენ უნდა გქონდეთ გაშვებული NVDA."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4933,12 +4901,10 @@ msgstr ""
 "პროცენტით ეკრანიდან, სიმაღლე, {height:.1f} პროცენტით ეკრანიდან"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} სიტყვაში {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4988,12 +4954,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "აცხადებს ბილიკის დაკვრის დარჩენილ დროს თუ შესაძლებელია"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, მდებარეობა {curLocation}-ის {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "გვერდი {pageNumber}"
 
@@ -5103,12 +5068,10 @@ msgid "Waiting for Outlook..."
 msgstr "აუთლუქის ლოდინი..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} დან {endTime} მდე"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "დანიშნულების {subject}, {time}"
 
@@ -5270,97 +5233,78 @@ msgid "Master Thumbnails"
 msgstr "ხატულების მასტერი"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "სლაიდი {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "ფარავს მარცხნიდან {otherShape} {distance:.3g}-იის წერტილით"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "ფარავს უკან და მარცხნიდან {otherShape} {distance:.3g}-იის წერტილით"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "ფარავს ზემოდან {otherShape} {distance:.3g}-ის წერტილით"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "ფარავსუკან და ზემოდან {otherShape} {distance:.3g}-ის წერტილით"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "ფარავს მარჯვნიდან {otherShape} {distance:.3g}-ის წერტილით"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "ფარავს უკან და მარჯვნიდან {otherShape} {distance:.3g}-ის წერტილით"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "ფარავს ქვემოდან {otherShape} {distance:.3g}-ის წერტილით"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "ფარავს უკან ქვემოდან {otherShape} {distance:.3g}-ის წერტილით"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "ფარავს {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "უკან {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} წერტილით სლაიდის მარცხენა კუთხიდან"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "სლაიდის მარცხენა კუთხიდან{distance:.3g} წერტილით"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} წერტილით სლაიდის ზემო კუთხიდან"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "სლაიდის ზემო კუთხიდან მარცხნივ {distance:.3g} წერტილით"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} წერტილით სლაიდის მარჯვენა კუთხიდან"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "სლაიდის მარჯვენა კუთხიდან {distance:.3g} წერტილით"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} წერტილით სლაიდის ქვედა კუთხიდან"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "სლაიდის ქვედა კუთხიდან {distance:.3g} წერტილით"
 
@@ -5375,12 +5319,10 @@ msgstr ""
 "ინფორმაცია რომელიც nvda-ს დახმარებით შეუძლია მიიღოს მომხმარებელს."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "სლაიდშოუს - შენიშვნები {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "სლაიდების ჩვენება - {slideName}"
 
@@ -5473,7 +5415,6 @@ msgstr ""
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "სერია: {portName}"
 
@@ -5974,7 +5915,6 @@ msgid "Choose Add-on Package File"
 msgstr "აირჩიეთ NVDA დამატების პაკეტი"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA დამატების პაკეტი (*.{ext})"
 
@@ -5988,7 +5928,6 @@ msgstr ""
 "ფორმატი"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6072,7 +6011,6 @@ msgid "Restart NVDA"
 msgstr "NVDA-ს გადატვირთვა"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6085,7 +6023,6 @@ msgstr ""
 "აღწერა: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "მისამართი: {url}"
 
@@ -6347,7 +6284,6 @@ msgstr ""
 "ვერსია განახლდება"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7324,7 +7260,6 @@ msgstr "&გავფილტროთ როგორც:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7365,12 +7300,10 @@ msgid "word"
 msgstr "სიტყვა"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "{x}, {y}ზე"
 
@@ -7427,7 +7360,6 @@ msgid "Taskbar"
 msgstr "ამოცანების პანელი"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB წითელი {rgb.red}, მწვანე {rgb.green}, ლურჯი {rgb.blue}"
 
@@ -7595,7 +7527,6 @@ msgid "&Sheets"
 msgstr "ფურცლები"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} -დან {end} -მდე"
 
@@ -7611,22 +7542,18 @@ msgstr ""
 "დოკუმენტის ფორმატირების პარამეტრებიდან"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "დაყენდეს {address} სვეტის სათაურების დასაწყისად"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} სვეტის სათაურების დასაწყისად უკვე დაყენებულია"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address}    წაიშალა სვეტების სათაურებიდან "
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr " {address}-ის პოვნა სვეტების სათაურებში ვერ მოხერხდა"
 
@@ -7640,22 +7567,18 @@ msgstr ""
 "გააუქმებს თქვენ მიერ გაკეთებულ არჩევანს."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "დაყენდეს {address} ხაზების სათაურების საწყისად"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} ხაზების სათაურების საწყისად უკვე დაყენებულია"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address}    წაიშალა ხაზების სათაურებიდან"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "{address}-ის პოვნა ხაზების სათაურებში ვერ მოხერხდა"
 
@@ -7668,11 +7591,9 @@ msgstr ""
 "და მარჯვნივ მდებარე უჯრებისთვის ამ არეში. . ორჯერ დაჭერისას კი გააუქმებს "
 "თქვენ მიერ გაკეთებულ არჩევანს."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "შეტანილი შეტყობინების სათაური არის {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "შეტანილი შეტყობინება არის {message}"
 
@@ -7685,12 +7606,10 @@ msgid "Reports the comment on the current cell"
 msgstr "ახმოვანებს კომენტარს მოცემულ უჯრაზე"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "{address} უჯრის კომენტარის რედაქტირება"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent}-დან  {lastAddress} {lastContent}-მდე"
 
@@ -8053,7 +7972,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "წერტილოვანი დიაგრამა გლუვი ხაზებით, მაგრამ მონაცემთა მარკერების გარეშე"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "სქემის სათაური: {chartTitle}, ტიპი: {chartType}"
 
@@ -8081,7 +7999,6 @@ msgstr "სერია"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "ღერძის ტიპი: {axisName} სათაურით: {axisTitle}"
 
@@ -8095,7 +8012,6 @@ msgid "There are total %d series in this chart"
 msgstr "ამ დიაგრამაში სულ  %d  რიგია"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "სერიის {number} {name}"
 
@@ -8120,7 +8036,6 @@ msgstr "მონაცემთა წერტილი"
 msgid "item"
 msgstr "ელემენტი"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "ხაზების ფერი {colorName} "
 
@@ -8213,54 +8128,45 @@ msgstr "მოყვანილობა"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} რიგი {seriesIndex} დან {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "არაა ცვლილებები წერტილში {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "გაიზარდა {incrementValue}-ით წერტილში {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "შემცირდა {decrementValue}-ით წერტილში {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "კატეგორია {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "მნიშვნელობა {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8269,7 +8175,6 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} {pointCount}-დან"
 
@@ -8282,13 +8187,11 @@ msgid "Secondary"
 msgstr "დამხმარე ღერძზე"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup}, სათაური: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup},"
 
@@ -8306,7 +8209,6 @@ msgid " squared "
 msgstr " ოთხკუთხედი "
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "სქემის  სათაური {chartTitle}"
 
@@ -8315,7 +8217,6 @@ msgid "Untitled chart"
 msgstr "უსახელო დიაგრამა"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8328,7 +8229,6 @@ msgid "Chart area "
 msgstr "დიაგრამის ფართობი"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8353,7 +8253,6 @@ msgstr "არაა ლეგენდა"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "ლეგენდის ელემენტი რიგისთვის {seriesName} {seriesIndex} {seriesCount}-დან"
@@ -8361,7 +8260,6 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "ლეგენდის გასაღები რიგისთვის {seriesName} რიგი {seriesIndex} {seriesCount}-დან"
@@ -8464,11 +8362,9 @@ msgstr "პირველი სათაური"
 msgid "Text frame"
 msgstr "ტექსტური ფრეიმი"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "შენიშვნა: {text} {author} {date}-ში"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} {author}  {date}-ში"
 
@@ -8509,24 +8405,20 @@ msgid "Table description"
 msgstr "ცხრილის აღწერა"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "ხაზი {rowNumber} სვეტი {columnNumber} დაყენდა სვეტების სათაურების საწყისად"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "ხაზი {rowNumber} სვეტი {columnNumber} სვეტების სათაურების საწყისად"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "ხაზი {rowNumber} სვეტი {columnNumber}  წაიშალა სვეტების სათაურებიდან"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "ხაზის {rowNumber} სვეტის {columnNumber}  პოვნა ვერ მოხერხდა სვეტების "
@@ -8542,13 +8434,11 @@ msgstr ""
 "გააუქმებს თქვენ მიერ გაკეთებულ არჩევანს."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "ხაზის {rowNumber} სვეტის {columnNumber} დაყენება ხაზების სათაურების საწყისად"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8556,12 +8446,10 @@ msgstr ""
 "საწყისად"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "ხაზი {rowNumber} სვეტი {columnNumber}  წაიშალა ხაზების სათაურებიდან"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "ხაზის {rowNumber} სვეტის {columnNumber}  პოვნა ვერ მოხერხდა ხაზების "
@@ -8647,43 +8535,35 @@ msgid "Moved above blank paragraph"
 msgstr "გადატანილია ცარიელი პარაგრაფის  ზემოთ"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} სტილი, კონტურის დონე {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} შრიფტის ნიშანი"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} სიმბოლო"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} დიუმი"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} სანტიმეტრი"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} მილიმეტრი"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} წერტილი"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} პიკი"
 
@@ -8724,867 +8604,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "Iფრეიმი"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "%s ენის ფაილში შეცდომაა."
-
-#~ msgid "Language Error"
-#~ msgstr "ენის შეცდომა"
-
-#~ msgid "&Profile"
-#~ msgstr "&პროფილი"
-
-#~ msgid "Language"
-#~ msgstr "ენა"
-
-#~ msgid "Log level"
-#~ msgstr "ლოგის დონე"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "ღილაკების წყობა "
-
-#~ msgid "text reporting unit"
-#~ msgstr "ტექსტის კითხვის ერტეული"
-
-#~ msgid "Progress bar output"
-#~ msgstr "შესრულების ინდიკატორების გახმოვანება "
-
-#~ msgid "Report &font name"
-#~ msgstr "შრიფტის სახელის გამოცხადება"
-
-#~ msgid "Report font &size"
-#~ msgstr "ფონტის ზომის&წაკიტხვა"
-
-#~ msgid "Report &alignment"
-#~ msgstr "გასწორების&წაკითხვა"
-
-#~ msgid "Report &colors"
-#~ msgstr "ფერების*წაკითხვა"
-
-#~ msgid "Report co&mments"
-#~ msgstr "კო&მენტარების გამოცხადება "
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "ტექსტზე ხაზგასმის წაკითხვა"
-
-#~ msgid "Report st&yle"
-#~ msgstr "სტილის&წაკითხვა"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "მართლწერაში შეცდომების გამოცხადება"
-
-#~ msgid "Report &pages"
-#~ msgstr "გვერდების&წაკითხვა"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "ხაზებს შორის ინტერვალების გამოცხადება"
-
-#~ msgid "Report &tables"
-#~ msgstr "ცხრილების&წაკითხვა"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "სვეტების და ხაზების სათაურების&წაკითხვა "
-
-#~ msgid "Report lin&ks"
-#~ msgstr "ბმულებ&ის გამოცხადება"
-
-#~ msgid "Report &headings"
-#~ msgstr "სათაურების&წაკითხვა"
-
-#~ msgid "Report &lists"
-#~ msgstr "სიების გამოცხადება"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "ციტატების&წაკითხვა"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "ორიენტირების&წაკითხვა "
-
-#~ msgid "Report fra&mes"
-#~ msgstr "ჩარ&ჩოების გამოცხადება"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "გამოცხადება თუ დაწკაპუნებადია"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "რთავს ხაზის გასწორების გამოცხადებას"
-
-#~ msgid "browse mode"
-#~ msgstr "ნახვის რეჟიმი"
-
-#~ msgid "unknown color"
-#~ msgstr "უცნობი ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "ლურჯი ელისი"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "ანტიკური თეთრი"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "ზღვის ტალღის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "ბივრილის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "აზურის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "კრემისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "უცნობი ფერი"
-
-# სავარაუდოა
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "ნუშის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "ლურჯი იისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "მოყვითალო"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "ნაცრისფერ-ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "სალათის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "შოკოლადის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "მარჯნის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "ღიღილოსფრად ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "აბრეშუმისფრად ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "მუქი-წითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "ცისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "მუქი-ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "მუქი-ცისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "მუქი-ოქროსფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "მუქი მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "მუქი ხაკისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "მუქი მეწამული"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "მუქი ზეთისხილისფერი მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "მუქი ნარინჯისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "მუქი ორქიდეის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "მუქი წითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "მუქი ნარინჯისფერ-ვარდისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "მუქი ზღვისფერი მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "გრიფელისფერი ლურჯი "
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "მუქი ნაცრისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "მუქი ფირუზისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "მუქი-იისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "ღრმა-ვარდისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "მუქი ცისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "კვამლისფრად ნაცრისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "აგურისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "თეთრი ყვავილისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "ტყიურ-მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "ფუქსიის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "გამჭვირვალედ თეთრი"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "ოქროს ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "ოქროსფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "ყვითელი მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "თაფლისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "ხასხასა წითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "წაბლისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "მუქი ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "სპილოს ძვლის ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "ხაკისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "ლავანდასფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "ხასხასა ლავანდასფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "ბალახისფერი მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "ლიმონისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "ღია ცისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "ღია მარჯნისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "ფერი ლურჯსა და მწვანეს შორის"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "ღია მოყვითალო ოქროსფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "ღია მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "ღია ვარდისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "ღია ნარინჯისფერ-ვარდისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "ღია ზღვისფერი მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "ღია ცისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "ღია ნაცრისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "ღია ფოლადისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "ღია ყვითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "კირისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "ტილოსფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "ფუქსინისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "წაბლისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "აკვამარინისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "ორქიდეისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "იისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "ზღვისფრად მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "ფირუზისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "იისფრად წითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "ძალიან მუქი ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "პიტნისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "ვარდისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "მოკასინისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "თეთრი"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "ზღვისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "ზეთისხილისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "ზეთისხილისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "ნარინჯისფერი წითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "ორქიდეისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "ოქროსფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "ფირუზისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "მოწითალო იისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "პაპაიას ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "ატმისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "უცნობი ფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "ვარდისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "ქლიავისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "ლურჯი ფხვნილისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "წითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "მოყავისფრო ვარდისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "კაშკაშა ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "ყავისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "თევზისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "ქვიშისფრად ყავისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "ზღვისფერი მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "ნიჟარისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "მუქი ყვითელი"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "ვერცხლისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "ცისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "ლურჯი"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "ნაცრისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "თოვლისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "ხასხასა მწვანე"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "ფოლადისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "მუქი შოკოლადისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "ბუმბულისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "ბალახისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "პამიდვრისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "ფირუზისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "იისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "ხორბლისფერი"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "კვამლისფრად თეთრი"
-
-#~ msgid "activate"
-#~ msgstr "გააქტიურება "
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "ფრაგმენტის დასაწყისი უნდა დაყენდეს იმავე ობიექტზე"
-
-#~ msgid "no next"
-#~ msgstr "არ არის შემდეგი"
-
-#~ msgid "no previous"
-#~ msgstr "არ არის წინა"
-
-#~ msgid "edge of table"
-#~ msgstr "ცხრილის საზღვარი"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "ამ უჯრის რედაქტირება შეუძლებელია"
-
-#~ msgid "%g characters"
-#~ msgstr "%g სიმბოლო"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "კომენტარები არ არის"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "სტანდარტული ფერი"
-
-#~ msgid "unselecting %s"
-#~ msgstr "არ არის გამოყოფილი %s"
-
-#~ msgid "unknown author"
-#~ msgstr "უცნობი ავტორი"
-
-#~ msgid "unknown date"
-#~ msgstr "უცნობი თარიღი"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "ფოკუსში კითხულობს ობიექტს."
-
-#, fuzzy
-#~ msgid "%s"
-#~ msgstr "ხაზი %s"
-
-#~ msgid "equation"
-#~ msgstr "განტოლება"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "იძახებს სიების, ბმულების, სათაურებისა და ორიენტირების დიალოგს"
-
-#~ msgid "Slovak"
-#~ msgstr "Slovak"
-
-#~ msgid "navy blue"
-#~ msgstr "მუქი ლურჯი"
-
-#~ msgid "teal"
-#~ msgstr "მომწვანო მოცისფრო"
-
-#, fuzzy
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "ღილაკების წყობა "
-
-#, fuzzy
-#~ msgid "Read What's New"
-#~ msgstr "რა არის &ახალი"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&აჩქარება"
-
-#~ msgid "male 1"
-#~ msgstr "მამრობითი 1"
-
-#~ msgid "female 1"
-#~ msgstr "მდედრობითი 1"
-
-#~ msgid "male 2"
-#~ msgstr "მამრობითი 2"
-
-#~ msgid "female 2"
-#~ msgstr "მდედრობითი 2"
-
-#~ msgid "lime"
-#~ msgstr "ლიმონის ფერი"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "დარწმუნებული ხართ რომ გსურთ გამორთოთ NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "შეკითხვა&NVDA-ს დასრულებისას თანხმობით"
-
-#~ msgid "Regexp"
-#~ msgstr "რეგულარული გამოთქმა "
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "ნავიგატორის მდებარეობა არაა ცნობილი"
-
-#~ msgid "No location information for screen"
-#~ msgstr "ობიექტის ეკრანზე განთავსება მიუწვდომელია"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "აცხადებს სიმაღლეს, სიგანეს და ნავიგატორის ობიექტის მდებარეობას."
-
-#, fuzzy
-#~ msgid "Set column header row"
-#~ msgstr "სვეტის სათაური"
-
-#, fuzzy
-#~ msgid "Cleared column header row"
-#~ msgstr "სვეტის სათაური"
-
-#, fuzzy
-#~ msgid "Set row header column"
-#~ msgstr "ხაზის სათაური"
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s მდე %s %s"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "თქვენი კონფიგურაციის ფაილი შეიცავს შეცდომებს. \n"
-#~ "დააწექით 'დიახ' შეცდომების გასწორებისათვის, ან დააწექიტ 'უარყოფა' , თუ "
-#~ "თქვენ გსურთ მოგვიანებით კონფიგურაციის ფაილის ხელ-ახალი რედაქტირება.\n"
-#~ "დაწვრილებითი ინფორმაცია ინახება log ფაილში.\n"
-
-#, fuzzy
-#~ msgid "Automatic comments:"
-#~ msgstr "ჩასმული"
-
-#, fuzzy
-#~ msgid "Translation:"
-#~ msgstr "ორგანიზაცია "
-
-#, fuzzy
-#~ msgid "Comments:"
-#~ msgstr "კომენტარი "
-
-#~ msgid "layout %s"
-#~ msgstr "%s წყობა"
-
-#~ msgid "%s embedded object"
-#~ msgstr "%s ჩადგმული ობიეკტი"
-
-#~ msgid "NVDA Excel Cell Editor"
-#~ msgstr "ექსელის NVDA-ში უჯრედის რედაქტორი "
-
-#~ msgid "Enter cell contents"
-#~ msgstr "შეიყვანეთ უჯრედის შინაარსი"
-
-#~ msgid "Extends the selection and speaks the last selected cell"
-#~ msgstr "გამოყოფს უჯრედებს და კითხულობს უკანასკნელს"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s %s დან"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "კონფიგურაციის ფაილი ფორმირებულია არა სწორედ"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, დაყენების წინ%s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "შეცდომა %s კონფიგურაციის ფაილის სინტაქსში"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "შეცდომები კონფიგურაციის ფაილში '%s':\n"
-#~ "%s"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "ამ ობიექტის ბრტყლად ნახვა მიუწვდომელია"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "ბრტყლად ნახვის რეჟიმში ობიექტი არ არის"
-
-#~ msgid ""
-#~ "Moves to the object represented by the text at the position of the review "
-#~ "cursor within flat review"
-#~ msgstr "არსებულ ტექსტს გადაადგილებს ობიექტზე ბრტყლად ნახვის რეჟიმში"
-
-#~ msgid "No parents"
-#~ msgstr "არ არის მშობლიური"
-
-#~ msgid ""
-#~ "Sets the navigator object to the parent of the object it is currently on "
-#~ "and speaks it"
-#~ msgstr ""
-#~ "მიჰყავს ნავიგატორი მშობლიურ ობიექტთან მიმდინარესთან შეფარდებით და "
-#~ "ახმოვანებს მას."
-
-#~ msgid ""
-#~ "Sets the navigator object to the object previous to the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "მიმდინარესთან შეფარდებით, აყენებს ნავიგატორს წინა ობიექტზე და ახმოვანებს "
-#~ "მას."
-
-#~ msgid "No children"
-#~ msgstr "არ არის შვილობილი."
-
-#~ msgid ""
-#~ "Sets the navigator object to the first child object of the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "მიმდინარესთან შეფარდებით, აყენებს ნავიგატორს პირველ შვილობილ ობიექტზე და "
-#~ "ახმოვანებს მას."
-
-#~ msgid "default action failed"
-#~ msgstr "სტანდარტით, მოქმედება არ მოხერხდა."
-
-#~ msgid ""
-#~ "Speaks the word of the current navigator object where the review cursor "
-#~ "is situated. If this key is pressed twice, the word will be spelled"
-#~ msgstr ""
-#~ "კითხულობს ხილული კურსორის ქვეს სიტყვას, ორჯერ დაწოლისას კითხულობს ასო-ასო."
-
-#~ msgid "beeps"
-#~ msgstr "სიგნალები"
-
-#~ msgid "talk"
-#~ msgstr "მეტყველება"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "ტვირთავს nvda კონფიგურაციის წყობას ფაილიდან, მოიხმარს მატ"
-
-#~ msgid "Please close  the other NVDA settings dialog first"
-#~ msgstr "გთხოვთ ჯერ დახუროტ nvda პარამეტრების სხვა დიალოგი"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "დიდი ასოებისათვის ხმის ტონის შეცვლა"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "მიჰყვეს &ფოკუსს"
-
-#~ msgid "&edit"
-#~ msgstr "&შეცვლა"
-
-#~ msgid "Translation &table:"
-#~ msgstr "ბრაილის&ცხრილი"

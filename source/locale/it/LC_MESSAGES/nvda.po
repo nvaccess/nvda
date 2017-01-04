@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-02 09:52+0100\n"
+"PO-Revision-Date: 2016-12-28 20:41-0800\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -81,7 +81,6 @@ msgid "unknown input method"
 msgstr "Metodo di immissione sconosciuto"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -719,7 +718,6 @@ msgstr "Non %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} di {total}"
 
@@ -1482,73 +1480,61 @@ msgid "pink-red"
 msgstr "rosa-rosso"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "{color} luminoso"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "{color} scuro"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "{color} molto scuro"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "{color} chiaro"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "{color} chiaro"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "{color} scuro tenue"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "{color} molto scuro"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} bianco"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} grigio"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "{color} grigio scuro"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "{color} molto scuro"
@@ -3448,7 +3434,6 @@ msgid "AC power on"
 msgstr "Alimentazione attiva"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} ore e {minutes:d} minuti restanti"
 
@@ -4299,7 +4284,6 @@ msgid "column %s"
 msgstr "Colonna %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "con {rowCount} righe e {columnCount} colonne"
 
@@ -4355,30 +4339,25 @@ msgstr "Stile predefinito"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "da {color1} a {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} su {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "Sfondo {backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "Motivo di sfondo {pattern}"
 
@@ -4586,7 +4565,6 @@ msgid "out of table"
 msgstr "Fuori tabella"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabella con {columnCount} colonne e {rowCount} righe"
 
@@ -4667,27 +4645,22 @@ msgid "object mode"
 msgstr "Modalita' oggetti"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "{action} singolo"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "{action} doppio"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action} triplo"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "{action} quadruplo"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} con {numFingers} dita"
 
@@ -4769,7 +4742,6 @@ msgstr "Aggiornamenti NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "E' disponibile la versione {version} di NVDA."
 
@@ -4865,11 +4837,9 @@ msgstr "Nonvisual desktop access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Uno screen reader gratuito e open-source per Microsoft windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} collaboratori di NVDA"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4915,7 +4885,6 @@ msgstr ""
 "selezionando Fai una donazione dal menu di NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4925,7 +4894,6 @@ msgstr ""
 "NVDA deve essere in esecuzione per poter installare componenti aggiuntivi."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4936,12 +4904,10 @@ msgstr ""
 "{height:.1f} dell'altezza"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} come in {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4991,12 +4957,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Legge il tempo rimanente del brano in riproduzione"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, posizione {curLocation} di {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Pagina {pageNumber}"
 
@@ -5106,12 +5071,10 @@ msgid "Waiting for Outlook..."
 msgstr "In attesa di outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} fino a {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Appuntamento {subject}, {time}"
 
@@ -5273,97 +5236,78 @@ msgid "Master Thumbnails"
 msgstr "Miniature principali"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Diapositiva {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "Si sovrappone a sinistra di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "Dietro a sinistra di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "Si sovrappone in alto di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "Dietro in alto di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "Si sovrappone a destra di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "Dietro in basso di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "Si sovrappone in basso di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "Dietro in basso di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "Si sovrappone a  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "Dietro a {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} punti dal bordo sinistro"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punti di distanza dal bordo sinistro della diapositiva"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} punti dal bordo superiore"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punti di distanza dal bordo superiore della diapositiva"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} punti dal bordo destro"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punti di distanza dal bordo destro della diapositiva"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} punti dal bordo inferiore"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} punti di distanza dal bordo inferiore della diapositiva"
 
@@ -5378,12 +5322,10 @@ msgstr ""
 "che l'utente può leggere con NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Note Presentazione - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Presentazione - {slideName}"
 
@@ -5472,7 +5414,6 @@ msgstr "Baum/Humanware/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Seriale: {portName}"
 
@@ -5972,7 +5913,6 @@ msgid "Choose Add-on Package File"
 msgstr "Seleziona un file contenente il componente aggiuntivo"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA pacchetto componente aggiuntivo (*.{ext})"
 
@@ -5986,7 +5926,6 @@ msgstr ""
 "%s - file mancante o formato file non valido"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6075,7 +6014,6 @@ msgid "Restart NVDA"
 msgstr "Riavvia NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6088,7 +6026,6 @@ msgstr ""
 "Descrizione: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6354,7 +6291,6 @@ msgstr ""
 "effettuato un aggiornamento"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7341,7 +7277,6 @@ msgstr "&Filtra per:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7382,12 +7317,10 @@ msgid "word"
 msgstr "Parola"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "a {x}, {y}"
 
@@ -7444,7 +7377,6 @@ msgid "Taskbar"
 msgstr "Barra delle applicazioni"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB rosso {rgb.red}, verde {rgb.green}, blu {rgb.blue}"
 
@@ -7612,7 +7544,6 @@ msgid "&Sheets"
 msgstr "Fogli (&s)"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} fino a {end}"
 
@@ -7629,22 +7560,18 @@ msgstr ""
 "formattazione documento."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Imposta {address} come inizio intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} già impostato a inizio intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "Rimozione di {address} dalle intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Impossibile trovare {address}    nelle intestazioni colonna"
 
@@ -7659,22 +7586,18 @@ msgstr ""
 "this cell. Una doppia pressione rimuoverà l'impostazione."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Imposta {address} all'inizio  intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} già impostato a inizio intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address} rimosso dalle intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Impossibile trovare {address} nelle intestazioni riga"
 
@@ -7687,11 +7610,9 @@ msgstr ""
 "dell'intestazione riga per tutte le celle più a destra e più in basso in "
 "questa regione. Una doppia pressione rimuoverà l'impostazione."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Il messaggio immesso è  {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Il messaggio immesso è {message}"
 
@@ -7704,12 +7625,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Annuncia i commenti per la cella corrente"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Modifico il commento per la cella {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} fino a {lastAddress} {lastContent}"
 
@@ -8064,7 +7983,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Dispersione con Linee Smussate senza Indicatori"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Titolo grafico: {chartTitle}, tipo: {chartType}"
 
@@ -8092,7 +8010,6 @@ msgstr "Serie"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} Asse è {axisTitle}"
 
@@ -8106,7 +8023,6 @@ msgid "There are total %d series in this chart"
 msgstr "Ci sono %d serie in totale su questo grafico"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "serie {number} {name}"
 
@@ -8131,7 +8047,6 @@ msgstr "Punto dati"
 msgid "item"
 msgstr "elemento"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Colore serie: {colorName} "
 
@@ -8221,54 +8136,45 @@ msgstr "Figura"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} serie {seriesIndex} di {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "Nessun cambiamento dal punto  {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Incremento di {incrementValue} dal punto {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "decremento di {decrementValue} dal punto {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Categoria {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "valore {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8276,7 +8182,6 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} di {pointCount}"
 
@@ -8289,13 +8194,11 @@ msgid "Secondary"
 msgstr "Secondario"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Asse del Grafico, tipo: {axisType}, gruppo: {axisGroup}, titolo: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Asse del grafico, tipo: {axisType}, gruppo: {axisGroup}"
 
@@ -8313,7 +8216,6 @@ msgid " squared "
 msgstr "Quadrato"
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Titolo grafico: {chartTitle}"
 
@@ -8322,7 +8224,6 @@ msgid "Untitled chart"
 msgstr "Grafico senza titolo"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8335,7 +8236,6 @@ msgid "Chart area "
 msgstr "Area Grafico"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8360,14 +8260,12 @@ msgstr "Nessuna legenda"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Valore Legenda per serie {seriesName} {seriesIndex} di {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Chiave Legenda  per Serie {seriesName} {seriesIndex} di {seriesCount}"
 
@@ -8469,11 +8367,9 @@ msgstr "Intestazione principale"
 msgid "Text frame"
 msgstr "Frame testo"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "commento: {text} di {author} del {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} di {author} in data {date}"
 
@@ -8514,14 +8410,12 @@ msgid "Table description"
 msgstr "Descrizione della tabella"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Imposto riga {rowNumber} colonna {columnNumber} come inizio intestazioni "
 "colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8529,13 +8423,11 @@ msgstr ""
 "intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "riga {rowNumber} colonna {columnNumber} rimosse da intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Impossibile trovare riga {rowNumber} colonna {columnNumber} nelle "
@@ -8551,14 +8443,12 @@ msgstr ""
 "corrente. Una doppia pressione rimuoverà l'impostazione."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Imposta  riga {rowNumber} colonna {columnNumber} come inizio intestazioni "
 "riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8566,12 +8456,10 @@ msgstr ""
 "intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Riga {rowNumber} colonna {columnNumber}  rimosse da intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Impossibile trovare riga {rowNumber} colonna {columnNumber}  nelle "
@@ -8657,43 +8545,35 @@ msgid "Moved above blank paragraph"
 msgstr "Spostato sopra un paragrafo vuoto"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "Stile {styleName}, livello rientro {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} punti font"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} caratteri"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} pollici"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetri"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} millimetri"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} punti"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picas"
 
@@ -8734,818 +8614,3 @@ msgstr "HIMS serie Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "Frame"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Errore nel file di lingua %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Errore di lingua"
-
-#~ msgid "&Profile"
-#~ msgstr "&Profilo"
-
-#~ msgid "Language"
-#~ msgstr "Lingua"
-
-#~ msgid "Log level"
-#~ msgstr "Livello di log"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Layout della tastiera"
-
-#~ msgid "text reporting unit"
-#~ msgstr "Parte di testo letta"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Aggiornamento barre di avanzamento"
-
-#~ msgid "Report &font name"
-#~ msgstr "Leggi il nome del &carattere"
-
-#~ msgid "Report font &size"
-#~ msgstr "Leggi la &dimensione del carattere"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Leggi &l'allineamento"
-
-#~ msgid "Report &colors"
-#~ msgstr "Leggi i &colori"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Leggi Co&mmenti"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Leggi testo enfatizzato"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Leggi lo st&ile"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "L&eggi gli errori di ortografia"
-
-#~ msgid "Report &pages"
-#~ msgstr "Leggi le &pagine"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "&Leggi spaziatura righe"
-
-#~ msgid "Report &tables"
-#~ msgstr "Leggi le &tabelle"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Leggi le i&ntestazioni riga/colonna delle tabelle"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Leggi i &links"
-
-#~ msgid "Report &headings"
-#~ msgstr "Leggi le &intestazioni"
-
-#~ msgid "Report &lists"
-#~ msgstr "Leggi gli elench&i"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Leggi i blocchi tra &virgolette"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Leggi Sez&ioni"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Leggi i frame"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Annuncia se &cliccabile"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Attiva o disattiva la lettura dei rientri riga"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Questa cella non è modificabile"
-
-#~ msgid "checker"
-#~ msgstr "scacchiera"
-
-#~ msgid "crisscross"
-#~ msgstr "Linee incrociate"
-
-#~ msgid "down"
-#~ msgstr "giù"
-
-#~ msgid "gray16"
-#~ msgstr "grigio16"
-
-#~ msgid "gray25"
-#~ msgstr "grigio25"
-
-#~ msgid "gray50"
-#~ msgstr "grigio50"
-
-#~ msgid "gray75"
-#~ msgstr "grigio75"
-
-#~ msgid "grid"
-#~ msgstr "Griglia di dati"
-
-#~ msgid "light down"
-#~ msgstr "Linee diagonali chiare"
-
-#~ msgid "light up"
-#~ msgstr "Linee diagonali chiare"
-
-#~ msgid "light vertical"
-#~ msgstr "Linee chiare verticali"
-
-#~ msgid "semi gray75"
-#~ msgstr "semi grigio75"
-
-#~ msgid "up"
-#~ msgstr "su"
-
-#~ msgid "unknown color"
-#~ msgstr "Colore sconosciuto"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Blu alice"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Bianco antico"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Acqua"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "acquamarina"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Azzurro"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Beige"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "biscotto"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Mandorla Scottata"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Blu"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Viola Azzurro"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Legno Massiccio"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Blu cadetto"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Chartreuse"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Cioccolato"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Corallo"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Blu Fiordaliso"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Seta di Mais"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Cremisi"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Celeste"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Blu scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Ciano scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Dorato Scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "Verde scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Cachi scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Magenta scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "Verde scuro oliva"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Arancione scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Orchidea scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Rosso scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Salmone scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "Verde mare scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Blu Ardesia scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Grigio Ardesia Scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Turchese Scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Viola scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Rosa Scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Celeste Intenso"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Grigio Tenue"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Blu Evasivo"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Rosso Sangue"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Bianco floreale"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Verde foresta"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fuchsia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Bianco fantasma"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Oro"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Dorato"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Grigio"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "Verdino"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Ambrosia"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Rosa scuro"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Rosso indiano"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indaco"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Avorio"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Cachi"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Lavanda"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Lavanda"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Verde prato"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "chiffon color limone"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Blu lucente"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Corallo lucente"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Celeste chiaro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Giallo Dorato Chiaro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Verde lucente"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Rosa chiaro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Salmone chiaro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Verde Mare"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Celeste lucente"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Grigio ardesia lucente"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Blu acciaio chiaro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Giallo chiaro"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Calce"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Verde calce"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Lino"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Marrone"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Acquamarina Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Blu Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Orchidea Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Viola Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Verde Mare Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Blu Ardesia Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Verde Primavera Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Turchese Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Rosso Viola Medio"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Blu mezzanotte"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Crema Alla Menta"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Rosa Velata"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Mocassino"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Bianco Navagio"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Blu Marina"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Merletto Antico"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Oliva"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Grigio Oliva"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Rosso arancione"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Orchidea"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Dorato Pallido"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Verde pallido"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Turchese Pallido"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Rosso Viola Pallido"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Ramo di Papaia"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Pesca"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Perù"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Rosa"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Prugna"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Blu Cipria"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Rosso"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Marrone Rosato"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Blu Reale"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Marrone Color Sella"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Salmone"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Marrone sabbia"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Verde mare"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "rosa Conchiglia"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Terra di siena"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Argento"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Blu cielo"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Blu Ardesia"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Grigio Ardesia"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Neve"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Verde primavera"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Blu Acciaio"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Marrone Chiaro"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Foglia di tè"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Cardo"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Rosso Pomodoro"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Turchese"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Viola"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Grano"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Fumo Bianco"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr ""
-#~ "Il marcatore del punto di inizio deve essere all'interno dello stesso "
-#~ "oggetto"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Leggi errori grammaticali Disattivato"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Leggi errori grammaticali Attivato"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Attiva o disattiva l'annuncio degli errori grammaticali"
-
-#~ msgid "grammar error"
-#~ msgstr "errore grammaticale"
-
-#~ msgid "out of grammar error"
-#~ msgstr "Fuori dall'errore grammaticale"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Leggi gli errori &grammaticali"
-
-#~ msgid "browse mode"
-#~ msgstr "Modalita' navigazione"
-
-#~ msgid "activate"
-#~ msgstr "attiva"
-
-#~ msgid "no next"
-#~ msgstr "Ultimo"
-
-#~ msgid "no previous"
-#~ msgstr "Primo"
-
-#~ msgid "edge of table"
-#~ msgstr "Bordo della tabella"
-
-#~ msgid "%g characters"
-#~ msgstr "%g caratteri"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "Non contiene commenti"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Presenta un elenco di grafici, celle con commenti e celle con formule"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "Colore predefinito"
-
-#~ msgid "unselecting %s"
-#~ msgstr "Deseleziono %s"
-
-#~ msgid "unrevised"
-#~ msgstr "Non revisionato"
-
-#~ msgid "unknown author"
-#~ msgstr "Autore sconosciuto"
-
-#~ msgid "unknown date"
-#~ msgstr "Data sconosciuta"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} di {revisionAuthor} in data {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Legge l'oggetto che ha il focus"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Serie {} di {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "valore {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} di {}"
-
-#~ msgid "equation"
-#~ msgstr "Equazione"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Mostra un elenco di links, intestazioni o sezioni"
-
-#~ msgid "Slovak"
-#~ msgstr "Slovacco"
-
-#~ msgid "navy blue"
-#~ msgstr "Blu marino"
-
-#~ msgid "teal"
-#~ msgstr "Teal"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "In NVDA 2013.1, il layout per le tastiere laptop è stato completamente "
-#~ "rifatto, in modo da renderlo più intuitivo e semplice.\n"
-#~ "Se utilizzi il layout laptop, consulta il documento contenente le novità "
-#~ "per ottenere maggiori informazioni."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Nuovo Layout per le tastiere laptop"
-
-#~ msgid "Read What's New"
-#~ msgstr "Leggi le novità"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Accelerazione"
-
-#~ msgid "male 1"
-#~ msgstr "Maschile 1"
-
-#~ msgid "female 1"
-#~ msgstr "Femminile 1"
-
-#~ msgid "male 2"
-#~ msgstr "Maschile 2"
-
-#~ msgid "female 2"
-#~ msgstr "Femminile 2"
-
-#~ msgid "lime"
-#~ msgstr "Calce"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Si è sicuri di voler uscire da NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Avvisa prima di uscire da NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "Regexp"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Non ci sono informazioni di posizione per il navigatore di oggetti"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Non ci sono informazioni di posizione a schermo"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Legge l'altezza, la larghezza e la posizione dell'oggetto attuale del "
-#~ "navigatore"

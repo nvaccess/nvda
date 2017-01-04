@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-15 11:41+1000\n"
-"PO-Revision-Date: 2016-11-10 23:26+0100\n"
+"PO-Revision-Date: 2016-12-28 20:31-0800\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -85,7 +85,6 @@ msgid "unknown input method"
 msgstr "neznámá metoda vstupu"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -723,7 +722,6 @@ msgstr "ne%s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} z {total}"
 
@@ -1483,73 +1481,61 @@ msgid "pink-red"
 msgstr "růžově červená"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "jasně {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "tmavě {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "velmi tmavě {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "světle bledě {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "bledě {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "tmavě bledě {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "velmi tmavě bledě {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} bílá"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} šedá"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "tmavě {color} šedá"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "velmi tmavě {color} šedá"
@@ -3421,7 +3407,6 @@ msgid "AC power on"
 msgstr "Napájení zapnuto"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "zbývá {hours:d} hodin a {minutes:d} minut"
 
@@ -4269,7 +4254,6 @@ msgid "column %s"
 msgstr "sloupec %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "s {rowCount} řádky a {columnCount} sloupci"
 
@@ -4325,30 +4309,25 @@ msgstr "výchozí styl"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} na {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} na {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} pozadí"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "Vzor pozadí {pattern}"
 
@@ -4556,7 +4535,6 @@ msgid "out of table"
 msgstr "vně tabulky"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabulka s {columnCount} sloupci a {rowCount} řádky"
 
@@ -4637,27 +4615,22 @@ msgid "object mode"
 msgstr "objektový režim"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "jedno {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "dvojí {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "trojité {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "čtyřnásobné {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} prsty {action}"
 
@@ -4739,7 +4712,6 @@ msgstr "Aktualizace NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "K dispozici je nová verze {version}."
 
@@ -4836,11 +4808,9 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Otevřený a volně šiřitelný odečítač obrazovky pro Microsoft Windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Tým"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4885,7 +4855,6 @@ msgstr ""
 "hlavní nabídky NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4894,7 +4863,6 @@ msgstr ""
 "Pro instalaci doplňků je třeba používat NVDA."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4905,12 +4873,10 @@ msgstr ""
 "nahoru"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} jako v {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4960,12 +4926,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oznámí zbývající čas u právě hrající stopy"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, umístění {curLocation} z {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Strana {pageNumber}"
 
@@ -5075,12 +5040,10 @@ msgid "Waiting for Outlook..."
 msgstr "Čekám na Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} do {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Schůzka {subject}, {time}"
 
@@ -5242,97 +5205,78 @@ msgid "Master Thumbnails"
 msgstr "Předloha s náhledy"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Snímek {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá levou stranu {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "za levou stranou {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá vršek {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "za vrškem {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá pravou stranu {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "za pravou stranou {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "zakrývá spodek {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "za spodkem {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "zakrývá  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "za {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} bodů od levého okraje snímku"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Mimo levý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} bodů od vrchního okraje snímku"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Mimo vrchní okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} bodů od pravého okraje snímku"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Mimo pravý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} bodů od spodního okraje snímku"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Mimo spodní okraj snímku o {distance:.3g} bodů"
 
@@ -5346,12 +5290,10 @@ msgstr ""
 "tím nemění, jen co můžete číst s NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Poznámky pro prezentaci - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Prezentace - {slideName}"
 
@@ -5440,7 +5382,6 @@ msgstr "Braillské řádky Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Sériový: {portName}"
 
@@ -5932,7 +5873,6 @@ msgid "Choose Add-on Package File"
 msgstr "Vyberte balíček s doplňkem"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Balíček s doplňkem (*.{ext})"
 
@@ -5946,7 +5886,6 @@ msgstr ""
 "neplatný formát souboru"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6030,7 +5969,6 @@ msgid "Restart NVDA"
 msgstr "Restart NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6043,7 +5981,6 @@ msgstr ""
 "Popis: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6300,7 +6237,6 @@ msgstr ""
 "aktualizována."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7277,7 +7213,6 @@ msgstr "&Filtrovat podle:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7317,12 +7252,10 @@ msgid "word"
 msgstr "slovo"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
 
@@ -7378,7 +7311,6 @@ msgid "Taskbar"
 msgstr "Úlohová lišta"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB červená {rgb.red}, zelená {rgb.green}, modrá {rgb.blue}"
 
@@ -7546,7 +7478,6 @@ msgid "&Sheets"
 msgstr "&Listy"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
 
@@ -7562,22 +7493,18 @@ msgstr ""
 "ohlašování formátování dokumentu."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "{address} nastaveno jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} již nastaveno jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address}    odstraněno ze záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Nelze najít {address}    v záhlaví sloupců"
 
@@ -7590,22 +7517,18 @@ msgstr ""
 "buňky níže a vpravo v této oblasti. Dvojitým stiskem se toto nastavení zruší."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "{address} nastaveno jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} již nastaveno jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address}    odstraněno ze záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Nelze najít {address}    v záhlaví řádků"
 
@@ -7617,11 +7540,9 @@ msgstr ""
 "Stiskne-li se jednou, nastaví se tato buňka jako první záhlaví řádků pro "
 "buňky níže a vpravo v této oblasti. Dvojitým stiskem se toto nastavení zruší."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Vstupní zpráva je {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Vstupní zpráva je {message}"
 
@@ -7634,12 +7555,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Přečte komentář v aktuální buňce"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Upravit komentář pro buňku {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} do {lastAddress} {lastContent}"
 
@@ -7994,7 +7913,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Bodový s vyhlazenými spojnicemi a bez datových značek"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Název grafu: {chartTitle}, typ: {chartType}"
 
@@ -8022,7 +7940,6 @@ msgstr "Řada"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} Osa je {axisTitle}"
 
@@ -8036,7 +7953,6 @@ msgid "There are total %d series in this chart"
 msgstr "Celkem %d řad v tomto grafu"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "řada {number} {name}"
 
@@ -8061,7 +7977,6 @@ msgstr "datový bod"
 msgid "item"
 msgstr "položka"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Barva řady: {colorName} "
 
@@ -8151,61 +8066,51 @@ msgstr "Obdélník"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} řada {seriesIndex} z {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "žádná změna od bodu {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Zvýšeno o {incrementValue} od bodu {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "sníženo o {decrementValue} od bodu {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Kategorie {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "hodnota {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " zlomek {fractionValue:.2f} výseč procent {pointIndex} z {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} z {pointCount}"
 
@@ -8218,12 +8123,10 @@ msgid "Secondary"
 msgstr "Vedlejší"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "Osa grafu, typ: {axisType}, skupina: {axisGroup}, název: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Osa grafu, typ: {axisType}, skupina: {axisGroup}"
 
@@ -8241,7 +8144,6 @@ msgid " squared "
 msgstr " čtvercový "
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Název grafu: {chartTitle}"
 
@@ -8250,7 +8152,6 @@ msgid "Untitled chart"
 msgstr "Bez názvu"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8263,7 +8164,6 @@ msgid "Chart area "
 msgstr "Oblast grafu "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8288,14 +8188,12 @@ msgstr "Bez legendy"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Položka legendy pro řadu {seriesName} {seriesIndex} z {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Klíč legendy pro řadu {seriesName} {seriesIndex} z {seriesCount}"
 
@@ -8397,11 +8295,9 @@ msgstr "Primární záhlaví"
 msgid "Text frame"
 msgstr "Textový rámeček"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentář: {text} od {author} dne {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dne {date}"
 
@@ -8442,14 +8338,12 @@ msgid "Table description"
 msgstr "Popis tabulky"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Řádek {rowNumber} sloupec {columnNumber} nastaven jako začátek záhlaví "
 "sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8457,12 +8351,10 @@ msgstr ""
 "sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Řádek {rowNumber} sloupec {columnNumber}  odstraněn ze záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví sloupců"
@@ -8476,13 +8368,11 @@ msgstr ""
 "buňky níže a vpravo v této tabulce. Dvojitým stiskem se toto nastavení zruší."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Řádek {rowNumber} sloupec {columnNumber} nastaven jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8490,12 +8380,10 @@ msgstr ""
 "řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Řádek {rowNumber} sloupec {columnNumber}  odstraněn ze záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví řádků"
 
@@ -8578,43 +8466,35 @@ msgid "Moved above blank paragraph"
 msgstr "Přesunuto nad prázdný odstavec"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "styl {styleName}, úroveň zobrazení {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "písmo {size:g} bodů"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} znaků"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} inčů"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetrů"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetrů"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} bodů"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pící"
 
@@ -8655,965 +8535,3 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "Vnitřní rám"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Chyba v jazykovém souboru %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Chyba jazyka"
-
-#~ msgid "&Profile"
-#~ msgstr "Profil"
-
-#~ msgid "Language"
-#~ msgstr "Jazyk"
-
-#~ msgid "Log level"
-#~ msgstr "Úroveň logování"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Rozložení klávesnice"
-
-#~ msgid "text reporting unit"
-#~ msgstr "jednotka ohlašování textu"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Ohlašovat indikátor průběhu"
-
-#~ msgid "Report &font name"
-#~ msgstr "Hlásit &jméno písma"
-
-#~ msgid "Report font &size"
-#~ msgstr "Hlásit &velikost písma"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Hlásit &zarovnání"
-
-#~ msgid "Report &colors"
-#~ msgstr "Hlásit &barvy"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Hlásit ko&mentáře"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Hlásit zvýraznění"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Hlásit &styl"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Hlásit pravopisné chyby"
-
-#~ msgid "Report &pages"
-#~ msgstr "Hlásit stran&y"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Hlásit &řádkování"
-
-#~ msgid "Report &tables"
-#~ msgstr "Hlásit &datové tabulky"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Hlásit zá&hlaví řádků a  sloupců v tabulkách"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Hlásit &odkazy"
-
-#~ msgid "Report &headings"
-#~ msgstr "Hlásit &nadpisy"
-
-#~ msgid "Report &lists"
-#~ msgstr "Hlás&it seznamy"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Hlásit &citace"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "H&lásit oblasti"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Hlásit &rámce"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Hlásit &kliknutelné"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Zapíná a vypíná hlášení odsazení"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Tuto buňku nelze upravit"
-
-#~ msgid "checker"
-#~ msgstr "šachovnice"
-
-#~ msgid "crisscross"
-#~ msgstr "cik cak"
-
-#~ msgid "down"
-#~ msgstr "dolů"
-
-#~ msgid "gray16"
-#~ msgstr "16% šedý"
-
-#~ msgid "gray25"
-#~ msgstr "25% šedý"
-
-#~ msgid "gray50"
-#~ msgstr "50% šedý"
-
-#~ msgid "gray75"
-#~ msgstr "75% šedý"
-
-#~ msgid "grid"
-#~ msgstr "datová mřížka"
-
-#~ msgid "light down"
-#~ msgstr "světlý dolů"
-
-#~ msgid "light up"
-#~ msgstr "světlý nahoru"
-
-#~ msgid "light vertical"
-#~ msgstr "světlý svislý"
-
-#~ msgid "semi gray75"
-#~ msgstr "75% pološedý"
-
-#~ msgid "up"
-#~ msgstr "nahoru"
-
-#~ msgid "unknown color"
-#~ msgstr "neznámá barva"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Alice modř"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Starobílá"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Azurová"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Akvamarínová"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Azurová"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Béžová"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "Světle hnědá"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Bělostná mandle"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Modrofialová"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Statné dřevo"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Kadetská modř"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Chartreuse"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Čokoládová"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Korálová"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Chrpově modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Režné hedvábí"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Rudá"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Kyanová"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Tmavě modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Tmavě kyanová"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Tmavě zlatý prut"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "Tmavě zelená"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Tmavá khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Tmavě purpurová"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "Tmavě olivově zelená"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Tmavě oranžová"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Tmavě orchidejová"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Tmavě červená"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Tmavě lososová"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "Tmavá mořská zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Tmavě bledě modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Tmavě bledě šedá"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Tmavě tyrkysová"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Tmavě fialová"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Sytě růžová"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Sytá nebeská modř"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Kalně šedá"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Úskočně modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Pálená cihla"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Květná bílá"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Lesní zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "Purpurová"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Bledě bílá"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Zlatá"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Zlatý prut"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Šedá"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "Zelenožlutá"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Melounová"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Ostře růžová"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Indiánská červeň"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Slonovinová"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Levandulová"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Levandulová zčervenalá"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Trávově zelená"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Citrónový šifón"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Světle modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Světle korálová"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Světle kyanová"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Světle zlatě žlutá"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Světle zelená"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Světle růžová"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Světle lososová"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Světlá mořská zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Světle nebesky modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Světle bledě šedá"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Světle ocelově modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Světle žlutá"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Světle zelená"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Citrónová zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Lněná"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Purpurová"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Kaštanová"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Středně akvamarínová"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Středně modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Středně orchidejová"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Středně fialová"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Střední mořská zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Středně bledě modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Střední jarní zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Středně tyrkysová"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Středně fialově červená"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Půlnoční modř"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Mátová smetana"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Mlhavě růžová"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Světle béžová"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navajová bílá"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Námořnická modř"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Zašlá krajka"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Olivová"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Olivově světle hnědá"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Oranžově červená"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Orchidejová"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Bledě zlatý prut"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Bledě zelená"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Bledě tyrkysová"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Bledě fialově červená"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Papája"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Broskvový nádech"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Peruánská oranžová"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Růžová"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Švestková"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Pudrově modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Červená"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Růžově hnědá"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Královská modř"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Sedlová hněď"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Lososová"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Pískově hnědá"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Mořská zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "Lasturová"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Oranžově žlutá"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Stříbrná"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Nebesky modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Bledě modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Bledě šedá"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Sněhová"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Jarní zeleň"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Ocelově modrá"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Žlutě hnědá"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Modrozelená"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Bodláková"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Rajčatová"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Tyrkysová"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Fialová"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Pšeničná"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Bíle kouřová"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Počáteční značka musí být umístěna na stejném objektu"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "hlásit gramatické chyby vypnuto"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "hlásit gramatické chyby zapnuto"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Zapíná a vypíná hlášení gramatických chyb"
-
-#~ msgid "grammar error"
-#~ msgstr "gramatická chyba"
-
-#~ msgid "out of grammar error"
-#~ msgstr "vně gramatické chyby"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Hlásit &gramatické chyby"
-
-#~ msgid "browse mode"
-#~ msgstr "režim prohlížení"
-
-#~ msgid "activate"
-#~ msgstr "aktivovat"
-
-#~ msgid "no next"
-#~ msgstr "Nenalezen"
-
-#~ msgid "no previous"
-#~ msgstr "nenalezen"
-
-#~ msgid "edge of table"
-#~ msgstr "okraj tabulky"
-
-#~ msgid "%g characters"
-#~ msgstr "%g znaků"
-
-#~ msgid "%g pt"
-#~ msgstr "%g bodů"
-
-#~ msgid "no comments"
-#~ msgstr "bez komentářů"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr "Představuje seznam grafů, buněk s komentáři a buněk se vzorci"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "výchozí barva"
-
-#~ msgid "unselecting %s"
-#~ msgstr "nevybráno %s"
-
-#~ msgid "unrevised"
-#~ msgstr "nezměněno"
-
-#~ msgid "unknown author"
-#~ msgstr "neznámý autor"
-
-#~ msgid "unknown date"
-#~ msgstr "neznámé datum"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} od {revisionAuthor} dne {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "ohlásí zaměřený objekt"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Řada {} z {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "hodnota {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} z {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " spojnice trendu {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr "Oblast grafu výška {}, šířka {}, vršek {}, levá strana {}"
-
-#~ msgid "equation"
-#~ msgstr "vzorec"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Zobrazí seznam odkazů, nadpisů nebo oblastí"
-
-#~ msgid "Slovak"
-#~ msgstr "Slovenština"
-
-#~ msgid "navy blue"
-#~ msgstr "námořnická modř"
-
-#~ msgid "teal"
-#~ msgstr "modrozelená"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "Ve verzi NVDA 2013.1 bylo rozložení klávesnice pro laptop kompletně "
-#~ "přepracováno pro lepší intuici a přehlednost.\n"
-#~ "Pokud používáte rozložení laptop, přečtěte si více v dokumentu Co je "
-#~ "nového."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Nové rozložení klávesnice laptop"
-
-#~ msgid "Read What's New"
-#~ msgstr "Přečtěte si Co je nového"
-
-#~ msgid "&Acceleration"
-#~ msgstr "Zrychlení"
-
-#~ msgid "male 1"
-#~ msgstr "mužský hlas 1"
-
-#~ msgid "female 1"
-#~ msgstr "ženský hlas 1"
-
-#~ msgid "male 2"
-#~ msgstr "mužský hlas 2"
-
-#~ msgid "female 2"
-#~ msgstr "ženský hlas 2"
-
-#~ msgid "lime"
-#~ msgstr "světle zelená"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Opravdu chcete ukončit NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "Upozornit před u&končením NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "Regulární výraz"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Informace o pozici prohlíženého objektu není k dispozici"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Informace o pozici obrazovky není k dispozici"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Ohlásí výšku, šířku a pozici prohlíženého objektu"
-
-#~ msgid "Set column header row"
-#~ msgstr "Záhlaví sloupců nastaveno"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Záhlaví sloupců zrušeno"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Stiskne-li se jednou, bude aktuální řádek nastaven jako řádek, kde by "
-#~ "měla být záhlaví sloupců. Dvojitý stisk nastavení zruší."
-
-#~ msgid "Set row header column"
-#~ msgstr "Záhlaví řádků nastaveno"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Stiskne-li se jednou, bude aktuální sloupec nastaven jako sloupec, kde by "
-#~ "měla být záhlaví řádků. Dvojitý stisk nastavení zruší."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s až %s %s"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "V konfiguračním souboru se vyskytla chyba. \n"
-#~ "Stiskněte OK pro její opravu nebo cancel pro pozdější ruční opravu "
-#~ "konfiguračního souboru. Více podrobností o chybě naleznete v prohlížeči "
-#~ "logu.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Žádné automatické komentáře."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Nemohu najít okno s automatickým komentářem."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Přečte komentáře v okně automatických komentářů"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automatické komentáře:"
-
-#~ msgid "Translation:"
-#~ msgstr "Překlad:"
-
-#~ msgid "Comments:"
-#~ msgstr "Komentáře:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nelze přepnout do režimu plošného prohlížení tohoto objektu"
-
-#~ msgid "No object at flat review position"
-#~ msgstr ""
-#~ "Nelze najít objekt, v jehož textu se při plošném prohlížení nachází čtecí "
-#~ "kurzor"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Přesune se na objekt reprezentovaný textem, v němž se při plošném "
-#~ "prohlížení nachází čtecí kurzor"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Nejprve prosím zavřete další okno nastavení NVDA."
-
-#~ msgid "Translation &table:"
-#~ msgstr "Překladová &tabulka:"
-
-#~ msgid "beeps"
-#~ msgstr "pípání"
-
-#~ msgid "talk"
-#~ msgstr "mluvení"
-
-#~ msgid "default action failed"
-#~ msgstr "Výchozí akce se nezdařila"
-
-#~ msgid "layout %s"
-#~ msgstr "rozložení %s"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, nastavuji výchozí hodnotu %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "konfigurační soubor není správně vytvořen"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Chyba při čtení konfiguračního souboru: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Chyba v konfiguračním souboru: '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s z %s"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "Načte uložené nastavení a přepíše naposledy provedené změny"
-
-#~ msgid "Your gesture map file contains errors.\n"
-#~ msgstr "Chyba souboru mapy vstupních příkazů"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Sledovat &systémový fokus"
-
-#~ msgid "&Add..."
-#~ msgstr "&Přidat"
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "Vytvořit soubor pro &automatické spuštění NVDA"
-
-#~ msgid "Key Command quick reference"
-#~ msgstr "Seznam klávesových zkratek"
-
-#~ msgid "User guide"
-#~ msgstr "Uživatelská příručka"
-
-#~ msgid "Web site"
-#~ msgstr "Webová stránka"
-
-#~ msgid "Portable options"
-#~ msgstr "Možnosti přenosné verze"
-
-#~ msgid "No parents"
-#~ msgstr "Žádné nadřazené objekty"
-
-#~ msgid "No children"
-#~ msgstr "žádné podřazené objekty"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "&Zvýšit hlas při čtení velkých písmen"
