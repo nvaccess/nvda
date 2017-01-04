@@ -203,6 +203,13 @@ class TextInfoQuickNavItem(QuickNavItem):
 	def moveTo(self):
 		info=self.textInfo.copy()
 		info.collapse()
+		while self.document._shouldSkipBlankLines(info):
+			i = info.copy()
+			i.expand(textInfos.UNIT_LINE)
+			if speech.isBlank(i.text):
+				info.move(textInfos.UNIT_LINE, 1)
+			else:
+				break
 		self.document._set_selection(info,reason=REASON_QUICKNAV)
 
 	@property
@@ -1037,13 +1044,16 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		blankInfo = info.copy()
 		blankInfo.expand(textInfos.UNIT_LINE)
 		#Get control Starts
-		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart"]
+		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart" and not field.field["isHidden"]]
+		if len(controlFields) == 0:
+			return False
 		if controlFields[-1].field["role"] in BAD_LEAF_ROLES:
 			return False
 		for field in controlFields:
-			if len(field.field["states"].intersection({STATE_CLICKABLE, STATE_EDITABLE})) > 0 or ROLE_EDITABLETEXT == field.field["role"]:
+			if STATE_EDITABLE in field.field["states"] or ROLE_EDITABLETEXT == field.field["role"]:
 				return False
-			if (field.field["role"] in BAD_ROLES and  
+			if ((field.field["role"] in BAD_ROLES or
+				STATE_CLICKABLE in field.field["states"]) and 
 				(field.field["_startOfNode"] and field.field["_endOfNode"])):
 				return False
 		return True

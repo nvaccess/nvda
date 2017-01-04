@@ -122,6 +122,25 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
+	def _shouldSkipBlankLines(self, info):
+		res = super(Gecko_ia2, self)._shouldSkipBlankLines(info)
+		if not res:
+			return False
+		#is this a pre element?
+		blankInfo = info.copy()
+		blankInfo.expand(textInfos.UNIT_LINE)
+		#Get control Starts
+		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart"]
+		for field in controlFields:
+			try:
+				if field.field[u'IAccessible2::attribute_tag'].lower() in {u'pre', u'code'}:
+					return False
+			except KeyError:
+				continue
+		return True
+
+
+
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
