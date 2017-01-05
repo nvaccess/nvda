@@ -5,6 +5,15 @@
 
 = 2017.1 =
 
+== New Features ==
+- In Microsoft Word the type of section break, and the section number can now be reported. This is enabled with the "report page numbers" option in the document formatting dialog. (#5946)
+- In Microsoft Word the text columns can now be reported. This is enabled with the "report page numbers" option in the document formatting dialog. (#5946)
+- Automatic language switching is now supported in Wordpad. (#6555)
+
+
+== Bug Fixes ==
+- Fix freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
+
 
 = 2016.4 =
 Highlights of this release include improved support for Microsoft Edge; browse mode in the Windows 10 Mail app; and significant improvements to NVDA's dialogs.
@@ -18,6 +27,7 @@ Highlights of this release include improved support for Microsoft Edge; browse m
 - Support for the Baum SuperVario2, Baum Vario 340 and HumanWare Brailliant2 braille displays. (#6116)
 - Initial support for the Anniversary update of Microsoft Edge. (#6271)
 - Browse mode is now used when reading emails in the Windows 10 mail app. (#6271)
+- New language: Lithuanian.
 
 
 == Changes ==

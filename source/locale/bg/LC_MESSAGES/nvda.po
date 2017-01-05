@@ -5,14 +5,14 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-28 21:41+0200\n"
+"PO-Revision-Date: 2016-12-28 20:32-0800\n"
 "Last-Translator: Kostadin Kolev <k_kolev1985@mail.bg>\n"
 "Language-Team: Български <>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7 FS\n"
+"X-Generator: Poedit 1.5.7\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -84,7 +84,6 @@ msgid "unknown input method"
 msgstr "Непознат метод на въвеждане"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -722,7 +721,6 @@ msgstr "Не %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} от {total}"
 
@@ -1485,73 +1483,61 @@ msgid "pink-red"
 msgstr "Розово-червено"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "Ярко {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "Тъмно {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "Много тъмно {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "Светло бледо {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "Бледо {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "Тъмно бледо {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "Много тъмно бледо {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} бяло"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} сиво"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "Тъмно {color} сиво"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "Много тъмно {color} сиво"
@@ -3444,7 +3430,6 @@ msgid "AC power on"
 msgstr "Външното захранване е включено"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "Остават {hours:d} часа и {minutes:d} минути"
 
@@ -4298,7 +4283,6 @@ msgid "column %s"
 msgstr "колона %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "с {rowCount} реда и {columnCount} колони"
 
@@ -4354,30 +4338,25 @@ msgstr "Стил по подразбиране"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} към {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} на {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} фон"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "Шарка на фона {pattern}"
 
@@ -4585,7 +4564,6 @@ msgid "out of table"
 msgstr "извън таблица"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "Таблица с {columnCount} колони и {rowCount} редове"
 
@@ -4666,27 +4644,22 @@ msgid "object mode"
 msgstr "обектен режим"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "еднократно {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "двукратно {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "трикратно {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "четирикратно {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} с {numFingers} пръста"
 
@@ -4768,7 +4741,6 @@ msgstr "Обновяване на NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Налична е версия {version} на NVDA."
 
@@ -4863,11 +4835,9 @@ msgstr "НеВизуален настолен достъп"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Безплатен и с отворен код екранен четец за Microsoft Windows"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Авторски права (C) сътрудници на NVDA, {years} г."
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4913,7 +4883,6 @@ msgstr ""
 "изберете Направи дарение от менюто на NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4922,7 +4891,6 @@ msgstr ""
 "NVDA трябва да е стартиран, за да може да инсталирате добавки."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4934,12 +4902,10 @@ msgstr ""
 "екрана"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} като в {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4990,12 +4956,11 @@ msgstr ""
 "Докладва оставащо време на просвирвания в момента запис (ако има такъв)"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, позиция {curLocation} от {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Страница {pageNumber}"
 
@@ -5105,12 +5070,10 @@ msgid "Waiting for Outlook..."
 msgstr "Изчакване на Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} до {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Среща {subject}, {time}"
 
@@ -5272,97 +5235,78 @@ msgid "Master Thumbnails"
 msgstr "Основни плочки"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Слайд {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "покрива лявата част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "зад лявата част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "покрива горната част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "зад горната част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "покрива лявата част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "зад дясната част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "покрива долната част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "зад долната част на {otherShape} с {distance:.3g} точки"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "покрива  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "зад {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} точки от левия край на слайда"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "извън левия край на слайда с {distance:.3g} точки"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} точки от горния край на слайда"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "извън горния край на слайда с {distance:.3g} точки"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} точки от десния край на слайда"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "извън десния край на слайда с {distance:.3g} точки"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} точки от долния край на слайда"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "извън долния край на слайда с {distance:.3g} точки"
 
@@ -5377,12 +5321,10 @@ msgstr ""
 "което потребителят може да чете с NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Бележки на слайда - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Слайд шоу - {slideName}"
 
@@ -5471,7 +5413,6 @@ msgstr "Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Сериен: {portName}"
 
@@ -5971,7 +5912,6 @@ msgid "Choose Add-on Package File"
 msgstr "Избор на пакет с добавка"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Пакет с добавка за NVDA (*.{ext})"
 
@@ -5985,7 +5925,6 @@ msgstr ""
 "невалиден файлов формат"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6069,7 +6008,6 @@ msgid "Restart NVDA"
 msgstr "Рестартиране на NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6082,7 +6020,6 @@ msgstr ""
 "Описание: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "Уеб адрес: {url}"
 
@@ -6344,7 +6281,6 @@ msgstr ""
 "обновено."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6955,8 +6891,8 @@ msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
 msgstr ""
-"Следните опции контролират видовете форматиране в документа, докладвани "
-"от NVDA."
+"Следните опции контролират видовете форматиране в документа, докладвани от "
+"NVDA."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7324,7 +7260,6 @@ msgstr "&Филтрирай по:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7365,12 +7300,10 @@ msgid "word"
 msgstr "дума"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "на {x}, {y}"
 
@@ -7428,7 +7361,6 @@ msgid "Taskbar"
 msgstr "Лента на задачите"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB червено {rgb.red}, зелено {rgb.green}, синьо {rgb.blue}"
 
@@ -7596,7 +7528,6 @@ msgid "&Sheets"
 msgstr "&Листове"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} до {end}"
 
@@ -7612,22 +7543,18 @@ msgstr ""
 "таблиците от менюто форматиране на документите"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "задаване на {address} като начало на заглавията на колоните"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "вече е зададено {address} като начало на заглавията на колоните"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address}    беше премахнат от заглавията на колоните"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "не мога да намеря {address}    в заглавията на колоните"
 
@@ -7641,22 +7568,18 @@ msgstr ""
 "занули текущите заглавия на колоните за тази клетка."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "задаване на {address} като начало на заглавията на редовете"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "вече е зададено {address} като начало на заглавията на редовете"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address}    беше премахнат от заглавията на редовете"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "не мога да намеря {address}    в заглавията на редовете"
 
@@ -7669,11 +7592,9 @@ msgstr ""
 "всички редове надолу и надясно от нея в този регион. Двукратно натискане ще "
 "занули текущите заглавия на редовете за тази клетка."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Входното съобщение е {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Входното съобщение е {message}"
 
@@ -7686,12 +7607,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Докладва коментара на текущата клетка"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "редактиране на коментар за клетка {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} до {lastAddress} {lastContent}"
 
@@ -8046,7 +7965,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Точкова с изгладени линии и без маркери за данни"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Заглавие на диаграмата: {chartTitle}, тип: {chartType}"
 
@@ -8074,7 +7992,6 @@ msgstr "Серии"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "Оста {axisName} е {axisTitle}"
 
@@ -8088,7 +8005,6 @@ msgid "There are total %d series in this chart"
 msgstr "Има общо %d серии в тази диаграма"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "серия {number} {name}"
 
@@ -8113,7 +8029,6 @@ msgstr "елемент от данни"
 msgid "item"
 msgstr "Елемент"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Цвят на серията: {colorName} "
 
@@ -8203,61 +8118,51 @@ msgstr "Фигура"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} серия {seriesIndex} от {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "без промяна от точка {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Увеличено с {incrementValue} от точка {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "Намалено с {decrementValue} от точка {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Категория {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "стойност {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " дроб {fractionValue:.2f} Процентна част {pointIndex} от {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} от {pointCount}"
 
@@ -8270,13 +8175,11 @@ msgid "Secondary"
 msgstr "Вторична"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Ос от диаграма, тип: {axisType}, група: {axisGroup}, заглавие: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Ос от диаграма, тип: {axisType}, група: {axisGroup}"
 
@@ -8294,7 +8197,6 @@ msgid " squared "
 msgstr " квадрат "
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Заглавие на диаграмата: {chartTitle}"
 
@@ -8303,7 +8205,6 @@ msgid "Untitled chart"
 msgstr "Неозаглавена диаграма"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8316,7 +8217,6 @@ msgid "Chart area "
 msgstr "Област от диаграма"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8341,7 +8241,6 @@ msgstr "Няма легенда"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Запис за легендата за Серия {seriesName} {seriesIndex} от {seriesCount}"
@@ -8349,7 +8248,6 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Ключ на легенда за Серия {seriesName} {seriesIndex} от {seriesCount}"
 
@@ -8451,11 +8349,9 @@ msgstr "Основен горен колонтитул"
 msgid "Text frame"
 msgstr "текстова рамка"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "Коментар: {text} от {author} на {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} от {author} на {date}"
 
@@ -8496,14 +8392,12 @@ msgid "Table description"
 msgstr "Описание на таблица"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "задаване на ред {rowNumber} колона {columnNumber} като начало на заглавията "
 "на колоните"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8511,14 +8405,12 @@ msgstr ""
 "заглавията на колоните"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "премахване на ред {rowNumber} колона {columnNumber}  от заглавията на "
 "колоните"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "не мога да намеря ред {rowNumber} колона {columnNumber}  в заглавията на "
@@ -8534,14 +8426,12 @@ msgstr ""
 "занули текущите заглавия на колоните за тази клетка."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "задаване на ред {rowNumber} колона {columnNumber} като начало на заглавията "
 "на редовете"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8549,14 +8439,12 @@ msgstr ""
 "заглавията на редовете"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "премахване на ред {rowNumber} колона {columnNumber}  от заглавията на "
 "редовете"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "не мога да намеря ред {rowNumber} колона {columnNumber}  в заглавията на "
@@ -8642,43 +8530,35 @@ msgid "Moved above blank paragraph"
 msgstr "Преместено над празен абзац"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} стил, ниво в структурата {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} точков шрифт"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} знака"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} инча"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} сантиметра"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} милиметра"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} точки"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} пики"
 
@@ -8719,755 +8599,3 @@ msgstr "HIMS серии Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "вътрешна рамка"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Грешка в езиковия файл за %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Грешка в езика"
-
-#~ msgid "&Profile"
-#~ msgstr "&Профил"
-
-#~ msgid "Language"
-#~ msgstr "Език"
-
-#~ msgid "Log level"
-#~ msgstr "Ниво на протокола"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Клавиатурна подредба"
-
-#~ msgid "text reporting unit"
-#~ msgstr "Обхват на докладвания текст"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Докладване на лентата на напредъка"
-
-#~ msgid "Report &font name"
-#~ msgstr "Докладвай &името на шрифта"
-
-#~ msgid "Report font &size"
-#~ msgstr "Докладвай &размера на шрифта"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Докладвай &подравняването"
-
-#~ msgid "Report &colors"
-#~ msgstr "Докладвай &цветовете"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Докладвай &коментарите"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Докладвай &открояването"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Докладвай с&тила"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Докладвай правописните &грешки"
-
-#~ msgid "Report &pages"
-#~ msgstr "Докладвай &страниците"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Докладвай &редовата разредка"
-
-#~ msgid "Report &tables"
-#~ msgstr "Докладвай &таблиците"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Докладвай &заглавията на редовете и колоните в таблиците"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Докладвай &връзките"
-
-#~ msgid "Report &headings"
-#~ msgstr "Докладвай заглавията"
-
-#~ msgid "Report &lists"
-#~ msgstr "Докладвай спис&ъците"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Докладвай &цитатите"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Докладвай маркерите"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Докладвай &рамките"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Съобщавай, ако е щракаем"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Включва или изключва докладването на отстъпа на редовете"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Тази клетка не може да бъде редактирана"
-
-#~ msgid "checker"
-#~ msgstr "Шахматно"
-
-#~ msgid "crisscross"
-#~ msgstr "Кръстосано"
-
-#~ msgid "down"
-#~ msgstr "Надолу"
-
-#~ msgid "gray16"
-#~ msgstr "Сиво16"
-
-#~ msgid "gray25"
-#~ msgstr "Сиво25"
-
-#~ msgid "gray50"
-#~ msgstr "Сиво50"
-
-#~ msgid "gray75"
-#~ msgstr "Сиво75"
-
-#~ msgid "grid"
-#~ msgstr "Мрежа"
-
-#~ msgid "light down"
-#~ msgstr "Светло надолу"
-
-#~ msgid "light up"
-#~ msgstr "Светло нагоре"
-
-#~ msgid "light vertical"
-#~ msgstr "Светло вертикално"
-
-#~ msgid "semi gray75"
-#~ msgstr "Полусиво75"
-
-#~ msgid "up"
-#~ msgstr "Нагоре"
-
-#~ msgid "unknown color"
-#~ msgstr "Непознат цвят"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Много, много светло синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Антично бяло"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Аква"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Аквамарин"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Азурно"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Бежово"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "Скаридено розово"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Бланширано бадемено"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Виолетово синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Дървесно кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Кадетско синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Резедаво"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Шоколадово кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Коралово"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Метличино синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Царевична реса"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Пурпурно"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Цианово"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Тъмно синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Тъмно цианово"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Тъмно златисто"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "Тъмно зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Тъмно сиво-кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Тъмен фуксин"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "Тъмно масленозелено"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Тъмно оранжево"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Тъмно орхидеено"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Тъмно червено"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Тъмно розово-оранжево"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "Тъмно морско зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Тъмно шистово синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Тъмно шистово сиво"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Тъмно тюркоазено"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Тъмно виолетово"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Дълбоко розово"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Тъмно небесно синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Замъглено сиво"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Богато синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Тухлено"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Флорално бяло"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Горско зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "Цикламено"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Много светло сиво"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Призрачно бяло"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Златно"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Златисто"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Сиво"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "Зелено-жълто"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Медена роса"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Горещо розово"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Индианско червено"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Индигово"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Слонова кост"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Сиво-кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Лавандулово"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Ръжено-лавандулово"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Тревно-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Лимонено-жълто"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Светло синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Светло коралово"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Светло цианово"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Светло златисто-жълто"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Светло зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Светло розово"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Светло розово-оранжево"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Светло морско-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Светло небесно-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Светло шистово-сиво"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Светло стоманено-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Светло жълто"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Светло резедаво"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Резедаво-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Ленено"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Фуксин"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Кестеняво"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Среден аквамарин"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Средно синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Средно орхидеено"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Средно лилаво"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Средно морско-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Средно шистово-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Средно пролетно-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Средно тюркоазено"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Средно виолетово-червено"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Среднощно-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Ментово-сметаново"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Мъглява роза"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Мокасиново"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Навахо бяло"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Морско-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Дантелено"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Масленозелено"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Маслиново-бозаво"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Оранжево-червено"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Орхидеено"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Бледо златисто"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Бледо зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Бледо тюркоазено"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Бледо виолетово-червено"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Папаено"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Прасковено"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Перуканско"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Розово"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Лилаво-виолетово"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Бледо синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Червено"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Розово-кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Дълбоко синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Седлено-кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Розово-оранжево"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Пясъчно-кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Морско-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "Черупково бяло"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Охра"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Сребърно"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Небесно-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Шистово-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Шистово-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Снежно"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Пролетно-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Стоманено-синьо"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Бронзово-кафяво"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Тъмно-зелено"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Магарешко-лилаво"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Доматено-червено"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Тюркоазено"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Виолетово"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Пшеничено"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Бял дим"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Маркерът за начало трябва да е в същия обект."
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Докладването на граматическите грешки е изключено"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Докладването на граматическите грешки е включено"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Включва или изключва докладването на граматическите грешки"
-
-#~ msgid "grammar error"
-#~ msgstr "Граматическа грешка"
-
-#~ msgid "out of grammar error"
-#~ msgstr "Край на граматическата грешка"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Докладвай гра&матическите грешки"
-
-#~ msgid "browse mode"
-#~ msgstr "Режим на разглеждане"
-
-#~ msgid "activate"
-#~ msgstr "активиране"
-
-#~ msgid "no next"
-#~ msgstr "Няма следващ"
-
-#~ msgid "no previous"
-#~ msgstr "Няма предишен"
-
-#~ msgid "edge of table"
-#~ msgstr "край на таблицата"
-
-#~ msgid "%g characters"
-#~ msgstr "%g знака"
-
-#~ msgid "%g pt"
-#~ msgstr "%g точки"
-
-#~ msgid "no comments"
-#~ msgstr "няма коментари"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Извежда списък с диаграмите, клетките с коментари и клетките с формули"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "цвят по подразбиране"
-
-#~ msgid "unselecting %s"
-#~ msgstr "Отмаркиране на %s"
-
-#~ msgid "unrevised"
-#~ msgstr "без промени"
-
-#~ msgid "unknown author"
-#~ msgstr "непознат автор"
-
-#~ msgid "unknown date"
-#~ msgstr "неизвестна дата"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} от {revisionAuthor} на {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Докладва обекта на фокус."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Серии {} от {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "Стойност {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} от {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " линия на тенденцията {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr ""
-#~ "Областта от диаграмата е с височина {}, ширина {}, с отстъп отгоре {}, с "
-#~ "отстъп отляво {}"

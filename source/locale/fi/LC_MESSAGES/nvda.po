@@ -6,14 +6,14 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-13 13:21+0200\n"
+"PO-Revision-Date: 2016-12-28 20:36-0800\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -84,7 +84,6 @@ msgid "unknown input method"
 msgstr "Tuntematon syöttömenetelmä"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -722,7 +721,6 @@ msgstr "ei %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} / {total}"
 
@@ -1484,73 +1482,61 @@ msgid "pink-red"
 msgstr "pinkki ja punainen"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "kirkkaan{color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "tumman{color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "hyvin tumman{color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "vaalea haalean{color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "haalean{color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "tummanhaalean{color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "hyvin tummanhaalean{color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} valkoinen"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} harmaa"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "tumman{color} harmaa"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "hyvin tumman{color} harmaa"
@@ -3454,7 +3440,6 @@ msgid "AC power on"
 msgstr "verkkovirta käytössä"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} tuntia ja {minutes:d} minuuttia jäljellä"
 
@@ -4305,7 +4290,6 @@ msgid "column %s"
 msgstr "sarake %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "jossa {rowCount} riviä ja {columnCount} saraketta"
 
@@ -4361,30 +4345,25 @@ msgstr "oletustyyli"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} ja {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "tekstin väri: {color}, taustaväri: {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} tausta"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "taustakuvio: {pattern}"
 
@@ -4592,7 +4571,6 @@ msgid "out of table"
 msgstr "taulukon loppu"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "taulukko jossa {columnCount} saraketta ja {rowCount} riviä"
 
@@ -4673,27 +4651,22 @@ msgid "object mode"
 msgstr "objektitila"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "{action} kerran"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "{action} kahdesti"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action} kolmesti"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "{action} neljästi"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} {numFingers} sormella"
 
@@ -4775,7 +4748,6 @@ msgstr "NVDA:n päivitys"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Versio {version} on saatavilla."
 
@@ -4871,11 +4843,9 @@ msgid "A free and open source screen reader for Microsoft Windows"
 msgstr ""
 "Ilmainen ja avoimen lähdekoodin ruudunlukuohjelma Microsoft Windowsille"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA:n tekijät"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4920,7 +4890,6 @@ msgstr ""
 "Lahjoita."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4929,7 +4898,6 @@ msgstr ""
 "NVDA:n on oltava käynnissä lisäosien asentamiseksi."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4941,12 +4909,10 @@ msgstr ""
 "korkeudesta"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} niin kuin {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4996,12 +4962,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Ilmoittaa tällä hetkellä soitettavan kappaleen jäljellä olevan ajan"
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage} %, sijainti {curLocation} / {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Sivu {pageNumber}"
 
@@ -5111,12 +5076,10 @@ msgid "Waiting for Outlook..."
 msgstr "Odotetaan Outlookia..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "alkaa {startTime}, päättyy {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Tapaaminen {subject}, {time}"
 
@@ -5278,99 +5241,80 @@ msgid "Master Thumbnails"
 msgstr "Perustyylin pikkukuvat"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Dia {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "peittää muodon {otherShape} vasemman reunan {distance:.3g} pisteen verran"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä muodon {otherShape} vasemman reunan takana"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "peittää muodon {otherShape} yläreunan {distance:.3g} pisteen verran"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä muodon {otherShape} yläreunan takana"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "peittää muodon {otherShape} oikean reunan {distance:.3g} pisteen verran"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä muodon {otherShape} oikean reunan takana"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "peittää muodon {otherShape} alareunan {distance:.3g} pisteen verran"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä muodon {otherShape} alareunan takana"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "peittää muodon {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "muodon {otherShape} takana"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} pistettä dian vasemmasta reunasta"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä dian vasemman reunan ulkopuolella"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} pistettä dian yläreunasta"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä dian yläreunan ulkopuolella"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} pistettä dian oikeasta reunasta"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä dian oikean reunan ulkopuolella"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} pistettä dian alareunasta"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "{distance:.3g} pistettä dian alareunan ulkopuolella"
 
@@ -5385,12 +5329,10 @@ msgstr ""
 "voi NVDA:n avulla lukea."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Diaesityksen muistiinpanot - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Diaesitys - {slideName}"
 
@@ -5481,7 +5423,6 @@ msgstr "Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Sarja: {portName}"
 
@@ -5977,7 +5918,6 @@ msgid "Choose Add-on Package File"
 msgstr "Valitse lisäosapaketti"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA:n lisäosapaketti (*.{ext})"
 
@@ -5991,7 +5931,6 @@ msgstr ""
 "virheellinen tiedostomuoto"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6076,7 +6015,6 @@ msgid "Restart NVDA"
 msgstr "Käynnistä NVDA uudelleen"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6089,7 +6027,6 @@ msgstr ""
 "Kuvaus: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL-osoite: {url}"
 
@@ -6344,7 +6281,6 @@ msgid ""
 msgstr "Järjestelmästä löytyi aiempi NVDA:n versio. Se päivitetään."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7319,7 +7255,6 @@ msgstr "&Suodata:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7360,12 +7295,10 @@ msgid "word"
 msgstr "sana"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "kohdassa {x}, {y}"
 
@@ -7423,7 +7356,6 @@ msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB: punainen {rgb.red}, vihreä {rgb.green}, sininen {rgb.blue}"
 
@@ -7591,7 +7523,6 @@ msgid "&Sheets"
 msgstr "&Laskentataulukot"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
 
@@ -7607,22 +7538,18 @@ msgstr ""
 "dokumenttien muotoiluasetuksista"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Määritä solu {address} sarakeotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Solu {address} on jo määritetty sarakeotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "Solu {address} poistettu sarakeotsikoista"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Solua {address} ei löydy sarakeotsikoista"
 
@@ -7636,22 +7563,18 @@ msgstr ""
 "painaminen nollaa solun nykyisen sarakeotsikon."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Määritä solu {address} riviotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Solu {address} on jo määritetty riviotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "Solu {address} poistettu riviotsikoista"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Solua {address} ei löydy riviotsikoista"
 
@@ -7664,11 +7587,9 @@ msgstr ""
 "ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen riviotsikon."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Syöttöilmoitus on {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Syöttöilmoitus on {message}"
 
@@ -7681,12 +7602,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Lukee nykyisessä solussa olevan kommentin"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Muokataan solun {address} kommenttia"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "väliltä {firstAddress} {firstContent} ja {lastAddress} {lastContent}"
 
@@ -8041,7 +7960,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "piste ja tasoitetut viivat, ei merkkejä"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Kaavion otsikko: {chartTitle}, tyyppi: {chartType}"
 
@@ -8069,7 +7987,6 @@ msgstr "sarja"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "Akselin {axisName} otsikko on {axisTitle}"
 
@@ -8083,7 +8000,6 @@ msgid "There are total %d series in this chart"
 msgstr "Tässä kaaviossa on yhteensä %d sarjaa"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "sarja {number} {name}"
 
@@ -8108,7 +8024,6 @@ msgstr "arvopiste"
 msgid "item"
 msgstr "elementti"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Sarjan väri: {colorName} "
 
@@ -8198,54 +8113,45 @@ msgstr "muoto"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "sarja {seriesName} {seriesIndex} / {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "ei muutosta pisteestä {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "Nousua {incrementValue} pistettä pisteestä {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "laskua {decrementValue} pistettä pisteestä {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Luokka {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "arvo {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -8253,7 +8159,6 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} / {pointCount}"
 
@@ -8266,13 +8171,11 @@ msgid "Secondary"
 msgstr "2"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
 "Kaavion akseli, tyyppi: {axisType}, ryhmä: {axisGroup}, otsikko: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "Kaavion akseli, tyyppi: {axisType}, ryhmä: {axisGroup}"
 
@@ -8290,7 +8193,6 @@ msgid " squared "
 msgstr " neliö "
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Kaavion otsikko: {chartTitle}"
 
@@ -8299,7 +8201,6 @@ msgid "Untitled chart"
 msgstr "nimetön kaavio"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8312,7 +8213,6 @@ msgid "Chart area "
 msgstr "Kaavion alue "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8337,14 +8237,12 @@ msgstr "Ei selitettä"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Seliteosa sarjalle {seriesName} {seriesIndex} / {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Seliteavain sarjalle {seriesName} {seriesIndex} / {seriesCount}"
 
@@ -8446,11 +8344,9 @@ msgstr "Ensisijainen ylätunniste"
 msgid "Text frame"
 msgstr "Tekstikehys"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "kommentti: {text}, muokkaaja: {author}, päiväys: {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
@@ -8492,14 +8388,12 @@ msgid "Table description"
 msgstr "Taulukon kuvaus"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
 "alkukohdaksi"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8507,12 +8401,10 @@ msgstr ""
 "alkukohdaksi"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy sarakeotsikoista"
@@ -8527,13 +8419,11 @@ msgstr ""
 "painaminen nollaa solun nykyisen sarakeotsikon."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8541,12 +8431,10 @@ msgstr ""
 "alkukohdaksi"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
 
@@ -8630,43 +8518,35 @@ msgid "Moved above blank paragraph"
 msgstr "Siirretty tyhjän kappaleen yläpuolelle"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "tyyli: {styleName}, jäsennystaso {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "fonttikoko {size:g} pistettä"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} merkkiä"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} tuumaa"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} senttimetriä"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} millimetriä"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pistettä"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picaa"
 
@@ -8707,951 +8587,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "kehys"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Virhe kielitiedostossa %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Kielitiedoston virhe"
-
-#~ msgid "&Profile"
-#~ msgstr "&Profiili"
-
-#~ msgid "Language"
-#~ msgstr "Kieli"
-
-#~ msgid "Log level"
-#~ msgstr "Lokitaso"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Näppäimistöasettelu"
-
-#~ msgid "text reporting unit"
-#~ msgstr "tekstinlukuyksikkö"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Edistymispalkkien päivitykset"
-
-#~ msgid "Report &font name"
-#~ msgstr "Lue &fontti"
-
-#~ msgid "Report font &size"
-#~ msgstr "L&ue fonttikoko"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Lue &tasaus"
-
-#~ msgid "Report &colors"
-#~ msgstr "Lue &värit"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Lue ko&mmentit"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Ilmoita k&orostus"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Lue t&yyli"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Lue &kirjoitusvirheet"
-
-#~ msgid "Report &pages"
-#~ msgstr "Lue &sivunumerot"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Ilmoita &rivivälit"
-
-#~ msgid "Report &tables"
-#~ msgstr "Lue t&aulukot"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Lue taulukon rivi- &ja sarakeotsikot"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Lue &linkit"
-
-#~ msgid "Report &headings"
-#~ msgstr "Lue &otsikot"
-
-#~ msgid "Report &lists"
-#~ msgstr "Ilmoita l&uettelot"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Lue sis&ennetyt kappaleet"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Lue kii&ntopisteet"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Lue ke&hykset"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Lue napsa&utettavat kohteet"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr ""
-#~ "Ottaa käyttöön rivin sisennyksen lukemisen tai poistaa sen käytöstä."
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Tätä solua ei voi muokata"
-
-#~ msgid "checker"
-#~ msgstr "shakkiruutu"
-
-#~ msgid "crisscross"
-#~ msgstr "siksakki"
-
-#~ msgid "down"
-#~ msgstr "alas"
-
-#~ msgid "gray16"
-#~ msgstr "16% harmaa"
-
-#~ msgid "gray25"
-#~ msgstr "25% harmaa"
-
-#~ msgid "gray50"
-#~ msgstr "50% harmaa"
-
-#~ msgid "gray75"
-#~ msgstr "75% harmaa"
-
-#~ msgid "grid"
-#~ msgstr "ruudukko"
-
-#~ msgid "light down"
-#~ msgstr "kapea alas"
-
-#~ msgid "light up"
-#~ msgstr "kapea ylös"
-
-#~ msgid "light vertical"
-#~ msgstr "kapea pystysuuntainen"
-
-#~ msgid "semi gray75"
-#~ msgstr "75% puoliharmaa"
-
-#~ msgid "up"
-#~ msgstr "ylös"
-
-#~ msgid "unknown color"
-#~ msgstr "tuntematon väri"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "alicensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "antiikinvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "vesi"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "akvamariini"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "asuurinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "beesi"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "vaaleanruskea>"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "kuoritunmantelinruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "sininen"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "sinivioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "vankka puu"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "kadetinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "kirkkaanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "suklaanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "korallinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "ruiskukansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "maissisilkinkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "karmiininpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "syaani"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "tummansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "tummansyaani"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "tummankultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "tummanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "tummanruskeankellertävä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "tummanmagenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "tummanoliivinvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Tummanoranssi"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "tummanorkideanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "tummanpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "tummanlohenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "tummanmerenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "tummanliuskekivensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "tummanliuskekivenharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "tummanturkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "tummanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "syvänpinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "syväntaivaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "himmeänharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "dodgerinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "tulenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "kukanvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "metsänvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fuksia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "gainsboronharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "haamunvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "kullankeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "kultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "harmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "vihreänkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Meloninvaaleanpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "kuumanpinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "intiaaninpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "indigonsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "norsunluunvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "ruskeankellertävä"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "laventelinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "laventelipuna"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "ruohonvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "sitruunasifonkikakunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "vaaleansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "vaaleankorallinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "vaaleansyaani"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "vaaleankultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "vaaleanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "vaaleanpinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "vaalean lohenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "vaaleanmerenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "vaaleantaivaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "vaaleanliuskekivenharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "vaaleanteräksensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "vaaleankeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "limetti"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Limetinvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "pellavankeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "punaisenruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "puoliakvamariini"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "puolisininen"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "puoliorkideanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "puolipurppura"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "puolimerenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "puolisiniharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "puolikeväisenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "puoliturkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "puolivioletinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Keskiyön sininen"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "minttukermanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "usvaruusu"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Mokkasiininoranssi"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navajonvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "laivastonsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "vanha pitsi"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "oliivinvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "oliivin likaisenruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "oranssinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "orkideanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "haaleankultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "haaleanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "haaleanturkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "haaleanvioletinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "papaijavaahdonoranssi"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "persikkakohokas"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "pinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "luumunvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "harmaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "punainen"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "ruusunpunaisen ruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "syvänsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "satulanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "lohenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "hiekanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "merenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "simpukanvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "sienanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "hopeanharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "taivaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "liuskekivensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "liuskekivenharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "lumenvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "keväisenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "teräksensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "nahanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "sinivihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "ohdakkeenpurppura"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "tomaatinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "turkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "violetti"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "vehnänkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "savunvalkoinen"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Tekstilohkon alkumerkin on oltava samassa objektissa"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Kielioppivirheitä ei ilmoiteta"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Ilmoita kirjoitusvirheet"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr ""
-#~ "Ottaa käyttöön kielioppivirheiden ilmoittamisen tai poistaa sen käytöstä"
-
-#~ msgid "grammar error"
-#~ msgstr "kielioppivirhe"
-
-#~ msgid "out of grammar error"
-#~ msgstr "kielioppivirheen loppu"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Ilmoita k&ielioppivirheet"
-
-#~ msgid "browse mode"
-#~ msgstr "selaustila"
-
-#~ msgid "activate"
-#~ msgstr "aktivoi"
-
-#~ msgid "no next"
-#~ msgstr "ei seuraavaa"
-
-#~ msgid "no previous"
-#~ msgstr "Ei edellistä"
-
-#~ msgid "edge of table"
-#~ msgstr "taulukon reuna"
-
-#~ msgid "%g characters"
-#~ msgstr "%g merkkiä"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pistettä"
-
-#~ msgid "no comments"
-#~ msgstr "ei kommentteja"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä "
-#~ "soluista"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "oletusväri"
-
-#~ msgid "unselecting %s"
-#~ msgstr "ei valita %s"
-
-#~ msgid "unrevised"
-#~ msgstr "ei muutettu"
-
-#~ msgid "unknown author"
-#~ msgstr "tuntematon muokkaaja"
-
-#~ msgid "unknown date"
-#~ msgstr "tuntematon päiväys"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr ""
-#~ "Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
-#~ "{revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "ilmoittaa objektin, jossa kohdistus on"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{}-sarja {} / {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "arvo {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} / {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " suuntaviiva {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr ""
-#~ "Kaavioalueen korkeus on {}, leveys on {}, yläreuna on {}, vasen reuna on "
-#~ "{}"
-
-#~ msgid "equation"
-#~ msgstr "yhtälö"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Näyttää listan linkeistä, otsikoista ja kiintopisteistä"
-
-#~ msgid "Slovak"
-#~ msgstr "slovakki"
-
-#~ msgid "navy blue"
-#~ msgstr "laivastonsininen"
-
-#~ msgid "teal"
-#~ msgstr "sinivihreä"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin "
-#~ "uudelleen NVDA:n 2013.1-versiossa, jotta se olisi intuitiivisempi ja "
-#~ "johdonmukaisempi.\n"
-#~ "Mikäli käytät kannettavien näppäimistöasettelua, katso lisätietoja Mitä "
-#~ "uutta -asiakirjasta."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Uusi kannettavien näppäimistöasettelu"
-
-#~ msgid "Read What's New"
-#~ msgstr "Mitä uutta"
-
-#~ msgid "&Acceleration"
-#~ msgstr "Kiih&tyvyys:"
-
-#~ msgid "male 1"
-#~ msgstr "mies 1"
-
-#~ msgid "female 1"
-#~ msgstr "nainen 1"
-
-#~ msgid "male 2"
-#~ msgstr "mies 2"
-
-#~ msgid "female 2"
-#~ msgstr "nainen 2"
-
-#~ msgid "lime"
-#~ msgstr "limetinvihreä"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Haluatko varmasti sulkea NVDA:n?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Vahvista sulkeminen"
-
-#~ msgid "Regexp"
-#~ msgstr "Säänla"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Ei sijaintitietoja navigointiobjektille"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Ei sijaintitietoja ruudulle"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Ilmoittaa nykyisen navigointiobjektin korkeuden, leveyden ja sijainnin"
-
-#~ msgid "Set column header row"
-#~ msgstr "Määritä sarakkeen otsikkorivi"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Sarakkeen otsikkorivi nollattu"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Määrittää kerran painettaessa nykyisen rivin sarakeotsikoiden riviksi. "
-#~ "Kahdesti painettaessa asetus nollataan."
-
-#~ msgid "Set row header column"
-#~ msgstr "Määritä rivin otsikkosarake"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Määrittää kerran painettaessa nykyisen sarakkeen riviotsikoiden "
-#~ "sarakkeeksi. Kahdesti painettaessa asetus nollataan."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s kautta %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "&Käytä manuaalisesti/muokkaa"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Asetustiedostossa on virheitä. \n"
-#~ "Paina OK korjataksesi virheet, tai paina Peruuta, jos haluat itse tehdä "
-#~ "korjaukset myöhemmin. Lisätietoja virheistä löytyy lokitiedostosta.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Ei automaattisia kommentteja."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Automaattisten kommenttien ikkunaa ei löytynyt."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Lukee kaikki automaattisten kommenttien ikkunassa olevat kommentit."
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automaattiset kommentit:"
-
-#~ msgid "Translation:"
-#~ msgstr "Käännös:"
-
-#~ msgid "Comments:"
-#~ msgstr "Kommentit:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Ei kokonaistarkastelua tälle objektille"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Ei objektia kokonaistarkastelun kohdassa"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Siirtää navigointiobjektin siihen objektiin, jossa tarkastelukohdistimen "
-#~ "kohdalla oleva teksti on kokonaistarkastelussa"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Sulje ensin toinen avoin NVDA:n asetusvalintaikkuna"
-
-#~ msgid "Translation &table:"
-#~ msgstr "Piste&taulukko:"
-
-#~ msgid "beeps"
-#~ msgstr "äänimerkit"
-
-#~ msgid "talk"
-#~ msgstr "puhe"
-
-#~ msgid "default action failed"
-#~ msgstr "Oletustoiminto epäonnistui"
-
-#~ msgid "layout %s"
-#~ msgstr "näppäimistöasettelu %s"
-
-#~ msgid "%s device found"
-#~ msgstr "Laite %s löytyi"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, käytetään oletusarvoa %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Asetustiedoston muoto virheellinen"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Virhe jäsenneltäessä asetustiedostoa: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Virheitä asetustiedostossa '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s / %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Tämä lisäosa on jo asennettu. Poista nykyinen lisäosa ja yritä uudelleen."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "Lataa NVDA:n tallennetut asetukset kumoten nykyiset muutokset"
