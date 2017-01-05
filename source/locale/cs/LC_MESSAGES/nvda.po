@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 11:41+1000\n"
-"PO-Revision-Date: 2016-12-28 20:31-0800\n"
+"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"PO-Revision-Date: 2016-12-29 17:28+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -4287,6 +4287,42 @@ msgstr "vně %s"
 #, python-format
 msgid "page %s"
 msgstr "strana %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "úsek %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+msgid "column {0} of {1}"
+msgstr "sloupec {0} of {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s sloupců"
+
+msgid "continuous section break"
+msgstr "konec souvislého úseku"
+
+msgid "new column section break"
+msgstr "konec úseku nového sloupce"
+
+msgid "new page section break"
+msgstr "konec úseku nové strany"
+
+msgid "even pages section break"
+msgstr "konec úseku sudých stran"
+
+msgid "odd pages section break"
+msgstr "konec úseku lichých stran"
+
+msgid "column break"
+msgstr "konec sloupce"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
