@@ -36,6 +36,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
+	readNumbersAs = integer(default=0,min=0,max=3)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
