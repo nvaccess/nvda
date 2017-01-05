@@ -12,6 +12,7 @@ import sys
 import time
 import re
 import wx
+import winVersion
 import winUser
 import vkCodes
 import eventHandler
@@ -169,16 +170,17 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		log.error("internal_keyDownEvent", exc_info=True)
 	finally:
 		# #6017: handle typed characters for UWP apps in Win10 RS2 and above where we can't detect typed characters in-process 
+		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus=api.getFocusObject()
-		if sys.getwindowsversion().build>=14986 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
+		if winVersion.winVersion.build>=14986 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
 			keyStates=(ctypes.c_byte*256)()
 			for k in xrange(256):
 				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
 			charBuf=ctypes.create_unicode_buffer(5)
-			# Normally calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
-			# However in UWP apps in Windows 10 RS2 and above, wm_keydown / wm_char is never processed, thus NVDA will be the only one calling it. 
 			hkl=ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
-			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,5,4,hkl)
+			# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
+			# However, ToUnicodeEx now can take a new flag of 0x4, which stops it from destroying keyboard state, thus allowing us to safely call it here.
+			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,len(charBuf),0x4,hkl)
 			if res>0:
 				for ch in charBuf[:res]: 
 					eventHandler.queueEvent("typedCharacter",focus,ch=ch)
