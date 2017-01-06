@@ -34,6 +34,25 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.TextUnit_Character
 	] if UIAHandler.isUIAAvailable else []
 
+	def find(self,text,caseSensitive=False,reverse=False):
+		tempRange=self._rangeObj.clone()
+		documentRange=self.obj.UIATextPattern.documentRange
+		if reverse:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,documentRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		else:
+			if tempRange.move(UIAHandler.TextUnit_Character,1)==0:
+				return False
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,documentRange,UIAHandler.TextPatternRangeEndpoint_End)
+		try:
+			r=tempRange.findText(text,reverse,not caseSensitive)
+		except COMError:
+			r=None
+		if r:
+			r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
+			self._rangeObj=r
+			return True
+		return False
+
 	def _getFormatFieldAtRange(self,range,formatConfig,ignoreMixedValues=False):
 		"""
 		Fetches formatting for the given UI Automation Text range.
