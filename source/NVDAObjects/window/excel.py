@@ -670,7 +670,24 @@ class ExcelWorksheet(ExcelBase):
 		self.excelApplicationObject=self.excelWorksheetObject.application
 		return self.excelApplicationObject
 
-	re_definedName=re.compile(u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?(?P<name>\w+)(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?(\..*)*)?)?$')
+	re_definedName=re.compile(
+		# Starts with an optional sheet name followed by an exclamation mark (!).
+		# If a sheet name contains spaces then it is surrounded by single quotes (')
+		# Examples:
+		# Sheet1!
+		# ''Sheet2 (4)'!
+		# 'profit and loss'!
+		u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?'
+		# followed by a unique name (not containing spaces). Example:
+		# rowtitle_ab12-cd34-de45
+		u'(?P<name>\w+)'
+		# Optionally followed by minimum and maximum addresses, starting with a period (.). Example:
+		# .a1.c3
+		# .ab34
+		u'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
+		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
+		u'(\..*)*)?)?$'
+	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
 		sheetName=self.excelWorksheetObject.name
