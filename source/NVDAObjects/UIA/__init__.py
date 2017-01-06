@@ -236,9 +236,7 @@ class UIATextInfo(textInfos.TextInfo):
 		field["description"] = obj.description
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
-			tableID=VARIANT()
-			obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(tableID))
-			field["table-id"] = obj
+			field["table-id"] = obj.UIAElement.getRuntimeId()
 			try:
 				field["table-rowcount"] = obj.rowCount
 				field["table-columncount"] = obj.columnCount
@@ -250,7 +248,7 @@ class UIATextInfo(textInfos.TextInfo):
 				field["table-rowsspanned"] = obj.rowSpan
 				field["table-columnnumber"] = obj.columnNumber
 				field["table-columnsspanned"] = obj.columnSpan
-				field["table-id"] = obj.table
+				field["table-id"] = obj.table.UIAElement.getRuntimeId()
 				field['role']=controlTypes.ROLE_TABLECELL
 				field['table-columnheadertext']=obj.columnHeaderText
 				field['table-rowheadertext']=obj.rowHeaderText

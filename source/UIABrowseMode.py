@@ -6,6 +6,7 @@
 from ctypes import byref
 from comtypes import COMError
 from comtypes.automation import VARIANT
+import array
 import winUser
 import UIAHandler
 from UIAUtils import *
@@ -325,10 +326,28 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 		pass
 
 	def _getTableCellAt(self,tableID,row,column):
-		# for UIA, tableID is actually a UIA NVDAObject
-		tableElement=tableID.UIAGridPattern
+		startUIAElement=self.selection.UIAElementAtStart
+		# Comtypes cannot automatically cast a tuple to a variant in method calls, so cast to a Python array first
+		tableIDArray=array.array("l",tableID)
+		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,tableIDArray)
+		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 		try:
-			cellElement=tableElement.getItem(row-1,column-1)
+			tableUIAElement=UIAWalker.normalizeElement(startUIAElement)
+		except COMError:
+			tableUIAElement=None
+		if not tableUIAElement:
+			raise LookupError
+		UIAGridPattern=None
+		try:
+			punk=tableUIAElement.getCurrentPattern(UIAHandler.UIA_GridPatternId)
+			if punk:
+				UIAGridPattern=punk.QueryInterface(UIAHandler.IUIAutomationGridPattern)
+		except COMError:
+			raise LookupError
+		if not tableUIAElement:
+			raise RuntimeError
+		try:
+			cellElement=UIAGridPattern.getItem(row-1,column-1)
 		except COMError:
 			cellElement=None
 		if not cellElement:

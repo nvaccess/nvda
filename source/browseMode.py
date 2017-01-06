@@ -1528,7 +1528,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 
 	def _getTableCellAt(self,tableID,row,column):
 		"""
-		Locates the table cell with the given row and column coodinates and table ID.
+		Locates the table cell with the given row and column coordinates and table ID.
 		@param tableID: the ID of the table.
 		@param row: the row number of the cell
 		@type row: int
@@ -1541,10 +1541,11 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		"""
-		Locates the nearest table cell relative to another table cell given its coodinates.
+		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
+		For example, this is used to move to the cell in the next column, previous row, etc.
 		@param tableID: the ID of the table
 		@param startPos: the position in the document to start searching from.
-		@type startPosition: L{textInfos.TextInfo}
+		@type startPos: L{textInfos.TextInfo}
 		@param origRow: the row number of the starting cell
 		@type origRow: int
 		@param origCol: the column number  of the starting cell
@@ -1571,8 +1572,8 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		elif axis == "column":
 			destCol += origColSpan if movement == "next" else -1
 
-		if destCol < 1:
-			# Optimisation: We're definitely at the edge of the column.
+		if destCol < 1 or destRow<1:
+			# Optimisation: We're definitely at the edge of the column or row.
 			raise LookupError
 
 		return self._getTableCellAt(tableID,destRow,destCol)
@@ -1582,6 +1583,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
+		#  For now, table movement includes layout tables even if reporting of layout tables is disabled.
 		formatConfig["includeLayoutTables"]=True
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
@@ -1608,7 +1610,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		self._tableMovementScriptHelper(axis="row", movement="next")
 	# Translators: the description for the next table row script on browseMode documents.
 	script_nextRow.__doc__ = _("moves to the next table row")
-
 
 	def script_previousRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="previous")
