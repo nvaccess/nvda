@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-21 18:14+0900\n"
+"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"PO-Revision-Date: 2016-12-30 23:18+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.8.10\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1700,6 +1700,7 @@ msgid "row"
 msgstr "行"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "フレーム"
 
@@ -2026,10 +2027,6 @@ msgstr "デスクトップアイコン"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "アラート"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "Iフレーム"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2692,15 +2689,15 @@ msgstr "スタイルの報告の切り替え"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "スペルの間違いを報告しない"
+msgstr "スペルミスを報告しない"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "スペルの間違いを報告する"
+msgstr "スペルミスを報告する"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "スペルの間違いの報告の切り替え"
+msgstr "スペルミスの報告の切り替え"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -4263,6 +4260,43 @@ msgstr "%sの外"
 msgid "page %s"
 msgstr "ページ%s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "セクション %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "列 {0}の{1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s列"
+
+msgid "continuous section break"
+msgstr "継続のセクション区切り"
+
+msgid "new column section break"
+msgstr "新しい列のセクション区切り"
+
+msgid "new page section break"
+msgstr "新しいページのセクション区切り"
+
+msgid "even pages section break"
+msgstr "偶数ページのセクション区切り"
+
+msgid "odd pages section break"
+msgstr "奇数ページのセクション区切り"
+
+msgid "column break"
+msgstr "段区切り"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4504,11 +4538,11 @@ msgstr "コメントの外"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "スペルの間違い"
+msgstr "スペルミス"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "スペルの間違いの外"
+msgstr "スペルミスの外"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -5729,7 +5763,6 @@ msgid "Exit NVDA"
 msgstr "NVDAの終了"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5739,16 +5772,20 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"NVDAへようこそ!\n"
-"NVDAキーを押しながらほかのキーを押すと、いろいろな操作ができます。\n"
-"InsertキーがNVDAキーとして使えます。\n"
-"NVDAキーとNを押すとNVDAメニューが開きます。\n"
-"NVDAメニューには、NVDAの設定の変更、説明、その他の機能があります。\n"
-"なお、英語キーボードでは、CapsLockキーをNVDAキーとして使えます。\n"
+"キーボードでNVDAを制御するにはNVDA制御キーを使います。\n"
+"初期状態ではInsertキーがNVDA制御キーとして使えます。\n"
+"NVDA+NまたはシステムトレイのアイコンでNVDAメニューが開きます。\n"
+"NVDAメニューには、NVDAの終了、設定、ヘルプなどがあります。\n"
+"タッチモードでは2本指2回タップでNVDAメニューが開きます。\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "ようこそNVDAへ"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "NVDAへようこそ!"
 
 msgid "Options"
 msgstr "オプション"
@@ -5756,7 +5793,7 @@ msgstr "オプション"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "英語キーボードのCapsLockキーをNVDAキーとして使用"
+msgstr "英語キーボードのCapsLockキーをNVDA制御キーとして使用"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -6478,13 +6515,6 @@ msgstr "NVDAのユーザー設定のコピー中にエラーが発生しまし�
 msgid "Successfully copied NVDA user settings"
 msgstr "NVDAのユーザー設定は正しくコピーされました"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "言語ファイル%sにエラーがあります"
-
-msgid "Language Error"
-msgstr "言語エラー"
-
 msgid "This change requires administrator privileges."
 msgstr "この変更には管理者権限が必要です。"
 
@@ -6590,12 +6620,12 @@ msgstr "キーボード配列(&K)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "テンキーのInsertキーをNVDAキーとして使用"
+msgstr "テンキーのInsertキーをNVDA制御キーとして使用"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "InsertキーをNVDAキーとして使用"
+msgstr "InsertキーをNVDA制御キーとして使用"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6635,7 +6665,7 @@ msgstr "コマンドキーの読み上げ(&K)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Play sound for &spelling errors while typing"
-msgstr "スペルの間違いを入力中に音で報告(&S)"
+msgstr "スペルミスを入力中に音で報告(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6912,7 +6942,7 @@ msgstr "校閲者による更新(&E)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Spelling e&rrors"
-msgstr "スペルの間違い(&R)"
+msgstr "スペルミス(&R)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7049,13 +7079,17 @@ msgstr "コメント(&C)"
 msgid "&Type"
 msgstr "種別(&T)"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "パターンが必要です"
+
+msgid "Dictionary Entry Error"
+msgstr "辞書項目のエラー"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "正規表現のエラー \"%s\""
-
-msgid "Dictionary Entry Error"
-msgstr "辞書項目のエラー"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"

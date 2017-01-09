@@ -76,9 +76,9 @@ Na tym etapie możesz zdecydować czy chcesz zainstalować program na dysku, utw
 
 Jeśli na aktualnym komputerze planujesz zawsze używać NVDA, prawdopodobnie najlepszym wyjściem będzie instalacja programu w systemie.
 Zainstalowana wersja umożliwia dostęp do funkcjonalności nieobecnych w kopii tymczasowej takich jak start wraz z systemem, dostęp do UAC i ekranów logowania. Po instalacji na twoim pulpicie i w menu start zostaną także utworzone skróty umożliwiające szybkie uruchomienie screenreadera.
-Przy pomocy zainstalowanej wersji będziesz mógł/mogła również utworzyć przenośną kopię programu w dowolnym momencie. 
+Przy pomocy zainstalowanej wersji możesz również utworzyć przenośną kopię programu w dowolnym momencie. 
 
-Jeśli chcesz nosić NVDA ze sobą na Pen Drive lub innym zapisywalnym nośniku, powinieneś wybrać utworzenie kopii przenośnej.
+Jeśli chcesz nosić NVDA ze sobą na Pen Drive lub innym zapisywalnym nośniku, wybierz utworzenie kopii przenośnej.
 Kopia przenośna umożliwia również instalację NVDA na dowolnym komputerze w późniejszym czasie.
 Jeżeli jednak chcesz skopiować NVDA na nośnik tylko do odczytu, taki jak płyta CD, powinieneś skopiować sam pakiet instalacyjny.
 Uruchomienie wersji przenośnej z nośnika tylko do odczytu, nie jest w tym momencie obsługiwane.
@@ -91,6 +91,7 @@ Poza brakiem możliwości automatycznego startu po zalogowaniu do systemu, przen
 - Brak odczytu ekranu kontroli konta użytkownika, podczas uruchamiania programu z uprawnieniami administratora.
 - Windows 8 i nowsze: brak obsługi ekranu dotykowego.
 - Windows 8 i nowsze: brak trybu czytania i wypowiadania wpisywanych znaków w aplikacjach Windows Store.
+- Windows 8 i nowsze: przyciszanie dźwięku nie jest obsługiwane.
 -
 
 ++ Instalacja NVDA ++
@@ -781,6 +782,9 @@ W Windows 8 i nowszych, ta opcja pozwala wybrać, czy NVDA powinien obniżać g�
 - Zawsze przyciszaj: NVDA będzie obniżał głośność innych dźwięków przez cały czas, gdy NVDA jest uruchomione.
 -
 
+Ta opcja jest dostępna tylko, jeśli NVDA został zainstalowany.
+Nie jest możliwe obsługiwanie przyciszania audio w przenośnych i tymczasowych kopiach NVDA.
+
 +++ Ustawienia Głosu (NVDA+kontrol+v) +++[VoiceSettings]
 Okno dialogowe Ustawienia Głosu znajduje się w menu Ustawienia. Zawiera opcje, które pozwalają zmieniać brzmienie mowy.
 Szybszy alternatywny sposób regulacji parametrów mowy z dowolnego miejsca, możesz znaleźć w rozdziale [Szybka zmiana ustawień syntezatora #SynthSettingsRing].
@@ -1195,42 +1199,61 @@ Okno "Formatowanie Dokumentów ..." znajduje się w menu ustawień nvda.
 Większość pól wyboru w tym oknie dialogowym służy do konfiguracji, jaki rodzaj formatowania chcesz usłyszeć automatycznie podczas poruszania się kursorem po dokumentach.
 Jeśli np. zaznaczysz pole wyboru "Odczytuj nazwy czcionek", to za każdym razem gdy kursor znajdzie się na tekście z inną czcionką, nazwa tej czcionki zostanie odczytana.
 
+Opcje formatowania dokumentu są pogrupowane.
 Możemy w ten sposób skonfigurować odczytywanie:
-- Nazw czcionek
-- Rozmiaru czcionki
-- Atrybutów czcionki
-- Wyrównania tekstu
-- Kolorów
-- Komentarzy
-- Zmian edycyjnych
-- Podkreślenia
-- Stylu tekstu
-- Błędów pisowni
-- Numerów stron
-- Numerów linii
-- Wcięć
-- Wcięć akapitu (np. wysunięcie, wcięcie pierwszej linii)
-- Interlinii (pojedyncza, podwójna etc)
-- Tabel
-- Nagłówków kolumn i wierszy tabeli
-- Współrzędnych komórek tabeli
-- Linków
-- Nagłówków
-- List
-- Cytatów
-- Punktów orientacyjnych
-- Ramek
-- Gdy coś jest klikalne
+- Czcionki
+ - Nazw czcionek
+ - Rozmiaru czcionki
+ - Atrybutów czcionki
+ - Podkreślenia
+ - Stylu tekstu
+ - Kolorów
+- Informacje o dokumencie
+ - Komentarzy
+ - Zmian edycyjnych
+ - Błędów pisowni
+- strony i odstępy
+ - Numerów stron
+ - Numerów linii
+ - Wcięć linii [(Wyłączone, Mowa, Dźwięki, Mowa i dźwięki) #lineIndentationOptions]
+ - Wcięć akapitu (np. wysunięcie, wcięcie pierwszej linii)
+ - Interlinii (pojedyncza, podwójna etc)
+ - Wyrównania tekstu
+- Informacje o tabeli
+ - Tabel
+ - Nagłówków kolumn i wierszy tabeli
+ - Współrzędnych komórek tabeli
+- Elementy
+ - Nagłówków
+ - Linków
+ - List
+ - Cytatów
+ - Punktów orientacyjnych
+ - Ramek
+ - Gdy element jest klikalny
+ -
 -
+
 
 Aby przełączać te ustawienia z każdego miejsca, proszę określić własne zdarzenia wejścia w [oknie zdarzenia wejścia #InputGestures].
 
-==== Uwzględniaj formatowanie za kursorem ====
+==== Zgłaszaj formatowanie za kursorem ====
 Jeśli opcja jest włączona, to NVDA spróbuje wykryć wszystkie zmiany formatowania w odczytywanej linii, nawet jeśli to pogorszy wydajność NVDA.
 
 Domyślnie NVDA wykryje formatowanie na pozycji Kursora Systemu / punktu Przeglądu, a w niektórych przypadkach może wykryć formatowanie reszty wierszy, ale tylko wtedy gdy nie będzie to powodować spadku wydajności.
  
-Włącz tę opcję, by przeprowadzić korektę dokumentów w aplikacjach takich jak Microsoft Word, gdzie formatowanie jest bardzo ważne.
+Włącz tę opcję, by przeprowadzić korektę dokumentów w aplikacjach takich jak Wordpad, gdzie formatowanie jest bardzo ważne.
+
+==== Zgłaszaj wcięcia linii ====
+Ta opcja pozwala ustawić w jaki sposób mają być zgłaszane wcięcia na początku linii.
+Lista rozwijana zgłaszania wcięć linii ma cztery opcje.
+
+- Wyłączone: NVDA nie będzie zgłaszał wcięć.
+- mowa: gdy zmieni się głębokość wcięcia linii, NVDA wypowie komunikat w stylu "12 spacja" lub "4 tab."
+- Dźwięki: przy zmianie głębokości wcięcia linii, dźwięki odzwierciedlą głębokość wcięcia.
+Wysokość dźwięku będzie wzrastać dla każdej spacji, a dla tabulatora przyrost wysokości dźwięku będzie równy przyrostowi dla czterech spacji.
+- Mowa i dźwięki: ta opcja zgłosi wcięcia przy użyciu obu powyższych metod.
+-
 
 +++ Słowniki wymowy +++
 Menu słowniki wymowy (znajdujące się w menu Ustawienia) zawiera polecenia otwierające okna dialogowe, które pozwalają zarządzać sposobem w jaki NVDA wypowiada określone słowa lub frazy.
@@ -1425,8 +1448,12 @@ Polecenia te są dostępne w menu Log.
 ++ Podgląd Mowy ++
 Dla widzących twórców oprogramowania, albo osób demonstrujących działanie NVDA szerszej publiczności osób widzących, dostępne jest ruchome okno wyświetlające to, co NVDA aktualnie wypowiada.
 
-Aby włączyć podgląd mowy, zaznacz pozycję "Podgląd Mowy" w menu w menu Narzędzia. 
-Aby wyłączyć tą opcję usuń zaznaczenie "Podgląd Mowy" w menu .
+Aby włączyć podgląd mowy, zaznacz pozycję "Podgląd Mowy" w menu Narzędzia. 
+Aby wyłączyć tę opcję, usuń zaznaczenie "Podgląd Mowy" w menu .
+
+Okno podglądu mowy zawiera pole wyboru "Pokaż podgląd mowy przy starcie".
+Jeśli jest zaznaczone, podgląd mowy otworzy się po starcie NVDA.
+Okno podglądu mowy będzie zawsze pojawiało się w tym samym miejscu i w takich samych rozmiarach, jakie ustawione były w chwili jego zamknięcia .
 
 Gdy podgląd mowy jest włączony, jego okienko stale się odświeża by pokazać aktualnie wypowiadany tekst.
 Gdy klikniesz lub umieścisz punkt uwagi wewnątrz podglądu, NVDA tymczasowo zatrzyma aktualizację tekstu, dzięki czemu możesz łatwo zaznaczyć lub skopiować istniejące treści.
@@ -1690,18 +1717,24 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Klawisz alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Monitory brajlowskie Baum/Humanware/APH ++
-Kilka monitorów firm [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] i [APH http://www.aph.org/] jest obsługiwanych przez USB i bluetooth.
+++ Monitory brajlowskie Baum/Humanware/APH/Orbit ++
+Kilka monitorów firm [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] i [Orbit http://www.orbitresearch.com/] jest obsługiwanych przez USB i bluetooth.
 Wśród nich:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Niektóre inne monitory produkowane przez Baum mogą również działać, ale nie zostało to przetestowane.
 
-Przy połączeniu przez USB do monitorów innych niż VarioUltra, Pronto! lub Refreshabraille z trybem USB ustawionym na HID, musisz najpierw zainstalować sterowniki USB dostarczone przez producenta.
+Przy połączeniu przez USB do monitorów, które nie używają HID, musisz najpierw zainstalować sterowniki USB dostarczone przez producenta.
+VarioUltra i Pronto! używają HID.
+Refreshabraille i Orbit Reader 20 mogą używać HID, jeśli są odpowiednio skonfigurowane.
 
-Poniżej skróty klawiszowe dla tego monitora, które działają w nvda.
+Tryb szeregowy USB monitora Orbit Reader 20 jest obsługiwany obecnie tylko w Windows 10.
+USB HID zasadniczo powinien być używany zamiast tego.
+
+Poniżej skróty klawiszowe dla tych monitorów, które działają w nvda.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 %kc:beginInclude
 || Działanie | Klawisz skrótu |

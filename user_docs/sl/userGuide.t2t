@@ -91,6 +91,7 @@ Ločeno od tega, da se NVDA ne more samodejno zagnati pred in/ali po prijavi, im
 - Nezmožnost branja zaslonov Nadzora Uporabniškega računa (NURR), ko se poskuša zagnati program s skrbniškimi pravicami.
 - Windows 8 in kasnejši: nezmožnost podpirati vnos preko zaslona na dotik.
 - Windows 8 in kasnejši: nezmožnost oskrbeti značilnosti, kot so recimo Brskalniško delovanje in izgovor natipkanih znakov v Trgovini Windows programčkov.
+- Windows 8 in kasnejši: Stišanje ostalih zvokov, ko NVDA govori ni podprto.
 -
 
 ++ Namestitev NVDA ++
@@ -780,6 +781,9 @@ V sistemu Windows 8 in novejših vam ta možnost omogoča, da NVDA zniža glasno
 - Stišaj, ko NVDA govori ali oddaja lastne zvoke: NVDA bo znižala glasnost ostalih zvokov samo takratk, ko bo sama govorila ali oddajala lastne zvoke.
 - Vedno stišaj: Ostali zvoki se bodo predvajali na naižji glasnosti ves čas medtem, ko bo NVDA v pogonu.
 -
+
+Ta možnost je na voljo samo takrat, ko je NVDA nameščena v sistemu.
+Stišanja zvokov v prenosljivi in začasni kopiji NVDA ni mogoče podpreti.
 
 +++ Nastavitve Glasu(NVDA+control+v) +++[VoiceSettings]
 Pogovorno okno Nastavitev Glasu, ki se nahaja v meniju Nastavitve, vsebuje možnosti, ki vam omogočajo spreminjanje zvoka govora.

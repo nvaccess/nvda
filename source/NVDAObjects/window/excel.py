@@ -8,6 +8,7 @@ from comtypes import COMError
 import comtypes.automation
 import wx
 import time
+import winsound
 import re
 import uuid
 import collections
@@ -427,6 +428,9 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 			return True
 
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
+
+	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+	disableAutoPassThrough=True
 
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
@@ -869,6 +873,8 @@ class ExcelWorksheet(ExcelBase):
 	__changeSelectionGestures = (
 		"kb:tab",
 		"kb:shift+tab",
+		"kb:enter",
+		"kb:numpadEnter",
 		"kb:upArrow",
 		"kb:downArrow",
 		"kb:leftArrow",
@@ -1152,6 +1158,15 @@ class ExcelCell(ExcelBase):
 		if self.excelWindowObject.ActiveSheet.ProtectContents and (not self.excelCellObject.Locked):
 			states.add(controlTypes.STATE_UNLOCKED)
 		return states
+
+	def event_typedCharacter(self,ch):
+		# #6570: You cannot type into protected cells.
+		# Apart from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
+		# Therefore for any character from space upwards (not control characters)  on protected cells, play the default sound rather than speaking the character
+		if ch>=" " and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
+			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
+			return
+		super(ExcelCell,self).event_typedCharacter(ch)
 
 	def getCellTextWidth(self):
 		#handle to Device Context

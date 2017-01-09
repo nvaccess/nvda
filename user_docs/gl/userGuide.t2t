@@ -23,7 +23,7 @@ O máis subliñable inclue:
 - Soporte para moitas pantallas de braille efímero incluíndo a entrada de braille computerizado para pantallas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 47 linguas
+- Traducido a 48 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis subliñable inclue:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 47 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 48 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ao usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -89,9 +89,10 @@ Utilizar a copia temporal do NVDA é tamén unha opción, ex.: con propósitos d
 Ademáis da incapacidade de iniciarse automáticamente durante e/ou despois da autentificación, as copias portable e temporal do NVDA tamén teñen as seguintes restriccións:
 - A incapacidade para interactuar con aplicacións que se executen con privilexios de administrador, ao menos que, por suposto, o mesmo NVDA tamén fora executado con estos privilexios (non é recomendable).
 - A incapacidade de ler as pantallas do Control de Contas do Usuario (UAC) cando tente iniciar unha aplicación con privilexios de administrador.
-- Windows 8 e superior: a incapacidade para soportar a entrada dende unha pantalla táctil.
-- Windows 8 e superior: a incapacidade de proporcionar características como modo navegación e fala de caracteres ao se escreber en Windows Store apps.
-
+- Windows 8 e posterior: a incapacidade para soportar a entrada dende unha pantalla táctil.
+- Windows 8 e posterior: a incapacidade de proporcionar características como modo navegación e fala de caracteres ao se escreber en Windows Store apps.
+- Windows 8 e posterior: a atenuación de audio non se soporta.
+-
 
 ++ Instalando NVDA ++
 Se se instala NVDA directamente dende o paquete descargado do NVDA, preme o botón Instalar NVDA.
@@ -780,6 +781,9 @@ En Windows 8 e superiores, esta opción permíteche escoller se NVDA debería ba
 - Atenuar cando saian voz e sons: NVDA só baixará o volume doutro audio cando NVDA estea falando ou reproducindo sons. Esto poderá non funcionar en todos os sintetizadores. 
 - Atenuar sempre: NVDA conservará o volume doutro audio máis baixo todo o tempo que NVDA estea en execución.
 -
+
+Esta opción só está dispoñible se NVDA se instalou.
+Non é posible soportar a atenuación de audio para copias portables e temporais do NVDA.
 
 +++ Opcións de Voz (NVDA+control+v) +++[VoiceSettings]
 O diálogo Opcións de Voz, que se atopa no menú Preferencias, contén opcións que che permiten modificar o son da voz. 

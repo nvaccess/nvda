@@ -23,7 +23,7 @@ Major highlights include:
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 47 languages
+- Translated into 48 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 47 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 48 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Lithuanian, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -91,6 +91,7 @@ Apart from the  inability to automatically start during and/or after log-on, the
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 - Windows 8 and later: the inability to support input from a touch screen.
 - Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+- Windows 8 and later: audio ducking is not supported.
 -
 
 ++ Installing NVDA ++
@@ -187,7 +188,7 @@ Following are some instructions on how to perform the various touch gestures.
 ==== Taps ====
 Tap the screen quickly with one or more fingers.
 
-Tapping once with one  finger is simpley known as a tap.
+Tapping once with one  finger is simply known as a tap.
 Tapping with 2 fingers at the same time is a 2-finger tap and so on.
 
 If the same tap is performed one or more times again in quick succession, NVDA will instead treat this as a multi-tap gesture.
@@ -226,8 +227,8 @@ The actual  commands will not execute while in input help mode.
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
 
 To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double tap on the touch screen.
-You can also get to the NVDA menu via the windows system tray.
-Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
+You can also get to the NVDA menu via the Windows system tray.
+Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the Windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
 When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
 
 ++ Basic NVDA commands ++
@@ -239,7 +240,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Toggle Speech Mode | NVDA+s | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
 | Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
 | Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
-| Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
+| Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treated as an NVDA key command |
 | Toggle application sleep mode on and off | NVDA+shift+s | NVDA+shift+z | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
 %kc:endInclude
 
@@ -262,7 +263,7 @@ An object is a single item such as a piece of text, button, checkbox, slider, li
 The system focus, also known simply as the focus, is the [object #Objects] which receives keys typed on the keyboard.
 For example, if you are typing into an editable text field, the editable text field has the focus.
 
-The Most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
+The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
 As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
 
 There are some key commands that are useful when moving with the System focus:
@@ -418,7 +419,7 @@ When moving around the screen with review commands, the navigator object is auto
 Note that in some newer applications, NVDA may not see some or all text displayed on the screen due to the use of newer screen drawing technologies which are impossible to support at this time.
 
 ++ Navigating with the Mouse ++
-When you move the Mouse, NVDA by default reports the text that is directly under the mouse pointer as the pointer moves over it.
+When you move the mouse, NVDA by default reports the text that is directly under the mouse pointer as the pointer moves over it.
 Where supported, NVDA will read the surrounding paragraph of text, though some controls may only read by line.
 
 NVDA can be configured to also announce the type of [object #Objects] under the mouse as it moves (e.g. list, button, etc.).
@@ -463,17 +464,17 @@ In addition, you can manually force focus mode, after which it will remain in ef
 %kc:beginInclude
 || Name | Key | Description |
 | Toggle browse/focus modes | NVDA+space | Toggles between focus mode and browse mode |
-| Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
+| Exit focus mode | escape | Switches back to browse mode if focus mode was previously switched to automatically |
 | Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document. Not available in Microsoft Word and Outlook.) |
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
-| open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
+| Open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
 %kc:endInclude
 
 
 ++ Single Letter Navigation ++
-While in browse mode, For quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
+While in browse mode, for quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
 Note that not all of these commands are supported in every type of document.
 
 %kc:beginInclude
@@ -586,7 +587,7 @@ After moving to the first cell in the column or row containing the headers, use 
 | Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
 | Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
 %kc:endInclude
-These settings will be stored in the document as bookmarks compatible with other Screen Readers such as Jaws.
+These settings will be stored in the document as bookmarks compatible with other screen readers such as Jaws.
 This means that users of other screen readers who open this document at a later date will automatically  have the row and column headers already set.
 
 +++ Browse Mode in Microsoft Word +++
@@ -620,7 +621,7 @@ After moving to the first cell in the column or row containing the headers, use 
 | Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
 | Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
 %kc:endInclude
-These settings will be stored in the workbook as defined name ranges compatible with other Screen Readers such as Jaws.
+These settings will be stored in the workbook as defined name ranges compatible with other screen readers such as Jaws.
 This means that users of other screen readers who open this workbook at a later date will automatically  have the row and column headers already set. 
 
 +++ The Elements List +++
@@ -633,13 +634,13 @@ The various types of information available in the Elements List are:
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
 - Comments: This lists all cells in the active worksheet containing comments. 
 The cell address along with its comments are shown for each cell. 
-Pressing Enter or the Move To button when on a listed comment will move directly to that cell.
+Pressing enter or the Move To button when on a listed comment will move directly to that cell.
 - Formulas: This lists all cells in the worksheet containing a formula. 
 The cell address along with its formula are shown for each cell.
-Pressing Enter or the Move To button on a listed formula will move directly to that cell. 
+Pressing enter or the Move To button on a listed formula will move directly to that cell. 
 - Sheets: This lists all sheets in the workbook. 
 Pressing f2 when on a listed sheet allows you to rename the sheet. 
-Pressing Enter or the Move To button while on the listed sheet will switch to that sheet.
+Pressing enter or the Move To button while on the listed sheet will switch to that sheet.
 - Form fields: This lists all form fields in the active worksheet.
 For each form field, the Elements List shows the alternative text of the field along with the addresses of the cells it covers.
 Selecting a form field and pressing enter or the Move to button moves to that field in browse mode.
@@ -649,7 +650,7 @@ Selecting a form field and pressing enter or the Move to button moves to that fi
 %kc:beginInclude
 To report any comments for the currently focused cell, press NVDA+alt+c.
 %kc:endInclude
-All comments for the Worksheet can also be listed in the NVDA Elements List.
+All comments for the worksheet can also be listed in the NVDA Elements List.
 
 +++ Reading Protected Cells +++
 If a workbook has been protected, it may not be possible to move focus to particular cells that have been locked for editing.
@@ -736,7 +737,7 @@ This option is a checkbox that, when checked, tells NVDA to play sounds when it 
 ==== Logging level ====
 This is a combo box that permits you to choose how much NVDA will log as it's running.
 Generally users should not need to touch this as not too much is logged.
-However if you are wanting to provide information in a bug report, then it may be a useful option.
+However, if you are wanting to provide information in a bug report, then it may be a useful option.
 
 ==== Automatically start NVDA after I log on to Windows ====
 If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
@@ -765,8 +766,8 @@ This option allows you to choose the synthesizer you wish NVDA to use for speech
 
 For a list of the Synthesizers that NVDA supports, please see the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
 
-One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output what so ever.
-This may be useful for someone who wishes to only use NVDA with Braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
+One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output whatsoever.
+This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
 
 ==== Output device ====
 This option allows you to choose the sound card that NVDA should instruct the selected synthesizer to speak through.
@@ -780,6 +781,9 @@ On Windows 8 and above, this option allows you to choose if NVDA should lower th
 - Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers. 
 - Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
 -
+
+This option is only available if NVDA has been installed.
+It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
 +++ Voice Settings (NVDA+control+v) +++[VoiceSettings]
 The Voice Settings dialog, found in the Preferences menu, contains options that let you change the sound of the speech.
@@ -1180,7 +1184,7 @@ For example, when on a web page, if you press tab and you land on a form, if thi
 
 ==== Automatic focus mode for caret movement ====
 This option, when checked, allows NVDA to enter and leave focus mode when using arrow keys.
-For example, if arrowing down a webpage and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
+For example, if arrowing down a web page and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
 
 ==== Audio indication of Focus and Browse modes ====
 If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode, rather than speaking the change.
@@ -1267,10 +1271,10 @@ The dialog also contains Add, Edit and Remove buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
-However to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog all together once you have finished adding/editing rules.
+However, to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog completely once you have finished adding/editing rules.
 
 The rules for NVDA's speech dictionaries allow you to change one string of characters into another.
-A simple example would be that you want to have NVDA say the word frog each time it is supposed to say the word bird.
+For example, you could create a rule which causes NVDA to say the word "frog" instead of "bird" whenever the word "bird" is encountered.
 In the Add rule dialog, the easiest way to do this is to type the word bird in the Pattern field, and the word frog in the Replacement field.
 You may also want to type a description of the rule in the Comment field (something like: changes bird to frog).
 
@@ -1405,7 +1409,7 @@ The Triggers list shows the available triggers, which are as follows:
 -
 
 To change the profile which should be automatically activated for a trigger, select the trigger and then select the desired profile from the Profile list.
-You can select (normal configuration) if you don't want a profile to be used.
+You can select "(normal configuration)" if you don't want a profile to be used.
 
 Press the Close button to return to the Configuration Profiles dialog.
 
@@ -1492,7 +1496,7 @@ Just like when you install or remove add-ons, you need to restart NVDA in order 
 The manager also has a Close button to close the dialog.
 If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
 
-In the past it has been possible to extend NVDA's functionality by copying individual plugins and drivers in to your NVDA user Configuration directory.
+In the past,  it was possible to extend NVDA's functionality by copying individual plugins and drivers into your NVDA user Configuration directory.
 Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
 It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
 
@@ -1556,8 +1560,8 @@ Nuance Vocalizer is a commercial, high quality voice synthesizer developed by Nu
 It contains over 50 different voices you can install, speaking over 30 languages.
 All synthesizer components and voices are bundled in add-on packages, which allows for full usage in portable copies of NVDA.
 
-You can get more information about Nuance Vocalizer for NVDA and how to buy it on its web site at [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-A percentage of sales of this product is donated to NV Access to fund further development of the NVDA Screen Reader.
+You can get more information about Nuance Vocalizer for NVDA and how to buy it on its website at [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+A percentage of sales of this product is donated to NV Access to fund further development of the NVDA screen reader.
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
