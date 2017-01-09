@@ -180,7 +180,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			hkl=ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
 			# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
 			# However, ToUnicodeEx now can take a new flag of 0x4, which stops it from destroying keyboard state, thus allowing us to safely call it here.
-			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,len(charBuf),0x4,hkl)
+			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,len(charBuf),0x4,hkl)
 			if res>0:
 				for ch in charBuf[:res]: 
 					eventHandler.queueEvent("typedCharacter",focus,ch=ch)
