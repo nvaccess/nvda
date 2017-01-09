@@ -327,7 +327,9 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def _getTableCellAt(self,tableID,row,column):
 		startUIAElement=self.selection.UIAElementAtStart
-		# Comtypes cannot automatically cast a tuple to a variant in method calls, so cast to a Python array first
+		# Comtypes casts a tuple into a variant containing a  safearray of variants.
+		# However, UIA's createPropertyCondition requires a safearay of ints.
+		# By first converting the tuple to a Python int Array we can ensure this.  
 		tableIDArray=array.array("l",tableID)
 		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,tableIDArray)
 		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
