@@ -3,58 +3,17 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2016.4 = 
-Af væsentlige forbedringer i denne version af NVDA kan nævnes: Forbedret understøttelse af Microsoft Edge, gennemsynstilstand i appen Windows 10 Mail, samt markante forbedringer til nVDAs dialoger.
+= 2017.1 = 
 
 == Nye Funktioner ==
-- NVDA kan nu rapportere linjeindrykning ved brug af toner. Dette kan konfigureres ved brug af combo boksen "Rapporter linjeindrykning med" i dialogen med indstillinger for dokumentformatering. (#5906)
-- Understøttelse for Orbit Reader 20 punktdisplay. (#6007)
-- En indstilling til at åbne talevisning ved opstart er blevet tilføjet. (#5050)
-- Når vinduet med talevisning åbnes, vil placeringen og dimensionerne af vinduet blive gendannet. (#5050)
-- Felter til brug af krydshenvisninger behandles nu som links. De rapporteres som links, og kan blive aktiveret. (#6102)
-- Støtte for Baum SuperVario2, Baum Vario 340 og HumanWare Brailliant2 punktdisplays. (#6116)
-- Understøttelse for Anniversary-opdateringen af Microsoft Edge. (#6271)
-- Gennemsynstilstand er nu brugt i appen Windows 10 Mail. (#6271)
+- I Microsoft Word, typen af et sektionsskift og et sektionsnummer kan nu blive rapporteret. Dette kan slås til ved brug af indstillingen "Sider" i indstillingerne for dokumentformatering.  (#5946)
+- Tekstkolonner kan nu rapporteres i Microsoft Word. Dette kan slås til ved brug af indstillingen  "Sider" i indstillingerne for dokumentformatering. (#5946)
 
 
 == Ændringer ==
-- Opdaterede liblouis punktoversætter til 3.0.0. Denne version indeholder store forbedringer til Unified English Braille. (#6109, #4194, #6220, #6140)
-- Genvejstaster er nu tilknyttet knapperne "Aktiver Tilføjelsespakke" og "Deaktiver Tilføjelsespakke" ved administrering af tilføjelsespakker (Alt+A og Alt+D). (#6388)
-- Forskellige problemer med hensyn til den indre margen samt justering af NVDAs dialoger er blevet rettet. (#6317, #5548, #6342, #6343, #6349)
-- Indholdet af dialogen til dokumentformatering er blevet justeret således, at indholdet ruller. (#6348)
-- Justerede layout i dialogen for Udtale af sætningstegn og symboler således, at den fulde bredte af dialogen er brugt til listen over symboler. (#6101)
-- Når gennemsynstilstand benyttes i browsere, vil bogstavnavigering for editfelter (E og Skift+E), samt formularfelter (F og Skift+F), nu også flytte mellem skrivebeskyttede felter. (#4164)
-- Tjekboksen "Oplæs ændringer i formatering efter markør" i dialogen for dokumentformatering er blevet omdøbt til "Rapportér ændringer i formatering efter markør", eftersom denne indstilling påvirker tale såvel som punkt. (#6336)
-- Justerede visningen af NVDAs Velkommen dialog. (#6350)
-- NVDA-dialoger har nu "OK" og "Afbryd" knapperne justeret til højre for dialogen. (#6333)
-- Rotationsbokse benyttes nu i felter, hvor numerisk indtastning er påkrævet, såsom "Procent ændring i tonehøjde" i stemmeindstillingerne. Du kan indtaste den ønskede værdi, eller bruge pil op og ned for at justere værdien. (#6099)
-- Måden IFrames (dokumenter indlejrede i dokumenter) rapporteres på er blevet gjort konsekvent uafhængigt af webbrowsere. IFrames er nu rapporteret som "Ramme" i Firefox. (#6047)
 
 
 == Fejlrettelser ==
-- Rettede en sjælden fejl der opstod, når talevisning var åben og NVDA afsluttes. (#5050)
-- Billedmapper gengives nu som forventet i gennemsynstilstand i Mozilla Firefox. (#6051)
-- Rettede en fejl som skrev en advarsel til NVDAs logfil, når CAPS Lock er slået til. 
-(#6127)
-- Hvis du befinder dig i en dialog, som omfatter ordbøgerne til NVDA, kan du nu trykke på enter-tasten for at gemme ændringerne og lukke dialogen. (#6206)
-- Beskeder er nu vist på punkt når der ændres indtastningstilstand for en indtastningsmetode (lokalt tegnsæt, alfanumerisk indtastning, full shaped/half shaped osv.) (#5892, #5893)
-- Hvis en tilføjelsespakke slås fra og straks slås til igen eller omvendt, vil tilføjelsespakkens status nu korrekt vende tilbage til hvad den var tidligere. (#6299)
-- Når der benyttes Microsoft Word, kan felter til sidetal nu blive læst i sidehoveder. (#6004)
-- Musen kan nu benyttes til at flytte fokus imellem symbollisten og editfelterne i dialogen til Udtale af Sætningstegn og Symboler. (#6312)
-- Rettede en fejl der gjorde elementlisten ikke kunne vises hvis Microsoft Word indeholdte et ugyldigt link. (#5886)
-- Efter lukning af talevisning ved hjælp af processlinjen eller genvejen ALT+F4, vil tjekboksens status i NVDA-menuen nu reflektere den aktuelle synlighed af vinduet. (#6340)
-- Kommandoen til genindlæsning af plugins vil ikke længere skabe problemer for udløste konfigurationsprofiler, nye dokumenter i web-browsere samt skærmlæsning. (#2892, #5380)
-- I listen over sprog i NVDAs generelle indstillinger, vil sprog som Aragonsk nu vises rigtigt på Windows 10. (#6259)
-- Emulerede systemtastaturtaster (f.eks. en knap på punkttastaturet der emulere et tryk på tab-tasten) præsenteres nu på det konfigurerede sprog, i tastaturhjælp samt dialogen for input-bevægelser. Tidligere blev disse kun vist på Engelsk. (#6212)
-- Skift af NVDAs sprog (fra dialogen for generelle indstillinger) har nu ingen indflydelse, før NVDA genstartes. (#4561)
-- Det er ikke længere muligt at efterlade feltet til mønstret blankt for et nyt emne i udtaleordbøgerne. (#6412)
-- Rettede en sjælden fejl der gjorde nogle punktdisplay-drivere ubruglige, når der blev scannet efter serielporte på nogle systemer. (#6462)
-- Nummerede punkter i tabeller i Microsoft Word er nu læst, når der flyttes i tabelceller. (#6446)
-- Det er nu muligt at tildele bevægelser til Handy Tech punktdisplay-driveren ved brug af NVDA-dialogen "Input-bevægelser". (#6461)
-- Når du trykker Enter eller NumpadEnter i Microsoft Excel, vil flytning til den næste række nu blive rapporteret som forventet. (#6500)
-- iTunes vil ikke længere fryse uregelmæssigt, når der benyttes gennemsynstilstand i iTunes Store, Apple Music, osv. (#6502)
-- Rettede nedbrud af 64-bit Mozilla- og Chrome-baserede applikationer. (#6497)
-- Gennemsynstilstand og redigerbare tekstfelter fungerer nu som forventet, når multi-process er slået til i Firefox. (#6380)
 
 
 == Ændringer for udviklere ==

@@ -24,7 +24,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor
+from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
@@ -468,8 +468,18 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
 
+class MailViewerTextInfoForTreeInterceptor(WordDocumentTextInfo):
+
+	def _get_shouldIncludeLayoutTables(self):
+		return config.conf['documentFormatting']['includeLayoutTables']
+
+class MailViewerTreeInterceptorTextInfo(BrowseModeWordDocumentTextInfo):
+	InnerTextInfoClass=MailViewerTextInfoForTreeInterceptor
+
 class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 	"""A BrowseMode treeInterceptor specifically for readonly emails, where tab and shift+tab are safe and we know will not edit the document."""
+
+	TextInfo=MailViewerTreeInterceptorTextInfo
 
 	def script_tab(self,gesture):
 		bookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
