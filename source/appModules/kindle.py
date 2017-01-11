@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NV Access Limited
+#Copyright (C) 2016-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -26,8 +26,13 @@ import winUser
 from logHandler import log
 import ui
 
-class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,BrowseModeDocumentTreeInterceptor):
+class ElementsListDialog(browseMode.ElementsListDialog):
+	ELEMENT_TYPES = (
+		browseMode.ElementsListDialog.ELEMENT_TYPES[0], # Links
+	)
 
+class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,BrowseModeDocumentTreeInterceptor):
+	ElementsListDialog = ElementsListDialog
 	TextInfo=treeInterceptorHandler.RootProxyTextInfo
 	pageChangeAlreadyHandled = False
 
