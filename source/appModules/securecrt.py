@@ -1,4 +1,4 @@
-#appModules/securecrt.py
+			#appModules/securecrt.py
 # Modified to include a regular expression so that all Secure CRT versions are supported past, present, and future.
 # Modification of original securecrt.py by Noel Romey 9/2016
 #A part of NonVisual Desktop Access (NVDA)
