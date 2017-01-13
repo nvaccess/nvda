@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -646,7 +646,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(STATE_LINKED)
 		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
-	if role != ROLE_EDITABLETEXT:
+	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
 	if role == ROLE_CHECKBOX:
 		positiveStates.discard(STATE_PRESSED)
