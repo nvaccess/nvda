@@ -145,8 +145,6 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 	horizontal axis. Screens may also have a gap between them. In the case where
 	there is a gap in between we count that as contributing to the full virtual
 	space """
-	xRangesToTest = []
-	yRangesToTest = []
 	smallestX, smallestY, largestX, largestY = (None, None, None, None)
 	for screenRect in displays:
 		(screenMin, screenMax) = getMinMaxPoints(screenRect)
