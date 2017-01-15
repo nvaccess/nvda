@@ -210,7 +210,7 @@ confspec = ConfigObj(StringIO(
 	followMouse = boolean(default=False)
 
 [UIA]
-	minWindowsVersion = float(default=6.1)
+	minWindowsVersion = float(default=5.1)
 	enabled = boolean(default=true)
 
 [update]
