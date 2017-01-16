@@ -165,10 +165,16 @@ def locateHTMLElementByID(document,ID):
 		elements=document.getElementsByName(ID)
 		if elements is not None:
 			element=elements.item(0)
-		else: #probably IE 10 in standards mode (#3151)
+		else : #probably IE 10 in standards mode (#3151)
 			try:
 				element=document.all.item(ID)
 			except:
+				element=None
+		if element is None: #getElementsByName doesn't return element with specified ID in IE11 (#5784)
+			try:
+				element=document.getElementByID(ID)
+			except COMError as e:
+				log.debugWarning("document.getElementByID failed with COMError %s"%e)
 				element=None
 	except COMError as e:
 		log.debugWarning("document.getElementsByName failed with COMError %s"%e)
