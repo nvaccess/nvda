@@ -165,7 +165,7 @@ def locateHTMLElementByID(document,ID):
 		elements=document.getElementsByName(ID)
 		if elements is not None:
 			element=elements.item(0)
-		else : #probably IE 10 in standards mode (#3151)
+		else: #probably IE 10 in standards mode (#3151)
 			try:
 				element=document.all.item(ID)
 			except:
