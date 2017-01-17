@@ -254,7 +254,7 @@ class Gecko_ia2(VirtualBuffer):
 			return nextHandler()
 	event_scrollingStart.ignoreIsReady = True
 
-	def _getTableCellAt(self,tableID,destRow,destCol):
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
 		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:

@@ -507,7 +507,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			yield VirtualBufferQuickNavItem(nodeType,self,node,startOffset.value,endOffset.value)
 			offset=startOffset
 
-	def _getTableCellAt(self,tableID,row,column):
+	def _getTableCellAt(self,tableID,startPos,row,column):
 		try:
 			return next(self._iterTableCells(tableID,row=row,column=column))
 		except StopIteration:
@@ -543,7 +543,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		# Optimisation: Try searching for exact destination coordinates.
 		# This won't work if they are covered by a cell spanning multiple rows/cols, but this won't be true in the majority of cases.
 		try:
-			return self._getTableCellAt(tableID,destRow,destCol)
+			return self._getTableCellAt(tableID,startPos,destRow,destCol)
 		except LookupError:
 			pass
 

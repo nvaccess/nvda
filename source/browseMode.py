@@ -1526,9 +1526,11 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			attrs["table-rownumber"], attrs["table-columnnumber"],
 			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
 
-	def _getTableCellAt(self,tableID,row,column):
+	def _getTableCellAt(self,tableID,startPos,row,column):
 		"""
-		Locates the table cell with the given row and column coordinates and table ID.
+		Starting from the given start position, Locates the table cell with the given row and column coordinates and table ID.
+		@param startPos: the position to start searching from.
+		@type startPos: L{textInfos.TextInfo}
 		@param tableID: the ID of the table.
 		@param row: the row number of the cell
 		@type row: int
@@ -1576,7 +1578,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			# Optimisation: We're definitely at the edge of the column or row.
 			raise LookupError
 
-		return self._getTableCellAt(tableID,destRow,destCol)
+		return self._getTableCellAt(tableID,startPos,destRow,destCol)
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
@@ -1600,7 +1602,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("Edge of table"))
 			# Retrieve the cell on which we started.
-			info = self._getTableCellAt(tableID, origRow, origCol)
+			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
 
 		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
 		info.collapse()
