@@ -437,6 +437,9 @@ def initTranslation():
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
+def getTranslatedMessage(translatedMessage):
+	return _(translatedMessage)
+
 def _translatedManifestPaths(lang=None, forBundle=False):
 	if lang is None:
 		lang = languageHandler.getLanguage() # can't rely on default keyword arguments here.
