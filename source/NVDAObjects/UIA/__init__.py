@@ -603,14 +603,16 @@ class UIA(Window):
 		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		if self.UIAElement.cachedAutomationID in ("TextBox", "SearchTextBox"):
+		# But don't let suggestions list appearance be announced in Windows 10 Start menu for consistent experience with earlier Windows versions.
+		if self.UIAElement.cachedAutomationID == "TextBox":
 			clsList.append(SearchField)
 		try:
-			# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
-			parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
-		except COMError:
-			pass
-		try:
+			# Nested block here in order to catch value error when attempting to access automation ID for invalid elements.
+			try:
+				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+			except COMError:
+				pass
 			# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
 			if parentElement.cachedAutomationId.lower()=="suggestionslist":
 				clsList.append(SuggestionListItem)
