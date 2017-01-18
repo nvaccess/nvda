@@ -21,6 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include "mshtml.h"
 #include <remote/nvdaController.h>
+#include <common/xml.h>
 #include "node.h"
 
 using namespace std;
@@ -474,7 +475,8 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 
 void MshtmlVBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(wstring& text, int startOffset, int endOffset) {
 	VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(text, startOffset, endOffset);
-	wostringstream s;
-	s << L"language=\"" << language << L"\" ";
-	text += s.str();
+	text += L"language=\"";
+	for (wstring::const_iterator it = language.begin(); it != language.end(); ++it)
+		appendCharToXML(*it, text, true);
+	text += L"\" ";
 }

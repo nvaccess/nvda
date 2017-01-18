@@ -154,6 +154,7 @@ class EditableText(editableText.EditableText, NVDAObject):
 		# As Pressing enter on an edit field can cause modal dialogs to appear, yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze. 
 		if self.announceNewLineText and self.processID!=os.getpid():
 			self.bindGesture("kb:enter","caret_newLine")
+			self.bindGesture("kb:numpadEnter","caret_newLine")
 
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
@@ -168,7 +169,7 @@ class EditableTextWithAutoSelectDetection(EditableText):
 
 	def event_caret(self):
 		super(EditableText, self).event_caret()
-		if self is api.getFocusObject():
+		if self is api.getFocusObject() and not eventHandler.isPendingEvents('gainFocus'):
 			self.detectPossibleSelectionChange()
 
 	def event_textChange(self):
@@ -421,7 +422,7 @@ class RowWithFakeNavigation(NVDAObject):
 
 	def _moveToColumn(self, obj):
 		if not obj:
-			ui.message(_("edge of table"))
+			ui.message(_("Edge of table"))
 			return
 		if obj is not self:
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
@@ -620,7 +621,7 @@ class ToolTip(NVDAObject):
 
 class Notification(NVDAObject):
 	"""Informs the user of non-critical information that does not require immediate action.
-	This is primarily for notifications displayed in the system notification area.
+	This is primarily for notifications displayed in the system notification area, and for Windows 8 and later, toasts.
 	The object should fire a alert or show event when the user should be notified.
 	"""
 

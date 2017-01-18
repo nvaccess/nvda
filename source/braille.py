@@ -2,13 +2,17 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2014 NV Access Limited
+#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
 
+import sys
 import itertools
 import os
 import pkgutil
+import ctypes.wintypes
+import threading
 import wx
 import louis
+import winKernel
 import keyboardHandler
 import baseObject
 import config
@@ -51,10 +55,10 @@ TABLES = (
 	("cz-cz-g1.utb", _("Czech grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g16.utb", _("Danish 6 dot grade 1"), False),
+	("da-dk-g16.ctb", _("Danish 6 dot grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g18.utb", _("Danish 8 dot grade 1"), False),
+	("da-dk-g18.ctb", _("Danish 8 dot grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("da-dk-g26.ctb", _("Danish 6 dot grade 2"), False),
@@ -138,6 +142,9 @@ TABLES = (
 	("gu-in-g1.utb", _("Gujarati grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("gr-bb.ctb", _("Koine Greek"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("gr-gr-g1.utb", _("Greek (Greece) grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -192,16 +199,19 @@ TABLES = (
 	("mn-in-g1.utb", _("Manipuri grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("mn-MN.utb", _("Mongolian"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("mr-in-g1.utb", _("Marathi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-BE-g1.ctb", _("Dutch (Belgium) grade 1"), False),
+	("nl-BE-g0.utb", _("Dutch (Belgium)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-NL-g1.ctb", _("Dutch (Netherlands) grade 1"), False),
+	("nl-NL-g0.utb", _("Dutch (Netherlands)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("no-no.ctb", _("Norwegian 8 dot computer braille"), True),
+	("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("No-No-g0.utb", _("Norwegian grade 0"), False),
@@ -220,6 +230,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("or-in-g1.utb", _("Oriya grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("pl-pl-comp8.ctb", _("Polish 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Pl-Pl-g1.utb", _("Polish grade 1"), False),
@@ -249,7 +262,7 @@ TABLES = (
 	("Se-Se-g1.utb", _("Swedish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("sk-sk-g1.utb", _("Slovak grade 1"), False),
+	("sk-g1.ctb", _("Slovak grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("sl-si-g1.utb", _("Slovene grade 1"), False),
@@ -261,16 +274,16 @@ TABLES = (
 	("ta-ta-g1.ctb", _("Tamil grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("te-in-g1.utb", _("Telegu grade 1"), False),
+	("te-in-g1.utb", _("Telugu grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("tr.ctb", _("Turkish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("UEBC-g1.utb", _("Unified English Braille Code grade 1"), False),
+	("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("UEBC-g2.ctb", _("Unified English Braille Code grade 2"), False),
+	("en-ueb-g2.ctb", _("Unified English Braille Code grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"), False),
@@ -281,6 +294,18 @@ TABLES = (
 
 #: Braille tables that support input (only computer braille tables yet).
 INPUT_TABLES = tuple(t for t in TABLES if t[2])
+
+#: Maps old table names to new table names for tables renamed in newer versions of liblouis.
+RENAMED_TABLES = {
+	"da-dk-g16.utb":"da-dk-g16.ctb",
+	"da-dk-g18.utb":"da-dk-g18.ctb",
+	"nl-BE-g1.ctb":"nl-BE-g0.utb",
+	"nl-NL-g1.ctb":"nl-NL-g0.utb",
+	"no-no.ctb":"no-no-comp8.ctb",
+	"sk-sk-g1.utb":"sk-g1.ctb",
+	"UEBC-g1.ctb":"en-ueb-g1.ctb",
+	"UEBC-g2.ctb":"en-ueb-g2.ctb",
+}
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
@@ -352,8 +377,16 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
-DOT7 = 64
-DOT8 = 128
+#: Cursor shapes
+CURSOR_SHAPES = (
+	# Translators: The description of a braille cursor shape.
+	(0xC0, _("Dots 7 and 8")),
+	# Translators: The description of a braille cursor shape.
+	(0x80, _("Dot 8")),
+	# Translators: The description of a braille cursor shape.
+	(0xFF, _("All dots")),
+)
+SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -398,8 +431,8 @@ def getDisplayList():
 class Region(object):
 	"""A region of braille to be displayed.
 	Each portion of braille to be displayed is represented by a region.
-	The region is responsible for retrieving its text and cursor position, translating it into braille cells and handling cursor routing requests relative to its braille cells.
-	The L{BrailleBuffer} containing this region will call L{update} and expect that L{brailleCells} and L{brailleCursorPos} will be set appropriately.
+	The region is responsible for retrieving its text and the cursor and selection positions, translating it into braille cells and handling cursor routing requests relative to its braille cells.
+	The L{BrailleBuffer} containing this region will call L{update} and expect that L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} will be set appropriately.
 	L{routeTo} will be called to handle a cursor routing request.
 	"""
 
@@ -409,6 +442,12 @@ class Region(object):
 		#: The position of the cursor in L{rawText}, C{None} if the cursor is not in this region.
 		#: @type: int
 		self.cursorPos = None
+		#: The start of the selection in L{rawText} (inclusive), C{None} if there is no selection in this region.
+		#: @type: int
+		self.selectionStart = None
+		#: The end of the selection in L{rawText} (exclusive), C{None} if there is no selection in this region.
+		#: @type: int
+		self.selectionEnd = None
 		#: The translated braille representation of this region.
 		#: @type: [int, ...]
 		self.brailleCells = []
@@ -425,6 +464,12 @@ class Region(object):
 		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
 		#: @type: int
 		self.brailleCursorPos = None
+		#: The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region.
+		#: @type: int
+		self.brailleSelectionStart = None
+		#: The position of the selection end in L{brailleCells}, C{None} if there is no selection in this region.
+		#: @type: int
+		self.brailleSelectionEnd = None
 		#: Whether to hide all previous regions.
 		#: @type: bool
 		self.hidePreviousRegions = False
@@ -434,12 +479,12 @@ class Region(object):
 
 	def update(self):
 		"""Update this region.
-		Subclasses should extend this to update L{rawText} and L{cursorPos} if necessary.
+		Subclasses should extend this to update L{rawText}, L{cursorPos}, L{selectionStart} and L{selectionEnd} if necessary.
 		The base class method handles translation of L{rawText} into braille, placing the result in L{brailleCells}.
 		Typeform information from L{rawTextTypeforms} is used, if any.
 		L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
-		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
-		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
+		L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are similarly updated based on L{cursorPos}, L{selectionStart} and L{selectionEnd}, respectively.
+		@postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
 		"""
 		mode = louis.dotsIO | louis.pass1Only
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
@@ -474,6 +519,18 @@ class Region(object):
 		else:
 			brailleCursorPos = None
 		self.brailleCursorPos = brailleCursorPos
+		if self.selectionStart is not None and self.selectionEnd is not None:
+			try:
+				# Mark the selection.
+				self.brailleSelectionStart = self.rawToBraillePos[self.selectionStart]
+				if self.selectionEnd >= len(self.rawText):
+					self.brailleSelectionEnd = len(self.brailleCells)
+				else:
+					self.brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
+				for pos in xrange(self.brailleSelectionStart, self.brailleSelectionEnd):
+					self.brailleCells[pos] |= SELECTION_SHAPE
+			except IndexError:
+				pass
 
 	def routeTo(self, braillePos):
 		"""Handle a cursor routing request.
@@ -676,7 +733,12 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getBrailleTextForProperties(**props)
-		if role == controlTypes.ROLE_MATH:
+		content = field.get("content")
+		if content:
+			if text:
+				text += " "
+			text += content
+		elif role == controlTypes.ROLE_MATH:
 			import mathPres
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
@@ -694,15 +756,28 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field):
-	linePrefix = field.get("line-prefix")
-	if linePrefix:
-		return linePrefix
-	return None
+def getFormatFieldBraille(field, isAtStart, formatConfig):
+	textList = []
+	if isAtStart:
+		if formatConfig["reportLineNumber"]:
+			lineNumber = field.get("line-number")
+			if lineNumber:
+				textList.append("%s" % lineNumber)
+		linePrefix = field.get("line-prefix")
+		if linePrefix:
+			textList.append(linePrefix)
+		if formatConfig["reportHeadings"]:
+			headingLevel=field.get('heading-level')
+			if headingLevel:
+				# Translators: Displayed in braille for a heading with a level.
+				# %s is replaced with the level.
+				textList.append(_("h%s")%headingLevel)
+	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):
 
 	pendingCaretUpdate=False #: True if the cursor should be updated for this region on the display
+	allowPageTurns=True #: True if a page turn should be tried when a TextInfo cannot move anymore and the object supports page turns.
 
 	def __init__(self, obj):
 		super(TextInfoRegion, self).__init__()
@@ -773,6 +848,7 @@ class TextInfoRegion(Region):
 		typeform = louis.plain_text
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
+				self._isFormatFieldAtStart = False
 				if not command:
 					continue
 				if self._endsWithField:
@@ -781,9 +857,9 @@ class TextInfoRegion(Region):
 					self.rawText += " "
 					self.rawTextTypeforms.append(louis.plain_text)
 					self._rawToContentPos.append(self._currentContentPos)
-				if isSelection and self._selectionStart is None:
+				if isSelection and self.selectionStart is None:
 					# This is where the content begins.
-					self._selectionStart = len(self.rawText)
+					self.selectionStart = len(self.rawText)
 				elif shouldMoveCursorToFirstContent:
 					# This is the first piece of content after the cursor.
 					# Position the cursor here, as it may currently be positioned on control field text.
@@ -797,14 +873,14 @@ class TextInfoRegion(Region):
 				self._currentContentPos = endPos
 				if isSelection:
 					# The last time this is set will be the end of the content.
-					self._selectionEnd = len(self.rawText)
+					self.selectionEnd = len(self.rawText)
 				self._endsWithField = False
 			elif isinstance(command, textInfos.FieldCommand):
 				cmd = command.command
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field)
+					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -825,8 +901,8 @@ class TextInfoRegion(Region):
 						if fieldStart > 0:
 							# There'll be a space before the field text.
 							fieldStart += 1
-						if isSelection and self._selectionStart is None:
-							self._selectionStart = fieldStart
+						if isSelection and self.selectionStart is None:
+							self.selectionStart = fieldStart
 						elif shouldMoveCursorToFirstContent:
 							self.cursorPos = fieldStart
 							shouldMoveCursorToFirstContent = False
@@ -840,7 +916,7 @@ class TextInfoRegion(Region):
 					# Map this field text to the end of the field's content.
 					self._addFieldText(text, self._currentContentPos - 1)
 				self._endsWithField = True
-		if isSelection and self._selectionStart is None:
+		if isSelection and self.selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
 		if not self._skipFieldsNotAtStartOfNode:
@@ -874,10 +950,11 @@ class TextInfoRegion(Region):
 		# Therefore, maintain a map of positions in the output to positions in the content.
 		self._rawToContentPos = []
 		self._currentContentPos = 0
-		self._selectionStart = self._selectionEnd = None
+		self.selectionStart = self.selectionEnd = None
+		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-		self._endsWithField = False
 
+		self._endsWithField = False
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -919,15 +996,6 @@ class TextInfoRegion(Region):
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
-		if self._selectionStart is not None:
-			# Mark the selection with dots 7 and 8.
-			if self._selectionEnd >= len(self.rawText):
-				brailleSelEnd = len(self.brailleCells)
-			else:
-				brailleSelEnd = self.rawToBraillePos[self._selectionEnd]
-			for pos in xrange(self.rawToBraillePos[self._selectionStart], brailleSelEnd):
-				self.brailleCells[pos] |= DOT7 | DOT8
-
 	def routeTo(self, braillePos):
 		if braillePos == self.brailleCursorPos:
 			# The cursor is already at this position,
@@ -951,7 +1019,15 @@ class TextInfoRegion(Region):
 		dest = self._readingInfo.copy()
 		moved = dest.move(self._getReadingUnit(), 1)
 		if not moved:
-			return
+			if self.allowPageTurns and isinstance(dest.obj,textInfos.DocumentWithPageTurns):
+				try:
+					dest.obj.turnPage()
+				except RuntimeError:
+					pass
+				else:
+					dest=dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
+			else: # no page turn support
+				return
 		dest.collapse()
 		self._setCursor(dest)
 
@@ -965,7 +1041,16 @@ class TextInfoRegion(Region):
 			unit = textInfos.UNIT_CHARACTER
 		moved = dest.move(unit, -1)
 		if not moved:
-			return
+			if self.allowPageTurns and isinstance(dest.obj,textInfos.DocumentWithPageTurns):
+				try:
+					dest.obj.turnPage(previous=True)
+				except RuntimeError:
+					pass
+				else:
+					dest=dest.obj.makeTextInfo(textInfos.POSITION_LAST)
+					dest.expand(unit)
+			else: # no page turn support
+				return
 		dest.collapse()
 		self._setCursor(dest)
 
@@ -981,6 +1066,8 @@ class CursorManagerRegion(TextInfoRegion):
 		self.obj.selection = info
 
 class ReviewTextInfoRegion(TextInfoRegion):
+
+	allowPageTurns=False
 
 	def _getCursor(self):
 		return api.getReviewPosition().copy()
@@ -1306,11 +1393,12 @@ def getFocusRegions(obj, review=False):
 		return
 
 	# Late import to avoid circular import.
-	from treeInterceptorHandler import TreeInterceptor
+	from treeInterceptorHandler import TreeInterceptor, DocumentTreeInterceptor
 	from cursorManager import CursorManager
+	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, TreeInterceptor) or NVDAObjectHasUsefulText(obj): 
+	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
@@ -1344,8 +1432,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
 
-	cursorShape = 0xc0
-
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
@@ -1372,6 +1458,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
+		_BgThread.stop()
 
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
@@ -1409,6 +1496,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				newDisplay = self.display
 				newDisplay.__init__(**kwargs)
 			else:
+				if newDisplay.isThreadSafe:
+					# Start the thread if it wasn't already.
+					_BgThread.start()
 				newDisplay = newDisplay(**kwargs)
 				if self.display:
 					try:
@@ -1431,20 +1521,41 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		self._cursorBlinkUp = True
+		self._cursorBlinkUp = showCursor = config.conf["braille"]["showCursor"]
 		self._displayWithCursor()
+		if self._cursorPos is None or not showCursor:
+			return
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
-		if blinkRate and self._cursorPos is not None:
+		if blinkRate:
 			self._cursorBlinkTimer = wx.PyTimer(self._blink)
 			self._cursorBlinkTimer.Start(blinkRate)
+
+	def _writeCells(self, cells):
+		if not self.display.isThreadSafe:
+			try:
+				self.display.display(cells)
+			except:
+				log.error("Error displaying cells. Disabling display", exc_info=True)
+				self.setDisplayByName("noBraille", isFallback=True)
+			return
+		with _BgThread.queuedWriteLock:
+			alreadyQueued = _BgThread.queuedWrite
+			_BgThread.queuedWrite = cells
+		# If a write was already queued, we don't need to queue another;
+		# we just replace the data.
+		# This means that if multiple writes occur while an earlier write is still in progress,
+		# we skip all but the last.
+		if not alreadyQueued:
+			# Queue a call to the background thread.
+			_BgThread.queueApc(_BgThread.executor)
 
 	def _displayWithCursor(self):
 		if not self._cells:
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= self.cursorShape
-		self.display.display(cells)
+			cells[self._cursorPos] |= config.conf["braille"]["cursorShape"]
+		self._writeCells(cells)
 
 	def _blink(self):
 		self._cursorBlinkUp = not self._cursorBlinkUp
@@ -1534,6 +1645,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.focus(region)
 		if region.brailleCursorPos is not None:
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif region.brailleSelectionStart is not None:
+			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1567,6 +1680,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.restoreWindow()
 		if region.brailleCursorPos is not None:
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif region.brailleSelectionStart is not None:
+			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1610,10 +1725,73 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if display != self.display.name:
 			self.setDisplayByName(display)
 
+class _BgThread:
+	"""A singleton background thread used for background writes and raw braille display I/O.
+	"""
+
+	thread = None
+	exit = False
+	queuedWrite = None
+
+	@classmethod
+	def start(cls):
+		if cls.thread:
+			return
+		cls.queuedWriteLock = threading.Lock()
+		thread = cls.thread = threading.Thread(target=cls.func)
+		thread.daemon = True
+		thread.start()
+		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
+
+	@classmethod
+	def queueApc(cls, func):
+		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, 0)
+
+	@classmethod
+	def stop(cls):
+		if not cls.thread:
+			return
+		cls.exit = True
+		# Wake up the thread. It will exit when it sees exit is True.
+		cls.queueApc(cls.executor)
+		cls.thread.join()
+		cls.exit = False
+		winKernel.closeHandle(cls.handle)
+		cls.handle = None
+		cls.thread = None
+
+	@winKernel.PAPCFUNC
+	def executor(param):
+		if _BgThread.exit:
+			# func will see this and exit.
+			return
+		with _BgThread.queuedWriteLock:
+			data = _BgThread.queuedWrite
+			_BgThread.queuedWrite = None
+		if not data:
+			return
+		try:
+			handler.display.display(data)
+		except:
+			log.error("Error displaying cells. Disabling display", exc_info=True)
+			handler.setDisplayByName("noBraille", isFallback=True)
+
+	@classmethod
+	def func(cls):
+		while True:
+			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
+			if cls.exit:
+				break
+
 def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
+	# #6140: Migrate to new table names as smoothly as possible.
+	oldTableName = config.conf["braille"]["translationTable"]
+	newTableName = RENAMED_TABLES.get(oldTableName)
+	if newTableName:
+		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
@@ -1646,6 +1824,8 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.
 	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
+
+	@see: L{hwIo} for raw serial and HID I/O.
 	"""
 	#: The name of the braille display; must be the original module file name.
 	#: @type: str
@@ -1653,6 +1833,14 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: A description of the braille display.
 	#: @type: str
 	description = ""
+	#: Whether this driver is thread-safe.
+	#: If it is, NVDA may initialize, terminate or call this driver  on any thread.
+	#: This allows NVDA to read from and write to the display in the background,
+	#: which means the rest of NVDA is not blocked while this occurs,
+	#: thus resulting in better performance.
+	#: This is also required to use the L{hwIo} module.
+	#: @type: bool
+	isThreadSafe = False
 
 	@classmethod
 	def check(cls):

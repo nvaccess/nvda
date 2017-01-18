@@ -83,13 +83,19 @@ confspec = ConfigObj(StringIO(
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
 
+# Audio settings
+[audio]
+	audioDuckingMode = integer(default=0)
+
 # Braille settings
 [braille]
 	display = string(default=noBraille)
 	translationTable = string(default=en-us-comp8.ctb)
 	inputTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
+	showCursor = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
+	cursorShape = integer(default=192,min=1,max=255)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
 	readByParagraph = boolean(default=false)
@@ -129,6 +135,16 @@ confspec = ConfigObj(StringIO(
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
 
+[speechViewer]
+	showSpeechViewerAtStartup = boolean(default=false)
+	autoPositionWindow = boolean(default=True)
+	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	x = integer()
+	y = integer()
+	width = integer()
+	height = integer()
+	displays = string_list()
+
 #Keyboard settings
 [keyboard]
 	useCapsLockAsNVDAModifierKey = boolean(default=false)
@@ -142,6 +158,7 @@ confspec = ConfigObj(StringIO(
 	speechInterruptForCharacters = boolean(default=true)
 	speechInterruptForEnter = boolean(default=true)
 	allowSkimReadingInSayAll = boolean(default=False)
+	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
 
 [virtualBuffers]
@@ -162,14 +179,16 @@ confspec = ConfigObj(StringIO(
 	reportFontSize = boolean(default=false)
 	reportFontAttributes = boolean(default=false)
 	reportRevisions = boolean(default=true)
-	reportEmphasis = boolean(default=true)
+	reportEmphasis = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
+	reportLineSpacing = boolean(default=false)
 	reportStyle = boolean(default=false)
 	reportSpellingErrors = boolean(default=true)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	reportLineIndentation = boolean(default=False)
+	reportLineIndentationWithTones = boolean(default=False)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
@@ -203,6 +222,10 @@ confspec = ConfigObj(StringIO(
 	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
 	reportReadingStringChanges = boolean(default=True)
 	reportCompositionStringChanges = boolean(default=True)
+
+[debugLog]
+	hwIo = boolean(default=false)
+	audioDucking = boolean(default=false)
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
@@ -509,6 +532,8 @@ class ConfigManager(object):
 		synthDriverHandler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
+		import audioDucking
+		audioDucking.handleConfigProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")

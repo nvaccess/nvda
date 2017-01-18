@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010 James Teh <jamie@jantrid.net>
+#Copyright (C) 2010-2016 NV Access Limited, Babbage B.V.
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -28,6 +28,7 @@ from logHandler import log
 import globalVars
 import languageHandler
 import controlTypes
+import keyLabels
 
 #: Script category for emulated keyboard keys.
 # Translators: The name of a category of NVDA commands.
@@ -57,6 +58,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: Indicates that while in Input Help Mode, this gesture should be handled as if Input Help mode was currently off.
 	#: @type: bool
 	bypassInputHelp=False
+
+	#: Indicates that this gesture should be reported in Input help mode. This would only be false for floodding Gestures like touch screen hovers.
+	#: @type: bool
+	reportInInputHelp=True
 
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
@@ -460,7 +465,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	def _inputHelpCaptor(self, gesture):
 		bypass = gesture.bypassInputHelp or getattr(gesture.script, "bypassInputHelp", False)
-		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
+		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass or not gesture.reportInInputHelp)
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
@@ -548,6 +553,8 @@ class _AllGestureMappingsRetriever(object):
 		gmap = braille.handler.display.gestureMap
 		if gmap:
 			self.addGlobalMap(gmap)
+		if isinstance(braille.handler.display, baseObject.ScriptableObject):
+			self.addObj(braille.handler.display)
 
 		# Global plugins.
 		import globalPluginHandler
@@ -609,7 +616,7 @@ class _AllGestureMappingsRetriever(object):
 	def makeKbEmuScriptInfo(self, cls, scriptName):
 		info = AllGesturesScriptInfo(cls, scriptName)
 		info.category = SCRCAT_KBEMU
-		info.displayName = scriptName[3:]
+		info.displayName = keyLabels.getKeyCombinationLabel(scriptName[3:])
 		return info
 
 	def makeNormalScriptInfo(self, cls, scriptName, script):

@@ -19,12 +19,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include "nvdaInProcUtils.h"
 
-error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle, long windowHandle, int groupIndex, BSTR* header, BSTR* footer, int* state) {
+error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle, const unsigned long windowHandle, int groupIndex, BSTR* header, BSTR* footer, int* state) {
 	LVGROUP group={0};
 	group.cbSize=sizeof(group);
 	group.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE;
 	group.stateMask=0xffffffff;
-	if(!SendMessage((HWND)windowHandle,LVM_GETGROUPINFOBYINDEX,(WPARAM)groupIndex,(LPARAM)&group)) {
+	if(!SendMessage((HWND)UlongToHandle(windowHandle),LVM_GETGROUPINFOBYINDEX,(WPARAM)groupIndex,(LPARAM)&group)) {
 		LOG_DEBUGWARNING(L"LVM_GETGROUPINFOBYINDEX failed");
 		return 1;
 	}

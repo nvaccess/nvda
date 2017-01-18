@@ -289,7 +289,8 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 	return foundDescendant;
 }
 
-error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, long hwnd, long parentID, long what, long* descendantID, long* descendantOffset) {
+error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, const unsigned long windowHandle, long parentID, long what, long* descendantID, long* descendantOffset) {
+	HWND hwnd=(HWND)UlongToHandle(windowHandle);
 	auto func=[&](void* data){
 		IAccessible* pacc=NULL;
 		VARIANT varChild;

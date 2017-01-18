@@ -1,21 +1,23 @@
 # Irish translation of NVDA
-# Copyright (C) 2006-2013 NVDA Contributors
+# Copyright (C) 2006-2016 NVDA Contributors
 #
-# Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>
+# Robbie Sinnott <robbiesin@gmail.com>
 # Kevin Scannell <kscanne@gmail.com>
+# Ronan McGuirk <ronan.p.mcguirk@gmail.com>
+# Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2013.1-5975\n"
+"Project-Id-Version: NVDA 2017.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-05 21:19-0000\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"PO-Revision-Date: 2016-12-31 16:09+0000\n"
+"Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -86,6 +88,7 @@ msgid "unknown input method"
 msgstr "Mód ionchuir anaithnid"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -126,6 +129,23 @@ msgstr "foirm"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "Réigiún"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "Ná ísligh aired chlosáin ó feidhmchláir eile"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr ""
+"Ísligh aired chlosáin ó fheidhmchláir eile agus NVDA ag labhairt nó ag "
+"déanamh fuaime  "
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "ísligh aired chlosáin ó feidhmchlair eile I gcónaí"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -314,6 +334,11 @@ msgstr "Gúisearáitis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Koine Greek"
+msgstr "Gréigis Koine "
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece) grade 1"
 msgstr "Gréigis (An Ghréig), grád 1"
 
@@ -394,31 +419,33 @@ msgstr "Laitvis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Malayalam grade 1"
-msgstr "Tamailis, grád 1"
+msgstr "Malayalam grad 1 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Manipuri grade 1"
-msgstr "Fairsis, grád 1"
+msgstr "Manipuri,  grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
+msgid "Mongolian"
+msgstr "Mongóilis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
-msgstr "Fairsis, grád 1"
+msgstr "Manipuri grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "Ollainnis (An Bheilg), grád 1"
+msgid "Dutch (Belgium)"
+msgstr "Ollainnis (na Beilge), grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "Ollainnis (An Ísiltír), grád 1"
+msgid "Dutch (Netherlands)"
+msgstr ".iÍsiltiris"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -452,9 +479,13 @@ msgstr "Neipeáilis , grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Oriya grade 1"
-msgstr "Seirbis, grád 1"
+msgstr "Oriya, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polainnis, ríomhbhraille 8-bponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -523,9 +554,8 @@ msgstr "Tamailis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
-msgid "Telegu grade 1"
-msgstr "Breatnais, grád 1"
+msgid "Telugu grade 1"
+msgstr "Telegu, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -662,6 +692,18 @@ msgstr "clc"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "pointe 7 agus 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "pointe 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "gach pointe"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -686,6 +728,7 @@ msgstr "nach %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} as {total}"
 
@@ -734,10 +777,11 @@ msgstr "ponc"
 msgid "space"
 msgstr "spás"
 
-msgid "focus mode"
+msgid "Focus mode"
 msgstr "mód fócasaithe"
 
-msgid "browse mode"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
 msgstr "mód brabhsála"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
@@ -753,7 +797,7 @@ msgid ""
 "Toggles single letter navigation on and off. When on, single letter keys in "
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
-msgstr ""
+msgstr "Cuir nó ná cuir nascleanúint le litir singil ar siúl.  "
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -764,7 +808,7 @@ msgid "Lists various types of elements in this document"
 msgstr "Saghas"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+msgid "Activates the current object in the document"
 msgstr "gníomhachtaigh an réad reatha sa cháipéis"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1201,16 +1245,22 @@ msgstr "níl aon anótáil roimhe seo"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "Nas&canna"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Ceannteidil"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "&Sainchomharthaí"
 
@@ -1268,7 +1318,8 @@ msgstr "Téigh go dtí tús an choimeádáin, mar shampla liosta nó tábla"
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+msgid "Bottom"
 msgstr "bun"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -1314,732 +1365,211 @@ msgstr "caomhnaigh I gcónaí"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
-#, fuzzy
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "leibhéal siombalach %s"
-
-#. Translators: Reported when text is written in unknown color.
-msgid "unknown color"
-msgstr "dath anaithnid"
-
-#. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Alice Blue"
-msgstr ""
-
-#. Translators: the color Antique White (RGB 250, 235, 215) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Antique White"
-msgstr ""
-
-#. Translators: the color Aqua (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aqua"
-msgstr "muirghorm"
-
-#. Translators: the color Aquamarine (RGB 127, 255, 212) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aquamarine"
-msgstr "muirghorm"
-
-#. Translators: the color Azure (RGB 240, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Azure"
-msgstr "gormghlas na spéire"
-
-#. Translators: the color Beige (RGB 245, 245, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Beige"
-msgstr "béas"
-
-#. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Bisque"
-msgstr ""
-
-#. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Black"
-msgstr "dubh"
-
-#. Translators: the color Blanched Almond (RGB 255, 235, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blanched Almond"
-msgstr ""
-
-#. Translators: the color Blue (RGB 0, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue"
-msgstr "gorm"
-
-#. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue Violet"
-msgstr ""
-
-#. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Brown"
-msgstr "donn"
-
-#. Translators: the color Burly Wood (RGB 222, 184, 135) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Burly Wood"
-msgstr ""
-
-#. Translators: the color Cadet Blue (RGB 95, 158, 160) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cadet Blue"
-msgstr ""
-
-#. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chartreuse"
-msgstr "seartrús"
-
-#. Translators: the color Chocolate (RGB 210, 105, 30) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chocolate"
-msgstr "donnrua"
-
-#. Translators: the color Coral (RGB 255, 127, 80) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Coral"
-msgstr ""
-
-#. Translators: the color Cornflower Blue (RGB 100, 149, 237) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornflower Blue"
-msgstr "dath an ghormáin"
-
-#. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornsilk"
-msgstr ""
-
-#. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Crimson"
-msgstr "Corcardhearg "
-
-#. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cyan"
-msgstr "cian"
-
-#. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Blue"
-msgstr "dúghorm"
-
-#. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Cyan"
-msgstr "dubhchian"
-
-#. Translators: the color Dark Goldenrod (RGB 184, 134, 11) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Goldenrod"
-msgstr ""
-
-#. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Gray"
-msgstr "dúliath"
-
-#. Translators: the color Dark Green (RGB 0, 100, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Green"
-msgstr "dúghlas"
-
-#. Translators: the color Dark Khaki (RGB 189, 183, 107) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Khaki"
-msgstr ""
-
-#. Translators: the color Dark Magenta (RGB 139, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Dark Magenta"
-msgstr "dúghlas"
-
-#. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Dark Olive Green"
-msgstr "dúghlas"
-
-#. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Dark Orange"
-msgstr "dúrua"
-
-#. Translators: the color Dark Orchid (RGB 153, 50, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Dark Orchid"
-msgstr "dúrua"
-
-#. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Red"
-msgstr "dúrua"
-
-#. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Salmon"
-msgstr ""
-
-#. Translators: the color Dark Sea Green (RGB 143, 188, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Dark Sea Green"
-msgstr "dúghlas"
-
-#. Translators: the color Dark Slate Blue (RGB 72, 61, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Blue"
-msgstr ""
-
-#. Translators: the color Dark Slate Gray (RGB 47, 79, 79) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Gray"
-msgstr ""
-
-#. Translators: the color Dark Turquoise (RGB 0, 206, 209) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Turquoise"
-msgstr ""
-
-#. Translators: the color Dark Violet (RGB 148, 0, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Violet"
-msgstr ""
-
-#. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Pink"
-msgstr "bándearg trom"
-
-#. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Sky Blue"
-msgstr ""
-
-#. Translators: the color Dim Gray (RGB 105, 105, 105) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dim Gray"
-msgstr ""
-
-#. Translators: the color Dodger Blue (RGB 30, 144, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dodger Blue"
-msgstr ""
-
-#. Translators: the color Fire Brick (RGB 178, 34, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fire Brick"
-msgstr ""
-
-#. Translators: the color Floral White (RGB 255, 250, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Floral White"
-msgstr ""
-
-#. Translators: the color Forest Green (RGB 34, 139, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Forest Green"
-msgstr ""
-
-#. Translators: the color Fuchsia (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fuchsia"
-msgstr "fiúise"
-
-#. Translators: the color Gainsboro (RGB 220, 220, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gainsboro"
-msgstr ""
-
-#. Translators: the color Ghost White (RGB 248, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ghost White"
-msgstr ""
-
-#. Translators: the color Gold (RGB 255, 215, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gold"
-msgstr "órga"
-
-#. Translators: the color Goldenrod (RGB 218, 165, 32) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Goldenrod"
-msgstr ""
-
-#. Translators: the color Gray (RGB 128, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gray"
-msgstr "liath"
-
-#. Translators: the color Green (RGB 0, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green"
-msgstr "uaine"
-
-#. Translators: the color Green Yellow (RGB 173, 255, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green Yellow"
-msgstr ""
-
-#. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Honeydew"
-msgstr ""
-
-#. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Hot Pink"
-msgstr ""
-
-#. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indian Red"
-msgstr ""
-
-#. Translators: the color Indigo (RGB 75, 0, 130) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indigo"
-msgstr "indeagó "
-
-#. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ivory"
-msgstr "eabhartha "
-
-#. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Khaki"
-msgstr "liathbhuí"
-
-#. Translators: the color Lavender (RGB 230, 230, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender"
-msgstr ""
-
-#. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender Blush"
-msgstr ""
-
-#. Translators: the color Lawn Green (RGB 124, 252, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Lawn Green"
-msgstr "dúghlas"
-
-#. Translators: the color Lemon Chiffon (RGB 255, 250, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lemon Chiffon"
-msgstr ""
-
-#. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Blue"
-msgstr "alt ar dheis"
-
-#. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Coral"
-msgstr "alt ar dheis"
-
-#. Translators: the color Light Cyan (RGB 224, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Cyan"
-msgstr "alt ar dheis"
-
-#. Translators: the color Light Goldenrod Yellow (RGB 250, 250, 210) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Goldenrod Yellow"
-msgstr ""
-
-#. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Green"
-msgstr "fionnliath"
-
-#. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Grey"
-msgstr "fionnliath"
-
-#. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Pink"
-msgstr "clic ar dheis"
-
-#. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Salmon"
-msgstr "alt ar dheis"
-
-#. Translators: the color Light Sea Green (RGB 32, 178, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sea Green"
-msgstr ""
-
-#. Translators: the color Light Sky Blue (RGB 135, 206, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sky Blue"
-msgstr ""
-
-#. Translators: the color Light Slate Gray (RGB 119, 136, 153) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Slate Gray"
-msgstr ""
-
-#. Translators: the color Light Steel Blue (RGB 176, 196, 222) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Steel Blue"
-msgstr ""
-
-#. Translators: the color Light Yellow (RGB 255, 255, 224) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Light Yellow"
-msgstr "saighead dheas"
-
-#. Translators: the color Lime (RGB 0, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime"
-msgstr ""
-
-#. Translators: the color Lime Green (RGB 50, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime Green"
-msgstr ""
-
-#. Translators: the color Linen (RGB 250, 240, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Linen"
-msgstr ""
-
-#. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Magenta"
-msgstr "maigeanta"
-
-#. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Maroon"
-msgstr "marún"
-
-#. Translators: the color Medium Aquamarine (RGB 102, 205, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Aquamarine"
-msgstr ""
-
-#. Translators: the color Medium Blue (RGB 0, 0, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Blue"
-msgstr ""
-
-#. Translators: the color Medium Orchid (RGB 186, 85, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Orchid"
-msgstr ""
-
-#. Translators: the color Medium Purple (RGB 147, 112, 219) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Purple"
-msgstr ""
-
-#. Translators: the color Medium Sea Green (RGB 60, 179, 113) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Sea Green"
-msgstr ""
-
-#. Translators: the color Medium Slate Blue (RGB 123, 104, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Slate Blue"
-msgstr ""
-
-#. Translators: the color Medium Spring Green (RGB 0, 250, 154) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Spring Green"
-msgstr ""
-
-#. Translators: the color Medium Turquoise (RGB 72, 209, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Turquoise"
-msgstr ""
-
-#. Translators: the color Medium Violet Red (RGB 199, 21, 133) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Violet Red"
-msgstr ""
-
-#. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Midnight Blue"
-msgstr ""
-
-#. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Mint Cream"
-msgstr ""
-
-#. Translators: the color Misty Rose (RGB 255, 228, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Misty Rose"
-msgstr ""
-
-#. Translators: the color Moccasin (RGB 255, 228, 181) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Moccasin"
-msgstr ""
-
-#. Translators: the color Navajo White (RGB 255, 222, 173) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navajo White"
-msgstr ""
-
-#. Translators: the color Navy (RGB 0, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navy"
-msgstr ""
-
-#. Translators: the color Old Lace (RGB 253, 245, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Old Lace"
-msgstr ""
-
-#. Translators: the color Olive (RGB 128, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive"
-msgstr "glas olóige"
-
-#. Translators: the color Olive Drab (RGB 107, 142, 35) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive Drab"
-msgstr ""
-
-#. Translators: the color Orange (RGB 255, 165, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orange"
-msgstr "oráiste"
-
-#. Translators: the color Orange Red (RGB 255, 69, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Orange Red"
-msgstr "oráiste"
-
-#. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orchid"
-msgstr ""
-
-#. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Goldenrod"
-msgstr ""
-
-#. Translators: the color Pale Green (RGB 152, 251, 152) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Pale Green"
-msgstr "dúghlas"
-
-#. Translators: the color Pale Turquoise (RGB 175, 238, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Turquoise"
-msgstr ""
-
-#. Translators: the color Pale Violet Red (RGB 219, 112, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Violet Red"
-msgstr ""
-
-#. Translators: the color Papaya Whip (RGB 255, 239, 213) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Papaya Whip"
-msgstr ""
-
-#. Translators: the color Peach Puff (RGB 255, 218, 185) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peach Puff"
-msgstr ""
-
-#. Translators: the color Peru (RGB 205, 133, 63) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peru"
-msgstr ""
-
-#. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pink"
-msgstr "bán dearg"
-
-#. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Plum"
-msgstr ""
-
-#. Translators: the color Powder Blue (RGB 176, 224, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Powder Blue"
-msgstr ""
-
-#. Translators: the color Purple (RGB 128, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Purple"
-msgstr "corcra"
-
-#. Translators: the color Red (RGB 255, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Red"
-msgstr "dearg"
-
-#. Translators: the color Rosy Brown (RGB 188, 143, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Rosy Brown"
-msgstr ""
-
-#. Translators: the color Royal Blue (RGB 65, 105, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Royal Blue"
-msgstr ""
-
-#. Translators: the color Saddle Brown (RGB 139, 69, 19) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Saddle Brown"
-msgstr ""
-
-#. Translators: the color Salmon (RGB 250, 128, 114) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Salmon"
-msgstr ""
-
-#. Translators: the color Sandy Brown (RGB 244, 164, 96) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sandy Brown"
-msgstr ""
-
-#. Translators: the color Sea Green (RGB 46, 139, 87) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Sea Green"
-msgstr "dúghlas"
-
-#. Translators: the color Seashell (RGB 255, 245, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Seashell"
-msgstr ""
-
-#. Translators: the color Sienna (RGB 160, 82, 45) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sienna"
-msgstr ""
-
-#. Translators: the color Silver (RGB 192, 192, 192) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Silver"
-msgstr "airgead"
-
-#. Translators: the color Sky Blue (RGB 135, 206, 235) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sky Blue"
-msgstr ""
-
-#. Translators: the color Slate Blue (RGB 106, 90, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Blue"
-msgstr ""
-
-#. Translators: the color Slate Gray (RGB 112, 128, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Gray"
-msgstr ""
-
-#. Translators: the color Snow (RGB 255, 250, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Snow"
-msgstr ""
-
-#. Translators: the color Spring Green (RGB 0, 255, 127) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
-msgctxt "color name"
-msgid "Spring Green"
-msgstr "priontáil scáileán"
-
-#. Translators: the color Steel Blue (RGB 70, 130, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Steel Blue"
-msgstr ""
-
-#. Translators: the color Tan (RGB 210, 180, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tan"
-msgstr ""
-
-#. Translators: the color Teal (RGB 0, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Teal"
-msgstr ""
-
-#. Translators: the color Thistle (RGB 216, 191, 216) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Thistle"
-msgstr ""
-
-#. Translators: the color Tomato (RGB 255, 99, 71) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tomato"
-msgstr ""
-
-#. Translators: the color Turquoise (RGB 64, 224, 208) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Turquoise"
-msgstr "turcaidghorm "
-
-#. Translators: the color Violet (RGB 238, 130, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Violet"
-msgstr "vialait "
-
-#. Translators: the color Wheat (RGB 245, 222, 179) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Wheat"
-msgstr ""
-
-#. Translators: the color White (RGB 255, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White"
+msgstr "faoi leibhéal na siombaile fiú amháin"
+
+#. Translators: the color white (HSV saturation0%, value 100%)
+msgctxt "color hue"
+msgid "white"
 msgstr "bán"
 
-#. Translators: the color White Smoke (RGB 245, 245, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White Smoke"
-msgstr ""
+#. Translators: the color very light grey (HSV saturation 0%, value 84%)
+msgctxt "color hue"
+msgid "very light grey"
+msgstr "fionnliath geal"
 
-#. Translators: the color Yellow (RGB 255, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow"
+#. Translators: the color light grey (HSV saturation 0%, value 66%)
+msgctxt "color hue"
+msgid "light grey"
+msgstr "fionnliath"
+
+#. Translators: the color grey (HSV saturation 0%, value 50%)
+msgctxt "color hue"
+msgid "grey"
+msgstr "liath"
+
+#. Translators: the color dark grey (HSV saturation 0%, value 34%)
+msgctxt "color hue"
+msgid "dark grey"
+msgstr "dúliath"
+
+#. Translators: the color very dark grey (HSV saturation 0%, value 16%)
+msgctxt "color hue"
+msgid "very dark grey"
+msgstr "liath an-dorcha"
+
+#. Translators: the color black (HSV saturation 0%, value 0%)
+msgctxt "color hue"
+msgid "black"
+msgstr "dubh"
+
+#. Translators: The color red (HSV hue 0 degrees)
+msgctxt "color hue"
+msgid "red"
+msgstr "dearg"
+
+#. Translators: The color between  red and orange (HSV hue 15 degrees)
+msgctxt "color hue"
+msgid "red-orange"
+msgstr "dearg oráiste"
+
+#. Translators: The color orange (HSV hue 30 degrees)
+msgctxt "color hue"
+msgid "orange"
+msgstr "oráiste"
+
+#. Translators: The color between  orange and yellow (HSV hue 45 degrees)
+msgctxt "color hue"
+msgid "orange-yellow"
+msgstr "oráisteBhuí"
+
+#. Translators: The color yellow (HSV hue 60 degrees)
+msgctxt "color hue"
+msgid "yellow"
 msgstr "buí"
 
-#. Translators: the color Yellow Green (RGB 154, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow Green"
-msgstr ""
+#. Translators: The color between  yellow and green (HSV hue 90 degrees)
+msgctxt "color hue"
+msgid "yellow-green"
+msgstr "buíghlas"
+
+#. Translators: The color green (HSV hue 120 degrees)
+msgctxt "color hue"
+msgid "green"
+msgstr "uaine"
+
+#. Translators: The color between  green and aqua (HSV hue 150 degrees)
+msgctxt "color hue"
+msgid "green-aqua"
+msgstr "glas-gormghlas"
+
+#. Translators: The color aqua (HSV hue 180 degrees)
+msgctxt "color hue"
+msgid "aqua"
+msgstr "gormghlas"
+
+#. Translators: The color between  aqua and blue (HSV hue 210 degrees)
+msgctxt "color hue"
+msgid "aqua-blue"
+msgstr "gorm-glasghorm"
+
+#. Translators: The color blue (HSV hue 240 degrees)
+msgctxt "color hue"
+msgid "blue"
+msgstr "gorm"
+
+#. Translators: The color between  blue and purple (HSV hue 270 degrees)
+msgctxt "color hue"
+msgid "blue-purple"
+msgstr "gormChorcra"
+
+#. Translators: The color purple (HSV hue 300 degrees)
+msgctxt "color hue"
+msgid "purple"
+msgstr "corcra"
+
+#. Translators: The color between  purple and pink (HSV hue 312 degrees)
+msgctxt "color hue"
+msgid "purple-pink"
+msgstr "corcraBhándearg"
+
+#. Translators: The color pink (HSV hue 324 degrees)
+msgctxt "color hue"
+msgid "pink"
+msgstr "bándearg"
+
+#. Translators: The color between  pink and red (HSV hue 342 degrees)
+msgctxt "color hue"
+msgid "pink-red"
+msgstr "bándearg-dearg"
+
+#. Translators: a bright color (HSV saturation 100% and value 100%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "bright {color}"
+msgstr "{color} geal"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: a dark color (HSV saturation 100% and value 44%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "dark {color}"
+msgstr "{color} dorcha"
+
+#. Translators: a very dark color (HSV saturation 100% and value 16%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "very dark {color}"
+msgstr " {color}an-dorcha "
+
+#. Translators: a light pale color (HSV saturation 50% and value 100%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "light pale {color}"
+msgstr "{color} geal"
+
+#. Translators: a pale color (HSV saturation 50% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "pale {color}"
+msgstr "{color} geal"
+
+#. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "dark pale {color}"
+msgstr "{color} dorcha"
+
+#. Translators: a very dark color (HSV saturation 50% and value 16%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "very dark pale {color}"
+msgstr "{color} dúgheal"
+
+#. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color} white"
+msgstr "{color} bán"
+
+#. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "{color} grey"
+msgstr "{color} liath"
+
+#. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "dark {color} grey"
+msgstr "liath {color} dorcha"
+
+#. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+#, python-brace-format
+msgctxt "color variation"
+msgid "very dark {color} grey"
+msgstr "liath {color} an-dorcha"
+
+#. Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "red-brown"
+msgstr "deargDhonn"
+
+#. Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "brown"
+msgstr "donn"
+
+#. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "brown-yellow"
+msgstr "donnBhuí"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2173,6 +1703,7 @@ msgid "row"
 msgstr "ró"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "fráma"
 
@@ -2500,10 +2031,6 @@ msgstr "deilbhín deisce"
 msgid "alert"
 msgstr "foláireamh"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "I-Fhráma"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "pána deisce"
@@ -2569,13 +2096,11 @@ msgstr "dath cúlra"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "forscript"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "foscript"
 
@@ -2761,12 +2286,11 @@ msgstr "dofheicthe"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
-msgstr ""
+msgstr "bearrtha"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-#, fuzzy
 msgid "overflowing"
-msgstr "níos ísle"
+msgstr "ag forsceitheadh"
 
 #. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
 msgid "unlocked"
@@ -2853,11 +2377,11 @@ msgstr ""
 "téacs is déanaí iontráilte."
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
+msgid "No selection"
 msgstr "gan roghnúchán"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+msgid "Copied to clipboard"
 msgstr "cóipeáilte go dtí an ghearrthaisce"
 
 #. Translators: The name of a category of NVDA commands.
@@ -2914,6 +2438,16 @@ msgstr "ionchur"
 msgid "Document formatting"
 msgstr "Formáidiú doiciméid"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Ní féidir audio eile a ísliú"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "cabhair ionchurtha: ar siúl"
@@ -2952,7 +2486,7 @@ msgstr ""
 "faoi dhó, litreofar  an líne reatha"
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+msgid "Left click"
 msgstr "clic ar chlé"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2960,7 +2494,7 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Cliceáil an cnaipe luiche ar chlé uair amháin ag ionad na luiche"
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+msgid "Right click"
 msgstr "clic ar dheis"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2968,11 +2502,11 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Cliceáil an cnaipe luiche ar dheis uair amháin ag ionad na luiche"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+msgid "Left mouse button unlock"
 msgstr "díghlasáil an cnaipe luiche ar chlé"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
+msgid "Left mouse button lock"
 msgstr "glasáil an cnaipe luiche ar chlé"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
@@ -2980,16 +2514,20 @@ msgid "Locks or unlocks the left mouse button"
 msgstr "Glasáil nó díghlasáil an cnaipe luiche ar chlé"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
+msgid "Right mouse button unlock"
 msgstr "díghlasáil an cnaipe luiche ar dheis"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
+msgid "Right mouse button lock"
 msgstr "glasáil an cnaipe luiche ar dheis"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Glasáil nó díghlasáil an cnaipe luiche ar dheis"
+
+#, python-format
+msgid "Selected %s"
+msgstr "Roghnaithe %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3098,9 +2636,8 @@ msgid "report font attributes on"
 msgstr "Léigh airíonna na clófhoirne"
 
 #. Translators: Input help mode message for toggle report font attributes command.
-#, fuzzy
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "Léigh nó ná léigh carachtair chlóscríofa"
+msgstr "Léigh nó ná léigh aitreabúidí clófhoirne"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
@@ -3124,9 +2661,8 @@ msgid "report emphasis on"
 msgstr "Tabhair tuairisc ar treise"
 
 #. Translators: Input help mode message for toggle report emphasis command.
-#, fuzzy
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Tuairiscigh nó ná tuairiscigh ar  leathnacha"
+msgstr "Tuairiscigh nó ná tuairiscigh arbéim"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3200,30 +2736,49 @@ msgstr "Léigh &uimhreacha líne"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Léigh nó ná léigh uimhreacha líne"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "Ná tabhair tuairisc ar ea&ngú"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Tabhair tuairisc ar eangú trí urlabhra "
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Tabhair tuairisc ar ea&ngú"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Tabhair tuairisc ar eangú trí thoin."
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Tabhair tuairisc ar eangú trí urlabhra agus toin"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Ná tabhair tuairisc ar eangú"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-#, fuzzy
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Léigh nó ná léigh focail chlóscríofa"
+msgid "Cycles through line indentation settings"
+msgstr "Sainroghanna eanguithe"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "Ná tuairiscigh eang pharagraif"
+msgstr "Ná tuairiscigh eangú paragraif"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "Tuairisceáil eang pharagraif ar siúl"
+msgstr "Tuairiscigh eangú paragraif."
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Tuairiscigh nó ná tuairiscigh eang pharagraif"
+msgstr "Tuairiscigh nó ná tuairiscigh eangU paragraif"
+
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+msgid "report line spacing off"
+msgstr "Ná tabhair tuairisc ar spásáil línte "
+
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+msgid "report line spacing on"
+msgstr "Tabhair tuairisc ar spásáil línte"
+
+#. Translators: Input help mode message for toggle report line spacing command.
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "Léigh nó ná léigh spásáil línte"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3267,11 +2822,11 @@ msgstr "Ná léigh nascanna"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "Léigh nascanna"
+msgstr "Léigh naisc"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr "Léigh nó ná léigh nascanna"
+msgstr "Léigh nó ná léigh naisc"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
@@ -3310,19 +2865,16 @@ msgid "Toggles on and off the reporting of headings"
 msgstr "Tuairiscigh nó ná tuairiscigh ceanntáisc"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report block quotes off"
-msgstr "Léigh ath&fhriotail eangaithe"
+msgstr "Ná tabhair tuairisc ar athfhriotail bloic"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report block quotes on"
-msgstr "Léigh ath&fhriotail eangaithe"
+msgstr "Tabhair tuairisc ar athfhriotail bloic"
 
 #. Translators: Input help mode message for toggle report block quotes command.
-#, fuzzy
 msgid "Toggles on and off the reporting of block quotes"
-msgstr "Léigh nó ná léigh focail chlóscríofa"
+msgstr "Tabhair tuairisc, nó ná tabhair tuairisc ar athfhriotail bloic"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
@@ -3364,7 +2916,7 @@ msgstr "Tuairiscigh nó ná tuairiscigh ar read inchliceáilte"
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
-msgid "symbol level %s"
+msgid "Symbol level %s"
 msgstr "leibhéal siombalach %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
@@ -3375,7 +2927,7 @@ msgstr ""
 "bheith le rá."
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+msgid "Object has no location"
 msgstr "réad gan suíomh"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3420,9 +2972,21 @@ msgstr ""
 "má táthar istigh i gceachtar acu faoi láthair, agus cuir cúrsóir an "
 "athbhreithnithe ag áit na hoibiachta."
 
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode off"
+msgstr "Mód simplí athbhreithnithe múchta"
+
+#. Translators: The message announced when toggling simple review mode.
+msgid "Simple review mode on"
+msgstr "Mód simplí athbhreithnithe ar siúl"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+msgid "Toggles simple review mode on and off"
+msgstr "Cuir nó ná cuir mód athbhreithnithe simplí ar siúl"
+
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+msgid "No navigator object"
 msgstr "gan réad nascleantóra"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3451,8 +3015,8 @@ msgid ""
 msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsóir an"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
-msgstr "bog go dtí an fócas reatha"
+msgid "Move to focus"
+msgstr "bog go dtí an fócas"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3465,20 +3029,20 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
+msgid "No focus"
 msgstr "gan fócas"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
+msgid "Move focus"
 msgstr "bog an fócas"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
+msgid "No caret"
 msgstr "gan carait"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "Brúitear uair amháin chun fócas an mhéarchláir a bhogadh chuig oibiacht an "
@@ -3494,6 +3058,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "Bog an réad nascleantóra go dtí an réad ina bhfuil sé"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "Níl aon réad ina dhiaidh seo"
 
@@ -3502,6 +3067,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "Bog an réad nascleantóra go dtí an chéad réad eile"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "Níl aon réad roimhe seo"
 
@@ -3518,8 +3084,8 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "Bog an réad nascleantóra go dtí an chéad réad taobh istigh de"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "gníomhachtaigh"
+msgid "Activate"
+msgstr "Gníomhachtaigh"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3534,7 +3100,7 @@ msgstr ""
 "más cnaipe é)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+msgid "Top"
 msgstr "barr"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3607,7 +3173,8 @@ msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an chéad fhocal eile sa réad "
 "nascleantóra agus léigh é"
 
-msgid "left"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
 msgstr "clé"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
@@ -3639,7 +3206,8 @@ msgstr ""
 "tuairiscítear luach uimhruichiúil an charactair sa chóras deachúil agus "
 "heicseadheachúil."
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+msgid "Right"
 msgstr "deas"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3659,15 +3227,15 @@ msgstr ""
 "bhfuil sé sa réad nascleantóra, agus léigh é"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
-msgstr "mód cainte: as"
+msgid "Speech mode off"
+msgstr "mód cainte múchta"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+msgid "Speech mode beeps"
 msgstr "mód cainte: bípeanna"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+msgid "Speech mode talk"
 msgstr "mód cainte: gnáth"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3706,7 +3274,7 @@ msgstr "Taispeáin an roghchlár NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "léigh ón chursóir athbhreithnithe go dtí deireadh an téacs reatha, agus an "
@@ -3714,7 +3282,7 @@ msgstr ""
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "léigh ó charait an chórais go dtí deireadh an téacs, agus an charait ag "
@@ -3724,29 +3292,36 @@ msgstr ""
 msgid "No formatting information"
 msgstr "Gan faisnéis fhormáidithe"
 
+#. Translators: title for formatting information dialog.
+msgid "Formatting"
+msgstr "Formáidiú"
+
 #. Translators: Input help mode message for report formatting command.
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "Tabhair tuairisc ar an bhformáidiú atá i bhfeidhm ag ionad an chursóra "
-"athbhreithnithe sa cháipéis"
+"athbhreithnithe sa cháipéis. Brúitear faoi dhó chun na faisnéise a "
+"thaispeáint I mód brabhsála. "
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
+"Tuairiscítear an oibiacht le focas. Má bhrútar faoi dhó, litrítear an "
+"fhaisnéis."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Líne stádais gan aimsiú"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
-"léigh barra stádais an fheidhmchláir reatha agus bog an nascleantóir ann"
+"léigh barra stádais an fheidhmchláir reatha agus bog an nascleantóir ann. Má "
+"bhrútar  faoi dhó, litrítear an fhaisnéis."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3761,7 +3336,7 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Rianaigh nó ná rianaigh an luch"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+msgid "No title"
 msgstr "gan teideal"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3775,7 +3350,7 @@ msgstr ""
 "dtí an ghearrthaisce."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+msgid "Speaks the current foreground object"
 msgstr "léigh an réad atá sa tulra faoi láthair"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3788,19 +3363,19 @@ msgstr ""
 "scrúdaíotar an t-eolas."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+msgid "No progress bar updates"
 msgstr "ná tabhair tuairiscí ar dhul chun cinn"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+msgid "Speak progress bar updates"
 msgstr "tabhair tuairisc labhartha ar dhul chun cinn"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+msgid "Beep for progress bar updates"
 msgstr "déan bíp ar dhul chun cinn"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+msgid "Beep and speak progress bar updates"
 msgstr "tabhair tuairisc labhartha agus bíp ar dhul chun cinn"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3858,7 +3433,7 @@ msgstr ""
 "athraithe fócais."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+msgid "No system battery"
 msgstr "níl aon chadhnra ann"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3871,11 +3446,12 @@ msgid "AC power on"
 msgstr "Cumhacht SA ceangailte"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} uair agus {minutes:d} nóiméad fágtha"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "taispeáin stádas an chadhnra agus an t-am fágtha mura bhfuil sé plugáilte "
 "isteach"
@@ -3939,14 +3515,14 @@ msgid "Shows the NVDA mouse settings dialog"
 msgstr "Taispeáin socruithe luiche NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
-#, fuzzy
 msgid "Shows the NVDA review cursor settings dialog"
-msgstr "Taispeáin socruithe gutha NVDA"
+msgstr ""
+"Taispeáin an dialog le haghaidh sainroghnaithe  an chursóra "
+"athbhreithnithe   "
 
 #. Translators: Input help mode message for go to input composition dialog.
-#, fuzzy
 msgid "Shows the NVDA input composition settings dialog"
-msgstr "Taispeáin socruithe luiche NVDA"
+msgstr "Taispeáintear dialog sainroghanna ionchuir"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3969,19 +3545,16 @@ msgid "Shows the NVDA voice-specific dictionary dialog"
 msgstr "Taispeáin foclóir   gutha NVDA "
 
 #. Translators: Input help mode message for opening temporary dictionary.
-#, fuzzy
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "Taispeáin socruithe an mhéarchláir NVDA"
+msgstr "Taispeáin dialog an fhoclóra sealadach "
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
-#, fuzzy
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "Taispeáin an dialóg sintéiseora NVDA"
+msgstr "Taispeáin an dialog fhoghraíocht siombaile NVDA "
 
 #. Translators: Input help mode message for go to input gestures dialog command.
-#, fuzzy
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Taispeáin an dialóg sintéiseora NVDA"
+msgstr "Taispeáintear an dialog gothaí ionchuir"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -4005,6 +3578,7 @@ msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
+"Cuirtear bainisteoir breiseáin ar siúl chun breiseáin a shuiteáil ar NVDA "
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -4018,13 +3592,14 @@ msgstr "Amharcán cainte cumasaithe"
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
-msgstr ""
+msgstr "Cuir nó ná cuir an amharcóir ar siúl"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
 msgstr "athbhreithniú"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "fócas"
 
@@ -4037,6 +3612,31 @@ msgstr "Braille nasctha le %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Scoránaigh ceangal braille idir an fócas agus an suíomh athbhreithnithe."
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Cúrsóir Bhraille stopaithe"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Cúrsóir Bhraille ar siúl"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Cuir nó ná cuir an cúrsóir Bhraille ar siúl."
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Níl an cúrsóir Bhraille ar siúl."
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "cúrsóir Bhraille %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Romhnaigh cruth an chursóra Bhraille."
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4057,10 +3657,10 @@ msgstr "Léigh an téacs sa ghearrthaisce Windows"
 msgid "Start marked"
 msgstr "Tús an téacs roghnaithe"
 
-#. Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
-"copied"
+"selected or copied"
 msgstr ""
 "Comharthaítear suíomh reatha an chúrsóra athbhreithnithe mar thús an téacs a "
 "bheith cóipeáilte."
@@ -4069,26 +3669,35 @@ msgstr ""
 msgid "No start marker set"
 msgstr "Gan marcóir tosaithe"
 
-#. Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
-msgid "The start marker must reside within the same object"
-msgstr "Ní mór don marcóir tosaithe a bheith taobh istigh den réad céanna"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "Cóipeáladh an téacs athbhreithnithe go dtí an ghearrthaisce"
+#. Translators: Presented when text has already been marked for selection, but not yet copied.
+msgid "Press twice to copy or reset the start marker"
+msgstr "Brúigh faoi dhó chun an marcóir tosaigh a nuashonrú. "
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
 msgstr "Níl aon téacs le cóipeáil"
 
-#. Translators: Input help mode message for copy selected review cursor text to clipboard command.
+#. Translators: Presented when unable to select the marked text.
+msgid "Can't select text, press twice to copy"
+msgstr "Ní féidir an téacs a roghnú. Brú fao dhó chun é a chóipeáil."
+
+#. Translators: Presented when some review text has been copied to clipboard.
+msgid "Review selection copied to clipboard"
+msgstr "Cóipeáladh an téacs athbhreithnithe go dtí an ghearrthaisce"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+msgid "Unable to copy"
+msgstr "ní féidir cóipeáil"
+
+#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
-"Retrieves the text from the previously set start marker up to and including "
-"the current position of the review cursor and copies it to the clipboard"
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
 msgstr ""
-"Aisghabh an téacs ón comhar tosaithe is déanaí socraithe chuig (agus san "
-"áireamh) suíomh reatha an chúrsóra aithbhreithnithe.  Agus déan cóip chuig "
-"an ghearrthaisce."
+"Má bhrúitear uair amháin, roghnaítear an téacs ón marcóir tosaigh go dtí "
+"suíomh reatha an chursóra. Má bhrúitear faoi dhó, cóipeáiltear  an teacs go "
+"dtí an gearrthaisce."
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -4116,6 +3725,10 @@ msgstr "Scrollaigh an taispeántas Braille go dtí an chéad líne eile"
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "Cuir poncanna Braille isteach tríd an méarchlár Braille"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Moves the braille display to the current focus"
+msgstr "bogtar an taispeántas Braille go dtí an fócas reatha"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Breiseáin athluchtaithe"
@@ -4128,10 +3741,6 @@ msgstr ""
 "Athluchtaigh modúil agus breiseáin chomhchoiteanna gan NVDA a atosú. "
 "Úsáideach d'fhorbróirí"
 
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "Níl aon réad ina dhiaidh seo"
-
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4139,10 +3748,6 @@ msgid ""
 msgstr ""
 "Bog go dtí an chéad oibiacht eile i radharc leacaithe an "
 "ordlathaisnascleantóra oibiachta."
-
-#. Translators: a message when there is no previous object when navigating
-msgid "no previous"
-msgstr "Níl aon réad roimhe seo"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4158,7 +3763,7 @@ msgid "%s mode"
 msgstr "Mód %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+msgid "Cycles between available touch modes"
 msgstr "téigh trí na móid tadhaill atá ar fáil"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4184,7 +3789,7 @@ msgstr "ní matamaitic é seo."
 
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
-msgstr ""
+msgstr "Tosaigh idirghníomhú le réimse matamaitice "
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4193,10 +3798,6 @@ msgstr "Déanann sé seo aithris ar eochracha   mhéarchlár an chórais"
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "Ilcheanálach"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "mód brabhsála"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4451,68 +4052,56 @@ msgid "numpad plus"
 msgstr "comhartha móide (uimhircheap)"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numpad decimal"
-msgstr "scrios (uimhircheap)"
+msgstr "ponc ar uimhircheap"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numpad insert"
-msgstr "enter (uimhircheap)"
+msgstr "Ionsáigh ar uimhircheap"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr ""
+msgstr "0 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 1"
-msgstr "uimhircheap 1"
+msgstr "1 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 2"
-msgstr "uimhircheap 2"
+msgstr "2 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 3"
-msgstr "uimhircheap 3"
+msgstr "3 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 4"
-msgstr "uimhircheap 4"
+msgstr "4 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 5"
-msgstr "uimhircheap 5"
+msgstr "5 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 6"
-msgstr "uimhircheap 6"
+msgstr "6 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 7"
-msgstr "uimhircheap 7"
+msgstr "7 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 8"
-msgstr "uimhircheap 8"
+msgstr "8 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "numLock numpad 9"
-msgstr "uimhircheap 9"
+msgstr "9 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
-#, fuzzy
 msgid "insert"
-msgstr "ionsá"
+msgstr "ionsáigh"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
@@ -4699,11 +4288,6 @@ msgstr "roghnúchán bainte"
 msgid "done dragging"
 msgstr "tarraingt críochnaithe"
 
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "leibhéal %s"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -4715,6 +4299,7 @@ msgid "column %s"
 msgstr "colún %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "le {rowCount} ró agus {columnCount} colún"
 
@@ -4727,6 +4312,11 @@ msgstr "le %s colún"
 #, python-format
 msgid "with %s rows"
 msgstr "le %s ró"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "leibhéal %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4743,6 +4333,43 @@ msgstr "as %s"
 #, python-format
 msgid "page %s"
 msgstr "leathanach %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "rannóg %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "colún {0} as {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "le %s colún"
+
+msgid "continuous section break"
+msgstr "Briseadh rannóige leanúnach"
+
+msgid "new column section break"
+msgstr "Briseadh rannóige ag colún nua"
+
+msgid "new page section break"
+msgstr "Briseadh rannóige ag leathanach nua"
+
+msgid "even pages section break"
+msgstr "Briseadh rannóige réleathanach"
+
+msgid "odd pages section break"
+msgstr "Briseadh rannóige corrleathanach"
+
+msgid "column break"
+msgstr "briseadh colúin"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
@@ -4761,21 +4388,36 @@ msgstr "stíl %s"
 msgid "default style"
 msgstr "stíl réamhshocraithe"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} go {color2}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} ar {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "cúlra {backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "patrún cúlra {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4805,9 +4447,9 @@ msgid "revised %s"
 msgstr "%s athbhreithnithe "
 
 #. Translators: Reported when text is not revised.
-#, fuzzy, python-format
+#, python-format
 msgid "no revised %s"
-msgstr "%s athbhreithnithe "
+msgstr "Níl %s athmheasta ann"
 
 #. Translators: Reported when text is marked
 msgid "marked"
@@ -4845,6 +4487,11 @@ msgstr "iodálach"
 msgid "no italic"
 msgstr "gan iodálach"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "Líne tríd dúbalta"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4865,7 +4512,6 @@ msgstr "gan líne faoi"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "bunlíne"
 
@@ -4955,6 +4601,11 @@ msgstr "ailínigh go hingearach dáilte"
 msgid "vertical align default"
 msgstr "        réamhshochrú ailíúcháin ingreachailíniú "
 
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "spásáil línte %s"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "as an nóta tráchta."
@@ -4972,11 +4623,16 @@ msgid "out of table"
 msgstr "deireadh an tábla"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tábla ina bhfuil {columnCount} colún agus {rowCount} ró"
 
 msgid "NVDA Speech Viewer"
 msgstr "Amharcán Cainte NVDA"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "Taispeáin amharcán urlabhra agus NVDA á tosú."
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -5028,20 +4684,18 @@ msgid "&Pitch"
 msgstr "A&irde"
 
 #. Translators: Label for a setting in synth settings ring.
-#, fuzzy
 msgctxt "synth setting"
 msgid "Pitch"
-msgstr "A&irde"
+msgstr "Tuinairde"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Casadh"
 
 #. Translators: Label for a setting in synth settings ring.
-#, fuzzy
 msgctxt "synth setting"
 msgid "Inflection"
-msgstr "&Casadh"
+msgstr "infhilleadh"
 
 msgid "text mode"
 msgstr "mód téacs"
@@ -5050,22 +4704,27 @@ msgid "object mode"
 msgstr "mód oibiachta"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "{action} singilte"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "{action} dúbalta"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "{action} tríreach "
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr " {action} ceathrach "
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr " {action} le {numFingers} méar "
 
@@ -5119,6 +4778,10 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "ainligh suas"
 
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+msgid "NVDA Message"
+msgstr "teachtaireacht NVDA"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Nuashonruithe á Lorg"
@@ -5143,6 +4806,7 @@ msgstr "Nuashonrú NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Tá leagan {version} de NVDA ar fáil."
 
@@ -5237,9 +4901,11 @@ msgstr "Rochtain Ríomhaireachta Gan Radharc"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Léitheoir scáileáin saor oscailte le haghaidh Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} Rannpháirtithe NVDA"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -5286,6 +4952,7 @@ msgstr ""
 "Féadann tú é seo  a dhéanamh, trí roghnú Bronn as an roghchlár NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -5294,6 +4961,7 @@ msgstr ""
 "siúl chun bhreiseáin a shuiteáil"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -5305,17 +4973,19 @@ msgstr ""
 "scáileáin."
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol}, cur síos: {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "Imeall an thábla"
+msgid "Edge of table"
+msgstr "Imeall an tábla"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5356,6 +5026,16 @@ msgstr "Níl aon amhrán ag seinm"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Tabhair tuairisc ar an méid ama fágtha san amhrán reatha"
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage}%, áit reatha {curLocation} de {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "leathanach {pageNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5463,16 +5143,18 @@ msgid "Waiting for Outlook..."
 msgstr "Ag fanacht le Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "ó {startTime} go {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Coinne {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
-msgstr "Coinne ann"
+msgid "Has appointment"
+msgstr "Tá Coinne ann"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -5628,80 +5310,99 @@ msgid "Master Thumbnails"
 msgstr "Máistir-mhionsamhlacha"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Sleamhnán {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "clúdaítear taobh na láimhe clé den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar na láimhe clé den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "clúdaítear barr an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar barr an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "clúdaítear taobh na láimhe dheise den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar na láimhe dheise den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "clúdaítear bun an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "taobh thiar bun an {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "clúdaítear {otherShape} "
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "taobh thiar {otherShape} "
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} pointí ó imeall chlé."
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "As an imeall chlé i {distance:.3g} pointí"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} pointí ó barr."
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "As an barr i {distance:.3g} pointí"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} pointí ó imeall deas."
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "As an imeall deas i {distance:.3g} pointí"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} pointí ó imeall an bhunshleamhnáin"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "As imeall an bhunshleamhnáin i {distance:.3g} pointí"
 
@@ -5716,10 +5417,12 @@ msgstr ""
 "amháin an méid atá inléite ag NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Nótaí taispeántais sleamhnán - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Taispeántas sleamhnán - {slideName}"
 
@@ -5772,6 +5475,12 @@ msgstr "Stad"
 msgid "Record"
 msgstr "Taifead"
 
+msgid "left"
+msgstr "clé"
+
+msgid "right"
+msgstr "deas"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -5797,13 +5506,14 @@ msgid "ALVA BC640/680 series"
 msgstr "Sraith ALVA BC640/680"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Taispeántais Bhraille Baum/HumanWare/APH"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Taispeántóir Bhraille Baum/HumanWare/APH/Orbit "
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Port Srathach: {portName}"
 
@@ -6049,11 +5759,11 @@ msgid "Python console"
 msgstr "Consól Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+msgid "Manage &add-ons..."
 msgstr "Bainistigh &breiseáin"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+msgid "Create portable copy..."
 msgstr "Cruthaigh cóip inaistrithe..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6092,7 +5802,7 @@ msgid "C&ontributors"
 msgstr "Rannpháirtithe"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+msgid "We&lcome dialog..."
 msgstr "Fuinneog fhái&lte"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -6145,7 +5855,6 @@ msgid "Exit NVDA"
 msgstr "Scoir ó NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -6155,10 +5864,9 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Fáilte ag NVDA!\n"
-"  D’fhormhór éalaíonn na horduithe a rialaíonn NVDA ort an eochair NVDA a "
+"D’fhormhór éalaíonn na horduithe a rialaíonn NVDA ort an eochair NVDA a "
 "choinneáil síos agus tú ag brú eochracha eile\n"
-"Mar réamhshocrú, is féidir na heochrachar “ionsáigh” an uimhirchip agus an "
+"Mar réamhshocrú, is féidir na heochracha “ionsáigh” an uimhirchip agus an "
 "príomheochair “ionsáigh” araon a úsáid mar eochair an NVDA. \n"
 " Is féidir leat, freisin, NVDA a chumrú chun glais ceannlitreacha a úsáid "
 "mar an eochair NVDA. \n"
@@ -6169,6 +5877,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Fáilte go NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Fáilte go NVDA!"
 
 msgid "Options"
 msgstr "Roghanna"
@@ -6240,7 +5953,8 @@ msgid "Add-ons Manager"
 msgstr "Bainisteoir na mBreiseán"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "Tá gach breiseán díchumasaithe anois. Ní mór duit NVDA a aitosú chun na "
 "breiseáin a chumasaigh.  "
@@ -6273,6 +5987,10 @@ msgstr "&Maidir leis an mbreiseán..."
 msgid "Add-on &help"
 msgstr "Breiseán agus Cabhair"
 
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "&Disable add-on"
+msgstr "&Díchumasaigh an Breiseán "
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "&Suiteáil..."
@@ -6293,6 +6011,7 @@ msgid "Choose Add-on Package File"
 msgstr "Roghnaigh Pacáiste Breiseáin"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Pacáiste Breiseáin NVDA (*.{ext})"
 
@@ -6306,6 +6025,7 @@ msgstr ""
 "comhad neamhbhailí"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6342,10 +6062,12 @@ msgstr "Fan fad is atá an breiseán á shuiteáil."
 msgid "Failed to install add-on  from %s"
 msgstr "Níorbh fhéidir an breiseán a shuiteáil ó %s"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr ""
 "An bhfuil tú cinnte gur mhaith leat an breiseán roghnaithe a bhaint ó NVDA?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "Bain an Breiseán"
 
@@ -6357,7 +6079,15 @@ msgstr "suiteáil"
 msgid "remove"
 msgstr "bain"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+msgid "disable"
+msgstr "Díchumasaigh"
+
+#. Translators: The status shown for an addon when its enabled.
+msgid "enable"
+msgstr "Cumasaigh"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "curtha ar athló"
 
@@ -6365,19 +6095,24 @@ msgstr "curtha ar athló"
 msgid "running"
 msgstr "ar siúl"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "&Enable add-on"
+msgstr "Cumasaigh an Breiseán "
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
-"Tá forlíontáin tar éis a bheith ionchurtha nó bainte.  Ní mór duit NVDA a "
-"aitosú chun na h-athraithe seo a chur i bhfeidhm?"
+"Athraíodh breiseáin. Is gá NVDA a atosú chun na hathruithe seo a chur I "
+"bhfeidhm. An mian leat NVDA a atosú anois?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
 msgstr "Atosaigh NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6390,6 +6125,7 @@ msgstr ""
 "Cur Síos: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
@@ -6400,10 +6136,6 @@ msgstr "Eolas faoin Bhreiseán"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Próifíle Cumriachta"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Próifíl"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6578,9 +6310,8 @@ msgstr ""
 "An mian leat í a ghníomhachtú de láimh anois?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
-#, fuzzy
 msgid "Manual Activation"
-msgstr "beochan"
+msgstr "gníomhú láimhe"
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
@@ -6655,6 +6386,7 @@ msgid ""
 msgstr "Aimsíodh cóip de NVDA ar do chóras. Nuashonrófar an chóip seo."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -6691,11 +6423,14 @@ msgid ""
 "should first cancel this installation and completely uninstall NVDA before "
 "installing the earlier version."
 msgstr ""
+"Tá tú ag iarraidh seanleagan NVDA a shuiteáil. Más mian leat é sin a "
+"dhéanamh, ní foláir  cealaigh as NVDA ar dtús agus ansin, díshuiteáil NVDA.  "
+"É sin déanta, beidh tú in an seanleagan a shuiteáil. "
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
 msgid "&Proceed with installation (not recommended)"
-msgstr ""
+msgstr "Lean ar aghaidh leis an suiteáil. Ní moltar é seo."
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6718,14 +6453,14 @@ msgstr "Comha&dlann inaistrithe:"
 msgid "Browse..."
 msgstr "Brabhsáil..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Cóipeáil an &chumraíocht úsáideora atá ann"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Roghnaigh comhadlann inaistrithe"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Cóipeáil an &chumraíocht úsáideora atá ann"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6770,6 +6505,10 @@ msgstr "Amharcán Logchomhad NVDA"
 msgid "Refresh\tF5"
 msgstr "Athnuaigh\tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr "sábháil mar..."
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "Logchomhad"
@@ -6807,10 +6546,6 @@ msgstr "dífhabhtú"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Teanga (is gá atosú chun an t-athrú seo a chur i bhfeidhm):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Teanga"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Sábháil an chumraíocht ag am scortha"
@@ -6826,10 +6561,6 @@ msgstr "&Sein fuaimeanna agus NVDA ag tosú nó ag stopadh."
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Leibhéal l&ogála:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Leibhéal logála"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6851,7 +6582,6 @@ msgid "Automatically check for &updates to NVDA"
 msgstr "Lorg n&uashonruithe NVDA go huathoibríoch"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
-#, fuzzy
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -6890,13 +6620,6 @@ msgstr "Earráid agus socruithe úsáideora NVDA á gcóipeáil"
 msgid "Successfully copied NVDA user settings"
 msgstr "Cóipeáladh socruithe úsáideora NVDA"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Earráid i gcomhad teanga %s"
-
-msgid "Language Error"
-msgstr "Earráid Teanga"
-
 msgid "This change requires administrator privileges."
 msgstr "Is é riarthóir an chórais amháin atá ábalta é seo a dhéanamh."
 
@@ -6932,6 +6655,10 @@ msgstr "&Sintéiseoir:"
 #. headphones, etc.
 msgid "Output &device:"
 msgstr "&Gléas aschurtha:"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Mód audio agus ísliú"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -6997,10 +6724,6 @@ msgstr "Socruithe an Mhéarchláir"
 msgid "&Keyboard layout:"
 msgstr "&Leagan amach an mhéarchláir:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Leagan amach an mhéarchláir"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -7049,6 +6772,11 @@ msgstr "Léigh &eochracha ordaithe"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr "Sein fuaim do bhutúin litrithe agus clóscríobh á dhéanamh agat."
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "Láimsigh eochr&acha ó fheidhmchláir eile"
 
@@ -7075,10 +6803,6 @@ msgstr "Cumasaigh &rianú na luiche"
 msgid "Text &unit resolution:"
 msgstr "Taifeach téacs agus aonaid:"
 
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "Aonad tuairisciú an théacs"
-
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report &role when mouse enters object"
@@ -7086,7 +6810,6 @@ msgstr "Tuairiscigh &ról nuair a iontrálann an luch ar an oibiacht."
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#, fuzzy
 msgid "&Play audio coordinates when mouse moves"
 msgstr "Seinn comhordanáidí fhuaime nuair a bhogann an luch."
 
@@ -7210,11 +6933,6 @@ msgstr "Tuairiscigh cur síos ar oibiachtaí"
 msgid "Progress &bar output:"
 msgstr "Aschur &barra dul chun cinn"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Aschur an bharra dul chun cinn"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -7278,128 +6996,170 @@ msgstr "        &Ná lig aon ghotha neamhordaithe tríd go dtí an doiciméa
 msgid "Document Formatting"
 msgstr "Formáidiú cáipéise"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
-"Fógair athraithe formáidithe i ndiaidh an chúrsóra (is féidir moill a "
-"thrúigeadh)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "Sainroghanna chun formáidiú doiciméid a bhainistiú"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "clófhoireann"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Léigh ai&nm na clófhoirne"
+msgid "&Font name"
+msgstr "ainm cló&fhoirne"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Léigh an c&hlómhéid"
+msgid "Font &size"
+msgstr "Méid clófhoirne"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Léigh airíonna na clófhoirne"
+msgid "Font attri&butes"
+msgstr "Aitrea&búidí clófhoirne"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Tabhair tuairisc ar &ailíniú"
+msgid "E&mphasis"
+msgstr "le béim"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Tabhair tuairisc ar &dhathanna"
+msgid "St&yle"
+msgstr "stíl"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
+msgid "&Colors"
+msgstr "dathanna"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Eolas faoin doiciméad"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Co&mments"
+msgstr "Nótaí tráchta"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "&Editor revisions"
 msgstr "Tabhair tuairisc maidir le hathbhreithnithe an &eagarthóra."
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Tabhair tuairisc ar tr&eise"
+msgid "Spelling e&rrors"
+msgstr "botúin lit&rithe"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "leathanaigh agus spásáil"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Tabhair tuairisc ar s&tíl"
+msgid "&Pages"
+msgstr "leathanaigh"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Tabhair tuairisc ar bhotúin litrithe"
+msgid "Line &numbers"
+msgstr "uimhreacha lí&ne"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Tabhair tuairisc ar leat&hanaigh"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Line &indentation reporting:"
+msgstr "Tuairisceáil ar eangú"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Léigh &uimhreacha líne"
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+msgid "Off"
+msgstr "as feidhm"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "Tabhair tuairisc ar ea&ngú"
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Urlabhra"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Toin"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Urlabhra agus toin araon"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Tuairiscigh eang pharagraif"
+msgid "&Paragraph indentation"
+msgstr "eangú paragraif"
+
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report line spacing if available.
+msgid "&Line spacing"
+msgstr "spásáil &líne"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Léigh &táblaí"
+msgid "&Alignment"
+msgstr "&ailíniú"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Eolas faoin tábla"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Léigh c&eanntásca ró/colúin i dtáblaí"
+msgid "&Tables"
+msgstr "&táblaí"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Léigh c&omhordanáidí cille i dtáblaí"
+msgid "Row/column h&eaders"
+msgstr "C&eanntásc ró agus colúin"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Léigh &nascanna"
+msgid "Cell c&oordinates"
+msgstr "C&omhordanáidí cille"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Eilimintí"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "Léig&h ceanntásca"
+msgid "&Lists"
+msgstr "&liostaí"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Tabhair tuairisc ar l&iostaí"
+msgid "Block &quotes"
+msgstr "athfhriotail bloic"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Léigh ath&fhriotail eangaithe"
+msgid "Fra&mes"
+msgstr "Frá&maí"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Léigh &sainchomharthaí"
+msgid "&Clickable"
+msgstr "in&chliceáilte"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Léigh frá&maí"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Tabhair tuairisc ar réad in&chliceáilte"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"Fógair athraithe formáidithe i ndiaidh an chúrsóra (is féidir moill a bheith "
+"ann)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7422,6 +7182,7 @@ msgid "&Pattern"
 msgstr "&Patrún"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Ionadaí"
 
@@ -7432,6 +7193,18 @@ msgstr "&Nóta"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "saghas:"
+
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Tá patrún de dhíth"
+
+msgid "Dictionary Entry Error"
+msgstr "Earráid san fhoclóir"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Earráid sa slonn rialta \"%s\" "
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7496,9 +7269,17 @@ msgstr "Tábla &ionchurtha:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Leathnaigh chun ríomhbhraille i gcomhair an fhocail ag an gcúrsóir"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "taispeáin an cúrsóir"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Ráta caochta an chursóra (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Cruth an chúrsóra"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7554,9 +7335,9 @@ msgstr "Leibhéal"
 msgid "Preserve"
 msgstr "caomhnaigh"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
-msgstr "Athraigh siombail"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
+msgstr "Athraigh an siombail roghnaithe"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -7564,7 +7345,7 @@ msgstr "&Leibhéal"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr ""
+msgstr "Seol an siombail go dtí an sintéiseoir."
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7587,8 +7368,9 @@ msgstr "&Scag de réir:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
-msgstr ""
+msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
@@ -7607,7 +7389,7 @@ msgstr "scoir ó matamaitic"
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr ""
+msgstr "Ní féidir idirghníomhú le matamaitic"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -7627,10 +7409,12 @@ msgid "word"
 msgstr "focal"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
-msgstr ""
+msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "ag {x}, {y}"
 
@@ -7647,11 +7431,11 @@ msgid "Refreshes the document content"
 msgstr "Athnuaigh ábhar na cáipéise"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
+msgid "Use screen layout on"
 msgstr "úsáid leagan amach scáileáin  ar siúl "
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
+msgid "Use screen layout off"
 msgstr "Leagan amach scáileáin stoptha"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -7688,8 +7472,9 @@ msgid "Taskbar"
 msgstr "Tascbharra"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
-msgstr ""
+msgstr "RGB dearg {rgb.red}, uaine {rgb.green}, gorm {rgb.blue}"
 
 #, python-format
 msgid "%s items"
@@ -7701,41 +7486,161 @@ msgstr "gair"
 msgid "Desktop"
 msgstr "Deasc"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
+#. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
 msgstr "dath réamhshocraithe"
 
-#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
-msgid "This cell is non-editable"
-msgstr "Ní féidir eagarthóireacht a dhéanamh ar an gcill seo."
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "dath anaithnid"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+msgid "automatic"
+msgstr "Uathoibríoch"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "diagonal crosshatch"
+msgstr "tras-haitseáil thrasnánach "
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "thin diagonal crosshatch"
+msgstr "tras-haitseáil thanaí thrasnánach"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "reverse diagonal stripe"
+msgstr "Stríoc thrasnánach aisiompaithe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 12.5% gray
+#, no-python-format
+msgid "12.5% gray"
+msgstr "liath 12.5%"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+#, no-python-format
+msgid "25% gray"
+msgstr "liath 25%"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+#, no-python-format
+msgid "50% gray"
+msgstr "liath 50%"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+#, no-python-format
+msgid "75% gray"
+msgstr "liath 75%"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 6.25% gray
+#, no-python-format
+msgid "6.25% gray"
+msgstr "liath 6.25%"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "thin horizontal crosshatch"
+msgstr "tras-haitseáil thanaí chothrománach "
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+msgid "horizontal stripe"
+msgstr "Stríoc chothrománach"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "thin reverse diagonal stripe"
+msgstr "Stríoc thrasnánach thanaí aisiompaithe"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+msgid "thin horizontal stripe"
+msgstr "Stríoc chothrománach thanaí"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "thin diagonal stripe"
+msgstr "Stríoc thrasnánach thanaí"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+msgid "thin vertical stripe"
+msgstr "Stríoc ingearach thanaí"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+msgid "none"
+msgstr "dada"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "thick diagonal crosshatch"
+msgstr "tras-haitseáil thiubh chothrománach "
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr "lándaite"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "diagonal stripe"
+msgstr "Stríoc thrasnánach"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+msgid "vertical stripe"
+msgstr "Stríoc ingearach"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "linear gradient"
+msgstr "Gradán líneach"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr "gradán dronuilleogach "
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Tuairiscítear ar eilimintí sa scarbhileog seo "
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
-msgid "&Chart"
-msgstr "cairt"
+msgid "&Charts"
+msgstr "cairtí"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
-msgid "C&omment"
-msgstr "Nóta"
+msgid "C&omments"
+msgstr "Nótaí tráchta"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
-msgid "&Formula"
-msgstr "foirmle ann"
+msgid "Fo&rmulas"
+msgstr "foirmlí"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr ""
+msgid "&Form fields"
+msgstr "réimsí foirme"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheets"
+msgstr "bileoga"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "ó {start} go dtí {end}"
 
@@ -7751,18 +7656,22 @@ msgstr ""
 "sa socruithe fhormáidithe na cáipéisí."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Socraigh {address} mar thús ceanntásc cholúin"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Tá {address} socraithe cheana mar thús ceanntásc cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+#, python-brace-format
+msgid "Removed {address}    from column headers"
 msgstr "Tá {address} bainnte ó cheanntásca cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Ní féidir {address} a aimsiú i gceanntásca cholúin."
 
@@ -7773,18 +7682,22 @@ msgid ""
 msgstr "f"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Socraigh {address} mar thús ceanntásc ró."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Tá {address} socraithe cheana mar thús ceanntásc ró."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+#, python-brace-format
+msgid "Removed {address}    from row headers"
 msgstr "Tá {address} bainnte ó cheanntásca ró."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Ní féidir {address} a aimsiú i gceanntásca ró."
 
@@ -7798,11 +7711,13 @@ msgstr ""
 "dhó í chun dearmad a dhéanamh ar an gceanntásc róreatha i gcomhair na cille "
 "seo."
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
-msgstr ""
+msgstr "Is í  {title}: {message} an teachtaireacht ionchuir"
 
+#, python-brace-format
 msgid "Input Message is {message}"
-msgstr ""
+msgstr "Is í {message} an teachtaireacht ionchuir. "
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -7813,303 +7728,299 @@ msgid "Reports the comment on the current cell"
 msgstr "Léigh an nóta tráchta ar an gcill reatha"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "ag eagairtheoracht an nóta tráchta ar chill {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} trí {lastAddress} {lastContent}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
-msgstr ""
+msgstr "achar tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr ""
+msgstr "achar tríphlánach cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
-msgstr ""
+msgstr "colún cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
-msgstr ""
+msgstr "barra braislithe 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr ""
+msgstr "barra cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr ""
+msgstr "barra tríphlánach, cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "3D Column"
-msgstr "colún"
+msgstr "colún tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
-msgstr ""
+msgstr "colún braislithe 100%  "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr ""
+msgstr "colún tríphlánach, cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr ""
+msgstr "colún tríphlánach, cruachta  100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr ""
+msgstr "line tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr ""
+msgstr "pióg tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
-msgstr ""
+msgstr "Pióg scartha tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
-msgstr ""
+msgstr "achar"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
-msgstr ""
+msgstr "achar cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
-msgstr ""
+msgstr "barra braislithe"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Bar of Pie"
-msgstr "roghchlár inscoite"
+msgstr "barra pióige"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr ""
+msgstr "barra cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr ""
+msgstr "barra cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
-msgstr ""
+msgstr "bolgán"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
-msgstr ""
+msgstr "Boilgeog thríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
-msgstr ""
+msgstr "colún braislithe"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Stacked Column"
-msgstr "colún"
+msgstr "colún cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr ""
+msgstr "colún cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
-msgstr ""
+msgstr "corpchón braislithe"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
-msgstr ""
+msgstr "corpchón cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
-msgstr ""
+msgstr "corpchón cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr ""
+msgstr "colún corpchóin tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-#, fuzzy
 msgid "Clustered Cone Column"
-msgstr "Culún ceanntáisc an ró glanta"
+msgstr "Colún corpchóin braislithe "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
-msgstr ""
+msgstr "colún corpchóin cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
-msgstr ""
+msgstr "colún corpchóin cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
-msgstr ""
+msgstr "barra sorcóra braislithe"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
-msgstr ""
+msgstr "barra sorcóra cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
-msgstr ""
+msgstr "barra sorcóra  cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr ""
+msgstr "colún sorcóra tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
-msgstr ""
+msgstr "colún sorcóra cruachta 100% "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
-msgstr ""
+msgstr "taoschnó"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
-msgstr ""
+msgstr "Taoschnó scartha"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr ""
+msgstr "líne"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
-msgstr ""
+msgstr "line le marcóirí"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
-msgstr ""
+msgstr "líne cruachta le marcóirí"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr ""
+msgstr "líne cruachta 100% le marcóirí"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
-msgstr ""
+msgstr "line cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr ""
+msgstr "líne cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Pie"
-msgstr "Próifíl"
+msgstr "pióg"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
-msgstr ""
+msgstr "Pióg scartha"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
-msgstr ""
+msgstr "Pióg pióige"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
-msgstr ""
+msgstr "barra pirimide braislithe"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
-msgstr ""
+msgstr "barra pirimide cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
-msgstr ""
+msgstr "barra pirimide cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
-msgstr ""
+msgstr "colún pirimide tríphlánach "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-#, fuzzy
 msgid "Clustered Pyramid Column"
-msgstr "Culún ceanntáisc an ró glanta"
+msgstr "Colún pirimide braislithe"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
-msgstr ""
+msgstr "colún pirimide cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
-msgstr ""
+msgstr "colún pirimide cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar"
-msgstr ""
+msgstr "Radar"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
-msgstr ""
+msgstr "Radar lánaithe"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
-msgstr ""
+msgstr "Radar agus marcóirí sonraí ann."
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8134,63 +8045,62 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
-msgstr ""
+msgstr "dromchla tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
-msgstr ""
+msgstr "dromchla"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
-msgstr ""
+msgstr "Dromchla fráma Y"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr ""
+msgstr "Dromchla tríphlánach, fráma Y"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Scatter"
-msgstr "Patrún"
+msgstr "Scaipeadh"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines"
-msgstr ""
+msgstr "Scaipeadh agus línte ann"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
-msgstr ""
+msgstr "Scaipeadh agus línte ann, gan marcéirí sonraí"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
-msgstr ""
+msgstr "Scaipeadh agus línte smúdáilte ann "
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr ""
+msgstr "Scaipeadh agus línte smúdáilte ann, gan marcéirí sonraí "
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Teideal an chárta  {chartTitle} saghas {chartType}"
 
 #. Translators: Reported when there is no title for an axis in a chart.
-#, fuzzy
 msgid "Not defined"
-msgstr "gan líne faoi"
+msgstr "nil sé sainmhínithe"
 
 #. Translators: A type of axis in a chart.
 #. Translators: The category axis in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Category"
-msgstr ""
+msgstr "catagóir"
 
 #. Translators: A type of axis in a chart.
 #. Translators: The value axis in a Microsoft Excel chart.
@@ -8206,8 +8116,9 @@ msgstr "Srath"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
-msgstr ""
+msgstr "Is í  {axisTitle} ais  {axisName}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
@@ -8219,39 +8130,38 @@ msgid "There are total %d series in this chart"
 msgstr "Tá %d srath in iomlán sa chárta seo. "
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "srath {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
-msgstr ""
+msgstr "nil aon srath sainmhínithe ann"
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
-msgstr ""
+msgstr "slisín"
 
 #. Translators: A column in a column chart.
-#, fuzzy
 msgctxt "chart"
 msgid "column"
 msgstr "colún"
 
 #. Translators: A data point in a line chart.
-#, fuzzy
 msgid "data point"
-msgstr "Mír sonraíochtaí"
+msgstr "pointe sonraí"
 
 #. Translators: A segment of a chart for charts which don't have a specific name for segments.
 msgid "item"
 msgstr "mír"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Dath an sratha:  {colorName}"
 
 #. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
 msgid "Display Unit Label"
-msgstr "réimse taispeána"
+msgstr "Taispeáin lipéad an aonaid"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
@@ -8267,17 +8177,15 @@ msgstr ""
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
-msgstr ""
+msgstr "Réimse cairte maighdeogach"
 
 #. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
 msgid "Down Bars"
-msgstr "saighead síos"
+msgstr "Barraí thíos"
 
 #. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
 msgid "Drop Lines"
-msgstr "liosta anuas"
+msgstr "Línte anuas"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
@@ -8285,7 +8193,7 @@ msgstr ""
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
-msgstr ""
+msgstr "Lipéid aise radar"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Series Lines"
@@ -8293,16 +8201,15 @@ msgstr "línte sratha"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
-msgstr ""
+msgstr "Barraí thuas"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
 msgstr "cúinní"
 
 #. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
 msgid "Data Table"
-msgstr "tábla"
+msgstr "tábla sonraí"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Floor"
@@ -8321,17 +8228,16 @@ msgid "Data Label"
 msgstr "lipéad dháta"
 
 #. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
 msgid "Error Bars"
-msgstr "Earráid"
+msgstr "barraí Earráide"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "X Error Bars"
-msgstr ""
+msgstr "Barraí earáide X"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Y Error Bars"
-msgstr ""
+msgstr "Barraí earáide Y"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Shape"
@@ -8339,86 +8245,98 @@ msgstr "cruth"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr " Srath {seriesName}  {seriesIndex} as {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr ""
+msgstr "Níl aon athrú on bpointe  {previousIndex}"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr ""
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr ""
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr ""
+msgstr "catagóir {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "Luach {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
+msgstr " Codán {fractionValue:.2f}  {pointIndex} faoin gcéad de   {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr ""
+msgstr " {segmentType} {pointIndex} de {pointCount}"
 
 #. Translators: The primary axis group in a Microsoft Excel chart.
-#, fuzzy
 msgid "Primary"
-msgstr "Príomh-bhuntásc"
+msgstr "Príomh"
 
 #. Translators: The secondary axis group in a Microsoft Excel chart.
 msgid "Secondary"
 msgstr ""
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
+"Ais cairte, cinneál: {axisType}, grúpa: {axisGroup}, Teideal: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr ""
+msgstr "Ais cairte, cinneál: {axisType}, grúpa: {axisGroup}"
 
 #. Translators: Indicates a chart axis title in Microsoft Excel.
 msgid "Chart axis title"
-msgstr ""
+msgstr "Teideal ais cairte"
 
 #. Translators: Indicates a trendline in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, fuzzy
 msgid "trendline"
-msgstr "líne faoi"
+msgstr "line treochta "
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
 msgid " squared "
-msgstr ""
+msgstr "cearnaithe "
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Teideal an chárta  {chartTitle}"
 
@@ -8427,45 +8345,52 @@ msgid "Untitled chart"
 msgstr "cárta gan teideal"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
+"Achar cairte, airde: {chartAreaHeight}, leithead: {chartAreaWidth}, Barr: "
+"{chartAreaTop}, Clé: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
-#, fuzzy
 msgid "Chart area "
-msgstr "Tús an téacs roghnaithe"
+msgstr "achar cairte"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
 "{plotAreaInsideLeft:.0f}"
 msgstr ""
+"Airde achar breacaidh: {plotAreaInsideHeight:.0f}, leithead : "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
-#, fuzzy
 msgid "Plot area "
-msgstr "Tús an téacs roghnaithe"
+msgstr "Achar breacaidh"
 
 #. Translators: Indicates the legend in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend"
-msgstr ""
+msgstr "eochair eolais"
 
 #. Translators: Indicates that there is no legend in a Microsoft Excel chart.
 msgid "No legend"
-msgstr ""
+msgstr "nil aon eochair eolais ann."
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 
@@ -8567,28 +8492,58 @@ msgstr "Príomh-cheanntásc"
 msgid "Text frame"
 msgstr "Fráma téacs"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "nóta tráchta: {text} le {author} ar {date}"
 
-#, fuzzy
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} le {author} ar {date}"
+msgstr "{revisionType}: {description}:  {text} le {author} ar {date}"
 
-#, python-format
-msgid "%g characters"
-msgstr "carachtair %g"
+#. Translators: single line spacing
+msgctxt "line spacing value"
+msgid "single"
+msgstr "singil"
 
-#. Translators: the value in points for a paragraph indenting
+#. Translators: double line spacing
+msgctxt "line spacing value"
+msgid "double"
+msgstr "dúbalta"
+
+#. Translators:  line spacing of 1.5 lines
+msgctxt "line spacing value"
+msgid "1.5 lines"
+msgstr "1.5 línte"
+
+#. Translators: exact (minimum) line spacing
+msgctxt "line spacing value"
+msgid "exact"
+msgstr "Beacht"
+
+#. Translators: line spacing of at least x point
 #, python-format
-msgid "%g pt"
-msgstr ""
+msgctxt "line spacing value"
+msgid "at least %.1f pt"
+msgstr "%.1f pt ar a laghad"
+
+#. Translators: line spacing of x lines
+#, python-format
+msgctxt "line spacing value"
+msgid "%.1f lines"
+msgstr "%.1f línte "
+
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+msgid "Table description"
+msgstr "cur síos ar an tábla"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Socraigh ró {rowNumber} cholúin {columnNumber} mar thús ceanntásc cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8596,10 +8551,12 @@ msgstr ""
 "cheanntásca colúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Tá  ró {rowNumber} colún {columnNumber} bainnte ó cheanntásca cholúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Ní féidir  ró {rowNumber} cholúin {columnNumber} a aimsiú i gceanntásca "
@@ -8616,10 +8573,12 @@ msgstr ""
 "na ciille seo."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "Socraigh ró {rowNumber} colún {columnNumber} mar thús ceanntásc ró."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8627,10 +8586,12 @@ msgstr ""
 "ró."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Tá  ró {rowNumber} colún {columnNumber} bainnte ó cheanntásca ró."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Ní féidir  ró {rowNumber} colún {columnNumber} a aimsiú i  gceanntásca ró."
@@ -8684,54 +8645,101 @@ msgstr "Ailínithe ar dheis"
 msgid "Justified"
 msgstr "ailínithe go comhfhadaithe"
 
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Superscript"
+msgstr "forscript"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Subscript"
+msgstr "foscript"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Baseline"
+msgstr "bunlíne"
+
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr "Bogtha faoi %s"
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+msgid "Moved below blank paragraph"
+msgstr "Bogtha faoi paragraph bán"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr "Bogtha thar %s"
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+msgid "Moved above blank paragraph"
+msgstr "Bogtha thar paragraph bán"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "stíl {styleName},  leibhéal imlíneach {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "clófhoireann {size:g} pointe"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "carachtair {offset:.3g} "
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} orlach"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} ceintiméadar"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milliméadar"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pointe"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
-msgstr ""
+msgstr "{offset:.3g} picas"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
+msgid "No comments"
 msgstr "Gan nóta tráchta."
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "tuairiscítear   nóta tráchta an áit ina bhfuil an carait suite."
 
+#. Translators: a message when switching to single line spacing  in Microsoft word
+msgid "Single line spacing"
+msgstr "spásáil línte singilte"
+
+#. Translators: a message when switching to double line spacing  in Microsoft word
+msgid "Double line spacing"
+msgstr "spásáil línte dúbalta"
+
+#. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
+msgid "1.5 line spacing"
+msgstr "spásáil línte 1.5"
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "As tábla"
-
-msgid "Edge of table"
-msgstr "Imeall an tábla"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8739,198 +8747,9 @@ msgid "&Annotations"
 msgstr "&Anótáil"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "Sraith HIMS Braille Sense/Braille EDGE"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "selecting %s"
-#~ msgstr "%s á roghnú"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s á dhíroghnú"
-
-#~ msgid "unrevised"
-#~ msgstr "gan athbhreithniú"
-
-#~ msgid "unknown author"
-#~ msgstr "údar anaithnid"
-
-#~ msgid "unknown date"
-#~ msgstr "dáta anaithnid"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} le {revisionAuthor} ar {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "léigh an réad i bhfócas"
-
-#, fuzzy
-#~ msgid "%s"
-#~ msgstr "c%s"
-
-#~ msgid "none"
-#~ msgstr "dada"
-
-#~ msgid "equation"
-#~ msgstr "cothromóid"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Taispeáin liosta nascanna, ceanntásc, nó sainchomharthaí"
-
-#~ msgid "Slovak"
-#~ msgstr "Slóvaicis"
-
-#~ msgid "grey"
-#~ msgstr "liath"
-
-#~ msgid "navy blue"
-#~ msgstr "dúghorm"
-
-#~ msgid "red"
-#~ msgstr "dearg"
-
-#~ msgid "blue"
-#~ msgstr "gorm"
-
-#~ msgid "teal"
-#~ msgstr "téalghorm"
-
-#~ msgid "aqua"
-#~ msgstr "gormghlas"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "In NVDA 2013.1, tá leagan amach méarchláir an ríomhaire glúine tar éis a "
-#~ "bheith athdhearfa go huile chun bheith níos iomasaí agus níos "
-#~ "comhsheasmhaí.\n"
-#~ "Má úsáideann tú leagan amach an ríomhaire glúine, féach ar an gcáipéis "
-#~ "What’s New i gcomhair breis eolais."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Leagan amach nua ar mhéarchlár ríomhaire glúine"
-
-#~ msgid "Read What's New"
-#~ msgstr "Gnéithe Nua"
-
-#~ msgid "&Acceleration"
-#~ msgstr "Lu&asghéarú"
-
-#~ msgid "male 1"
-#~ msgstr "fear 1"
-
-#~ msgid "female 1"
-#~ msgstr "bean 1"
-
-#~ msgid "male 2"
-#~ msgstr "fear 2"
-
-#~ msgid "female 2"
-#~ msgstr "bean 2"
-
-#~ msgid "lime"
-#~ msgstr "líoma"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "An bhfuil tú cinnte gur mian leat scor ó NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Tabhair rabhadh sula ndúntar NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "SlonnIonad"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Gan eolas maidir le suíomh an réada nascleantóra"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Ní féidir eolas faoi shuíomh a fháil ón scáileán"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Tabhair tuairisc ar airde, leithead, agus ionad an réada nascleantóra"
-
-#~ msgid "Set column header row"
-#~ msgstr "Socraigh ró an cheanntásc colúin"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Ró an cheanntásc colúin glanta"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Socróidh brú amháin ró na linne mar an ró ab fhearr do na ceanntásca "
-#~ "colúin aimsithe ann.  Glanann brú faoi dhó an socrú."
-
-#~ msgid "Set row header column"
-#~ msgstr "Socraigh colún ceanntáisc an ró"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Socróidh brú amháin  colún na linne mar an gcolún ab fhearr do na "
-#~ "ceanntása na rónna a bheith aimsithe ann.Glanann brú faoi dhó an socrú."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "líne tríd"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Tá earráidí i do chomhad cumraíochta. \n"
-#~ "Brúigh OK chun na hearráidí seo a cheartú, nó brúigh “Cealaigh” má "
-#~ "theastaíonn uait an chomhad “config” a eagrú de láimh níos déanaí chun "
-#~ "cheartúcháin a dhéanamh.  Tá breis eolais ar na hearráidí le fáil sa "
-#~ "logchomhad.Tá earráidí i do chomhad cumraíochta.\n"
-#~ "Brúigh OK chun na hearráidí seo a cheartú, nó brúigh “Cealaigh” má "
-#~ "theastaíonn uait an chomhad “config” a eagrú de láimh níos déanaí chun "
-#~ "cheartúcháin a dhéanamh. Tá breis eolais ar na hearráidí le fáil sa "
-#~ "logchomhad.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Gan nótaí tráchta uathoibríocha."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Níorbh fhéidir fuinneog na nótaí uathoibríocha a aimsiú."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Léigh aon nótaí tráchta i bhfuinneog na nótaí uathoibríocha"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Nótaí tráchta uathoibríocha:"
-
-#~ msgid "Translation:"
-#~ msgstr "Aistriúchán:"
-
-#~ msgid "Comments:"
-#~ msgstr "Nótaí tráchta:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Níl aon athbhreithniú cothrom don réad seo"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Níl oibiacht ag an suíomh athbhreithnithe sin."
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Bogtar oibiacht an nascleantóra chuig an oibiacht atá ciallaithe sa "
-#~ "teéacs ag suíomh an chúrsóra athbhreithnithe atá istigh in san "
-#~ "athbhreithniú."
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Dún an dialóg chumraíochta NVDA eile ar dtús"

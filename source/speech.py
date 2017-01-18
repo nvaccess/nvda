@@ -257,8 +257,6 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 		if args: buf.append(args)
 
 def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allowedProperties):
-	if speechMode==speechMode_off:
-		return
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
@@ -408,21 +406,31 @@ def splitTextIndentation(text):
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
 RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
-def getIndentationSpeech(indentation):
+IDT_BASE_FREQUENCY = 220 #One octave below middle A.
+IDT_TONE_DURATION = 80 #Milleseconds
+IDT_MAX_SPACES = 72
+def getIndentationSpeech(indentation, formatConfig):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
-	@type indentation: basestring
+	@type indentation: unicode
+	@param formatConfig: The configuration to use.
+	@type formatConfig: dict
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
-	# Translators: no indent is spoken when the user moves from a line that has indentation, to one that 
-	# does not.
+	speechIndentConfig = formatConfig["reportLineIndentation"]
+	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
 	if not indentation:
+		if toneIndentConfig:
+			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
 		# Translators: This is spoken when the given line has no indentation.
-		return _("no indent")
+		return (_("no indent") if speechIndentConfig else "")
 
+	#The non-breaking space is semantically a space, so we replace it here.
+	indentation = indentation.replace(u"\xa0", u" ")
 	res = []
 	locale=languageHandler.getLanguage()
+	quarterTones = 0
 	for m in RE_INDENTATION_CONVERT.finditer(indentation):
 		raw = m.group()
 		symbol = characterProcessing.processSpeechSymbol(locale, raw[0])
@@ -434,8 +442,18 @@ def getIndentationSpeech(indentation):
 			res.append(symbol)
 		else:
 			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
+		quarterTones += (count*4 if raw[0]== "\t" else count)
 
-	return " ".join(res)
+	speak = speechIndentConfig
+	if toneIndentConfig: 
+		if quarterTones <= IDT_MAX_SPACES:
+			#Remove me during speech refactor.
+			pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
+			tones.beep(pitch, IDT_TONE_DURATION)
+		else: 
+			#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
+			speak = True
+	return (" ".join(res) if speak else "")
 
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
@@ -664,7 +682,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	if extraDetail:
 		formatConfig=formatConfig.copy()
 		formatConfig['extraDetail']=True
-	reportIndentation=unit==textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]
+	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
 
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
@@ -767,7 +785,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
-	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail,initialFormat=True)
 	if text:
 		speechSequence.append(text)
 	if autoLanguageSwitching:
@@ -825,7 +843,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				if commonFieldCount>len(newControlFieldStack):
 					commonFieldCount=len(newControlFieldStack)
 			elif command.command=="formatChange":
-				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail)
 				if fieldText:
 					inTextChunk=False
 				if autoLanguageSwitching:
@@ -846,7 +864,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
 	if reportIndentation and speakTextInfoState and allIndentation!=speakTextInfoState.indentationCache:
-		indentationSpeech=getIndentationSpeech(allIndentation)
+		indentationSpeech=getIndentationSpeech(allIndentation, formatConfig)
 		if autoLanguageSwitching and speechSequence[-1].lang is not None:
 			# Indentation must be spoken in the default language,
 			# but the initial format field specified a different language.
@@ -944,23 +962,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
 		textList.append(propertyValues['keyboardShortcut'])
-	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
-	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
-	if 0<indexInGroup<=similarItemsInGroup:
-		# Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-		# {number} is replaced with the number of the item in the group.
-		# {total} is replaced with the total number of items in the group.
-		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
-	if 'positionInfo_level' in propertyValues:
-		level=propertyValues.get('positionInfo_level',None)
-		role=propertyValues.get('role',None)
-		if level is not None:
-			if role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM) and level!=oldTreeLevel:
-				textList.insert(0,_("level %s")%level)
-				oldTreeLevel=level
-			else:
-				# Translators: Speaks the item level in treeviews (example output: level 2).
-				textList.append(_('level %s')%propertyValues['positionInfo_level'])
+	if includeTableCellCoords and cellCoordsText:
+		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
@@ -984,8 +987,6 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 				# Translators: Speaks current column number (example output: column 3).
 				textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
-	if includeTableCellCoords and cellCoordsText:
-		textList.append(cellCoordsText)
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
@@ -1000,6 +1001,23 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
+	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
+	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
+	if 0<indexInGroup<=similarItemsInGroup:
+		# Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+		# {number} is replaced with the number of the item in the group.
+		# {total} is replaced with the total number of items in the group.
+		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
+	if 'positionInfo_level' in propertyValues:
+		level=propertyValues.get('positionInfo_level',None)
+		role=propertyValues.get('role',None)
+		if level is not None:
+			if role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM) and level!=oldTreeLevel:
+				textList.insert(0,_("level %s")%level)
+				oldTreeLevel=level
+			else:
+				# Translators: Speaks the item level in treeviews (example output: level 2).
+				textList.append(_('level %s')%propertyValues['positionInfo_level'])
 	return CHUNK_SEPARATOR.join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
@@ -1069,7 +1087,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return roleText+" "+_("with %s items")%childControlCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
-		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
+		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
 	elif fieldType in ("start_addedToControlFieldStack","start_relative") and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
@@ -1090,7 +1108,15 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText if x])
+		out = []
+		content = attrs.get("content")
+		if content and speakContentFirst:
+			out.append(content)
+		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText) if x)
+		if content and not speakContentFirst:
+			out.append(content)
+		return CHUNK_SEPARATOR.join(out)
+		
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
@@ -1103,7 +1129,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,unit=None,extraDetail=False , initialFormat=False, separator=CHUNK_SEPARATOR):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -1113,7 +1139,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
 		if text:
 			textList.append(text)
-	if  formatConfig["reportPage"]:
+	if formatConfig["reportPage"]:
 		pageNumber=attrs.get("page-number")
 		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
@@ -1121,10 +1147,62 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# %s will be replaced with the page number.
 			text=_("page %s")%pageNumber
 			textList.append(text)
+		sectionNumber=attrs.get("section-number")
+		oldSectionNumber=attrsCache.get("section-number") if attrsCache is not None else None
+		if sectionNumber and sectionNumber!=oldSectionNumber:
+			# Translators: Indicates the section number in a document.
+			# %s will be replaced with the section number.
+			text=_("section %s")%sectionNumber
+			textList.append(text)
+
+		textColumnCount=attrs.get("text-column-count")
+		oldTextColumnCount=attrsCache.get("text-column-count") if attrsCache is not None else None
+		textColumnNumber=attrs.get("text-column-number")
+		oldTextColumnNumber=attrsCache.get("text-column-number") if attrsCache is not None else None
+
+		# Because we do not want to report the number of columns when a document is just opened and there is only 
+		# one column. This would be verbose, in the standard case.
+		# column number has changed, or the columnCount has changed
+		# but not if the columnCount is 1 or less and there is no old columnCount.
+		if (((textColumnNumber and textColumnNumber!=oldTextColumnNumber) or
+			(textColumnCount and textColumnCount!=oldTextColumnCount)) and not
+			(textColumnCount and int(textColumnCount) <=1 and oldTextColumnCount == None)) :
+			if textColumnNumber and textColumnCount:
+				# Translators: Indicates the text column number in a document.
+				# {0} will be replaced with the text column number.
+				# {1} will be replaced with the number of text columns.
+				text=_("column {0} of {1}").format(textColumnNumber,textColumnCount)
+				textList.append(text)
+			elif textColumnCount:
+				# Translators: Indicates the text column number in a document.
+				# %s will be replaced with the number of text columns.
+				text=_("%s columns")%(textColumnCount)
+				textList.append(text)
+
+	sectionBreakType=attrs.get("section-break")
+	if sectionBreakType:
+		if sectionBreakType == "0" : # Continuous section break.
+			text=_("continuous section break")
+		elif sectionBreakType == "1" : # New column section break.
+			text=_("new column section break")
+		elif sectionBreakType == "2" : # New page section break.
+			text=_("new page section break")
+		elif sectionBreakType == "3" : # Even pages section break.
+			text=_("even pages section break")
+		elif sectionBreakType == "4" : # Odd pages section break.
+			text=_("odd pages section break")
+		else:
+			text=""
+		textList.append(text)
+	columnBreakType=attrs.get("column-break")
+	if columnBreakType:
+		textList.append(_("column break"))
 	if  formatConfig["reportHeadings"]:
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
-		if headingLevel and headingLevel!=oldHeadingLevel:
+		# headings should be spoken not only if they change, but also when beginning to speak lines or paragraphs
+		# Ensuring a similar experience to if a heading was a controlField
+		if headingLevel and (initialFormat and (reason==controlTypes.REASON_FOCUS or unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH)) or headingLevel!=oldHeadingLevel):
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text=_("heading level %d")%headingLevel
 			textList.append(text)
@@ -1161,21 +1239,36 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
-		if color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
+		backgroundColor2=attrs.get("background-color2")
+		oldBackgroundColor2=attrsCache.get("background-color2") if attrsCache is not None else None
+		bgColorChanged=backgroundColor!=oldBackgroundColor or backgroundColor2!=oldBackgroundColor2
+		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)
+		if backgroundColor2:
+			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else unicode(backgroundColor2)
+			# Translators: Reported when there are two background colors.
+			# This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+			# {color1} will be replaced with the first background color.
+			# {color2} will be replaced with the second background color.
+			bgColorText=_("{color1} to {color2}").format(color1=bgColorText,color2=bg2Name)
+		if color and backgroundColor and color!=oldColor and bgColorChanged:
 			# Translators: Reported when both the text and background colors change.
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{color} on {backgroundColor}").format(
 				color=color.name if isinstance(color,colors.RGB) else unicode(color),
-				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+				backgroundColor=bgColorText))
 		elif color and color!=oldColor:
 			# Translators: Reported when the text color changes (but not the background color).
 			# {color} will be replaced with the text color.
 			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
-		elif backgroundColor and backgroundColor!=oldBackgroundColor:
+		elif backgroundColor and bgColorChanged:
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
-			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorText))
+		backgroundPattern=attrs.get("background-pattern")
+		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
+		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
+			textList.append(_("background pattern {pattern}").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
@@ -1258,12 +1351,17 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		strikethrough=attrs.get("strikethrough")
 		oldStrikethrough=attrsCache.get("strikethrough") if attrsCache is not None else None
 		if (strikethrough or oldStrikethrough is not None) and strikethrough!=oldStrikethrough:
-			# Translators: Reported when text is formatted with strikethrough.
-			# See http://en.wikipedia.org/wiki/Strikethrough
-			text=(_("strikethrough") if strikethrough
+			if strikethrough:
+				# Translators: Reported when text is formatted with double strikethrough.
+				# See http://en.wikipedia.org/wiki/Strikethrough
+				text=(_("double strikethrough") if strikethrough=="double"
+				# Translators: Reported when text is formatted with strikethrough.
+				# See http://en.wikipedia.org/wiki/Strikethrough
+				else _("strikethrough"))
+			else:
 				# Translators: Reported when text is formatted without strikethrough.
 				# See http://en.wikipedia.org/wiki/Strikethrough
-				else _("no strikethrough"))
+				text=_("no strikethrough")
 			textList.append(text)
 		underline=attrs.get("underline")
 		oldUnderline=attrsCache.get("underline") if attrsCache is not None else None
@@ -1375,6 +1473,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text has reverted to default vertical alignment.
 				text=_("vertical align default")
 			textList.append(text)
+	if formatConfig["reportLineSpacing"]:
+		lineSpacing=attrs.get("line-spacing")
+		oldLineSpacing=attrsCache.get("line-spacing") if attrsCache is not None else None
+		if (lineSpacing or oldLineSpacing is not None) and lineSpacing!=oldLineSpacing:
+			# Translators: a type of line spacing (E.g. single line spacing)
+			textList.append(_("line spacing %s")%lineSpacing)
 	if  formatConfig["reportLinks"]:
 		link=attrs.get("link")
 		oldLink=attrsCache.get("link") if attrsCache is not None else None
@@ -1414,7 +1518,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
-	return CHUNK_SEPARATOR.join(textList)
+	return separator.join(textList)
 
 def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if tableInfo is None and oldTableInfo is None:

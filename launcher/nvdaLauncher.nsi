@@ -13,7 +13,7 @@ ReserveFile "${NSISDIR}\Plugins\banner.dll"
 ReserveFile "..\miscDeps\launcher\nvda_logo.wav"
 
 Name "NVDA"
-VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
+VIProductVersion "${VERSION_YEAR}.${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "NVDA"
 VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey "FileDescription" "NVDA launcher file"
@@ -86,21 +86,11 @@ execWait "$PLUGINSDIR\app\nvda_noUIAccess.exe $0 -r --launcher" $1
 intcmp $1 3 exec +1
 SectionEnd
 
-var hmci
 
 Function PlaySound
 ; Retrieve the file to play
 pop $9
-System::Call 'msvfw32.dll::MCIWndCreate(i 0, i 0, i 0x0070, t "$9") i .r0'
-StrCpy $hmci $0
-; Checks format support
-SendMessage $hmci 0x0490 0 0 $0
-IntCmp $0 0 nosup
-; if you want mci window to be hidden
-ShowWindow $hmci SW_HIDE
-; you can use "STR:play" or "STR:play repeat", but I saw "repeat" problems with midi files
-SendMessage $hmci 0x0465 0 "STR:play"
-;SendMessage $hmci ${WM_CLOSE} 0 0
-
-nosup:
+; The code below is derived from the code example at http://nsis.sourceforge.net/WinAPI:winmm:PlaySound
+IntOp $0 "SND_ASYNC" || 1
+System::Call 'winmm::PlaySound(t r9, i 0, i r0) b'
 FunctionEnd

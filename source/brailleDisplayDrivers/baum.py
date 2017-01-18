@@ -3,26 +3,26 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2015 NV Access Limited
+#Copyright (C) 2010-2016 NV Access Limited
 
 import time
 from collections import OrderedDict
-import wx
-import serial
+from cStringIO import StringIO
 import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import hwIo
 
 TIMEOUT = 0.2
 BAUD_RATE = 19200
-READ_INTERVAL = 50
 
 ESCAPE = "\x1b"
 
 BAUM_DISPLAY_DATA = "\x01"
 BAUM_CELL_COUNT = "\x01"
+BAUM_REQUEST_INFO = "\x02"
 BAUM_PROTOCOL_ONOFF = "\x15"
 BAUM_COMMUNICATION_CHANNEL = "\x16"
 BAUM_POWERDOWN = "\x17"
@@ -55,7 +55,7 @@ KEY_NAMES = {
 	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
 
-USB_IDS = frozenset((
+USB_IDS_SER = {
 	"VID_0403&PID_FE70", # Vario 40
 	"VID_0403&PID_FE71", # PocketVario
 	"VID_0403&PID_FE72", # SuperVario/Brailliant 40
@@ -76,7 +76,30 @@ USB_IDS = frozenset((
 	"VID_0904&PID_2015", # EcoVario 64
 	"VID_0904&PID_2016", # EcoVario 80
 	"VID_0904&PID_3000", # RefreshaBraille 18
-))
+}
+
+USB_IDS_HID = {
+	"VID_0904&PID_3001", # RefreshaBraille 18
+	"VID_0904&PID_6101", # VarioUltra 20
+	"VID_0904&PID_6103", # VarioUltra 32
+	"VID_0904&PID_6102", # VarioUltra 40
+	"VID_0904&PID_4004", # Pronto! 18 V3
+	"VID_0904&PID_4005", # Pronto! 40 V3
+	"VID_0904&PID_4007", # Pronto! 18 V4
+	"VID_0904&PID_4008", # Pronto! 40 V4
+	"VID_0904&PID_6001", # SuperVario2 40
+	"VID_0904&PID_6002", # SuperVario2 24
+	"VID_0904&PID_6003", # SuperVario2 32
+	"VID_0904&PID_6004", # SuperVario2 64
+	"VID_0904&PID_6005", # SuperVario2 80
+	"VID_0904&PID_6006", # Brailliant2 40
+	"VID_0904&PID_6007", # Brailliant2 24
+	"VID_0904&PID_6008", # Brailliant2 32
+	"VID_0904&PID_6009", # Brailliant2 64
+	"VID_0904&PID_600A", # Brailliant2 80
+	"VID_0904&PID_6201", # Vario 340
+	"VID_0483&PID_A1D3", # Orbit Reader 20
+}
 
 BLUETOOTH_NAMES = (
 	"Baum SuperVario",
@@ -88,12 +111,14 @@ BLUETOOTH_NAMES = (
 	"BrailleConnect",
 	"Pronto!",
 	"VarioUltra",
+	"Orbit Reader 20",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
 	# Translators: Names of braille displays.
-	description = _("Baum/HumanWare/APH braille displays")
+	description = _("Baum/HumanWare/APH/Orbit braille displays")
+	isThreadSafe = True
 
 	@classmethod
 	def check(cls):
@@ -115,19 +140,25 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def _getAutoPorts(cls, comPorts):
+		for portInfo in hwPortUtils.listHidDevices():
+			if portInfo.get("usbID") in USB_IDS_HID:
+				yield portInfo["devicePath"], "USB HID"
 		# Try bluetooth ports last.
 		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
 			if hwID.startswith(r"FTDIBUS\COMPORT"):
 				# USB.
-				portType = "USB"
+				portType = "USB serial"
 				try:
 					usbID = hwID.split("&", 1)[1]
 				except IndexError:
 					continue
-				if usbID not in USB_IDS:
+				if usbID not in USB_IDS_SER:
 					continue
+			elif hwID == r"USB\VID_0483&PID_5740&REV_0200":
+				# Generic STMicroelectronics Virtual COM Port used by Orbit Reader 20.
+				portType = "USB serial"
 			elif "bluetoothName" in portInfo:
 				# Bluetooth.
 				portType = "bluetooth"
@@ -150,92 +181,97 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for port, portType in tryPorts:
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
+			self.isHid = portType == "USB HID"
 			try:
-				self._ser = serial.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT)
-			except serial.SerialException:
+				if self.isHid:
+					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
+				else:
+					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+			except EnvironmentError:
 				continue
-			# If the protocol is already on, sending protocol on won't return anything.
-			# First ensure it's off.
-			self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
-			# This will cause the device id, serial number and number of cells to be returned.
-			self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
-			# Send again in case the display misses the first one.
-			self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
-			self._handleResponses(wait=True)
-			if not self.numCells or not self._deviceID:
+			if self.isHid:
+				try:
+					# It's essential to send protocol on for the Orbit Reader 20.
+					self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
+				except EnvironmentError:
+					# Pronto! and VarioUltra don't support BAUM_PROTOCOL_ONOFF.
+					pass
+				# Explicitly request device info.
+				# Even where it's supported, BAUM_PROTOCOL_ONOFF doesn't always return device info.
+				self._sendRequest(BAUM_REQUEST_INFO, 0)
+			else: # Serial
+				# If the protocol is already on, sending protocol on won't return anything.
+				# First ensure it's off.
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+				# This will cause the device id, serial number and number of cells to be returned.
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
+				# Send again in case the display misses the first one.
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
+			for i in xrange(3):
 				# An expected response hasn't arrived yet, so wait for it.
-				self._handleResponses(wait=True)
+				self._dev.waitForRead(TIMEOUT)
+				if self.numCells and self._deviceID:
+					break
 			if self.numCells:
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._deviceID, type=portType, port=port))
 				break
+			self._dev.close()
 
 		else:
 			raise RuntimeError("No Baum display found")
 
-		self._readTimer = wx.PyTimer(self._handleResponses)
-		self._readTimer.Start(READ_INTERVAL)
 		self._keysDown = {}
 		self._ignoreKeyReleases = False
 
 	def terminate(self):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
-			self._readTimer.Stop()
-			self._readTimer = None
-			self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+			try:
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+			except EnvironmentError:
+				# Some displays don't support BAUM_PROTOCOL_ONOFF.
+				pass
 		finally:
-			# We absolutely must close the Serial object, as it does not have a destructor.
-			# If we don't, we won't be able to re-open it later.
-			self._ser.close()
+			# Make sure the device gets closed.
+			# If it doesn't, we may not be able to re-open it later.
+			self._dev.close()
 
 	def _sendRequest(self, command, arg=""):
 		if isinstance(arg, (int, bool)):
 			arg = chr(arg)
-		self._ser.write("\x1b{command}{arg}".format(command=command,
-			arg=arg.replace(ESCAPE, ESCAPE * 2)))
+		if self.isHid:
+			self._dev.write(command + arg)
+		else:
+			self._dev.write("\x1b{command}{arg}".format(command=command,
+				arg=arg.replace(ESCAPE, ESCAPE * 2)))
 
-	def _handleResponses(self, wait=False):
-		while wait or self._ser.inWaiting():
-			command, arg = self._readPacket()
-			if command:
-				self._handleResponse(command, arg)
-			wait = False
-
-	def _readPacket(self):
-		# Find the escape.
-		chars = []
-		escapeFound = False
-		while True:
-			char = self._ser.read(1)
-			if char == ESCAPE:
-				escapeFound = True
-				break
-			else:
-				chars.append(char)
-			if not self._ser.inWaiting():
-				break
-		if chars:
-			log.debugWarning("Ignoring data before escape: %r" % "".join(chars))
-		if not escapeFound:
-			return None, None
-
-		command = self._ser.read(1)
+	def _onReceive(self, data):
+		if self.isHid:
+			# data contains the entire packet.
+			stream = StringIO(data)
+		else:
+			if data != ESCAPE:
+				log.debugWarning("Ignoring byte before escape: %r" % data)
+				return
+			# data only contained the escape. Read the rest from the device.
+			stream = self._dev
+		command = stream.read(1)
 		length = BAUM_RSP_LENGTHS.get(command, 0)
 		if command == BAUM_ROUTING_KEYS:
 			length = 10 if self.numCells > 40 else 5
-		arg = self._ser.read(length)
-		return command, arg
+		arg = stream.read(length)
+		if command == BAUM_DEVICE_ID and arg == "Refreshabraille ":
+			# For most Baum devices, the argument is 16 bytes,
+			# but it is 18 bytes for the Refreshabraille.
+			arg += stream.read(2)
+		self._handleResponse(command, arg)
 
 	def _handleResponse(self, command, arg):
 		if command == BAUM_CELL_COUNT:
 			self.numCells = ord(arg)
 		elif command == BAUM_DEVICE_ID:
-			if arg == "Refreshabraille ":
-				# For most Baum devices, the argument is 16 bytes,
-				# but it is 18 bytes for the Refreshabraille.
-				arg += self._ser.read(2)
 			# Short ids can be padded with either nulls or spaces.
 			self._deviceID = arg.rstrip("\0 ")
 		elif command in KEY_NAMES:

@@ -5,15 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-10663,552b45f\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-09-30 12:11+0530\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-12-28 20:43-0800\n"
+"Last-Translator: siddalingeshwar ingalagi <ingalagisiddu@gmail.com>\n"
 "Language-Team: Kannada <ingalagisiddu@gmail.com>\n"
 "Language: kn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -124,6 +125,21 @@ msgstr "ನಮೂನೆ"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "ಪ್ರದೇಶ"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "No ducking"
+msgstr "ಮುಳುಗು ಇಲ್ಲ"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "ಡಕ್ ಮಾಡಿದಾಗ ಭಾಷಣ ಮತ್ತು ಶಬ್ದಗಳ ಉತ್ಪಾದಿಸುವ"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Guide for details.
+msgid "Always duck"
+msgstr "ಯಾವಾಗಲೂ ಡಕ್"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -312,6 +328,12 @@ msgstr "ಗುಜರಾತಿ ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Koine Greek"
+msgstr "ಲೈಮ್ ಹಸಿರು"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece) grade 1"
 msgstr "ಗ್ರೀಕ್ (ಗ್ರೀಸ್) ದರ್ಜೆ 1"
 
@@ -402,17 +424,24 @@ msgstr "ಮಣಿಪುರಿ ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "ಮಂಗೋಲಿಯನ್"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "ಮರಾಠಿ ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
+#, fuzzy
+msgid "Dutch (Belgium)"
 msgstr "ಡಚ್ (ಬೆಲ್ಜಿಯಂ) ದರ್ಜೆ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
+#, fuzzy
+msgid "Dutch (Netherlands)"
 msgstr "ಡಚ್ ನೆದರ್ಲ್ಯಾಂಡ್ ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -449,6 +478,12 @@ msgstr "ನೇಪಾಳಿ ವರ್ಗ 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "ಒರಿಯ ವರ್ಗ 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Polish 8 dot computer braille"
+msgstr "ಸ್ಪ್ಯಾನಿಷ್ 8 ಡಾಟ್ ಕಂಪ್ಯೂಟರ್ ಬ್ರೈಲ್"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -517,7 +552,8 @@ msgstr "ತಮಿಳು ದರ್ಜೆ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+#, fuzzy
+msgid "Telugu grade 1"
 msgstr "ತೆಲುಗು ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -655,6 +691,18 @@ msgstr "ಒತ್ತಿ"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "ಚುಕ್ಕೆಗಳು 7 ಮತ್ತು 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr ""
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "ಎಲ್ಲಾ ಚುಕ್ಕೆಗಳು"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -727,11 +775,13 @@ msgstr "ಪೂರ್ಣವಿರಾಮ"
 msgid "space"
 msgstr "ಜಾಗ"
 
-msgid "focus mode"
+#, fuzzy
+msgid "Focus mode"
 msgstr "ಗಮನಿತ ಸ್ಥಿತಿ"
 
-msgid "browse mode"
-msgstr "ಹುಡುಕಾಟದ ಸ್ಥಿತಿ"
+#. Translators: The name of a category of NVDA commands.
+msgid "Browse mode"
+msgstr "ಹುಡುಕಾಟದ ವಿಧಾನ"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -761,7 +811,8 @@ msgid "Lists various types of elements in this document"
 msgstr "ಈ ಧಾಕಲೆಯಲ್ಲಿ ಪಟ್ಟಿಯ ರೂಪದಲ್ಲಿ ಬಹುವಿಧವಾದ  ಅಂಶಗಳನ್ನು  ತೋರುತ್ತದೆ"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-msgid "activates the current object in the document"
+#, fuzzy
+msgid "Activates the current object in the document"
 msgstr "ಪ್ರಸ್ತುತ ವಸ್ತುವನ್ನು ದಸ್ತಾವೇಜಿನಲ್ಲಿ ಸಕ್ರಿಯಗೊಳಿಸುತ್ತದೆ"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
@@ -1198,16 +1249,22 @@ msgstr "ಹಿಂದಕ್ಕಿಲ್ಲ ಟಿಪ್ಪಣಿ "
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "ಕೊಂ&ಡಿ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&ಷಿರೋನಾಮೆಗಳು"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "ಹೆಗ್ಗು&ರುತು"
 
@@ -1265,7 +1322,9 @@ msgstr "ಪ್ರಾರಂಭದ ಧಾರಕ ಅಂಶಕ್ಕೆ ಚಲಿಸ
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
+#. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+#, fuzzy
+msgid "Bottom"
 msgstr "ಸಂಪೂರ್ಣ ಕೆಳಗೆ"
 
 #. Translators: Description for the Move past end of container command in browse mode.
@@ -1297,709 +1356,233 @@ msgctxt "symbolLevel"
 msgid "character"
 msgstr "ಅಕ್ಷರ"
 
-#. Translators: Reported when text is written in unknown color.
-msgid "unknown color"
-msgstr "ಅಪರಿಚಿತ ಬಣ್ಣ"
-
-#. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Alice Blue"
-msgstr "Alice ನೀಲಿ"
-
-#. Translators: the color Antique White (RGB 250, 235, 215) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Antique White"
-msgstr "ಪ್ರಾಚೀನವಾದ ಬಿಳಿ"
-
-#. Translators: the color Aqua (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aqua"
-msgstr "ನೀರು"
-
-#. Translators: the color Aquamarine (RGB 127, 255, 212) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Aquamarine"
-msgstr "ಸಮುದ್ರ ನೀರು"
-
-#. Translators: the color Azure (RGB 240, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Azure"
-msgstr "ಆಕಾಶನೀಲ"
-
-#. Translators: the color Beige (RGB 245, 245, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Beige"
-msgstr "ಬೀಝ್"
-
-#. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Bisque"
-msgstr "ಬಿಸ್ಕ್"
-
-#. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Black"
-msgstr "ಕಪ್ಪು"
-
-#. Translators: the color Blanched Almond (RGB 255, 235, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blanched Almond"
-msgstr "ಬೆಳ್ಳನೆಯ ಬದಾಮು"
-
-#. Translators: the color Blue (RGB 0, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue"
-msgstr "ನೀಲಿ"
-
-#. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Blue Violet"
-msgstr "ನೀಲಿ ವೈಲೆಟ್"
-
-#. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Brown"
-msgstr "ಕಂದು ಬಣ್ಣ"
-
-#. Translators: the color Burly Wood (RGB 222, 184, 135) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Burly Wood"
-msgstr "ದೊಡ್ಡಘಾತ್ರದ ಮರ"
-
-#. Translators: the color Cadet Blue (RGB 95, 158, 160) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cadet Blue"
-msgstr "ನಾವಿಕನ ನೀಲಿ"
-
-#. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chartreuse"
-msgstr "ಚಾರ್ಟ್ರ್ಯೂಸ್"
-
-#. Translators: the color Chocolate (RGB 210, 105, 30) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Chocolate"
-msgstr "ಚಾಕ್ಲೆಟ್"
-
-#. Translators: the color Coral (RGB 255, 127, 80) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Coral"
-msgstr "ಕೋರಲ್"
-
-#. Translators: the color Cornflower Blue (RGB 100, 149, 237) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornflower Blue"
-msgstr "ಜೋಳದಹೂವಿನ ನೀಲಿ"
-
-#. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cornsilk"
-msgstr "ಜೋಳದ ಱೇಶಿಮೆ"
-
-#. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Crimson"
-msgstr "ಕ್ರಿನ್ಸನ್"
-
-#. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Cyan"
-msgstr "ಸಯಾನ್"
-
-#. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Blue"
-msgstr "ಕತ್ತಲೆಯ ನೀಲಿ"
-
-#. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Cyan"
-msgstr "ಕತ್ತಲಿನ ಸಯಾನ್"
-
-#. Translators: the color Dark Goldenrod (RGB 184, 134, 11) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Goldenrod"
-msgstr "ಕತ್ತಲೆಯ ಕಬ್ಬಿಣದಚಿನ್ನ"
-
-#. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Gray"
-msgstr "ಕತ್ತಲಿನ ಬೂದು"
-
-#. Translators: the color Dark Green (RGB 0, 100, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Green"
-msgstr "ಕತ್ತಲೆಯ ಹಸಿರು"
-
-#. Translators: the color Dark Khaki (RGB 189, 183, 107) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Khaki"
-msgstr "ಕತ್ತಲಿನ ಕಾಕಿ"
-
-#. Translators: the color Dark Magenta (RGB 139, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Magenta"
-msgstr "ಕತ್ತಲಿನ ಮಜೆಂಟ"
-
-#. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Olive Green"
-msgstr "ಕಪ್ಪು ಹಸಿರಿನ ಆಲಿವ್ ವ್ೃಕ್ಷ"
-
-#. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Orange"
-msgstr "ಕತ್ತಲೆಯ ಕಿತ್ತಳೆ"
-
-#. Translators: the color Dark Orchid (RGB 153, 50, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Orchid"
-msgstr "ಕತ್ತಲಿನ ಆರ್ಕೇಡ್"
-
-#. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Red"
-msgstr "ಕತ್ತಲೆಯ ಕೆಂಪು"
-
-#. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Salmon"
-msgstr "ಕತ್ತಲಿನ ಸಲ್ಮೋನ್"
-
-#. Translators: the color Dark Sea Green (RGB 143, 188, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Sea Green"
-msgstr "ಕತ್ತಲೆಯ ಸಮುದ್ರದ ಹಸಿರು"
-
-#. Translators: the color Dark Slate Blue (RGB 72, 61, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Blue"
-msgstr "ಕಪ್ಪು ಹಲಗೆಯ ನೀಲಿ"
-
-#. Translators: the color Dark Slate Gray (RGB 47, 79, 79) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Slate Gray"
-msgstr "ಕತ್ತಲೆಯ ಹಲಗೆಯ ಬೂದು"
-
-#. Translators: the color Dark Turquoise (RGB 0, 206, 209) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Turquoise"
-msgstr "ಕತ್ತಲೆಯ ಟರ್ಕ್ವೈಸ್"
-
-#. Translators: the color Dark Violet (RGB 148, 0, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dark Violet"
-msgstr "ಕತ್ತಲೆಯ ವೈಲೆಟ್"
-
-#. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Pink"
-msgstr "ಆಳವಾದ ಗುಲಾಬಿ ಬಣ್ಣ"
-
-#. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Deep Sky Blue"
-msgstr "ಆಳವಾದ ಆಕಾಶದ ನೀಲಿ"
-
-#. Translators: the color Dim Gray (RGB 105, 105, 105) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dim Gray"
-msgstr "ಮಂದ ಬೂದು"
-
-#. Translators: the color Dodger Blue (RGB 30, 144, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Dodger Blue"
-msgstr "ಕಪ್ಪಾದ ನೀಲಿ"
-
-#. Translators: the color Fire Brick (RGB 178, 34, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fire Brick"
-msgstr "ಬೆಂಕಿಯ ಇಟ್ಟಿಗೆ"
-
-#. Translators: the color Floral White (RGB 255, 250, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Floral White"
-msgstr "ಫ್ಲೋರಲ್ ಬಿಳೀ"
-
-#. Translators: the color Forest Green (RGB 34, 139, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Forest Green"
-msgstr "ಕಾಡಿನ ಹಸಿರು"
-
-#. Translators: the color Fuchsia (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Fuchsia"
-msgstr "ಫ್ಯೂಶಿಯಾ"
-
-#. Translators: the color Gainsboro (RGB 220, 220, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gainsboro"
-msgstr "ಗೇನ್ಸ್ಬೊರೋ"
-
-#. Translators: the color Ghost White (RGB 248, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ghost White"
-msgstr "ಗೋಸ್ಟ್ ಬಿಳೀ"
-
-#. Translators: the color Gold (RGB 255, 215, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gold"
-msgstr "ಚಿನ್ನ"
-
-#. Translators: the color Goldenrod (RGB 218, 165, 32) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Goldenrod"
-msgstr "ಚಿನ್ನದ ಕಬ್ಬಿಣ"
-
-#. Translators: the color Gray (RGB 128, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Gray"
-msgstr "ಬೂದು"
-
-#. Translators: the color Green (RGB 0, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green"
-msgstr "ಹಸಿರು"
-
-#. Translators: the color Green Yellow (RGB 173, 255, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Green Yellow"
-msgstr "ಹಸಿರು ಹಳದಿ"
-
-#. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Honeydew"
-msgstr "ಜೇನಿನ ಇಬ್ಬನಿ"
-
-#. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Hot Pink"
-msgstr "ಸುಡುವ ಗುಲಾಬಿ ಬಣ್ಣ"
-
-#. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indian Red"
-msgstr "ಭಾರತೀಯ ಕೆಂಪು"
-
-#. Translators: the color Indigo (RGB 75, 0, 130) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Indigo"
-msgstr "ಇಂಡಿಗೋ"
-
-#. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Ivory"
-msgstr "ಐವರಿ"
-
-#. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Khaki"
-msgstr "ಕಾಕಿ"
-
-#. Translators: the color Lavender (RGB 230, 230, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender"
-msgstr "ಲ್ಯಾವೆಂಡರ್"
-
-#. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lavender Blush"
-msgstr "ಲ್ಯಾವೆಂಡರ್ ಬ್ಲಶ್"
-
-#. Translators: the color Lawn Green (RGB 124, 252, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lawn Green"
-msgstr "ಲಾನ್ ಹಸಿರು"
-
-#. Translators: the color Lemon Chiffon (RGB 255, 250, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lemon Chiffon"
-msgstr "ನಿಂಬೆಯ ಚಿಫ್ಫನ್"
-
-#. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Blue"
-msgstr "ಬೆಳಕಿನ ನೀಲಿ"
-
-#. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Coral"
-msgstr "ಬೆಳಕಿನ ಕೋರಲ್"
-
-#. Translators: the color Light Cyan (RGB 224, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Cyan"
-msgstr "ಬೆಳಕಿನ ಸಯಾನ್"
-
-#. Translators: the color Light Goldenrod Yellow (RGB 250, 250, 210) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Goldenrod Yellow"
-msgstr "ಬೆಳಕಿನ ಚಿನ್ನದಕಬ್ಬಿಣದ ಹಳದಿ"
-
-#. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Green"
-msgstr "ಬೆಳಕಿನ ಹಸಿರು"
-
-#. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Grey"
-msgstr "ಬೆಳಕಿನ ಗ್ರೇ"
-
-#. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Pink"
-msgstr "ಬೆಳಕಿನ ಗುಲಾಬಿ ಬಣ್ಣ"
-
-#. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Salmon"
-msgstr "ಬೆಳಕಿನ ಸಲ್ಮೋನ್"
-
-#. Translators: the color Light Sea Green (RGB 32, 178, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sea Green"
-msgstr "ಬೆಳಕಿನ ಸಮುದ್ರದ ಹಸಿರು"
-
-#. Translators: the color Light Sky Blue (RGB 135, 206, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Sky Blue"
-msgstr "ಬೆಳಕಿನ ಆಕಾಶದ ನೀಲಿ"
-
-#. Translators: the color Light Slate Gray (RGB 119, 136, 153) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Slate Gray"
-msgstr "ಬೆಳಕಿನ ಹಲಗೆಯ ಬೂದು"
-
-#. Translators: the color Light Steel Blue (RGB 176, 196, 222) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Steel Blue"
-msgstr "ಬೆಳಕಿನ ಸ್ಟೀಲ್ ನೀಲಿ"
-
-#. Translators: the color Light Yellow (RGB 255, 255, 224) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Light Yellow"
-msgstr "ಬೆಳಕಿನ ಹಳದಿ"
-
-#. Translators: the color Lime (RGB 0, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime"
-msgstr "ಲೈಮ್"
-
-#. Translators: the color Lime Green (RGB 50, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Lime Green"
-msgstr "ಲೈಮ್ ಹಸಿರು"
-
-#. Translators: the color Linen (RGB 250, 240, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Linen"
-msgstr "ಲಿನೆನ್"
-
-#. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Magenta"
-msgstr "ಮಜೆಂಟ"
-
-#. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Maroon"
-msgstr "ಮೆರೂನ್"
-
-#. Translators: the color Medium Aquamarine (RGB 102, 205, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Aquamarine"
-msgstr "ಮಧ್ಯಮ ಆಕ್ವಮೆರೀನ್"
-
-#. Translators: the color Medium Blue (RGB 0, 0, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Blue"
-msgstr "ಮಧ್ಯಮ ನೀಲಿ"
-
-#. Translators: the color Medium Orchid (RGB 186, 85, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Orchid"
-msgstr "ಮಧ್ಯಮ ಆರ್ಕೇಡ್"
-
-#. Translators: the color Medium Purple (RGB 147, 112, 219) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Purple"
-msgstr "ಮಧ್ಯಮ ನೇರಳೆಯ ಬಣ್ಣ"
-
-#. Translators: the color Medium Sea Green (RGB 60, 179, 113) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Sea Green"
-msgstr "ಮಧ್ಯಮ ಸಮುದ್ರದ ಹಸಿರು"
-
-#. Translators: the color Medium Slate Blue (RGB 123, 104, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Slate Blue"
-msgstr "ಮಧ್ಯಮ ಸ್ಲೇಟ್ ನೀಲಿ"
-
-#. Translators: the color Medium Spring Green (RGB 0, 250, 154) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Spring Green"
-msgstr "ಮಧ್ಯಮ ವಸಂತ ಹಸಿರು"
-
-#. Translators: the color Medium Turquoise (RGB 72, 209, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Turquoise"
-msgstr "ಮಧ್ಯಮ ಟರ್ಕ್ವೈಸ್"
-
-#. Translators: the color Medium Violet Red (RGB 199, 21, 133) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Medium Violet Red"
-msgstr "ಮಧ್ಯಮ ವೈಲೆಟ್ ಕೆಂಪು"
-
-#. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Midnight Blue"
-msgstr "ಮಧ್ಯರಾತ್ರಿಯ ನೀಲಿ"
-
-#. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Mint Cream"
-msgstr "ಮಿಂಟ್ ಕ್ರೀಮ್"
-
-#. Translators: the color Misty Rose (RGB 255, 228, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Misty Rose"
-msgstr "ಮಿಸ್ಟಿ ಗುಲಾಬಿ"
-
-#. Translators: the color Moccasin (RGB 255, 228, 181) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Moccasin"
-msgstr "ಮೊಕಾಸಿನ್"
-
-#. Translators: the color Navajo White (RGB 255, 222, 173) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navajo White"
-msgstr "ನವಾಜೋ ಬಿಳೀ"
-
-#. Translators: the color Navy (RGB 0, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Navy"
-msgstr "ನೌಕಾಪಡೆಯ"
-
-#. Translators: the color Old Lace (RGB 253, 245, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Old Lace"
-msgstr "ಹಳೆಯ ಜರತಾರಿ"
-
-#. Translators: the color Olive (RGB 128, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive"
-msgstr "ಆಲಿವ್"
-
-#. Translators: the color Olive Drab (RGB 107, 142, 35) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Olive Drab"
-msgstr "ಆಲಿವ್ ಮಂಕು"
-
-#. Translators: the color Orange (RGB 255, 165, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orange"
-msgstr "ಕಿತ್ತಳೆ"
-
-#. Translators: the color Orange Red (RGB 255, 69, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orange Red"
-msgstr "ಕಿತ್ತಳೆಯ ಕೆಂಪು"
-
-#. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Orchid"
-msgstr "ಆರ್ಕಿಡ್"
-
-#. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Goldenrod"
-msgstr "ಮಸುಕಾದ ಬಂಗಾರದ ಕಡ್ಡಿ"
-
-#. Translators: the color Pale Green (RGB 152, 251, 152) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Green"
-msgstr "ಮಸುಕಾದ ಹಸಿರು"
-
-#. Translators: the color Pale Turquoise (RGB 175, 238, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Turquoise"
-msgstr "ಪೇಲ್ ಟರ್ಕೊಐಸ್"
-
-#. Translators: the color Pale Violet Red (RGB 219, 112, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pale Violet Red"
-msgstr "ಮಸುಕಾದ ನೇರಳೆ ಕೆಂಪು"
-
-#. Translators: the color Papaya Whip (RGB 255, 239, 213) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Papaya Whip"
-msgstr "ಪಪ್ಪಾಯಿ ವಿಪ್"
-
-#. Translators: the color Peach Puff (RGB 255, 218, 185) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peach Puff"
-msgstr "ಪೀಚ್ ಪಫ್"
-
-#. Translators: the color Peru (RGB 205, 133, 63) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Peru"
-msgstr "ಪೆರು"
-
-#. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Pink"
-msgstr "ನಸುಗೆಂಪು"
-
-#. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Plum"
-msgstr "ನಯವಾದ ಸಿಪ್ಪೆಯ ಗಟ್ಟಿಬೀಜದ ಸಿಹಿಯಾದ ಹಳದಿ ಕೆಂಪು ಹಣ್ಣು"
-
-#. Translators: the color Powder Blue (RGB 176, 224, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Powder Blue"
-msgstr "ನೀಲಿಯಾದ ಪುಡಿ"
-
-#. Translators: the color Purple (RGB 128, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Purple"
-msgstr "ನೇರಳೆ"
-
-#. Translators: the color Red (RGB 255, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Red"
-msgstr "ಕೆಂಪು"
-
-#. Translators: the color Rosy Brown (RGB 188, 143, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Rosy Brown"
-msgstr "ಗುಲಾಬಿಯ ಕಂದು ಬಣ್ಣ"
-
-#. Translators: the color Royal Blue (RGB 65, 105, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Royal Blue"
-msgstr "ಅರಸನಿಗೆ ತಕ್ಕುದಾದ ನೀಲಿ ಬಣ್ಣ"
-
-#. Translators: the color Saddle Brown (RGB 139, 69, 19) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Saddle Brown"
-msgstr "ಸ್ಯಾಡಲ್ ಬ್ರೌನ್ ಕಂದು ಬಣ್ಣದ ಾಸನ"
-
-#. Translators: the color Salmon (RGB 250, 128, 114) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Salmon"
-msgstr "ಎಳೆಗೆಂಪ"
-
-#. Translators: the color Sandy Brown (RGB 244, 164, 96) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sandy Brown"
-msgstr "ಮಣ್ಣಿನ ಕಂದು ಬಣ್ಣ"
-
-#. Translators: the color Sea Green (RGB 46, 139, 87) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sea Green"
-msgstr "ಸಮುದ್ರದ ಹಸಿರು"
-
-#. Translators: the color Seashell (RGB 255, 245, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Seashell"
-msgstr "ಕಪ್ಪೆಚಿಪ್ಪು"
-
-#. Translators: the color Sienna (RGB 160, 82, 45) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sienna"
-msgstr "ಸಿಯೆನ್ನಾ"
-
-#. Translators: the color Silver (RGB 192, 192, 192) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Silver"
-msgstr "ಬೆಳ್ಳಿಯ ಬಣ್ಣ"
-
-#. Translators: the color Sky Blue (RGB 135, 206, 235) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Sky Blue"
-msgstr "ಆಕಾಶದ ನೀಲಿ"
-
-#. Translators: the color Slate Blue (RGB 106, 90, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Blue"
-msgstr "ನೀಲಿಯ ಬಳಪ"
-
-#. Translators: the color Slate Gray (RGB 112, 128, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Slate Gray"
-msgstr "ಬೂದು ಬಣ್ಣದ ಬಳಪ"
-
-#. Translators: the color Snow (RGB 255, 250, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Snow"
-msgstr "ಮಂಜು"
-
-#. Translators: the color Spring Green (RGB 0, 255, 127) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Spring Green"
-msgstr "ಹಸಿರು ಚಿಮ್ಮುವಿಕೆ"
-
-#. Translators: the color Steel Blue (RGB 70, 130, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Steel Blue"
-msgstr "ನೀಲಿ ತುಕ ನೀಲಿ ಸ್ಟೀಲ್"
-
-#. Translators: the color Tan (RGB 210, 180, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tan"
-msgstr "ಟಾನ್"
-
-#. Translators: the color Teal (RGB 0, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Teal"
-msgstr "ಟೀಲ್"
-
-#. Translators: the color Thistle (RGB 216, 191, 216) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Thistle"
-msgstr "ಊದಾಬಣ್ಣ ಥಿಸಲ್"
-
-#. Translators: the color Tomato (RGB 255, 99, 71) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Tomato"
-msgstr "ಟಮೇಟೊ, ತರಕಾರಿ ಬಣ್ಣ"
-
-#. Translators: the color Turquoise (RGB 64, 224, 208) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Turquoise"
-msgstr "ಹಸಿರುನೀಲಿ ಬಣ್ಣದ ಪಚ್ಚೆಕಲ್ಲು"
-
-#. Translators: the color Violet (RGB 238, 130, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Violet"
-msgstr "ನೇರಳೆಯ ಬಣ್ಣ, ನೀಲವರ್ಣ"
-
-#. Translators: the color Wheat (RGB 245, 222, 179) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Wheat"
-msgstr "ಗೋದಿ ಬಣ್ಣ"
-
-#. Translators: the color White (RGB 255, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White"
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "ಯಾವಾಗೂ ಇಲ್ಲ"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "ಯಾವಾಗಲೂ"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "ಚಿಹ್ನೆ ಹಂತ"
+
+#. Translators: the color white (HSV saturation0%, value 100%)
+#, fuzzy
+msgctxt "color hue"
+msgid "white"
 msgstr "ಬಿಳೀ"
 
-#. Translators: the color White Smoke (RGB 245, 245, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "White Smoke"
-msgstr "ಬಿಳಿ ಹೊಗೆ"
+#. Translators: the color very light grey (HSV saturation 0%, value 84%)
+#, fuzzy
+msgctxt "color hue"
+msgid "very light grey"
+msgstr "ಬೆಳಕಿನ ಗ್ರೇ"
 
-#. Translators: the color Yellow (RGB 255, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow"
+#. Translators: the color light grey (HSV saturation 0%, value 66%)
+#, fuzzy
+msgctxt "color hue"
+msgid "light grey"
+msgstr "ಬೆಳಕಿನ ಗ್ರೇ"
+
+#. Translators: the color grey (HSV saturation 0%, value 50%)
+msgctxt "color hue"
+msgid "grey"
+msgstr ""
+
+#. Translators: the color dark grey (HSV saturation 0%, value 34%)
+#, fuzzy
+msgctxt "color hue"
+msgid "dark grey"
+msgstr "ಕತ್ತಲಿನ ಬೂದು"
+
+#. Translators: the color very dark grey (HSV saturation 0%, value 16%)
+msgctxt "color hue"
+msgid "very dark grey"
+msgstr ""
+
+#. Translators: the color black (HSV saturation 0%, value 0%)
+#, fuzzy
+msgctxt "color hue"
+msgid "black"
+msgstr "ಕಪ್ಪು"
+
+#. Translators: The color red (HSV hue 0 degrees)
+#, fuzzy
+msgctxt "color hue"
+msgid "red"
+msgstr "ಸಂಪಾದನೆ ಚೌಕ"
+
+#. Translators: The color between  red and orange (HSV hue 15 degrees)
+#, fuzzy
+msgctxt "color hue"
+msgid "red-orange"
+msgstr "ಕಿತ್ತಳೆ"
+
+#. Translators: The color orange (HSV hue 30 degrees)
+#, fuzzy
+msgctxt "color hue"
+msgid "orange"
+msgstr "ಕಿತ್ತಳೆ"
+
+#. Translators: The color between  orange and yellow (HSV hue 45 degrees)
+msgctxt "color hue"
+msgid "orange-yellow"
+msgstr ""
+
+#. Translators: The color yellow (HSV hue 60 degrees)
+#, fuzzy
+msgctxt "color hue"
+msgid "yellow"
 msgstr "ಹಳದಿ"
 
-#. Translators: the color Yellow Green (RGB 154, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-msgctxt "color name"
-msgid "Yellow Green"
+#. Translators: The color between  yellow and green (HSV hue 90 degrees)
+#, fuzzy
+msgctxt "color hue"
+msgid "yellow-green"
 msgstr "ಹಳದಿ ಹಸಿರು"
+
+#. Translators: The color green (HSV hue 120 degrees)
+#, fuzzy
+msgctxt "color hue"
+msgid "green"
+msgstr "ಹಸಿರು"
+
+#. Translators: The color between  green and aqua (HSV hue 150 degrees)
+msgctxt "color hue"
+msgid "green-aqua"
+msgstr ""
+
+#. Translators: The color aqua (HSV hue 180 degrees)
+msgctxt "color hue"
+msgid "aqua"
+msgstr ""
+
+#. Translators: The color between  aqua and blue (HSV hue 210 degrees)
+msgctxt "color hue"
+msgid "aqua-blue"
+msgstr ""
+
+#. Translators: The color blue (HSV hue 240 degrees)
+msgctxt "color hue"
+msgid "blue"
+msgstr ""
+
+#. Translators: The color between  blue and purple (HSV hue 270 degrees)
+msgctxt "color hue"
+msgid "blue-purple"
+msgstr ""
+
+#. Translators: The color purple (HSV hue 300 degrees)
+#, fuzzy
+msgctxt "color hue"
+msgid "purple"
+msgstr "ನೇರಳೆ"
+
+#. Translators: The color between  purple and pink (HSV hue 312 degrees)
+msgctxt "color hue"
+msgid "purple-pink"
+msgstr ""
+
+#. Translators: The color pink (HSV hue 324 degrees)
+msgctxt "color hue"
+msgid "pink"
+msgstr ""
+
+#. Translators: The color between  pink and red (HSV hue 342 degrees)
+msgctxt "color hue"
+msgid "pink-red"
+msgstr ""
+
+#. Translators: a bright color (HSV saturation 100% and value 100%)
+#, fuzzy
+msgctxt "color variation"
+msgid "bright {color}"
+msgstr "{color}"
+
+#. Translators: color (HSV saturation 100% and value 72%)
+#, fuzzy
+msgctxt "color variation"
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: a dark color (HSV saturation 100% and value 44%)
+#, fuzzy
+msgctxt "color variation"
+msgid "dark {color}"
+msgstr "{color}"
+
+#. Translators: a very dark color (HSV saturation 100% and value 16%)
+msgctxt "color variation"
+msgid "very dark {color}"
+msgstr ""
+
+#. Translators: a light pale color (HSV saturation 50% and value 100%)
+msgctxt "color variation"
+msgid "light pale {color}"
+msgstr ""
+
+#. Translators: a pale color (HSV saturation 50% and value 72%)
+#, fuzzy
+msgctxt "color variation"
+msgid "pale {color}"
+msgstr "{color}"
+
+#. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, fuzzy
+msgctxt "color variation"
+msgid "dark pale {color}"
+msgstr "ಪೂರ್ವನಿಯೋಜಿತ ಬಣ್ಣ"
+
+#. Translators: a very dark color (HSV saturation 50% and value 16%)
+msgctxt "color variation"
+msgid "very dark pale {color}"
+msgstr ""
+
+#. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, fuzzy
+msgctxt "color variation"
+msgid "{color} white"
+msgstr "{color}"
+
+#. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, fuzzy
+msgctxt "color variation"
+msgid "{color} grey"
+msgstr "{color}"
+
+#. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+msgctxt "color variation"
+msgid "dark {color} grey"
+msgstr ""
+
+#. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+msgctxt "color variation"
+msgid "very dark {color} grey"
+msgstr ""
+
+#. Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "red-brown"
+msgstr ""
+
+#. Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
+#, fuzzy
+msgctxt "color hue"
+msgid "brown"
+msgstr "ಕಂದು ಬಣ್ಣ"
+
+#. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
+msgctxt "color hue"
+msgid "brown-yellow"
+msgstr ""
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2133,6 +1716,7 @@ msgid "row"
 msgstr "ಪಂಕ್ತಿ"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "ಚೌಕಟ್ಟು"
 
@@ -2460,10 +2044,6 @@ msgstr "ಮೇಲ್ತೆರೆ ಲಾಂಛನ "
 msgid "alert"
 msgstr "ಎಚ್ಚರ"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "ಐಚೌಕಟ್ಟು"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "ಮೇಲ್ತೆರೆ ಪಲಕ"
@@ -2529,13 +2109,11 @@ msgstr "ಹಿನ್ನೆಲೆ ಬಣ್ಣ"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "ಮೇಲ್ಬರಹ"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "ಕೆಳ ಬರಹ"
 
@@ -2727,6 +2305,11 @@ msgstr "ಫಸಲಿಸಿದ"
 msgid "overflowing"
 msgstr "ಸ್ಮ್ೃತಿ ಸಂಗ್ರಾಹಿಸುವಿಕೆ"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+#, fuzzy
+msgid "unlocked"
+msgstr "ಗುರುತಿಸಿಲ್ಲ"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ಾಯ್ಕೆಯನ್ನು ಮಾಡಲಾಗಿಲ್ಲ"
@@ -2808,11 +2391,13 @@ msgstr ""
 "ಹುಡುಕಿ"
 
 #. Translators: Reported when there is no text selected (for copying).
-msgid "no selection"
+#, fuzzy
+msgid "No selection"
 msgstr "ಯಾವುದನ್ನೂ ಆಯ್ದುಕೊಂಡಿಲ್ಲ"
 
 #. Translators: Message presented when text has been copied to clipboard.
-msgid "copied to clipboard"
+#, fuzzy
+msgid "Copied to clipboard"
 msgstr "ಪಲಕಕ್ಕೆ ಪ್ರತಿಯಾಗಿದೆ"
 
 #. Translators: The name of a category of NVDA commands.
@@ -2869,6 +2454,19 @@ msgstr "ಆದಾನ"
 msgid "Document formatting"
 msgstr "ದಾಖಲೆಯ ಶೈಲಿ"
 
+#. Translators: a message when audio ducking is not supported on this machine
+#, fuzzy
+msgid "Audio ducking not supported"
+msgstr "ಗಣೀತದ ಸಂಸರ್ಗಕ್ಕೆ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"NVDA ಇತರ ಶಬ್ದಗಳ ಪರಿಮಾಣ ಕಡಿಮೆ ಮಾಡುತ್ತದೆ ಮಾಡಿದಾಗ ನಿರ್ಧರಿಸುವ ಆಡಿಯೋ ಮುಳುಗು "
+"ವಿಧಾನಗಳು ಮೂಲಕ ಡಾಟ್ಸ್ 7 ಮತ್ತು 8Cycles"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "ಆದಾನ ನೆರವು ಚಾಲನೆಗೊಂಡಿತು"
@@ -2909,7 +2507,8 @@ msgstr ""
 "ಬಾರಿ ಕೀಲಿಯನ್ನು ಒತ್ತಿದರೆ ಪ್ರಸ್ತುತ  ಸಾಲಿನ ಅಕ್ಷರಗಳನ್ನು ಹೇಳುತ್ತದೆ."
 
 #. Translators: Reported when left mouse button is clicked.
-msgid "left click"
+#, fuzzy
+msgid "Left click"
 msgstr "ಎಡದ ಅಮುಕು"
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2917,7 +2516,8 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "ಪ್ರಸ್ತುತ ಮೌಸ್ ಸ್ಥಾನದಲ್ಲೇ ಒಂದು ಸಲ  ಎಡದ ಮೌಸ್ ಗುಂಡಿಯನ್ನು ಅಮುಕುತ್ತದೆ."
 
 #. Translators: Reported when right mouse button is clicked.
-msgid "right click"
+#, fuzzy
+msgid "Right click"
 msgstr "ಬಲದ ಅಮುಕು"
 
 #. Translators: Input help mode message for right mouse click command.
@@ -2925,11 +2525,13 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "ಪ್ರಸ್ತುತ ಮೌಸ್ ಸ್ಥಾನದಲ್ಲೇ ಒಂದು ಸಲ  ಬಲದ ಮೌಸ್ ಗುಂಡಿಯನ್ನು ಅಮುಕುತ್ತದೆ."
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "left mouse button unlock"
+#, fuzzy
+msgid "Left mouse button unlock"
 msgstr "ಎಡ ಮೌಸ್ ಗುಂಡಿ ತೆರೆದುಕೊಂಡಿತು"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "left mouse button lock"
+#, fuzzy
+msgid "Left mouse button lock"
 msgstr "ಎಡ ಮೌಸ್ ಗುಂಡಿ ತಡಿಯಲಾಯಿತು"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
@@ -2937,16 +2539,22 @@ msgid "Locks or unlocks the left mouse button"
 msgstr " ಎಡ ಮೌಸ್ ಗುಂಡಿಯನ್ನು ತಡೆಗಟ್ಟುವುದನ್ನು ಅಥವಾ ತೆರೆಯುವುದನ್ನು ಮಾಡುತ್ತದೆ"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "right mouse button unlock"
+#, fuzzy
+msgid "Right mouse button unlock"
 msgstr "ಬಲ ಮೌಸ್ ಗುಂಡಿ ತೆರೆದಿದೆ"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "right mouse button lock"
+#, fuzzy
+msgid "Right mouse button lock"
 msgstr "ಬಲ ಮೌಸ್ ಗುಂಡಿ ತಡೆಗಟ್ಟಿದೆ"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr " ಬಲ ಮೌಸ್ ಗುಂಡಿಯನ್ನು ತಡೆಗಟ್ಟುವುದನ್ನು ಅಥವಾ ತೆರೆಯುವುದನ್ನು ಮಾಡುತ್ತದೆ"
+
+#, fuzzy, python-format
+msgid "Selected %s"
+msgstr "%s ಆಯ್ಕೆಗೊಂಡಿದೆ"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3161,17 +2769,30 @@ msgstr "ರೇಖೆಯ ಸಂಖ್ಯೆ ಹೇಳುವುದು ಆನ್"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "ರೇಖೆಯ ಸಂಖ್ಯೆಯನ್ನು ಹೇಳುವುದು ಆಫ್ ಅಥವ ಆನಾಗುತ್ತದೆ"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
+#. Translators: A message reported when cycling through line indentation settings.
+#, fuzzy
+msgid "Report line indentation with speech"
+msgstr "&ಸಾಲಿನ ಪದಜಾಗ ನಿರ್ಧರಣೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
+
+#. Translators: A message reported when cycling through line indentation settings.
+#, fuzzy
+msgid "Report line indentation with tones"
+msgstr "&ಸಾಲಿನ ಪದಜಾಗ ನಿರ್ಧರಣೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
+
+#. Translators: A message reported when cycling through line indentation settings.
+#, fuzzy
+msgid "Report line indentation with speech and tones"
+msgstr "&ಸಾಲಿನ ಪದಜಾಗ ನಿರ್ಧರಣೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
+
+#. Translators: A message reported when cycling through line indentation settings.
+#, fuzzy
+msgid "Report line indentation off"
 msgstr "ರೇಖೆಯ ಪದಜಾಗನಿರ್ಧರಣೆ ಹೇಳುವುದು ಆಫ್"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "ರೇಖೆಯ ಪದ ಜಾಗ ನಿರ್ಧರಣೆ ಹೇಳುವುದು ಆನ್"
-
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "ರೇಖೆಯ ಪದಜಾಗ ನಿರ್ಧರಣೆ ಹೇಳುವುದು ಆಫ್ ಅಥವ ಆನಾಗುತ್ತದೆ"
+#, fuzzy
+msgid "Cycles through line indentation settings"
+msgstr "ರೇಖೆಯ ಪದ ಜಾಗ ನಿರ್ಧರಣೆ ಹೇಳುವುದು ಆನ್"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3184,6 +2805,21 @@ msgstr "ವಾಕ್ಯವ್ೃಂದದ ಪದ ಜಾಗ ನಿರ್ಧರಣ
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "ವಾಕ್ಯವ್ೃಂದದ ಪದ ಜಾಗ ನಿರ್ಧರಣೆ ಹೇಳುವುದು ಆಫ್ ಅಥವ ಆನಾಗುತ್ತದೆ"
+
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+#, fuzzy
+msgid "report line spacing off"
+msgstr "ಕೊಂಡಿಗಳನ್ನು ಹೇಳುವುದು ಆಫ್"
+
+#. Translators: The message announced when toggling the report line spacing document formatting setting.
+#, fuzzy
+msgid "report line spacing on"
+msgstr "ಕೊಂಡಿಗಳನ್ನು ಹೇಳುವುದು ಆನ್"
+
+#. Translators: Input help mode message for toggle report line spacing command.
+#, fuzzy
+msgid "Toggles on and off the reporting of line spacing"
+msgstr "ಕೊಂಡಿಗಳನ್ನು ಹೇಳುವುದು ಆಫ್ ಅಥವ ಆನಾಗುತ್ತದೆ"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3320,8 +2956,8 @@ msgstr "ಕ್ಲಿಕ್ ಆದರೆ ಹೇಳುವುದು ಆಫ್ ಅ�
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
-#, python-format
-msgid "symbol level %s"
+#, fuzzy, python-format
+msgid "Symbol level %s"
 msgstr "ಚಿಹ್ನೆ %s ಹಂತ"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
@@ -3330,7 +2966,8 @@ msgid ""
 msgstr "ಎಂತಹ ಚಿಹ್ನೆಗಳನ್ನು ಹೇಳಬೇಕು ಎಂಬುವುದನ್ನು ಚಿಹ್ನೆ ಹಂತದ ಮೂಲಕ ನಿರ್ಧರಿಸುತ್ತದೆ"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-msgid "object has no location"
+#, fuzzy
+msgid "Object has no location"
 msgstr "ಈ ವಸ್ತು ಯಾವುದೆ ಸ್ಥಳವನ್ನು ಹೊಂದಿಲ್ಲ"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
@@ -3373,9 +3010,25 @@ msgstr ""
 "ಹಿಂದಿನ  ಪರಿಶೀಲನಾ ಸ್ಥಿತಿಗೆ ಇರಿಸುತ್ತದೆ (ಉದಾ. ವಸ್ತು, ದಸ್ತಾವೇಜು ಅಥವಾ ಪರದೆ) ಮತ್ತು "
 "ಸಂಚಲಿತ ವಸ್ತುವಿನ ತುದಿಯಲ್ಲಿ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿಯನ್ನು ಇರಿಸುತ್ತದೆ"
 
+#. Translators: The message announced when toggling simple review mode.
+#, fuzzy
+msgid "Simple review mode off"
+msgstr "ಸರಳ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿ"
+
+#. Translators: The message announced when toggling simple review mode.
+#, fuzzy
+msgid "Simple review mode on"
+msgstr "ಸರಳ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿ"
+
+#. Translators: Input help mode message for toggle simple review mode command.
+#, fuzzy
+msgid "Toggles simple review mode on and off"
+msgstr "ಸರಳ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿ"
+
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-msgid "no navigator object"
+#, fuzzy
+msgid "No navigator object"
 msgstr "ಸಂಚಲಿತ ವಸ್ತು ಇಲ್ಲ"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
@@ -3406,7 +3059,8 @@ msgstr ""
 "ಎರಡು ಸಲ ಒತ್ತಿದರೆ ಇನ್ನಷ್ಟು ಮಾಹಿತಿಯನ್ನು ಒದಗಿಸುತ್ತದೆ"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
-msgid "move to focus"
+#, fuzzy
+msgid "Move to focus"
 msgstr "ಗಮನಿತಕ್ಕೆ ಚಲಿಸು"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
@@ -3420,20 +3074,24 @@ msgstr ""
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-msgid "no focus"
+#, fuzzy
+msgid "No focus"
 msgstr "ಗಮನಿಸಿಲ್ಲ"
 
 #. Translators: Reported when attempting to move focus to navigator object.
-msgid "move focus"
+#, fuzzy
+msgid "Move focus"
 msgstr "ಗಮನಿತವನ್ನು ಚಲಿಸು"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-msgid "no caret"
+#, fuzzy
+msgid "No caret"
 msgstr "ಯಾವುದೇ ಕಾರೆಟ್ ಇಲ್ಲ"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
+#, fuzzy
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "ಒಂದು ಬಾರಿ ಒತ್ತಿದರೆ ಸಂಚಲಿತ ವಸ್ತುವನ್ನು ಕೀಲಿಮಣೆಯ ಗಮನಿತಕ್ಕೆ ಇರಿಸುತ್ತದೆ. ಎರಡು ಬಾರಿ "
@@ -3448,6 +3106,7 @@ msgid "Moves the navigator object to the object containing it"
 msgstr "ವಸ್ತುಗಳನ್ನು ಒಳಗೊಂಡಿರುವಲ್ಲಿಗೆ ಸಂಚಲಿತ ವಸ್ತುವನ್ನು ಚಲಿಸುತ್ತದೆ"
 
 #. Translators: Reported when there is no next object (current object is the last object).
+#. Translators: a message when there is no next object when navigating
 msgid "No next"
 msgstr "ಮುಂದಕ್ಕೆ ಏನೂ ಇಲ್ಲ"
 
@@ -3456,6 +3115,7 @@ msgid "Moves the navigator object to the next object"
 msgstr "ಸಂಚಲಿತ  ವಸ್ತುವನ್ನು ಮುಂದಿನ ವಸ್ತುವಿಗೆ ಚಲಿಸುತ್ತದೆ"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
+#. Translators: a message when there is no previous object when navigating
 msgid "No previous"
 msgstr "ಹಿಂದಕ್ಕೆ ಏನೂ ಇಲ್ಲ"
 
@@ -3472,8 +3132,9 @@ msgid "Moves the navigator object to the first object inside it"
 msgstr "ಸಂಚಲಿತ  ವಸ್ತುವನ್ನು ಮೊದಲ ವಸ್ತುವಿನ ಒಳಕ್ಕೆ ಕಳುಹಿಸುತ್ತದೆ"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-msgid "activate"
-msgstr "ಸಕ್ರಿಯಗೊಳಿಸಿ"
+#, fuzzy
+msgid "Activate"
+msgstr "& ಸಕ್ರಿಯಗೊಳಿಸು"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -3488,7 +3149,8 @@ msgstr ""
 "ಗುಂಡಿಯಾಗಿದ್ದರೆ ಅದನ್ನು ಒತ್ತುತ್ತದೆ)."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "top"
+#, fuzzy
+msgid "Top"
 msgstr "ಸಂಪೂರ್ಣ ಮೇಲೆ"
 
 #. Translators: Input help mode message for move review cursor to top line command.
@@ -3559,8 +3221,9 @@ msgstr ""
 "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಸಂಚಲಿತ ವಸ್ತುವಿನ ಮುಂದಿನ ಪದಕ್ಕೆ ಪರಿಶೀಲನಾ ಕರ್ಸರನ್ನು ಚಲಿಸುತ್ತದೆ ಮತ್ತು "
 "ಅದನ್ನು ಹೇಳುತ್ತದೆ"
 
-msgid "left"
-msgstr "ಎಡ"
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr ""
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3590,7 +3253,9 @@ msgstr ""
 "ಒತ್ತಿದರೆ ಸಾಲಿನಲ್ಲಿರುವ ಅಕ್ಷರಗಳನ್ನು ಉದಾಹರಣೆಗಳ ಅಥವಾ ವಿವರಣೆಗಳ ಸಹಿತ ಪ್ರಕಟಿಸುತ್ತದೆ. ಮೂರು "
 "ಸಲ ಒತ್ತಿದರೆ ಅಕ್ಷರದ ಮೌಲ್ಯವನ್ನು ದಶಮಾಂಶ ಮತ್ತು ಷೋಡಶ ದಶಮಾನ ಸಂಖ್ಯೆಯಲ್ಲಿ ಪ್ರಕಟಿಸುತ್ತದೆ."
 
-msgid "right"
+#. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+#, fuzzy
+msgid "Right"
 msgstr "ಬಲ"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3610,15 +3275,18 @@ msgstr ""
 "ಅದನ್ನು ಹೇಳುತ್ತದೆ"
 
 #. Translators: A speech mode which disables speech output.
-msgid "speech mode off"
+#, fuzzy
+msgid "Speech mode off"
 msgstr "ಹೇಳುವ ವಿಧಾನ ಬೇಡ"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-msgid "speech mode beeps"
+#, fuzzy
+msgid "Speech mode beeps"
 msgstr "ಮಾತಿನ ವಿಧಾನ ಬೀಪ್ಗಳಂತೆ"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-msgid "speech mode talk"
+#, fuzzy
+msgid "Speech mode talk"
 msgstr "ಮಾತಿನ ವಿಧಾನ ಮಾತಿನಂತೆ"
 
 #. Translators: Input help mode message for toggle speech mode command.
@@ -3656,16 +3324,18 @@ msgid "Shows the NVDA menu"
 msgstr "ಎನ್ವೀಡೀಯೇ ಪರಿವಿಡಿಯನ್ನು ತೋರಿಸುತ್ತದೆ"
 
 #. Translators: Input help mode message for say all in review cursor command.
+#, fuzzy
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "ಪರಿಶೀಲನಾ ಸೂಚಕದಿಂದ ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಪಠ್ಯದ ಕೊನೆಯ ವರೆಗು ಓದುತ್ತದೆ, ಅದು ಹೋದಂತೆ ಪರಿಶೀಲನಾ "
 "ಸೂಚಕವನ್ನು ಚಲಿಸುತ್ತದೆ."
 
 #. Translators: Input help mode message for say all with system caret command.
+#, fuzzy
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
+"Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "ಗಣಕ  ತೆರೆಬಾಣದಿಂದ  ಪಠ್ಯದ ಕೊನೆಯವರೆಗು ಓದುತ್ತದೆ. ಅದು ಹೋದಂತೆ ತೆರೆಬಾಣವನ್ನು  ಚಲಿಸುತ್ತದೆ."
@@ -3674,15 +3344,22 @@ msgstr ""
 msgid "No formatting information"
 msgstr "ಯಾವುದೇ ಅಂದಗೊಳಿಕೆಯ ಮಾಹಿತಿ ಇಲ್ಲ"
 
+#. Translators: title for formatting information dialog.
+#, fuzzy
+msgid "Formatting"
+msgstr "ದಸ್ತಾವೇಜು ಅಂದಗೊಳಿಸುವಿಕೆ"
+
 #. Translators: Input help mode message for report formatting command.
+#, fuzzy
 msgid ""
 "Reports formatting info for the current review cursor position within a "
-"document"
+"document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "ದಸ್ತಾವೇಜಿನಲ್ಲಿ ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಪರಿಶೀಲನಾ ಸೂಚಕದ ಸ್ಥಿತಿಯ ಶೈಲಿಯ ಮಾಹಿತಿಯನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus. If pressed twice, spells the information"
+#, fuzzy
+msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "ವಸ್ತುವನ್ನು ಅದರೊಳಗೆ ಇರಿಸುವುದರೊಂದಿಗೆ ಹೇಳುತ್ತದೆ. ಎರಡು ಬಾರಿ ಒತ್ತಿದರೆ ಮಾಹಿತಿಯನ್ನು "
 "ಉಚ್ಛರಿಸುತ್ತದೆ."
@@ -3692,8 +3369,9 @@ msgid "No status line found"
 msgstr "ಯಾವುದೇ ಸ್ಥಿತಿಯ ಸಾಲು ಕಂಡುಬಂದಿಲ್ಲ"
 
 #. Translators: Input help mode message for report status line text command.
+#, fuzzy
 msgid ""
-"reads the current application status bar and moves the navigator to it. If "
+"Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಅನ್ವಹಿಯ ಸ್ಥಿತಿಯ ಬಾರನ್ನು ಓದುತ್ತದೆ ಮತ್ತು ನ್ಯಾವಿಗೇಟರನ್ನು ಅದಕ್ಕೆ ಚಲಿಸುತ್ತದೆ. "
@@ -3712,7 +3390,8 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr "ಮೌಸ್ ಚಲಿಸಿದಂತೆ ಮಾಹಿತಿಯನ್ನು ಅನುಗುಣವಾಗಿ ಪ್ರಕಟಿಸುತ್ತದೆ"
 
 #. Translators: Reported when there is no title text for current program or window.
-msgid "no title"
+#, fuzzy
+msgid "No title"
 msgstr "ಯಾವುದೇ ಶೀರ್ಶಿಕೆಯಿಲ್ಲ"
 
 #. Translators: Input help mode message for report title bar command.
@@ -3726,7 +3405,8 @@ msgstr ""
 "ಪಲಕಕ್ಕೆ ಪ್ರತಿಮಾಡಿಕೊಳ್ಳುತ್ತದೆ."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "speaks the current foreground object"
+#, fuzzy
+msgid "Speaks the current foreground object"
 msgstr "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಮುನ್ನೆಲೆಯ ವಸ್ತುವನ್ನು ಹೇಳುತ್ತದೆ"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -3739,19 +3419,23 @@ msgstr ""
 "ಮಾಹಿತಿಯನ್ನು ಪರೀಕ್ಷಿಸಲು ಸಹಾಯವಾಗುತ್ತದೆ."
 
 #. Translators: A mode where no progress bar updates are given.
-msgid "no progress bar updates"
+#, fuzzy
+msgid "No progress bar updates"
 msgstr "ಯಾವುದೇ ಪ್ರಗತಿಯ ಪಟ್ಟಿಕೆಯ ನವೀಕರಣಗಳಿಲ್ಲ"
 
 #. Translators: A mode where progress bar updates will be spoken.
-msgid "speak progress bar updates"
+#, fuzzy
+msgid "Speak progress bar updates"
 msgstr "ಪ್ರಗತಿಯ ಪಟ್ಟಿಕೆಯ ನವೀಕರಣಗಳನ್ನು ಹೇಳು"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-msgid "beep for progress bar updates"
+#, fuzzy
+msgid "Beep for progress bar updates"
 msgstr "ಪ್ರಗತಿಯ ಪಟ್ಟಿಕೆಯ ನವೀಕರಣಕ್ಕೆ ಶಬ್ದ ಮಾಡು"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
-msgid "beep and speak progress bar updates"
+#, fuzzy
+msgid "Beep and speak progress bar updates"
 msgstr "ಪ್ರಗತಿಯ ಪಟ್ಟಿಕೆಯ ನವೀಕರಣಕ್ಕೆ ಶಬ್ದದ ಜೊತೆ ಹೇಳು"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -3808,7 +3492,8 @@ msgstr ""
 "ಸಂಚಲಿತದ ವಸ್ತುವಿನ ಚಲನೆಯು ಗಮನಿತದ ಕಾರಣಗಳಿಂದಾಗಿ ಇಲ್ಲವಾಗುತ್ತದೆ ಮತ್ತು ಇರುವಂತೆ ಆಗುತ್ತದೆ"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "no system battery"
+#, fuzzy
+msgid "No system battery"
 msgstr "ಗಣಕದಲ್ಲಿ ಬ್ಯಾಟರಿ ಇಲ್ಲ"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -3825,7 +3510,8 @@ msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} ಗಂಟೆಗಳು ಮತ್ತು {minutes:d}  ನಿಮಿಶಗಳು ಉಳಿದಿವೆ"
 
 #. Translators: Input help mode message for report battery status command.
-msgid "reports battery status and time remaining if AC is not plugged in"
+#, fuzzy
+msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "ನೀವು ಬ್ಯಾಟರಿ ಚಾರ್ಜರನ್ನು ಪ್ಲಗಿನ್ ಮಾಡದಿದ್ದಲ್ಲಿ, ಇದು ಬ್ಯಾಟರಿ ಸ್ಥಿತಿ ಮತ್ತು ಉಳಿದಿರುವ "
 "ಸಮಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ."
@@ -3975,6 +3661,7 @@ msgid "review"
 msgstr "ಪರಿಶೀಲನೆ"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "ಗಮನಿತ"
 
@@ -3986,6 +3673,31 @@ msgstr "ಬ್ರೈಲ್ %s ಗೆ ಟೆದರ್ ಆಗಿದೆ"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "ಬ್ರೈಲ್ ಟೆದರನ್ನು ಗಮನಿತ ಮತ್ತು ಪರಿಶೀಲನಾ ಸ್ಥಾನಗಳಿಂದ ಬದಲಾಯಿಸುತ್ತದೆ"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr ""
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr ""
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr ""
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr ""
+
+#. Translators: Reports which braille cursor shape is activated.
+#, fuzzy, python-format
+msgid "Braille cursor %s"
+msgstr "ಬ್ರೈಲ್ %s ಗೆ ಟೆದರ್ ಆಗಿದೆ"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr ""
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4006,10 +3718,11 @@ msgstr "ಗಣಕದ  ಪ್ರತಿಯಪಲಕದಲ್ಲಿರುವ ಪಠ
 msgid "Start marked"
 msgstr "ಪ್ರಾರಂಭ ಗುರುತಾಗಿದೆ"
 
-#. Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
+#. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+#, fuzzy
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
-"copied"
+"selected or copied"
 msgstr ""
 "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಪರಿಶೀಲನಾ ಸೂಚಕದ ಸ್ಥಿತಿಯನ್ನು ಪ್ರತಿಗೊಳಿಸುವಂತಹ ಪಠ್ಯದ ಪ್ರಾರಂಭವನ್ನು "
 "ಗುರುತಿಸುತ್ತದೆ"
@@ -4018,22 +3731,33 @@ msgstr ""
 msgid "No start marker set"
 msgstr "ಯಾವುದೇ ಪ್ರಾರಂಭದ ಗುರುತ್ವ ಇಟ್ಟಿಲ್ಲ"
 
-#. Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
-msgid "The start marker must reside within the same object"
-msgstr "ಪ್ರಾರಂಭದ ಗುರುತ್ವ ಅದೇ ಪ್ರಕಾರದ ವಸ್ತುವಿನೊಂದಿಗೆ ಇರಬೇಕು"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "ಪರಿಶೀಲನಾ ಆಯ್ಕೆಗಳು ಪಲಕಕ್ಕೆ ಪ್ರತಿಗೊಂಡಿತು"
+#. Translators: Presented when text has already been marked for selection, but not yet copied.
+msgid "Press twice to copy or reset the start marker"
+msgstr ""
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
 msgstr "ಪ್ರತಿಗೊಳಿಸಿಕೊಳ್ಳಲು  ಪಠ್ಯವಿಲ್ಲ"
 
-#. Translators: Input help mode message for copy selected review cursor text to clipboard command.
+#. Translators: Presented when unable to select the marked text.
+msgid "Can't select text, press twice to copy"
+msgstr ""
+
+#. Translators: Presented when some review text has been copied to clipboard.
+msgid "Review selection copied to clipboard"
+msgstr "ಪರಿಶೀಲನಾ ಆಯ್ಕೆಗಳು ಪಲಕಕ್ಕೆ ಪ್ರತಿಗೊಂಡಿತು"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+#, fuzzy
+msgid "Unable to copy"
+msgstr "ಪ್ರತಿಗೊಳಿಸಿಕೊಳ್ಳಲು  ಪಠ್ಯವಿಲ್ಲ"
+
+#. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+#, fuzzy
 msgid ""
-"Retrieves the text from the previously set start marker up to and including "
-"the current position of the review cursor and copies it to the clipboard"
+"If pressed once, the text from the previously set start marker up to and "
+"including the current position of the review cursor is selected. If pressed "
+"twice, the text is copied to the clipboard"
 msgstr ""
 "ಹಿಂದೆಯೇ ಇರಿಸಿದ್ದ ಪ್ರಾರಂಭದ ಗುರುತ್ವದಿಂದ ಪಠ್ಯವನ್ನು ತಿರುಗಿ ಪಡೆಯುತ್ತದೆ. ಅದರ ಜೊತೆಯೇ "
 "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಪರಿಶೀಲನಾ ಸೂಚಕದ ಜಾಗವನ್ನು ಪಡೆದು ಪಲಕಕ್ಕೆ ಪ್ರತಿಗೊಳಿಸುತ್ತದೆ"
@@ -4062,6 +3786,11 @@ msgstr "ಬ್ರೈಲ್ ಪ್ರದರ್ಶನವನ್ನು ಮುಂದ�
 msgid "Inputs braille dots via the braille keyboard"
 msgstr "ಬ್ರೈಲ್ ಕೀಲಿಮಣೆಯಿಂದ ಬ್ರೈಲ್ ಚುಕ್ಕೆಗಳನ್ನು ಹೂಡುತ್ತದೆ"
 
+#. Translators: Input help mode message for a braille command.
+#, fuzzy
+msgid "Moves the braille display to the current focus"
+msgstr "ಬ್ರೈಲ್ ಪ್ರದರ್ಶನವನ್ನು ಹಿಂದಿನ ಸಾಲಿಗೆ ಚಲಿಸುತ್ತದೆ"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "ಪ್ಲಗಿನ್ಗಳು ಮರಳಿಮೂಡಿವೆ"
@@ -4073,10 +3802,6 @@ msgid ""
 msgstr ""
 "ಎನ್ವಿಡಿಎಯನ್ನು ಮರುಪ್ರಾರಂಭಿಸದೆ  ತಂತ್ರಾಂಶ ಮಾದರಿ ಮತ್ತು ವಿಸ್ತೃತ ಪ್ಲಗಿನ್ಗಳನ್ನು "
 "ಮರಳಿಮೂಡಿಸುತ್ತದೆ, ಇವು ಅಭಿವೃದ್ಧಿಪಡಿಸುವವರಿಗೆ ಸಹಾಯಕಾರಿ"
-
-#. Translators: a message when there is no next object when navigating
-msgid "no next"
-msgstr "ಏನೂ ಇಲ್ಲ"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4096,7 +3821,8 @@ msgid "%s mode"
 msgstr "%s ವಿಧಾನ"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "cycles between available touch modes"
+#, fuzzy
+msgid "Cycles between available touch modes"
 msgstr "ಲಭ್ಯವಿರುವ ಸ್ಪರ್ಶದ ವಿಧಾನದಲ್ಲಿ ಸುತ್ತುತ್ತದೆ"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4131,10 +3857,6 @@ msgstr "ಸಂಚಯಿತ  ಗಣಕದ ಕೀಲಿಮಣೆಯ ಕೀಲಿ�
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
 msgstr "ಇತರೆ"
-
-#. Translators: The name of a category of NVDA commands.
-msgid "Browse mode"
-msgstr "ಹುಡುಕಾಟದ ವಿಧಾನ"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4601,15 +4323,20 @@ msgstr "ವಾಕ್ಯವೃಂದ ಆರಂಭಿಕವಿಲ್ಲ"
 msgid "%d characters"
 msgstr "%d ಅಕ್ಷರಗಳು"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-#, python-format
-msgid "selecting %s"
-msgstr "%s ಆಯ್ದುಕೊಳ್ಳಲಾಗುತ್ತಿದೆ"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
+#, fuzzy, python-format
+msgid "%s selected"
+msgstr "ಆಯ್ಕೆಯನ್ನು ಮಾಡಲಾಗಿದೆ"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-#, python-format
-msgid "unselecting %s"
-msgstr "%s ಆಯ್ಕೆಯನ್ನು ಬಿಡಲಾಗುತ್ತಿದೆ"
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, fuzzy, python-format
+msgid "%s unselected"
+msgstr "ಆಯ್ಕೆಯನ್ನು ಮಾಡಲಾಗಿದೆ"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, fuzzy, python-format
+msgid "%s selected instead"
+msgstr "%s ಆಯ್ಕೆಗೊಂಡಿದೆ"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4619,11 +4346,6 @@ msgstr "ಆಯ್ಕೆಮಾಡಿದ್ದನ್ನು ತೆಗೆಯಲಾ�
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "ಎಳೆಯುವುದನ್ನು ಮುಗಿಸಿದೆ"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "ಹಂತ %s"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -4648,6 +4370,11 @@ msgstr "%s ಅಂಕಣಗಳೊಂದಿಗೆ"
 #, python-format
 msgid "with %s rows"
 msgstr "%s ಪಂಕ್ತಿಗಳೊಂದಿಗೆ"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "ಹಂತ %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -4682,6 +4409,14 @@ msgstr "ಶೈಲಿ %s"
 msgid "default style"
 msgstr "ಮುಂಚಿನ ಶೈಲಿ"
 
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, fuzzy
+msgid "{color1} to {color2}"
+msgstr "{backgroundColor} ಮೇಲೆ {color}"
+
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
@@ -4697,6 +4432,9 @@ msgstr "{color}"
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} ಹಿನ್ನೆಲೆಗೆ"
+
+msgid "background pattern {pattern}"
+msgstr ""
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -4773,6 +4511,12 @@ msgstr "ಓರೆಯ ಅಕ್ಷರ"
 msgid "no italic"
 msgstr "ೋರೆ ಅಕ್ಷರ ಇಲ್ಲ"
 
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+#, fuzzy
+msgid "double strikethrough"
+msgstr "ಸ್ಟ್ರೈಕ್ ತ್ರೂ ಇಲ್ಲ"
+
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
@@ -4793,7 +4537,6 @@ msgstr "ಅದ್ದಗೆರೆಯಾಗಿಲ್ಲ"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "ಮೂಲ ಸಾಲು"
 
@@ -4883,6 +4626,11 @@ msgstr "ಹರಡಿಕೊಂಡ ಲಂಬ ಹೊಂದಿತ "
 msgid "vertical align default"
 msgstr "ಮೊದಲಿನಂತೆ  ಲಂಬ ಹೊಂದಿತ "
 
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, fuzzy, python-format
+msgid "line spacing %s"
+msgstr "%s ಆಯ್ದುಕೊಳ್ಳಲಾಗುತ್ತಿದೆ"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "ಠಿಪ್ಪಣಿಯಾಚೆಗೆ"
@@ -4905,6 +4653,10 @@ msgstr "{columnCount} ಅಂಕಣಗಳು ಮತ್ತು {rowCount} ಪಂಕ
 
 msgid "NVDA Speech Viewer"
 msgstr "ಎನ್ವೀಡೀಯೇ ಮಾತಿನ ದರ್ಶಕ"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr ""
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -5044,6 +4796,11 @@ msgstr "ಸುತ್ತಿ"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "ಮೇಲಕ್ಕೆ  ಸುತ್ತಿ"
+
+#. Translators: The title for the dialog used to present general NVDA messages in browse mode.
+#, fuzzy
+msgid "NVDA Message"
+msgstr "NVDA ಪ್ರಾರಂಭಗೊಂಡಿತು"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -5237,8 +4994,8 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "edge of table"
-msgstr "ಕೋಷ್ಟಕದ ತುದಿ"
+msgid "Edge of table"
+msgstr "ಕೋಷ್ಟಕದ ಕೊನೆ"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -5279,6 +5036,16 @@ msgstr "ಯಾವುದೇ ಗೀತೆ ಆಡುತ್ತಿಲ್ಲ"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "ಯಾವುದಾದರು ಇದ್ದಲ್ಲಿ, ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಗೀತೆಯ ಉಳಿದಿರುವ ಸಮಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
+
+#. Translators: A position in a Kindle book
+#, no-python-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr ""
+
+#. Translators: a page in a Kindle book
+#, fuzzy
+msgid "Page {pageNumber}"
+msgstr "ಜಾರುಫಲಕ {slideNumber}"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5394,7 +5161,8 @@ msgid "Appointment {subject}, {time}"
 msgstr "ಬೇಟಿಯ {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-msgid "has appointment"
+#, fuzzy
+msgid "Has appointment"
 msgstr "ಬೇಟಿಯಿದೆ"
 
 #. Translators: the email is a meeting request
@@ -5691,6 +5459,12 @@ msgstr "ನಿಲ್ಲಿಸು"
 msgid "Record"
 msgstr "ದಾಖಲಿಸು"
 
+msgid "left"
+msgstr "ಎಡ"
+
+msgid "right"
+msgstr "ಬಲ"
+
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
@@ -5716,7 +5490,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 ಶ್ರೇಣಿ"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
+#, fuzzy
+msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/ಮಾನವವಸ್ತು/APH ಬ್ರೈಲ್ ಪ್ರದರ್ಶನಗಳು"
 
 #. Translators: Name of a serial communications port.
@@ -5966,11 +5741,13 @@ msgid "Python console"
 msgstr "ಪೈತನ್ ಕನ್ಸೋಲ್"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons"
+#, fuzzy
+msgid "Manage &add-ons..."
 msgstr "ಸಹವರ್ತಿಗಳು & ನಿರ್ವಹಣೆ"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create Portable copy..."
+#, fuzzy
+msgid "Create portable copy..."
 msgstr "ಕೊಂಡೊಯ್ಯುವಂತಹ ಪ್ರತಿಯನ್ನು ಉಂಟುಮಾಡು..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -6009,7 +5786,8 @@ msgid "C&ontributors"
 msgstr "ಕಾ&ಣಿಕೆದಾರರು"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog"
+#, fuzzy
+msgid "We&lcome dialog..."
 msgstr "ಸ್ವಾ&ಗತದ ಸಂವಾದ"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
@@ -6061,8 +5839,8 @@ msgstr "ನಿ&ರ್ಗಮಿಸು"
 msgid "Exit NVDA"
 msgstr "ಎನ್ವೀಡೀಯೇಯನ್ನು ನಿಷ್ಕ್ರಮಣಗೊಳಿಸಿ "
 
+#, fuzzy
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -6085,6 +5863,12 @@ msgstr ""
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
+msgstr "ಎನ್ವೀಡೀಯೇಗೆ ಸ್ವಾಗತ"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+#, fuzzy
+msgid "Welcome to NVDA!"
 msgstr "ಎನ್ವೀಡೀಯೇಗೆ ಸ್ವಾಗತ"
 
 msgid "Options"
@@ -6157,7 +5941,9 @@ msgid "Add-ons Manager"
 msgstr "ಸಹವರ್ತಿಗಳ ನಿರ್ವಾಹಕ"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
-msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+#, fuzzy
+msgid ""
+"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
 "ಎಲ್ಲಾ ಸಹವರ್ತಿಗಳು ಈಗ ನಿಶಕ್ತಗೊಂಡಿವೆ. ಸಹವರ್ತಿಗಳನ್ನು ಶಕ್ತಗೊಳಿಸಲು ನೀವು ಎನ್ವೀಡೀಯೇಯನ್ನು "
 "ಮರುಪ್ರಾರಂಭಿಸಬೇಕಾಗುತ್ತದೆ."
@@ -6189,6 +5975,11 @@ msgstr "ಸಹವರ್ತಿ &ಬಗ್ಗೆ..."
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
 msgstr "ಸಹವರ್ತಿ  &ಸಹಾಯ"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+#, fuzzy
+msgid "&Disable add-on"
+msgstr "ಅನುಸ್ಥಾಪಿತ ಸಹವರ್ತಿಗಳು"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6259,9 +6050,11 @@ msgstr "ಸಹವರ್ತಿಯನ್ನು ಅನುಸ್ಥಾಪಿಸು�
 msgid "Failed to install add-on  from %s"
 msgstr "%s ನಿಂದ ಸಹವರ್ತಿಯನ್ನು ಸ್ಥಾಪಿಸುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ"
 
+#. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "ನೀವು ಎನ್ವೀಡೀಯೇಯಿಂದ ಈ ಸಹವರ್ತಿಯನ್ನು ಖಂಡಿತವಾಗಿಯು ತೆಗೆದುಹಾಕಲು ಇಷ್ಟಪಡುತ್ತೀರ?"
 
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
 msgstr "ಸಹವರ್ತಿಯನ್ನು  ತೆಗೆದುಹಾಕಿ"
 
@@ -6273,18 +6066,34 @@ msgstr "ಅನುಸ್ಥಾಪಿಸಿ"
 msgid "remove"
 msgstr "ತೆಗೆದುಹಾಕಿ"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+#. Translators: The status shown for an addon when its disabled.
+#, fuzzy
+msgid "disable"
+msgstr "ಸಂಪಾದಿಸಬಹುದಾದ"
+
+#. Translators: The status shown for an addon when its enabled.
+#, fuzzy
+msgid "enable"
+msgstr "ಕೋಷ್ಟಕ"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
 msgstr "ಅಮಾನತ್ತುಗೊಂಡಿರುವ"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
-msgstr "ಓಡುತ್ತಿದೆ"
+msgstr "ಚಾಲ್ತಿಯಲ್ಲಿದೆ"
 
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+#, fuzzy
+msgid "&Enable add-on"
+msgstr "ಅನುಸ್ಥಾಪಿತ ಸಹವರ್ತಿಗಳು"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
+#, fuzzy
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
 "ಸಹವರ್ತಿಯನ್ನು ಸೇರಿಸಲಾಗಿದೆ ಅಥವಾ ತೆಗೆದುಹಾಕಲಾಗಿದೆ. ಬದಲಾವಣೆಗಳನ್ನು ಅನ್ವಯಿಸಿಕೊಳ್ಳಲು ನೀವು "
 "ಎನ್ವಿಡಿಯೆಯನ್ನು ಮರುಪ್ರಾರಂಭಿಸಬೇಕು. ಈಗ ನೀವು ಇದನ್ನು ಮರುಪ್ರಾರಂಭಿಸುವಿರಾ?"
@@ -6316,10 +6125,6 @@ msgstr "ಸಹವರ್ತಿ  ಮಾಹಿತಿ"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "ಸಂರಚನೆಯ ಬದಿನೋಟಗಳು"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&ಬದಿನೋಟ"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6633,14 +6438,14 @@ msgstr "ಕೊಂಡೊಯ್ಯುವಂತಹ &ನಿರ್ದೆಶಿಕೆ:
 msgid "Browse..."
 msgstr "ಹುಡುಕಿಡಿ..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "ಚಾಲ್ತಿಯಲ್ಲಿರುವ &ಬಳಕೆದಾರ ಸಂರಚನೆಗಳನ್ನು ಪ್ರತಿಗೊಳಿಸಿ"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "ಕೊಂಡುಹೋಗುವಂತಹ ಎನ್ವೀಡೀಯೇಯ ನಿರ್ದೆಶಿಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "ಚಾಲ್ತಿಯಲ್ಲಿರುವ &ಬಳಕೆದಾರ ಸಂರಚನೆಗಳನ್ನು ಪ್ರತಿಗೊಳಿಸಿ"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6687,6 +6492,10 @@ msgstr "ಎನ್ವೀಡೀಯೇಯ ಲಾಗ್ ಪರಿಶೀಲಕ"
 msgid "Refresh\tF5"
 msgstr "ಪುನಶ್ಚೇತನ \tF5"
 
+#. Translators: The label for a menu item in NVDA log viewer to save log file.
+msgid "Save &as...\tCtrl+S"
+msgstr ""
+
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
 msgstr "ಲಾಗ್"
@@ -6724,10 +6533,6 @@ msgstr "ದೋಷಪತ್ತೆ"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&ಭಾಷೆಯು  (ಸಂಪೂರ್ಣವಾಗಿ ಬಳಕೆಯಾಗಲು ಮರುಪ್ರಾರಂಭಿಸಬೇಕು):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "ಭಾಷೆ"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&ನಿರ್ಗಮಿಸುವಾಗ ಮಾಡಿರುವ ಸಂಯೋಜನೆಗಳ ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ"
@@ -6743,10 +6548,6 @@ msgstr "&ಎನ್ವೀಡೀಯೇ ಪ್ರಾರಂಭವಾಗುವಾಗ 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "ಲಾ&ಗಿಂಗ್ ಮಟ್ಟ:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "ಲಾಗ್ ಮಟ್ಟ"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6804,13 +6605,6 @@ msgstr "ಎನ್ವೀಡೀಯೇ ಬಳಕೆದಾರರ ಸಂಯೋಜನ�
 msgid "Successfully copied NVDA user settings"
 msgstr "ಎನ್ವೀಡೀಯೇ ಬಳಕೆದಾರರ ಸಂಯೋಜನೆಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಪ್ರತಿಗೊಳಿಸಲಾಗಿದೆ"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "%s ಭಾಷೆಯ ಕಡತದಲ್ಲಿ ದೋಷವಾಗಿದೆ"
-
-msgid "Language Error"
-msgstr "ಭಾಷೆಯ ದೋಷ"
-
 msgid "This change requires administrator privileges."
 msgstr "ಈ ಬದಲಾವಣೆಗೆ ಮಹಾಶಯದ ಅನುಮತಿಗಳು ಬೇಕಾಗುತ್ತದೆ"
 
@@ -6847,6 +6641,10 @@ msgstr "&ಸಂಶ್ಲೇಷಕ"
 #. headphones, etc.
 msgid "Output &device:"
 msgstr "ಹೂಡು&ವಳಿ ಸಾಧನ:"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr ""
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -6910,10 +6708,6 @@ msgstr "ಕೀಲಿಮಣೆ ಸಂಯೋಜನೆಗಳು"
 msgid "&Keyboard layout:"
 msgstr "&ಕೀಲಿಮಣೆ ವಿನ್ಯಾಸ"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "ಕೀಲಿಮಣೆ ವಿನ್ಯಾಸ"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6961,6 +6755,11 @@ msgstr "ಆದೇಶದ&ಕೀಲಿಗಳನ್ನು ಹೇಳಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
+msgid "Play sound for &spelling errors while typing"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 msgid "Handle keys from other &applications"
 msgstr "ಇತರ &ಬಳಕಗಳಿಂದ ಕೀಲಿಗಳನ್ನು ನಿಭಾಯಿಸಿ"
 
@@ -6986,10 +6785,6 @@ msgstr "ಮೌಸ್ &ದಾರಿಯನ್ನು ಶಕ್ತಗೊಳಿಸಿ
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "ಪಠ್ಯ ಸೂಕ್ಷ್ಮತೆಯ &ಘಟಕ:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "ಪಠ್ಯ ಪ್ರಕಟಣೆಯ ಘಟಕ"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -7116,11 +6911,6 @@ msgstr "ವಸ್ತುವಿನ &ವಿವರಣೆಗಳನ್ನು ಪ್ರ
 msgid "Progress &bar output:"
 msgstr "ಪ್ರಗತಿಯ &ಪಟ್ಟಿಕೆ ಹುಟ್ಟುವಳಿ"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "ಪ್ರಗತಿಯ ಪಟ್ಟಿಕೆ ಹುಟ್ಟುವಳಿ"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -7184,127 +6974,191 @@ msgstr "ಆದೇಶವಲ್ಲದ ಸೂಚನೆಗಳು ದಸ್ತಾವ�
 msgid "Document Formatting"
 msgstr "ದಸ್ತಾವೇಜು ಅಂದಗೊಳಿಸುವಿಕೆ"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "ಸೂಚಕವು  (ಲ್ಯಾಗ್ ಉಂಟುಮಾಡಿದಮೇಲೆ) ಶೈಲಿಗಳ ಬದಲಾವಣೆಗಳನ್ನು ಹೇಳಿ"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr ""
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "&ಅಕ್ಷರದ ಹೆಸರನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "&Font name"
+msgstr "ಅಕ್ಷರ ವಿನ್ಯಾಸದ ಹೆಸರು"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "ಅಕ್ಷರಶೈಲಿ &ಗಾತ್ರವನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "Font &size"
+msgstr "ಅಕ್ಷರದ ಅಳತೆ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
+#, fuzzy
+msgid "Font attri&butes"
 msgstr "ಅಕ್ಷರಶೈಲಿ &ಗುಣವಿಶೇಶಕವನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "&ಹೊಂದಿಸುವಿಕೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "E&mphasis"
+msgstr "&ಪುಟಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "&ಬಣ್ಣಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+msgid "St&yle"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
+msgid "&Colors"
+msgstr ""
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+#, fuzzy
+msgid "Document information"
+msgstr "ದಾಖಲೆಯ ಶೈಲಿ"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "Co&mments"
+msgstr "ಪ್ರತಿಕ್ರಿಯೆಗಳು"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "&Editor revisions"
 msgstr "&ಸಂಪಾದಕತ್ವದ ಪರಿಶ್ಕರಣಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #, fuzzy
-msgid "Report e&mphasis"
-msgstr "&ಪುಟಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+msgid "Spelling e&rrors"
+msgstr "ಕಾಗುಣಿತ ದೋಷ"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "&ಶೈಲಿಯನ್ನು ಪ್ರಕಟಿಸಿ"
+msgid "&Pages"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "&ದೋಷಗಳ ಪದಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "&ಪುಟಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
+#, fuzzy
+msgid "Line &numbers"
 msgstr "ರೇಖೆಯ &ಸಂಖ್ಯೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+#, fuzzy
+msgid "Line &indentation reporting:"
 msgstr "&ಸಾಲಿನ ಪದಜಾಗ ನಿರ್ಧರಣೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#, fuzzy
+msgid "Off"
+msgstr "ಮುಚ್ಚಿತು"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+#, fuzzy
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "ಮಾತು"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr ""
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr ""
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
+#, fuzzy
+msgid "&Paragraph indentation"
 msgstr "&ವಾಕ್ಯವೃಂದದ ಪದಜಾಗ ನಿರ್ಧರಣೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "&ಕೋಷ್ಟಕಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report line spacing if available.
+#, fuzzy
+msgid "&Line spacing"
+msgstr "%s ಆಯ್ದುಕೊಳ್ಳಲಾಗುತ್ತಿದೆ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "ಕೋಷ್ಟಕಗಳ &ಪಂಕ್ತಿ/ಅಂಕಣದ ಶಿರೋಲೇಖವನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "&Alignment"
+msgstr "ಹೊಂದಿತ"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+#, fuzzy
+msgid "Table information"
+msgstr "ಸ್ಥಳದ ಮಾಹಿತಿಯಿಲ್ಲ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
+#, fuzzy
+msgid "&Tables"
+msgstr "ಕೋಷ್ಟಕ"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "Row/column h&eaders"
+msgstr "ಅಂಕಣದ ಶಿರೋಲೇಖ"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "Cell c&oordinates"
 msgstr "ಕೋಷ್ಟಕದ ಕೋಶದ &ಸಂಯೋಜಿತಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "&ಕೊಂಡಿಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+#, fuzzy
+msgid "Elements"
+msgstr "ಅಂಶಗಳ ಪಟ್ಟಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "&ಶಿರೋನಾಮೆಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+msgid "&Lists"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "&ಪಟ್ಟಿಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "Block &quotes"
+msgstr "ಉಲ್ಲೇಖಿತ ಪಠ್ಯಖಂಡ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "ಪಠ್ಯಖಂಡ   &ಉಲ್ಲೇಖಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+msgid "Fra&mes"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "&ಹೆಗ್ಗುರುತುಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "&Clickable"
+msgstr "ಒತ್ತಬಹುದಾದ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "&ಚೌಕಟ್ಟುಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "&ಕ್ಲಿಕ್ ಮಾಡುವಂತದ್ದನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "(ಕರ್ಸರ್ ಘೋಶಣೆಯ ನಂತರ) ಶೈಲಿಗಳ ಬದಲಾವಣೆಗಳನ್ನು ಹೇಳಿ"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7327,6 +7181,7 @@ msgid "&Pattern"
 msgstr "&ಮಾದರಿ"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&ಮರುಸ್ಥಾಪಿಸುವಿಕೆ"
 
@@ -7337,6 +7192,19 @@ msgstr "&ಪ್ರತಿಕ್ರಿಯೆ"
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&ವಿಧಾನ"
+
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr ""
+
+#, fuzzy
+msgid "Dictionary Entry Error"
+msgstr "ಶಬ್ದಕೋಶಕ್ಕೆ ಸೇರಿಸಿ"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, fuzzy, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "&ಕ್ರಮಬದ್ಧ ಅಭಿವ್ಯಕ್ತಿ, "
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7401,9 +7269,18 @@ msgstr "&ಹೂಡುವಳಿ ಕೋಷ್ಟಕ "
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "ಸೂಚಕದಲ್ಲಿ ಪದಕ್ಕೆ ಬ್ರೈಲ್  ಗಣಕವನ್ನು &ವಿಸ್ತರಿಸಿ"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+#, fuzzy
+msgid "&Show cursor"
+msgstr "ಸೂಚಕ"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "ಸೂಚಕದ ಮಿಂಚಿನ ಗತಿ (MS)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr ""
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7454,13 +7331,23 @@ msgstr "ಚಿನ್ಹೆ"
 msgid "Level"
 msgstr "ಮಟ್ಟ"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "ಉಳಿಸಿಕೊ"
+
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+#, fuzzy
+msgid "Change selected symbol"
 msgstr "ಚಿನ್ಹೆಯನ್ನು ಬದಲಾಯಿಸಿ"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&ಮಟ್ಟ"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&ಸಂಯೋಜಕ ನಿಜವಾದ ಚಿಹ್ನೆ ಕಳುಹಿಸಿ"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7543,11 +7430,13 @@ msgid "Refreshes the document content"
 msgstr "ದಸ್ತಾವೇಜಿನ ಒಳಾಂಶವನ್ನು ಪುನಶ್ಚೇತನಗೊಳಿಸುತ್ತದೆ"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout on"
+#, fuzzy
+msgid "Use screen layout on"
 msgstr "ಪರದೆಯ ವಿನ್ಯಾಸದ ಬಳಕೆ ಬೇಕು"
 
 #. Translators: Presented when use screen layout option is toggled.
-msgid "use screen layout off"
+#, fuzzy
+msgid "Use screen layout off"
 msgstr "ಪರದೆಯ ವಿನ್ಯಾಸದ ಬಳಕೆ ಬೇಡ"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -7597,27 +7486,171 @@ msgstr "ಪ್ರಾರ್ಥಿಸು"
 msgid "Desktop"
 msgstr "ಮೇಲ್ತೆರೆ"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
+#. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
 msgstr "ಪೂರ್ವನಿಯೋಜಿತ ಬಣ್ಣ"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+#, fuzzy
+msgid "Unknown color"
+msgstr "ಅಪರಿಚಿತ ಬಣ್ಣ"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Excel controls the pattern.
+#, fuzzy
+msgid "automatic"
+msgstr "ಸ್ವಯಂಚಾಲಿತ"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Checkerboard
+msgid "diagonal crosshatch"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Criss-cross lines
+msgid "thin diagonal crosshatch"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the upper left to the lower right
+msgid "reverse diagonal stripe"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 12.5% gray
+#, no-python-format
+msgid "12.5% gray"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 25% gray
+#, no-python-format
+msgid "25% gray"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 50% gray
+#, no-python-format
+msgid "50% gray"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% gray
+#, no-python-format
+msgid "75% gray"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 6.25% gray
+#, no-python-format
+msgid "6.25% gray"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Grid
+msgid "thin horizontal crosshatch"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark horizontal lines
+#, fuzzy
+msgid "horizontal stripe"
+msgstr "ಬೆಳಕಿನ ಕೋರಲ್"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the upper left to the lower right
+msgid "thin reverse diagonal stripe"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light horizontal lines
+#, fuzzy
+msgid "thin horizontal stripe"
+msgstr "ಬೆಳಕಿನ ಕೋರಲ್"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light diagonal lines running from the lower left to the upper right
+msgid "thin diagonal stripe"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Light vertical bars
+#, fuzzy
+msgid "thin vertical stripe"
+msgstr "ಹರಡಿಕೊಂಡ ಲಂಬ ಹೊಂದಿತ "
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. No pattern
+#, fuzzy
+msgid "none"
+msgstr "ಯಾವುದೂ ಬೇಡ"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. 75% dark moire
+msgid "thick diagonal crosshatch"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Solid color
+msgid "solid"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark diagonal lines running from the lower left to the upper right
+msgid "diagonal stripe"
+msgstr ""
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#. Dark vertical bars
+#, fuzzy
+msgid "vertical stripe"
+msgstr "ಸಂಪೂರ್ಣ ಮೇಲಕ್ಕೆ ಲಂಬ ಹೊಂದಿತ "
+
+#. Translators: A type of background pattern in Microsoft Excel.
+#, fuzzy
+msgid "linear gradient"
+msgstr "ಸ್ಲೋವೇನ್ ದರ್ಜೆ 1"
+
+#. Translators: A type of background pattern in Microsoft Excel.
+msgid "rectangular gradient"
+msgstr ""
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "ನಕ್ಷೆಗಳ ಪಟ್ಟಿಯೊಂದಿಗೆ, ಹೇಳಿಕೆಗಳು ಮತ್ತು ಫಾರ್ಮುಲಾದೊಂದಿಗೆ ಕೋಶವನ್ನು ತೋರುತ್ತದೆ."
+#, fuzzy
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "ಈ ಧಾಕಲೆಯಲ್ಲಿ ಪಟ್ಟಿಯ ರೂಪದಲ್ಲಿ ಬಹುವಿಧವಾದ  ಅಂಶಗಳನ್ನು  ತೋರುತ್ತದೆ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+#, fuzzy
+msgid "&Charts"
 msgstr "&ನಕ್ಷೆ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
+#, fuzzy
+msgid "C&omments"
 msgstr "&ಹೇಳಿಕೆ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
+#, fuzzy
+msgid "Fo&rmulas"
 msgstr "&ರೂಪವಿಶಯ"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Form fields"
+msgstr "ಮುಂದಕ್ಕಿಲ್ಲ ನಮೂನೆ ವರ್ಗ "
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheets"
+msgstr ""
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7643,7 +7676,8 @@ msgid "Already set {address} as start of column headers"
 msgstr "{address}  ಈಗಾಗಲೇ ಪ್ರಾರಂಭದ ಅಂಕಣದ ಶಿರೋಲೇಖದಂತೆ ಇರಿಸಲಾಗಿದೆ"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-msgid "removed {address}    from column headers"
+#, fuzzy
+msgid "Removed {address}    from column headers"
 msgstr "ಅಂಕಣದ ಶಿರೋಲೇಖದಿಂದ {address}     ವನ್ನು ತೆಗೆಯಲಾಗಿದೆ"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -7668,7 +7702,8 @@ msgid "Already set {address} as start of row headers"
 msgstr "ಈಗಾಗಲೇ {address}  ವನ್ನು ಪಂಕ್ತಿ ಶಿರೋಲೇಖದ ಪ್ರಾರಂಭವನ್ನಾಗಿ ಇರಿಸಲಾಗಿದೆ"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-msgid "removed {address}    from row headers"
+#, fuzzy
+msgid "Removed {address}    from row headers"
 msgstr "ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದಿಂದ {address}  ವನ್ನು ತೆಗೆಯಲಾಗಿದೆ"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -7683,6 +7718,12 @@ msgstr ""
 "ಒಂದು ಬಾರಿ ಒತ್ತಿದರೆ, ಈ ಕೋಶವನ್ನು ಮೊದಲನೆಯ ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖವನ್ನಾಗಿ ಕೆಳಗಿನ ಯಾವುದಾದರು "
 "ಕೋಶಕ್ಕೆ ಇರಿಸುತ್ತದೆ ಮತ್ತು ಇದೇ ಕ್ಷೇತ್ರದಲ್ಲಿ ಬಲಕ್ಕೆ ಇರಿಸುತ್ತದೆ. ಎರಡು ಬಾರಿ ಒತ್ತಿದರೆ ಈ "
 "ಕೋಶಕ್ಕೆ ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖವನ್ನು ಮರೆಯುತ್ತದೆ."
+
+msgid "Input Message is {title}: {message}"
+msgstr "ಇನ್ಪುಟ್ ಸಂದೇಶ {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "ಇನ್ಪುಟ್ ಸಂದೇಶ {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8444,14 +8485,43 @@ msgstr "ಪ್ರತಿಕ್ರಿಯೆ {text} {author} ರವರಿಂದ {da
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text} {author} ರವರಿಂದ {date} ರಂದು"
 
-#, python-format
-msgid "%g characters"
-msgstr "%g ಅಕ್ಷರಗಳು"
+#. Translators: single line spacing
+msgctxt "line spacing value"
+msgid "single"
+msgstr ""
 
-#. Translators: the value in points for a paragraph indenting
+#. Translators: double line spacing
+msgctxt "line spacing value"
+msgid "double"
+msgstr ""
+
+#. Translators:  line spacing of 1.5 lines
+#, fuzzy
+msgctxt "line spacing value"
+msgid "1.5 lines"
+msgstr "ಸಾಲು %s "
+
+#. Translators: exact (minimum) line spacing
+msgctxt "line spacing value"
+msgid "exact"
+msgstr ""
+
+#. Translators: line spacing of at least x point
 #, python-format
-msgid "%g pt"
-msgstr "%g pt"
+msgctxt "line spacing value"
+msgid "at least %.1f pt"
+msgstr ""
+
+#. Translators: line spacing of x lines
+#, python-format
+msgctxt "line spacing value"
+msgid "%.1f lines"
+msgstr ""
+
+#. Translators: the title of the message dialog desplaying an MS Word table description.
+#, fuzzy
+msgid "Table description"
+msgstr "ವಿಸ್ತೃತ ವಿವರಣೆಯನ್ನ ಹೊಂದಿರುವ"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -8554,6 +8624,41 @@ msgstr "ಬಲಕ್ಕೆ ಹೊಂದಿಸಿದ"
 msgid "Justified"
 msgstr "ಸರಿಹೊಂದಿಸಿದ"
 
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Superscript"
+msgstr "ಮೇಲ್ಬರಹ"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Subscript"
+msgstr "ಕೆಳ ಬರಹ"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Baseline"
+msgstr "ಮೂಲ ಸಾಲು"
+
+#. Translators: a message reported when a paragraph is moved below another paragraph
+#, python-format
+msgid "Moved below %s"
+msgstr ""
+
+#. Translators: a message reported when a paragraph is moved below a blank paragraph
+#, fuzzy
+msgid "Moved below blank paragraph"
+msgstr "ವಾಕ್ಯವೃಂದ  &ಮೂಲಕ ಓದಿರಿ"
+
+#. Translators: a message reported when a paragraph is moved above another paragraph
+#, python-format
+msgid "Moved above %s"
+msgstr ""
+
+#. Translators: a message reported when a paragraph is moved above a blank paragraph
+#, fuzzy
+msgid "Moved above blank paragraph"
+msgstr "ವಾಕ್ಯವೃಂದ  &ಮೂಲಕ ಓದಿರಿ"
+
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} ಶೈಲಿ, ರೂಪರೇಖೆಯ ಮಟ್ಟ  {outlineLevel}"
@@ -8588,20 +8693,30 @@ msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} ಪಿಕಸ್"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-msgid "no comments"
-msgstr "ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಗಳಿಲ್ಲ"
+#, fuzzy
+msgid "No comments"
+msgstr "ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಯಿಲ್ಲ."
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
 msgstr "ಗಣಕದ ತೆರೆಬಾಣ ಇರುವಲ್ಲಿ ಪ್ರತಿಕ್ರಿಯೆಯ ಪಠ್ಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
 
+#. Translators: a message when switching to single line spacing  in Microsoft word
+msgid "Single line spacing"
+msgstr ""
+
+#. Translators: a message when switching to double line spacing  in Microsoft word
+msgid "Double line spacing"
+msgstr ""
+
+#. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
+msgid "1.5 line spacing"
+msgstr ""
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
 msgstr "ಕೋಷ್ಟಕದೊಳಗಿಲ್ಲ"
-
-msgid "Edge of table"
-msgstr "ಕೋಷ್ಟಕದ ಕೊನೆ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8609,24 +8724,10 @@ msgid "&Annotations"
 msgstr "&ಠಿಪ್ಪಣಿಗಳು"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
+#, fuzzy
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "ಹಿಮ್ಸ್ ಬ್ರೈಲ್ ಸೆನ್ಸ್/ಬ್ರೈಲ್ ಕೊನೆಯ ಶ್ರೇಣಿ"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ಹಿಮ್ಸ್ ಸಿಂಕ್ ಬ್ರೈಲ್"
-
-#~ msgid "unrevised"
-#~ msgstr "ಪರಿಶ್ಕರಿಸದ"
-
-#~ msgid "unknown author"
-#~ msgstr "ಅಪರಿಚಿತ ಲೇಖಕ"
-
-#~ msgid "unknown date"
-#~ msgstr "ಅಪರಿಚಿತ ತಾರೀಕು"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} {revisionAuthor} ರವರಿಂದ {revisionDate} ರಂದು"
-
-#~ msgid "%s"
-#~ msgstr "%s"

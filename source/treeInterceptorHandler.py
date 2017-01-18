@@ -144,21 +144,31 @@ class DocumentTreeInterceptor(TreeInterceptor):
 
 class RootProxyTextInfo(textInfos.TextInfo):
 
-	def __init__(self,obj,position,_rangeObj=None):
+	def __init__(self,obj,position,**kwargs):
 		super(RootProxyTextInfo,self).__init__(obj,position)
-		self.innerTextInfo=self.InnerTextInfoClass(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+		if isinstance(position,self.InnerTextInfoClass):
+			self.innerTextInfo=position
+		else:
+			self.innerTextInfo=self.InnerTextInfoClass(obj.rootNVDAObject,position,**kwargs)
 
 	def _get_InnerTextInfoClass(self):
 		return self.obj.rootNVDAObject.TextInfo
 
 	def copy(self):
-		return self.__class__(self.obj,None,_rangeObj=self.innerTextInfo._rangeObj)
+		innerCopy=self.innerTextInfo.copy()
+		return self.__class__(self.obj,innerCopy)
 
 	def _get__rangeObj(self):
 		return self.innerTextInfo._rangeObj
 
 	def _set__rangeObj(self,r):
 		self.innerTextInfo._rangeObj=r
+
+	def _get_locationText(self):
+		return self.innerTextInfo.locationText
+
+	def copyToClipboard(self):
+		return self.innerTextInfo.copyToClipboard()
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)

@@ -3,6 +3,220 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.4 =
+Najważniejsze zmiany w tej wersji to poprawiona obsługa Microsoft Edge; tryb czytania w aplikacji Poczta systemu Windows 10; istotne poprawki okien NVDA.
+
+== Nowe funkcje ==
+- NVDA może oznajmiać wcięcia linii przy użyciu dźwięków. Może to być ustawione na liście "Oznajmiaj wcięcia linii" w ustawieniach formatowania dokumentów NVDA. (#5906)
+- Obsługa monitora brajlowskiego Orbit Reader 20. (#6007)
+- Dodana opcja automatycznego otwierania okna podglądu mowy przy starcie NVDA. Może zostać włączona przez pole wyboru w oknie podglądu mowy. (#5050)
+- Przy ponownym otwieraniu podglądu mowy, przywracane są rozmiary i położenie okna. (#5050)
+- Pola odsyłacza w Microsoft Word są teraz traktowane jak hiperlinki. Są zgłaszane jako linki, i mogą być aktywowane. (#6102)
+- Obsługa monitorów brajlowskich Baum SuperVario2, Baum Vario 340 i HumanWare Brailliant2. (#6116)
+- Wstępna obsługa rocznicowej aktualizacji Microsoft Edge. (#6271)
+- Tryb czytania jest teraz używany podczas czytania poczty w aplikacji Windows 10 mail. (#6271)
+
+
+== Zmiany ==
+- Zaktualizowany translator brajlowski liblouis do wersji 3.0.0. Zawiera znaczne zmiany ujednoliconego brajla angielskiego. (#6109, #4194, #6220, #6140)
+- W managerze dodatków, przyciski włączania i wyłączania dodatków mają klawisze skrótu (w polskiej wersji językowej, klawisze te były zdefiniowane już dawniej). (#6388)
+- Naprawiono różne problemy rozmieszczenia i wyrównania elementów w oknach dialogowych NVDA. (#6317, #5548, #6342, #6343, #6349)
+- W oknie ustawień formatowania dokumentów, treść się przewija. (#6348)
+- Naprawione okno wymowy symboli, aby cała szerokość okna była używana dla listy symboli. (#6101)
+- W trybie czytania w przeglądarkach internetowych, komendy literowej nawigacji do pól edycji (e i shift+e) i pól formularza (f i shift+f) uwzględniają także pola edycji tylko do odczytu. (#4164)
+- w oknie ustawień formatowania dokumentów NVDA, opcja "Oznajmiaj zmiany edycyjne za kursorem" została zmieniona na "zgłaszaj zmiany formatowania za kursorem", ponieważ dotyczy brajla, a nie tylko mowy. W polskiej wersji językowej, nowa nazwa tej opcji istniała już dawniej. (#6336)
+- Poprawiony wizualny układ powitalnego okna dialogowego NVDA. (#6350)
+- Okna dialogowe NVDA mają teraz przyciski "ok" i "Anuluj" wyrównane do prawej strony okna. (#6333)
+- Pokrętła są teraz używane do wprowadzania wartości pól numerycznych takich jak procentowa zmiana tonu dla dużych liter w oknie ustawień głosu. (#6099)
+- Ujednolicony między różnymi przeglądarkami sposób zgłaszania elementów IFrame (dokumentów zagnieżdżonych wewnątrz innych dokumentów). W przeglądarce Firefox, iframe są zgłaszane jako "Ramka". (#6047)
+
+
+== Poprawki błędów ==
+- Poprawiony rzadki problem przy wyjściu z NVDA, gdy otwarty był podgląd mowy. (#5050)
+- Mapy obrazkowe są teraz renderowane zgodnie z oczekiwaniami w trybie czytania w Mozilla Firefox. (#6051)
+- W oknie słownika, naciśnięcie klawisza Enter zapisuje zmiany i zamyka okno. (#6206)
+- Wyświetlane komunikaty w brajlu przy zmianie trybów wprowadzania dla metody wprowadzania (wprowadzanie narodowe /alfanumeryczne, pełnokształtowe/półkształtowe, etc.). (#5892, #5893)
+- Po wyłączeniu i natychmiastowym ponownym włączeniu wtyczki lub odwrotnie, status wtyczki prawidłowo zmienia się na poprzedni. (#6299)
+- W Microsoft Word, pola numerów stron w nagłówku mogą być odczytywane. (#6004)
+- Mysz może być użyta do zmiany punktu uwagi między listą symboli i polami edycyjnymi w oknie wymowy symboli. (#6312)
+- Poprawiono błąd blokujący pojawienie się listy elementów w trybie czytania, gdy Microsoft Word zawierał nieprawidłowe łącze. (#5886)
+- Po zamknięciu podglądu mowy z paska zadań lub klawiszem alt+F4, pole wyboru statusu podglądu mowy w menu NVDA  będzie odzwierciedlać aktualną widoczność okna. (#6340)
+- Komenda przeładowania wtyczek nie powoduje dłużej problemów z wyzwalaczami profili konfiguracji, nowym dokumentem w przeglądarkach internetowych i przeglądem ekranu. (#2892, #5380)
+- Na liście języków w oknie ustawień ogólnych NVDA, języki takie jak aragoński są teraz poprawnie wyświetlane w Windows 10. (#6259)
+- Emulowane klawisze systemowe (np. przycisk na monitorze brajlowskim, który emuluje naciśnięcie klawisza tab) są teraz prezentowane w wybranym języku NVDA w pomocy klawiatury i oknie zdarzeń wejścia. Poprzednio były zawsze wyświetlane po angielsku. (#6212)
+- Zmiana języka w ogólnych ustawieniach NVDA odnosi skutek dopiero po restarcie programu. (#4561)
+- Pole wzorca dla nowego wpisu słownika nie może być pozostawione puste. (#6412)
+- Naprawiono rzadki błąd skanowania portów szeregowych na niektórych systemach, sprawiający, że sterownik monitora brajlowskiego nie mógł być używany. (#6462)
+- W Microsoft Word, numerowane punktory są teraz odczytywane w komórkach tabeli, podczas przemieszczania się o komórkę. (#6446)
+- Można przypisywać zdarzenia wejścia  do poleceń dla sterownika monitora brajlowskiego Handy Tech  w oknie zdarzeń wejścia NVDA. (#6461)
+- W Microsoft Excel, naciśnięcie enter lub numpadEnter podczas nawigacji w arkuszu, teraz prawidłowo  zgłasza nawigację do następnego wiersza. (#6500)
+- iTunes  nie zawiesza się na zawsze podczas używania trybu czytania  w sklepie iTunes, Apple Music, etc. (#6502)
+- Poprawiono awarie w 64-bitowych aplikacjach   Mozilla i bazujących na Chrome. (#6497)
+- W Firefox z włączoną wieloprocesowością, tryb czytania i edytowalne pola tekstowe teraz działają prawidłowo. (#6380)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2016.3 =
+Najważniejsze zmiany w tej wersji to możliwość wyłączania pojedynczych dodatków; obsługa pól formularzy w Microsoft Excel; znaczące ulepszenia zgłaszania kolorów; poprawki dotyczące kilku monitorów brajlowskich; poprawki obsługi Microsoft Word.
+
+== Nowe funkcje ==
+- Tryb czytania może teraz być używany do odczytu dokumentów PDF w Microsoft Edge w rocznicowej aktualizacji Windows 10. (#5740)
+- Przekreślenie i podwójne przekreślenie są odczytywane  w razie potrzeby w Microsoft Word. (#5800)
+- W Microsoft Word odczytywany jest tytuł tabeli jeśli jest zdefiniowany. Jeżeli istnieje opis, można go odczytać przy pomocy komendy otwarcia długiego opisu (NVDA+d) w trybie czytania. (#5943)
+- W Microsoft Word, NVDA zgłasza informację o położeniu podczas przenoszenia paragrafów (alt+shift+strzałka w dół i alt+shift+strzałka w górę). (#5945)
+- Microsoft Word: zgłaszana jest interlinia poprzez komendę NVDA odczytaj formatowanie, oraz automatycznie, jeśli włączona jest opcja w ustawieniach formatowania dokumentów NVDA - przy zmianie interlinii klawiszami skrótu Microsoft word, oraz przy przejściu do tekstu o innej interlinii. (#2961)
+- Internet Explorer:  rozpoznawane są strukturalne elementy HTML 5. (#6044)
+- Odczytywanie komentarzy (takich jak w Microsoft Word) może teraz być wyłączone przy pomocy opcji "Czytaj komentarze" w ustawieniach formatowania dokumentów NVDA. (#5108)
+- Możliwe jest teraz wyłączanie pojedynczych dodatków w managerze dodatków. (#3090)
+- Dodatkowe przypisania klawiszy zostały dodane do monitorów brajlowskich serii ALVA BC640/680. (#5206)
+- Dodana komenda przeniesienia monitora brajlowskiego do punktu uwagi. Obecnie, tylko monitory serii ALVA BC640/680 mają klawisz przypisany do tej komendy, ale może to zostać zdefiniowane ręcznie dla dowolnego monitora  brajlowskiego w oknie zdarzeń wejścia. (#5250)
+- W Microsoft Excel, można nawigować po polach formularzy. Przejście do pola formularza możliwe jest przy pomocy listy elementów, albo nawigacji literami w trybie czytania. (#4953)
+- Można przypisać zdarzenie wejścia do przełączania trybu prostego przeglądu przy pomocy okna zdarzeń wejścia. (#6173)
+
+
+== Zmiany ==
+- NVDA zgłasza teraz kolory przy użyciu podstawowego, dobrze rozumianego zestawu 9 odcieni kolorów i 3 cieni ze zmianami jasności i bladości. Zastępuje to bardziej subiektywne i mniej rozumiane nazwy kolorów. (#6029)
+- Zmienione zachowanie NVDA+F9 a następnie NVDA+F10: teraz zaznacza tekst po pierwszym naciśnięciu F10. Po kolejnym naciśnięciu F10 w krótkim odstępie czasowym, tekst jest kopiowany do schowka . (#4636)
+- Zaktualizowany eSpeak NG do wersji Master 11b1a7b (22 czerwiec 2016). (#6037)
+
+
+== Poprawki błędów ==
+- Kopiowanie do schowka w trybie czytania w Microsoft Word, zachowuje formatowanie. (#5956)
+- W Microsoft Word, NVDA informuje prawidłowo o użyciu poleceń Worda nawigacji w tabeli (alt+home, alt+end, alt+pageUp i alt+pageDown) i komend zaznaczania tabeli (shift z klawiszami skrótu nawigacji). (#5961)
+- W oknach dialogowych Microsoft Word, znacząco poprawiona nawigacja w chierarchii obiektów NVDA. (#6036)
+- W niektórych aplikacjach takich jak Visual Studio 2015, klawisze skrótu (np. control+c dla skopiowania) są teraz odczytywane. (#6021)
+- Poprawiono rzadki błąd skanowania portów szeregowych na niektórych systemach, który powodował bezużyteczność niektórych sterowników monitorów brajlowskich. (#6015)
+- Zgłaszanie kolorów w Microsoft Word jest teraz dokładniejsze, ponieważ uwzględnia zmiany powodowane przez motywy Microsoft Office. (#5997)
+- W kompilacjach Windows 10  po kwietniu 2016, ponownie dostępny jest tryb czytania Microsoft Edge i wsparcie dla sugestii wyszukiwania na ekranie startowym. (#5955)
+- W Microsoft Word, automatyczny odczyt nagłówków tabeli  radzi sobie lepiej z połączonymi komórkami. (#5926)
+- W aplikacji Poczta systemu Windows 10, NVDA nie ma od teraz problemów z odczytaniem treści wiadomości. (#5635) 
+- przy włączonym oznajmianiu klawiszy poleceń, stan klawiszy przełącznikowych takich jak caps lock, nie jest anonsowany podwójnie. (#5490)
+- Okna kontroli konta użytkownika Windows są ponownie odczytywane prawidłowo w aktualizacji rocznicowej Windows 10. (#5942)
+- We wtyczce konferencji web (takiej jak używana na stronie out-of-sight.net), NVDA od teraz nie generuje dźwięków i nie wypowiada pasków postępu związanych z wejściem mikrofonu. (#5888)
+- W trybie czytania, wykonanie polecenia znajdź poprzedni lub znajdź następny, prawidłowo wykona poszukiwanie z uwzględnieniem wielkości liter, jeżeli pierwsze wyszukiwanie uwzględniało wielkość liter. (#5522)
+- Podczas edycji wpisów słownika, dostarczana jest informacja zwrotna dla nieprawidłowych wyrażeń regularnych. NVDA nie zawiesza się, jeżeli plik słownika zawiera nieprawidłowe wyrażenie regularne. (#4834)
+- Jeśli NVDA nie może się komunikować z monitorem brajlowskim (np. ponieważ został odłączony), automatycznie wyłączy używanie monitora. (#1555)
+- Nieznacznie poprawiona wydajność filtrowania listy elementów trybu czytania w niektórych sytuacjach. (#6126)
+- W Microsoft Excel, nazwy wzorców tła zgłaszane przez NVDA, teraz zgadzają się z nazwami używanymi przez Excel. (#6092)
+- Poprawiona obsługa ekranu logowania Windows 10, włącznie z oznajmianiem alertów i aktywowaniem pola hasła przy użyciu dotyku . (#6010)
+- NVDA poprawnie wykrywa dodatkowe przyciski routingu w monitorach brajlowskich serii ALVA BC640/680. (#5206)
+- NVDA ponownie może zgłaszać wyskakujące powiadomienia Windows w najnowszych kompilacjach Windows 10. (#6096)
+- Rozwiązany zdarzający się czasem problem, że NVDA nie rozpoznawał naciśnięć klawiszy na monitorach brajlowskich kompatybilnych z Baum i HumanWare Brailliant B. (#6035)
+- Jeśli włączone jest zgłaszanie numerów linii w ustawieniach formatowania dokumentów NVDA, numery linii są pokazywane na monitorze brajlowskim. (#5941)
+- W trybie komunikacji bez mowy, odczyt obiektów (np. po naciśnięciu NVDA+tab aby odczytać punkt uwagi) teraz pojawia się w podglądzie mowy. (#6049)
+- Na liście wiadomości  Outlook 2016,  informacja o powiązanym szkicu nie jest od teraz zgłaszana. (#6219)
+- W Google Chrome i przeglądarkach bazujących na Chrome w językach innych niż angielski, tryb czytania nie zawodzi w wielu dokumentach. (#6249)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2016.2.1 =
+To wydanie naprawia awarie Microsoft Word:
+
+- NVDA nie powoduje awarii Microsoft Word zdarzających się od razu po starcie w Windows XP. (#6033)
+- Usunięte zgłaszanie błędów gramatycznych, które powodowało awarie Microsoft Word. (#5954, #5877)
+
+
+= 2016.2 =
+Najważniejsze zmiany w tej wersji to możliwość zgłaszania błędów pisowni podczas wpisywania; obsługa zgłaszania błędów gramatycznych w Microsoft Word; poprawki obsługi Microsoft Office.
+
+== Nowości ==
+- W trybie czytania w Internet Explorer i innych kontrolkach MSHTML, używanie nawigacji literami aby przejść do adnotacji (a i shift+a) teraz przemieszcza do wstawionego i usuniętego tekstu. (#5691)
+- W Microsoft Excel, NVDA zgłasza teraz poziom grupy komórek, oraz informacje, czy są rozwinięte czy zwinięte. (#5690)
+- Dwukrotne naciśnięcie komendy odczytania formatowania tekstu (NVDA+f), prezentuje informacje w trybie czytania, więc mogą być łatwo przejrzane. (#4908)
+- W Microsoft Excel 2010 i nowszych, cieniowanie komórki i wypełnienie gradientowe są teraz zgłaszane. Automatyczne ogłaszanie jest kontrolowane przez opcję sygnalizuj kolory w ustawieniach formatowania dokumentów NVDA. (#3683)
+- Nowa tablica brajlowska: Greka koine. (#5393)
+- W podglądzie logów, możesz teraz zapisać log używając klawisza control+s. (#4532)
+- Gdy włączone jest informowanie o błędach pisowni i jest  obsługiwane przez kontrolkę z punktem uwagi, NVDA wygeneruje dźwięk ostrzegawczy aby poinformować o błędzie przy wpisywaniu. Można to wyłączyć nową opcją "Odtwarzaj dźwięk przy błędach pisowni podczas wpisywania" w oknie ustawień klawiatury NVDA. (#2024)
+- Błędy gramatyczne są teraz zgłaszane w Microsoft Word. Można to wyłączyć przy użyciu nowej opcji "Zgłaszaj błędy gramatyczne"  w oknie ustawień formatowania dokumentów NVDA. (#5877)
+
+
+== Zmiany ==
+- W trybie czytania i polach edycji, NVDA traktuje teraz numpad Enter tak samo jak główny klawisz enter. (#5385)
+- NVDA używa teraz syntezatora eSpeak NG. (#5651)
+- W Microsoft Excel, NVDA nie ignoruje nagłówka kolumny dla komórek oddzielonych pustą linią od nagłówków. (#5396)
+- W Microsoft Excel, współrzędne są oznajmiane przed nagłówkami dla uniknięcia dwuznaczności między nagłówkami i treścią. (#5396)
+
+
+== Poprawki błędów ==
+- W trybie czytania, podczas próby użycia nawigacji literami aby przejść do elementu, który nie jest obsługiwany dla dokumentu, NVDA zgłasza, że nie jest to obsługiwane, zamiast informacji, że nie ma elementu w wybranym kierunku. (#5691)
+- Lista elementów w trybie arkuszy Microsoft Excel, wyświetla również arkusze zawierające tylko wykresy. (#5698)
+- NVDA nie zgłasza teraz nadmiarowych informacji podczas przełączania okien w wielookienkowych aplikacjach Java takich jak IntelliJ lub Android Studio. (#5732)
+- W edytorach bazujących na silniku Scintilla takich jak Notepad++, brajl jest prawidłowo aktualizowany podczas przemieszczania kursora przy użyciu monitora brajlowskiego. (#5678)
+- NVDA od teraz nie zawiesza się czasami podczas włączania wyświetlania na monitorze brajlowskim. (#4457)
+- W Microsoft Word, wcięcie akapitu jest zawsze zgłaszane w jednostkach miary wybranych przez użytkownika (np. centymetrach lub calach). (#5804)
+- Wiele komunikatów NVDA, które dawniej były tylko wypowiadane, jest teraz prezentowanych również na monitorze brajlowskim, jeśli używany. (#5557)
+- W dostępnych aplikacjach Java, zgłaszany jest poziom elementów drzewa. (#5766)
+- Naprawione przypadki zawieszania się NVDA w Adobe Flash w Mozilla Firefox. (#5367)
+- W Google Chrome i przeglądarkach bazujących na Chrome, dokumenty w oknach dialogowych lub aplikacjach mogą być odczytywane w trybie czytania. (#5818)
+- W Google Chrome i przeglądarkach bazujących na Chrome, możesz zmusić NVDA do przejścia w tryb czytania w sieciowych oknach dialogowych lub aplikacjach. (#5818)
+- W Internet Explorer i innych kontrolkach MSHTML, przesunięcie punktu uwagi do niektórych kontrolek (szczególnie takich, gdzie użyty jest aria-activedescendant) nie przełącza nieprawidłowo do trybu czytania. Miało to miejsce np. podczas przejścia do podpowiedzi w polach adresowych w trakcie tworzenia wiadomości w Gmail. (#5676)
+- W Microsoft Word, NVDA nie zawiesza się w dużych tabelach przy włączonym zgłaszaniu nagłówków tabel. (#5878)
+- W Microsoft word, NVDA nie zgłasza nieprawidłowo jako nagłówek tekstu z poziomem konspektu (ale nie wbudowanym stylem nagłówka). (#5186)
+- W trybie czytaniaW Microsoft Word, komendy przejścia do początku i końca kontenera (przecinek i Shift+przecinek) działają teraz dla tabel. (#5883)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2016.1 =
+Najważniejsze zmiany w tej wersji to opcjonalna możliwość zmniejszenia głośności innych dźwięków; ulepszone wyświetlanie brajla i obsługa monitorów brajlowskich; kilka znaczących poprawek obsługi  Microsoft Office; poprawki trybu czytania w iTunes.
+
+== Nowości ==
+- Nowe tablice brajlowskie: polski 8-punktowy brajl komputerowy, mongolski. (#5537, #5574)
+- Można wyłączyć kursor brajlowski, albo zmienić jego kształt, używając nowych opcji pokazywania kursora i kształtu kursora, znajdujących się w oknie ustawień brajla. (#5198)
+- NVDA może się łączyć z monitorem brajlowskim HIMS Smart Beetle przez Bluetooth. (#5607)
+- NVDA może opcjonalnie zmniejszać głośność innych dźwięków, gdy zainstalowane na Windows 8 i nowszych. Może to być ustawione przy użyciu opcji trybu przyciszania audio w oknie ustawień syntezatora NVDA, lub przez naciśnięcie NVDA+shift+d. (#3830, #5575)
+- Wsparcie dla APH Refreshabraille w trybie HID, Baum VarioUltra i Pronto! połączonych przez USB. (#5609)
+- Wsparcie monitorów brajlowskich HumanWare Brailliant BI/B, gdy protokół jest ustawiony na OpenBraille. (#5612)
+
+
+== Zmiany ==
+- Zgłaszanie podkreślenia jest teraz domyślnie wyłączone. (#4920)
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.5. (#5574)
+- Słowo "tekst" nie jest ogłaszane, gdy punkt uwagi, albo punkt przeglądu zostanie przesunięty na obiekt tekstowy. (#5452)
+
+
+== Poprawki błędów ==
+- W iTunes 12, tryb czytania jest prawidłowo aktualizowany, gdy nowa strona zostanie załadowana w iTunes Store. (#5191)
+- W Internet Explorer i innych kontrolkach MSHTML, przechodzenie do nagłówków określonego poziomu przy pomocy nawigacji pojedynczymi literami  teraz działa prawidłowo, gdy poziom nagłówka został nadpisany dla potrzeb dostępności (szczególnie, gdy aria-level nadpisuje poziom elementu h). (#5434)
+- W Spotify, rozwiązany problem częstego lądowania punktu uwagi na obiektach "nieznane". (#5439)
+- Punkt uwagi jest prawidłowo przywracany podczas powrotu do Spotify z innej aplikacji. (#5439)
+- Podczas przełączania trybu czytania i trybu formularzy, aktualny tryb jest zgłaszany brajlem i mową. (#5239)
+- Przycisk Start na pasku zadań nie jest od teraz zgłaszany jako lista lub jako zaznaczony w niektórych wersjach Windows. (#5178)
+- Komunikaty takie jak "wstawione" nie są od teraz zgłaszane podczas edycji wiadomości w Microsoft Outlook. (#5486)
+- Podczas używania monitora brajlowskiego, gdy tekst w bieżącej linii jest zaznaczony, (np. przy wyszukiwaniu w edytorze tekstu, gdy poszukiwany ciąg znajduje się w tej samej linii), wyświetlany na linijce tekst zostanie przesunięty, jeśli będzie to konieczne. (#5410)
+- NVDA od teraz nie zamyka się, gdy konsola wiersza poleceń Windows zostanie zamknięta klawiszami alt+f4 w Windows 10. (#5343)
+- Na liście elementów trybu czytania, gdy zmieniono typ elementu, pole filtra jest teraz czyszczone. (#5511)
+- W tekstach edytowalnych aplikacji Mozilla, przesuwanie myszy powoduje odczyt odpowiedniej linii, słowa, etc. zamiast całej treści. (#5535)
+- Podczas przesuwania myszy w tekstach edytowalnych aplikacji Mozilla, odczyt nie jest od teraz zatrzymywany na elementach takich jak linki, które znajdują się wewnątrz odczytywanego słowa, lub linii. (#2160, #5535)
+- W Internet Explorer, strona shoprite.com może być odczytywana w trybie czytania i nie jest zgłaszana jako pusta. (Nieprawidłowo zdefiniowane atrybuty lang są obsługiwane.) (#5569)
+- W Microsoft Word, śledzone zmiany takie jak "wstawione" nie są zgłaszane, gdy śledzenie zmian nie jest wyświetlane. (#5566)
+- Gdy punkt uwagi znajduje się na przycisku przełączającym, NVDA zgłasza, gdy zmieni się z wciśnięte na niewciśnięte. (#5441)
+- Ogłaszanie zmiany kształtu wskaźnika myszy ponownie działa zgodnie z oczekiwaniami. (#5595)
+- Przy odczytywaniu wcięcia linii, twarde spacje są traktowane jak normalne. Poprzednio mogło to powodować ogłaszanie "spacja spacja spacja" zamiast "3 spacja". (#5610)
+- Przy zamykaniu nowszej metody wprowadzania listy kandydatów, punkt uwagi prawidłowo wraca do pola kompozycji, lub dokumentu. (#4145)
+- W Microsoft Office 2013 i nowszych, gdy wstążka jest ustawiona na pokazywanie tylko zakładek, elementy wstążki są prawidłowo odczytywane, gdy zakładka jest aktywowana. (#5504)
+- Poprawki i ulepszenia wykrywania  i przypisywania gestów na ekranach dotykowych. (#5652)
+- Pojedyncze dotknięcia ekranu dotykowego nie są od teraz zgłaszane w trybie pomocy. (#5652)
+- Rozwiązany problem braku na liście elementów komentarzy, które znajdowały się na połączonych komórkach Excel. (#5704)
+- Naprawiony bardzo rzadki problem, że NVDA nie odczytywało zawartości arkusza Excel przy włączonym odczytywaniu nagłówków tabeli. (#5705)
+- W Google Chrome, nawigacja we wprowadzaniu kompozycji dla znaków wschodnio-azjatyckich  nie powoduje teraz błędu. (#4080)
+- Podczas wyszukiwania w Apple Music w iTunes, tryb czytania dla dokumentu wyników wyszukiwania jest aktualizowany zgodnie z oczekiwaniami. (#5659)
+- W Microsoft Excel, naciśnięcie shift+f11 aby utworzyć nowy arkusz, zgłasza teraz nową pozycję. (#5689)
+- Naprawione problemy z wyświetlaniem brajla na monitorach brajlowskich, podczas wprowadzania znaków koreańskich. (#5640)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2015.4 =
 Najważniejsze zmiany w tej wersji to poprawki wydajności w Windows 10; obecność NVDA w centrum ułatwień dostępu Windows 8 i nowszych; zmiany w Microsoft Excel w tym lista i zmiana nazw arkuszy oraz dostęp do zablokowanych komórek w zabezpieczonych arkuszach;  obsługa edycji tekstu sformatowanego w Mozilla Firefox, Google Chrome i Mozilla Thunderbird.
 
@@ -222,7 +436,7 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 - W Windows Vista, nieprawdziwe okno  "nie znaleziono punktu wejścia" nie jest wyświetlane w niektórych przypadkach, np. gdy uruchomiono NVDA ze skrótu na pulpicie, albo przez klawisz skrótu. (#4235)
 - Naprawiono poważne problemy z polami edycji w okienkach dialogowych najnowszych wersji Eclipse . (#3872)
 - Outlook 2010: przemieszczanie punktu uwagi działa zgodnie z oczekiwaniami w polu lokalizacji spotkań i próśb o spotkanie. (#4126)
-- Wewnątrz żywego obszaru, treść oznaczona jako nie będąca żywą, (np. aria-live="off") jest teraz prawidłowo ignorowana. (#4405)
+- Wewnątrz żywego obszaru, treść oznaczona jako niebędąca żywą, (np. aria-live="off") jest teraz prawidłowo ignorowana. (#4405)
 - Podczas zgłaszania treści paska stanu, posiadającego nazwę, nazwa jest teraz prawidłowo oddzielona od pierwszego słowa treści. (#4430)
 - W polach wprowadzania haseł, przy włączonym wypowiadaniu wpisywanych słów, wielokrotne gwiazdki nie są od teraz niepotrzebnie odczytywane po rozpoczęciu wpisywania nowych słów. (#4402)
 - Na liście wiadomości Microsoft Outlook , elementy nie są od teraz bezsensownie ogłaszane jako elementy danych. (#4439)

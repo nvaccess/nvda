@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2013 NV Access Limited
+Copyright 2007-2016 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -54,7 +54,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IServiceProvider* pserv=NULL;
 	IAccessible2* pacc2=NULL;
 	VARIANT varChild;
-	if(AccessibleObjectFromEvent((HWND)docHandle,OBJID_CLIENT,ID,&pacc,&varChild)!=S_OK) {
+	if(AccessibleObjectFromEvent((HWND)UlongToHandle(docHandle),OBJID_CLIENT,ID,&pacc,&varChild)!=S_OK) {
 		LOG_DEBUG(L"AccessibleObjectFromEvent failed");
 		return NULL;
 	}
@@ -99,12 +99,14 @@ inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer
 	unk->Release();
 	if (res != S_OK || !acc)
 		return 0;
-	int docHandle, id;
-	if (acc->get_windowHandle((HWND*)&docHandle) != S_OK
+	HWND docHwnd;
+	int id;
+	if (acc->get_windowHandle(&docHwnd) != S_OK
 			|| acc->get_uniqueID((long*)&id) != S_OK) {
 		acc->Release();
 		return 0;
 	}
+	const int docHandle = HandleToUlong(docHwnd);
 	VBufStorage_controlFieldNode_t* node = tableBuffer->getControlFieldNodeWithIdentifier(docHandle, id);
 	if (!node) {
 		acc->Release();
@@ -150,21 +152,22 @@ inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTa
 	wostringstream s;
 	IUnknown** headerCells;
 	long nHeaderCells;
-	IAccessible2* headerCellPacc = NULL;
-	int headerCellDocHandle, headerCellID;
 
 	if ((paccTableCell->*getHeaderCells)(&headerCells, &nHeaderCells) == S_OK && headerCells) {
 		for (int hci = 0; hci < nHeaderCells; hci++) {
+			IAccessible2* headerCellPacc = NULL;
 			if (headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)&headerCellPacc) != S_OK) {
 				headerCells[hci]->Release();
 				continue;
 			}
 			headerCells[hci]->Release();
-			if (headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle) != S_OK) {
+			HWND hwnd;
+			if (headerCellPacc->get_windowHandle(&hwnd) != S_OK) {
 				headerCellPacc->Release();
 				continue;
 			}
-			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
+			const int headerCellDocHandle = HandleToUlong(findRealMozillaWindow(hwnd));
+			int headerCellID;
 			if (headerCellPacc->get_uniqueID((long*)&headerCellID) != S_OK) {
 				headerCellPacc->Release();
 				continue;
@@ -281,6 +284,22 @@ bool isLabelVisible(IAccessible2* acc) {
 	return true;
 }
 
+long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
+	long rawChildCount = 0;
+	if(!isAriaHidden){
+		auto res = pacc->get_accChildCount(&rawChildCount);
+		if(res != S_OK){
+			rawChildCount = 0;
+		}
+	}
+	return rawChildCount;
+}
+
+bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
+	const auto IA2AttribsMapIt = IA2AttribsMap.find(L"hidden");
+	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
+}
+
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
@@ -300,12 +319,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	wostringstream s;
 
 	//get docHandle -- IAccessible2 windowHandle
-	int docHandle;
-	if(pacc->get_windowHandle((HWND*)&docHandle)!=S_OK) {
+	HWND docHwnd;
+	if(pacc->get_windowHandle(&docHwnd)!=S_OK) {
 		LOG_DEBUG(L"pacc->get_windowHandle failed");
 		return NULL;
 	}
-	docHandle=(int)findRealMozillaWindow((HWND)docHandle);
+	const int docHandle=HandleToUlong(findRealMozillaWindow(docHwnd));
 	if(!docHandle) {
 		LOG_DEBUG(L"bad docHandle");
 		return NULL;
@@ -357,7 +376,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	VARIANT varState;
 	VariantInit(&varState);
 	if(pacc->get_accState(varChild,&varState)!=S_OK) {
-		LOG_DEBUG(L"pacc->get_accState returned "<<res);
+		LOG_DEBUG(L"pacc->get_accState failed");
 		varState.vt=VT_I4;
 		varState.lVal=0;
 	}
@@ -488,10 +507,16 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	bool isNeverInteractive = parentNode->isHidden||(!isEditable && (isRoot || role == ROLE_SYSTEM_DOCUMENT || role == IA2_ROLE_INTERNAL_FRAME));
 	bool isInteractive = !isNeverInteractive && (isEditable || inLink || states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE || isEmbeddedApp || role == ROLE_SYSTEM_EQUATION);
 	// We aren't finished calculating isInteractive yet; actions are handled below.
+
+	const bool isAriaHidden = hasAriaHiddenAttribute(IA2AttribsMap);
+	const long childCount = getChildCount(isAriaHidden, pacc);
+
+	const bool isImgMap = role == ROLE_SYSTEM_GRAPHIC && childCount > 0;
 	// Whether the name is the content of this node.
-	bool nameIsContent = isEmbeddedApp
-		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
+	const bool nameIsContent = isEmbeddedApp
+		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
 		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
+
 
 	IAccessibleText* paccText=NULL;
 	IAccessibleHypertext* paccHypertext=NULL;
@@ -523,12 +548,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether to render children, including text content.
 	// Note that we may still render the name, value, etc. even if we don't render children.
 	bool renderChildren = true;
-	long childCount=0;
-	if ((IA2AttribsMapIt = IA2AttribsMap.find(L"hidden")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true") {
+	if (isAriaHidden) {
 		// aria-hidden
 		isVisible = false;
 	} else {
-		isVisible = width > 0 && height > 0;
+		// If a node has children, it's visible.
+		isVisible = width > 0 && height > 0 || childCount > 0;
 		if (IA2TextIsUnneededSpace
 			|| role == ROLE_SYSTEM_COMBOBOX
 			|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
@@ -536,15 +561,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			|| role == ROLE_SYSTEM_OUTLINE
 			|| role == ROLE_SYSTEM_EQUATION
 			|| (nameIsContent && (IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true")
-		)
+		) {
 			renderChildren = false;
-		if(pacc->get_accChildCount(&childCount)==S_OK) {
-			if (childCount > 0) {
-				// If a node has children, it's visible.
-				isVisible = true;
-			}
-		} else
-			childCount=0;
+		}
 	}
 
 	//Expose all available actions
@@ -649,7 +668,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		parentNode->addAttribute(L"name", name);
 
 	if (isVisible) {
-		if (role==ROLE_SYSTEM_GRAPHIC&&childCount>0&&name) {
+		if ( isImgMap && name ) {
 			// This is an image map with a name. Render the name first.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
@@ -733,11 +752,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				LOG_DEBUG(L"Error allocating varChildren memory");
 				return NULL;
 			}
-			if(AccessibleChildren(pacc,0,childCount,varChildren,&childCount)!=S_OK) {
+			long accessibleChildrenCount = 0;
+			if(AccessibleChildren(pacc,0,childCount,varChildren,&accessibleChildrenCount)!=S_OK) {
 				LOG_DEBUG(L"AccessibleChildren failed");
-				childCount=0;
+				accessibleChildrenCount=0;
 			}
-			for(long i=0;i<childCount;++i) {
+			for(long i=0;i<accessibleChildrenCount;++i) {
 				if (varChildren[i].vt != VT_DISPATCH) {
 					VariantClear(&(varChildren[i]));
 					continue;
@@ -833,7 +853,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 }
 
 bool getDocumentFrame(HWND* hwnd, long* childID) {
-	IAccessible2* pacc=IAccessible2FromIdentifier((int)*hwnd,*childID);
+	IAccessible2* pacc=IAccessible2FromIdentifier(HandleToUlong(*hwnd),*childID);
 	if (!pacc)
 		return false;
 
@@ -910,11 +930,11 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		LOG_DEBUG(L"Invalid window");
 		return;
 	}
-	int docHandle=(int)hwnd;
+	int docHandle=HandleToUlong(hwnd);
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
-		HWND rootWindow=(HWND)((*i)->rootDocHandle);
+		HWND rootWindow=(HWND)UlongToHandle(((*i)->rootDocHandle));
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd))
 			backend=(*i);
 		else
@@ -928,7 +948,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		}
 
 		//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
-		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID)
+		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)UlongToHandle(backend->rootDocHandle)&&childID==backend->rootID)
 			return;
 
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);

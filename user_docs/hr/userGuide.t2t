@@ -1,5 +1,4 @@
 NVDA NVDA_VERSION Vodič za korisnike
-NVDA NVDA_VERSION Vodič za korisnike
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -38,7 +37,7 @@ Osim engleskog, NVDA je preveden na 47 jezika, uključujući: afrikanerski, alba
 ++ Podrška Za Sintetizatore Govora ++
 Osim podrške za mnoge jezike, NVDA može omogućiti korisniku čitanje sadržaja na bilo kojem jeziku, sve dok korisnik ima sintetizator govora za taj određeni jezik.
 
-NVDA dolazi s [eSpeak-om http://espeak.sourceforge.net/], besplatnim, otvorenog koda, višejezičnim sintetizatorom govora.
+NVDA dolazi s [eSpeak ng-om https://github.com/espeak-ng/espeak-ng], besplatnim, otvorenog koda, višejezičnim sintetizatorom govora.
 
 Informacije o drugim sintetizatorima govora koje NVDA podržava mogu se pronaći u poglavlju [Podržani Sintetizatori Govora #SupportedSpeechSynths].
 
@@ -57,12 +56,14 @@ Ovo se primjenjuje na originalni i izmjenjeni softver, kao i na rad koji je iz t
 Za više pojedinosti, možete [pogledati cijelu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Zahtjevi Sustava +
-- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
+- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, windows 8.1, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
  - Za Windows XP 32-bitni operacijski sustav, NVDA zahtjeva Servisni paket 2 ili viši.
  - Za Windows Server 2003, NVDA zahtjeva Servisni paket 1 ili viši.
+- za windowse Vista, NVDA zahtjeva servisni paket 2 i [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
+ Obje komponente moraju biti instalirane ako su sve nadogradnje preuzete preko windows update servisa.
 - Memorija: 256 mb ili više RAM-a
 - Brzina procesora: 1.0 ghz ili više
-- Oko 50 MB prostora na hard disku.
+- Oko 90 MB prostora na hard disku.
 -
 
 + Preuzimanje i postavljanje NVDA +
@@ -88,8 +89,9 @@ Korištenje privremene kopije također je moguće (npr. za potrebe prezentacije)
 Osim nemogućnosti automatskog pokretanja tokom i/ili nakon prijave, prijenosne i privremene kopije NVDA također imaju slijedeća ograničenja:
 - Nemogućnost korištenja aplikacija koje zahtijevaju administratorska prava, ako naravno sam NVDA nije pokrenut sa istim pravima (ne preporučuje se).
 - Nemogućnost čitanja zaslona kontrole korisničkog računa (UAC) kada se pokušava pokrenuti aplikacija sa administratorskim pravima.
-- Windows 8: nemogućnost podrške unosa za zaslone osjetljive na dodir.
-- Windows 8: Nemogućnost omogućavanja značajki kao što su to način pregleda i izgovor upisanih znakova u aplikacijama koje su kupljene u windows prodavaonici.
+- Windows 8 i noviji: nemogućnost unosa znakova sa zaslona osjetljivog na dodir.
+- Windows 8 i noviji: nemogućnost pružanja značajki poput načina pregleda i  izgovora znakova u aplikacijama kupljenim u windowsovoj trgovini.
+- Windows 8 i noviji: nepodržano utišavanje zvuka.
 -
 
 ++ Instaliranje NVDA ++
@@ -298,7 +300,7 @@ Kad ste unutar tablice, sljedeći prečaci su također dostupni:
 | Prebaci se na idući stupac | kontrol+alt+strelicaDole | pomiče kursor sustava u idući redak (ostajući pritom u istom stupcu) |
 %kc:endInclude
 
-++ Objektna navigacija ++
+++ Objektna navigacija ++[ObjectNavigation]
 Većinu vremena radit ćete s aplikacijama koristeći prečace koji pomiču [fokus SystemFocus] i [kursor #SystemCaret].
 Međutim, možda ćete željeti istražiti trenutnu aplikaciju ili operacijski sustav bez pomicanja fokusa ili kursora.
 Također, možda želite raditi s [objektima #Objects] kojima se ne može pristupiti preko tipkovnice na uobičajeni način.
@@ -369,9 +371,9 @@ Sljedeći prečaci su dostupne za pregled teksta:
 | Pomakni se na slijedeći znak u pregledu | num3 | NVDA+strelicaDesno | klizni desno (tekstualni način) | pomakni kursor pregleda na idući znak na trenutnom retku teksta |
 | Pomakni se na kraj retka u pregledu | shift+num3 | NVDA+end | nema | pomiče pregledni kursor na kraj u trenutnom retku teksta |
 | Izgovori sve pomoću pregleda | numPlus | NVDA+shift+a | klizni sa tri prsta prema dolje (tekstualni način) | Čita od trenutne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
-| Kopiraj s preglednog kursora | NVDA+f9 | NVDA+f9 | nema | započinje kopiranje teksta od trenutne pozicije preglednog kursora. U tom se trenutku kopiranje ne izvodi sve dok ne kažemo  NVDA gdje to treba kopirati |
-| Kopiraj na pregledni kursor | NVDA+f10 | NVDA+f10 | nema | kopira od mjesta gdje se pregledni kursor nalazi odnosno trenutno podešen sa kopiraj sa preglednog kursora, na trenutnu poziciju preglednog kursora. nakon pritiska te tipke, tekst će biti kopiran u međuspremnik |
-| Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi |
+| označi a potom kopiraj sa preglednog kursora | insert+f9 | insert+f9 | nema | označava a potom započinje proces kopiranja od trenutne pozicije preglednog kursora. trenutna akcija se ne izvodi sve dok ne kažete NVDA gdje se nalazi kraj niza znakova |
+| označi a potom kopiraj na pregledni kursor | insert+f10 | insert+f10 | nema | prilikom prvog pritiska, tekst je označen od pozicije od koje je označen početni marker uključujući trenutnu poziciju preglednog kursora. Poslije drugog pritiska iste prečice, tekst će biti kopiran u windowsow međuspremnik |
+| Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi Prilikom pritiska prečaca dva puta brzo, informacija se prikazuje u načinu pregleda. |
 %kc:endInclude
 
 Bilješka: tipke na numeričkoj tipkovnici zahtjevaju isključen numerički blok da bi ispravno radile.
@@ -441,7 +443,7 @@ Iako bi se za navigaciju mišem trebao koristiti miš ili trackpad, NVDA ima nek
 | Fokusiraj se na objekt pod mišem | NVDA+numpadZvjezdica | NVDA+shift+n | Postavlja objekt navigatora na objekt na poziciji miša |
 %kc:endInclude
 
-+ Način pregleda +
++ Način pregleda +[BrowseMode]
 Kompleksni dokumenti koji su samo za čitanje kao na primjer web stranice uz pomoć NVDA pregledavaju se koristeći način pregleda.
 Ovo uključuje dokumente u Mozilla Firefoxu, Microsoft Internet Exploreru, Mozilla Thunderbirdu, html poruke u Microsoft Outlooku, Google Chromeu, Adobe Readeru i Adobe Flashu.
 Također, način pregleda je neobavezno dostupan u microsoft word dokumentima.
@@ -628,30 +630,39 @@ Slično kao i na web stranicama, Nvda ima popis elemenata za microsoft excel, ko
 kako biste pristupili popisu elemenata u excelu, pritisnite NVDA+f7.
 %kc:endInclude
 Razne vrste informacija u popisu elemenata u excelu jesu:
-- Grafovi: Ovo popisuje sve grafove u radnoj knjizi. 
+- Grafovi: Ovo popisuje sve grafove u aktivnom radnom listu. 
 Označujući graf ili pritišćući enter na gumbu pomakni na, fokusira graf spreman za čitanje uz pomoć strelica.
-- komentar: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže komentare. 
+- komentari: Ovo popisuje sve ćelije u aktivnom radnom listu koje sadrže komentare. 
 Adresa ćelije sa pripadajućim komentarom je prikazana. 
 Kada pritisnete enter ili gumb premjesti na kada se nalazite na popisanom komentaru premješta izravno na tu ćeliju.
-- formula: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže formulu. 
+- formule: Ovo popisuje sve ćelije u aktivnom radnom listu koje sadrže formulu. 
 Adresa ćelije skupa sa formulom je čitana.
 Pritišćući enter ili gumb premjesti na će premjestiti izravno na ovu ćeliju. 
-- radni list: ovo popisuje sve radne listove u  radnoj knjizi. 
+- radni listovi: ovo popisuje sve radne listove u  radnoj knjizi. 
 Pritišćući f2 na odabranom radnom listu omogućuje preimenovanje radnog lista. 
 Pritišćući enter ili gumb premjesti na kada se nalazite na označenoj ćeliji Premješta na taj radni list.
+- obrazci: ovo popisuje sve obrasce u aktivnom radnom listu.
+za svaki obrazac, u popisu elemenata prikazuje se  alternativan tekst polja, zajedno sa adresama ćelija koje pokriva
+označavajući polje obrazca i pritiščući enter ili gumb premjesti na premještava na to polje u načinu pregleda.
 -
 
 +++ Izvještavanje o komentarima +++
 %kc:beginInclude
 Kako biste doznali komentar za trenutnu ćeliju, pritisnite NVDA+alt+c.
 %kc:endInclude
-Svi komentari za označenu radnu knjigu mogu biti popisani koristeći nvda popis elemenata.
+Svi komentari za označeni radni list mogu biti popisani koristeći nvda popis elemenata.
 
 +++ Čitanje zaštićenih ćelija +++
 Ako je radna knjiga zaštićena, neće možda biti moguće premještati fokus na određene ćelije koje su zaključane za uređivanje.
 %kc:beginInclude
 Kako biste omogućili premještanje po zaključanim ćelijama, Premjestite se u način pregleda pritišćući NVDA+razmak, a potom koristite standardne excelove prečace za kretanje po dokumentu poput strelica kako biste se premještali po trenutnom radnom listu.
 %kc:endInclude
+
++++ Polja obrazaca +++
+Excelovi radni listovi mogu sadržavati obrasce.
+Možete im pristupiti koristeći popis elemenata ili prečace f i shift+f.
+Jedamput kada se premjestite na obrazac u načinu pregleda, možete pritisnuti enter ili razmaknicu kako biste aktivirali ili se prebacili na načim fokusa kako biste mogli manipulirati s time, ovisno o kontroli.
+Za više informacija o načinu pregleda i brzoj navigacii, molimo pogledajte [poglavlje o brzoj navigaciji #BrowseMode].
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -761,6 +772,19 @@ To može biti korisno za nekoga tko želi koristiti NVDA samo uz pomoć brajičn
 ==== Izlazni uređaj ====
 Ova opcija omogućuje odabir zvučne kartice preko koje će NVDA prosljeđivati izlaznu govornu informaciju prema korisniku.
 
+%kc:setting
+==== način utišavanja zvuka ====
+Prečac: NVDA+shift+d
+
+Na Windows 8 i novijima, ova vam opcija omogućuje stišavanje ostalih zvukova  u bilo kojem drugom programu dok nvda govori, ili cijelo vrijeme kada je nvda pokrenut.
+- nema stišavanja: nvda nikada neće stišavati druge zvukove. 
+- stišavaj dok nvda govori: nvda će stišavati druge zvukove kada nvda govori ili reproducira zvukove. This may not work for all synthesizers. 
+- uvijek utišavaj: NVDA će zadržati glasnoću ostalih zvukova tišu cijelo vrijeme kada je nvda pokrenut.
+-
+
+Ova je opcija dostupna samo ako je  NVDA instaliran.
+Nije moguća podrška za prijenosne i privremene kopije NVDA čitača zaslona.
+
 +++ Glasovne postavke (NVDA+control+v) +++[VoiceSettings]
 Dijaloški okvir glasovne postavke, kojeg možete pronaći u izborniku postavke, sadrži opcije koje vam omogućuju promjenu postavki govora.
 Za brže mjenjanje glasovnih postavki s bilo kojeg mjesta pogledajte poglavlje  [postavke sintetizatora govora u obliku prstena #SynthSettingsRing].
@@ -773,8 +797,8 @@ Možete pritisnuti strelice gore i dolje da biste preslušali raznolike izbore g
 Lijeva i gornja strelica vam omogućuju kretanje prema gore u popisu, dok vas desna i doljnja strelica pomiću prema dolje u popisu.
 
 ==== Vrsta ====
-Ako koristite Espeak govornu jedinicu koja dolazi sa NVDA, ovo je odabirni okvir koji vam omogućuje odabir vrste glasa koju će sintetizator govora koristiti za izgovor.
-Espeakove varijante su poput glasova, jer espeakovim glasovima daju malčice drugaćije atribute.
+Ako koristite Espeak ng govornu jedinicu koja dolazi sa NVDA, ovo je odabirni okvir koji vam omogućuje odabir vrste glasa koju će sintetizator govora koristiti za izgovor.
+Espeak ng-ove varijante su poput glasova, jer espeakovim glasovima daju malčice drugaćije atribute.
 Neke će varijante zvučati kao muški glasovi, neke kao ženski, neke čak i kao žaba.
 
 ==== Brzina ====
@@ -789,15 +813,15 @@ Ovo je klizač koji ide od 0 do 100, (0 kao najniža visina a 100 kao najviša v
 Ova je opcija klizač koji ide od 0 do 100, (0 kao najtiša vrijednost dok je 100 najglasnija).
 
 ==== Modulacija ====
-Ova je opcija klizač koji vam omogućuje odabir, odnosno podešavanje modulacije sintetizatora (podizanje i spuštanje visine pri čitanju) koju će sintetizator koristiti. (Trenutno samo espeak podržava ovu mogućnost).
+Ova je opcija klizač koji vam omogućuje odabir, odnosno podešavanje modulacije sintetizatora (podizanje i spuštanje visine pri čitanju) koju će sintetizator koristiti. (Trenutno samo espeak ng podržava ovu mogućnost).
 
 ==== Automatska promjena jezika ====
 Ovaj potvrdni okvir omogućuje vam uključivanje / isključivanje automatskog prepoznavanja jezika ako je u dokumentu takvo što označeno npr. na web stranicama ili u wordovim dokumentima.
 Zadana vrijednost ove opcije je uključeno.
-Trenutno samo Espeak podržava ovu opciju.
+Trenutno samo Espeak ng podržava ovu opciju.
 
 ==== Automatsko prebacivanje dijalekata ====
-Ovaj vam potvrdni okvir omogućuje otkrivanje promjena dijalekta pri čitanju, to je bolje nego samo prebacivanje jezika.
+Ovaj vam potvrdni okvir omogućuje otkrivanje promjena dijalekta pri čitanju, to je bolje od samog prebacivanja jezika.
 Na primjer, ako čitate tekst glasom namjenjenim za Američki engleski ali je u dokumentu postavljen dijalekat Engleskog Velike britanije, onda će sintetizator prebacivati između naglasaka ako je ova opcija označena.
 Zadana vrijednost ove opcije je isključeno.
 
@@ -880,16 +904,24 @@ Možete se kretati između brajičnih tablica koristeći kursorske tipke.
 Uz prethodnu opciju, pronači ćete opciju za promjenu ulazne tablice koja je odabirni okvir.
 Ova će se brajična tablica koristiti pri unosu znakova sa tipkovnice vašeg brajičnog retka.
 Trenutno će biti prikazane samo osmotočkaste brajične tablice, jer NVDA podržava samo unos s brajičnog retka koristeći osmotočkastu brajicu.
-
 Između brajičnih tablica pomićete se koristeći kursorske tipke.
+
 Imajte na umu da ovu opciju možete koristiti ako vaš brajični redak na sebi ima brajičnu tipkovnicu i ako upravljački program podržava unos preko iste.
 Ako unos sa brajičnog retka koji ima brajičnu tipkovnicu nije podržan, to će biti naznačeno u poglavlju [podržani brajični retci #SupportedBrailleDisplays].
 
 ==== Proširi na kompjutorsku brajicu za riječ na položaju kursora ====
 Ova opcija omogućuje prikaz riječi pod kursorom koristeći kompjutorsku brajicu.
 
-==== Brzina titraja kursora ====
-Ova je opcija brojčano polje za uređivanje koje omogućuje promjenu titraja kursora u milisekundama.
+==== Prikaži pokazivač ====
+Ova opcija omogućuje uključivanje/isključivanje brajičnog pokazivača.
+Ovo se primjenjuje za kursor sustava i pregledni kursor, ali ne i za indikator označenosti.
+
+==== Brzina titraja pokazivača (ms) ====
+ Ova je opcija brojčano polje koja vam omogućuje izmjenu brzine titraja pokazivača u milisekundama.
+
+==== Izgled pokazivača ====
+Ova vam opcija omogućuje promjenu izgleda (kombinacije točkica) brajičnog pokazivača.
+Indikator označenosti nije obuhvaćen ovom opcijom.
 
 ==== Stanka za poruke u sekundama ====
 Ovom se opcijom određuje koliko će dugo NVDA poruke biti prikazane na brajičnom retku.
@@ -972,6 +1004,10 @@ Prečac: NVDA+4
 
 Kad je ova opcija uključena, NVDA će izgovarati sve tipke koje nisu znakovi, a koje pritišćete na tipkovnici. To uključuje kombinacije tipaka poput kontrol+neko drugo slovo.
 
+==== reproduciraj zvučni signal prilikom pisanja ====
+Kada je ova opcija uključena, kratki zvuk buzera  bit će reproduciran kada riječ koju ste napisali sadrži pravopisnu pogrešku.
+Ova je opcija dostupna samo ako je izvještavanje o pravopisnim pogreškama uključeno u nvda [postavkama oblikovanja dokumenta #DocumentFormattingSettings].
+
 ==== Rukovanje tipkama iz drugih aplikacija ====
 Ova opcija omogućuje korisniku kontrolu nad tim hoće li ili neće NVDA dohvaćati kombinacije tipaka koje su namijenjene nekoj drugoj aplikaciji poput zaslonskih tipkovnica i softvera za prepoznavanje govora. 
 Ova je opcija zadano uključena, ali neki korisnici bi to htjeli isključiti kao što su korisnici koji upisuju vijetnamski pomoću Unikey programa za pisanje jer će to prouzrokovati pogrešan unos znakova.
@@ -1027,6 +1063,8 @@ Kad je ova opcija uključena, pregledni će kursor pratiti miš kako se isti bud
 
 ==== Način jednostavnog pregleda ====
 Kad je ova opcija uključena, NVDA će filtrirati hijerarhiju objekata po kojima se možete kretati kako bi se izbacili suvišni objekti koji nisu zanimljivi korisniku; Npr. nevidljivi objekti i objekti u estetske svrhe.
+
+Da biste uključili ili isključili način jednostavnog pregleda iz bilo kojeg prozora, molimo dodijelite prilagođeni prečac koristeći [dijaloški okvir ulazne geste #InputGestures].
 
 +++ Prezentacija objekta (NVDA+kontrol+o) +++
 Ovu opciju možete pronaći u izborniku postavke "Prezentacija objekta...".
@@ -1161,40 +1199,61 @@ Ova se opcija može pronaći u izborniku postavke pod opcijom "Oblikovanje dokum
 Većina potvrdnih okvira u ovom dijaloškom okviru služe da biste postavili koju vrstu oblikovanja dokumenta želite da se izgovara kada se pomičete po dokumentu uz pomoć kursorskih tipaka.
 Na primjer, ako odaberete potvrdni okvir izvijesti o imenu fonta, svaki put, kad se budete pomicali po tekstu uz pomoć kursorskih tipaka i nailazili na drugačiji font, ime fonta biti će izgovoreno.
 
+Dijaloški okvir oblikovanje teksta organiziran je u grupe..
 Možete podesiti izgovor slijedećeg:
-- Imena fonta
-- Veličine fonta
-- Karakteristike fonta
-- Poravnanje teksta
-- Boje
-- Revizije urednika
-- Isticanje
-- Stil teksta
-- Pravopisne pogreške
-- Brojeve stranica
-- Brojeve redaka
-- Poravnanje redaka
-- Poravnanje odlomaka (npr. viseća uvlaka, uvlačenje prvog retka)
-- Tablice
-- Zaglavlja redaka/stupaca tablica
-- Koordinate ćelije u tablici
-- Linkovi
-- Naslovi
-- Popisi
-- Citati
-- Orjentiri
-- Okviri
-- klikabilne elemente
+- Fonta
+ - imena fonta
+ - veličine fonta
+ - karakteristike fonta
+ - isticanje
+ - stil
+ - Boje
+- informacije o dokumentu
+ - komentare
+- revizije urednika
+ - pravopisne pogreške
+- stranice i numeriranje
+ - brojeve stranica
+ - brojeve redaka
+ - izvještavanje u uvlaci retka [(Isključeno, Govor, Zvučni signali, Oboje Govor i zvučni signali) #lineIndentationOptions]
+ - uvlaka odlomka (Npr. viseća uvlaka, samo prvi redak)
+ - prored (jednostruki, dvostruki itd.)
+ - poravnanje retka
+- informacije o tablici
+- tablica
+ - zaglavlja redaka/stupaca
+ - koordinate ćelija
+- elementi
+ - naslovi
+ - Linkovi
+ - Popisi
+ - citati
+ - Orjentiri
+ - okviri
+ - klikajuće elemente
+-
 -
 
-Da biste mogli ukljućivati/iskljućivati ove postavke sa bilo kojeg mjesta, molimo pridjelite prilagođene tipkovničke prećace koristeći [dijaloški okvir ulazne geste #InputGestures].
 
-==== Obavijesti o promjenama oblikovanja poslije kursora ====
+ Da biste mogli uključivati/isključivati ove postavke sa bilo kojeg mjesta, molimo pridjelite prilagođene tipkovničke prečace koristeći [dijaloški okvir ulazne geste #InputGestures].
+
+==== Izvijesti o promjenama oblikovanja poslije kursora ====
 Ako je ova opcija uključena, ova će opcija uzrokovati da NVDA pokuša prepoznati sve postavke oblikovanja u retku i potom ih izgovara, čak iako uključite ovu opciju to može uzrokovati usporavanje NVDA.
 
 Po podrazumjevanom, NVDA će prepoznati oblikovanje na poziciji kursora sustava / Preglednog kursora, i u nekim slučajevima može otkriti formatiranje na ostatku retka, samo u slučaju ako to neće izazvati pad performansi.
 
-Uključite ovu opciju kad radite na korekciji teksta u aplikacijama kao što je Microsoft Word, gdje je oblikovanje važno.
+Uključite ovu opciju kad radite na korekciji teksta u aplikacijama kao što je Wordpad, gdje je oblikovanje važno.
+
+==== izvješćivanje o uvučenosti redka ====[lineIndentationOptions]
+Ova vam opcija omogućava podešavanje načina izvještavanja poravnanja redka.
+Odabirni okvir "izvijesti o poravnanju redka uz pomoć", ima četiri opcije.
+
+- isključeno: NVDA neće obraćati pažnju na poravnanje redka.
+- govor: Ako je ova opcija označena, kada se broj uvlaka promijeni, nvda će izgovoriti na primjer "dvanaest razmaka" ili "četiri tabulatora."
+- zvučni signali: ako su zvučni signali označeni, kada se vrijednost uvlake promijeni, zvučni signali obavještavaju o promjeni uvlake.
+Zvuk se povećava u visini za svaki razmak, a za tabulator, povećavat će se ekvivalentno četirima razmacima.
+- zvučni signali i govor: Ova opcija čita izmjene koristeći obje metode.
+-
 
 +++ Govorni rječnici +++
 Izbornik govorni rječnici (kojeg možete pronaći u izborniku postavke) sadrži dijaloške okvire koji vam omogućuju upravljanje načinom na koji NVDA izgovara određene riječi ili fraze.
@@ -1392,17 +1451,21 @@ Za programere koji normalno vide ili za ljude koji prezentiraju NVDA publici nor
 Da biste omogućili preglednik govora, označite stavku "Preglednik govora" koja se nalazi u izborniku Alati u NVDA izborniku.
 Maknite kvačicu sa stavke izbornika pomoću tipke enter da biste je onemogučili.
 
+Prozor preglednika govora sadrži odabirni okvir obilježen "prikaži preglednik govora pri pokretanju".
+Ako je ova opcija označena, preglednik govora će se otvoriti kada je nvda pokrenut.
+Preglednik govora pokušat će se otvoriti sa istim dimenzijama i pozicijom kao što je bio otvoren.
+
 Kad je preglednik govora omogućen, on se stalno osvježava da bi vam prikazao tekst koji se trenutno izgovara.
 Međutim, ako kliknete ili se fokusirate na preglednik, NVDA će privremeno zaustaviti osvježavanje teksta, tako da možete označiti ili kopirati postojeći sadržaj.
 
 Kako biste mogli uključiti ili isključiti preglednik govora sa bilo kojeg mjesta, molimo pridjelite prilagođenu gestu koristeći [dijaloški okvir ulazne geste #InputGestures].
 
 ++ Upravitelj dodacima ++
-Upravitelj dodacima, kojemu se može pristupiti u NVDA izborniku u podizborniku alati pod stavkom upravljaj dodacima, vam omogućuje instalaciju i deinstalaciju NVDA dodataka.
+Upravitelj dodacima, kojemu se može pristupiti u NVDA izborniku u podizborniku alati pod stavkom upravljaj dodacima, omogućuje vam instalaciju, deinstalaciju omogućavanje i onemogućavanje NVDA dodataka.
 Ove pakete pruža zajednica koja koristi NVDA, i ovi dodaci mogu sadržavati prilagođeni kod pomoću kojeg su dodane ili izmjenjene neke funkcije u NVDA ili čak pružaju podršku za neke brajične retke ili govorne jedinice.
 
 Upravitelj dodataka sadrži listu u kojoj su prikazani svi dodaci trenutno instalirani u vašoj konfiguraciji za NVDA. 
-Ime paketa, inačica i autor prikazani su za svaki dodatak, ali se i informacije kao što su opis i web adresa mogu pročitati kad označite dodatak i pritisnete gumb o dodatku.
+Ime paketa, stanje, inačica i autor prikazani su za svaki dodatak, međutim, više informacija poput opisa i web adrese može se saznati tako što se označi dodatak sa popisa,  i pritiskom gumba "o dodatku".
 Ako je dostupna pomoč za dodatak, možete joj pristupiti kad označite dodatak i pritisnete gumb pomoč za dodatak.
 
 Da biste istražili i preuzeli dodatke na mreži, pritisnite gumb preuzmi dodatke.
@@ -1424,8 +1487,14 @@ NVDA će vas pitati želite li to doista.
 Kao i kod instalacije, NVDA mora ponovno biti pokrenut da bi dodatak bio potpuno uklonjen.
 Sve dok to ne učinite, status "uklanjanje" će se prikazivati za taj dodatak na popisu.
 
+Da biste uklonili dodatak, pritisnite gumb "Ukloni".
+Da biste omogućili dodatak koji je prije bio omogućen, pritisnite gumb "omogući".
+Možete onemogučiti dodatak ako status dodatka pokazuje "pokrenut", ili omogućen,, ili ga onemogućite ako je dodatak suspendiran ili omogućen.
+Pri svakom pritisku na gumb omogući-onemogući, stanje dodatka se mijenja kako bi pokazivalo na akciju koja će se izvršiti pri ponovnom pokretanju nvda.
+Kao i prilikom uklanjanja i-ili deinstalacije dodataka, trebate ponovno pokrenuti nvda, kako bi vaše izmjene stupile na snagu.
+
 Upravitelj također ima gumb zatvori da biste zatvorili dijaloški okvir.
-Ako ste dodali ili uklonili dodatke, NVDA će vas najprije pitati želite li ga ponovno pokrenuti tako da vaše promjene stupe na snagu.
+Ako ste dodali, uklonili ili promijenili status dodataka, NVDA će vas najprije pitati želite li ga ponovno pokrenuti kako bi vaše promjene stupile na snagu.
 
 U prošlosti je bilo moguće proširiti funkcionalnost NVDA kopirajući dodatne dodatke i upravljačke programe u vašu korisničku mapu.
 Iako ih ova NVDA inačica može pokretati, oni neće biti prikazani u upravitelju dodataka.
@@ -1444,22 +1513,22 @@ Jednom kad se ova stavka aktivira, ponovno će se učitati NVDA dodaci bez potre
 Ovo poglavlje sadrži informacije o govornim jedinicama koje NVDA podržava.
 Za detaljniji i iscrpniji popis besplatnih i komercijalnih govornih jedinica koje možete kupiti i koristiti uz pomoć čitača ekrana NVDA, molimo pogledajte web stranicu na adresi  [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak ++
-[ESpeak http://espeak.sourceforge.net/] je izravno ugrađena govorna jedinica u NVDA koja ne zahtjeva dodatne komponente ili instalirane specijalne upravljačke programe.
-NVDA se, zadano, pokreće sa espeak-om.
-Zbog toga što je Espeak ugrađen u NVDA, to je dobar izbor kad se NVDA pokreće s USB sticka na drugim sustavima.
+++ eSpeak ng ++
+[ESpeak ng https://github.com/espeak-ng/espeak-ng] je izravno ugrađena govorna jedinica u NVDA koja ne zahtjeva dodatne komponente ili instalirane specijalne upravljačke programe.
+NVDA se, zadano, pokreće sa espeak- ng-om.
+Zbog toga što je Espeak ng ugrađen u NVDA, to je dobar izbor kad se NVDA pokreće s USB sticka na drugim sustavima.
 
-Svaki glas, koji dolazi sa eSpeak-om, govori različitim jezikom.
-Postoji preko 43 različita jezika koje eSpeak podržava.
+Svaki glas, koji dolazi sa eSpeak ng-om, govori različitim jezikom.
+Postoji preko 43 različita jezika koje eSpeak ng podržava.
 
 Postoji također mnogo varijanata koje mogu biti izabrane da bi se prilagodio zvuk glasa.
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 je stariji Microsoftov standard za softverske govorne jedinice.
-Puno se govornih jedinica, koje su u skladu s ovim standardom, mogu kupiti ili besplatno preuzeti sa web stranica raznih proizvođača ili iz neovisnih izvora.
-Kad koristite ovu govornu jedinicu s NVDA, dostupni glasovi (kojima se može pristupiti iz [dijaloškog okvira glasovne postavke #VoiceSettings] ili uz pomoć [prstena za promjenu postavki sintetizatora govora #SynthSettingsRing]) će sadržavati sve glasove svih sapi 4 kompatibilnih govornih jedinica instaliranih u sustavu.
+NVDA još uvijek ovo podržava, za one korisnike koji imaju instalirane ovakve govorne jedinice..
+Međutim, microsoft ga ne podržava i Microsoft ne dostavlja više te komponente.
 
-Ako imate sapi 4 glasove instalirane, ali se sintetizator ne pojavljuje u NVDA-ovom popisu sintetizatora, molimo instalirajte SAPI 4.0 runtime binarne pakete, dostupne na http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Pri korištenju ove govorne jedinice sa NVDA, dostupni glasovi (kojima se pristupa [iz dijaloškog okvira glasovnih postavki #VoiceSettings] ili uz pomoć [prstena govornih jedinica #SynthSettingsRing]) sadržavat će sve glasove koji su instalirani kao sapi4 dostupne komponente na vašem sustavu.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 je Microsoftov standard za govorne jedinice.
@@ -1570,11 +1639,17 @@ Sljede prečaci dodjeljeni za ovaj brajični redak za korištenje sa NVDA.
 Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis i smještaj tipaka na brajičnom retku.
 %kc:beginInclude
 || Naziv | Prečac |
-| Pomakni brajični redak za redak u natrag | t1 |
+| Pomakni brajični redak za redak u natrag | t1 ili etouch1 |
 | Premjesti brajični redak na prijašnji redak | t2 |
+| premjesti na trenutni fokus | t3 |
 | Premjesti brajični redak na slijedeći redak | t4 |
-| Pomakni brajični redak u naprijed za redak | t5 |
+| Pomakni brajični redak u naprijed za redak | t5 ili etouch 3|
 | Prebaci na brajičnu ćeliju | routing |
+| premjesti se na najgornji redak u pregledu | t1+t2 |
+| premjesti se na posljednji redak u pregledu | t4+t5 |
+| prebaci brajicu usmjerenu na | t1+t3 |
+| pročitaj naslov | etouch2 |
+| pročitaj traku stanja | etouch4 |
 | shift+tab | sp1 |
 | alt | sp2 |
 | escape | sp3 |
@@ -1584,10 +1659,16 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 | strelicaLijevo | spLeft |
 | strelicaDesno | spRight |
 | enter | spEnter |
+| izgovori datum i vrijeme | sp1+sp2 |
 | NVDA Izbornik | sp1+sp3 |
 | windows+d (minimiziraj sve aplikacije) | sp1+sp4 |
+| windows+b tipka (fokusiranje područja obavjesti) | sp3+sp4 |
 | windows tipka | sp2+sp3 |
 | alt+tab | sp2+sp4 |
+| ctrl+home | t3+spUp |
+| control+end | t3+spDown |
+| home | t3+spLeft |
+| end | t3+spRight |
 %kc:endInclude
 
 ++ Handy Tech brajični retci ++
@@ -1636,17 +1717,22 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste ustanovili gd
 | alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Brajični Retci ++
-Nekoliko [Baum-ovih http://www.baum.de/cms/en/], [HumanWare-ovih http://www.humanware.com/] i [APH-ovih http://www.aph.org/] brajičnih redaka su podržani kada su spojeni USB ili Bluetooth vezom.
+++ Baum/Humanware/APH/Orbit Brajični Retci ++
+Nekoliko [Baumovih http://www.baum.de/cms/en/], [HumanWare-ovih http://www.humanware.com/], [APH-ovih http://www.aph.org/] i [Orbitovih http://www.orbitresearch.com/] brajičnih redaka su podržani kada su spojeni putem usb, bluetooth ili serijske veze.
 Slijedeći brajični retci su podržani:
-- Baum: SuperVario, PocketVario, VarioUltra (Samo preko bluetooth veze), Pronto! (samo preko bluetooth veze)
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Neki brajični retci, koje je proizveo baum mogu također raditi, premda to nije isprobano.
 
-Ako brajični redak povezujete putem USB veze, prvo morate instalirati upravljačke programe koje je napravio proizvođač.
-Za APH Refreshabraille, USB način mora biti postavljen na serijski način.
+Ako spajate brajične redke koji ne koriste hid preko usb veze, morate instalirati usb upravljačke programe proizvođača.
+VarioUltra i Pronto! brajični redci koriste HID.
+Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su konfigurirani na određeni način.
+
+ USB serijski način u Orbit Reader 20 brajičnom redku, trenutno je podržan samo u Windows 10 operacijskom sustavu.
+Umjesto toga, trebali biste koristiti USB HID.
 
 Sljede prečaci za ovaj brajični redak za korištenje uz pomoć NVDA.
 Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste saznali opise i smještaj tipaka na brajičnom retku.
@@ -1703,7 +1789,8 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste saznali smje�
 
 ++ HumanWare Brailliant BI/B Serije ++
 Brailliant BI i B serije brajičnih redaka tvrtke [HumanWare http://www.humanware.com/], uključujući BI 32, BI 40 i B 80, su podržani kad su spojeni putem USB ili Bluetooth veze.
-Ako brajični redak spajate putem USB veze, prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
+Ako brajični redak spajate putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
+USB upravljački programi nisu potrebni ako  je protokol postavljen na OpenBraille.
 
 Sljede tipkovnički prečaci za ove brajične retke za korištenje uz pomoć NVDA.
 Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali opise tipaka i njihov raspored.
@@ -1731,12 +1818,10 @@ Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali
 | Reci sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Serije ++
-NVDA podržava Braille Sense i Braille EDGE brajične retke tvrtke [Hims http://www.hims-inc.com/] kad su spojeni preko USB ili Bluetooth veze. 
+++ HIMS Braille Sense/Braille EDGE  smart beetle Serije ++
+NVDA podržava Braille Sense,  Braille EDGE i SMART BEETLE brajične retke tvrtke [Hims http://www.hims-inc.com/] kad su spojeni preko USB ili Bluetooth veze. 
 Ako brajični redak spajate putem USB, trebat ćete instalirati USB himsove upravljačke programe na vaš sustav.
-Možete ih preuzeti iz Himsovog resursnog centrana adresi: http://www.hims-inc.com/resource-center/
-Na toj stranici odaberite svoj uređaj i iz odjeljka "Window-Eyes", preuzmite upravljački program.
-Iako se u tom odjeljku spominje window-eyes, to je univerzalni USB upravljački program koji će također raditi sa NVDA čitačem zaslona.
+Možete ih preuzeti sa ove stranice: http://www.himsintl.com/?c=2/13&uid=2319
 
 Sljede dodijeljeni prečaci za ove brajične retke za NVDA.
 Molimo pogledajte uputstva za upotrebu brajičnih redaka kako biste saznali smještaj i opis tipaka na brajičnom retku.
@@ -2088,7 +2173,7 @@ Za brajične retke koji imaju brajičnu tipkovnicu, BRLTTY trenutno rukuje unoso
 Stoga, postavka za ulaznu brajičnu tablicu u dijaloškom okviru Brajične postavke, je nebitna.
 
 Ovo su BRLTTY prečaci za NVDA.
-Molimo pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty/doc/KeyTables/] za više informacija o tome kako su pridjeljeni prečaci za kontrole na brajičnim retcima.
+Molimo pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su pridjeljeni prečaci za kontrole na brajičnim retcima.
 %kc:beginInclude
 || Naziv | BRLTTY komanda |
 | Prebaci brajični redak u natrag | fwinlt (idi jedan prozor u lijevo) |
