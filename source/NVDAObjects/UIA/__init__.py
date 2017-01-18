@@ -24,7 +24,7 @@ from logHandler import log
 from UIAUtils import *
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, Suggestion
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 
 class UIATextInfo(textInfos.TextInfo):
@@ -1258,8 +1258,8 @@ class WpfTextView(UIA):
 	def event_stateChange(self):
 		return
 
-class SearchField(Suggestion, UIA):
-	"""An edit field that presents suggestions based on search term.
+class SearchField(EditableTextWithSuggestions, UIA):
+	"""An edit field that presents suggestions based on a search term.
 	"""
 
 	def event_UIA_controllerFor(self):

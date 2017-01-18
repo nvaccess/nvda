@@ -27,6 +27,7 @@ from logHandler import log
 import api
 import ui
 import braille
+import nvwave
 
 class ProgressBar(NVDAObject):
 
@@ -635,25 +636,37 @@ class Notification(NVDAObject):
 
 	event_show = event_alert
 
-class Suggestion(NVDAObject):
-	"""Allows NvDA to announce appearance/disappearance of suggestions.
+class EditableTextWithSuggestions(NVDAObject):
+	"""Allows NvDA to announce appearance/disappearance of suggestions as text is entered.
 	This is used in various places, including Windows 10 search edit fields and others.
 	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
 	These events are fired when suggestions appear and disappear, respectively.
 	"""
 
 	def event_suggestionsOpened(self):
-		"""Called when suggestions appear in response to users entering search terms.
+		"""Called when suggestions appear when text is entered e.g. search suggestions.
 		Subclasses should provide custom implementations if possible.
-		By default, NVDA will announce appearance of suggestions using speech and braille.
+		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
 		"""
-		# Translators: Announced when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-		ui.message(_("Suggestions"))
+		reportAutoSuggestions = config.conf["presentation"]["reportAutoSuggestions"]
+		if reportAutoSuggestions in ("message", "sound"):
+			# Translators: Announced when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+			braille.handler.message(_("Suggestions"))
+			if reportAutoSuggestions == "message":
+				speech.speakMessage(_("Suggestions"))
+			elif reportAutoSuggestions == "sound":
+				nvwave.playWaveFile(r"waves\suggestionsOpened.wav")
 
 	def event_suggestionsClosed(self):
 		"""Called when suggestions list or container is closed.
 		Subclasses should provide custom implementations if possible.
-		By default NVDA will announce this via speech and braille.
+		By default NVDA will announce this via speech, braille or via a sound.
 		"""
-		# Translators: Announced when suggestions disappear when search term is entered in various search fields such as Start search box in Windows 10.
-		ui.message(_("Suggestions closed"))
+		reportAutoSuggestions = config.conf["presentation"]["reportAutoSuggestions"]
+		if reportAutoSuggestions in ("message", "sound"):
+			# Translators: Announced when suggestions disappear when search term is entered in various search fields such as Start search box in Windows 10.
+			braille.handler.message(_("Suggestions closed"))
+			if reportAutoSuggestions == "message":
+				speech.speakMessage(_("Suggestions closed"))
+			elif reportAutoSuggestions == "sound":
+				nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
