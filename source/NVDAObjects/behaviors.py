@@ -3,9 +3,10 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Joseph Lee
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
+Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
 """
 
 import os
@@ -633,3 +634,26 @@ class Notification(NVDAObject):
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
 	event_show = event_alert
+
+class Suggestion(NVDAObject):
+	"""Allows NvDA to announce appearance/disappearance of suggestions.
+	This is used in various places, including Windows 10 search edit fields and others.
+	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
+	These events are fired when suggestions appear and disappear, respectively.
+	"""
+
+	def event_suggestionsOpened(self):
+		"""Called when suggestions appear in response to users entering search terms.
+		Subclasses should provide custom implementations if possible.
+		By default, NVDA will announce appearance of suggestions using speech and braille.
+		"""
+		# Translators: Announced when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+		ui.message(_("Suggestions"))
+
+	def event_suggestionsClosed(self):
+		"""Called when suggestions list or container is closed.
+		Subclasses should provide custom implementations if possible.
+		By default NVDA will announce this via speech and braille.
+		"""
+		# Translators: Announced when suggestions disappear when search term is entered in various search fields such as Start search box in Windows 10.
+		ui.message(_("Suggestions closed"))
