@@ -599,7 +599,7 @@ class UIA(Window):
 				pass
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
-		# #5942: In recent Windows 10 Redstone builds (14332 and later), Microsoft rewrote various dialog code including that of User Account Control.
+		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
 		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
@@ -1239,7 +1239,7 @@ class Toast_win8(Notification, UIA):
 
 class Toast_win10(Notification, UIA):
 
-	# #6096: Windows 10 Redstone build 14366 and later does not fire tooltip event when toasts appear.
+	# #6096: Windows 10 build 14366 and later does not fire tooltip event when toasts appear.
 	if sys.getwindowsversion().build > 10586:
 		event_UIA_window_windowOpen=Notification.event_alert
 	else:
