@@ -602,13 +602,19 @@ class UIA(Window):
 		# #5942: In recent Windows 10 Redstone builds (14332 and later), Microsoft rewrote various dialog code including that of User Account Control.
 		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
-		# 6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
+		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		if self.UIAElement.cachedAutomationID in ("TextBox", "SearchTextBox"):
 			clsList.append(SearchField)
 		try:
-			if self.parent.UIAElement.cachedAutomationId.lower()=="suggestionslist":
+			# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+			parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			pass
+		try:
+			# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
+			if parentElement.cachedAutomationId.lower()=="suggestionslist":
 				clsList.append(SuggestionListItem)
-		except AttributeError:
+		except ValueError:
 			pass
 
 		clsList.append(UIA)
