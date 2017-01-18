@@ -24,9 +24,8 @@ from logHandler import log
 from UIAUtils import *
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, Suggestion
 import braille
-import ui
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -1251,18 +1250,16 @@ class WpfTextView(UIA):
 	def event_stateChange(self):
 		return
 
-class SearchField(UIA):
+class SearchField(Suggestion, UIA):
 	"""An edit field that presents suggestions based on search term.
 	"""
 
 	def event_UIA_controllerFor(self):
 		# Only useful if suggestions appear and disappear.
 		if self == api.getFocusObject() and len(self.controllerFor)>0:
-			# Translators: Announced when suggestions appear when search term is entered in various search fields in Windows 10.
-			ui.message(_("Suggestions"))
+			self.event_suggestionsOpened()
 		else:
-			# Translators: Announced when suggestions disappear when search term is entered in various search fields in Windows 10.
-			ui.message(_("Suggestions closed"))
+			self.event_suggestionsClosed()
 
 
 class SuggestionListItem(UIA):
@@ -1277,4 +1274,3 @@ class SuggestionListItem(UIA):
 			speech.cancelSpeech()
 			api.setNavigatorObject(self)
 			self.reportFocus()
-
