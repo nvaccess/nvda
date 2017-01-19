@@ -62,7 +62,7 @@ def doStartupDialogs():
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
 
-def restart(disableAddons=False):
+def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
 	if globalVars.appArgs.launcher:
 		import wx
@@ -79,8 +79,14 @@ def restart(disableAddons=False):
 		sys.argv.remove('--disable-addons')
 	except ValueError:
 		pass
+	try:
+		sys.argv.remove('--debug-logging')
+	except ValueError:
+		pass
 	if disableAddons:
 		options.append('--disable-addons')
+	if debugLogging:
+		options.append('--debug-logging')
 	try:
 		sys.argv.remove("--ease-of-access")
 	except ValueError:
