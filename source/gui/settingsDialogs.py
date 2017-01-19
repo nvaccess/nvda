@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -921,11 +921,16 @@ class ObjectPresentationDialog(SettingsDialog):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
-<<<<<<< 3e48cf75483d11254e321c974799c6d5c0a420de
+		objCoordinatesText = _("&Play object coordinates"))
+		self.playObjectCoordinatesCheckBox=sHelper.addItem(wx.CheckBox(self,label=objCoordinatesText))
+		self.playObjectCoordinatesCheckBox.SetValue(config.conf["presentation"]["playObjectCoordinates"])
+
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		descriptionText = _("Report object &descriptions")
 		self.descriptionCheckBox=sHelper.addItem(wx.CheckBox(self,label=descriptionText))
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
-		
+
 		# Translators: This is the label for a combobox in the
 		# object presentation settings dialog.
 		progressLabelText = _("Progress &bar output:")
@@ -937,13 +942,13 @@ class ObjectPresentationDialog(SettingsDialog):
 				break
 		else:
 			log.debugWarning("Could not set progress list to current report progress bar updates setting")
-		
+
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
 		reportBackgroundProgressBarsText = _("Report background progress bars")
 		self.reportBackgroundProgressBarsCheckBox=sHelper.addItem(wx.CheckBox(self,label=reportBackgroundProgressBarsText))
 		self.reportBackgroundProgressBarsCheckBox.SetValue(config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
 		dynamicContentText = _("Report dynamic &content changes")
