@@ -9,7 +9,7 @@
 
 + Introducción +
 O NonVisual Desktop Access (NVDA) ye un lector de pantalla libre y de codigo ubierto  t'o Sistema Operativo  Microsoft Windows.
-Proporcionando retroalimentación a traviés de voz sintetica y Braille, posibilita a la chent ciega u deficient visual accedir a ordinadors executando Windows por un coste no mayor a lo d'una persona vident.
+Furnindo retroalimentación a traviés de voz sintetica y Braille, posibilita a la chent ciega u deficient visual accedir a ordinadors executando lo Windows por un coste no mayor a lo d'una persona vident.
 O NVDA ye desembolicau por [NV Access http://www.nvaccess.org/], con  colaboracions d'a comunidat.
 
 ++ Caracteristicas chenerals ++
@@ -90,6 +90,7 @@ Amás d'a incapacidat d'encetar-se automaticament entre y/u dimpués de l'autent
 - A incapacidat pa interactuar con as aplicacions que s'executen con privilechios d'administrador, a lo menos que, profés, o mesmo NVDA tamién siga estau executau con istos privilechios (no ye recomendable).
 - A incapacidat de leyer as pantallas d'o Control de Cuentas d'Usuario (UAC) quan tracte d'encetar una aplicación con privilechios d'administrador.
 - Windows 8 y superiors: a incapacidat pa suportar a dentrada dende una pantalla tactil.
+- Windows 8 y superior: L'achiquida d'audio no ye suportada.
 - Windows 8 y superiors: a incapacidat d'amanir caracteristicas tals como lo modo de navegación y verbalización de caracters en escribir en aplicacions d'o Windows Store.
 
 
@@ -766,7 +767,7 @@ Ista opción te permite trigar o sintetizador  que deseyas que emplegue o NVDA t
 Ta una lista d'os sintetizadors que suporta lo NVDA, por favor uella la sección [Sintetizadors de Voz Suportaus #SupportedSpeechSynths].
 
 Un elemento especial que amaneixerá siempre en ista lista ye "Sin Voz", que te permite emplegar o NVDA sin salida de voz beluna.
-Isto podría estar util ta belún que deseye emplegar nomás o NVDA con Braille, u  talment ta desembolicadors vidents que solament deseyen emplegar o Visualizador de Voz.
+Ixo podría estar util pa belún que deseye emplegar nomás o NVDA con Braille, u  talment pa desembolicadors vidents que solament deseyen emplegar o Visor d'a Voz.
  
 ==== Dispositivo de Salida ====
 Ista opción te permite trigar a tarcheta de son a traviés d'a quala NVDA habría de mandar charrar a o sintetizador seleccionau.
@@ -779,7 +780,10 @@ En o Windows 8 y superiors, ista opción te permit esleyir si o NVDA habría de 
 - No achiquir: O NVDA nunca no baixará o volumen d'atros sons. 
 - Achiquir quan salga fabla y sons: O NVDA nomás baixará o volumen d'atros sons quan o NVDA siga charrando u reproducindo sons. Ixo puet no marchar pa totz os sintetizadors. 
 - Achiquir siempre: O NVDA mantendrá o volumen d'atros sons más baixo tot o tiempo que siga correndo.
+-
 
+Ista opción nomás ye disponible si o NVDA ye instalau.
+No ye posible suportar l'achiquida d'audio en as copias portables y temporals d'o NVDA.
 
 +++ Opcions de Voz (NVDA+control+v) +++[VoiceSettings]
 O dialogo Opcions de Voz, que se troba en o menú Preferencias, contién opcions que te permiten modificar o son d'a voz. 
@@ -1158,7 +1162,7 @@ Iste campo achusta a cantidat de linias que moverás quan pretes Abance de pachi
 ==== Fer servir disenyo de pantalla ====
 Tecla: NVDA+v
 
-Ista opción te permite especificar si o conteniu en o modo de navegación habría de colocar cosetas tals como vinclos y atros campos en a suya propia linia, u si habría de conservar-los en o fluxo de texto seguntes en siga amostrau visualment. Si a opción ye activada, allora as cosetas remanirán seguntes sigan amostradas visualment, pero si en ye desactivada, allora os campos serán colocaus en a suya propia linia.
+Ista opción te permite d'especificar si o conteniu en o modo de navegación habría de colocar cosetas tals como vinclos y atros campos en a suya propia linia, u si habría de conservar-los en o fluixo de texto seguntes en siga amostrau visualment. Si a opción ye activada, allora as cosetas remanirán seguntes sigan amostradas visualment, pero si ye desactivada, allora os campos serán colocaus en a suya propia linia.
 
 ==== Charrar-lo Tot Automaticament en Cargar a Pachina ====
 Ista caixeta de verificación commuta a verbalización automatica d'una pachina dimpués de cargar-la en o modo de navegación.
@@ -1192,47 +1196,55 @@ Como un eixemplo, en estar activada, si se pretó a letra j habría de capturar-
 +++ Formatiau de Documentos (NVDA+control+d) +++[DocumentFormattingSettings]
 Iste quadro de dialogo se troba en o menú Preferencias, baixo "Formatiau de Documentos...". 
 
-A mayoría d'as caixetas de verificación en iste dialogo son ta configurar qué tipo de formato deseyas escuitar automaticament en que muevas o cursor por os documentos. 
+A mayoría d'as caixetas de verificación en iste dialogo son pa configurar qué tipo de formato deseyas escuitar automaticament en que muevas o cursor por os documentos. 
 Por Eixemplo, si marcas a caixeta de verificación anunciar o nombre d'a fuent, cada vegada que navegues por o texto con una fuent diferent, o nombre d'a fuent será anunciau.
 
+As opcions de formatiau de documentos son organizadas en grupos.
 Puetz configurar l'anunciau de:
-- Nombre d'a fuent
-- Grandaria d'a fuent
-- Atributos d'a fuent
-- Aliniación d'o texto
-- Colors
-- Comentarios
-- Revisions de l'editor
-- Enfasi
-- Estilo d'o texto
-- Errors d'ortografía
-- Numers de pachina
-- Numers de linia
-- Sangría de linia
-- Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
-- Espaciau de linia (simple, dople, etc.)
-- Tablas
-- Capiters de ringlera y columna de tabla
-- Coordenadas de celdas de tabla
-- Vinclos
-- Capiters
-- Listas
-- Citas
-- Zonas
-- Bastidas
-- Quan bella cosa ye clicable
+- Fuent
+ - Nombre d'a fuent
+ - Grandaria d'a fuent
+ - Atributos d'a fuent
+ - Enfasi
+ - Estilo
+ - Colors
+- Información de documento
+ - Comentarios
+ - Revisions de l'editor
+ - Errors d'ortografía
+- Pachinas y espaciau
+ - Numers de pachina
+ - Numers de linia
+ - Anunciau d'a sangría de linia (desenchegau, fabla, tons, todas dos fabla y tons)
+ - Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
+ - Espaciau de linia (simple, dople, etc.)
+ - Aliniación
+- Información de tabla
+ - Tablas
+ - Capiters de ringlera y columna
+ - Coordenadas de celdas
+- Elementos
+ - Capiters
+ - Vinclos
+ - Listas
+ - Citas
+ - Zonas
+ - Bastidas
+ - Clicable
+ -
 -
 
-Ta trigar istas opcions dende qualsiquier puesto, por favor asigna cenyos personalizaus fendo servir o [dialogo de cenyos de dentrada #InputGestures].
+
+Pa trigar istas opcions dende qualsiquier puesto asigna cenyos personalizaus fendo servir o [dialogo de cenyos de dentrada #InputGestures].
 
 ==== Anunciar os cambeos de formato dimpués d'o cursor ====
-Si en ye activada, ista opción diz a lo NVDA que prebe y detecte totz os cambeos de formato en una linia seguntes a charra, si se fa isto podría ralentizar-se a rispuesta d'o NVDA.
+Si ye activada, ista opción diz a lo NVDA que prebe y detecte totz os cambeos de formato en una linia seguntes l'anuncia, si se fa isto podría ralentizar-se a rispuesta d'o NVDA.
 
-De traza predeterminada, o NVDA detectará o formato en a posición d'o cursor d'o Sistema / Revisión, y en qualques casos podría detectar o formato en a resta d'a linia, nomás si no'n ye causando un decremento d'a respuesta.
- 
-Activa ista opción mientras comprebas a lectura de documentos en aplicacions tals como lo Microsoft Word, do lo formato siga important.
+De traza predeterminada, o NVDA detectará o formato en a posición d'o cursor d'o Sistema / Revisión, y en qualques casos podría detectar o formato en a resta d'a linia, nomás si no bi ye causando un decremento d'a respuesta.
 
-==== Anunciar a sangría d'a linia con ====
+Activa ista opción mientras comprebas a lectura de documentos en aplicacions tals como lo Wordpad, en do lo formato ye important.
+
+==== Anunciau d'a sangría d'a linia ====[lineIndentationOptions]
 Ista opción te permite configurar cómow s'anuncia a sangría en o prencipio d'as linias.
 O quadro combinau d'"anunciar a sangría d'a linia con" tien quatro opcions.
 
@@ -1427,22 +1439,26 @@ Ta cambiar cómo se configura o NVDA en as pantallas de logon/UAC, configura lo 
 
 + Ferramientas Extra +
 
-++ Visualizador d'o rechistro ++
-O visualizador d'o rechistro, trobau en Ferramientas en o menú NVDA, te permiten veyer toda la salida que haiga ocurriu dica agora dende quan encetés NVDA por zaguera vegada.
+++ Visor d'o rechistro ++
+O visor d'o rechistro, trobau en Ferramientas en o menú NVDA, te permiten veyer toda la salida que haiga ocurriu dica agora dende quan encetés NVDA por zaguera vegada.
 
-Amás de leyer o conteniu, tamién puetz alzar una copia d'o fichero de rechistro, u refrescar o visualizador tal que s'amuestre a salida mas recient dende que o visualizador de rechistro estió ubierto.
-Istas accions son disponibles baixo o menú de visualizador de rechistro.
+Amás de leyer o conteniu, tamién puetz alzar una copia d'o fichero de rechistro, u refrescar o visor pa que s'amuestre a salida mas recient dende que s'ubrió lo visor d'o rechistro.
+Istas accions son disponibles baixo o menú d'o visor d'o rechistro.
 
-++ Visualizador de Voz ++
-Ta desembolicadors de Software vidents u chent contrimostrando lo NVDA a una audiencia vident, ye disponible una finestra flotant que te permite veyer tot o texto que o NVDA siga charrando actualment.
+++ Visor d'a Voz ++
+Pa desembolicadors vidents de Software u chent contrimostrando lo NVDA a una audiencia vident, ye disponible una finestra flotant que te permite veyer tot o texto que o NVDA siga charrando actualment.
 
-T'activar o visualizador de voz, marca l'elemento de menú "Visualizador de Voz" baixo Ferramientas en o menú NVDA.
-Desmarca l'elemento de menú ta desactivar-lo.
+Pa activar o visor d'a voz, marca l'elemento de menú "Visor d'a Voz" baixo Ferramientas en o menú NVDA.
+Desmarca l'elemento de menú pa desactivar-lo.
 
-Mientras o visualizador de voz ye activau, s'actualiza constantment t'amostrar-te o texto mas recient que ye estando charrau.
-Manimenos, si fas clic u colocas o foco adintro d'o visualizador,  o NVDA aturará temporalment l'actualización d'o texto, tal que podrás seleccionar u copiar facilment o conteniu existent.
+A finestra d'o visor d'a voz contién una caixeta de verificación clamada "Amostrar o visor d'a voz en rancar".
+Si ye enchegada, o visor d'a voz s'ubrirá en que o NVDA ranque.
+A finestra d'o visor d'a voz mirará de reubrir-se siempre con as mesmas dimensions y ubicación que quan se zarró.
 
-Pa trigar o visor d'a fabla dende qualsiquier puesto, por favor asigna un cenyo personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
+Mientras o visor de voz ye activau, s'actualiza constantment t'amostrar-te o texto mas recient que ye estando charrau.
+Manimenos, si fas clic u colocas o foco adintro d'o visor,  o NVDA aturará temporalment l'actualización d'o texto, tal que podrás seleccionar u copiar facilment o conteniu existent.
+
+Pa trigar o visor d'a voz dende qualsiquier puesto asigna un cenyo personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
 
 ++ Administrador de Complementos ++
 L'Administrador de Complementos, t'o que s'accede seleccionando l'administrador de complementos baixo as ferramientas en o menú d'o NVDA, te permite instalar, desinstalar, enchegar y desenchegar paquetz de complementos pa o NVDA.
@@ -1704,8 +1720,8 @@ Porfavor mira a documentación d'a linia ta descripcions de do se pueden trobar 
 ++ Linias braille Baum/Humanware/APH/Orbit ++
 Quantas linias braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] y [Orbit http://www.orbitresearch.com/]. As linias son suportadas quan se connectan a traviés de l'USB, d'o bluetooth u d'o puerto serie.
 Istas incluyen:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -

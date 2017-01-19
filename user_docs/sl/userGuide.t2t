@@ -91,6 +91,7 @@ Ločeno od tega, da se NVDA ne more samodejno zagnati pred in/ali po prijavi, im
 - Nezmožnost branja zaslonov Nadzora Uporabniškega računa (NURR), ko se poskuša zagnati program s skrbniškimi pravicami.
 - Windows 8 in kasnejši: nezmožnost podpirati vnos preko zaslona na dotik.
 - Windows 8 in kasnejši: nezmožnost oskrbeti značilnosti, kot so recimo Brskalniško delovanje in izgovor natipkanih znakov v Trgovini Windows programčkov.
+- Windows 8 in kasnejši: Stišanje ostalih zvokov, ko NVDA govori ni podprto.
 -
 
 ++ Namestitev NVDA ++
@@ -781,6 +782,9 @@ V sistemu Windows 8 in novejših vam ta možnost omogoča, da NVDA zniža glasno
 - Vedno stišaj: Ostali zvoki se bodo predvajali na naižji glasnosti ves čas medtem, ko bo NVDA v pogonu.
 -
 
+Ta možnost je na voljo samo takrat, ko je NVDA nameščena v sistemu.
+Stišanja zvokov v prenosljivi in začasni kopiji NVDA ni mogoče podpreti.
+
 +++ Nastavitve Glasu(NVDA+control+v) +++[VoiceSettings]
 Pogovorno okno Nastavitev Glasu, ki se nahaja v meniju Nastavitve, vsebuje možnosti, ki vam omogočajo spreminjanje zvoka govora.
 Obstaja pa tudi še hitrejša pot za spreminjanje nastavitev glasu od kjerkoli ; prosimo, oglejte si razdelek [Krog Nastavitev Sinteze #SynthSettingsRing].
@@ -1234,11 +1238,11 @@ V NVDA lahko nastavite poročanje za:
 Za preklapljanje stanja teh nastavitev od kjerkoli, prosimo, dodelite lastne kretnje vnosa prek [pogovornega okna Kretenj Vnosa. #InputGestures]
 
 ==== Sporočaj spremembe oblikovanja za utripalko ====
-Če je izbrana, ta nastavitev pove NVDA, naj poskuša zaznati vse spremembe v oblikovanju v vrstici, ki jo trenutno izgovarja, čeprav to lahko zniža učinkovitost NVDA.
+Če je izbrana, ta nastavitev pove NVDA, naj poskuša zaznati vse spremembe v oblikovanju v vrstici, ki jo trenutno predstavlja in te podrobnosti sporočiti, čeprav to lahko zniža učinkovitost NVDA.
 
 Privzeto bo NVDA zaznavala spremembe na položaju pregledne utripalke/sistemske kazalke in včasih bo zaznavala oblikovanje v drugih delih vrstice samo, če to ne bo vpočasnilo njenega delovanja.
 
-Omogočite to možnost v programih, kot je Microsoft Word med postopkom postavitve besedila, kjer je oblikovanje pomembno.
+Omogočite to možnost v programih, kot je Wordpad med postopkom postavitve besedila, kjer je oblikovanje pomembno.
 
 ==== Sporočanje zamika vrstice ====[lineIndentationOptions]
 Ta možnost vam omogoča nastavitev, kako naj NVDA sporoča zamik vrstice na njenem začetku.

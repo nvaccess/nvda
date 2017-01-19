@@ -1,26 +1,369 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015 NV Access Limited
+#Copyright (C) 2015-2016 NV Access Limited
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
 from ctypes import byref
+from logHandler import log
 import eventHandler
+import config
 import controlTypes
-import winUser
-import textInfos
-import UIAHandler
-import browseMode
-import treeInterceptorHandler
 import cursorManager
 import aria
-from . import UIA
+import textInfos
+import UIAHandler
+from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
+import aria
+from UIAUtils import *
+from . import UIA, UIATextInfo
+
+class EdgeTextInfo(UIATextInfo):
+
+	def _hasEmbedded(self):
+		"""Is this textInfo positioned on an embedded child?"""
+		children=self._rangeObj.getChildren()
+		if children.length:
+			child=children.getElement(0)
+			if not child.getCurrentPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId):
+				childRange=self.obj.UIATextPattern.rangeFromChild(child)
+				if childRange:
+					childChildren=childRange.getChildren()
+				if childChildren.length==1 and UIAHandler.handler.clientObject.compareElements(child,childChildren.getElement(0)):
+					return True
+		return False
+
+	def _get_UIAElementAtStartWithReplacedContent(self):
+		"""Fetches the deepest UIAElement at the start of the text range whos name has been overridden by the author (such as aria-label)."""
+		element=self.UIAElementAtStart
+		condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:self.UIAControlTypesWhereNameIsContent})
+		# A part from the condition given, we must always match on the root of the document so we know when to stop walking
+		runtimeID=VARIANT()
+		self.obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		condition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),condition)
+		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
+		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
+		cacheRequest.addProperty(UIAHandler.UIA_AriaPropertiesPropertyId)
+		element=walker.normalizeElementBuildCache(element,cacheRequest)
+		while element and not UIAHandler.handler.clientObject.compareElements(element,self.obj.UIAElement):
+			ariaProperties=element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+			if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
+				return element
+			try:
+				range=self.obj.UIATextPattern.rangeFromChild(element)
+			except COMEror:
+				return
+			text=range.getText(-1)
+			if not text or text.isspace():
+				return element
+			element=walker.getParentElementBuildCache(element,cacheRequest)
+
+	def _moveToEdgeOfReplacedContent(self,back=False):
+		"""If within replaced content (E.g. aria-label is used), moves to the first or last character covered, so that a following call to move in the same direction will move out of the replaced content, in order to ensure that the content only takes up one character stop.""" 
+		element=self.UIAElementAtStartWithReplacedContent
+		if not element:
+			return
+		try:
+			range=self.obj.UIATextPattern.rangeFromChild(element)
+		except COMError:
+			return
+		if not back:
+			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,range,UIAHandler.TextPatternRangeEndpoint_End)
+		else:
+			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,range,UIAHandler.TextPatternRangeEndpoint_Start)
+			range.move(UIAHandler.TextUnit_Character,1)
+		self._rangeObj=range
+
+	def _collapsedMove(self,unit,direction,skipReplacedContent):
+		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
+		if not skipReplacedContent: 
+			return super(EdgeTextInfo,self).move(unit,direction)
+		if direction==0: 
+			return
+		chunk=1 if direction>0 else -1
+		finalRes=0
+		while finalRes!=direction:
+			self._moveToEdgeOfReplacedContent(back=direction<0)
+			res=super(EdgeTextInfo,self).move(unit,chunk)
+			if res==0:
+				break
+			finalRes+=res
+		return finalRes
+
+	def move(self,unit,direction,endPoint=None,skipReplacedContent=True):
+		# Skip over non-text element starts and ends
+		if not endPoint:
+			if direction>0 and unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
+				return self._collapsedMove(unit,direction,skipReplacedContent)
+			elif direction>0:
+				res=self._collapsedMove(unit,direction,skipReplacedContent)
+				if res!=0:
+					# Ensure we move past the start of any elements 
+					tempInfo=self.copy()
+					while super(EdgeTextInfo,tempInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
+						tempInfo.setEndPoint(self,"startToStart")
+						if tempInfo.text or tempInfo._hasEmbedded():
+							break
+						tempInfo.collapse(True)
+						self._rangeObj=tempInfo._rangeObj.clone()
+				return res
+			elif direction<0:
+				tempInfo=self.copy()
+				res=self._collapsedMove(unit,direction,skipReplacedContent)
+				if res!=0:
+					while True:
+						tempInfo.setEndPoint(self,"startToStart")
+						if tempInfo.text or tempInfo._hasEmbedded():
+							break
+						if super(EdgeTextInfo,self).move(textInfos.UNIT_CHARACTER,-1)==0:
+							break
+				return res
+		else:
+			tempInfo=self.copy()
+			res=tempInfo.move(unit,direction,skipReplacedContent=skipReplacedContent)
+			if res!=0:
+				self.setEndPoint(tempInfo,"endToEnd" if endPoint=="end" else "startToStart")
+			return res
+
+	def expand(self,unit):
+		# Ensure expanding to character/word correctly covers embedded controls
+		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
+			tempInfo=self.copy()
+			tempInfo.move(textInfos.UNIT_CHARACTER,1,endPoint="end",skipReplacedContent=False)
+			if tempInfo._hasEmbedded():
+				self.setEndPoint(tempInfo,"endToEnd")
+				return
+		super(EdgeTextInfo,self).expand(unit)
+		return
+
+	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field['embedded']=isEmbedded
+		# report landmarks
+		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
+		if landmark and (landmark!='region' or field.get('name')):
+			field['landmark']=aria.landmarkRoles.get(landmark)
+		# Combo boxes with a text pattern are editable
+		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
+			field['states'].add(controlTypes.STATE_EDITABLE)
+		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
+		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
+		ariaProperties=obj.UIAElement.currentAriaProperties
+		hasAriaLabel=('label=' in ariaProperties)
+		hasAriaLabelledby=('labelledby=' in ariaProperties)
+		if field.get('nameIsContent'):
+			content=""
+			field.pop('name',None)
+			if hasAriaLabel or hasAriaLabelledby:
+				content=obj.name
+			if not content:
+				text=self.obj.makeTextInfo(obj).text
+				if not text or text.isspace():
+					content=obj.name or field.pop('description',None)
+			if content:
+				field['content']=content
+		elif isEmbedded:
+			field['content']=obj.value
+			if field['role']==controlTypes.ROLE_GROUPING:
+				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+				if not obj.value:
+					field['content']=obj.name
+		# Give lists an item count
+		if obj.role==controlTypes.ROLE_LIST:
+			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
+			if child:
+				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+		return field
+
+	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+		# Edge zooms into its children at the start.
+		# Thus you are already in the deepest first child.
+		# Therefore get the deepest enclosing element at the start, get its content, Then do the whole thing again on the content from the end of the enclosing element to the end of its parent, and repete!
+		# In other words, get the content while slowly zooming out from the start.
+		log.debug("_getTextWithFieldsForUIARange (unbalanced)")
+		if not recurseChildren:
+			log.debug("recurseChildren is False. Falling back to super")
+			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,textRange,formatConfig,includeRoot=includeRoot,alwaysWalkAncestors=True,recurseChildren=False,_rootElementRange=_rootElementRange):
+				yield field
+			return
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType)
+			log.debug("full text: %s"%textRange.getText(-1))
+			log.debug("includeRoot: %s"%includeRoot)
+		startRange=textRange.clone()
+		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		enclosingElement=startRange.getEnclosingElement()
+		if enclosingElement:
+			enclosingElement=enclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		else:
+			log.debug("No enclosingElement. Returning")
+			return
+		enclosingRange=self.obj.getNormalizedUIATextRangeFromElement(enclosingElement)
+		if not enclosingRange:
+			log.debug("enclosingRange is NULL. Returning")
+			return
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("enclosingElement: %s"%enclosingElement.currentLocalizedControlType)
+		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
+		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
+			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+		# check for an embedded child
+		childElements=startRange.getChildren()
+		if childElements.length==1 and UIAHandler.handler.clientObject.compareElements(rootElement,childElements.getElement(0)):
+			log.debug("Using single embedded child as enclosingElement")
+			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementRange=_rootElementRange,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False):
+				yield field
+			return
+		parents=[]
+		parentElement=enclosingElement
+		log.debug("Generating ancestors:")
+		hasAncestors=False
+		while parentElement:
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
+			isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
+			log.debug("isRoot: %s"%isRoot)
+			if not isRoot:
+				hasAncestors=True
+			if parentElement is not enclosingElement:
+				if includeRoot or not isRoot:
+					try:
+						obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
+						field=self._getControlFieldForObject(obj)
+					except LookupError:
+						log.debug("Failed to fetch controlField data for parentElement. Breaking")
+						break
+					parents.append((parentElement,field))
+				else:
+					# This is the root but it was not requested for inclusion
+					# However we still need the root element itself for further recursion
+					parents.append((parentElement,None))
+			if isRoot:
+				log.debug("Hit root. Breaking")
+				break
+			log.debug("Fetching next parentElement")
+			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
+		log.debug("Done generating parents")
+		log.debug("Yielding parents in reverse order")
+		for parentElement,field in reversed(parents):
+			if field: yield textInfos.FieldCommand("controlStart",field)
+		log.debug("Done yielding parents")
+		log.debug("Yielding balanced fields for startRange")
+		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementRange=enclosingRange,includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True):
+			yield field
+		tempRange=startRange.clone()
+		log.debug("Walking parents to yield controlEnds and recurse unbalanced endRanges")
+		for parentElement,field in parents:
+			if log.isEnabledFor(log.DEBUG):
+				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+			parentRange=self.obj.getNormalizedUIATextRangeFromElement(parentElement)
+			if parentRange:
+				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)
+				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
+					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+					clippedEnd=True
+				else:
+					clippedEnd=False
+				if field:
+					clippedStart=parentRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
+					field['_startOfNode']=not clippedStart
+					field['_endOfNode']=not clippedEnd
+				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+					log.debug("Recursing endRange")
+					for endField in self._getTextWithFieldsForUIARange(parentElement,tempRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True):
+						yield endField
+					log.debug("Done recursing endRange")
+				else:
+					log.debug("No content after parent")
+			if field:
+				log.debug("Yielding controlEnd for parent")
+				yield textInfos.FieldCommand("controlEnd",field)
+		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
+		log.debug("_getTextWithFieldsForUIARange (unbalanced) end")
+
+	def getTextWithFields(self,formatConfig=None):
+		# We don't want fields for collapsed ranges.
+		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
+		if self.isCollapsed:
+			return []
+		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
+		seenText=False
+		curStarts=[]
+		# remove clickable state on descendants of controls with clickable state
+		clickableField=None
+		for field in fields:
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				states=field.field['states']
+				if clickableField:
+					states.discard(controlTypes.STATE_CLICKABLE)
+				elif controlTypes.STATE_CLICKABLE in states:
+					clickableField=field.field
+			elif clickableField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field is clickableField:
+				clickableField=None
+		# Chop extra whitespace off the end incorrectly put there by Edge
+		numFields=len(fields)
+		index=0
+		while index<len(fields):
+			field=fields[index]
+			if index>1 and isinstance(field,basestring) and field.isspace():
+				prevField=fields[index-2]
+				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
+					del fields[index-1:index+1]
+			index+=1
+		# chop fields off the end incorrectly placed there by Edge
+		# This can happen if expanding to line covers element start chars at its end
+		startCount=0
+		lastStartIndex=None
+		numFields=len(fields)
+		for index in xrange(numFields-1,-1,-1):
+			field=fields[index]
+			if isinstance(field,basestring):
+				break
+			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
+				startCount+=1
+				lastStartIndex=index
+		if lastStartIndex:
+			del fields[lastStartIndex:lastStartIndex+(startCount*2)]
+		# Remove any content from fields with a content attribute
+		numFields=len(fields)
+		curField=None
+		for index in xrange(numFields-1,-1,-1):
+			field=fields[index]
+			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
+				curField=field.field
+				endIndex=index
+			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
+				fields[index+1:endIndex]=" "
+				curField=None
+		return fields
 
 class EdgeNode(UIA):
 
+	_TextInfo=EdgeTextInfo
+
+	def getNormalizedUIATextRangeFromElement(self,UIAElement):
+		range=super(EdgeNode,self).getNormalizedUIATextRangeFromElement(UIAElement)
+		if not range:
+			return
+		#Move the start of a UIA text range past any element start character stops
+		lastCharInfo=EdgeTextInfo(self,None,_rangeObj=range)
+		lastCharInfo._rangeObj=range
+		charInfo=lastCharInfo.copy()
+		charInfo.collapse()
+		while super(EdgeTextInfo,charInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
+			charInfo.setEndPoint(lastCharInfo,"startToStart")
+			if charInfo.text or charInfo._hasEmbedded():
+				break
+			lastCharInfo.setEndPoint(charInfo,"startToEnd")
+			charInfo.collapse(True)
+		return range
+
 	def _get_role(self):
 		role=super(EdgeNode,self).role
+		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
+			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self.UIAElement.currentAriaRole
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
@@ -28,6 +371,21 @@ class EdgeNode(UIA):
 				role=newRole
 				break
 		return role
+
+	def _get_states(self):
+		states=super(EdgeNode,self).states
+		if self.role in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
+			states.add(controlTypes.STATE_CLICKABLE)
+		return states
+
+	def _get_description(self):
+		ariaProperties=self.UIAElement.currentAriaProperties
+		if 'describedby=' in ariaProperties:
+			try:
+				return self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
+			except COMError:
+				pass
+		return super(EdgeNode,self).description
 
 class EdgeList(EdgeNode):
 
@@ -38,10 +396,7 @@ class EdgeList(EdgeNode):
 			states.add(controlTypes.STATE_READONLY)
 		return states
 
-
 class EdgeHTMLRootContainer(EdgeNode):
-
-	shouldAllowUIAFocusEvent=True
 
 	def event_gainFocus(self):
 		firstChild=self.firstChild
@@ -50,485 +405,28 @@ class EdgeHTMLRootContainer(EdgeNode):
 			return
 		return super(EdgeHTMLRootContainer,self).event_gainFocus()
 
-class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
+class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
 
-	def __init__(self,itemType,document,UIAElementOrRange):
-		if isinstance(UIAElementOrRange,UIAHandler.IUIAutomationElement):
-			UIATextRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(UIAElementOrRange)
-			self._UIAElement=UIAElementOrRange
-		elif isinstance(UIAElementOrRange,UIAHandler.IUIAutomationTextRange):
-			UIATextRange=UIAElementOrRange
-			self._UIAElement=None
-		else:
-			raise ValueError("Invalid UIAElementOrRange")
-		textInfo=document.TextInfo(document,None,_rangeObj=UIATextRange)
-		super(UIATextRangeQuickNavItem,self).__init__(itemType,document,textInfo)
-
-	@property
-	def obj(self):
-		UIAElement=self._UIAElement if self._UIAElement else self.textInfo._rangeObj.getEnclosingElement()
-		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		return UIA(UIAElement=UIAElement)
-
-class HeadingUIATextRangeQuickNavItem(UIATextRangeQuickNavItem):
-
-	@property
-	def level(self):
-		return int(self.itemType[7:]) if len(self.itemType)>7 else 0
-
-	def isChild(self,parent):
-		if not isinstance(parent,HeadingUIATextRangeQuickNavItem):
-			return False
-		return self.level>parent.level
-
-def createUIAMultiPropertyCondition(*dicts):
-	outerOrList=[]
-	for dict in dicts:
-		andList=[]
-		for key,values in dict.iteritems():
-			innerOrList=[]
-			if not isinstance(values,list):
-				values=[values]
-			for value in values:
-				condition=UIAHandler.handler.clientObject.createPropertyCondition(key,value)
-				innerOrList.append(condition)
-			if len(innerOrList)==0:
-				continue
-			elif len(innerOrList)==1:
-				condition=innerOrList[0]
-			else:
-				condition=UIAHandler.handler.clientObject.createOrConditionFromArray(innerOrList)
-			andList.append(condition)
-		if len(andList)==0:
-			continue
-		elif len(andList)==1:
-			condition=andList[0]
-		else:
-			condition=UIAHandler.handler.clientObject.createAndConditionFromArray(andList)
-		outerOrList.append(condition)
-	if len(outerOrList)==0:
-		raise ValueError("no properties")
-	elif len(outerOrList)==1:
-		condition=outerOrList[0]
-	else:
-		condition=UIAHandler.handler.clientObject.createOrConditionFromArray(outerOrList)
-	return condition
-
-def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attributeValue,direction="next",ItemClass=UIATextRangeQuickNavItem):
-	includeCurrent=False
-	if not position:
-		position=document.makeTextInfo(textInfos.POSITION_ALL)
-		includeCurrent=True
-	elif direction=="previous":
-		position.expand(textInfos.UNIT_CHARACTER)
-		# Hack: IUIAutomationTextRange::FindAttribute breaks after expand. copy to fix.
-		position=position.copy()
-		position.setEndPoint(document.TextInfo(document,textInfos.POSITION_ALL),"startToStart")
-	else:
-		position.setEndPoint(document.TextInfo(document,textInfos.POSITION_ALL),"endToEnd")
-	while True:
-		try:
-			newRange=position._rangeObj.findAttribute(attributeID,attributeValue,direction=="previous")
-		except COMError:
-			newRange=None
-		if not newRange:
-			return
-		if includeCurrent or newRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)>0:
-			yield ItemClass(itemType,document,newRange)
-			includeCurrent=True
-		if direction=="previous":
-			position._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,newRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		else:
-			position._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,newRange,UIAHandler.TextPatternRangeEndpoint_End)
-
-def UIATextRangeFromElement(documentTextPattern,element):
-	try:
-		childRange=documentTextPattern.rangeFromChild(element)
-	except COMError:
-		childRange=None
-	return childRange
-
-def isUIAElementInWalker(element,walker):
-		try:
-			newElement=walker.normalizeElement(element)
-		except COMError:
-			newElement=None
-		return newElement and UIAHandler.handler.clientObject.compareElements(element,newElement)
-
-def getDeepestLastChildUIAElementInWalker(element,walker):
-	descended=False
-	while True:
-		lastChild=walker.getLastChildElement(element)
-		if lastChild:
-			descended=True
-			element=lastChild
-		else:
-			break
-		return element if descended else None
-
-def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction="next"):
-	# A part from the condition given, we must always match on the root of the document so we know when to stop walking
-	runtimeID=VARIANT()
-	document.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
-	UIACondition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),UIACondition)
-	if not position:
-		# All items are requested (such as for elements list)
-		elements=document.rootNVDAObject.UIAElement.findAll(UIAHandler.TreeScope_Descendants,UIACondition)
-		if elements:
-			for index in xrange(elements.length):
-				element=elements.getElement(index)
-				try:
-					elementRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(element)
-				except COMError:
-					elementRange=None
-				if elementRange:
-					yield UIATextRangeQuickNavItem(itemType,document,elementRange)
-		return
-	if direction=="up":
-		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
-		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
-		# Thus we must check getChildren before getEnclosingElement.
-		tempRange=position._rangeObj.clone()
-		tempRange.expandToEnclosingUnit(UIAHandler.TextUnit_Character)
-		children=tempRange.getChildren()
-		if children.length==1:
-			element=children.getElement(0)
-		else:
-			element=position._rangeObj.getEnclosingElement()
-		element=walker.normalizeElement(element)
-		if element and not UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) and not UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):
-			yield UIATextRangeQuickNavItem(itemType,document,element)
-		return
-	elif direction=="previous":
-		# Fetching items previous to the given position.
-		# When getting children of a UIA text range, Edge will incorrectly include a child that starts at the end of the range. 
-		# Therefore move back by one character to stop this.
-		toPosition=position._rangeObj.clone()
-		toPosition.move(UIAHandler.TextUnit_Character,-1)
-		child=toPosition.getEnclosingElement()
-		childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
-		toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		# Fetch the last child of this text range.
-		# But if its own range extends beyond the end of our position:
-		# We know that the child is not the deepest descendant,
-		# And therefore we Limit our children fetching range to the start of this child,
-		# And fetch the last child again.
-		zoomedOnce=False
-		while True:
-			children=toPosition.getChildren()
-			length=children.length
-			if length==0:
-				if zoomedOnce:
-					child=toPosition.getEnclosingElement()
-				break
-			child=children.getElement(length-1)
-			try:
-				childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
-			except COMError:
-				return
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,toPosition,UIAHandler.TextPatternRangeEndpoint_Start)>0:
-				toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
-				zoomedOnce=True
-				continue
-			break
-		if not child or UIAHandler.handler.clientObject.compareElements(child,document.rootNVDAObject.UIAElement):
-			# We're on the document itself -- probably nothing in it.
-			return
-		# Work out if this child is previous to our position or not.
-		# If it isn't, then we know we still need to move parent or previous before it is safe to emit an item.
-		try:
-			childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
-		except COMError:
-			return
-		gonePreviousOnce=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<=0
-		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
-		curElement=child
-		# Start traversing from this child backward through the document, emitting items for valid elements.
-		curElementMatchedCondition=False
-		goneParent=False
-		while curElement:
-			if gonePreviousOnce and not goneParent: 
-				lastChild=getDeepestLastChildUIAElementInWalker(curElement,walker)
-				if lastChild:
-					curElement=lastChild
-					curElementMatchedCondition=True
-				elif not curElementMatchedCondition and isUIAElementInWalker(curElement,walker):
-					curElementMatchedCondition=True
-				if curElementMatchedCondition:
-					yield UIATextRangeQuickNavItem(itemType,document,curElement)
-			previousSibling=walker.getPreviousSiblingElement(curElement)
-			if previousSibling:
-				gonePreviousOnce=True
-				goneParent=False
-				curElement=previousSibling
-				curElementMatchedCondition=True
-				continue
-			parent=walker.getParentElement(curElement)
-			if parent and not UIAHandler.handler.clientObject.compareElements(document.rootNVDAObject.UIAElement,parent):
-				curElement=parent
-				goneParent=True
-				curElementMatchedCondition=True
-				if gonePreviousOnce:
-					yield UIATextRangeQuickNavItem(itemType,document,curElement)
-				continue
-			curElement=None
-	else: # direction is next
-		# Fetching items after the given position.
-		# Extend the end of the range forward to the end of the document so that we will be able to fetch children from this point onwards. 
-		# Fetch the first child of this text range.
-		# But if its own range extends before the start of our position:
-		# We know that the child is not the deepest descendant,
-		# And therefore we Limit our children fetching range to the end of this child,
-		# And fetch the first child again.
-		child=position._rangeObj.getEnclosingElement()
-		childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
-		toPosition=position._rangeObj.clone()
-		toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_End)
-		zoomedOnce=False
-		while True:
-			children=toPosition.getChildren()
-			length=children.length
-			if length==0:
-				if zoomedOnce:
-					child=toPosition.getEnclosingElement()
-				break
-			child=children.getElement(0)
-			try:
-				childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
-			except COMError:
-				return
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,toPosition,UIAHandler.TextPatternRangeEndpoint_End)<0:
-				toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_End)
-				zoomedOnce=True
-				continue
-			break
-		# Work out if this child is after our position or not.
-		if not child or UIAHandler.handler.clientObject.compareElements(child,document.rootNVDAObject.UIAElement):
-			# We're on the document itself -- probably nothing in it.
-			return
-		try:
-			childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
-		except COMError:
-			return
-		goneNextOnce=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)>0
-		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
-		curElement=child
-		# If we are already past our position, and this is a valid child
-		# Then we can emit an item already
-		if goneNextOnce and isUIAElementInWalker(curElement,walker):
-			yield UIATextRangeQuickNavItem(itemType,document,curElement)
-		# Start traversing from this child forwards through the document, emitting items for valid elements.
-		while curElement:
-			firstChild=walker.getFirstChildElement(curElement) if goneNextOnce else None
-			if firstChild:
-				curElement=firstChild
-				yield UIATextRangeQuickNavItem(itemType,document,curElement)
-			else:
-				nextSibling=None
-				while not nextSibling:
-					nextSibling=walker.getNextSiblingElement(curElement)
-					if not nextSibling:
-						parent=walker.getParentElement(curElement)
-						if parent and not UIAHandler.handler.clientObject.compareElements(document.rootNVDAObject.UIAElement,parent):
-							curElement=parent
-						else:
-							return
-				curElement=nextSibling
-				goneNextOnce=True
-				yield UIATextRangeQuickNavItem(itemType,document,curElement)
-
-class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
-
-	def getTextWithFields(self,formatConfig=None):
-		try:
-			container=next(self.obj._iterNodesByType("nonTextContainer","up",self))
-		except StopIteration:
-			container=None
-		if container:
-			fields=super(EdgeHTMLTreeInterceptorTextInfo,container.textInfo).getTextWithFields(formatConfig)
-			startLen=0
-			for index,field in enumerate(fields):
-				if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-					startLen=index+1
-				else:
-					break
-			fields[startLen:0-startLen]=[container.obj.value or u""]
-			return fields
-		else:
-			return super(EdgeHTMLTreeInterceptorTextInfo,self).getTextWithFields(formatConfig)
-
-	# override move to get around bugs in Edge where moving by line jumps over checkboxes, radio buttons etc.
-	def move(self,unit,direction,endPoint=None):
-		try:
-			containerInfo=next(self.obj._iterNodesByType("nonTextContainer","up",self)).textInfo
-		except StopIteration:
-			containerInfo=None
-		if containerInfo:
-			if direction>0:
-				containerInfo.collapse(end=True)
-				super(EdgeHTMLTreeInterceptorTextInfo,containerInfo).move(textInfos.UNIT_CHARACTER,-1)
-			else:
-				containerInfo.collapse()
-			self._rangeObj=containerInfo._rangeObj
-			del containerInfo
-		origInfo=None
-		if (direction==1 or direction==-1) and not endPoint and unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
-			origInfo=self.copy()
-			origInfo.expand(unit)
-		res=super(EdgeHTMLTreeInterceptorTextInfo,self).move(unit,direction,endPoint)
-		if res and origInfo:
-			if direction==1 and self.compareEndPoints(origInfo,"startToEnd")>0:
-				newInfo=origInfo.copy()
-				newInfo.collapse(end=True)
-				newInfo.move(textInfos.UNIT_CHARACTER,-1)
-				newInfo.move(textInfos.UNIT_CHARACTER,1)
-				newInfo.expand(unit)
-				if newInfo.compareEndPoints(origInfo,"startToEnd")>=0 and self.compareEndPoints(newInfo,"startToStart")>0:
-					newInfo.collapse()
-					charInfo=newInfo.copy()
-					charInfo.expand(textInfos.UNIT_CHARACTER)
-					children=charInfo._rangeObj.getChildren()
-					if children.length==1:
-						childInfo=self.obj.TextInfo(self.obj,None,_rangeObj=self.obj.rootNVDAObject.UIATextPattern.rangeFromChild(children.getElement(0)))
-						if childInfo.compareEndPoints(charInfo,"startToStart")==0 and childInfo.compareEndPoints(charInfo,"endToEnd")==0:
-							self._rangeObj=newInfo._rangeObj.clone()
-			elif direction==-1:
-				newInfo=self.copy()
-				count=4
-				while count>0:
-					newInfo.move(unit,1)
-					if newInfo.compareEndPoints(origInfo,"startToStart")<0:
-						self._rangeObj=newInfo._rangeObj.clone()
-					else:
-						break
-					count-=1
-		return res
-
-	# Override expand to get around bugs in Edge where expanding to line on a checkbox, radio button etc expands the previous line (not containing the control in question).
-	def expand(self,unit):
-		try:
-			containerInfo=None #next(self.obj._iterNodesByType("nonTextContainer","up",self)).textInfo
-		except StopIteration:
-			containerInfo=None
-		if containerInfo:
-			self._rangeObj=containerInfo._rangeObj
-			del containerInfo
-		origInfo=None
-		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
-			origInfo=self.copy()
-		super(EdgeHTMLTreeInterceptorTextInfo,self).expand(unit)
-		if origInfo:
-			if self.compareEndPoints(origInfo,"endToEnd")<=0:
-				self._rangeObj=origInfo._rangeObj.clone()
-				super(EdgeHTMLTreeInterceptorTextInfo,self).expand(textInfos.UNIT_CHARACTER)
-
-class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.BrowseModeDocumentTreeInterceptor):
-
-	TextInfo=EdgeHTMLTreeInterceptorTextInfo
-
-	# Ovveride setting selection to get around bugs in Edge where programmatically setting focus corrupts existing IUIAutomationTextRanges
-	# cloning them seems to fix them
-	def _set_selection(self,info,reason=controlTypes.REASON_CARET):
-		super(EdgeHTMLTreeInterceptor,self)._set_selection(info,reason=reason)
-		info._rangeObj=info._rangeObj.clone()
+	TextInfo=UIABrowseModeDocumentTextInfo
 
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
 
-	def _iterNodesByType(self,nodeType,direction="next",pos=None):
-		if nodeType=="heading":
-			return browseMode.mergeQuickNavItemIterators([UIATextAttributeQuickNavIterator("heading%d"%level,self,pos,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.StyleId_Heading1+(level-1),direction,HeadingUIATextRangeQuickNavItem) for level in xrange(1,7)],direction)
-		elif nodeType.startswith("heading"):
-			level=int(nodeType[7:])
-			return UIATextAttributeQuickNavIterator(nodeType,self,pos,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.StyleId_Heading1+(level-1),direction,HeadingUIATextRangeQuickNavItem)
-		elif nodeType=="link":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="checkBox":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_CheckBoxControlTypeId)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="radioButton":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_RadioButtonControlTypeId)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="comboBox":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_ComboBoxControlTypeId)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="graphic":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_ImageControlTypeId)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="table":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TableControlTypeId)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="separator":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_SeparatorControlTypeId)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="focusable":
-			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_IsKeyboardFocusablePropertyId,True)
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="list":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:False})
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="container":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_TableControlTypeId})
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="edit":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False})
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="formField":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_CheckBoxControlTypeId,UIAHandler.UIA_RadioButtonControlTypeId,UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_ButtonControlTypeId]})
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		elif nodeType=="nonTextContainer":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
-		raise NotImplementedError
-
-	def _activateNVDAObject(self,obj):
-		try:
-			obj.doAction()
-		except NotImplementedError:
-			pass
-
-	def _get_isAlive(self):
-		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
-			return False
-		try:
-			self.rootNVDAObject.UIAElement.currentProviderDescription
-		except COMError:
-			return False
-		return True
-
-	def __contains__(self,obj):
-		if not isinstance(obj,UIA):
-			return False
-		try:
-			self.rootNVDAObject.makeTextInfo(obj)
-		except LookupError:
-			return False
-		return True
+	def shouldPassThrough(self,obj,reason=None):
+		# Enter focus mode for selectable list items (<select> and role=listbox)
+		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
+			return True
+		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
 
 class EdgeHTMLRoot(EdgeNode):
 
 	treeInterceptorClass=EdgeHTMLTreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return self.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in self.states 
-
+		return self.role==controlTypes.ROLE_DOCUMENT
 
 	def _get_role(self):
 		role=super(EdgeHTMLRoot,self).role
 		if role==controlTypes.ROLE_PANE:
 			role=controlTypes.ROLE_DOCUMENT
 		return role
-
-# PDF content in Edge cannot, and does not need to, use the Edge HTML specific treeInterceptor TextInfo as skipping containers such as combo boxes does not apply, plus using it can sometimes incorrectly skip over lists (possibly due to state mis-matches, focusable, readonly).
-# For now at least it is best to have a custom implementation, while Edge is so fluid. 
-class EdgePDFTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
-	pass
-
-class EdgePDFTreeInterceptor(EdgeHTMLTreeInterceptor):
-
-	TextInfo=EdgePDFTreeInterceptorTextInfo
-
-class EdgePDFRoot(UIA):
-
-	treeInterceptorClass=EdgePDFTreeInterceptor

@@ -8,6 +8,7 @@ from comtypes import COMError
 import comtypes.automation
 import wx
 import time
+import winsound
 import re
 import uuid
 import collections
@@ -429,6 +430,9 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 			return True
 
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
+
+	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+	disableAutoPassThrough=True
 
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
@@ -871,6 +875,8 @@ class ExcelWorksheet(ExcelBase):
 	__changeSelectionGestures = (
 		"kb:tab",
 		"kb:shift+tab",
+		"kb:enter",
+		"kb:numpadEnter",
 		"kb:upArrow",
 		"kb:downArrow",
 		"kb:leftArrow",
@@ -1162,7 +1168,16 @@ class ExcelCell(ExcelBase):
 			states.add(controlTypes.STATE_UNLOCKED)
 		return states
 
-	def getCellWidthAndTextWidth(self):
+	def event_typedCharacter(self,ch):
+		# #6570: You cannot type into protected cells.
+		# Apart from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
+		# Therefore for any character from space upwards (not control characters)  on protected cells, play the default sound rather than speaking the character
+		if ch>=" " and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
+			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
+			return
+		super(ExcelCell,self).event_typedCharacter(ch)
+
+	def getCellTextWidth(self):
 		#handle to Device Context
 		hDC = ctypes.windll.user32.GetDC(self.windowHandle)
 		tempDC = ctypes.windll.gdi32.CreateCompatibleDC(hDC)
@@ -1172,12 +1187,10 @@ class ExcelCell(ExcelBase):
 		#handle to the bitmap object
 		hOldBMP = ctypes.windll.gdi32.SelectObject(tempDC, hBMP)
 		#Pass Device Context and LOGPIXELSX, the horizontal resolution in pixels per unit inch
-		deviceCaps = ctypes.windll.gdi32.GetDeviceCaps(tempDC, 88)
+		dpi = ctypes.windll.gdi32.GetDeviceCaps(tempDC, LOGPIXELSX)
 		#Fetching Font Size and Weight information
 		iFontSize = self.excelCellObject.Font.Size
 		iFontSize = 11 if iFontSize is None else int(iFontSize)
-		iFontSize = ctypes.c_int(iFontSize)
-		iFontSize = ctypes.windll.kernel32.MulDiv(iFontSize, deviceCaps, 72)
 		#Font  Weight for Bold FOnt is 700 and for normal font it's 400
 		iFontWeight = 700 if self.excelCellObject.Font.Bold else 400
 		#Fetching Font Name and style information
@@ -1228,14 +1241,13 @@ class ExcelCell(ExcelBase):
 		#Release & Delete the device context
 		ctypes.windll.gdi32.DeleteDC(tempDC)
 		#Retrieve the text width
-		textWidth = StructText.width+5
-		cellWidth  = self.excelCellObject.ColumnWidth * xlCellWidthUnitToPixels	#Conversion factor to convert the cellwidth to pixels
-		return (cellWidth,textWidth)
+		textWidth = StructText.width
+		return textWidth
 
 	def _get__overlapInfo(self):
-		(cellWidth, textWidth) = self.getCellWidthAndTextWidth()
-		isWrapText = self.excelCellObject.WrapText
-		isShrinkToFit = self.excelCellObject.ShrinkToFit
+		textWidth = self.getCellTextWidth()
+		if self.excelCellObject.WrapText or self.excelCellObject.ShrinkToFit:
+			return None
 		isMerged = self.excelWindowObject.Selection.MergeCells
 		try:
 			adjacentCell = self.excelCellObject.Offset(0,1)
@@ -1247,15 +1259,23 @@ class ExcelCell(ExcelBase):
 			isAdjacentCellEmpty = not adjacentCell.Text
 		info = {}
 		if isMerged:
-			columnCountInMergeArea = self.excelCellObject.MergeArea.Columns.Count
-			curCol = self.excelCellObject.Column
-			curRow = self.excelCellObject.Row
-			cellWidth = 0
-			for x in xrange(columnCountInMergeArea):
-				cellWidth += self.excelCellObject.Cells(curRow, curCol).ColumnWidth
-				curCol += 1
-			cellWidth = cellWidth * xlCellWidthUnitToPixels #Conversion factor to convert the cellwidth to pixels
-		if isWrapText or isShrinkToFit or textWidth <= cellWidth:
+			columns=self.excelCellObject.mergeArea.columns
+			columnCount=columns.count
+			firstColumn=columns.item(1)
+			lastColumn=columns.item(columnCount)
+			firstColumnLeft=firstColumn.left
+			lastColumnLeft=lastColumn.left
+			lastColumnWidth=lastColumn.width
+			cellLeft=firstColumnLeft
+			cellRight=lastColumnLeft+lastColumnWidth
+		else:
+			cellLeft=self.excelCellObject.left
+			cellRight=cellLeft+self.excelCellObject.width
+		pointsToPixels=self.excelCellObject.Application.ActiveWindow.PointsToScreenPixelsX
+		cellLeft=pointsToPixels(cellLeft)
+		cellRight=pointsToPixels(cellRight)
+		cellWidth=(cellRight-cellLeft)
+		if textWidth <= cellWidth:
 			info = None
 		else:
 			if isAdjacentCellEmpty:

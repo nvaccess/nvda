@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-14 20:14+0530\n"
+"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"PO-Revision-Date: 2017-01-08 11:43+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -1686,6 +1686,7 @@ msgid "row"
 msgstr "கிடைவரிசை"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "சட்டகம்"
 
@@ -2012,10 +2013,6 @@ msgstr "மேசைத்தள படவுரு"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "கவனிக்கவும்..."
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "உட்சட்டகம்"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -4306,6 +4303,42 @@ msgstr "%s வெளியே"
 msgid "page %s"
 msgstr "பக்கம் %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "உட்பிரிவு %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+msgid "column {0} of {1}"
+msgstr "நெடுவரிசை {1}ல் {0}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s நெடுவரிசைகள்"
+
+msgid "continuous section break"
+msgstr "தொடர் உட்பிரிவு முறிவு"
+
+msgid "new column section break"
+msgstr "புது நெடுவரிசை உட்பிரிவு முறிவு"
+
+msgid "new page section break"
+msgstr "புதுப் பக்க உட்பிரிவு முறிவு"
+
+msgid "even pages section break"
+msgstr "இரட்டைப் படை பக்கங்களின் உட்பிரிவு முறிவு"
+
+msgid "odd pages section break"
+msgstr "ஒற்றைப் படை பக்கங்களின் உட்பிரிவு முறிவு"
+
+msgid "column break"
+msgstr "நெடுவரிசை முறிவு"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -5750,7 +5783,6 @@ msgid "Exit NVDA"
 msgstr "என்விடிஏவை விட்டு வெளியேறுக"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5760,7 +5792,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"என்விடிஏவிற்கு வருக!\n"
 "என்விடிஏவைக் கட்டுப்படுத்த, பிற விசைகளை அழுத்தும்பொழுது என்விடிஏ விசையையும் அழுத்த "
 "வேண்டும்.\n"
 "இயல்பில், நீட்டிக்கப்பட்ட செருகு விசை, எண் திட்டு செருகு விசை ஆகிய இரு விசைகளும் "
@@ -5773,6 +5804,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "என்விடிஏவிற்கு வருக"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "என்விடிஏவிற்கு வருக! "
 
 msgid "Options"
 msgstr "விருப்பத்தேர்வுகள்"
@@ -6507,13 +6543,6 @@ msgstr "என்விடிஏ பயனர் அமைப்புகளை�
 msgid "Successfully copied NVDA user settings"
 msgstr "என்விடிஏ பயனர் அமைப்புகள் வெற்றிகரமாக படியெடுக்கப்பட்டது"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "%s மொழிக் கோப்பில் பிழை"
-
-msgid "Language Error"
-msgstr "மொழிப் பிழை"
-
 msgid "This change requires administrator privileges."
 msgstr "இம்மாற்றத்திற்கு நிர்வாகியின் சிறப்புரிமைகள் தேவைப்படுகிறது"
 
@@ -7085,13 +7114,17 @@ msgstr "கருத்துரை (&C)"
 msgid "&Type"
 msgstr "வகை (&T)"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "ொரு வடிவவிதம் தேவைப்படுகிறது"
+
+msgid "Dictionary Entry Error"
+msgstr "அகரமுதலி உள்ளீட்டுப் பிழை"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "சுருங்குறித்தொடர் பிழை: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "அகரமுதலி உள்ளீட்டுப் பிழை"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8597,967 +8630,3 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
-
-#~ msgid "&Profile"
-#~ msgstr "தனியமைப்பு (&P)"
-
-#~ msgid "Language"
-#~ msgstr "மொழி"
-
-#~ msgid "Log level"
-#~ msgstr "செயற்குறிப்பேட்டுப் பதிவு நிலை"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "விசைப்பலகைத் தளவமைப்பு"
-
-#~ msgid "text reporting unit"
-#~ msgstr "உரையை அறிவிக்கும் தொகுதி"
-
-#~ msgid "Progress bar output"
-#~ msgstr "முன்னேற்றப் பட்டையின் வெளியீடு"
-
-#~ msgid "Report &font name"
-#~ msgstr "எழுத்துரு பெயரை அறிவிக்கவும் (&F)"
-
-#~ msgid "Report font &size"
-#~ msgstr "எழுத்துரு அளவை அறிவிக்கவும் (&S)"
-
-#~ msgid "Report &alignment"
-#~ msgstr "ஒழுங்கினை அறிவிக்கவும் (&A)"
-
-#~ msgid "Report &colors"
-#~ msgstr "நிரங்களை அறிவிக்கவும் (&C)"
-
-#~ msgid "Report co&mments"
-#~ msgstr "கருத்துரைகளை அறிவிக்கவும் (&M)"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "வலியுறுத்தல்களை அறிவிக்கவும் (&M)"
-
-#~ msgid "Report st&yle"
-#~ msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும் (&R)"
-
-#~ msgid "Report &pages"
-#~ msgstr "பக்கங்களை அறிவிக்கவும் (&P)"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "வரி இடைவெளியை அறிவிக்கவும் (&L)"
-
-#~ msgid "Report &tables"
-#~ msgstr "அட்டவணைகளை அறிவிக்கவும் (&T)"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "அட்டவணையின் கிடைவரிசை/நெடுவரிசைகளின் தலைப்பை அறிவிக்கவும் (&E)"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "தொடுப்புகளை அறிவிக்கவும் (&K)"
-
-#~ msgid "Report &headings"
-#~ msgstr "தலைப்புகளை அறிவிக்கவும் (&H)"
-
-#~ msgid "Report &lists"
-#~ msgstr "வரிசைப் பட்டியல்களை அறிவிக்கவும் (&L)"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "உரைத் தொகுதிகளை அறிவிக்கவும் (&Q)"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "நிலக்குறிகளை அறிவிக்கவும் (&D)"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "சட்டகங்களை அறிவிக்கவும் (&M)"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "சொடுக்கப்படக்கூடியதா என்பதை அறிவிக்கவும் (&C)"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "வரியோரச் சீர்மையை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "இச்சிறுகட்டம் தொகுக்கப்பட இயலாதது"
-
-#~ msgid "checker"
-#~ msgstr "கட்டங்கள்"
-
-#~ msgid "crisscross"
-#~ msgstr "குறுக்குநெடுக்குக் கோடுகள்"
-
-#~ msgid "down"
-#~ msgstr "கீழ்"
-
-#~ msgid "gray16"
-#~ msgstr "சாம்பல் 16"
-
-#~ msgid "gray25"
-#~ msgstr "சாம்பல் 25"
-
-#~ msgid "gray50"
-#~ msgstr "சாம்பல் 50"
-
-#~ msgid "gray75"
-#~ msgstr "சாம்பல் 75"
-
-#~ msgid "grid"
-#~ msgstr "வலையம்"
-
-#~ msgid "light down"
-#~ msgstr "மெல்லியக் கீழ்க் கோடுகள்"
-
-#~ msgid "light up"
-#~ msgstr "மெல்லிய மேற்கோடுகள்"
-
-#~ msgid "light vertical"
-#~ msgstr "மெல்லியச் செங்குத்துக்கோடுகள்"
-
-#~ msgid "semi gray75"
-#~ msgstr "அரைச் சாம்பல் 75"
-
-#~ msgid "up"
-#~ msgstr "அடர் மேற்கோடுகள்"
-
-#~ msgid "unknown color"
-#~ msgstr "தெரியாத நிறம்"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "வெளிர் நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "பாலேட்டு வெள்ளை"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "பசுநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "நீலப்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "தெளிந்த ஆகாய நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "இளமஞ்சள் நிற சாம்பல்"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "இளஞ்சிவப்பு கலந்த பழுப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "வெளிர்பாதாம் இளமஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "நீலவூதா"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "்பர்லி மரம்"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "படை நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Chartreuse வெளிர் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "சாக்லெட்"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "பவளம்"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "செவ்வூதா நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "சோளப்பட்டு இளமஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "இளநீலம் கலந்த கருஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "மயில் நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "கருநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "மயில் கருநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "கரும் பொன்மஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "கரும்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "கருங்காக்கி"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "கரும் மஜந்தா"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "அடர் ஆலிவ் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "அடர் செம்மஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "அடர் மந்தாரை"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "கருஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "அடர்மஞ்சளான இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "கரும் கடற்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "அடர் கற்பலகை நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "அடர் கற்பலகைச் சாம்பல்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "அடர் பசும்நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "கருவூதா"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "அடர் இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "ஆகாய கருநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "இளஞ்சாம்பல்"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "டாஜர் நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "செங்கல்"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "மெல்லிய இளஞ்சிவப்பான வெள்ளை"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "வனப் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "செவ்வூதாச் சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "இளநீலச் சாம்பல்"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "ஆவிநிற வெள்ளை"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "தங்கம்"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "பொன்மஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "சாம்பல்"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "பசுமஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "honeydew இளநீலப்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "ஒளிரும் இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "இந்தியச் சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "அவுரி நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "தந்தம்"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "காக்கி"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "சுகந்தி வெளிர் செவ்வூதா"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "சுகந்தி சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "புல்தரைப் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "இளமஞ்சள் பட்டு"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "இளநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "இளம்பவளம்"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "மெல்லிய மயில் நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "இளம் பொன்மஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "இளம்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "மெல்லிய இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "மெல்லிய மஞ்சள் கலந்த இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "இளங்கடற்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "மெல்லிய ஆகாய நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "மெல்லிய கற்பலகைச் சாம்பல்"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "மெல்லிய எஃகு நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "இளமஞ்சள்"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "எலுமிச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "எலுமிச்சம்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "நார்த்துணி"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "மஜந்தா"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "அரக்கு"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "நடுத்தர நீலப்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "நடுத்தர நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "நடுத்தர மந்தாரை"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "நடுத்தர செவ்வூதா"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "நடுத்தர கடற்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "நடுத்தர கற்பலகை நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "நடுத்தர இளவேனிற்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "நடுத்தர பசுநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "நடுத்தர ஊதாச் சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "நல்லிரவு நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "வெளிர் புதினாப் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "பனி ரோஜா"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "மான்தோல்"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "செம்மஞ்சள் வெள்ளை"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "கடற்படை நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "அரை வெள்ளை"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "ஆலிவ் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "சாம்பல் கலந்த ஆலிவ் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "செம்மஞ்சள் சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "மந்தாரை"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "வெளிர் பொன்மஞ்சள் "
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "வெளிர் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "வெளிர் பசுநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "வெளிர் ஊதாச் சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "பப்பாளித் தண்டு"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "மஞ்சளான இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "பெரு"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "கருநீலச் சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "பொடி நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "இளஞ்சிவப்பான பழுப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "ஆழமான ஒளிர் நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "சேணப் பழுப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "மஞ்சளான இளஞ்சிவப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "மணற்பழுப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "கடற்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "கடற்சிப்பி"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "காவி"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "வெள்ளி"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "ஆகாய நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "கற்பலகை நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "கற்பலகைச் சாம்பல்"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "பனி"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "இளவேனில் பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "எஃகு நீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "மஞ்சள் பழுப்பு"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "teal நீலப்பச்சை"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "நெருஞ்சி"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "தக்காளி"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "பசுநீலம்"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "ஊதா"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "கோதுமை"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "வெண்புகை"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "துவக்கக் குறி, அதே பொருளின் உள்ளாக இருக்க வேண்டும்"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்காது"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கும்"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
-
-#~ msgid "grammar error"
-#~ msgstr "இலக்கணப் பிழை"
-
-#~ msgid "out of grammar error"
-#~ msgstr "இலக்கணப் பிழைக்கு வெளியே"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "இலக்கணப் பிழைகளை அறிவிக்கவும் (&G)"
-
-#~ msgid "browse mode"
-#~ msgstr "உலாவும் நிலை"
-
-#~ msgid "activate"
-#~ msgstr "இயங்கச் செய்க"
-
-#~ msgid "no next"
-#~ msgstr "அடுத்தது ஏதுமில்லை"
-
-#~ msgid "no previous"
-#~ msgstr "முந்தையது ஏதுமில்லை"
-
-#~ msgid "edge of table"
-#~ msgstr "அட்டவணையின் விளிம்பு"
-
-#~ msgid "%g characters"
-#~ msgstr "%g வரியுருக்கள்"
-
-#~ msgid "%g pt"
-#~ msgstr "%g புள்ளி்"
-
-#~ msgid "no comments"
-#~ msgstr "கருத்துரைகள் ஏதுமில்லை"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "விளக்கப்படங்கள், கருத்துரைகளடங்கிய சிறுகட்டங்கள், சூத்திரங்களடங்கிய சிறுகட்டங்கள் கொண்ட "
-#~ "வரிசைப் பட்டியலை அளிக்கிறது"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "இயல்நிறம்"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s தெரிவு நீக்கப்பட்டது "
-
-#~ msgid "unrevised"
-#~ msgstr "திருத்தப்படாதது"
-
-#~ msgid "unknown author"
-#~ msgstr "தெரியாத படைப்பாளர்"
-
-#~ msgid "unknown date"
-#~ msgstr "தெரியாத தேதி"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType}, படைப்பாளர் {revisionAuthor}, தேதி {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "குவிமையத்தைக் கொண்ட பொருளை அறிவிக்கும்"
-
-#~ msgid "%s"
-#~ msgstr "%s "
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "பெயர் {}, தொடர் {}, மொத்தம் {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "மதிப்பு {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr "{} {}, மொத்தம் {}"
-
-#~ msgid " trendline {} "
-#~ msgstr "போக்கு வரிசை {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr "விளக்கப்படத்தின் பகுதி: உயரம் {}, அகலம் {}, மேல் {}, இடது {}"
-
-#~ msgid "equation"
-#~ msgstr "சமன்பாடு"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "தொடுப்புகள், தலைப்புகள், அல்லது நிலக்குறிகளின் பட்டியலை வழங்குகிறது"
-
-#~ msgid "Slovak"
-#~ msgstr "ஸ்லோவாக்"
-
-#~ msgid "navy blue"
-#~ msgstr "கடற்படை நீலம்"
-
-#~ msgid "teal"
-#~ msgstr "கரும்பச்சை நீலம்"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "என்விடிஏ 2013.1 பதிப்பில், மாற்றமில்லாமலும், தன்னிச்சையாக பயன்படுத்தவும், மடிக்கணினி "
-#~ "விசைப் பலகை வரைவு முழுவதுமாக மறுவடிவமாக்கப்பட்டுள்ளது.\n"
-#~ "மடிக்கணினி வரைவைத் தாங்கள் பயன்படுத்துவதாக இருந்தால், மேலும் தகவல்களுக்கு, 'புதிதாக "
-#~ "என்ன?' என்கிற ஆவணத்தைக் காணவும். "
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "புதிய மடிக்கணினி விசைப் பலகை வரைவு"
-
-#~ msgid "Read What's New"
-#~ msgstr "புதிதாக என்னவென்பதைப் படிக்கவும்"
-
-#~ msgid "&Acceleration"
-#~ msgstr "முடுக்கம் (&A)"
-
-#~ msgid "male 1"
-#~ msgstr "ஆண் 1"
-
-#~ msgid "female 1"
-#~ msgstr "பெண் 1"
-
-#~ msgid "male 2"
-#~ msgstr "ஆண் 2"
-
-#~ msgid "female 2"
-#~ msgstr "பெண் 2"
-
-#~ msgid "lime"
-#~ msgstr "எழுமிச்ச நிறம்"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "என்விடிஏவை விட்டு தாங்கள் கட்டாயம் வெளியேற வேண்டுமா?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "என்விடிஏவை விட்டு வெளியேறும்பொழுது எச்சரிக்கவும் (&W)"
-
-#~ msgid "Regexp"
-#~ msgstr "சுருங்குறித்தொடர்"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "வழிகாட்டிப் பொருளுக்கு எந்த இருப்பிடத் தகவலுமில்லை"
-
-#~ msgid "No location information for screen"
-#~ msgstr "திரைக்கு எந்த இருப்பிடத் தகவலுமில்லை"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "வழிகாட்டிப் பொருளின் உயரம், அகலம், நிலை ஆகியவைகளை அறிவிக்கும்"
-
-#~ msgid "Set column header row"
-#~ msgstr "நெடுவரிசையின் கிடைவரிசைத் தலைப்பு அமைக்கப்பட்டது"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "நெடுவரிசையின் கிடைவரிசைத் தலைப்பு துடைக்கப்பட்டது"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "ஒருமுறை அழுத்தினால், தற்போதைய கிடைவரிசையை, நெடுவரிசையின் தலைப்புகள் இருக்க "
-#~ "வேண்டிய கிடைவரிசையாக அமைக்கும். இருமுறை அழுத்தினால், அமைப்புகள் நீக்கப்படும்."
-
-#~ msgid "Set row header column"
-#~ msgstr "கிடைவரிசையின் நெடுவரிசைத் தலைப்பு அமைக்கப்பட்டது"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "ஒருமுறை அழுத்தினால், தற்போதைய நெடுவரிசையை, கிடைவரிசையின் தலைப்புகள் இருக்க "
-#~ "வேண்டிய நெடுவரிசையாக அமைக்கும். இருமுறை அழுத்தினால், அமைப்புகள் நீக்கப்படும்."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s முதல் %s %s வரை"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "கைமுறை இயக்கம்/தொகுத்தல்"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "தங்களின் அமைவடிவ கோப்பில் பிழைகள் உள்ளன. \n"
-#~ "இப்பிழைகளைச் சரிசெய்ய 'சரி' பொத்தானை அழுத்தவும், அல்லது மற்றொரு நேரம் அமைவடிவ "
-#~ "கோப்பினைத் தாங்களாகவே திருத்தம் செய்ய 'விலக்குக' பொத்தானை அழுத்தவும். இப்பிழைகள் "
-#~ "குறித்த கூடுதல் தகவல்களை, செயற்குறிப்பேட்டு பதிவினில் காணலாம்.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "தன்னியக்க கருத்துரைகள் ஏதுமில்லை"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "தன்னியக்க கருத்துரைகள் சாளரம் காணப்படவில்லை"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "தன்னியக்கக் கருத்துரைச் சாளரத்தில் கருத்துரை ஏதேனும் இருந்தால், அதை அறிவிக்கும்"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "தன்னியக்க கருத்துரைகள்"
-
-#~ msgid "Translation:"
-#~ msgstr "மொழிபெயர்ப்பு"
-
-#~ msgid "Comments:"
-#~ msgstr "கருத்துரைகள்"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "இப்பொருளுக்குத் தட்டைச் சீராய்வு வசதியில்லை"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "தட்டைச் சீராய்வு நிலையில் எப்பொருளுமில்லை"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "தட்டைச் சீராய்வு நிலையில், சீராய்வுச் சுட்டியின் இடத்திலிருக்கும் பொருளுக்குப் "
-#~ "பிரதிநிதியாக விளங்கும் உரைக்கு வழிகாட்டிப் பொருளை நகர்த்தும்"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr ""
-#~ "ஏற்கெனவே இயக்கத்திலுள்ள மற்றொரு என்விடிஏ அமைப்புகள் உரையாடலை கருணைக்கூர்ந்து முதலில் "
-#~ "மூடுங்கள்"
-
-#~ msgid "Translation &table:"
-#~ msgstr "மொழிப்பெயர்ப்பு அட்டவணை (&T)"
-
-#~ msgid "beeps"
-#~ msgstr "சிற்றொலிகள்"
-
-#~ msgid "talk"
-#~ msgstr "பேசுக"
-
-#~ msgid "default action failed"
-#~ msgstr "இயல்புச் செயல் தோல்வியடைந்தது"
-
-#~ msgid "layout %s"
-#~ msgstr "வரைவு %s"
-
-#~ msgid "%s device found"
-#~ msgstr "%s கருவி காணப்படுகிறது"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, %s இயல்பாக்கப்படுகிறது"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "பழுதுடந்கூடிய அமைவடிவக் கோப்பு"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "அமைவடிவக் கோப்பினைக் கடத்துவதில் பிழை %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "அமைவடிவக் கோப்பில் பிழை '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s, மொத்தம் %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "இக்கூட்டுக்கூறு ஏற்கெனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் "
-#~ "கூட்டுக்கூறை நீக்கிவிட்டு மீண்டும் முயற்சியுங்கள்."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "தற்போதைய மாற்றங்களை நீக்கிவிட்டு, சேமித்து வைத்திருக்கும் என்விடிஏ அமைவடிவத்தை "
-#~ "ஏற்றுகிறது"
-
-#~ msgid "We need your help in order to continue to improve NVDA.\n"
-#~ msgstr "என்விடிஏவைத் தொடர்ந்து மேம்படுத்த, தங்களின் உதவித் தேவைப்படுகிறது.\n"
-
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "என்விடிஏவிற்கு வருக!\n"
-
-#~ msgid "Your gesture map file contains errors.\n"
-#~ msgstr "தங்களின் gesture வரைப்பட கோப்பு பிழைகளைக் கொண்டுள்ளது.\n"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "விசைப்பலகையின் குவிமையத்தைப் பின்தொடர்க (&K)"
-
-#~ msgid "&Add..."
-#~ msgstr "ஏற்றுக... (&A)"
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "தானியங்கிக் கோப்பினை உருவாக்குக (&A)"
-
-#~ msgid "Key Command quick reference"
-#~ msgstr "விசைக் கட்டளை விரைவுக் குறிப்பு"
-
-#~ msgid "User guide"
-#~ msgstr "பயனர் வழிகாட்டி"
-
-#~ msgid "Web site"
-#~ msgstr "வலைத்தளம்"

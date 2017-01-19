@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2007-2016 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -18,13 +18,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <remote/nvdaHelperRemote.h>
 #include <common/log.h>
 #include <remote/nvdaControllerInternal.h>
+#include <remote/inProcess.h>
 #include "storage.h"
 #include "backend.h"
 
 using namespace std;
-
-const UINT VBufBackend_t::wmRenderThreadInitialize=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadInitialize");
-const UINT VBufBackend_t::wmRenderThreadTerminate=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadTerminate");
 
 VBufBackendSet_t VBufBackend_t::runningBackends;
 
@@ -36,11 +34,13 @@ void VBufBackend_t::initialize() {
 	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);
-	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
-	LOG_DEBUG(L"Registered hook, sending message...");
-	SendMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadInitialize,(WPARAM)this,0);
-	LOG_DEBUG(L"Message sent, unregistering hook");
-	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
+	auto func = [&] (void* data) {
+		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<this);
+		this->renderThread_initialize();
+	};
+	LOG_DEBUG(L"Calling execInWindow");
+	execInWindow((HWND)UlongToHandle(rootDocHandle),func, NULL);
+	LOG_DEBUG(L"execInWindow complete");
 }
 
 void VBufBackend_t::forceUpdate() {
@@ -62,18 +62,6 @@ LRESULT CALLBACK VBufBackend_t::destroy_callWndProcHook(int code, WPARAM wParam,
 				(*i)->renderThread_terminate();
 			}
 		}
-	}
-	return 0;
-}
-
-LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
-	if((pcwp->message==wmRenderThreadInitialize)) {
-		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<pcwp->wParam);
-		((VBufBackend_t*)(pcwp->wParam))->renderThread_initialize();
-	} else if((pcwp->message==wmRenderThreadTerminate)) {
-		LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<pcwp->wParam);
-		((VBufBackend_t*)(pcwp->wParam))->renderThread_terminate();
 	}
 	return 0;
 }
@@ -229,24 +217,18 @@ void VBufBackend_t::update() {
 	LOG_DEBUG(L"Update complete");
 }
 
-int VBufBackend_t::getNativeHandleForNode(VBufStorage_controlFieldNode_t* node) {
-	return 0;
-}
-
-VBufStorage_controlFieldNode_t* VBufBackend_t::getNodeForNativeHandle(int nativeHandle) {
-	return NULL;
-}
-
 void VBufBackend_t::terminate() {
 	if(runningBackends.count(this)>0) {
 		LOG_DEBUG(L"Render thread not terminated yet");
 		int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 		LOG_DEBUG(L"render threadID "<<renderThreadID);
-		registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
-		LOG_DEBUG(L"Registered hook, sending message...");
-		SendMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadTerminate,(WPARAM)this,0);
-		LOG_DEBUG(L"Message sent, unregistering hook");
-		unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
+		auto func = [&] (void* data) {
+			LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<this);
+			this->renderThread_terminate();
+		};
+		LOG_DEBUG(L"Calling execInWindow");
+		execInWindow((HWND)UlongToHandle(rootDocHandle),func, NULL);
+		LOG_DEBUG(L"execInWindow complete");
 	} else {
 		LOG_DEBUG(L"render thread already terminated");
 	}

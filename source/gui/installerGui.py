@@ -123,7 +123,7 @@ class InstallerDialog(wx.Dialog):
 		if globalVars.appArgs.launcher:
 			self.copyPortableConfigCheckbox.Disable()
 
-		bHelper = sHelper.addItem(guiHelper.ButtonHelper(wx.HORIZONTAL))
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		# Translators: The label of a button to continue with the operation.
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
@@ -211,7 +211,7 @@ class PortableCreaterDialog(wx.Dialog):
 		if globalVars.appArgs.launcher:
 			self.copyUserConfigCheckbox.Disable()
 
-		bHelper = sHelper.addItem(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
 		
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()

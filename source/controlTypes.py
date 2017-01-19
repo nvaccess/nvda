@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -426,8 +426,8 @@ roleLabels={
 	ROLE_DESKTOPICON:_("desktop icon"),
 	# Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 	ROLE_ALERT:_("alert"),
-	# Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-	ROLE_INTERNALFRAME:_("IFrame"),
+	# Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
+	ROLE_INTERNALFRAME:_("frame"),
 	# Translators: Identifies desktop pane (the desktop window).
 	ROLE_DESKTOPPANE:_("desktop pane"),
 	# Translators: Identifies an option pane.
@@ -646,7 +646,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(STATE_LINKED)
 		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
-	if role != ROLE_EDITABLETEXT:
+	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
 	if role == ROLE_CHECKBOX:
 		positiveStates.discard(STATE_PRESSED)

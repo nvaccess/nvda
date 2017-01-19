@@ -23,7 +23,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen pistenäytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 47 kielelle
+- Käännökset 48 kielelle
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
 - Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
@@ -32,7 +32,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälisyys ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on saatavilla englannin lisäksi seuraavilla 47 kielellä: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, espanja, farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, katalaani, kolumbianespanja, korea, kreikka, kroatia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, punjabi, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on käännetty englannin lisäksi seuraaville 48 kielelle: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, espanja, farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, katalaani, kolumbianespanja, korea, kreikka, kroatia, liettua, mandariinikiina, nepali, norja, perinteinen kiina, portugali, punjabi, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tšekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -91,6 +91,7 @@ Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai 
 - Käyttäjätilien valvonnan kehotteiden lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksin.
 - Windows 8 ja uudemmat käyttöjärjestelmät: kosketusnäyttösyötteiden käyttäminen ei ole mahdollista.
 - Windows 8 ja uudemmat käyttöjärjestelmät: selaustila ja kirjoitettujen merkkien puhuminen eivät toimi Windows-kaupasta ladatuissa sovelluksissa.
+- Windows 8 ja uudemmat käyttöjärjestelmät: taustaäänien vaimennusta ei tueta.
 -
 
 ++ Asentaminen ++
@@ -781,6 +782,9 @@ Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä va
 - Vaimenna aina: NVDA alentaa muiden äänien voimakkuutta koko ajan käynnissä ollessaan.
 -
 
+Tämä asetus on käytettävissä vain, jos käytetään NVDA:n asennettua versiota.
+Massamuisti- ja väliaikaisversiot eivät tue taustaäänien vaimennusta.
+
 +++ Puheäänen asetukset (NVDA+Control+V) +++[VoiceSettings]
 Puheäänen asetukset -valintaikkuna, joka avataan Asetukset-valikosta kohdasta "Puheääni...", sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
 Saadaksesi tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa, katso [Syntetisaattorin asetusrengas #SynthSettingsRing] -kappaletta.
@@ -1238,7 +1242,7 @@ Jos tämä asetus on käytössä, NVDA yrittää havaita kaikki rivillä olevat 
 
 NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla olevat muotoilut, ja joissakin tapauksissa lopunkin rivin, mutta vain, jos se ei aiheuta suorituskyvyn heikkenemistä.
  
-Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja sellaisissa sovelluksissa kuin Microsoft Word, kun muotoilut ovat tärkeitä.
+Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja esim. WordPadissa, kun muotoilut ovat tärkeitä.
 
 ==== Rivien sisennysten ilmoittaminen ====
 Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmoitetaan.
@@ -1278,12 +1282,12 @@ Puhesanastoja on mahdollista käyttää paljon muuhunkin kuin yksinkertaiseen sa
 Säännönlisäysvalintaikkunassa on myös valintaruutu, jolla voit määrittää, onko isoilla ja pienillä kirjaimilla merkitystä säännön toiminnan kannalta.
 Oletusarvoisesti kirjainkokoa ei huomioida.
 
-Viimeisenä on joukko valintapainikkeita, joiden avulla voit määrittää, täsmääkö korvattava merkkijono kaikkialla, vain kokonaisena sanana vai käsitelläänkö sitä säännöllisenä lausekkeena.
+Viimeisenä on joukko valintapainikkeita, joiden avulla voit määrittää, täsmääkö korvattava merkkijono kaikkialla, vain kokonaisena sanana vai käsitelläänkö sitä sääntölausekkeena.
 Korvattavan tekstin määrittäminen kokonaiseksi sanaksi tarkoittaa, että se korvataan vain, jos se ei esiinny pidemmän sanan osana, ts. sen edellä ja/tai jäljessä ei ole muu kuin aakkosnumeerinen merkki tai alaviiva.
 Eli käyttääksemme aiempaa esimerkkiä lintu-sanan korvaamisesta sanalla sammakko, jos tekisit siitä koko sanan korvauksen, se ei täsmäisi "lintuja"- tai "sinilintu"-sanoihin.
 
-Säännöllinen lauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
-Säännöllisiä lausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
+Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
+Sääntölausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
 
 +++ Välimerkkien ja symboleiden puhuminen +++[SymbolPronunciation]
 Tässä valintaikkunassa voit muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.

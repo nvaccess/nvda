@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-13 18:55+0100\n"
+"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"PO-Revision-Date: 2017-01-05 16:18+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -1702,6 +1702,7 @@ msgid "row"
 msgstr "fila"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "marco"
 
@@ -2028,10 +2029,6 @@ msgstr "icono del escritorio"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "alerta"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "Marco en línea"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -4356,6 +4353,43 @@ msgstr "fuera de %s"
 msgid "page %s"
 msgstr "página %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "sección %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "columna {0} de {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s columnas"
+
+msgid "continuous section break"
+msgstr "salto de sección continua"
+
+msgid "new column section break"
+msgstr "salto de sección de columna nueva"
+
+msgid "new page section break"
+msgstr "salto de sección de página nueva"
+
+msgid "even pages section break"
+msgstr "salto de Sección de páginas pares"
+
+msgid "odd pages section break"
+msgstr "salto de sección de páginas pares"
+
+msgid "column break"
+msgstr "salto de columna"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -5837,7 +5871,6 @@ msgid "Exit NVDA"
 msgstr "salir de NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5847,20 +5880,24 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"¡Bienvenido a NVDA!\n"
 "La mayoría de las órdenes para controlar a NVDA requieren que mantengas "
-"pulsada la tecla NVDA mientras presionas otras teclas.\n"
-"De forma Predeterminada, las teclas insert del teclado numérico y del "
-"principal podrán ser utilizadas como la tecla NVDA.\n"
-"También puedes configurar a NVDA para utilizar el BloqMayus como la tecla "
-"NVDA.\n"
-"Presiona NVDA+n en cualquier momento para activar el menú de NVDA.\n"
+"pulsado la tecla NVDA mientras pulsas otras teclas.\n"
+"Por omisión, las teclas insert del teclado numérico e insert principal "
+"podrán utilizarse como la tecla NVDA.\n"
+"También puedes configurar a NVDA para utilizar el BloqueoMayúsculas como la "
+"tecla NVDA.\n"
+"Pulsa NVDA+n en cualquier momento para activar el menú NVDA.\n"
 "Desde este menú, puedes configurar a NVDA, obtener ayuda y acceder a otras "
-"funciones de NVDA.\n"
+"funciones.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Bienvenido a NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "¡Bienvenido a NVDA!"
 
 msgid "Options"
 msgstr "Opciones"
@@ -6605,13 +6642,6 @@ msgstr "Error al copiar las opciones de usuario de NVDA"
 msgid "Successfully copied NVDA user settings"
 msgstr "Opciones de usuario de NVDA copiadas satisfactoriamente"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Error en fichero de idioma %s"
-
-msgid "Language Error"
-msgstr "Error en el Idioma"
-
 msgid "This change requires administrator privileges."
 msgstr "Este cambio requiere privilegios de administrador."
 
@@ -7185,13 +7215,17 @@ msgstr "&Comentario"
 msgid "&Type"
 msgstr "Tipo:"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Se requiere un patrón."
+
+msgid "Dictionary Entry Error"
+msgstr "Error de Entrada de Diccionario"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Error de expresión regular: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Error de Entrada de Diccionario"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8757,944 +8791,3 @@ msgstr "Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "&Profile"
-#~ msgstr "&Perfil"
-
-#~ msgid "Language"
-#~ msgstr "Idioma"
-
-#~ msgid "Log level"
-#~ msgstr "Niveles en el Registro"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Disposición del teclado"
-
-#~ msgid "text reporting unit"
-#~ msgstr "Unidad de anunciado de texto"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Salida de la barra de progreso"
-
-#~ msgid "Report &font name"
-#~ msgstr "Anunciar &nombre de la fuente"
-
-#~ msgid "Report font &size"
-#~ msgstr "Anunciar tama&ño de la fuente"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Anunciar &alineación"
-
-#~ msgid "Report &colors"
-#~ msgstr "Anunciar &colores"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Anunciar co&mentarios"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Anunciar É&nfasis"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Anunciar e&stilo"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Anunciar &errores de ortografía"
-
-#~ msgid "Report &pages"
-#~ msgstr "Anunciar pá&ginas"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Anunciar espaciado de &línea"
-
-#~ msgid "Report &tables"
-#~ msgstr "Anunciar &tablas"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Anunciar &encabezados de fila/columna de tabla"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Anunciar &enlaces"
-
-#~ msgid "Report &headings"
-#~ msgstr "Anunciar en&cabezados"
-
-#~ msgid "Report &lists"
-#~ msgstr "Anunciar &listas"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Anunciar c&itas"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Anunciar puntos de referencia"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Anunciar &marcos"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Anunciar si admite &clic"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Activa y desactiva el anunciado de la sangría de la línea"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Esta celda no es editable"
-
-#~ msgid "checker"
-#~ msgstr "marcador"
-
-#~ msgid "crisscross"
-#~ msgstr "Cruzadas"
-
-#~ msgid "down"
-#~ msgstr "abajo"
-
-#~ msgid "gray16"
-#~ msgstr "gris16"
-
-#~ msgid "gray25"
-#~ msgstr "gris25"
-
-#~ msgid "gray50"
-#~ msgstr "gris50"
-
-#~ msgid "gray75"
-#~ msgstr "gris75"
-
-#~ msgid "grid"
-#~ msgstr "cuadrícula"
-
-#~ msgid "light down"
-#~ msgstr "ligeramente hacia abajo"
-
-#~ msgid "light up"
-#~ msgstr "ligeramente hacia arriba"
-
-#~ msgid "light vertical"
-#~ msgstr "ligeramente vertical"
-
-#~ msgid "semi gray75"
-#~ msgstr "semi gris75"
-
-#~ msgid "up"
-#~ msgstr "arriba"
-
-#~ msgid "unknown color"
-#~ msgstr "color desconocido"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Blanco Azulado"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Blanco Viejo"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Azul verdoso"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Aguamarino"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Azul intenso"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Beis"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "Miel"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Blanco almendra"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Azul"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Azul Violáceo"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Madera"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Azul grisáceo"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Verde Pálido"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Chocolate"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Coral"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Azul Aciano"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Crudo"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Carmesí"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Cián"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Azul Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Cián Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Ocre oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "verde oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Kaki oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Magenta Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "verde Oliva oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Naranja oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Orquídea oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Rojo oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Salmón >Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "Verde mar oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Azul Pizarra Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Gris pizarra oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Turquesa Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Violeta Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Rosa Oscuro"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Azul celeste profundo"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Gris apagado"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Azul Dodger"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Ladrillo"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Blanco floral"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Verde selva"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fuxia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Azul Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Blanco Pálido"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Dorado"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Ocre"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Gris"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "Verde amarillento"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Flor de Rocío"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Rosa Intenso"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Rojo indio"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Añil"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Marfil"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Kaki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Lavanda"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Lavanda Rosácea"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Verde Césped"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Amarillo Pastel"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Azul Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Coral Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Cián Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Ocre Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Verde Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Rosa Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Salmón Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Verde mar Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Azul celeste claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Gris pizarra claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Azul acero claro"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Amarillo Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Lima"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Verde lima"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Blanco Arena"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Granate"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Aguamarina medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Azul medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Orquídea medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Púrpura medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Verde mar medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Azul pizarra medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Verde primavera medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Turquesa medio"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Violeta rojizo medio"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Azul media noche"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Menta"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Rosa Difuminado"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Arena"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Blanco Navajo"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Azul marino"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Encaje Antiguo"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Verde oliva"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Verde Oliva Parduzco"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Naranja Rojizo"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Orquídea"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Ocre Pálido"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Verde Pálido"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Turquesa Pálido"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Violeta rojizo pálido"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Papaya Claro"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Melocotón"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Perú"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Rosa"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Ciruela"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Azul Polvo"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Rojo"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Marrón Rosáceo"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Azul Real"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Marrón cuero"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Salmón"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Marrón arena"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Verde Mar"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "Nácar"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Sienna"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Plateado"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Azul celeste"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Azul pizarra"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Gris pizarra"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Nieve"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Verde Primavera"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Azul acero"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Canela"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Azul verdoso"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Cardo"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Tomate"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Turquoise"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Violeta"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Trigo"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Blanco humo"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "La marca de inicio debe residir dentro del mismo objeto"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "anunciar errores gramaticales desactivado"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "anunciar errores gramaticales activado"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Activa y desactiva el anunciado de errores gramaticales"
-
-#~ msgid "grammar error"
-#~ msgstr "error gramatical"
-
-#~ msgid "out of grammar error"
-#~ msgstr "fuera de error gramatical"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Anunciar errores &gramaticales"
-
-#~ msgid "browse mode"
-#~ msgstr "modo exploración"
-
-#~ msgid "activate"
-#~ msgstr "activar"
-
-#~ msgid "no next"
-#~ msgstr "no hay más"
-
-#~ msgid "no previous"
-#~ msgstr "no hay anterior"
-
-#~ msgid "edge of table"
-#~ msgstr "borde de la tabla"
-
-#~ msgid "%g characters"
-#~ msgstr "%g carácteres"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "sin comentarios"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Presenta una lista de gráficos, celdas con comentarios y celdas con "
-#~ "fórmulas"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "color predeterminado"
-
-#~ msgid "unselecting %s"
-#~ msgstr "Deseleccionando %s"
-
-#~ msgid "unrevised"
-#~ msgstr "sin revisar"
-
-#~ msgid "unknown author"
-#~ msgstr "autor desconocido"
-
-#~ msgid "unknown date"
-#~ msgstr "fecha desconocida"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} por {revisionAuthor} en {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Anuncia el objeto con el foco"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Series {} de {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "valor {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} de {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " Línea de tendencias {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr ""
-#~ "Altura de área de gráficos igual {}, anchura igual {}, parte superior "
-#~ "igual {}, izquierda igual{}"
-
-#~ msgid "equation"
-#~ msgstr "ecuación"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Presenta una lista de enlaces, encabezados o puntos de referencia"
-
-#~ msgid "Slovak"
-#~ msgstr "Eslovaco"
-
-#~ msgid "navy blue"
-#~ msgstr "Azul Marino"
-
-#~ msgid "teal"
-#~ msgstr "azul verdoso"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "En NVDA 2013.1, la distribución para teclados de portátil se ha "
-#~ "rediseñado por completo para hacerlo más intuitivo y consistente.\n"
-#~ "Si utilizas la distribución portátil, por favor mira el documento ¿Qué "
-#~ "hay de nuevo? para más información."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Nueva distribución Teclado Portátil"
-
-#~ msgid "Read What's New"
-#~ msgstr "Leer ¿Qué Hay de Nuevo?"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Aceleración"
-
-#~ msgid "male 1"
-#~ msgstr "masculino 1"
-
-#~ msgid "female 1"
-#~ msgstr "femenino 1"
-
-#~ msgid "male 2"
-#~ msgstr "masculino 2"
-
-#~ msgid "female 2"
-#~ msgstr "femenino 2"
-
-#~ msgid "lime"
-#~ msgstr "Verde lima"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "¿Estás seguro de que quieres salir de NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Avisar antes de salir de NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "Regular"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "no hay información de posición para el navegador de objetos"
-
-#~ msgid "No location information for screen"
-#~ msgstr "no hay información de posición para la pantalla"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Informa de la altura, anchura y  posición del actual navegador de objetos"
-
-#~ msgid "Set column header row"
-#~ msgstr "Configurar fila de encabezados de columna"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Limpiada fila de encabezados de columna"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Pulsando una vez configurará la fila actual como la fila donde deberían "
-#~ "encontrarse los emcabezados de columna. Pulsando dos veces limpia la "
-#~ "opción"
-
-#~ msgid "Set row header column"
-#~ msgstr "Configurar Columna de encabezados de fila"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Pulsando una vez configurará la columna actual como la columna donde se "
-#~ "deberían encontrar los encabezados de fila. Pulsando dos veces limpia la "
-#~ "opción."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s por %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "activar/editar manualmente"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "El fichero de configuración contiene errores. \n"
-#~ "Pulsa 'Aceptar' para corregir estos errores, o pulsa 'Cancelar' si deseas "
-#~ "editar manualmente tu fichero config más tarde para hacer las "
-#~ "correcciones. Se pueden encontrar más detalles acerca de los errores en "
-#~ "el fichero del log.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "No hay comentarios automáticos."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "No se encontró la ventana de comentarios automáticos."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr ""
-#~ "Anuncia cualquier comentario en la ventana de comentarios automáticos"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Comentarios automáticos:"
-
-#~ msgid "Translation:"
-#~ msgstr "Traducción:"
-
-#~ msgid "Comments:"
-#~ msgstr "Comentarios"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "No hay revisión plana para este objeto"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "No hay objeto en la posición de revisión plana"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Mueve el navegador de objetos al objeto representado por el texto en la "
-#~ "posición del cursor de revisión dentro de la revisión plana"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Por favor cierra primero el otro diálogo de opciones de NVDA"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&tabla de transcripción"
-
-#~ msgid "beeps"
-#~ msgstr "Pitidos"
-
-#~ msgid "talk"
-#~ msgstr "hablar"
-
-#~ msgid "default action failed"
-#~ msgstr "la acción predeterminada falló"
-
-#~ msgid "layout %s"
-#~ msgstr "distribución %s"
-
-#~ msgid "%s device found"
-#~ msgstr "%s dispositivo encontrado"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, predeterminando a %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Fichero de configuración mal formado"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Error interpretando el fichero de configuración: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Errores en fichero de configuración '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s de %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Este complemento parece estar ya instalado. Por favor elimina el "
-#~ "complemento existente e inténtalo de nuevo."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "carga la configuración de NVDA, sobreescribiendo los cambios actuales"

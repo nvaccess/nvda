@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 00:10+1000\n"
-"PO-Revision-Date: 2016-10-11 13:56+0200\n"
+"POT-Creation-Date: 2016-11-11 00:10+1000\n"
+"PO-Revision-Date: 2016-12-28 20:30-0800\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -432,13 +432,13 @@ msgstr "مهاراتية بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "هولاندي بلجيكي بدون اختصارات"
+msgid "Dutch (Belgium)"
+msgstr "هولاندي (بلجيكي)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "هولاندي (نيذرلاند) بدون اختصارات"
+msgid "Dutch (Netherlands)"
+msgstr "هولاندي (نيذرلاند)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -547,7 +547,7 @@ msgstr "تاميل بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "تيلوجو بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
@@ -1240,16 +1240,22 @@ msgstr "لا يوجد تعليق توضيحي سابقة"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "الر&وابط"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "رؤوس ال&موضوعات"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "سا&حات آريا"
 
@@ -1680,6 +1686,7 @@ msgid "row"
 msgstr "صَف"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "إطار"
 
@@ -2006,10 +2013,6 @@ msgstr "أيقونة سطح المكتب"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "تنبيه"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "لافتة بينية"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -3512,6 +3515,7 @@ msgid "review"
 msgstr "استعراض"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "التحديد الحالي"
 
@@ -5663,7 +5667,6 @@ msgid "Exit NVDA"
 msgstr "الخروج من البرنامج"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5673,8 +5676,7 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"أهلا وسهلا بكم في برنامج NVDA\n"
-". تتطلب معظم أوامر البرنامج الضغط على مفتاح NVDA قبيل الضغط على مفاتيح "
+"تتطلب معظم أوامر البرنامج الضغط على مفتاح NVDA قبيل الضغط على مفاتيح "
 "الاختصار الأخرى.\n"
 " ويقوم مفتاحي الإدراج سواء الواقع في اللوحة الرقمية أو الممتد بالعمل كمفتاح "
 "NVDA.\n"
@@ -5685,6 +5687,11 @@ msgstr ""
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
+msgstr "أهلا بكم في برنامج NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
 msgstr "أهلا بكم في برنامج NVDA"
 
 msgid "Options"
@@ -5790,8 +5797,8 @@ msgid "Add-on &help"
 msgstr "ملف مساعدة الإضافة"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "تعطيل الإضافة"
+msgid "&Disable add-on"
+msgstr "تعط&يل الإضافة"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5894,8 +5901,8 @@ msgid "running"
 msgstr "تعمل"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "تشغيل الإضافة"
+msgid "&Enable add-on"
+msgstr "ت&شغيل الإضافة"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -5932,10 +5939,6 @@ msgstr "معلومات حول الإضافة البرمجية"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "الأوضاع"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&وضع"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6244,14 +6247,14 @@ msgstr "مجلد النسخة ال&محمولة:"
 msgid "Browse..."
 msgstr "استعراض..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "نسخ اإ&عدادات المستخدم الحالية"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "اختر المجلد الذي تود به إنشاء النسخة المحمولة"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "نسخ اإ&عدادات المستخدم الحالية"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6337,10 +6340,6 @@ msgstr "فحص الخطأ البرمجي"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "الل&غة (تحتاج لإعادة التشغيل لتعمل بصورة مناسبة)"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "اللغة"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&حفظ الإعدادات عند الخروج من البرنامج"
@@ -6356,10 +6355,6 @@ msgstr "تشغيل الأصوات المصاحبة عند فتح وإغلاق NV
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "&مستوى إعداد التقرير:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "مستوى التقرير"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6414,13 +6409,6 @@ msgstr "خلل في نسخ إعدادات مستخدم البرنامج"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "تم نسخ إعدادات مستخدم البرنامج بنجاح"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "خلل في ملف اللغة %s"
-
-msgid "Language Error"
-msgstr "خلل في اللغة"
 
 msgid "This change requires administrator privileges."
 msgstr "يتطلب هذا التعديل صلاحيات إدارية."
@@ -6524,10 +6512,6 @@ msgstr "إعدادات لوحة المفاتيح"
 msgid "&Keyboard layout:"
 msgstr "نمط &لوحة المفاتيح:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "نمط لوحة المفاتيح"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6606,10 +6590,6 @@ msgstr "تشغيل تتبع &مسار الفأرة"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "مقدار ال&وحدة النصية:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "الإعلام عن الوحدة النصية"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6736,11 +6716,6 @@ msgstr "الإعلان عن &وصف الكائن"
 msgid "Progress &bar output:"
 msgstr "طريقة الإعلام عن &شريط التقدم"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "الإعلام عن شريط التقدم"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6804,77 +6779,86 @@ msgstr "منع غيرم&فاتيح الحركة السريعة من الوصول
 msgid "Document Formatting"
 msgstr "تنسيق المستند"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
-"الإعلام عن التغييرات التنسيقية بعد موضع المؤشر (مما قد يسبب بُطْءاً في "
-"الاستجابة)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "تتحكم الخيارات التالية فيما ينبغي أن ينطقه NVDA من تنسيقات"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "ال&خط"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "الإعلان عن &نوع الخط"
+msgid "&Font name"
+msgstr "ا&سم الخط"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "الإعلان عن &حجم الخط"
+msgid "Font &size"
+msgstr "&حجم الخط"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "الإعلان عن &خصائص الخط"
+msgid "Font attri&butes"
+msgstr "خ&صائص الخط"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "الإعلان عن حالة ال&محاذاة"
+msgid "E&mphasis"
+msgstr "مؤ&كد"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "الإعلان عن الأ&لوان"
+msgid "St&yle"
+msgstr "الإ&سلوب"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "الإعلان عن الت&عليقات"
+msgid "&Colors"
+msgstr "الأ&لوان"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "معلومات المستند"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "الإعلان عن &مراجعات المحرر"
+msgid "Co&mments"
+msgstr "الت&عليقات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "الإعلان عن ال&نص المؤكد"
+msgid "&Editor revisions"
+msgstr "&مراجعات المحرر"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "الإعلان عن الأس&لوب"
+msgid "Spelling e&rrors"
+msgstr "الأ&خطاء الهجائية"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "الصفحات المسافات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "الإعلان عن الأخ&طاء الهجائِية"
+msgid "&Pages"
+msgstr "الص&فحات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "الإعلان عن ال&صفحات"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "الإعلان عن ر&قم السطر"
+msgid "Line &numbers"
+msgstr "ر&قم السطر"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "الإعلان عن إزاحة الس&طر عبر"
+msgid "Line &indentation reporting:"
+msgstr "الإعلان عن إزاحة الس&طر:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
@@ -6895,63 +6879,69 @@ msgstr "النغمات والنطق"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "الإعلان عن المسافات البادئة للفقرات"
+msgid "&Paragraph indentation"
+msgstr "المسا&فات البادئة"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "الإعلان عن &تباعد الأسطر"
+msgid "&Line spacing"
+msgstr "&تباعد الأسطر"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "الإعلان عن ال&جداول"
+msgid "&Alignment"
+msgstr "ال&محاذاة"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "معلومات الجدول"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "الإعلان عن رأس ال&صف أو العمود بالجدول"
+msgid "&Tables"
+msgstr "الج&داول"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "الإعلان عن مرا&جع الخلايا بالجدول"
+msgid "Row/column h&eaders"
+msgstr "رؤو&س الأعمدة/الصفوف"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "الإعلان عن ال&روابط"
+msgid "Cell c&oordinates"
+msgstr "مرا&جع الخلايا"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "عناصر التصفح"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "الإعلان عن رؤوس الموضو&عات"
+msgid "&Lists"
+msgstr "ال&قوائم سردية"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "الإعلان عن القوائم ال&سردية"
+msgid "Block &quotes"
+msgstr "اق&تباس"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "الإعلان عن الاق&تباس"
+msgid "Fra&mes"
+msgstr "الإطا&رات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "الإعلان عن العلامات ال&دليلية"
+msgid "&Clickable"
+msgstr "يمكن ن&قره"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "الإعلان عن الإ&طارات"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "الإعلان عن الكائنات التي تسمح ب&نقرها بالفأرة"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"نطق التغييرات التنسيقية بعد موضع المؤشر (مما قد يسبب بُطْءاً في الاستجابة)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -6986,13 +6976,17 @@ msgstr "&ملحوظة"
 msgid "&Type"
 msgstr "ال&نوع المطابقة:"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "يرجى كتابة الكلمة الأصلية."
+
+msgid "Dictionary Entry Error"
+msgstr "خطأ في مدخل القاموس"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "خطأ تعبير قياسي: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "خطأ في مدخل القاموس"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8476,730 +8470,3 @@ msgstr "سلسلة الأسطر HIMS Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "التبديل بين تشغيل وتعطيل الإعلان عن إزاحة الأسطر"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "هذه الخلية لا يمكن تحريرها"
-
-#~ msgid "checker"
-#~ msgstr "مدقق"
-
-#~ msgid "crisscross"
-#~ msgstr "خطوط متصالبة"
-
-#~ msgid "down"
-#~ msgstr "سفلي"
-
-#~ msgid "gray16"
-#~ msgstr "رمادي16"
-
-#~ msgid "gray25"
-#~ msgstr "رمادي25"
-
-#~ msgid "gray50"
-#~ msgstr "رمادي50"
-
-#~ msgid "gray75"
-#~ msgstr "رمادي75"
-
-#~ msgid "grid"
-#~ msgstr "شبكة"
-
-#~ msgid "light down"
-#~ msgstr "سفلي فاتح"
-
-#~ msgid "light up"
-#~ msgstr "علوي فاتح"
-
-#~ msgid "light vertical"
-#~ msgstr "رأسي فاتح"
-
-#~ msgid "semi gray75"
-#~ msgstr "شبه رمادي75"
-
-#~ msgid "up"
-#~ msgstr "علوي"
-
-#~ msgid "unknown color"
-#~ msgstr "لون غير معروف"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "أزرق أليس"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "أبيض عتيق"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "مائي"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "زبرجدي"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "أزرق سماوي"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "بايج"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "حسائي"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "لوزي مقشر"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "أزرق"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "بنفسجي مزرق"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "خشبي"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "أزرق جيشي"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "كرتوزي"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "لون الشيكولاتة"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "مرجان"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "قنطريوني"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "أصفر فاتح جدا"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "قرمزي"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "بين الأخضر والأزرق"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "أزرق داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "سماوي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "ذهبي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "أخضر داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "كاكي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "أحمر أرجواني داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "أخضر زيتوني داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "برتقالي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "سحلبي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "أحمر داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "سلموني داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "أخضر بحري داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "أزرق أردوازي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "رمادي أردوازي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "تركواز داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "بنفسجي داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "وردي عميق"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "أزرق سماوي عميق"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "رماضي معتم"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "أزرق مراوغ"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "طوبي محروق"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "أبيض مزهر"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "أخضر غابي"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "فوشيا"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "رماضي مائل للأزرق فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "شبحي"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "ذهب"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "ذهبي"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "رماضي"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "أصفر مخضر"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "مَني"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "وردي ساخن"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "أحمر هندي"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "نيلي"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "سكري"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "كاكي"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "خزامي"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "خزامي  محمر"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "أخضر مصفر فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "شيفون ليموني"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "أزرق فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "مرجاني فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "سماوي فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "أصفر ذهبي فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "أخضر فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "وردي فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "سلموني فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "أخضر بحري فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "أزرق سماوي فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "رماضي أردوازي فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "أزرق فولاذي"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "أصفر فاتح"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "ليموني"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "أخضر ليموني"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "كتاني"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "أرجواني"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "كستنائي"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "أزرق مخضر متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "أزرق متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "سحلبي متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "أرجواني متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "أخضر بحري متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "أزرق أردوازي متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "أخضر ربيعي متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "تركواز متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "أحمر بنفسجي متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "أزرق مائل للأسود"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "كريمي نعناع"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "زهري ضبابي"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "حذائي"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "أبيض نافاجو"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "أزرق"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "شريط قديم"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "زيتوني"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "زيتوني"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "أحمر برتقالي"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "سحلبي"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "ذهبي شاحب"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "أخضر شاحب"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "تركواز شاحب"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "أحمر بنفسجي شاحب"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "لون ثمرة الببايا"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "خوخي"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "بيرو"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "وردي"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "برقوقي"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "أزرق بودرة"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "أحمر"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "بني زهري"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "أزرق ملكي"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "سرجي"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "سلموني"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "بني رملي"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "أخضر بحريأخضر داكن"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "صدفي"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "ترابي"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "فضي"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "سماوي"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "أزرق أردوازي"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "رمادي أردوازي"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "ثلجي"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "أخضر ربيعي"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "أزرق فولاذي"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "أسمر"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "فيروزي"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "سيشيلي"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "طماطم"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "تركواز"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "بنفسجي"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "قمحي"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "دخاني"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "لا بد من وجود علامة بداية التحديد في نفس الكائن"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "الإعلان عن الأخطاء النحوية تعطيل"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "الإعلان عن الأخطاء النحوية تشغيل"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الأخطاء النحوية"
-
-#~ msgid "grammar error"
-#~ msgstr "خطأ نحوي"
-
-#~ msgid "out of grammar error"
-#~ msgstr "خارج الخطأ النحوي"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "الإعلان عن الأخطاء الن&حوِية"
-
-#~ msgctxt "espeak NG NGVarient"
-#~ msgid "none"
-#~ msgstr "لا شيء"
-
-#~ msgid "browse mode"
-#~ msgstr "بيئة التصفح"
-
-#~ msgid "activate"
-#~ msgstr "تنشيط"
-
-#~ msgid "no next"
-#~ msgstr "لا يوجد المزيد من الكائنات"
-
-#~ msgid "no previous"
-#~ msgstr "لا توجد كائنات سابقة"
-
-#~ msgid "edge of table"
-#~ msgstr "حافة الجدول"
-
-#~ msgid "%g characters"
-#~ msgstr "%g أحرف"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "لا يوجد تعليقات"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr "عرض قائمة بالمخططات, والخلايا ذات التعليقات والخلايا ذات الصيغ"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "اللون الافتراضي"
-
-#~ msgid "unselecting %s"
-#~ msgstr "إزالة تحديد %s"
-
-#~ msgid "unrevised"
-#~ msgstr "لم يتم تعديله"
-
-#~ msgid "unknown author"
-#~ msgstr "مؤلف غير معروف"
-
-#~ msgid "unknown date"
-#~ msgstr "تاريخ غير معروف"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} بواسطة {revisionAuthor} في {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "الإعلان عن الكائن مع التحديد الحالي"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} سلسلة {} من {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "القيمة {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} من {}"
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr ""
-#~ "ارتفاع مساحة المخطط يساوي {}, العرض يساوي {}, العلو يساوي {}, اليسار "
-#~ "يساوي {}"
-
-#~ msgid "equation"
-#~ msgstr "معادلة"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "عرض قائمة بالروابط, ورؤوس الموضوعات أو علامار دليلية"
-
-#~ msgid "Slovak"
-#~ msgstr "سلوفاكي"
-
-#~ msgid "navy blue"
-#~ msgstr "أزرق داكن"
-
-#~ msgid "teal"
-#~ msgstr "أخضر مائل إلى الزرقة"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "في الإصدار 2013.1, قام المطورون بإعادة تصميم نمط الحواسب المحمولة تماما "
-#~ "كي يكون أسرع وأكثر توافقا.\n"
-#~ "فإذا كنت من مستخدمي نمط الحواسب المحمولة, يرجى قراءة ملف المستجدات لمزيد "
-#~ "من المعلومات."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "نمط جديد للحواسب المحمولة"
-
-#~ msgid "Read What's New"
-#~ msgstr "اقرأ ملف المستجدات"
-
-#~ msgid "&Acceleration"
-#~ msgstr "ت&سريع"
-
-#~ msgid "male 1"
-#~ msgstr "مذكر 1"
-
-#~ msgid "female 1"
-#~ msgstr "مؤنث 1"
-
-#~ msgid "male 2"
-#~ msgstr "مذكر 2"
-
-#~ msgid "female 2"
-#~ msgstr "مؤنث 2"
-
-#~ msgid "lime"
-#~ msgstr "ليموني"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "هل أنت متأكد من رغبتك بالخروج من برنامج NVDA؟"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "ال&تنبيه عند الخروج من البرنامج"
-
-#~ msgid "Regexp"
-#~ msgstr "تعبير قياسي"
