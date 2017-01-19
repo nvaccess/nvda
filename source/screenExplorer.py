@@ -1,6 +1,6 @@
 #screenExplorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2016 NV Access Limited, Joseph Lee
+#Copyright (C) 2012-2017 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -45,7 +45,7 @@ def playLocationCoordinates(x, y, screenWidth, screenHeight, detectBrightness=Tr
 
 def playObjectCoordinates(obj):
 	"""Plays the audio coordinate for the object.  
-	@param obj: the object for which the coordinate announced should be played
+	@param obj: the object for which the coordinates should be played
 	@type obj: NVDAObjects.NvDAObject
 	"""
 	l,t,w,h=obj.location

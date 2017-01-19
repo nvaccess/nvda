@@ -1,19 +1,16 @@
 #mouseHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import time
 import wx
-import tones
-import ctypes
 import winUser
 import queueHandler
 import api
 import screenBitmap
 import speech
-import globalVars
 import eventHandler
 from logHandler import log
 import config
