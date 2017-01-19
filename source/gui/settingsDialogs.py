@@ -968,7 +968,7 @@ class ObjectPresentationDialog(SettingsDialog):
 
 		# Translators: This is the label for a combobox in the
 		# object presentation settings dialog.
-		autoSuggestionsLabelText = _("Report &auto-suggestions:")
+		autoSuggestionsLabelText = _("&Auto-suggestions notification:")
 		autoSuggestionsChoices = [name for setting, name in self.autoSuggestionsLabels]
 		self.autoSuggestionsList=sHelper.addLabeledControl(autoSuggestionsLabelText, wx.Choice,choices=autoSuggestionsChoices)
 		for index, (setting, name) in enumerate(self.autoSuggestionsLabels):
