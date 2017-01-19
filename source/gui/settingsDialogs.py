@@ -887,23 +887,6 @@ class ObjectPresentationDialog(SettingsDialog):
 		("both", _("Speak and beep")),
 	)
 
-	autoSuggestionsLabels = (
-		# Translators: An option for auto-suggestions output in the Object Presentation dialog
-		# which disables reporting of appearance of suggestions.
-		# See Report auto-suggestions in the Object Presentation Settings section of the User Guide.
-		("off", _("off")),
-		# Translators: An option for auto-suggestions output in the Object Presentation dialog
-		# which disables reporting of appearance of suggestions.
-		# See Report auto-suggestions in the Object Presentation Settings section of the User Guide.
-
-		# which announces appearance of suggestions via speech and braille.
-		("message", _("Message")),
-		# Translators: An option for auto-suggestions output in the Object Presentation dialog
-		# which reports appearance of suggestions via a sound.
-		# See Report auto-suggestions in the Object Presentation Settings section of the User Guide.
-		("sound", _("Sound")),
-	)
-
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
@@ -968,13 +951,9 @@ class ObjectPresentationDialog(SettingsDialog):
 
 		# Translators: This is the label for a combobox in the
 		# object presentation settings dialog.
-		autoSuggestionsLabelText = _("&Auto-suggestions notification:")
-		autoSuggestionsChoices = [name for setting, name in self.autoSuggestionsLabels]
-		self.autoSuggestionsList=sHelper.addLabeledControl(autoSuggestionsLabelText, wx.Choice,choices=autoSuggestionsChoices)
-		for index, (setting, name) in enumerate(self.autoSuggestionsLabels):
-			if setting == config.conf["presentation"]["reportAutoSuggestions"]:
-				self.autoSuggestionsList.SetSelection(index)
-				break
+		autoSuggestionsLabelText = _("Play a sound when &auto-suggestions appear")
+		self.autoSuggestionSoundsCheckBox=sHelper.addItem(wx.CheckBox(self,label=autoSuggestionsLabelText))
+		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
 
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
@@ -989,7 +968,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
-		config.conf["presentation"]["reportAutoSuggestions"]=self.autoSuggestionsLabels[self.autoSuggestionsList.GetSelection()][0]
+		config.conf["presentation"]["reportAutoSuggestionsWithSound"]=self.autoSuggestionSoundsCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class BrowseModeDialog(SettingsDialog):

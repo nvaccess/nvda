@@ -648,25 +648,17 @@ class EditableTextWithSuggestions(NVDAObject):
 		Subclasses should provide custom implementations if possible.
 		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
 		"""
-		reportAutoSuggestions = config.conf["presentation"]["reportAutoSuggestions"]
-		if reportAutoSuggestions in ("message", "sound"):
-			# Translators: Announced when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-			braille.handler.message(_("Suggestions"))
-			if reportAutoSuggestions == "message":
-				speech.speakMessage(_("Suggestions"))
-			elif reportAutoSuggestions == "sound":
-				nvwave.playWaveFile(r"waves\suggestionsOpened.wav")
+		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+		braille.handler.message(_("Suggestions"))
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(r"waves\suggestionsOpened.wav")
 
 	def event_suggestionsClosed(self):
 		"""Called when suggestions list or container is closed.
 		Subclasses should provide custom implementations if possible.
 		By default NVDA will announce this via speech, braille or via a sound.
 		"""
-		reportAutoSuggestions = config.conf["presentation"]["reportAutoSuggestions"]
-		if reportAutoSuggestions in ("message", "sound"):
-			# Translators: Announced when suggestions disappear when search term is entered in various search fields such as Start search box in Windows 10.
-			braille.handler.message(_("Suggestions closed"))
-			if reportAutoSuggestions == "message":
-				speech.speakMessage(_("Suggestions closed"))
-			elif reportAutoSuggestions == "sound":
-				nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+		# Translators: Announced in braille when suggestions disappear when search term is entered in various search fields such as Start search box in Windows 10.
+		braille.handler.message(_("Suggestions closed"))
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
