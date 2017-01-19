@@ -42,17 +42,26 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	@param onlyIfChanged: if true reporting will not happen if the last reportPassThrough reported the same thing.
 	@type onlyIfChanged: bool
 	"""
-	if not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last:
+	if (not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last[0] or 
+		(not treeInterceptor.passThrough and reportPassThrough.last[1] != treeInterceptor.singleLetterNavEnabled)):
 		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
-			sound = r"waves\focusMode.wav" if treeInterceptor.passThrough else r"waves\browseMode.wav"
+			sound = ""
+			if treeInterceptor.passThrough:
+				sound = r"waves\focusMode.wav" 
+			else:
+				sound = r"waves\browseMode.wav" if treeInterceptor.singleLetterNavEnabled else r"waves\BrowseModeSingleLetterNavDisabled.wav"
 			nvwave.playWaveFile(sound)
 		else:
 			if treeInterceptor.passThrough:
 				ui.message(_("Focus mode"))
+			elif not treeInterceptor.singleLetterNavEnabled:
+				# Translators: Reported when browse mode is enabled, but single letter navigation   is turned off.
+				ui.message(_("Browse mode, Single Letter Navigation Off."))
 			else:
+				#Translators: Reported when browse mode is enabled.
 				ui.message(_("Browse mode"))
-		reportPassThrough.last = treeInterceptor.passThrough
-reportPassThrough.last = False
+		reportPassThrough.last = (treeInterceptor.passThrough, treeInterceptor.singleLetterNavEnabled)
+reportPassThrough.last = (False, False)
 
 def mergeQuickNavItemIterators(iterators,direction="next"):
 	"""
@@ -262,14 +271,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		return script
 
 	def script_toggleSingleLetterNav(self,gesture):
-		if self.singleLetterNavEnabled:
-			self.singleLetterNavEnabled=False
-			# Translators: Reported when single letter navigation in browse mode is turned off.
-			ui.message(_("Single letter navigation off"))
-		else:
-			self.singleLetterNavEnabled=True
-			# Translators: Reported when single letter navigation in browse mode is turned on.
-			ui.message(_("Single letter navigation on"))
+		self.singleLetterNavEnabled = not self.singleLetterNavEnabled
+		reportPassThrough(self, onlyIfChanged=True)
+		
 	# Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 	script_toggleSingleLetterNav.__doc__=_("Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application")
 
