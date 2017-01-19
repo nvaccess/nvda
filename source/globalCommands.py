@@ -1271,6 +1271,7 @@ class GlobalCommands(ScriptableObject):
 			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
+			"reportBorderStyle":True,"reportBorderColor":True,
 		}
 		textList=[]
 		info=api.getReviewPosition()
