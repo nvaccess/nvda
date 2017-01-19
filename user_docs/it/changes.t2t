@@ -3,6 +3,28 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.1 =
+
+== Novità ==
+- In Microsoft Word possono ora essere annunciati il numero di sezione o il tipo di interruzione sezione. Ciò può essere attivato tramite l'opzione "leggi i numeri di pagina" presente nella finestra impostazioni formattazione documento di NVDA. (#5946)
+- In Microsoft Word è possibile farsi annunciare le colonne di testo. Ciò può essere attivato tramite l'opzione "leggi i numeri di pagina" presente nella finestra impostazioni formattazione documento di NVDA. (#6555)
+- La funzione di cambio lingua automatica è ora supportata anche in Wordpad. (#6555)
+- Il comando Trova di NVDA (ctrl-NVDA-f) è ora funzionante anche nella modalità navigazione in Microsoft Edge. (#6580)
+- Le funzioni di navigazione veloce con i tasti b e Shift+b ora sono operative anche in Microsoft Edge. (#6577)
+
+
+== Bug corretti ==
+- Sistemato un problema che causava il congelamento di NVDA quando ci si spostava per paragrafi in Microsoft Word in documenti molto estesi. (#6368)
+- Le tabelle che venivano copiate da Microsoft Excel a Microsoft Word non sono più rilevate come tabelle di layout e comunque non vengono più ignorate. (#5927)
+- Quando si cerca di scrivere in un documento protetto da scrittura in Microsoft Excel, NVDA ora emetterà un segnale acustico piuttosto che annunciare lettere che in realtà non vengono scritte. (#6570)
+- La pressione del tasto Esc in Microsoft Excel non causerà più l'attivazione della modalità navigazione, a meno che l'utente non abbia preventivamente deciso di impostare la modalità navigazione con NVDA+spazio e poi sia entrato in modalità focus premendo invio su un campo di tipo form. (#6569) 
+- NVDA non si blocca più in un foglio di lavoro in Microsoft Excel nel quale si trova una riga o una colonna cui è stata applicata la funzione unisci. (#6216)
+- L'annuncio di eventuale testo sporgente o ritagliato nelle celle di Microsoft Excel dovrebbe adesso risultare più accurato. (#6472)
+- NVDA ora annuncerà se una casella di controllo risulta di sola lettura. (#6563)
+- All'esecuzione di NVDA non verrà più mostrato un avviso nel caso in cui non sia possibile riprodurre il suono di avvio in quanto non risulta disponibile alcun dispositivo audio. (#6289)
+- I controlli ribbon in Microsoft Excel che risultano non disponibili ora vengono segnalati correttamente. (#6430)
+
+
 = 2016.4 =
 Le principali caratteristiche di questa versione si focalizzano su un supporto molto migliorato per Microsoft Edge; modalità navigazione nell'app Posta di Windows10; miglioramenti significativi all'interfaccia delle finestre di dialogo di NVDA.
 
