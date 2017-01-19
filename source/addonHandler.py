@@ -438,6 +438,14 @@ def initTranslation():
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
 def getTranslatedMessage(translatedMessage):
+	"""Get a message translated in NVDA's core.
+	This should be used instead of _(message) when add-ons present text translated in NVDA.
+	For instance, use getTranslatedMessage("Error") instead of _("Error")
+	@param translatedMessage: The text of a message translated in NVDA.
+	@type translatedMessage: str
+	@return: The available translation for the message.
+	@rtype: str
+	"""
 	return _(translatedMessage)
 
 def _translatedManifestPaths(lang=None, forBundle=False):
