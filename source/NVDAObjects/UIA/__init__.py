@@ -603,8 +603,8 @@ class UIA(Window):
 		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		# But don't let suggestions list appearance be announced in Windows 10 Start menu for consistent experience with earlier Windows versions.
-		if self.UIAElement.cachedAutomationID == "TextBox":
+		# In Windows 10, allow Start menu search box and Edge's address omnibar to participate in announcing appearance of auto-suggestions.
+		if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox", "addressEditBox"):
 			clsList.append(SearchField)
 		try:
 			# Nested block here in order to catch value error when attempting to access automation ID for invalid elements.
