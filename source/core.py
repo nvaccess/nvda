@@ -79,6 +79,10 @@ def restart(disableAddons=False, debugLogging=False):
 		sys.argv.remove('--disable-addons')
 	except ValueError:
 		pass
+	try:
+		sys.argv.remove('--debug-logging')
+	except ValueError:
+		pass
 	if disableAddons:
 		options.append('--disable-addons')
 	if debugLogging:
