@@ -6,13 +6,23 @@ Quoi de Neuf dans NVDA
 = 2017.1 =
 
 == Nouvelles Fonctionnalités ==
-- Sous Microsoft Word le type de saut de section, et le numéro de section peuvent maintenant être signalés. This is enabled with the "report page numbers" option in the document formatting dialog. (#5946)
+- Sous Microsoft Word le type de saut de section, et le numéro de section peuvent maintenant être signalés. Ceci s'active grâce à l'option "annoncer les numéros de page" dans le dialogue Mise en Forme des Documents. (#5946)
 - Sous Microsoft Word les colonnes de texte peuvent maintenant être signalées. Ceci s'active grâce à l'option "Annoncer les numéros de page" dans le dialogue Mise en forme des documents. (#5946)
 - Le changement automatique de langue est maintenant supporté sous Wordpad. (#6555)
+- La commande de recherche de NVDA (NVDA+control+f) est maintenant supportée en mode navigation sous Microsoft Edge. (#6580)
+- La navigation rapide vers les boutons en mode navigation (b et maj+b) est maintenant supportée sous Microsoft Edge. (#6577)
  
  
 == Corrections de Bogues ==
 - Correction du bloquage sous Microsoft Word quand on se déplace par paragraphe dans un gros document en mode navigation. (#6368)
+- Sous Microsoft Word, les tableaux copiés depuis Microsoft Excel ne sont plus traités comme des tableaux de disposition, et ainsi ne sont plus ignorés. (#5927)
+- Quand on essaie d'entrer des caractères sous Microsoft Excel dans une vue protégée, NVDA produit maintenant un son plutôt que de dire les caractères qui ne sont pas acceptés. (#6570)
+- Sous Microsoft Excel, l'appui sur échap ne fait plus passer en mode navigation, à moins que l'utilisateur ne soit passé explicitement en mode navigation par NVDA+espace puis soit entré en mode formulaire en pressant entrer sur un champ de formulaire. (#6569) 
+- NVDA ne se bloque plus dans les feuilles de calcul Microsoft Excel quand une ligne ou une colonne entière est fusionnée. 9#6216)
+- L'annonce de texte détouré ou trop large dans les cellules sous Microsoft Excel devrait maintenant être plus fiable (#6472)
+- NVDA signale maintenant quand une case à cocher est en lecture seule. (#6563)
+- Le lanceur de NVDA n'affichera plus un dialogue d'avertissement quand il ne peut jouer le son de démarrage en raison de l'indisponibilité d'un dispositif audio. (#6289)
+- Dans le ruban de Microsoft Excel, les contrôles indisponibles sont maintenant annoncés comme tel. (#6430)
 
 
 = 2016.4 =
@@ -1961,7 +1971,7 @@ Les points forts principaux de cette version comprennent le support des édition
  - Pour plus d'informations au sujet d'eSpeak, où pour trouver d'autres versions, aller à http://espeak.sourceforge.net/.
 - Correction d'un bogue où le mauvais caractère était annoncé lors de l'appui sur supprime dans les volets éditables dans Internet Explorer / Outlook Express.
 - Ajout du support pour plus de champs d'édition dans Skype.
-- Les tampons virtuels ne sont chargés que lorsque le focus es sur la fenêtre qui a besoin d'être chargée. Ceci corrige quelques problèmes quand le volet de visualisation est actifdans Outlook Express.
+- Les tampons virtuels ne sont chargés que lorsque le focus est sur la fenêtre qui a besoin d'être chargée. Ceci corrige quelques problèmes quand le volet de visualisation est actif dans Outlook Express.
 - Ajout d'arguments en ligne de commande à NVDA :
  - -m, --minimal: ne joue pas les sons de démarrage et d'arrêt et ne présente pas d'interface au démarrage si configuré à cet effet.
  - -q, --quit: Met fin à tout autre instance déjà en cours d'exécution de NVDA et arrête ce dernier
