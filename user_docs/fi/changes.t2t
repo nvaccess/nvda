@@ -3,6 +3,28 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.1 =
+
+== Uudet ominaisuudet ==
+- Osanvaihdon tyypin ja osan numeron ilmoittaminen on nyt mahdollista Microsoft Wordissa. Toiminto otetaan käyttöön Dokumenttien muotoilu -valintaikkunan "Ilmoita sivunumerot" -asetuksella. (#5946)
+- Tekstipalstojen ilmoittaminen on nyt mahdollista Microsoft Wordissa. Toiminto otetaan käyttöön Dokumenttien muotoilu -valintaikkunan "Ilmoita sivunumerot" -asetuksella. (#5946)
+- WordPadissa tuetaan nyt automaattista kielen vaihtamista. (#6555)
+- NVDA:n Etsi-komentoa (NVDA+Ctrl+F) tuetaan nyt selaustilassa Microsoft Edgessä. (#6580)
+- Selaustilassa painikkeisiin siirtäviä pikanavigointinäppäimiä (B ja Shift+B) tuetaan nyt Microsoft Edgessä. (#6577)
+
+
+== Korjatut ohjelmavirheet ==
+- Korjattu hyytyminen Microsoft Wordissa liikuttaessa kappaleittain suuressa asiakirjassa selaustilan ollessa käytössä. (#6368)
+- Microsoft Wordin taulukoita, jotka on kopioitu Microsoft Excelistä, ei enää käsitellä asettelutaulukoina, jonka vuoksi niitä ei enää ohiteta. (#5927)
+- NVDA antaa äänimerkin yritettäessä kirjoittaa Microsoft Excelin suojatussa näkymässä sen sijaan, että puhuisi merkkejä, joita ei todellisuudessa kirjoitettu. (#6570)
+- Esc-näppäimen painaminen Microsoft Excelissä ei enää virheellisesti vaihda selaustilaan, ellei käyttäjä ole aiemmin nimenomaisesti vaihtanut selaustilaan näppäinkomennolla NVDA+Välilyönti ja siirtynyt sitten vuorovaikutustilaan painamalla Enteriä lomakekentän kohdalla. (#6569) 
+- NVDA ei enää hyydy Microsoft Excelin laskentataulukoissa, joissa koko rivi tai sarake on yhdistetty. (#6216)
+- Rajatun/ylivuotavan tekstin ilmoittaminen Microsoft Excelin soluissa pitäisi olla nyt tarkempaa. (#6472)
+- NVDA ilmoittaa nyt, kun valintaruutu on vain luku -tyyppiä. (#6563)
+- Kun NVDA:n käynnistinohjelma ei voi toistaa tunnusääntä, näkyviin ei pitäisi enää tulla varoitusikkunaa puuttuvasta äänilaitteesta. (#6289)
+- Microsoft Excelin valintanauhan säätimet, jotka eivät ole käytettävissä, ilmoitetaan nyt sellaisina. (#6430)
+
+
 = 2016.4 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat paranneltu Microsoft Edgen tuki; selaustila Windows 10:n Sähköposti-sovelluksessa; sekä NVDA:n valintaikkunoiden merkittävät parannukset.
 
@@ -15,6 +37,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat paranneltu Microsoft E
 - Tuki Baum SuperVario2-, Baum Vario 340- ja HumanWare Brailliant2 -pistenäytöille. (#6116)
 - Alustava tuki Microsoft Edgen Anniversary-päivitykselle. (#6271)
 - Selaustilaa käytetään nyt viestien lukemiseen Windows 10:n sähköpostisovelluksessa. (#6271)
+- Uusi kieli: liettua.
 
 
 == Muutokset ==

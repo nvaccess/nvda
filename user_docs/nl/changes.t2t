@@ -3,6 +3,28 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.1 =
+
+== Nieuwe Functies ==
+- In Microsoft Word kan het soort sectie-einde en het nummer van de sectie nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
+- In Microsoft Word kunnen de tekstkolommen nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
+- Automatische taalherkenning is nu ondersteund in Wordpad. (#6555)
+- The NVDA find command (NVDA+control+f) is now supported in browse mode for Microsoft Edge. (#6580)
+- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+
+
+== Opgeloste problemen ==
+- Fix freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
+- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables, and therefore are no longer ignored. (#5927)
+- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
+- Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
+- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. 9#6216)
+- Reporting of cropped/overflowed text in Microsoft Excel cells should be now more accurate (#6472)
+- NVDA now reports when a check box is read-only. (#6563)
+- The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
+- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+
+
 = 2016.4 =
 Hoogtepunten in deze versie zijn verbeterde ondersteuning voor Microsoft Edge; bladermodus in de Windows 10 Mail app; en significante verbeteringen aan de dialoogvensters van NVDA.
 
@@ -35,10 +57,10 @@ Hoogtepunten in deze versie zijn verbeterde ondersteuning voor Microsoft Edge; b
 - Een zeldzame fout opgelost bij het afsluiten van NVDA terwijl het spraakweergavevenster open is. (#5050)
 - Afbeeldingen maps verschijnen nu zoals verwacht in bladermodus in Mozilla Firefox. (#6051)
 - Voorheen gebeurde er niets als u op de Entertoets drukte in het dialoogvenster Woordenboek. Nu worden alle wijzigingen opgeslagen die u hebt aangebracht en wordt het dialoogvenster afgesloten. (#6206)
-- Berichten worden nu getoond in braille als ju invoermodi wijzigt voor een invoermethode (native invoer/alfanumeriek, halve/volledige xmodus, etc.). (#5892, #5893)
+- Berichten worden nu getoond in braille als u invoermodi wijzigt voor een invoermethode (native invoer/alfanumeriek, halve/volledige xmodus, etc.). (#5892, #5893)
 - Als u een add-on uitschakelt en onmiddellijk weer inschakelt of omgekeerd, keert de status van de add-on nu correct terug naar de oorspronkelijke. (#6299)
 - In Microsoft Word kunnen velden met paginanummers nu gelezen worden in kopteksten. (#6004)
-- De muis kan nu worden gebruikt om de focus te verplaatsen tussen de symbolenlijst en de invoervelden in het dialoogvenster symbooluitspraak. (#6312)
+- In het dialoogvenster symbooluitspraak kan de muis nu worden gebruikt om de focus te verplaatsen tussen de symbolenlijst en de invoervelden. (#6312)
 - In bladermodus in Microsoft Word is een probleem opgelost dat de elementenlijst niet liet verschijnen als een document een ongeldige hyperlink bevatte. (#5886)
 - Als u het spraakweergavevenster sluit via de taakbalk of de alt+F4 sneltoets, zal het selectievakje in het NVDA-menu nu correct aangeven of het venster al dan niet zichtbaar is. (#6340)
 - Het commando Plugins herladen, veroorzaakt niet langer problemen voor getriggerde configuratieprofielen, nieuwe documenten in web browsers en schermoverzichtmodus. (#2892, #5380)
@@ -278,6 +300,7 @@ Hoogtepunten in deze versie zijn initiële ondersteuning voor Windows 10; de mog
 - Nieuwe brailletabellen: Fins 6 punts, Iers graad 1, Iers graad 2, Koreaans graad 1 (2006), Koreaans graad 2 (2006). (#5137, #5074, #5097)
 - Het QWERTY toetsenbord van de Papenmeier BRAILLEX Live Plus brailleleesregel wordt nu ondersteund. (#5181)
 - Experimentele ondersteuning voor de Microsoft Edge webbrowser en browsing engine in Windows 10. (#5212)
+- Nieuwe taal: Kannada.
 
 
 == Veranderingen ==
@@ -497,17 +520,17 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 - In de spellingcontrole van Microsoft Word 2010 wordt het eigenlijke foutief gespelde woord gemeld in plaats van onterecht enkel het eerste vette woord te melden. (#3431)
 - In bladermodus in Internet Explorer en andere MSHTML-elementen, tabbing of gebruik van lettertoetsnavigatie om naar formuliervelden te gaan, meldt opnieuw het label in veel gevallen waar dat vroeger niet gebeurde (specifiek waar HTML label elements zijn gebruikt). (#4170)
 - Microsoft Word: Reporting de aanwezigheid en placement of comments is more accurate. (#3528)
-- Navigatie in bepaalde dialoogvensters in MS Office producten zoals Word, Excel en Outlook is verbeterd door niet langer particular control container toolbars te melden die niet nuttig zijn voor de gebruiker. (#4198) 
-- Task panes zoals clipboard manager or File recovery niet langer accidentilly seem to gain focus bij het openen van een toepassing als Microsoft Word or Excel, waardoor de gebruiker soms heen en weer moest schakelen naar de toepassing om het document of werkblad te gebruiken. (#4199)
+- Navigatie in bepaalde dialoogvensters in MS Office producten zoals Word, Excel en Outlook is verbeterd door niet langer bepaalde control container toolbars te melden die niet nuttig zijn voor de gebruiker. (#4198) 
+- Task panes zoals clipboard manager of File recovery lijken niet langer per ongeluk focus te krijgen bij het openen van een toepassing als Microsoft Word of Excel, waardoor de gebruiker soms heen en weer moest schakelen naar de toepassing om het document of werkblad te gebruiken. (#4199)
 - NVDA weigert niet langer te werken op recente Windows besturingssystemen als de taal van Windows is ingesteld als Servisch (Latin). (#4203) 
 - Pressing numlock in invoerhulp nu correctly toggles numlock, rather than causing het toetsenbord en het besturingssysteem to become out of sync in regards to de status van deze toets. (#4226)
 - In Google Chrome wordt de titel van het document opnieuw gemeld bij het wisselen van tabblad. In NVDA 2014.2 gebeurde dit in sommige gevallen niet. (#4222)
 - In Google Chrome en Chrome-gebaseerde browsers wordt het webadres van het document niet langer gemeld bij het lezen van het document. (#4223)
 - When running say all als de No speech synthesizer is geselecteerd (nuttig voor automated testing), say all will nu complete in plaats van te stoppen na de eerste regels. (#4225)
-- Microsoft Outlook's Signature dialog: het Signature editing veld is nu toegankelijk, wt full cursor tracking en format detection mogelijk maakt. (#3833) 
+- Microsoft Outlook's Signature dialog: het Signature editing veld is nu toegankelijk, wat full cursor tracking en format detection mogelijk maakt. (#3833) 
 - Microsoft Word: bij het lezen van de laatste regel van een tabelcel, wordt niet langer de hele tabelcel gelezen. (#3421)
 - Microsoft Word: bij het lezen van de eerste of de laatste regel van een inhoudsopgave, wordt niet langer de hele inhoudsopgave gelezen. (#3421)
-- When speaking typed words en in sommige andere gevallen, worden woorden niet langer onterecht onderbroken bij markeringen zoals klinkertekens en virama in Indische talen. (#4254)
+- Bij het uitspreken van woorden en in sommige andere gevallen, worden woorden niet langer onterecht onderbroken bij markeringen zoals klinkertekens en virama in Indische talen. (#4254)
 - Invoervelden voor getallen worden nu correct behandeld in GoldWave. (#670)
 - Microsoft Word: als u per alinea navigeert met control+pijlOmlaag / control+pijlOmhoog is het niet langer nodig de toetscombinatie tweemaal te drukken als u door een lijst gaat. (#3290)
 

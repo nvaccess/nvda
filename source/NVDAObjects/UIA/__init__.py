@@ -34,6 +34,25 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.TextUnit_Character
 	] if UIAHandler.isUIAAvailable else []
 
+	def find(self,text,caseSensitive=False,reverse=False):
+		tempRange=self._rangeObj.clone()
+		documentRange=self.obj.UIATextPattern.documentRange
+		if reverse:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,documentRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		else:
+			if tempRange.move(UIAHandler.TextUnit_Character,1)==0:
+				return False
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,documentRange,UIAHandler.TextPatternRangeEndpoint_End)
+		try:
+			r=tempRange.findText(text,reverse,not caseSensitive)
+		except COMError:
+			r=None
+		if r:
+			r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
+			self._rangeObj=r
+			return True
+		return False
+
 	def _getFormatFieldAtRange(self,range,formatConfig,ignoreMixedValues=False):
 		"""
 		Fetches formatting for the given UI Automation Text range.
@@ -764,7 +783,7 @@ class UIA(Window):
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
-		for prop in (UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+		for prop in (UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,UIAHandler.UIA_IsEnabledPropertyId):
 			statesCacheRequest.addProperty(prop)
 		return self.UIAElement.buildUpdatedCache(statesCacheRequest)
 
@@ -788,6 +807,8 @@ class UIA(Window):
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
 			if e.getCachedPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
+		if not e.getCachedPropertyValueEx(UIAHandler.UIA_IsEnabledPropertyId,True):
+			states.add(controlTypes.STATE_UNAVAILABLE)
 		try:
 			isDataValid=e.getCachedPropertyValueEx(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
 		except COMError:

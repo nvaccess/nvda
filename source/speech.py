@@ -1139,7 +1139,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
 		if text:
 			textList.append(text)
-	if  formatConfig["reportPage"]:
+	if formatConfig["reportPage"]:
 		pageNumber=attrs.get("page-number")
 		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
@@ -1147,6 +1147,56 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			# %s will be replaced with the page number.
 			text=_("page %s")%pageNumber
 			textList.append(text)
+		sectionNumber=attrs.get("section-number")
+		oldSectionNumber=attrsCache.get("section-number") if attrsCache is not None else None
+		if sectionNumber and sectionNumber!=oldSectionNumber:
+			# Translators: Indicates the section number in a document.
+			# %s will be replaced with the section number.
+			text=_("section %s")%sectionNumber
+			textList.append(text)
+
+		textColumnCount=attrs.get("text-column-count")
+		oldTextColumnCount=attrsCache.get("text-column-count") if attrsCache is not None else None
+		textColumnNumber=attrs.get("text-column-number")
+		oldTextColumnNumber=attrsCache.get("text-column-number") if attrsCache is not None else None
+
+		# Because we do not want to report the number of columns when a document is just opened and there is only 
+		# one column. This would be verbose, in the standard case.
+		# column number has changed, or the columnCount has changed
+		# but not if the columnCount is 1 or less and there is no old columnCount.
+		if (((textColumnNumber and textColumnNumber!=oldTextColumnNumber) or
+			(textColumnCount and textColumnCount!=oldTextColumnCount)) and not
+			(textColumnCount and int(textColumnCount) <=1 and oldTextColumnCount == None)) :
+			if textColumnNumber and textColumnCount:
+				# Translators: Indicates the text column number in a document.
+				# {0} will be replaced with the text column number.
+				# {1} will be replaced with the number of text columns.
+				text=_("column {0} of {1}").format(textColumnNumber,textColumnCount)
+				textList.append(text)
+			elif textColumnCount:
+				# Translators: Indicates the text column number in a document.
+				# %s will be replaced with the number of text columns.
+				text=_("%s columns")%(textColumnCount)
+				textList.append(text)
+
+	sectionBreakType=attrs.get("section-break")
+	if sectionBreakType:
+		if sectionBreakType == "0" : # Continuous section break.
+			text=_("continuous section break")
+		elif sectionBreakType == "1" : # New column section break.
+			text=_("new column section break")
+		elif sectionBreakType == "2" : # New page section break.
+			text=_("new page section break")
+		elif sectionBreakType == "3" : # Even pages section break.
+			text=_("even pages section break")
+		elif sectionBreakType == "4" : # Odd pages section break.
+			text=_("odd pages section break")
+		else:
+			text=""
+		textList.append(text)
+	columnBreakType=attrs.get("column-break")
+	if columnBreakType:
+		textList.append(_("column break"))
 	if  formatConfig["reportHeadings"]:
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None

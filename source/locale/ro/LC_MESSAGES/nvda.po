@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA R3899\n"
+"Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-30 19:58+0200\n"
-"Last-Translator: DanP <dan.punga@gmail.com>\n"
-"Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com\n"
+"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"PO-Revision-Date: 2017-01-05 16:28+0200\n"
+"Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
+"Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -433,12 +433,12 @@ msgstr "Marathi grad 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Belgium)"
-msgstr "Olandeză (Belgia)"
+msgstr "Neerlandeză (Belgia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Netherlands)"
-msgstr "Olandeză (Olanda)"
+msgstr "Neerlandeză (Țările de Jos)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3536,16 +3536,16 @@ msgstr "Arată fereastra de dialog a opțiunilor NVDA pentru compunere intrări"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Arată fereastra de dialog a opțiunile prezentării obiectelor din NVDA"
+msgstr "Arată fereastra de dialog a opțiunilor prezentării obiectelor din NVDA"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Arată fereastra dialog cu opțiunile modului navigare al NVDA"
+msgstr "Arată fereastra de dialog cu opțiunile modului navigare al NVDA"
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr ""
-"Arată fereastra de dialog din NVDA cu opțiunile de format pentru documente"
+"Arată fereastra de dialog din NVDA cu opțiunile de formatare a documentelor"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -4349,6 +4349,43 @@ msgstr "în afara %s"
 #, python-format
 msgid "page %s"
 msgstr "pagina %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "secțiunea %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "coloana {0} din {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s coloane"
+
+msgid "continuous section break"
+msgstr "continuă secțiunea"
+
+msgid "new column section break"
+msgstr "coloana nouă a secțiunii"
+
+msgid "new page section break"
+msgstr "pagina nouă a secțiunii"
+
+msgid "even pages section break"
+msgstr "chiar și spațiere între secțiunile paginii"
+
+msgid "odd pages section break"
+msgstr "spațiere adițională între secțiunile paginii"
+
+msgid "column break"
+msgstr "spațiere între coloane"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
@@ -7038,7 +7075,7 @@ msgstr "&Revizii editor"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Spelling e&rrors"
-msgstr "&greșeli de ortografie"
+msgstr "&Greșeli de ortografie"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7199,7 +7236,7 @@ msgstr "Comentariu"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
-msgstr "Şablon"
+msgstr "Șablon"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
@@ -7257,7 +7294,7 @@ msgstr "Arată c&ursor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "&Rata intemitenței cusorului (ms)"
+msgstr "&Rata intemitenței cursorului (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
@@ -8748,1001 +8785,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "IFrame"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Eroare în fișierul de limbă %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Eroare de limbă"
-
-#~ msgid "&Profile"
-#~ msgstr "&Profil"
-
-#~ msgid "Language"
-#~ msgstr "Limbă"
-
-#~ msgid "Log level"
-#~ msgstr "Nivelul jurnalului"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Schemă tastatură"
-
-#~ msgid "text reporting unit"
-#~ msgstr "unitate de raportare a textului"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Anunț bară de progres"
-
-#~ msgid "Report &font name"
-#~ msgstr "Anunță &nume font"
-
-#~ msgid "Report font &size"
-#~ msgstr "Anunță &mărime font"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Anunță &alinierea"
-
-#~ msgid "Report &colors"
-#~ msgstr "Anunță &culori"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Anunță co&mentarii"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Anunță a&ccentuarea"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Anunță st&il"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Anunță &erori de ortografie"
-
-#~ msgid "Report &pages"
-#~ msgstr "Anunță &pagini"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Anunță spațiere &linie"
-
-#~ msgid "Report &tables"
-#~ msgstr "Anunță &tabele"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Anunță &anteturi de rând sau coloană din tabel"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Anunță le&gături"
-
-#~ msgid "Report &headings"
-#~ msgstr "Anunță &rubrici"
-
-#~ msgid "Report &lists"
-#~ msgstr "Anunță &liste"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Anunță &citate în bloc"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Anunță r&epere"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Anunță &cadre"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Anunță dacă e &clicabil"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Activează sau dezactivează raportarea indentației de rând"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Celula curentă nu este editabilă"
-
-#~ msgid "checker"
-#~ msgstr "tablă de șah"
-
-#~ msgid "crisscross"
-#~ msgstr "intersectat"
-
-#~ msgid "down"
-#~ msgstr "jos"
-
-#~ msgid "gray16"
-#~ msgstr "gri16"
-
-#~ msgid "gray25"
-#~ msgstr "gri25"
-
-#~ msgid "gray50"
-#~ msgstr "gri50"
-
-#~ msgid "gray75"
-#~ msgstr "gri75"
-
-#~ msgid "grid"
-#~ msgstr "grilă"
-
-#~ msgid "light down"
-#~ msgstr "deschis spre jos"
-
-#~ msgid "light up"
-#~ msgstr "deschis spre sus"
-
-#~ msgid "light vertical"
-#~ msgstr "deschis vertical"
-
-#~ msgid "semi gray75"
-#~ msgstr "semi gri75"
-
-#~ msgid "up"
-#~ msgstr "sus"
-
-#~ msgid "unknown color"
-#~ msgstr "culoare necunoscută"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "albastru Alice"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "alb antic"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "aqua"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "acvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "azur"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "bej"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "roz-portocaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "migdale înălbite"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "albastru"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "albastru-violaceu"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "nisipiu"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "albastru-cenușiu"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "galben-verzui"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "ciocolatiu"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "corai"
-
-# sună cam forțat
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "de culoarea albăstrelei"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "galben-deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "carmin"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "albastru închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "cyan închis"
-
-# traducere forțată...
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "culoarea splinuței închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "verde închis"
-
-# varianta "kaki" are pronunție dificilă pe sintetizator
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "kakiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "magenta închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "verde-măsliniu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "portocaliu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "orhidee închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "roșu închis"
-
-# forțată
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "culoarea somonului închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "verde-marin închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "albastru-cenușiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "gri-cenușiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "turcoaz închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "violet închis"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "roz intens"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "azur intens"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "gri pal"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "azur-luminos Dodger"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "cărămiziu"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "alb-rozaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "verde de pădure"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fucsia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "albastru-cenușiu Gainsboro"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "alb de fantomă"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "auriu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "culoarea splinuței"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "gri"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "galben-verzui"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "pepene galben"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "roz viu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "roșu oxid de fier"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "fildeș"
-
-# varianta "kaki" are pronunție dificilă pe sintetizator
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "kakiu"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "levănțică"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "levănțică rozalie"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "verde gazon"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Șifon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "albastru deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "corai deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "cyan deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "splinuță deschis gălbui"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "verde deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "roz deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "culoarea somonului deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "verde-marin deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "azur deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "gri-cenușiu deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "albastru-metalic deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "galben deschis"
-
-# sau "limetă" ?
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "limetă"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "limetă verzuie"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "pânză de in"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "maro"
-
-# "pronunțat" fiind mai mic pe scara intensității decât "închis"="dark"
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "acvamarin pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "albastru pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "orhidee pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "purpuriu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "verde-marin pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "albastru-cenușiu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "verde de primăvară pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "turcoaz pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "violet-cărămiziu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "albastru miezu-nopții"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "verde lichior de mentă"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "roz pal"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "mocasin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "alb-portocaliu Navajo"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "bleumarin"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "dantelă ștearsă"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "oliv"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "olive-kakiu"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "roșu-portocaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "orhidee"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "culoarea splinuței pală"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "verde pal"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "turcoaz pal"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "violet-cărămiziu pal"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "portocaliu pal Papaya"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "puf de piersică"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "brun Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "roz"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "prună"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "albastru foarte pal"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "roșu"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "brun-rozaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "albastru intens regal"
-
-# sau..."brun-bronz pronunțat"?
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "brun ca șaua"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "culoarea somonului"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "brun-nisipiu"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "verde marin"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "scoică"
-
-# nu cunosc culoarea...
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "sienna"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "argintiu"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "azur"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "albastru-cenușiu"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "gri-cenușiu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "culoare de nea"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "verde-primăvăratec"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "albastru-metalic"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "cafeniu"
-
-# "cyan închis"
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "albastru-verzui închis"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "violet ciulin"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "roșu tomată"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "turcoaz"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "violet"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "culoarea grâului"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "culoare fum-alb"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Marcarea începutului trebuie să se afle în același obiect"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "anunță erori ortografie dezactivat"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "anunță erori ortografie activat"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Activează sau dezactivează raportarea erorilor de ortografie"
-
-#~ msgid "grammar error"
-#~ msgstr "eroare de ortografie"
-
-#~ msgid "out of grammar error"
-#~ msgstr "în afara erorii de ortografie"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Anunță &erori de ortografie"
-
-#~ msgid "browse mode"
-#~ msgstr "mod navigare"
-
-#~ msgid "activate"
-#~ msgstr "activează"
-
-#~ msgid "no next"
-#~ msgstr "următor inexistent"
-
-#~ msgid "no previous"
-#~ msgstr "anterior inexistent"
-
-#~ msgid "edge of table"
-#~ msgstr "marginea tabelului"
-
-#~ msgid "%g characters"
-#~ msgstr "%g caractere"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "fără comentarii"
-
-#~ msgid "layout %s"
-#~ msgstr "plan %s"
-
-#~ msgid "%s embedded object"
-#~ msgstr "%s obiect incorporat"
-
-#~ msgid "NVDA Excel Cell Editor"
-#~ msgstr "Editor NVDA în celule de Excel"
-
-#~ msgid "Enter cell contents"
-#~ msgstr "Introduceți conținutul celulei"
-
-#~ msgid "Extends the selection and speaks the last selected cell"
-#~ msgstr "Extinde selecțiunea și pronunță ultima celulă selectată"
-
-#~ msgid "%s %s through %s %s"
-#~ msgstr "%s %s prin %s %s"
-
-#~ msgid "Slovak"
-#~ msgstr "slovacă"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s din %s"
-
-#~ msgid "line feed"
-#~ msgstr "introducere rând"
-
-#~ msgid "page break"
-#~ msgstr "pagină nouă"
-
-#~ msgid "carriage return"
-#~ msgstr "de la capăt"
-
-#~ msgid "quote"
-#~ msgstr "ghilimele"
-
-#~ msgid "number"
-#~ msgstr "număr"
-
-#~ msgid "dollar"
-#~ msgstr "dolar"
-
-#~ msgid "percent"
-#~ msgstr "procent"
-
-#~ msgid "tick"
-#~ msgstr "bifă"
-
-#~ msgid "left paren"
-#~ msgstr "paranteză stânga"
-
-#~ msgid "plus"
-#~ msgstr "plus"
-
-#~ msgid "comma"
-#~ msgstr "virgulă"
-
-#~ msgid "dash"
-#~ msgstr "cratimă"
-
-#~ msgid "slash"
-#~ msgstr "bară diagonală"
-
-#~ msgid "semi"
-#~ msgstr "punct și virgulă"
-
-#~ msgid "less"
-#~ msgstr "minus"
-
-#~ msgid "equals"
-#~ msgstr "egal"
-
-#~ msgid "greater"
-#~ msgstr "plus"
-
-#~ msgid "question"
-#~ msgstr "semn de întrebare"
-
-#~ msgid "at"
-#~ msgstr "la"
-
-#~ msgid "left bracket"
-#~ msgstr "paranteză dreaptă stânga"
-
-#~ msgid "back slash"
-#~ msgstr "bară diagonală inversă"
-
-#~ msgid "right bracket"
-#~ msgstr "paranteză dreaptă dreapta"
-
-#~ msgid "left brace"
-#~ msgstr "acoladă stânga"
-
-#~ msgid "bar"
-#~ msgstr "bară"
-
-#~ msgid "right brace"
-#~ msgstr "acoladă dreapta"
-
-#~ msgid "tilda"
-#~ msgstr "tildă"
-
-#~ msgid "bullet"
-#~ msgstr "bulet"
-
-#~ msgid "dot dot dot"
-#~ msgstr "puncte puncte"
-
-#~ msgid "lime"
-#~ msgstr "verde deschis"
-
-#~ msgid "navy blue"
-#~ msgstr "bleumarin"
-
-#~ msgid "teal"
-#~ msgstr "albastru verzui"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Fișier de configurare format greșit"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, devine implicit %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Eroare la analizarea fișierului de configurare: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Erori în fișierul de configurare '%s':\n"
-#~ "%s"
-
-#~ msgid "equation"
-#~ msgstr "ecuație"
-
-#~ msgid "speak punctuation"
-#~ msgstr "citește punctuația"
-
-#~ msgid ""
-#~ "Toggles on and off the speaking of punctuation. When on NVDA will say the "
-#~ "names of punctuation symbols, when off it will be up to the synthesizer "
-#~ "as to how it speaks punctuation"
-#~ msgstr ""
-#~ "Pornește sau oprește citirea punctuației. Când e activat, NVDA va spune "
-#~ "numele semnelor de punctuație, când e dezactivat sintetizatorul va alege "
-#~ "cum citește punctuația."
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nu există descriere simplă pentru acest obiect"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nu există obiect la poziția descrierii simple"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Nu există informație asupra locației pentru obiectul navigator"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nu există informație asupra locației pentru ecran"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Anunță înălțimea, lățimea și poziția obiectului navigator curent"
-
-#~ msgid "Sets the keyboard focus to the navigator object"
-#~ msgstr "Pune punctul focalizat din taste pe obiectul navigator"
-
-#~ msgid "No parents"
-#~ msgstr "Nu există surse"
-
-#~ msgid ""
-#~ "Sets the navigator object to the parent of the object it is currently on "
-#~ "and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe sursa obiectului pe care se află pe moment și "
-#~ "îl pronunță"
-
-#~ msgid ""
-#~ "Sets the navigator object to the object previous to the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe obiectul dinaintea celui pe care se află pe "
-#~ "moment și îl pronunță"
-
-#~ msgid "No children"
-#~ msgstr "Nu există rezultate"
-
-#~ msgid ""
-#~ "Sets the navigator object to the first child object of the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe primul obiect rezultat din cel pe care se află "
-#~ "pe moment și îl pronunță"
-
-#~ msgid "default action failed"
-#~ msgstr "acțiune implicită eșuată"
-
-#~ msgid ""
-#~ "Moves the system caret to the position of the review cursor , in the "
-#~ "current navigator object"
-#~ msgstr ""
-#~ "Mută cursorul de scriere al sistemului la poziția cursorului de examinare "
-#~ "în obiectul navigator curent"
-
-#~ msgid "beeps"
-#~ msgstr "semnale sonore"
-
-#~ msgid "talk"
-#~ msgstr "vorbește"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "anunță obiectul cu punctul focalizat"
-
-#~ msgid "Shows the NVDA virtual buffers settings dialog"
-#~ msgstr ""
-#~ "Arată fereastra de dialog a setărilor zonei tampon virtuale din NVDA"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "încarcă configurația salvată a NVDA, suprascriind schimbările curente"
-
-#, fuzzy
-#~ msgid "Please close  the other NVDA settings dialog first"
-#~ msgstr "Arată fereastra de dialog a setărilor mousului din NVDA"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Sigur doriți să închideți NVDA?"
-
-#~ msgid "copyright"
-#~ msgstr "copyright"
-
-#~ msgid "url"
-#~ msgstr "url"
-
-#~ msgid "Virtual &buffers..."
-#~ msgstr "&Zone tampon virtuale..."
-
-#~ msgid "Readme"
-#~ msgstr "Citește-mă"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Avertizează înainte de închiderea NVDA"
-
-#~ msgid "&Speak all punctuation"
-#~ msgstr "&Pronunță toate semnele de punctuație"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "Crește amplitudinea sunetului pentru majuscule"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Urmărește &focalizarea din taste"
-
-#~ msgid "virtual buffers"
-#~ msgstr "zone tampon virtuale"
-
-#~ msgid "Regular &expression"
-#~ msgstr "&Expresii obișnuite"
-
-#~ msgid "&edit"
-#~ msgstr "&editează"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&Tabel traducere:"
-
-#~ msgid "unselecting %s"
-#~ msgstr "deselectare %s"
-
-#~ msgid "female 1"
-#~ msgstr "femeie 1"
-
-#~ msgid "female 2"
-#~ msgstr "femeie 2"
-
-#~ msgid "male 1"
-#~ msgstr "bărbat 1"
-
-#~ msgid "male 2"
-#~ msgstr "bărbat 2"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Prezintă o listă de linkuri, titluri și repere"

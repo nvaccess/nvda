@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-25 17:58+0330\n"
+"PO-Revision-Date: 2016-12-28 20:36-0800\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Bookmarks: -1,1148,85,-1,-1,-1,-1,-1,-1,-1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -83,7 +83,6 @@ msgid "unknown input method"
 msgstr "روشِ ورودیِ نامشخص"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -721,7 +720,6 @@ msgstr "نه %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} از {total}"
 
@@ -1481,73 +1479,61 @@ msgid "pink-red"
 msgstr "صورتی-قرمز"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "{color}ِ روشن"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "{color}ِ تیره"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "{color}ِ سیرِ سیر"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "{color}ِ خیلی کمرنگ"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "{color}ِ کمرنگ"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "{color}ِ ملایم"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "{color}ِ ملایم"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "سفیدِ {color}"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "خاکستریِ {color}"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "{color}ِ خاکستریِ تیره"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "{color}ِ خیلی تیره"
@@ -3423,7 +3409,6 @@ msgid "AC power on"
 msgstr "متصل به برق"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} ساعت و {minutes:d} دقیقه مانده است"
 
@@ -4272,7 +4257,6 @@ msgid "column %s"
 msgstr "ستونِ %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "{rowCount} سطر و {columnCount} ستون دارد."
 
@@ -4328,30 +4312,25 @@ msgstr "سبْکِ پیش‌فرض"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} به {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "متنِ {color} روی پس‌زمینه‌ی {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "متنِ {color} رنگ"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "پس‌زمینه‌ی {backgroundColor} رنگ"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "الگوی پس‌زمینه‌ی {pattern}"
 
@@ -4559,7 +4538,6 @@ msgid "out of table"
 msgstr "بیرون از جدول"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "جدولی با {columnCount} ستون و {rowCount} سطر"
 
@@ -4640,27 +4618,22 @@ msgid "object mode"
 msgstr "حالتِ شیئی"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "یک {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "دو {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "سه {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "چهار {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} {numFingers} انگشتی"
 
@@ -4742,7 +4715,6 @@ msgstr "به‌روزرسانیِ NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "نگارشِ {version} از NVDA در دسترس است"
 
@@ -4838,11 +4810,9 @@ msgstr "دسترسی به میزِ کارِ رایانه بدونِ نیاز ب�
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "یک صفحه خوانِ رایگان و متن‌باز برای ویندوزِ مایکروسافت"
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "حقِّ تألیف (C) {years} متعلق به مشارکت‌کنندگانِ NVDA میباشد."
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4887,7 +4857,6 @@ msgstr ""
 "کمکِ مالی از منوی NVDA انجام دهید."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4896,7 +4865,6 @@ msgstr ""
 "برای اینکه بتوانید افزونه های NVDA را نصب کنید، باید NVDA را اجرا کرده باشید."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4907,12 +4875,10 @@ msgstr ""
 "است."
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "مانندِ {symbol} در {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -4962,12 +4928,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "زمانِ باقیمانده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%، {curLocation} از {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "صفحه‌ی {pageNumber}"
 
@@ -5077,12 +5042,10 @@ msgid "Waiting for Outlook..."
 msgstr "در انتظارِ Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "از {startTime} تا {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "قرارِ ملاقات {subject}, در {time}"
 
@@ -5244,97 +5207,78 @@ msgid "Master Thumbnails"
 msgstr "نمایشِ اصلیِ تصاویرِ کوچک"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "اسلایدِ {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "سمتِ چپِ {otherShape} را به مقدارِ {distance:.3g} نقطه میپوشانَد"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "زیرِ سمتِ چپِ {otherShape} به مقدارِ {distance:.3g} نقطه قرار گرفته است"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "بالای {otherShape} را به مقدارِ {distance:.3g} نقطه میپوشانَد"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "زیرِ بالای {otherShape} به مقدارِ {distance:.3g}نقطه قرار گرفته است"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "سمتِ راستِ {otherShape} را به مقدارِ {distance:.3g} نقطه میپوشانَد"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "زیرِ سمتِ راستِ {otherShape} به مقدارِ {distance:.3g} نقطه قرار گرفته است"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "پایینِ {otherShape} را به مقدارِ {distance:.3g} نقطه میپوشانَد"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "زیرِ پایینِ {otherShape} به مقدارِ {distance:.3g} نقطه قرار گرفته است"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "{otherShape} را میپوشانَد."
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "زیرِ {otherShape} قرار گرفته است."
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} نقطه از لبه‌ی چپِ اسلاید"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "به مقدارِ {distance:.3g} نقطه بیرون از لبه‌ی چپِ اسلاید"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} نقطه از لبه‌ی بالای اسلاید"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "به مقدارِ {distance:.3g} بیرون از لبه‌ی بالای اسلاید"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} نقطه از لبه‌ی راستِ اسلاید"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "به مقدارِ {distance:.3g} نقطه بیرون از لبه‌ی راستِ اسلاید"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} نقطه از لبه‌ی پایینِ اسلاید"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "به مقدارِ {distance:.3g} نقطه بیرون از لبه‌ی پایینِ اسلاید"
 
@@ -5349,12 +5293,10 @@ msgstr ""
 "میتواند با NVDA بخواند را تغییر میدهد."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "یادداشتهای نمایشِ اسلاید - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "نمایشِ اسلاید - {slideName}"
 
@@ -5444,7 +5386,6 @@ msgstr "نمایشگر‌های بریلِ Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "پورتِ سریال: {portName}"
 
@@ -5940,7 +5881,6 @@ msgid "Choose Add-on Package File"
 msgstr "فایلِ بسته‌ی افزونه را انتخاب کنید"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "بسته‌ی افزونه‌ی NVDA (*.{ext})"
 
@@ -5954,7 +5894,6 @@ msgstr ""
 "است."
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6039,7 +5978,6 @@ msgid "Restart NVDA"
 msgstr "راه‌اندازیِ مجددِ NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6052,7 +5990,6 @@ msgstr ""
 "توضیح: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "نشانیِ اینترنتی: {url}"
 
@@ -6305,7 +6242,6 @@ msgid ""
 msgstr "نسخه‌ی پیشینی از NVDA روی سیستمِ شما یافت شد. این نسخه به‌روزرسانی میشود."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7278,7 +7214,6 @@ msgstr "&فیلتر کردن با"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7319,12 +7254,10 @@ msgid "word"
 msgstr "واژه"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}٪"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "در {x}, {y} پیکْسِل"
 
@@ -7382,7 +7315,6 @@ msgid "Taskbar"
 msgstr "نوارِ وظیفه"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "سرخ {rgb.red}، سبز {rgb.green}، آبی {rgb.blue}"
 
@@ -7550,7 +7482,6 @@ msgid "&Sheets"
 msgstr "&برگه‌ها"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "از {start} تا {end}"
 
@@ -7566,22 +7497,18 @@ msgstr ""
 "تنظیمات قالببندیِ اسناد فعال کنید."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "{address} به عنوانِ آغازِ سر‌ستون‌ها تنظیم شد"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} پیش از این به عنوانِ آغازِ سر‌ستون‌ها تنظیم شده است"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address} از سر‌ستون‌ها حذف شد"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "{address} در سر‌ستون‌ها پیدا نمیشود"
 
@@ -7595,22 +7522,18 @@ msgstr ""
 "جاری یا این خانه صرفِ نظر میشود."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "{address} به عنوانِ آغازِ سر‌سطر‌ها تنظیم شد"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} پیش از این به عنوانِ آغازِ سر‌سطر‌ها تنظیم شده است"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address} از سر‌سطر‌ها حذف شد"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "{address} در سر‌سطر‌ها پیدا نمیشود"
 
@@ -7623,11 +7546,9 @@ msgstr ""
 "راستِ آن که در این ناحیه قرار دارند تنظیم میشود. با دو بار فشردن، از سر‌سطرِ "
 "جاری یا این خانه صرفِ نظر میشود."
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "پیام ورودی عبارت است از  {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "پیام ورودی عبارت است از {message}"
 
@@ -7640,12 +7561,10 @@ msgid "Reports the comment on the current cell"
 msgstr "توضیحی که برای خانه‌ی جاری وجود دارد را اعلام میکند"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "در حالِ ویرایشِ توضیحِ خانه‌ی {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "از {firstAddress} {firstContent} تا {lastAddress} {lastContent}"
 
@@ -8000,7 +7919,6 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "پراکندگی با خط‌های صاف بدونِ علامت‌زنِ داده"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "این نمودار {chartTitle} است و از نوعِ {chartType} میباشد."
 
@@ -8028,7 +7946,6 @@ msgstr "مجموعه"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
-#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "محورِ {axisName} عبارت است از {axisTitle}"
 
@@ -8042,7 +7959,6 @@ msgid "There are total %d series in this chart"
 msgstr "تعداد %d مجموعه در این نمودار هست."
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "مجموعه‌ی {number} {name}"
 
@@ -8067,7 +7983,6 @@ msgstr "نقطه‌ی داده‌ها"
 msgid "item"
 msgstr "جزء"
 
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "رنگِ مجموعه {colorName} است"
 
@@ -8157,61 +8072,51 @@ msgstr "شکل"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "مجموعه‌ی {seriesName} {seriesIndex} از {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "بدونِ تغییر از نقطه‌ی {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "افزایش به اندازه‌ی {incrementValue} از نقطه‌ی {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "کاهش به اندازه‌ی {decrementValue} از نقطه‌ی {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "رده‌ی {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "مقدارِ {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr "کسرِ {fractionValue:.2f} درصد سهمِ {pointIndex} از {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} از {pointCount}"
 
@@ -8224,12 +8129,10 @@ msgid "Secondary"
 msgstr "ثانویه"
 
 #. Translators: Details about an axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "محورِ نمودار، نوع: {axisType}، گروه: {axisGroup}، عنوان: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "محورِ نمودار، نوع: {axisType}، گروه: {axisGroup}"
 
@@ -8247,7 +8150,6 @@ msgid " squared "
 msgstr "گِرد‌شده"
 
 #. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "عنوانِ نمودار: {chartTitle}"
 
@@ -8256,7 +8158,6 @@ msgid "Untitled chart"
 msgstr "نمودارِ بدونِ عنوان"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8269,7 +8170,6 @@ msgid "Chart area "
 msgstr "ناحیه‌ی نمودار"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8294,7 +8194,6 @@ msgstr "راهنمای علائم موجود نیست"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "ورودیِ راهنمای علائم برای مجموعه‌ی {seriesName} {seriesIndex} از {seriesCount}"
@@ -8302,7 +8201,6 @@ msgstr ""
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "کلید راهنمای علائم برای مجموعه‌ی {seriesName} {seriesIndex} از {seriesCount}"
@@ -8405,11 +8303,9 @@ msgstr "سرصفحه‌ی ابتدایی"
 msgid "Text frame"
 msgstr "قابِ متنی"
 
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "توضیح: {text} توسطِ {author} به تاریخِ {date}"
 
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} توسطِ {author} در {date}"
 
@@ -8450,12 +8346,10 @@ msgid "Table description"
 msgstr "توضیحِ جدول"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr "سطرِ {rowNumber} ستونِ {columnNumber} به عنوانِ آغازِ سر‌ستون‌ها تعیین شد"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8463,12 +8357,10 @@ msgstr ""
 "شده است"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "سطرِ {rowNumber} ستونِ {columnNumber} از سر‌ستون‌ها حذف شد"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "سطرِ {rowNumber} ستونِ {columnNumber} در سر‌ستون‌ها پیدا نمیشود"
 
@@ -8482,12 +8374,10 @@ msgstr ""
 "جاری برای این خانه صرف نظر میشود."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr "سطرِ {rowNumber} ستونِ {columnNumber} به عنوانِ آغازِ سر‌سطر‌ها تعیین شد"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8495,12 +8385,10 @@ msgstr ""
 "شده است"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "سطرِ {rowNumber} ستونِ {columnNumber} از سر‌سطر‌ها حذف شد"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "سطرِ {rowNumber} ستونِ {columnNumber} در سر‌سطر‌ها پیدا نمیشود"
 
@@ -8584,43 +8472,35 @@ msgid "Moved above blank paragraph"
 msgstr "روی پاراگرافِ خالی رفت"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "سبْک {styleName}، سطحِ اختصار {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "قلم {size:g} نقطه ای"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} نویسه"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} اینچ"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} سانتیمتر"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} میلیمتر"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} نقطه"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} پیکا"
 
@@ -8661,879 +8541,3 @@ msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE/Smart
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "IFrame"
-#~ msgstr "قابِ داخلی"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "خطا در فایلِ زبانِ %s"
-
-#~ msgid "Language Error"
-#~ msgstr "خطا در زبان"
-
-#~ msgid "&Profile"
-#~ msgstr "&گروه"
-
-#~ msgid "Language"
-#~ msgstr "زبان"
-
-#~ msgid "Log level"
-#~ msgstr "سطح وقایع"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "چیدمانِ صفحه‌کلید"
-
-#~ msgid "text reporting unit"
-#~ msgstr "واحدِ گزارشِ متن"
-
-#~ msgid "Progress bar output"
-#~ msgstr "اعلامِ نوارِ پیشرفت"
-
-#~ msgid "Report &font name"
-#~ msgstr "اعلامِ &نامِ قلم"
-
-#~ msgid "Report font &size"
-#~ msgstr "اعلامِ اندا&زه‌ی قلم"
-
-#~ msgid "Report &alignment"
-#~ msgstr "اعلامِ &ترازبندی"
-
-#~ msgid "Report &colors"
-#~ msgstr "اعلامِ رن&گ‌ها"
-
-#~ msgid "Report co&mments"
-#~ msgstr "اعلامِ تو&ضیحات"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "اعلامِ تأک&ید"
-
-#~ msgid "Report st&yle"
-#~ msgstr "اعلامِ &سبْک"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "اعلامِ خ&طاهای املایی"
-
-#~ msgid "Report &pages"
-#~ msgstr "اعلامِ &صفحه‌ها"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "اعلامِ &فاصله‌ی خط‌ها"
-
-#~ msgid "Report &tables"
-#~ msgstr "اعلامِ &جدول‌ها"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "&اعلامِ سرسطرها و سر‌ستون‌های جدول"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "اعلامِ &لینک‌ها"
-
-#~ msgid "Report &headings"
-#~ msgstr "اعلامِ س&رنوشتارها"
-
-#~ msgid "Report &lists"
-#~ msgstr "اعلامِ ف&هرست‌ها"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "ا&علامِ نقلِ قول‌ها"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "اعلامِ &بخش‌های اصلیِ صفحه"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "اعلامِ &قاب‌ها"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "اعلامِ &کلیک‌شدنی‌ها"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "اعلام شدنِ تورفتگیِ خط را فعال یا غیرِ فعال میکند."
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "این خانه غیرِ قابلِ ویرایش است"
-
-#~ msgid "checker"
-#~ msgstr "شطرنجی"
-
-#~ msgid "crisscross"
-#~ msgstr "متقاطع"
-
-#~ msgid "down"
-#~ msgstr "خطوطِ مورّب از بالا به پایین"
-
-#~ msgid "gray16"
-#~ msgstr "خاکستریِ ۱۶"
-
-#~ msgid "gray25"
-#~ msgstr "خاکستریِ ۲۵"
-
-#~ msgid "gray50"
-#~ msgstr "خاکستریِ ۵۰"
-
-#~ msgid "gray75"
-#~ msgstr "خاکستریِ ۷۵"
-
-#~ msgid "grid"
-#~ msgstr "جدول"
-
-#~ msgid "light down"
-#~ msgstr "خطوطِ روشنِ مورّب از بالا به پایین"
-
-#~ msgid "light up"
-#~ msgstr "خطوطِ روشنِ مورّب از پایین به بالا"
-
-#~ msgid "light vertical"
-#~ msgstr "خطوطِ روشنِ عمودی"
-
-#~ msgid "semi gray75"
-#~ msgstr "نیمه‌خاکستریِ ۷۵"
-
-#~ msgid "up"
-#~ msgstr "خطوطِ مورّب از پایین به بالا"
-
-#~ msgid "unknown color"
-#~ msgstr "رنگِ نامشخص"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "نیلیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "بژِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "فیروزه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "یشمی"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "آبیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "بژِ باز"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "کِرِم"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "کاه‌گِلی"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "آبی"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "آبیِ بنفشِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "خاکی"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "آبیِ لجنی"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "سبزِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "عسلیِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "نارنجیِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "آبیِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "کاهی"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "زرشکی"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "آبیِ دریایی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "سرمه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "سبزِ کبریتیِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "ماشیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "سبزِ آوا‌کادو"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "ماشی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "مخملی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "زیتونیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "نارنجیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "ارغوانیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "عنّابیِ تند"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "قهوه‌ایِ حنایی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "سبزِ دریاییِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "آبیِ دودی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "لجنیِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "فیروزه‌ایِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "بنفشِ باز"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "شفقی"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "آبیِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "دودی"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "نیلی"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "شرابی"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "پوست پیازی"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "شِویدی"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "سرخابی"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "خاکستریِ مات"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "سفیدِ بنفشه"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "طلایی"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "خردلی"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "خاکستری"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "مغز‌پسته‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "یشمیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "سرخابی"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "جگری"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "نیلیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "استخوانی"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "خاکی"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "نیلیِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "صورتیِ مات"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "مغز‌پسته‌ایِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "شیر‌شکری"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "آبیِ کبریتی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "بژِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "آبیِ آسمانی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "لیموییِ روشن\""
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "سبزِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "صورتیِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "کِرِمِ نارنجی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "سبزِ کبریتیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "آبیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "سربی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "بنفشِ مایل به آبی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "شیری"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "مغز‌پسته‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "سبزِ مغز‌پسته‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "کتانی"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "سرخابیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "آلبالویی"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "سبزِ دریایی"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "آبیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "ارکیده‌ایِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "آبیِ بنفش"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "خزه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "آبیِ متالیکِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "یشمیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "فیروزه‌ایِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "ارغوانی"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "آبی نفتی"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "سفیدِ نعنایی"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "بژ"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "هلویی"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "کِرِمِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "لاجوردی"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "بژِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "زیتونی"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "سبزِ ارتشی"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "قرمزِ نارنجی"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "ارکیده‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "نخودی"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "سبزِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "فیروزه‌ایِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "شرابیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "هلوییِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "هلوییِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "بادامیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "صورتی"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "بنفشِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "آبی کبریتیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "قرمز"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "بادمجانی"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "فیروزه‌ایِ فسفری"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "کاکائویی"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "حناییِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "هلوییِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "خزه‌ایِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "هِلی"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "قهوه‌ایِ متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "نقره‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "آبیِ آسمانیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "آبیِ فولادی"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "سربیِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "صورتیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "یشمیِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "نیلیِ متالیک"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "برنزه‌ی کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "سبزِ دودی"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "بادمجانیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "قرمزِ گوجه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "سبزِ دریاییِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "بنفشِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "گندمی"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "خاکستریِ محو"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "نشانه‌ی آغاز باید در همان شیء قرار گرفته باشد."
-
-#~ msgid "report grammar errors off"
-#~ msgstr "خطاهای دستوری اعلام نمیشوند."
-
-#~ msgid "report grammar errors on"
-#~ msgstr "خطاهای دستوری اعلام میشوند."
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "اعلام شدنِ خطاهای دستوری را فعال یا غیرِ فعال میکند."
-
-#~ msgid "grammar error"
-#~ msgstr "خطای دستوری"
-
-#~ msgid "out of grammar error"
-#~ msgstr "بیرون از خطای دستوری"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "اعلامِ خ&طاهای دستوری"
-
-#~ msgid "browse mode"
-#~ msgstr "حالتِ مرور"
-
-#~ msgid "activate"
-#~ msgstr "انجام شد."
-
-#~ msgid "no next"
-#~ msgstr "شیءِ بعدی‌ای وجود ندارد."
-
-#~ msgid "no previous"
-#~ msgstr "شیءِ قبلی‌ای نیست"
-
-#~ msgid "edge of table"
-#~ msgstr "لبه‌ی جدول"
-
-#~ msgid "%g characters"
-#~ msgstr "%g نویسه"
-
-#~ msgid "%g pt"
-#~ msgstr "%g نقطه"
-
-#~ msgid "no comments"
-#~ msgstr "هیچ توضیحی نیست"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "فهرستی از نمودارها، خانه‌های توضیح‌دار و خانه‌های فرمول‌دار را ارائه میدهد."
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "رنگِ پیش‌فرض"
-
-#~ msgid "unselecting %s"
-#~ msgstr "انتخاب نکردنِ %s"
-
-#~ msgid "unrevised"
-#~ msgstr "برای بازبینی نشانه‌گذاری شد"
-
-#~ msgid "unknown author"
-#~ msgstr "نویسنده‌ی ناشناس"
-
-#~ msgid "unknown date"
-#~ msgstr "تاریخِ نامشخص"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "شیئی را که در تیر‌رَسِ صفحه کلید قرار دارد اعلام میکند"
-
-#, fuzzy
-#~ msgid "%s"
-#~ msgstr "سرنو%s"
-
-#~ msgid "equation"
-#~ msgstr "معادله"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr ""
-#~ "فهرستی از لینکها، سرنوشتارها یا بخشهای موجود در سندِ پیشِ رو ارائه میدهد."
-
-#~ msgid "Slovak"
-#~ msgstr "اسلواکی"
-
-#~ msgid "navy blue"
-#~ msgstr "آبیِ سیر"
-
-#~ msgid "teal"
-#~ msgstr "سبزِ دودی"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "در NVDA نگارشِ 2013.1، چیدمانِ صفحه کلیدِ لپتاپ کاملا از نو طراحی شد تا قابلِ "
-#~ "درکتر برای کاربر و سازگارتر شود.\n"
-#~ "اگر شما از چیدمان لپتاپ استفاده میکنید، سندِ \"تازه چه خبر\" را برای کسب "
-#~ "اطلاعات بیشتر مطالعه کنید."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "چیدمانِ جدیدِ صفحه کلیدِ لپتاپ"
-
-#~ msgid "Read What's New"
-#~ msgstr "بخوان تازه چه خبر"
-
-#~ msgid "&Acceleration"
-#~ msgstr "افزایش &سرعت"
-
-#~ msgid "male 1"
-#~ msgstr "مرد ۱"
-
-#~ msgid "female 1"
-#~ msgstr "زن ۱"
-
-#~ msgid "male 2"
-#~ msgstr "مرد ۲"
-
-#~ msgid "female 2"
-#~ msgstr "زن ۲"
-
-#~ msgid "lime"
-#~ msgstr "مغز پسته ای"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "آیا مطمئن هستید که میخواهید از NVDA خارج شوید؟"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&هشدار دادن پیش از خروج از NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "عبارتِ مُنتظم"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "داده ای پیرامون جای چیز بازبینی‌شده در میان نیست"
-
-#~ msgid "No location information for screen"
-#~ msgstr "داده ای پیرامون جای برگه‌ی نمایش در میان نیست"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "پهنا و بلندا و جایگاه چیز بازبینی‌شده‌ی کنونی را گزارش می‌دهد"
-
-#~ msgid "Set column header row"
-#~ msgstr "جانشان شدن سرنوشتار برای ستون"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "پاک شدن سرنوشتار برای ستون"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "با یک بار فشار دادن٬ ردیف کنونی در جایی که سرنوشته‌ی ستون باید باشد جای "
-#~ "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
-
-#~ msgid "Set row header column"
-#~ msgstr "جانشان شدن سرنوشتار برای ردیف"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "با یک‌بار فشار دادن٬ ستون کنونی در جایی که سرنوشته‌ی ردیف باید باشد جای "
-#~ "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s تا %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "کارا کردن/ویراستن دستی"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "پرونده‌ی پیکره‌بندی دارای کژی است. \n"
-#~ "دکمه‌ی 'Ok' را برای برکنار کردن این کژی٬ فشار دهید؛ یا دکمه‌ی 'Cancel' را "
-#~ "اگر می‌خواهید دستی پرونده را ویرایش کنید٬ فشار دهید. برای دانستن بیشتر٬ "
-#~ "می‌توانید پرونده‌ی گاه‌نگار را نگاه کنید.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "آشکارگویه‌ی خودکاری نیست"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "پنجره توضیحات خودکار را نتوانست پیدا بکند."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "هر آشکارگویه‌ای را در پنجره‌ی آشکارگویه‌ی خودکار گزارش می‌دهد"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "آشکارگویه‌ی خودکار"
-
-#~ msgid "Translation:"
-#~ msgstr "برگردان:"
-
-#~ msgid "Comments:"
-#~ msgstr "آشکارگویه‌ها"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s از %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "پرونده ی تنظیمات بطور بدی شکل گرفته"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "خطا در تجزیه پرونده تنظیمات: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "خطا ها در پرونده تنظیمات '%s':\n"
-#~ "%s"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "فوکوس &صفحه کلید را تعقیب بکن"

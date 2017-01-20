@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-11 16:49+0900\n"
+"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"PO-Revision-Date: 2016-12-30 23:18+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -4259,6 +4259,43 @@ msgstr "%sの外"
 #, python-format
 msgid "page %s"
 msgstr "ページ%s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "セクション %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "列 {0}の{1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s列"
+
+msgid "continuous section break"
+msgstr "継続のセクション区切り"
+
+msgid "new column section break"
+msgstr "新しい列のセクション区切り"
+
+msgid "new page section break"
+msgstr "新しいページのセクション区切り"
+
+msgid "even pages section break"
+msgstr "偶数ページのセクション区切り"
+
+msgid "odd pages section break"
+msgstr "奇数ページのセクション区切り"
+
+msgid "column break"
+msgstr "段区切り"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
