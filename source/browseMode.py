@@ -204,7 +204,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
 
-	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = (
+	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
 		controlTypes.ROLE_COMBOBOX,
 		controlTypes.ROLE_EDITABLETEXT,
 		controlTypes.ROLE_LIST,
@@ -218,15 +218,17 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.ROLE_TABLEROW,
 		controlTypes.ROLE_TABLECELL,
 		controlTypes.ROLE_TABLEROWHEADER,
-		controlTypes.ROLE_TABLECOLUMNHEADER)
+		controlTypes.ROLE_TABLECOLUMNHEADER,
+		})
 
-	SWITCH_TO_PASS_THROUGH_ON_FOCUS_ROLES = (
+	SWITCH_TO_PASS_THROUGH_ON_FOCUS_ROLES = frozenset({
 		controlTypes.ROLE_LISTITEM,
 		controlTypes.ROLE_RADIOBUTTON,
 		controlTypes.ROLE_TAB,
 		controlTypes.ROLE_MENUITEM,
 		controlTypes.ROLE_RADIOMENUITEM,
-		controlTypes.ROLE_CHECKMENUITEM)
+		controlTypes.ROLE_CHECKMENUITEM,
+		})
 
 	def shouldPassThrough(self, obj, reason=None):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
