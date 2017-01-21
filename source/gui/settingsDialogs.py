@@ -1577,7 +1577,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-		tetherListText = _("Braille tethered to:")
+		tetherListText = _("B&raille tethered to:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
 		tetherChoices = [x[1] for x in self.tetherValues]
