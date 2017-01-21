@@ -324,22 +324,20 @@ formatConfigFlagsMap={
 }
 formatConfigFlag_includeLayoutTables=0x20000
 
-
-##Map some characters from PUA to Unicode. Meant to be used with bullets only.
-##Doesn't care about the actual Font, so can give incorrect unicode in rare cases.
-## Copy of this is in appModules/powerpnt.py
-
+# Map some characters from PUA to Unicode. Meant to be used with bullets only.
+# Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
 mapPUAToUnicode = {
-        u'\uF0B7' : u'\u2022', # star  to bullet ( Symbol, 0xB7, U+2022, bullet )
-        u'\uF06E' : u'\u25A0', # double dash to square box ( Wingdings, 0x6E, U+25A0, black square )
-        u'\uF0E8' : u'\u2794', # minus greater to arrow( Wingdings,  0xE8, U+2794, right arrow solid)
-        u'\uF0F0' : u'\u21E8', # equal greater to hollow arrow (Wingdings, 0xF0, U+21E8, right arrow hollow)
-        u'\uF0D8' : u'\u27A2', # reater to arrow head (Wingdings, 0xD8, U+27A2, right arrowhead)
-        u'\uF0A8' : u'\u2666', # greater  less to diamond ( Symbol, 0xA8, U+25C6, Black diamond )
-	u'\uF076' : u'\u2756', # Black diamond minus white X (Wingdings, 0x76 , U+2756, black dia...)
-	u'\uF0FC' : u'\u2713', # Check Mark (Wingdings, 0xFC, U+2713,check mark)
+	# from : to # fontname
+	u'\uF06E' : u'\u25A0', # Wingdings
+	u'\uF076' : u'\u2756', # Wingdings
+	u'\uF0A7' : u'\u2663', # Symbol
+	u'\uF0A8' : u'\u2666', # Symbol
+	u'\uF0B7' : u'\u2022', # Symbol
+	u'\uF0D8' : u'\u27A2', # Wingdings
+	u'\uF0E8' : u'\u21D2', # Wingdings
+	u'\uF0F0' : u'\u21E8', # Wingdings
+	u'\uF0FC' : u'\u2714', # Wingdings
 }
-
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -793,10 +791,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			else:
 				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
-                bullet_string = field.get('line-prefix')
-                if bullet_string and len(bullet_string) == 1:
-                        global mapPUAToUnicode
-                        field['line-prefix'] = mapPUAToUnicode.get(bullet_string,bullet_string)
+		bullet=field.get('line-prefix')
+		if bullet and len(bullet)==1:
+			global mapPUAToUnicode
+			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
 		return field
 
 	def expand(self,unit):
