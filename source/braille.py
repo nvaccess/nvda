@@ -945,6 +945,9 @@ class TextInfoRegion(Region):
 		sel = self._getSelection()
 		if not sel.isCollapsed:
 			self._readingInfo = readingInfo = sel.copy()
+			if self.obj.isSelectionAnchoredAtStart:
+				# The end of the range is exclusive, so make it inclusive first.
+				readingInfo.move(textInfos.UNIT_CHARACTER, -1, "end")
 			# Collapse the selection to the point that is moving.
 			readingInfo.collapse(end=self.obj.isSelectionAnchoredAtStart)
 			# Get the reading unit at the end of the selection.
