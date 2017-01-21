@@ -272,7 +272,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	def reportSelectionChange(self, oldTextInfo):
 		api.processPendingEvents(processEventQueue=False)
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		self._findSelectionAnchor(oldInfo,newInfo)
+		self._findSelectionAnchor(oldTextInfo,newInfo)
 		speech.speakSelectionChange(oldTextInfo,newInfo)
 		braille.handler.handleCaretMove(self)
 
