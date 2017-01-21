@@ -1562,11 +1562,19 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.shapeList.Disable()
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-		messageTimeoutText = _("Message timeout (sec)")
+		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
 			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
 			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
 			initial=config.conf["braille"]["messageTimeout"])
+		if self.noMessageTimeoutCheckBox.GetValue():
+			self.messageTimeoutEdit.Disable()
+
+		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+		noMessageTimeoutLabelText = _("No &message timeout")
+		self.noMessageTimeoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=noMessageTimeoutLabelText))
+		self.noMessageTimeoutCheckBox.Bind(wx.EVT_CHECKBOX, self.onNoMessageTimeoutChange)
+		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("Braille tethered to:")
@@ -1611,6 +1619,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
+		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
@@ -1649,6 +1658,9 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+
+	def onNoMessageTimeoutChange(self, evt):
+		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
 class AddSymbolDialog(wx.Dialog):
 
