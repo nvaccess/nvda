@@ -132,9 +132,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		@return: C{True} if the selection is anchored at the start else C{False}
 		@rtype: bool
 		"""
-		if hasattr(self, '_isSelectionAnchoredAtStart'):
-			return self._isSelectionAnchoredAtStart
-		return False
+		return getattr(self, '_isSelectionAnchoredAtStart', False)
 
 	_cache_shouldPrepare=True
 	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).

@@ -809,9 +809,7 @@ Tries to force this object to take the focus.
 		@return: C{True} if the selection is anchored at the start else C{False}
 		@rtype: bool
 		"""
-		if hasattr(self, '_isSelectionAnchoredAtStart'):
-			return self._isSelectionAnchoredAtStart
-		return False
+		return getattr(self, '_isSelectionAnchoredAtStart', False)
 
 	def _reportErrorInPreviousWord(self):
 		try:
