@@ -42,6 +42,9 @@ b	bravo
 
 See the file locale\en\characterDescriptions.dic for a full example.
 
+In most cases, the characters in this file should be a single lower case character.
+It is assumed that characters will have the same description regardless of their case, so upper case characters are converted to lower case before looking up their character descriptions.
+
 ++ Symbol Pronunciation ++
 It is often useful to hear punctuation and other symbols pronounced as words when reading text, particularly when moving by character.
 Unfortunately, the pronunciation of symbols is inconsistent between speech synthesisers and many synthesisers do not speak many symbols and/or do not allow control over what symbols are spoken.

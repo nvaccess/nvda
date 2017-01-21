@@ -8,15 +8,20 @@
 """
 
 from comtypes import COMError
+import oleacc
 import controlTypes
+import IAccessibleHandler
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf
-from NVDAObjects.behaviors import Dialog
+from . import ia2Web
 
 class ChromeVBuf(GeckoVBuf):
 
 	def __contains__(self, obj):
 		if obj.windowHandle != self.rootNVDAObject.windowHandle:
+			return False
+		if not isinstance(obj,ia2Web.Ia2Web):
+			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
 			return False
 		accId = obj.IA2UniqueID
 		if accId == self.rootID:
@@ -25,14 +30,13 @@ class ChromeVBuf(GeckoVBuf):
 			self.rootNVDAObject.IAccessibleObject.accChild(accId)
 		except COMError:
 			return False
-		return True
+		return not self._isNVDAObjectInApplication(obj)
 
-class Document(IAccessible):
-	value = None
+class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self):
 		states = self.states
-		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states:
+		if controlTypes.STATE_EDITABLE not in states and controlTypes.STATE_BUSY not in states:
 			return ChromeVBuf
 		return super(Document, self).treeInterceptorClass
 
@@ -40,16 +44,5 @@ def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
-	role = obj.role
-	if role == controlTypes.ROLE_DOCUMENT:
-		clsList.append(Document)
-		return
-
-	if role == controlTypes.ROLE_DIALOG:
-		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-		if "dialog" in xmlRoles:
-			# #2390: Don't try to calculate text for ARIA dialogs.
-			try:
-				clsList.remove(Dialog)
-			except ValueError:
-				pass
+	ia2Web.findExtraOverlayClasses(obj, clsList,
+		documentClass=Document)

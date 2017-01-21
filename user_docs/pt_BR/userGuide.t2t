@@ -37,7 +37,7 @@ Além do inglês, o NVDA está traduzido para 45 idiomas, estando inclusos: Afri
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens da interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
 
-Este programa vem com o [eSpeak http://espeak.sourceforge.net/], um sintetizador de voz livre, de código-aberto e multilíngüe.
+Este programa vem com o [eSpeak NG https://github.com/espeak-ng/espeak-ng], um sintetizador de voz livre, de código-aberto e multilíngüe.
 
 Informações sobre outros sintetizadores de voz que o NVDA suporta podem ser encontradas na seção [Sintetizadores de Voz Suportados #SupportedSpeechSynths].
 
@@ -366,7 +366,7 @@ As seguintes teclas de atalho estão disponíveis para a revisão de texto:
 | Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+a | Varredura para baixo com 3 dedos (Modo de texto) | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Indisponível | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que você informe ao NVDA onde pretende copiar |
 | Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Indisponível | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows |
-| Informar formatação de texto | NVDA+f | NVDA+f | Indisponível | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
+| Informar formatação de texto | NVDA+f | NVDA+f | Indisponível | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente. Pressionando duas vezes, exibe  a informação em modo de navegação |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente. 
@@ -461,7 +461,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 || Nome | Tecla | Descrição |
 | Alternar Modo de Foco e Navegação | NVDA+espaço | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | escape | Volta para o modo de navegação se o modo de foco foi anteriormente ativado automaticamente |
-| Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo.  Not available in Microsoft Word and Outlook. Não disponível no Microsoft Word e Outlook.) |) | ) |
+| Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo. Não disponível no Microsoft Word e Outlook.) |
 | Procurar | NVDA+control+f | Abre um diálogo onde você pode digitar algum texto para procurar no documento atual |
 | Procurar seguinte | NVDA+f3 | Procura pela próxima ocorrência de texto já procurada no documento |
 | Procurar anterior | NVDA+shift+f3 | Procura pela ocorrência de texto anterior  já procurada no documento |
@@ -509,7 +509,8 @@ Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas tecla
 Para alternar a ativação das teclas de navegação por caractere no o documento atual, pressione NVDA+shift+espaço.
  %kc:endInclude
 
-++ A Lista de Elementos ++
+
+ ++ A Lista de Elementos ++
 A lista de elementos fornece acesso a uma lista de  vários tipos de elementos no documento, quando apropriado ao aplicativo.
 Os botões de opção permitem-lhe alternar entre os vários tipos de elementos.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
@@ -537,12 +538,12 @@ O mesmo encontra-se disponível para download gratuito em: http://www.dessci.com
 
 O NVDA suporta os seguintes tipos de conteúdo matemático:
 - MathML no Mozilla Firefox e Microsoft Internet Explorer.
-- Design Science MathType no Microsoft Word e PowerPoint.
+- Design Science MathType no Microsoft Word e PowerPoint. O MathType precisa estar instalado para que tal seja possível. A versão trial é suficiente.
 - MathML no Adobe Reader. Note que este ainda não é um standard oficial, então atualmente não existe um software disponível publicamente que  possa produzir esse conteúdo.
 -
 
 Ao ler um documento, o NVDA irá falar qualquer conteúdo matemático suportado onde este ocorra.
-Caso você esteja usando uma linha braille, tal conteúdo também será exiido em braille.
+Caso você esteja usando uma linha braille, tal conteúdo também será exibido em braille.
 
 ++ Navegação Interativa ++
 Se você está trabalhando primariamente com voz, na maioria dos casos, irá provavelmente querer examinar a expressão em segmentos menores, ao invés de lê-la toda de uma só vez.
@@ -571,21 +572,87 @@ O NVDA fornece seus próprios comandos adicionais para alguns aplicativos, com v
 
 ++ Microsoft Word ++
 
++++ Leitura Automática dos Cabeçalhos das Linhas e Colunas +++
+O NVDA pode anunciar automaticamente os cabeçalhos apropriados para as linhas e colunas quando se está navegando por tabelas no Microsoft Word.
+Para isso, é necessário  que primeiro a opção Anunciar os cabeçalhos de linhas e colunas das tabelas esteja habilitada no Diáloggo de Formatação de Documentos do NVDA.
+Além disso, o NVDA precisa ser informado sobre qual linha ou coluna contém os cabeçalhos em qualquer tabela determinada
+Depois de mover-se para a primeira célula da coluna ou linha que contém os cabeçalhos, use um dos seguintes comandos:
+
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Anunciar comentário atual | NVDA+alt+c | Anuncia o texto do comentário na posição do cursor do sistema.
 | Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará a configuração. |
 | Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
 %kc:endInclude
+Essas configurações serão armazenadas no documento como marcadores compatíveis com outros leitores de telas como o Jaws.
+Issso significa que os usuários de outros leitores de telas que abrirem este documento posteriormente terão os cabeçalhos das linhas e colunas definidos automaticamente.
+
++++ Modo de Navegação no Microsoft Word +++
+Assim como na web, o Modo de navegação pode ser usado no Microsoft Word, permitindo-lhe usar recursos tais como a navegação rápida e a Lista de Elementos.
+%kc:beginInclude
+Para alternar a ativação do Modo de navegação no Microsoft Word, pressione NVDA+espaço.
+%kc:endInclude
+Para mais informações sobre o Modo de navegação e a Navegação Rápida, consulte a seção [Modo de Navegação #BrowseMode].
+
+++++ A Lista de Elementos ++++
+%kc:beginInclude
+Estando em modo de navegação no Microsoft Word, você pode  acessar a Lista de Elementos pressionando NVDA+f7.
+%kc:endInclude
+A Lista de Elementos pode listar cabeçalhos, links e anotações (o que inclui comentários e revisões de editores).
+
++++ Anunciar Comentários +++
+%kc:beginInclude
+Para anunciar quaisquer comentários na posição atual do cursor do sistema, pressione NVDA+alt+c.
+%kc:endInclude
+Todos os comentários para o documento, além de outras revisões de editores, podem também ser listadas na Lista de Elementos do NVDA ao selecionar Anotações como tipo de elemento.
 
 ++ Microsoft Excel ++
+
++++ Leitura Automática dos Cabeçalhos das Linhas e Colunas +++
+O NVDA pode anunciar automaticamente os cabeçalhos apropriados para as linhas e colunas quando se está navegando por folhas de cálculo no Microsoft Excel.
+Para isso, é necessário  que primeiro a opção Anunciar os cabeçalhos de linhas e colunas das tabelas esteja habilitada no Diáloggo de Formatação de Documentos do NVDA.
+Além disso, o NVDA precisa ser informado sobre qual linha ou coluna contém os cabeçalhos.
+Depois de mover-se para a primeira célula da coluna ou linha que contém os cabeçalhos, use um dos seguintes comandos:
 
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 | Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará a configuração. |
 | Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
-| Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula atual, caso haja algum. |
-| Lista de Elementos | NVDA+f7 | abre o Diálogo da Lista de Elementos, contendo gráficos, células com comentários, ou células com fórmulas. |
+%kc:endInclude
+Essas configurações serão armazenadas na folha de cálculo com nomes de variáveis compatíveis com outros leitores de telas como o Jaws.
+Issso significa que os usuários de outros leitores de telas que abrirem esta planilha posteriormente terão os cabeçalhos das linhas e colunas definidos automaticamente.
+
++++ A Lista de Elementos +++
+De modo similar à web, o NVDA possui uma Lista de Elementos para o Microsoft Excel que lhe permite listar e acessar vários tipos diferentes de informação.
+%kc:beginInclude
+Para acessar a Lista de Elementos no Microsoft Excel, pressione NVDA+f7.
+%kc:endInclude
+Os vários tipos de informação disponíveis na Lista de Elementos são:
+- Gráfico: Isso lista todos os gráficos na folha de cálculo. 
+Selecionando um gráficco e pressionando enter ou o botão Mover para, coloca-se o gráfico sob o foco para navegar e ler com as setas.
+- Comentário: Isso lista todas as células da folha de cálculo que contenham comentários. 
+O endereço da célula além de seus comentários são mostrados para cada célula. 
+Estando num comentário de célula selecionado e pressionando enter ou o botão Mover para, moverá diretamente para aquela célula.
+- Fórmula: Isso lista todas as células da folha de cálculo que contém uma fórmula. 
+O endereço da célula além de sua fórmula são mostrados para cada célula. 
+Estando numa fórmula selecionada e pressionando enter ou o botão Mover para, moverá diretamente para aquela célula.
+- Planilha: Isso lista todas as planilhas na folha de cálculo. 
+Estando numa planilha selecionada e pressionando f2, permite-lhe renomeá-la. 
+Estando numa planilha selecionada e pressionando enter ou o botão Mover para, irá mover para aquela planilha.
+- Campos de Formulário: Lista todos os campos de formulário na folha de cálculo ativa.
+Para cada campo de formulário, a Lista de Elementos mostra o texto alternativo do campo, além dos endereços das células cobertas por ele.
+Selecionando um campo de formulário e pressionando enter ou o botão Mover para, move para aquele campo no modo de navegação.
+ -
+
++++ Anunciar Comentários +++
+%kc:beginInclude
+Para anunciar quaisquer  comentários na célula atualmente sob o foco, pressione NVDA+alt+c.
+%kc:endInclude
+Todos os comentários para a folha de cálculo também podem ser listados na Lista de Elementos do NVDA.
+
++++ Lendo Células Protegidas +++
+Caso uma folha de cálculos tenha sido protegida, poderá não ser possível mover o foco para as  células em particular que foram bloqueadas para edição.
+%kc:beginInclude
+Para ser possível mover-se para células bloqueadas, alterne para o Modo de Navegação pressionando NVDA+espaço, em seguida use os comandos  de movimentto padrões do Excel, tais como as setas, para mover-se por todas as células da planilha.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -689,6 +756,15 @@ Isto pode ser útil para alguém que deseja utilizar o NVDA somente com Braille,
 ==== Dispositivo de Saída ====
 Esta opção permite-lhe escolher a placa de som que o NVDA indicará ao sintetizador selecionado para falar.
 
++%kc:setting
+==== Audio Ducking Mode ====
+Tecla: NVDA+shift+d
+
+No Windows 8 e superiores, essa opção permite-lhe escolher se o NVDA deve reduzir o volume de outros aplicativos enquanto ele estiver falando, ou durante todo o tempo em que o NVDA estiver em execução.
+- Não reduzir: o NVDA não reduzirá o volume de outros áudios. 
+- Reduzir ao reproduzir fala e sons: o NVDA irá reduzir o volume de outros áudios apenas quando ele estiver falando ou reproduzindo seus sons. Isso pode não funcionar para todos os sintetizadores. 
+- Sempre reduzir: o NVDA irá manter o volume de outros  áudios baixo enquanto este leitor de telas estiver em execução.
+
 +++ Opções de Voz (NVDA+control+v) +++[VoiceSettings]
 O diálogo das opções de voz que se encontra no menu Preferências contém opções que lhe permitem alterar o som da voz.
 Para uma forma alternativa e mais rápida de controlar os parâmetros de voz a partir de qualquer local, por favor consulte a seção [Anel de Opções de Voz #SynthSettingsRing].
@@ -701,9 +777,9 @@ Pode utilizar as setas para ouvir os diversos itens.
 As setas Acima e Esquerda sobem pela lista, enquanto as Setas Abaixo e Direita descem pela lista.
 
 ==== Variante ====
-Caso esteja usando o eSpeak que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
-As variantes do eSpeak assemelham-se às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
-Algumas variantes são semelhantes a homens, mulheres e outras são similares a sapos.
+Caso esteja usando o eSpeak NG que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
+As variantes do eSpeak NG assemelham-se às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
+Algumas variantes são semelhantes a homens e mulheres e outras são similares a sapos.
 
 ==== Velocidade ====
 Esta opção permite-lhe alterar a velocidade da voz.
@@ -717,12 +793,12 @@ Contém uma barra de controle que lhe possibilita andar de 0 a 100, (sendo 0 o t
 Esta opção é uma barra de controle que lhe permite andar  de 0 a 100, (sendo 0 o volume mais baixo e 100 o mais alto). 
 
 ==== Inflecção ====
-Uma barra de controle que lhe permite escolher a inflecção (mais alta ou mais baixa do tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak oferece essa opção por padrão).
+Uma barra de controle que lhe permite escolher a inflecção (mais alta ou mais baixa do tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak NG oferece essa opção por padrão).
 
 ==== Alternância Automática de Idioma ====
 Essa caixa de seleção lhe permite escolher se o NVDA deve ou não alterar o idioma do sintetizador de voz, desde que o atributo do idioma esteja disponível no texto que está sendo lido.
 Por padrão, essa opção está ativada.
-Atualmente, apenas o eSpeak suporta alternância automática de idioma.
+Atualmente, apenas o eSpeak NG suporta alternância automática de idioma.
 
 ==== Alternância Automática de Dialeto ====
 Se a alternância automática de Idioma estiver ativada, essa caixa de seleção lhe permite escolher se as alterações nos dialetos devem ser processadas em lugar de alterar apenas o idioma atual.
@@ -880,7 +956,11 @@ Portanto, é bastante útil ser alertado sobre isso.
 ==== Falar Teclas de Comando ====
 Tecla: NVDA+4
 
-Quando está marcada informa ao NVDA para anunciar todas as teclas que não são caracteres que você pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
+Quando está marcada, informa ao NVDA para anunciar todas as teclas que não são caracteres que você pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
+
++==== Tocar som para erros ortográficos ao digitar ====
+Se habilitada, um curto som de alerta será tocado quando uma palavra digitada contiver um erro ortográficco.
+Esta opção só estará disponível se o anúncio de erros ortográficos estiver habilitado no [Diálogo de Opções de Formatação de Documentos #DocumentFormattingSettings] do NVDA.
 
 ==== Processar Teclas  de outros Aplicativos ==== 
 Esta opção permite ao usuário controlar se o pressionamento de teclas gerado por aplicações tais como teclados na tela e softwares de reconhecimento de voz deverão ser processados pelo NVDA.  
@@ -936,6 +1016,8 @@ Se ativado, o cursor de exploração seguirá o mouse quando o mesmo se mover.
 
 ==== Modo Simples de Exploração ====
 Quando ativado, o NVDA filtrará a hierarquia dos objetos que podem ser navegados para excluir quaisquer objetos inutilizáveis.
+
+Para alternar o modo de revisão simples de qualquer lugar, atribua um gesto de entrada usando o [Diálogo de gestos para entrada #InputGestures].
 
 +++ Opções de Apresentação de Objetos (NVDA+control+o) +++
 Encontra-se no menu Preferências no item "Apresentação de Objeto...".
@@ -1075,13 +1157,17 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - Atributos da Fonte
 - Alinhamento
 - Cores
+- Comentários
 - Revisões de editores
+- Ênfase
 - Estilo
 - Erros Ortográficos
+- Erros Gramaticais
 - Número das Páginas
 - Número das Linhas
 - Indentação das Linhas
 - indentação do Parágrafo (como hanging indent, first line indent)
+- espaço entre linhas (simples, duplo, etc)
 - Tabelas
 - Cabeçalhos de Linhas e Colunas das Tabelas
 - Coordenadas de Células em Tabelas
@@ -1142,10 +1228,30 @@ Expressões regulares não são explicadas neste guia do usuário, mas existem m
 
 Esse diálogo permite-lhe mudar o modo como a pontuação e outros sinais serão anunciados, bem como em que grau de sinais eles serão falados.
 
+O idioma para o qual a pronúncia do sinal está sendo  editada será mostrado no título do diálogo.
+Note que esse diálogo respeita a opção "Usar o idioma da voz ao processar caracteres e símbolos" encontrada no [Diálogo de Opções de Voz #VoiceSettings]; isto é, ele usa o idioma da voz ao invés de usar o  idioma da configuração geral do NVDA quando esta opção está habilitada.
+
 Para mudar um sinal, selecione-o na lista de sinais.
   O campo de substituição permite que você altere o texto que será falado no lugar do sinal.
-  Através do campo grau você poderá definir o grau de sinais no qual este será falado.
+  Através do campo grau você poderá definir o grau de sinais mais baixo no qual este será falado.
   
+  - O campo Enviar o real símbolo para o sintetizador especifica quando o próprio símbolo (contrariamente a seu substituto) deve ser enviado para o sintetizador.
+Isso é útil quando o símbolo faz com que o sintetizador emita pausa ou altere a inflecção da voz.
+Por exemplo, uma vírgula provoca pausa no sintetizador.
+Existem 3 opções:
+ - nunca: Nunca envia o real símbolo para o sintetizador.
+ - sempre: Sempre envia o real símbolo para o sintetizador.
+ - somente abaixo do nível de símbolos: envia o real símbolo apenas se o grau configurado estiver abaixo do  grau definido para esse símbolo.
+ Por exemplo, você pode usá-lo de modo que um símbolo tenha seu substituto falado em graus mais altos sem pausar, enquanto continua sendo indicado com uma pausa em graus mais baixos.
+ -
+-
+
+Você pode adicionar novos símbolos pressionando o botão Adicionar.
+No diálogo que aparece, insira o símbolo e pressione o botão OK.
+Em seguida, altere os campos para o novo símbolo  como você faria  para outros sinais.
+
+é possível remover um símbolo adicionado anteriormente pressionando o botão Remover.
+
 Após finalizar, pressione ok para salvar as alterações ou cancelar  caso queira descartá-las.
 
 +++ Gestos de Entrada +++
@@ -1311,8 +1417,14 @@ O NVDA irá perguntar se você realmente deseja removê-lo.
 Assim como ao instalar, o NVDA precisa ser reiniciado para que o complemento seja completamente removido.
 Até que você faça isso, o status de "removido" será mostrado para aquele complemento na lista.
 
+Para desativar um complemento, pressione o botão desativar.
+Para ativar um complemento anteriormente desativado, pressione o botão ativar.
+Você pode desativar um complemento caso o status deste indique que ele está em execução ou ativado, ou ativá-lo se o complemento estiver suspenso ou desativado.
+para cada pressionamento do botão ativar/desativar, o status do complemento mudará para indicar o que ocorrerá quando o NVDA for reiniciado.
+Semelhante a quando você instala ou remove complementos, é necessário reiniciar o NVDA para que as alterações façam efeito.
+
 O gerenciador também possui um botão "Fechar" para encerrar o diálogo.
-Caso tenha instalado ou removido algum complemento, o NVDA primeiro indagará se você deseja reiniciar, de forma que suas alterações possam fazer efeito. 
+Caso tenha instalado, removido ou alterado o status de algum complemento, o NVDA primeiro indagará se você deseja reiniciar, de forma que suas alterações possam fazer efeito. 
 
 No passado foi possível extender as funcionalidades do NVDA copiando plugins e drivers individuais para sua pasta de Configurações do usuário do NVDA.
 Embora nessa versão do NVDA continue sendo possível carregá-los, eles não serão mostrados no gerenciador de complementos. 
@@ -1332,12 +1444,12 @@ Esse item, quando ativado, recarrega app modules e global plugins sem reiniciar 
 Esta seção contém informação sobre os sintetizadores de voz suportados pelo NVDA. Se deseja uma lista mais extensa de sintetizadores gratuitos e comerciais que você pode baixar ou  comprar para usar com o NVDA, por favor consulte a página
 http://www.nvda-project.org/wiki/ExtraVoices.
 
-++ eSpeak ++
-O sintetizador [eSpeak http://espeak.sourceforge.net/] é compilado diretamente para o NVDA e não necessita instalar nenhum outro driver ou componente especial.
-O eSpeak é iniciado com o NVDA por padrão.
+++ eSpeak NG ++
+O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] é compilado diretamente para o NVDA e não é necessário instalar nenhum outro driver ou componente especial.
+O eSpeak NG é iniciado com o NVDA por padrão.
 Por ter sido compilado para o NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo USB ou CD em outros sistemas.
 
-Cada voz que vem com o eSpeak fala um idioma diferente.
+Cada voz que vem com o eSpeak NG fala um idioma diferente.
 Existem cerca de 43 idiomas suportados por ele.
 
 Existem também muitas variantes que podem ser escolhidas para alterar o som da voz.
@@ -1460,11 +1572,17 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 
 %kc:beginInclude
 || Nome | Tecla |
-| Mover linha braille para trás | t1 |
+| Mover linha braille para trás | t1 ou etouch1 |
 | Mover linha braille para a linha anterior | t2 |
+| Mover para o foco atual | t3 |
 | Mover linha braille para a linha seguinte | t4 |
-| Mover linha braille para a frente | t5 |
+| Mover linha braille para a frente | t5 ou etouch3 |
 | Guiar para a cela braille  | sensor |
+| Mover para a primeira linha em revisão | t1+t2 |
+| Mover para a última linha em revisão | t4+t5 |
+| Alternar vínculo do braille | t1+t3 |
+| Anunciar título | etouch2 |
+| Ler a barra de status | etouch4 |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
@@ -1474,10 +1592,16 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | tecla seta a esquerda | spLeft |
 | tecla seta a direita | spRight |
 | tecla enter | spEnter |
+| Anunciar data/hora | sp1+sp2 |
 | menu do NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicações) | sp1+sp4 |
+| tecla windows+b (colocar a área de notificação em foco ) | sp3+sp4 |
 | tecla windows | sp2+sp3 |
 | tecla alt+tab | sp2+sp4 |
++| tecla control+home | t3+spUp |
+| tecla control+end | t3+spDown |
+| tecla home | t3+spLeft |
+| tecla end | t3+spRight |
 %kc:endInclude
 
 ++ Linhas Handy Tech ++
@@ -1531,7 +1655,7 @@ Por favor consulte a documentação da mesma para obter descrições de onde ess
 Várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] são suportadas quando conectadas via USB ou bluetooth.
 
  Entre elas estão:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (apenas via bluetooth), Pronto! (apenas via bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -

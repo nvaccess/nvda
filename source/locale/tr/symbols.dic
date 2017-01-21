@@ -43,7 +43,7 @@ negative number	eksi	none	norep
 # Standard punctuation/symbols
 !	ünlem	all
 "	tırnak	most
-\#	diyez	most
+\#	diyez	some
 $	dolar	all	norep
 £	paund	all	norep
 €	euro	all	norep
@@ -51,8 +51,8 @@ $	dolar	all	norep
 &	ve	some
 ′	apostrof	all
 '	apostrof	all
-(	açparantez	most
-)	kapaparantez	most
+(	açparantez	most	always
+)	kapaparantez	most	always
 *	yıldız	some
 +	artı	some
 ├	artı	most
@@ -70,12 +70,12 @@ $	dolar	all	norep
 /	bölü	some
 :	ikinokta	most	norep
 ;	noktalıvirgül	most
-<	küçüktür	most
-◄	küçüktür	most
->	büyüktür	most
-►	büyüktür	most
-♂	büyüktür	most
-♂	büyüktür	most
+<	küçüktür	some
+◄	küçüktür	some
+>	büyüktür	some
+►	büyüktür	some
+♂	büyüktür	some
+♂	büyüktür	some
 =	eşittir	some
 ═	eşittir	most
 ?	soru	all
@@ -105,7 +105,7 @@ _	alt çizgi	most
 ’	tektırnakkapa	most
 	tırnak	most
 	tırnak	most
-–	ORTA TİRE	most
+–	ORTA TİRE	most	always
 —	uzuntire	most
 ●	yıldız	most
 ¨	diaeresis	most
@@ -354,3 +354,50 @@ _	alt çizgi	most
 ٨	8	some
 ٩	9	some
 ٠	0	some
+
+#Mathematical Operators U+2200 to U+220F
+
+∀	Her 	none
+∁	Tümleyen	none
+∂	Kısmi Türev	none
+∃	vardır	none
+∄	Hiçbir	none
+∅	Boş Küme	none
+∆	Artım	none
+∇	Nabla	none
+∈	Elemanıdır	none
+∉	Elemanı değildir	none
+∊	Küçük elemanıdır	none
+∋	Içerir	none
+∌	Içermez	none
+∍	Küçük içerir	none
+∎	İspat sonu	none
+∏	Çarpım	none
+
+# Miscellaneous Mathematical Operators
+
+∑	Toplam	none
+√	Karekök	none
+∛	Küp kök	none
+∜	4.dereceden kök	none
+∝	Orantılı	none
+∞	Sonsuz	none
+∟	Dik açı	none
+∠	Açı	none
+∥	Paralel	none
+∦	Paralel değil	none
+∧	Mantık ve	none
+∨	Mantık veya	none
+∩	Kesişim	none
+∪	Birleşim	none
+∫	İntegral	none
+∴	Dolayısıyla	none
+∵	Çünkü	none
+∶	Oran	none
+∷	Orantı	none
+≤	Eşit veya daha az	none
+≥	Eşit veya daha fazla	none
+⊂	Alt kümesi	none
+⊃	Üstkümesi	none
+⊆	Eşit veya alt kümesi	none
+⊇	Eşit veya üstkümesi	none

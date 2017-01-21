@@ -1,100 +1,105 @@
-﻿#locale/he/symbols.dic
+﻿#locale/en/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2012 NVDA Contributors
+#Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
-#Provided by Misgav Shem-tov - www.shemtov.tel
+
+complexSymbols:
+
 
 symbols:
-# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	נקודה
-! sentence ending	סימן קריאה
-? sentence ending	סימן שאלה
-; phrase ending	נקודה פסיק
-: phrase ending	נקודותיים
-in-word '	גֵרֵשְ
-negative number	מינוס
+. sentence ending	נקודה	all	always
+! sentence ending	סימן קריאה	all	always
+? sentence ending	סימן שאלה	all	always
+; phrase ending	נקודה פסיק	most	always
+: phrase ending	נקודתיים	most	always
+decimal point	נקודה 	none	always
+in-word '	גרש	all	norep
+negative number	מינוס	none	norep
 
 # Whitespace
-\0	ריק
+\0	blank	char	# null
 \t	טאב
-\n	סימן שורה
-\f	הפסקת עמוד
-\r	סימן חזור
- 	רווח
- 	רווח
+\n	שורה חדשה	char
+\f	עמוד חדש	none
+\r	carriage return	char
+ 	רווח	char
+ 	רווח	char	# no-break space
 
 # Standard punctuation/symbols
-!	סימן קריאה
-"	מרכאות
-\#	סולמית
-$	דולר
-£	פאונד
-€	יורו
-¢	סנטס
-¥	ין
-%	אחוז
-&	and
-'	גֵרֵשְ
-(	סוגריים שמאליים
-)	סוגריים ימניים
-*	כוכבית
-+	פלוס
-,	פסיק
--	מקף
-.	נקודה
-/	לוכסן
-:	נקודתיים
-;	נקודתיים פסיק
-<	קטן מ
->	גדול מ
-=	שָוֵה
-?	סימן שאלה
-@	שטרודל
-[	סוגריים מרובעים שמאליים
-]	סוגריים מרובעים ימניים
-\\	לוכסן הפוך
-^	caret
-_	קו תחתון
-`	גֵרֵשְ
-{	סוגריים מסולסלים ימניים
-}	סוגריים מסולסלים ימניים
-|	שורה
-~	תילדה
+!	bang	all
+"	מרכאות	most
+\#	מספר	most
+$	דולר	all	norep
+£	פאונד	all	norep
+€	יורו	all	norep
+¢	סנט	all	norep
+¥	יין	all	norep
+%	אחוז	some
+&	וגם	some
+'	גרש	all
+(	סוגר שמאלי	most
+)	סוגר ימני	most
+*	כוכבית	some
++	פלוס	some
+,	פסיק	all	always
+-	מקף	most
+.	נקודה	some
+/	קו נטוי	some
+:	נקודתיים	most	norep
+;	נקודה פסיק	most
+<	קטן מ 	most
+>	גדול מ	most
+=	שווה	some
+?	סימן שאלה	all
+@	שטרודל	some
+[	סוגר שמאלי מרובע		most
+]	סוגר ימיני מרובע	most
+\\	לוכסן אחורי	most
+^	גג	most
+_	קו תחתון	most
+`	פסיק עליון ימיני	most
+{	סוגר מסולסל שמאלי	most
+}	סוגר מסולסל ימני	most
+|	קו ניצב	most
+~	טילדה	most
 
 # Other characters
-•	רשומה
-…	שלוש נקודות
-...	נקודה נקודה נקודה
-	רשומה
-“	מרכאות שמאליות
-”	מרכאות ימניות
-‘	גרש שמאלי
-’	גרש ימני
-–	en dash
-—	em dash
-●	מעגל
-¨	diaeresis
-‎	סימן משמאל לימין
-‏	סימן מימין לשמאל
-■	מרובע שחור
-➔	חץ ימינה
-§	איזור
-°	מעלות
-«	סוגריים מרובעים שמאליים כפולים
-»	סוגריים מרובעים ימניים כפולים
-µ	מיקרו
-¹	superscript 1
-²	superscript 2
-³	superscript 3
-®	סימן רשום
-™	טרייד מארק
-©	קופי רייט
-±	פחות או יותר
-×	כפול
-÷	חלקי
-→	חץ ימני
-✓	check
-✔	check
-
+•	נקודה מודגשת	some
+…	שלוש נקודות	all	always
+...	שלוש נקודות	all	always
+	נקודה מודגשת	some
+“	מרכאות שמאלי	most
+”	מרכאות ימני quote	most
+‘	גרש שמאלי	most
+’	גרש ימני	most
+–	מקף	most
+—	קו מפריד	most
+●	נקודה מודגשת	most
+¨	שתי נקודות מעל אות	most
+‎	סימון שמאל לימין	char
+‏	סימון ימין לשמאל	char
+■	ריבוע שחור	some
+▪	ריבוע שחור	some
+◾	ריבוע שחור	some
+◦	נקודה מודגשת 	some
+➔	חץ מצביע לימין	some
+§	סימן הסעיף	all
+°	סימון מעלה	some
+«	סוגר משלוש כפול שמאלי bracket
+»	סוגר משלוש כפול ימני bracket
+µ	סימון מיקרו	some
+¹	סימון 1 מעל לקו	some
+²	סימון 2 מעל לקו	some
+³	סימון 3 מעל לקו	some
+®	סימון רשום	some
+™	Trademark	some
+©	זכויות יוצרים	some
+±	פלוס מינוס	most
+×	כפול	most
+÷	חלקי	most
+←	שמאלה arrow	some
+→	ימינה arrow	some
+✓	וי	some
+✔	וי	some

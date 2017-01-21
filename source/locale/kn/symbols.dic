@@ -27,15 +27,15 @@ symbols:
 ? sentence ending	ಪ್ರಶ್ನಾರ್ಥಕ	all	always
 ; phrase ending	ಅರ್ಧ ನಿಲುಗಡೆ	most	always
 : phrase ending	ವಿವರಣೆಯ	most	always
-decimal point		ದಶಾಂಶ	always
+decimal point	ದಶಾಂಶ	always
 in-word '	tick	all	norep
 negative number	minus	none	norep
 
 # Whitespace
 \0	blank	char	# null
 \t	ಟ್ಯಾಬ್	
-\n	ಸಾಲಿನ ಮೊದಲ  ಅಥವ ಕೊನೆಯ ಅಂಚು ಹಾಗು, ಸಾಲನ್ನು ಪೂರ್ಣಗೊಳಿಸುವುದು	char
-\f	ಮುದ್ರಣ ಮಾಡುವಾಗ ಪುಟವನ್ನು ಅಂತ್ಯಗೊಳಿಸುವ ಸಂಕೆತವನ್ನು ತಿಳಿಸುವುದು	none
+\n	ಸಾಲಿನ ತುದಿ	char
+\f	ಮುದ್ರಣದ ಪುಟವನ್ನು ಅಂತ್ಯಗೊಳಿಸುವ ಸಂಕೇತ	none
 \r	ಹೊಸಾ ಸಾಲು ರೇಖೆ	char
  	ಜಾಗ	char
  	 ಜಾಗ	char	# no-break space
@@ -57,7 +57,7 @@ $	ಡಾಲರ್	all	norep
 *	ನಕ್ಷತ್ರ	some
 +	ಸಂಕಲನ	some
 ,	ಅಲ್ಪ ವಿರಾಮ	all	always
--	ವ್ಯವಕಲನ ಸಂಯೊಜಕ	most
+-	ವ್ಯವಕಲನ	most
 .	ಪೂರ್ಣವಿರಾಮ	some
 /	ಬಾಗಾಕಾರ	some
 :	ವಿವರನಾತ್ಮಕ	most	norep
@@ -66,7 +66,7 @@ $	ಡಾಲರ್	all	norep
 >	ಹೆಚ್ಚಿಸುವುದು	most
 =	ಸಮಸೂಚಕ	some
 ?	ಪ್ರಶ್ಣಾರ್ಥಕ	all
-@	ಇದಕ್ಕೆ	some
+@	ಕ್ಕೆ	some
 [	ಎಡಚೌಕಟ್ಟು ಆವರಣ	most
 ]	ಬಲಚೌಕಟ್ಟು ಆವರಣ	most
 \\	ಎಡ ೋರೆಯ ಗೆರೆ	most

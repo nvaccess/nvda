@@ -226,3 +226,6 @@ def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desi
 	if kernel32.DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, byref(targetHandle), desiredAccess, inheritHandle, options) == 0:
 		raise WinError()
 	return targetHandle.value
+
+PAPCFUNC = ctypes.WINFUNCTYPE(None, ctypes.wintypes.ULONG)
+THREAD_SET_CONTEXT = 16

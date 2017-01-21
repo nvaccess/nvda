@@ -28,10 +28,18 @@ StyleId_Heading1=70001
 StyleId_Heading9=70009
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
+UIA_FullDescriptionPropertyId=30159
 UIA_LevelPropertyId=30154
 UIA_PositionInSetPropertyId=30152
 UIA_SizeOfSetPropertyId=30153
+UIA_LocalizedLandmarkTypePropertyId=30158
+UIA_LandmarkTypePropertyId=30157
 
+HorizontalTextAlignment_Left=0
+HorizontalTextAlignment_Centered=1
+HorizontalTextAlignment_Right=2
+HorizontalTextAlignment_Justified=3
+  
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -119,9 +127,10 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
 	#UIA_Text_TextSelectionChangedEventId:"caret",
-	UIA_ToolTipOpenedEventId:"alert",
+	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
+	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 }
 
 class UIAHandler(COMObject):
@@ -151,7 +160,18 @@ class UIAHandler(COMObject):
 	def MTAThreadFunc(self):
 		try:
 			oledll.ole32.CoInitializeEx(None,comtypes.COINIT_MULTITHREADED) 
-			self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			isUIA8=False
+			try:
+				self.clientObject=CoCreateInstance(CUIAutomation8._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+				isUIA8=True
+			except (COMError,WindowsError,NameError):
+				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			if isUIA8:
+				try:
+					self.clientObject=self.clientObject.QueryInterface(IUIAutomation3)
+				except COMError:
+					self.clientObject=self.clientObject.QueryInterface(IUIAutomation2)
+			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
 			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)

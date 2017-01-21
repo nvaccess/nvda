@@ -52,11 +52,11 @@ DWORD tls_index_curScriptTextOutScriptAnalysis=TLS_OUT_OF_INDEXES;
 
 class TextInsertionTracker {
 	private:
-	int _initialRefCount;
+	INT_PTR _initialRefCount;
 	bool _wasFirst;
 	public:
 	TextInsertionTracker(): _initialRefCount(0), _wasFirst(false)  {
-		_initialRefCount=(int)TlsGetValue(tls_index_textInsertionsCount);
+		_initialRefCount=(INT_PTR)TlsGetValue(tls_index_textInsertionsCount);
 		if(_initialRefCount==0) {
 			_initialRefCount=1;
 			TlsSetValue(tls_index_textInsertionsCount,(LPVOID)_initialRefCount);
@@ -69,11 +69,11 @@ class TextInsertionTracker {
 		if(_wasFirst) TlsSetValue(tls_index_textInsertionsCount,(LPVOID)0);
 	}
 	static void reportTextInsertion() {
-		int newRefCount=(int)TlsGetValue(tls_index_textInsertionsCount);
+		INT_PTR newRefCount=(INT_PTR)TlsGetValue(tls_index_textInsertionsCount);
 		if(newRefCount>0) TlsSetValue(tls_index_textInsertionsCount,(LPVOID)(newRefCount+1));
 	}
 	bool hasTrackedTextInsertion() {
-		int newRefCount=(int)TlsGetValue(tls_index_textInsertionsCount);
+		INT_PTR newRefCount=(INT_PTR)TlsGetValue(tls_index_textInsertionsCount);
 		return newRefCount>_initialRefCount;
 	}
 };
@@ -82,7 +82,7 @@ void CALLBACK textChangeNotifyTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, D
 	map<HWND,RECT> tempMap;
 	textChangeNotifications.swap(tempMap);
 	for(map<HWND,RECT>::iterator i=tempMap.begin();i!=tempMap.end();++i) {
-		nvdaControllerInternal_displayModelTextChangeNotify((long)(i->first),i->second.left,i->second.top,i->second.right,i->second.bottom);
+		nvdaControllerInternal_displayModelTextChangeNotify(HandleToUlong(i->first),i->second.left,i->second.top,i->second.right,i->second.bottom);
 	}
 }
 
@@ -666,7 +666,7 @@ BOOL WINAPI fake_DrawFocusRect(HDC hdc, const RECT* lprc) {
 		model->setFocusRect(NULL);
 	} else {
 		model->setFocusRect(&focusRect);
-		if(model->hwnd) nvdaControllerInternal_drawFocusRectNotify((long)(model->hwnd),focusRect.left,focusRect.top,focusRect.right,focusRect.bottom);
+		if(model->hwnd) nvdaControllerInternal_drawFocusRectNotify(HandleToUlong(model->hwnd),focusRect.left,focusRect.top,focusRect.right,focusRect.bottom);
 	}
 	model->release();
 	return res;

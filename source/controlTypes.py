@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -64,7 +64,7 @@ ROLE_GROUPING=56
 ROLE_PROPERTYPAGE=57
 ROLE_CANVAS=58
 ROLE_CAPTION=59
-ROLE_CHECKMENUITEM=60,
+ROLE_CHECKMENUITEM=60
 ROLE_DATEEDITOR=61
 ROLE_ICON=62
 ROLE_DIRECTORYPANE=63
@@ -190,6 +190,7 @@ STATE_HASCOMMENT=0X2000000000
 STATE_OBSCURED=0x4000000000
 STATE_CROPPED=0x8000000000
 STATE_OVERFLOWING=0x10000000000
+STATE_UNLOCKED=0x20000000000
 
 roleLabels={
 	# Translators: The word for an unknown control type.
@@ -425,8 +426,8 @@ roleLabels={
 	ROLE_DESKTOPICON:_("desktop icon"),
 	# Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 	ROLE_ALERT:_("alert"),
-	# Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-	ROLE_INTERNALFRAME:_("IFrame"),
+	# Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
+	ROLE_INTERNALFRAME:_("frame"),
 	# Translators: Identifies desktop pane (the desktop window).
 	ROLE_DESKTOPPANE:_("desktop pane"),
 	# Translators: Identifies an option pane.
@@ -556,6 +557,8 @@ stateLabels={
 	STATE_CROPPED:_("cropped"),
 	# Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 	STATE_OVERFLOWING:_("overflowing"),
+	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet). 
+	STATE_UNLOCKED:_("unlocked"),
 }
 
 negativeStateLabels={
@@ -576,6 +579,8 @@ silentRolesOnFocus={
 	ROLE_MENUITEM,
 	ROLE_CHECKMENUITEM,
 	ROLE_TREEVIEWITEM,
+	ROLE_STATICTEXT,
+	ROLE_BORDER,
 }
 
 silentValuesForRoles={
@@ -641,7 +646,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(STATE_LINKED)
 		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
-	if role != ROLE_EDITABLETEXT:
+	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
 	if role == ROLE_CHECKBOX:
 		positiveStates.discard(STATE_PRESSED)
@@ -649,6 +654,8 @@ def processPositiveStates(role, states, reason, positiveStates):
 		# The user doesn't usually care if a menu item is expanded or collapsed.
 		positiveStates.discard(STATE_COLLAPSED)
 		positiveStates.discard(STATE_EXPANDED)
+	if STATE_FOCUSABLE not in states:
+		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
 
 def processNegativeStates(role, states, reason, negativeStates):
@@ -662,6 +669,8 @@ def processNegativeStates(role, states, reason, negativeStates):
 	# Restrict "not checked" in a similar way to "not selected".
 	if (role in (ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_CHECKMENUITEM) or STATE_CHECKABLE in states)  and (STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or STATE_FOCUSED in states):
 		speakNegatives.add(STATE_CHECKED)
+	if role == ROLE_TOGGLEBUTTON:
+		speakNegatives.add(STATE_PRESSED)
 	if reason == REASON_CHANGE:
 		# We want to speak this state only if it is changing to negative.
 		speakNegatives.add(STATE_DROPTARGET)

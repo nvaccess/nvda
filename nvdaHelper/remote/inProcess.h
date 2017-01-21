@@ -10,4 +10,9 @@ LRESULT CALLBACK inProcess_callWndProcHook(int code, WPARAM wParam,LPARAM lParam
 void inProcess_initialize();
 void inProcess_terminate();
 
+#include <functional>
+typedef std::function<void(void*)> execInWindow_funcType;
+void execInWindow(HWND hwnd, execInWindow_funcType func,void* data);
+
+
 #endif

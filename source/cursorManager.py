@@ -1,6 +1,6 @@
 #cursorManager.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors
+#Copyright (C) 2006-2016 NV Access Limited, Joseph Lee, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -22,12 +22,14 @@ import config
 import braille
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
+import ui
+from textInfos import DocumentWithPageTurns
 
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
 
-	def __init__(self, parent, cursorManager, text):
+	def __init__(self, parent, cursorManager, text, caseSensitivity):
 		# Translators: Title of a dialog to find text.
 		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
@@ -44,10 +46,10 @@ class FindDialog(wx.Dialog):
 		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
 		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
-		self.caseSensitiveCheckBox.SetValue(False)
+		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
 		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
 
-		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL), flag=wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
@@ -81,6 +83,7 @@ class CursorManager(baseObject.ScriptableObject):
 	scriptCategory=SCRCAT_BROWSEMODE
 
 	_lastFindText=""
+	_lastCaseSensitivity=False
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -119,7 +122,13 @@ class CursorManager(baseObject.ScriptableObject):
 		if direction is not None:
 			info.expand(unit)
 			info.collapse(end=posUnitEnd)
-			info.move(unit,direction)
+			if info.move(unit,direction)==0 and isinstance(self,DocumentWithPageTurns):
+				try:
+					self.turnPage(previous=direction<0)
+				except RuntimeError:
+					pass
+				else:
+					info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
 		self.selection=info
 		info.expand(unit)
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
@@ -139,9 +148,10 @@ class CursorManager(baseObject.ScriptableObject):
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
+		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
-		d = FindDialog(gui.mainFrame, self, self._lastFindText)
+		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
 		gui.mainFrame.prePopup()
 		d.Show()
 		gui.mainFrame.postPopup()
@@ -152,7 +162,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText)
+		self.doFindText(self._lastFindText, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find next command.
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
@@ -160,7 +170,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText,reverse=True)
+		self.doFindText(self._lastFindText,reverse=True, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find previous command.
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
@@ -304,11 +314,16 @@ class CursorManager(baseObject.ScriptableObject):
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
 			# Translators: Reported when there is no text selected (for copying).
-			speech.speakMessage(_("no selection"))
+			ui.message(_("No selection"))
 			return
 		if info.copyToClipboard():
 			# Translators: Message presented when text has been copied to clipboard.
-			speech.speakMessage(_("copied to clipboard"))
+			ui.message(_("Copied to clipboard"))
+
+	def reportSelectionChange(self, oldTextInfo):
+		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		speech.speakSelectionChange(oldTextInfo,newInfo)
+		braille.handler.handleCaretMove(self)
 
 	__gestures = {
 		"kb:pageUp": "moveByPage_back",

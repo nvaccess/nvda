@@ -1,8 +1,22 @@
 ﻿#locale/vi/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2014 NVDA Contributors
-#Author: nguyen Van dung
+#Copyright (c) 2011-2012 NVDA Contributors
+#Author: nguyen Van dung; adding and edited by Dang Hoai Phuc, Jan 2017
 #This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[
@@ -10,7 +24,7 @@ symbols:
 # Complex symbols
 . sentence ending	chấm	all	always
 ! sentence ending	chấm than	all	always
-? sentence ending	hỏi chấm	all	always
+? sentence ending	chấm hỏi	all	always
 ; phrase ending	chấm phẩy	most	always
 : phrase ending	hai chấm	most	always
 decimal chấm		none	always
@@ -19,22 +33,23 @@ negative number	trừ	none	norep
 
 # Whitespace
 \0	dòng trắng	char	# null
-\t	tab
+\t	táp
 \n	xuống dòng	char
-\f	ngắt trang	none
-\r	cuối  dòng	char
- 	dấu cách	char
- 	dấu cách	char	# no-break space
+\f	hết trang	none
+\r	cuối dòng	char
+ 	khoảng trắng	char
+ 	khoảng trắng	char	# no-break space
 
 # Standard punctuation/symbols
 !	chấm than	all
-"	nháy đôi	most
-\#	dấu thăng	most
-$	dollar	all	norep
-£	pound	all	norep
-€	euro	all	norep
-¢	Cents	all	norep
-¥	Yen	all	norep
+"	ngoặc kép	most
+\#	báo số	most
+$	đô la	all	norep
+£	pao	all	norep
+€	u rô	all	norep
+¢	Xen	all	norep
+¥	Yên	all	norep
+₹	Ru Bi Ấn	some	norep
 %	phần trăm	some
 &	và	some
 '	nháy đơn	all
@@ -45,57 +60,107 @@ $	dollar	all	norep
 ,	phẩy	all	always
 -	gạch ngang	most
 .	chấm	some
-/	xược  chéo	some
+/	gạch chéo	some
 :	hai chấm	most	norep
 ;	chấm phẩy	most
 <	nhỏ hơn	most
 >	lớn hơn	most
 =	bằng	some
-?	hỏi chấm	all
+?	chấm hỏi	all
 @	a còng	some
-[	móc trái vuông	most
-]	móc phải vuông	most
-\\	xược chéo phải	most
+[	Mở ngoặc vuông	most
+]	Đóng ngoặc vuông	most
+\\	gạch chéo ngược	most
 ^	dấu mũ	most
 _	gạch dưới	most
-`	dấu ngã	most
-{	móc trái	most
-}	móc phải	most
-|	sổ đứng	most
-~	tilda	most
+`	dấu huyền	most
+{	Mở ngoặc móc	most
+}	Đóng ngoặc móc	most
+|	gạch đứng	most
+~	dấu ngã	most
 
 # Other characters
-•	bullet	some
+•	bun lét	some
 …	ba chấm	all	always
 ...	ba chấm	all	always
-	bullet	some
-“	nháy đôi trái	most
-”	nháy đôi phải	most
+	bun lét	some
+“	mở ngoặc kép	most
+”	đóng ngoặc kép	most
 ‘	nháy đơn trái	most
 ’	nháy đơn phải	most
 –	gạch ngang	most
 —	em dash	most
-●	circle	most
+●	bun lét tròn	most
 ¨	diaeresis	most
-‎	left to right mark	char
-‏	right to left mark	char
-■	black square	some
-➔	right arrow	some
-§	section	all
-°	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
-µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-®	Nhãn hiệu đã được đăng ký	some
+‎	dấu trái qua phải	char
+‏	dấu phải qua trái	char
+■	dấu vuông đen	some
+▪	dấu vuông đen	some
+◾	dấu vuông đen	some
+◦	bun lét trắng	some
+➔	mũi tên phải	some
+§	phần	all
+°	độ	some
+«	mở ngoặc vuông kép
+»	đóng ngoặc vuông kép
+µ	mai rô	some
+¹	số một in trên	some
+²	số hai in trên	some
+³	số ba in trên	some
+®	đã được đăng ký	some
 ™	Thương hiệu	some
 ©	bản quyền	some
-±	Plus or Minus	most
-×	times	most
-÷	divide by	most
-←	left arrow	some
-→	right arrow	some
-✓	check	some
-✔	check	some
+±	cộng hoặc trừ	most
+×	lần	most
+÷	chia cho	most
+←	mũi tên trái	some
+→	mũi tên phải	some
+✓	dấu kiểm	some
+✔	dấu kiểm	some
+
+#Mathematical Operators U+2200 to U+220F
+
+∀	cho tất cả 	none
+∁	Bù	none
+∂	Đạo hàm cục bộ	none
+∃	có tồn	none
+∄	Không ó tồn	none
+∅	tập rỗng	none
+∆	Lượng gia	none
+∇	NABLA	none
+∈	Yếu tố của	none
+∉	Không phải yếu tố của	none
+∊	Yếu tố nhỏ của	none
+∋	CONTAINS AS MEMBER	none
+∌	DOES NOT CONTAIN AS MEMBER	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	END OF PROOF	none
+∏	N-ARY PRODUCT	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ARY SUMMATION	none
+√	SQUARE ROOT	none
+∛	CUBE ROOT	none
+∜	FOURTH ROOT	none
+∝	PROPORTIONAL TO	none
+∞	INFINITY	none
+∟	RIGHT ANGLE	none
+∠	ANGLE	none
+∥	PARALLEL TO	none
+∦	NOT PARALLEL TO	none
+∧	LOGICAL AND	none
+∨	LOGICAL OR	none
+∩	INTERSECTION	none
+∪	UNION	none
+∫	INTEGRAL	none
+∴	THEREFORE	none
+∵	BECAUSE	none
+∶	RATIO	none
+∷	PROPORTION	none
+≤	Nhỏ hơn hoặc bằng	none
+≥	Lớn hơn hoặc bằng	none
+⊂	SUBSET OF	none
+⊃	SUPERSET OF	none
+⊆	SUBSET OF OR EQUAL TO	none
+⊇	SUPERSET OF OR EQUAL TO	none

@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
+#Copyright (C) 2006-2016 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -8,6 +8,7 @@ from comtypes import COMError
 import comtypes.automation
 import wx
 import time
+import winsound
 import re
 import uuid
 import collections
@@ -29,8 +30,12 @@ from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
 import browseMode
+import inputCore
 import ctypes
 
+xlNone=-4142
+xlSimple=-4154
+xlExtended=3
 xlCenter=-4108
 xlJustify=-4130
 xlLeft=-4131
@@ -38,7 +43,12 @@ xlRight=-4152
 xlDistributed=-4117
 xlBottom=-4107
 xlTop=-4160
+xlDown=-4121
+xlToLeft=-4159
+xlToRight=-4161
+xlUp=-4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
+xlSheetVisible=-1
 alignmentLabels={
 	xlCenter:"center",
 	xlJustify:"justify",
@@ -65,6 +75,127 @@ xlCellTypeLastCell            =11         # from enum XlCellType
 xlCellTypeSameFormatConditions=-4173      # from enum XlCellType
 xlCellTypeSameValidation      =-4175      # from enum XlCellType
 xlCellTypeVisible             =12         # from enum XlCellType
+#MsoShapeType Enumeration
+msoFormControl=8
+msoTextBox=17
+#XlFormControl Enumeration
+xlButtonControl=0
+xlCheckBox=1
+xlDropDown=2
+xlEditBox=3
+xlGroupBox=4
+xlLabel=5
+xlListBox=6
+xlOptionButton=7
+xlScrollBar=8
+xlSpinner=9
+#MsoTriState Enumeration
+msoTrue=-1    #True
+msoFalse=0    #False
+#CheckBox and RadioButton States
+checked=1
+unchecked=-4146
+mixed=2
+#LogPixels
+LOGPIXELSX=88
+LOGPIXELSY=90
+
+#Excel Cell Patterns (from enum XlPattern)
+xlPatternAutomatic = -4105
+xlPatternChecker = 9
+xlPatternCrissCross = 16
+xlPatternDown = -4121
+xlPatternGray16 = 17
+xlPatternGray25 = -4124
+xlPatternGray50 = -4125
+xlPatternGray75 = -4126
+xlPatternGray8 = 18
+xlPatternGrid = 15
+xlPatternHorizontal = -4128
+xlPatternLightDown = 13
+xlPatternLightHorizontal = 11
+xlPatternLightUp = 14
+xlPatternLightVertical = 12
+xlPatternNone = -4142
+xlPatternSemiGray75 = 10
+xlPatternSolid = 1
+xlPatternUp = -4162
+xlPatternVertical = -4166
+xlPatternLinearGradient = 4000
+xlPatternRectangularGradient = 4001
+
+backgroundPatternLabels={
+		# See https://msdn.microsoft.com/en-us/library/microsoft.office.interop.excel.xlpattern.aspx
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Excel controls the pattern.
+		xlPatternAutomatic:_("automatic"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Checkerboard
+		xlPatternChecker:_("diagonal crosshatch"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Criss-cross lines
+		xlPatternCrissCross:_("thin diagonal crosshatch"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark diagonal lines running from the upper left to the lower right
+		xlPatternDown:_("reverse diagonal stripe"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 12.5% gray
+		# xgettext:no-python-format
+		xlPatternGray16:_("12.5% gray"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 25% gray
+		# xgettext:no-python-format
+		xlPatternGray25:_("25% gray"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# xgettext:no-python-format
+		# 50% gray
+		xlPatternGray50:_("50% gray"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 75% gray
+		# xgettext:no-python-format
+		xlPatternGray75:_("75% gray"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 6.25% gray
+		# xgettext:no-python-format
+		xlPatternGray8:_("6.25% gray"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Grid
+		xlPatternGrid:_("thin horizontal crosshatch"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark horizontal lines
+		xlPatternHorizontal:_("horizontal stripe"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light diagonal lines running from the upper left to the lower right
+		xlPatternLightDown:_("thin reverse diagonal stripe"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light horizontal lines
+		xlPatternLightHorizontal:_("thin horizontal stripe"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light diagonal lines running from the lower left to the upper right
+		xlPatternLightUp:_("thin diagonal stripe"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Light vertical bars
+		xlPatternLightVertical:_("thin vertical stripe"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# No pattern
+		xlPatternNone:_("none"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# 75% dark moire
+		xlPatternSemiGray75:_("thick diagonal crosshatch"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Solid color
+		xlPatternSolid:_("solid"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark diagonal lines running from the lower left to the upper right
+		xlPatternUp:_("diagonal stripe"),
+		# Translators: A type of background pattern in Microsoft Excel. 
+		# Dark vertical bars
+		xlPatternVertical:_("vertical stripe"),
+		# Translators: A type of background pattern in Microsoft Excel.
+		xlPatternLinearGradient:_("linear gradient"),
+		# Translators: A type of background pattern in Microsoft Excel.
+		xlPatternRectangularGradient:_("rectangular gradient"),
+	}
 
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
@@ -167,7 +298,8 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 	def __init__( self , nodeType , document , commentObject , commentCollection ):
-		self.label = commentObject.address(False,False,1,False) + " " + commentObject.Comment.Text()
+		self.comment=commentObject.comment
+		self.label = commentObject.address(False,False,1,False) + " " + (self.comment.Text() if self.comment else "")
 		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
 
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
@@ -234,8 +366,10 @@ class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 		try:
 			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
 		except(COMError):
-
 			return None
+
+	def filter(self,item):
+		return item is not None and item.comment is not None
 
 class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
@@ -246,10 +380,66 @@ class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 
 			return None
 
+class ExcelSheetQuickNavItem(ExcelQuickNavItem):
+
+	def __init__( self , nodeType , document , sheetObject , sheetCollection ):
+		self.label = sheetObject.Name
+		self.sheetIndex = sheetObject.Index
+		self.sheetObject = sheetObject
+		super( ExcelSheetQuickNavItem , self).__init__( nodeType , document , sheetObject , sheetCollection )
+
+	def __lt__(self,other):
+		return self.sheetIndex < other.sheetIndex
+
+	def moveTo(self):
+		self.sheetObject.Activate()
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
+	def rename(self,newName):
+		if newName and newName!=self.label:
+			self.sheetObject.Name=newName
+			self.label=newName
+
+	@property
+	def isRenameAllowed(self):
+		return True
+
+	@property
+	def isAfterSelection(self):
+		activeSheet = self.document.Application.ActiveSheet
+		if self.sheetObject.Index <= activeSheet.Index:
+			return False
+		else:
+			return True
+
+class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	"""
+	Allows iterating over an MS excel Sheets collection emitting L{QuickNavItem} object.
+	"""
+	quickNavItemClass=ExcelSheetQuickNavItem#: the QuickNavItem class that should be instantiated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return worksheetObject.Application.ActiveWorkbook.sheets
+		except(COMError):
+			return None
+
+	def filter(self,sheet):
+		if sheet.Visible==xlSheetVisible:
+			return True
+
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
-	needsReviewCursorTextInfoWrapper=False
-	passThrough=True
+	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+	disableAutoPassThrough=True
+
+	def __init__(self,rootNVDAObject):
+		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
+		self.passThrough=True
+		browseMode.reportPassThrough.last=True
+
+	def _get_currentNVDAObject(self):
+		obj=api.getFocusObject()
+		return obj if obj.treeInterceptor is self else None
 
 	def _get_isAlive(self):
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
@@ -257,14 +447,80 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		try:
 			return self.rootNVDAObject.excelWorksheetObject.name==self.rootNVDAObject.excelApplicationObject.activeSheet.name
 		except (COMError,AttributeError,NameError):
-			log.debugWarning("could not compair sheet names",exc_info=True)
+			log.debugWarning("could not compare sheet names",exc_info=True)
 			return False
 
+	def navigationHelper(self,direction):
+		excelWindowObject=self.rootNVDAObject.excelWindowObject
+		cellPosition = excelWindowObject.activeCell
+		try:
+			if   direction == "left":
+				cellPosition = cellPosition.Offset(0,-1)
+			elif direction == "right":
+				cellPosition = cellPosition.Offset(0,1)
+			elif direction == "up":
+				cellPosition = cellPosition.Offset(-1,0)
+			elif direction == "down":
+				cellPosition = cellPosition.Offset(1,0)
+			#Start-of-Column
+			elif direction == "startcol":
+				cellPosition = cellPosition.end(xlUp)
+			#Start-of-Row
+			elif direction == "startrow":
+				cellPosition = cellPosition.end(xlToLeft)
+			#End-of-Row
+			elif direction == "endrow":
+				cellPosition = cellPosition.end(xlToRight)
+			#End-of-Column
+			elif direction == "endcol":
+				cellPosition = cellPosition.end(xlDown)
+			else:
+				return
+		except COMError:
+			pass
+
+		try:
+			isMerged=cellPosition.mergeCells
+		except (COMError,NameError):
+			isMerged=False
+		if isMerged:
+			cellPosition=cellPosition.MergeArea(1)
+			obj=ExcelMergedCell(windowHandle=self.rootNVDAObject.windowHandle,excelWindowObject=excelWindowObject,excelCellObject=cellPosition)
+		else:
+			obj=ExcelCell(windowHandle=self.rootNVDAObject.windowHandle,excelWindowObject=excelWindowObject,excelCellObject=cellPosition)
+		cellPosition.Select()
+		cellPosition.Activate()
+		eventHandler.executeEvent('gainFocus',obj)
+
+	def script_moveLeft(self,gesture):
+		self.navigationHelper("left")
+
+	def script_moveRight(self,gesture):
+		self.navigationHelper("right")
+
+	def script_moveUp(self,gesture):
+		self.navigationHelper("up")
+
+	def script_moveDown(self,gesture):
+		self.navigationHelper("down")
+
+	def script_startOfColumn(self,gesture):
+		self.navigationHelper("startcol")
+
+	def script_startOfRow(self,gesture):
+		self.navigationHelper("startrow")
+
+	def script_endOfRow(self,gesture):
+		self.navigationHelper("endrow")
+
+	def script_endOfColumn(self,gesture):
+		self.navigationHelper("endcol")
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
 
-
+	def _get_selection(self):
+		return self.rootNVDAObject._getSelection()
 
 	def _set_selection(self,info):
 		super(ExcelBrowseModeTreeInterceptor,self)._set_selection(info)
@@ -280,27 +536,48 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 			return CommentExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
 		elif nodeType=="formula":
 			return FormulaExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="sheet":
+			return SheetsExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="formField":
+			return ExcelFormControlQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None,self ).iterate(pos)
 		else:
 			raise NotImplementedError
 
 	def script_elementsList(self,gesture):
 		super(ExcelBrowseModeTreeInterceptor,self).script_elementsList(gesture)
 	# Translators: the description for the elements list command in Microsoft Excel.
-	script_elementsList.__doc__ = _("Presents a list of charts, cells with comments and cells with formulas")
+	script_elementsList.__doc__ = _("Lists various types of elements in this spreadsheet")
 	script_elementsList.ignoreTreeInterceptorPassThrough=True
+
+	__gestures = {
+		"kb:upArrow": "moveUp",
+		"kb:downArrow":"moveDown",
+		"kb:leftArrow":"moveLeft",
+		"kb:rightArrow":"moveRight",
+		"kb:control+upArrow":"startOfColumn",
+		"kb:control+downArrow":"endOfColumn",
+		"kb:control+leftArrow":"startOfRow",
+		"kb:control+rightArrow":"endOfRow",
+	}
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
 	ELEMENT_TYPES=(
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("chart", _("&Chart")),
+		("chart", _("&Charts")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("comment", _("C&omment")),
+		("comment", _("C&omments")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("formula", _("&Formula")),
+		("formula", _("Fo&rmulas")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("formField", _("&Form fields")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("sheet", _("&Sheets")),
 	)
 
 class ExcelBase(Window):
@@ -444,6 +721,8 @@ class ExcelWorksheet(ExcelBase):
 				if maxCell:
 					maxRowNumber=maxCell.row
 					maxColumnNumber=maxCell.column
+			if maxColumnNumber is None:
+				maxColumnNumber=self._getMaxColumnNumberForHeaderCell(headerCell)
 			headerCellTracker.addHeaderCellInfo(rowNumber=headerCell.row,columnNumber=headerCell.column,rowSpan=headerCell.rows.count,colSpan=headerCell.columns.count,minRowNumber=minRowNumber,maxRowNumber=maxRowNumber,minColumnNumber=minColumnNumber,maxColumnNumber=maxColumnNumber,name=fullName,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
 
 	def _get_headerCellTracker(self):
@@ -477,9 +756,18 @@ class ExcelWorksheet(ExcelBase):
 			self.excelWorksheetObject.parent.names(oldInfo.name).delete()
 			oldInfo.name=name
 		else:
-			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+			maxColumnNumber=self._getMaxColumnNumberForHeaderCell(cell.excelCellObject)
+			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,maxColumnNumber=maxColumnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
 		self.excelWorksheetObject.parent.names.add(name,cell.excelRangeObject)
 		return True
+
+	def _getMaxColumnNumberForHeaderCell(self,excelCell):
+		try:
+			r=excelCell.currentRegion
+		except COMError:
+			return excelCell.column
+		columns=r.columns
+		return columns[columns.count].column+1
 
 	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
 		if not isColumnHeader and not isRowHeader: 
@@ -506,13 +794,7 @@ class ExcelWorksheet(ExcelBase):
 		except COMError:
 			log.debugWarning("Possibly protected sheet")
 			return None
-		if cellRegion.count==1:
-			minRow=maxRow=minColumn=maxColumn=None
-		else:
-			rc=cellRegion.address(True,True,xlRC,False)
-			g=[int(x) for x in re_absRC.match(rc).groups()]
-			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
-		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
+		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
@@ -557,6 +839,12 @@ class ExcelWorksheet(ExcelBase):
 		cell=self.excelWorksheetObject.cells(1,1)
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
+	def _get_states(self):
+		states=super(ExcelWorksheet,self).states
+		if self.excelWorksheetObject.ProtectContents:
+			states.add(controlTypes.STATE_PROTECTED)
+		return states
+
 	def script_changeSelection(self,gesture):
 		oldSelection=api.getFocusObject()
 		gesture.send()
@@ -585,6 +873,8 @@ class ExcelWorksheet(ExcelBase):
 	__changeSelectionGestures = (
 		"kb:tab",
 		"kb:shift+tab",
+		"kb:enter",
+		"kb:numpadEnter",
 		"kb:upArrow",
 		"kb:downArrow",
 		"kb:leftArrow",
@@ -624,13 +914,18 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+pageDown",
 		"kb:control+a",
 		"kb:control+v",
+		"kb:shift+f11",
 	)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
-		fontObj=self.obj.excelCellObject.font
+		if (self.obj.excelCellObject.Application.Version > "12.0"):
+			cellObj=self.obj.excelCellObject.DisplayFormat
+		else:
+			cellObj=self.obj.excelCellObject
+		fontObj=cellObj.font
 		if formatConfig['reportAlignment']:
 			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
 			if value:
@@ -660,12 +955,21 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			except COMError:
 				pass
 			try:
-				formatField['background-color']=colors.RGB.fromCOLORREF(int(self.obj.excelCellObject.interior.color))
+				pattern = cellObj.Interior.Pattern
+				formatField['background-pattern'] = backgroundPatternLabels.get(pattern)
+				if pattern in (xlPatternLinearGradient, xlPatternRectangularGradient):
+					formatField['background-color']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(1).Color)))
+					formatField['background-color2']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(2).Color)))
+				else:
+					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)
 
 class ExcelCell(ExcelBase):
+
+	def doAction(self):
+		pass
 
 	def _get_columnHeaderText(self):
 		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=True)
@@ -711,7 +1015,7 @@ class ExcelCell(ExcelBase):
 		elif scriptCount==1:
 			if self.parent.forgetHeaderCell(self,isColumnHeader=True,isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
-				ui.message(_("removed {address}    from column headers").format(address=self.cellCoordsText))
+				ui.message(_("Removed {address}    from column headers").format(address=self.cellCoordsText))
 			else:
 				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
@@ -733,7 +1037,7 @@ class ExcelCell(ExcelBase):
 		elif scriptCount==1:
 			if self.parent.forgetHeaderCell(self,isColumnHeader=False,isRowHeader=True):
 				# Translators: a message reported in the SetRowHeader script for Excel.
-				ui.message(_("removed {address}    from row headers").format(address=self.cellCoordsText))
+				ui.message(_("Removed {address}    from row headers").format(address=self.cellCoordsText))
 			else:
 				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(_("Cannot find {address}    in row headers").format(address=self.cellCoordsText))
@@ -811,8 +1115,27 @@ class ExcelCell(ExcelBase):
 	def _get_name(self):
 		return self.excelCellObject.Text
 
+	def _getCurSummaryRowState(self):
+		try:
+			row=self.excelCellObject.rows[1]
+			if row.summary:
+				return controlTypes.STATE_EXPANDED if row.showDetail else controlTypes.STATE_COLLAPSED
+		except COMError:
+			pass
+
+	def _getCurSummaryColumnState(self):
+		try:
+			col=self.excelCellObject.columns[1]
+			if col.summary:
+				return controlTypes.STATE_EXPANDED if col.showDetail else controlTypes.STATE_COLLAPSED
+		except COMError:
+			pass
+
 	def _get_states(self):
 		states=super(ExcelCell,self).states
+		summaryCellState=self._getCurSummaryRowState() or self._getCurSummaryColumnState()
+		if summaryCellState:
+			states.add(summaryCellState)
 		if self.excelCellObject.HasFormula:
 			states.add(controlTypes.STATE_HASFORMULA)
 		try:
@@ -832,9 +1155,20 @@ class ExcelCell(ExcelBase):
 				states.add(controlTypes.STATE_CROPPED)
 			if self._overlapInfo['obscuringRightBy'] > 0:
 				states.add(controlTypes.STATE_OVERFLOWING)
+		if self.excelWindowObject.ActiveSheet.ProtectContents and (not self.excelCellObject.Locked):
+			states.add(controlTypes.STATE_UNLOCKED)
 		return states
 
-	def getCellWidthAndTextWidth(self):
+	def event_typedCharacter(self,ch):
+		# #6570: You cannot type into protected cells.
+		# Apart from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
+		# Therefore for any character from space upwards (not control characters)  on protected cells, play the default sound rather than speaking the character
+		if ch>=" " and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
+			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
+			return
+		super(ExcelCell,self).event_typedCharacter(ch)
+
+	def getCellTextWidth(self):
 		#handle to Device Context
 		hDC = ctypes.windll.user32.GetDC(self.windowHandle)
 		tempDC = ctypes.windll.gdi32.CreateCompatibleDC(hDC)
@@ -844,12 +1178,10 @@ class ExcelCell(ExcelBase):
 		#handle to the bitmap object
 		hOldBMP = ctypes.windll.gdi32.SelectObject(tempDC, hBMP)
 		#Pass Device Context and LOGPIXELSX, the horizontal resolution in pixels per unit inch
-		deviceCaps = ctypes.windll.gdi32.GetDeviceCaps(tempDC, 88)
+		dpi = ctypes.windll.gdi32.GetDeviceCaps(tempDC, LOGPIXELSX)
 		#Fetching Font Size and Weight information
 		iFontSize = self.excelCellObject.Font.Size
 		iFontSize = 11 if iFontSize is None else int(iFontSize)
-		iFontSize = ctypes.c_int(iFontSize)
-		iFontSize = ctypes.windll.kernel32.MulDiv(iFontSize, deviceCaps, 72)
 		#Font  Weight for Bold FOnt is 700 and for normal font it's 400
 		iFontWeight = 700 if self.excelCellObject.Font.Bold else 400
 		#Fetching Font Name and style information
@@ -900,14 +1232,13 @@ class ExcelCell(ExcelBase):
 		#Release & Delete the device context
 		ctypes.windll.gdi32.DeleteDC(tempDC)
 		#Retrieve the text width
-		textWidth = StructText.width+5
-		cellWidth  = self.excelCellObject.ColumnWidth * xlCellWidthUnitToPixels	#Conversion factor to convert the cellwidth to pixels
-		return (cellWidth,textWidth)
+		textWidth = StructText.width
+		return textWidth
 
 	def _get__overlapInfo(self):
-		(cellWidth, textWidth) = self.getCellWidthAndTextWidth()
-		isWrapText = self.excelCellObject.WrapText
-		isShrinkToFit = self.excelCellObject.ShrinkToFit
+		textWidth = self.getCellTextWidth()
+		if self.excelCellObject.WrapText or self.excelCellObject.ShrinkToFit:
+			return None
 		isMerged = self.excelWindowObject.Selection.MergeCells
 		try:
 			adjacentCell = self.excelCellObject.Offset(0,1)
@@ -919,15 +1250,23 @@ class ExcelCell(ExcelBase):
 			isAdjacentCellEmpty = not adjacentCell.Text
 		info = {}
 		if isMerged:
-			columnCountInMergeArea = self.excelCellObject.MergeArea.Columns.Count
-			curCol = self.excelCellObject.Column
-			curRow = self.excelCellObject.Row
-			cellWidth = 0
-			for x in xrange(columnCountInMergeArea):
-				cellWidth += self.excelCellObject.Cells(curRow, curCol).ColumnWidth
-				curCol += 1
-			cellWidth = cellWidth * xlCellWidthUnitToPixels #Conversion factor to convert the cellwidth to pixels
-		if isWrapText or isShrinkToFit or textWidth <= cellWidth:
+			columns=self.excelCellObject.mergeArea.columns
+			columnCount=columns.count
+			firstColumn=columns.item(1)
+			lastColumn=columns.item(columnCount)
+			firstColumnLeft=firstColumn.left
+			lastColumnLeft=lastColumn.left
+			lastColumnWidth=lastColumn.width
+			cellLeft=firstColumnLeft
+			cellRight=lastColumnLeft+lastColumnWidth
+		else:
+			cellLeft=self.excelCellObject.left
+			cellRight=cellLeft+self.excelCellObject.width
+		pointsToPixels=self.excelCellObject.Application.ActiveWindow.PointsToScreenPixelsX
+		cellLeft=pointsToPixels(cellLeft)
+		cellRight=pointsToPixels(cellRight)
+		cellWidth=(cellRight-cellLeft)
+		if textWidth <= cellWidth:
 			info = None
 		else:
 			if isAdjacentCellEmpty:
@@ -959,6 +1298,36 @@ class ExcelCell(ExcelBase):
 			previous=None
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
+
+	def _get_description(self):
+		try:
+			inputMessageTitle=self.excelCellObject.validation.inputTitle
+		except (COMError,NameError,AttributeError):
+			inputMessageTitle=None
+		try:
+			inputMessage=self.excelCellObject.validation.inputMessage
+		except (COMError,NameError,AttributeError):
+			inputMessage=None
+		if inputMessage and inputMessageTitle:
+			return _("Input Message is {title}: {message}").format( title = inputMessageTitle , message = inputMessage)
+		elif inputMessage:
+			return _("Input Message is {message}").format( message = inputMessage)
+		else:
+			return None
+
+	def _get_positionInfo(self):
+		try:
+			level=int(self.excelCellObject.rows[1].outlineLevel)-1
+		except COMError:
+			level=None
+		if level==0:
+			try:
+				level=int(self.excelCellObject.columns[1].outlineLevel)-1
+			except COMError:
+				level=None
+		if level==0:
+			level=None
+		return {'level':level}
 
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
@@ -1071,12 +1440,15 @@ class ExcelDropdownItem(Window):
 	def _get_previous(self):
 		newIndex=self.index-1
 		if newIndex>=0:
-			return self.parent.children[newIndex]
+			return self.parent.getChildAtIndex(newIndex)
 
 	def _get_next(self):
 		newIndex=self.index+1
 		if newIndex<self.parent.childCount:
-			return self.parent.children[newIndex]
+			return self.parent.getChildAtIndex(newIndex)
+
+	def _get_treeInterceptor(self):
+		return self.parent.treeInterceptor
 
 	def _get_positionInfo(self):
 		return {'indexInGroup':self.index+1,'similarItemsInGroup':self.parent.childCount,}
@@ -1112,6 +1484,9 @@ class ExcelDropdown(Window):
 				children.append(obj)
 				index+=1
 		return children
+
+	def getChildAtIndex(self,index):
+		return self.children[index]
 
 	def _get_childCount(self):
 		return len(self.children)
@@ -1168,3 +1543,412 @@ class ExcelMergedCell(ExcelCell):
 	def _get_colSpan(self):
 		return self.excelCellObject.mergeArea.columns.count
 
+class ExcelFormControl(ExcelBase):
+	isFocusable=True
+	_roleMap = {
+		xlButtonControl: controlTypes.ROLE_BUTTON,
+		xlCheckBox: controlTypes.ROLE_CHECKBOX,
+		xlDropDown: controlTypes.ROLE_COMBOBOX,
+		xlEditBox: controlTypes.ROLE_EDITABLETEXT,
+		xlGroupBox: controlTypes.ROLE_BOX,
+		xlLabel: controlTypes.ROLE_LABEL,
+		xlListBox: controlTypes.ROLE_LIST,
+		xlOptionButton: controlTypes.ROLE_RADIOBUTTON,
+		xlScrollBar: controlTypes.ROLE_SCROLLBAR,
+		xlSpinner: controlTypes.ROLE_SPINBUTTON,
+	}
+
+	def _get_excelControlFormatObject(self):
+		return self.excelFormControlObject.controlFormat
+
+	def _get_excelOLEFormatObject(self):
+		return self.excelFormControlObject.OLEFormat.object
+
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		self.parent=parent
+		self.excelFormControlObject=excelFormControlObject
+		super(ExcelFormControl,self).__init__(windowHandle=windowHandle)
+
+	def _get_role(self):
+		try:
+			if self.excelFormControlObject.Type==msoFormControl:
+				formControlType=self.excelFormControlObject.FormControlType
+			else:
+				formControlType=None
+		except:
+			return None
+		return self._roleMap[formControlType]
+
+	def _get_states(self):
+		states=super(ExcelFormControl,self).states
+		if self is api.getFocusObject():
+			states.add(controlTypes.STATE_FOCUSED)
+		newState=None
+		if self.role==controlTypes.ROLE_RADIOBUTTON:
+			newState=controlTypes.STATE_CHECKED if self.excelOLEFormatObject.Value==checked else None
+		elif self.role==controlTypes.ROLE_CHECKBOX:
+			if self.excelOLEFormatObject.Value==checked:
+				newState=controlTypes.STATE_CHECKED
+			elif self.excelOLEFormatObject.Value==mixed:
+				newState=controlTypes.STATE_HALFCHECKED
+		if newState:
+			states.add(newState)
+		return states
+
+	def _get_name(self):
+		if self.excelFormControlObject.AlternativeText:
+			return self.excelFormControlObject.AlternativeText+" "+self.excelFormControlObject.TopLeftCell.address(False,False,1,False) + "-" + self.excelFormControlObject.BottomRightCell.address(False,False,1,False)
+		else:
+			return self.excelFormControlObject.Name+" "+self.excelFormControlObject.TopLeftCell.address(False,False,1,False) + "-" + self.excelFormControlObject.BottomRightCell.address(False,False,1,False)
+
+	def _get_index(self):
+		return self.excelFormControlObject.ZOrderPosition
+
+	def _get_topLeftCell(self):
+		return self.excelFormControlObject.TopLeftCell
+
+	def _get_bottomRightCell(self):
+		return self.excelFormControlObject.BottomRightCell
+
+	def _getFormControlScreenCoordinates(self):
+		topLeftAddress=self.topLeftCell
+		bottomRightAddress=self.bottomRightCell
+		#top left cell's width in points
+		topLeftCellWidth=topLeftAddress.Width
+		#top left cell's height in points
+		topLeftCellHeight=topLeftAddress.Height
+		#bottom right cell's width in points
+		bottomRightCellWidth=bottomRightAddress.Width
+		#bottom right cell's height in points
+		bottomRightCellHeight=bottomRightAddress.Height
+		self.excelApplicationObject=self.parent.excelWorksheetObject.Application
+		hDC = ctypes.windll.user32.GetDC(None)
+		#pixels per inch along screen width
+		px = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
+		#pixels per inch along screen height
+		py = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
+		ctypes.windll.user32.ReleaseDC(None, hDC)
+		zoom=self.excelApplicationObject.ActiveWindow.Zoom
+		zoomRatio=zoom/100
+		#Conversion from inches to Points, 1 inch=72points
+		pointsPerInch = self.excelApplicationObject.InchesToPoints(1)
+		#number of pixels from the left edge of the spreadsheet's window to the left edge the first column in the spreadsheet.
+		X=self.excelApplicationObject.ActiveWindow.PointsToScreenPixelsX(0)
+		#number of pixels from the top edge of the spreadsheet's window to the top edge the first row in the spreadsheet,
+		Y=self.excelApplicationObject.ActiveWindow.PointsToScreenPixelsY(0)
+		if topLeftAddress==bottomRightAddress:
+			#Range.Left: The distance, in points, from the left edge of column A to the left edge of the range.
+			X=int(X + (topLeftAddress.Left+topLeftCellWidth/2) * zoomRatio * px / pointsPerInch)
+			#Range.Top: The distance, in points, from the top edge of Row 1 to the top edge of the range.
+			Y=int(Y + (topLeftAddress.Top+topLeftCellHeight/2) * zoomRatio * py / pointsPerInch)
+			return (X,Y)
+		else:
+			screenTopLeftX=int(X + (topLeftCellWidth/2 + topLeftAddress.Left) * zoomRatio * px / pointsPerInch)
+			screenBottomRightX=int(X + (bottomRightCellWidth/2+bottomRightAddress.Left) * zoomRatio * px / pointsPerInch)
+			screenTopLeftY = int(Y + (topLeftCellHeight/2+ topLeftAddress.Top) * zoomRatio * py / pointsPerInch)
+			screenBottomRightY=int(Y + (bottomRightCellHeight/2+ bottomRightAddress.Top) * zoomRatio * py / pointsPerInch)
+			return (int(0.5*(screenTopLeftX+screenBottomRightX)), int(0.5*(screenTopLeftY+screenBottomRightY)))
+
+	def script_doAction(self,gesture):
+		self.doAction()
+	script_doAction.canPropagate=True
+
+	def doAction(self):
+		(x,y)=self._getFormControlScreenCoordinates()
+		winUser.setCursorPos(x,y)
+		#perform Mouse Left-Click
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		self.invalidateCache()
+		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
+
+	__gestures= {
+				"kb:enter":"doAction",
+				"kb:space":"doAction",
+				"kb(desktop):numpadEnter":"doAction",
+				}
+
+class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
+
+	def __init__( self , nodeType , document , formControlObject , formControlCollection, treeInterceptorObj ):
+		super( ExcelFormControlQuickNavItem ,self).__init__( nodeType , document , formControlObject , formControlCollection )
+		self.formControlObjectIndex = formControlObject.ZOrderPosition
+		self.treeInterceptorObj=treeInterceptorObj
+
+	_label=None
+	@property
+	def label(self):
+		if self._label: return self._label
+		alternativeText=self.excelItemObject.AlternativeText
+		if alternativeText: 
+			self._label=alternativeText+" "+self.excelItemObject.Name+" " + self.excelItemObject.TopLeftCell.address(False,False,1,False) + "-" + self.excelItemObject.BottomRightCell.address(False,False,1,False)
+		else:
+			self._label=self.excelItemObject.Name + " " + self.excelItemObject.TopLeftCell.address(False,False,1,False) + "-" + self.excelItemObject.BottomRightCell.address(False,False,1,False)
+		return self._label
+
+	_nvdaObj=None
+	@property
+	def nvdaObj(self):
+		if self._nvdaObj: return self._nvdaObj
+		formControlType=self.excelItemObject.formControlType
+		if formControlType ==xlListBox:
+			self._nvdaObj=ExcelFormControlListBox(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		elif formControlType ==xlDropDown:
+			self._nvdaObj=ExcelFormControlDropDown(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		elif formControlType in (xlScrollBar,xlSpinner):
+			self._nvdaObj=ExcelFormControlScrollBar(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		else:
+			self._nvdaObj=ExcelFormControl(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
+		self._nvdaObj.treeInterceptor=self.treeInterceptorObj
+		return self._nvdaObj
+
+	def __lt__(self,other):
+		return self.formControlObjectIndex < other.formControlObjectIndex
+
+	def moveTo(self):
+		self.excelItemObject.TopLeftCell.Select
+		self.excelItemObject.TopLeftCell.Activate()
+		if self.treeInterceptorObj.passThrough:
+			self.treeInterceptorObj.passThrough=False
+			browseMode.reportPassThrough(self.treeInterceptorObj)
+		eventHandler.queueEvent("gainFocus",self.nvdaObj)
+
+	@property
+	def isAfterSelection(self):
+		activeCell = self.document.Application.ActiveCell
+		if self.excelItemObject.TopLeftCell.row == activeCell.row:
+			if self.excelItemObject.TopLeftCell.column > activeCell.column:
+				return False
+		elif self.excelItemObject.TopLeftCell.row > activeCell.row:
+			return False
+		return True
+
+class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelFormControlQuickNavItem
+
+	def __init__(self, itemType , document , direction , includeCurrent,treeInterceptorObj):
+		super(ExcelFormControlQuicknavIterator,self).__init__(itemType , document , direction , includeCurrent)
+		self.treeInterceptorObj=treeInterceptorObj
+
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return worksheetObject.Shapes
+		except(COMError):
+			return None
+
+	def iterate(self, position):
+		"""
+		returns a generator that emits L{QuickNavItem} objects for this collection.
+		@param position: an excelRangeObject representing either the TopLeftCell of the currently selected form control
+		or ActiveCell in a worksheet
+		"""
+		# Returns the Row containing TopLeftCell of an item
+		def topLeftCellRow(item):
+			row=item.TopLeftCell.Row
+			# Cache row on the COM object as we need it later
+			item._comobj.excelRow=row
+			return row
+		items=self.collectionFromWorksheet(self.document)
+		if not items:
+			return
+		items=sorted(items,key=topLeftCellRow)
+		if position:
+			rangeObj=position.excelRangeObject
+			row = rangeObj.Row
+			col = rangeObj.Column
+			if self.direction=="next":
+				for collectionItem in items:
+					itemRow=collectionItem._comobj.excelRow
+					if (itemRow>row or (itemRow==row and collectionItem.TopLeftCell.Column>col)) and self.filter(collectionItem):
+						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj)
+						yield item
+			elif self.direction=="previous":
+				for collectionItem in reversed(items):
+					itemRow=collectionItem._comobj.excelRow
+					if (itemRow<row or (itemRow==row and collectionItem.TopLeftCell.Column<col)) and self.filter(collectionItem):
+						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj )
+						yield item
+		else:
+			for collectionItem in items:
+				if self.filter(collectionItem):
+					item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items,self.treeInterceptorObj )
+					yield item
+
+	def filter(self,shape):
+		if shape.Type == msoFormControl:
+			if shape.FormControlType == xlGroupBox or shape.Visible != msoTrue:
+				return False
+			else:
+				return True
+		else:
+			return False
+
+class ExcelFormControlListBox(ExcelFormControl):
+
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
+		try:
+			self.listSize=int(self.excelControlFormatObject.ListCount)
+		except:
+			self.listSize=0
+		try:
+			self.selectedItemIndex= int(self.excelControlFormatObject.ListIndex)
+		except:
+			self.selectedItemIndex=0
+		try:
+			self.isMultiSelectable= self.excelControlFormatObject.multiSelect!=xlNone
+		except:
+			self.isMultiSelectable=False
+
+	def getChildAtIndex(self,index):
+		name=str(self.excelOLEFormatObject.List(index+1))
+		states=set([controlTypes.STATE_SELECTABLE])
+		if self.excelOLEFormatObject.Selected[index+1]==True:
+			states.add(controlTypes.STATE_SELECTED)
+		return ExcelDropdownItem(parent=self,name=name,states=states,index=index)
+
+	def _get_childCount(self):
+		return self.listSize
+
+	def _get_firstChild(self):
+		if self.listSize>0:
+			return self.getChildAtIndex(0)
+
+	def _get_lastChild(self):
+		if self.listSize>0:
+			return self.getChildAtIndex(self.listSize-1)
+
+	def script_moveUp(self, gesture):
+		if self.selectedItemIndex > 1:
+			self.selectedItemIndex= self.selectedItemIndex - 1
+			if not self.isMultiSelectable:
+				try:
+					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
+				except:
+					pass
+			child=self.getChildAtIndex(self.selectedItemIndex-1)
+			if child:
+				eventHandler.queueEvent("gainFocus",child)
+	script_moveUp.canPropagate=True
+
+	def script_moveDown(self, gesture):
+		if self.selectedItemIndex < self.listSize:
+			self.selectedItemIndex= self.selectedItemIndex + 1
+			if not self.isMultiSelectable:
+				try:
+					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
+				except:
+					pass
+			child=self.getChildAtIndex(self.selectedItemIndex-1)
+			if child:
+				eventHandler.queueEvent("gainFocus",child)
+	script_moveDown.canPropagate=True
+
+	def doAction(self):
+		if self.isMultiSelectable:
+			try:
+				lb=self.excelOLEFormatObject
+				lb.Selected[self.selectedItemIndex] =not lb.Selected[self.selectedItemIndex] 
+			except:
+				return
+			child=self.getChildAtIndex(self.selectedItemIndex-1)
+			eventHandler.queueEvent("gainFocus",child)
+
+	__gestures= {
+		"kb:upArrow": "moveUp",
+		"kb:downArrow":"moveDown",
+	}
+
+class ExcelFormControlDropDown(ExcelFormControl):
+
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		super(ExcelFormControlDropDown,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
+		try:
+			self.listSize=self.excelControlFormatObject.ListCount
+		except:
+			self.listSize=0
+		try:
+			self.selectedItemIndex=self.excelControlFormatObject.ListIndex
+		except:
+			self.selectedItemIndex=0
+
+	def script_moveUp(self, gesture):
+		if self.selectedItemIndex > 1:
+			self.selectedItemIndex= self.selectedItemIndex - 1
+			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
+			eventHandler.queueEvent("valueChange",self)
+	script_moveUp.canPropagate=True
+
+	def script_moveDown(self, gesture):
+		if self.selectedItemIndex < self.listSize:
+			self.selectedItemIndex= self.selectedItemIndex + 1
+			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
+			eventHandler.queueEvent("valueChange",self)
+	script_moveDown.canPropagate=True
+
+	def _get_value(self):
+		if self.selectedItemIndex < self.listSize:
+			return str(self.excelOLEFormatObject.List(self.selectedItemIndex))
+
+	__gestures= {
+		"kb:upArrow": "moveUp",
+		"kb:downArrow":"moveDown",
+	}
+
+class ExcelFormControlScrollBar(ExcelFormControl):
+
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		super(ExcelFormControlScrollBar,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
+		try:
+			self.minValue=self.excelControlFormatObject.min
+		except:
+			self.minValue=0
+		try:
+			self.maxValue=self.excelControlFormatObject.max
+		except:
+			self.maxValue=0
+		try:
+			self.smallChange=self.excelControlFormatObject.smallChange
+		except:
+			self.smallChange=0
+		try:
+			self.largeChange=self.excelControlFormatObject.largeChange
+		except:
+			self.largeChange=0
+
+	def _get_value(self):
+		try:
+			return str(self.excelControlFormatObject.value)
+		except COMError:
+			return 0
+
+	def moveValue(self,up=False,large=False):
+		try:
+			curValue=self.excelControlFormatObject.value
+		except COMError:
+			return
+		if up:
+			newValue=min(curValue+(self.largeChange if large else self.smallChange),self.maxValue)
+		else:
+			newValue=max(curValue-(self.largeChange if large else self.smallChange),self.minValue)
+		self.excelControlFormatObject.value=newValue
+		eventHandler.queueEvent("valueChange",self)
+
+	def script_moveUpSmall(self,gesture):
+		self.moveValue(True,False)
+
+	def script_moveDownSmall(self,gesture):
+		self.moveValue(False,False)
+
+	def script_moveUpLarge(self,gesture):
+		self.moveValue(True,True)
+
+	def script_moveDownLarge(self,gesture):
+		self.moveValue(False,True)
+
+	__gestures={
+		"kb:upArrow":"moveUpSmall",
+		"kb:downArrow":"moveDownSmall",
+		"kb:pageUp":"moveUpLarge",
+		"kb:pageDown":"moveDownLarge",
+	}
