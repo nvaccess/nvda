@@ -7,11 +7,15 @@
 
 """Keyboard support"""
 
+import ctypes
+import sys
 import time
 import re
 import wx
+import winVersion
 import winUser
 import vkCodes
+import eventHandler
 import speech
 import ui
 from keyLabels import localizedKeyLabels
@@ -73,6 +77,7 @@ def isNVDAModifierKey(vkCode,extended):
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
+	gestureExecuted=False
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		# Injected keys should be ignored in some cases.
@@ -146,6 +151,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 
 		try:
 			inputCore.manager.executeGesture(gesture)
+			gestureExecuted=True
 			trappedKeys.add(keyCode)
 			if canModifiersPerformAction(gesture.generalizedModifiers):
 				# #3472: These modifiers can perform an action if pressed alone
@@ -162,6 +168,22 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				return False
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
+	finally:
+		# #6017: handle typed characters for UWP apps in Win10 RS2 and above where we can't detect typed characters in-process 
+		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
+		focus=api.getFocusObject()
+		if winVersion.winVersion.build>=14986 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
+			keyStates=(ctypes.c_byte*256)()
+			for k in xrange(256):
+				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
+			charBuf=ctypes.create_unicode_buffer(5)
+			hkl=ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
+			# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
+			# However, ToUnicodeEx now can take a new flag of 0x4, which stops it from destroying keyboard state, thus allowing us to safely call it here.
+			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,len(charBuf),0x4,hkl)
+			if res>0:
+				for ch in charBuf[:res]: 
+					eventHandler.queueEvent("typedCharacter",focus,ch=ch)
 	return True
 
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
