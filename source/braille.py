@@ -1525,8 +1525,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._displayWithCursor()
 		if self._cursorPos is None or not showCursor:
 			return
+		cursorShouldBlink = config.conf["braille"]["cursorBlink"]
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
-		if blinkRate:
+		if cursorShouldBlink and blinkRate:
 			self._cursorBlinkTimer = wx.PyTimer(self._blink)
 			self._cursorBlinkTimer.Start(blinkRate)
 

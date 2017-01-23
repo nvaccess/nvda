@@ -9,10 +9,20 @@
 - In Microsoft Word kan het soort sectie-einde en het nummer van de sectie nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
 - In Microsoft Word kunnen de tekstkolommen nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
 - Automatische taalherkenning is nu ondersteund in Wordpad. (#6555)
+- The NVDA find command (NVDA+control+f) is now supported in browse mode for Microsoft Edge. (#6580)
+- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
 
 
 == Opgeloste problemen ==
 - Fix freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
+- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables, and therefore are no longer ignored. (#5927)
+- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
+- Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
+- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. 9#6216)
+- Reporting of cropped/overflowed text in Microsoft Excel cells should be now more accurate (#6472)
+- NVDA now reports when a check box is read-only. (#6563)
+- The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
+- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
 
 
 = 2016.4 =

@@ -1,0 +1,198 @@
+# -*- coding: UTF-8 -*-
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2016 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
+from cStringIO import StringIO
+from configobj import ConfigObj
+
+#: The version of the schema outlined in this file. Increment this when modifying the schema and 
+#: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
+#: just adding a new element to (or removing from) the schema, only when old versions of the config 
+#: (conforming to old schema versions) will not work correctly with the new schema.
+latestSchemaVersion = 1
+
+#: The configuration specification string
+#: @type: String
+configSpecString = ("""# NVDA Configuration File
+schemaVersion = integer(min=0, default={latestSchemaVersion})
+[general]
+	language = string(default="Windows")
+	saveConfigurationOnExit = boolean(default=True)
+	askToExit = boolean(default=true)
+	playStartAndExitSounds = boolean(default=true)
+	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
+	loggingLevel = string(default="INFO")
+	showWelcomeDialogAtStartup = boolean(default=true)
+
+# Speech settings
+[speech]
+	# The synthesiser to use
+	synth = string(default=auto)
+	symbolLevel = integer(default=100)
+	trustVoiceLanguage = boolean(default=true)
+	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
+	outputDevice = string(default=default)
+	autoLanguageSwitching = boolean(default=true)
+	autoDialectSwitching = boolean(default=false)
+
+	[[__many__]]
+		capPitchChange = integer(default=30,min=-100,max=100)
+		sayCapForCapitals = boolean(default=false)
+		beepForCapitals = boolean(default=false)
+		useSpellingFunctionality = boolean(default=true)
+
+# Audio settings
+[audio]
+	audioDuckingMode = integer(default=0)
+
+# Braille settings
+[braille]
+	display = string(default=noBraille)
+	translationTable = string(default=en-us-comp8.ctb)
+	inputTable = string(default=en-us-comp8.ctb)
+	expandAtCursor = boolean(default=true)
+	showCursor = boolean(default=true)
+	cursorBlink = boolean(default=true)
+	cursorBlinkRate = integer(default=500,min=200,max=2000)
+	cursorShape = integer(default=192,min=1,max=255)
+	messageTimeout = integer(default=4,min=0,max=20)
+	tetherTo = string(default="focus")
+	readByParagraph = boolean(default=false)
+	wordWrap = boolean(default=true)
+
+	# Braille display driver settings
+	[[__many__]]
+		port = string(default="")
+
+# Presentation settings
+[presentation]
+		reportKeyboardShortcuts = boolean(default=true)
+		reportObjectPositionInformation = boolean(default=true)
+		guessObjectPositionInformationWhenUnavailable = boolean(default=false)
+		reportTooltips = boolean(default=false)
+		reportHelpBalloons = boolean(default=true)
+		reportObjectDescriptions = boolean(default=True)
+		reportDynamicContentChanges = boolean(default=True)
+	[[progressBarUpdates]]
+		reportBackgroundProgressBars = boolean(default=false)
+		#output modes are beep, speak, both, or off
+		progressBarOutputMode = string(default="beep")
+		speechPercentageInterval = integer(default=10)
+		beepPercentageInterval = integer(default=1)
+		beepMinHZ = integer(default=110)
+
+[mouse]
+	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work
+	mouseTextUnit = string(default="paragraph")
+	reportObjectRoleOnMouseEnter = boolean(default=False)
+	audioCoordinatesOnMouseMove = boolean(default=False)
+	audioCoordinates_detectBrightness = boolean(default=False)
+	audioCoordinates_blurFactor = integer(default=3)
+	audioCoordinates_minVolume = float(default=0.1)
+	audioCoordinates_maxVolume = float(default=1.0)
+	audioCoordinates_minPitch = integer(default=220)
+	audioCoordinates_maxPitch = integer(default=880)
+	reportMouseShapeChanges = boolean(default=false)
+
+[speechViewer]
+	showSpeechViewerAtStartup = boolean(default=false)
+	autoPositionWindow = boolean(default=True)
+	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	x = integer()
+	y = integer()
+	width = integer()
+	height = integer()
+	displays = string_list()
+
+#Keyboard settings
+[keyboard]
+	useCapsLockAsNVDAModifierKey = boolean(default=false)
+	useNumpadInsertAsNVDAModifierKey = boolean(default=true)
+	useExtendedInsertAsNVDAModifierKey = boolean(default=true)
+	keyboardLayout = string(default="desktop")
+	speakTypedCharacters = boolean(default=true)
+	speakTypedWords = boolean(default=false)
+	beepForLowercaseWithCapslock = boolean(default=true)
+	speakCommandKeys = boolean(default=false)
+	speechInterruptForCharacters = boolean(default=true)
+	speechInterruptForEnter = boolean(default=true)
+	allowSkimReadingInSayAll = boolean(default=False)
+	alertForSpellingErrors = boolean(default=True)
+	handleInjectedKeys= boolean(default=true)
+
+[virtualBuffers]
+	maxLineLength = integer(default=100)
+	linesPerPage = integer(default=25)
+	useScreenLayout = boolean(default=True)
+	autoPassThroughOnFocusChange = boolean(default=true)
+	autoPassThroughOnCaretMove = boolean(default=false)
+	passThroughAudioIndication = boolean(default=true)
+	autoSayAllOnPageLoad = boolean(default=true)
+	trapNonCommandGestures = boolean(default=true)
+
+#Settings for document reading (such as MS Word and wordpad)
+[documentFormatting]
+	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
+	detectFormatAfterCursor = boolean(default=false)
+	reportFontName = boolean(default=false)
+	reportFontSize = boolean(default=false)
+	reportFontAttributes = boolean(default=false)
+	reportRevisions = boolean(default=true)
+	reportEmphasis = boolean(default=false)
+	reportColor = boolean(default=False)
+	reportAlignment = boolean(default=false)
+	reportLineSpacing = boolean(default=false)
+	reportStyle = boolean(default=false)
+	reportSpellingErrors = boolean(default=true)
+	reportPage = boolean(default=true)
+	reportLineNumber = boolean(default=False)
+	reportLineIndentation = boolean(default=False)
+	reportLineIndentationWithTones = boolean(default=False)
+	reportParagraphIndentation = boolean(default=False)
+	reportTables = boolean(default=true)
+	includeLayoutTables = boolean(default=False)
+	reportTableHeaders = boolean(default=True)
+	reportTableCellCoords = boolean(default=True)
+	reportLinks = boolean(default=true)
+	reportComments = boolean(default=true)
+	reportLists = boolean(default=true)
+	reportHeadings = boolean(default=true)
+	reportBlockQuotes = boolean(default=true)
+	reportLandmarks = boolean(default=true)
+	reportFrames = boolean(default=true)
+	reportClickable = boolean(default=true)
+
+[reviewCursor]
+	simpleReviewMode = boolean(default=True)
+	followFocus = boolean(default=True)
+	followCaret = boolean(default=True)
+	followMouse = boolean(default=False)
+
+[UIA]
+	minWindowsVersion = float(default=6.1)
+	enabled = boolean(default=true)
+
+[update]
+	autoCheck = boolean(default=true)
+
+[inputComposition]
+	autoReportAllCandidates = boolean(default=True)
+	announceSelectedCandidate = boolean(default=True)
+	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
+	reportReadingStringChanges = boolean(default=True)
+	reportCompositionStringChanges = boolean(default=True)
+
+[debugLog]
+	hwIo = boolean(default=false)
+	audioDucking = boolean(default=false)
+
+[upgrade]
+	newLaptopKeyboardLayout = boolean(default=false)
+""").format(latestSchemaVersion=latestSchemaVersion)
+
+#: The configuration specification
+#: @type: ConfigObj
+confspec = ConfigObj(StringIO( configSpecString ), list_values=False, encoding="UTF-8")
+confspec.newlines = "\r\n"

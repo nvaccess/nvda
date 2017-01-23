@@ -9,10 +9,20 @@ Qué hay de Nuevo en NVDA
 - Ahora pueden anunciarse en Microsoft Word el tipo de salto de sección y el número de sección. Esto se habilita con la opción "anunciar número de página" en el diálogo Formateado de documentos. (#5946)
 - En Microsoft Word ahora pueden anunciarse las columnas de texto. Esto se habilita con la opción "anunciar números de página" en el diálogo Formateado de documentos. (#5946)
 - Ahora se soporta el cambio automático de idiomas en Wordpad. (#6555)
+- La orden buscar de NVDA (NVDA+control+f) ahora se soporta en modo exploración para Microsoft Edge. (#6580)
+- La navegación rápida por botones en modo exploración (b y shift+b) ahora se soporta en Microsoft Edge. (#6577)
 
 
 == Corrección de Fallos ==
 - Corregido el cuelgue en Microsoft Word al moverse por párrafos a través de un documento largo mientras se está en modo exploración. (#6368)
+- Las tablas en Microsoft Word que se hayan copiado desde Microsoft Excel ya no se tratan como tablas de diseño, y por lo tanto, ya no se ignoran. (#5927)
+- Cuando se intenta teclear en Microsoft Excel mientras se esté en vista protegida, NVDA ahora hace un sonido en lugar de verbalizar los carácteres que no se escribieron. (#6570)
+- Pulsando escape en Microsoft Excel ya no se cambia incorrectamente a modo exploración, al menos que el usuario haya cambiado anteriormente a modo exploración explícitamente con NVDA+espacio y luego entrado en el modo foco pulsando intro en un campo de formulario. (#6569) 
+- NVDA ya no se cuelga en hojas de cálculo de Microsoft Excel donde se fusione una fila o columna entera. 9#6216)
+- El anunciado de texto recortado o desbordado en celdas de Microsoft Excel ahora debería de ser más preciso (#6472)
+- NVDA ahora anuncia cuando una casilla de verificación es de sólo lectura. (#6563)
+- El lanzador de NVDA ya no mostrará un diálogo de advertencia cuando no pueda reproducir el sonido de inicio debido a que no esté disponible el dispositivo de audio. (#6289)
+- Los controles en la cinta de Microsoft Excel que no estén disponibles ahora se anuncian como tales. (#6430)
 
 
 = 2016.4 =
