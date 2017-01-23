@@ -18,6 +18,7 @@
 - The minimum braille cursor blink rate is now 200ms. Profiles or configurations with values below this will be increased to 200ms. (#6470)
 - A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
 - Profiles and configuration files are now automatically upgraded to meet the requirements of schema modifications. If there is an error during upgrade, a notification is shown, the configuration is reset, and the old configuration file is available in the NVDA log at 'Info' level. (#6470)
+- Support for reading and navigating books in Kindle for PC version 1.19, including access to links, footnotes, graphics, highlighted text and user notes. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638)
 
 
 == Bug Fixes ==
