@@ -9,10 +9,20 @@ Ce este nou în NVDA
 - În Microsoft Word tipul de spațiere între secțiuni și nmărul secțiunilor pot fi anunțate. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
 - În Microsoft Word coloanele de text pot fi acum anunțate. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
 - Comutarea automată a limbii este acum suportată în Wordpad. (#6555)
+- Comanda de găsire a NVDA-ului (NVDA+control+f) este acum suportată în modul de navigare pentru Microsoft Edge. (#6580)
+- Navigarea rapidă pentru butoane în modul de navigare (b și shift+b) este acum suportată în Microsoft Edge. (#6577)
 
 
 == Rezolvări defecte ==
 - A fost reparată blocarea în Microsoft Word la deplasarea paragrafului printr-un document mare în timpul modului de navigare. (#6368)
+- Tabelele în Microsoft Word care au fost copiate din Microsoft Excel nu mai sunt tratate ca tabele de aspect, prin urmare nu mai sunt ignorate. (#5927)
+- La încercarea de tastare în Microsoft Excel în timpul vizualizării protejate, NVDA nu face un sunet mai degrabă decât vorbirea caracterelor care, de fapt, nu au fost tastate. (#6570)
+- Apăsarea tastei escape în Microsoft Excel nu mai comută incorect la modul de navigare, dacă utilizatorul nu a comutat mai înainte la modul de navigare cu NVDA+spațiu și a intrat în modul de focalizare prin apăsarea tastei enter pe un câmp formular. (#6569)
+- În cazul în care este fuzionat un rând întreg sau o coloană, NVDA nu se mai blochează în foile de calcul ale Excelului. 9#6216)
+- Raportarea textului decupat/revărsat în celulele Excelului ar trebui să fie afișată mai precis. (#6472)
+- NVDA anunță când o casetă de bifat este doar-citire. (#6563)
+- La lansarea NVDA nu se va mai afișa un dialog de avertizare atunci când nu se poate reda sunetul logo datorită indisponibilității unui dispozitiv audio. (#6289)
+- Controalele în ribbonul Excelului care sunt nedisponibile sunt raportate ca atare. (#6430)
 
 
 = 2016.4 =

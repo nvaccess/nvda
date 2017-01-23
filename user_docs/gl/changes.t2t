@@ -9,10 +9,20 @@ Que hai de Novo no NVDA
 - Agora poden anunciarse no Microsoft Word o tipo de salto de sección e o número de sección. Esto habilítase coa opción "anunciar número de páxina" no diálogo Formateado de documentos. (#5946)
 - No Microsoft Word agora pódense anunciar as columnas de texto. Esto habilítase coa opción "anunciar números de páxina" no diálogo Formateado de documentos. (#5946)
 - Agora sopórtase o cambio automático de linguas no Wordpad. (#6555)
+- A orde procurar do NVDA (NVDA+control+f) agora sopórtase en modo exploración para o Microsoft Edge. (#6580)
+- A navegación rápida por botóns en modo exploración (b e shift+b) agora sopórtase no Microsoft Edge. (#6577)
 
 
 == Correción de Fallos ==
 - Correxido o colgue no Microsoft Word ao se mover por parágrafos a través dun documento longo mentres se está en modo exploración. (#6368)
+- As táboas no Microsoft Word que se copiaran dende o Microsoft Excel xa non se tratan como táboas de deseño, e polo tanto, xa non se ignoran. (#5927)
+- Cando se tenta teclear no Microsoft Excel mentres se estea en vista protexida, NVDA agora fai un son en lugar de falar os carácteres que non se escrebiron. (#6570)
+- Premendo escape no Microsoft Excel xa non se cambia incorrectamente ao modo exploración, ao menos que o usuario cambiara anteriormente a modo exploración explícitamente con NVDA+espacio e logo entrado no modo foco premendo intro nun campo de formulario. (#6569) 
+- NVDA xa non se colga en follas de cálculo do Microsoft Excel onde se fusione unha fila ou columna enteira. 9#6216)
+- O anunciado de texto recortado ou desbordado en celdas do Microsoft Excel agora debería de ser máis preciso (#6472)
+- NVDA agora anuncia cando unha caixa de verificación é de só lectura. (#6563)
+- O lanzador do NVDA xa non amosará un diálogo de aviso cando non poda reproducir o son de comezo debido a que non estea dispoñible o dispositivo de audio. (#6289)
+- Os controis na cinta do Microsoft Excel que non estean dispoñibles agora anúncianse así. (#6430)
 
 
 = 2016.4 =
