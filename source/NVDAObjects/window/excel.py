@@ -674,7 +674,24 @@ class ExcelWorksheet(ExcelBase):
 		self.excelApplicationObject=self.excelWorksheetObject.application
 		return self.excelApplicationObject
 
-	re_definedName=re.compile(ur'^((?P<sheet>\w+)!)?(?P<name>\w+)(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?(\..*)*)?)?$')
+	re_definedName=re.compile(
+		# Starts with an optional sheet name followed by an exclamation mark (!).
+		# If a sheet name contains spaces then it is surrounded by single quotes (')
+		# Examples:
+		# Sheet1!
+		# ''Sheet2 (4)'!
+		# 'profit and loss'!
+		u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?'
+		# followed by a unique name (not containing spaces). Example:
+		# rowtitle_ab12-cd34-de45
+		u'(?P<name>\w+)'
+		# Optionally followed by minimum and maximum addresses, starting with a period (.). Example:
+		# .a1.c3
+		# .ab34
+		u'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
+		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
+		u'(\..*)*)?)?$'
+	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
 		sheetName=self.excelWorksheetObject.name
@@ -684,6 +701,8 @@ class ExcelWorksheet(ExcelBase):
 			if not nameMatch:
 				continue
 			sheet=nameMatch.group('sheet')
+			if sheet and sheet[0]=="'" and sheet[-1]=="'":
+				sheet=sheet[1:-1]
 			if sheet and sheet!=sheetName:
 				continue
 			name=nameMatch.group('name').lower()
@@ -752,13 +771,15 @@ class ExcelWorksheet(ExcelBase):
 		else:
 			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
 		name+=uuid.uuid4().hex
+		relativeName=name
+		name="%s!%s"%(cell.excelRangeObject.worksheet.name,name)
 		if oldInfo:
 			self.excelWorksheetObject.parent.names(oldInfo.name).delete()
 			oldInfo.name=name
 		else:
 			maxColumnNumber=self._getMaxColumnNumberForHeaderCell(cell.excelCellObject)
 			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,maxColumnNumber=maxColumnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
-		self.excelWorksheetObject.parent.names.add(name,cell.excelRangeObject)
+		self.excelWorksheetObject.names.add(relativeName,cell.excelRangeObject)
 		return True
 
 	def _getMaxColumnNumberForHeaderCell(self,excelCell):
