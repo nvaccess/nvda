@@ -26,6 +26,10 @@ class Ia2Web(IAccessible):
 				info['level']=level
 		return info
 
+	def getValueForAriaCurrent(self):
+		current = self.IA2Attributes.get("current", False)
+		return current
+
 class Document(Ia2Web):
 	value = None
 

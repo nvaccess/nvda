@@ -798,6 +798,12 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
+	def getValueForAriaCurrent(self):
+		"""Gets the value for aria-current. Normally returns False. If this object is current
+		it will return one of the following values: True, "page", "step", "location", "date", "time"
+		"""
+		return False
+
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
