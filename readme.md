@@ -107,6 +107,7 @@ If trying to debug nvdaHelper, You can control various  debugging options  with 
 
 * debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
 * RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
+* analyze: runs MSVC code analysis on all nvdaHelper code, holting on any warning. (default is no analysis).
 
 The special keywords none and all can also be used in place of the individual flags.
 
