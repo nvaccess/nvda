@@ -567,7 +567,7 @@ class UIA(Window):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
-			elif self.UIATextPattern and isinstance(self.parent,edge.EdgeHTMLRootContainer):
+			elif self.UIATextPattern and self.role==controlTypes.ROLE_PANE and self.parent and (isinstance(self.parent,edge.EdgeHTMLRootContainer) or not isinstance(self.parent,edge.EdgeNode)): 
 				clsList.append(edge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
 				clsList.append(edge.EdgeList)
