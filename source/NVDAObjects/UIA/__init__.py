@@ -767,19 +767,17 @@ class UIA(Window):
 			return ""
 
 	def _get_keyboardShortcut(self):
-		ret = ""
 		try:
-			ret += self.UIAElement.currentAccessKey
+			accessKey = self.UIAElement.currentAccessKey
 		except COMError:
-			pass
-		if ret:
-			#add a double space to the end of the string
-			ret +="  "
+			# #6779: Forcefully set access key to an empty string if UIA says access key is None, resolves concatenation error in focus events, object navigation and so on.
+			accessKey = ""
 		try:
-			ret += self.UIAElement.currentAcceleratorKey
+			acceleratorKey = self.UIAElement.currentAcceleratorKey
 		except COMError:
-			pass
-		return ret
+			acceleratorKey = ""
+		# #6790: Do not add two spaces blindly in order to not waste string real estate.
+		return accessKey if not acceleratorKey else "  ".join([accessKey, acceleratorKey])
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
