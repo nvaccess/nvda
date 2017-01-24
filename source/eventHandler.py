@@ -256,6 +256,10 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# #5595: Events for the cursor get mapped to the desktop window.
 		return True
 
+	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window
+	if wClass.startswith('Windows.UI.Core'):
+		return True
+
 	fg = winUser.getForegroundWindow()
 	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":
 		# #5504: In Office >= 2013 with the ribbon showing only tabs,
