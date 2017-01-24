@@ -1017,15 +1017,18 @@ class MSHTML(IAccessible):
   		return filename
   	
 	def script_assignCustomLabel(self, gesture):
-		obj=api.getFocusObject()
-		treeInterceptor=obj.treeInterceptor
-		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
-			obj=treeInterceptor
 		try:
-			info=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
-		browseObj=info.NVDAObjectAtStart
+			obj=api.getFocusObject()
+			treeInterceptor=obj.treeInterceptor
+			if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
+				obj=treeInterceptor
+			try:
+				info=obj.makeTextInfo(textInfos.POSITION_CARET)
+			except (NotImplementedError, RuntimeError):
+				info=obj.makeTextInfo(textInfos.POSITION_FIRST)
+			browseObj=info.NVDAObjectAtStart
+		except:
+			browseObj=api.getFocusObject()
 		if (browseObj.HTMLNode.nodeName=="IMG"):
 			customLabelKey=browseObj.HTMLAttributes['src']
 		elif (browseObj.HTMLNode.nodeName=="A"):

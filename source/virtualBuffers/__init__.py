@@ -372,20 +372,23 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(target=self._loadBuffer).start()
 
+	def fetchLabels(self):
+  		weblink=self.documentConstantIdentifier
+  		parsed_uri = urlparse( weblink )
+  		domain='{uri.netloc}'.format(uri=parsed_uri)
+   		domain=domain.replace('.','_')
+   		domain=domain.replace(':','_')
+   		domain=domain.replace('\\','_')
+   		filename=domain+'.ini'
+   		labels=""
+   		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
+   		for k,v in config.iteritems():
+   			labels+=k+":"+v+","
+   		return labels
+	
 	def _loadBuffer(self):
 		try:
-  			weblink=self.documentConstantIdentifier
-  			parsed_uri = urlparse( weblink )
-  		 	domain='{uri.netloc}'.format(uri=parsed_uri)
-   		 	domain=domain.replace('.','_')
-   		  	domain=domain.replace(':','_')
-   		  	domain=domain.replace('\\','_')
-   		  	filename=domain+'.ini'
-   		  	labels=""
-   		  	config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
-   		  	for k,v in config.iteritems():
-				labels+=k+":"+v+","
-			
+			labels=self.fetchLabels()
 			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),unicode(labels))
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")

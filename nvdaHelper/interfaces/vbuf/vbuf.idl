@@ -46,6 +46,7 @@ interface VBuf {
  * @param docHandle uniquely identifies the document or window being virtualized
  * @param ID uniquely identifies the object with in the document or window where rendering should start from
  * @param backendName The name of the backend (the path to the correct dll will be calculated automatically)
+ * @param labels The name of the labels given by the user to Web elements
  * @return a handle identifying the new virtual buffer.
  */
 	VBufRemote_bufferHandle_t createBuffer([in] handle_t bindingHandle, [in] int docHandle, [in] int ID, [in,string] const wchar_t* backendName,[in,string] const wchar_t* labels);

@@ -1075,7 +1075,6 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 				// There is alt text, so use it.
 				contentString = tempIter->second;
 			}
-
 		} else if ((tempIter = attribsMap.find(L"HTMLAttrib::title")) != attribsMap.end()) {
 			// There is a title, so use it.
 			contentString = tempIter->second;
@@ -1086,12 +1085,10 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 			contentString=getNameForURL(IAValue);
 		}
 		if ((tempIter = attribsMap.find(L"HTMLAttrib::src")) != attribsMap.end()) {
-			renderChildren=true;
 			wstring srcAttribute=tempIter->second;
 			wstring labelForNode=findLabel(labelsMap,srcAttribute);
 			if (!labelForNode.empty()){
 				contentString=labelForNode;
-				renderChildren=false;
 			}
 	}
 	} else if(nodeName.compare(L"INPUT")==0) {
@@ -1144,15 +1141,12 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	) {
 		contentString=L" ";
 	} else if((nodeName.compare(L"A")==0)&&(attribsMap.find(L"HTMLAttrib::href")!=attribsMap.end())) {
-		renderChildren=true;
 		tempIter = attribsMap.find(L"HTMLAttrib::href");
 		wstring linkAttribute=tempIter->second;
 		wstring labelForNode=findLabel(labelsMap,linkAttribute);
 		if (!labelForNode.empty()){
 			contentString=labelForNode;
-			renderChildren=false;
 		}
-
 	} else {
 		renderChildren=true;
 	}
@@ -1162,8 +1156,8 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	if (!nameIsContent && !IAName.empty() && (nameFromAuthor || (
 		attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end()
 		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
-	)))
-		{attribsMap[L"name"]=IAName;
+	))){
+		attribsMap[L"name"]=IAName;
 		}
 
 	tempIter = attribsMap.find(L"HTMLAttrib::name");
@@ -1361,12 +1355,10 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 wstring findLabel(multiValueAttribsMap labelsMap,wstring attributeValue) {
 	wstring key ;
 	wstring value;
-	for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++)
-	{
+	for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++) {
 		key = it->first;
 		value = it->second;
-		if (attributeValue.compare(key)==0)
-		{
+		if (attributeValue.compare(key)==0) {
 			return value;
 		}
 	}
