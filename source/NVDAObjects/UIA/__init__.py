@@ -776,8 +776,10 @@ class UIA(Window):
 			acceleratorKey = self.UIAElement.currentAcceleratorKey
 		except COMError:
 			acceleratorKey = ""
-		# #6790: Do not add two spaces blindly in order to not waste string real estate.
-		return accessKey if not acceleratorKey else "  ".join([accessKey, acceleratorKey])
+		# #6790: Do not add two spaces unless both access key and accelerator are present in order to not waste string real estate.
+		# If not, just return the longest string.
+		keyboardShortcuts = (accessKey, acceleratorKey)
+		return "  ".join(keyboardShortcuts) if accessKey and acceleratorKey else max(keyboardShortcuts)
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
