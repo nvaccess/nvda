@@ -1003,7 +1003,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
 	ariaCurrent = propertyValues.get('_current', False)
-	if ariaCurrent != False:
+	if ariaCurrent is not None and ariaCurrent != False:
 		if ariaCurrent=="page":
 			textList.append(_("current page"))
 		else:
