@@ -768,26 +768,24 @@ class UIA(Window):
 
 	def _get_keyboardShortcut(self):
 		# Build the keyboard shortcuts list early for readability.
-		keyboardShortcuts = []
+		shortcuts = []
 		try:
 			accessKey = self.UIAElement.currentAccessKey
-		except COMError:
-			# #6779: Forcefully set access key to an empty string if UIA says access key is None, resolves concatenation error in focus events, object navigation and so on.
+			# #6779: Don't add access key to the shortcut list if UIA says access key is None, resolves concatenation error in focus events, object navigation and so on.
 			# In rare cases, access key itself is None.
+			if accessKey:
+				shortcuts.append(accessKey)
+		except COMError, AttributeError:
 			pass
-		if not accessKey:
-			accessKey = ""
-		keyboardShortcuts.append(accessKey)
 		try:
 			acceleratorKey = self.UIAElement.currentAcceleratorKey
-		except COMError:
+			# Same case as access key.
+			if acceleratorKey:
+				shortcuts.append(acceleratorKey)
+		except COMError, AttributeError:
 			pass
-		if not acceleratorKey:
-			acceleratorKey = ""
-		keyboardShortcuts.append(acceleratorKey)
 		# #6790: Do not add two spaces unless both access key and accelerator are present in order to not waste string real estate.
-		# If not, just return the longest string.
-		return "  ".join(keyboardShortcuts) if accessKey and acceleratorKey else max(keyboardShortcuts)
+		return "  ".join(shortcuts) if shortcuts else ""
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
