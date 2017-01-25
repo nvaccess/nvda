@@ -6,6 +6,7 @@
 
 import sys
 import itertools
+import weakref
 import os
 import pkgutil
 import ctypes.wintypes
@@ -681,6 +682,31 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
+class TextInfoRegionState(object):
+	"""Caches the state of a TextInfoRegion such as the current formatfield."""
+
+	__slots__=[
+		'objRef',
+		'formatFieldAttributesCache',
+	]
+
+	def __init__(self,obj):
+		if isinstance(obj,TextInfoRegionState):
+			oldState=obj
+			self.objRef=oldState.objRef
+		else:
+			self.objRef=weakref.ref(obj)
+			oldState=getattr(obj,'_textInfoRegionState',None)
+		self.formatFieldAttributesCache=oldState.formatFieldAttributesCache if oldState else {}
+		
+	def updateObj(self):
+		obj=self.objRef()
+		if obj:
+			obj._textInfoRegionState=self.copy()
+
+	def copy(self):
+		return self.__class__(self)
+
 def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
@@ -756,7 +782,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field, isAtStart, formatConfig):
+def getFormatFieldBraille(field, isAtStart, formatConfig, fieldCache=None):
 	textList = []
 	if isAtStart:
 		if formatConfig["reportLineNumber"]:
@@ -772,6 +798,14 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 				# Translators: Displayed in braille for a heading with a level.
 				# %s is replaced with the level.
 				textList.append(_("h%s")%headingLevel)
+	if formatConfig["reportLinks"]:
+		link=field.get("link")
+		oldLink=fieldCache.get("link") if fieldCache is not None else None
+		if link and link != oldLink:
+			textList.append(roleLabels[controlTypes.ROLE_LINK])
+	if fieldCache is not None:
+		fieldCache.clear()
+		fieldCache.update(field)
 	return " ".join([x for x in textList if x])
 
 class TextInfoRegion(Region):
@@ -842,9 +876,16 @@ class TextInfoRegion(Region):
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 		self._rawToContentPos.extend((contentPos,) * textLen)
 
-	def _addTextWithFields(self, info, formatConfig, isSelection=False):
+	def _addTextWithFields(self, info, formatConfig, isSelection=False, useCache=True):
+		if isinstance(useCache,TextInfoRegionState):
+			textInfoRegionState=useCache
+		elif useCache:
+		 textInfoRegionState=TextInfoRegionState(info.obj)
+		else:
+			textInfoRegionState=None
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
+		formatFieldAttributesCache = textInfoRegionState.formatFieldAttributesCache if textInfoRegionState else {}
 		typeform = louis.plain_text
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
@@ -880,7 +921,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
+					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig, formatFieldAttributesCache)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -923,6 +964,10 @@ class TextInfoRegion(Region):
 			# We only render fields that aren't at the start of their nodes for the first part of the reading unit.
 			# Otherwise, we'll render fields that have already been rendered.
 			self._skipFieldsNotAtStartOfNode = True
+		if useCache:
+			textInfoRegionState.formatFieldAttributesCache = formatFieldAttributesCache
+			if not isinstance(useCache,TextInfoRegionState):
+				textInfoRegionState.updateObj()
 
 	def _getReadingUnit(self):
 		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
