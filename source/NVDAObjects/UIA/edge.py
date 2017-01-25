@@ -387,6 +387,13 @@ class EdgeNode(UIA):
 				pass
 		return super(EdgeNode,self).description
 
+	def getValueForAriaCurrent(self):
+		ariaProperties=self.UIAElement.currentAriaProperties
+		if 'current=' in ariaProperties:
+			# We are not able to get the value for aria-current property
+			return True
+		return False
+
 class EdgeList(EdgeNode):
 
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
