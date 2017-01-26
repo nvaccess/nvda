@@ -9,13 +9,27 @@
 - I Microsoft Word, typen af et sektionsskift og et sektionsnummer kan nu blive rapporteret. Dette kan slås til ved brug af indstillingen "Sider" i indstillingerne for dokumentformatering.  (#5946)
 - Tekstkolonner kan nu rapporteres i Microsoft Word. Dette kan slås til ved brug af indstillingen  "Sider" i indstillingerne for dokumentformatering. (#5946)
 - Automatisk skift af sprog er nu understøttet i Wordpad. (#6555)
+- NVDA-kommandoen Find (NVDA+CTRL+F) er nu understøttet i Microsoft Edge. (#6580)
+- Bogstavnavigation for knapper i gennemsynstilstand (B og skift+B) er nu understøttet i Microsoft Edge. (#6577)
 
 
 == Ændringer ==
+- Minimum blinkhastighed er nu 200 MS. Profiler, hvor værdien er mindre end 200, vil blive forøget til dette. (#6470)
+- En tjekboks er blevet tilføjet til dialogen punktindstillinger der tillader, at blinkhastigheden kan slås til og fra. Tidligere var værdien 0 brugt til at opnå dette. (#6470)
+- Profiler og konfigurationer opdateres nu automatisk, så disse opnår kravene for skema ændringer. Hvis der opstår en fejl under opgraderingen, vil dette fremkomme af en meddelelse, konfigurationen nulstilles, og den tidligere konfiguration vil være tilgængelig i NVDAs log under logningsniveauet "info". (#6470)
 
 
 == Fejlrettelser ==
 - Rettede en fejl i Microsoft Word der frøs NVDA, når man flyttede mellem afsnit i gennemsynstilstand. (#6368)
+- Tabeller, der kopieres fra Microsoft Excel ind i Microsoft Word, vil ikke længere blive behandlet som layout-tabeller og derfor ikke længere ignoreret. (#5927)
+- Når der indtastes i beskyttet visning i Microsoft Word, vil NVDA nu afspille en lyd i stedet for at udtale tegn, der ikke blev skrevet. (#6570)
+- Ved et tryk på Esc vil NVDA ikke længere ved en fejl skift til gennemsynstilstand, med mindre brugeren udtrykkeligt har skiftet til gennemsynstilstand ved at trykke på NVDA+mellemrum, og herefter skiftet til fokustilstand med tasten enter på et formularfelt. (#6569)
+- NVDA fryser ikke længere i Excel regneark, når en hel række eller en kolonne flettes. (#6216)
+-Rapportering af beskåret eller overløbende tekst af celler i Microsoft Excel skulle være mere præcis. (#6472)
+- NVDA vil nu rapportere, hvis en tjekboks er skrivebeskyttet. (#6563)
+- NVDA-starteren vil ikke længere vise en advarselsdialog, hvis logo-lyden ikke kan afspilles på grund af manglende lydenhed. (#6289)
+- Utilgængelige kontrolelementer på Microsoft Excel-båndet vil nu blive rapporteret ligeledes. (#6430)
+- NVDA vil ikke længere annoncere "Rude" når vinduer minimeres. (#6671)
 
 
 == Ændringer for udviklere ==
