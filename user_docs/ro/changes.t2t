@@ -13,6 +13,12 @@ Ce este nou în NVDA
 - Navigarea rapidă pentru butoane în modul de navigare (b și shift+b) este acum suportată în Microsoft Edge. (#6577)
 
 
+== Modificări ==
+- Frecvența minimă a intermitenței cursorului braille este acum 200ms. Profilurile sau configurările cu valorile de mai jos, aceasta va fi mărită cu 200ms. (#6470)
+- A fost adăugată o casetă de bifat în dialogul setărilor braille pentru a permite activarea/dezactivarea intermitenței cursorului braille. Înainte, o valoare de zero a fost utilizată pentru a realiza acest lucru. (#6470)
+- Profilurile și fișierele de configurare sunt acum upgradate automat pentru a cunoaște necesitățile modificărilor schematice. Dacă există o eroare pe durata upgrade-ului, o notificare este afișată, configurația este resetată, iar configurația veche este disponibilă în logul NVDA la nivelul 'Info'. (#6470)
+
+
 == Rezolvări defecte ==
 - A fost reparată blocarea în Microsoft Word la deplasarea paragrafului printr-un document mare în timpul modului de navigare. (#6368)
 - Tabelele în Microsoft Word care au fost copiate din Microsoft Excel nu mai sunt tratate ca tabele de aspect, prin urmare nu mai sunt ignorate. (#5927)
@@ -23,6 +29,7 @@ Ce este nou în NVDA
 - NVDA anunță când o casetă de bifat este doar-citire. (#6563)
 - La lansarea NVDA nu se va mai afișa un dialog de avertizare atunci când nu se poate reda sunetul logo datorită indisponibilității unui dispozitiv audio. (#6289)
 - Controalele în ribbonul Excelului care sunt nedisponibile sunt raportate ca atare. (#6430)
+- NVDA nu va mai anunța „panou” la minimizarea ferestrelor. (#6671)
 
 
 = 2016.4 =

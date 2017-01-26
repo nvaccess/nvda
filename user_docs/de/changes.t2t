@@ -8,6 +8,28 @@
 == neue Funktionen ==
 - Mit der neuen Option "Seitenzahlen ansagen" in den Einstellungen für Dokumentformatierungen können Sie sich nun Abschnittswechsel und -Nummern anzeigen lassen. (#5946)
 - Diese Option aktiviert desweiteren eine Ansage von Spalten in mehrspaltigen Texten in Microsoft Word. (#5946)
+- der automatische Sprachenwechsel wird nun auch in Wordpad unterstützt. (#6555)
+- Der NVDA-interne Suchbefehl (nvda+strg+f) wird nun auch in Microsoft Edge unterstützt. (#6580)
+- Die Schnellnavigationstasten für Schalter werden in Microsoft Edge unterstützt. (#6577)
+
+
+== Änderungen ==
+- Die Minimale Cursorblinkrate beträgt nun 200ms. Falls in einem Konfigurationsprofil ein niedrigerer Wert hinterlegt ist, wird dieser automatisch angehoben. (#6470)
+- In den Braille-Einstellungen wurde eine neue Option zum ein-/Ausschalten des Cursorblinkens hinzugefügt. Bisher war das Abschalten des Cursorblinkens durch die Angabe von 0 als Cursorblinkrate möglich. (#6470)
+- Konfigurationsprofile und -Dateien werden automatisch aktualisiert. Falls beim Aktualisieren ein Fehler auftritt, wird eine Fehlermeldung mit der Ebene "info" im Protokoll hinterlegt. (#6470)
+
+
+== Fehlerkorrekturen ==
+- Fehler beim absatzweisen Navigieren im Lesemodus von Midcrosoft Word korrigiert. (#6368)
+- Tabellen, die von Microsoft Excel in Microsoft Word eingefügt wurden, werden nicht mehr ignoriert. (#5927)
+- Bei dem Versuch, in geschützte Excel-Zellen zu schreiben wird nun ein Signalton abgespielt. Bisher wurden die eingegebenen zeichen gesprochen. (#6570)
+- Das Drücken von Exc in Excel schaltet nun nicht mehr unerwartet in den Lesemodus um. (#6569) 
+- NVDA stürzt nicht mehr in Excel-Tabellenblättern ab, bei denen eine ganze Reihe/Spalte in eine Zelle zusammengeführt wurde. 9#6216)
+- die Ansage von überlagertem Text in Microsoft Excel wurde verbessert. (#6472)
+- NVDA zeigt nun schreibgeschützte Kontrollkästchen korrekt an. (#6563)
+- NVDA zeigt nun keine Warnmeldungen mehr an, wenn der Logo-Klang nicht abbgespielt werden konnte. (#6289)
+- nicht verfügbare Steuerelemente in Menübändern von Microsoft Excel werden als solche angezeigt. (#6430)
+- NvDA zeigt nicht mehr "Feld" an, wenn Fenster minimiert werden. (#6671)
 
 
 = 2016.4 =

@@ -916,6 +916,10 @@ Cette option permet d'afficher le mot sous le curseur en intégral.
 Cette option permet d'activer ou de désactiver l'affichage du curseur braille.
 Elle s'applique au curseur système et au curseur de revue, mais pas à l'indicateur de sélection.
 
+==== Clignotement du Curseur ====
+Cette option permet au curseur braille de clignoter.
+Si le clignotement est désactivé, le curseur braille sera constamment en position haute.
+
 ==== Vitesse de clignotement du curseur (ms) ====
 Cette option est un champ numérique qui vous permet de modifier la vitesse de clignotement du curseur en millisecondes.
  
@@ -2164,8 +2168,8 @@ Veuillez consulter [la documentation EcoBraille ftp://ftp.once.es/pub/utt/biblio
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
-Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
+Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://www.brltty.com/download.html].
 Vous devez télécharger et installer la version la plus récente avec installateur qui s'appellera, par exemple, brltty-win-4.2-2.exe.
 Quand vous configurerez le terminal et le port à utiliser, portez une attention particulière aux instructions, en particulier si vous utilisez un terminal USB et que le pilote du constructeur est déjà installé.
 

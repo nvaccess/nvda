@@ -916,6 +916,10 @@ Esta opción permite á palabra que está baixo o cursor seren amosada en braill
 Esta opción permite ao cursor braille activarse e desactivarse.
 Aplícase ao cursor do sistema e ao cursor de revisión, pero non ao indicador de seleción.
 
+==== Parpadeo de Cursor ====
+Esta opción permite ao cursor braille parpadear.
+Se o parpadeo está desactivado, o cursor braille estará constantemente na posición "subida".
+
 ==== Velocidade de Parpadeo do Cursor (ms) ====
 Esta opción é un campo numérico que che permite cambiar a velocidade de parpadeo do cursor en milésimas de segundo.
 
@@ -2164,8 +2168,8 @@ Por favor consulta a [documentación para EcoBraille ftp://ftp.once.es/pub/utt/b
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] é un programa por separado que pode utilizarse para soportar moitas pantallas braille.
-Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] é un programa por separado que pode utilizarse para soportar moitas pantallas braille.
+Para utilizar esto, necesitas instalar [BRLTTY for Windows http://www.brltty.com/download.html].
 Deberías descargar e instalar o último paquete instalable, que se chamará, por exemplo, brltty-win-4.2-2.exe.
 Cando configures a pantalla e porto a utilizar,  asegúrate de prestar gran atención ás instruccións, especialmente se estás utilizando unha pantalla USB e xa tes os controladores do fabricante instalados.
 
