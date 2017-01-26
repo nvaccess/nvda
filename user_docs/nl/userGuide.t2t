@@ -423,8 +423,8 @@ Wanneer het scherm met de daarvoor bestemde leesoverzichtcommando's wordt verken
 Merk op dat NVDA bij sommige recente toepassingen tekst die op het scherm verschijnt slechts gedeeltelijk of soms helemaal niet leest. Dit heeft te maken met nieuwe schermtechnologie die op dit moment nog niet ondersteund kan worden.
 
 ++ Navigeren met de muis ++
-Door de muis over het scherm te verplaatsen wordt tekst die zich onder de muisaanwijzer bevindt voorgelezen.
-Voor zover ondersteund, wordt een hele alinea tekst voorgelezen, maar waar alinea-ondersteuning ontbreekt, leest NVDA de tekst per regel voor.
+Door de muis over het scherm te verplaatsen wordt tekst die zich direct onder de muisaanwijzer bevindt standaard door NVDA voorgelezen.
+Voor zover ondersteund, wordt een hele alinea tekst voorgelezen, maar bij bepaalde besturingselementen leest NVDA de tekst per regel voor.
 
 U kunt NVDA zo instellen dat het programma ook meldt welk type besturingselement of object zich onder de muisaanwijzer bevindt, zoals  een lijst, een knop, etc.
 Dit kan voor mensen die helemaal blind zijn erg handig zijn, omdat soms alleen tekst niet voldoende is.
@@ -1411,7 +1411,7 @@ In de lijst staan de volgende beschikbare Triggers:
 -
 
 Om het profiel te wijzigen dat automatisch moet worden geactiveerd voor een bepaalde triggerselecteert u eerst de trigger en vervolgens het gewenste profiel in de lijst met profielen. 
-Als u niet wilt dat er een profiel wordt gebruikt, selecteert u "Normale Configuratie".
+Als u niet wilt dat er een profiel wordt gebruikt, selecteert u "(normale configuratie)".
 
 Druk op de knop Sluiten om naar het dialoogvenster Configuratieprofielen terug te gaan.
 
@@ -2161,8 +2161,8 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] is een apart programma dat gebruikt kan worden voor de ondersteuning van veel andere leesregels.
-Om er gebruik van te maken moet u [BRLTTY voor Windows http://brl.thefreecat.org/brltty/] installeren.
+[BRLTTY http://www.brltty.com/] is een opzichzelfstaand programma dat kan dienen ter ondersteuning van veel meer brailleleesregels.
+Om hiervan gebruik te kunnen maken moet u [BRLTTY voor Windows installeren http://www.brltty.com/download.html].
 U moet de nieuwste versie van het programma (bij voorbeeld, met als naam brltty-win-4.2-2.exe) downloaden en installeren.
 Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u ervoor zorgen de instructies nauwkeurig op te volgen, vooral bij gebruik van een USB-leesregel waarvoor de drivers van de fabrikant reeds zijn geïnstalleerd.
 
