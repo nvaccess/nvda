@@ -975,8 +975,8 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 				# The word landmark is superfluous for regions.
 				textList.append(braille.landmarkLabels[landmark])
 			else:
-				# Translators: This is brailled to indicate a landmark (example output: main lmk).
-				textList.append(_("%s lmk") % braille.landmarkLabels[landmark])
+				# Translators: This is brailled to indicate a landmark (example output: lmk main).
+				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
 		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)
