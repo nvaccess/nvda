@@ -13,6 +13,12 @@
 - Le funzioni di navigazione veloce con i tasti b e Shift+b ora sono operative anche in Microsoft Edge. (#6577)
 
 
+== Cambiamenti ==
+- La velocità minima di lampeggio del cursore braille ora è impostata a 200ms. I profili con valori di configurazione più bassi di questo saranno automaticamente modificati a 200. (#6470)
+- è stata aggiunta una casella di controllo alla finestra di dialogo delle impostazioni braille per permettere di abilitare/disabilitare il cursore lampeggiante. In precedenza veniva usato il valore 0 per implementare questa funzione.  (#6470)
+- I profili e i file di configurazione verranno automaticamente aggiornati per adeguarsi alle modifiche inerenti schema e struttura degli stessi. Se c'è un errore durante l'aggiornamento, viene visualizzata una notifica, la configurazione è ripristinata, i vecchi file di configurazione saranno disponibili nei log di NVDA al 'livello info'. (#6470)
+
+
 == Bug corretti ==
 - Sistemato un problema che causava il congelamento di NVDA quando ci si spostava per paragrafi in Microsoft Word in documenti molto estesi. (#6368)
 - Le tabelle che venivano copiate da Microsoft Excel a Microsoft Word non sono più rilevate come tabelle di layout e comunque non vengono più ignorate. (#5927)
@@ -23,6 +29,7 @@
 - NVDA ora annuncerà se una casella di controllo risulta di sola lettura. (#6563)
 - All'esecuzione di NVDA non verrà più mostrato un avviso nel caso in cui non sia possibile riprodurre il suono di avvio in quanto non risulta disponibile alcun dispositivo audio. (#6289)
 - I controlli ribbon in Microsoft Excel che risultano non disponibili ora vengono segnalati correttamente. (#6430)
+- NVDA non annuncerà più la parola "pannello" quando si riducono tutte le finestre ad icona. (#6671)
 
 
 = 2016.4 =
