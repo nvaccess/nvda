@@ -6,23 +6,30 @@
 = 2017.1 =
 
 == Nove značajke ==
-- U Microsoft Word vrsta prijeloma odjeljka, i broj odjeljka sada se izgovara. Ovo se omogućuje uz pomoć opcije "izvijesti o brojevima stranica" u dijaloškom okviru oblikovanje dokumenta. (#5946)
-- U Microsoft Wordu the sada se mogu izgovarati stupci teksta. Ovo je omogućeno uz pomoć opcije "izvijesti o brojevima stranica" u dijaloškom okviru oblikovanje dokumenta. (#5946)
-- Automatsko prebacivanje jezika sada je podržano u Wordpadu. (#6555)
-- The NVDA find command (NVDA+control+f) is now supported in browse mode for Microsoft Edge. (#6580)
-- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+- U Microsoft Wordu vrsta prijeloma sekcije, i broja sekcije sada se izgovara. To je omogućeno kada je opcija "izvijesti o brojevima stranica" uključena u dijaloškom okviru oblikovanje dokumenta. (#5946)
+- U Microsoft Wordu tekstovni stupci sada se izgovaraju. Ovo je uključeno kada je opcija "izgovori brojeve stranica" označena opcija se nalazi u dijaloškom okviru oblikovanje dokumenta. (#5946)
+- Sada je podržana automatsko prepoznavanje jezika u Wordpadu. (#6555)
+- NVDA komanda "traži", (NVDA+ctrl+f) je sada onemogućena u načinu pregleda za Microsoft Edge. (#6580)
+- Brza navigacija za gumbe (b i shift+b) sada je podržana u Microsoft Edge. (#6577)
 
 
-== Ispravke grešaka ==
-- Ispravljena greška u Wordu, koja je prouzrokovala smrzavanje pri kretanju po odlomcima preko cijelog dokumenta u načinu pregleda. (#6368)
+== Izmjene ==
+- Minimalna brzina titranja kursora sada je 200 ms. Profili i konfiguracije koje sadrže vrijednosti ispod ove bit će povećane na vrijednost 200ms. (#6470)
+- U dijaloški okvir "brajične postavke", dodan je potvrdni okvir koji dozvoljava omogućavanje /onemogućavanje titranja kursora. Prije se koristila vrijednost 0, kako bi se to postiglo. (#6470)
+- Konfiguracijski profili i konfiguracije se automatski nadograđuju kako bi ispunjavali zahtjeve modifikacija šeme. Ako postoji greška prilikom nadogradnje, prikazuje se obavijest, konfiguracija je vraćena, i stara konfiguracijska datoteka je dostupna u NVDA zapisniku pri 'Info' razini. (#6470)
+
+
+== Bug Fixes ==
+- Fix freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
 - Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables, and therefore are no longer ignored. (#5927)
-- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570) 
+- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
 - Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
 - NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. 9#6216)
 - Reporting of cropped/overflowed text in Microsoft Excel cells should be now more accurate (#6472)
 - NVDA now reports when a check box is read-only. (#6563)
 - The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
-- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430) 
+- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+- NVDA will no longer announce "pane" when minimizing windows. (#6671)
 
 
 = 2016.4 =
