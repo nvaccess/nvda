@@ -60,6 +60,9 @@ def processFile(path):
 	if len(bits) != 5:
 		return None, None, None
 	_, platform, cpu_arch, debug_id, debug_file = bits
+	# debug_file will have a .pdb extension; e.g. nvdaHelperRemote.dll.pdb.
+	# The output file format should have a .sym extension instead.
+	# Strip .pdb and add .sym.
 	sym_file = debug_file[:-4] + '.sym'
 	filename = os.path.join(debug_file, debug_id, sym_file)
 	debug_filename = os.path.join(debug_file, debug_id, debug_file)
