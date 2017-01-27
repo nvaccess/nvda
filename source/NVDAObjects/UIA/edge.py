@@ -11,11 +11,11 @@ import eventHandler
 import config
 import controlTypes
 import cursorManager
+import re
 import aria
 import textInfos
 import UIAHandler
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
-import aria
 from UIAUtils import *
 from . import UIA, UIATextInfo
 
@@ -389,9 +389,12 @@ class EdgeNode(UIA):
 
 	def getValueForAriaCurrent(self):
 		ariaProperties=self.UIAElement.currentAriaProperties
-		if 'current=' in ariaProperties:
-			# We are not able to get the value for aria-current property
-			return True
+		match = re.match("current=(\w+);", ariaProperties)
+		log.debug("aria props = %s" % ariaProperties)
+		if match:
+			valueOfAriaCurrent = match.group(1)
+			log.debug("aria current value = %s" % valueOfAriaCurrent)
+			return valueOfAriaCurrent
 		return False
 
 class EdgeList(EdgeNode):
