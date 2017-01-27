@@ -1,15 +1,17 @@
-# Vietnamese translation for NVDA R836
-# Copyright (C) YEAR ORGANIZATION
+# Vietnamese translation for NVDA 2017.1
+# Copyright (C) 2017 Sao Mai Center for the Blind
 # Nguyen Van dung, Email: dungnv1984@gmail.com
+# Dang Hoai Phuc, danghoaiphuc@gmail.com
+# website: http://www.saomaicenter.org
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 00:10+1000\n"
-"PO-Revision-Date: 2017-01-18 12:50+0700\n"
-"Last-Translator: \n"
-"Language-Team: Nguyen Van Dung\n"
+"POT-Creation-Date: 2017-01-20 00:10+1000\n"
+"PO-Revision-Date: 2017-01-24 15:53+0700\n"
+"Last-Translator: Dang Hoai Phuc <danghoaiphuc@gmail.com>\n"
+"Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +50,7 @@ msgstr "half katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
-msgstr "alphanumeric"
+msgstr "an-pha-bê"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 msgid "hiragana"
@@ -98,19 +100,19 @@ msgstr "Lỗi trong Mô Đun Ứng Dụng %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
-msgstr "Tiêu đề"
+msgstr "Đầu đề"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgid "complementary"
-msgstr "phụ"
+msgstr "phụ mục"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 msgid "content info"
-msgstr "Thông tin trang web"
+msgstr "thông tin nội dung"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 msgid "main"
-msgstr "nội dung chính"
+msgstr "phần chính"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
 msgid "navigation"
@@ -123,7 +125,7 @@ msgstr "tìm kiếm"
 #. Translators: Reported for the form landmark, normally found on web pages.
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
-msgstr "nhập liệu"
+msgstr "biểu mẫu"
 
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
@@ -587,7 +589,7 @@ msgstr "edt"
 #. Translators: Displayed in braille for an object which is a
 #. list.
 msgid "lst"
-msgstr "danh sách"
+msgstr "lst"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
@@ -637,7 +639,7 @@ msgstr "tv"
 #. Translators: Displayed in braille for an object which is a
 #. table.
 msgid "tb"
-msgstr "tab"
+msgstr "tb"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
@@ -667,15 +669,15 @@ msgstr "submnu"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
 msgid "..."
-msgstr "ba chấm"
+msgstr "..."
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 msgid "-"
-msgstr "gạch ngang"
+msgstr "-"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 msgid "+"
-msgstr "cộng"
+msgstr "+"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 msgid "ro"
@@ -691,7 +693,7 @@ msgstr "( )"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
-msgstr "Chấm 7 và 8"
+msgstr "Chấm 7 8"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dot 8"
@@ -751,7 +753,7 @@ msgstr "c%s"
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "%s end"
+msgstr "%s cuối"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -759,11 +761,11 @@ msgstr "Tự động"
 
 #. Translators: Reported before braille input in input help mode.
 msgid "braille"
-msgstr "nổi"
+msgstr "chữ nổi"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
-msgstr "vùng trắng có dấu chấm"
+msgstr "Khoảng trắng với chấm."
 
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
@@ -772,14 +774,14 @@ msgstr "chấm"
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
-msgstr "Khoảng trắng"
+msgstr "khoảng trắng"
 
 msgid "Focus mode"
-msgstr "Focus mode"
+msgstr "Chế độ focus"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
-msgstr "chế độ duyệt tài liệu"
+msgstr "Chế độ duyệt"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1329,22 +1331,22 @@ msgstr "Chuyển đến đối tượng chứa cuối cùng"
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "không đọc dấu và ký hiệu "
+msgstr "không"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "some"
-msgstr "Đọc một số "
+msgstr "Một vài"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "Đọc hầu hết "
+msgstr "hầu hết"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "all"
-msgstr "Đọc tất cả "
+msgstr "tất cả"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1602,7 +1604,7 @@ msgstr "Nút radio"
 
 #. Translators: The word used to identify a static text such as dialog text.
 msgid "text"
-msgstr "tên trường"
+msgstr "văn bản"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 msgid "edit"
@@ -1618,7 +1620,7 @@ msgstr "Thanh thực đơn"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 msgid "menu item"
-msgstr "mục con"
+msgstr "mục trên thực đơn"
 
 #. Translators: The word used for menus such as edit menu.
 #. Translators: Identifies a menu such as file menu.
@@ -1627,7 +1629,7 @@ msgstr "thực đơn"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr "Hộp hộp sổ xuống"
+msgstr "Hộp hộp xổ"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
@@ -1659,12 +1661,12 @@ msgstr "cây thư mục"
 
 #. Translators: Identifies a tree view item.
 msgid "tree view item"
-msgstr " mục con"
+msgstr "mục trên cây thư mục"
 
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "tab "
+msgstr "tab"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
@@ -1721,7 +1723,7 @@ msgstr "tiêu đề dòng"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "nút sổ xuống"
+msgstr "nút xổ xuống"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -1761,7 +1763,7 @@ msgstr "tiêu đề cấp 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 msgid "paragraph"
-msgstr "đoạn văn bản"
+msgstr "đoạn"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
@@ -1815,11 +1817,11 @@ msgstr "phụ đề"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr "mục đã chọn"
+msgstr "chọn mục trên thực đơn"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
-msgstr "ô nhập liệu"
+msgstr "ô nhập ngày"
 
 #. Translators: Identifies an icon.
 msgid "icon"
@@ -1876,7 +1878,7 @@ msgstr "trang"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr "mục con radio"
+msgstr "Mục radio trên thực đơn"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
@@ -1897,7 +1899,7 @@ msgstr "thanh nhập liệu"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
-msgstr "màn hình console"
+msgstr "terminal"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
@@ -1972,7 +1974,7 @@ msgstr "quay số"
 
 #. Translators: Identifies a drop list.
 msgid "drop list"
-msgstr "danh sách sổ xuống"
+msgstr "danh sách xổ xuống"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
@@ -1984,7 +1986,7 @@ msgstr "nút thực đơn"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
-msgstr "nút sổ xuống"
+msgstr "nút sổ xuống dạng lưới"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
@@ -2140,7 +2142,7 @@ msgstr "bị vô hiệu hóa"
 
 #. Translators: This is presented when a control has focus.
 msgid "focused"
-msgstr "đang chọn"
+msgstr "đang có focus"
 
 #. Translators: This is presented when the control is selected.
 msgid "selected"
@@ -2152,15 +2154,15 @@ msgstr "đang xử lý"
 
 #. Translators: This is presented when a button is pressed.
 msgid "pressed"
-msgstr "ấn"
+msgstr "đã kích hoạt"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
-msgstr "đã kiểm tra"
+msgstr "đã chọn"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "chọn nửa"
+msgstr "đã chọn nửa"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -2184,11 +2186,11 @@ msgstr "đã xem"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
-msgstr "được liên kết"
+msgstr "đã liên kết"
 
 #. Translators: This is presented when the control menu item has a submenu.
 msgid "subMenu"
-msgstr "Các mục con"
+msgstr "thực đơn con"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 msgid "protected"
@@ -2205,7 +2207,7 @@ msgstr "Không tồn tại"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
-msgstr "mục  không hợp lệ"
+msgstr "đầu vào không hợp lệ"
 
 msgid "modal"
 msgstr "Mô hình"
@@ -2231,11 +2233,11 @@ msgstr "có thể chọn"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
-msgstr "có thể chọn"
+msgstr "có thể có focus"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
-msgstr "liên kết"
+msgstr "có thể kích"
 
 msgid "editable"
 msgstr "Có thể nhập"
@@ -2322,11 +2324,11 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Tập tin chứa các phím tắt bị lỗi.\n"
-"Chi tiết lỗi có thể tìm thấy trong tập tin log."
+"Tập tin chứa các thao tác có lỗi.\n"
+"Chi tiết lỗi có thể xem trong bản ghi chú."
 
 msgid "gesture map File Error"
-msgstr "Tập tin chứa các phím tắt có lỗi"
+msgstr "Tập tin chứa các thao tác có lỗi"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -2342,7 +2344,7 @@ msgstr "Tìm kiếm"
 
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
-msgstr "Nhập từ khóa muốn tìm"
+msgstr "Nhập nội dung muốn tìm"
 
 #. Translators: An option in find dialog to perform case-sensitive search.
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
@@ -2351,7 +2353,7 @@ msgstr "Phân biệt chữ &hoa và chữ thường"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "Không tìm thấy từ \"%s\" "
+msgstr "Không tìm thấy nội dung \"%s\" "
 
 msgid "Find Error"
 msgstr "Có lỗi trong khi tìm kiếm"
@@ -2386,7 +2388,7 @@ msgstr "đã chép lên bộ nhớ tạm"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
-msgstr "Duyệt text"
+msgstr "Duyệt nội dung"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Object navigation"
@@ -2394,7 +2396,7 @@ msgstr "Duyệt các đối tượng"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
-msgstr "Con trỏ nháy"
+msgstr "Dấu nháy hệ thống"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Mouse"
@@ -2410,7 +2412,7 @@ msgstr "Cấu hình"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Braille"
-msgstr "Màn hình nổi"
+msgstr "Chữ nổi"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -2446,15 +2448,15 @@ msgstr "Chức năng giảm âm lượng không được hỗ trợ."
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
-msgstr "Chuyển giữa các tùy chọn để NVDA giảm âm lượng của các ứng dung khác."
+msgstr "Chuyển giữa các tùy chọn để NVDA giảm âm lượng của các ứng dụng khác."
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr "Chế độ thông báo bàn phím đã bật"
+msgstr "Bật chế độ trợ giúp nhập"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr "Chế độ thông báo bàn phím đã tắt"
+msgstr "Tắt chế độ trợ giúp nhập"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -3454,7 +3456,7 @@ msgstr ""
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
-msgstr "Hiển thị hộp thoại cấu hình chung "
+msgstr "Hiển thị hộp thoại thiết lập chung "
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
@@ -3781,7 +3783,7 @@ msgstr "Tài liệu hướng dẫn"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "Danh sách các phím tắt tham khảo"
+msgstr "Bản tham khảo các phím lệnh"
 
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
@@ -3797,15 +3799,15 @@ msgstr "Quay lại"
 
 #. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
 msgid "forward"
-msgstr "Chuyển đến kế tiếp"
+msgstr "Chuyển đến"
 
 #. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
 msgid "refresh"
-msgstr "tải lại trang web"
+msgstr "làm mới lại"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 msgid "browser stop"
-msgstr "Dừng tải trang web"
+msgstr "tắt trình duyệt"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 msgid "search page"
@@ -3821,7 +3823,7 @@ msgstr "trang chủ"
 
 #. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
 msgid "mute"
-msgstr "tắt âm thanh"
+msgstr "tắt âm"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 msgid "volume down"
@@ -3885,7 +3887,7 @@ msgstr "shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "windows"
-msgstr "Phím cửa sổ windows"
+msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
@@ -3901,27 +3903,27 @@ msgstr "Phím thoát"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
-msgstr "page up"
+msgstr "trang trước"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page down"
-msgstr "Page down"
+msgstr "trang kế"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
-msgstr "Phím end"
+msgstr "cuối dòng"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
-msgstr "Phím home"
+msgstr "đầu dòng"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
-msgstr "Phím xóa"
+msgstr "xóa"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "Phím xóa ở bàn phím số"
+msgstr "xóa bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -3941,7 +3943,7 @@ msgstr "Mũi tên xuống"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
-msgstr "Phím application"
+msgstr "Phím ứng dụng"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
@@ -3949,7 +3951,7 @@ msgstr "Phím khóa bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
-msgstr "Phím chụp màn hình"
+msgstr "chụp màn hình"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
@@ -3957,39 +3959,39 @@ msgstr "Phím khóa cuộn"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "phím số 4 bên bàn phím số"
+msgstr "số 4 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "phím số 6 bên bàn phím số"
+msgstr "số 6 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "phím số 8 bên bàn phím số"
+msgstr "số 8 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "phím số 2 bên bàn phím số"
+msgstr "số 2 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "phím số 9 bên bàn phím số"
+msgstr "số 9 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "phím số 3 bên bàn phím số"
+msgstr "số 3 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "phím số 1 bên bàn phím số"
+msgstr "số 1 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "phím số 7 bên bàn phím số"
+msgstr "số 7 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "phím số 5 bên bàn phím số"
+msgstr "số 5 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
@@ -4013,11 +4015,11 @@ msgstr "Dấu chấm bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
-msgstr "Phím Insert bàn phím số"
+msgstr "Insert bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr "numLock numpad 0"
+msgstr "Số 0 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 1"
@@ -4057,39 +4059,39 @@ msgstr "Số 9 bàn phím số"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
-msgstr "chèn"
+msgstr "insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
-msgstr "phím Control trái"
+msgstr "Control trái"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right control"
-msgstr "phím control phải"
+msgstr "control phải"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left windows"
-msgstr "phím cửa sổ Windows trái"
+msgstr "Windows trái"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
-msgstr "phím Shift trái"
+msgstr "Shift trái"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right shift"
-msgstr "phím Shift phải"
+msgstr "Shift phải"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left alt"
-msgstr "phím Alt trái"
+msgstr "Alt trái"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right alt"
-msgstr "phím Alt phải"
+msgstr "Alt phải"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right windows"
-msgstr "phím ửa sổ Windows phải"
+msgstr "Windows phải"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
@@ -4098,11 +4100,11 @@ msgstr "Phím break"
 #. Translators: This is the name of a key on the keyboard.
 msgctxt "keyLabel"
 msgid "tab"
-msgstr "tab "
+msgstr "táp"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
-msgstr "Máy tính để bàn"
+msgstr "Máy tính bàn"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "laptop"
@@ -4187,11 +4189,11 @@ msgstr "NVDA Python Console"
 
 #. Translators: One of the review modes.
 msgid "Object review"
-msgstr "Duyệt text trên đối tượng"
+msgstr "Duyệt đối tượng"
 
 #. Translators: One of the review modes.
 msgid "Document review"
-msgstr "Duyệt text trên tài liệu"
+msgstr "Document review"
 
 #. Translators: One of the review modes.
 msgid "Screen review"
@@ -4237,7 +4239,7 @@ msgstr "đã chọn %s thay vì"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
-msgstr "bỏ chọn"
+msgstr "Duyệt tài liệu"
 
 #. Translators: Reported when drag and drop is finished.
 #. This is only reported for objects which support accessible drag and drop.
@@ -4654,7 +4656,7 @@ msgid "Inflection"
 msgstr "Ngữ điệu"
 
 msgid "text mode"
-msgstr "chế độ text"
+msgstr "chế độ văn bản"
 
 msgid "object mode"
 msgstr "Chế độ đối tượng"
@@ -4780,7 +4782,7 @@ msgstr "&Tải phiên bản mới"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 msgid "Remind me &later"
-msgstr "Lát nữa nhắc &lại tôi "
+msgstr "Nhắc lại sau"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
@@ -4954,7 +4956,7 @@ msgstr "chuyển về hàng trên"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
-msgstr "thành phần"
+msgstr "Composition"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
@@ -5563,32 +5565,32 @@ msgstr "Giới thiệu về NVDA"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
-msgstr "&Cài đặt chung..."
+msgstr "Thiết lập ch&ung..."
 
 msgid "General settings"
-msgstr "cài đặt chung"
+msgstr "Thiết lập chung"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
-msgstr "& Chọn bộ đọc"
+msgstr "&Bộ đọc"
 
 msgid "Change the synthesizer to be used"
 msgstr "thay đổi bộ đọc"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "Cấu hình cho giọng &đọc"
+msgstr "Thiết lập &giọng đọc"
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "Chọn tên giọng đọc, tốc độ, độ cao và âm lượng cho giọng đọc"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "Cài đặt cho màn hình &nổi..."
+msgstr "Thiết lập màn hình &nổi..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "Cấu hình bàn &phím..."
+msgstr "Thiết lập bàn &phím..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -5599,7 +5601,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "Cài đặt cho &chuột..."
+msgstr "Thiết lập &chuột..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
@@ -5607,7 +5609,7 @@ msgstr ""
 "chuột"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
+msgid "Review cursor..."
 msgstr "Con trỏ &duyệt"
 
 msgid "Configure how and when the review cursor moves"
@@ -5615,7 +5617,7 @@ msgstr "Cấu hình cách di chuyển con trỏ duyệt"
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "Cài đặt phương thức &nhập"
+msgstr "Thiết lập &phương thức nhập..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -5624,14 +5626,14 @@ msgstr "Cài đặt phương thức nhập cho các ngôn ngữ"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
-msgstr "Cấu hình thông tin cho đối &tượng"
+msgstr "Trình bà&y đối tượng..."
 
 msgid "Change reporting of objects"
 msgstr "Thay đổi thông báo các đối tượng"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "Chế độ duyệt tài &liệu"
+msgstr "Chế độ &duyệt..."
 
 msgid "Change virtual buffers specific settings"
 msgstr ""
@@ -5639,7 +5641,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
-msgstr "Cấu hình thông tin c&ho tài liệu"
+msgstr "Định dạng tài &liệu..."
 
 msgid "Change settings of document properties"
 msgstr "thay đổi thông tin cho tài liệu"
@@ -5655,7 +5657,7 @@ msgstr "Cửa sổ cho phép bạn tạo ra từ điển mặc định"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
-msgstr "Từ điển cho &giọng đọc ..."
+msgstr "Từ điển &giọng đọc..."
 
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
@@ -5666,7 +5668,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
-msgstr "&Từ điển tạm thời"
+msgstr "&Từ điển tạm..."
 
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
@@ -5679,7 +5681,7 @@ msgstr "Từ điển giọng &nói"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "Từ điển cho dấu và &ký hiệu"
+msgstr "Phát âm &ký hiệu và dấu câu..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
@@ -5691,11 +5693,11 @@ msgstr "&Tùy Chọn"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "Trình hiển thị &log"
+msgstr "Xem log"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Hiển thị các từ đã &đọc"
+msgstr "Trình Hiển thị nội &dung đọc"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -5711,7 +5713,7 @@ msgstr "Tạo bản không cài đặt..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
-msgstr "&Cài đặt NVDA"
+msgstr "&Cài đặt NVDA..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -5738,7 +5740,7 @@ msgstr "Trang &web NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
-msgstr "&Bản quyền"
+msgstr "&Giấy phép"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
@@ -5758,15 +5760,15 @@ msgstr "Giới thiệu"
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
-msgstr "&Trợ giúp"
+msgstr "Trợ &giúp"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "&Quản lý thông tin cấu hình"
+msgstr "Hồ &sơ cấu hình..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "&Phục hồi lại cấu hình trước"
+msgstr "&Phục hồi lại cấu hình đã lưu"
 
 msgid "Reset all settings to saved state"
 msgstr "Phục hồi lại các thiết lập như trạng thái đã lưu"
@@ -5774,7 +5776,7 @@ msgstr "Phục hồi lại các thiết lập như trạng thái đã lưu"
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "Khôi hục lại cấu hình &mặc định"
+msgstr "Khôi phục lại cấu hình &mặc định"
 
 msgid "Reset all settings to default state"
 msgstr "Khôi phục lại các cấu hình mặc định"
@@ -5791,7 +5793,7 @@ msgid "Donate"
 msgstr "Tài trợ"
 
 msgid "E&xit"
-msgstr "&thoát nVDa"
+msgstr "&thoát NVDA"
 
 #. Translators: The title of the dialog to exit NVDA
 msgid "Exit NVDA"
@@ -7190,6 +7192,10 @@ msgstr "Mở rộng chữ nổi máy tính đến từ của con trỏ"
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
 msgstr "Hiển thị con trỏ"
+
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Nhấp nháy con trỏ"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"

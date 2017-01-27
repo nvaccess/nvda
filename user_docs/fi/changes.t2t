@@ -13,6 +13,12 @@
 - Selaustilassa painikkeisiin siirtäviä pikanavigointinäppäimiä (B ja Shift+B) tuetaan nyt Microsoft Edgessä. (#6577)
 
 
+== Muutokset ==
+- Pienin sallittu pistekohdistimen vilkkumisnopeus on nyt 200 ms. Profiilien tai asetusten tätä pienempi arvo nostetaan 200:aan. (#6470)
+- Pistekirjoitusasetusten valintaikkunaan on lisätty valintaruutu, jonka avulla on mahdollista ottaa pistekohdistimen vilkkuminen käyttöön tai poistaa se käytöstä. Aiemmin vilkkuminen poistettiin käytöstä määrittämällä arvoksi 0. (#6470)
+- Profiilit ja asetustiedostot päivitetään nyt automaattisesti vastaamaan skeemamuokkausten vaatimuksia. Mikäli päivityksen aikana ilmenee virheitä, siitä näytetään ilmoitus, asetukset nollataan ja vanha asetustiedosto on käytettävissä NVDA:n lokissa "tiedot"-tasolla. (#6470)
+
+
 == Korjatut ohjelmavirheet ==
 - Korjattu hyytyminen Microsoft Wordissa liikuttaessa kappaleittain suuressa asiakirjassa selaustilan ollessa käytössä. (#6368)
 - Microsoft Wordin taulukoita, jotka on kopioitu Microsoft Excelistä, ei enää käsitellä asettelutaulukoina, jonka vuoksi niitä ei enää ohiteta. (#5927)
@@ -23,6 +29,7 @@
 - NVDA ilmoittaa nyt, kun valintaruutu on vain luku -tyyppiä. (#6563)
 - Kun NVDA:n käynnistinohjelma ei voi toistaa tunnusääntä, näkyviin ei pitäisi enää tulla varoitusikkunaa puuttuvasta äänilaitteesta. (#6289)
 - Microsoft Excelin valintanauhan säätimet, jotka eivät ole käytettävissä, ilmoitetaan nyt sellaisina. (#6430)
+- NVDA ei enää sano "ruutu" ikkunoita pienennettäessä. (#6671)
 
 
 = 2016.4 =
