@@ -2,7 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2016 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
+
+"""Add-ons Manager user interface
+Add-on Manager allows add-ons to be installed, removed, enabled, disabled and perform other tasks.
+It also allows add-ons to provide a button to read add-on help files.
+"""
 
 import os
 import wx
@@ -64,6 +69,11 @@ class AddonsDialog(wx.Dialog):
 		self.enableDisableButton.Disable()
 		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
 		entryButtonsSizer.Add(self.enableDisableButton)
+		# Translators: The label for a button in Add-ons Manager dialog to check for an updated version of the selected add-on.
+		self.updateCheckButton=wx.Button(self,label=_("Check for add-on &update..."))
+		self.updateCheckButton.Disable()
+		self.updateCheckButton.Bind(wx.EVT_BUTTON,self.onAddonUpdateCheck)
+		entryButtonsSizer.Add(self.updateCheckButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 		self.addButton=wx.Button(self,label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON,self.onAddClick)
@@ -177,6 +187,12 @@ class AddonsDialog(wx.Dialog):
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
 
+	def onAddonUpdateCheck(self,evt):
+		index=self.addonsList.GetFirstSelected()
+		if index<0: return
+		manifest=self.curAddons[index].manifest
+		gui.messageBox("Work in progress...", "Checking for Add-on Update", wx.OK)
+
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
@@ -217,6 +233,7 @@ class AddonsDialog(wx.Dialog):
 			self.aboutButton.Disable()
 			self.helpButton.Disable()
 			self.removeButton.Disable()
+			self.updateCheckButton.Disable()
 
 	def _shouldDisable(self, addon):
 		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable))
@@ -232,6 +249,7 @@ class AddonsDialog(wx.Dialog):
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
+		self.updateCheckButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
 		self.Destroy()
