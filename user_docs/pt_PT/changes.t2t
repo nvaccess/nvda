@@ -5,6 +5,35 @@
 
 Tradução de Rui Fontes
 
+= 2017.1 =
+
+== Novas Funcionalidades ==
+- No Microsoft Word o tipo de quebra de secção e o número da secção passam a poder ser anunciados. Esta opção é activada juntamente com o anúncio do número de página no diálogo Formatação de documentos do NVDA. (#5946)
+- No Microsoft Word as colunas de texto passam a poder ser anunciadas. Esta opção é activada juntamente com o anúncio do número de página no diálogo Formatação de documentos do NVDA. (#5946)
+- A mudança automática de idioma passa a ser suportada no Wordpad. (#6555)
+- O comando Localizar do NVDA (NVDA+control+f) já é suportado no modo de navegação no Microsoft Edge. (#6580)
+- Os comandos de navegação rápida para botões, no modo de navegação, (b e shift+b) passam a ser suportados no Microsoft Edge. (#6577)
+
+
+== Alterações ==
+- O valor mínimo para a intermitência do cursor braille é agora 200 ms. Perfis ou configurações com valores inferiores serão alterados para este novo mínimo. (#6470)
+- Foi adicionada, no diálogo Definições do Braille, uma caixa de verificação para poder desligar a intermitência do cursor Braille. Esta opção era antes activada colocando a intermitência do cursor Braille a 0. (#6470)
+- Os ficheiros de Perfis e configurações serão automaticamente actualizados para acomodar as alterações anteriores. Se houver um erro na actualização, uma notificaçãon será mostrada e a  configuração será feita por padrão,, ficando a configuração antiga disponível no ficheiro de log do NVDA. (#6470)
+
+
+== Correcções ==
+- Corrigida a paragem no Microsoft Word ao mover por parágrafo no modo de navegação num documento grande. (#6368)
+- As tabelas copiadas do Microsoft Excel  para o Microsoft Word já não são consideradas como tabelas de formatação e, por isso, já não são ignoradas. (#5927)
+- Ao tentar escrever na vista protegida do Microsoft Excel, o NVDA passa a fazer um bip em vez de ecoar as letras que, na realidade, não são escritas. (#6570)
+- Pressionar escape no Microsoft Excel já não muda, incorrectamente, para modo de navegação, a menos que o utilizador tenha antes mudado para esse modo, com NVDA+Espaço, e depois tenha mudado para o modo normal ao pressionar enter num campo de formulário. (#6569) 
+- O NVDA já não apresenta paragens no Microsoft Excel, quando numa folha, uma linha ou coluna inteira está unida. 9#6216)
+- O anúncio de texto cortado ou em sobreposição, nas células do Microsoft Excel, está mais certeiro. (#6472)
+- O NVDA passa a anunciar quando uma caixa de verificação é apenas de leitura. (#6563)
+- Ao iniciar o NVDA, já não é mostrado um aviso  quando não é possível emitir sons por falta de um dispositivo de áudio. (#6289)
+- Nos frisos do Microsoft Excel os controlos indisponíveis passam agora a ser anunciados como tal. (#6430)
+- O NVDA já não anunciará "painel" ao minimizar janelas. (#6671)
+
+
 = 2016.4 =
 Os destaques desta versão são:
 - Suporte melhorado ao Microsoft Edge;
