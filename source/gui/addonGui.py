@@ -10,6 +10,7 @@ It also allows add-ons to provide a button to read add-on help files.
 """
 
 import os
+import threading
 import wx
 import core
 import languageHandler
@@ -146,7 +147,7 @@ class AddonsDialog(wx.Dialog):
 				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 					return
 				prevAddon.requestRemove()
-			progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+			self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 			# Translators: The title of the dialog presented while an Addon is being installed.
 			_("Installing Add-on"),
 			# Translators: The message displayed while an addon is being installed.
@@ -156,8 +157,8 @@ class AddonsDialog(wx.Dialog):
 			except:
 				log.error("Error installing  addon bundle from %s"%addonPath,exc_info=True)
 				self.refreshAddonsList()
-				progressDialog.done()
-				del progressDialog
+				self._progressDialog.done()
+				self._progressDialog = None
 				# Translators: The message displayed when an error occurs when installing an add-on package.
 				gui.messageBox(_("Failed to install add-on  from %s")%addonPath,
 					# Translators: The title of a dialog presented when an error occurs.
@@ -166,8 +167,8 @@ class AddonsDialog(wx.Dialog):
 				return
 			else:
 				self.refreshAddonsList(activeIndex=-1)
-				progressDialog.done()
-				del progressDialog
+				self._progressDialog.done()
+				self._progressDialog = None
 		finally:
 			if closeAfter:
 				# #4460: If we do this immediately, wx seems to drop the WM_QUIT sent if the user chooses to restart.
@@ -191,7 +192,19 @@ class AddonsDialog(wx.Dialog):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
 		manifest=self.curAddons[index].manifest
-		gui.messageBox("Work in progress...", "Checking for Add-on Update", wx.OK)
+		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+		# Translators: The title of the dialog presented while checking for add-on updates.
+		_("Add-on update check"),
+		# Translators: The message displayed while checking for add-on updates.
+		_("Checking for add-on updates..."))
+		t = threading.Thread(target=self.addonUpdateCheck)
+		t.daemon = True
+		t.start()
+
+	def addonUpdateCheck(self):
+		info = addonHandler.checkForAddonUpdates()
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
