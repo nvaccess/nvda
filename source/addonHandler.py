@@ -1,9 +1,15 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2016 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee
+#Copyright (C) 2012-2017 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
+"""Manages add-ons
+The add-on handler provides a definition of an add-on bundle, as well as functions to install, remove, disable/enable, and update add-on bundles.
+See http://addons.nvda-project.org for more information on NVDA community add-ons.
+See the NVDA developer guide for more info on writing add-ons.
+"""
 
 import sys
 import os.path
@@ -18,6 +24,9 @@ import pkgutil
 import shutil
 from cStringIO import StringIO
 import zipfile
+import urllib
+# #3208 todo: tentatively use JSON for exchanging add-on update data.
+import json
 
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
@@ -117,8 +126,13 @@ def disableAddonsIfAny():
 	state["pendingDisableSet"].clear()
 	state["pendingEnableSet"].clear()
 
+def checkForAddonUpdates():
+	# No matter which protocol will be used, go through installed add-ons, connect online, and return a dictionary.
+	# Key: add-on name, value: a dictionary of summary, current version, new version, path, hash.
+	pass
+
 def initialize():
-	""" Initializes the add-ons subsystem. """
+	""" Initializes the add-ons subsystem."""
 	loadState()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
@@ -127,6 +141,8 @@ def initialize():
 	disableAddonsIfAny()
 	saveState()
 	getAvailableAddons(refresh=True)
+	# #3208 todo: Check for add-on updates unless NVDA itself is updating right now.
+	#checkForAddonUpdates()
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
