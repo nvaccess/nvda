@@ -103,7 +103,8 @@ def setAudioDuckingMode(mode):
 	global _audioDuckingMode, _modeChangeEvent
 	if not isAudioDuckingSupported():
 		raise RuntimeError("audio ducking not supported")
-	# Normalize mode to within the exceptable range of values
+	# Normalize mode to within the exceptable range of values.
+	# We normalize rather than rasing an error as certain values only exist on certain builds of Windows, such as 'always duck'. 
 	mode=max(min(mode,len(audioDuckingModes)-1),0)
 	# Some Windows builds introduce their own dynamic ducking which is incompatible with our dynamic ducking.
 	# Therefore, if the user chooses  dynamic ducking,  force our 'always duck' mode, which then allows the OS to dynamic duck.
