@@ -15,12 +15,12 @@ from NVDAObjects.behaviors import Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler
 #initialize a compiles regexp object for all window names following the standard SecureCrt Window naming comvention for all versions
-MATCHER = re.compile ("AfxFrameOrView\d{2,}u")
+RE_Terminal_WinClass = re.compile ("AfxFrameOrView\d{2,}u")
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 	#perform the match with the compiled object
-		if MATCHER.match (obj.windowClassName) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT: 
+		if Terminal_WinClass.match (obj.windowClassName) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT: 
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
