@@ -35,7 +35,13 @@ env=env.Clone()
 #Therefore specifically force it off
 env.Append(CCFLAGS='/GL-')
 
+# Don't analyze the code as not our project
+if 'analyze' in env['nvdaHelperDebugFlags']:
+	env.Append(CCFLAGS='/analyze-')
+
+# Ignore all warnings as the code is not ours
 env.Append(CCFLAGS='/W0')
+
 env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
