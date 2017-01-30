@@ -44,6 +44,7 @@ import globalVars
 import wx
 import gui
 import configobj
+from customLabels import customLabels
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -374,16 +375,12 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def fetchLabels(self):
   		weblink=self.documentConstantIdentifier
-  		parsed_uri = urlparse( weblink )
-  		domain='{uri.netloc}'.format(uri=parsed_uri)
-   		domain=domain.replace('.','_')
-   		domain=domain.replace(':','_')
-   		domain=domain.replace('\\','_')
-   		filename=domain+'.ini'
+  		filename=customLabels.getFilenameFromElementDomain(weblink)
    		labels=""
    		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
    		for k,v in config.iteritems():
    			labels+=k+":"+v+","
+#    		print (labels)
    		return labels
 	
 	def _loadBuffer(self):

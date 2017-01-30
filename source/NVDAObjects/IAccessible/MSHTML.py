@@ -36,6 +36,7 @@ import os
 import globalVars
 import treeInterceptorHandler
 import configobj
+from customLabels import customLabels
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -624,12 +625,13 @@ class MSHTML(IAccessible):
 	def _get_name(self):
 		nameAttribute=self.HTMLAttributes['name']
 		idAttribute=self.HTMLAttributes['id']
+		filename=customLabels.getFilenameFromElementDomain(getattr(self.HTMLNode.document,'url',""))
 		if idAttribute and nameAttribute:
-			name=self.getCustomLabel(idAttribute+nameAttribute)
+			name=customLabels.getCustomLabel(filename,idAttribute+nameAttribute)
 		elif not nameAttribute:
-			name=self.getCustomLabel(idAttribute)
+			name=customLabels.getCustomLabel(filename,idAttribute)
 		elif not idAttribute:
-			name=self.getCustomLabel(nameAttribute)
+			name=customLabels.getCustomLabel(filename,nameAttribute)
 
  		if name:
   			return name
@@ -995,27 +997,7 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
-		
-	def getCustomLabel(self,nameAttribute):
-  		filename=self.getFilenameFromElementDomain()
-		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
-		try:
-			for k,v in config.iteritems():
-				if (k==nameAttribute):
-					return v
-		except Exception as e:
-   			pass
-	
-	def getFilenameFromElementDomain(self):
-		weblink=getattr(self.HTMLNode.document,'url',"")
- 		parsed_uri = urlparse( weblink )
- 		domain='{uri.netloc}'.format(uri=parsed_uri)
-  		domain=domain.replace('.','_')
-  		domain=domain.replace(':','_')
-  		domain=domain.replace('\\','_')
-  		filename=domain+'.ini'
-  		return filename
-  	
+
 	def script_assignCustomLabel(self, gesture):
 		try:
 			obj=api.getFocusObject()
@@ -1044,26 +1026,8 @@ class MSHTML(IAccessible):
 				log.debugWarning("\nCannot assign custom label")			
 		if customLabelKey:
 			customLabelKey=customLabelKey.replace(':','\:')
-		filename=self.getFilenameFromElementDomain()
-		if not os.path.exists(os.path.join(globalVars.appArgs.configPath, "webLabels")):
-			os.makedirs(os.path.join(globalVars.appArgs.configPath, "webLabels"))
-		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
-		try:
-			defaultCustomLabel=config[customLabelKey]
-		except Exception as e:
-			defaultCustomLabel=u""
-		if customLabelKey:
-			d = wx.TextEntryDialog(gui.mainFrame, 
-			# Translators: Dialog text for 
-			_("Custom Label Edit"),
-			_("Custom Label"),
-			defaultValue=defaultCustomLabel,
-			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
-			def callback(result):
-				if result == wx.ID_OK:
-					config[customLabelKey] = d.Value
-					config.write()
-			gui.runScriptModalDialog(d, callback)
+		filename=customLabels.getFilenameFromElementDomain(getattr(self.HTMLNode.document,'url',""))
+		customLabels.addLabel(filename,customLabelKey)
 		
 	__gestures = {
 		"kb:NVDA+control+tab": "assignCustomLabel",
