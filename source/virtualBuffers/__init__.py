@@ -343,6 +343,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	#: Maps root identifiers (docHandle and ID) to buffers.
 	rootIdentifiers = weakref.WeakValueDictionary()
+	labelSupportOn=False
 
 	def __init__(self,rootNVDAObject,backendName=None):
 		super(VirtualBuffer,self).__init__(rootNVDAObject)
@@ -380,13 +381,15 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
    		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
    		for k,v in config.iteritems():
    			labels+=k+":"+v+","
-#    		print (labels)
    		return labels
 	
 	def _loadBuffer(self):
 		try:
-			labels=self.fetchLabels()
-			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),unicode(labels))
+			if (self.labelSupportOn):
+				labels=self.fetchLabels()
+				self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),unicode(labels))
+			else:
+				self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:

@@ -145,6 +145,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 class MSHTML(VirtualBuffer):
 
 	TextInfo=MSHTMLTextInfo
+	labelSupportOn=True
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
