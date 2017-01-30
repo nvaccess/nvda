@@ -308,7 +308,7 @@ def info():
 	return espeakDLL.espeak_Info()
 
 def getVariantDict():
-	dir='synthDrivers\\espeak-data\\voices\\!v'
+	dir='synthDrivers\\espeak-ng-data\\voices\\!v'
 	# Translators: name of the default espeak varient.
 	variantDict={"none": pgettext("espeakVarient", "none")}
 	for fileName in os.listdir(dir):
