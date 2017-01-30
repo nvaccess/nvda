@@ -905,6 +905,7 @@ bool getDocumentFrame(HWND* hwnd, long* childID) {
 	return true;
 }
 
+int winEventCurDocId = 0;
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
 		case EVENT_OBJECT_FOCUS:
@@ -934,6 +935,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
+		winEventCurDocId = (*i)->rootID;
 		HWND rootWindow=(HWND)UlongToHandle(((*i)->rootDocHandle));
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd))
 			backend=(*i);
@@ -970,6 +972,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			continue;
 		backend->invalidateSubtree(node);
 	}
+	winEventCurDocId = 0;
 }
 
 void GeckoVBufBackend_t::renderThread_initialize() {
@@ -978,6 +981,8 @@ void GeckoVBufBackend_t::renderThread_initialize() {
 }
 
 void GeckoVBufBackend_t::renderThread_terminate() {
+	if (winEventCurDocId == this->rootID)
+		LOG_ERROR(L"Terminating backend in re-entrant call while win event callback is processing this same backend!");
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	VBufBackend_t::renderThread_terminate();
 }

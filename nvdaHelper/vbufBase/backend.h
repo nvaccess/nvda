@@ -56,6 +56,7 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  * the list is in the order the invalidations were requested.
  */
 	VBufStorage_controlFieldNodeList_t invalidSubtreeList;
+	bool wasTerminated = false;
 
 	protected:
 

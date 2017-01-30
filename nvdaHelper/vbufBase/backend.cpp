@@ -133,6 +133,7 @@ void VBufBackend_t::renderThread_terminate() {
 	LOG_DEBUG(L"Calling clearBuffer on backend at "<<this);
 	this->clearBuffer();
 	runningBackends.erase(this);
+	this->wasTerminated = true;
 }
 
 bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
@@ -229,6 +230,8 @@ void VBufBackend_t::terminate() {
 		LOG_DEBUG(L"Calling execInWindow");
 		execInWindow((HWND)UlongToHandle(rootDocHandle),func, NULL);
 		LOG_DEBUG(L"execInWindow complete");
+		if (!this->wasTerminated)
+			LOG_ERROR(L"execInWindow returned without executing renderThread_terminate!");
 	} else {
 		LOG_DEBUG(L"render thread already terminated");
 	}
