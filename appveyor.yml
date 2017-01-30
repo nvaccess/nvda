@@ -13,6 +13,8 @@ environment:
  PY_PYTHON: 2.7-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ mozillaSymsAuthToken:
+  secure: Dz24ukUM3Ho0soTDwJEYaw0fNY3yzfVp3Vf+y8I+Uh4wiSYibWJxOANacceGmfIU
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
 
 init:
@@ -93,6 +95,7 @@ deploy_script:
  - ps: |
      if ($env:versionType) {
       # Not a try build.
+      # Notify our server.
       $exe = Get-ChildItem -Name output\*.exe
       $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
       $data = @{
@@ -105,4 +108,8 @@ deploy_script:
        artifacts=$artifacts
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      # Upload symbols to Mozilla.
+      Start-FileDownload https://github.com/mozilla/gecko-dev/raw/master/toolkit/crashreporter/tools/win32/dump_syms_vc1800.exe -FileName appveyor\dump_syms.exe
+      py -m pip install requests
+      py appveyor\mozillaSyms.py
      }
