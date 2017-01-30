@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2015 NV Access Limited
+#Copyright (C) 2012-2016 NV Access Limited
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -170,8 +170,9 @@ class AutoUpdateChecker(UpdateChecker):
 		self._checkTimer = None
 
 	def setNextCheck(self, isRetry=False):
-		self._checkTimer.Stop()
-		self._checkTimer.Start((RETRY_INTERVAL if isRetry else CHECK_INTERVAL) * 1000, True)
+		# #6127: Timers must be manipulated from the main thread.
+		wx.CallAfter(self._checkTimer.Stop)
+		wx.CallAfter(self._checkTimer.Start, (RETRY_INTERVAL if isRetry else CHECK_INTERVAL) * 1000, True)
 
 	def _started(self):
 		log.info("Performing automatic update check")
@@ -292,7 +293,8 @@ class UpdateDownloader(object):
 		self._guiExecFunc = func
 		self._guiExecArgs = args
 		if not self._guiExecTimer.IsRunning():
-			self._guiExecTimer.Start(50, True)
+			# #6127: Timers must be manipulated from the main thread.
+			wx.CallAfter(self._guiExecTimer.Start, 50, True)
 
 	def _guiExecNotify(self):
 		self._guiExecFunc(*self._guiExecArgs)
