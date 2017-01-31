@@ -21,6 +21,7 @@
 - Profiles and configuration files are now automatically upgraded to meet the requirements of schema modifications. If there is an error during upgrade, a notification is shown, the configuration is reset, and the old configuration file is available in the NVDA log at 'Info' level. (#6470)
 - Support for reading and navigating books in Kindle for PC version 1.19, including access to links, footnotes, graphics, highlighted text and user notes. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638)
 - Upgraded eSpeak-NG to commit e095f008fa3f838
+- Mouse tracking now works across all screens on computers with multiple monitors. (#6598)
 
 
 == Bug Fixes ==
