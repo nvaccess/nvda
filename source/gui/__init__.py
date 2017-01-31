@@ -741,7 +741,9 @@ class ExitDialog(wx.Dialog):
 		# Translators: An option in the combo box to choose exit action.
 		_("Restart"),
 		# Translators: An option in the combo box to choose exit action.
-		_("Restart with add-ons disabled")]
+		_("Restart with add-ons disabled"),
+		# Translators: An option in the combo box to choose exit action.
+		_("Restart with debug logging enabled")]
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
@@ -763,7 +765,9 @@ class ExitDialog(wx.Dialog):
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,True)
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
+		elif action == 3:
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
 		self.Destroy()
 
 	def onCancel(self, evt):
