@@ -996,6 +996,9 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 				pass
 		return formatField,(self._startOffset,self._endOffset)
 
+	def _get_locationText(self):
+		return self.obj.getCellPosition()
+
 class ExcelCell(ExcelBase):
 
 	def doAction(self):
@@ -1135,6 +1138,11 @@ class ExcelCell(ExcelBase):
 		return self._rowAndColumnNumber[1]
 
 	colSpan=1
+
+	def getCellPosition(self):
+		rowAndColumn = self.cellCoordsText
+		sheet = self.excelWindowObject.ActiveSheet.name
+		return "Sheet {0}, {1}".format(sheet, rowAndColumn)
 
 	def _get_tableID(self):
 		address=self.excelCellObject.address(1,1,0,1)

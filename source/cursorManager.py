@@ -232,26 +232,59 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def _selectionMovementScriptHelper(self,unit=None,direction=None,toPosition=None):
 		oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		# toPosition and unit might both be provided.
+		# In this case, we move to the position before moving by the unit.
 		if toPosition:
 			newInfo=self.makeTextInfo(toPosition)
-			if newInfo.compareEndPoints(oldInfo,"startToStart")>0:
-				newInfo.setEndPoint(oldInfo,"startToStart")
-			if newInfo.compareEndPoints(oldInfo,"endToEnd")<0:
-				newInfo.setEndPoint(oldInfo,"endToEnd")
+			if oldInfo.isCollapsed:
+				self._lastSelectionMovedStart = newInfo.compareEndPoints(oldInfo, "startToStart") < 0
 		elif unit:
-			newInfo=oldInfo.copy()
+			# position was not provided, so start from the old selection.
+			newInfo = oldInfo.copy()
 		if unit:
-			if self._lastSelectionMovedStart:
-				newInfo.move(unit,direction,endPoint="start")
+			if oldInfo.isCollapsed:
+				# Starting a new selection, so set the selection direction
+				# based on the direction of this movement.
+				self._lastSelectionMovedStart = direction < 0
+			# Find the requested unit starting from the active end of the selection.
+			# We can't just move the desired endpoint because this might cause
+			# the end to move before the start in some cases
+			# and some implementations don't support this.
+			# For example, you might shift+rightArrow to select a character in the middle of a word
+			# and then press shift+control+leftArrow to move to the previous word.
+			newInfo.collapse(end=not self._lastSelectionMovedStart)
+			newInfo.move(unit, direction, endPoint="start" if direction < 0 else "end")
+			# Collapse this so we don't have to worry about which endpoint we used here.
+			newInfo.collapse(end=direction > 0)
+		if self._lastSelectionMovedStart:
+			if newInfo.compareEndPoints(oldInfo, "startToEnd") > 0:
+				# We were selecting backwards, but now we're selecting forwards.
+				# For example:
+				# 1. Caret at 1
+				# 2. Shift+leftArrow: selection (0, 1)
+				# 3. Shift+control+rightArrow: next word at 3, so selection (1, 3)
+				newInfo.setEndPoint(oldInfo, "startToEnd")
 			else:
-				newInfo.move(unit,direction,endPoint="end")
-		self.selection = newInfo
-		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
-			self._lastSelectionMovedStart=True
+				# We're selecting backwards.
+				# For example:
+				# 1. Caret at 1; selection (1, 1)
+				# 2. Shift+leftArrow: selection (0, 1)
+				newInfo.setEndPoint(oldInfo, "endToEnd")
 		else:
-			self._lastSelectionMovedStart=False
-		if newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
-			self._lastSelectionMovedStart=False
+			if newInfo.compareEndPoints(oldInfo, "startToStart") < 0:
+				# We were selecting forwards, but now we're selecting backwards.
+				# For example:
+				# 1. Caret at 1
+				# 2. Shift+rightArrow: selection (1, 2)
+				# 3. Shift+control+leftArrow: previous word at 0, so selection (0, 1)
+				newInfo.setEndPoint(oldInfo, "endToStart")
+			else:
+				# We're selecting forwards.
+				# For example:
+				# 1. Caret at 1; selection (1, 1)
+				# 2. Shift+rightArrow: selection (1, 2)
+				newInfo.setEndPoint(oldInfo, "startToStart")
+		self.selection = newInfo
 		speech.speakSelectionChange(oldInfo,newInfo)
 
 	def script_selectCharacter_forward(self,gesture):

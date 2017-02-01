@@ -334,7 +334,7 @@ def initialize(shouldDoRemoteLogging=False):
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure:
+	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure:
 		# Log level was overridden on the command line or we're running in secure mode,
 		# so don't set it.
 		return

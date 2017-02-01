@@ -13,6 +13,12 @@ Que hai de Novo no NVDA
 - A navegación rápida por botóns en modo exploración (b e shift+b) agora sopórtase no Microsoft Edge. (#6577)
 
 
+== Cambios ==
+- A velocidade mínima do parpadeo do cursor braille agora é 200ms. Os perfís ou as configuracións con valores por embaixo deste incrementaranse en 200ms. (#6470)
+- Engadiuse unha caixa de verificación ao diálogo opcións braille para permitir habilitar ou deshabilitar o parpadeo do cursor braille. Anteriormente usábase un valor de cero para lograr esto. (#6470)
+- Os ficheiros de perfís e configuración agora actualízanse automáticamente para cumprir cos requisitos das modificacións do esquema. Se hai un erro durante a actualización, amósase unha notificación, reiníciase a configuración, e o ficheiro de configuración antigo está dispoñible no rexistro do NVDA no nível 'Info'. (#6470)
+
+
 == Correción de Fallos ==
 - Correxido o colgue no Microsoft Word ao se mover por parágrafos a través dun documento longo mentres se está en modo exploración. (#6368)
 - As táboas no Microsoft Word que se copiaran dende o Microsoft Excel xa non se tratan como táboas de deseño, e polo tanto, xa non se ignoran. (#5927)
@@ -23,6 +29,7 @@ Que hai de Novo no NVDA
 - NVDA agora anuncia cando unha caixa de verificación é de só lectura. (#6563)
 - O lanzador do NVDA xa non amosará un diálogo de aviso cando non poda reproducir o son de comezo debido a que non estea dispoñible o dispositivo de audio. (#6289)
 - Os controis na cinta do Microsoft Excel que non estean dispoñibles agora anúncianse así. (#6430)
+- NVDA xa non anunciará "panel" cando se minimicen ventás. (#6671)
 
 
 = 2016.4 =
