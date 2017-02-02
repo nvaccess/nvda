@@ -1,4 +1,4 @@
- Có Gì Mới Cho NVDA
+ Có Gì Mới trong NVDA
 
 
 %!includeconf: ../changes.t2tconf
@@ -10,19 +10,29 @@
 - Đã có thể thông báo các cột văn bản trong Microsoft Word . Chức năng này được bật ở tùy chọn "Báo số trang" trong hộp thoại định dạng tài liệu. (#5946)
 - Đã hỗ trợ tự chuyển đổi ngôn ngữ trong Wordpad. (#6555)
 - Lệnh tìm kiếm của NVDA (NVDA+control+f) đã được hỗ trợ trong chế độ duyệt (Browse mode) cho Microsoft Edge. (#6580)
-- Lệnh di chuyển nhanh đến các nút (b and shift+b) đã được hỗ trợ trong  Microsoft Edge. (#6577)
+- Lệnh di chuyển nhanh ở chế độ duyệt đến các nút (b và shift+b) đã được hỗ trợ trong  Microsoft Edge. (#6577)
+- Thiết lập cho tiêu đề cột và dòng vẫn được giữ khi copy bảng tính từ Microsoft Excel. (#6628)
 
 
-== Các Lỗi Được Sửa ==
+== Những Thay Đổi ==
+- Tốc độ nháy tối thiểu của con trỏ màn hình nổi là 200ms. Những cấu hình có giá trị thấp hơn sẽ tự động đưa về 200ms. (#6470)
+- Thêm một tùy chỉnh hộp kiểm trong hộp thoại thiết lập màn hình nổi cho phép tắt/bật nhấp nháy con trỏ màn hình nổi.  Trước đây, nhập giá trị 0 để tắt. (#6470)
+- Các tập tin cấu hình cũng như hồ sơ cá nhân đều tự động được nâng cấp để đáp ứng những yêu cầu chỉnh sửa schema. Nếu có lỗi khi nâng cấp, hộp thoại thông báo sẽ xuất hiện, cấu hình sẽ được khởi tạo lại và tập tin cấu hình cũ được lưu trong bản ghi log của NVDA tại cấp 'Info'. (#6470)
+- Hỗ trợ đọc và duyệt sách trên máy Kindle phiên bản PC 1.19, sử dụng được các mục như liên kết, phần chú thích chân, hình ảnh, nội dung in đậm và ghi chú của người dùng. Vui lòng xem thêm phần Kindle cho PC trong tài liệu hướng dẫn sử dụng của NVDA. (#6247, #6638)
+
+
+== Đã Sửa Các Lỗi ==
 - Sửa lỗi treo khi di chuyển giữa các đoạn trong một văn bản lớn ở chế độ duyệt trong Microsoft Word (#6368)
-- Các bảng biểu được copy từ Microsoft Excel trong Microsoft Word không còn được xem như các bảng biểu bố cục  vì vậy sẽ không bị bỏ qua (#5927)
+- Các bảng được copy từ Microsoft Excel trong Microsoft Word không còn được xem như bảng bố cục  vì vậy sẽ không bị bỏ qua (#5927)
 - Khi nhập liệu trong Microsoft Excel ở chế độ bảo vệ, NVDA sẽ phát âm thanh thay vì đọc các ký tự được gõ (#6570)
 - Khi nhấn Escape trong Microsoft Excel sẽ không chuyển sang chế độ duyệt, trừ phi người dùng chuyển sang chế độ duyệt trước đó với NVDA+space và sau đó ở trong chế độ focus bằng cách nhấn Enter trong ô biểu mẫu. (#6569) 
-- NVDA không còn treo trong các bảng tính  của Microsoft Excel có toàn bộ  dòng hoặc  cột được kết hợp (merged) 9#6216)
-- Thông báo chính xác hơn các văn bản bị cắt/thừa trong các ô của Microsoft Excel (#6472)
+- NVDA không còn treo trong các bảng tính  của Microsoft Excel khi toàn bộ  dòng hoặc  cột được kết hợp (merged) 9#6216)
+- Thông báo chính xác hơn các văn bản bị cắt hoặc tràn trong các ô của Microsoft Excel (#6472)
 - NVDA sẽ thông báo các hộp kiểm có thuộc tính Chỉ đọc (Read-only). (#6563)
-- Trình chạy NVDA sẽ không hiển thị hộp thoại cảnh báo khi nó không thể phát âm thanh logo do thiết bị âm thanh không có. (#6289)
+- Trình chạy NVDA sẽ không hiển thị hộp thoại cảnh báo khi nó không thể phát âm thanh logo do thiếu thiết bị âm thanh. (#6289)
 - Các điều khiển không hoạt động trong ribbon của Microsoft Excel sẽ được thông báo. (#6430)
+- NVDA không còn thông báo "vùng (pane)" khi thu nhỏ cửa sổ. (#6671)
+- Hỗ trợ đọc ký tự khi gõ trong các ứng dụng UWP (bao gồm Microsoft Edge) trong bản cập nhật  Windows 10 Creators. (#6017)
 
 
 = 2016.4 =
@@ -33,7 +43,7 @@ Các điểm chính trong phiên bản này bao gồm, cải thiện Microsoft E
 - Hỗ trợ màn hình nổi Orbit Reader 20. (#6007)
 - Thêm tùy chọn mở cửa sổ speech viewer khi khởi động. Có thể bật trong cửa sổ speech viewer. (#5050)
 - Khi mở lại cửa sổ speech viewer, các vị trí và kích cỡ sẽ được phục hồi. (#5050)
-- Các trường Cross-reference trong Microsoft Word sẽ được xem như các liên kết. Nó sẽ được thông báo là liên kết và có thể kích hoạt. (#5050)
+- Các trường tham khảo trong Microsoft Word sẽ được xem như các liên kết. Nó sẽ được thông báo là liên kết và có thể kích hoạt. (#5050)
 - Hỗ trợ  màn hình nổi Baum SuperVario2, Baum Vario 340 và HumanWare Brailliant2. (#6116)
 - Hỗ trợ cơ bản cho việc cập nhật Anniversary update của Microsoft Edge. (#6271)
 - Chế độ duyệt sẽ được sử dụng khi đọc email với Windows 10 mail. (#6271)
@@ -44,22 +54,22 @@ Các điểm chính trong phiên bản này bao gồm, cải thiện Microsoft E
 - Cập nhật trình chuyển đổi chữ nổi  liblouis lên 3.0.0. Bản này gồm nhiều cập nhật quan trọng cho Unified English Braille. (#6109, #4194, #6220, #6140)
 - Trong trình quản lý Add-ons, nút tắt và bật đã có phím tắt lần lượt là (alt+d và alt+e). (#6388)
 - Nhiều vấn đề canh chỉnh và dấu chân trong các hộp thoại của NVDA đã được chỉnh sửa. (#6317, #5548, #6342, #6343, #6349)
-- Hộp thoại định dạng tài liệu đã được điều chỉnh để nội dung có thể cuộn. (#6348)
+- Hộp thoại định dạng tài liệu đã được điều chỉnh để có thể cuộn nội dung. (#6348)
 - Điều chỉnh lại bố cục hộp thoại phát âm ký hiệu để danh sách ký hiệu sẽ sử dụng toàn bộ độ rộng của hộp thoại. (#6101)
 - Ở chế độ duyệt trong các trình duyệt web, các phím lệnh di chuyển nhanh đến các trường soạn thảo (e and shift+e) và biểu mẫu (f and shift+f) có thể dùng để di chuyển đến các trường soạn thảo có thuộc tính Chỉ đọc (Read-only). (#4164)
 - Ở các thiết lập định dạng tài liệu NVDA, "Thông báo thay đổi định dạng sau con trỏ" được đổi tên thành "Báo thay đổi định dạng sau con trỏ", vì nó ảnh hưởng đến phần chữ nổi và đọc. (#6336)
 - Điều chỉnh lại màn hình "hộp thoại chào mừng" của NVDA. (#6350)
 - Nút "Đồng ý" và "Hủy" của các hộp thoại NVDA đều được canh phải trên các hộp thoại. (#6333)
 - Các điều khiển spin được dùng cho các trường nhập số như "Phần trăm thay đổi độ cao chữ hoa" trong hộp thoại thiết lập giọng đọc. Bạn có thể nhập giá trị hoặc dùng mũi tên lên/xuống để điều chỉnh. (#6099)
-- Cách thông báo các IFrames (các tài liệu được nhúng trong một tài liệu khác) đã thống nhất và ổn định trên các trình duyệt web khác nhau. IFrames được thông báo là "frame" trong Firefox. (#6047)
+- Cách thông báo các IFrames (nội dung nhúng trong một tài liệu) đã thống nhất và ổn định trên các trình duyệt web khác nhau. IFrames được thông báo là "frame" trong Firefox. (#6047)
 
 
-== Các lỗi được sửa ==
+== Đã sửa các lỗi ==
 - Sửa lỗi hiếm gặp khi tắt NVDA trong khi speech viewer mở. (#5050)
 - Các Image maps chạy đúng trong Mozilla Firefox. (#6051)
-- Khi trong hộp thoại Từ điển, nhấn Enter sẽ lưu lại các thay đổi và đóng hộp thoại. Trước đây, khi nhấn Enter sẽ không có tác dụng. (#6206)
+- Khi đứng trong hộp thoại Từ điển, nhấn Enter sẽ lưu lại các thay đổi và đóng hộp thoại. Trước đây, khi nhấn Enter sẽ không có tác dụng. (#6206)
 - Các thông điệp sẽ hiển thị dạng chữ nổi khi thay đổi chế độ nhập cho một phương thức nhập (native input/alphanumeric, full shaped/half shaped, etc.). (#5892, #5893)
-- Khi tắt và bật một add-on ngay sau đó hoặc ngược lại, trạng thái của add-on sẽ được thay đổi đúng. (#6299)
+- Khi tắt và bật một add-on ngay sau đó hoặc ngược lại, trạng thái của add-on sẽ được hiển thị đúng. (#6299)
 - Khi sử dụng Microsoft Word, có thể đọc được ô số trang trong các tiêu đề. (#6004)
 - Chuột có thể di chuyển focus giữa danh sách ký hiệu và ô soạn thảo trong hộp thoại phát âm ký hiệu. (#6312)
 - Ở chế độ duyệt trong Microsoft Word, đã sửa lỗi không hiển thị danh sách các thành phần khi trong tài liệu có liên kết không hợp lệ. (#5886)
@@ -74,7 +84,7 @@ Các điểm chính trong phiên bản này bao gồm, cải thiện Microsoft E
 - Đã có thể gán các thao tác lệnh cho driver màn hình nổi Handy Tech trong hộp thoại thao tác nhập của NVDA. (#6461)
 - Trong Microsoft Excel, nhấn Enter khi duyệt các bảng tính, NVDA sẽ thông báo chính xác dòng kế. (#6500)
 - iTunes sẽ không còn thỉnh thoảng treo khi dùng chế độ duyệt trong iTunes Store, Apple Music vvv. (#6502)
-- Sửa lỗi sung đột/treo trong các ứng dụng 64-bit trên nền Chrome và Mozilla. (#6497)
+- Sửa lỗi sung đột và treo trong các ứng dụng 64-bit trên nền Chrome và Mozilla. (#6497)
 - Khi bật multi-process trong Firefox, các ô soạn thảo và chế độ duyệt đã hoạt động tốt. (#6380)
 
 

@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Le principali caratteristiche di questa versione comprendono  la segnalazione delle sezioni e colonne di testo in Microsoft Word; il Supporto per la lettura, la navigazione e le funzioni di annotazione nei libri in Kindle per PC; grossi miglioramenti al supporto per Microsoft Edge.
 
 == Novità ==
 - In Microsoft Word possono ora essere annunciati il numero di sezione o il tipo di interruzione sezione. Ciò può essere attivato tramite l'opzione "leggi i numeri di pagina" presente nella finestra impostazioni formattazione documento di NVDA. (#5946)
@@ -11,12 +12,17 @@
 - La funzione di cambio lingua automatica è ora supportata anche in Wordpad. (#6555)
 - Il comando Trova di NVDA (ctrl-NVDA-f) è ora funzionante anche nella modalità navigazione in Microsoft Edge. (#6580)
 - Le funzioni di navigazione veloce con i tasti b e Shift+b ora sono operative anche in Microsoft Edge. (#6577)
+- Quando si copia un foglio in Microsoft Excel, vengono ricordate le intestazioni di riga e colonna. (#6628)
+- Supporto alla lettura e alla navigazione dei libri in Kindle per Pc versione 1.19, il che comprende l'accesso ai link, note a piè di pagina, i grafici, il testo evidenziato e le note dell'utente. Per ulteriori informazioni, Si prega di fare riferimento alla sezione Kindle per Pc del manuale utente di NVDA. (#6247, #6638)
+- Supporto all'esplorazione delle tabelle in modalità navigazione in Microsoft Edge. (#6594)
+- In Microsoft Excel, il comando "annuncia posizione del cursore di controllo" (desktop: NVDA+Canc del tastierino numerico, laptop: NVDA+Canc) ora leggerà il nome del foglio di lavoro e la posizione della cella. (#6613)
+- Aggiunta un'opzione alla finestra di dialogo di uscita di NVDA per riavviare lo screen reader con il debugging nel log. (#6689)
 
 
 == Cambiamenti ==
 - La velocità minima di lampeggio del cursore braille ora è impostata a 200ms. I profili con valori di configurazione più bassi di questo saranno automaticamente modificati a 200. (#6470)
 - è stata aggiunta una casella di controllo alla finestra di dialogo delle impostazioni braille per permettere di abilitare/disabilitare il cursore lampeggiante. In precedenza veniva usato il valore 0 per implementare questa funzione.  (#6470)
-- I profili e i file di configurazione verranno automaticamente aggiornati per adeguarsi alle modifiche inerenti schema e struttura degli stessi. Se c'è un errore durante l'aggiornamento, viene visualizzata una notifica, la configurazione è ripristinata, i vecchi file di configurazione saranno disponibili nei log di NVDA al 'livello info'. (#6470)
+- Aggiornata  eSpeak NG (commit e095f008, 10 gennaio 2017). (#6717)
 
 
 == Bug corretti ==
@@ -30,6 +36,12 @@
 - All'esecuzione di NVDA non verrà più mostrato un avviso nel caso in cui non sia possibile riprodurre il suono di avvio in quanto non risulta disponibile alcun dispositivo audio. (#6289)
 - I controlli ribbon in Microsoft Excel che risultano non disponibili ora vengono segnalati correttamente. (#6430)
 - NVDA non annuncerà più la parola "pannello" quando si riducono tutte le finestre ad icona. (#6671)
+- Ora vengono annunciati i caratteri digitati anche nelle app Universal Windows Platform (UWP)  (inclusa Microsoft Edge) nell'aggiornamento Windows 10 Creators. (#6017)
+- Il tracciamento del mouse ora funziona anche in computer a cui sono collegati più monitor. (#6598)
+
+
+== Cambiamenti per sviluppatori ==
+- I profili e i file di configurazione verranno automaticamente aggiornati per adeguarsi alle modifiche inerenti schema e struttura degli stessi. Se c'è un errore durante l'aggiornamento, viene visualizzata una notifica, la configurazione è ripristinata, i vecchi file di configurazione saranno disponibili nei log di NVDA al 'livello info'. (#6470)
 
 
 = 2016.4 =

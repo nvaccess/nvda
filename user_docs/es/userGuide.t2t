@@ -698,6 +698,42 @@ Cuando se está en una conversación:
 | Revisar mensaje | NVDA+control+1-0 | Anuncia y mueve el cursor de revisión a un mensaje reciente, dependiendo del número pulsado; por ej.: NVDA+control+2 lee el segundo mensaje más reciente. |
 %kc:endInclude
 
+++ Kindle para PC ++
+NVDA soporta la lectura y la navegación de libros en Amazon Kindle para PC.
+Esta funcionalidad sólo está disponible en libros de Kindle que soporten "Enhanced Typesetting", lo cual puedes verificar en la página de detalles para el libro.
+
+Se utiliza el modo exploración para leer libros.
+Se habilita automáticamente al abrir un libro o al enfocar el área del libro.
+La página se pasará automáticamente según proceda cuando muevas el cursor o utilices la orden leer todo.
+%kc:beginInclude
+Puedes pasar a la siguiente página manualmente con la tecla avPág y retroceder a la anterior con la tecla rePág.
+%kc:endInclude
+
+Se soporta la navegación con una sola tecla para enlaces y gráficos, pero sólo dentro de la página actual.
+La navegación por enlaces también incluye notas al pie.
+
++++ Selección de Texto +++
+Kindle te permite realizar varias funciones en el texto seleccionado, incluyendo obtener una definición de diccionario, añadir notas y hacer resaltados, copiar el texto al portapapeles y buscar en la web.
+Para hacer esto, primero selecciona texto como lo harías normalmente en modo exploración; ej.: utilizando shift y las teclas de cursor.
+%kc:beginInclude
+Una vez hayas seleccionado el texto, pulsa la tecla aplicaciones o shift+f10 para mostrar las opciones disponibles para trabajar con la selección.
+%kc:endInclude
+Si haces esto sin texto seleccionado, las opciones que se mostrarán serán para la palabra en el cursor.
+
++++ Notas de Usuario +++
+Puedes añadir una nota con respecto a una palabra o a un pasaje de texto.
+Para hacer esto, primero selecciona el texto pertinente y accede a las opciones de la selección según se describió arriba.
+Después, elige Añadir Nota.
+
+Al leer en el modo exploración, NVDA se refiere a estas notas como comentarios.
+
+Para ver, editar o eliminar una nota:
+
++ Mueve el cursor al texto que contenga la nota.
++ Accede a las opciones para la selección según se describió arriba.
++ Elige Editar Nota.
++
+
 + Configurando NVDA +
 
 ++ Preferencias ++
@@ -2262,6 +2298,7 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | -m | --minimal | Sin sonidos, sin interface, sin mensaje de inicio etc |
 | -s | --secure | Modo seguro (deshabilita la consola Python) |
 | None | --disable-addons | Los complementos no tendrán efecto |
+| None | --debug-logging | Habilita el nivel depuración en el registro sólo para esta ejecución. Esta opción anulará cualquier otro argumento del nivel del registro ( ""--loglevel"", -l) dado. |
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
