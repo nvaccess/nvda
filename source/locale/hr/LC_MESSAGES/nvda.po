@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-28 20:40-0800\n"
-"Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
+"PO-Revision-Date: 2017-02-01 13:44+0100\n"
+"Last-Translator: Zvonimir Stanečić  <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
 "Language: hr_HR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -87,6 +87,7 @@ msgid "unknown input method"
 msgstr "nepoznata metoda unosa"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
@@ -724,6 +725,7 @@ msgstr "nije %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} od {total}"
 
@@ -798,6 +800,7 @@ msgstr ""
 "je isključeno, ove su tipke proslijeđene aplikaciji"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Nije podržano u ovom dokumentu"
 
@@ -1292,6 +1295,7 @@ msgid "%s landmark"
 msgstr "%s orijentir"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "odabrano %s"
@@ -1323,6 +1327,33 @@ msgstr "dno"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Premiješta iza kraja sadržanog elementa, kao što je lista ili tablica"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "nije u ćeliji tablice"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "rub tablice"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "premiješta na sljedeći redak u tablici"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "premiješta na prethodni redak u tablici"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "premiješta na sljedeći stupac u tablici"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "premiješta na prethodni stupac u tablici"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1483,61 +1514,73 @@ msgid "pink-red"
 msgstr "ružičasto crvena"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "svjetlo {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "tamno {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "vrlo tamna {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "svjetlo blijeda {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "blijeda {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "tamno blijeda {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "vrlo tamno blijeda {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} bijela"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} siva"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "tamno {color} siva"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "vrlo tamno {color} siva"
@@ -3436,6 +3479,7 @@ msgid "AC power on"
 msgstr "Električno napajanje priključeno"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "preostalo je {hours:d} sati i {minutes:d} minuta"
 
@@ -4289,6 +4333,7 @@ msgid "column %s"
 msgstr "stupac %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "od {rowCount} redova i {columnCount} stupaca"
 
@@ -4323,6 +4368,43 @@ msgstr "izvan %s"
 msgid "page %s"
 msgstr "stranica %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "Prijelom %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "stupac {0} od {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s stupaca"
+
+msgid "continuous section break"
+msgstr "kontinuirani odjeljak"
+
+msgid "new column section break"
+msgstr "Novi odjeljak"
+
+msgid "new page section break"
+msgstr "Novi prijelom stranice"
+
+msgid "even pages section break"
+msgstr "prijelom neparne stranice"
+
+msgid "odd pages section break"
+msgstr "prijelom parne stranice"
+
+msgid "column break"
+msgstr "Prijelom stupca"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4344,25 +4426,30 @@ msgstr "početni stil"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
+#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} na {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} na {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} pozadina"
 
+#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "pozadinski uzorak {pattern}"
 
@@ -4570,6 +4657,7 @@ msgid "out of table"
 msgstr "izvan tablice"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tablica od {columnCount} stupaca i {rowCount} redova"
 
@@ -4650,22 +4738,27 @@ msgid "object mode"
 msgstr "mod objekta"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "jednostruki {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "dvostruki {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "trostruki {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "četverostruki {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} s {numFingers} prsta"
 
@@ -4747,6 +4840,7 @@ msgstr "NVDA ažuriranje"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "Dostupna je NVDA inačica {version}."
 
@@ -4842,9 +4936,11 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Besplatan open-source čitač ekrana za sustav MS Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Autorska prava (C) {years} NVDA Doprinositelji"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4889,6 +4985,7 @@ msgstr ""
 "odaberete opciju Donirajte iz NVDA izbornika."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -4897,6 +4994,7 @@ msgstr ""
 "Morate imati pokrenut NVDA da biste mogli instalirati dodatke."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -4907,17 +5005,14 @@ msgstr ""
 "centimetru zaslona, visina je {height:.1f} po centimetru zaslona"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} kao u {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "rub tablice"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -4961,14 +5056,39 @@ msgstr ""
 "Izvještava o preostalom vremenu trake koja se trenutno reproducira, ukoliko "
 "postoji"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Prikazuje opcije koje se odnose na označeni tekst ili na tekst pod kursorom"
+
 #. Translators: A position in a Kindle book
-#, no-python-format
+#, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, pozicija {curLocation} od {maxLocation}"
 
 #. Translators: a page in a Kindle book
+#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Stranica {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "oznaka"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "Nema oznake"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s označeno"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "izvan popularnih oznaka"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5076,10 +5196,12 @@ msgid "Waiting for Outlook..."
 msgstr "Čekam Outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "Od {startTime} do {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Dogovoreni termin {subject}, u {time}"
 
@@ -5241,78 +5363,97 @@ msgid "Master Thumbnails"
 msgstr "Sličice u slajdu matrice"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Slajd {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr "covers left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "behind left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "covers top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "behind top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "covers right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "behind right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "covers bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "behind bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "covers  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "behind {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} points from left slide edge"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Off left slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} points from top slide edge"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Off top slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} points from right slide edge"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Off right slide edge by {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} points from bottom slide edge"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Off bottom slide edge by {distance:.3g} points"
 
@@ -5327,10 +5468,12 @@ msgstr ""
 "korisnik može čitati pomoću NVDA programa."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Bilješke Prikaza Slajda - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Prikaz Slajda - {slideName}"
 
@@ -5419,6 +5562,7 @@ msgstr "Baum/HumanWare/APH/Orbit brajični redci"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serijski priključak: {portName}"
 
@@ -5851,6 +5995,10 @@ msgstr "Ponovno pokreni"
 msgid "Restart with add-ons disabled"
 msgstr "Ponovno pokreni sa isključenim dodacima"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Ponovno pokreni sa načinom zapisa debug"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Molimo pričekajte"
@@ -5918,6 +6066,7 @@ msgid "Choose Add-on Package File"
 msgstr "Odaberite datoteku paketa s NVDA dodacima"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Paket s NVDA dodacima (*.{ext})"
 
@@ -5931,6 +6080,7 @@ msgstr ""
 "neispravan format datoteke"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -6014,6 +6164,7 @@ msgid "Restart NVDA"
 msgstr "Ponovo pokreni NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -6026,6 +6177,7 @@ msgstr ""
 "Opis: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "URL adresa: {url}"
 
@@ -6288,6 +6440,7 @@ msgstr ""
 "Na vašem sustavu pronađena je prethodna NVDA kopija. Ista će biti ažurirana."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -7172,6 +7325,10 @@ msgstr "Pr&oširi na kompjutorsku brajicu za riječ na položaju kursora"
 msgid "&Show cursor"
 msgstr "po&kaži pokazivač"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "titranje kursora"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Brzina titraja kursora (u milisekundama)"
@@ -7267,6 +7424,7 @@ msgstr "pretražuj po slijedećim ključnim riječima:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -7307,10 +7465,12 @@ msgid "word"
 msgstr "riječ"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
 
@@ -7342,32 +7502,11 @@ msgstr ""
 "Naizmjence uključuje da li je raspored ekrana očuvan prilikom renderiranja "
 "sadržaja dokumenta"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "nije u ćeliji tablice"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "premiješta na sljedeći redak u tablici"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "premiješta na prethodni redak u tablici"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "premiješta na sljedeći stupac u tablici"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "premiješta na prethodni stupac u tablici"
-
 msgid "Taskbar"
 msgstr "Traka zadataka"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB crvena {rgb.red}, zelena {rgb.green}, plava {rgb.blue}"
 
@@ -7535,6 +7674,7 @@ msgid "&Sheets"
 msgstr "&radni listovi"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "od {start} do {end}"
 
@@ -7550,18 +7690,22 @@ msgstr ""
 "tablice u postavkama oblikovanja dokumenta."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Postavi adresu {address} kao početak zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "Adresa {address} već je postavljena kao početak zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "uklonjena adresa {address} iz zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Ne mogu naći {address} u zaglavljima stupaca"
 
@@ -7575,18 +7719,22 @@ msgstr ""
 "pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Postavi {address} kao početak zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "Adresa {address} već je postavljena kao početak zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "Adresa {address} je uklonjena iz zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Ne mogu naći {address} u zaglavljima redaka"
 
@@ -7599,9 +7747,11 @@ msgstr ""
 "redaka za svaku ćeliju niže i desno od nje unutar ove regije. Kada se "
 "pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "ulazna poruka je {title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Ulazna poruka je {message}"
 
@@ -7614,10 +7764,12 @@ msgid "Reports the comment on the current cell"
 msgstr "Izvještava o komentaru na trenutnoj ćeliji"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Uređivanje komentara za ćeliju {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "od {firstAddress} {firstContent} do {lastAddress} {lastContent}"
 
@@ -7972,6 +8124,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "meteor sa produženim linijama ali bez oznaka podataka"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "naslov grafa: {chartTitle}, tip: {chartType}"
 
@@ -7999,6 +8152,7 @@ msgstr "serije"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} os je {axisTitle}"
 
@@ -8012,6 +8166,7 @@ msgid "There are total %d series in this chart"
 msgstr "trenutno postoji %d serije u ovom grafu"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "serija {number} {name}"
 
@@ -8036,6 +8191,7 @@ msgstr "podatkovna točka"
 msgid "item"
 msgstr "stavka"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "boja serije: {colorName} "
 
@@ -8125,51 +8281,61 @@ msgstr "oblik"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} serije {seriesIndex} od {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "nema promjene od {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "povećano za{incrementValue} od točke {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "smanjeno za {decrementValue} od točke {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "kategorija {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "vrijednost {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " veličina {fractionValue:.2f} Posto rez {pointIndex} od {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} od {pointCount}"
 
@@ -8182,10 +8348,12 @@ msgid "Secondary"
 msgstr "sekundarna"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "os grafa, vrsta: {axisType}, grupa: {axisGroup}, naslov: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "os grafa, vrsta: {axisType}, grupa: {axisGroup}"
 
@@ -8203,6 +8371,7 @@ msgid " squared "
 msgstr "kvadratno"
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "naslov grafa: {chartTitle}"
 
@@ -8211,6 +8380,7 @@ msgid "Untitled chart"
 msgstr "neimenovani graf"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -8223,6 +8393,7 @@ msgid "Chart area "
 msgstr "mjesto grafa"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -8247,12 +8418,14 @@ msgstr "Nema legende"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "zapis legende za seriju {seriesName} {seriesIndex} od {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "ključ legende za seriju {seriesName} {seriesIndex} od {seriesCount}"
 
@@ -8354,9 +8527,11 @@ msgstr "Primarno zaglavlje"
 msgid "Text frame"
 msgstr "Tekstualni okvir"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} od strane {author} datuma {date}"
 
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} datuma {date}"
 
@@ -8397,11 +8572,13 @@ msgid "Table description"
 msgstr "opis tablice"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -8409,10 +8586,12 @@ msgstr ""
 "zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja stupaca"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr "Ne mogu naći {rowNumber} stupac {columnNumber} u zaglavljima stupaca"
 
@@ -8426,11 +8605,13 @@ msgstr ""
 "pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -8438,10 +8619,12 @@ msgstr ""
 "zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja redaka"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Ne mogu naći redak {rowNumber} stupac {columnNumber} u zaglavljima redaka"
@@ -8526,35 +8709,43 @@ msgid "Moved above blank paragraph"
 msgstr "premješteno iznad praznog odlomka"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "Stil {styleName}, razina obrisa {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "Font {size:g} točaka"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} znakova"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} inča"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetara"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetara"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} točaka"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pica"
 
