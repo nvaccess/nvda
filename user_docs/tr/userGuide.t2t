@@ -698,6 +698,42 @@ Bir konuşma içindeyken:
 | Mesajı dinle | NVDA+control+1-0 | Basılan numaraya göre, son mesajlardan birini okur ve inceleme imlecini mesajın üzerine taşır; örneğin NVDA+control+2 sondan ikinci mesajı okur. |
 %kc:endInclude
 
+++ Kindle for PC ++
+NVDA supports reading and navigating books in Amazon Kindle for PC.
+This functionality is only available in Kindle books that support "Enhanced Typesetting", which you can check on the details page for the book.
+
+Browse mode is used to read books.
+It is enabled automatically when you open a book or focus the book area.
+The page will be turned automatically as appropriate when you move the cursor or use the say all command.
+%kc:beginInclude
+You can manually turn to the next page with the pageDown key and turn to the previous page with the pageUp key.
+%kc:endInclude
+
+Single letter navigation is supported for links and graphics, but only within the current page.
+Navigating by link also includes footnotes.
+
++++ Text Selection +++
+Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
+To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
+%kc:beginInclude
+Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
+%kc:endInclude
+If you do this with no text selected, options will be shown for the word at the cursor.
+
++++ User Notes +++
+You can add a note regarding a word or passage of text.
+To do this, first select the relevant text and access the selection options as described above.
+Then, choose Add Note.
+
+When reading in browse mode, NVDA refers to these notes as comments.
+
+To view, edit or delete a note:
+
++ Move the cursor to the text containing the note.
++ Access the options for the selection as described above.
++ Choose Edit Note.
++
+
 + NVDA'yı ayarlama +
 
 ++ Tercihler ++
@@ -915,6 +951,10 @@ Bu seçenek, imlecin üzerinde bulunduğu sözcüğün kısaltmasız bilgisayar 
 ==== İmleci göster ====
 Bu seçenek, brail imlecini açıp kapatmanızı sağlar.
 Sistem imleci ve inceleme imleci için uygulanır; seçimin belirtilmesi için geçerli değildir.
+
+==== İmleç Sinyali ====
+Bu seçenek, braille imlecin yanıp sönmesini sağlar.
+Sinyal kapatıldıysa, braille imleç yukarıda sabitlenir.
 
 ==== İmleç inip çıkma hızı ====
 Bu seçenek, imleç inip çıkma hızının milisaniyede ne kadar hızlı olacağını değiştirmenizi sağlayan rakamsal bir alandır.
@@ -2164,8 +2204,8 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
-bunu kullanabilmek için,[BRLTTY for Windows http://brl.thefreecat.org/brltty/] programını yüklemeniz gerekecektir.
+[BRLTTY http://www.brltty.com/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
+bunu kullanabilmek için,[BRLTTY for Windows http://www.brltty.com/download.html] programını yüklemeniz gerekecektir.
 En son kurulum sürümünü indirip kurmalısınız. bunun adı şu biçimde olabilir: brltty-win-4.2-2.exe.
 Ekranı ve kullanılacak portu ayarlarken, özellikle USB sürücüleri kullanıyorsanız ve elinizde üreticilerin sürücüleri varsa, yönergeleri yakından takip ettiğinizden emin olun.
 
@@ -2258,6 +2298,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -m | --minimal | Ses, arayüz, başlangıç mesajı vb olmaz |
 | -s | --secure | Güvenli kip (Python konsolu devre dışı bırakır) |
 | None | --disable-addons | Eklentiler etkisizdir |
+| None | --debug-logging | hata ayıklama seviyesi günlüğünü etkinleştir sadece bu çalışma için. Bu ayar, herhangi bir diğer log düzeyini geçersiz kılar ( ""--loglevel"", -l) sağlanan değişken. |
 | None | --no-sr-flag  | Global ekran okuyucu bayrağını devre dışı bırakmaz |
 | None | --install | NVDA'yı kurar (yeni kurulmuş kopyayı çalıştırarak) |
 | None | --install-silent | NVDA'yı sessizce kurar (yeni kurulmuş kopyayı başlatmaz) |
