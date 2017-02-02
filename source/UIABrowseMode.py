@@ -328,8 +328,8 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 	def event_caret(self,obj,nextHandler):
 		pass
 
-	def _getTableCellAt(self,tableID,row,column):
-		startUIAElement=self.selection.UIAElementAtStart
+	def _getTableCellAt(self,tableID,startPos,row,column):
+		startUIAElement=startPos.UIAElementAtStart
 		# Comtypes casts a tuple into a variant containing a  safearray of variants.
 		# However, UIA's createPropertyCondition requires a safearay of ints.
 		# By first converting the tuple to a Python int Array we can ensure this.  
