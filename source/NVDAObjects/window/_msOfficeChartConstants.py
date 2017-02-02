@@ -369,227 +369,9 @@ xlMovingAvg=6
 xlPolynomial=3
 xlPower=4
 
-class OfficeChart(Window):
-
-	role=controlTypes.ROLE_CHART
-
-	def __init__(self,windowHandle, officeApplicationObject, officeShapeObject,keyIndex=0):
-		self.windowHandle=windowHandle
-		self.officeApplicationObject=officeApplicationObject
-		self.officeShapeObject=officeShapeObject
-		self.officeChartObject=officeShapeObject.Chart
-		self.currentSeriesIndex=0
-		self.keyIndex=keyIndex
-		self.chartElements={}
-		self.keyList=[]
-		try:
-			seriesCount=self.officeChartObject.SeriesCollection().Count
-		except:
-			seriesCount=None
-		if seriesCount:
-			for i in xrange(seriesCount):
-				key='series'+str(i+1)
-				self.chartElements[key]=(self.focusChartSeries,i+1)
-				self.keyList.append(key)
-				try:
-					trendlinesCount = self.officeChartObject.SeriesCollection(i+1).Trendlines().Count
-				except:
-					trendlinesCount = None
-				if trendlinesCount>=1:
-					key=key+"Trendline"
-					self.chartElements[key]=(self.focusSeriesTrendline,i+1)
-					self.keyList.append(key)
-		self.chartElements['otherElements']=(self.focusChartElements, None)
-		self.keyList.append('otherElements')
-		self.elementsCount=len(self.keyList)
-		self.officeShapeObject.Chart.Select()
-		super(OfficeChart,self).__init__(windowHandle=windowHandle)
-
-	def focusSeriesTrendline(self, seriesIndex):
-		obj=OfficeChartSeriesTrendline(windowHandle=self.windowHandle, officeApplicationObject=self.officeApplicationObject, officeShapeObject=self.officeShapeObject, keyIndex=self.keyIndex, seriesIndex=seriesIndex)
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusChartSeries(self, seriesIndex):
-		self.currentSeriesIndex=seriesIndex
-		obj=OfficeChartElementSeries(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject , elementID = xlSeries , arg1 = self.currentSeriesIndex)
-		self.officeChartObject.SeriesCollection(self.currentSeriesIndex).Select()
-		obj.parent = self
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def focusChartElements(self):
-		obj=OfficeChartElement(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject )
-		obj.parent = self
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def _get_name(self):
-		if self.officeChartObject.HasTitle:
-			name=self.officeChartObject.ChartTitle.Text
-		else:
-			name=self.officeChartObject.Name
-		#find the type of the chart
-		chartType = self.officeChartObject.ChartType
-		chartTypeText = chartTypeDict.get(chartType,
-                # Translators: Reported when the type of a chart is not known.
-                                _("unknown"))
-		# Translators: Message reporting the title and type of a chart.
-		text=_("Chart title: {chartTitle}, type: {chartType}").format(chartTitle=name, chartType=chartTypeText)
-		return text
-
-	def _get_description(self):
-		count = self.officeChartObject.SeriesCollection().count
-		text=""
-		if count>0:
-			if count == 1:
-				# Translators: Indicates that there is 1 series in a chart.
-				seriesValueString = _( "There is 1 series in this chart" )
-			else:
-				# Translators: Indicates the number of series in a chart where there are multiple series.
-				seriesValueString = _( "There are total %d series in this chart" ) %(count)
-				for i in xrange(1, count+1):
-					# Translators: Specifies the number and name of a series when listing series in a chart.
-					seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.officeChartObject.SeriesCollection(i).Name)
-				text += seriesValueString
-		else:
-			# Translators: Indicates that there are no series in a chart.
-			text +=_("No Series defined.")
-		return text
-
-	def getChartSegment(self):
-		chartType = self.officeChartObject.ChartType
-		if chartType in (xl3DPie, xl3DPieExploded, xlPie, xlPieExploded, xlPieOfPie):
-			# Translators: A slice in a pie chart.
-			text=_("slice")
-		elif chartType in (xl3DColumn, xl3DColumnClustered, xl3DColumnStacked, xl3DColumnStacked100, xlColumnClustered, xlColumnStacked100, xlColumnStacked):
-			# Translators: A column in a column chart.
-			text=pgettext('chart','column')
-		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
-			# Translators: A data point in a line chart.
-			text=_("daata point")
-		else:
-			# Translators: A segment of a chart for charts which don't have a specific name for segments.
-			text=_("item")
-		return text
-
-	def invokeChartElement(self, keyIndex):
-		val=self.chartElements[self.keyList[keyIndex]]
-		func=val[0]
-		arg=val[1]
-		if arg==None:
-			func()
-		else:
-			func(arg)
-		
-	def script_nextChartElement(self,gesture):
-		if self.keyIndex == self.elementsCount-1:
-			self.keyIndex=0
-		else:
-			self.keyIndex=self.keyIndex+1
-		self.invokeChartElement(self.keyIndex)
-	script_nextChartElement.canPropagate=True
-
-	def script_previousChartElement(self,gesture):
-		if self.keyIndex == 0:
-			self.keyIndex=self.elementsCount-1
-		else:
-			self.keyIndex=self.keyIndex-1
-		self.invokeChartElement(self.keyIndex)
-	script_previousChartElement.canPropagate=True
-
-	def script_activatePosition(self,gesture):
-		# Toggle browse mode pass-through.
-		self.passThrough = True
-		self.ignoreTreeInterceptorPassThrough=False
-		browseMode.reportPassThrough(self)
-	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-	script_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
-	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
-
-	def script_disablePassThrough(self, gesture):
-		rangeStart=self.officeShapeObject.Range.Start
-		self.officeApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
-		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
-
-	__gestures = {
-				"kb:upArrow":"nextChartElement",
-				"kb:downArrow":"previousChartElement",
-				"kb:leftArrow":"previousChartElement",
-				"kb:rightarrow":"nextChartElement",
-				"kb:enter": "activatePosition",
-				"kb(desktop):numpadEnter":"activatePosition",
-				"kb:space": "activatePosition",
-				"kb:escape": "disablePassThrough",
-	}
-
-class OfficeChartSeriesTrendline(OfficeChart):
-
-	role=controlTypes.ROLE_CHARTELEMENT
-	_trendlineTypeMap = {
-								# Translators: Indicates that trendline type is Exponential
-								xlExponential: _("Exponential"),
-								# Translators: Indicates that trendline type is Linear
-								xlLinear: _("Linear"),
-								# Translators: Indicates that trendline type is Logarithmic
-								xlLogarithmic: _("Logarithmic"),
-								# Translators: Indicates that trendline type is Moving Average
-								xlMovingAvg: _("Moving Average"),
-								# Translators: Indicates that trendline type is Polynomial
-								xlPolynomial: _("Polynomial"),
-								# Translators: Indicates that trendline type is Power
-								xlPower: _("Power") 
-	}
-
-	def __init__(self, windowHandle, officeApplicationObject, officeShapeObject, keyIndex, seriesIndex, trendlineIndex=1):
-		self.seriesIndex=seriesIndex
-		self.trendlineIndex=trendlineIndex
-		self.trendlinesCount=officeShapeObject.Chart.SeriesCollection(self.seriesIndex).Trendlines().Count
-		self.currentTrendline=officeShapeObject.Chart.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex)
-		super(OfficeChartSeriesTrendline, self).__init__(windowHandle=windowHandle, officeApplicationObject=officeApplicationObject, officeShapeObject=officeShapeObject, keyIndex=keyIndex)
-
-	def _get_name(self):
-		if self.currentTrendline.DisplayEquation or self.currentTrendline.DisplayRSquared:
-			label=self.currentTrendline.DataLabel.Text
-			#Translators: Substitute superscript two by square for R square value
-			label=label.replace(u"²", _( " square " ))
-			label=re.sub(r'([a-zA-Z]+)([2])',r'\1 square', label)
-			label=re.sub(r'([a-zA-Z]+)([3])',r'\1 cube', label)
-			label=re.sub(r'([a-zA-Z]+)([-]*[04-9][0-9]*)',r'\1 to the power \2', label)
-			#Translators: Substitute - by minus in trendline equations.
-			label=label.replace(u"-",_(" minus "))
-			# Translators: This message gives trendline type and name for selected series
-			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} ").format(seriesName=self.officeChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.currentTrendline.Type], trendlineName=self.currentTrendline.Name, trendlineLabel=label)
-		else:
-			# Translators: This message gives trendline type and name for selected series
-			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName} ").format(seriesName=self.officeChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.currentTrendline.Type], trendlineName=self.currentTrendline.Name)
-		return output
-
-	def invokeTrendline(self, trendlineIndex):
-		obj=OfficeChartSeriesTrendline(windowHandle=self.windowHandle, officeApplicationObject=self.officeApplicationObject, officeShapeObject=self.officeShapeObject, keyIndex=self.keyIndex, seriesIndex=self.seriesIndex, trendlineIndex=trendlineIndex)
-		self.currentTrendline.Select()
-		eventHandler.queueEvent('gainFocus',obj)
-
-	def script_previousTrendline(self, gesture):
-		if self.trendlinesCount > 1:
-			if self.trendlineIndex==1:
-				self.trendlineIndex=self.trendlinesCount
-			else:
-				self.trendlineIndex=self.trendlineIndex-1
-			self.invokeTrendline(self.trendlineIndex)
-
-	def script_nextTrendline(self, gesture):
-		if self.trendlinesCount > 1:
-			if self.trendlineIndex==self.trendlinesCount:
-				self.trendlineIndex=1
-			else:
-				self.trendlineIndex=self.trendlineIndex+1
-			self.invokeTrendline(self.trendlineIndex)
-
-	__gestures = {
-				"kb:leftArrow":"previousTrendline",
-				"kb:rightArrow":"nextTrendline",
-	}
-
 class OfficeChartElementBase(Window):
 
+	#used for deciding whether to report extra information for chart or plot areas
 	reportExtraInfo = False
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
@@ -685,12 +467,13 @@ class OfficeChartElementBase(Window):
 		"kb:NVDA+f" : "reportCurrentChartElementColor",
 	}
 
-class OfficeChartElementList(OfficeChartElementBase):
+class OfficeChartElementList(Window):
 
 	def __init__(self, windowHandle , officeChartObject , elementID=None  , arg1=None , arg2=None ):
+		self.officeChartObject = officeChartObject
 		self.elementList = []
 		self.activeElement = None	
-		super(OfficeChartElementList,self).__init__(windowHandle=windowHandle, officeChartObject = officeChartObject , elementID = elementID , arg1 = arg1 , arg2 = arg2 )
+		super(OfficeChartElementList,self).__init__(windowHandle=windowHandle )
 
 	def addElement(self , element , parent):
 		element.parent = parent
@@ -730,6 +513,97 @@ class OfficeChartElementList(OfficeChartElementBase):
 				"kb(desktop):rightArrow":"nextElement",
 	}
 
+class OfficeChart(OfficeChartElementList):
+
+	role=controlTypes.ROLE_CHART
+
+	def __init__(self,windowHandle, officeApplicationObject, officeShapeObject,keyIndex=0):
+		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeShapeObject.Chart )
+		self.officeApplicationObject=officeApplicationObject
+		try:
+			seriesCount=self.officeChartObject.SeriesCollection().Count
+		except:
+			seriesCount=None
+		if seriesCount:
+			for i in xrange(seriesCount):
+				self.addElement( OfficeChartElementSeries(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject , elementID = xlSeries , arg1 = i +1 ) , self) 
+
+		self.addElement( OfficeChartElement(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject ) , self )
+
+		self.officeChartObject.Select()
+
+	def _get_name(self):
+		if self.officeChartObject.HasTitle:
+			name=self.officeChartObject.ChartTitle.Text
+		else:
+			name=self.officeChartObject.Name
+		#find the type of the chart
+		chartType = self.officeChartObject.ChartType
+		chartTypeText = chartTypeDict.get(chartType,
+                # Translators: Reported when the type of a chart is not known.
+                                _("unknown"))
+		# Translators: Message reporting the title and type of a chart.
+		text=_("Chart title: {chartTitle}, type: {chartType}").format(chartTitle=name, chartType=chartTypeText)
+		return text
+
+	def _get_description(self):
+		count = self.officeChartObject.SeriesCollection().count
+		text=""
+		if count>0:
+			if count == 1:
+				# Translators: Indicates that there is 1 series in a chart.
+				seriesValueString = _( "There is 1 series in this chart" )
+			else:
+				# Translators: Indicates the number of series in a chart where there are multiple series.
+				seriesValueString = _( "There are total %d series in this chart" ) %(count)
+				for i in xrange(1, count+1):
+					# Translators: Specifies the number and name of a series when listing series in a chart.
+					seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.officeChartObject.SeriesCollection(i).Name)
+				text += seriesValueString
+		else:
+			# Translators: Indicates that there are no series in a chart.
+			text +=_("No Series defined.")
+		return text
+
+	def getChartSegment(self):
+		chartType = self.officeChartObject.ChartType
+		if chartType in (xl3DPie, xl3DPieExploded, xlPie, xlPieExploded, xlPieOfPie):
+			# Translators: A slice in a pie chart.
+			text=_("slice")
+		elif chartType in (xl3DColumn, xl3DColumnClustered, xl3DColumnStacked, xl3DColumnStacked100, xlColumnClustered, xlColumnStacked100, xlColumnStacked):
+			# Translators: A column in a column chart.
+			text=pgettext('chart','column')
+		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
+			# Translators: A data point in a line chart.
+			text=_("daata point")
+		else:
+			# Translators: A segment of a chart for charts which don't have a specific name for segments.
+			text=_("item")
+		return text
+
+	def script_activatePosition(self,gesture):
+		# Toggle browse mode pass-through.
+		self.passThrough = True
+		self.ignoreTreeInterceptorPassThrough=False
+		browseMode.reportPassThrough(self)
+	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+	script_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
+	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
+
+	def script_disablePassThrough(self, gesture):
+		rangeStart=self.officeShapeObject.Range.Start
+		self.officeApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
+		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+
+	__gestures = {
+				"kb:upArrow":"previousElement",
+				"kb:downArrow":"nextElement",
+				"kb:enter": "activatePosition",
+				"kb(desktop):numpadEnter":"activatePosition",
+				"kb:space": "activatePosition",
+				"kb:escape": "disablePassThrough",
+	}
+
 class OfficeChartElement(OfficeChartElementList):
 
 	role=controlTypes.ROLE_CHARTELEMENT
@@ -744,11 +618,21 @@ class OfficeChartElement(OfficeChartElementList):
 		for item in axisAndAxisTitles:
 			self.addElement( item , self)
 
-		self.addElement(OfficeChartElementChartArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) , self )
-		self.addElement(OfficeChartElementPlotArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) , self )
+		chartAreaObject = OfficeChartElementChartArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) 
+		chartAreaObject.reportExtraInfo = True
+		self.addElement( chartAreaObject , self )
+		plotAreaObject = OfficeChartElementPlotArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) 
+		plotAreaObject.reportExtraInfo = True
+		self.addElement( plotAreaObject , self )
 
 		if officeChartObject.HasLegend:
 			self.addElement(OfficeChartElementLegend(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) , self )
+
+			self.legendEntryCount = self.officeChartObject.Legend.LegendEntries().Count
+			for legendEntryIndex in xrange( 1 , self.legendEntryCount  + 1 ) :
+				legendEntry = OfficeChartElementLegendEntry(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlLegendEntry ,  arg1 = legendEntryIndex , arg2 = self.legendEntryCount ) 
+				legendEntry.eventDriven = False
+				self.addElement ( legendEntry , self )
 
 		if officeChartObject.HasDataTable:
 			self.addElement(OfficeChartElementDataTable(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) , self )
@@ -757,13 +641,17 @@ class OfficeChartElement(OfficeChartElementList):
 		#Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
 		return _("Chart Elements")
 
+	def select(self):
+		pass
+
 class OfficeChartElementSeries(OfficeChartElementList):
 
 	description=None
 	role=controlTypes.ROLE_CHARTELEMENT
 
 	def __init__(self,windowHandle, officeChartObject , elementID , arg1 = None , arg2= None   ):
-		super(OfficeChartElementSeries,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super(OfficeChartElementSeries,self).__init__( windowHandle=windowHandle , officeChartObject = officeChartObject ) 
+		self.elementID=elementID 
 		self.seriesIndex=arg1
 		self.currentPointIndex=arg2
 		self.seriesCount=self.officeChartObject.SeriesCollection().Count
@@ -776,16 +664,15 @@ class OfficeChartElementSeries(OfficeChartElementList):
 		self.trendlinesCount = self.officeChartObject.SeriesCollection(self.seriesIndex).Trendlines().Count
 		for trendlineIndex in xrange( 1 , self.trendlinesCount + 1 ) :
 			self.addElement ( OfficeChartElementTrendline(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlTrendline ,  arg1 = self.seriesIndex , arg2 = trendlineIndex ) , self )
-
-		#self.legendEntryCount = self.officeChartObject.SeriesCollection(self.seriesIndex).LegendEntries().Count
-		#for legendEntryIndex in xrange( 1 , self.legendEntryCount + 1 ) :
-		#	self.addElement ( OfficeChartElementLegendEntry(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlLegendEntry ,  arg1 = self.seriesIndex , arg2 = legendEntryIndex ) , self )
 	
 	def _get_name(self):
 		currentSeries=self.officeChartObject.SeriesCollection(self.seriesIndex)
 		# Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(self.seriesIndex).Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount )
 		return seriesText
+
+	def select(self):
+		self.officeChartObject.SeriesCollection(self.seriesIndex).Select()
 
 	def script_reportColor(self, gesture):
 		if self.officeChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
@@ -984,7 +871,6 @@ class OfficeChartElementChartTitle( OfficeChartElementBase):
 		self.officeChartObject.ChartTitle.Select()
 
 class OfficeChartElementChartArea( OfficeChartElementBase):
-	reportExtraInfo = True
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
 		super( OfficeChartElementChartArea , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
@@ -1001,8 +887,6 @@ class OfficeChartElementChartArea( OfficeChartElementBase):
 		self.officeChartObject.ChartArea.Select()
 
 class OfficeChartElementPlotArea( OfficeChartElementBase):
-
-	reportExtraInfo = True
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
 		super( OfficeChartElementPlotArea , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
@@ -1033,14 +917,24 @@ class OfficeChartElementLegend( OfficeChartElementBase):
 
 class OfficeChartElementLegendEntry( OfficeChartElementBase):
 
+	eventDriven = True
+
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
+		if self.eventDriven:
+			self.legendEntry = officeChartObject.Legend.LegendEntries(arg1)
 		super( OfficeChartElementLegendEntry , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlLegendEntry:
-			# Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-			# For example, this might report "Legend entry for series Temperature 1 of 2"
+		# Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+		# For example, this might report "Legend entry for series Temperature 1 of 2"
+		if self.eventDriven:
 			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count ) 
+		else:
+			return _( "Legend entry {legendEntryIndex} of {legendEntryCount}").format( legendEntryIndex = arg1 , legendEntryCount = arg2 ) 
+
+	def select(self):
+		if self.eventDriven:
+			self.legendEntry.Select() 
 
 class OfficeChartElementLegendKey( OfficeChartElementBase):
 

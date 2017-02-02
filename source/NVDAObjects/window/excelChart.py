@@ -195,7 +195,7 @@ class ExcelChart(excel.ExcelBase):
 		elif ElementID == xlAxisTitle:  
 			selectedChartElement = OfficeChartElementAxisTitle( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlSeries:
-			selectedChartElement = OfficeChartElementSeries( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
+			selectedChartElement = OfficeChartElementPoint( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlTrendline:
 			selectedChartElement = OfficeChartElementTrendline( windowHandle= self.windowHandle , officeChartObject= self.excelChartObject  , elementID=ElementID  , arg1=arg1 , arg2=arg2 )
 		elif ElementID == xlChartTitle:
