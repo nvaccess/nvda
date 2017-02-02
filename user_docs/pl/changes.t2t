@@ -3,6 +3,38 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.1 =
+
+== Nowe funkcje ==
+- W Microsoft Word mogą być zgłaszane typ podziału sekcji i numer sekcji. Jest to włączane przy pomocy opcji "Zgłaszaj numery stron"  w oknie formatowania dokumentów. (#5946)
+- W Microsoft Word kolumny tekstu mogą być zgłaszane. Jest to włączane przy pomocy opcji "Zgłaszaj numery stron"  w oknie formatowania dokumentów. (#5946)
+- Automatyczna zmiana języka jest obsługiwana w Wordpad. (#6555)
+- Komenda znajdowania w NVDA (NVDA+control+f) jest obsługiwana w trybie czytania w Microsoft Edge. (#6580)
+- Szybka nawigacja po przyciskach w trybie czytania (b i shift+b) jest obsługiwana w Microsoft Edge. (#6577)
+- Podczas kopiowania arkusza w Microsoft Excel, zapamiętywane są ustawione nagłówki kolumn i wierszy. (#6628)
+
+
+== Zmiany ==
+- Minimalna częstotliwość migotania kursora brajla to obecnie 200ms. Niższe wartości tego ustawienia w profilach lub konfiguracjach zostaną podniesione do 200ms. (#6470)
+- Pole wyboru zostało dodane do ustawień brajla, pozwalające włączyć lub wyłączyć migotanie kursora brajlowskiego. Poprzednio wartość zero była używana, aby to osiągnąć. (#6470)
+- Profile i konfiguracje są automatycznie aktualizowane do zmodyfikowanych wymagań schematu. Jeśli pojawi się błąd podczas aktualizacji, pokazywane jest powiadomienie, konfiguracja jest resetowana, a stary plik konfiguracyjny jest dostępny w logu NVDA na poziomie 'Info'. (#6470)
+- Obsługa czytania i nawigacji książek w Kindle dla PC wersja 1.19, włączając w to dostęp do linków, przypisów, grafik, podświetlonego tekstu i notatek użytkownika. Więcej informacji dostępne w rozdziale Kindle dla PC podręcznika NVDA. (#6247, #6638)
+
+
+== Poprawki błędów ==
+- Naprawione zawieszenie w Microsoft Word podczas przechodzenia akapitami w dużym dokumencie przy włączonym trybie czytania. (#6368)
+- W Microsoft Word tabele skopiowane z Microsoft Excel nie są od teraz pomijane jako tabele układu treści. (#5927)
+- W Microsoft Excel próba wpisywania w widoku chronionym sprawia, że NVDA generuje dźwięk zamiast wypowiadać znaki, które nie zostały wpisane. (#6570)
+- Naciśnięcie escape w Microsoft Excel nie przełącza błędnie do trybu czytania, chyba że użytkownik wcześniej włączył tryb czytania klawiszami NVDA+space, a następnie przeszedł do trybu formularzy naciskając Enter na kontrolce. (#6569) 
+- NVDA nie zawiesza się w arkuszach Microsoft Excel , w których cała linia lub kolumna jest połączona. (#6216)
+- Zgłaszanie przepełnienia lub przyciętego tekstu w komórkach Microsoft Excel powinno być teraz bardziej dokładne. (#6472)
+- NVDA zgłasza pola wyboru tylko do odczytu. (#6563)
+- Program uruchamiający NVDA nie będzie pokazywał okna ostrzeżenia, gdy nie może odtworzyć dźwięku logo z powodu braku dostępnego urządzenia audio. (#6289)
+- Niedostępne kontrolki wstążki Microsoft Excel są teraz odpowiednio zgłaszane. (#6430)
+- NVDA nie będzie zgłaszał "panel" podczas minimalizacji okien. (#6671)
+- Obsługa wpisywanych znaków w aplikacjach UWP (włączając w to Microsoft Edge) w Windows 10 Creators Update. (#6017)
+
+
 = 2016.4 =
 Najważniejsze zmiany w tej wersji to poprawiona obsługa Microsoft Edge; tryb czytania w aplikacji Poczta systemu Windows 10; istotne poprawki okien NVDA.
 
@@ -15,6 +47,7 @@ Najważniejsze zmiany w tej wersji to poprawiona obsługa Microsoft Edge; tryb c
 - Obsługa monitorów brajlowskich Baum SuperVario2, Baum Vario 340 i HumanWare Brailliant2. (#6116)
 - Wstępna obsługa rocznicowej aktualizacji Microsoft Edge. (#6271)
 - Tryb czytania jest teraz używany podczas czytania poczty w aplikacji Windows 10 mail. (#6271)
+- Nowy język: litewski.
 
 
 == Zmiany ==
