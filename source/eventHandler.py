@@ -258,9 +258,10 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 
 	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
 	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread. 
-	gi=winUser.getGUIThreadInfo(0)
-	if winUser.isDescendantWindow(gi.hwndActive,windowHandle) and wClass.startswith('Windows.UI.Core'):
-		return True
+	if wClass.startswith('Windows.UI.Core'):
+		gi=winUser.getGUIThreadInfo(0)
+		if winUser.isDescendantWindow(gi.hwndActive,windowHandle):
+			return True
 
 	fg = winUser.getForegroundWindow()
 	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":
