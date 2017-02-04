@@ -256,9 +256,12 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# #5595: Events for the cursor get mapped to the desktop window.
 		return True
 
-	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window
+	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
+	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread. 
 	if wClass.startswith('Windows.UI.Core'):
-		return True
+		gi=winUser.getGUIThreadInfo(0)
+		if winUser.isDescendantWindow(gi.hwndActive,windowHandle):
+			return True
 
 	fg = winUser.getForegroundWindow()
 	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":
