@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 00:10+1000\n"
-"PO-Revision-Date: 2017-01-20 01:38+0330\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
+"PO-Revision-Date: 2017-01-30 00:16+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -796,6 +796,7 @@ msgstr ""
 "میکنند. وقتی خاموش باشد، کلید‌های یاد‌شده به برنامه‌ی پیشِ رو هدایت میشوند."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "در این سند پشتیبانی نمیشود"
 
@@ -1290,6 +1291,7 @@ msgid "%s landmark"
 msgstr "بخشِ %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "%s انتخاب شد"
@@ -1321,6 +1323,33 @@ msgstr "پایین"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "به بعد از انتهای سازه‌ی دربرگیرنده، مانند لیست یا جدول میبَرَد."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "در جدول نیستید."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "لبه‌ی جدول"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "به سطرِ بَعدیِ جدول میبَرَد."
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "به سطرِ قبلیِ جدول میبَرَد."
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "به ستونِ بَعدیِ جدول میبَرَد"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "به ستونِ قبلیِ جدول میبَرَد."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4953,11 +4982,6 @@ msgstr "مانندِ {symbol} در {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "لبه‌ی جدول"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "پِیمایِشگر را به ستونِ بعدی میبَرَد."
@@ -4998,6 +5022,12 @@ msgstr "هیچ تِرَکی پخش نمی‌شود"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "زمانِ باقیمانده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"گزینه‌های مربوط به متنِ انتخاب‌شده یا متنی که مکان‌نما روی آن قرار دارد را نشان "
+"میدهد."
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5007,6 +5037,25 @@ msgstr "{bookPercentage}%، {curLocation} از {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "صفحه‌ی {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "برجسته"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "قسمتِ برجسته‌ای نیست"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s برجسته شد"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "خارج از قسمتِ برجسته‌ی پرمخاطب"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5908,6 +5957,11 @@ msgstr "راه‌اندازیِ مجدد"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
+msgstr "راه‌اندازیِ مجدد با افزونه های غیرِ فعال"
+
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Restart with debug logging enabled"
 msgstr "راه‌اندازیِ مجدد با افزونه های غیرِ فعال"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
@@ -7212,9 +7266,7 @@ msgstr "جدولِ &ورودیِ بریل"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr ""
-"&گسترش دادَنِ واژه‌ی قرار گرفته روی مکان‌نما به صورتِ بریلِ رایانه (کوتاهنویسی "
-"نشده)"
+msgstr "&گسترش دادَنِ واژه‌ی قرار گرفته روی مکان‌نما به صورتِ بریلِ رایانه"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
@@ -7396,28 +7448,6 @@ msgid ""
 msgstr ""
 "هنگامِ ارائه‌ی محتوای سند، مرورِ صفحه را بر اساسِ چیدمانِ بصریِ صفحه یا بر اساس "
 "مرور خط به خط تغییر میدهد."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "در جدول نیستید."
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "به سطرِ بَعدیِ جدول میبَرَد."
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "به سطرِ قبلیِ جدول میبَرَد."
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "به ستونِ بَعدیِ جدول میبَرَد"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "به ستونِ قبلیِ جدول میبَرَد."
 
 msgid "Taskbar"
 msgstr "نوارِ وظیفه"

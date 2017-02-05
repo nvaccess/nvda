@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 00:10+1000\n"
-"PO-Revision-Date: 2017-01-19 16:22+0200\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
+"PO-Revision-Date: 2017-02-01 14:06+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -798,6 +798,7 @@ msgstr ""
 "käytössä, niiden painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ei tueta tässä dokumentissa"
 
@@ -1292,6 +1293,7 @@ msgid "%s landmark"
 msgstr "%s kiintopiste"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "valittu %s"
@@ -1324,6 +1326,33 @@ msgstr "Alareuna"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, loppuun."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Ei taulukon solussa"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Taulukon reuna"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "siirtää seuraavalle taulukon riville"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "siirtää edelliselle taulukon riville"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "siirtää seuraavaan taulukon sarakkeeseen"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "siirtää edelliseen taulukon sarakkeeseen"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4332,7 +4361,7 @@ msgstr "jossa %s kohdetta"
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
 msgid "out of %s"
-msgstr "%s loppuu"
+msgstr "%s loppui"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
@@ -4614,7 +4643,7 @@ msgstr "riviväli %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "kommentti loppuu"
+msgstr "kommentti loppui"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -4622,7 +4651,7 @@ msgstr "kirjoitusvirhe"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "kirjoitusvirheen loppu"
+msgstr "kirjoitusvirhe loppui"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -4987,11 +5016,6 @@ msgstr "{symbol} niin kuin {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Taulukon reuna"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Siirtää navigointiobjektin seuraavaan sarakkeeseen"
@@ -5032,6 +5056,12 @@ msgstr "Kappaleen toisto ei ole käynnissä"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Ilmoittaa tällä hetkellä soitettavan kappaleen jäljellä olevan ajan"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Näyttää valittuun tai kohdistimen kohdalla olevaan tekstiin liittyviä "
+"vaihtoehtoja."
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5041,6 +5071,25 @@ msgstr "{bookPercentage} %, sijainti {curLocation} / {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Sivu {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "korostus"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "ei korostusta"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s korostettu"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "suosittu korostus loppui"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5946,6 +5995,10 @@ msgstr "Käynnistä uudelleen"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Käynnistä uudelleen ja poista lisäosat käytöstä"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Käynnistä uudelleen ja ota käyttöön virheenkorjaus-lokitaso"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7437,28 +7490,6 @@ msgid ""
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö "
 "ruudun ulkoasu dokumentin sisältöä hahmonnettaessa."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Ei taulukon solussa"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "siirtää seuraavalle taulukon riville"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "siirtää edelliselle taulukon riville"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "siirtää seuraavaan taulukon sarakkeeseen"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "siirtää edelliseen taulukon sarakkeeseen"
 
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"

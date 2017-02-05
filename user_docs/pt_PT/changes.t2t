@@ -6,6 +6,10 @@
 Tradução de Rui Fontes
 
 = 2017.1 =
+Os destaques desta versão são:
+- Anúncio de secções e colunas no Microsoft Word;
+- Suporte à leitura, navegação e anotações em livros no Kindle for PC;
+- Suporte melhorado ao Microsoft Edge.
 
 == Novas Funcionalidades ==
 - No Microsoft Word o tipo de quebra de secção e o número da secção passam a poder ser anunciados. Esta opção é activada juntamente com o anúncio do número de página no diálogo Formatação de documentos do NVDA. (#5946)
@@ -13,12 +17,17 @@ Tradução de Rui Fontes
 - A mudança automática de idioma passa a ser suportada no Wordpad. (#6555)
 - O comando Localizar do NVDA (NVDA+control+f) já é suportado no modo de navegação no Microsoft Edge. (#6580)
 - Os comandos de navegação rápida para botões, no modo de navegação, (b e shift+b) passam a ser suportados no Microsoft Edge. (#6577)
+- Ao copiar uma folha no Microsoft Excel, os cabeçalhos de linhas e colunas são também copiados. (#6628)
+- Suporte para ler e navegar livros na versão 1.19 para PC do Kindle, incluindo acesso a links, notas de rodapé, gráficos, texto realçado e notas do utilizador. Por favor, consulte a secção sobre o Kindle para PC do Manual do utilizador para mais informações. (#6247, #6638)
+- A navegação em tabelas no modo de navegação  já é suportada no Microsoft Edge. (#6594)
+- No Microsoft Excel, o comando Anunciar localização do cursor de revisão (desktop: NVDA+Delete do numérico, laptop: NVDA+delete) passa a anunciar o nome da folha e a localização da célula. (#6613)
+- Adicionada uma opção ao diálogo de encerramento do NVDA para reiniciar com o nível de registo definido para Depuração. (#6689)
 
 
 == Alterações ==
 - O valor mínimo para a intermitência do cursor braille é agora 200 ms. Perfis ou configurações com valores inferiores serão alterados para este novo mínimo. (#6470)
 - Foi adicionada, no diálogo Definições do Braille, uma caixa de verificação para poder desligar a intermitência do cursor Braille. Esta opção era antes activada colocando a intermitência do cursor Braille a 0. (#6470)
-- Os ficheiros de Perfis e configurações serão automaticamente actualizados para acomodar as alterações anteriores. Se houver um erro na actualização, uma notificaçãon será mostrada e a  configuração será feita por padrão,, ficando a configuração antiga disponível no ficheiro de log do NVDA. (#6470)
+- Actualizado o eSpeak NG (commit e095f008, 10 de Janeiro de 2017). (#6717)
 
 
 == Correcções ==
@@ -26,12 +35,18 @@ Tradução de Rui Fontes
 - As tabelas copiadas do Microsoft Excel  para o Microsoft Word já não são consideradas como tabelas de formatação e, por isso, já não são ignoradas. (#5927)
 - Ao tentar escrever na vista protegida do Microsoft Excel, o NVDA passa a fazer um bip em vez de ecoar as letras que, na realidade, não são escritas. (#6570)
 - Pressionar escape no Microsoft Excel já não muda, incorrectamente, para modo de navegação, a menos que o utilizador tenha antes mudado para esse modo, com NVDA+Espaço, e depois tenha mudado para o modo normal ao pressionar enter num campo de formulário. (#6569) 
-- O NVDA já não apresenta paragens no Microsoft Excel, quando numa folha, uma linha ou coluna inteira está unida. 9#6216)
-- O anúncio de texto cortado ou em sobreposição, nas células do Microsoft Excel, está mais certeiro. (#6472)
+- O NVDA já não apresenta paragens no Microsoft Excel, quando numa folha, uma linha ou coluna inteira está unida. (#6216)
+- O anúncio de texto cortado ou em sobreposição, nas células do Microsoft Excel, está mais preciso. (#6472)
 - O NVDA passa a anunciar quando uma caixa de verificação é apenas de leitura. (#6563)
 - Ao iniciar o NVDA, já não é mostrado um aviso  quando não é possível emitir sons por falta de um dispositivo de áudio. (#6289)
 - Nos frisos do Microsoft Excel os controlos indisponíveis passam agora a ser anunciados como tal. (#6430)
 - O NVDA já não anunciará "painel" ao minimizar janelas. (#6671)
+- Os caracteres digitados já são falados nas aplicações Universal Windows Platform (UWP) (incluindo Microsoft Edge) no Windows 10 Creators Update. (#6017)
+- O acompanhamento do rato já funciona em todos os ecrãs em computadores com múltiplos ecrãs. (#6598)
+
+
+== Alterações para desenvolvedores ==
+- Os ficheiros de Perfis e configurações serão automaticamente actualizados para acomodar as alterações ao esquema de intermitência do cursor Braille. Se houver um erro na actualização, uma notificaçãon será mostrada e a  configuração será feita por padrão,, ficando a configuração antiga disponível no ficheiro de log do NVDA. (#6470)
 
 
 = 2016.4 =

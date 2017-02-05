@@ -612,7 +612,7 @@ Kaikki dokumentin kommentit muiden jäljitettävien muutosten ohella voidaan my�
 ++ Microsoft Excel ++
 
 +++ Sarake- ja riviotsikoiden automaattinen lukeminen +++
-NVDA voi lukea automaattisesti asianmukaiset rivi- ja sarakeotsikot Excel-taulukoissa liikuttaessa.
+NVDA voi lukea automaattisesti asianmukaiset rivi- ja sarakeotsikot Excel-laskentataulukoissa liikuttaessa.
 Tämä edellyttää, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön NVDA:n Dokumenttien muotoiluasetukset -valintaikkunasta.
 Toiseksi NVDA:n on tiedettävä, mikä rivi tai sarake sisältää otsikoita.
 Kun olet siirtynyt ensimmäiseen soluun otsikoita sisältävässä sarakkeessa tai rivissä, käytä jotakin seuraavista komennoista:
@@ -697,6 +697,42 @@ Keskustelussa oltaessa:
 || Nimi | Näppäinkomento | Kuvaus |
 | Lue viesti | NVDA+Control+1-0 | Lukee painettua numeroa vastaavan uusimman viestin ja siirtää tarkastelukohdistimen siihen; esim. NVDA+Control+2 lukee toiseksi uusimman viestin. |
 %kc:endInclude
+
+++ Kindle for PC ++
+NVDA tukee kirjojen lukemista ja niissä liikkumista Amazonin Kindle for PC -sovelluksessa.
+Tämä toiminnallisuus on käytettävissä vain kirjoissa, jotka tukevat laajennettua ladontaa (Enhanced Typesetting), minkä voit tarkistaa kirjan Tiedot-sivulta (Details).
+
+Kirjojen lukemiseen käytetään selaustilaa.
+Se otetaan käyttöön automaattisesti avatessasi kirjan tai siirtäessäsi kohdistuksen kirja-alueelle.
+Sivua käännetään automaattisesti aina tarvittaessa siirtäessäsi kohdistinta tai käyttäessäsi lue kaikki -komentoa.
+%kc:beginInclude
+Voit kääntää manuaalisesti seuraavalle sivulle painamalla Page down -näppäintä ja edelliselle painamalla Page up.
+%kc:endInclude
+
+Pikanavigointia tuetaan linkeille ja grafiikoille, mutta vain nykyisellä sivulla.
+Linkkeihin siirtyminen sisältää myös alaviitteet .
+
++++ Tekstin valitseminen +++
+Voit suorittaa Kindlessä valitulle tekstille eri toimintoja, mukaan lukien sanastomääritelmän hakeminen, huomautusten ja korostusten lisääminen, leikepöydälle kopioiminen sekä verkosta etsiminen.
+Tämä tehdään valitsemalla ensin tekstiä aivan kuten normaalistikin selaustilassa, esim. Shift- ja nuolinäppäimiä käyttäen.
+%kc:beginInclude
+Kun olet valinnut tekstin, paina sovellusnäppäintä tai Shift+F10 näyttääksesi käytettävissä olevat vaihtoehdot valinnan käsittelyyn.
+%kc:endInclude
+Mikäli tekstiä ei ole valittuna, vaihtoehdot näytetään kohdistimen kohdalla olevalle sanalle.
+
++++ Käyttäjän huomautukset +++
+Voit lisätä sanaan tai tekstin kohtaan liittyvän huomautuksen.
+Tämä tehdään valitsemalla ensin haluttu teksti ja avaamalla valinnan vaihtoehdot, kuten edellä on kuvailtu.
+Valitse sitten Add note.
+
+NVDA viittaa selaustilassa luettaessa huomautuksiin kommentteina.
+
+Lue, muokkaa tai poista huomautus seuraavasti:
+
++ Siirrä kohdistin kommentin sisältävään tekstiin.
++ Avaa valinnan vaihtoehdot, kuten yllä on kuvailtu.
++ Valitse Edit note.
++
 
 + NVDA:n asetusten määrittäminen +
 
@@ -2262,7 +2298,8 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -m | --minimal | Ei ääniä, käyttöliittymää, käynnistysilmoitusta jne. |
 | -s | --secure | Suojattu tila (poistaa käytöstä Python-konsolin). |
 | Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
-| Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukuohjelmalippua. |
+| Ei mitään | --debug-logging | Ottaa virheenkorjaus-lokitason käyttöön vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason argumentin (""--loglevel"", -l). |
+| Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
 

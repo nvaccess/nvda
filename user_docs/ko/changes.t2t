@@ -11,9 +11,17 @@ NVDA 변경된 사항
 - WordPad 사용시 자동 언어 변경 기능 지원 추가. (#6555)
 - 마이크로소프트 Edge 브라우즈 모드 사용시 NVDA의 문자열 찾기 명령(NVDA+control+f) 사용 가능. (#6580)
 - 마이크로소프트 Edge 브라우즈 모드 사용시 버튼 탐색 명령(b/shift+b) 사용 가능. (#6577)
+- 마이크로소프트 엑셀에서 sheet를 복사시 행 및 열 머릿말 정보도 복사되도록 함. (#6628)
+- Kindle 앱 1.19 버전 지원(책 독서중 링크, footnote, 그래픽, 텍스트 하이라이트 및 사용자 노트 탐색 가능). 자세한 정보는 NVDA 사용설명서 내 "Kindle PC 앱" 섹션을 참고바람. (#6247, #6638)
+- 마이크로소프트 Edge 브라우즈 모드에 표 탐색 명령 추가. (#6594)
+- 마이크로소프트 엑셀에서 리뷰 커서 위치 명령(NVDA+numpadDelete (desktop)/NVDA+delete (laptop))을 실행시 worksheet와 현재 셀 위치가 출력되도록 함. (#6613)
+- NVDA 종료 대화상자에 NVDA 재시작 및 디버그 정보 기록 옵션 추가. (#6689)
 
 
 == 변경된 기능들 ==
+- 점자 커서 깜박이 설정이 200 ms 이상으로 설정되도록 함(프로필 업그레이드시 본 설정이 조정되도록 함). (#6470)
+- 점자 설정에 점자 커서 깜박이 체크박스 추가함(이전에는 깜박이 설정을 0으로 설정하면 커서 깜박이가 꺼졌음). (#6470)
+- Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
 
 
 == 버그 수정 ==
@@ -27,6 +35,8 @@ NVDA 변경된 사항
 - 오디오 장치가 없는 컴퓨터에 NVDA 설치파일을 실행시 오디오 출력 불가로 인한 로고 재생 관련 경고 대화상자가 나타나지 않도록 함. (#6289)
 - 마이크로소프트 엑셀 ribbon 탐색시 사용할 수 없는 컨트롤의 사용 여부가 제대로 출력되도록 함. (#6430)
 - NVDA will no longer announce "pane" when minimizing windows. (#6671)
+- Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
+- Mouse tracking now works across all screens on computers with multiple monitors. (#6598)
 
 
 = 2016.4 =

@@ -698,6 +698,42 @@ Durant une conversation :
 | Revoir un message | NVDA+control+1-0 | Annonce et amène le curseur de revue à un message récent, en fonction du nombre pressé; ex : NVDA+control+2 lit le second message plus récent. |
 %kc:endInclude
 
+++ Kindle pour PC ++
+NVDA supporte la lecture et la navigation pour les livres sous Amazon Kindle pour PC.
+Cette fonctionnalité est disponible seulement dans les libres Kindle qui supportent la "Composition Améliorée", ce que vous pouvez sur la page de détails du libre.
+
+On utilise le mode navigation pour lire les livres.
+Il est activé automatiquement quand vous ouvrez un livre ou quand vous placez le focus sur la zone du livre.
+La page sera tournée automatiquement quand vous déplacerez le curseur ou utiliserez la commande dire tout.
+%kc:beginInclude
+Vous pouvez aller manuellement à la page suivante en pressant la touche PageSuiv ou à la page précédente en pressant la touche PagePrec.
+%kc:endInclude
+
+La navigation par simple lettre est supportée pour les liens et les graphiques, mais seulement dans la page en cours.
+La navigation par liens inclut également les notes de bas de page.
+
++++ Sélection de Texte +++
+Kindle vous permet d'exécuter diverses fonctions sur le texte sélectionné, incluant l'obtension d'une définition du dictionnaire, l'ajout de notes et de surlignages, la copie du texte dans le presse-papiers et la recherche sur le web.
+Pour faire cela, sélectionnez d'abord le texte comme vous le feriez normalement en mode navigation; ex: en utilisant maj et les touches curseur.
+%kc:beginInclude
+Une fois que vous avez sélectionné le texte, pressez la touche applications ou maj+f10 pour afficher les options disponibles pour travailler avec la sélection.
+%kc:endInclude
+Si vous faites ceci sans avoir sélectionné de texte, les options pour le mot sous le curseur seront affichées.
+
++++ Notes de l'Utilisateur +++
+Vous pouvez ajouter une note concernant un mot ou un passage du texte.
+Pour faire cela, sélectionnez d'abord le texte concerné et accédez aux options de sélection comme décrit plus haut.
+Ensuite, choisissez Ajouter une Note.
+
+Durant la lecture en mode navigation, NVDA fait référence à cette note comme un commentaire.
+
+Pour voir, éditer ou effacer une note.
+
++ Amenez le curseur au texte contenant la note.
++ Accédez aux options de sélection comme décrit plus haut.
++ Choisissez Éditer la Note.
++
+
 + Configurer NVDA +
 
 ++ Préférences ++
@@ -2262,6 +2298,7 @@ Voici les options de ligne de commande de NVDA :
 | -m | --minimal | Pas de sons, pas d'interface, pas de message de démarrage etc |
 | -s | --secure | Mode sécurisé (désactive la console Python) |
 | Aucune | --disable-addons | Les modules complémentaires n'auront pas d'effet |
+| Aucune | --debug-logging | Active le niveau de journalisation débogage seulement pour cette session. Ce paramètre remplacera tout autre niveau de journalisation ( ""--loglevel"", -l) argument donné. |
 | Aucune | --no-sr-flag  | Ne change pas l'indicateur système global de revue d'écran |
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
