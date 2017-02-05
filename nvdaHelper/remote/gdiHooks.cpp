@@ -359,6 +359,7 @@ GlyphTranslatorCache glyphTranslatorCache;
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
  * @param direction >0 for left to right, <0 for right to left, 0 for neutral or unknown. Text must still be passed in in visual order.
+ * @param prevColor the color of the pixel at the origin before the text was drawn, or CLR_INVALID if unknown
   */
 void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction, COLORREF prevColor) {
 	RECT clearRect={0,0,0,0};
