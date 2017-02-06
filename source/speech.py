@@ -307,7 +307,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 			newPropertyValues["_tableID"]=obj.tableID
 		except NotImplementedError:
 			pass
-	newPropertyValues['_current']=obj.getValueForAriaCurrent()
+	newPropertyValues['current']=obj.getValueForAriaCurrent()
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -1002,7 +1002,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
-	ariaCurrent = propertyValues.get('_current', False)
+	ariaCurrent = propertyValues.get('current', False)
 	if ariaCurrent is not None and ariaCurrent != False:
 		if ariaCurrent=="page":
 			textList.append(_("current page"))
@@ -1042,6 +1042,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
+	ariaCurrent=attrs.get('current', None)
 	value=attrs.get('value',"")
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
 		description=attrs.get('description',"")
@@ -1057,6 +1058,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
+	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	valueText=getSpeechTextForProperties(reason=reason,value=value)
 	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
@@ -1119,7 +1121,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
-		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText) if x)
+		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
 		if content and not speakContentFirst:
 			out.append(content)
 		return CHUNK_SEPARATOR.join(out)

@@ -257,6 +257,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return lineStart.value,lineEnd.value
 
 	def _normalizeControlField(self,attrs):
+
+		ariaCurrent = attrs.get("IAccessible2::attribute_current")
+		if ariaCurrent != None:
+			attrs['current']= ariaCurrent
+			del attrs["IAccessible2::attribute_current"]
+			
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
