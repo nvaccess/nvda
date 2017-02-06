@@ -4,6 +4,7 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Caracteristicile principale ale acestei lansări includ raportarea secțiunilor și a coloanelor de text în Microsoft Word, suport în citirea, navigarea și adnotarea cărților în Kindle for PC și suport îmbunătățit pentru Microsoft Edge.
 
 == Noi funcționalități ==
 - În Microsoft Word tipul de spațiere între secțiuni și nmărul secțiunilor pot fi anunțate. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
@@ -11,12 +12,17 @@ Ce este nou în NVDA
 - Comutarea automată a limbii este acum suportată în Wordpad. (#6555)
 - Comanda de găsire a NVDA-ului (NVDA+control+f) este acum suportată în modul de navigare pentru Microsoft Edge. (#6580)
 - Navigarea rapidă pentru butoane în modul de navigare (b și shift+b) este acum suportată în Microsoft Edge. (#6577)
+- Când se copiază o foaie în Microsoft Excel, coloana și antetele rândurilor setate sunt memorate. (#6628)
+- Suport pentru citirea și navigarea în Kindle For PC, versiunea 1.19, incluzând acces la linkuri, note de subsol, grafice, text evidențiat și note pentru utilizatori. Vă rugăm să verificați secțiunea Kindle for PC în documentația NVDA-ului pentru mai multe informații. (#6247, #6638)
+- Modul de navigare al navigării tabelului este acum suportat în Microsoft Edge. (#6594)
+- În Microsoft Excel, raportarea examinării cursorului a locației comenzii (desktop: NVDA+numpadDelete, laptop: NVDA+delete) raportează numele foii de lucru și locația celulei. (#6613)
+- A fost adăugată o opțiune la dialogul ieșire pentru repornirea cu nivelul diagnosticării. (#6689)
 
 
 == Modificări ==
 - Frecvența minimă a intermitenței cursorului braille este acum 200ms. Profilurile sau configurările cu valorile de mai jos, aceasta va fi mărită cu 200ms. (#6470)
 - A fost adăugată o casetă de bifat în dialogul setărilor braille pentru a permite activarea/dezactivarea intermitenței cursorului braille. Înainte, o valoare de zero a fost utilizată pentru a realiza acest lucru. (#6470)
-- Profilurile și fișierele de configurare sunt acum upgradate automat pentru a cunoaște necesitățile modificărilor schematice. Dacă există o eroare pe durata upgrade-ului, o notificare este afișată, configurația este resetată, iar configurația veche este disponibilă în logul NVDA la nivelul 'Info'. (#6470)
+- A fost actualizat eSpeak NG (commit e095f008, 10 ianuarie 2017). (#6717)
 
 
 == Rezolvări defecte ==
@@ -30,6 +36,12 @@ Ce este nou în NVDA
 - La lansarea NVDA nu se va mai afișa un dialog de avertizare atunci când nu se poate reda sunetul logo datorită indisponibilității unui dispozitiv audio. (#6289)
 - Controalele în ribbonul Excelului care sunt nedisponibile sunt raportate ca atare. (#6430)
 - NVDA nu va mai anunța „panou” la minimizarea ferestrelor. (#6671)
+- Caracterele tastate sunt acum rostite în platforma universală a Windows-ului (UWP) aplicații (incluzând Microsoft Edge) în actualizările creatoare. (#6017)
+- Urmărirea mausului funcționează peste toate ecranele pe calculatoarele cu monitoare multiple. (#6598)
+
+
+== Modificări pentru dezvoltatori ==
+- Profilurile și fișierele de configurare sunt acum upgradate automat pentru a cunoaște necesitățile modificărilor schematice. Dacă există o eroare pe durata upgrade-ului, o notificare este afișată, configurația este resetată, iar configurația veche este disponibilă în logul NVDA la nivelul 'Info'. (#6470)
 
 
 = 2016.4 =

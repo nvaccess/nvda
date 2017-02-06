@@ -1282,7 +1282,7 @@ If enabled, this setting tells NVDA to try and detect all the formatting changes
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
-Enable this option while proof reading documents in applications such as Wordpad, where formatting is important.
+Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
 ==== Line indentation reporting ====[lineIndentationOptions]
 This option allows you to configure how indentation at the beginning of lines is reported.
@@ -2298,6 +2298,7 @@ Following are the command line options for NVDA:
 | -m | --minimal | No sounds, no interface, no start message etc |
 | -s | --secure | Secure mode (disable Python console) |
 | None | --disable-addons | Addons will have no effect |
+| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given. |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |

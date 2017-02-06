@@ -32,7 +32,7 @@ Trăsăturile importante includ:
 
 ++ Internaționalizare ++
 Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, să aibă același acces la tehnologie.
-În afară de engleză, NVDA a fost tradus în 48 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindusă, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, lituaniană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
+În afară de engleză, NVDA a fost tradus în 48 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, indiană, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, lituaniană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
 
 ++ Suport pentru sintetizator de voce ++
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorului să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
@@ -698,6 +698,42 @@ Când vă aflați într-o conversație:
 | Verificare mesaj | NVDA+control+1-0 | Anunță și mută cursorul de examinare la un mesaj recent, depinzând de cifra apăsată; de ex. NVDA+control+2 citește cel de-al doilea cel mai recent mesaj. |
 %kc:endInclude
 
+++ Kindle pentru PC ++
+NVDA suportă citirea și navigarea cărților în Amazon Kindle pentru PC.
+Această funcționalitate este disponibilă doar pentru cărțile Kindle care suportă „Formatarea scrierii îmbunătățită”(„Enhanced Typesetting”), pe care o puteți verifica din pagina de detalii a cărții.
+
+Modul navigare este folosit pentru cititul de cărți.
+Acesta este activat automat când deschideți o carte sau focalizați zona cărții.
+Pagina va fi întoarsă automat în mod adecvat când mutați cursorul sau folosiți comanda „rostește tot”.
+%kc:beginInclude
+Puteți răsfoi la pagina următoare manual cu tasta pageDown și puteți să vă întoarceți la pagina precedentă cu tasta pageUp.
+%kc:endInclude
+
+Navigarea cu o singură tastă este suportată pentru legături sau grafice, dar doar în cadrul paginii curente.
+Navigarea prin legături include, de asemenea, note de subsol.
+
++++ Selectarea textului +++
+Kindle vă permite să executați diferite funcții pe textul selectat, incluzând obținerea unei definiții de dicționar, adăugarea de note sau sublinieri, copierea textului pe planșetă sau căutarea pe Web.
+Pentru a face asta, mai întâi selectați textul cum o faceți în mod obișnuit în modul navigare; de ex: folosind shift și tastele cursor.
+%kc:beginInclude
+Odată textul selectat, apăsați tasta pentru aplicații sau shift+F10 pentru a afișa opțiunile disponibile pentru lucrul cu selecția.
+%kc:endInclude
+Dacă faceți asta fără să aveți text selectat, vă vor fi arătate opțiuni pentru cuvântul aflat la poziția cursorului.
+
++++ Note de utilizator +++
+Puteți adăuga o notă referitoarea la un cuvânt sau un pasaj de text.
+Pentru a face asta, mai întâi selectați textul relevant și accesați opțiunile de selecție după cum este descris mai sus.
+Alegeți apo „Adaugă notă”.
+
+Când citiți in mod navigare, NVDA vede aceste note sub formă de comentarii.
+
+Pentru a vizualiza, modifica sau șterge o notă:
+
++ Mutați cursorul la următoarea notă conținută.
++ Accesați opțiunile de selecție după cum este descris mai sus.
++ Alegeți „Modifică notă”.
++
+
 + Configurarea NVDA +
 
 ++ Preferințe ++
@@ -915,6 +951,10 @@ Această opțiune permite cuvântului de sub cursor să fie afișat în braille 
 ==== Arată cursor ====
 Această opțiune permite activarea sau dezactivarea cursorului braille.
 Se aplică cursorului de scriere al sistemului și cursorului de examinare, dar nu și indicatorului de selecție.
+
+==== Cursor intermitent ====
+Această opțiune permite cursorului braille să clipească (să apară intermitent).
+Dacă opțiunea de intermitență este dezactivată, cursorul braille va rămâne constant pe poziția „pornit”.
 
 ==== Rata intermitenței cursorului (ms) ====
 Această opțiune este un câmp numeric care permite schimbarea ratei de clipire a cursorului în milisecunde.
@@ -2164,8 +2204,8 @@ Vă rugăm să consultați [documentația EcoBraille ftp://ftp.once.es/pub/utt/b
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] este un program separat care poate fi folosit pentru a suporta multe alte afișaje braille.
-Pentru a-l folosi, trebuie să instalați [BRLTTY pentru Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] este un program separat care poate fi folosit pentru a suporta multe alte afișaje braille.
+Pentru a-l folosi, trebuie să instalați [BRLTTY pentru Windows http://www.brltty.com/download.html].
 Trebuie să descărcați și să instalați ultimul pachet de instalare, care ar trebui să se denumească de exemplu, brltty-win-4.2-2.exe.
 Când configurați afișajul și portul pe care să-l folosească, aveți grijă să fiți foarte atent la instrucțiuni, în special dacă folosiți un afișaj USB și aveți deja instalat driverul producătorului.
 

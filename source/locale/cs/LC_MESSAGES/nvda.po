@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 00:10+1000\n"
-"PO-Revision-Date: 2016-12-29 17:28+0100\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
+"PO-Revision-Date: 2017-02-02 00:56+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -796,6 +796,7 @@ msgstr ""
 "vypnutá, tyto klávesy přejdou do aktuálního programu"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Není podporováno v tomto dokumentu"
 
@@ -1290,6 +1291,7 @@ msgid "%s landmark"
 msgstr "%s oblast"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "vybráno %s"
@@ -1321,6 +1323,33 @@ msgstr "Spodek"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Přejde na konec skupiny prvků, např. seznamu nebo tabulky"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Mimo buňku v tabulce"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Okraj tabulky"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "přejde na následující řádek tabulky"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "přejde na předchozí řádek tabulky"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "přejde na následující odstavec tabulky"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "přejde na předchozí odstavec tabulky"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4916,11 +4945,6 @@ msgstr "{symbol} jako v {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Okraj tabulky"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Přejde na následující sloupec"
@@ -4961,6 +4985,10 @@ msgstr "Žádná stopa se nepřehrává"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oznámí zbývající čas u právě hrající stopy"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Zobrazí možnosti týkající se vybraného textu nebo textu pod kurzorem"
+
 #. Translators: A position in a Kindle book
 #, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4969,6 +4997,25 @@ msgstr "{bookPercentage}%, umístění {curLocation} z {maxLocation}"
 #. Translators: a page in a Kindle book
 msgid "Page {pageNumber}"
 msgstr "Strana {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "označení"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "bez označení"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s označeno"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "vně populárního označení"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5841,6 +5888,10 @@ msgstr "Restartovat"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Restartovat bez doplňků"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Při restartu povolit logování debug"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7154,6 +7205,10 @@ msgstr "&Slovo, na kterém je kurzor, zobrazit počítačovým braillovým písm
 msgid "&Show cursor"
 msgstr "&Zobrazit kurzor"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Blikání kurzoru"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Rychlost blikání kurzoru v milisekundách"
@@ -7320,28 +7375,6 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "Zapíná a vypíná zachování vzhledu jako na obrazovce"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Mimo buňku v tabulce"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "přejde na následující řádek tabulky"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "přejde na předchozí řádek tabulky"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "přejde na následující odstavec tabulky"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "přejde na předchozí odstavec tabulky"
 
 msgid "Taskbar"
 msgstr "Úlohová lišta"
