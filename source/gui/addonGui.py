@@ -15,6 +15,7 @@ import wx
 import core
 import languageHandler
 import gui
+import guiHelper
 from logHandler import log
 import addonHandler
 import globalVars
@@ -189,9 +190,8 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.SetFocus()
 
 	def onAddonUpdateCheck(self,evt):
-		index=self.addonsList.GetFirstSelected()
-		if index<0: return
-		manifest=self.curAddons[index].manifest
+		# Hide Add-ons Manager window, otherwise the update result dialog will not be shown.
+		self.Hide()
 		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while checking for add-on updates.
 		_("Add-on update check"),
@@ -205,6 +205,8 @@ class AddonsDialog(wx.Dialog):
 		info = addonHandler.checkForAddonUpdates()
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
+		wx.CallAfter(AddonUpdatesDialog, gui.mainFrame, info)
+		wx.CallAfter(self.Show)
 
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
@@ -329,3 +331,52 @@ Description: {description}
 		dialog = AddonsDialog(gui.mainFrame)
 		dialog.installAddon(addonPath, closeAfter=closeAfter)
 		del dialog
+
+
+class AddonUpdatesDialog(wx.Dialog):
+
+	def __init__(self,parent, addonUpdateInfo):
+		# Translators: The title of the add-on updates dialog.
+		super(AddonUpdatesDialog,self).__init__(parent,title=_("Add-on Updates"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		addonsSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		self.addonUpdateInfo = addonUpdateInfo
+
+		if addonUpdateInfo:
+			entriesSizer=wx.BoxSizer(wx.VERTICAL)
+			self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+			# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
+			self.addonsList.InsertColumn(0,_("Package"),width=150)
+			# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
+			self.addonsList.InsertColumn(1,_("Current version"),width=50)
+			# Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
+			self.addonsList.InsertColumn(2,_("New version"),width=50)
+			entriesSizer.Add(self.addonsList,proportion=8)
+			for entry in sorted(addonUpdateInfo.keys()):
+				addon = addonUpdateInfo[entry]
+				self.addonsList.Append((addon['summary'], addon['version'], addon['version']))
+			addonsSizerHelper.addItem(entriesSizer)
+		else:
+			addonsSizerHelper.addItem(wx.StaticText(self, label=_("No add-on update available.")))
+
+		bHelper = addonsSizerHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
+		if addonUpdateInfo:
+			# Translators: The label of a button to update add-ons.
+			label = _("&Update add-ons")
+			updateButton = bHelper.addButton(self, label=label)
+			updateButton.Bind(wx.EVT_BUTTON, self.onClose)
+
+		# Translators: The label of a button to close a dialog.
+		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Close"))
+		closeButton.Bind(wx.EVT_BUTTON, self.onClose)
+		self.Bind(wx.EVT_CLOSE, lambda evt: self.onClose)
+		self.EscapeId = wx.ID_CLOSE
+
+		mainSizer.Add(addonsSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		wx.CallAfter(self.Show)
+
+	def onClose(self, evt):
+		self.Destroy()
