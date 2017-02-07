@@ -701,6 +701,42 @@ Wanneer u zich in een berichtenreeks bevindt:
 | Bericht lezen | NVDA+control+1-0 | Afhankelijk van het cijfer dat u indrukt, wordt de leescursor naar het daarbijbehorende bericht verplaatst en kan het gelezen worden; als  u bij voorbeeld NVDA+control+2 indrukt, wordt het bericht dat u op één na het laatst hebt ontvangen gelezen. |
 %kc:endInclude
 
+++ Kindle voor de PC ++
+NVDA ondersteunt het lezen van en het navigeren in boeken met  Amazon Kindle voor de PC.
+Deze functionaliteit is alleen beschikbaar voor  Kindle-boeken die "Enhanced Typesetting" ondersteunen U kunt dit nagaan op de pagina met gegevens over het boek in kwestie.
+
+U gebruikt de bladermodus om boeken te lezen.
+Deze wordt vanzelf geactiveerd wanneer u een boek opent of de focus ergens in een boekgebied plaatst.
+De pagina wordt, wanneer dit aan de orde is, automatisch  omgeslagen door de cursor  te verplaatsen of met behulp van het commando "Alles uitspreken".
+%kc:beginInclude
+U kunt ook handmatig naar de volgende pagina gaan  met de Pagina Omlaag-toets,en met de toets Pagina Omhoog kunt u naar de vorige bladzijde.
+%kc:endInclude
+
+Navigeren met een enkele lettertoets wordt ondersteund voor koppelingen en afbeeldingen maar alleen binnen de huidige pagina.
+Bij het navigeren tussen koppelingen (links) worden ook voetnoten meegenomen.
+
++++ Tekstselectie +++
+Met Kindle kunt u verschillende handelingen met betrekking tot geselecteerde tekst, uitvoeren, waaronder het verkrijgen van een definitie uit een woordenboek, het toevoegen van aantekeningen en tekstmarkeringen, het kopiëren van tekst naar het klembord en het doorzoeken van een webpagina. 
+Daartoe dient u eerst tekst op de gebruikelijke manier te selecteren in de bladermodus, bijv. met shift en de cursortoetsen.
+%kc:beginInclude
+Nadat u tekst hebt geselecteerd drukt u op de Windows contextmenutoets of op shift+f10 om te zien wat u kunt doen met de selectie.
+%kc:endInclude
+Als u dit doet zonder dat er tekst is geselecteerd, worden de opties getoond voor het woord bij de cursor.
+
++++ Aantekeningen van gebruiker +++
+U kunt een aantekening maken bij een woord of een tekstpassage. 
+Hiertoe selecteert u eerst de tekst waar het omgaat en roept u het contextmenu voor de selectie op zoals hierboven beschreven.
+Vervolgens kiest u "Aantekening toevoegen".
+
+Als u in de bladermodus leest, verwijst NVDA naar deze aantekeningen als Opmerkingen.
+
+Om een aantekening te bekijken, bewerken of verwijderen:
+
++ verplaatst u de cursor naar de tekst waar de aantekening zich bevindt,
++ roept u het Windows contextmenu op met de opties voor de selectie,
++ kiest u "Aantekening bewerken".
++
+
 + NVDA configureren +
 
 ++ Opties ++
@@ -912,6 +948,10 @@ Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven
 ==== Cursor Tonen ====
 Met deze optie kunt u de braillecursor in- en uitschakelen.
 Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectieaanwijzer.
+
+==== Knipperende cursor ====
+Met deze optie kunt u een braillecursor laten knipperen.
+Als knipperen wordt uitgezet, blijft de braillecursor steeds in de "omhoog" stand staan.
 
 ==== Knippersnelheid cursor ====
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.

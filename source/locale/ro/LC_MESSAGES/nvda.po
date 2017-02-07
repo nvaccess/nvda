@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 00:10+1000\n"
-"PO-Revision-Date: 2017-01-20 16:08+0200\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
+"PO-Revision-Date: 2017-02-01 15:31+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -798,6 +798,7 @@ msgstr ""
 "aplicației"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Nesuportat în acest document"
 
@@ -1292,6 +1293,7 @@ msgid "%s landmark"
 msgstr "%s reper"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "selectat %s"
@@ -1323,6 +1325,33 @@ msgstr "Jos"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Mută după sfârșitul elementului container, cum ar fi listă sau tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Nu este într-o celulă de tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Marginea tabelului"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "se mută lal rândul următor din tabel"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "se mută la rândul anterior din tabel"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "mută la coloana următoare din tabel"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "mută la coloana anterioară din tabel"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4999,11 +5028,6 @@ msgstr "{symbol} ca în {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Marginea tabelului"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Mută obiectul de navigare la următoarea coloană"
@@ -5044,6 +5068,10 @@ msgstr "Nu este redată nicio melodie"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anunță timpul rămas din melodia redată acum, dacă există"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Arată opțiunile relatate la textul selectat sau textul la cursor"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5053,6 +5081,25 @@ msgstr "{bookPercentage}%, locație {curLocation} din {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Pagină {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "evidențiere"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "nicio evidențiere"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s evidențiat"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "În afara evidențierii populare"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5959,6 +6006,10 @@ msgstr "Repornire"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Repornire cu extensiile add-on dezactivate"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Repornire cu diagnosticarea activată"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7469,28 +7520,6 @@ msgid ""
 msgstr ""
 "Activează sau dezactivează păstrarea aspectului ecranului în timpul redării "
 "conținutului documentului"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Nu este într-o celulă de tabel"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "se mută lal rândul următor din tabel"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "se mută la rândul anterior din tabel"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "mută la coloana următoare din tabel"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "mută la coloana anterioară din tabel"
 
 msgid "Taskbar"
 msgstr "Bară de activități"

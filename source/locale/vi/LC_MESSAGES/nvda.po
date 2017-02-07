@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 00:10+1000\n"
-"PO-Revision-Date: 2017-01-24 15:53+0700\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
+"PO-Revision-Date: 2017-01-26 21:23+0700\n"
 "Last-Translator: Dang Hoai Phuc <danghoaiphuc@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -96,7 +96,7 @@ msgstr "{language} - {layout}"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Lỗi trong Mô Đun Ứng Dụng %s"
+msgstr "Lỗi trong mô đun Ứng Dụng %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
@@ -802,6 +802,7 @@ msgstr ""
 "gửi đến ứng dung."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Không được hỗ trợ trong tài lieu này"
 
@@ -1296,6 +1297,7 @@ msgid "%s landmark"
 msgstr "%s landmark"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "đã chọn %s "
@@ -1327,6 +1329,33 @@ msgstr "Cuối"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Chuyển đến đối tượng chứa cuối cùng"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Không ở trong bảng"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Đã ở cuối của bảng"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "chuyển đến dòng kế của bảng"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "chuyển đến dòng trước của bảng"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "chuyển đến cột kế của bảng"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "chuyển đến cột trước của bảng"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4933,11 +4962,6 @@ msgstr "{symbol} như trong {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Đã ở cuối của bảng"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Chuyển sang cột tiếp theo"
@@ -4978,6 +5002,12 @@ msgstr "không có bài nào đang chơi"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "thông báo thời gian còn lại của bản nhạc đang chơi "
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Hiển thị các tùy chọn liên quan đến văn bản được chọn hoặc văn bản tại vị "
+"trí con trỏ"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4987,6 +5017,25 @@ msgstr "{bookPercentage}%, vị trí {curLocation} của {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Trang {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "đánh dấu"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "chưa đánh dấu"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "đã đánh dấu %s"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "ngoài phần đánh dấu phổ biến"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5609,8 +5658,8 @@ msgstr ""
 "chuột"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review cursor..."
-msgstr "Con trỏ &duyệt"
+msgid "Review &cursor..."
+msgstr "Con trỏ &duyệt..."
 
 msgid "Configure how and when the review cursor moves"
 msgstr "Cấu hình cách di chuyển con trỏ duyệt"
@@ -5705,7 +5754,7 @@ msgstr "Python console"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
-msgstr "Quán lý &Add-ons..."
+msgstr "Quản lý &Add-ons..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -5885,6 +5934,11 @@ msgstr "Khởi động lại"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
+msgstr "Khởi động lại với các add-on được tắt"
+
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Restart with debug logging enabled"
 msgstr "Khởi động lại với các add-on được tắt"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
@@ -6587,7 +6641,7 @@ msgstr "thiết bị đầu ra"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 msgid "Audio &ducking mode:"
-msgstr "Chế độ giảm âm ứng dung khác:"
+msgstr "Chế độ giảm âm lượng ứng dụng khác:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -6669,7 +6723,7 @@ msgstr "Đọc ký tự khi gõ"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &words"
-msgstr "Đọc từ sau khi gõ xong từ đó"
+msgstr "Đọc từ khi gõ"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6742,26 +6796,26 @@ msgstr "&Phát âm thanh tọa độ khi di chuyển chuột"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "&Brightness controls audio coordinates volume"
-msgstr "Độ &sang kiểm soát âm lượng âm thanh tọa độ"
+msgstr "Độ &sáng kiểm soát âm lượng âm thanh tọa độ"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"
-msgstr "Cấu hình chế độ duyệt text"
+msgstr "Thiết Lập Con Trỏ Duyệt"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow system &focus"
-msgstr "Theo con trỏ hệ &thống"
+msgstr "Theo focus hệ &thống"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow System &Caret"
-msgstr "theo con trỏ &nháy"
+msgstr "theo dấu &nháy hệ thống"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow &mouse cursor"
-msgstr "theo vị trí &chuột"
+msgstr "theo con trỏ chuột"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -7044,7 +7098,7 @@ msgstr "&Bảng"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Row/column h&eaders"
-msgstr "Tieu đề cột/dòng"
+msgstr "Tiêu đề cột/dòng"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7367,28 +7421,6 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "Bật tắt chức năng đọc theo kiểu trình bày của trang web"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Không ở trong bảng"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "chuyển đến dòng kế của bảng"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "chuyển đến dòng trước của bảng"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "chuyển đến cột kế của bảng"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "chuyển đến cột trước của bảng"
 
 msgid "Taskbar"
 msgstr "Thanh tác vụ"
