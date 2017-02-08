@@ -147,6 +147,8 @@ class EdgeTextInfo(UIATextInfo):
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
+		# report if the field is 'current'
+		field['current']=obj.getValueForAriaCurrent()
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		ariaProperties=obj.UIAElement.currentAriaProperties
