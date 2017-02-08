@@ -9,6 +9,7 @@ from ctypes import *
 import time
 import config
 from logHandler import log
+import winVersion
 
 def _isDebug():
 	return config.conf["debugLog"]["audioDucking"]
@@ -28,6 +29,9 @@ AUDIODUCKINGMODE_NONE=0
 AUDIODUCKINGMODE_OUTPUTTING=1
 AUDIODUCKINGMODE_ALWAYS=2
 
+# The Windows build number where Microsoft introduced its own dynamic ducking
+WINVERSION_DYNAMICDUCKING_MIN=14986
+
 audioDuckingModes=[
 	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 	# See the Audio Ducking Mode section of the User Guide for details.
@@ -39,6 +43,11 @@ audioDuckingModes=[
 	# See the Audio Ducking Mode section of the User Guide for details.
 	_("Always duck"),
 ]
+
+# Some Windows builds introduced their own dynamic ducking which makes our 'always duck' mode  impossible.
+# Thus on these builds, remove that option
+if winVersion.winVersion.build>=WINVERSION_DYNAMICDUCKING_MIN:
+	del audioDuckingModes[-1]
 
 ANRUS_ducking_AUDIO_ACTIVE=4
 ANRUS_ducking_AUDIO_ACTIVE_NODUCK=8
@@ -94,8 +103,15 @@ def setAudioDuckingMode(mode):
 	global _audioDuckingMode, _modeChangeEvent
 	if not isAudioDuckingSupported():
 		raise RuntimeError("audio ducking not supported")
-	if mode<0 or mode>=len(audioDuckingModes):
-		raise ValueError("%s is not an audio ducking mode")
+	# Normalize mode to within the exceptable range of values.
+	# We normalize rather than rasing an error as certain values only exist on certain builds of Windows, such as 'always duck'. 
+	mode=max(min(mode,len(audioDuckingModes)-1),0)
+	# Some Windows builds introduce their own dynamic ducking which is incompatible with our dynamic ducking.
+	# Therefore, if the user chooses  dynamic ducking,  force our 'always duck' mode, which then allows the OS to dynamic duck.
+	if winVersion.winVersion.build>=WINVERSION_DYNAMICDUCKING_MIN and mode==AUDIODUCKINGMODE_OUTPUTTING:
+		if _isDebug():
+			log.debug("Allowing oS to handle dynamic ducking")
+		mode=AUDIODUCKINGMODE_ALWAYS
 	with _duckingRefCountLock:
 		oldMode=_audioDuckingMode
 		_audioDuckingMode=mode
