@@ -1006,6 +1006,14 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	if ariaCurrent is not None and ariaCurrent != False:
 		if ariaCurrent=="page":
 			textList.append(_("current page"))
+		elif ariaCurrent=="step":
+			textList.append(_("current step"))
+		elif ariaCurrent=="location":
+			textList.append(_("current location"))
+		elif ariaCurrent=="date":
+			textList.append(_("current date"))
+		elif ariaCurrent=="time":
+			textList.append(_("current time"))
 		else:
 			textList.append(_("current"))
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
