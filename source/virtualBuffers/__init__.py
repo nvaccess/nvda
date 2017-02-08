@@ -377,7 +377,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def fetchLabels(self):
   		weblink=self.documentConstantIdentifier
   		filename=customLabels.getFilenameFromElementDomain(weblink)
-   		labels=""
+   		labels=u""
    		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
    		for k,v in config.iteritems():
    			labels+=k+":"+v+","
@@ -386,10 +386,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def _loadBuffer(self):
 		try:
 			if (self.labelSupportOn):
-				labels=self.fetchLabels()
-				self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),unicode(labels))
+				labels=self.fetchLabels()	
 			else:
-				self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
+				labels=u""
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),labels)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:
