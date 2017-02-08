@@ -1133,7 +1133,7 @@ class ExcelCell(ExcelBase):
 	def getCellPosition(self):
 		rowAndColumn = self.cellCoordsText
 		sheet = self.excelWindowObject.ActiveSheet.name
-		return "Sheet {0}, {1}".format(sheet, rowAndColumn)
+		return u"Sheet {0}, {1}".format(sheet, rowAndColumn)
 
 	def _get_tableID(self):
 		address=self.excelCellObject.address(1,1,0,1)
