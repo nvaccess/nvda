@@ -1,46 +1,46 @@
-﻿What's New in NVDA
+﻿NVDA, Ne yeni
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
-Highlights of this release include reporting of sections and text columns in Microsoft Word; Support for reading, navigating and annotating books in Kindle for PC; and improved support for Microsoft Edge.
+Sürümün öne çıkanları: Microsoft Word'de bölümlerin ve metin sütunlarının bildirimi; Kindle for PC'de kitaplar  için okuma, gezinme ve not alma desteği; ve Microsoft Edge için iyileştirilmiş  destek.
 
-== New Features ==
-- In Microsoft Word, the types of section breaks and section numbers can now be reported. This is enabled with the "Report page numbers" option in the Document Formatting dialog. (#5946)
-- In Microsoft Word, text columns can now be reported. This is enabled with the "Report page numbers" option in the document formatting dialog. (#5946)
-- Automatic language switching is now supported in WordPad. (#6555)
-- The NVDA find command (NVDA+control+f) is now supported in browse mode in Microsoft Edge. (#6580)
-- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
-- When copying a sheet in Microsoft Excel, column and row headers are remembered. (#6628)
-- Support for reading and navigating books in Kindle for PC version 1.19, including access to links, footnotes, graphics, highlighted text and user notes. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638)
-- Browse mode table navigation is now supported in Microsoft Edge. (#6594)
-- In Microsoft Excel, the report review cursor location command (desktop: NVDA+numpadDelete, laptop: NVDA+delete) now reports the name of the worksheet and the cell location. (#6613)
-- Added an option to the exit dialog to restart with debug level logging. (#6689)
+== Yeni Özellikler ==
+- Microsoft Word, bölüm sonu türleri ve bölüm numaraları artık bildirilebilir. Bunun için, "Belge formatları" iletişim kutusundaki "sayfa numaraları" seçeneği işaretlenmeli. (#5946)
+- Microsoft Word, metin sütunları artık bildirilebilir. Bunun için, "Belge formatları" iletişim kutusundaki "sayfa numaraları" seçeneği işaretlenmeli. (#5946)
+- WordPad, otomatik dil geçişi artık destekleniyor. (#6555)
+- Microsoft Edge, tarama kipinde NVDA arama komutu (NVDA+control+f) artık kullanılabiliyor. (#6580)
+- Microsoft Edge, tarama kipinde düğmeler arasında hızlı geçiş tuşları (b ve shift+b) artık destekleniyor.  (#6577)
+- Microsoft Excel, bir sayfayı kopyalarken  sütun ve satır başlıkları hatırlanıyorr. (#6628)
+-  Kindle for PC version 1.19, kitap okuma ve navigasyon desteği, bağlantılar, dipnotlar, grafik, vurgulanmış metin ve kullanıcı notlarına erişim. Detay için lütfen NVDA kullanıcı rehberinde Kindle for PC bölümüne bakın. (#6247, #6638)
+- Microsoft Edge, tarama kipinde tablo dolaşımı artık destekleniyor. (#6594)
+- Microsoft Excel, inceleme imlecinin konumunu öğrenme komutu (masaüstü: NVDA+numpadSil, dizüstü: NVDA+sil) artık çalışma sayfasının adını ve hücre konumunu bildiriyor. (#6613)
+- NVDA'dan çıkma iletişim kutusuna Hata ayıklama günlüğünün etkinleştirilerek yeniden başlatılması için bir seçenek eklendi. (#6689)
 
 
-== Changes ==
-- The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
-- A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
+== Değişiklikler ==
+- Minimum braille imleç yanıp sönme hızı artık 200 ms. Önceden daha düşük bir değer belirlenmişse 200 ms olarak güncellenecek. (#6470)
+- Braille ayarları iletişim kutusuna imleç sinyalinin etkinleştirilmesiyle ilgili bir onay kutusu eklendi. Bu önceden, hız bölümünde 0 yazılarak yapılıyordu. (#6470)
 - Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
 
 
-== Bug Fixes ==
-- Fixed freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
-- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables and therefore are no longer ignored. (#5927)
-- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
-- Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
-- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. (#6216)
-- Reporting of cropped/overflowed text in Microsoft Excel cells should now be more accurate. (#6472)
-- NVDA now reports when a check box is read-only. (#6563)
-- The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
-- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
-- NVDA will no longer announce "pane" when minimizing windows. (#6671)
-- Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
-- Mouse tracking now works across all screens on computers with multiple monitors. (#6598)
+== Hata Düzeltmeleri ==
+- Microsoft Word, tarama kipinde büyük belgelerde paragraf paragraf dolaşılırken yaşanan donma sorunu çözüldü. (#6368)
+- Microsoft Excel'den Microsoft Word'e kopyalanan tablolara artık  düzen  tablosu muamelesi yapılmıyor ve dolayısıyla artık görmezden gelinmiyor. (#5927)
+- Microsoft Excel, korumalı görünümdeyken, NVDA artık  basıldığı halde gerçekte girilemeyen karakterleri seslendirmek yerine hata sesi veriyor. (#6570)
+- Microsoft Excel, kullanıcı önceden NVDA+aralık tuşuyla tarama kipine geçip form alanındayken enter tuşuna basarak odak kipine geçmediyse, Esc tuşuna basılması artık yanlış bir biçimde tarama kipine geçilmesine neden olmuyor,. (#6569) 
+- Microsoft Excel çalışma sayfalarında satır ya da sütunun tamamı birleştirilmişse NVDA artık donmuyor. (#6216)
+- Microsoft Excel, kırpılmış/taşan metin hücrelerinin bildirimi artık daha doğru  yapılıyor olmalı. (#6472)
+- NVDA bir onay kutusunun salt-okunur  olduğunu bildiriyor. (#6563)
+- NVDA başlatıcısı artık ses cihazı bulunmadığı için başlangıç sesini çalamadığına dair bir uyarı görüntülemiyor. (#6289)
+- Microsoft Excel şeritlerindeki pasif kontroller artık  uygun şekilde bildiriliyor. (#6430)
+- NVDA pencereler küçültülürken artık pano demiyor. (#6671)
+- Windows 10 Creators güncellemesinde, Evrensel Windows Platform (UWP) uygulamalarda (Microsoft Edge dahil) karakter girişleri seslendiriliyor. (#6017)
+- Fare izleme artık birden çok monitör ile çalışan bilgisayarlar üzerinde tüm ekranlarda çalışıyor. (#6598)
 
 
-== Changes for Developers ==
+== Geliştiriciler için değişiklikler ==
 - Profiles and configuration files are now automatically upgraded to meet the requirements of schema modifications. If there is an error during upgrade, a notification is shown, the configuration is reset and the old configuration file is available in the NVDA log at 'Info' level. (#6470)
 
 

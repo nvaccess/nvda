@@ -4,35 +4,44 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Một số tính năng mới nổi bật trong phiên bản này bao ;gồm thông báo các vùng và cột nội dung trong Microsoft Word; hỗ trợ di chuyển, ghi chú lại và đọc sách với máy Kindle bản PC; và những cải thiện cho Microsoft Edge.
 
 == Tính Năng Mới ==
-- Đã có thể thông báo kiểu số phân vùng và ngắt vùng trong Microsoft Word . Chức năng này được bật ở tùy chọn "Báo số trang" trong hộp thoại định dạng tài liệu. (#5946)
-- Đã có thể thông báo các cột văn bản trong Microsoft Word . Chức năng này được bật ở tùy chọn "Báo số trang" trong hộp thoại định dạng tài liệu. (#5946)
+- Đã có thể thông báo các kiểu số phân vùng và ngắt vùng trong Microsoft Word . Chức năng này được bật ở tùy chọn "Báo số trang" trong hộp thoại định dạng tài liệu. (#5946)
+- Đã có thể thông báo các cột nội dung trong Microsoft Word . Chức năng này được bật ở tùy chọn "Báo số trang" trong hộp thoại định dạng tài liệu. (#5946)
 - Đã hỗ trợ tự chuyển đổi ngôn ngữ trong Wordpad. (#6555)
 - Lệnh tìm kiếm của NVDA (NVDA+control+f) đã được hỗ trợ trong chế độ duyệt (Browse mode) cho Microsoft Edge. (#6580)
 - Lệnh di chuyển nhanh ở chế độ duyệt đến các nút (b và shift+b) đã được hỗ trợ trong  Microsoft Edge. (#6577)
-- Thiết lập cho tiêu đề cột và dòng vẫn được giữ khi copy bảng tính từ Microsoft Excel. (#6628)
+- Thiết lập cho tiêu đề cột và dòng vẫn được nhớ khi copy bảng tính từ Microsoft Excel. (#6628)
+- Hỗ trợ đọc và duyệt sách trên máy Kindle phiên bản PC 1.19, sử dụng được các mục như liên kết, phần chú thích chân, hình ảnh, nội dung in đậm và ghi chú của người dùng. Vui lòng xem thêm phần Kindle cho PC trong tài liệu hướng dẫn sử dụng của NVDA. (#6247, #6638)
+- Di chuyển bảng ở chế độ duyệt đã được hỗ trợ trong Microsoft Edge. (#6594)
+- Trong Microsoft Excel, phím lệnh thông báo vị trí con trỏ duyệt (Máy bàn: NVDA+delete bàn phím số, Sách tay: NVDA+Delete) đã đọc tên của bảng tính và vị trí ô. (#6613)
+- Thêm tùy chọn khởi động lại với chế độ bản ghi dò lỗi trong hộp thoại thoát NVDA. (#6689)
 
 
 == Những Thay Đổi ==
-- Tốc độ nháy tối thiểu của con trỏ màn hình nổi là 200ms. Những cấu hình có giá trị thấp hơn sẽ tự động đưa về 200ms. (#6470)
+- Tốc độ nháy tối thiểu của con trỏ màn hình nổi là 200ms. Những cấu hình trước đây có giá trị thấp hơn sẽ tự động được thiết lập về 200ms. (#6470)
 - Thêm một tùy chỉnh hộp kiểm trong hộp thoại thiết lập màn hình nổi cho phép tắt/bật nhấp nháy con trỏ màn hình nổi.  Trước đây, nhập giá trị 0 để tắt. (#6470)
-- Các tập tin cấu hình cũng như hồ sơ cá nhân đều tự động được nâng cấp để đáp ứng những yêu cầu chỉnh sửa schema. Nếu có lỗi khi nâng cấp, hộp thoại thông báo sẽ xuất hiện, cấu hình sẽ được khởi tạo lại và tập tin cấu hình cũ được lưu trong bản ghi log của NVDA tại cấp 'Info'. (#6470)
-- Hỗ trợ đọc và duyệt sách trên máy Kindle phiên bản PC 1.19, sử dụng được các mục như liên kết, phần chú thích chân, hình ảnh, nội dung in đậm và ghi chú của người dùng. Vui lòng xem thêm phần Kindle cho PC trong tài liệu hướng dẫn sử dụng của NVDA. (#6247, #6638)
+- Cập nhật eSpeak NG (Bản phát triển e095f008, 10 tháng 1, 2017). (#6717)
 
 
 == Đã Sửa Các Lỗi ==
 - Sửa lỗi treo khi di chuyển giữa các đoạn trong một văn bản lớn ở chế độ duyệt trong Microsoft Word (#6368)
-- Các bảng được copy từ Microsoft Excel trong Microsoft Word không còn được xem như bảng bố cục  vì vậy sẽ không bị bỏ qua (#5927)
+- Các bảng được copy từ Microsoft Excel qua Microsoft Word không còn được xem như bảng bố cục  vì vậy sẽ không bị bỏ qua (#5927)
 - Khi nhập liệu trong Microsoft Excel ở chế độ bảo vệ, NVDA sẽ phát âm thanh thay vì đọc các ký tự được gõ (#6570)
 - Khi nhấn Escape trong Microsoft Excel sẽ không chuyển sang chế độ duyệt, trừ phi người dùng chuyển sang chế độ duyệt trước đó với NVDA+space và sau đó ở trong chế độ focus bằng cách nhấn Enter trong ô biểu mẫu. (#6569) 
-- NVDA không còn treo trong các bảng tính  của Microsoft Excel khi toàn bộ  dòng hoặc  cột được kết hợp (merged) 9#6216)
-- Thông báo chính xác hơn các văn bản bị cắt hoặc tràn trong các ô của Microsoft Excel (#6472)
+- NVDA không còn treo trong các bảng tính  của Microsoft Excel khi toàn bộ  một dòng hoặc  cột được kết hợp (merged) (#6216)
+- Thông báo chính xác hơn các văn bản bị cắt hoặc bị tràn trong các ô của Microsoft Excel. (#6472)
 - NVDA sẽ thông báo các hộp kiểm có thuộc tính Chỉ đọc (Read-only). (#6563)
 - Trình chạy NVDA sẽ không hiển thị hộp thoại cảnh báo khi nó không thể phát âm thanh logo do thiếu thiết bị âm thanh. (#6289)
 - Các điều khiển không hoạt động trong ribbon của Microsoft Excel sẽ được thông báo. (#6430)
 - NVDA không còn thông báo "vùng (pane)" khi thu nhỏ cửa sổ. (#6671)
-- Hỗ trợ đọc ký tự khi gõ trong các ứng dụng UWP (bao gồm Microsoft Edge) trong bản cập nhật  Windows 10 Creators. (#6017)
+- Đã đọc ký tự khi gõ trong các ứng dụng của nền Windows Universal (UWP), (bao gồm Microsoft Edge) trong bản cập nhật  Windows 10 Creators. (#6017)
+- Chức năng di chuyển theo chuột đã hoạt động trong mọi cửa sổ của máy tính có nhiều màn hình. (#6598)
+
+
+== Thay đổi dành cho nhà phát triển ==
+- Các tập tin cấu hình cũng như hồ sơ cá nhân đều tự động được nâng cấp để đáp ứng những yêu cầu chỉnh sửa schema. Nếu có lỗi khi nâng cấp, hộp thoại thông báo sẽ xuất hiện, cấu hình sẽ được khởi tạo lại và tập tin cấu hình cũ được lưu trong bản ghi log của NVDA tại cấp 'Info'. (#6470)
 
 
 = 2016.4 =

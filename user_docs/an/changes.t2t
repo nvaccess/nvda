@@ -4,21 +4,25 @@ Qué bi ha de Nuevo en o NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+O resinyable d'ista versión inclui l'anunciau de seccions y columnas de texto en o Microsoft Word, Suporte pa leyer, navegar y anotar libros en o Kindle pa PC y suporte amillorau pa o Microsoft Edge.
 
 == Nuevas Caracteristicas ==
-- En o Microsoft Word Agora se puet anunciar o tipo de brinco de sección y o numero de sección. Ixo s'activa con a opción "anunciar os numers de pachina" en o dialogo de formatiau de documentos. (#5946)
+- En o Microsoft Word Agora se puet anunciar os tipos de brincos de sección y os numers de sección. Ixo s'enchega con a opción "anunciar os numers de pachina" en o dialogo de formatiau de documentos. (#5946)
 - En o Microsoft Word agora se puet anunciar as columnas de texto. Ixo s'activa con a opción "anunciar os numers de pachina" en o dialogo de formatiau de documentos. (#5946)
-- Agora se suporta o cambio automatico d'idioma en o Wordpad. (#6555)
-- O comando de busca d'o NVDA (NVDA+control+f) agora se suporta en o modo de navegación pa o Microsoft Edge. (#6580)
+- Agora se suporta o cambio automatico d'idioma en o WordPad. (#6555)
+- O comando de busca d'o NVDA (NVDA+control+f) agora se suporta en o modo de navegación en o Microsoft Edge. (#6580)
 - A navegación rapeda pa os botons en o modo de navegación (b y mayus+b) agora se suporta en o Microsoft Edge. (#6577)
-- Se remera os capiters de columna y ringlera establius en copiar bella fuella en o Microsoft Excel. (#6628)
+- Se remera os capiters de columna y ringlera en copiar bella fuella en o Microsoft Excel. (#6628)
+- Suporte pa leyer y navegar por libros en a versión 1.19 d'o Kindle pa PC, incluindo acceso t'os vinclos, notas a o piet, graficos, texto resaltau y notas d'usuario. Mira-te a sección d'o Kindle pa PC d'a guida de l'usuario d'o NVDA pa información mas detallada. (#6247, #6638)
+- Agora se suporta a navegación por tablas en o modo de navegación en o Microsoft Edge. (#6594)
+- En o Microsoft Excel, o comando pa anunciar a ubicación d'o cursor de revisión (escritorio: NVDA+suprimir d'o teclau numerico, portatil: NVDA+suprimir) agora anuncia o nombre d'a fuella de treballo y a ubicación d'a celda. (#6613)
+- S'ha adhibiu una opción a lo dialogo de salida pa reenchegar con libel de rechirstro de depuración. (#6689)
 
 
 == Cambios ==
-- A velocidat minima d'o esparpello d'o cursor braille agora ye de 200ms. Os perfils u configuracions con valors por debaixo d'ixo se puyarán ta 200ms. (#6470)
+- A velocidat minima d'o esparpello d'o cursor braille agora ye de 200 ms. Si s'establió anteriorment por debaixo d'ixo se puyará ta 200 ms. (#6470)
 - S'ha adhibiu una caixeta de verificación a lo dialogo d'opcions d'o braille pa permitir enchegar u desenchegar o esparpello d'o cursor braille. Anteriorment se feba servir una valor de 0 pa aconseguir ixo. (#6470)
-- Os perfils y os fichers de configuración agora s'esviellan automaticament pa meter-ie os requisitos d'as modificacions d'o esquema. Si bi ha bella error mientras l'actualización s'amuestra una notificación, a configuración se reenchega y o viello fichero de configuración ye disponible en o rechistro d'o NVDA en libel 'Info'. (#6470)
-- Suporte pa leyer y navegar por libros en a versión 1.19 d'o Kindle pa PC, incluindo acceso t'os vinclos, notas a o piet, graficos, texto resaltau y notas d'usuario. Mira-te a sección d'o Kindle pa PC d'a guida de l'usuario d'o NVDA pa información mas detallada. (#6247, #6638)
+- S'ha esviellau o eSpeak-NG (verificación e095f008, 10 de chinero d'o 2017). (#6717)
 
 
 == Corrección d'errors ==
@@ -27,12 +31,17 @@ Qué bi ha de Nuevo en o NVDA
 - En mirar d'escribir en o Microsoft Excel estando en una envista protechida, o NVDA agora fa un son en cuenta de dicir os caracters que realment no s'han escritos. (#6570)
 - Pretar o escape en o Microsoft Excel ya no cambia incorrectament t'o modo de navegación, difuera que l'usuario haiga cambiau previament t'o modo de navegación explicitament con NVDA+espacio y siga dentrau to modo de foco pretando l'intro en un campo de formulario. (#6569) 
 - O NVDA ya no se conchela en fuellas de calculo d'o Microsoft Excel en que se mezcle bella ringlera u columna completa. (#6216)
-- L'anunciau de texto retallau u sobreixiu  en celdas d'o Microsoft Excel habría a estar agora mas preciso (#6472)
+- L'anunciau de texto retallau u sobreixiu  en celdas d'o Microsoft Excel habría a estar mas preciso. (#6472)
 - O NVDA agora anuncia quan bella caixeta de verificación ye de nomás lectura. (#6563)
 - O disparador d'o NVDA ya no amostrará un dialogo d'alvertencia quan no se pueda reproducir o son d'inicio debiu a que o dispositivo d'audio no siga disponible. (#6289)
 - Os Controls en a cingla d'o Microsoft Excel que no sigan disponibles agora s'anuncian como tals. (#6430)
 - O NVDA ya no anunciará "panel" en minimizar finestras. (#6671)
-- Suporte pa charrar os caracters en escribir en as aplicacions UWP (incluindo lo Microsoft Edge) en l'actualización Creators d'o Windows 10. (#6017)
+- Agora se charra os caracters escritos en as aplicacions d'a plataforma universal d'o Windows (UWP) (incluindo lo Microsoft Edge) en l'actualización Creators d'o Windows 10. (#6017)
+- O seguimiento d'o churi agora marcha a traviés de todas as pantallas en os ordinadors con qualques monitors. (#6598)
+
+
+== Cambios pa os desembolicadors ==
+- Os perfils y os fichers de configuración agora s'esviellan automaticament pa meter-ie os requisitos d'as modificacions d'o esquema. Si bi ha bella error mientras l'actualización s'amuestra una notificación, a configuración se reenchega y o viello fichero de configuración ye disponible en o rechistro d'o NVDA en libel 'Info'. (#6470)
 
 
 = 2016.4 =

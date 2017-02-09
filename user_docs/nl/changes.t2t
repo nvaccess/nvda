@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Highlights of this release include reporting of sections and text columns in Microsoft Word; Support for reading, navigating and annotating books in Kindle for PC; and improved support for Microsoft Edge.
 
 == Nieuwe Functies ==
 - In Microsoft Word kan het soort sectie-einde en het nummer van de sectie nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
@@ -11,6 +12,17 @@
 - Automatische taalherkenning is nu ondersteund in Wordpad. (#6555)
 - The NVDA find command (NVDA+control+f) is now supported in browse mode for Microsoft Edge. (#6580)
 - Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+- When copying a sheet in Microsoft Excel, column and row headers are remembered. (#6628)
+- Support for reading and navigating books in Kindle for PC version 1.19, including access to links, footnotes, graphics, highlighted text and user notes. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638)
+- Browse mode table navigation is now supported in Microsoft Edge. (#6594)
+- In Microsoft Excel, the report review cursor location command (desktop: NVDA+numpadDelete, laptop: NVDA+delete) now reports the name of the worksheet and the cell location. (#6613)
+- Added an option to the exit dialog to restart with debug level logging. (#6689)
+
+
+== Veranderingen ==
+- The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
+- A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
+- Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
 
 
 == Opgeloste problemen ==
@@ -23,6 +35,13 @@
 - NVDA now reports when a check box is read-only. (#6563)
 - The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
 - Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+- NVDA will no longer announce "pane" when minimizing windows. (#6671)
+- Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
+- Mouse tracking now works across all screens on computers with multiple monitors. (#6598)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
 
 
 = 2016.4 =

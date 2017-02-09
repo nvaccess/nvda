@@ -1282,7 +1282,7 @@ Ako je ova opcija uključena, ova će opcija uzrokovati da NVDA pokuša prepozna
 
 Po podrazumjevanom, NVDA će prepoznati oblikovanje na poziciji kursora sustava / Preglednog kursora, i u nekim slučajevima može otkriti formatiranje na ostatku retka, samo u slučaju ako to neće izazvati pad performansi.
 
-Uključite ovu opciju kad radite na korekciji teksta u aplikacijama kao što je Wordpad, gdje je oblikovanje važno.
+Uključite ovu opciju kad radite na korekciji teksta u aplikacijama kao što je Word pad, gdje je oblikovanje važno.
 
 ==== izvješćivanje o uvučenosti redka ====[lineIndentationOptions]
 Ova vam opcija omogućava podešavanje načina izvještavanja poravnanja redka.
@@ -2298,9 +2298,10 @@ Sljede opcije naredbenog retka za NVDA:
 | -m | --minimal | bez zvuka, bez sučelja, bez poruke dobrodošlice itd |
 | -s | --secure | siguran način (onemogućuje python konzolu) |
 | Nema | --disable-addons | dodaci neće imati utjecaja |
+| Nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument. |
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
-| None | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+| Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
 
 + Dodatne Informacije +
 Ako trebate više informacija ili pomoč za NVDA, molimo posjetite NVDA web stranicu na adresi NVDA_URL.

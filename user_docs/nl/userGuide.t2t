@@ -1283,7 +1283,7 @@ Als dit selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de op
 
 Standaard wordt de opmaak bij de systeemcursor / review cursor gedetecteerd, maar in bepaalde gevallen wordt ook de opmaak in de rest van de regel gedetecteerd voor zover dit geen nadelige invloed heeft op de prestatie.
 
-Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals Wordpad waar opmaak van belang is.
+Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals WordPad waar opmaak van belang is.
 
 ==== Regelinspringing melden ==== [lineIndentationOptions]
 Met deze optie kunt u bepalen hoe de inspringing van een regel wordt gemeld.
@@ -2295,10 +2295,11 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
 | -s | --secure | Veilige modus (Python consool uitschakelen) |
-| None | --disable-addons | Addons buiten werking gesteld. |
-| None | --no-sr-flag  | Verander de systeem-brede vlag voor de schermlezer niet. |
-| None | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
-| None | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
+| Geen | --disable-addons | Addons buiten werking gesteld. |
+| geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l)gegeven  argument. |
+| Geen | --no-sr-flag  | Verander de systeem-brede vlag voor de schermlezer niet. |
+| Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
+| Geen | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
 
 ++ Meer uitgebreide aanpassing van de uitspraak van leestekens en  symbolen ++
 Behalve in het [dialoogvenster Uitspraak van Interpunctie en Symbolen #SymbolPronunciation] zijn er nog andere mogelijkheden om de uitspraak van leestekens te beïnvloeden.

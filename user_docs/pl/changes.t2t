@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Najważniejsze zmiany w tej wersji to zgłaszanie sekcji i kolumn tekstu w Microsoft Word; obsługa czytania, nawigacji i komentowania książek w Kindle dla PC; poprawiona obsługa Microsoft Edge.
 
 == Nowe funkcje ==
 - W Microsoft Word mogą być zgłaszane typ podziału sekcji i numer sekcji. Jest to włączane przy pomocy opcji "Zgłaszaj numery stron"  w oknie formatowania dokumentów. (#5946)
@@ -11,14 +12,16 @@
 - Automatyczna zmiana języka jest obsługiwana w Wordpad. (#6555)
 - Komenda znajdowania w NVDA (NVDA+control+f) jest obsługiwana w trybie czytania w Microsoft Edge. (#6580)
 - Szybka nawigacja po przyciskach w trybie czytania (b i shift+b) jest obsługiwana w Microsoft Edge. (#6577)
-- Podczas kopiowania arkusza w Microsoft Excel, zapamiętywane są ustawione nagłówki kolumn i wierszy. (#6628)
+- Podczas kopiowania arkusza w Microsoft Excel, zapamiętywane są nagłówki kolumn i wierszy. (#6628)
+- Obsługa czytania i nawigacji książek  w Kindle dla PC wersja 1.19, włączając w to dostęp do linków, przypisów, grafik, podświetlonego tekstu i notatek użytkownika. Więcej informacji dostępne w rozdziale Kindle dla PC podręcznika NVDA. (#6247, #6638)
+- Nawigacja wewnątrz tabel w trybie czytania jest obsługiwana w Microsoft Edge. (#6594)
+- W Microsoft Excel, komenda zgłaszania położenia kursora przeglądu (desktop: NVDA+numpadDelete, laptop: NVDA+delete), zgłasza nazwę arkusza i położenie komórki .  (#6613)
 
 
 == Zmiany ==
-- Minimalna częstotliwość migotania kursora brajla to obecnie 200ms. Niższe wartości tego ustawienia w profilach lub konfiguracjach zostaną podniesione do 200ms. (#6470)
+- Minimalna częstotliwość migotania kursora brajla to obecnie 200ms. Niższe wartości tego ustawienia zostaną podniesione do 200ms. (#6470)
 - Pole wyboru zostało dodane do ustawień brajla, pozwalające włączyć lub wyłączyć migotanie kursora brajlowskiego. Poprzednio wartość zero była używana, aby to osiągnąć. (#6470)
-- Profile i konfiguracje są automatycznie aktualizowane do zmodyfikowanych wymagań schematu. Jeśli pojawi się błąd podczas aktualizacji, pokazywane jest powiadomienie, konfiguracja jest resetowana, a stary plik konfiguracyjny jest dostępny w logu NVDA na poziomie 'Info'. (#6470)
-- Obsługa czytania i nawigacji książek w Kindle dla PC wersja 1.19, włączając w to dostęp do linków, przypisów, grafik, podświetlonego tekstu i notatek użytkownika. Więcej informacji dostępne w rozdziale Kindle dla PC podręcznika NVDA. (#6247, #6638)
+- Zaktualizowany eSpeak NG (commit e095f008, 10 stycznia 2017). (#6717)
 
 
 == Poprawki błędów ==
@@ -32,7 +35,12 @@
 - Program uruchamiający NVDA nie będzie pokazywał okna ostrzeżenia, gdy nie może odtworzyć dźwięku logo z powodu braku dostępnego urządzenia audio. (#6289)
 - Niedostępne kontrolki wstążki Microsoft Excel są teraz odpowiednio zgłaszane. (#6430)
 - NVDA nie będzie zgłaszał "panel" podczas minimalizacji okien. (#6671)
-- Obsługa wpisywanych znaków w aplikacjach UWP (włączając w to Microsoft Edge) w Windows 10 Creators Update. (#6017)
+- Odczytywane są wpisywane znaki w aplikacjach uniwersalnej platformy Windows (UWP) (włączając w to Microsoft Edge) w Windows 10 Creators Update. (#6017)
+- Śledzenie myszy działa na wszystkich ekranach na komputerach z wieloma monitorami. (#6598)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
 
 
 = 2016.4 =
