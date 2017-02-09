@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
