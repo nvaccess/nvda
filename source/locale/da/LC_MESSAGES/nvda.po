@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 00:10+1000\n"
-"PO-Revision-Date: 2016-12-31 15:27+0100\n"
+"POT-Creation-Date: 2017-02-03 00:10+1000\n"
+"PO-Revision-Date: 2017-02-08 11:24+0100\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <kontakt@nvda.dk>\n"
 "Language: da_DK\n"
@@ -799,6 +799,7 @@ msgstr ""
 "tastetryk sendt videre til applikationen."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ikke understøttet i dette dokument"
 
@@ -1293,6 +1294,7 @@ msgid "%s landmark"
 msgstr "%s landmærke"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "valgt %s"
@@ -1328,6 +1330,33 @@ msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Flytter forbi slutningen af indholdselementet, eksempelvis en liste  eller "
 "tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Ikke i en tabelcelle"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Kant af tabel"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "flytter til næste række i tabel"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "flytter til forrige række i tabel"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "flytter til næste kolonne i tabel"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "flytter til forrige kolonne i tabel"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4974,11 +5003,6 @@ msgstr "{symbol} som i {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Kant af tabel"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Flytter navigatorobjektet til den næste kolonne"
@@ -5019,6 +5043,10 @@ msgstr "Intet spor afspilles"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oplæser den resterende tid for det igangværende spor, hvis det findes"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Viser indstillinger for den valgte tekst og tekst ved markøren"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5028,6 +5056,25 @@ msgstr "{bookPercentage}%, placering {curLocation} af {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Side Page {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "Fremhævelse"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "Ingen fremhævelse"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s fremhævet"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "Uden for populær fremhævelse"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5929,6 +5976,10 @@ msgstr "Genstart"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Genstart uden tilføjelsesprogrammer"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Genstart med logning for fejlrettelse aktiveret"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7255,9 +7306,13 @@ msgstr "U&dvid ordet ved markøren til computer-braille"
 msgid "&Show cursor"
 msgstr "&Vis markør"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Blinkende markør"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "markør-blinkhastighed (ms)"
+msgstr "Blinkhastighed for markør (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
@@ -7428,28 +7483,6 @@ msgstr ""
 "Slår bevaring af skærmlayout under visning af indholdet af dokumentet til og "
 "fra"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Ikke i en tabelcelle"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "flytter til næste række i tabel"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "flytter til forrige række i tabel"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "flytter til næste kolonne i tabel"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "flytter til forrige kolonne i tabel"
-
 msgid "Taskbar"
 msgstr "Proceslinje"
 
@@ -7487,12 +7520,12 @@ msgstr "Automatisk"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 msgid "diagonal crosshatch"
-msgstr ""
+msgstr "diagonal skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "thin diagonal crosshatch"
-msgstr ""
+msgstr "tynd diagonal skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
@@ -7532,7 +7565,7 @@ msgstr "6.25% grå"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
 msgid "thin horizontal crosshatch"
-msgstr ""
+msgstr "tynd vandret skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
@@ -7567,7 +7600,7 @@ msgstr "ingen"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "thick diagonal crosshatch"
-msgstr ""
+msgstr "tyk diagonal skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
