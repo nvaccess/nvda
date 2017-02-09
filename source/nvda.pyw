@@ -90,7 +90,7 @@ parser.add_argument('--launcher',action="store_true",dest='launcher',default=Fal
 # If this occurs, the user will see an obscure error,
 # but that's far better than a major security hazzard.
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
-(globalVars.appArgs,extraArgs)=parser.parse_known_args()
+(globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
