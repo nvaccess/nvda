@@ -230,7 +230,7 @@ In diesem Menü können Sie alle Einstellungen von NVDA ändern, die Einstellung
 
 Um von überall in das NVDA-Menü zu gelangen, drücken Sie die Tastenkombination NVDA+n oder tippen Sie zweimal mit zwei Fingern. Dies funktioniert allerdings auch nur, wenn NVDA läuft.
 Das Menü kann auch über einen Rechtsklick auf das NVDA-Symbol im Infobereich erreicht werden.
-Alternativ können Sie auch die Tastenkombination "Windows+B" drücken und mit den "Pfeiltasten zum NVDA-Symbol navigieren und das Menü mit der Anwendungstaste öffnen.
+Alternativ können Sie auch die Tastenkombination "Windows+B" drücken und mit den "Pfeiltasten zum NVDA-Symbol navigieren und das Menü mit der Anwendungstaste öffnen. Die Anwendungstaste befindet sich auf den meisten Tastaturen links neben der rechten strg-Taste.
 In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste öffnen Sie die Menüpunkte.
 
 ++ Allgemeine Befehle für NVDA ++
@@ -685,6 +685,42 @@ Hinweis: Der Befehl "Verbleibende Zeit ausgeben" funktioniert nur, wenn die Stan
 || Name | Tastenkombination | Beschreibung |
 | Letzte Nachricht ausgeben | NVDA+Steuerung+1 bis 4 | Gibt die zur Nummer passende Nachricht aus; NVDA+Steuerung+2 gibt beispielsweise die vorletzte Nachricht aus. |
 %kc:endInclude
+++ Kindle für PC ++
+NVDA unterstützt das Lesen von und das Navigieren in Büchern in Kindle für PC.
+Dies ist nur verfügbar, wenn die Bücher "Enhanced Typesetting" unterstützen.Dies können Sie auf der Detailseite des Buches überprüfen.
+
+Der Lesemodus wird beim Lesen von Büchern unterstützt.
+Er wird automatisch aktiviert, wenn sie ein Buch öffnen.
+Die Seiten werden automatisch umgeblättert, wenn Sie den Cursor im virtuellen Dokument bewegen oder den Befehl zum Vorlesen von Dokumenten verwenden.
+%kc:beginInclude
+Sie können auch manuell zwischen den Seiten blättern. Verwenden Sie hierfür die Tasten Seite auf und Seite ab.
+%kc:endInclude
+
+Die Schnellnavigation für Links und Grafiken funktioniert auf der aktuellen Seite.
+Die Linknavigation beinhaltet auch Fußnoten.
+
++++ Markieren von Text +++
++Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
++To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
++%kc:beginInclude
++Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
++%kc:endInclude
++If you do this with no text selected, options will be shown for the word at the cursor.
++
+++++ User Notes +++
++You can add a note regarding a word or passage of text.
++To do this, first select the relevant text and access the selection options as described above.
++Then, choose Add Note.
++
++When reading in browse mode, NVDA refers to these notes as comments.
++
++To view, edit or delete a note:
++
+++ Move the cursor to the text containing the note.
+++ Access the options for the selection as described above.
+++ Choose Edit Note.
+++
++
 
 ++ Poedit ++
 %kc:beginInclude
@@ -2171,8 +2207,8 @@ Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/b
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit dem Sie viele weitere Braillezeilen ansteuern können.
-Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] ist ein separates Programm, mit dem Sie viele weitere Braillezeilen ansteuern können.
+Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://www.brltty.com/download.html].
 Dazu laden Sie sich das neueste Treiberpaket herunter und installieren es. Der Name sieht in etwa wie folgt aus: brltty-win-4.2-3.exe.
 Bei der Konfiguration der Braillezeile und des zu verwendenden Anschlusses - insbesondere bei USB -, seien Sie sicher, dass Sie auch die passenden Treiber vom Hersteller bereits auf Ihrem System installiert haben.
 
@@ -2265,6 +2301,7 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Sicherer Modus, schaltet die Python-Konsole ab. |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
+| Keine | --debug-logging | aktiviert die Debug-Protokollierung für diese Sitzung. Diese Option überschreibt andere Angaben zur Protokollebene ( ""--loglevel"", -l). |
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
