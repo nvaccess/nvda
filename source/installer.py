@@ -171,7 +171,7 @@ uninstallerRegInfo={
 	"URLInfoAbout":versionInfo.url,
 }
 
-def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen):
+def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
 	import _winreg
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,_winreg.KEY_WRITE) as k:
 		for name,value in uninstallerRegInfo.iteritems(): 
@@ -180,6 +180,8 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		_winreg.SetValueEx(k,"",None,_winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,_winreg.KEY_WRITE) as k:
 		_winreg.SetValueEx(k,"startMenuFolder",None,_winreg.REG_SZ,startMenuFolder)
+		if configInLocalAppData:
+			_winreg.SetValueEx(k,"configInLocalAppData",None,_winreg.REG_DWORD,int(configInLocalAppData))
 	if easeOfAccess.isSupported:
 		registerEaseOfAccess(installDir)
 	else:
@@ -364,6 +366,11 @@ def tryCopyFile(sourceFilePath,destFilePath):
 
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	prevInstallPath=getInstallPath(noDefault=True)
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, u"SOFTWARE\\NVDA")
+		configInLocalAppData = bool(_winreg.QueryValueEx(k, u"configInLocalAppData")[0])
+	except WindowsError:
+		configInLocalAppData = False
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
@@ -388,7 +395,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
-	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon)
+	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")
