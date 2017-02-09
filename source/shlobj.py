@@ -12,6 +12,7 @@ shell32 = windll.shell32
 MAX_PATH = 260
 
 CSIDL_APPDATA = 0x001a
+CSIDL_LOCAL_APPDATA = 0x001c
 CSIDL_COMMON_APPDATA = 0x0023
 
 def SHGetFolderPath(owner, folder, token=0, flags=0):

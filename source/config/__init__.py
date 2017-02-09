@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -64,7 +64,13 @@ def isInstalledCopy():
 
 def getInstalledUserConfigPath():
 	try:
-		return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		configInLocalAppData = bool(_winreg.QueryValueEx(k, u"configInLocalAppData")[0])
+	except WindowsError:
+		configInLocalAppData=False
+	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
+	try:
+		return os.path.join(configParent, "nvda")
 	except WindowsError:
 		return None
 
