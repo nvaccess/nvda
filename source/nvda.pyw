@@ -41,12 +41,11 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 		"""Shows help in a standard Windows message dialog"""
 		winUser.MessageBox(0, unicode(self.format_help()), u"Help", 0)
 
-	def error(self, msg):
+	def error(self, message):
 		"""Shows an error in a standard Windows message dialog, and then exits NVDA"""
 		out = ""
-		if self.usage:
-			out = self.get_usage()
-		out += "\nerror: %s" % msg
+		out = self.format_usage()
+		out += "\nerror: %s" % message
 		winUser.MessageBox(0, unicode(out), u"Error", 0)
 		sys.exit(2)
 
