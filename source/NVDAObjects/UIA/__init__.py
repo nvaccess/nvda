@@ -136,10 +136,10 @@ class UIATextInfo(textInfos.TextInfo):
 			annotationTypes=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
 				formatField["invalid-spelling"]=True
-		val=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
-		if val and isinstance(val,int):
+		cultureVal=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
+		if cultureVal and isinstance(cultureVal,int):
 			try:
-				formatField['language']=languageHandler.windowsLCIDToLocaleName(val)
+				formatField['language']=languageHandler.windowsLCIDToLocaleName(cultureVal)
 			except:
 				log.debugWarning("language error",exc_info=True)
 				pass
