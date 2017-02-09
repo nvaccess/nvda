@@ -67,19 +67,21 @@ if not winVersion.canRunVc2010Builds():
 
 #Process option arguments
 parser=NoConsoleOptionParser()
-parser.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
-parser.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
+quitGroup = parser.add_mutually_exclusive_group()
+quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
+quitGroup.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_argument('-f','--log-file',dest='logFileName',help="The file where log messages should be written to")
-parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
+parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10,20,30,40,50],help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
 parser.add_argument('-c','--config-path',dest='configPath',default=None,help="The path where all settings for NVDA are stored")
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
 parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given.")
 parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
-parser.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
-parser.add_argument('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
+installGroup = parser.add_mutually_exclusive_group()
+installGroup.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
+installGroup.add_argument('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
