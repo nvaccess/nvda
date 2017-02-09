@@ -208,6 +208,29 @@ class AddonsDialog(wx.Dialog):
 		wx.CallAfter(AddonUpdatesDialog, gui.mainFrame, info)
 		wx.CallAfter(self.Show)
 
+	def updateAddons(self, addonBundles, closeAfter=False):
+		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+		# Translators: The title of the dialog presented while add-ons are being updated.
+		_("Updating Add-ons"),
+		# Translators: The message displayed while add-ons are being updated.
+		_("Please wait while add-ons are being updated."))
+		for addon in self.curAddons:
+			addonName = addon.manifest['name']
+			if not addon.isPendingRemove and addonName in addonBundles:
+				addon.requestRemove()
+			try:
+				updatedAddonBundle =addonHandler.AddonBundle(addonBundles[addonName]['path'])
+				gui.ExecAndPump(addonHandler.installAddonBundle,updatedAddonBundle)
+			except:
+				log.error("Error updating add-on %s"%addonName,exc_info=True)
+				self.refreshAddonsList()
+			else:
+				self.refreshAddonsList(activeIndex=-1)
+		self._progressDialog.done()
+		self._progressDialog = None
+		if closeAfter:
+			wx.CallLater(1, self.Close)
+
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
