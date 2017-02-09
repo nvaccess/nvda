@@ -128,15 +128,25 @@ def disableAddonsIfAny():
 
 def checkForAddonUpdates():
 	# No matter which protocol will be used, go through installed add-ons, connect online, and return a dictionary.
-	# Key: add-on name, value: a dictionary of summary, current version, new version, path, hash.
-	# todo: remove the emulated update check routine.
-	import time
-	time.sleep(3)
-	info = {}
+	# Send a dictionary with key = add-on name, value = channel and current version.
+	# Return dictionary: Key = add-on name, value = a dictionary of new version, path, hash.
+	curAddons = {}
+	addonSummaries = {}
 	for addon in getAvailableAddons():
 		manifest = addon.manifest
-		info[manifest["name"]] = {"summary": manifest["summary"], "version": manifest["version"]}
-	return info 
+		curVersion = manifest["version"]
+		curAddons[manifest["name"]] = {"summary": manifest["summary"], "version": curVersion}
+		addonSummaries[manifest["name"]] = {"summary": manifest["summary"], "curVersion": curVersion}
+	data = json.dumps(curAddons)
+	# Pseudocode:
+	"""try:
+		res = urllib.open(someURL, data)
+		# Check SSL and what not.
+		res = json.loads(res)"""
+	res = json.loads(data)
+	for addon in res:
+		res[addon].update(addonSummaries[addon])
+	return res
 
 def initialize():
 	""" Initializes the add-ons subsystem."""
