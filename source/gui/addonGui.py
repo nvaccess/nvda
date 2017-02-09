@@ -377,7 +377,7 @@ class AddonUpdatesDialog(wx.Dialog):
 			entriesSizer.Add(self.addonsList,proportion=8)
 			for entry in sorted(addonUpdateInfo.keys()):
 				addon = addonUpdateInfo[entry]
-				self.addonsList.Append((addon['summary'], addon['version'], addon['version']))
+				self.addonsList.Append((addon['summary'], addon['curVersion'], addon['version']))
 			addonsSizerHelper.addItem(entriesSizer)
 		else:
 			addonsSizerHelper.addItem(wx.StaticText(self, label=_("No add-on update available.")))
