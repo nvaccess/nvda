@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 00:10+1000\n"
-"PO-Revision-Date: 2017-01-20 17:42+0800\n"
+"POT-Creation-Date: 2017-02-03 00:10+1000\n"
+"PO-Revision-Date: 2017-02-09 19:41+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -798,6 +798,7 @@ msgstr ""
 "приложению"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Не поддерживается в данном документе"
 
@@ -1292,6 +1293,7 @@ msgid "%s landmark"
 msgstr "%s ориентир"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "Выделено %s"
@@ -1324,6 +1326,33 @@ msgstr "Нижний"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Переходит на конец элемента-контейнера, например списка или таблицы"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Вне ячейки таблицы"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Граница таблицы"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "Переходит на следующую строку таблицы"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "Переходит на предыдущую строку таблицы"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "Переходит на следующий столбец таблицы"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "Переходит на предыдущий столбец таблицы"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4979,11 +5008,6 @@ msgstr "{symbol} как в {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Граница таблицы"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Устанавливает навигатор на следующий столбец"
@@ -5024,6 +5048,12 @@ msgstr "Трек не воспроизводится"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Сообщает время, оставшееся до конца воспроизводимого трека"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Показывает варианты действий над выделенным текстом или над словом под "
+"курсором"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5033,6 +5063,25 @@ msgstr "{bookPercentage}%, расположение {curLocation} из {maxLocat
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Страница {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "интересный фрагмент"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "конец интересного фрагмента"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "популярный фрагмент для %s человек"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "конец популярного фрагмента"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5939,6 +5988,10 @@ msgstr "Перезагрузить"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Перезагрузить с отключёнными дополнениями"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Перезагрузить с журналом на уровне отладки"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7442,28 +7495,6 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "Включает и выключает экранное представление документа"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Вне ячейки таблицы"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "Переходит на следующую строку таблицы"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "Переходит на предыдущую строку таблицы"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "Переходит на следующий столбец таблицы"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "Переходит на предыдущий столбец таблицы"
 
 msgid "Taskbar"
 msgstr "Панель задач"
