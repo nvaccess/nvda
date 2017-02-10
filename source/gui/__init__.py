@@ -22,6 +22,7 @@ import versionInfo
 import speech
 import queueHandler
 import core
+import guiHelper
 from settingsDialogs import *
 import speechDictHandler
 import languageHandler
@@ -579,47 +580,44 @@ class WelcomeDialog(wx.Dialog):
 		# bold lettering 
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
 		welcomeTextHeader.SetFont(wx.Font(18, wx.NORMAL, wx.NORMAL, wx.BOLD))
-		mainSizer.AddSpacer(10)
+		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
-		mainSizer.AddSpacer(10)
+		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
-		kbdSizer = wx.BoxSizer(wx.HORIZONTAL)
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
-		kbdLabel = wx.StaticText(self, -1, label=_("&Keyboard layout:"))
-		kbdSizer.Add(kbdLabel)
+		kbdLabelText = _("&Keyboard layout:")
 		layouts = keyboardHandler.KeyboardInputGesture.LAYOUTS
 		self.kbdNames = sorted(layouts)
 		kbdChoices = [layouts[layout] for layout in self.kbdNames]
-		self.kbdList = wx.Choice(self, wx.ID_ANY, name=_("Keyboard layout"), choices=kbdChoices)
+		self.kbdList = sHelper.addLabeledControl(kbdLabelText, wx.Choice, choices=kbdChoices)
 		try:
 			index = self.kbdNames.index(config.conf["keyboard"]["keyboardLayout"])
 			self.kbdList.SetSelection(index)
 		except:
 			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True) 
-		kbdSizer.Add(self.kbdList)
-		optionsSizer.Add(kbdSizer,flag=wx.TOP|wx.LEFT,border=10)
 		# Translators: The label of a checkbox in the Welcome dialog.
-		self.capsAsNVDAModifierCheckBox = wx.CheckBox(self, wx.ID_ANY, _("&Use CapsLock as an NVDA modifier key"))
+		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
+		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
-		optionsSizer.Add(self.capsAsNVDAModifierCheckBox,flag=wx.TOP|wx.LEFT,border=10)
 		# Translators: The label of a checkbox in the Welcome dialog.
-		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("&Automatically start NVDA after I log on to Windows"))
+		startAfterLogonText = _("&Automatically start NVDA after I log on to Windows")
+		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
-		optionsSizer.Add(self.startAfterLogonCheckBox,flag=wx.TOP|wx.LEFT,border=10)
 		# Translators: The label of a checkbox in the Welcome dialog.
-		self.showWelcomeDialogAtStartupCheckBox = wx.CheckBox(self, wx.ID_ANY, _("&Show this dialog when NVDA starts"))
+		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
+		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(wx.CheckBox(self, label=showWelcomeDialogAtStartupText))
 		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
-		optionsSizer.Add(self.showWelcomeDialogAtStartupCheckBox,flag=wx.TOP|wx.LEFT,border=10)
-		mainSizer.Add(optionsSizer,flag=wx.LEFT|wx.TOP|wx.RIGHT|wx.EXPAND,border=20)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK),flag=wx.TOP|wx.BOTTOM|wx.ALIGN_CENTER_HORIZONTAL,border=20)
+		mainSizer.Add(optionsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
-		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
 		self.kbdList.SetFocus()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
