@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-28 20:52-0800\n"
+"POT-Creation-Date: 2017-02-03 00:10+1000\n"
+"PO-Revision-Date: 2017-02-02 14:38+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -798,6 +798,7 @@ msgstr ""
 "ospredju"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ni podprto v tem dokumentu"
 
@@ -1292,6 +1293,7 @@ msgid "%s landmark"
 msgstr "%s mejnik"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "označeno %s"
@@ -1323,6 +1325,33 @@ msgstr "Spodaj"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Premakne se na konec vsebnika, kot je seznam ali tabela"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "ni v celici tabele"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Rob tabele"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "premakne se v naslednjo vrstico v tabeli"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "premakne se v predhodno vrstico v tabeli"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "premakne se v naslednji stolpec v tabeli"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "premakne se v predhodni stolpec v tabeli"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4354,6 +4383,42 @@ msgstr "iz %s"
 msgid "page %s"
 msgstr "stran %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "odsek %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+msgid "column {0} of {1}"
+msgstr "stolpec {0} od {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s stolpci"
+
+msgid "continuous section break"
+msgstr "zvezni prelom odseka"
+
+msgid "new column section break"
+msgstr "prelom odseka v nov stolpec"
+
+msgid "new page section break"
+msgstr "prelom odseka na novo stran"
+
+msgid "even pages section break"
+msgstr "prelom odseka na sodih straneh"
+
+msgid "odd pages section break"
+msgstr "prelom odseka na lihih straneh"
+
+msgid "column break"
+msgstr "prelom stolpca"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4943,11 +5008,6 @@ msgstr "{symbol} kot v {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Rob tabele"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Premakne predmet krmiljenja v naslednji stolpec"
@@ -4989,6 +5049,10 @@ msgstr "Nobena skladba se ne predvaja"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Sporoča preostanek časa predvajanja skladbe, če se predvaja"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+
 #. Translators: A position in a Kindle book
 #, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4997,6 +5061,25 @@ msgstr "{bookPercentage}%, lokacija {curLocation} do {maxLocation}"
 #. Translators: a page in a Kindle book
 msgid "Page {pageNumber}"
 msgstr "Stran {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr ""
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr ""
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr ""
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr ""
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5890,6 +5973,11 @@ msgstr "Ponovni zagon"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Ponovni zagon z onemogočenimi dodatki"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr ""
+"Ponovni zagon z omogočenim vpisovanjem v dnevnik na nivoju razhroščevanja"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7218,9 +7306,13 @@ msgstr "Prikaži besedo, kjer stoji utripalka, v računalniški &brajici"
 msgid "&Show cursor"
 msgstr "Prikazuj &utripalko"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Pulz utripalke"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "Hitrost utripanja utripalke (ms)"
+msgstr "Hitrost utripalkinega pulza"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
@@ -7388,28 +7480,6 @@ msgid ""
 msgstr ""
 "Vključi/izključi, če je postavitev zaslona zavarovana med prilagajanjem "
 "vsebine dokumenta"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "ni v celici tabele"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "premakne se v naslednjo vrstico v tabeli"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "premakne se v predhodno vrstico v tabeli"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "premakne se v naslednji stolpec v tabeli"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "premakne se v predhodni stolpec v tabeli"
 
 msgid "Taskbar"
 msgstr "Opravilna vrstica"
