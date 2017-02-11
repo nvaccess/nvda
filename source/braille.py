@@ -10,6 +10,7 @@ import os
 import pkgutil
 import ctypes.wintypes
 import threading
+import time
 import wx
 import louis
 import winKernel
@@ -1688,6 +1689,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
+	def _handleProgressBarUpdate(self, obj):
+		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
+		newTime = time.time()
+		if oldTime and newTime - oldTime < 1:
+			# Fetching dialog text is expensive, so update at most once a second.
+			return
+		self._lastProgressBarUpdateTime = newTime
+		parent = obj.parent
+		while parent:
+			if parent.role == controlTypes.ROLE_DIALOG:
+				self.handleUpdate(parent)
+				return
+			parent = parent.parent
+
 	def handleUpdate(self, obj):
 		if not self.enabled:
 			return
@@ -1698,6 +1713,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				break
 		else:
 			# No region for this object.
+			# There are some objects that may require an update even if they have no region.
+			# Late import to avoid circular import.
+			from NVDAObjects import NVDAObject
+			if isinstance(obj, NVDAObject) and obj.role == controlTypes.ROLE_PROGRESSBAR and obj.isInForeground:
+				self._handleProgressBarUpdate(obj)
 			return
 		self.mainBuffer.saveWindow()
 		region.update()
