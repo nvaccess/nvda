@@ -23,7 +23,7 @@ Najważniejsze właściwości NVDA to:
 - Wsparcie dla wielu monitorów Brajlowskich uwzględniające możliwość wprowadzania tekstu na monitorach z klawiaturą brajlowską
 - Możliwość uruchamiania z pamięci USB lub innych nośników przenośnych bez konieczności instalacji
 - Łatwy w użyciu udźwiękowiony instalator
-- Tłumaczenie na 47 języków
+- Tłumaczenie na 48 języków
 - Wsparcie dla współczesnych systemów operacyjnych Windows, zarówno 32 jak i 64 bitowych
 - Możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranów.
 - Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge, iAccessible2, UI Automation. UI Automation jest obsługiwany tylko pod kontrolą systemów Windows 7 i wyższych.
@@ -32,7 +32,7 @@ Najważniejsze właściwości NVDA to:
 
 ++ Wersje Językowe ++
 Ważne jest, by ludzie z całego świata, bez względu na ojczysty język, mogli mieć równy dostęp do technologii.
-Poza angielskim, NVDA został przetłumaczony na 47 języków, w tym: afrykanerski, albański, amharski, arabski, aragoński, bułgarski, chiński tradycyjny i uproszczony, chorwacki, czeski, duński, fiński, francuski, galicyjski, grecki,   gruziński, hebrajski, hindi,  hiszpański, hiszpański kolumbijski, holenderski,  irlandzki, islandzki,  japoński, kataloński, koreański, mandaryński, nepalski, niemiecki, norweski, pendżabski, perski, polski, portugalski, portugalski brazylijski, rosyjski, rumuński,  serbski, słowacki, słoweński, szwedzki, tajski, tamilski, turecki, ukraiński, węgierski, wietnamski i włoski.
+Poza angielskim, NVDA został przetłumaczony na 47 języków, w tym: afrykanerski, albański, amharski, arabski, aragoński, bułgarski, chiński tradycyjny i uproszczony, chorwacki, czeski, duński, fiński, francuski, galicyjski, grecki,   gruziński, hebrajski, hindi,  hiszpański, hiszpański kolumbijski, holenderski,  irlandzki, islandzki,  japoński, kataloński, koreański, litewski, mandaryński, nepalski, niemiecki, norweski, pendżabski, perski, polski, portugalski, portugalski brazylijski, rosyjski, rumuński,  serbski, słowacki, słoweński, szwedzki, tajski, tamilski, turecki, ukraiński, węgierski, wietnamski i włoski.
 
 ++ Obsługa Syntezatora Mowy ++
 NVDA oferuje wiele wersji językowych interfejsu i daje możliwość odczytywania treści w każdym języku wspieranym przez zainstalowany w systemie syntezator mowy.
@@ -915,6 +915,10 @@ Ta opcja umożliwia wyświetlenie słowa pod kursorem w formie nieskróconego br
 ==== Pokaż kursor ====
 Ta opcja pozwala włączać i wyłączać kursor brajlowski.
 Ma zastosowanie do kursora systemu i kursora przeglądu, ale nie dotyczy oznaczania zaznaczenia.
+
+==== Migotanie kursora ====
+Ta opcja umożliwia migotanie kursora brajlowskiego.
+Jeśli migotanie jest wyłączone, punkty tworzące kursor brajlowski będą stale wysunięte.
 
 ==== Tempo migania kursora ====
 Ta opcja jest polem liczbowym, które pozwala zmienić częstotliwość migania kursora wyrażoną w milisekundach.
@@ -2164,8 +2168,8 @@ Proszę przeczytać [Dokumentację EcoBraille ftp://ftp.once.es/pub/utt/bibliote
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] jest osobnym programem, który może być wykorzystany do wsparcia wielu monitorów Brajlowskich.
-Aby skorzystać z takiej możliwości, należy zainstalować [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] jest osobnym programem, który może być wykorzystany do wsparcia wielu monitorów Brajlowskich.
+Aby skorzystać z takiej możliwości, należy zainstalować [BRLTTY for Windows http://www.brltty.com/download.html].
 Należy pobrać i zainstalować najnowszy pakiet instalacyjny, który będzie się nazywać na przykład brltty-win-4.2-2.exe.
 Podczas konfiguracji monitora i używanych portów, należy zwrócić szczególną uwagę na wskazówki w przypadku korzystania z monitora USB i zainstalowania dostarczonych przez producenta sterowników.
 

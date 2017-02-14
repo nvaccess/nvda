@@ -23,8 +23,8 @@ Highlights of this release include reporting of sections and text columns in Mic
 - The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
 - A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
 - Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
-- Due to breaking changes In the Windows 10 Creators Update, the 'Always duck' mode is removed from NVDA's Audio ducking settings. It is still available on older windows 10 releases. (#6684)
-- Due to breaking changes in the  Windows 10 Creators Update, the 'Duck when outputting speech and sounds' mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume.  These changes do not   affect older windows 10 releases. (#6684)
+- Due to changes In the Windows 10 Creators Update, the "Always duck" mode is no longer available in NVDA's Audio ducking settings. It is still available on older windows 10 releases. (#6684)
+- Due to changes in the  Windows 10 Creators Update, the "Duck when outputting speech and sounds" mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume. These changes do not   affect older windows 10 releases. (#6684)
 
 
 == Bug Fixes ==

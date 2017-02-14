@@ -698,6 +698,42 @@ Under en samtale:
 | Læs meddelelse | NVDA+Ctrl+1-0 | Læser og flytter læsemarkøren til en af de nyeste meddelelser alt efter, hvilket tal du trykker. F.eks. NVDA+Ctrl+2 læser den næstnyeste meddelelse. |
 %kc:endInclude
 
+++ Kindle for PC ++
+NVDA understøtter navigering og læsning i Amazon Kindle for PC.
+Denne funktionalitet er kun tilgængelig i Kindle bøger, der understøtter "Enhanced Typesetting." Du kan undersøge dette på detaljesiden for bogen.
+
+Gennemsynstilstand benyttes til at læse bøger.
+Dette slås til automatisk, eller når du fokusere på bogens område.
+Siderne vendes automatisk efter behov, eller når kommandoen "Sig Alt" benyttes.
+%kc:beginInclude
+Du kan manuelt gå til den næste side med tasten side ned, og gå til forrige side ved hjælp af tasten side op.
+%kc:endInclude
+
+Bogstavnavigation er understøttet for links og grafik, men kun indenfor den aktuelle side.
+Navigering ved hjælp af links vil også inkluderer fodnoter.
+
++++ Valg af tekst +++
+Kindle lader dig udføre diverse funktioner på udvalgt tekst, såsom at slå ord op i en ordbog, tilføje noter og fremhævelser, opiere tekst til udklipsholderen og søge på nettet.
+For at gøre dette, skal du først vælge tekst som du normalt ville gøre det i gennemsynstilstand f.eks. ved at bruge skift og piletasterne.
+%kc:beginInclude
+Når du har valgt tekst, skal du trykke på applikationstasten eller Skift+F10 for at vise de tilgængelige muligheder og arbejde med den udvalgte tekst.
+%kc:endInclude
+Hvis du gør dette uden at vælge tekst, vil tilgængelige muligheder vises for det aktuelle ord under markøren.
+
++++ Brugernoter +++
+Du kan tilføje en note angående et ord eller en tekstpassage.
+For at gøre dette, skal du først vælge den ønskede tekst og bruge menuen som beskrevet ovenover.
+Derefter, vælg "Add Note".
+
+Når der læses i gennemsynstilstand, vil NVDA henvise til disse noter som kommentarer.
+
+For at vise, redigere eller slette en note:
+
++ Flyt markøren til teksten, der indeholder noten.
++ Vis menuen til behandlingen af udvalgt tekst, som skrevet ovenover.
++ Vælg "Edit Note".
++ 
+
 + opsætning af NVDA+
 
 ++ Indstillinger ++
@@ -916,7 +952,11 @@ Med denne indstilling kan du få ordet under markøren vist i uforkortet compute
 Denne indstilling lader dig slå punktmarkøren til og fra.
 Denne indstilling anvendes til brug af system- og læsemarkøren, men ikke udvælgelses-indikatoren.
 
-==== Blinkhastighed for markør (ms) ====
+==== Blinkende markør ====
+Denne indstilling gør punktmarkøren i stand til at blinke.
+Hvis dette er slået fra, vil markøren konstant forblive i "op" positionen.
+
+==== Blinkhastighed for markør (MS) ====
 Denne indstilling er et felt til indtastning af en talværdi. Her har du mulighed for at indtaste markørens blinkhastighed i millisekunder.
 
 ==== Markørform ====
@@ -2164,8 +2204,8 @@ Se venligst [dokumentationen til EcoBraille ftp://ftp.once.es/pub/utt/bibliotecn
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] er et særskilt program, der understøtter yderligere en lang række punktdisplays.
-For at kunne bruge det, skal du installere programmet [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] er et særskilt program, der understøtter yderligere en lang række punktdisplays.
+For at kunne bruge det, skal du installere programmet [BRLTTY for Windows http://www.brltty.com/download.html].
 Det anbefales, at du henter og installerer den seneste installationspakke, som fx. kan have navnet brltty-win-4.2-2.exe.
 Under konfigurationen af displayet og den port, der skal bruges, skal du følge instruktionerne nøje, især hvis du benytter et USB-display og allerede har installeret producentens drivere.
 
@@ -2258,6 +2298,7 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
 | -s | --secure | Sikker tilstand (uden Python console) |
 | Ingen | --disable-addons | ingen tilføjelsesprogrammer |
+| Ingen | --debug-logging | Aktiver debug-logningsniveau for kun denne opstart. Denne indstilling vil overstyre alle logningsniveau ( ""--loglevel"", -l) argumenter. |
 | Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |

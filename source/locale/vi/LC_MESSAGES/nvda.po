@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-02 10:00+1000\n"
-"PO-Revision-Date: 2017-01-26 21:23+0700\n"
+"POT-Creation-Date: 2017-02-03 00:10+1000\n"
+"PO-Revision-Date: 2017-02-07 15:22+0700\n"
 "Last-Translator: Dang Hoai Phuc <danghoaiphuc@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -3074,7 +3074,7 @@ msgstr "Không có đối tượng cha"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr "Chuyển về đối tượng cha"
+msgstr "Chuyển đối tượng điều hướng về đối tượng cha"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
@@ -4431,7 +4431,7 @@ msgstr "chưa xóa"
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
-msgstr "Xem lại %s"
+msgstr "đã xem lại %s"
 
 #. Translators: Reported when text is not revised.
 #, python-format
@@ -5140,7 +5140,7 @@ msgstr "Ngày gửi: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
-msgstr "Xin vui lòng chờ OutLook"
+msgstr "Xin vui lòng chờ OutLook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -5437,7 +5437,7 @@ msgstr "Slide trắng"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
-msgstr "Xin vui lòng chờ Power Point"
+msgstr "Xin vui lòng chờ PowerPoint..."
 
 #. Translators: The name of the NVDA command category for Skype specific commands.
 msgid "Skype"
@@ -5937,9 +5937,8 @@ msgid "Restart with add-ons disabled"
 msgstr "Khởi động lại với các add-on được tắt"
 
 #. Translators: An option in the combo box to choose exit action.
-#, fuzzy
 msgid "Restart with debug logging enabled"
-msgstr "Khởi động lại với các add-on được tắt"
+msgstr "Khởi động lại với bản ghi dò lỗi được bật"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -6050,7 +6049,7 @@ msgstr "Đang cài đặt Add - on"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "xin vui lòng chờ trong giây lát ..."
+msgstr "Vui long chờ khi đang cài đặt add-on."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
@@ -6312,13 +6311,11 @@ msgstr "Đang cài đặt nVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr ""
-"Xin vui lòng chờ trong khi cập nhật phiên bản mới cho NVDA trên máy của "
-"bạn..."
+msgstr "Vui lòng chờ trong khi đang cập nhật các cài đặt của phiên bản trước."
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "xin vui lòng chờ trong khi cài NVDa..."
+msgstr "xin vui lòng chờ trong khi cài NVDA..."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -6352,7 +6349,7 @@ msgstr "Quá trình cập nhật đã thành công. xin chúc mừng bạn."
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "xin vui lòng chọn OK để bắt đầu copy dữ liệu"
+msgstr "xin vui lòng chọn OK để bắt đầu copy dữ lieu."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -6466,9 +6463,7 @@ msgstr "Tạo bản NVDA chạy trực tiếp"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr ""
-"xin vui lòng chờ trong khi đang tạo bản NVDA chạy trực tiếp từ phiên bản "
-"trên máy của bạn..."
+msgstr "xin vui lòng chờ trong khi đang tạo bản NVDA chạy trực tiếp."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -6584,7 +6579,7 @@ msgstr "Đang copy cấu hình"
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "xin vui lòng chờ trong khi copy cấu hình..."
+msgstr "Vui long chờ trong khi đang copy các thiết lập vào cấu hình hệ thống."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 msgid ""
@@ -6660,12 +6655,12 @@ msgstr "Cấu hình cho giọng đọc"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "Tự động chuyển ngôn ngữ`"
+msgstr "Tự động chuyển ngôn ngữ (nếu có hỗ trợ)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "Tự động chuyển giọng giữa các vùng"
+msgstr "Tự động chuyển giọng theo vùng mien (nếu có hỗ trợ)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
@@ -6829,7 +6824,7 @@ msgstr "Cài đặt phương thức nhập"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Automatically report all available &candidates"
-msgstr "Tự động thông báo các lựa chọn"
+msgstr "Tự động thông báo các lựa chọn hiện có"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -6935,12 +6930,12 @@ msgstr "Số dòng trên một trang"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Use &screen layout (when supported)"
-msgstr "Sử dụng trình bày theo màn hình khi hỗ trợ)"
+msgstr "Sử dụng trình bày theo màn hình khi được hỗ trợ)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic &Say All on page load"
-msgstr "Tự động ở chế độ đọc toàn bộ"
+msgstr "Tự động đọc tất cả khi trang được mở"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -8284,7 +8279,7 @@ msgstr "Tên biểu đồ axis"
 #. Translators: Indicates a trendline in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "trendline"
-msgstr "trendline"
+msgstr "dòng kẻ"
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
 msgid " squared "
@@ -8359,7 +8354,7 @@ msgstr "Xóa"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 msgid "property"
-msgstr "trang thuộc tính"
+msgstr "thuộc tính "
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"

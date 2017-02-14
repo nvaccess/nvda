@@ -4,35 +4,44 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupcima u Microsoft wordu; podrška za čitanje, kretanje i označavanje knjiga u Kindlu za osobna računala; i unaprjeđena podrška za microsoft edge.
 
 == Nove značajke ==
-- U Microsoft Wordu vrsta prijeloma sekcije, i broja sekcije sada se izgovara. To je omogućeno kada je opcija "izvijesti o brojevima stranica" uključena u dijaloškom okviru oblikovanje dokumenta. (#5946)
-- U Microsoft Wordu tekstovni stupci sada se izgovaraju. Ovo je uključeno kada je opcija "izgovori brojeve stranica" označena opcija se nalazi u dijaloškom okviru oblikovanje dokumenta. (#5946)
-- Sada je podržana automatsko prepoznavanje jezika u Wordpadu. (#6555)
-- NVDA komanda "traži", (NVDA+ctrl+f) je sada onemogućena u načinu pregleda za Microsoft Edge. (#6580)
-- Brza navigacija za gumbe (b i shift+b) sada je podržana u Microsoft Edge. (#6577)
-- Prolikom kopiranja radnog lista u Microsoft Excelu, Postavke zaglavlja redaka i stupaca su zapamćene. (#6628)
+- U Microsoft Wordu, vrsta prijeloma poglavlja i brojeva istih sada se izgovara. ovo je omogućeno uz pomoć opcije "izvijesti o brojevima stranica" u dijaloškom okviru oblikovanje dokumenata. (#5946)
+- U Microsoft Wordu, tekstni stupci sada se izgovaraju. Ovo je omogućeno uz pomoć opcije "izvijesti o brojevima stranica" u postavkama oblikovanja dokumenata. (#5946)
+- Automatsko prebacivanje jezika sada je podržano u  WordPadu. (#6555)
+- Prečac za pretragu (NVDA+control+f) sada je podržan u načinu pregleda u Microsoft Edgeu. (#6580)
+- Brzo kretanje po gumbima u načinu pregleda (b i shift+b) sada je podržana u Microsoft Edgeu. (#6577)
+- Prilikom kopiranja radnog lista u Microsoft Excelu, zaglavlja redaka i stupaca su zapamćena. (#6628)
+- Podrška za čitanje i kretanje po knjigama u  Kindlu za osobna računala inačica 1.19, uključujući pristup linkovima, fusnotama, slikama, označenom tekstu i korisničkim bilješkama. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638)
+- Kretanje po tablicama sada je moguće u  Microsoft Edgeu. (#6594)
+- U Microsoft Excelu, prečac izgovori lokaciju preglednog kursora (desktop: NVDA+numDelete, laptop: NVDA+delete) sada izgovara ime radnog lista i poziciju u ćeliji. (#6613)
+- Dodana opcija u dijaloški okvir izađi koja omogućuje ponovno pokretanje sa uključenom dijagnostikom. (#6689)
 
 
-== Izmjene ==
-- Minimalna brzina titranja kursora sada je 200 ms. Profili i konfiguracije koje sadrže vrijednosti ispod ove bit će povećane na vrijednost 200ms. (#6470)
-- U dijaloški okvir "brajične postavke", dodan je potvrdni okvir koji dozvoljava omogućavanje /onemogućavanje titranja kursora. Prije se koristila vrijednost 0, kako bi se to postiglo. (#6470)
-- Konfiguracijski profili i konfiguracije se automatski nadograđuju kako bi ispunjavali zahtjeve modifikacija šeme. Ako postoji greška prilikom nadogradnje, prikazuje se obavijest, konfiguracija je vraćena, i stara konfiguracijska datoteka je dostupna u NVDA zapisniku pri 'Info' razini. (#6470)
-- Podrška za čitanje i kretanje po knigama u Kindle za osobna računala inačica 1.19, ukljujući pristup do linkova, podnožja, slika, označenog teksta i korisničkih bilježaka. Molimo pogledajte poglavlje "Kindle za osobna računala" u NVDA voduću za korisnike za više informacija. (#6247, #6638)
+== Changes ==
+- Minimalna brzina titranja kursora sada je 200 MS. Ako je ovo prije bilo postavljeno na manju vrijednost, ta vrijednost će se povećati na 200 MS. (#6470)
+- U brajične postavke, Dodan je potvrdni okvir koji omogućuje - onemogućuje titranje kursora. Previously a value of zero was used to achieve this. (#6470)
+- Nadograđen eSpeak NG (commit e095f008, 10 Veljače 2017). (#6717)
 
 
 == Ispravke grešaka ==
-- Ispravljeno zamrzavanje u Microsoft Wordu prilikom kretanja po velikom dokumentu u načinu pregleda. (#6368)
-- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables, and therefore are no longer ignored. (#5927)
-- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
-- Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
-- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. 9#6216)
-- Reporting of cropped/overflowed text in Microsoft Excel cells should be now more accurate (#6472)
-- NVDA now reports when a check box is read-only. (#6563)
-- The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
-- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
-- NVDA will no longer announce "pane" when minimizing windows. (#6671)
-- Support speaking of typed characters in UWP apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
+- Ispravljeno smrzavanje prilikom kretanje po odlomcima u načinu pregleda. (#6368)
+- Tablice koje su kopirane iz Microsoft excela u microsoft word, sada se ne tretiraju kao tablice izgleda i time više se ne ignoriraju. (#5927)
+- Prilikom pokušaja pisanja u microsoft excelu u zaštićenom prikazu, NVDA sada takvu situaciju oglašava zvukom, što je bolje od izgovaranja znakova koji nisu upisani. (#6570)
+- pritisak escape tipke u Microsoft Excelu Više ne prebacuje korisnika u način pregleda, osiim ako se korisnik izričito nije prebacio u isti sa NVDA+razmak i potom ušao u način fokusa sa enterom na polju obrasca. (#6569) 
+- NVDA se više ne smrzava u Microsoft Excelovim gdje se cijeli redak ili stupac spajaju. (#6216)
+- Izvještavanje o izrezanom, odnosno tekstu koji ne stane u cijeli redak /stupac sada je točnije u Microsoft Excelu. (#6472)
+- NVDA sada izvještava o potvrdnim okvirima koji su samo za čitanje. (#6563)
+- NVDA pokretač više neće prikazivati dijaloški okvir upozorenja kada ne može reproducirati zvuk logotipa zbog nedostupnosti audio uređaja. (#6289)
+- Kontrole u Microsoft Excel ribbonu koje su nedostupne sada se izvještavaju kao takve. (#6430)
+- NVDA više neće izgovarati "ploha" prilikom minimiziranja prozora. (#6671)
+- Upisani znakovi sada se izgovaraju u aplikacijama univerzalne windowsowe platforme (UWP) (uključujući Microsoft Edge) u windows 10 Creator nadogradnji. (#6017)
+- Praćenje miša sada radi na svim zaslonima na računalima koja imaju više monitora. (#6598)
+
+
+== Izmjene za razvojne programere ==
+Ako želite doznati više, pogledajte ovaj dokument na engleskom jeziku.
 
 
 = 2016.4 =
