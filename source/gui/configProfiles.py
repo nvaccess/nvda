@@ -171,7 +171,7 @@ class ProfilesDialog(wx.Dialog):
 		index = self.profileList.Selection
 		if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-			_("This profile will be permanently deleted, this action cannot be undone."),
+			_("This profile will be permanently deleted. This action cannot be undone."),
 			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 			_("Confirm Deletion"),
 			wx.OK | wx.CANCEL | wx.ICON_QUESTION, self
