@@ -307,6 +307,8 @@ error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHan
 		findContentDescendant(pacc2,what,descendantID,descendantOffset);
 		pacc2->Release();
 	};
-	execInWindow((HWND)hwnd,func);
+	if(!execInThread(GetWindowThreadProcessId(hwnd,NULL),func)) {
+			LOG_DEBUGWARNING(L"Could not execute findContentDescendant in UI thread");
+	}
 	return 0;
 }

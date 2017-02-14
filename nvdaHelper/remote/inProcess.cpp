@@ -39,10 +39,10 @@ winEventHookRegistry_t inProcess_registeredWinEventHooks;
 windowsHookRegistry_t inProcess_registeredCallWndProcWindowsHooks;
 windowsHookRegistry_t inProcess_registeredGetMessageWindowsHooks;
 
-UINT wm_execInWindow;
+UINT wm_execInThread;
 
 void inProcess_initialize() {
-	wm_execInWindow=RegisterWindowMessage(L"nvdaHelper_execInWindow");
+	wm_execInThread=RegisterWindowMessage(L"nvdaHelper_execInThread");
 	IA2Support_inProcess_initialize();
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
@@ -118,10 +118,10 @@ LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
 	MSG* pmsg=(MSG*)lParam;
-	if(pmsg->message==wm_execInWindow) {
-		execInWindow_funcType* func=(execInWindow_funcType*)(pmsg->wParam);
+	if(pmsg->message==wm_execInThread) {
+		execInThread_funcType* func=(execInThread_funcType*)(pmsg->wParam);
 		if(func) (*func)();
-		// Signal completion to execInWindow.
+		// Signal completion to execInThread.
 		SetEvent((HANDLE)pmsg->lParam);
 		return 0;
 	}
@@ -157,11 +157,32 @@ void CALLBACK inProcess_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	}
 }
 
-void execInWindow(HWND hwnd, execInWindow_funcType func) {
-	// Using SendMessage here causes outgoing cross-process COM calls to fail with RPC_E_CANTCALLOUT_ININPUTSYNCCALL,
-	// which breaks us for Firefox multi-process. See Mozilla bug 1297549 comment 14.
-	// Use PostMessage instead.
-	HANDLE event=CreateEvent(NULL,TRUE,FALSE,NULL);
-	PostMessage(hwnd,wm_execInWindow,(WPARAM)&func,(LPARAM)event);
-	WaitForSingleObject(event,INFINITE);
+bool execInThread(long threadID, execInThread_funcType func) {
+	HANDLE handles[2]={NULL,NULL};
+	handles[0]=CreateEvent(NULL,TRUE,FALSE,NULL);
+	if(!handles[0]) {
+		LOG_DEBUGWARNING(L"Could not create event");
+		return false;
+	}
+	handles[1]=OpenThread(SYNCHRONIZE,false,threadID);
+	if(!handles[1]) {
+		LOG_DEBUGWARNING(L"Could not open UI thread");
+		CloseHandle(handles[0]);
+		return false;
+	}
+	if(PostThreadMessage(threadID,wm_execInThread,(WPARAM)&func,(LPARAM)(handles[0]))==0) {
+		LOG_DEBUGWARNING(L"Failed to post thread message");
+		CloseHandle(handles[0]);
+		CloseHandle(handles[1]);
+		return false;
+	}
+	if(WaitForMultipleObjects(2,handles,false,INFINITE)!=WAIT_OBJECT_0) {
+		LOG_DEBUGWARNING(L"Failed to wait for execInThread message to complete");
+		CloseHandle(handles[0]);
+		CloseHandle(handles[1]);
+		return false;
+	}
+	CloseHandle(handles[0]);
+	CloseHandle(handles[1]);
+	return true;
 }

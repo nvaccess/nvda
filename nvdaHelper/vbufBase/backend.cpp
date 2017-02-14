@@ -38,9 +38,12 @@ void VBufBackend_t::initialize() {
 		LOG_DEBUG(L"Calling renderThread_initialize on backend at "<<this);
 		this->renderThread_initialize();
 	};
-	LOG_DEBUG(L"Calling execInWindow");
-	execInWindow((HWND)UlongToHandle(rootDocHandle),func);
-	LOG_DEBUG(L"execInWindow complete");
+	LOG_DEBUG(L"Calling execInThread");
+	if(!execInThread(renderThreadID,func)) {
+		LOG_ERROR(L"Could not execute renderThread_initialize in UI thread");
+	} else {
+		LOG_DEBUG(L"execInThread complete");
+	}
 }
 
 void VBufBackend_t::forceUpdate() {
@@ -226,9 +229,12 @@ void VBufBackend_t::terminate() {
 			LOG_DEBUG(L"Calling renderThread_terminate on backend at "<<this);
 			this->renderThread_terminate();
 		};
-		LOG_DEBUG(L"Calling execInWindow");
-		execInWindow((HWND)UlongToHandle(rootDocHandle),func);
-		LOG_DEBUG(L"execInWindow complete");
+		LOG_DEBUG(L"Calling execInThread");
+		if(!execInThread(renderThreadID,func)) {
+			LOG_ERROR(L"Could not execute renderThread_terminate in UI thread");
+		} else {
+			LOG_DEBUG(L"execInThread complete");
+		}
 	} else {
 		LOG_DEBUG(L"render thread already terminated");
 	}
