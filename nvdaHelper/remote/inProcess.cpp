@@ -158,6 +158,12 @@ void CALLBACK inProcess_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 }
 
 bool execInThread(long threadID, execInThread_funcType func) {
+	// If we were to Use SendMessage to execute code in the UI thread,  this would cause outgoing cross-process COM calls to fail with RPC_E_CANTCALLOUT_ININPUTSYNCCALL,
+	// which breaks us for Firefox multi-process. See Mozilla bug 1297549 comments 14 and 18.
+	// Using SendMessageCallback could get around this problem, but:
+	// both SendMessage and SendMessageCallback have the added disadvantage that our message may get processed during a COM call from our own code, causing reentrancy, which our code is not able to handle.
+	// Therefore, use PostThreadMessage.
+	// The reason for PostThreadMessage rather than PostMessage is to ensure that even if the window dies, our message will still be processed. (#6422)
 	HANDLE handles[2]={NULL,NULL};
 	handles[0]=CreateEvent(NULL,TRUE,FALSE,NULL);
 	if(!handles[0]) {
@@ -176,8 +182,9 @@ bool execInThread(long threadID, execInThread_funcType func) {
 		CloseHandle(handles[1]);
 		return false;
 	}
-	if(WaitForMultipleObjects(2,handles,false,INFINITE)!=WAIT_OBJECT_0) {
-		LOG_DEBUGWARNING(L"Failed to wait for execInThread message to complete");
+	int res=WaitForMultipleObjects(2,handles,false,INFINITE);
+	if(res!=WAIT_OBJECT_0) {
+		LOG_DEBUGWARNING(L"Failed to wait for execInThread message to complete. WaitForMultipleObjects returned "<<res);
 		CloseHandle(handles[0]);
 		CloseHandle(handles[1]);
 		return false;
