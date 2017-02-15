@@ -698,6 +698,42 @@ Wewnątrz konwersacji:
 | Przejrzyj wiadomość | NVDA+control+1-0 | Odczytuje ostatnią wiadomość i przenosi do niej punkt przeglądu, zależnie od naciśniętej cyfry; np. NVDA+control+2 odczytuje wiadomość drugą od końca. |
 %kc:endInclude
 
+++ Kindle dla PC ++
+NVDA obsługuje odczyt i nawigację wewnątrz książek w aplikacji Amazon Kindle dla PC.
+Ta funkcjonalność jest dostępna tylko w książkach Kindle z wsparciem "Ulepszonego składu", co można sprawdzić na stronie szczegółów książki.
+
+Tryb czytania jest używany do czytania książek.
+Jest włączany automatycznie po otwarciu książki lub ustawieniu punktu uwagi na obszarze książki.
+Strona zostanie zmieniona automatycznie gdy będzie to konieczne czyli po przesunięciu kursora lub włączeniu polecenia czytaj wszystko.
+%kc:beginInclude
+Ręczne przejście do kolejnej strony nastąpi po wciśnięciu klawisza pageDown, a przejście do poprzedniej strony po naciśnięciu pageUp.
+%kc:endInclude
+
+Nawigacja pojedynczymi literami jest obsługiwana dla linków i grafiki, ale wyłącznie w obrębie bieżącej strony.
+Nawigacja po linkach uwzględnia również przypisy.
+
++++ Zaznaczanie tekstu +++
+Kindle pozwala na wykonanie różnych akcji na zaznaczonym tekście np. uzyskanie definicji słownikowej, dodanie notatek, skopiowanie tekstu do schowka i przeszukiwanie sieci.
+Aby to zrobić, najpierw zaznacz tekst w zwykły sposób dla trybu czytania; np. przy użyciu klawisza shift i strzałek.
+%kc:beginInclude
+Po zaznaczeniu tekstu, naciśnij klawisz menu kontekstowego, albo shift+f10 aby wyświetlić dostępne opcje pracy z zaznaczeniem.
+%kc:endInclude
+Jeśli to zrobisz bez zaznaczonego tekstu, pokazane zostaną opcje dla słowa pod kursorem.
+
++++ Notatki użytkownika +++
+Możesz dodać notatkę dotyczącą słowa lub fragmentu tekstu.
+Aby to zrobić, najpierw zaznacz tekst i otwórz opcje zaznaczenia w sposób opisany powyżej.
+Następnie wybierz dodanie notatki.
+
+Podczas czytania w trybie czytania, NVDA zgłasza te notatki jako komentarze.
+
+Aby przejrzeć, edytować lub usunąć notatkę:
+
++ Przesuń kursor do tekstu zawierającego notatkę.
++ Otwórz opcje zaznaczenia w sposób opisany powyżej.
++ Wybierz edycję notatki.
++
+
 + Konfigurowanie NVDA +
 
 ++ Menu ustawienia ++
@@ -2262,7 +2298,8 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 | -m | --minimal | bez dźwięku, interfejsu, informacji początkowej etc |
 | -s | --secure | Tryb bezpieczny (wyłącz konsolę Pythona) |
 | Brak | --disable-addons | dodatki będą ignorowane |
-| None | --no-sr-flag  | Nie zmieniaj globalnej flagi systemowej czytnika ekranu |
+| Brak | --debug-logging | Ustaw poziom logowania na informacje debugowania, dla bieżącego uruchomienia. To ustawienie nadpisze jakiekolwiek ustawienie poziomu logowania ( ""--loglevel"", -l). |
+| Brak | --no-sr-flag  | Nie zmieniaj globalnej flagi systemowej czytnika ekranu |
 | None | --install | Po cichu instaluje NVDA i uruchamia zainstalowaną kopię |
 | Brak | --install-silent | Po cichu instaluje NVDA (nie uruchamia zainstalowanej kopii) |
 

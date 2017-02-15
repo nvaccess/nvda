@@ -29,6 +29,8 @@ Os destaques desta versão são:
 - O valor mínimo para a intermitência do cursor braille é agora 200 ms. Perfis ou configurações com valores inferiores serão alterados para este novo mínimo. (#6470)
 - Foi adicionada, no diálogo Definições do Braille, uma caixa de verificação para poder desligar a intermitência do cursor Braille. Esta opção era antes activada colocando a intermitência do cursor Braille a 0. (#6470)
 - Actualizado o eSpeak NG (commit e095f008, 10 de Janeiro de 2017). (#6717)
+- Devido a alterações no Windows 10 Creators Update, que quebraram esta funcionalidade, a opção Diminuir sempre foi removida do Modo  de diminuição do volume do NVDA. Ainda está disponível em versões anteriores do windows 10. (#6684)
+- Devido a alterações no Windows 10 Creators Update, que quebraram esta funcionalidade, a opção Diminuir quando a emitir voz ou sons já não pode assegurar que o som foi silenciado antes de começar a falar, nem que o áudio fica desligado depois de terminar. Estas alterações não afectam versões anteriores do windows 10. (#6684)
 
 
 == Correcções ==
@@ -44,7 +46,8 @@ Os destaques desta versão são:
 - O NVDA já não anunciará "painel" ao minimizar janelas. (#6671)
 - Os caracteres digitados já são falados nas aplicações Universal Windows Platform (UWP) (incluindo Microsoft Edge) no Windows 10 Creators Update. (#6017)
 - O acompanhamento do rato já funciona em todos os ecrãs em computadores com múltiplos ecrãs. (#6598)
-
+- O NVDA já não fica inusável depois de sair do Windows Media Player quando focado numa barra deslizante. (#5467)
+ 
 
 == Alterações para desenvolvedores ==
 - Os ficheiros de Perfis e configurações serão automaticamente actualizados para acomodar as alterações ao esquema de intermitência do cursor Braille. Se houver um erro na actualização, uma notificaçãon será mostrada e a  configuração será feita por padrão,, ficando a configuração antiga disponível no ficheiro de log do NVDA. (#6470)

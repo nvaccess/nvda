@@ -22,6 +22,8 @@ Najważniejsze zmiany w tej wersji to zgłaszanie sekcji i kolumn tekstu w Micro
 - Minimalna częstotliwość migotania kursora brajla to obecnie 200ms. Niższe wartości tego ustawienia zostaną podniesione do 200ms. (#6470)
 - Pole wyboru zostało dodane do ustawień brajla, pozwalające włączyć lub wyłączyć migotanie kursora brajlowskiego. Poprzednio wartość zero była używana, aby to osiągnąć. (#6470)
 - Zaktualizowany eSpeak NG (commit e095f008, 10 stycznia 2017). (#6717)
+- W związku ze zmianami w Windows 10 Creators Update, tryb 'zawsze przyciszaj' został usunięty z ustawienia przyciszania audio w NVDA. Jest on nadal dostępny w starszych wydaniach Windows 10. (#6684)
+- W związku ze zmianami w Windows 10 Creators Update, tryb 'Przycisz podczas generowania mowy i dźwięku' nie może stwierdzić, czy audio zostało w pełni przyciszone przed rozpoczęciem mowy, ani utrzymać dźwięk przyciszony na wystarczająco długi czas do zakończenia wypowiedzi.  Te zmiany nie wpływają na starsze wydania windows 10. (#6684)
 
 
 == Poprawki błędów ==
@@ -37,6 +39,7 @@ Najważniejsze zmiany w tej wersji to zgłaszanie sekcji i kolumn tekstu w Micro
 - NVDA nie będzie zgłaszał "panel" podczas minimalizacji okien. (#6671)
 - Odczytywane są wpisywane znaki w aplikacjach uniwersalnej platformy Windows (UWP) (włączając w to Microsoft Edge) w Windows 10 Creators Update. (#6017)
 - Śledzenie myszy działa na wszystkich ekranach na komputerach z wieloma monitorami. (#6598)
+- NVDA od teraz nie staje się bezużyteczny po wyjściu z Windows Media Player , gdy punkt uwagi znajdował się na suwaku. (#5467)
 
 
 == Zmiany dla programistów ==

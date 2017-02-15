@@ -23,8 +23,9 @@ Les points forts de cette version incluent l'annonce des sections et des colonne
 == Changements ==
 - La vitesse minimale de clignotement du curseur braille est maintenant de 200ms. Si une valeur inférieure a été définie, elle sera augmentée à 200ms. (#6470)
 - Une case à cocher a été ajoutée au dialogue paramètres braille pour permettre l'activation ou la désactivation du clignotement du curseur braille. Précédemment, une valeur de 0 était utilisée pour réaliser cela. (#6470)
-- Les fichiers de profils et de configurations sont maintenant automatiquement mis à jour pour satisfaire aux changements de schéma. En cas d'erreur durant la mise à jour, une notification est affichée, la configuration est réinitialisée, et l'ancien fichier de configuration est disponible dans le journal de NVDA au niveau 'Info'. (#6470)
 - Mise à jour de eSpeak NG (commit e095f008, 10 Janvier 2017). (#6717)
+- En raison de changements dans la mise à jour Creators Update de Windows 10, le mode "toujours atténué' a été retiré des paramètres d'atténuation audio de NVDA. Il est toujours disponible dans les versions plus anciennes de Windows 10. (#6684)
+- En raison de changements dans la mise à jour Creators Update de Windows 10, le mode 'Atténuer les autres sources quand NVDA parle' ne peut plus s'assurer que les autres sources ont été complètement atténuées avant le début de la parole et ne pourra pas non plus conserver l'atténuation assez longtemps après la fin de la parole. Ceci n'affecte pas les versions plus anciennes de Windows 10. (#6684)
 
 
 == Corrections de Bogues ==
@@ -40,6 +41,7 @@ Les points forts de cette version incluent l'annonce des sections et des colonne
 - NVDA m'annoncera plus "Fenêtre" quand on minimise les fenêtres. (#6671)
 - Support de l'écho clavier par caractères dans les applications Universal Windows Platform (incluant Microsoft Edge) sous Windows 10 Creators Update. (#6017)
 - Le suivi de la souris fonctionne maintenant pour tous les écrans sur les ordinateurs avec plusieurs moniteurs. (#6598)
+- NVDA ne devient plus inutilisable après avoir quitté Windows Media Player alors que le focus était sur un potentiomètre. (#5467)
 
 
 == Changements pour les Développeurs ==
