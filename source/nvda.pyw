@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -25,7 +25,7 @@ import ctypes
 import locale
 import gettext
 import time
-import optparse
+import argparse
 import win32con
 import globalVars
 import config
@@ -34,19 +34,18 @@ from logHandler import log
 import winUser
 import winKernel
 
-class NoConsoleOptionParser(optparse.OptionParser):
+class NoConsoleOptionParser(argparse.ArgumentParser):
 	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
 
 	def print_help(self, file=None):
 		"""Shows help in a standard Windows message dialog"""
 		winUser.MessageBox(0, unicode(self.format_help()), u"Help", 0)
 
-	def error(self, msg):
+	def error(self, message):
 		"""Shows an error in a standard Windows message dialog, and then exits NVDA"""
 		out = ""
-		if self.usage:
-			out = self.get_usage()
-		out += "\nerror: %s" % msg
+		out = self.format_usage()
+		out += "\nerror: %s" % message
 		winUser.MessageBox(0, unicode(out), u"Error", 0)
 		sys.exit(2)
 
@@ -67,28 +66,30 @@ if not winVersion.canRunVc2010Builds():
 
 #Process option arguments
 parser=NoConsoleOptionParser()
-parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
-parser.add_option('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
-parser.add_option('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
-parser.add_option('-f','--log-file',dest='logFileName',help="The file where log messages should be written to")
-parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
-parser.add_option('-c','--config-path',dest='configPath',default=None,help="The path where all settings for NVDA are stored")
-parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
-parser.add_option('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
-parser.add_option('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
-parser.add_option('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given.")
-parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
-parser.add_option('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
-parser.add_option('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
-parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
+quitGroup = parser.add_mutually_exclusive_group()
+quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
+quitGroup.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
+parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
+parser.add_argument('-f','--log-file',dest='logFileName',help="The file where log messages should be written to")
+parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10,20,30,40,50],help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
+parser.add_argument('-c','--config-path',dest='configPath',default=None,help="The path where all settings for NVDA are stored")
+parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
+parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
+parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
+parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given.")
+parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
+installGroup = parser.add_mutually_exclusive_group()
+installGroup.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
+installGroup.add_argument('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
+parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
 # the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
 # If this occurs, the user will see an obscure error,
 # but that's far better than a major security hazzard.
-parser.add_option('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
-(globalVars.appArgs,extraArgs)=parser.parse_args()
+parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
+(globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
