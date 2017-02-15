@@ -23,6 +23,8 @@ Sürümün öne çıkanları: Microsoft Word'de bölümlerin ve metin sütunlar�
 - Minimum braille imleç yanıp sönme hızı artık 200 ms. Önceden daha düşük bir değer belirlenmişse 200 ms olarak güncellenecek. (#6470)
 - Braille ayarları iletişim kutusuna imleç sinyalinin etkinleştirilmesiyle ilgili bir onay kutusu eklendi. Bu önceden, hız bölümünde 0 yazılarak yapılıyordu. (#6470)
 - Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
+- Due to changes In the Windows 10 Creators Update, the "Always duck" mode is no longer available in NVDA's Audio ducking settings. It is still available on older windows 10 releases. (#6684)
+- Due to changes in the  Windows 10 Creators Update, the "Duck when outputting speech and sounds" mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume. These changes do not   affect older windows 10 releases. (#6684)
 
 
 == Hata Düzeltmeleri ==
@@ -38,6 +40,7 @@ Sürümün öne çıkanları: Microsoft Word'de bölümlerin ve metin sütunlar�
 - NVDA pencereler küçültülürken artık pano demiyor. (#6671)
 - Windows 10 Creators güncellemesinde, Evrensel Windows Platform (UWP) uygulamalarda (Microsoft Edge dahil) karakter girişleri seslendiriliyor. (#6017)
 - Fare izleme artık birden çok monitör ile çalışan bilgisayarlar üzerinde tüm ekranlarda çalışıyor. (#6598)
+- NVDA artık kaydırıcı denetimi üzerindeyken Windows Medya Oynatıcısı kapatıldığında kullanılamaz hale gelmiyor. (#5467)
 
 
 == Geliştiriciler için değişiklikler ==

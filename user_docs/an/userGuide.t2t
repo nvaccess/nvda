@@ -226,9 +226,10 @@ As ordens actuals no s'executarán mientras se siga en o modo d'aduya de dentrad
 ++ O Menú NVDA ++
 O menú NVDA te permite controlar as opcions d'o NVDA, acceder ta l'aduya, alzar/tornar t'a tuya configuración, Modificar os diccionarios d'a fabla, leyer o fichero d'o rechistro, y salir d'o NVDA.
 
-Pa desplegar o menú NVDA dende qualsiquier puesto de Windows mientras NVDA se siga executando, preta NVDA+n en o teclau u realiza un dople toque con 2 didos en a pantalla tactil. 
-Tamién puetz desplegar o menú NVDA a traviés d'a servilla de sistema de Windows. U fendo clic con o botón dreito sobre l'icono NVDA trobau en a servilla de sistema, u accedindo a la servilla de sistema pretando a tecla con o logo de Windows+B, flecha abaixo dica l'icono de  NVDA y pretando a tecla aplicacions trobada seguidament a la tecla de control d'a dreita en a mayoría d'os teclaus. 
-Quan amaneixca o menú, puetz emplegar as teclas de cursor ta navegar por o menú, y a tecla intro t'activar un elemento.
+Pa desplegar o menú NVDA dende qualsiquier puesto d'o Windows mientras o NVDA se siga executando, preta NVDA+n en o teclau u fe un dople toque con 2 didos en a pantalla tactil. 
+Tamién puetz desplegar o menú NVDA a traviés d'a servilla de sistema d'o Windows.
+u fendo clic con o botón dreito sobre l'icono NVDA trobau en a servilla de sistema, u accedindo t'a servilla de sistema pretando a tecla con o logo de Windows+B, flecha abaixo dica l'icono d'o  NVDA y pretando a tecla aplicacions trobada de seguida a la tecla de control d'a dreita en a mayoría d'os teclaus. 
+Quan amaneixca o menú, puetz emplegar as teclas de cursor pa navegar por o menú, y a tecla intro pa enchegar bell elemento.
 
 ++ Ordens Basicas d'o NVDA ++
 %kc:beginInclude
@@ -1281,7 +1282,7 @@ Si ye activada, ista opción diz a lo NVDA que prebe y detecte totz os cambeos d
 
 De traza predeterminada, o NVDA detectará o formato en a posición d'o cursor d'o Sistema / Revisión, y en qualques casos podría detectar o formato en a resta d'a linia, nomás si no bi ye causando un decremento d'a respuesta.
 
-Activa ista opción mientras comprebas a lectura de documentos en aplicacions tals como lo Wordpad, en do lo formato ye important.
+Enchega ista opción mientras comprebas a lectura de documentos en aplicacions tals como lo WordPad en do lo formato ye important.
 
 ==== Anunciau d'a sangría d'a linia ====[lineIndentationOptions]
 Ista opción te permite configurar cómow s'anuncia a sangría en o prencipio d'as linias.
@@ -2296,10 +2297,11 @@ As siguients son as opcions d'a linia de comandos d'o NVDA:
 | -c rota_de_configuración | --config-path=rota_de_configuración | A rota an son almagazenadas todas as opcions d'o NVDA |
 | -m | --minimal | Sin sons, sin interficie, sin mensache de ranque, etc |
 | -s | --secure | Modo seguro (desenchegar a consola Python) |
-| Garra | --disable-addons | Oscomplementos no tendrán efecto |
-| Garra | --no-sr-flag  | No cambiar l'indicador global de lector de pantalla d'o sistema |
-| Garra | --install | Instala o NVDA (rancando a copia recient instalada) |
-| Garra | --install-silent | Instala o NVDA silenciosament (no ranca la copia recient instalada) |
+| garra | --disable-addons | Oscomplementos no tendrán efecto |
+| garra | --debug-logging | Enchega o libel de rechistro de depuración nomás pa ista execución. Ista opción sobrescribirá qualsiquier atro argumento obteniu de libel de rechistro ( ""--loglevel"", -l). |
+| garra | --no-sr-flag  | No cambiar l'indicador global de lector de pantalla d'o sistema |
+| garra | --install | Instala o NVDA (rancando a copia recient instalada) |
+| garra | --install-silent | Instala o NVDA silenciosament (no ranca la copia recient instalada) |
 
 + Información Adicional +
 Si requiers d'información adicional u asistencia respective a lo NVDA, por favor visita o puesto Web d'o NVDA en NVDA_URL.

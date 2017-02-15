@@ -3,6 +3,46 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.1 =
+Ebben a kiadásban: Szakasztörések és hasábok bemondása a Microsoft Wordben; Támogatás a Kindle for PC ebook olvasóhoz (Könyvek olvasása, navigálás, kiemelések, jegyzetek); és fejlődött a Microsoft Edge támogatása is.
+
+== Újdonságok ==
+- Microsoft Word: A szakasztörések típusát, és a szakaszok sorszámát már bemondja az NVDA. Ezzel az Oldalszámok bemondása opció bővült, ami elérhető a Dokumentumformázás párbeszédpanelen. (#5946)
+- Microsoft Word: A hasábokat már jelzi az NVDA. Ezzel az Oldalszámok bemondása opció bővült, ami elérhető a Dokumentumformázás párbeszédpanelen. (#5946)
+- WordPad: Az automatikus nyelvváltás már támogatott. (#6555)
+- Microsoft Edge: Böngészőmódban az NVDA keresés parancs (NVDA+control+f) használata már támogatott. (#6580)
+- Microsoft Edge: Böngészőmódban a gombok közti navigálásra szolgáló gyorsbillentyűk  (b és shift+b) használata már támogatott. (#6577)
+- Microsoft Excel: Munkalapok másolása után a másolatban is működnek a korábban beállított oszlop- és sorfejlécek. (#6628)
+- Kindle for PC 1.19 verzió: Már támogatott a könyvek olvasása és a navigálás. Kezelhetőek a hivatkozások, lábjegyzetek, ábrák, kiemelt szövegek és a jegyzetek. Az NVDA felhasználói útmutatójában bővebb információkat találhat a témáról. (#6247, #6638)
+- Microsoft Edge: már támogatott a böngészőmódú táblázatnavigáció. (#6594)
+- Microsoft Excel: Bővült az áttekintőkurzor pozícióinformációit lekérdező parancs (Asztali: NVDA+numerikus Delete, laptop: NVDA+delete). Már bemondja a munkalap nevét, és a cella koordinátáit. (#6613)
+- Új opció a Kilépés az NVDA-ból párbeszédpanelen: Újraindítás nyomkövetés naplózási szinttel. (#6689)
+
+
+== Változások ==
+- Braille beállítások: A legkisebb kurzorvillogási érték most már 200 ms. Korábban ennél alacsonyabb érték megadása után a program automatikusan növelte az értéket erre a szintre. (#6470)
+- Braille beállítások: Új opció: Villogó kurzor jelölőnégyzet. Engedélyezheti/letilthatja a kurzor villogását. Korábban az opciót letiltani a kurzor villogási sebességének 0-ra állításával lehetett. (#6470)
+- eSpeak NG frissítése (commit e095f008, 2017. január 10.). (#6717)
+- Windows 10 Creators update: A Mindig opció nem elérhető az NVDA hangerő-igazítás szolgáltatásában. A korábbi Windows 10 kiadásokban marad az opció és a megszokott viselkedés. (#6684) 
+- Windows 10 Creators update: A Csak amikor az NVDA használja a hangkimenetet opció a hangerő-igazítás szolgáltatásban nem működik a korábban megszokott módon, később veszi le a hangerőt, és korábban állítja vissza. Ez gyakoribb hullámzást okoz a hangerőben. A korábbi Windows 10 kiadásokban marad a megszokott viselkedés. (#6684) 
+
+
+== Hibajavítások ==
+- Microsoft Word: Már nem fagy le az NVDA, ha böngészőmódban egy hosszabb dokumentumban bekezdésenként mozgunk. (#6368)
+- MS office: A Microsoft Excelből a Microsoft wordbe beillesztett táblázatokat már jól kezeli az NVDA. (#5927)
+- Microsoft Excel: Védett nézetben ha megkísérelünk karaktereket beírni, az NVDA hangjelzést ad. Korábban bemondta a leütött karaktereket, amik egyébként be sem kerültek a dokumentumba. (#6570)
+- Microsoft Excel: Az Esc lenyomása már csak abban az esetben eredményezi a böngészőmódra váltást, amennyiben korábban az NVDA+Szóköz paranccsal léptünk böngészőmódba, és egy űrlapmezőn enterezve fókuszmódra váltott a program. Korábban az Esc lenyomására kéretlenül is böngészőmódba váltott a program. (#6569) 
+- Microsoft Excel: Az NVDA már nem fagy le, ha egy egész sor vagy oszlop egyesítve van. (#6216)
+- Microsoft Excel: Az átlógó és letakart szövegek jelzése pontosabb lett. (#6472)
+- Az NVDA már jelzi ha egy jelölőnégyzet állapota csak olvasható. (#6563)
+- Az NVDA már nem jelenít meg hibaüzenetet, ha az indító hangot nem tudja lejátszani megfelelő hangeszköz híján. (#6289)
+- Microsoft Excel: A nem érhető el állapotú ribbon vezérlőelemeket az NVDA az elvártnak megfelelően jelenti be.  (#6430)
+- Az NVDA már nem jelent be terület elemet az ablakok kis méretűre állításakor. (#6671)
+- Windows 10 Creators Update: A beírt karakterek bemondása működni fog a Universal Windows Platform (UWP) alkalmazásokban (beleértve a Microsoft Edge-t is). (#6017)
+- Az egérmutató követése most már a többmonitoros számítógépek minden képernyőjén működik. (#6598)
+- Az NVDA már nem válik használhatatlanná, ha a Windows Media Playert úgy zárjuk be, hogy az aktív elem egy csúszka. (#5467) 
+
+
 = 2016.4 =
 Ebben a kiadásban: javított támogatás a Microsoft Edge-hez; böngészőmód a Win 10 Üzenetek alkalmazáshoz, ill. jelentős javítások az NVDA párbeszédpanelein.
 

@@ -23,6 +23,8 @@ O subliñable desta versión inclúe o anunciado de secións e columnas de texto
 - A velocidade mínima do parpadeo do cursor braille agora é 200ms. Os perfís ou as configuracións con valores por embaixo deste incrementaranse en 200ms. (#6470)
 - Engadiuse unha caixa de verificación ao diálogo opcións braille para permitir habilitar ou deshabilitar o parpadeo do cursor braille. Anteriormente usábase un valor de cero para lograr esto. (#6470)
 - Actualizado o eSpeak NG (commit e095f008, 10 de xaneiro do 2017). (#6717)
+- Debido aos cambios na actualización Windows 10 Creators, o modo "Atenuar sempre" xa non está dispoñible nas opcións de Atenuación de audio do NVDA. Aínda está dispoñible en versións máis vellas do windows 10. (#6684)
+- Debido aos cambios na Actualización Windows 10 Creators, o modo "Atenuar cando saian voz e sons" xa non pode asegurarse de que o audio se atenuara compretamente antes de comezar a falar, nin manterá o audio atenuado o tempo suficiente despois de falar para deter o rebote rápido no volume. Estos cambios non afectan ás versións máis vellas do windows 10. (#6684)
 
 
 == Correción de Fallos ==
@@ -38,6 +40,7 @@ O subliñable desta versión inclúe o anunciado de secións e columnas de texto
 - NVDA xa non anunciará "panel" cando se minimicen ventás. (#6671)
 - Os caracteres que se escreben agora fálanse en aplicacións UWP (incluindo Microsoft Edge) na actualización Windows 10 Creators. (#6017)
 - O seguemento do rato agora funciona en todas as pantallas en computadores con varios monitores. (#6598)
+- NVDA xa non se volverá inusable despois de saír do Windows Media Player mentres se enfoca un control deslizador. (#5467)
 
 
 == Cambios para Desenvolvedores ==

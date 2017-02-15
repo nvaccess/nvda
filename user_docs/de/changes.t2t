@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Schwerpunkte dieser Version sind u.a. die Ansage von Abschnitten und Spalten in Microsoft Word; Unterstützung beim Navigieren in, Lesen von und Einfügen von Anmerkungen in Bücher(n) in Kindle sowie verbesserte Unterstützung von Microsoft Edge.
 
 == Neue Funktionen ==
 - Mit der neuen Option "Seitenzahlen ansagen" in den Einstellungen für Dokumentformatierungen können Sie sich nun Abschnittswechsel und -Nummern anzeigen lassen. (#5946)
@@ -21,7 +22,9 @@
 == Änderungen ==
 - Die minimale Cursorblinkfrequenz beträgt nun 200 ms. Falls in einem Konfigurationsprofil ein niedrigerer Wert hinterlegt wird, wird dieser automatisch angehoben. (#6470)
 - In den Braille-Einstellungen wurde eine neue Option zum Ein-/Ausschalten der Cursorblinkens hinzugefügt. Bisher war das Abschalten der Cursorblinkfrequenz durch die Angabe von 0 als Cursorblinkfrequenz möglich. (#6470)
-
+- eSpeak NG wurde aktualisiert (commit e095f008, 10 January 2017). (#6717)
+- Aufgrund von Änderungen in Windows 10 Creators Update ist die Option "Lautstärke anderer Anwendungen immer reduzieren" nicht mehr verfügbar. In älteren Versionen von Windows 10 steht die Option weiterhin zur Verfügung. (#6684)
+- Aufgrund von Änderungen in Windows 10 Creators Update kann die Audioducking-Einstellung "nur beim Sprechen" weder sicherstellen, dass die lautstärke anderer Anwendungen rechtzeitig reduziert wird, noch bevor NVDA zu sprechen beginnt; noch wird die Lautstärke lange genug reduziert, bis NVDA ausgesprochen hat. Diese Änderungen wirken sich nicht auf älteren Windows 10-Versionen aus. (#6684)
 
 
 == Fehlerkorrekturen ==
@@ -37,7 +40,7 @@
 - NVDA zeigt nicht mehr "Feld" an, wenn Fenster minimiert werden. (#6671)
 - In Windows 10 Creators Update werden in Windows 10-Apps eingegebene Zeichen gesprochen. (#6017)
 - Bei der Verwendung mehrerer Monitore funktioniert die Mausverfolgung nun über alle Monitore hinweg. (#6598)
-
+- NVDA verhält sich korrekt, wenn Sie Windows Media Player beenden, während ein Schieberegler den Fokus besitzt. (#5467)
 
 == Änderungen für Entwickler ==
 - Konfigurationsprofile und -Dateien werden automatisch aktualisiert. Falls beim Aktualisieren ein Fehler auftritt, wird eine Fehlermeldung mit der Ebene "info" im Protokoll hinterlegt. (#6470)
