@@ -23,6 +23,8 @@ Af væsentlige forbedringer i denne version af NVDA kan nævnes rapportering af 
 - Minimum blinkhastighed er nu 200 MS. Profiler, hvor værdien er mindre end 200, vil blive forøget til dette. (#6470)
 - En tjekboks er blevet tilføjet til dialogen punktindstillinger der tillader, at blinkhastigheden kan slås til og fra. Tidligere var værdien 0 brugt til at opnå dette. (#6470)
 - Opdaterede eSpeak NG (commit e095f008, 10 January 2017). (#6717)
+- På grund af ændringer i Windows 10 Creators Update er lyddæmpningstilstanden "Altid dæmp" ikke længere tilgængelig i NVDAs indstillinger for lyddæmpning. Denne indstilling kan stadig benyttes i ældre versioner af Windows 10. (#6684)
+- På grund af ændringer i Windows 10 Creators Update kan tilstanden "Dæmp når der udsendes tale og lyde" ikke længre sikre, at lyden er helt dæmpet før der udsendes tale, og vil desuden heller ikke bevare lyden dæmpet længe nok når der ikke længere udsendes tale. Dette vil forhindre hurtige ændringer af lydniveauet. Disse ændringer påvirker ikke ældre versioner af Windows 10. (#6684)
 
 
 == Fejlrettelser ==
@@ -38,6 +40,7 @@ Af væsentlige forbedringer i denne version af NVDA kan nævnes rapportering af 
 - NVDA vil ikke længere annoncere "Rude" når vinduer minimeres. (#6671)
 - Indtastede tegn udtales nu i Universal Windows Platform (UWP) apps (herunder Microsoft Edge) i Windows 10 Creators Update. (#6017)
 - Musefølgning virker nu på tværs af alle skærme på computere med flere tilkoblede skærme. (#6598)
+- NVDA bliver ikke længere ubrugelig, når Windows Media Player afsluttes og en skyderkontrol har fokus. (#5467)
 
 
 == Ændringer for udviklere ==
