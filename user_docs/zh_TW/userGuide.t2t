@@ -720,10 +720,10 @@ NVDA可支援在視窗作業系統上的Amazon Kindle for PC閱讀和瀏覽書�
 %kc:endInclude
 如果沒有選取文字，則會視同選擇所在游標的文字之選項。
 
-+++ 使用者註記User Notes +++
++++ 使用者註記 +++
 您可以在一個字或段落上添加註記。
 要執行此功能，首先選擇相關的文字並選取上述選項。
-然後選擇「新增註記」選項。Then, choose Add Note.
+然後選擇「新增註記」選項。
 
 當在瀏覽模式閱讀時，NVDA將這些筆記稱為註解。
 
@@ -2291,17 +2291,17 @@ nvda -q
 | -h | --help | 顯示命令列 說明並結束 |
 | -q | --quit | 結束已啟用的這個 NVDA 版本 |
 | -r | --replace | 結束目前已啟用的 NVDA 版本，並啟用這一個。 |
-| -k | --check-running | 報告 NVDA的結束狀態代碼，若是0則代表啟用中，若是1則代表沒有啟用。
+| -k | --check-running | 報告 NVDA的結束狀態代碼，若是0則代表啟用中，若是1則代表沒有啟用。 |
 | -f LOGFILENAME | --log-file=LOGFILENAME | 應將事件資訊寫入的檔案 |
-| -l LOGLEVEL | --log-level=LOGLEVEL | | 事件記錄最低等級（偵錯 10；資訊 20；警告 30；錯誤 40；嚴重錯誤；預設是警告。
-| -c CONFIGPATH | --config-path=CONFIGPATH | 所有用在 NVDA設定的路徑均已貯存。
-| -m | --minimal | 沒有音效、沒有介面、沒有啟動等資訊。
-| -s | --secure | 安全模式（停用 Python 主控台）
+| -l LOGLEVEL | --log-level=LOGLEVEL | | 事件記錄最低等級（偵錯 10；資訊 20；警告 30；錯誤 40；嚴重錯誤；預設是警告。 |
+| -c CONFIGPATH | --config-path=CONFIGPATH | 所有用在 NVDA設定的路徑均已貯存。 |
+| -m | --minimal | 沒有音效、沒有介面、沒有啟動等資訊。 |
+| -s | --secure | 安全模式（停用 Python 主控台） |
 | None | --disable-addons | 附加元件將不起作用 |
-| None | --debug-logging | 僅對本次執行啟用除錯等級的事件紀錄，這個設定會覆蓋其他事件紀錄的指定等級之內容。( ""--loglevel"", -l)|
+| None | --debug-logging | 僅對本次執行啟用除錯等級的事件紀錄，這個設定會覆蓋其他事件紀錄的指定等級之內容。( ""--loglevel"", -l) |
 | None | --no-sr-flag  | 不要改變預設螢幕報讀軟體的標記符號
 | None | --install | 安裝 NVDA（開始安裝一個新的版本） |
-| None | --install-silent | 靜音安裝 NVDA （並非安裝一個 NVDA 新的版本）|
+| None | --install-silent | 靜音安裝 NVDA （並非安裝一個 NVDA 新的版本） |
 
 + 額外資訊 +
 假如您需要NVDA進一步的資訊或協助，請瀏覽 NVDA 的網站 NVDA_URL，
