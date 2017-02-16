@@ -23,6 +23,8 @@ Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupc
 - Minimalna brzina titranja kursora sada je 200 MS. Ako je ovo prije bilo postavljeno na manju vrijednost, ta vrijednost će se povećati na 200 MS. (#6470)
 - U brajične postavke, Dodan je potvrdni okvir koji omogućuje - onemogućuje titranje kursora. Previously a value of zero was used to achieve this. (#6470)
 - Nadograđen eSpeak NG (commit e095f008, 10 Veljače 2017). (#6717)
+- Zbog izmjena u Windows 10 creators nadogradnji, opcija "uvijek stišavaj" više nije dostupna u NVDA glasovnim postavkama. Ali, još uvijek je dostupna u starijim inačicama Windowsa 10. (#6684)
+- zbog promjena u   Windows 10 Creators nadogradnji, način "stišavanja zvuka prilikom proizvodnje zvuka i govora" više se ne može uvjeravati u punu stišanost zvuka prije nego što počne govoriti, niti ne može ostaviti audiokanal otvoren  poslije zaustavljanja naglog stišavanja glasnoće. Ove izmjene ne utjeću na starije inačice windows 10 operacijskog sustava. (#6684)
 
 
 == Ispravke grešaka ==
@@ -38,6 +40,7 @@ Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupc
 - NVDA više neće izgovarati "ploha" prilikom minimiziranja prozora. (#6671)
 - Upisani znakovi sada se izgovaraju u aplikacijama univerzalne windowsowe platforme (UWP) (uključujući Microsoft Edge) u windows 10 Creator nadogradnji. (#6017)
 - Praćenje miša sada radi na svim zaslonima na računalima koja imaju više monitora. (#6598)
+- NVDA više ne postaje beskoristan poslije isključivanja windows media playera prilikom fokusiranja na kontrolu klizača. (#5467)
 
 
 == Izmjene za razvojne programere ==
