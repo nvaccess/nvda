@@ -28,6 +28,16 @@ from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
 
+from urlparse import urlparse
+import wx
+import gui
+from ConfigParser import SafeConfigParser
+import os
+import globalVars
+import treeInterceptorHandler
+import configobj
+from customLabels import customLabels
+
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
 class UIAMSHTMLTextInfo(UIATextInfo):
@@ -613,6 +623,18 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
+		nameAttribute=self.HTMLAttributes['name']
+		idAttribute=self.HTMLAttributes['id']
+		filename=customLabels.getFilenameFromElementDomain(getattr(self.HTMLNode.document,'url',""))
+		if idAttribute and nameAttribute:
+			name=customLabels.getCustomLabel(filename,idAttribute+nameAttribute)
+		elif not nameAttribute:
+			name=customLabels.getCustomLabel(filename,idAttribute)
+		elif not idAttribute:
+			name=customLabels.getCustomLabel(filename,nameAttribute)
+
+ 		if name:
+  			return name
 		ariaLabelledBy=self.HTMLAttributes['aria-labelledBy']
 		if ariaLabelledBy:
 			try:
@@ -975,6 +997,41 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+
+	def script_assignCustomLabel(self, gesture):
+		try:
+			obj=api.getFocusObject()
+			treeInterceptor=obj.treeInterceptor
+			if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
+				obj=treeInterceptor
+			try:
+				info=obj.makeTextInfo(textInfos.POSITION_CARET)
+			except (NotImplementedError, RuntimeError):
+				info=obj.makeTextInfo(textInfos.POSITION_FIRST)
+			browseObj=info.NVDAObjectAtStart
+		except:
+			browseObj=api.getFocusObject()
+		if (browseObj.HTMLNode.nodeName=="IMG"):
+			customLabelKey=browseObj.HTMLAttributes['src']
+		elif (browseObj.HTMLNode.nodeName=="A"):
+			customLabelKey=browseObj.HTMLAttributes['href']
+		else:
+			if browseObj.HTMLAttributes['id'] and browseObj.HTMLAttributes['name']:
+				customLabelKey=browseObj.HTMLAttributes['id']+browseObj.HTMLAttributes['name']
+			elif not browseObj.HTMLAttributes['name']:
+				customLabelKey=browseObj.HTMLAttributes['id']
+			elif not browseObj.HTMLAttributes['id']:
+				customLabelKey=browseObj.HTMLAttributes['name']
+			if (not customLabelKey):
+				log.debugWarning("\nCannot assign custom label")			
+		if customLabelKey:
+			customLabelKey=customLabelKey.replace(':','\:')
+		filename=customLabels.getFilenameFromElementDomain(getattr(self.HTMLNode.document,'url',""))
+		customLabels.addLabel(filename,customLabelKey)
+		
+	__gestures = {
+		"kb:NVDA+control+tab": "assignCustomLabel",
+		}
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.

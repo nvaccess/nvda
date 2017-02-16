@@ -23,7 +23,7 @@ map<VBufBackend_t*,HINSTANCE> backendLibHandles;
 
 extern "C" {
 
-VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int docHandle, int ID, const wchar_t* backendName) {
+VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int docHandle, int ID, const wchar_t* backendName,const wchar_t* labels) {
 	wchar_t backendPath[MAX_PATH];
 	wsprintf(backendPath,L"%s\\VBufBackend_%s.dll",dllDirectory,backendName);
 	HINSTANCE backendLibHandle=LoadLibrary(backendPath);
@@ -39,7 +39,7 @@ VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int do
 		return NULL;
 	}
 	backendLibHandles[backend]=backendLibHandle;
-	backend->initialize();
+	backend->initialize(labels);
 	return (VBufRemote_bufferHandle_t)backend;
 }
 

@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+wstring findLabel(multiValueAttribsMap,wstring);
+
 HINSTANCE backendLibHandle=NULL;
 UINT WM_HTML_GETOBJECT;
 
@@ -449,6 +451,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	IHTMLDOMAttribute* tempAttribNode=NULL;
 	VARIANT tempVar;
 	macro_addHTMLAttributeToMap(L"id",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"name",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	if(nodeName.compare(L"TABLE")==0) {
 		macro_addHTMLAttributeToMap(L"summary",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"A")==0) {
@@ -1080,7 +1083,14 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		else if (isInteractive && !IAValue.empty()) {
 			// The graphic is unlabelled, but we should try to derive a name for it.
 			contentString=getNameForURL(IAValue);
-		} 
+		}
+		if ((tempIter = attribsMap.find(L"HTMLAttrib::src")) != attribsMap.end()) {
+			wstring srcAttribute=tempIter->second;
+			wstring labelForNode=findLabel(labelsMap,srcAttribute);
+			if (!labelForNode.empty()){
+				contentString=labelForNode;
+			}
+	}
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
 		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"file")==0) {
@@ -1130,6 +1140,13 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		||nodeName.compare(L"MATH")==0
 	) {
 		contentString=L" ";
+	} else if((nodeName.compare(L"A")==0)&&(attribsMap.find(L"HTMLAttrib::href")!=attribsMap.end())) {
+		tempIter = attribsMap.find(L"HTMLAttrib::href");
+		wstring linkAttribute=tempIter->second;
+		wstring labelForNode=findLabel(labelsMap,linkAttribute);
+		if (!labelForNode.empty()){
+			contentString=labelForNode;
+		}
 	} else {
 		renderChildren=true;
 	}
@@ -1139,8 +1156,34 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	if (!nameIsContent && !IAName.empty() && (nameFromAuthor || (
 		attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end()
 		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
-	)))
+	))){
 		attribsMap[L"name"]=IAName;
+		}
+
+	tempIter = attribsMap.find(L"HTMLAttrib::name");
+	map<wstring,wstring>::const_iterator tempIterId;
+	tempIterId=attribsMap.find(L"HTMLAttrib::id");
+	if(tempIter!=attribsMap.end() || tempIterId!=attribsMap.end())
+	{
+		wstring nameAttribute;
+		if (tempIterId==attribsMap.end())
+		{
+			nameAttribute=tempIter->second;
+		}
+		else if (tempIter==attribsMap.end())
+		{
+			nameAttribute=tempIterId->second;
+		}
+		else
+		{
+			nameAttribute=tempIterId->second+tempIter->second;
+		}
+		wstring labelForNode=findLabel(labelsMap,nameAttribute);
+		if (!labelForNode.empty()){
+					contentString=labelForNode;
+					renderChildren=false;
+				}
+	}
 
 	//Add a textNode to the buffer containing any special content retreaved
 	if(!hidden&&!contentString.empty()) {
@@ -1307,6 +1350,19 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	}
 
 	return parentNode;
+}
+
+wstring findLabel(multiValueAttribsMap labelsMap,wstring attributeValue) {
+	wstring key ;
+	wstring value;
+	for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++) {
+		key = it->first;
+		value = it->second;
+		if (attributeValue.compare(key)==0) {
+			return value;
+		}
+	}
+	return L"";
 }
 
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
