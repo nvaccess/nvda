@@ -511,7 +511,7 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
-	def getValueForAriaCurrent(self):
+	def _get_isCurrent(self):
 		return self.HTMLAttributes["aria-current"]
 
 	def _get_HTMLAttributes(self):

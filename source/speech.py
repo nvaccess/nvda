@@ -307,7 +307,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 			newPropertyValues["_tableID"]=obj.tableID
 		except NotImplementedError:
 			pass
-	newPropertyValues['current']=obj.getValueForAriaCurrent()
+	newPropertyValues['current']=obj.isCurrent
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -1003,19 +1003,12 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
 	ariaCurrent = propertyValues.get('current', False)
-	if ariaCurrent is not None and ariaCurrent != False:
-		if ariaCurrent=="page":
-			textList.append(_("current page"))
-		elif ariaCurrent=="step":
-			textList.append(_("current step"))
-		elif ariaCurrent=="location":
-			textList.append(_("current location"))
-		elif ariaCurrent=="date":
-			textList.append(_("current date"))
-		elif ariaCurrent=="time":
-			textList.append(_("current time"))
-		else:
-			textList.append(_("current"))
+	if ariaCurrent:
+		try:
+			textList.append(controlTypes.isCurrentLabels[ariaCurrent])
+		except KeyError:
+			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
+			textList.append(controlTypes.isCurrentLabels[True])
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:
@@ -1118,7 +1111,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
 		return (getSpeechTextForProperties(_tableID=tableID, **getProps)
-			+ (" %s" % stateText if stateText else ""))
+			+ (" %s" % stateText if stateText else "")
+			+ (" %s" % ariaCurrentText if ariaCurrent else ""))
 
 	# General cases
 	elif (
@@ -1139,10 +1133,14 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return _("out of %s")%roleText
 
 	# Special cases
-	elif not extraDetail and not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
-		# Clickable.
-		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
-
+	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
+		out = []
+		if not extraDetail and controlTypes.STATE_CLICKABLE in states: 
+			# Clickable.
+			out.append(getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE])))
+		if ariaCurrent:
+			out.append(ariaCurrentText)
+		return CHUNK_SEPARATOR.join(out)
 	else:
 		return ""
 
