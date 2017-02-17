@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+﻿# -*- coding: UTF-8 -*-
 #globalCommands.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -141,7 +141,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text)
+			speech.spellTextInfo(info)
 	# Translators: Input help mode message for report current line command.
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
 	script_reportCurrentLine.category=SCRCAT_SYSTEMCARET
