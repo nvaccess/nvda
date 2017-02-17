@@ -698,6 +698,42 @@ Ko smo v pogovoru:
 | Preglej sporočilo | NVDA+control+1-0 | Sporoči zadnje sporočilo in nanj premakne pregledno utripalko, odvisno od številke, ki ste jo pritisnili; npr. NVDA+control+2 prebere predzadnje sporočilo. |
 %kc:endInclude
 
+++ Kindle za Osebni Računalnik ++
+NVDA podpira branje knjig in premikanje po njih v aplikaciji Amazon Kindle za osebne računalnike.
+Ta funkcionalnost je na voljo samo v knjigah Kindle, ki podpirajo "Enhanced Typesetting", (aplikacija je samo v Angleščini)), kar lahko preverite na strani, ki prikazuje podrobne informacije o lastnostih knjige.
+
+Za branje se uporablja Brskalniško delovanje.
+To se vključi samodejno, ko knjigo odprete ali pa se žarišče postavi na njeno območje.
+Prav tako se bodo strani ustrezno obračale samodejno, ko se boste premikali z utripalko ali pa uporabljali ukaz "Preberi Vse".
+%kc:beginInclude
+Ročno se lahko na naslednjo ali predhodno stran premaknete z uporabo tipke pageDown ali pageUp.
+%kc:endInclude
+
+Enočrkovno krmiljenje je podprto za povezave in grafike, vendar samo znotraj trenutne strani.
+Krmiljenje po povezavah vključuje tudi opombe pod črto.
+
++++ Izbiranje Besedila +++
+Kindle vam omogoča, da nad izbranim besedilom izvedete različna dejanja, vključno s pridobivanjem slovarske deifinicije, dodajanjem zabeležk in poudarkov, preslikavo besedila v odložišče in iskanjem po spletu.
+Za izvedbo dejanja, najprej označite besedilo, kot se to naredi v brskalniškem delovanju; na primer, lahko uporabite tipko shift skupaj s smernimi tipkami za manipulacijo z utripalko (puščicami).
+%kc:beginInclude
+Ko boste enkrat besedilo označili, pritisnite  tipko applications ali shift+f10, da se vam bodo prikazale možnosti, ki so na voljo za delo z izbranim odsekom.
+%kc:endInclude
+Če boste to storili, brez, da bi prej označili ustrezno besedilo, se bodo te možnosti pokazale samo za besedo, nad katero trenutno stoji utripalka.
+
++++ Uporabniške Zabeležke +++
+Ob branju knjige lahko vanjo dodate lastne zabeležke. Lahko so besede pa tudi krajše besedilo.
+Če želite to narediti, naprej označite željeno besedilo, nato pa za dostop do možnosti nad to izbiro izvedite korake, ki so opisani zgoraj.
+Nato izberite "Add Note" Dodaj zabeležko.
+
+Med branjem v brskalniškem delovanju, NVDA te zabeležke obravnava kot komentarje.
+
+Za pregled, urejanje ali izbris zabeležke:
+
++ Premaknite utripalko na besedilo, ki vsebuje zabeležko.
++ Izvedite korako za dostop do možnosti nad izbiro, kot je opisano zgoraj.
++ Izberite Uredi zabeležko "Edit Note".
++
+
 + Nastavljanje NVDA +
 
 ++ Nastavitve ++
@@ -1246,7 +1282,7 @@ Za preklapljanje stanja teh nastavitev od kjerkoli, prosimo, dodelite lastne kre
 
 Privzeto bo NVDA zaznavala spremembe na položaju pregledne utripalke/sistemske kazalke in včasih bo zaznavala oblikovanje v drugih delih vrstice samo, če to ne bo vpočasnilo njenega delovanja.
 
-Omogočite to možnost v programih, kot je Wordpad med postopkom postavitve besedila, kjer je oblikovanje pomembno.
+Omogočite to možnost v programih, kot je WordPad, med postopkom postavitve besedila, kjer je oblikovanje pomembno.
 
 ==== Sporočanje zamika vrstice ====[lineIndentationOptions]
 Ta možnost vam omogoča nastavitev, kako naj NVDA sporoča zamik vrstice na njenem začetku.
@@ -2262,6 +2298,7 @@ NVDA pozna naslednje možnosti ukazne vrstice:
 | -m | --minimal | Brez zvokov, brez vmesnika, brez sporočila po zagunu ipd. |
 | -s | --secure | Varni način (Onemogočena konzola Pythona) |
 | None | --disable-addons | Dodatki nimajo vpliva na NVDA. Isto, kot če v NVDA dodatkov ne bi bilo. |
+| None | --debug-logging | Nastavi nivo beleženja na RAzhroščevanje samo za naslednji zagon NVDA. Ta nastavitev bo preglasila katerikoli drug dan argument, ki definira nivo beleženja ( ""--loglevel"", -l). |
 | None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
 | None | --install | Namesti NVDA (na novo nameščeno kopijo NVDA tudi zažene). |
 | None | --install-silent | Tiho namesti NVDA (na novo nameščene kopije NVDA ne zažene). |
