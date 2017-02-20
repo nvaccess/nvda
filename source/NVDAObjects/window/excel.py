@@ -988,10 +988,18 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			except COMError:
 				pass
 		if formatConfig["reportBorderStyle"]:
-			if self.obj.excelCellObject.mergeCells:
-				cellObj=self.obj.excelCellObject.mergeArea.DisplayFormat
+			borders = None
+			hasMergedCells = self.obj.excelCellObject.mergeCells
+			if hasMergedCells:
+				mergeArea = self.obj.excelCellObject.mergeArea
+				try:
+					borders = mergeArea.DisplayFormat.borders # for later versions of office
+				except COMError:
+					borders = mergeArea.borders # for office 2007
+			else:
+				borders = cellObj.borders
 			try:
-				formatField['border-style']=getCellBorderStyleDescription(cellObj.borders,reportBorderColor=formatConfig['reportBorderColor'])
+				formatField['border-style']=getCellBorderStyleDescription(borders,reportBorderColor=formatConfig['reportBorderColor'])
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)
