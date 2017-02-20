@@ -610,8 +610,9 @@ class ExcelBase(Window):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
-			import excelChart
-			obj=excelChart.ExcelChart(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelChartObject=selection)
+			import _msOfficeChartConstants
+			obj = _msOfficeChartConstants.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeShapeObject = selection.Parent )  
+			#obj=excelChart.ExcelChart(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelChartObject=selection)
 		return obj
 
 

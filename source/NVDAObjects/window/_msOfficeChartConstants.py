@@ -529,9 +529,11 @@ class OfficeChart(OfficeChartElementList):
 				self.addElement( OfficeChartElementSeries(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject , elementID = xlSeries , arg1 = i +1 ) , self) 
 
 		self.addElement( OfficeChartElement(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject ) , self )
-
-		self.officeChartObject.Select()
-
+		try:
+			self.officeChartObject.Select()
+		except:
+			pass		
+		
 	def _get_name(self):
 		if self.officeChartObject.HasTitle:
 			name=self.officeChartObject.ChartTitle.Text
@@ -575,7 +577,7 @@ class OfficeChart(OfficeChartElementList):
 			text=pgettext('chart','column')
 		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
 			# Translators: A data point in a line chart.
-			text=_("daata point")
+			text=_("data point")
 		else:
 			# Translators: A segment of a chart for charts which don't have a specific name for segments.
 			text=_("item")
@@ -943,7 +945,7 @@ class OfficeChartElementLegendKey( OfficeChartElementBase):
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlLegendKey:
-			# Translators: Details about a legend key for a series in a Microsoft Excel chart.
+			# Translators: Details about a legend key for a series in a Microsoft office chart.
 			# For example, this might report "Legend key for series Temperature 1 of 2"
 			# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 			return _( "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count )
