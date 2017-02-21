@@ -4,25 +4,47 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
+Hoogtepunten in deze versie zijn melden van secties en tekstkolommen in Microsoft Word; Ondersteuning voor lezen, navigeren en annoteren van boeken in Kindle voor PC; en verbeterde ondersteuning voor Microsoft Edge.
 
 == Nieuwe Functies ==
 - In Microsoft Word kan het soort sectie-einde en het nummer van de sectie nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
 - In Microsoft Word kunnen de tekstkolommen nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
-- Automatische taalherkenning is nu ondersteund in Wordpad. (#6555)
-- The NVDA find command (NVDA+control+f) is now supported in browse mode for Microsoft Edge. (#6580)
-- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+- Automatische taalherkenning wordt nu ondersteund in Wordpad. (#6555)
+- Het NVDA-commando om te zoeken (NVDA+control+f) wordt nu ondersteund in bladermodus voor Microsoft Edge. (#6580)
+- Snelnavigatie voor knoppen in bladermodus (b en shift+b) wordt nu ondersteund in Microsoft Edge. (#6577)
+- Bij het kopiëren van een werkblad in Microsoft Excel worden kolom- en rijhoofdingen onthouden. (#6628)
+- Ondersteuning voor lezen en navigeren van boeken in Kindle voor PC versie 1.19, inclusief toegang tot links, voetnoten, afbeeldingen, benadrukte tekst en gebruikersnota's. Voor meer informatie verwijzen we naar de sectie Kindle voor PC in NVDA handleiding. (#6247, #6638)
+- Bladermodus tabel navigatie wordt nu ondersteund in Microsoft Edge. (#6594)
+- In Microsoft Excel meldt het commando om de locatie van de leescursor te melden (desktop: NVDA+numpadDelete, laptop: NVDA+delete) nu de naam van het werkblad en de cellocatie. (#6613)
+- Een optie toegevoegd aan het Afsluiten dialoogvenster om te herstarten met debug level logging. (#6689)
+
+
+== Veranderingen ==
+- The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
+- A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
+- eSpeak NG bijgewerkt (commit e095f008, 10 januari 2017). (#6717)
+- Due to changes In the Windows 10 Creators Update, the "Always duck" mode is no longer available in NVDA's Audio ducking settings. It is still available on older windows 10 releases. (#6684)
+- Due to changes in the  Windows 10 Creators Update, the "Duck when outputting speech and sounds" mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume. These changes do not   affect older windows 10 releases. (#6684)
 
 
 == Opgeloste problemen ==
-- Fix freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
-- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables, and therefore are no longer ignored. (#5927)
+- Fix freeze in Microsoft Word when moving by paragraph through a large document while in bladermodus. (#6368)
+- Tabellen in Microsoft Word die gekopieerd werden uit Microsoft Excel worden niet langer behandeld als opmaaktabellen en worden daardoor niet langer genegeerd. (#5927)
 - When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
-- Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
-- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. 9#6216)
+- Het drukken van escape in Microsoft Excel schakelt niet langer onterecht naar bladermodus, tenzij de gebruiker eerder expliciet naar bladermodus heeft geschakeld met NVDA+spatiebalk en dan focusmodus heeft geactiveerd door enter te drukken op een formulierveld. (#6569) 
+- NVDA loopt niet langer vast in Microsoft Excel spreadsheets waarin een gehele rij of kolom is samengevoegd. 9#6216)
 - Reporting of cropped/overflowed text in Microsoft Excel cells should be now more accurate (#6472)
-- NVDA now reports when a check box is read-only. (#6563)
+- NVDA meldt nu wanneer een selectievakje alleen-lezen is. (#6563)
 - The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
 - Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+- NVDA zal niet langer "venster" aankondigen bij het minimaliseren van vensters. (#6671)
+- Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
+- Muis volgen, werkt nu doorheen alle schermen op computers met meerdere monitoren. (#6598)
+- NVDA wordt niet langer onbruikbaar na het afsluiten van Windows Media Player als de focus op een slider control staat. (#5467)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
 
 
 = 2016.4 =

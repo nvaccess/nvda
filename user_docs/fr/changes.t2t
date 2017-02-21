@@ -3,11 +3,12 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+
 = 2017.1 =
 Les points forts de cette version incluent l'annonce des sections et des colonnes de texte sous Microsoft Word; Le support de la lecture, navigation et annotation des livres sous Kindle pour PC; et un support amélioré de Microsoft Edge.
 
 == Nouvelles Fonctionnalités ==
-- Sous Microsoft Word le type de saut de section, et le numéro de section peuvent maintenant être signalés. Ceci s'active grâce à l'option "annoncer les numéros de page" dans le dialogue Mise en Forme des Documents. (#5946)
+- Dans Microsoft Word le type de saut de section, et le numéro de section peuvent maintenant être signalés. Ceci s'active grâce à l'option "annoncer les numéros de page" dans le dialogue Mise en Forme des Documents. (#5946)
 - Sous Microsoft Word les colonnes de texte peuvent maintenant être signalées. Ceci s'active grâce à l'option "Annoncer les numéros de page" dans le dialogue Mise en forme des documents. (#5946)
 - Le changement automatique de langue est maintenant supporté sous Wordpad. (#6555)
 - La commande de recherche de NVDA (NVDA+control+f) est maintenant supportée en mode navigation sous Microsoft Edge. (#6580)
@@ -22,8 +23,9 @@ Les points forts de cette version incluent l'annonce des sections et des colonne
 == Changements ==
 - La vitesse minimale de clignotement du curseur braille est maintenant de 200ms. Si une valeur inférieure a été définie, elle sera augmentée à 200ms. (#6470)
 - Une case à cocher a été ajoutée au dialogue paramètres braille pour permettre l'activation ou la désactivation du clignotement du curseur braille. Précédemment, une valeur de 0 était utilisée pour réaliser cela. (#6470)
-- Les fichiers de profils et de configurations sont maintenant automatiquement mis à jour pour satisfaire aux changements de schéma. En cas d'erreur durant la mise à jour, une notification est affichée, la configuration est réinitialisée, et l'ancien fichier de configuration est disponible dans le journal de NVDA au niveau 'Info'. (#6470)
 - Mise à jour de eSpeak NG (commit e095f008, 10 Janvier 2017). (#6717)
+- En raison de changements dans la mise à jour Creators Update de Windows 10, le mode "toujours atténué' a été retiré des paramètres d'atténuation audio de NVDA. Il est toujours disponible dans les versions plus anciennes de Windows 10. (#6684)
+- En raison de changements dans la mise à jour Creators Update de Windows 10, le mode 'Atténuer les autres sources quand NVDA parle' ne peut plus s'assurer que les autres sources ont été complètement atténuées avant le début de la parole et ne pourra pas non plus conserver l'atténuation assez longtemps après la fin de la parole. Ceci n'affecte pas les versions plus anciennes de Windows 10. (#6684)
 
 
 == Corrections de Bogues ==
@@ -39,6 +41,7 @@ Les points forts de cette version incluent l'annonce des sections et des colonne
 - NVDA m'annoncera plus "Fenêtre" quand on minimise les fenêtres. (#6671)
 - Support de l'écho clavier par caractères dans les applications Universal Windows Platform (incluant Microsoft Edge) sous Windows 10 Creators Update. (#6017)
 - Le suivi de la souris fonctionne maintenant pour tous les écrans sur les ordinateurs avec plusieurs moniteurs. (#6598)
+- NVDA ne devient plus inutilisable après avoir quitté Windows Media Player alors que le focus était sur un potentiomètre. (#5467)
 
 
 == Changements pour les Développeurs ==
@@ -67,7 +70,7 @@ Les points fort de cette version incluent un support amélioré de Microsoft Edg
 - Le dialogue de mise en forme des documents a été ajusté pour que le contenu puisse défiler. (#6348)
 - Ajustement de la disposition du dialogue Prononciation des symboles pour que toute la largeur du dialogue soit utilisée pour la liste des symboles. (#6101)
 - En mode navigation dans les navigateurs internet, les commandes de navigation vers les zones d'édition (e et maj+e) et les champs de formulaire (f et maj+f) peuvent maintenant atteindre les champs en lecture seule. (#4164)
-- Dans le dialogue Mise en Forme des Documents de NVDA, "Annoncer les changements de mise en forme après le curseur" a été renommé en "Signaler  les changements de mise en forme après le curseur", puisque cela affecte le braille autant que la voix. (#6336)
+- Dans le dialogue Mise en Forme des Documents de NVDA, "Annoncer les changements de mise en forme après le curseur" a été renommé en "Signaler les changements de mise en forme après le curseur", puisque cela affecte le braille autant que la voix. (#6336)
 - Amélioration de l'apparence du dialogue de bienvenue de NVDA. (#6350)
 - Dans les dialogues de NVDA, les boutons "Ok" et "Annuler" sont maintenant alignés à droite du dialogue. (#6333)
 - Des contrôles rotatifs sont maintenant utilisés pour les champs de saisie numériques tels que le changement de la hauteur pour indiquer les majuscules dans le dialogue Paramètres Vocaux. Vous pouvez entrer une valeur ou utiliser les flèches haut et bas pour ajuster la valeur. (#6099)
@@ -1796,7 +1799,7 @@ Les points forts principaux de cette version comprennent le support des édition
 - NVDA annonce maintenant l'activation du menu contextuel dans le menu Démarrer.
 - Le menu Démarrer classique est désormais annoncé comme menu démarrer au lieu d'être traité en tant que menu de l'Application.
 - Amélioration de la lecture des alertes comme celles rencontrées dans Mozilla Firefox. Le texte ne doit plus être lu plusieurs fois et les autres informations superflues ne sont plus lues. (#248)
-- Le texte des zones d'édition focusables, qui sont en lecture seule ne seront plus inclus lors de la récupération du texte des dialogues. Ceci corrige, par exemple, le problème de lecture automatique de tout le contrat de licence dans les installateurs.  
+- Le texte des zones d'édition focusables, qui sont en lecture seule ne seront plus inclus lors de la récupération du texte des dialogues. Ceci corrige, par exemple, le problème de lecture automatique de tout le contrat de licence dans les installateurs.
 - NVDA n'annonce plus la désélection de texte en quittant certains contrôles d'édition (exemple : barre d'adresse de Internet Explorer, champs d'adresse de courrier électronique Thunderbird 3).
 - Lors de l'ouverture des courriels en texte clair dans Outlook Express et Windows Mail, le focus est correctement positionné dans le message prêt pour que l'utilisateur lise. Auparavant, l'utilisateur devait appuyer sur tab ou cliquer sur le message afin d'utiliser les touches de curseur et le lire.
 - Correction de plusieurs problèmes majeurs avec la fonctionn « Annoncer les touches de commande ».
@@ -1976,7 +1979,7 @@ Accès au contenu web grâce aux nouveaux tampons virtuels en développement (pr
 
 
 = 0.5 =
-- NVDA dispose maintenant d'une synthèse vocale intégrée appelée eSpeak, développée par Jonathan Duddington. Elle est très réactive et légère et prend en charge beaucoup de langues différentes. Les synthèses vocales Sapi peuvent encore être utilisées, mais eSpeak sera utilisée par défaut.
+- NVDA dispose maintenant d'une synthèse vocale intégrée appelée eSpeak, développée par Jonathan Duddington. Elle est très réactive, légère et elle prend en charge beaucoup de langues différentes. Les synthèses vocales Sapi peuvent encore être utilisées, mais eSpeak sera utilisée par défaut.
  - eSpeak ne dépend d'aucun logiciel spécial pour être installée, elle peut donc être utilisée avec NVDA sur n'importe quel ordinateur, sur une clef USB, ou partout.
  - Pour plus d'informations au sujet d'eSpeak, où pour trouver d'autres versions, aller à http://espeak.sourceforge.net/.
 - Correction d'un bogue où le mauvais caractère était annoncé lors de l'appui sur supprime dans les volets éditables dans Internet Explorer / Outlook Express.

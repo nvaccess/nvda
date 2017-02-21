@@ -15,29 +15,32 @@ Caracteristicile principale ale acestei lansări includ raportarea secțiunilor 
 - Când se copiază o foaie în Microsoft Excel, coloana și antetele rândurilor setate sunt memorate. (#6628)
 - Suport pentru citirea și navigarea în Kindle For PC, versiunea 1.19, incluzând acces la linkuri, note de subsol, grafice, text evidențiat și note pentru utilizatori. Vă rugăm să verificați secțiunea Kindle for PC în documentația NVDA-ului pentru mai multe informații. (#6247, #6638)
 - Modul de navigare al navigării tabelului este acum suportat în Microsoft Edge. (#6594)
-- În Microsoft Excel, raportarea examinării cursorului a locației comenzii (desktop: NVDA+numpadDelete, laptop: NVDA+delete) raportează numele foii de lucru și locația celulei. (#6613)
+- În Microsoft Excel,localizarea comenzii  raportării examinării cursorului (desktop: NVDA+numpadDelete, laptop: NVDA+delete) raportează numele foii de lucru și locația celulei. (#6613)
 - A fost adăugată o opțiune la dialogul ieșire pentru repornirea cu nivelul diagnosticării. (#6689)
 
 
 == Modificări ==
-- Frecvența minimă a intermitenței cursorului braille este acum 200ms. Profilurile sau configurările cu valorile de mai jos, aceasta va fi mărită cu 200ms. (#6470)
+- Frecvența minimă a intermitenței cursorului braille este acum 200 ms. Dacă aceasta a fost înainte setată la o valoare mai mică, ea va fi mărită cu 200 ms. (#6470)
 - A fost adăugată o casetă de bifat în dialogul setărilor braille pentru a permite activarea/dezactivarea intermitenței cursorului braille. Înainte, o valoare de zero a fost utilizată pentru a realiza acest lucru. (#6470)
 - A fost actualizat eSpeak NG (commit e095f008, 10 ianuarie 2017). (#6717)
+- Datorită modificărilor aduse în Windows 10 Creators Update, modul „atenuare totdeauna” nu mai este disponibil în setările atenuării audio a NVDA-ului. Cu toate astea, el încă mai este disponibil în vechile lansări ale Windows 10. (#6684)
+- Datorită schimbărilor aduse în Windows 10 Creators Update, modul  de reducere a volumului la redarea vorbirii sau a sunetelor nu poate asigura estomparea completă a sunetului înainte de vorbire sau va menține estomparea sufficient încât să oprească sincronizarea rapidă a volumului. Aceste setări nu afectează versiunile mai vechi ale Windows 10. (#6684)
 
 
 == Rezolvări defecte ==
 - A fost reparată blocarea în Microsoft Word la deplasarea paragrafului printr-un document mare în timpul modului de navigare. (#6368)
 - Tabelele în Microsoft Word care au fost copiate din Microsoft Excel nu mai sunt tratate ca tabele de aspect, prin urmare nu mai sunt ignorate. (#5927)
-- La încercarea de tastare în Microsoft Excel în timpul vizualizării protejate, NVDA nu face un sunet mai degrabă decât vorbirea caracterelor care, de fapt, nu au fost tastate. (#6570)
+- La încercarea de tastare în Microsoft Excel în timpul vizualizării protejate, NVDA nu emite un sunet mai degrabă decât vorbirea caracterelor care nu au fost tastate. (#6570)
 - Apăsarea tastei escape în Microsoft Excel nu mai comută incorect la modul de navigare, dacă utilizatorul nu a comutat mai înainte la modul de navigare cu NVDA+spațiu și a intrat în modul de focalizare prin apăsarea tastei enter pe un câmp formular. (#6569)
 - În cazul în care este fuzionat un rând întreg sau o coloană, NVDA nu se mai blochează în foile de calcul ale Excelului. 9#6216)
-- Raportarea textului decupat/revărsat în celulele Excelului ar trebui să fie afișată mai precis. (#6472)
+- Raportarea textului decupat/revărsat în celulele Excelului ar trebui să fie afișată cu mai multă acuratețe. (#6472)
 - NVDA anunță când o casetă de bifat este doar-citire. (#6563)
 - La lansarea NVDA nu se va mai afișa un dialog de avertizare atunci când nu se poate reda sunetul logo datorită indisponibilității unui dispozitiv audio. (#6289)
 - Controalele în ribbonul Excelului care sunt nedisponibile sunt raportate ca atare. (#6430)
 - NVDA nu va mai anunța „panou” la minimizarea ferestrelor. (#6671)
-- Caracterele tastate sunt acum rostite în platforma universală a Windows-ului (UWP) aplicații (incluzând Microsoft Edge) în actualizările creatoare. (#6017)
+- Caracterele tastate sunt acum rostite în platforma universală a Windows-ului (UWP) aplicații (incluzând Microsoft Edge) în Windows 10 Creators Update. (#6017)
 - Urmărirea mausului funcționează peste toate ecranele pe calculatoarele cu monitoare multiple. (#6598)
+- NVDA nu mai devine inutilizabil după ieșirea din Windows Media Player în timp ce este focalizat pe un glisor de control. (#5467)
 
 
 == Modificări pentru dezvoltatori ==
