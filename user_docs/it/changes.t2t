@@ -23,6 +23,8 @@ Le principali caratteristiche di questa versione comprendono  la segnalazione de
 - La velocità minima di lampeggio del cursore braille ora è impostata a 200ms. I profili con valori di configurazione più bassi di questo saranno automaticamente modificati a 200. (#6470)
 - è stata aggiunta una casella di controllo alla finestra di dialogo delle impostazioni braille per permettere di abilitare/disabilitare il cursore lampeggiante. In precedenza veniva usato il valore 0 per implementare questa funzione.  (#6470)
 - Aggiornata  eSpeak NG (commit e095f008, 10 gennaio 2017). (#6717)
+- A causa di alcune modifiche nell'aggiornamento Windows 10 Creators, non è più disponibile la funzione "attenua sempre" nelle impostazioni di attenuazione audio di NVDA. Risulta ancora presente nelle versioni precedenti di Windows 10. (#6684)
+- A causa di alcune modifiche nell'aggiornamento Windows 10 Creators, la funzione "Attenua quando vengono riprodotti suoni assieme alla voce", presente nelle impostazioni di attenuazione audio, non può più assicurare una diminuzione dell'audio corretta nel momento in cui la sintesi vocale inizia a parlare, e il conseguente aumento del suono in maniera graduale quando la voce ha terminato; in sostanza questa funzione esiste ancora, ma può provocare sbalzi inaspettati di volume. Queste modifiche non devono preoccupare gli utenti che utilizzano versioni precedenti di Windows10. (#6684)
 
 
 == Bug corretti ==
@@ -38,6 +40,7 @@ Le principali caratteristiche di questa versione comprendono  la segnalazione de
 - NVDA non annuncerà più la parola "pannello" quando si riducono tutte le finestre ad icona. (#6671)
 - Ora vengono annunciati i caratteri digitati anche nelle app Universal Windows Platform (UWP)  (inclusa Microsoft Edge) nell'aggiornamento Windows 10 Creators. (#6017)
 - Il tracciamento del mouse ora funziona anche in computer a cui sono collegati più monitor. (#6598)
+- NVDA non diventa più inutilizzabile all'uscita da Windows Media Player,  nel caso il focus fosse posizionato su un cursore d'avanzamento. (#5467)
 
 
 == Cambiamenti per sviluppatori ==

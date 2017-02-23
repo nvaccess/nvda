@@ -4,25 +4,25 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.1 =
-Schwerpunkte dieser Version sind u.a. die Ansage von Abschnitten und Spalten in Microsoft Word; Unterstützung beim Navigieren in, Lesen von und Einfügen von Anmerkungen in Bücher(n) in Kindle sowie verbesserte Unterstützung von Microsoft Edge.
+Schwerpunkte dieser Version sind u. a. die Ansage von Abschnitten und Spalten in Microsoft Word; Unterstützung beim Navigieren in, Lesen von und Einfügen von Anmerkungen in Bücher(n) in Kindle sowie verbesserte Unterstützung von Microsoft Edge.
 
 == Neue Funktionen ==
-- Mit der neuen Option "Seitenzahlen ansagen" in den Einstellungen für Dokumentformatierungen können Sie sich nun Abschnittswechsel und -Nummern anzeigen lassen. (#5946)
+- Mit der neuen Option "Seitenzahlen ansagen" in den Einstellungen für Dokumentformatierungen können Sie sich nun Abschnittswechsel und -Nummern ansagen lassen. (#5946)
 - Diese Option aktiviert des Weiteren eine Ansage von Spalten in mehrspaltigen Texten in Microsoft Word. (#5946)
 - Der automatische Sprachenwechsel wird nun auch in WordPad unterstützt. (#6555)
 - Der NVDA-interne Suchbefehl (NVDA+Strg+F) wird nun auch in Microsoft Edge unterstützt. (#6580)
 - Die Schnellnavigationstasten für Schalter werden in Microsoft Edge unterstützt. (#6577)
 - Beim Kopieren von Tabellenblättern in Microsoft Excel werden Reihen- und Spaltenüberschriften berücksichtigt. (#6628)
-- Unterstützung für Kindle für Pc. Weitere Informationen finden Sie im Abschnitt für Kindle für Pc im Handbuch. (#6247, #6638)
+- Unterstützung für Kindle für PC. Weitere Informationen finden Sie im Abschnitt für Kindle für PC im Handbuch. (#6247, #6638)
 - Tabellennavigation im Lesemodus von Microsoft Edge. (#6594)
-- In Excel gibt der Befehl zur Ausgabe des aktuellen Standorts (nvda+entf) nun den Namen des Tabellenblatts und die aktuell hervorgehobene Zelle aus. (#6613)
-- Im Dialog zum Beenden von NVDA gibt es eine neue Option zum Neustart von NVDA mit Debug-Protokollierung. (#6689)
+- In Microsoft Excel gibt der Befehl zur Ausgabe des aktuellen Standorts (NVDA+Entf) nun den Namen des Tabellenblatts und die aktuell hervorgehobene Zelle aus. (#6613)
+- Im Dialog zum Beenden von NVDA gibt es eine neue Option zum Neustart von NVDA im Debug-Modus. (#6689)
 
 
 == Änderungen ==
 - Die minimale Cursorblinkfrequenz beträgt nun 200 ms. Falls in einem Konfigurationsprofil ein niedrigerer Wert hinterlegt wird, wird dieser automatisch angehoben. (#6470)
 - In den Braille-Einstellungen wurde eine neue Option zum Ein-/Ausschalten der Cursorblinkens hinzugefügt. Bisher war das Abschalten der Cursorblinkfrequenz durch die Angabe von 0 als Cursorblinkfrequenz möglich. (#6470)
-- eSpeak NG wurde aktualisiert (commit e095f008, 10 January 2017). (#6717)
+- eSpeak NG wurde aktualisiert (commit e095f008, vom 10. Januar 2017). (#6717)
 - Aufgrund von Änderungen in Windows 10 Creators Update ist die Option "Lautstärke anderer Anwendungen immer reduzieren" nicht mehr verfügbar. In älteren Versionen von Windows 10 steht die Option weiterhin zur Verfügung. (#6684)
 - Aufgrund von Änderungen in Windows 10 Creators Update kann die Audioducking-Einstellung "nur beim Sprechen" weder sicherstellen, dass die lautstärke anderer Anwendungen rechtzeitig reduziert wird, noch bevor NVDA zu sprechen beginnt; noch wird die Lautstärke lange genug reduziert, bis NVDA ausgesprochen hat. Diese Änderungen wirken sich nicht auf älteren Windows 10-Versionen aus. (#6684)
 
@@ -30,9 +30,9 @@ Schwerpunkte dieser Version sind u.a. die Ansage von Abschnitten und Spalten in 
 == Fehlerkorrekturen ==
 - Fehler beim absatzweisen Navigieren im Lesemodus von Microsoft Word korrigiert. (#6368)
 - Tabellen, die von Microsoft Excel in Microsoft Word eingefügt wurden, werden nicht mehr ignoriert. (#5927)
-- Bei dem Versuch, in geschützte Excel-Zellen zu schreiben wird nun ein Signalton abgespielt. Bisher wurden die eingegebenen zeichen gesprochen. (#6570)
-- Das Drücken der Escape-Taste in Excel schaltet nun nicht mehr unerwartet in den Lesemodus um. (#6569) 
-- NVDA stürzt nicht mehr in Excel-Tabellenblättern ab, bei denen eine ganze Reihe/Spalte in eine Zelle zusammengeführt wurde. 9#6216)
+- Bei dem Versuch, in geschützte Microsoft Excel-Zellen zu schreiben wird nun ein Signalton abgespielt. Bisher wurden die eingegebenen zeichen gesprochen. (#6570)
+- Das Drücken der Escape-Taste in Microsoft Excel schaltet nun nicht mehr unerwartet in den Lesemodus um. (#6569) 
+- NVDA stürzt nicht mehr in Microsoft Excel-Tabellenblättern ab, bei denen eine ganze Reihe/Spalte in eine Zelle zusammengeführt wurde. 9#6216)
 - Die Ansage von überlagertem Text in Microsoft Excel wurde verbessert. (#6472)
 - NVDA zeigt nun schreibgeschützte Kontrollkästchen korrekt an. (#6563)
 - NVDA zeigt nun keine Warnmeldungen mehr an, wenn der Logo-Klang nicht abbgespielt werden konnte. (#6289)
@@ -59,7 +59,7 @@ Zu den Schwerpunkten dieser Version gehören Verbesserungen in der Unterstützun
 - Die Unterstützung für folgende Braillezeilen wurden hinzugefügt: Baum SuperVario2, Baum Vario 340 und HumanWare Brailliant2. (#6116)
 - Grundlegende Unterstützung für die jährliche Aktualisierung von Microsoft Edge. (#6271)
 - Zum Lesen von Mails in der Mail-App in Windows 10 wird nun der Lesemodus verwendet. (#6271)
-- Neue Sprache: Littauisch
+- Neue Sprache: Littauisch.
 
 
 == Änderungen ==
