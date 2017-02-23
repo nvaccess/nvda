@@ -29,7 +29,7 @@ symbols:
 : phrase ending	hai chấm	most	always
 decimal chấm		none	always
 in-word '	nháy đơn	all	norep
-negative number	trừ	none	norep
+negative number	âm	none	norep
 
 # Whitespace
 \0	dòng trắng	char	# null
@@ -45,7 +45,7 @@ negative number	trừ	none	norep
 "	ngoặc kép	most
 \#	báo số	most
 $	đô la	all	norep
-£	pao	all	norep
+£	đồng bảng	all	norep
 €	u rô	all	norep
 ¢	Xen	all	norep
 ¥	Yên	all	norep
@@ -70,7 +70,7 @@ $	đô la	all	norep
 @	a còng	some
 [	Mở ngoặc vuông	most
 ]	Đóng ngoặc vuông	most
-\\	gạch chéo ngược	most
+\\	chéo ngược	most
 ^	dấu mũ	most
 _	gạch dưới	most
 `	dấu huyền	most
@@ -89,9 +89,9 @@ _	gạch dưới	most
 ‘	nháy đơn trái	most
 ’	nháy đơn phải	most
 –	gạch ngang	most
-—	em dash	most
+—	gạch nối	most
 ●	bun lét tròn	most
-¨	diaeresis	most
+¨	dấu tách đôi	most
 ‎	dấu trái qua phải	char
 ‏	dấu phải qua trái	char
 ■	dấu vuông đen	some
@@ -124,43 +124,43 @@ _	gạch dưới	most
 ∁	Bù	none
 ∂	Đạo hàm cục bộ	none
 ∃	có tồn	none
-∄	Không ó tồn	none
+∄	Không có tồn	none
 ∅	tập rỗng	none
-∆	Lượng gia	none
+∆	số gia	none
 ∇	NABLA	none
-∈	Yếu tố của	none
-∉	Không phải yếu tố của	none
-∊	Yếu tố nhỏ của	none
-∋	CONTAINS AS MEMBER	none
-∌	DOES NOT CONTAIN AS MEMBER	none
-∍	SMALL CONTAINS AS MEMBER	none
-∎	END OF PROOF	none
-∏	N-ARY PRODUCT	none
+∈	Thuộc	none
+∉	Không thuộc	none
+∊	phần tử thuộc	none
+∋	Tập hợp con của	none
+∌	Không phải tập hợp con của	none
+∍	Tập hợp con nhỏ của	none
+∎	kết quả của sự chứng minh	none
+∏	Tích	none
 
 # Miscellaneous Mathematical Operators
 
-∑	N-ARY SUMMATION	none
-√	SQUARE ROOT	none
-∛	CUBE ROOT	none
-∜	FOURTH ROOT	none
-∝	PROPORTIONAL TO	none
-∞	INFINITY	none
-∟	RIGHT ANGLE	none
-∠	ANGLE	none
-∥	PARALLEL TO	none
-∦	NOT PARALLEL TO	none
-∧	LOGICAL AND	none
-∨	LOGICAL OR	none
-∩	INTERSECTION	none
-∪	UNION	none
-∫	INTEGRAL	none
+∑	Tổng	none
+√	Căn bậc hai	none
+∛	Căn bậc ba	none
+∜	Căn bậc bốn	none
+∝	Tỷ lệ	none
+∞	Vô cực	none
+∟	góc vuông	none
+∠	góc	none
+∥	song song với	none
+∦	không song song với	none
+∧	và	none
+∨	hoặc	none
+∩	giao	none
+∪	hợp	none
+∫	tích phân	none
 ∴	THEREFORE	none
 ∵	BECAUSE	none
-∶	RATIO	none
-∷	PROPORTION	none
+∶	Tỉ suất	none
+∷	Tỉ lệ	none
 ≤	Nhỏ hơn hoặc bằng	none
 ≥	Lớn hơn hoặc bằng	none
-⊂	SUBSET OF	none
-⊃	SUPERSET OF	none
-⊆	SUBSET OF OR EQUAL TO	none
-⊇	SUPERSET OF OR EQUAL TO	none
+⊂	Tập con của	none
+⊃	Tập cha của	none
+⊆	Tập con bằng của	none
+⊇	Tập cha bằng của	none
