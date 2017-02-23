@@ -613,8 +613,8 @@ REASON_CARET="caret"
 REASON_ONLYCACHE="onlyCache"
 #}
 
-# Text to use for 'current' values. These describe if an item is the current item 
-# within a particular kind of selection.
+#: Text to use for 'current' values. These describe if an item is the current item 
+#: within a particular kind of selection.
 isCurrentLabels = {
 	# Translators: Presented when an item is marked as current in a collection of items
 	True:_("current"),

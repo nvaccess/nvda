@@ -633,12 +633,12 @@ def getBrailleTextForProperties(**propertyValues):
 			# Translators: Displayed in braille for a table cell column number.
 			# %s is replaced with the column number.
 			textList.append(_("c%s") % columnNumber)
-	ariaCurrent = propertyValues.get('current', False)
-	if ariaCurrent:
+	current = propertyValues.get('current', False)
+	if current:
 		try:
-			textList.append(controlTypes.isCurrentLabels[ariaCurrent])
+			textList.append(controlTypes.isCurrentLabels[current])
 		except KeyError:
-			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
+			log.debugWarning("Aria-current value not handled: %s"%current)
 			textList.append(controlTypes.isCurrentLabels[True])
 	if includeTableCellCoords and  cellCoordsText:
 		textList.append(cellCoordsText)
@@ -708,15 +708,15 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
 	value=field.get('value',None)
-	ariaCurrent=field.get('current', None)
+	current=field.get('current', None)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		# The only item we report for these fields is clickable, if present.
 		if controlTypes.STATE_CLICKABLE in states:
 			text.append(getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE}))
-		if ariaCurrent:
-			text.append(getBrailleTextForProperties(current=ariaCurrent))
+		if current:
+			text.append(getBrailleTextForProperties(current=current))
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
 
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
@@ -728,7 +728,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"rowNumber": field.get("table-rownumber"),
 			"columnNumber": field.get("table-columnnumber"),
 			"includeTableCellCoords": reportTableCellCoords,
-			"current": ariaCurrent,
+			"current": current,
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
@@ -739,7 +739,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":ariaCurrent}
+			"states": states,"value":value, "current":current}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
