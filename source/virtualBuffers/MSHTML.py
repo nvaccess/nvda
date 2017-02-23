@@ -50,6 +50,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		level=None
+		ariaCurrent = attrs.get('HTMLAttrib::aria-current', None)
+		if ariaCurrent is not None:
+			attrs['current']=ariaCurrent
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
