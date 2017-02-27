@@ -20,6 +20,9 @@ import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 
+import api
+from customLabels import customLabels
+
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
@@ -66,6 +69,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
+		#log.info("Attributes are: %s",attrs);
 		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
 
 	def _normalizeFormatField(self, attrs):
@@ -75,6 +79,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 class Gecko_ia2(VirtualBuffer):
 
 	TextInfo=Gecko_ia2_TextInfo
+	labelSupportOn=True
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
@@ -279,6 +284,41 @@ class Gecko_ia2(VirtualBuffer):
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
+	
+	def script_assignCustomLabel(self, gesture):
+		try:
+			obj=api.getFocusObject()
+			treeInterceptor=obj.treeInterceptor
+			if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
+				obj=treeInterceptor
+			try:
+				info=obj.makeTextInfo(textInfos.POSITION_CARET)
+			except (NotImplementedError, RuntimeError):
+				info=obj.makeTextInfo(textInfos.POSITION_FIRST)
+			browseObj=info.NVDAObjectAtStart
+		except:
+			browseObj=api.getFocusObject()
+		log.info("Role is: %s",browseObj.role)
+		docHandle,ID=self.getIdentifierFromNVDAObject(browseObj)
+		attrs=self.makeTextInfo(browseObj)._getControlFieldAttribs(docHandle,ID)
+		if (attrs['IAccessible2::attribute_tag']== "a"):
+			customLabelKey=browseObj.value
+		elif (attrs['IAccessible2::attribute_tag']== "img"):
+			customLabelKey=attrs['IAccessible2::attribute_src']
+		if customLabelKey:
+			customLabelKey=customLabelKey.replace(':','\:')
+# 		log.info("Custom Label Key is : %s",customLabelKey)
+# 		log.info("Page URL: %s",self._get_documentConstantIdentifier())
+		filename=customLabels.getFilenameFromElementDomain(self._get_documentConstantIdentifier())
+		customLabels.addLabel(filename,customLabelKey)
+# 		log.info("Current Object is: %s",browseObj.value)
+# #  		log.info("Img source: %s",self.makeTextInfo(browseObj).getTextWithFields()[2])
+# 		
+# 		log.info("Img source: %s",self.makeTextInfo(browseObj)._getControlFieldAttribs(docHandle,ID))
+	
+	__gestures = {
+		"kb:NVDA+control+tab": "assignCustomLabel",
+		}
 
 class Gecko_ia2Pre14(Gecko_ia2):
 

@@ -20,6 +20,8 @@ from NVDAObjects.behaviors import RowWithFakeNavigation
 from . import IA2TextTextInfo
 from . import ia2Web
 
+import api
+
 class Mozilla(ia2Web.Ia2Web):
 
 	def _get_parent(self):
@@ -55,6 +57,30 @@ class Mozilla(ia2Web.Ia2Web):
 			elif self.table and self.table.presentationType==self.presType_layout:
 				presType=self.presType_layout
 		return presType
+	
+# 	def script_assignCustomLabel(self, gesture):
+# 		#################check if this code can be merged for IE and mozilla################
+# 		try:
+# 			obj=api.getFocusObject()
+# 			treeInterceptor=obj.treeInterceptor
+# 			if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
+# 				obj=treeInterceptor
+# 			try:
+# 				info=obj.makeTextInfo(textInfos.POSITION_CARET)
+# 			except (NotImplementedError, RuntimeError):
+# 				info=obj.makeTextInfo(textInfos.POSITION_FIRST)
+# 			browseObj=info.NVDAObjectAtStart
+# 		except:
+# 			browseObj=api.getFocusObject()
+# 		####################################################################################
+# 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+# 		node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
+# # 		log.info("Inner HTML: %s",node.attributesForNames(1, (BSTR * 1)("src"), (c_short * 1)(0,)))
+# 		log.info("Value of object: %s",browseObj.value)
+	
+# 	__gestures = {
+# 		"kb:NVDA+control+tab": "assignCustomLabel",
+# 		}
 
 class Gecko1_9(Mozilla):
 

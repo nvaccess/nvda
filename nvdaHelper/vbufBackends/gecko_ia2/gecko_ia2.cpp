@@ -26,6 +26,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+wstring findLabel(multiValueAttribsMap,wstring);
+
 #define NAVRELATION_LABELLED_BY 0x1003
 #define NAVRELATION_NODE_CHILD_OF 0x1005
 
@@ -662,10 +664,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			value=NULL;
 		}
 	}
-
 	//If the name isn't being rendered as the content, then add the name as a field attribute.
 	if (!nameIsContent && name)
-		parentNode->addAttribute(L"name", name);
+	{	parentNode->addAttribute(L"name", name);
+	}
 
 	if (isVisible) {
 		if ( isImgMap && name ) {
@@ -688,6 +690,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			map<wstring,wstring> textAttribs;
 			for(int i=0;;++i) {
 				if(i!=chunkStart&&(i==IA2TextLength||i==attribsEnd||IA2Text[i]==0xfffc)) {
+					if(value){
+						wstring labelForNode=findLabel(labelsMap,value);
+						if (!labelForNode.empty()){
+							previousNode=buffer->addTextFieldNode(parentNode,previousNode,labelForNode);
+						}
+					}
 					// We've reached the end of the current chunk of text.
 					// (A chunk ends at the end of the text, at the end of an attributes run
 					// or at an embedded object char.)
@@ -780,7 +788,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		} else {
 			// There were no children to render.
 			if(role==ROLE_SYSTEM_GRAPHIC) {
-				if (name && name[0]) {
+//				LOG_INFO(L"Image link: "<<IA2AttribsMap[L"src"]);
+				wstring labelForNode=findLabel(labelsMap,IA2AttribsMap[L"src"]);
+				if (!labelForNode.empty()){
+//					LOG_INFO(L"has custom label");
+					previousNode=buffer->addTextFieldNode(parentNode,previousNode,labelForNode);
+				}
+				else if (name && name[0]) {
 					// The graphic has a label, so use it.
 					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
@@ -850,6 +864,19 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	}
 
 	return parentNode;
+}
+
+wstring findLabel(multiValueAttribsMap labelsMap,wstring attributeValue) {
+	wstring key ;
+	wstring value;
+	for(std::map<wstring, wstring>::const_iterator it = labelsMap.begin(); it != labelsMap.end(); it++) {
+		key = it->first;
+		value = it->second;
+		if (attributeValue.compare(key)==0) {
+			return value;
+		}
+	}
+	return L"";
 }
 
 bool getDocumentFrame(HWND* hwnd, long* childID) {
