@@ -146,6 +146,8 @@ def checkForAddonUpdates():
 	res = json.loads(data)
 	for addon in res:
 		res[addon].update(addonSummaries[addon])
+		# In reality, it'll be a list of URL's to try.
+		res[addon]["urls"] = None
 	return res
 
 def initialize():
