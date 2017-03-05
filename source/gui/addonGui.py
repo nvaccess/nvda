@@ -20,6 +20,7 @@ import guiHelper
 from logHandler import log
 import addonHandler
 import globalVars
+import queueHandler
 import updateCheck
 
 class AddonsDialog(wx.Dialog):
@@ -204,15 +205,11 @@ class AddonsDialog(wx.Dialog):
 		t.start()
 
 	def addonUpdateCheck(self):
+		self.Disable()
 		info = addonHandler.checkForAddonUpdates()
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
-		if info is not None:
-			wx.CallAfter(AddonUpdatesDialog, gui.mainFrame, info)
-			self.refreshAddonsList()
-		else:
-			gui.messageBox(_("No add-on updates available"), _("Add-on update"), wx.OK)
-		wx.CallAfter(self.Show)
+		wx.CallAfter(AddonUpdatesDialog, self, info, auto=False)
 
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
@@ -341,32 +338,37 @@ Description: {description}
 
 class AddonUpdatesDialog(wx.Dialog):
 
-	def __init__(self,parent, addonUpdateInfo):
+	def __init__(self,parent, addonUpdateInfo, auto=True):
 		# Translators: The title of the add-on updates dialog.
 		super(AddonUpdatesDialog,self).__init__(parent,title=_("Add-on Updates"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		addonsSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		self.addonUpdateInfo = addonUpdateInfo
+		self.auto = auto
 
-		entriesSizer=wx.BoxSizer(wx.VERTICAL)
-		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
-		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-		self.addonsList.InsertColumn(0,_("Package"),width=150)
-		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-		self.addonsList.InsertColumn(1,_("Current version"),width=50)
-		# Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
-		self.addonsList.InsertColumn(2,_("New version"),width=50)
-		entriesSizer.Add(self.addonsList,proportion=8)
-		for entry in sorted(addonUpdateInfo.keys()):
-			addon = addonUpdateInfo[entry]
-			self.addonsList.Append((addon['summary'], addon['curVersion'], addon['version']))
-		addonsSizerHelper.addItem(entriesSizer)
+		if addonUpdateInfo:
+			entriesSizer=wx.BoxSizer(wx.VERTICAL)
+			self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+			# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
+			self.addonsList.InsertColumn(0,_("Package"),width=150)
+			# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
+			self.addonsList.InsertColumn(1,_("Current version"),width=50)
+			# Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
+			self.addonsList.InsertColumn(2,_("New version"),width=50)
+			entriesSizer.Add(self.addonsList,proportion=8)
+			for entry in sorted(addonUpdateInfo.keys()):
+				addon = addonUpdateInfo[entry]
+				self.addonsList.Append((addon['summary'], addon['curVersion'], addon['version']))
+			addonsSizerHelper.addItem(entriesSizer)
+		else:
+			addonsSizerHelper.addItem(wx.StaticText(self, label=_("No add-on update available.")))
 
 		bHelper = addonsSizerHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-		# Translators: The label of a button to update add-ons.
-		label = _("&Update add-ons")
-		updateButton = bHelper.addButton(self, label=label)
-		updateButton.Bind(wx.EVT_BUTTON, self.onUpdate)
+		if addonUpdateInfo:
+			# Translators: The label of a button to update add-ons.
+			label = _("&Update add-ons")
+			updateButton = bHelper.addButton(self, label=label)
+			updateButton.Bind(wx.EVT_BUTTON, self.onUpdate)
 
 		# Translators: The label of a button to close a dialog.
 		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Close"))
@@ -382,14 +384,27 @@ class AddonUpdatesDialog(wx.Dialog):
 
 	def onUpdate(self, evt):
 		self.Destroy()
+		AddonsDialog(gui.mainFrame).Close()
 		for addon in self.addonUpdateInfo:
 			addonInfo = self.addonUpdateInfo[addon]
-			AddonUpdateDownloader([addonInfo["urls"]], addonInfo["summary"]).start()
-		if AddonsDialog._instance is None:
-			wx.CallLater(1, AddonsDialog(gui.mainFrame).Close)
+			downloader = AddonUpdateDownloader([addonInfo["urls"]], addonInfo["summary"])
+			downloader.start()
+		if self.auto:
+			wx.CallLater(1, addonsDialog.Close)
+		else:
+			self.focusToAddonsDialog()
 
 	def onClose(self, evt):
 		self.Destroy()
+		self.focusToAddonsDialog()
+
+	def focusToAddonsDialog(self):
+		# Bring back add-ons manager.
+		print "testing"
+		addonsDialog = AddonsDialog(gui.mainFrame)
+		addonsDialog.refreshAddonsList()
+		addonsDialog.Enable()
+		addonsDialog.Show()
 
 
 class AddonUpdateDownloader(updateCheck.UpdateDownloader):
@@ -436,7 +451,7 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 		self._stopped()
 		gui.messageBox(
 			# Translators: A message indicating that an error occurred while downloading an update to NVDA.
-			_("Error downloading add-on update."),
+			_("Error downloading update for {name}.").format(name = self.addonName),
 			_("Error"),
 			wx.OK | wx.ICON_ERROR)
 
@@ -447,8 +462,8 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 				bundle=addonHandler.AddonBundle(self.destPath.decode("mbcs"))
 			except:
 				log.error("Error opening addon bundle from %s"%self.destPath,exc_info=True)
-				# Translators: The message displayed when an error occurs when opening an add-on package for adding. 
-				gui.messageBox(_("Failed to open add-on package file at %s - missing file or invalid file format")%self.destPath,
+				# Translators: The message displayed when an error occurs when trying to update an add-on package due to package problems.
+				gui.messageBox(_("Cannot update {name} - missing file or invalid file format").format(name = self.addonName),
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
 					wx.OK | wx.ICON_ERROR)
@@ -469,16 +484,18 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 			except:
 				log.error("Error installing  addon bundle from %s"%self.destPath,exc_info=True)
 				progressDialog.done()
-				del progressDialog
+				progressDialog.Hide()
+				progressDialog.Destroy()
 				# Translators: The message displayed when an error occurs when installing an add-on package.
-				gui.messageBox(_("Failed to update add-on  from %s")%self.destPath,
+				gui.messageBox(_("Failed to update {name} add-on").format(name = self.addonName),
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
 					wx.OK | wx.ICON_ERROR)
 				return
 			else:
 				progressDialog.done()
-				del progressDialog
+				progressDialog.Hide()
+				progressDialog.Destroy()
 		finally:
 			try:
 				os.remove(self.destPath)
