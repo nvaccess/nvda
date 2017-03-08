@@ -1715,4 +1715,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("spellingError", _("S&pelling/grammar errors")),
 	)
