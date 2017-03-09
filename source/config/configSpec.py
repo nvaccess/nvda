@@ -50,7 +50,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Braille settings
 [braille]
 	display = string(default=noBraille)
-	translationTable = string(default=en-us-comp8.ctb)
+	translationTable = string(default=en-ueb-g2.ctb)
 	inputTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
 	showCursor = boolean(default=true)
