@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-24 00:10+1000\n"
+"POT-Creation-Date: 2017-03-03 00:10+1000\n"
 "PO-Revision-Date: 2017-02-17 03:56+0700\n"
 "Last-Translator: Dang Hoai Phuc <danghoaiphuc@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
@@ -1337,7 +1337,7 @@ msgstr "Không ở trong bảng"
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
 msgid "Edge of table"
-msgstr "Đã ở cuối của bảng"
+msgstr "đã ở sát cạnh của bảng"
 
 #. Translators: the description for the next table row script on browseMode documents.
 msgid "moves to the next table row"
@@ -1345,15 +1345,15 @@ msgstr "chuyển đến dòng kế của bảng"
 
 #. Translators: the description for the previous table row script on browseMode documents.
 msgid "moves to the previous table row"
-msgstr "chuyển đến dòng trước của bảng"
+msgstr "chuyển về dòng trước của bảng"
 
 #. Translators: the description for the next table column script on browseMode documents.
 msgid "moves to the next table column"
-msgstr "chuyển đến cột kế của bảng"
+msgstr "chuyển qua cột kế của bảng"
 
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
-msgstr "chuyển đến cột trước của bảng"
+msgstr "chuyển về cột trước của bảng"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2716,15 +2716,15 @@ msgstr "Bật/tắt thông báo phần canh chỉnh lề"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "Tắt báo cách lối định dạng"
+msgstr "Tắt báo kiểu dáng"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "Bật báo cách lối định dạng"
+msgstr "Bật báo kiểu dáng"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
-msgstr "Bật/tắt thông báo cách lối định dạng (style)"
+msgstr "Bật/tắt thông báo kiểu dáng khi nó thay đổi"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -2772,7 +2772,7 @@ msgstr "Báo thụt đầu dòng bằng âm thanh"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech and tones"
-msgstr "ThôBáo thụt đầu dòng bằng âm thanh và giọng đọc"
+msgstr "Báo thụt đầu dòng bằng âm thanh và giọng đọc"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation off"
@@ -4322,7 +4322,7 @@ msgstr "Trang %s"
 #. %s will be replaced with the section number.
 #, python-format
 msgid "section %s"
-msgstr "vùng %s"
+msgstr "phần %s"
 
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
@@ -4338,19 +4338,19 @@ msgid "%s columns"
 msgstr "%s cột"
 
 msgid "continuous section break"
-msgstr "ngắt vùng liên tục"
+msgstr "ngắt phần liên tục"
 
 msgid "new column section break"
-msgstr "ngắt vùng cột mới"
+msgstr "ngắt phần cột mới"
 
 msgid "new page section break"
-msgstr "ngắt vùng trang mới"
+msgstr "ngắt phần trang mới"
 
 msgid "even pages section break"
-msgstr "ngắt vùng các trang chẵn"
+msgstr "ngắt phần các trang chẵn"
 
 msgid "odd pages section break"
-msgstr "ngắt vùng các trang lẻ"
+msgstr "ngắt phần các trang lẻ"
 
 msgid "column break"
 msgstr "ngắt cột"
@@ -4365,7 +4365,7 @@ msgstr "Tiêu đề cấp %d"
 #. %s will be replaced with the name of the style.
 #, python-format
 msgid "style %s"
-msgstr "kiểu cách %s"
+msgstr "kiểu dáng %s"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
@@ -4592,15 +4592,15 @@ msgstr "phân cách dòng %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "ngoài vùng chú thích"
+msgstr "hết chú thích"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "sai chính tả"
+msgstr "lỗi chính tả"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "không sai chính tả"
+msgstr "hết lỗi chính tả"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -4609,7 +4609,7 @@ msgstr "hết bảng"
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
 #, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "Bảng có {columnCount} cột và {rowCount} hàng"
+msgstr "Bảng có {rowCount} dòng và {columnCount} cột"
 
 msgid "NVDA Speech Viewer"
 msgstr "Trình Hiển Thị Nội Dung Đọc NVDA"
@@ -4853,8 +4853,8 @@ msgid ""
 msgstr ""
 "Chúng tôi cần sự giúp đỡ của bạn để tiếp tục phát triển sản phẩm.\n"
 "Dự án này chủ yếu dựa trên sự đóng góp từ các tổ chức cá nhân.Mọi đóng góp "
-"dù là nhỏ nhất đều hỗ trợ cho dự án phát triển NVDA và được chuyển về tổ chức "
-"NVAccess, đây là tổ chức chịu trách nhiệm phát triển sản phẩm.\n"
+"dù là nhỏ nhất đều hỗ trợ cho dự án phát triển NVDA và được chuyển về tổ "
+"chức NVAccess, đây là tổ chức chịu trách nhiệm phát triển sản phẩm.\n"
 "Cảm ơn sự hỗ trợ của các bạn."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -4973,7 +4973,7 @@ msgstr "Chuyển xuống hàn kế"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "chuyển về hàng trên"
+msgstr "chuyển đối tượng điều hướng và focus về dòng trên"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -5280,27 +5280,27 @@ msgstr "Hiển thị chú thích ở chế độ mặc định"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Outline view"
-msgstr "Chế độ xem qua"
+msgstr "Dạng xem phác thảo"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Sorter view"
-msgstr "Hiển thị slide theo trật tự"
+msgstr "Dạng xem slide theo thứ tự"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Title Master view"
-msgstr "Hiển thị tiêu đề ở chế độ mặc định"
+msgstr "Dạng xem bản master của tiêu đề"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Normal view"
-msgstr "Chế độ hiển thị thông thường"
+msgstr "Dạng xem bình thường"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Print Preview"
-msgstr "Xem trước khi in"
+msgstr "Xem trước bản in"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Thumbnails"
-msgstr "Chế độ hiển thị cả slide"
+msgstr "Thumbnails"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Master Thumbnails"
@@ -6999,7 +6999,7 @@ msgstr "nhấn &mạnh"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "St&yle"
-msgstr "&Cách lối"
+msgstr "Kiểu dáng"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7044,7 +7044,7 @@ msgstr "Số dòng"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "Thông báo lề dòng:"
+msgstr "Thông báo thụt lề dòng:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
@@ -7600,13 +7600,13 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"Không thể set tiêu đề. vui lòng bật chức năng thông báo tiêu đề cho bảng rồi "
+"Không thể thiết lập tiêu đề. vui lòng bật chức năng thông báo tiêu đề cho bảng và "
 "thử lại."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
-msgstr "Chọn {address} là dòng tiêu đề của cột"
+msgstr "Thiết lập {address} là tiêu đề cột đầu tiên"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -7634,12 +7634,12 @@ msgstr ""
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of row headers"
-msgstr "Thiết lập {address} là ô tiêu đề đầu tiên của hàng"
+msgstr "Thiết lập {address} là ô tiêu đề đầu tiên của dòng"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Already set {address} as start of row headers"
-msgstr "Đã thiết lập {address} là tiêu đề đầu tiên trong hàng tiêu đề "
+msgstr "Đã thiết lập {address} là tiêu đề đầu tiên của các dòng"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -7649,7 +7649,7 @@ msgstr "Bỏ {address}    khỏi tiêu đề dòng"
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Cannot find {address}    in row headers"
-msgstr "Không tìm thấy {address}    trong hàng tiêu đề"
+msgstr "Không tìm thấy {address}    trong các tiêu đề dòng"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
@@ -8345,11 +8345,11 @@ msgstr "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
-msgstr "insertionphần"
+msgstr "Phần nội dung chèn"
 
 #. Translators: a Microsoft Word revision type (deleted content)
 msgid "deletion"
-msgstr "Xóa"
+msgstr "Phần nội dung được xóa"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 msgid "property"
@@ -8361,7 +8361,7 @@ msgstr "số đoạn"
 
 #. Translators: a Microsoft Word revision type (display field)
 msgid "display field"
-msgstr "display field"
+msgstr "ô hiển thị"
 
 #. Translators: a Microsoft Word revision type (reconcile)
 msgid "reconcile"
@@ -8488,53 +8488,53 @@ msgstr "Mô tả bảng"
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "Chọn hàng {rowNumber} cột {columnNumber} là tiêu đề cho các cột"
+msgstr "Thiết lập dòng {rowNumber} cột {columnNumber} là tiêu đề đầu tiên của các cột"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "Đã chọn hàng {rowNumber} cột {columnNumber} à tiêu đề cho các cột"
+msgstr "Đã thiết lập dòng {rowNumber} cột {columnNumber} là tiêu đề đầu tiên của các cột"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "Bỏ hàng {rowNumber} cột {columnNumber}  khỏi tiêu đề của cột"
+msgstr "Đã xóa thiết lập tiêu đề cột của dòng {rowNumber} cột {columnNumber} "
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
-"Không tìm thấy hàng {rowNumber} cột {columnNumber}  trong tiêu đề của các cột"
+"Không tìm thấy dòng {rowNumber} cột {columnNumber}  trong các tiêu đề cột"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this table. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"Ấn 1 lần để chọn ô hiện tại là ô tiêu đề của vùng bảng bên dưới. Ấn nhanh 2 "
-"lần để bỏ qua tiêu đề này"
+"Ấn 1 lần để chọn ô hiện tại làm ô tiêu đề của vùng bảng bên dưới. Ấn nhanh 2 "
+"lần để xóa thiết lập tiêu đề này"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "Chọn hàng {rowNumber} cột {columnNumber} là tiêu đề cho hàng"
+msgstr "Thiết lập dòng {rowNumber} cột {columnNumber} là tiêu đề đầu tiên của các dòng"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "Đã chọn hàng {rowNumber} cột {columnNumber} là tiêu đề cho các hàng"
+msgstr "Đã thiết lập dòng {rowNumber} cột {columnNumber} là tiêu đề đầu tiên của các dòng"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "Bỏ dòng {rowNumber} cột {columnNumber}  khỏi tiêu dòng của dòng "
+msgstr "Đã xóa thiết lập dòng {rowNumber} cột {columnNumber}  là tiêu đề của các dòng "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "Không tim thấy hàng {rowNumber} cột {columnNumber}  trong hàng tiêu đề"
+msgstr "Không tìm thấy dòng {rowNumber} cột {columnNumber}  trong các tiêu đề dòng"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
@@ -8617,7 +8617,7 @@ msgstr "Chuyển lên trước đoạn trống"
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
-msgstr "Kiểu cách {styleName}, Cấp độ bố cục {outlineLevel}"
+msgstr "Kiểu dáng {styleName}, Cấp độ bố cục {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 #, python-brace-format
