@@ -705,7 +705,7 @@ def normalizeGestureIdentifier(identifier):
 	main = main.split("+")
 	# The order of the parts doesn't matter as far as the user is concerned,
 	# but we need them to be in a determinate order so they will match other gesture identifiers.
-	# We sort them alphanumerically.
+	# We sort them by character.
 	main.sort()
 	main = "+".join(main)
 	return u"{0}:{1}".format(prefix, main)
