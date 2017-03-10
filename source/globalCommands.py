@@ -137,9 +137,20 @@ class GlobalCommands(ScriptableObject):
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
-		info.expand(textInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_PARAGRAPH)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+			import time
+			times=[]
+			log.info("Starting test...")
+			for x in xrange(20):
+				startTime=time.time()
+				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				endTime=time.time()
+				times.append(endTime-startTime)
+				speech.cancelSpeech()
+				time.sleep(0.05)
+			log.info("Test done. Min %s, avg %s, max %s"%(min(times),sum(times)/len(times),max(times)))
+			import tones; tones.beep(440,50)
 		else:
 			speech.speakSpelling(info.text)
 	# Translators: Input help mode message for report current line command.

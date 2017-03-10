@@ -1,4 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
+#A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2015-2016 NV Access Limited
@@ -141,7 +142,7 @@ class EdgeTextInfo(UIATextInfo):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
 		# report landmarks
-		landmark=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
+		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
 		if landmark and (landmark!='region' or field.get('name')):
 			field['landmark']=aria.landmarkRoles.get(landmark)
 		# Combo boxes with a text pattern are editable
@@ -151,7 +152,7 @@ class EdgeTextInfo(UIATextInfo):
 		field['current']=obj.isCurrent
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
-		ariaProperties=obj.UIAElement.currentAriaProperties
+		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		hasAriaLabel=('label=' in ariaProperties)
 		hasAriaLabelledby=('labelledby=' in ariaProperties)
 		if field.get('nameIsContent'):
@@ -178,7 +179,7 @@ class EdgeTextInfo(UIATextInfo):
 				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
 		return field
 
-	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementRange=None):
+	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=True,recurseChildren=True,alwaysWalkAncestors=True,_rootElementClipped=(True,True)):
 		# Edge zooms into its children at the start.
 		# Thus you are already in the deepest first child.
 		# Therefore get the deepest enclosing element at the start, get its content, Then do the whole thing again on the content from the end of the enclosing element to the end of its parent, and repete!
@@ -186,7 +187,7 @@ class EdgeTextInfo(UIATextInfo):
 		log.debug("_getTextWithFieldsForUIARange (unbalanced)")
 		if not recurseChildren:
 			log.debug("recurseChildren is False. Falling back to super")
-			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,textRange,formatConfig,includeRoot=includeRoot,alwaysWalkAncestors=True,recurseChildren=False,_rootElementRange=_rootElementRange):
+			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,textRange,formatConfig,includeRoot=includeRoot,alwaysWalkAncestors=True,recurseChildren=False,_rootElementClipped=_rootElementClipped):
 				yield field
 			return
 		if log.isEnabledFor(log.DEBUG):
@@ -195,10 +196,8 @@ class EdgeTextInfo(UIATextInfo):
 			log.debug("includeRoot: %s"%includeRoot)
 		startRange=textRange.clone()
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		enclosingElement=startRange.getEnclosingElement()
-		if enclosingElement:
-			enclosingElement=enclosingElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		else:
+		enclosingElement=getEnclosingElementWithCacheFromUIATextRange(startRange,self._controlFieldUIACacheRequest)
+		if not enclosingElement:
 			log.debug("No enclosingElement. Returning")
 			return
 		enclosingRange=self.obj.getNormalizedUIATextRangeFromElement(enclosingElement)
@@ -215,10 +214,10 @@ class EdgeTextInfo(UIATextInfo):
 			log.debug("Collapsed range. Returning")
 			return
 		# check for an embedded child
-		childElements=startRange.getChildren()
+		childElements=getChildrenWithCacheFromUIATextRange(startRange,self._controlFieldUIACacheRequest)
 		if childElements.length==1 and UIAHandler.handler.clientObject.compareElements(rootElement,childElements.getElement(0)):
 			log.debug("Using single embedded child as enclosingElement")
-			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementRange=_rootElementRange,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False):
+			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementClipped=_rootElementClipped,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False):
 				yield field
 			return
 		parents=[]
@@ -235,7 +234,7 @@ class EdgeTextInfo(UIATextInfo):
 			if parentElement is not enclosingElement:
 				if includeRoot or not isRoot:
 					try:
-						obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement)
+						obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
 						field=self._getControlFieldForObject(obj)
 					except LookupError:
 						log.debug("Failed to fetch controlField data for parentElement. Breaking")
@@ -249,14 +248,16 @@ class EdgeTextInfo(UIATextInfo):
 				log.debug("Hit root. Breaking")
 				break
 			log.debug("Fetching next parentElement")
-			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,UIAHandler.handler.baseCacheRequest)
+			parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,self._controlFieldUIACacheRequest)
 		log.debug("Done generating parents")
 		log.debug("Yielding parents in reverse order")
 		for parentElement,field in reversed(parents):
 			if field: yield textInfos.FieldCommand("controlStart",field)
 		log.debug("Done yielding parents")
 		log.debug("Yielding balanced fields for startRange")
-		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementRange=enclosingRange,includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True):
+		clippedStart=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,startRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
+		clippedEnd=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_End)>0
+		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementClipped=(clippedStart,clippedEnd),includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True):
 			yield field
 		tempRange=startRange.clone()
 		log.debug("Walking parents to yield controlEnds and recurse unbalanced endRanges")
@@ -278,7 +279,7 @@ class EdgeTextInfo(UIATextInfo):
 					field['_endOfNode']=not clippedEnd
 				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
 					log.debug("Recursing endRange")
-					for endField in self._getTextWithFieldsForUIARange(parentElement,tempRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True):
+					for endField in self._getTextWithFieldsForUIARange(parentElement,tempRange,formatConfig,_rootElementClipped=(clippedStart,clippedEnd),includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True):
 						yield endField
 					log.debug("Done recursing endRange")
 				else:
@@ -370,7 +371,7 @@ class EdgeNode(UIA):
 		role=super(EdgeNode,self).role
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
-		ariaRole=self.UIAElement.currentAriaRole
+		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId)
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
@@ -385,10 +386,10 @@ class EdgeNode(UIA):
 		return states
 
 	def _get_description(self):
-		ariaProperties=self.UIAElement.currentAriaProperties
+		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		if 'describedby=' in ariaProperties:
 			try:
-				return self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
+				return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
 			except COMError:
 				pass
 		return super(EdgeNode,self).description
@@ -400,7 +401,7 @@ class EdgeNode(UIA):
 	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(\w+);")
 
 	def _get_isCurrent(self):
-		ariaProperties=self.UIAElement.currentAriaProperties
+		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		match = self.RE_ARIA_CURRENT_PROP_VALUE.match(ariaProperties)
 		log.debug("aria props = %s" % ariaProperties)
 		if match:
