@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
 
 import sys
 import itertools
@@ -1929,7 +1929,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	routingIndex = None
 
 	def _get_identifiers(self):
-		ids = [u"br({source}):{id}".format(source=self.source, id=self.id).lower()]
+		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
