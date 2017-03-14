@@ -1,3 +1,12 @@
+#appModules/calc.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2007-2012 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
+"""App module for Windows Calculator (desktop version)
+"""
+
 import appModuleHandler
 import NVDAObjects.IAccessible
 import speech
