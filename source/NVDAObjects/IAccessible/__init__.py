@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NVDA Contributors
+#Copyright (C) 2006-2016 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -233,13 +233,9 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)
+			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
 		except COMError:
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
-		if start>offset or offset>end:
-			# HACK: Work around buggy implementations which return a range that does not include offset.
-			return offset,offset+1
-		return start,end
 
 	def _getLineOffsets(self,offset):
 		try:

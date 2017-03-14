@@ -37,6 +37,10 @@ def _getRawTextInfo(obj):
 		return FakeEmbeddingTextInfo
 	elif obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
+	if hasattr(obj, "ia2TextInfoClass"):
+		# Allow implementations to provide a subclass of IA2TextTextInfo
+		# to deal with implementation specific bugs.
+		return obj.ia2TextInfoClass
 	return IA2TextTextInfo
 
 def _getEmbedded(obj, offset):
