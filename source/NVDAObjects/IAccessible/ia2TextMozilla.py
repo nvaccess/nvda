@@ -15,6 +15,7 @@ import textInfos
 import controlTypes
 import IAccessibleHandler
 import api
+import core
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
@@ -44,18 +45,22 @@ def _getRawTextInfo(obj):
 	return IA2TextTextInfo
 
 def _getEmbedded(obj, offset):
+	ck = ("embedded", obj.IA2UniqueID, offset)
+	v = core.getCorePumpCacheValue(ck)
+	if v:
+		return v
 	if not hasattr(obj, "IAccessibleTextObject"):
-		return obj.getChild(offset)
+		return core.setCorePumpCacheValue(ck, obj.getChild(offset))
 	# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
 	try:
 		ht = obj.iaHypertext
 		hi = ht.hyperlinkIndex(offset)
 		if hi != -1:
 			hl = ht.hyperlink(hi)
-			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+			return core.setCorePumpCacheValue(ck, IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0))
 	except COMError:
 		pass
-	return None
+	return core.setCorePumpCacheValue(ck, None)
 
 class MozillaCompoundTextInfo(CompoundTextInfo):
 
@@ -172,21 +177,28 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return _getRawTextInfo(obj)(obj, position)
 
 	def _getEmbedding(self, obj):
+		ckt = ("embeddingTi", obj.IA2UniqueID)
+		cko = ("embeddingO", obj.IA2UniqueID)
+		v = core.getCorePumpCacheValue(ckt)
+		if v:
+			return v.copy()
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		info = self._makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
 		if isinstance(info, FakeEmbeddingTextInfo):
 			info._startOffset = obj.indexInParent
 			info._endOffset = info._startOffset + 1
-			return info
+			core.setCorePumpCacheValue(cko, info.obj)
+			return core.setCorePumpCacheValue(ckt, info)
 		try:
 			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
 			hlOffset = hl.startIndex
 			info._startOffset = hlOffset
 			info._endOffset = hlOffset + 1
-			return info
+			core.setCorePumpCacheValue(cko, info.obj)
+			return core.setCorePumpCacheValue(ckt, info)
 		except COMError:
 			pass
-		return None
+		return core.setCorePumpCacheValue(ckt, None)
 
 	POSITION_SELECTION_START = 3
 	POSITION_SELECTION_END = 4

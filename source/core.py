@@ -151,6 +151,15 @@ def _setInitialFocus():
 	except:
 		log.exception("Error retrieving initial focus")
 
+_corePumpCache = {}
+
+def getCorePumpCacheValue(key):
+	return _corePumpCache.get(key)
+
+def setCorePumpCacheValue(key, value):
+	_corePumpCache[key] = value
+	return value
+
 def main():
 	"""NVDA's core main loop.
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and sets up the core pump, which checks the queues and executes functions when requested. Finally, it starts the wx main loop.
@@ -365,6 +374,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			except:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
+			_corePumpCache.clear()
 			watchdog.asleep()
 			if _isPumpPending and not _pump.IsRunning():
 				# #3803: A pump was requested, but the timer was ignored by a modal loop

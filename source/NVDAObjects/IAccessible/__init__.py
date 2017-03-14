@@ -9,6 +9,7 @@ import os
 import re
 import itertools
 from comInterfaces.tom import ITextDocument
+import core
 import tones
 import languageHandler
 import textInfos.offsets
@@ -177,11 +178,15 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		self.obj.IAccessibleTextObject.AddSelection(start,end)
 
 	def _getStoryLength(self):
+		ck = ("ia2TextNCharacters", self.obj.IA2UniqueID)
+		v = core.getCorePumpCacheValue(ck)
+		if v is not None:
+			return v
 		try:
-			return self.obj.IAccessibleTextObject.NCharacters
+			return core.setCorePumpCacheValue(ck, self.obj.IAccessibleTextObject.NCharacters)
 		except COMError:
 			log.debugWarning("IAccessibleText::nCharacters failed",exc_info=True)
-			return 0
+			return core.setCorePumpCacheValue(ck, 0)
 
 	def _getLineCount(self):
 			return -1
@@ -217,7 +222,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getCharacterOffsets(self,offset):
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+			if offset>=self._getStoryLength():
 				return offset,offset+1
 		except COMError:
 			pass
@@ -228,7 +233,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getWordOffsets(self,offset):
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+			if offset>=self._getStoryLength():
 				return offset,offset+1
 		except COMError:
 			pass
