@@ -81,7 +81,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 
 		Subclasses must implement this method.
 		@return: One or more identifiers which uniquely identify this gesture.
-		@rtype: list or tuple of str
+		@rtype: list or tuple of basestring
 		"""
 		raise NotImplementedError
 
@@ -91,7 +91,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 		These normalized identifiers can be directly looked up in input gesture maps.
 		Subclasses should not override this method.
 		@return: One or more normalized identifiers which uniquely identify this gesture.
-		@rtype: list of str
+		@rtype: list of basestring
 		"""
 		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
 

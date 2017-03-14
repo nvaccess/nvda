@@ -160,6 +160,7 @@ class TouchInputGesture(inputCore.InputGesture):
 			if self.tracker.actionCount>1:
 				ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
 			ID+=self.tracker.action
+			# "ts" is the gesture identifier source prefix for "touch screen".
 			IDs.append("ts(%s):%s"%(self.mode,ID))
 			IDs.append("ts:%s"%ID)
 		return IDs
