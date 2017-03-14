@@ -466,9 +466,8 @@ def requestPump():
 
 def callLater(delay, callable, *args, **kwargs):
 	"""Call a callable once after the specified number of milliseconds.
-	This is currently a thin wrapper around C{wx.CallLater},
-	but this should be used instead for calls which aren't just for UI,
-	as it notifies watchdog appropriately.
+	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
+	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
 	This function can be safely called from any thread.
 	"""
 	import wx
@@ -478,9 +477,5 @@ def callLater(delay, callable, *args, **kwargs):
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
 
 def _callLaterExec(callable, args, kwargs):
-	import watchdog
-	watchdog.alive()
-	try:
-		return callable(*args, **kwargs)
-	finally:
-		watchdog.asleep()
+	import queueHandler
+	queueHandler.queueFunction(queueHandler.eventQueue,callable,*args, **kwargs)
