@@ -299,12 +299,30 @@ class Gecko_ia2(VirtualBuffer):
 		except:
 			browseObj=api.getFocusObject()
 		log.info("Role is: %s",browseObj.role)
+		
+# 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+# 		node = browseObj.IAccessibleObject.QueryInterface(ISimpleDOMNode)
+# 		try:
+# 			log.info("Node:%s",node.innerHTML)
+# 			log.info("Name:%s",node.attributesForNames.previousSibling)
+# 			log.info("ID:%s",node.id)
+# 		except:
+# 			pass
+		
 		docHandle,ID=self.getIdentifierFromNVDAObject(browseObj)
 		attrs=self.makeTextInfo(browseObj)._getControlFieldAttribs(docHandle,ID)
 		if (attrs['IAccessible2::attribute_tag']== "a"):
 			customLabelKey=browseObj.value
 		elif (attrs['IAccessible2::attribute_tag']== "img"):
 			customLabelKey=attrs['IAccessible2::attribute_src']
+		elif (attrs['IAccessible2::attribute_tag']== "input" or attrs['IAccessible2::attribute_tag']== "select" or attrs['IAccessible2::attribute_tag']== "textarea"):
+			log.info("Input field")
+			try:
+				customLabelKey=attrs['IAccessible2::attribute_id']
+			except:
+				customLabelKey=""
+		else:
+			customLabelKey=""
 		if customLabelKey:
 			customLabelKey=customLabelKey.replace(':','\:')
 # 		log.info("Custom Label Key is : %s",customLabelKey)

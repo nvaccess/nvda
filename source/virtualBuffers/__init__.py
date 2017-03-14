@@ -233,6 +233,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		if start==end:
 			return ""
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
+# 		log.info("Manshul:%s",text)
 		if not text:
 			return ""
 		commandList=XMLFormatting.XMLTextParser().parse(text)
@@ -243,7 +244,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					commandList[index].field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
 					commandList[index].field=self._normalizeFormatField(field)
-# 		log.info("Command List:%s",commandList)
+#  		log.info("Command List:%s",commandList)
 		return commandList
 
 	def _getWordOffsets(self,offset):

@@ -428,6 +428,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
 			s<<L"IAccessible2::attribute_"<<it->first;
 			parentNode->addAttribute(s.str(),it->second);
+			LOG_INFO(L"Manshul:"<<it->first);
+			LOG_INFO(L"Manshul1:"<<it->second);
 			s.str(L"");
 		}
 	} else
@@ -682,7 +684,19 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			ignoreInteractiveUnlabelledGraphics = name != NULL;
 		}
 
+		if((IA2AttribsMapIt = IA2AttribsMap.find(L"id")) != IA2AttribsMap.end()){
+			LOG_INFO(L"has id:"<<IA2AttribsMapIt->second);
+			wstring id=IA2AttribsMapIt->second;
+			wstring labelForNode=findLabel(labelsMap,id);
+				if (!labelForNode.empty()){
+					LOG_INFO(L"reaching if");
+//					previousNode->addAttribute(IA2AttribsMapIt->first,labelForNode);
+					previousNode=buffer->addTextFieldNode(parentNode,previousNode,labelForNode);
+				}
+		}
+
 		if (renderChildren && IA2TextLength > 0) {
+//			LOG_INFO(L"Manshul:"<<IA2AttribsMap[L"id"])
 			// Process IAccessibleText.
 			int chunkStart=0;
 			long attribsStart = 0;
@@ -703,8 +717,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					if(tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart))) {
 						previousNode=tempNode;
 						// Add text attributes.
-						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
+						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it){
 							previousNode->addAttribute(it->first,it->second);
+						}
 						#define copyObjectAttribute(attr) if ((IA2AttribsMapIt = IA2AttribsMap.find(attr)) != IA2AttribsMap.end()) \
 							previousNode->addAttribute(attr, IA2AttribsMapIt->second);
 						copyObjectAttribute(L"text-align");
@@ -793,8 +808,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				if (!labelForNode.empty()){
 //					LOG_INFO(L"has custom label");
 					previousNode=buffer->addTextFieldNode(parentNode,previousNode,labelForNode);
-				}
-				else if (name && name[0]) {
+				} else if (name && name[0]) {
 					// The graphic has a label, so use it.
 					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
@@ -821,7 +835,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		if ((nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME) && !nodeHasUsefulContent(parentNode)) {
 			// If there is no useful content and the name can be the content,
 			// render the name if there is one.
-			if(name) {
+			 if (name) {
 				tempNode = buffer->addTextFieldNode(parentNode, NULL, name);
 				if(tempNode && !locale.empty()) tempNode->addAttribute(L"language", locale);
 			} else if(role==ROLE_SYSTEM_LINK&&value) {
