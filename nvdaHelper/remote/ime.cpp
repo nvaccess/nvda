@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2010-2016 World Light Information Limited, Hong Kong Blind Union, NV Access Limited.
+Copyright 2010-2012 World Light Information Limited and Hong Kong Blind Union.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -14,7 +14,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <windows.h>
 #include <wchar.h>
-#include <Shlwapi.h>
 #include "nvdaHelperRemote.h"
 #include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
@@ -518,28 +517,7 @@ LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	return 0;
 }
 
-bool isConhostBuild15025OrLater() {
-	OSVERSIONINFO ver;
-	ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	if (!GetVersionEx(&ver))
-		return false;
-	if (ver.dwBuildNumber < 15025)
-		return false;
-	wchar_t appName[MAX_PATH];
-	if (GetModuleFileName(NULL, appName, ARRAYSIZE(appName)) == 0)
-		return false;
-	PathStripPath(appName);
-	return wcscmp(appName, L"conhost.exe") == 0;
-}
-
 void IME_inProcess_initialize() {
-	if (isConhostBuild15025OrLater()) {
-		// #6833: On Windows 10 build >= 15025, console windows launched from shortcuts
-		// are invisible if immLockIMC is called in response to WM_ACTIVATE/WM_SETFOCUS.
-		// Therefore, disable IME in this case.
-		LOG_DEBUGWARNING(L"conhost on Windows 10 >= 15025, disabling IME support");
-		return;
-	}
 	wm_candidateChange=RegisterWindowMessage(L"nvda_wm_candidateChange");
 	wm_handleIMEConversionModeUpdate=RegisterWindowMessage(L"nvda_wm_handleIMEConversionModeUpdate");
 	gImm32Module = LoadLibraryA("imm32.dll");
@@ -558,8 +536,6 @@ void IME_inProcess_initialize() {
 }
 
 void IME_inProcess_terminate() {
-	if (isConhostBuild15025OrLater())
-		return;
 	unregisterWindowsHook(WH_CALLWNDPROC, IME_callWndProcHook);
 	unregisterWindowsHook(WH_GETMESSAGE, IME_getMessageHook);
 	if (gImm32Module)  FreeLibrary(gImm32Module);
