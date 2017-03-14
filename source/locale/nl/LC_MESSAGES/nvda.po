@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"POT-Creation-Date: 2017-02-24 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
+"Last-Translator: Leonard de Ruijter <leonard@babbage.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -799,6 +799,7 @@ msgstr ""
 "applicatie"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Niet ondersteund in dit document"
 
@@ -1293,6 +1294,7 @@ msgid "%s landmark"
 msgstr "%s oriëntatiepunt"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "geselecteerd %s"
@@ -1326,6 +1328,33 @@ msgstr "Onderaan"
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Gaat voorbij het einde van het container element, zoals een lijst of tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Niet in een cel van een tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Tabelrand"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "gaat naar de volgende rij van de tabel"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "gaat naar de vorige rij van de tabel"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "gaat naar de volgende kolom van de tabel"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "gaat naar de vorige kolom van de tabel"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4359,19 +4388,19 @@ msgid "%s columns"
 msgstr "%s kolommen"
 
 msgid "continuous section break"
-msgstr ""
+msgstr "doorlopend sectie-einde"
 
 msgid "new column section break"
-msgstr ""
+msgstr "nieuwe kolom sectie-einde"
 
 msgid "new page section break"
-msgstr ""
+msgstr "nieuwe pagina sectie-einde"
 
 msgid "even pages section break"
-msgstr ""
+msgstr "even pagina's sectie-einde"
 
 msgid "odd pages section break"
-msgstr ""
+msgstr "oneven pagina's sectie-einde"
 
 msgid "column break"
 msgstr "kolomeinde"
@@ -4985,11 +5014,6 @@ msgstr "{symbol} zoals in {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Tabelrand"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Verplaatst het navigatorobject naar de volgende kolom"
@@ -5031,6 +5055,12 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Meldt de resterende tijd van het nummer dat op dit moment wordt afgespeeld"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Geeft opties weer die gerelateerd zijn aan geselecteerde tekst of tekst op "
+"de cursorpositie"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5040,6 +5070,25 @@ msgstr "{bookPercentage}%, locatie {curLocation} van {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Pagina {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "highlight"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "geen highlight"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s gehighlight"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "buiten populaire highlight"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5944,6 +5993,10 @@ msgstr "Herstart"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Herstart met uitgeschakelde add-ons"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Herstart met loggen van debug-informatie ingeschakeld"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7277,6 +7330,10 @@ msgstr "Naar &computerbraille uitbreiden voor het woord onder de cursor"
 msgid "&Show cursor"
 msgstr "Cur&sor weergeven"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Knipperende cursor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Knippersnelheid van de cursor (miliseconden)"
@@ -7449,28 +7506,6 @@ msgid ""
 msgstr ""
 "In- en uitschakelen van het behouden van de schermlay-out tijdens het "
 "vernieuwen van het document"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Niet in een cel van een tabel"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "gaat naar de volgende rij van de tabel"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "gaat naar de vorige rij van de tabel"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "gaat naar de volgende kolom van de tabel"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "gaat naar de vorige kolom van de tabel"
 
 msgid "Taskbar"
 msgstr "Taakbalk"
