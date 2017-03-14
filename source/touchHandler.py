@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+#Copyright (C) 2012-2017 NV Access Limited
 
 import wx
 import threading
@@ -149,7 +149,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		self.x=tracker.x
 		self.y=tracker.y
 
-	def _get__rawIdentifiers(self):
+	def _get_identifiers(self):
 		IDs=[]
 		for includeHeldFingers in ([True,False] if self.preheldTracker else [False]):
 			ID=""
@@ -160,21 +160,10 @@ class TouchInputGesture(inputCore.InputGesture):
 			if self.tracker.actionCount>1:
 				ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
 			ID+=self.tracker.action
-			IDs.append("TS(%s):%s"%(self.mode,ID))
+			# "ts" is the gesture identifier source prefix for "touch screen".
+			IDs.append("ts(%s):%s"%(self.mode,ID))
 			IDs.append("ts:%s"%ID)
 		return IDs
-
-	def _get_logIdentifier(self):
-		return self._rawIdentifiers[0]
-
-	def _get_identifiers(self):
-		identifiers=[]
-		for identifier in self._rawIdentifiers:
-			t,i=identifier.split(':')
-			# Force the ID in to Python set order so they are always comparable
-			i="+".join(set(i.split("+")))
-			identifiers.append("%s:%s"%(t.lower(),i.lower()))
-		return identifiers
 
 	RE_IDENTIFIER = re.compile(r"^ts(?:\((.+?)\))?:(.*)$")
 
