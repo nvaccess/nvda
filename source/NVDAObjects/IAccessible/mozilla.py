@@ -87,7 +87,7 @@ class RootApplication(Mozilla):
 
 class Document(ia2Web.Document):
 
-	def _get_treeInterceptorClass(self):
+	def no_get_treeInterceptorClass(self):
 		ver=getGeckoVersion(self)
 		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
 			return super(Document,self).treeInterceptorClass

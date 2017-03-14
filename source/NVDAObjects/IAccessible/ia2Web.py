@@ -7,12 +7,16 @@
 """Base classes with common support for browsers exposing IAccessible2.
 """
 
+from comtypes import COMError
 import oleacc
 import IAccessibleHandler
 import controlTypes
 from NVDAObjects.behaviors import Dialog
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
+import browseMode
+import treeInterceptorHandler
+import cursorManager
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -30,11 +34,33 @@ class Ia2Web(IAccessible):
 		current = self.IA2Attributes.get("current", False)
 		return current
 
+class DocumentTreeInterceptor(cursorManager.ReviewCursorManager, browseMode.BrowseModeDocumentTreeInterceptor):
+	TextInfo = treeInterceptorHandler.RootProxyTextInfo
+
+	def _get_isAlive(self):
+		return True
+
+	def __contains__(self, obj):
+		if self.rootNVDAObject.windowHandle != obj.windowHandle:
+			return False
+		uid = obj.IA2UniqueID
+		if uid == self.rootNVDAObject.IA2UniqueID:
+			return True
+		try:
+			self.rootNVDAObject.IAccessibleObject.accChild(uid)
+		except COMError:
+			return False
+		return True
+
 class Document(Ia2Web):
 	value = None
+	TextInfo = MozillaCompoundTextInfo
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return controlTypes.STATE_READONLY in self.states
+
+	def _get_treeInterceptorClass(self):
+		return DocumentTreeInterceptor
 
 class Application(Document):
 	shouldCreateTreeInterceptor = False
