@@ -204,12 +204,38 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
 
+	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
+		controlTypes.ROLE_COMBOBOX,
+		controlTypes.ROLE_EDITABLETEXT,
+		controlTypes.ROLE_LIST,
+		controlTypes.ROLE_SLIDER,
+		controlTypes.ROLE_TABCONTROL,
+		controlTypes.ROLE_MENUBAR,
+		controlTypes.ROLE_POPUPMENU,
+		controlTypes.ROLE_TREEVIEW,
+		controlTypes.ROLE_TREEVIEWITEM,
+		controlTypes.ROLE_SPINBUTTON,
+		controlTypes.ROLE_TABLEROW,
+		controlTypes.ROLE_TABLECELL,
+		controlTypes.ROLE_TABLEROWHEADER,
+		controlTypes.ROLE_TABLECOLUMNHEADER,
+		})
+
+	SWITCH_TO_PASS_THROUGH_ON_FOCUS_ROLES = frozenset({
+		controlTypes.ROLE_LISTITEM,
+		controlTypes.ROLE_RADIOBUTTON,
+		controlTypes.ROLE_TAB,
+		controlTypes.ROLE_MENUITEM,
+		controlTypes.ROLE_RADIOMENUITEM,
+		controlTypes.ROLE_CHECKMENUITEM,
+		})
+
 	def shouldPassThrough(self, obj, reason=None):
-		"""Determine whether pass through mode should be enabled or disabled for a given object.
+		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		@param reason: The reason for this query; one of the output reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
-		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
+		@return: C{True} if pass through mode (focus mode) should be enabled, C{False} if it should be disabled (browse mode).
 		"""
 		if reason and (
 			self.disableAutoPassThrough
@@ -232,12 +258,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
 		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
 			return False
-		if reason == controlTypes.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_TAB):
+		# Any roles or states for which we always switch to passThrough
+		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.STATE_EDITABLE in states:
 			return True
-		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM) or controlTypes.STATE_EDITABLE in states:
-			return True
+		# focus is moving to this control. Perhaps after pressing tab or clicking a button that brings up a menu (via javascript)
 		if reason == controlTypes.REASON_FOCUS:
+			if role in self.SWITCH_TO_PASS_THROUGH_ON_FOCUS_ROLES:
+				return True
 			# If this is a focus change, pass through should be enabled for certain ancestor containers.
+			# this is done last for performance considerations. Walking up the through the parents could be costly
 			while obj and obj != self.rootNVDAObject:
 				if obj.role == controlTypes.ROLE_TOOLBAR:
 					return True
