@@ -11,6 +11,7 @@ from comtypes.automation import VARIANT
 import weakref
 import sys
 import numbers
+import languageHandler
 import UIAHandler
 import globalVars
 import eventHandler
@@ -135,6 +136,13 @@ class UIATextInfo(textInfos.TextInfo):
 			annotationTypes=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
 				formatField["invalid-spelling"]=True
+		cultureVal=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
+		if cultureVal and isinstance(cultureVal,int):
+			try:
+				formatField['language']=languageHandler.windowsLCIDToLocaleName(cultureVal)
+			except:
+				log.debugWarning("language error",exc_info=True)
+				pass
 		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position,_rangeObj=None):
