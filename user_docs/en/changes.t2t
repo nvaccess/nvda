@@ -19,6 +19,8 @@
 - Reporting of the background color in screen review is now more accurate when  text was drawn with a transparant background (#6467) 
 - Improved support for aria-describedby in Internet Explorer 11, including support within iframes and when multiple IDs are provided. (#5784)
 - In the Windows Creaters Update, NVDA's audio ducking again works as in previous Windows releases (I.e. Duck with speech and sounds, always duck, and no ducking are all available). (#6933)
+- NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
+- Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
 
 
 == Changes for Developers ==
