@@ -8,12 +8,24 @@
 == New Features ==
 - Cell border information can now be reported in Microsoft Excel by using `NVDA+f`. (#3044)
 - Added support for aria-current attributes. (#6358)
+- Support automatic language switching in Microsoft Edge. (#6852)
 
 
 == Bug Fixes ==
 - Web page menu items (menu item checkbox's and radio buttons) can now be activated while in browse mode. (#6735)
 - Excel sheet name reporting is now translated. (#6848)
 - Pressing ESC while the configuration profile "Confirm Deletion" prompt is active now dismisses the dialog. (#6851)
+- Fix some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
+- Reporting of the background color in screen review is now more accurate when  text was drawn with a transparant background (#6467) 
+- Improved support for aria-describedby in Internet Explorer 11, including support within iframes and when multiple IDs are provided. (#5784)
+- In the Windows Creaters Update, NVDA's audio ducking again works as in previous Windows releases (I.e. Duck with speech and sounds, always duck, and no ducking are all available). (#6933)
+- NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
+- Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
+
+
+== Changes for Developers ==
+- Commandline arguments are now processed with Python's argparser module, rather than optparser. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797) 
 
 
 = 2017.1 =
