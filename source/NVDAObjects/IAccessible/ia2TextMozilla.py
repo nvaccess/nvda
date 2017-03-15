@@ -57,7 +57,7 @@ def _getEmbedded(obj, offset):
 		hi = ht.hyperlinkIndex(offset)
 		if hi != -1:
 			hl = ht.hyperlink(hi)
-			return core.setCorePumpCacheValue(ck, IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0))
+			return core.setCorePumpCacheValue(ck, IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0, chooseBestAPI=False))
 	except COMError:
 		pass
 	return core.setCorePumpCacheValue(ck, None)
