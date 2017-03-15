@@ -3,9 +3,11 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import itertools
 from ctypes import *
-from ctypes.wintypes import HWND, HRESULT, BOOL
-from comtypes import GUID, COMMETHOD, IUnknown, tagBIND_OPTS2
+from ctypes.wintypes import HWND, HRESULT, BOOL, ULONG
+from comtypes import GUID, COMMETHOD, IUnknown, tagBIND_OPTS2, COMError
+from comtypes.hresult import S_OK
 from comtypes.persist import IPersist
 WSTRING = c_wchar_p
 
@@ -286,3 +288,33 @@ IRunningObjectTable._methods_ = [
 	COMMETHOD([], HRESULT, 'EnumRunning',
 		( ['out'], POINTER(POINTER(IEnumMoniker)), 'ppenumMoniker' )),
 ]
+
+class MULTI_QI(Structure):
+	_fields_ = [
+		('pIID', POINTER(GUID)),
+		('pItf', c_void_p),
+		('hr', HRESULT)
+	]
+
+class IMultiQI(IUnknown):
+
+	def QueryMultipleInterfaces(self, interfaces):
+		mqis = (MULTI_QI * len(interfaces))()
+		for interface, mqi in itertools.izip(interfaces, mqis):
+			mqi.pIID = pointer(interface._iid_)
+		self._QueryMultipleInterfaces(len(mqis), mqis)
+		ret = {}
+		for interface, mqi in itertools.izip(interfaces, mqis):
+			if mqi.hr == S_OK:
+				ret[interface] = cast(mqi.pItf, POINTER(interface))
+			else:
+				ret[interface] = COMError(mqi.hr, FormatError(mqi.hr),
+					(None, None, 0, None, None))
+		return ret
+
+	_iid_ = GUID('{00000020-0000-0000-C000-000000000046}')
+	_methods_ = [
+		COMMETHOD([], HRESULT, 'QueryMultipleInterfaces',
+			( ['in'], ULONG, 'cMQIs' ),
+			( ['in'], POINTER(MULTI_QI), 'pMQIs' ))
+        ]

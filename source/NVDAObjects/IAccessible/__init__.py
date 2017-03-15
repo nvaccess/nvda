@@ -20,6 +20,7 @@ import IAccessibleHandler
 import oleacc
 import JABHandler
 import winUser
+import objidl
 import globalVars
 from logHandler import log
 import speech
@@ -598,6 +599,12 @@ the NVDAObject for IAccessible
 		self.event_childID=event_childID
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
 
+		# Ask the COM proxy to cache interfaces we might need in a single call.
+		interfaces = (IAccessibleHandler.IAccessibleAction, IAccessibleHandler.IAccessibleTable, IAccessibleHandler.IAccessibleTableCell, IAccessibleHandler.IAccessibleText, IAccessibleHandler.IAccessibleHypertext, IServiceProvider)
+		try:
+			IAccessibleObject.QueryInterface(objidl.IMultiQI).QueryMultipleInterfaces(interfaces)
+		except COMError:
+			pass
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
 		except COMError:
