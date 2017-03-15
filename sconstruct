@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvaccess.org/
-#Copyright 2010-2016 NV Access Limited.
+#Copyright 2010-2017 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -17,6 +17,7 @@ import os
 import time
 import _winreg
 from glob import glob
+import sourceEnv
 
 def recursiveCopy(env,targetDir,sourceDir):
 	targets=[]
@@ -89,7 +90,7 @@ if len(unknown)>0:
 	Exit(1)
 
 #Ensure that any Python subprocesses (such as for py2exe) can find our Python directory in miscDeps
-env['ENV']['PYTHONPATH']=Dir('#miscDeps/python').abspath
+env['ENV']['PYTHONPATH']=";".join(sourceEnv.PYTHON_DIRS)
 
 env["copyright"]=versionInfo.copyright
 env['version_year']=versionInfo.version_year
