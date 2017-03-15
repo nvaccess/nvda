@@ -379,7 +379,7 @@ the NVDAObject for IAccessible
 		return True
 
 	def findOverlayClasses(self,clsList):
-		if self.event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(self.windowHandle): 
+		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and self.event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(self.windowHandle): 
 			clsList.append(JavaVMRoot)
 
 		windowClassName=self.windowClassName
@@ -498,7 +498,7 @@ the NVDAObject for IAccessible
 			except WindowsError:
 				log.debugWarning("msftedit not available, couldn't retrieve IID_ITextServices")
 				IAccessible.IID_ITextServices=None
-		if IAccessible.IID_ITextServices:
+		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and IAccessible.IID_ITextServices:
 			try:
 				pDoc=self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(IAccessible.IID_ITextServices,ITextDocument)
 			except COMError:
@@ -551,16 +551,17 @@ the NVDAObject for IAccessible
 				tempWindow=winUser.getAncestor(tempWindow,winUser.GA_PARENT)
 			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
 				windowHandle=tempWindow
-		try:
-			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
-		except COMError:
-			Identity=None
-		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
-			event_windowHandle=Identity['windowHandle']
-		if event_objectID is None and Identity and 'objectID' in Identity:
-			event_objectID=Identity['objectID']
-		if event_childID is None and Identity and 'childID' in Identity:
-			event_childID=Identity['childID']
+		if not isinstance(IAccessibleObject, IAccessibleHandler.IAccessible2):
+			try:
+				Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
+			except COMError:
+				Identity=None
+			if event_windowHandle is None and Identity and 'windowHandle' in Identity:
+				event_windowHandle=Identity['windowHandle']
+			if event_objectID is None and Identity and 'objectID' in Identity:
+				event_objectID=Identity['objectID']
+			if event_childID is None and Identity and 'childID' in Identity:
+				event_childID=Identity['childID']
 		if not windowHandle and event_windowHandle:
 			windowHandle=event_windowHandle
 		if not windowHandle:
