@@ -313,7 +313,10 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj,IAccessible):
 			clsList.insert(0,PageTurnFocusIgnorer)
-			if hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View":
+			if ((isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2) and obj.IA2Attributes.get("class") == "KindleBookPageView")
+				# We must rely on .name in Kindle <= 1.19.
+				or (hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View")
+			):
 				clsList.insert(0,BookPageView)
 		return clsList
 
