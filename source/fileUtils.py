@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 import os
-import osreplace
+import ctypes
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
 from logHandler import log
@@ -18,4 +18,7 @@ def FaultTolerantFile(name):
 		f.flush()
 		os.fsync(f)
 		f.close()
-		osreplace.replace(f.name, name)
+		MOVEFILE_REPLACE_EXISTING = 1
+		moveFileResult = ctypes.windll.kernel32.MoveFileExW(f.name, name, MOVEFILE_REPLACE_EXISTING)
+		if moveFileResult == 0:
+			raise ctypes.WinError()
