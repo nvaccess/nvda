@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
-#config\__init__.py
+#config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -69,15 +69,6 @@ conf = None
 def initialize():
 	global conf
 	conf = ConfigManager()
-
-def save():
-	"""
-	@deprecated: Use C{conf.save} instead.
-	"""
-	import warnings
-	warnings.warn("config.save deprecated. Use config.conf.save instead.",
-		DeprecationWarning, 2)
-	conf.save()
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
