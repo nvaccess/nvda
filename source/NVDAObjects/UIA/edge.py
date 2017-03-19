@@ -7,6 +7,7 @@
 from comtypes import COMError
 from comtypes.automation import VARIANT
 from ctypes import byref
+import winVersion
 from logHandler import log
 import eventHandler
 import config
@@ -21,19 +22,6 @@ from UIAUtils import *
 from . import UIA, UIATextInfo
 
 class EdgeTextInfo(UIATextInfo):
-
-	def _hasEmbedded(self):
-		"""Is this textInfo positioned on an embedded child?"""
-		children=self._rangeObj.getChildren()
-		if children.length:
-			child=children.getElement(0)
-			if not child.getCurrentPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId):
-				childRange=self.obj.UIATextPattern.rangeFromChild(child)
-				if childRange:
-					childChildren=childRange.getChildren()
-				if childChildren.length==1 and UIAHandler.handler.clientObject.compareElements(child,childChildren.getElement(0)):
-					return True
-		return False
 
 	def _get_UIAElementAtStartWithReplacedContent(self):
 		"""Fetches the deepest UIAElement at the start of the text range whos name has been overridden by the author (such as aria-label)."""
@@ -93,6 +81,128 @@ class EdgeTextInfo(UIATextInfo):
 		return finalRes
 
 	def move(self,unit,direction,endPoint=None,skipReplacedContent=True):
+		if not endPoint:
+			return self._collapsedMove(unit,direction,skipReplacedContent)
+		else:
+			tempInfo=self.copy()
+			res=tempInfo.move(unit,direction,skipReplacedContent=skipReplacedContent)
+			if res!=0:
+				self.setEndPoint(tempInfo,"endToEnd" if endPoint=="end" else "startToStart")
+			return res
+
+	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field['embedded']=isEmbedded
+		# report landmarks
+		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
+		if landmark and (landmark!='region' or field.get('name')):
+			field['landmark']=aria.landmarkRoles.get(landmark)
+		# Combo boxes with a text pattern are editable
+		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
+			field['states'].add(controlTypes.STATE_EDITABLE)
+		# report if the field is 'current'
+		field['current']=obj.isCurrent
+		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
+		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
+		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+		hasAriaLabel=('label=' in ariaProperties)
+		hasAriaLabelledby=('labelledby=' in ariaProperties)
+		if field.get('nameIsContent'):
+			content=""
+			field.pop('name',None)
+			if hasAriaLabel or hasAriaLabelledby:
+				content=obj.name
+			if not content:
+				text=self.obj.makeTextInfo(obj).text
+				if not text or text.isspace():
+					content=obj.name or field.pop('description',None)
+			if content:
+				field['content']=content
+		elif isEmbedded:
+			field['content']=obj.value
+			if field['role']==controlTypes.ROLE_GROUPING:
+				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+				if not obj.value:
+					field['content']=obj.name
+		# Give lists an item count
+		if obj.role==controlTypes.ROLE_LIST:
+			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
+			if child:
+				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+		return field
+
+	def getTextWithFields(self,formatConfig=None):
+		# We don't want fields for collapsed ranges.
+		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
+		if self.isCollapsed:
+			return []
+		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
+		seenText=False
+		curStarts=[]
+		# remove clickable state on descendants of controls with clickable state
+		clickableField=None
+		for field in fields:
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				states=field.field['states']
+				if clickableField:
+					states.discard(controlTypes.STATE_CLICKABLE)
+				elif controlTypes.STATE_CLICKABLE in states:
+					clickableField=field.field
+			elif clickableField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field is clickableField:
+				clickableField=None
+		# Chop extra whitespace off the end incorrectly put there by Edge
+		numFields=len(fields)
+		index=0
+		while index<len(fields):
+			field=fields[index]
+			if index>1 and isinstance(field,basestring) and field.isspace():
+				prevField=fields[index-2]
+				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
+					del fields[index-1:index+1]
+			index+=1
+		# chop fields off the end incorrectly placed there by Edge
+		# This can happen if expanding to line covers element start chars at its end
+		startCount=0
+		lastStartIndex=None
+		numFields=len(fields)
+		for index in xrange(numFields-1,-1,-1):
+			field=fields[index]
+			if isinstance(field,basestring):
+				break
+			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
+				startCount+=1
+				lastStartIndex=index
+		if lastStartIndex:
+			del fields[lastStartIndex:lastStartIndex+(startCount*2)]
+		# Remove any content from fields with a content attribute
+		numFields=len(fields)
+		curField=None
+		for index in xrange(numFields-1,-1,-1):
+			field=fields[index]
+			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
+				curField=field.field
+				endIndex=index
+			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
+				fields[index+1:endIndex]=" "
+				curField=None
+		return fields
+
+class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
+
+	def _hasEmbedded(self):
+		"""Is this textInfo positioned on an embedded child?"""
+		children=self._rangeObj.getChildren()
+		if children.length:
+			child=children.getElement(0)
+			if not child.getCurrentPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId):
+				childRange=self.obj.UIATextPattern.rangeFromChild(child)
+				if childRange:
+					childChildren=childRange.getChildren()
+				if childChildren.length==1 and UIAHandler.handler.clientObject.compareElements(child,childChildren.getElement(0)):
+					return True
+		return False
+
+	def move(self,unit,direction,endPoint=None,skipReplacedContent=True):
 		# Skip over non-text element starts and ends
 		if not endPoint:
 			if direction>0 and unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH):
@@ -137,47 +247,6 @@ class EdgeTextInfo(UIATextInfo):
 				return
 		super(EdgeTextInfo,self).expand(unit)
 		return
-
-	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
-		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
-		field['embedded']=isEmbedded
-		# report landmarks
-		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
-		if landmark and (landmark!='region' or field.get('name')):
-			field['landmark']=aria.landmarkRoles.get(landmark)
-		# Combo boxes with a text pattern are editable
-		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
-			field['states'].add(controlTypes.STATE_EDITABLE)
-		# report if the field is 'current'
-		field['current']=obj.isCurrent
-		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
-		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
-		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		hasAriaLabel=('label=' in ariaProperties)
-		hasAriaLabelledby=('labelledby=' in ariaProperties)
-		if field.get('nameIsContent'):
-			content=""
-			field.pop('name',None)
-			if hasAriaLabel or hasAriaLabelledby:
-				content=obj.name
-			if not content:
-				text=self.obj.makeTextInfo(obj).text
-				if not text or text.isspace():
-					content=obj.name or field.pop('description',None)
-			if content:
-				field['content']=content
-		elif isEmbedded:
-			field['content']=obj.value
-			if field['role']==controlTypes.ROLE_GROUPING:
-				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
-				if not obj.value:
-					field['content']=obj.name
-		# Give lists an item count
-		if obj.role==controlTypes.ROLE_LIST:
-			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
-			if child:
-				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
-		return field
 
 	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=True,recurseChildren=True,alwaysWalkAncestors=True,_rootElementClipped=(True,True)):
 		# Edge zooms into its children at the start.
@@ -290,72 +359,18 @@ class EdgeTextInfo(UIATextInfo):
 		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
 		log.debug("_getTextWithFieldsForUIARange (unbalanced) end")
 
-	def getTextWithFields(self,formatConfig=None):
-		# We don't want fields for collapsed ranges.
-		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
-		if self.isCollapsed:
-			return []
-		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
-		seenText=False
-		curStarts=[]
-		# remove clickable state on descendants of controls with clickable state
-		clickableField=None
-		for field in fields:
-			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-				states=field.field['states']
-				if clickableField:
-					states.discard(controlTypes.STATE_CLICKABLE)
-				elif controlTypes.STATE_CLICKABLE in states:
-					clickableField=field.field
-			elif clickableField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field is clickableField:
-				clickableField=None
-		# Chop extra whitespace off the end incorrectly put there by Edge
-		numFields=len(fields)
-		index=0
-		while index<len(fields):
-			field=fields[index]
-			if index>1 and isinstance(field,basestring) and field.isspace():
-				prevField=fields[index-2]
-				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
-					del fields[index-1:index+1]
-			index+=1
-		# chop fields off the end incorrectly placed there by Edge
-		# This can happen if expanding to line covers element start chars at its end
-		startCount=0
-		lastStartIndex=None
-		numFields=len(fields)
-		for index in xrange(numFields-1,-1,-1):
-			field=fields[index]
-			if isinstance(field,basestring):
-				break
-			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
-				startCount+=1
-				lastStartIndex=index
-		if lastStartIndex:
-			del fields[lastStartIndex:lastStartIndex+(startCount*2)]
-		# Remove any content from fields with a content attribute
-		numFields=len(fields)
-		curField=None
-		for index in xrange(numFields-1,-1,-1):
-			field=fields[index]
-			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
-				curField=field.field
-				endIndex=index
-			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
-				fields[index+1:endIndex]=" "
-				curField=None
-		return fields
-
 class EdgeNode(UIA):
 
-	_TextInfo=EdgeTextInfo
+	_edgeIsPreGapRemoval=winVersion.winVersion.build<15048
+
+	_TextInfo=EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
 
 	def getNormalizedUIATextRangeFromElement(self,UIAElement):
 		range=super(EdgeNode,self).getNormalizedUIATextRangeFromElement(UIAElement)
-		if not range:
-			return
+		if not range or not self._edgeIsPreGapRemoval:
+			return range
 		#Move the start of a UIA text range past any element start character stops
-		lastCharInfo=EdgeTextInfo(self,None,_rangeObj=range)
+		lastCharInfo=EdgeTextInfo_preGapRemoval(self,None,_rangeObj=range)
 		lastCharInfo._rangeObj=range
 		charInfo=lastCharInfo.copy()
 		charInfo.collapse()
