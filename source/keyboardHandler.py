@@ -573,7 +573,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 inputCore.registerGestureSource("kb", KeyboardInputGesture)
 
 def injectRawKeyboardInput(isPress, code, isExtended):
-	"""Injet raw input from a system keyboard that is not handled natively by Windows.
+	"""Inject raw input from a system keyboard that is not handled natively by Windows.
 	For example, this might be used for input from a QWERTY keyboard on a braille display.
 	NVDA will treat the key as if it had been pressed on a normal system keyboard.
 	If it is not handled by NVDA, it will be sent to the operating system.
