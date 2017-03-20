@@ -89,7 +89,7 @@ class ProfilesDialog(wx.Dialog):
 		# Translators: The label of a button to close a dialog.
 		closeButton = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		sHelper.addItem(closeButton)
+		sHelper.addDialogDismissButtons(closeButton)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
 
@@ -171,11 +171,11 @@ class ProfilesDialog(wx.Dialog):
 		index = self.profileList.Selection
 		if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-			_("Are you sure you want to delete this profile? This cannot be undone."),
+			_("This profile will be permanently deleted. This action cannot be undone."),
 			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 			_("Confirm Deletion"),
-			wx.YES | wx.NO | wx.ICON_QUESTION, self
-		) == wx.NO:
+			wx.OK | wx.CANCEL | wx.ICON_QUESTION, self
+		) != wx.OK:
 			return
 		name = self.profileNames[index]
 		try:
@@ -323,7 +323,7 @@ class TriggersDialog(wx.Dialog):
 		self.profileList = sHelper.addLabeledControl(profileText, wx.Choice, choices=profileChoices)
 		self.profileList.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 
-		closeButton = sHelper.addItem(wx.Button(self, wx.ID_CLOSE, label=_("&Close")))
+		closeButton = sHelper.addDialogDismissButtons(wx.Button(self, wx.ID_CLOSE, label=_("&Close")))
 		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.AffirmativeId = wx.ID_CLOSE
@@ -388,7 +388,7 @@ class NewProfileDialog(wx.Dialog):
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
 
-		sHelper.addItem(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 

@@ -117,6 +117,9 @@ CURSOR_SHAPES = (
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
+# used to separate chunks of text when programmatically joined
+TEXT_SEPARATOR = " "
+
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
 	role = obj.role
@@ -359,9 +362,16 @@ def getBrailleTextForProperties(**propertyValues):
 			# Translators: Displayed in braille for a table cell column number.
 			# %s is replaced with the column number.
 			textList.append(_("c%s") % columnNumber)
+	current = propertyValues.get('current', False)
+	if current:
+		try:
+			textList.append(controlTypes.isCurrentLabels[current])
+		except KeyError:
+			log.debugWarning("Aria-current value not handled: %s"%current)
+			textList.append(controlTypes.isCurrentLabels[True])
 	if includeTableCellCoords and  cellCoordsText:
 		textList.append(cellCoordsText)
-	return " ".join([x for x in textList if x])
+	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
 	"""A region to provide a braille representation of an NVDAObject.
@@ -384,7 +394,7 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role,
+		text = getBrailleTextForProperties(name=obj.name, role=role, current=obj.isCurrent,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -397,7 +407,7 @@ class NVDAObjectRegion(Region):
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
-					text += " " + mathPres.brailleProvider.getBrailleForMathMl(
+					text += TEXT_SEPARATOR + mathPres.brailleProvider.getBrailleForMathMl(
 						obj.mathMl)
 				except (NotImplementedError, LookupError):
 					pass
@@ -427,12 +437,16 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
 	value=field.get('value',None)
+	current=field.get('current', None)
 
 	if presCat == field.PRESCAT_LAYOUT:
+		text = []
 		# The only item we report for these fields is clickable, if present.
 		if controlTypes.STATE_CLICKABLE in states:
-			return getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE})
-		return None
+			text.append(getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE}))
+		if current:
+			text.append(getBrailleTextForProperties(current=current))
+		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
 
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
 		# Table cell.
@@ -442,7 +456,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"states": states,
 			"rowNumber": field.get("table-rownumber"),
 			"columnNumber": field.get("table-columnnumber"),
-			"includeTableCellCoords": reportTableCellCoords
+			"includeTableCellCoords": reportTableCellCoords,
+			"current": current,
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
@@ -453,7 +468,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value}
+			"states": states,"value":value, "current":current}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -462,13 +477,18 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getBrailleTextForProperties(**props)
-		if role == controlTypes.ROLE_MATH:
+		content = field.get("content")
+		if content:
+			if text:
+				text += TEXT_SEPARATOR
+			text += content
+		elif role == controlTypes.ROLE_MATH:
 			import mathPres
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
 					if text:
-						text += " "
+						text += TEXT_SEPARATOR
 					text += mathPres.brailleProvider.getBrailleForMathMl(
 						info.getMathMl(field))
 				except (NotImplementedError, LookupError):
@@ -490,7 +510,13 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 		linePrefix = field.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
-	return " ".join([x for x in textList if x])
+		if formatConfig["reportHeadings"]:
+			headingLevel=field.get('heading-level')
+			if headingLevel:
+				# Translators: Displayed in braille for a heading with a level.
+				# %s is replaced with the level.
+				textList.append(_("h%s")%headingLevel)
+	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class TextInfoRegion(Region):
 
@@ -554,7 +580,7 @@ class TextInfoRegion(Region):
 	def _addFieldText(self, text, contentPos, separate=True):
 		if separate and self.rawText:
 			# Separate this field text from the rest of the text.
-			text = " " + text
+			text = TEXT_SEPARATOR + text
 		self.rawText += text
 		textLen = len(text)
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
@@ -572,7 +598,7 @@ class TextInfoRegion(Region):
 				if self._endsWithField:
 					# The last item added was a field,
 					# so add a space before the content.
-					self.rawText += " "
+					self.rawText += TEXT_SEPARATOR
 					self.rawTextTypeforms.append(louis.plain_text)
 					self._rawToContentPos.append(self._currentContentPos)
 				if isSelection and self.selectionStart is None:
@@ -711,7 +737,7 @@ class TextInfoRegion(Region):
 			# There is no text left after stripping line ending characters,
 			# or the last item added can be navigated with a cursor.
 			# Add a space in case the cursor is at the end of the reading unit.
-			self.rawText += " "
+			self.rawText += TEXT_SEPARATOR
 			rawTextLen += 1
 			self.rawTextTypeforms.append(louis.plain_text)
 			self._rawToContentPos.append(self._currentContentPos)
@@ -1119,7 +1145,7 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
 		if not parent.isPresentableFocusAncestor:
 			continue
-		region = NVDAObjectRegion(parent, appendText=" ")
+		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
 		region.update()
 		yield region
@@ -1150,7 +1176,7 @@ def getFocusRegions(obj, review=False):
 		region2 = None
 	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
-	region = NVDAObjectRegion(obj, appendText=" " if region2 else "")
+	region = NVDAObjectRegion(obj, appendText=TEXT_SEPARATOR if region2 else "")
 	region.update()
 	yield region
 	if region2:
@@ -1169,7 +1195,7 @@ def formatCellsForLog(cells):
 	# optimisation: This gets called a lot, so needs to be as efficient as possible.
 	# List comprehensions without function calls are faster than loops.
 	# For str.join, list comprehensions are faster than generator comprehensions.
-	return " ".join([
+	return TEXT_SEPARATOR.join([
 		"".join([str(dot + 1) for dot in xrange(8) if cell & (1 << dot)])
 		if cell else "-"
 		for cell in cells])
@@ -1271,8 +1297,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._displayWithCursor()
 		if self._cursorPos is None or not showCursor:
 			return
+		cursorShouldBlink = config.conf["braille"]["cursorBlink"]
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
-		if blinkRate:
+		if cursorShouldBlink and blinkRate:
 			self._cursorBlinkTimer = wx.PyTimer(self._blink)
 			self._cursorBlinkTimer.Start(blinkRate)
 

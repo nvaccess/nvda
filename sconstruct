@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2010-2014 NV Access Limited.
+#URL: http://www.nvaccess.org/
+#Copyright 2010-2016 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -70,7 +70,7 @@ vars.Add(PathVariable("certFile", "The certificate file with which to sign execu
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
-vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC"]))
+vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
 #Base environment for this and sub sconscripts
@@ -140,6 +140,10 @@ env['signExec']=signExec
 
 #architecture-specific environments
 archTools=['default','windowsSdk','midl','msrpc']
+# MSVC analysis is only available in newer Windows SDKs
+# So if required, remove the Windows SDK 7.1 (XP) tool
+if 'analyze' in env['nvdaHelperDebugFlags']:
+	archTools.remove('windowsSdk')
 env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
 env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
 # Hack around odd bug where some tool [after] msvc states that static and shared objects are different
@@ -344,9 +348,9 @@ devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
 	"--output", "${TARGET.abspath}",
 	"--quiet", "--html", "--include-log", "--no-frames",
-	"--name", "NVDA", "--url", "http://www.nvda-project.org/",
+	"--name", "NVDA", "--url", "http://www.nvaccess.org/",
 	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-	"config", "globalPlugins", "gui", "NVDAObjects",
+	"config", "globalPlugins", "gui", "mathPres", "NVDAObjects",
 	"synthDrivers", "textInfos", "virtualBuffers",
 ]])
 

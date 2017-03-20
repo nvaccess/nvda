@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-09-23 19:02-0400\n"
+"POT-Creation-Date: 2017-02-03 00:10+1000\n"
+"PO-Revision-Date: 2017-02-08 11:24+0100\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <kontakt@nvda.dk>\n"
 "Language: da_DK\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -434,13 +434,13 @@ msgstr "Marathi niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "Hollandsk (Belgien) Niveau 1"
+msgid "Dutch (Belgium)"
+msgstr "Hollandsk (Belgien)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "Hollandsk (Holland) Niveau 1"
+msgid "Dutch (Netherlands)"
+msgstr "Hollandsk (Holland)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -549,7 +549,7 @@ msgstr "Tamilsk niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "Telegu Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -799,6 +799,7 @@ msgstr ""
 "tastetryk sendt videre til applikationen."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ikke understøttet i dette dokument"
 
@@ -1244,16 +1245,22 @@ msgstr "ingen forrige annotation"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "Lin&ks"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Overskrifter"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "Lan&dmærker"
 
@@ -1287,6 +1294,7 @@ msgid "%s landmark"
 msgstr "%s landmærke"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "valgt %s"
@@ -1322,6 +1330,33 @@ msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Flytter forbi slutningen af indholdselementet, eksempelvis en liste  eller "
 "tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Ikke i en tabelcelle"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Kant af tabel"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "flytter til næste række i tabel"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "flytter til forrige række i tabel"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "flytter til næste kolonne i tabel"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "flytter til forrige kolonne i tabel"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1700,6 +1735,7 @@ msgid "row"
 msgstr "række"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "ramme"
 
@@ -2026,10 +2062,6 @@ msgstr "skrivebordsikon"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "besked"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "IFrame"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2399,7 +2431,6 @@ msgid "Mouse"
 msgstr "Mus"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Tale"
 
@@ -2635,27 +2666,27 @@ msgstr "Slår oplæsning af skriftstørrelse til og fra"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "Oplæs skriftegenskaber fra"
+msgstr "Oplæs skrifttypeattributter fra"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "Oplæs skriftegenskaber til"
+msgstr "Oplæs skriftattributter til"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "Slår oplæsning af skriftegenskaber til og fra"
+msgstr "Slår oplæsning af skriftattributter til og fra"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "Oplæs ændringer fra"
+msgstr "Oplæs redaktørændringer fra"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "Oplæs ændringer til"
+msgstr "Oplæs redaktørændringer til"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
-msgstr "Slår oplæsning af ændringer til og fra"
+msgstr "Slår oplæsning af redaktørændringer til og fra"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
@@ -2741,17 +2772,25 @@ msgstr "Oplæs linjenumre til"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Slår oplæsning af linjenumre til og fra"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "Oplæs indrykning fra"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Rapporter indrykning med tale"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Oplæs indrykning til"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Rapporter indrykning med toner"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Rapporter indrykning med tale og lyde"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Rapporter indrykning fra"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Slår oplæsning af indrykning til og fra"
+msgid "Cycles through line indentation settings"
+msgstr "Skifter mellem indstillinger for linjeindrykning"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3585,6 +3624,7 @@ msgid "review"
 msgstr "læsemarkør"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "fokus"
 
@@ -4317,6 +4357,43 @@ msgstr "forlader %s"
 msgid "page %s"
 msgstr "side %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "sektion %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "kolonne {0} af {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s kolonner"
+
+msgid "continuous section break"
+msgstr "fortløbende sektionsskift"
+
+msgid "new column section break"
+msgstr "ny kolonne sektionsskift"
+
+msgid "new page section break"
+msgstr "ny side sektionsskift"
+
+msgid "even pages section break"
+msgstr "lige sider sektionsskift"
+
+msgid "odd pages section break"
+msgstr "ulige sider sektionsskift"
+
+msgid "column break"
+msgstr "kolonneskift"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4926,11 +5003,6 @@ msgstr "{symbol} som i {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Kant af tabel"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Flytter navigatorobjektet til den næste kolonne"
@@ -4971,6 +5043,10 @@ msgstr "Intet spor afspilles"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oplæser den resterende tid for det igangværende spor, hvis det findes"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Viser indstillinger for den valgte tekst og tekst ved markøren"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4980,6 +5056,25 @@ msgstr "{bookPercentage}%, placering {curLocation} af {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Side Page {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "Fremhævelse"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "Ingen fremhævelse"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s fremhævet"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "Uden for populær fremhævelse"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5794,7 +5889,6 @@ msgid "Exit NVDA"
 msgstr "Afslut NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5804,7 +5898,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Velkommen til NVDA!\n"
 "De fleste kommandoer til styring af NVDA kræver, at du holder NVDA-tasten "
 "nede, mens du trykker en anden tast.\n"
 "Du kan som standard enten bruge Insert på det numeriske tastatur eller den "
@@ -5817,6 +5910,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Velkommen til NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Velkommen til NVDA!"
 
 msgid "Options"
 msgstr "Indstillinger"
@@ -5879,6 +5977,10 @@ msgstr "Genstart"
 msgid "Restart with add-ons disabled"
 msgstr "Genstart uden tilføjelsesprogrammer"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Genstart med logning for fejlrettelse aktiveret"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Vent venligst"
@@ -5923,8 +6025,8 @@ msgid "Add-on &help"
 msgstr "Hjælp til &tilføjelsesprogrammer"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "Deaktivér tilføjelsesprogram"
+msgid "&Disable add-on"
+msgstr "&Deaktivér tilføjelsesprogram"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6032,8 +6134,8 @@ msgid "running"
 msgstr "i gang"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "Aktivér tilføjelsesprogrammer"
+msgid "&Enable add-on"
+msgstr "&Aktivér tilføjelsesprogrammer"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6072,10 +6174,6 @@ msgstr "Information om tilføjelsesprogram"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Indstillingsprofiler"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profil"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6398,14 +6496,14 @@ msgstr "Flytbar &mappe:"
 msgid "Browse..."
 msgstr "Gennemse..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Kopiér aktuelle &bruger-indstillinger"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Vælg flytbar mappe"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Kopiér aktuelle &bruger-indstillinger"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6491,10 +6589,6 @@ msgstr "debug"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Sprog (kræver genstart for at slå helt igennem ):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Sprog"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Gem konfiguration ved afslutning"
@@ -6510,10 +6604,6 @@ msgstr "&Afspil lyde ved opstart og afslutning af NVDA"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "L&ogningsniveau"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Logningsniveau"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6570,13 +6660,6 @@ msgstr "Помилка при копіюванні користувацьких 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "Користувацькі налаштування успішно скопійовано"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "Fejl i   %s sprogfil"
-
-msgid "Language Error"
-msgstr "Sprogfejl"
 
 msgid "This change requires administrator privileges."
 msgstr "Denne ændring kræver administratorrettigheder"
@@ -6680,10 +6763,6 @@ msgstr "Tastaturindstillinger"
 msgid "&Keyboard layout:"
 msgstr "&Tastaturlayout"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Tastaturlayout"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6761,10 +6840,6 @@ msgstr "Slå muse&følgning til"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Opløsning for tekst&enhed:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "Enhed for tekstoplæsning"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6891,11 +6966,6 @@ msgstr "Oplæs objekts &beskrivelse"
 msgid "Progress &bar output:"
 msgstr "Output for behandlings&linje"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Output for behandlingslinje"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6959,79 +7029,97 @@ msgstr "&Forhindre alle ikke-NVDA-kommandoer i at nå til dokumentet"
 msgid "Document Formatting"
 msgstr "Dokumentformatering"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Oplæs ændringer i formatering efter markør (kan give forsinkelse)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr ""
+"De følgende indstillinger kontrollere typerne af dokumentformatering "
+"rapporteret af NVDA."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Skrifttype"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Oplæs skrift&type"
+msgid "&Font name"
+msgstr "&Navn på skrifttype"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Oplæs skrifttype&størrelse"
+msgid "Font &size"
+msgstr "Skrift&størrelse"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Oplæs skrifttype&attributter"
+msgid "Font attri&butes"
+msgstr "Skrifttype&attributter"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Oplæs &justering"
+msgid "E&mphasis"
+msgstr "Frem&hævet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Annoncér &farver"
+msgid "St&yle"
+msgstr "T&ypografi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Annoncér ko&mmentarer"
+msgid "&Colors"
+msgstr "&Farver"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Dokumentinformation"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Læs &redaktørændringer"
+msgid "Co&mments"
+msgstr "&Kommentarer"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Annoncér fre&mhævelse"
+msgid "&Editor revisions"
+msgstr "&Redaktørændringer"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Oplæs typo&grafi"
+msgid "Spelling e&rrors"
+msgstr "Stave&fejl"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Sider og linjeafstand"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Annoncér stavefe&jl"
+msgid "&Pages"
+msgstr "&Sider"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Annoncér &sider"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Oplæs linje&numre"
+msgid "Line &numbers"
+msgstr "Linjer og numre"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "Rapporter &indrykning med"
+msgid "Line &indentation reporting:"
+msgstr "Rapporter &indrykning:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
 msgstr "Fra"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Tale"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -7039,67 +7127,72 @@ msgstr "Toner"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both  Speech and Tones"
-msgstr "Tale og toner"
+msgstr "Både Tale og Toner"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Oplys indrykning af &afsnit"
+msgid "&Paragraph indentation"
+msgstr "Indrykning af &afsnit"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Annoncér &linjeafstand"
+msgid "&Line spacing"
+msgstr "Linjeafstand"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Annoncér &tabeller"
+msgid "&Alignment"
+msgstr "&Justering"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Tabelinformation"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Annoncér kolonne- og række&overskrifter i tabeller"
+msgid "&Tables"
+msgstr "&Tabeller"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Annoncér &celle&koordinater i tabeller"
+msgid "Row/column h&eaders"
+msgstr "Række- og kolonneoverskrifter"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Annoncér lin&ks"
+msgid "Cell c&oordinates"
+msgstr "&Cellekoordinater"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Elementer"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "annoncér &overskrifter"
+msgid "&Lists"
+msgstr "&Lister"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Annoncér &lister"
+msgid "Block &quotes"
+msgstr "&Blokcitater"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Annoncér blok&citater"
+msgid "Fra&mes"
+msgstr "Ram&mer"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Annoncér land&mærker"
+msgid "&Clickable"
+msgstr "&Klikbar"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Annoncér r&ammer"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "annoncér klik&bart element"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "Rapporter ændringer i formatering efter markør (kan give forsinkelse)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7134,13 +7227,17 @@ msgstr "&Kommentar"
 msgid "&Type"
 msgstr "&Type"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Et mønster er påkrævet."
+
+msgid "Dictionary Entry Error"
+msgstr "Fejl i ordbogsord"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Fejl i regulært udtryk: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Fejl i ordbogsord"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7209,9 +7306,13 @@ msgstr "U&dvid ordet ved markøren til computer-braille"
 msgid "&Show cursor"
 msgstr "&Vis markør"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Blinkende markør"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "markør-blinkhastighed (ms)"
+msgstr "Blinkhastighed for markør (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
@@ -7382,28 +7483,6 @@ msgstr ""
 "Slår bevaring af skærmlayout under visning af indholdet af dokumentet til og "
 "fra"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Ikke i en tabelcelle"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "flytter til næste række i tabel"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "flytter til forrige række i tabel"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "flytter til næste kolonne i tabel"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "flytter til forrige kolonne i tabel"
-
 msgid "Taskbar"
 msgstr "Proceslinje"
 
@@ -7441,12 +7520,12 @@ msgstr "Automatisk"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 msgid "diagonal crosshatch"
-msgstr ""
+msgstr "diagonal skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "thin diagonal crosshatch"
-msgstr ""
+msgstr "tynd diagonal skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
@@ -7486,7 +7565,7 @@ msgstr "6.25% grå"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
 msgid "thin horizontal crosshatch"
-msgstr ""
+msgstr "tynd vandret skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
@@ -7521,7 +7600,7 @@ msgstr "ingen"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "thick diagonal crosshatch"
-msgstr ""
+msgstr "tyk diagonal skravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -8692,880 +8771,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Denne celle kan ikke redigeres"
-
-#~ msgid "checker"
-#~ msgstr "Skaktern"
-
-#~ msgid "crisscross"
-#~ msgstr "krydsmønster"
-
-#~ msgid "down"
-#~ msgstr "Ned"
-
-#~ msgid "gray16"
-#~ msgstr "Grå16"
-
-#~ msgid "gray25"
-#~ msgstr "Grå25"
-
-#~ msgid "gray50"
-#~ msgstr "Grå50"
-
-#~ msgid "gray75"
-#~ msgstr "Grå75"
-
-#~ msgid "grid"
-#~ msgstr "gitter"
-
-#~ msgid "light down"
-#~ msgstr "Lys ned"
-
-#~ msgid "light up"
-#~ msgstr "Lys op"
-
-#~ msgid "light vertical"
-#~ msgstr "Lys Lodret"
-
-#~ msgid "semi gray75"
-#~ msgstr "Semi grå75"
-
-#~ msgid "up"
-#~ msgstr "op"
-
-#~ msgid "unknown color"
-#~ msgstr "Ukendt farve"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Alice-blå"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Antikhvid"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Blågrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Akvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Azurblå"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Beige"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "Bisque"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Brændte mandler"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Blå"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Blåviolet"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Burlywood"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Kadetblå"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Chartreuse"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Chokoladebrun"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Koralrød"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Kornblomstblå"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Cornsilk"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Karminrød"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Cyanblå"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Mørkeblå"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Mørk cyanblå"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Mørk gyldenris"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "Mørkegrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Mørk khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Mørk magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "Mørk olivengrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Mørk orange"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Mørk orkidé-farvet"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Mørkerød"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Mørk laksefarvet"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "mørk søgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Mørk skiferblå"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Mørk skifergrå"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Mørk turkis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Mørk violet"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Dyb lyserød"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Dyb himmelblå"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Dæmpet grå"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Dodger-blå"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Ildfast mursten"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Melhvid"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Skovgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fuchsiafarvet"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Spøgelseshvid"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Guld"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Gyldenris"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Grå"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "grøn-gul"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Honningdug"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Varm lyserød"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Indianerrød"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Elfenben"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Lavendel"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Lavendel-rouge"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Græsgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Lemon Chiffon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Lyseblå"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Lys koralhøjre alt"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Lys cyanhøjre alt"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Lys gyldenris-gul"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Lysegrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Lys lyserød"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Lys laksefarvet"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Lys søgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Lys himmelblå"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Lys skifergrå"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Lys stålblå"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Lysegul"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Citrongul"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Citrongrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Lagenhvid"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Rødbrun"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Mellem akvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Mellemblå"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Mellem-orkide"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Mellem purpur"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Mellem-søgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Mellem-skiferblå"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Mellem-forårsgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Mellemturkis"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Mellem-violetrød"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Midnatsblå"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "mint creme"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Misty Rose"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Mokkasin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navajo-hvid"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Marineblå"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Old Lace"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Olivengrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Oliven-drap"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Orange rød"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Orkidé-farvet"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Bleg gyldenris"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Bleg grøn"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Bleg turkis"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Bleg violetrød"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Papaya Whip"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Ferskenkage"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Lyserød"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Blommefarvet"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Krudtblå"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Rød"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Rosenbrun"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Kongeblå"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Sadelbrun"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Laksefarvet"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Sandbrun"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Søgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "Strandskal"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Sienna"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Sølvfarvet"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Himmelblå"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Skifferblå."
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Skiffergrå."
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Snehvid"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Forårsgrøn"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Stålblå"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Solbrun"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Grønblå"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Tidsel"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Tomatrød"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Turkis"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Violet"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Hvede"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Røghvid"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Startmarkeringen skal befinde sig inden for samme objekt."
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Annoncér gramatikfejl fra"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Annoncér gramatikfejl til"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Slår annoncering af gramatikfejl til og fra"
-
-#~ msgid "grammar error"
-#~ msgstr "gramatikfejl"
-
-#~ msgid "out of grammar error"
-#~ msgstr "forlader gramatikfejl"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Annoncér &gramatikfejl"
-
-#~ msgid "browse mode"
-#~ msgstr "gennemsynstilstand"
-
-#~ msgid "activate"
-#~ msgstr "aktivér"
-
-#~ msgid "no next"
-#~ msgstr "Ingen næste"
-
-#~ msgid "no previous"
-#~ msgstr "ingen forrige"
-
-#~ msgid "edge of table"
-#~ msgstr "Kant af tabel"
-
-#~ msgid "%g characters"
-#~ msgstr "%g tegn"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pkt"
-
-#~ msgid "no comments"
-#~ msgstr "Ingen kommentarer"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Giver en liste over diagrammer, celler med kommentarer og celler med "
-#~ "formler"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "standardfarve"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s fravalgt"
-
-#~ msgid "unrevised"
-#~ msgstr "ikke revideret"
-
-#~ msgid "unknown author"
-#~ msgstr "Ukendt forfatter"
-
-#~ msgid "unknown date"
-#~ msgstr "Ukendt dato"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} af {revisionAuthor} {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Oplæser objektet, der aktuelt har fokus."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Serie {} på {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "værdi {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} af {}"
-
-#~ msgid " trendline {} "
-#~ msgstr "Tendenskurve {}"
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr "Diagramområde, højde {}, bredde {}, top {}, venstre {}"
-
-#~ msgid "equation"
-#~ msgstr "ligning"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Viser en liste over links overskrifter eller landmærker"
-
-#~ msgid "Slovak"
-#~ msgstr "Slovakisk"
-
-#~ msgid "navy blue"
-#~ msgstr "navy blå"
-
-#~ msgid "teal"
-#~ msgstr "teal"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "I NVDA 2013.1 er laptop tastatur-lyoutet blevet helt omdesignet for at "
-#~ "gøre det mere intuitivt og konsistent.\n"
-#~ "Hvis du vil bruge laptop tastatur-layoutet, så se i nyhedsdokumentet for "
-#~ "yderligere oplysninger."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Nyt laptop tastaturlayout"
-
-#~ msgid "Read What's New"
-#~ msgstr "Læs nyheder"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Acceleration"
-
-#~ msgid "male 1"
-#~ msgstr "maskulin 1"
-
-#~ msgid "female 1"
-#~ msgstr "feminin 1"
-
-#~ msgid "male 2"
-#~ msgstr "maskulin 2"
-
-#~ msgid "female 2"
-#~ msgstr "feminin 2"
-
-#~ msgid "lime"
-#~ msgstr "lime"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Er du sikker på, at du vil afslutte NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Advar før NVDA afsluttes"
-
-#~ msgid "Regexp"
-#~ msgstr "Regexp"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Ingen information om placering for navigatorobjekt"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Ingen information om placering for skærm"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Oplyser højde, bredde og placering på de aktuelle navigatorobjekt"
-
-#~ msgid "Set column header row"
-#~ msgstr "Indstil række med kolonneoverskrift"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Række med kolonneoverskrift nulstillet"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Et enkelt tryk indstiller den aktuelle række til den række, hvor "
-#~ "kolonneoverskrifterne skal hentes. To tryk nulstiller indstillingen."
-
-#~ msgid "Set row header column"
-#~ msgstr "Indstil kolonne med rækkeoverskrift"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Et enkelt tryk indstiller den aktuelle kolonne til den kolonne, hvor "
-#~ "rækkeoverskrifterne skal hentes. To tryk nulstiller indstillingen."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s til og med %s %s"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Din konfigurationsfil indeholder fejl. \n"
-#~ "Tryk 'Ok' for at rette fejlene, eller tryk 'Afslut', hvis du ønsker at "
-#~ "redigere konfigurationsfilen og rette fejlene manuelt på et senere "
-#~ "tidspunkt. yderligere detaljer om fejlene kan findes i log filen.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Ingen automatiske kommentarer."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Kunne ikke finde vinduet for automatiske kommentarer."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Oplæser alle kommentarer i vinduet med automatiske kommentarer"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automatise kommentarer:k"
-
-#~ msgid "Translation:"
-#~ msgstr "Oversættelse"
-
-#~ msgid "Comments:"
-#~ msgstr "Kommentarer"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Ingen flad visning for dette objekt"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Intet objekt ved position for flad visning"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Flytter til det objekt, som repræsenteres af teksten på den ubegrænsede "
-#~ "markørs position i flad visning "
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Luk venligst den anden NVDA indstillingsdialog først"
-
-#~ msgid "Translation &table:"
-#~ msgstr "Oversættelse & Tabel"
-
-#~ msgid "beeps"
-#~ msgstr "bipper"
-
-#~ msgid "talk"
-#~ msgstr "tale"
-
-#~ msgid "layout %s"
-#~ msgstr "layout %s"
-
-#~ msgid "default action failed"
-#~ msgstr "Standardhandling mislykkedes"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s af %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Konfigurationsfilen forkert opbygget"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, vender tilbage til %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Fejl under behandling af konfigurationsfil: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Fejl i konfigurationsfil '%s':\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Denne add-on ser ud til allerede at være installeret. Fjern venligst den "
-#~ "eksisterende add-on og prøv igen."
-
-#~ msgid "%s device found"
-#~ msgstr "%s enhed fundet"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "Indlæser den gemte NVDA-konfiguration og overskriver aktuelle ændringer."
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Følg &tastaturfokus "
-
-#~ msgid "Key Command quick reference"
-#~ msgstr "Samlet liste over tastaturgenveje"
-
-#~ msgid "User guide"
-#~ msgstr "Brugervejledning"
-
-#~ msgid "Web site"
-#~ msgstr "Netsted"
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "Opret en &Autorun fil"
-
-#~ msgid "Portable options"
-#~ msgstr "Flytbare indstillinger"
-
-#~ msgid "No parents"
-#~ msgstr "Ingen forældre"
-
-#~ msgid "No children"
-#~ msgstr "Ingen børn"

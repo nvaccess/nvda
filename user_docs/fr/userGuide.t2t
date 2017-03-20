@@ -23,7 +23,7 @@ Ses points forts sont :
 - La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
 - Un installateur parlant facile à utiliser ;
-- Une traduction dans 47 langues ;
+- Une traduction dans 48 langues ;
 - La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés ;
 - La prise en charge des interfaces d'accessibilité communes telles que, Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-À ce jour, NVDA a été traduit en 47 langues : l'afrikaans, l'albanais, l'allemand, l'arabe, l'aragonais, le bulgare, le catalan, le chinois traditionnel et simplifié, le coréen, le croate, le danois, l'espagnol, l'espagnol colombien, l'éthiopien, le farsi, le finnois, le français, le galicien, le grec, le géorgien, l'hébreu, le hongrois, l'hindi, l'irlandais, l'islandais, l'italien, le japonais, le néerlandais, le népalais, le norvégien, le polonais, le portugais, le portugais brésilien, le punjabi, le roumain, le russe, le serbe, le slovaque, le slovène, le suédois, le tamoul, le tchèque, le thaï, le turc, l'ukrainien et le vietnamien.
+À ce jour, NVDA a été traduit en 48 langues : l'afrikaans, l'albanais, l'allemand, l'arabe, l'aragonais, le bulgare, le catalan, le chinois traditionnel et simplifié, le coréen, le croate, le danois, l'espagnol, l'espagnol colombien, l'éthiopien, le farsi, le finnois, le français, le galicien, le grec, le géorgien, l'hébreu, le hongrois, l'hindi, l'irlandais, l'islandais, l'italien, le japonais, le lithuanien, le néerlandais, le népalais, le norvégien, le polonais, le portugais, le portugais brésilien, le punjabi, le roumain, le russe, le serbe, le slovaque, le slovène, le suédois, le tamoul, le tchèque, le thaï, le turc, l'ukrainien et le vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -91,6 +91,7 @@ Outre l'impossibilité de démarrer automatiquement pendant ou après l'ouvertur
 - Impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
 - Windows 8 et au-delà : impossible d'utiliser un écran tactile comme support d'entrée ;
 - Windows 8 et au-delà : fonctionnalités impossibles comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
+- Windows 8 et au-delà : l'atténuation audio n'est pas supportée.
 -
 
 ++ Installer NVDA ++
@@ -697,35 +698,71 @@ Durant une conversation :
 | Revoir un message | NVDA+control+1-0 | Annonce et amène le curseur de revue à un message récent, en fonction du nombre pressé; ex : NVDA+control+2 lit le second message plus récent. |
 %kc:endInclude
 
+++ Kindle pour PC ++
+NVDA supporte la lecture et la navigation dans les livres sous Amazon Kindle pour PC.
+Cette fonctionnalité est disponible seulement dans les libres Kindle qui supportent la " Composition Améliorée ", ce que vous pouvez vérifier sur la page de détails du livre.
+
+On utilise le mode navigation pour lire les livres.
+Il est activé automatiquement quand vous ouvrez un livre ou quand vous placez le focus sur la zone du livre.
+La page sera tournée automatiquement quand vous déplacerez le curseur ou utiliserez la commande dire tout.
+%kc:beginInclude
+Vous pouvez aller manuellement à la page suivante en pressant la touche PageSuiv ou à la page précédente en pressant la touche PagePrec.
+%kc:endInclude
+
+La navigation par simple lettre est supportée pour les liens et les graphiques, mais seulement dans la page en cours.
+La navigation par liens inclut également les notes de bas de page.
+
++++ Sélection de Texte +++
+Kindle vous permet d'exécuter diverses fonctions relatives au texte sélectionné, incluant l'obtension d'une définition du dictionnaire, l'ajout de notes et de surlignages, la copie du texte dans le presse-papiers et la recherche sur le web.
+Pour faire cela, sélectionnez d'abord le texte comme vous le feriez normalement en mode navigation; ex: en utilisant maj et les touches curseur.
+%kc:beginInclude
+Une fois que vous avez sélectionné le texte, pressez la touche applications ou maj+f10 pour afficher les options disponibles pour travailler avec la sélection.
+%kc:endInclude
+Si vous faites ceci sans avoir sélectionné de texte, les options pour le mot sous le curseur seront affichées.
+
++++ Notes de l'Utilisateur +++
+Vous pouvez ajouter une note concernant un mot ou un passage du texte.
+Pour faire cela, sélectionnez d'abord le texte concerné et accédez aux options de sélection comme décrit plus haut.
+Ensuite, choisissez Ajouter une Note.
+
+Durant la lecture en mode navigation, NVDA fait référence à cette note comme un commentaire.
+
+Pour afficher, éditer ou effacer une note.
+
++ Amenez le curseur au texte contenant la note.
++ Accédez aux options de sélection comme décrit plus haut.
++ Choisissez Éditer la Note.
++
+
 + Configurer NVDA +
 
 ++ Préférences ++
 %kc:settingsSection: || Nom | Touche Desktop | Touche Laptop | Description |
-La plupart des paramètres de NVDA peuvent être modifiés en utilisant les dialogues accessibles par le sous-menu "Préférences" du menu NVDA.
+La plupart des paramètres de NVDA peuvent être modifiés en utilisant les dialogues accessibles par le sous-menu " Préférences " du menu NVDA.
 Dans tous les dialogues de NVDA, appuyez sur le bouton "OK" pour valider vos modifications.
-Pour annuler les modifications, appuyez sur le bouton "Annuler" ou sur la touche "échap".
+Pour annuler les modifications, appuyez sur le bouton " Annuler " ou sur la touche " échap ".
 Certains paramètres peuvent aussi être modifiés en utilisant des raccourcis clavier que vous trouverez dans les sections ci-dessous.
 
 Notez que par défaut, tous les dialogues des préférences ne peuvent pas être atteints par des gestes de commandes (raccourcis clavier, gestes tactiles, etc.).
 Si vous voulez atteindre des dialogues qui n'ont pas de raccourci clavier, utilisez le [dialogue Gestes de Commandes #InputGestures] pour ajouter un geste personnalisé pour ce dialogue.
 
 +++ Paramètres généraux (NVDA+contrôle+g) +++
-Le dialogue "Paramètres généraux" se trouve dans le menu "Préférences".
+Le dialogue "Paramètres généraux" se trouve dans le menu " Préférences ".
 Il contient les options suivantes :
 
 ==== Langue ====
 C'est une liste déroulante qui permet de choisir la langue de l'interface utilisateur et des messages de NVDA.
-La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".
+La liste comporte de nombreuses langues et le dernier élément est dénommé " Windows ".
 Ce choix indique à NVDA d'utiliser la langue de Windows.
 
 Noter qu'il faut relancer NVDA quand on change la langue. 
 NVDA vous demandera si vous désirez le redémarrer quand vous changez la sélection. 
-Appuyez sur "OK" et NVDA redémarrera.
+Appuyez sur " OK " et NVDA redémarrera.
 
 ==== Sauvegarder la configuration en quittant ====
 C'est une case à cocher qui, une fois cochée, indique à NVDA de sauvegarder automatiquement la configuration courante lorsqu'on arrête NVDA.
 
-==== Afficher les options de sortie avant de quitter NVDA ====
+==== Afficher les options d'arrêt avant de quitter NVDA ====
 Cette option est une case à cocher vous permettant d'indiquer si un dialogue vous demandant quelle action effectuer doit s'afficher quand vous quittez NVDA.
 Quand elle est cochée, un dialogue apparaît lorsque vous voulez quitter NVDA, vous demandant si vous voulez quitter, redémarer ou redémarrer sans modules complémentaires.
 Quand elle n'est pas cochée, NVDA s'arrête immédiatement.
@@ -780,6 +817,9 @@ Sous Windows 8 et au-delà, cette option vous permet de choisir si NVDA doit bai
 - Atténuer les autres sources quand NVDA parle : NVDA ne baissera le son des autres applications que quand il parle ou émet un son. Ceci peut ne pas fonctionner avec tous les synthétiseurs. 
 - Toujours atténuer : NVDA réduira le son des autres applications tout le long de son exécution.
 -
+
+Cette option n'est disponible que si NVDA a été installé.
+Il n'est pas possible de supporter l'atténuation audio pour les versions portables et temporaires de NVDA.
 
 +++ Paramètres vocaux (NVDA+contrôle+v) +++[VoiceSettings]
 Le dialogue "Paramètres vocaux" qui se trouve dans le menu "Préférences", contient des options vous permettant de changer le son de la voix.
@@ -911,6 +951,10 @@ Cette option permet d'afficher le mot sous le curseur en intégral.
 ==== Montrer le Curseur ====
 Cette option permet d'activer ou de désactiver l'affichage du curseur braille.
 Elle s'applique au curseur système et au curseur de revue, mais pas à l'indicateur de sélection.
+
+==== Clignotement du Curseur ====
+Cette option permet au curseur braille de clignoter.
+Si le clignotement est désactivé, le curseur braille sera constamment en position haute.
 
 ==== Vitesse de clignotement du curseur (ms) ====
 Cette option est un champ numérique qui vous permet de modifier la vitesse de clignotement du curseur en millisecondes.
@@ -1195,44 +1239,52 @@ Ce dialogue se trouve dans le menu des "Préférences", sous "Mise en forme des 
 La plupart des cases à cocher de ce dialogue servent à définir quelles informations de mise en forme on souhaite entendre automatiquement lorsqu'on parcourt un document.
 Par exemple, si on coche la case "Annoncer le nom de la police", à chaque fois que les flèches amènent sur un texte avec une police différente, le nom de la police est annoncé.
 
+Les options de mise en forme des document sont organisées en deux groupes;
 On peut configurer les annonces suivantes :
-- nom de la police,
-- taille de la police,
-- attributs de la police,
-- alignement du texte,
-- couleurs,
-- commentaires
-- révisions de l'éditeur,
-- emphase
-- style du texte,
-- fautes d'orthographe,
-- numéro de page,
-- numéro de ligne,
-- retrait de ligne,
-- retrait de paragraphe (ex : retrait en cours, retrait de première ligne),
-- interligne (simple, double etc)
-- tableaux,
-- titres des lignes et colonnes d'un tableau,
-- coordonnées des cellules d'un tableau,
-- liens,
-- titres,
-- listes,
-- citations,
-- régions,
-- cadres.
-- quand quelque chose est cliquable
+- Police,
+ - Nom de la police
+ - Taille de la police,
+ - Attributs de la police,
+ - Emphase
+ - Style
+ - Couleurs
+- Informations sur le document
+ - Commentaires
+ - Révisions de l'éditeur
+ - Fautes d'orthographe
+- Pages et espacement
+ - Numéros de page
+ - Numéros de ligne
+ - Annonce du retrait de ligne [(Désactivé, Parole, Sons, Parole et Sons) #lineIndentationOptions]
+ - Retrait des paragraphes (ex. retrait négatif, retrait de première ligne)
+ - interligne (simple, double etc)
+ - Alignement
+- Informations sur les tableaux
+ - Tableaux
+ - En-têtes des lignes et colonnes
+ - Coordonnées des cellules
+- Éléments
+ - Titres
+ - Liens
+ - Listes
+ - Citations
+ - Régions
+ - Cadres
+ - Cliquable
+ -
 -
+
 
 Pour modifier ces paramètres de n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
 ==== Annonce des changements de mise en forme après le curseur ====
-Si on l'active, ce paramètre dit à NVDA de détecter tous les changements de mise en forme sur une ligne et de les annoncer pendant la lecture. Attention, cela peut dégrader les performances de NVDA.
+Si on l'active, ce paramètre dit à NVDA de détecter tous les changements de mise en forme sur une ligne et de les signaler pendant la lecture. Attention, cela peut dégrader les performances de NVDA.
 
 Par défaut, NVDA détecte la mise en forme sous le curseur système ou le curseur de revue, et, dans certains cas, sur toute la ligne à condition que cela ne dégrade pas les performances.
 
-Activez cette option quand vous révisez un document sous une application telle que Microsoft Word et que la mise en forme est importante.
+Activez cette option quand vous révisez un document dans une application telle que Wordpad et que la mise en forme est importante.
 
-==== Annoncer les retraits de lignes par ====
+==== Annonce des retraits de lignes ====[lineIndentationOptions]
 Cette option vous permet de configurer la manière dont les retraits en début de ligne sont annoncés.
 La liste déroulante "Annoncer les retraits de ligne par" a quatre options .
 
@@ -1708,8 +1760,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 ++ Les terminaux Baum/Humanware/APH/Orbit ++
 Plusieurs terminaux [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] et [Orbit http://www.orbitresearch.com/] sont pris en charge quand ils sont connectés via USB, bluetooth ou série.
 Les terminaux suivants sont pris en charge :
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, brailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
@@ -2152,8 +2204,8 @@ Veuillez consulter [la documentation EcoBraille ftp://ftp.once.es/pub/utt/biblio
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
-Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
+Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://www.brltty.com/download.html].
 Vous devez télécharger et installer la version la plus récente avec installateur qui s'appellera, par exemple, brltty-win-4.2-2.exe.
 Quand vous configurerez le terminal et le port à utiliser, portez une attention particulière aux instructions, en particulier si vous utilisez un terminal USB et que le pilote du constructeur est déjà installé.
 
@@ -2246,6 +2298,7 @@ Voici les options de ligne de commande de NVDA :
 | -m | --minimal | Pas de sons, pas d'interface, pas de message de démarrage etc |
 | -s | --secure | Mode sécurisé (désactive la console Python) |
 | Aucune | --disable-addons | Les modules complémentaires n'auront pas d'effet |
+| Aucune | --debug-logging | Active le niveau de journalisation débogage seulement pour cette session. Ce paramètre remplacera tout autre niveau de journalisation ( ""--loglevel"", -l) argument donné. |
 | Aucune | --no-sr-flag  | Ne change pas l'indicateur système global de revue d'écran |
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |

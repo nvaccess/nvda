@@ -35,7 +35,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.11, 32 bit
+* [Python](http://www.python.org/), version 2.7.13, 32 bit
 * Microsoft Visual Studio 2015 (Express for Desktop with VC++ and Windows SDK 7.1A support, or Community with VC++ and Windows XP support):
 	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
 
@@ -107,6 +107,7 @@ If trying to debug nvdaHelper, You can control various  debugging options  with 
 
 * debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
 * RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
+* analyze: runs MSVC code analysis on all nvdaHelper code, holting on any warning. (default is no analysis).
 
 The special keywords none and all can also be used in place of the individual flags.
 
@@ -125,6 +126,10 @@ Please see the release keyword argument for what compiler optimizations it will 
 
 ## Running the Source Code
 To start NVDA from source code, run `nvda.pyw` located in the source directory.
+To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
+These arguments are also documented in the user guide.
+Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
+However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
 
 ## Building NVDA
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).

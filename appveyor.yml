@@ -13,6 +13,8 @@ environment:
  PY_PYTHON: 2.7-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ mozillaSymsAuthToken:
+  secure: Dz24ukUM3Ho0soTDwJEYaw0fNY3yzfVp3Vf+y8I+Uh4wiSYibWJxOANacceGmfIU
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
 
 init:
@@ -71,11 +73,18 @@ build_script:
  - py scons.py %sconsArgs%
  # Build symbol store.
  - ps: |
-     foreach ($syms in "source\*.pdb", "source\lib\*.pdb", "source\lib64\*.pdb", "source\synthDrivers\*.pdb") {
+     foreach ($syms in
+      # We don't just include source\*.dll because that would include system dlls.
+      "source\liblouis.dll", "source\*.pdb",
+      "source\lib\*.dll", "source\lib\*.pdb",
+      # We include source\lib64\*.exe to cover nvdaHelperRemoteLoader.
+      "source\lib64\*.dll", "source\lib64\*.exe", "source\lib64\*.pdb",
+      "source\synthDrivers\*.dll", "source\synthDrivers\*.pdb"
+     ) {
       & $env:symstore add /s symbols /compress -:NOREFS /t NVDA /f $syms
      }
  - cd symbols
- - 7z a -tzip -r ..\output\symbols.zip *.pd_
+ - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
  - cd ..
 
 artifacts:
@@ -86,6 +95,7 @@ deploy_script:
  - ps: |
      if ($env:versionType) {
       # Not a try build.
+      # Notify our server.
       $exe = Get-ChildItem -Name output\*.exe
       $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
       $data = @{
@@ -98,4 +108,8 @@ deploy_script:
        artifacts=$artifacts
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      # Upload symbols to Mozilla.
+      Start-FileDownload https://github.com/mozilla/gecko-dev/raw/master/toolkit/crashreporter/tools/win32/dump_syms_vc1800.exe -FileName appveyor\dump_syms.exe
+      py -m pip install requests
+      py appveyor\mozillaSyms.py
      }

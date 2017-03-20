@@ -1,0 +1,105 @@
+# Based on code from https://gist.github.com/luser/2ad32d290f224782fcfc
+
+"""Script to convert and upload appropriate NVDA debug symbols to Mozilla crash-stats.
+This should just be run as a script with no arguments.
+It expects the crash-stats auth token to be placed in the mozillaSymsAuthToken environment variable.
+To update the list of symbols uploaded to Mozilla, see the DLL_NAMES constant below.
+"""
+
+from __future__ import print_function
+import argparse
+import os
+import subprocess
+import sys
+import zipfile
+import requests
+
+SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
+DUMP_SYMS = os.path.join(SCRIPT_DIR, "dump_syms.exe")
+NVDA_SOURCE = os.path.join(os.path.dirname(SCRIPT_DIR), "source")
+NVDA_LIB = os.path.join(NVDA_SOURCE, "lib")
+NVDA_LIB64 = NVDA_LIB + "64"
+ZIP_FILE = os.path.join(SCRIPT_DIR, "mozillaSyms.zip")
+URL = 'https://crash-stats.mozilla.com/symbols/upload'
+
+# The dlls for which symbols are to be uploaded to Mozilla.
+# This only needs to include dlls injected into Mozilla products.
+DLL_NAMES = [
+	"IAccessible2Proxy.dll",
+	"minHook.dll",
+	"nvdaHelperRemote.dll",
+	"VBufBackend_adobeFlash.dll",
+	"VBufBackend_gecko_ia2.dll",
+]
+DLL_FILES = [f
+	for dll in DLL_NAMES
+	# We need both the 32 bit and 64 bit symbols.
+	for f in (os.path.join(NVDA_LIB, dll), os.path.join(NVDA_LIB64, dll))]
+
+class ProcError(Exception):
+	def __init__(self, returncode, stderr):
+		self.returncode = returncode
+		self.stderr = stderr
+
+def check_output(command):
+	proc = subprocess.Popen(command,
+		stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE)
+	stdout, stderr = proc.communicate()
+	if proc.returncode != 0:
+		raise ProcError(proc.returncode, stderr)
+	return stdout
+
+def processFile(path):
+	try:
+		stdout = check_output([DUMP_SYMS, path])
+	except ProcError as e:
+		print('Error: running "%s %s": %s' % (DUMP_SYMS, path, e.stderr))
+		return None, None, None
+	bits = stdout.splitlines()[0].split(' ', 4)
+	if len(bits) != 5:
+		return None, None, None
+	_, platform, cpu_arch, debug_id, debug_file = bits
+	# debug_file will have a .pdb extension; e.g. nvdaHelperRemote.dll.pdb.
+	# The output file format should have a .sym extension instead.
+	# Strip .pdb and add .sym.
+	sym_file = debug_file[:-4] + '.sym'
+	filename = os.path.join(debug_file, debug_id, sym_file)
+	debug_filename = os.path.join(debug_file, debug_id, debug_file)
+	return filename, stdout, debug_filename
+
+def generate():
+	count = 0
+	with zipfile.ZipFile(ZIP_FILE, 'w', zipfile.ZIP_DEFLATED) as zf:
+		for f in DLL_FILES:
+			filename, contents, debug_filename = processFile(f)
+			if not (filename and contents):
+				print('Error dumping symbols')
+				raise RuntimeError
+			zf.writestr(filename, contents)
+			count += 1
+	print('Added %d files to %s' % (count, ZIP_FILE))
+
+def upload():
+	r = requests.post(URL,
+		files={'symbols.zip': open(ZIP_FILE, 'rb')},
+		headers={'Auth-Token': os.getenv('mozillaSymsAuthToken')},
+		allow_redirects=False
+	)
+	if r.status_code >= 200 and r.status_code < 300:
+		print('Uploaded successfully!')
+	elif r.status_code < 400:
+		print('Error: bad auth token? (%d)' % r.status_code)
+		raise RuntimeError
+	else:
+		print('Error: %d' % r.status_code)
+		print(r.text)
+		raise RuntimeError
+	return 0
+
+if __name__ == '__main__':
+	try:
+		generate()
+		upload()
+	except RuntimeError:
+		sys.exit(1)

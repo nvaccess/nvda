@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 00:10+1000\n"
-"PO-Revision-Date: 2016-10-01 09:38+0200\n"
+"POT-Creation-Date: 2017-02-17 00:10+1000\n"
+"PO-Revision-Date: 2017-02-20 15:23+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -129,17 +129,17 @@ msgstr "Alue"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "Ei vaimennusta"
+msgstr "Ei hiljennystä"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Vaimenna puhuttaessa ja ääntä toistettaessa"
+msgstr "Hiljennä puhuttaessa ja ääntä toistettaessa"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
-msgstr "Vaimenna aina"
+msgstr "Hiljennä aina"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -433,13 +433,13 @@ msgstr "marathi, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "hollanti (Belgia), taso 1"
+msgid "Dutch (Belgium)"
+msgstr "hollanti (Belgia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "hollanti (Alankomaat), taso 1"
+msgid "Dutch (Netherlands)"
+msgstr "hollanti (Alankomaat)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -548,7 +548,7 @@ msgstr "tamili, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
+msgid "Telugu grade 1"
 msgstr "telugu, taso 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -798,6 +798,7 @@ msgstr ""
 "käytössä, niiden painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ei tueta tässä dokumentissa"
 
@@ -1163,19 +1164,19 @@ msgstr "Ei edellisiä grafiikoita"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "Siirtää seuraavaan sisennettyyn kappaleeseen."
+msgstr "Siirtää seuraavaan sisennettyyn lainaukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
-msgstr "Ei enempää sisennettyjä kappaleita"
+msgstr "Ei enempää sisennettyjä lainauksia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "Siirtää edelliseen sisennettyyn kappaleeseen."
+msgstr "Siirtää edelliseen sisennettyyn lainaukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
-msgstr "Ei edellisiä sisennettyjä kappaleita"
+msgstr "Ei edellisiä sisennettyjä lainauksia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
@@ -1243,16 +1244,22 @@ msgstr "Ei edellisiä selitteitä"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Otsikot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "Kii&ntopisteet"
 
@@ -1286,6 +1293,7 @@ msgid "%s landmark"
 msgstr "%s kiintopiste"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "valittu %s"
@@ -1318,6 +1326,33 @@ msgstr "Alareuna"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, loppuun."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Ei taulukon solussa"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Taulukon reuna"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "siirtää seuraavalle taulukon riville"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "siirtää edelliselle taulukon riville"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "siirtää seuraavaan taulukon sarakkeeseen"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "siirtää edelliseen taulukon sarakkeeseen"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1696,6 +1731,7 @@ msgid "row"
 msgstr "rivi"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "kehys"
 
@@ -1759,7 +1795,7 @@ msgstr "kappale"
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr "sisennetty kappale"
+msgstr "sisennetty lainaus"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
@@ -2023,10 +2059,6 @@ msgstr "työpöydän kuvake"
 msgid "alert"
 msgstr "ilmoitus"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "kehys"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "työpöytä"
@@ -2063,11 +2095,11 @@ msgstr "rivi"
 
 #. Translators: Identifies a font name.
 msgid "font name"
-msgstr "fontti"
+msgstr "fontin nimi"
 
 #. Translators: Identifies font size.
 msgid "font size"
-msgstr "fonttikoko"
+msgstr "fontin koko"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
@@ -2396,7 +2428,6 @@ msgid "Mouse"
 msgstr "Hiiri"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgid "Speech"
 msgstr "Puhe"
 
@@ -2436,15 +2467,15 @@ msgstr "Dokumenttien muotoilu"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
-msgstr "Taustaäänien vaimennusta ei tueta"
+msgstr "Äänenvoimakkuuden hiljennystä ei tueta"
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr ""
-"Vaihtaa taustaäänien vaimennustilaa, joka määrittää, milloin NVDA alentaa "
-"muiden äänien voimakkuutta."
+"Vaihtaa äänenvoimakkuuden hiljennystilaa, joka määrittää, milloin NVDA "
+"hiljentää muiden sovellusten äänenvoimakkuutta."
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2611,11 +2642,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "Fontin lukeminen pois"
+msgstr "Fontin nimen lukeminen pois"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "Fontin lukeminen käytössä"
+msgstr "Fontin nimen lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -2743,30 +2774,38 @@ msgstr "Rivinumeroiden lukeminen käytössä"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Ottaa käyttöön rivinumeroiden lukemisen tai poistaa sen käytöstä."
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "Rivin sisennyksen lukeminen pois"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Ilmoita rivien sisennykset puheella"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Rivin sisennyksen lukeminen käytössä"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Ilmoita rivien sisennykset äänimerkeillä"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Ilmoita rivien sisennykset puheella ja äänimerkeillä"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Rivien sisennysten ilmoittaminen pois"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Ottaa käyttöön rivin sisennyksen lukemisen tai poistaa sen käytöstä."
+msgid "Cycles through line indentation settings"
+msgstr "Vaihtaa rivien sisennysten ilmoittamisen asetusta."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "Kappalesisennyksen lukeminen pois"
+msgstr "Kappalesisennysten lukeminen pois"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "Kappalesisennyksen lukeminen käytössä"
+msgstr "Kappalesisennysten lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr ""
-"Ottaa käyttöön kappalesisennyksen ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön kappalesisennysten ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -2870,16 +2909,16 @@ msgstr "Ottaa käyttöön otsikoiden lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "Sisennettyjen kappaleiden lukeminen pois"
+msgstr "Sisennettyjen lainausten lukeminen pois"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "Sisennettyjen kappaleiden lukeminen käytössä"
+msgstr "Sisennettyjen lainausten lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
 msgstr ""
-"Ottaa käyttöön sisennettyjen kappaleiden lukemisen tai poistaa sen käytöstä."
+"Ottaa käyttöön sisennettyjen lainausten lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
@@ -3596,6 +3635,7 @@ msgid "review"
 msgstr "tarkastelukohdistinta"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "kohdistusta"
 
@@ -3788,7 +3828,7 @@ msgstr "Aloittaa vuorovaikutuksen matemaattisen sisällön kanssa."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
-msgstr "Näppäimistön emuloidut näppäimet"
+msgstr "Emuloidut näppäimet"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
@@ -4160,7 +4200,7 @@ msgstr "käytössä"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "off"
-msgstr "ei käytössä"
+msgstr "pois"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -4321,13 +4361,50 @@ msgstr "jossa %s kohdetta"
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
 msgid "out of %s"
-msgstr "%s loppuu"
+msgstr "%s loppui"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
 #, python-format
 msgid "page %s"
 msgstr "sivu %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "osa %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "palsta {0} / {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s palstaa"
+
+msgid "continuous section break"
+msgstr "jatkuva osanvaihto"
+
+msgid "new column section break"
+msgstr "uuden palstan osanvaihto"
+
+msgid "new page section break"
+msgstr "uuden sivun osanvaihto"
+
+msgid "even pages section break"
+msgstr "parillisten sivujen osanvaihto"
+
+msgid "odd pages section break"
+msgstr "parittomien sivujen osanvaihto"
+
+msgid "column break"
+msgstr "palstanvaihto"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
@@ -4566,7 +4643,7 @@ msgstr "riviväli %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "kommentti loppuu"
+msgstr "kommentin loppu"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -4939,11 +5016,6 @@ msgstr "{symbol} niin kuin {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Taulukon reuna"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Siirtää navigointiobjektin seuraavaan sarakkeeseen"
@@ -4984,6 +5056,12 @@ msgstr "Kappaleen toisto ei ole käynnissä"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Ilmoittaa tällä hetkellä soitettavan kappaleen jäljellä olevan ajan"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Näyttää valittuun tai kohdistimen kohdalla olevaan tekstiin liittyviä "
+"vaihtoehtoja."
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4993,6 +5071,25 @@ msgstr "{bookPercentage} %, sijainti {curLocation} / {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Sivu {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "korostus"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "ei korostusta"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s korostettu"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "suositun korostuksen loppu"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5519,7 +5616,7 @@ msgstr "Papenmeier BRAILLEX (uudet mallit)"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
-msgstr "Siirrä pistesoluun ja lue muotoilutiedot"
+msgstr "Siirrä pistesoluun ja lue muotoilut."
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -5811,7 +5908,6 @@ msgid "Exit NVDA"
 msgstr "Sulje NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5821,8 +5917,7 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Tervetuloa käyttämään NVDA:ta!\n"
-"Useimmat NVDA:n hallintaan tarkoitetuista komennoista edellyttävät NVDA-"
+"Suurin osa NVDA:n hallintaan tarkoitetuista komennoista edellyttävät NVDA-"
 "näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
 "Oletusarvoisesti sekä normaalia että numeronäppäimistön Insertiä voidaan "
 "käyttää NVDA-näppäimenä.\n"
@@ -5834,6 +5929,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Tervetuloa käyttämään NVDA:ta"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Tervetuloa käyttämään NVDA:ta!"
 
 msgid "Options"
 msgstr "Asetukset"
@@ -5896,6 +5996,10 @@ msgstr "Käynnistä uudelleen"
 msgid "Restart with add-ons disabled"
 msgstr "Käynnistä uudelleen ja poista lisäosat käytöstä"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Käynnistä uudelleen ja ota käyttöön virheenkorjaus-lokitaso"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Odota"
@@ -5940,8 +6044,8 @@ msgid "Add-on &help"
 msgstr "&Ohje"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "Poista käytöstä"
+msgid "&Disable add-on"
+msgstr "&Poista käytöstä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6046,8 +6150,8 @@ msgid "running"
 msgstr "käytössä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "Ota käyttöön"
+msgid "&Enable add-on"
+msgstr "&Ota käyttöön"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6086,10 +6190,6 @@ msgstr "Lisäosan tiedot"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Asetusprofiilit"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profiili"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6401,14 +6501,14 @@ msgstr "Massamuistiversion &hakemisto:"
 msgid "Browse..."
 msgstr "Selaa..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Kopioi &käyttäjän nykyiset asetukset"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Valitse massamuistiversion hakemisto"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Kopioi &käyttäjän nykyiset asetukset"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6494,10 +6594,6 @@ msgstr "virheenkorjaus"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Kieli (edellyttää uudelleenkäynnistystä):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Kieli"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Tallenna asetukset suljettaessa"
@@ -6514,10 +6610,6 @@ msgstr "&Toista ääni käynnistettäessä ja suljettaessa"
 msgid "L&ogging level:"
 msgstr "L&okitaso:"
 
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Lokitaso"
-
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
@@ -6530,8 +6622,8 @@ msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Käytä &nykyisiä tallennettuja asetuksia kirjautumisikkunassa ja muissa "
-"suojatuissa ruuduissa (edellyttää järjestelmänvalvojan oikeuksia)"
+"Käytä t&allennettuja asetuksia kirjautumisikkunassa ja muissa suojatuissa "
+"ruuduissa (edellyttää järjestelmänvalvojan oikeuksia)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -6575,13 +6667,6 @@ msgstr "Virhe kopioitaessa asetuksia"
 msgid "Successfully copied NVDA user settings"
 msgstr "Asetukset kopioitu onnistuneesti"
 
-#, python-format
-msgid "Error in %s language file"
-msgstr "Virhe kielitiedostossa %s"
-
-msgid "Language Error"
-msgstr "Kielitiedoston virhe"
-
 msgid "This change requires administrator privileges."
 msgstr "Tämä muutos edellyttää järjestelmänvalvojan oikeuksia."
 
@@ -6620,7 +6705,7 @@ msgstr "Ääni&laite:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 msgid "Audio &ducking mode:"
-msgstr "Taustaäänien va&imennus:"
+msgstr "Äänenvoimakkuuden h&iljennys:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -6683,10 +6768,6 @@ msgstr "Näppäimistöasetukset"
 #. keyboard settings dialog.
 msgid "&Keyboard layout:"
 msgstr "&Näppäimistöasettelu:"
-
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Näppäimistöasettelu"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6766,10 +6847,6 @@ msgstr "Käytä hiiren &seurantaa"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Teksti&yksikön tarkkuus:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "tekstinlukuyksikkö"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6896,11 +6973,6 @@ msgstr "Lue objektien k&uvaukset"
 msgid "Progress &bar output:"
 msgstr "E&distymispalkkien päivitykset:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Edistymispalkkien päivitykset"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6964,148 +7036,171 @@ msgstr "Estä mui&den kuin komentoeleiden pääsy dokumenttiin"
 msgid "Document Formatting"
 msgstr "Dokumenttien muotoiluasetukset"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
 msgstr ""
-"Lue kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
+"Seuraavat asetukset määrittävät, minkä tyyppisiä dokumenttien muotoiluja "
+"NVDA ilmoittaa."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Fontti"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Lue &fontti"
+msgid "&Font name"
+msgstr "&Fontin nimi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "L&ue fonttikoko"
+msgid "Font &size"
+msgstr "Fontin &koko"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Lu&e fontin määreet"
+msgid "Font attri&butes"
+msgstr "Fontin mää&reet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Lue &tasaus"
+msgid "E&mphasis"
+msgstr "K&orostus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Lue &värit"
+msgid "St&yle"
+msgstr "T&yyli"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Lue ko&mmentit"
+msgid "&Colors"
+msgstr "V&ärit"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Dokumentin tiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Lue &muokkaajan muokkaukset"
+msgid "Co&mments"
+msgstr "Ko&mmentit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Ilmoita k&orostus"
+msgid "&Editor revisions"
+msgstr "M&uokkaajan muokkaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Lue t&yylimääreet"
+msgid "Spelling e&rrors"
+msgstr "Kirjoitusv&irheet"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Sivut ja välit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Lue &kirjoitusvirheet"
+msgid "&Pages"
+msgstr "&Sivut"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Lue &sivunumerot"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Lue rivi&numerot"
+msgid "Line &numbers"
+msgstr "Rivi&numerot"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
-msgstr "Ilmoita rivi&en sisennykset:"
+msgid "Line &indentation reporting:"
+msgstr "Rivien &sisennysten ilmoittaminen:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 msgid "Off"
-msgstr "ei käytössä"
+msgstr "Ei käytössä"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Puheella"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
-msgstr "äänimerkeillä"
+msgstr "Äänimerkeillä"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both  Speech and Tones"
-msgstr "puheella ja äänimerkeillä"
+msgstr "Puheella ja äänimerkeillä"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Lue ka&ppalesisennykset"
+msgid "&Paragraph indentation"
+msgstr "Ka&ppalesisennykset"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Ilmoita &rivivälit"
+msgid "&Line spacing"
+msgstr "Ri&vivälit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Lue t&aulukot"
+msgid "&Alignment"
+msgstr "T&asaus"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Taulukon tiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Lue taulukon rivi- &ja sarakeotsikot"
+msgid "&Tables"
+msgstr "Ta&ulukot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Lue taulukon solujen koor&dinaatit"
+msgid "Row/column h&eaders"
+msgstr "Rivi- ja sarak&eotsikot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Lue &linkit"
+msgid "Cell c&oordinates"
+msgstr "Solujen koor&dinaatit"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Elementit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "Lue &otsikot"
+msgid "&Lists"
+msgstr "&Luettelot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Ilmoita l&uettelot"
+msgid "Block &quotes"
+msgstr "Sisennetyt &lainaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Lue sis&ennetyt kappaleet"
+msgid "Fra&mes"
+msgstr "Ke&hykset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Lue kii&ntopisteet"
+msgid "&Clickable"
+msgstr "&Napsautettavat kohteet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Lue ke&hykset"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Lue napsa&utettavat kohteet"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7117,7 +7212,7 @@ msgstr "Koko &sana"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Regular expression"
-msgstr "Säännöllinen &lauseke"
+msgstr "Sääntö&lauseke"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -7140,13 +7235,17 @@ msgstr "&Kommentti"
 msgid "&Type"
 msgstr "&Tyyppi"
 
-#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Virhe säännöllisessä lausekkeessa: \"%s\"."
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Korvattava teksti on pakollinen."
 
 msgid "Dictionary Entry Error"
 msgstr "Virhe sanastomäärityksessä"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Virhe sääntölausekkeessa: \"%s\"."
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7214,6 +7313,10 @@ msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
 msgstr "&Näytä kohdistin"
+
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Vilkkuva kohdistin"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -7387,28 +7490,6 @@ msgid ""
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö "
 "ruudun ulkoasu dokumentin sisältöä hahmonnettaessa."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Ei taulukon solussa"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "siirtää seuraavalle taulukon riville"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "siirtää edelliselle taulukon riville"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "siirtää seuraavaan taulukon sarakkeeseen"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "siirtää edelliseen taulukon sarakkeeseen"
 
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
@@ -8698,863 +8779,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Tätä solua ei voi muokata"
-
-#~ msgid "checker"
-#~ msgstr "shakkiruutu"
-
-#~ msgid "crisscross"
-#~ msgstr "siksakki"
-
-#~ msgid "down"
-#~ msgstr "alas"
-
-#~ msgid "gray16"
-#~ msgstr "16% harmaa"
-
-#~ msgid "gray25"
-#~ msgstr "25% harmaa"
-
-#~ msgid "gray50"
-#~ msgstr "50% harmaa"
-
-#~ msgid "gray75"
-#~ msgstr "75% harmaa"
-
-#~ msgid "grid"
-#~ msgstr "ruudukko"
-
-#~ msgid "light down"
-#~ msgstr "kapea alas"
-
-#~ msgid "light up"
-#~ msgstr "kapea ylös"
-
-#~ msgid "light vertical"
-#~ msgstr "kapea pystysuuntainen"
-
-#~ msgid "semi gray75"
-#~ msgstr "75% puoliharmaa"
-
-#~ msgid "up"
-#~ msgstr "ylös"
-
-#~ msgid "unknown color"
-#~ msgstr "tuntematon väri"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "alicensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "antiikinvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "vesi"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "akvamariini"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "asuurinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "beesi"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "vaaleanruskea>"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "kuoritunmantelinruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "sininen"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "sinivioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "vankka puu"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "kadetinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "kirkkaanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "suklaanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "korallinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "ruiskukansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "maissisilkinkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "karmiininpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "syaani"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "tummansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "tummansyaani"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "tummankultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "tummanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "tummanruskeankellertävä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "tummanmagenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "tummanoliivinvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Tummanoranssi"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "tummanorkideanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "tummanpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "tummanlohenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "tummanmerenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "tummanliuskekivensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "tummanliuskekivenharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "tummanturkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "tummanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "syvänpinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "syväntaivaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "himmeänharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "dodgerinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "tulenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "kukanvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "metsänvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fuksia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "gainsboronharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "haamunvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "kullankeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "kultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "harmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "vihreänkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Meloninvaaleanpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "kuumanpinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "intiaaninpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "indigonsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "norsunluunvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "ruskeankellertävä"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "laventelinsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "laventelipuna"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "ruohonvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "sitruunasifonkikakunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "vaaleansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "vaaleankorallinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "vaaleansyaani"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "vaaleankultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "vaaleanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "vaaleanpinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "vaalean lohenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "vaaleanmerenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "vaaleantaivaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "vaaleanliuskekivenharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "vaaleanteräksensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "vaaleankeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "limetti"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Limetinvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "pellavankeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "punaisenruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "puoliakvamariini"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "puolisininen"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "puoliorkideanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "puolipurppura"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "puolimerenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "puolisiniharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "puolikeväisenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "puoliturkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "puolivioletinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Keskiyön sininen"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "minttukermanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "usvaruusu"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Mokkasiininoranssi"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navajonvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "laivastonsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "vanha pitsi"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "oliivinvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "oliivin likaisenruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "oranssinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "orkideanvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "haaleankultapiiskunkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "haaleanvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "haaleanturkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "haaleanvioletinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "papaijavaahdonoranssi"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "persikkakohokas"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "pinkki"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "luumunvioletti"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "harmaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "punainen"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "ruusunpunaisen ruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "syvänsininen"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "satulanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "lohenpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "hiekanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "merenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "simpukanvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "sienanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "hopeanharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "taivaansininen"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "liuskekivensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "liuskekivenharmaa"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "lumenvalkoinen"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "keväisenvihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "teräksensininen"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "nahanruskea"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "sinivihreä"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "ohdakkeenpurppura"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "tomaatinpunainen"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "turkoosi"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "violetti"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "vehnänkeltainen"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "savunvalkoinen"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Tekstilohkon alkumerkin on oltava samassa objektissa"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Kielioppivirheitä ei ilmoiteta"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Ilmoita kirjoitusvirheet"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr ""
-#~ "Ottaa käyttöön kielioppivirheiden ilmoittamisen tai poistaa sen käytöstä"
-
-#~ msgid "grammar error"
-#~ msgstr "kielioppivirhe"
-
-#~ msgid "out of grammar error"
-#~ msgstr "kielioppivirheen loppu"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Ilmoita k&ielioppivirheet"
-
-#~ msgid "browse mode"
-#~ msgstr "selaustila"
-
-#~ msgid "activate"
-#~ msgstr "aktivoi"
-
-#~ msgid "no next"
-#~ msgstr "ei seuraavaa"
-
-#~ msgid "no previous"
-#~ msgstr "Ei edellistä"
-
-#~ msgid "edge of table"
-#~ msgstr "taulukon reuna"
-
-#~ msgid "%g characters"
-#~ msgstr "%g merkkiä"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pistettä"
-
-#~ msgid "no comments"
-#~ msgstr "ei kommentteja"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä "
-#~ "soluista"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "oletusväri"
-
-#~ msgid "unselecting %s"
-#~ msgstr "ei valita %s"
-
-#~ msgid "unrevised"
-#~ msgstr "ei muutettu"
-
-#~ msgid "unknown author"
-#~ msgstr "tuntematon muokkaaja"
-
-#~ msgid "unknown date"
-#~ msgstr "tuntematon päiväys"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr ""
-#~ "Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
-#~ "{revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "ilmoittaa objektin, jossa kohdistus on"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{}-sarja {} / {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "arvo {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} / {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " suuntaviiva {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr ""
-#~ "Kaavioalueen korkeus on {}, leveys on {}, yläreuna on {}, vasen reuna on "
-#~ "{}"
-
-#~ msgid "equation"
-#~ msgstr "yhtälö"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Näyttää listan linkeistä, otsikoista ja kiintopisteistä"
-
-#~ msgid "Slovak"
-#~ msgstr "slovakki"
-
-#~ msgid "navy blue"
-#~ msgstr "laivastonsininen"
-
-#~ msgid "teal"
-#~ msgstr "sinivihreä"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin "
-#~ "uudelleen NVDA:n 2013.1-versiossa, jotta se olisi intuitiivisempi ja "
-#~ "johdonmukaisempi.\n"
-#~ "Mikäli käytät kannettavien näppäimistöasettelua, katso lisätietoja Mitä "
-#~ "uutta -asiakirjasta."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Uusi kannettavien näppäimistöasettelu"
-
-#~ msgid "Read What's New"
-#~ msgstr "Mitä uutta"
-
-#~ msgid "&Acceleration"
-#~ msgstr "Kiih&tyvyys:"
-
-#~ msgid "male 1"
-#~ msgstr "mies 1"
-
-#~ msgid "female 1"
-#~ msgstr "nainen 1"
-
-#~ msgid "male 2"
-#~ msgstr "mies 2"
-
-#~ msgid "female 2"
-#~ msgstr "nainen 2"
-
-#~ msgid "lime"
-#~ msgstr "limetinvihreä"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Haluatko varmasti sulkea NVDA:n?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Vahvista sulkeminen"
-
-#~ msgid "Regexp"
-#~ msgstr "Säänla"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Ei sijaintitietoja navigointiobjektille"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Ei sijaintitietoja ruudulle"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Ilmoittaa nykyisen navigointiobjektin korkeuden, leveyden ja sijainnin"
-
-#~ msgid "Set column header row"
-#~ msgstr "Määritä sarakkeen otsikkorivi"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Sarakkeen otsikkorivi nollattu"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Määrittää kerran painettaessa nykyisen rivin sarakeotsikoiden riviksi. "
-#~ "Kahdesti painettaessa asetus nollataan."
-
-#~ msgid "Set row header column"
-#~ msgstr "Määritä rivin otsikkosarake"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Määrittää kerran painettaessa nykyisen sarakkeen riviotsikoiden "
-#~ "sarakkeeksi. Kahdesti painettaessa asetus nollataan."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s kautta %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "&Käytä manuaalisesti/muokkaa"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Asetustiedostossa on virheitä. \n"
-#~ "Paina OK korjataksesi virheet, tai paina Peruuta, jos haluat itse tehdä "
-#~ "korjaukset myöhemmin. Lisätietoja virheistä löytyy lokitiedostosta.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Ei automaattisia kommentteja."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Automaattisten kommenttien ikkunaa ei löytynyt."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Lukee kaikki automaattisten kommenttien ikkunassa olevat kommentit."
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automaattiset kommentit:"
-
-#~ msgid "Translation:"
-#~ msgstr "Käännös:"
-
-#~ msgid "Comments:"
-#~ msgstr "Kommentit:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Ei kokonaistarkastelua tälle objektille"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Ei objektia kokonaistarkastelun kohdassa"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Siirtää navigointiobjektin siihen objektiin, jossa tarkastelukohdistimen "
-#~ "kohdalla oleva teksti on kokonaistarkastelussa"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Sulje ensin toinen avoin NVDA:n asetusvalintaikkuna"
-
-#~ msgid "Translation &table:"
-#~ msgstr "Piste&taulukko:"
-
-#~ msgid "beeps"
-#~ msgstr "äänimerkit"
-
-#~ msgid "talk"
-#~ msgstr "puhe"
-
-#~ msgid "default action failed"
-#~ msgstr "Oletustoiminto epäonnistui"
-
-#~ msgid "layout %s"
-#~ msgstr "näppäimistöasettelu %s"
-
-#~ msgid "%s device found"
-#~ msgstr "Laite %s löytyi"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, käytetään oletusarvoa %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Asetustiedoston muoto virheellinen"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Virhe jäsenneltäessä asetustiedostoa: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Virheitä asetustiedostossa '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s / %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Tämä lisäosa on jo asennettu. Poista nykyinen lisäosa ja yritä uudelleen."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "Lataa NVDA:n tallennetut asetukset kumoten nykyiset muutokset"
