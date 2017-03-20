@@ -18,6 +18,7 @@ from logHandler import log
 
 from comtypes.gen.UIAutomationClient import *
 
+
 #Some new win8 UIA constants that could be missing
 UIA_StyleIdAttributeId=40034
 UIA_AnnotationAnnotationTypeIdPropertyId=30113
