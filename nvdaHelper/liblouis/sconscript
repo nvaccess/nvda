@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2006-2012 NVDA contributers.
+#Copyright 2011-2017 NV Access Limited, Joseph Lee
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -57,6 +57,7 @@ sourceFiles = [
 	"wrappers.c",
 	"logging.c",
 	"pattern.c",
+	"commonTranslationFunctions.c",
 ]
 objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
 louisLib = env.SharedLibrary("liblouis", objs + ["liblouis.def"])
