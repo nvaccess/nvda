@@ -74,6 +74,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_LocalizedLandmarkTypePropertyId,
 		UIAHandler.UIA_AriaPropertiesPropertyId,
 		UIAHandler.UIA_LevelPropertyId,
+		UIAHandler.UIA_IsEnabledPropertyId,
 	} if UIAHandler.isUIAAvailable else set()
 
 	def _get__controlFieldUIACacheRequest(self):
@@ -956,7 +957,7 @@ class UIA(Window):
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
 			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId,onlyCached=True):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
-		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True):
+		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True,onlyCached=True):
 			states.add(controlTypes.STATE_UNAVAILABLE)
 		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,ignoreDefault=True,onlyCached=True):
 			states.add(controlTypes.STATE_INVALID_ENTRY)
