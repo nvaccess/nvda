@@ -428,8 +428,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
 			s<<L"IAccessible2::attribute_"<<it->first;
 			parentNode->addAttribute(s.str(),it->second);
-			LOG_INFO(L"Manshul:"<<it->first);
-			LOG_INFO(L"Manshul1:"<<it->second);
 			s.str(L"");
 		}
 	} else
@@ -685,18 +683,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 
 		if((IA2AttribsMapIt = IA2AttribsMap.find(L"id")) != IA2AttribsMap.end()){
-			LOG_INFO(L"has id:"<<IA2AttribsMapIt->second);
 			wstring id=IA2AttribsMapIt->second;
 			wstring labelForNode=findLabel(labelsMap,id);
 				if (!labelForNode.empty()){
-					LOG_INFO(L"reaching if");
-//					previousNode->addAttribute(IA2AttribsMapIt->first,labelForNode);
 					previousNode=buffer->addTextFieldNode(parentNode,previousNode,labelForNode);
 				}
 		}
 
 		if (renderChildren && IA2TextLength > 0) {
-//			LOG_INFO(L"Manshul:"<<IA2AttribsMap[L"id"])
 			// Process IAccessibleText.
 			int chunkStart=0;
 			long attribsStart = 0;
@@ -803,10 +797,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		} else {
 			// There were no children to render.
 			if(role==ROLE_SYSTEM_GRAPHIC) {
-//				LOG_INFO(L"Image link: "<<IA2AttribsMap[L"src"]);
 				wstring labelForNode=findLabel(labelsMap,IA2AttribsMap[L"src"]);
 				if (!labelForNode.empty()){
-//					LOG_INFO(L"has custom label");
 					previousNode=buffer->addTextFieldNode(parentNode,previousNode,labelForNode);
 				} else if (name && name[0]) {
 					// The graphic has a label, so use it.

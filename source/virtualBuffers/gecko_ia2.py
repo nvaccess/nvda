@@ -298,17 +298,6 @@ class Gecko_ia2(VirtualBuffer):
 			browseObj=info.NVDAObjectAtStart
 		except:
 			browseObj=api.getFocusObject()
-		log.info("Role is: %s",browseObj.role)
-		
-# 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
-# 		node = browseObj.IAccessibleObject.QueryInterface(ISimpleDOMNode)
-# 		try:
-# 			log.info("Node:%s",node.innerHTML)
-# 			log.info("Name:%s",node.attributesForNames.previousSibling)
-# 			log.info("ID:%s",node.id)
-# 		except:
-# 			pass
-		
 		docHandle,ID=self.getIdentifierFromNVDAObject(browseObj)
 		attrs=self.makeTextInfo(browseObj)._getControlFieldAttribs(docHandle,ID)
 		if (attrs['IAccessible2::attribute_tag']== "a"):
@@ -325,14 +314,9 @@ class Gecko_ia2(VirtualBuffer):
 			customLabelKey=""
 		if customLabelKey:
 			customLabelKey=customLabelKey.replace(':','\:')
-# 		log.info("Custom Label Key is : %s",customLabelKey)
-# 		log.info("Page URL: %s",self._get_documentConstantIdentifier())
 		filename=customLabels.getFilenameFromElementDomain(self._get_documentConstantIdentifier())
 		customLabels.addLabel(filename,customLabelKey)
-# 		log.info("Current Object is: %s",browseObj.value)
-# #  		log.info("Img source: %s",self.makeTextInfo(browseObj).getTextWithFields()[2])
-# 		
-# 		log.info("Img source: %s",self.makeTextInfo(browseObj)._getControlFieldAttribs(docHandle,ID))
+	script_assignCustomLabel.ignoreTreeInterceptorPassThrough=True
 	
 	__gestures = {
 		"kb:NVDA+control+tab": "assignCustomLabel",
