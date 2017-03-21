@@ -69,7 +69,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Therefore class a range as collapsed if it has no text
 		return not bool(self.text)
 
-	def old_getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self,formatConfig=None):
 		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.

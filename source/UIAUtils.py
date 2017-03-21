@@ -122,6 +122,7 @@ def iterUIARangeByUnit(rangeObj,unit):
 		yield tempRange.clone()
 
 def getEnclosingElementWithCacheFromUIATextRange(textRange,cacheRequest):
+	"""A thin wrapper around IUIAutomationTextRange3::getEnclosingElementBuildCache if it exists, otherwise IUIAutomationTextRange::getEnclosingElement and then IUIAutomationElement::buildUpdatedCache."""
 	if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 		raise ValueError("%s is not a text range"%textRange)
 	try:
@@ -150,6 +151,7 @@ class CacheableUIAElementArray(object):
 		return e
 
 def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
+	"""A thin wrapper around IUIAutomationTextRange3::getChildrenBuildCache if it exists, otherwise IUIAutomationTextRange::getChildren but wraps the result in an object that automatically calls IUIAutomationElement::buildUpdateCache on any element retreaved."""
 	if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 		raise ValueError("%s is not a text range"%textRange)
 	try:

@@ -430,7 +430,7 @@ class UIATextInfo(textInfos.TextInfo):
 		@type alwaysWalkAncestors: bool
 		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
 		@type recurseChildren: bool
-		@param _rootElementClipped: Indicates of textRange represents all of the given rootElement, or is clipped at the start or end.
+		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement, or is clipped at the start or end.
 		@type _rootElementClipped: 2-tuple
 		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
@@ -640,15 +640,18 @@ class UIATextInfo(textInfos.TextInfo):
 class UIA(Window):
 
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
-		"""A dictionary per core cycle that is ready to map UIA property IDs to UIAElements with that property already cached."""
+		"""
+		A dictionary per core cycle that is ready to map UIA property IDs to UIAElements with that property already cached.
+		An example of where multiple cache elements may exist would be where the UIA NVDAObject was instantiated with a UIA element already containing a UI Automation cache (appropriate for generating control fields) but another UIA NVDAObject property (E.g. states) has a set of UIA properties of its own which should be bulk-fetched, and did not exist in the original cache. 
+		"""
 		return {}
 
 	def _getUIACacheablePropertyValue(self,ID,ignoreDefault=False,onlyCached=False):
 		"""
-		Fetches the value for a UI Automation property from an element cache available in this core cycle. If not cached and L{onlyCache} is False then a new value will be fetched.
+		Fetches the value for a UI Automation property from an element cache available in this core cycle. If not cached and L{onlyCached} is False then a new value will be fetched.
 		"""
 		elementCache=self._coreCycleUIAPropertyCacheElementCache
-		# If we have a UIAElement who's own cache contains the property, fetch the value from there
+		# If we have a UIAElement whos own cache contains the property, fetch the value from there
 		cacheElement=elementCache.get(ID,None)
 		if cacheElement:
 			value=cacheElement.getCachedPropertyValueEx(ID,ignoreDefault)
@@ -657,8 +660,6 @@ class UIA(Window):
 			value=self.UIAElement.getCurrentPropertyValueEx(ID,ignoreDefault)
 		else:
 			raise ValueError("UIA property value not cached")
-		# cache and return the value
-		#valueCache[key]=value
 		return value
 
 	def _prefetchUIACacheForPropertyIDs(self,IDs):
@@ -930,12 +931,10 @@ class UIA(Window):
 		# In rare cases, access key itself is None.
 		if accessKey:
 			shortcuts.append(accessKey)
-			pass
 		acceleratorKey = self._getUIACacheablePropertyValue(UIAHandler.UIA_AcceleratorKeyPropertyId)
 		# Same case as access key.
 		if acceleratorKey:
 			shortcuts.append(acceleratorKey)
-			pass
 		# #6790: Do not add two spaces unless both access key and accelerator are present in order to not waste string real estate.
 		return "  ".join(shortcuts) if shortcuts else ""
 
