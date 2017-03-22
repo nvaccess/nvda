@@ -66,7 +66,8 @@ class NVDAAgeCommand(object):
 
 	def __call__(self):
 		import datetime
-		return int(((datetime.datetime.now()- datetime.datetime(2006, 04, 01)).days)/365)
+		date = datetime.datetime.now()
+		return date.year-2006 - (0 if date.month>4 else 1)
 
 #: The singleton Python console UI instance.
 consoleUI = None
