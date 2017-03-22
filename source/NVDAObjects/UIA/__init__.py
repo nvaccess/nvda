@@ -1144,11 +1144,7 @@ class UIA(Window):
 			r=self._getUIACacheablePropertyValue(UIAHandler.UIA_BoundingRectanglePropertyId)
 		except COMError:
 			return None
-		left=r.left
-		top=r.top
-		width=r.right-left
-		height=r.bottom-top
-		return left,top,width,height
+		return r
 
 	def _get_value(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
