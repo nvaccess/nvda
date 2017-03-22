@@ -55,6 +55,19 @@ class ExitConsoleCommand(object):
 	def __call__(self):
 		self._exitFunc()
 
+class NVDAAgeCommand(object):
+	"""
+	An object that can be used to get NVDA's age in years.
+	"""
+
+	_reprMessage="Type NVDAAge() to get NVDA's age in years."
+	def __repr__(self):
+		return self._reprMessage
+
+	def __call__(self):
+		import datetime
+		return int(((datetime.datetime.now()- datetime.datetime(2006, 04, 01)).days)/365)
+
 #: The singleton Python console UI instance.
 consoleUI = None
 
@@ -82,9 +95,12 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		#: @type: dict
 		# Populate with useful modules.
 		exitCmd = ExitConsoleCommand(exitFunc)
+
 		self.namespace = {
 			"help": HelpCommand(),
 			"exit": exitCmd,
+			#easteregg: Get NVDA's age in years.
+			"NVDAAge" : NVDAAgeCommand(),
 			"quit": exitCmd,
 			"sys": sys,
 			"os": os,
