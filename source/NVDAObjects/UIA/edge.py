@@ -11,11 +11,11 @@ import eventHandler
 import config
 import controlTypes
 import cursorManager
+import re
 import aria
 import textInfos
 import UIAHandler
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
-import aria
 from UIAUtils import *
 from . import UIA, UIATextInfo
 
@@ -147,6 +147,8 @@ class EdgeTextInfo(UIATextInfo):
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
+		# report if the field is 'current'
+		field['current']=obj.isCurrent
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		ariaProperties=obj.UIAElement.currentAriaProperties
@@ -208,6 +210,10 @@ class EdgeTextInfo(UIATextInfo):
 		startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,enclosingRange,UIAHandler.TextPatternRangeEndpoint_End)
 		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)>0:
 			startRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
+		# Ensure we don't now have a collapsed range
+		if startRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_Start)<=0:
+			log.debug("Collapsed range. Returning")
+			return
 		# check for an embedded child
 		childElements=startRange.getChildren()
 		if childElements.length==1 and UIAHandler.handler.clientObject.compareElements(rootElement,childElements.getElement(0)):
@@ -386,6 +392,22 @@ class EdgeNode(UIA):
 			except COMError:
 				pass
 		return super(EdgeNode,self).description
+
+	# RegEx to get the value for the aria-current property. This will be looking for a the value of 'current'
+	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
+	# character and before the ';' character.
+	# This could be one of: True, "page", "step", "location", "date", "time"
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(\w+);")
+
+	def _get_isCurrent(self):
+		ariaProperties=self.UIAElement.currentAriaProperties
+		match = self.RE_ARIA_CURRENT_PROP_VALUE.match(ariaProperties)
+		log.debug("aria props = %s" % ariaProperties)
+		if match:
+			valueOfAriaCurrent = match.group(1)
+			log.debug("aria current value = %s" % valueOfAriaCurrent)
+			return valueOfAriaCurrent
+		return False
 
 class EdgeList(EdgeNode):
 

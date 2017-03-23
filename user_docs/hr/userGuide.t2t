@@ -23,7 +23,7 @@ Glavne značajke uključuju:
 - podršku za mnoge brajične retke, uključujući unos kompjutorske brajice za brajične retke koji posjeduju brajičnu tipkovnicu
 - mogućnost pokretanja sa USB memorijskih stickova u cjelosti ili drugih prijenosnih medija bez potrebe instalacije samog čitača zaslona
 - govorni instalacijski program koji je jednostavan za korištenje
-- preveden na 47 jezika
+- preveden na 48 jezika
 - podršku za moderne Windows operativne sustave u 32 i 64 bitnim inačicama
 - mogućnost pokretanja na Windows zaslonu za prijavu i ostalim sigurnosnim zaslonima
 - podršku za uobičajena sučelja za pristupačnost kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation je podržan samo u windows 7 i novijim inačicama)
@@ -32,7 +32,7 @@ Glavne značajke uključuju:
 
 ++ Internacionalizacija ++
 Vrlo je važno da ljudi bilo gdje u svijetu, bez obzira na jezik kojim govore, imaju jednak pristup tehnologijama.
-Osim engleskog, NVDA je preveden na 47 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, korejski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
+Osim engleskog, NVDA je preveden na 47 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, korejski, litavski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
 
 ++ Podrška Za Sintetizatore Govora ++
 Osim podrške za mnoge jezike, NVDA može omogućiti korisniku čitanje sadržaja na bilo kojem jeziku, sve dok korisnik ima sintetizator govora za taj određeni jezik.
@@ -698,6 +698,42 @@ Kada se nalazite u razgovoru:
 | Pregledaj poruke | NVDA+kontrol+1-0 | Čitaj poruke i pomakni pregledni kursor na zadnju poruku, ovisno o pritisnutom broju; npr. NVDA+kontrol+2 čita drugu najzadnju poruku. |
 %kc:endInclude
 
+++ Kindle za Osobna računala ++
+NVDA podržava čitanje i kretanje po knjigama u Amazonovom Kindlu za osobna računala.
+Ova je funkcionalnost podržana samo u Kindle knjigama označenima "Screen Reader: Supported" zastavicom, što možete provjeriti na stranici sa detaljima o knjizi.
+
+Način pregleda se upotrebljava za čitanje knjiga.
+Isti je omogučen automatski kada otvorite knjigu ili premjestite fokus na područje knjige.
+Stranice će se okretati automatski kada je to potrebno kada pomićete kursor ili prilikom korištenja prečaca "čitaj sve".
+%kc:beginInclude
+možete se ručno prebacivati na slijedeću stranicu uz pomoć tipke pageDown i prebacivati na prethodnu stranicu uz pomoć page up tipke.
+%kc:endInclude
+
+Brzo kretanje je podržano za linkove i grafike, ali samo za trenutnu stranicu.
+Kretanje po linkovima također uključuje fusnote.
+
++++ označavanje teksta +++
+Kindle vam omogučuje izvođenje različitih funkcija na označenom tekstu, uključujući izvlačenje objašnjenja iz rječnika, dodavanje bilježaka i oznaka, kopiranje teksta u međuspremnik i pretraživanje interneta.
+Kako bi ste mogli učiniti jednu od ovih radnji, prvo označite tekst na način kako biste ga inače označavali u načinu pregleda; NPR. koristeći shift i kursorske tipke.
+%kc:beginInclude
+Kada ste označili tekst, pritisnite aplikacijsku tipku ili shift+f10 kako biste prikazali dostupne opcije za rad s označenim tekstom.
+%kc:endInclude
+Ako to napravite bez označenog teksta, pokazat će se opcije primjenjive za trenutnu riječ pod kursorom.
+
++++ korisničke bilješke +++
+Možete dodavati bilješku koja se odnosi na riječ ili pasus teksta.
+Kako biste učinili ovo, najprije označite relevantan tekst i pristupite opcijama označenoga teksta kako je to opisano iznad.
+Potom, odaberite opciju "Dodaj bilješku".
+
+Prilikom čitanja u načinu pregleda, NVDA se odnosi prema bilješkama kao prema komentarima.
+
+Kako biste pregledali, uredili ili izbrisali bilješku:
+
++ Premjestite se na tekst koji sadrži bilješku.
++ Pristupite opcijama označenog teksta kako je to opisano iznad.
++ Odaberite opciju "Uredi bilješku". Napomena: budući da hrvatski prevoditelj NVDA čitača ekrana ne zna je li amazon lokaliziran na hrvatski, preveo je nazive opcija u postupcima za rad s tekstom.
++
+
 + Podešavanje NVDA +
 
 ++ Postavke ++
@@ -915,6 +951,10 @@ Ova opcija omogućuje prikaz riječi pod kursorom koristeći kompjutorsku brajic
 ==== Prikaži pokazivač ====
 Ova opcija omogućuje uključivanje/isključivanje brajičnog pokazivača.
 Ovo se primjenjuje za kursor sustava i pregledni kursor, ali ne i za indikator označenosti.
+
+==== Titranje kursora ====
+Ova opcija omogućava titranje brajičnog kursora.
+Ako je titranje isključeno, brajični redak će konstantno biti u tzv. "gornjoj" poziciji.
 
 ==== Brzina titraja pokazivača (ms) ====
  Ova je opcija brojčano polje koja vam omogućuje izmjenu brzine titraja pokazivača u milisekundama.
@@ -1223,6 +1263,7 @@ Možete podesiti izgovor slijedećeg:
 - tablica
  - zaglavlja redaka/stupaca
  - koordinate ćelija
+ - granice ćelija [(Isključeno, Stilovi, boje i stilovi)
 - elementi
  - naslovi
  - Linkovi
@@ -1242,7 +1283,7 @@ Ako je ova opcija uključena, ova će opcija uzrokovati da NVDA pokuša prepozna
 
 Po podrazumjevanom, NVDA će prepoznati oblikovanje na poziciji kursora sustava / Preglednog kursora, i u nekim slučajevima može otkriti formatiranje na ostatku retka, samo u slučaju ako to neće izazvati pad performansi.
 
-Uključite ovu opciju kad radite na korekciji teksta u aplikacijama kao što je Wordpad, gdje je oblikovanje važno.
+Uključite ovu opciju kad radite na korekciji teksta u aplikacijama kao što je Word pad, gdje je oblikovanje važno.
 
 ==== izvješćivanje o uvučenosti redka ====[lineIndentationOptions]
 Ova vam opcija omogućava podešavanje načina izvještavanja poravnanja redka.
@@ -2164,8 +2205,8 @@ Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bib
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] je program koji se može koristiti za podršku puno više brajičnih redaka.
-Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] je program koji se može koristiti za podršku puno više brajičnih redaka.
+Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows http://www.brltty.com/download.html].
 Treba li biste preuzeti i instalirati trenutnu inačicu paketa, na primjer koji će biti imenovan, brltty-win-4.2-2.exe.
 Kad podešavate brajični redak i priključak za korištenje, budite sigurni da strogo pratite upute, pogotovo ako koristite Usb brajični redak i ako već imate instalirane upravljačke programe proizvođača.
 
@@ -2258,9 +2299,10 @@ Sljede opcije naredbenog retka za NVDA:
 | -m | --minimal | bez zvuka, bez sučelja, bez poruke dobrodošlice itd |
 | -s | --secure | siguran način (onemogućuje python konzolu) |
 | Nema | --disable-addons | dodaci neće imati utjecaja |
+| Nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument. |
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
-| None | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+| Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
 
 + Dodatne Informacije +
 Ako trebate više informacija ili pomoč za NVDA, molimo posjetite NVDA web stranicu na adresi NVDA_URL.

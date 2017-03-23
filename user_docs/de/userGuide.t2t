@@ -1,6 +1,4 @@
-﻿Benutzerhandbuch
-
-NVDA Version NVDA_VERSION
+﻿NVDA  NVDA_VERSION Benutzerhandbuch
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -230,7 +228,7 @@ In diesem Menü können Sie alle Einstellungen von NVDA ändern, die Einstellung
 
 Um von überall in das NVDA-Menü zu gelangen, drücken Sie die Tastenkombination NVDA+n oder tippen Sie zweimal mit zwei Fingern. Dies funktioniert allerdings auch nur, wenn NVDA läuft.
 Das Menü kann auch über einen Rechtsklick auf das NVDA-Symbol im Infobereich erreicht werden.
-Alternativ können Sie auch die Tastenkombination "Windows+B" drücken und mit den "Pfeiltasten zum NVDA-Symbol navigieren und das Menü mit der Anwendungstaste öffnen.
+Alternativ können Sie auch die Tastenkombination "Windows+B" drücken und mit den "Pfeiltasten zum NVDA-Symbol navigieren und das Menü mit der Anwendungstaste öffnen. Die Anwendungstaste befindet sich auf den meisten Tastaturen links neben der rechten strg-Taste.
 In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste öffnen Sie die Menüpunkte.
 
 ++ Allgemeine Befehle für NVDA ++
@@ -700,6 +698,42 @@ Innerhalb einer Konversation:
 | Nachricht anzeigen | NVDA+Steuerung+1 bis 0 | Setzt den NVDA-Cursor auf die zur Nummer passenden Nachricht NVDA+Steuerung+2 zeigt beispielsweise die vorletzte Nachricht an |
 %kc:endInclude
 
+++ Kindle für PC ++
+NVDA unterstützt das Lesen von und das Navigieren in Büchern in Kindle für PC.
+Dies ist nur verfügbar, wenn die Bücher "Enhanced Typesetting" unterstützen.Dies können Sie auf der Detailseite des Buches überprüfen.
+
+Der Lesemodus wird beim Lesen von Büchern verwendet.
+Er wird automatisch aktiviert, wenn sie ein Buch öffnen.
+Die Seiten werden automatisch umgeblättert, wenn Sie den Cursor im virtuellen Dokument bewegen oder den Befehl zum Vorlesen von Dokumenten verwenden.
+%kc:beginInclude
+Sie können auch manuell zwischen den Seiten blättern. Verwenden Sie hierfür die Tasten Seite auf und Seite ab.
+%kc:endInclude
+
+Die Schnellnavigation für Links und Grafiken funktioniert auf der aktuellen Seite.
+Die Linknavigation beinhaltet auch Fußnoten.
+
++++ Markieren von Text +++
+(noch nicht übersetzt) Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
+To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
++%kc:beginInclude
++Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
++%kc:endInclude
++If you do this with no text selected, options will be shown for the word at the cursor.
+
++++ Notizen +++
+Sie können eine Notiz zu einem Wort oder einer ganzen Passage hinzufügen.
+Um dies zu tun, markieren Sie den relevanten Text und öffnen die Markierungsoptionen wie oben beschrieben.
+Nun wählen Sie Notiz hinzufügen.
+
+Während Sie im Lese-Modus lesen, werden Notizen als Kommentare ausgegeben.
+
+Eine Notiz lesen, bearbeiten oder löschen:
+
++ Bewegen Sie den Cursor zum Text, der die Notiz enthällt.
++ Rufen Sie die Markierungsoptionen wie oben beschrieben auf..
++ Wählen Sie Notiz bearbeiten.
++
+
 + NVDA konfigurieren +
 
 ++ Das Menü "Einstellungen" ++
@@ -756,7 +790,7 @@ Diese Option ist nur in der installierten Version verfügbar!
 
 ==== Automatisch nach Aktualisierungen suchen ====
 Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
-Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
+Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe| -machenenü wählen.
 
 +++ Sprachausgabe (NVDA+Steuerung+S) +++
 Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden soll.
@@ -918,8 +952,12 @@ Diese Option legt fest, ob das Wort, welches sich unter dem Cursor befindet, in 
 Mit Hilfe dieser Option können Sie die Anzeige des Cursors in Braille ein- und ausschalten.
 Dies betrifft den System- und den NVDA-Cursor, nicht jedoch die Kennzeichnung von markiertem Text.
 
-==== Cursor-Blinkfrequenz ====
-Diese Option ist ein numerisches Feld, in dem sich die Cursor-Blinkfrequenz in Millisekunden anpassen lässt.
+==== blinkender Cursor ====
+Mit Hilfe dieser Option können Sie das Blinken des Braillecursors ein-/ausschalten.
+Wenn das Blinken des Cursors deaktiviert ist, wird er ständig angezeigt.
+
+==== Cursor-Blinkrate ====
+Diese Option ist ein numerisches Feld, in dem sich die Cursor-Blinkrate in Millisekunden anpassen lässt.
 
 ==== Cursorform ====
 Mit Hilfe dieser option können Sie die Form (das Punktmuster) des Cursors auf der Braillezeile einstellen.
@@ -2166,8 +2204,8 @@ Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/b
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit dem Sie viele weitere Braillezeilen ansteuern können.
-Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] ist ein separates Programm, mit dem Sie viele weitere Braillezeilen ansteuern können.
+Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://www.brltty.com/download.html].
 Dazu laden Sie sich das neueste Treiberpaket herunter und installieren es. Der Name sieht in etwa wie folgt aus: brltty-win-4.2-3.exe.
 Bei der Konfiguration der Braillezeile und des zu verwendenden Anschlusses - insbesondere bei USB -, seien Sie sicher, dass Sie auch die passenden Treiber vom Hersteller bereits auf Ihrem System installiert haben.
 
@@ -2260,6 +2298,7 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Sicherer Modus, schaltet die Python-Konsole ab. |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
+| Keine | --debug-logging | aktiviert die Debug-Protokollierung für diese Sitzung. Diese Option überschreibt andere Angaben zur Protokollebene ( ""--loglevel"", -l). |
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |

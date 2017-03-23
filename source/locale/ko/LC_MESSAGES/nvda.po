@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-28 22:27-0800\n"
-"PO-Revision-Date: 2016-12-28 22:33-0800\n"
+"POT-Creation-Date: 2017-02-10 00:10+1000\n"
+"PO-Revision-Date: 2017-02-09 11:54-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -797,6 +797,7 @@ msgstr ""
 "할 수 있고 첫 글자 명령 해제시 웹 앱에서 명령을 처리합니다"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "본 요소를 지원하지 않는 문서임"
 
@@ -1292,6 +1293,7 @@ msgid "%s landmark"
 msgstr "%s 랜드마크"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "%s 선택됨"
@@ -1323,6 +1325,33 @@ msgstr "밑"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 끝으로 이동합니다. "
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "테이블 셀 아님"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "테이블 가장자리"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "다음 테이블 행으로 이동합니다"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "이전 테이블 행으로 이동합니다"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "다음 테이블 열로 이동합니다"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "이전 테이블 열로 이동합니다"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4278,9 +4307,9 @@ msgstr "페이지 %s"
 
 #. Translators: Indicates the section number in a document.
 #. %s will be replaced with the section number.
-#, fuzzy, python-format
+#, python-format
 msgid "section %s"
-msgstr "section"
+msgstr "section %s"
 
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
@@ -4290,9 +4319,9 @@ msgstr "열 {0}/{1}"
 
 #. Translators: Indicates the text column number in a document.
 #. %s will be replaced with the number of text columns.
-#, fuzzy, python-format
+#, python-format
 msgid "%s columns"
-msgstr "%s 열"
+msgstr "열 %s"
 
 msgid "continuous section break"
 msgstr "연속 섹션 끝"
@@ -4309,9 +4338,8 @@ msgstr "짝수 쪽 섹션 끝"
 msgid "odd pages section break"
 msgstr "홀수 쪽 섹션 끝"
 
-#, fuzzy
 msgid "column break"
-msgstr "열 머리말"
+msgstr "열 브레이크"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
@@ -4901,11 +4929,6 @@ msgstr "{description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "테이블 가장자리"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "화면 탐색 객체를 다음 열로 이동합니다. "
@@ -4946,6 +4969,10 @@ msgstr "재생되는 트랙 없음"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "만약 트랙이 재생되는 경우 현재 트랙의 남은 시간을 알려줍니다. "
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+
 #. Translators: A position in a Kindle book
 #, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4954,6 +4981,25 @@ msgstr "{bookPercentage}%, {curLocation}/{maxLocation}"
 #. Translators: a page in a Kindle book
 msgid "Page {pageNumber}"
 msgstr "Page {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "highlight"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr ""
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr ""
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr ""
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5827,6 +5873,10 @@ msgstr "재시작"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "재시작 및 추가 기능 사용 안 함"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "재시작 및 디버그 정보 기록"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7136,6 +7186,10 @@ msgstr "커서 위치의 점자 단어 풀이 (&X)"
 msgid "&Show cursor"
 msgstr "점자 커서 출력 (&S)"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "점자 커서 깜박이"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "커서 깜박이 시간 (ms) (&C)"
@@ -7304,28 +7358,6 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "문서를 표시할때 화면 레이아웃으로 보여줄 것인지를 토글합니다. "
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "테이블 셀 아님"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "다음 테이블 행으로 이동합니다"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "이전 테이블 행으로 이동합니다"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "다음 테이블 열로 이동합니다"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "이전 테이블 열로 이동합니다"
 
 msgid "Taskbar"
 msgstr "작업 표시줄"

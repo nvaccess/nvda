@@ -23,7 +23,7 @@ As características principais são:
 - Suporte para diversas linhas Braille, incluindo a introdução de texto através do teclado Braille, nas linhas que o possuem, usando o código Braille informático
 - Possibilidade de ser executado a partir de dispositivos USB ou através de outros dispositivos portáteis, sem necessitar de instalação
 - Tem um instalador com voz e fácil de usar
-- Está traduzido em 47 idiomas
+- Está traduzido em 48 idiomas
 - Suporta os Sistemas Operativos Windows mais actuais, quer nas arquitecturas de 32 quer nas de 64 bits
 - Tem a possibilidade de funcionar nas janelas de início de sessão e noutros ecrãs de ambiente seguro
 - Suporta as interfaces de acessibilidade mais comuns, tais como o Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (o UI Automation é somente suportado no Windows 7 ou posteriores)
@@ -32,7 +32,7 @@ As características principais são:
 
 ++ Internacionalização ++
 É importante que todos os indivíduos tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
-Para além do Inglês, o NVDA está traduzido em 47 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Catalão, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol da Colômbia, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Irlandês, Islandês, Italiano, Japonês, Nepalês, Norueguês, Persa, Polaco, Português de Portugal, Português do Brasil, Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
+Para além do Inglês, o NVDA está traduzido em 48 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Catalão, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol da Colômbia, Farsi, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Irlandês, Islandês, Italiano, Japonês, Nepalês, Norueguês, Persa, Polaco, Português de Portugal, Português do Brasil, Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
 
 ++ Suporte de Sintetizadores de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que o possa falar.
@@ -228,7 +228,7 @@ O Menu do NVDA permite-lhe controlar as definições do leitor de ecrã, aceder 
 
 Para aceder ao menu do NVDA, de qualquer lugar no Windows, enquanto executa o NVDA, pressione NVDA+n, ou realize um duplo toque com dois dedos, num ecrã sensível ao toque.
 Também pode aceder ao mesmo através da área de notificação do Windows.
-Basta clicar com o botão direito no ícone do NVDA que lá se encontra, ou mova-se para a área de notificação, com a tecla Windows+B, desloque-se com a Seta Abaixo, até ao ícone deste leitor de ecrã, e pressione a Tecla Aplicações que se encontra, em diversos teclados, antes do Control direito.
+Basta clicar com o botão direito no ícone do NVDA que lá se encontra, ou mova-se para a área de notificação, com a tecla Windows+B, desloque-se com a Seta Abaixo, até ao ícone deste leitor de ecrã, e pressione a Tecla Aplicações que se encontra, na maioria dos teclados, antes do Control direito.
 Quando o menu surgir, pode usar as setas direccionais para navegar pelo mesmo e activar um item com a tecla Enter.
 
 ++ Comandos Básicos do NVDA ++
@@ -698,6 +698,41 @@ Numa conversa:
 | Rever mensagem | NVDA+control+1-0 | Anuncia e move o cursor de revisão para uma mensagem, dependendo do número utilizado, por exemplo, NVDA+control+2 lê a segunda mensagem mais recente. |
 %kc:endInclude
 
+++ Kindle para PC ++
+O NVDA suporta a leitura e navegação em livros no Kindle para PC da Amazon.
+Esta funcionalidade está apenas disponível em livros Kindle que suportem "Enhanced Typesetting", o que pode verificar na página de detalhes do livro.
+
+Para a leitura dos livros é usado o modo de navegação.
+Este modo é automaticamente ativado quando abre um livro ou ou a área do livro é focada.
+As páginas são viradas automaticamente quando move o cursor ou usa leitura contínua.
+%kc:beginInclude
+Pode mudar manualmente para a página seguinte com pageDown ou para a anterior com pageUp.
+%kc:endInclude
+
+A navegação por caractere é suportada para links e gráficos, mas apenas na página actual.
+A navegação por link também inclui as notas de rodapé.
+
++++ Selecção de Texto +++
+Kindle permite-lhe executar várias funções sobre texto seleccionado, incluindo obter uma definição do dicionário, adicionar notas e realces, copiar o texto para o a área de transferência e pesquisar na Net.
+Para isso, seleccione o  texto, como faz normalmente no modo de navegação, usando Shift e as teclas de cursor
+%kc:beginInclude
+Após ter seleccionado o texto, pressione Aplicações ou shift+f10 para ver as opções disponíveis para essa selecção.
+%kc:endInclude
+Se pressionar Aplicações sem texto seleccionado, serão mostradas as opções para a palavra sobre o cursor.
+
++++ Notas do Utilizador +++
+Pode adicionar uma nota a uma palavra ou a uma passagem do texto.
+Para isso, seleccione o  texto, e aceda às opções conforme descrito acima.
+Das opções, escolha Adicionar notas.
+
+Durante a leitura em modo de navegação, o NVDA refere-se às notas como comentários.
+Para ver, editar ou apagar uma nota:
+
+- Mova o cursor para o texto que contém a nota.
+- Aceda às opções para a selecção como descrito acima.
+- Escolha Editar Nota.
+-
+
 + Configurar O NVDA +
 
 ++ Preferências ++
@@ -915,6 +950,10 @@ Esta opção permite que a palavra que está sob o cursor apareça em Braille de
 ==== Mostrar Cursor ====
 Esta opção permite activar ou desactivar o cursor braille.
 Aplica-se ao foco do sistema e ao cursor de revisão, mas não ao indicador de seleção.
+
+==== Intermitência do Cursor ====
+Esta opção permite definir se o cursor Braille pisca ou não.
+Se a intermitência estiver desactivada, o cursor Braille ficará sempre para cima.
 
 ==== Velocidade de intermitência do Cursor (ms)====
 Esta opção é um campo numérico que lhe permite alterar a velocidade de intermitência do cursor, em milésimos de segundo.
@@ -2164,8 +2203,8 @@ Por favor consulte a documentação [EcoBraille em ftp://ftp.once.es/pub/utt/bib
 %kc:endInclude
 
 ++ BRLTTY ++
-O [BRLTTY http://mielke.cc/brltty/] é um programa adicional que pode ser usado para suportar muitas mais linhas Braille.
-Para utilizá-lo, terá que instalar o [BRLTTY para o Windows http://brl.thefreecat.org/brltty/].
+O [BRLTTY http://www.brltty.com/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
+Para utilizá-lo, terá que instalar o [BRLTTY para o Windows http://www.brltty.com/download.html].
 Para isso, deverá efectuar o download e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se está a utilizar uma linha USB e já tem as drivers do fabricante instaladas.
 
@@ -2258,6 +2297,7 @@ Seguidamente apresentam-se as opções para a linha de comando para o NVDA
 | -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc |
 | -s | --secure | Modo seguro (desactiva a consola do Python) |
 | None | --disable-addons | Os extras serão desacttivados |
+| None | --debug-logging | Activa o nível de registo para Depuração apenas para a próxima execução. Esta definição substitui qualquer outra definição para o nível de registo ( ""--loglevel"", -l) argumento. |
 | None | --no-sr-flag  | Não alterar a flag que sinaliza a presença de um leitor de ecrã no sistema |
 | None | --install | Silenciosamente installa o NVDA e inicia a cópia instalada |
 | None | --install-silent | Instala o NVDA silenciosamente e não inicia a cópia instalada |
@@ -2265,4 +2305,4 @@ Seguidamente apresentam-se as opções para a linha de comando para o NVDA
 + Mais Informações +
 Se necessitar de mais informações ou assistência sobre o NVDA, por favor, visite a página Internet do NVDA em NVDA_URL.
 Aqui poderá encontrar documentação adicional, bem como suporte técnico recursos da comunidade.
-Este site também fornece informações concernentes ao desenvolvimento do NVDA.
+Este site também fornece informações referentes ao desenvolvimento do NVDA.

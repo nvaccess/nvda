@@ -35,8 +35,18 @@ signExec=env['signExec'] if env['certFile'] else None
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WS03')])
-env.Append(CCFLAGS=['/W3','/WX']);
+env.Append(CCFLAGS=['/W3','/WX'])
+if 'analyze' in debug:
+	env.Append(CCFLAGS=['/analyze'])
+	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
+	# Seems all MIDL-generated code from idl files don't add annotations 
+	env.Append(CCFLAGS='/wd28251')
+	# Disable: 'x': unreferenced formal parameter
+	# We use a great deal of hook functions where we have no need for various parameters 
+	env.Append(CCFLAGS='/wd4100')
+
 env.Append(CXXFLAGS=['/EHsc'])
+
 env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
 env.Append(LINKFLAGS=['/incremental:no','/WX'])
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header

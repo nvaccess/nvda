@@ -423,8 +423,8 @@ Wanneer het scherm met de daarvoor bestemde leesoverzichtcommando's wordt verken
 Merk op dat NVDA bij sommige recente toepassingen tekst die op het scherm verschijnt slechts gedeeltelijk of soms helemaal niet leest. Dit heeft te maken met nieuwe schermtechnologie die op dit moment nog niet ondersteund kan worden.
 
 ++ Navigeren met de muis ++
-Door de muis over het scherm te verplaatsen wordt tekst die zich onder de muisaanwijzer bevindt voorgelezen.
-Voor zover ondersteund, wordt een hele alinea tekst voorgelezen, maar waar alinea-ondersteuning ontbreekt, leest NVDA de tekst per regel voor.
+Door de muis over het scherm te verplaatsen wordt tekst die zich direct onder de muisaanwijzer bevindt standaard door NVDA voorgelezen.
+Voor zover ondersteund, wordt een hele alinea tekst voorgelezen, maar bij bepaalde besturingselementen leest NVDA de tekst per regel voor.
 
 U kunt NVDA zo instellen dat het programma ook meldt welk type besturingselement of object zich onder de muisaanwijzer bevindt, zoals  een lijst, een knop, etc.
 Dit kan voor mensen die helemaal blind zijn erg handig zijn, omdat soms alleen tekst niet voldoende is.
@@ -701,6 +701,42 @@ Wanneer u zich in een berichtenreeks bevindt:
 | Bericht lezen | NVDA+control+1-0 | Afhankelijk van het cijfer dat u indrukt, wordt de leescursor naar het daarbijbehorende bericht verplaatst en kan het gelezen worden; als  u bij voorbeeld NVDA+control+2 indrukt, wordt het bericht dat u op één na het laatst hebt ontvangen gelezen. |
 %kc:endInclude
 
+++ Kindle voor de PC ++
+NVDA ondersteunt het lezen van en het navigeren in boeken met  Amazon Kindle voor de PC.
+Deze functionaliteit is alleen beschikbaar voor  Kindle-boeken met het kenmerk "Schermlezers: worden ondersteund" (Screen Reader: supported). U kunt dit nagaan op de pagina met gegevens over het boek in kwestie.
+
+U gebruikt de bladermodus om boeken te lezen.
+Deze wordt vanzelf geactiveerd wanneer u een boek opent of de focus ergens in een boekgebied plaatst.
+De pagina wordt, wanneer dit aan de orde is, automatisch  omgeslagen door de cursor  te verplaatsen of met behulp van het commando "Alles uitspreken".
+%kc:beginInclude
+U kunt ook handmatig naar de volgende pagina gaan  met de Pagina Omlaag-toets,en met de toets Pagina Omhoog kunt u naar de vorige bladzijde.
+%kc:endInclude
+
+Navigeren met een enkele lettertoets wordt ondersteund voor koppelingen en afbeeldingen maar alleen binnen de huidige pagina.
+Bij het navigeren tussen koppelingen (links) worden ook voetnoten meegenomen.
+
++++ Tekstselectie +++
+Met Kindle kunt u verschillende handelingen met betrekking tot geselecteerde tekst, uitvoeren, waaronder het verkrijgen van een definitie uit een woordenboek, het toevoegen van aantekeningen en tekstmarkeringen, het kopiëren van tekst naar het klembord en het doorzoeken van een webpagina. 
+Daartoe dient u eerst tekst op de gebruikelijke manier te selecteren in de bladermodus, bijv. met shift en de cursortoetsen.
+%kc:beginInclude
+Nadat u tekst hebt geselecteerd drukt u op de Windows contextmenutoets of op shift+f10 om te zien wat u kunt doen met de selectie.
+%kc:endInclude
+Als u dit doet zonder dat er tekst is geselecteerd, worden de opties getoond voor het woord bij de cursor.
+
++++ Aantekeningen van gebruiker +++
+U kunt een aantekening maken bij een woord of een tekstpassage. 
+Hiertoe selecteert u eerst de tekst waar het omgaat en roept u het contextmenu voor de selectie op zoals hierboven beschreven.
+Vervolgens kiest u "Aantekening toevoegen".
+
+Als u in de bladermodus leest, verwijst NVDA naar deze aantekeningen als Opmerkingen.
+
+Om een aantekening te bekijken, bewerken of verwijderen:
+
++ verplaatst u de cursor naar de tekst waar de aantekening zich bevindt,
++ roept u het Windows contextmenu op met de opties voor de selectie,
++ kiest u "Aantekening bewerken".
++
+
 + NVDA configureren +
 
 ++ Opties ++
@@ -912,6 +948,10 @@ Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven
 ==== Cursor Tonen ====
 Met deze optie kunt u de braillecursor in- en uitschakelen.
 Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectieaanwijzer.
+
+==== Knipperende cursor ====
+Met deze optie kunt u een braillecursor laten knipperen.
+Als knipperen wordt uitgezet, blijft de braillecursor steeds in de "omhoog" stand staan.
 
 ==== Knippersnelheid cursor ====
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.
@@ -1226,6 +1266,7 @@ U kunt de vermelding laten horen van:
  - Tabellen
  - Rij- en kolomhoofden
  - Celcoördinaten
+ - Celranden [(Uit, Stijlen, Zowel kleuren als stijlen
 - Elementen
  - Links
  - Koppen
@@ -1243,7 +1284,7 @@ Als dit selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de op
 
 Standaard wordt de opmaak bij de systeemcursor / review cursor gedetecteerd, maar in bepaalde gevallen wordt ook de opmaak in de rest van de regel gedetecteerd voor zover dit geen nadelige invloed heeft op de prestatie.
 
-Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals Wordpad waar opmaak van belang is.
+Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals WordPad waar opmaak van belang is.
 
 ==== Regelinspringing melden ==== [lineIndentationOptions]
 Met deze optie kunt u bepalen hoe de inspringing van een regel wordt gemeld.
@@ -1411,7 +1452,7 @@ In de lijst staan de volgende beschikbare Triggers:
 -
 
 Om het profiel te wijzigen dat automatisch moet worden geactiveerd voor een bepaalde triggerselecteert u eerst de trigger en vervolgens het gewenste profiel in de lijst met profielen. 
-Als u niet wilt dat er een profiel wordt gebruikt, selecteert u "Normale Configuratie".
+Als u niet wilt dat er een profiel wordt gebruikt, selecteert u "(normale configuratie)".
 
 Druk op de knop Sluiten om naar het dialoogvenster Configuratieprofielen terug te gaan.
 
@@ -2161,8 +2202,8 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] is een apart programma dat gebruikt kan worden voor de ondersteuning van veel andere leesregels.
-Om er gebruik van te maken moet u [BRLTTY voor Windows http://brl.thefreecat.org/brltty/] installeren.
+[BRLTTY http://www.brltty.com/] is een opzichzelfstaand programma dat kan dienen ter ondersteuning van veel meer brailleleesregels.
+Om hiervan gebruik te kunnen maken moet u [BRLTTY voor Windows installeren http://www.brltty.com/download.html].
 U moet de nieuwste versie van het programma (bij voorbeeld, met als naam brltty-win-4.2-2.exe) downloaden en installeren.
 Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u ervoor zorgen de instructies nauwkeurig op te volgen, vooral bij gebruik van een USB-leesregel waarvoor de drivers van de fabrikant reeds zijn geïnstalleerd.
 
@@ -2255,10 +2296,11 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
 | -s | --secure | Veilige modus (Python consool uitschakelen) |
-| None | --disable-addons | Addons buiten werking gesteld. |
-| None | --no-sr-flag  | Verander de systeem-brede vlag voor de schermlezer niet. |
-| None | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
-| None | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
+| Geen | --disable-addons | Addons buiten werking gesteld. |
+| geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l)gegeven  argument. |
+| Geen | --no-sr-flag  | Verander de systeem-brede vlag voor de schermlezer niet. |
+| Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
+| Geen | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
 
 ++ Meer uitgebreide aanpassing van de uitspraak van leestekens en  symbolen ++
 Behalve in het [dialoogvenster Uitspraak van Interpunctie en Symbolen #SymbolPronunciation] zijn er nog andere mogelijkheden om de uitspraak van leestekens te beïnvloeden.

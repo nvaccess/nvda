@@ -698,6 +698,42 @@ When in a conversation:
 | Review message | NVDA+control+1-0 | Reports and moves the review cursor to a recent message, depending on the number pressed; e.g. NVDA+control+2 reads the second most recent message. |
 %kc:endInclude
 
+++ Kindle for PC ++
+NVDA supports reading and navigating books in Amazon Kindle for PC.
+This functionality is only available in Kindle books designated with "Screen Reader: Supported" which you can check on the details page for the book.
+
+Browse mode is used to read books.
+It is enabled automatically when you open a book or focus the book area.
+The page will be turned automatically as appropriate when you move the cursor or use the say all command.
+%kc:beginInclude
+You can manually turn to the next page with the pageDown key and turn to the previous page with the pageUp key.
+%kc:endInclude
+
+Single letter navigation is supported for links and graphics, but only within the current page.
+Navigating by link also includes footnotes.
+
++++ Text Selection +++
+Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
+To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
+%kc:beginInclude
+Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
+%kc:endInclude
+If you do this with no text selected, options will be shown for the word at the cursor.
+
++++ User Notes +++
+You can add a note regarding a word or passage of text.
+To do this, first select the relevant text and access the selection options as described above.
+Then, choose Add Note.
+
+When reading in browse mode, NVDA refers to these notes as comments.
+
+To view, edit or delete a note:
+
++ Move the cursor to the text containing the note.
++ Access the options for the selection as described above.
++ Choose Edit Note.
++
+
 + Configuring NVDA +
 
 ++ Preferences ++
@@ -915,6 +951,10 @@ This option allows the word that is under the cursor to be displayed in non-cont
 ==== Show Cursor ====
 This option allows the braille cursor to be turned on and off.
 It applies to the system caret and review cursor, but not to the selection indicator.
+
+==== Blink Cursor ====
+This option allows the braille cursor to blink.
+If blinking is turned off, the braille cursor will constantly be in the "up" position.
 
 ==== Cursor Blink Rate (ms) ====
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
@@ -1223,6 +1263,7 @@ You can configure reporting of:
  - Tables
  - Row/column headers
  - Cell coordinates
+ - Cell borders [(Off, Styles, Both Colors and Styles)
 - Elements
  - Headings
  - Links
@@ -1242,7 +1283,7 @@ If enabled, this setting tells NVDA to try and detect all the formatting changes
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
-Enable this option while proof reading documents in applications such as Wordpad, where formatting is important.
+Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
 ==== Line indentation reporting ====[lineIndentationOptions]
 This option allows you to configure how indentation at the beginning of lines is reported.
@@ -2164,8 +2205,8 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] is a separate program which can be used to support many more braille displays.
+In order to use this, you need to install [BRLTTY for Windows http://www.brltty.com/download.html].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
 
@@ -2258,6 +2299,7 @@ Following are the command line options for NVDA:
 | -m | --minimal | No sounds, no interface, no start message etc |
 | -s | --secure | Secure mode (disable Python console) |
 | None | --disable-addons | Addons will have no effect |
+| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given. |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |

@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-12-28 20:30-0800\n"
+"POT-Creation-Date: 2017-02-03 00:10+1000\n"
+"PO-Revision-Date: 2017-02-05 16:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -795,6 +795,7 @@ msgstr ""
 "التعطيل, ستمر هذه المفاتيح للتطبيق "
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "غير مدعوم بهذا المستند"
 
@@ -1289,6 +1290,7 @@ msgid "%s landmark"
 msgstr "%s علامة دليلية"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "%s محدد"
@@ -1320,6 +1322,33 @@ msgstr "نهاية"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "المرور بنهاية الكائنات التي تحتوي على عناصر كالقوائم والجداول"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "ليس في خلية جدولية"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "حافة الجدول"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "الانتقال للصف التالي بالجدول"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "الانتقال للصف السابق بالجدول"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "الانتقال للعمود التالي بالجدول"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "الانتقال للعمود السابق بالجدول"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -4239,6 +4268,42 @@ msgstr "خارج ال%s"
 msgid "page %s"
 msgstr "صفحة %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "مقطع %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+msgid "column {0} of {1}"
+msgstr "عمود {0} من {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "أعمدة %s"
+
+msgid "continuous section break"
+msgstr "فاصل مقطعي مستمر"
+
+msgid "new column section break"
+msgstr "فاصل مقطعي عمود جديد"
+
+msgid "new page section break"
+msgstr "فاصل مقطعي صفحة جديدة"
+
+msgid "even pages section break"
+msgstr "فاصل مقطعي للصفحات الزوجية"
+
+msgid "odd pages section break"
+msgstr "فاصل مقطعي للصفحات الفردية"
+
+msgid "column break"
+msgstr "فاصل الأعمدة"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4832,11 +4897,6 @@ msgstr "{symbol} كما في {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "حافة الجدول"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "تحريك الكائن والتحديد الحالي للعمود التالي"
@@ -4877,6 +4937,10 @@ msgstr "لا يوجد ملف صوتي يعمل"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "الإعلان عن الوقت المتبقى من الملف الصوتي الحالي, إن وجد"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "يظهر خيارات النص المحدد أو النص الموضوع عليه المؤشر"
+
 #. Translators: A position in a Kindle book
 #, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4885,6 +4949,25 @@ msgstr "{bookPercentage}%, المكان {curLocation} من {maxLocation}"
 #. Translators: a page in a Kindle book
 msgid "Page {pageNumber}"
 msgstr "صفحة {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "تمييز"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "لا يوجد نص محدد"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "تم تحديد %s"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "خارج نطاق الأكثر قراءة"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5754,6 +5837,10 @@ msgstr "إعادة التشغيل"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "إعادة التشغيل مع تعطيل الإضافات"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "إعادة التشغيل في مستوى فحص الأخطاء البرمجية"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7055,6 +7142,10 @@ msgstr "مد الكلمة الحالية ب&شفرة برايل الحاسوبي
 msgid "&Show cursor"
 msgstr "ظهور المؤشر"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "ظهور المؤشر"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "معدل ظهور المؤشر (ms)"
@@ -7222,28 +7313,6 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "تشغيل وتعطيل الاحتفاظ بعرض تنسيق الشاشة أثناء معالجة محتوى الصفحة"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "ليس في خلية جدولية"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "الانتقال للصف التالي بالجدول"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "الانتقال للصف السابق بالجدول"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "الانتقال للعمود التالي بالجدول"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "الانتقال للعمود السابق بالجدول"
 
 msgid "Taskbar"
 msgstr "شريط المهام"

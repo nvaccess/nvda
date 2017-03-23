@@ -199,7 +199,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			log.debugWarning("could not get attributes",exc_info=True)
 			return textInfos.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textInfos.FormatField()
-		if not attribsString and offset>0:
+		if attribsString is None and offset>0:
 			try:
 				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
 			except COMError:

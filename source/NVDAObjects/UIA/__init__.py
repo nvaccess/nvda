@@ -7,9 +7,11 @@
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
+from comtypes.automation import VARIANT
 import weakref
 import sys
 import numbers
+import languageHandler
 import UIAHandler
 import globalVars
 import eventHandler
@@ -134,6 +136,13 @@ class UIATextInfo(textInfos.TextInfo):
 			annotationTypes=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
 				formatField["invalid-spelling"]=True
+		cultureVal=getUIATextAttributeValueFromRange(range,UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
+		if cultureVal and isinstance(cultureVal,int):
+			try:
+				formatField['language']=languageHandler.windowsLCIDToLocaleName(cultureVal)
+			except:
+				log.debugWarning("language error",exc_info=True)
+				pass
 		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position,_rangeObj=None):
@@ -173,6 +182,8 @@ class UIATextInfo(textInfos.TextInfo):
 			#p=POINT(position.x,position.y)
 			#self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
 			raise NotImplementedError
+		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
+			self._rangeObj=position.clone()
 		else:
 			raise ValueError("Unknown position %s"%position)
 
@@ -236,7 +247,7 @@ class UIATextInfo(textInfos.TextInfo):
 		role = obj.role
 		field = textInfos.ControlField()
 		# Ensure this controlField is unique to the object
-		field['runtimeID']=obj.UIAElement.getRuntimeID()
+		runtimeID=field['runtimeID']=obj.UIAElement.getRuntimeId()
 		field['_startOfNode']=startOfNode
 		field['_endOfNode']=endOfNode
 		field["role"] = obj.role
@@ -252,7 +263,7 @@ class UIATextInfo(textInfos.TextInfo):
 		field["description"] = obj.description
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
-			field["table-id"] = 1 # FIXME
+			field["table-id"] = obj.UIAElement.getRuntimeId()
 			try:
 				field["table-rowcount"] = obj.rowCount
 				field["table-columncount"] = obj.columnCount
@@ -261,8 +272,10 @@ class UIATextInfo(textInfos.TextInfo):
 		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
 			try:
 				field["table-rownumber"] = obj.rowNumber
+				field["table-rowsspanned"] = obj.rowSpan
 				field["table-columnnumber"] = obj.columnNumber
-				field["table-id"] = 1 # FIXME
+				field["table-columnsspanned"] = obj.columnSpan
+				field["table-id"] = obj.table.UIAElement.getRuntimeId()
 				field['role']=controlTypes.ROLE_TABLECELL
 				field['table-columnheadertext']=obj.columnHeaderText
 				field['table-rowheadertext']=obj.rowHeaderText
@@ -567,7 +580,7 @@ class UIA(Window):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
-			elif self.UIATextPattern and isinstance(self.parent,edge.EdgeHTMLRootContainer):
+			elif self.UIATextPattern and self.role==controlTypes.ROLE_PANE and self.parent and (isinstance(self.parent,edge.EdgeHTMLRootContainer) or not isinstance(self.parent,edge.EdgeNode)): 
 				clsList.append(edge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
 				clsList.append(edge.EdgeList)
@@ -675,6 +688,10 @@ class UIA(Window):
 		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
 		return self.UIAInvokePattern
 
+	def _get_UIAGridPattern(self):
+		self.UIAGridPattern=self._getUIAPattern(UIAHandler.UIA_GridPatternId,UIAHandler.IUIAutomationGridPattern)
+		return self.UIAGridPattern
+
 	def _get_UIATogglePattern(self):
 		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
 		return self.UIATogglePattern
@@ -767,23 +784,29 @@ class UIA(Window):
 			return ""
 
 	def _get_keyboardShortcut(self):
-		ret = ""
+		# Build the keyboard shortcuts list early for readability.
+		shortcuts = []
 		try:
-			ret += self.UIAElement.currentAccessKey
-		except COMError:
+			accessKey = self.UIAElement.currentAccessKey
+			# #6779: Don't add access key to the shortcut list if UIA says access key is None, resolves concatenation error in focus events, object navigation and so on.
+			# In rare cases, access key itself is None.
+			if accessKey:
+				shortcuts.append(accessKey)
+		except COMError, AttributeError:
 			pass
-		if ret:
-			#add a double space to the end of the string
-			ret +="  "
 		try:
-			ret += self.UIAElement.currentAcceleratorKey
-		except COMError:
+			acceleratorKey = self.UIAElement.currentAcceleratorKey
+			# Same case as access key.
+			if acceleratorKey:
+				shortcuts.append(acceleratorKey)
+		except COMError, AttributeError:
 			pass
-		return ret
+		# #6790: Do not add two spaces unless both access key and accelerator are present in order to not waste string real estate.
+		return "  ".join(shortcuts) if shortcuts else ""
 
 	def _get_UIACachedStatesElement(self):
 		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
-		for prop in (UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+		for prop in (UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,UIAHandler.UIA_IsEnabledPropertyId):
 			statesCacheRequest.addProperty(prop)
 		return self.UIAElement.buildUpdatedCache(statesCacheRequest)
 
@@ -807,6 +830,8 @@ class UIA(Window):
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
 			if e.getCachedPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
+		if not e.getCachedPropertyValueEx(UIAHandler.UIA_IsEnabledPropertyId,True):
+			states.add(controlTypes.STATE_UNAVAILABLE)
 		try:
 			isDataValid=e.getCachedPropertyValueEx(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
 		except COMError:
@@ -933,6 +958,12 @@ class UIA(Window):
 			return val+1
 		raise NotImplementedError
 
+	def _get_rowSpan(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemRowSpanPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		return 1
+
 	def _get_rowHeaderText(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
 		if val==UIAHandler.handler.reservedNotSupportedValue:
@@ -952,6 +983,12 @@ class UIA(Window):
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val+1
 		raise NotImplementedError
+
+	def _get_columnSpan(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemColumnSpanPropertyId,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		return 1
 
 	def _get_columnHeaderText(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId ,True)
@@ -981,8 +1018,9 @@ class UIA(Window):
 
 	def _get_table(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemContainingGridPropertyId ,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
-			return UIA(UIAElement=val)
+		if val and val!=UIAHandler.handler.reservedNotSupportedValue:
+			e=val.QueryInterface(UIAHandler.IUIAutomationElement).buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			return UIA(UIAElement=e)
 		raise NotImplementedError
 
 	def _get_processID(self):

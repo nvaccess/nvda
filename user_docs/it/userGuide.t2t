@@ -1,6 +1,6 @@
 ﻿NVDA NVDA_VERSION Manuale utente
 NVDA NVDA_VERSION Manuale utente
-Ultimo Aggiornamento del manuale originale: 10 agosto2016, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 10 febbraio2017, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -24,7 +24,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente
-- Tradotto in 45 lingue
+- Tradotto in 48 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-Oltre all'inglese, NVDA è stato tradotto in 45 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, farsi, finlandese, Francese, Farsi, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+Oltre all'inglese, NVDA è stato tradotto in 47 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, Catalano, croato, Ceco, Coreano, Danese, Dutch, farsi, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Punjabi, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Spagnolo-colombiano, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -74,11 +74,11 @@ Accedere alla sezione download e si troverà l'apposito link per scaricarlo. In 
 Una volta che si esegue il file appena scaricato, verrà lanciata una copia temporanea di NVDA.
 In seguito verrà richiesto se installare NVDA sul disco fisso, se creare una versione portable, oppure continuare ad utilizzare la copia in esecuzione dello screen reader.
 
-Se si desidera utilizzare spesso NVDA su questo computer, è consigliabile scegliere di installare NVDA nel sistema.
+Se si desidera utilizzare spesso NVDA sul computer, è consigliabile scegliere di installare NVDA nel sistema.
 L'installazione comporta alcuni vantaggi, come la possibilità di avviarsi automaticamente dopo il login, la lettura delle finestre di Logon e le schermate generate dal controllo utente per la sicurezza (UAC), ed inoltre verrà creata  un'icona sul desktop e una voce sul menu avvio, tutte caratteristiche non presenti nella versione portable.
 Si ricorda che una volta installato NVDA, sarà sempre possibile creare una copia portable in qualsiasi momento.
 
-Se invece si desidera utilizzare NVDA in una chiavetta USB o su altri tipi di supporti scrivibili, allora è necessario selezionare di creare una copia portable.
+Se invece si desidera utilizzare NVDA in una chiavetta USB o su altri tipi di supporti scrivibili, allora è necessario selezionare l'opzione che permette di creare una copia portable.
 Questa versione portable potrà, in futuro, essere installata in un computer in qualsiasi momento.
 Comunque, se si desidera copiare NVDA in un dispositivo di sola lettura come un CD, basterà copiare il pacchetto scaricato dalla rete. 
 L'esecuzione della versione portable su questo tipo di dispositivi non è supportata al momento.
@@ -208,7 +208,7 @@ Per cui, risulta possibile compiere gesti come lo scorrimento in alto con due di
 Poiché esistono molti più comandi di NVDA rispetto ai gesti che possono essere eseguiti, NVDA permette di passare tra diverse modalità di tocco per far sì che possano essere impartiti il maggior numero di comandi attraverso i gesti.
 Le due modalità previste sono la modalità testo e quella a oggetti.
 Alcuni comandi di NVDA elencati in questa guida possono prevedere una modalità di tocco particolare, scritta tra parentesi, dopo il gesto.
-Ad esempio, scorrimento verso l'alto (modo testo), significa che il gesto sarà eseguito soltanto se ci si trova nella modalitàdi tocco testo.
+Ad esempio, scorrimento verso l'alto (modo testo), significa che il gesto sarà eseguito soltanto se ci si trova nella modalità di tocco testo.
 Se il comando non presenta una modalità di tocco, funzionerà in ogni circostanza.
 
 %kc:beginInclude
@@ -241,7 +241,7 @@ In alternativa, si può ricorrere alla System Tray.
 | Commuta Modalità Aiuto Immissione | NVDA+1 | NVDA+1 | Nessuno | in questa modalità sarà possibile premere qualsiasi tasto e ne verrà annunciato il nome e la propria funzione in NVDA |
 | Uscire da NVDA | NVDA+q | NVDA+q | Nessuno | Esce da NVDA |
 | Passa Tasto Successivo a | NVDA+f2 | NVDA+f2 | Nessuno | Questo comando istruisce NVDA a passare la combinazione di tasti successiva all'applicazione attiva, anche se si tratta di un comando di NVDA. |
-| Attiva/disattiva modalità riposo | NVDA+shift+s | NVDA+Shift+z | Nessuno | La modalità riposo, sleep mode disabilita tutti i comandi di NVDA e l'output tramite voce/braille per l'applicazione corrente. Risulta utile se si ha a che fare con programmi che forniscono direttamente indicazioni vocali. Ripremere la combinazione di tasti per disattivare questa funzione. |
+| Attiva/disattiva modalità riposo | NVDA+shift+s | NVDA+Shift+z | Nessuno | La modalità riposo, sleep mode disabilita tutti i comandi di NVDA e l'output tramite voce/braille per l'applicazione corrente. Risulta utile se si ha a che fare con programmi che forniscono direttamente indicazioni vocali (audiogame, centralini telefonici, etc). Ripremere la combinazione di tasti per disattivare questa funzione. |
 %kc:endInclude
 
 ++ Conoscere Informazioni di sistema ++
@@ -307,7 +307,7 @@ Inoltre potrebbe essere necessario lavorare con [oggetti #Objects] che non posso
 In questi casi, si può utilizzare la navigazione ad oggetti.
 
 Essa permette di ottenere informazioni e spostarsi tra singoli [oggetti #Objects].
-Quando ci si sposta su un oggetto, NVDA lo annuncerà allo stesso modo a come avviene con il focus di sistema.
+Quando ci si sposta su un oggetto, NVDA lo annuncerà allo stesso modo come avviene con il focus di sistema.
 Se invece si desidera esplorare il testo così come appare sullo schermo, è possibile utilizzare la [navigazione in linea #ScreenReview].
 
 Onde evitare di doversi muovere indietro ed avanti tra ogni singolo oggetto del sistema, gli oggetti sono raggruppati in maniera gerarchica.
@@ -323,7 +323,7 @@ Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i 
 Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza con il focus di sistema, tuttavia questo comportamento può essere modificato, attivando o disattivando la relativa opzione.
 
 Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
-Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
+Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo". Attenzione che così facendo la pressione di un cursor routing non sposterà il cursore di sistema, bensì quello di controllo, il che potrebbe generare confusione all'utente se non si è consapevoli di questo.
 
 Per navigare ad oggetti, utilizzare i tasti seguenti:
 
@@ -698,6 +698,42 @@ In una conversazione:
 | Annuncia messaggio | NVDA+control+1-0 | Legge il messaggio e vi sposta il cursore di controllo, a seconda del numero premuto. Ad esempio NVDA+control+2 legge il secondo messaggio più recente. |
 %kc:endInclude
 
+++ Kindle per PC ++
+NVDA supporta la lettura e la navigazione dei libri in Amazon Kindle per PC.
+Questa funzionalità è disponibile solo nei libri Kindle che supportano la "formattazione avanzata dei caratteri", cosa che è possibile controllare alla pagina dettagli per il libro. La stragrande maggioranza dei testi supporta questa funzione.
+
+Per la lettura dei libri viene usata la modalità navigazione.
+Si attiverà automaticamente non appena si apre un libro, o si posiziona il focus nell'area contenente il testo.
+Sempre automaticamente verranno girate le pagine sia con lo spostamento del cursore, sia con la modalità dire tutto.
+%kc:beginInclude
+è possibile utilizzare manualmente i tasti pagina su o pagina giù per spostarsi tra le pagine.
+%kc:endInclude
+
+La navigazione veloce con le lettere è supportata per link e grafici, ma soltanto per la pagina corrente.
+ La navigazione per link comprende anche le note a piè di pagina.
+ 
++++ Selezionare il testo +++
+Kindle consente di eseguire varie operazioni sul testo selezionato, come l'ottenimento di una definizione dal dizionario, l'aggiunta di note ed evidenziazioni, copiare il testo negli appunti e la ricerca sul web.
+Per fare questo, per prima cosa selezionare il testo come sempre in modalità navigazione (ad esempio tenendo premuto shift e spostandosi con i tasti freccia).
+%kc:beginInclude
+Dopo aver selezionato il testo, premere il tasto applicazioni o maiusc+f10 per visualizzare le opzioni disponibili per operare con la selezione.
+%kc:endInclude
+Se si esegue questa operazione senza aver selezionato alcun testo, verranno visualizzate le opzioni inerenti la parola sotto al cursore.
+
++++ Note dell'utente +++
+È possibile aggiungere una nota riguardo una parola o un passaggio di testo.
+Per fare questo, per prima cosa selezionare il testo più rilevante, successivamente accedere alle opzioni di selezione come spiegato nel paragrafo precedente.
+Quindi, scegliere Aggiungi Nota.
+
+Durante la lettura in modalità navigazione, NVDA chiamerà questo genere di note con il termine "commenti".
+
+Per visualizzare, modificare o eliminare una nota:
+
++ Spostare il cursore sul testo contenente la nota.
++ Accedere alle opzioni inerenti la selezione come descritto sopra.
++ Scegliere Modifica Nota.
++
+
 + Configurare NVDA +
 
 ++ Preferenze ++
@@ -915,6 +951,10 @@ Questa opzione permette la visualizzazione della parola sotto il cursore nel for
 ==== Mostra cursore ====
 Questa opzione permette di attivare o disattivare la visualizzazione del cursore braille.
 Si applica al cursore di sistema e al cursore di controllo, ma non agli indicatori di selezione.
+
+==== Cursore lampeggiante ====
+Questa opzione consente al cursore braille di lampeggiare.
+Se il lampeggìo viene disattivato, il cursore braille sarà sempre visibile, senza che i puntini corrispondenti si alzino e abbassino ritmicamente.
 
 ==== Velocità lampeggio cursore (ms) ====
 Si tratta di un campo numerico che permette di modificare la velocità di lampeggio del cursore in millisecondi.
@@ -1645,7 +1685,7 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Sposta il Display Braille alla riga successiva | t4 |
 | Scorrimento Display Braille avanti | t5 o etouch3 |
 | Portare cursore sulla cella braille  | routing |
-\ spostarsi all'inizio della riga in modalità in linea | t1+t2 |
+| spostarsi all'inizio della riga in modalità in linea | t1+t2 |
 | Spostarsi alla fine della riga in modalità in linea | t4+t5 |
 | Commuta inseguimento braille | t1+t3 |
 | Leggi titolo | etouch2 |
@@ -2166,8 +2206,8 @@ Si prega di consultare la [documentazione EcoBraille ftp://ftp.once.es/pub/utt/b
 +%kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 
-Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 
+Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://www.brltty.com/download.thm].
 Si deve scaricare ed installare l'ultimo pacchetto Installer, che è chiamato, ad esempio, brltty-win-4.2-2.exe. 
 Quando si configura la Barra Braille e la porta da utilizzare, si prega di fare attenzione alle istruzioni presentate a schermo, specialmente in caso si possieda un modello USB e sono già installati nel sistema i Drivers prodotti dalla casa madre.
 
@@ -2260,6 +2300,7 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | -m | --minimal | Niente suoni, niente interfaccia, niente messaggio all'avvio etc |
 | -s | --secure | Modalità protetta (disabilita Python console) |
 | None | --disable-addons | I componenti aggiuntivi non avranno alcun effetto |
+| None | --debug-logging | Abilita il debug nei log solo per la presente istanza. Questa impostazione ha la precedenza su qualsiasi altro livello di log ( ""--loglevel"", -l). |
 | None | --no-sr-flag  | Non modifica il flag Screen Reader per il sistema |
 | None | --install | Installa NVDA (avviando la copia appena installata) |
 | None | --install | Silent Installa NVDA (non avviando la copia appena installata) |
