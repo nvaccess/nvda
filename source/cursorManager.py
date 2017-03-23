@@ -116,7 +116,7 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		oldInfo=self.makeTextInfo(posConstant)
-		#If we should go to beginning or end, and we land on a blank line, we might want to go away from that blank line.
+		#If we go to the beginning or end, and we land on a blank line, we might want to move to the first available non-blank line.
 		if posConstant in {textInfos.POSITION_FIRST, textInfos.POSITION_LAST}:
 			while self._shouldSkipBlankLines(oldInfo):
 				if self._isBlankHelper(oldInfo):
