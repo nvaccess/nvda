@@ -3,6 +3,31 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Novas Características ==
+- Agora pódese anunciar a información do borde das celdas en Microsoft Excel usando `NVDA+f`. (#3044)
+- Engadido o soporte para atributos aria-current. (#6358)
+- Sopórtase o cambio autumático de linguas no Microsoft Edge. (#6852)
+
+
+== Correción de Fallos ==
+- Os elementos de menú en páxinas Web (as caixas de verificación e os botóns de opción dos elementos de menús) agora poden activarse mentres se estea en modo exploración. (#6735)
+- Agora tradúcese o anunciado de nomes de follas en Excel. (#6848)
+- Premer ESC mentres o indicativo "confirmar borrado" do perfil de configuración está activo agora pecha o diálogo. (#6851)
+- Correxidos algúns colgues en Mozilla Firefox e outras aplicacións Gecko onde está habilitada a característica multi-proceso. (#6885)
+- O anunciado da cor de fondo na revisión de pantalla agora é máis preciso cando o texto se dibuxou cun fondo trasparente. (#6467) 
+- Mellorado o soporte para aria-describedby en Internet Explorer 11, incluindo o soporte dentro de iframes e cando se proporcionan varios IDs. (#5784)
+- Na actualización Windows Creators, a atenuación de audio do NVDA funciona de novo como en anteriores versións de Windows (ex.: Atenuar ca voz e sons, atenuar sempre, e non atenuar están dispoñibles todas). (#6933)
+- NVDA xa non fallará ao navegar ou ao anunciar certos controis (UIA) onde non se definíu un atallo de teclado. (#6779)
+- Xa non se engaden dous espazos valdeiros na información de atallos de teclado para certos controis (UIA). (#6790)
+
+
+== Cambios para Desenvolvedores ==
+- Os argumentos de liña de ordes agora procésanse co módulo argparser de Python, en lugar de co optparser. Esto permite a certas opcións coma -r e -q manexarse exclusivamente. (#6865)
+- core.callLater agora pon en cola a devolución de chamada á cola principal do NVDA despois do retraso dado, en lugar de executala directamente despertando ao núcleo. Esto detén posibles colgues debidos a que o núcleo se vaia a dormir accidentalmente despois de procesar unha chamada, en medio dunha chamada modal coma o amosado dunha caixa de mensaxe. (#6797) 
+
+
 = 2017.1 =
 O subliñable desta versión inclúe o anunciado de secións e columnas de texto no Microsoft Word; o Soporte para lectura, navegación e anotación de libros no Kindle para PC; e o soporte mellorado para o Microsoft Edge.
 
