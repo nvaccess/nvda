@@ -142,8 +142,6 @@ class Gecko_ia2(VirtualBuffer):
 				continue
 		return True
 
-
-
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
