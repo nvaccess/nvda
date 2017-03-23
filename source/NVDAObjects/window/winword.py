@@ -956,6 +956,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
+
 	def _shouldSkipBlankLines(self, info):
 		#Do not skip blank lines in word, because it doesn't really make sense.
 		return False
