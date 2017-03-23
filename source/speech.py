@@ -308,6 +308,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 		except NotImplementedError:
 			pass
 	newPropertyValues['current']=obj.isCurrent
+	newPropertyValues['placeholder']=obj.placeholder
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -1009,6 +1010,9 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		except KeyError:
 			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
 			textList.append(controlTypes.isCurrentLabels[True])
+	ariaPlaceholder = propertyValues.get('placeholder', None)
+	if ariaPlaceholder:
+		textList.append(_("placeholder: %s"%ariaPlaceholder))
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:

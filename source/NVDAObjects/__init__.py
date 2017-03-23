@@ -810,6 +810,9 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
+	def _get_placeholder(self):
+		return None
+
 	def _reportErrorInPreviousWord(self):
 		try:
 			# self might be a descendant of the text control; e.g. Symphony.
