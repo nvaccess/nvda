@@ -1073,9 +1073,9 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		blankInfo = info.copy()
 		blankInfo.expand(textInfos.UNIT_LINE)
 		#Get control Starts
-		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart" and not field.field["isHidden"]]
+		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart" and not field.field.get("isHidden", False)]
 		if len(controlFields) == 0:
-			return False
+			return True
 		if controlFields[-1].field["role"] in BAD_LEAF_ROLES:
 			return False
 		for field in controlFields:
