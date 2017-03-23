@@ -61,6 +61,7 @@ def validateConfig(configObj,validator,validationResult=None,keyList=None):
 
 #: @deprecated: Use C{conf.validator} instead.
 val = Validator()
+
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
