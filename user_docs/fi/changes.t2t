@@ -3,6 +3,31 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Uudet ominaisuudet ==
+- Solun reunojen tiedot voidaan nyt selvittää Microsoft Excelissä käyttäen näppäinkomentoa NVDA+F. (#3044)
+- Lisätty tuki aria-current-attribuuteille. (#6358)
+- Tuki automaattiselle kielen vaihtamiselle Microsoft Edgessä. (#6852)
+
+
+== Korjatut ohjelmavirheet ==
+- Verkkosivun valikkokohteiden (valikkokohteina olevien valintaruutujen ja valintapainikkeiden) aktivoiminen on nyt mahdollista selaustilassa oltaessa. (#6735)
+- Excelin laskentataulukon ilmoittaminen on nyt käännetty eri kielille. (#6848)
+- Esc-näppäimen painaminen asetusprofiilin "Vahvista poistaminen" -kehotteen ollessa aktiivisena sulkee nyt valintaikkunan. (#6851)
+- Korjattu joitakin kaatumisia Mozilla Firefoxissa ja muissa Gecko-sovelluksissa, joissa usean ikkunan toiminto on otettu käyttöön. (#6885)
+- Taustavärin ilmoittaminen ruututarkastelussa on nyt tarkempaa, kun teksti on piirretty läpinäkyvällä taustalla. (#6467) 
+- Paranneltu tuki aria-describedby-attribuutille Internet Explorer 11:ssä, mukaan lukien tilanteet, joissa sitä käytetään kehysten sisällä tai kun useita tunnuksia on saatavilla. (#5784)
+- NVDA:n äänenvoimakkuuden hiljennys toimii Windowsin Creators Update -versiossa taas kuten aiemmissa Windows-versioissa (ts. vaihtoehdot "hiljennä puhuttaessa ja ääntä toistettaessa", "hiljennä aina" sekä "ei hiljennystä" ovat kaikki käytettävissä). (#6933)
+- Tiettyihin UIA-säätimiin siirtyminen tai niiden ilmoittaminen ei enää epäonnistu NVDA:ta käyttäen, kun niihin ei ole määritetty pikanäppäintä. (#6779)
+- Pikanäppäintietoihin ei enää lisätä kahta välilyöntiä tietyissä UIA-säätimissä. (#6790)
+
+
+== Muutokset kehittäjille (englanniksi) ==
+- Commandline arguments are now processed with Python's argparser module, rather than optparser. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797) 
+
+
 = 2017.1 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. osien ja tekstipalstojen ilmoittaminen Microsoft Wordissa; tuki kirjojen lukemiselle ja kommentoinnille sekä niissä liikkumiselle Kindle for PC:ssä; sekä paranneltu Microsoft Edgen tuki.
 
