@@ -938,7 +938,19 @@ class UIA(Window):
 		# #6790: Do not add two spaces unless both access key and accelerator are present in order to not waste string real estate.
 		return "  ".join(shortcuts) if shortcuts else ""
 
-	_UIAStatesPropertyIDs={UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,UIAHandler.UIA_IsEnabledPropertyId}
+	_UIAStatesPropertyIDs={
+		UIAHandler.UIA_HasKeyboardFocusPropertyId,
+		UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
+		UIAHandler.UIA_IsDataValidForFormPropertyId,
+		UIAHandler.UIA_IsRequiredForFormPropertyId,
+		UIAHandler.UIA_ValueIsReadOnlyPropertyId,
+		UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,
+		UIAHandler.UIA_ToggleToggleStatePropertyId,
+		UIAHandler.UIA_IsKeyboardFocusablePropertyId,
+		UIAHandler.UIA_IsPasswordPropertyId,
+		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
+		UIAHandler.UIA_IsEnabledPropertyId
+	}  if UIAHandler.isUIAAvailable else set()
 
 	def _get_states(self):
 		states=set()
