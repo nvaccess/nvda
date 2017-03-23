@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-10 00:10+1000\n"
-"PO-Revision-Date: 2017-03-12 10:01+0200\n"
+"POT-Creation-Date: 2017-03-17 00:10+1000\n"
+"PO-Revision-Date: 2017-03-17 23:54+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -2332,6 +2332,30 @@ msgstr "neselectat"
 msgid "not checked"
 msgstr "nebifat"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "curent"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "pagină curentă"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "etapă curentă"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "locație curentă"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "dată curentă"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "oră curentă"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -4294,7 +4318,7 @@ msgstr "Emulează apăsarea %s pe tastatura sistemului"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "gol"
+msgstr "spațiu gol"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -4433,6 +4457,10 @@ msgstr "stil %s"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "stil implicit"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "fără linii de frontieră"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -6249,8 +6277,9 @@ msgid "Error activating profile."
 msgstr "Eroare la activarea profilului"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Sigur vreți să ștergeți acest profil? Acțiunea este ireversibilă."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr ""
+"Acest profil va fi șters permanent. Această acțiune nu poate fi neterminată."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7149,6 +7178,8 @@ msgid "Line &indentation reporting:"
 msgstr "&Anunțare indentație rând"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "dezactivat"
 
@@ -7199,6 +7230,21 @@ msgstr "&Antet rând/coloană"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "&Coordonate celulă"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Stiluri"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Atât culori cât și stiluri"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Frontierele celulei"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7765,6 +7811,11 @@ msgstr ""
 "toate celulele aflate mai jos și la dreapta ei în interiorul acestei regiuni."
 "Apăsând de două ori se va omite antetul de rând curent acestei celule."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Foaie {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Mesajul de intrare este {title}: {message}"
@@ -7790,6 +7841,129 @@ msgstr "Editare comentariu pentru celula {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} până la {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "margine superioară"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "margine inferioară"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "margine din stânga"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "margine din dreapta"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "linie diagonală sus-dreapta"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "linie diagonală în jos-dreapta"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "margini orizontale cu excepția celor din exterior"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "margini verticale cu excepția celor din exterior"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "continuu"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "discontinuu"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "cratimă punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "cratimă punct punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "punctat"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "dublu"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "cratimă înclinată punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "foarte fin"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "subțire"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "mediu"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "gros"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "cratimă medie punct punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "cratimă medie punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "punctat mediu"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "margine din jur {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "marginea superioară și cea inferioară {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "marginea din stânga și cea din dreapta {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "liniile diagonale sus-dreapta și jos-dreapta {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 # adăugat "plană" pentru claritate
 #. Translators: A type of chart in Microsoft Excel.
@@ -8818,3 +8992,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "Sigur vreți să ștergeți acest profil? Acțiunea este ireversibilă."

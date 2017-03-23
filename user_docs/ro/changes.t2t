@@ -3,10 +3,35 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.1 =
-Caracteristicile principale ale acestei lansări includ raportarea secțiunilor și a coloanelor de text în Microsoft Word, suport în citirea, navigarea și adnotarea cărților în Kindle for PC și suport îmbunătățit pentru Microsoft Edge.
+= 2017.2 =
 
-== Noi funcționalități ==
+== Noi Funcționalități ==
+- Informația marginii celulei poate fi acum raportată în Microsoft Excel prin utilizarea `NVDA+f`. (#3044)
+- A fost adăugat suportul pentru atributele curente-aria. (#6358)
+- Comutarea automată a limbii este suportată în Microsoft Edge. (#6852)
+
+
+== Rezolvări Defecte ==
+- Elementele din meniul paginii web ) elementul de meniu și butoanele rotative din casetele de bifat) pot fi acum activate în timp ce vă aflați în modul de navigare. (#6735)
+- Raportarea numelui foii Excel este acum tradusă. (#6848)
+- Apăsarea tastei escape în timp ce comanda configurării profilului „Confirmă Ștergerea” este activă respinge fereastra de dialog. (#6851)
+- Au fost reparate unele erori în Mozilla Firefox și în alte aplicații Gecko unde caracteristica multi-proces este activată. (#6885)
+- Raportarea culorii de fundal în examinarea ecranului este acum mai precisă atunci când textul a fost desenat cu un fundal transparent. (#6467)
+- Suport îmbunătățit pentru describedby-aria în Internet Explorer 11, incluzând suport în iframe-uri și atunci când ID-uri multiple sunt furnizate. (#5784)
+- În Windows Creaters Update, atenuarea audio a NVDA-ului funcționează ca în versiunile anterioare de Windows (I.e. Atenuează cu vorbire și sunete, atenuează totdeauna și fără atenuare sunt disponibile. (#6933)
+- NVDA nu va mai eșua să navigheze sau să raporteze comenzi (UIA) unde o scurtătură nu este definită. (#6779)
+- Două spații goale nu mai sunt adăugate în informația scurtăturii pentru anumite comenzi (UIA). (#6790)
+
+
+== Modificări pentru Dezvoltatori ==
+- Argumentele Commandline sunt procesate acum cu modulul argparser al Python-ului, mai degrabă decât optparser-ul. Aceasta permite anumite opțiuni cum ar fi -r și -q pentru a fi manipulate în mod exclusiv. (#6865)
+- core.callLater pune callback-ul la  coada principală a NVDA-ului după întârzierea dată, mai degrabă decât trezirea nucleului și executarea lui în mod direct. Aceasta oprește posibilele blocări datorită nucleului care intră în repaus accidental după procesarea unui callback în mijlocul unui apel de model cum ar fi afișarea unei casete de mesaj. (#6797) 
+
+
+= 2017.1 =
+Caracteristicile principale ale acestei lansări includ raportarea secțiunilor și a coloanelor de text în Microsoft Word; suport în citirea, navigarea și adnotarea cărților în Kindle for PC; și suport îmbunătățit pentru Microsoft Edge.
+
+== Noi Funcționalități ==
 - În Microsoft Word tipul de spațiere între secțiuni și nmărul secțiunilor pot fi anunțate. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
 - În Microsoft Word coloanele de text pot fi acum anunțate. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
 - Comutarea automată a limbii este acum suportată în Wordpad. (#6555)
@@ -27,7 +52,7 @@ Caracteristicile principale ale acestei lansări includ raportarea secțiunilor 
 - Datorită schimbărilor aduse în Windows 10 Creators Update, modul  de reducere a volumului la redarea vorbirii sau a sunetelor nu poate asigura estomparea completă a sunetului înainte de vorbire sau va menține estomparea sufficient încât să oprească sincronizarea rapidă a volumului. Aceste setări nu afectează versiunile mai vechi ale Windows 10. (#6684)
 
 
-== Rezolvări defecte ==
+== Rezolvări Defecte ==
 - A fost reparată blocarea în Microsoft Word la deplasarea paragrafului printr-un document mare în timpul modului de navigare. (#6368)
 - Tabelele în Microsoft Word care au fost copiate din Microsoft Excel nu mai sunt tratate ca tabele de aspect, prin urmare nu mai sunt ignorate. (#5927)
 - La încercarea de tastare în Microsoft Excel în timpul vizualizării protejate, NVDA nu emite un sunet mai degrabă decât vorbirea caracterelor care nu au fost tastate. (#6570)
@@ -43,14 +68,14 @@ Caracteristicile principale ale acestei lansări includ raportarea secțiunilor 
 - NVDA nu mai devine inutilizabil după ieșirea din Windows Media Player în timp ce este focalizat pe un glisor de control. (#5467)
 
 
-== Modificări pentru dezvoltatori ==
+== Modificări pentru Dezvoltatori ==
 - Profilurile și fișierele de configurare sunt acum upgradate automat pentru a cunoaște necesitățile modificărilor schematice. Dacă există o eroare pe durata upgrade-ului, o notificare este afișată, configurația este resetată, iar configurația veche este disponibilă în logul NVDA la nivelul 'Info'. (#6470)
 
 
 = 2016.4 =
-Caracteristicile principale ale acestei lansări includ suport îmbunătățit pentru Microsoft Edge, mod de navigare în aplicația Windows 10 Mail și îmbunătățiri semnificative la dialogurile NVDA-ului.
+Caracteristicile principale ale acestei lansări includ suport îmbunătățit pentru Microsoft Edge; mod de navigare în aplicația Windows 10 Mail; și îmbunătățiri semnificative la dialogurile NVDA-ului.
 
-== Noi funcționalități ==
+== Noi Funcționalități ==
 - NVDA poate acum să indice indentația rândurilor folosind tonuri. Opțiunea poate fi configurată folosind caseta combinată „Anunțare indentație rând” din fereastra cu preferințe pentru formatarea documentului din NVDA. (#5906)
 - Suport pentru afișajul braille Orbit Reader 20. (#6007)
 - A fost adăugată o opțiune pentru a deschide monitorul de vorbire la pornirea aplicației. Opțiunea poate fi activată printr-o căsuță de bifat din fereastra monitorului de vorbire. (#5050)
@@ -76,7 +101,7 @@ Caracteristicile principale ale acestei lansări includ suport îmbunătățit p
 - Modul în care sunt raportate IFrame-urile (documente încorporate în alte documente) a fost realizat mai consistent pe diferite browsere. IFrame-urile sunt acum raportate prin „cadru” în Firefox. (#6047)
 
 
-== Rezolvări defecte ==
+== Rezolvări Defecte ==
 - Corectat o eroare rară la ieșirea din NVDA în timp ce monitorul de vorbire este deschis. (#5050)
 - Hărțile grafice sunt randate în mod corespunzător în mod navigare în Mozilla Firefox. (#6051)
 - Atunci când vă aflați în fereastra dicționarului, apăsarea tastei enter salvează toate modificările făcute și închide fereastra de dialog. Anterior, apăsarea tastei enter nu făcea nimic. (#6206)
@@ -106,9 +131,9 @@ Caracteristicile principale ale acestei lansări includ suport îmbunătățit p
 
 
 = 2016.3 =
-Caracteristicile principale ale acestei lansări includ abilitatea de a dezactiva add-on-uri în mod individual, suport pentru câmpuri de formular în Microsoft Excel, îmbunătățiri semnificative ale raportării culorilor, corectării și îmbunătățiri asociate mai multor afișaje braille și remedieri și îmbunătățiri ale compatibilității cu Microsoft Word.
+Caracteristicile principale ale acestei lansări includ abilitatea de a dezactiva add-on-uri în mod individual; suport pentru câmpuri de formular în Microsoft Excel; îmbunătățiri semnificative ale raportării culorilor, corectării și îmbunătățiri asociate mai multor afișaje braille și remedieri; și îmbunătățiri ale compatibilității cu Microsoft Word.
 
-== Noi funcționalități ==
+== Noi Funcționalități ==
 - Modul navigare poate fi acum folosit pentru citirea documentelor PDF în Microsoft Edge, pentru versiunile Windows 10 Aniversar. (#5740)
 - Textele tăiate cu o linie sau linie dublă sunt acum anunțate dacă este cazul în Microsoft Word. (#5800)
 - În Microsoft Word, este raportat titlul unui tabel dacă a fost definit. Dacă există o descriere, poate fi accesată folosind comanda de deschidere a descrierii detaliate (NVDA+d) în mod navigare. (#5943)
@@ -129,7 +154,7 @@ Caracteristicile principale ale acestei lansări includ abilitatea de a dezactiv
 - Actualizare a eSpeak NG la versiunea Master 11b1a7b (22 iunie 2016). (#6037)
 
 
-== Rezolvări defecte ==
+== Rezolvări Defecte ==
 - În mod navigare în Microsoft Word, copierea în planșetă acum menține formatarea. (#5956)
 - În Microsoft Word, NVDA acum raportează corespunzător când se folosesc comenzile proprii Wordului de navigare a tabelelor (alt+home, alt+end, alt+pageUp și alt+pageDown) și comenzi de selecție pentru tabele (shift adăugat la comenzile de navigare). (#5961)
 - În ferestrele de dialog Microsoft Word, navigarea prin obiecte a NVDA a fost îmbunătățită semnificativ. (#6036)
@@ -169,9 +194,9 @@ Această lansare corectează defectele din Microsoft Word:
 
 
 = 2016.2 =
-Caracteristicile principale ale acestei noi lansări includ abilitatea de a raporta erorile de ortografie în timpul tastării, suport pentru raportarea erorilor de ortografie în Microsoft Word și îmbunătățiri pentru integrarea cu Microsoft Office.
+Caracteristicile principale ale acestei noi lansări includ abilitatea de a raporta erorile de ortografie în timpul tastării; suport pentru raportarea erorilor de ortografie în Microsoft Word; și îmbunătățiri pentru integrarea cu Microsoft Office.
 
-== Noi funcționalități ==
+== Noi Funcționalități ==
 - În mod exploarare, pentru Internet Explorer și alte controloare MSHTML, acum, folosirea navigației cu prima literă pentru a urma adnotările (a și shift+a), mută la textul inserat și șters. (#5691)
 - În Microsoft Excel, NVDA acum anunță nivelul unui grup de celule, precum și dacă este extins sau restrâns. (#5690)
 - Dubla apăsare a comenzii „Raportează formatul textului” (NVDA+f) prezintă informația în modul navigare pentru a putea fi examinată. (#4908)
@@ -189,7 +214,7 @@ Caracteristicile principale ale acestei noi lansări includ abilitatea de a rapo
 - În Microsoft Excel, coordonatele sunt acum anunțate înaintea antetelor pentru a elimina ambiguitățile dintre antete și conținut. (#5396)
 
 
-== Rezolvări defecte ==
+== Rezolvări Defecte ==
 - În modul navigare, la încercarea de a folosi navigarea cu o singură literă pentru a se muta la un element care nu este suportat pentru respectivul document, NVDA anunță că acest lucru nu este suportat, față de precedentul anunț că nu există element în direcția respectivă. (#5691)
 - La listarea foilor de lucru în Lista de elemente pentru Microsoft Excel, sunt acum incluse și foile care conțin doar diagrame. (#5698)
 - NVDA nu mai anunță informații ciudate la comutarea ferestrelor într-o aplicație Java cu ferestre multiple, cum ar fi IntelliJ sau Android Studio. (#5732)
