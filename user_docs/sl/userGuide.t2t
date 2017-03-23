@@ -700,7 +700,7 @@ Ko smo v pogovoru:
 
 ++ Kindle za Osebni Računalnik ++
 NVDA podpira branje knjig in premikanje po njih v aplikaciji Amazon Kindle za osebne računalnike.
-Ta funkcionalnost je na voljo samo v knjigah Kindle, ki podpirajo "Enhanced Typesetting", (aplikacija je samo v Angleščini)), kar lahko preverite na strani, ki prikazuje podrobne informacije o lastnostih knjige.
+Ta funkcionalnost je na voljo samo v knjigah Kindle, ki so zaznamovane z oznako "Screen Reader: Supported", (aplikacija je samo v Angleščini)), kar lahko preverite na strani, ki prikazuje podrobne informacije o lastnostih knjige.
 
 Za branje se uporablja Brskalniško delovanje.
 To se vključi samodejno, ko knjigo odprete ali pa se žarišče postavi na njeno območje.
@@ -1263,6 +1263,7 @@ V NVDA lahko nastavite poročanje za:
  - Tabele
  - Glave in čela Tabel (glave vrstic in stolpcev)
  - Koordinate celic v tabelah
+ - Obrobe celice (Izključeno, Slogi, Tako Barve kot Slogi)
 - Elementi
  - Naslove
  - Povezave
@@ -2295,10 +2296,10 @@ NVDA pozna naslednje možnosti ukazne vrstice:
 | -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka, kjer se morajo beležiti dogodki, ki se zapisujejo v dnevnik. |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Najnižji nivo beleženja sporočil v dnevnik (razhroščevanje 10, info 20, opozorilo, 30, napaka 40, kritično 50). Privzeta vrednost je nastavljena na opozorilo. |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Prostor, kjer so shranjene vse nastavitve za NVDA. |
-| -m | --minimal | Brez zvokov, brez vmesnika, brez sporočila po zagunu ipd. |
+| -m | --minimal | Brez zvokov, brez vmesnika, brez sporočila po zagonu ipd. |
 | -s | --secure | Varni način (Onemogočena konzola Pythona) |
 | None | --disable-addons | Dodatki nimajo vpliva na NVDA. Isto, kot če v NVDA dodatkov ne bi bilo. |
-| None | --debug-logging | Nastavi nivo beleženja na RAzhroščevanje samo za naslednji zagon NVDA. Ta nastavitev bo preglasila katerikoli drug dan argument, ki definira nivo beleženja ( ""--loglevel"", -l). |
+| None | --debug-logging | Nastavi nivo beleženja na Razhroščevanje samo za naslednji zagon NVDA. Ta nastavitev bo preglasila katerikoli drug dan argument, ki definira nivo beleženja ( ""--loglevel"", -l). |
 | None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
 | None | --install | Namesti NVDA (na novo nameščeno kopijo NVDA tudi zažene). |
 | None | --install-silent | Tiho namesti NVDA (na novo nameščene kopije NVDA ne zažene). |

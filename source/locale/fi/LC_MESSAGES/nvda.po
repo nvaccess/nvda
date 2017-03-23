@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 00:10+1000\n"
-"PO-Revision-Date: 2017-02-20 15:23+0200\n"
+"POT-Creation-Date: 2017-03-17 00:10+1000\n"
+"PO-Revision-Date: 2017-03-17 14:51+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -2332,6 +2332,30 @@ msgstr "ei valittu"
 msgid "not checked"
 msgstr "ei valittu"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "nykyinen"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "nykyinen sivu"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "nykyinen vaihe"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "nykyinen sijainti"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "nykyinen päiväys"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "nykyinen aika"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -4423,6 +4447,10 @@ msgstr "tyyli: %s"
 msgid "default style"
 msgstr "oletustyyli"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "ei reunaviivoja"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6238,8 +6266,8 @@ msgid "Error activating profile."
 msgstr "Virhe otettaessa käyttöön profiilia."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Haluatko varmasti poistaa tämän profiilin? Poistoa ei voi perua."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Tämä profiili poistetaan pysyvästi. Poistoa ei voi perua."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7120,6 +7148,8 @@ msgid "Line &indentation reporting:"
 msgstr "Rivien &sisennysten ilmoittaminen:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Ei käytössä"
 
@@ -7170,6 +7200,21 @@ msgstr "Rivi- ja sarak&eotsikot"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "Solujen koor&dinaatit"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Tyylit"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Värit ja tyylit"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Solun reunat:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7736,6 +7781,11 @@ msgstr ""
 "ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen riviotsikon."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Laskentataulukko {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Syöttöilmoitus on {title}: {message}"
@@ -7761,6 +7811,129 @@ msgstr "Muokataan solun {address} kommenttia"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "väliltä {firstAddress} {firstContent} ja {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "yläreuna"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "alareuna"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "vasen reuna"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "oikea reuna"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "vinoviiva ylhäältä oikealle"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "vinoviiva alas oikealle"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "vaakareunat paitsi ulkoreunoilla"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "pystyreunat paitsi ulkoreunoilla"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "jatkuva"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "katkoviiva"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "viiva-piste"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "viiva-piste-piste"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "pisteviiva"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "kaksinkertainen"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "vinoviiva-piste"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "hiusviiva"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "kapea"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "normaali"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "leveä"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "normaali katkoviiva-piste-piste"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "normaalipistekatkoviiva"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "normaalikatkoviiva"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} ympäröivä reuna"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} ylä- ja alareunat"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} vasen ja oikea reuna"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} vinoviivat ylhäältä oikealle ja alhaalta oikealle"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8779,3 +8952,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "Haluatko varmasti poistaa tämän profiilin? Poistoa ei voi perua."
