@@ -208,6 +208,12 @@ class GeneralSettingsDialog(SettingsDialog):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+			# Translators: The label of a checkbox in general settings to toggle automatic checking for ad-on updates at startup.
+			item=self.autoCheckForAddonUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &add-on updates when NVDA starts"))
+			item.Value=config.conf["update"]["addonUpdateAtStartup"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizerHelper.addItem(item)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -276,6 +282,7 @@ class GeneralSettingsDialog(SettingsDialog):
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
+		config.conf["update"]["addonUpdateAtStartup"]=self.autoCheckForAddonUpdatesCheckBox.IsChecked()
 		if self.oldLanguage!=newLanguage:
 			if gui.messageBox(
 				# Translators: The message displayed after NVDA interface language has been changed.
