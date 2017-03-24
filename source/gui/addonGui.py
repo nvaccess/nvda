@@ -462,10 +462,7 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 			_("Error downloading update for {name}.").format(name = self.addonName),
 			_("Error"),
 			wx.OK | wx.ICON_ERROR)
-		try:
-			updateAddonsGenerator(self.addonsToBeUpdated, auto=self.auto).next()
-		except StopIteration:
-			pass
+		self.continueUpdatingAddons()
 
 	def _downloadSuccess(self):
 		self._stopped()
@@ -479,6 +476,7 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
 					wx.OK | wx.ICON_ERROR)
+				self.continueUpdatingAddons()
 				return
 			bundleName=bundle.manifest['name']
 			# Optimization (future): it is better to remove would-be add-ons all at once instead of doing it each time a bundle is opened.
@@ -503,6 +501,7 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
 					wx.OK | wx.ICON_ERROR)
+				self.continueUpdatingAddons()
 				return
 			else:
 				progressDialog.done()
@@ -513,6 +512,9 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 				os.remove(self.destPath)
 			except OSError:
 				pass
+		self.continueUpdatingAddons()
+
+	def continueUpdatingAddons(self):
 		try:
 			updateAddonsGenerator(self.addonsToBeUpdated, auto=self.auto).next()
 		except StopIteration:
