@@ -25,6 +25,8 @@ import shutil
 from cStringIO import StringIO
 import zipfile
 import urllib
+import threading
+import wx
 # #3208 todo: tentatively use JSON for exchanging add-on update data.
 import json
 
@@ -127,9 +129,6 @@ def disableAddonsIfAny():
 	state["pendingEnableSet"].clear()
 
 def checkForAddonUpdates():
-	# No matter which protocol will be used, go through installed add-ons, connect online, and return a dictionary.
-	# Send a dictionary with key = add-on name, value = channel and current version.
-	# Return dictionary: Key = add-on name, value = a dictionary of new version, path, hash.
 	curAddons = {}
 	addonSummaries = {}
 	for addon in getAvailableAddons():
@@ -149,6 +148,18 @@ def checkForAddonUpdates():
 		# In reality, it'll be a list of URL's to try.
 		res[addon]["urls"] = None
 	return res
+
+def autoAddonUpdateCheck():
+	t = threading.Thread(target=_showAddonUpdateUI)
+	t.daemon = True
+	t.start()
+
+def _showAddonUpdateUI():
+	info = checkForAddonUpdates()
+	if info is not None:
+		import gui
+		from gui.addonGui import AddonUpdatesDialog
+		wx.CallAfter(AddonUpdatesDialog, gui.mainFrame, info)
 
 def initialize():
 	""" Initializes the add-ons subsystem."""

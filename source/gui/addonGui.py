@@ -384,12 +384,15 @@ class AddonUpdatesDialog(wx.Dialog):
 	def onUpdate(self, evt):
 		self.Destroy()
 		# #3208: do not display add-ons manager while updates are in progres.
-		self.Parent.Destroy()
+		# Also, Skip the below step if this is an automatic update check.
+		if not self.auto:
+			self.Parent.Destroy()
 		updateAddonsGenerator(self.addonUpdateInfo.values(), auto=self.auto).next()
 
 	def onClose(self, evt):
 		self.Destroy()
-		gui.mainFrame.onAddonsManagerCommand(None)
+		if not self.auto:
+			gui.mainFrame.onAddonsManagerCommand(None)
 
 
 def updateAddonsGenerator(addons, auto=True):
@@ -398,7 +401,7 @@ def updateAddonsGenerator(addons, auto=True):
 	"""
 	if not len(addons):
 		if auto:
-			wx.CallLater(1, AddonsDialog.Close)
+			wx.CallLater(1, AddonsDialog(gui.mainFrame).Close)
 		else:
 			gui.mainFrame.onAddonsManagerCommand(None)
 		return

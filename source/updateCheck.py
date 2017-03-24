@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2016 NV Access Limited
+#Copyright (C) 2012-2017 NV Access Limited, Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -33,6 +33,7 @@ from logHandler import log
 import config
 import shellapi
 import winUser
+import addonHandler
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -163,6 +164,9 @@ class AutoUpdateChecker(UpdateChecker):
 		secsSinceLast = max(time.time() - state["lastCheck"], 0)
 		# The maximum time till the next check is CHECK_INTERVAL.
 		secsTillNext = CHECK_INTERVAL - int(min(secsSinceLast, CHECK_INTERVAL))
+		# #3208: unless NVDA Core needs to check for an update right now, give add-ons a chance to check for updates.
+		if secsTillNext > 0 and config.conf["update"]["addonUpdateAtStartup"]:
+			wx.CallAfter(addonHandler.autoAddonUpdateCheck)
 		self._checkTimer.Start(secsTillNext * 1000, True)
 
 	def terminate(self):
