@@ -792,6 +792,10 @@ This option is only available for installed copies of NVDA.
 If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
 You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
 
+==== Automatically check for add-on updates when NVDA starts ====
+If this is enabled, NVDA will check for updated versions of NVDA add-ons when it starts.
+You can also check for add-on updates manually via [Add-ons Manager #addonsManager].
+
 +++ Synthesizer Selection (NVDA+control+s) +++
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.
 Once you have selected your synthesizer of choice, you can press Ok and NVDA will load the selected Synthesizer.
@@ -1501,8 +1505,8 @@ However, if you click or focus inside the viewer, NVDA will temporarily stop upd
 
 To toggle the speech viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-++ Add-ons Manager ++
-The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, enable and disable add-on packages for NVDA.
+++ Add-ons Manager ++[addonsManager]
+The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, update, enable and disable add-on packages for NVDA.
 These packages are provided by the community and contain custom code that may add or change features in NVDA or even provide support for extra Braille displays or speech synthesizers.
 
 The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
@@ -1533,6 +1537,17 @@ To enable a previously disabled add-on, press the enable button.
 You can disable an add-on if the add-on status indicates it is running or enabled, or enable it if the add-on is suspended or disabled.
 For each press of the enable/disable button, add-on status changes to indicate what will happen when NVDA restarts.
 Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+
+To update add-ons, press Check for add-on update button.
+If add-on updates are available, a dialog containing a list of add-ons with updates will be displayed.
+Press Update button to update add-ons or Close button to exit.
+When update button is pressed, NVDA will download and install add-ons one after another.
+Once add-ons were updated, you'll be returned to add-ons manager.
+Be sure to restart NVDA after updating add-ons in order to use new add-on versions.
+
+Alternatively, you can configure NVDA to check for add-on updates when it starts.
+When this is enabled, when NVDA starts, it will check for add-on updates and present the update dialog described above.
+After updating add-ons, be sure to restart NVDA when prompted.
 
 The manager also has a Close button to close the dialog.
 If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
