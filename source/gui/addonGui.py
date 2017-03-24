@@ -321,7 +321,7 @@ Description: {description}
 		self.refreshAddonsList(activeIndex=index)
 
 	def onGetAddonsClick(self,evt):
-		ADDONS_URL = "http://addons.nvda-project.org"
+		ADDONS_URL = "https://addons.nvda-project.org"
 		os.startfile(ADDONS_URL)
 
 	def __del__(self):
