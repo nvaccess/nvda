@@ -871,6 +871,14 @@ class UIA(Window):
 					states.add(controlTypes.STATE_CHECKED)
 		return states
 
+	def _get_presentationType(self):
+		presentationType=super(UIA,self).presentationType
+		# UIA NVDAObjects can only be considered content if UI Automation considers them both a control and content.
+		if presentationType==self.presType_content and not (self.UIAElement.cachedIsContentElement and self.UIAElement.cachedIsControlElement):
+			presentationType=self.presType_layout
+		return presentationType 
+
+
 	def correctAPIForRelation(self, obj, relation=None):
 		if obj and self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
 			# The target element is not the root element for the window, so don't change API class; i.e. always use UIA.
