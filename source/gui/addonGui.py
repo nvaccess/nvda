@@ -205,7 +205,6 @@ class AddonsDialog(wx.Dialog):
 		t.start()
 
 	def addonUpdateCheck(self):
-		self.Disable()
 		info = addonHandler.checkForAddonUpdates()
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
@@ -384,27 +383,30 @@ class AddonUpdatesDialog(wx.Dialog):
 
 	def onUpdate(self, evt):
 		self.Destroy()
-		AddonsDialog(gui.mainFrame).Close()
-		for addon in self.addonUpdateInfo:
-			addonInfo = self.addonUpdateInfo[addon]
-			downloader = AddonUpdateDownloader([addonInfo["urls"]], addonInfo["summary"])
-			downloader.start()
-		if self.auto:
-			wx.CallLater(1, addonsDialog.Close)
-		else:
-			self.focusToAddonsDialog()
+		# #3208: do not display add-ons manager while updates are in progres.
+		self.Parent.Destroy()
+		updateAddonsGenerator(self.addonUpdateInfo.values(), auto=self.auto).next()
 
 	def onClose(self, evt):
 		self.Destroy()
-		self.focusToAddonsDialog()
+		gui.mainFrame.onAddonsManagerCommand(None)
 
-	def focusToAddonsDialog(self):
-		# Bring back add-ons manager.
-		print "testing"
-		addonsDialog = AddonsDialog(gui.mainFrame)
-		addonsDialog.refreshAddonsList()
-		addonsDialog.Enable()
-		addonsDialog.Show()
+
+def updateAddonsGenerator(addons, auto=True):
+	"""Updates one add-on after the other.
+	The auto parameter is used to show add-ons manager after all add-ons were updated.
+	"""
+	if not len(addons):
+		if auto:
+			wx.CallLater(1, AddonsDialog.Close)
+		else:
+			gui.mainFrame.onAddonsManagerCommand(None)
+		return
+	# #3208: Update (download and install) add-ons one after the other.
+	addonInfo = addons.pop()
+	downloader = AddonUpdateDownloader([addonInfo["urls"]], addonInfo["summary"], addonsToBeUpdated=addons, auto=auto)
+	downloader.start()
+	yield
 
 
 class AddonUpdateDownloader(updateCheck.UpdateDownloader):
@@ -412,20 +414,26 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 	No hash checking for now, and URL's and temp file paths are different.
 	"""
 
-	def __init__(self, urls, addonName, fileHash=None):
+	def __init__(self, urls, addonName, fileHash=None, addonsToBeUpdated=None, auto=True):
 		"""Constructor.
 		@param urls: URLs to try for the update file.
 		@type urls: list of str
-		@param fileHash: The SHA-1 hash of the file as a hex string.
 		@param addonName: Name of the add-on being downloaded.
 		@type addonName: str
+		@param fileHash: The SHA-1 hash of the file as a hex string.
 		@type fileHash: basestring
+		@param addonsToBeUpdated: a list of add-ons that needs updating.
+		@type addonsToBeUpdated: list of str
+		@param auto: Automatic add-on updates or not.
+		@type addonsToBeUpdated: bool
 		"""
 		super(AddonUpdateDownloader, self).__init__(urls, fileHash)
 		self.urls = urls
 		self.addonName = addonName
 		self.destPath = tempfile.mktemp(prefix="nvda_addonUpdate-", suffix=".nvda-addon")
 		self.fileHash = fileHash
+		self.addonsToBeUpdated = addonsToBeUpdated
+		self.auto = auto
 
 	def start(self):
 		"""Start the download.
@@ -454,6 +462,10 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 			_("Error downloading update for {name}.").format(name = self.addonName),
 			_("Error"),
 			wx.OK | wx.ICON_ERROR)
+		try:
+			updateAddonsGenerator(self.addonsToBeUpdated, auto=self.auto).next()
+		except StopIteration:
+			pass
 
 	def _downloadSuccess(self):
 		self._stopped()
@@ -501,3 +513,7 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 				os.remove(self.destPath)
 			except OSError:
 				pass
+		try:
+			updateAddonsGenerator(self.addonsToBeUpdated, auto=self.auto).next()
+		except StopIteration:
+			pass
