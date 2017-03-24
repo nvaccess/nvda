@@ -5,7 +5,7 @@
 #Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
 
 """Add-ons Manager user interface
-Add-on Manager allows add-ons to be installed, removed, enabled, disabled and perform other tasks.
+The Add-ons Manager allows add-ons to be installed, removed, enabled, disabled and perform other tasks.
 It also allows add-ons to provide a button to read add-on help files.
 """
 
@@ -74,8 +74,8 @@ class AddonsDialog(wx.Dialog):
 		self.enableDisableButton.Disable()
 		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
 		entryButtonsSizer.Add(self.enableDisableButton)
-		# Translators: The label for a button in Add-ons Manager dialog to check for an updated version of the selected add-on.
-		self.updateCheckButton=wx.Button(self,label=_("Check for add-on &update..."))
+		# Translators: The label for a button in Add-ons Manager dialog to check for updated versions of installed add-ons.
+		self.updateCheckButton=wx.Button(self,label=_("Check for add-on &updates..."))
 		self.updateCheckButton.Disable()
 		self.updateCheckButton.Bind(wx.EVT_BUTTON,self.onAddonUpdateCheck)
 		entryButtonsSizer.Add(self.updateCheckButton)
@@ -266,7 +266,7 @@ class AddonsDialog(wx.Dialog):
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
-		self.updateCheckButton.Enable(addon is not None and not addon.isPendingRemove)
+		self.updateCheckButton.Enable()
 
 	def onClose(self,evt):
 		self.Destroy()
@@ -360,6 +360,7 @@ class AddonUpdatesDialog(wx.Dialog):
 				self.addonsList.Append((addon['summary'], addon['curVersion'], addon['version']))
 			addonsSizerHelper.addItem(entriesSizer)
 		else:
+			# Translators: Message displayed when no add-on updates are available.
 			addonsSizerHelper.addItem(wx.StaticText(self, label=_("No add-on update available.")))
 
 		bHelper = addonsSizerHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
@@ -428,7 +429,7 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 		@param addonsToBeUpdated: a list of add-ons that needs updating.
 		@type addonsToBeUpdated: list of str
 		@param auto: Automatic add-on updates or not.
-		@type addonsToBeUpdated: bool
+		@type auto: bool
 		"""
 		super(AddonUpdateDownloader, self).__init__(urls, fileHash)
 		self.urls = urls
