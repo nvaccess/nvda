@@ -28,7 +28,114 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
 import braille
 
+UIAControlTypesWhereNameIsContent={
+	UIAHandler.UIA_ButtonControlTypeId,
+	UIAHandler.UIA_HyperlinkControlTypeId,
+	UIAHandler.UIA_ImageControlTypeId,
+	UIAHandler.UIA_MenuItemControlTypeId,
+	UIAHandler.UIA_TabItemControlTypeId,
+	UIAHandler.UIA_TextControlTypeId,
+	UIAHandler.UIA_SplitButtonControlTypeId
+} if UIAHandler.isUIAAvailable else None
+
+from collections import defaultdict
+
+class UIAControlField(textInfos.ControlField):
+	"""Control field information for a given UIA NVDAObject."""
+
+	_obj=None
+
+	def __init__(self,windowHandle,UIAElement,initialUIACachedPropertyIDs=None,isEmbedded=False,startOfNode=False,endOfNode=False):
+		"""
+		@ param obj: the NVDAObject the control field is for.
+		@type obj: L{UIA}
+		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
+		@ type isEmbedded: bool
+		@param startOfNode: True if the control field represents the very start of this object.
+		@type startOfNode: bool
+		@param endOfNode: True if the control field represents the very end of this object.
+		@type endOfNode: bool
+		"""
+		super(UIAControlField,self).__init__()
+		self._windowHandle=windowHandle
+		self._UIAElement=UIAElement
+		self._initialUIACachedPropertyIDs=initialUIACachedPropertyIDs
+		self['uniqueID']=UIAElement.getRuntimeId()
+		self['_startOfNode']=startOfNode
+		self['_endOfNode']=endOfNode
+		self['embedded']=isEmbedded
+
+	@property
+	def obj(self):
+		if not self._obj:
+			log.info("instantiating obj",stack_info=True)
+			self._obj=UIA(windowHandle=self._windowHandle,UIAElement=self._UIAElement,initialUIACachedPropertyIDs=self._initialUIACachedPropertyIDs)
+		return self._obj
+
+	def lookupFromObj(self,item):
+		if item=="role":
+			role=self.obj.role
+			# map all table cell variants to table cell
+			if role in (controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
+				role=controlTypes.ROLE_TABLECELL
+			return role
+		elif item=="states":
+			states = self.obj.states
+			# The user doesn't care about certain states, as they are obvious.
+			states.discard(controlTypes.STATE_EDITABLE)
+			states.discard(controlTypes.STATE_MULTILINE)
+			states.discard(controlTypes.STATE_FOCUSED)
+			return states
+		elif item=='nameIsContent':
+			return self._UIAElement.cachedControlType in UIAControlTypesWhereNameIsContent
+		elif item=="name":
+			return self.obj.name if not self['nameIsContent'] else u""
+		elif item=="description":
+			return self.obj.description
+		elif item=="level":
+			return self.obj.positionInfo.get("level")
+		elif item=='table-id':
+			role=self['role']
+			if role==controlTypes.ROLE_TABLE:
+				return self['runtimeID']
+			elif role==controlTypes.ROLE_TABLECELL:
+				return self.obj.table.UIAElement.getRuntimeId()
+			else:
+				raise KeyError
+		elif item=="table-rowcount":
+			return self.obj.rowCount
+		elif item=="table-columncount":
+			return self.obj.columnCount
+		elif item=="table-rownumber":
+			return self.obj.rowNumber
+		elif item=="table-rowsspanned":
+			return self.obj.rowSpan
+		elif item=="table-columnnumber":
+			return self.obj.columnNumber
+		elif item=="table-columnsspanned":
+			return self.obj.columnSpan
+		elif item=='table-columnheadertext':
+			return self.obj.columnHeaderText
+		elif item=='table-rowheadertext':
+			return self.obj.rowHeaderText
+		raise KeyError
+
+	def __missing__(self,item):
+		try:
+			val=self[item]=self.lookupFromObj(item)
+		except NotImplementedError:
+			raise KeyError
+		return val
+
+	def get(self,item,default=None):
+		try:
+			return self[item]
+		except KeyError:
+			return default
+
 class UIATextInfo(textInfos.TextInfo):
+
+	UIAControlFieldClass=UIAControlField
 
 	_cache_controlFieldNVDAObjectClass=True
 	def _get_controlFieldNVDAObjectClass(self):
@@ -42,9 +149,9 @@ class UIATextInfo(textInfos.TextInfo):
 	_controlFieldUIACachedPropertyIDs={
 		UIAHandler.UIA_IsValuePatternAvailablePropertyId,
 		UIAHandler.UIA_HasKeyboardFocusPropertyId,
-		UIAHandler.UIA_NamePropertyId,
+		#UIAHandler.UIA_NamePropertyId,
 		UIAHandler.UIA_ToggleToggleStatePropertyId,
-		UIAHandler.UIA_HelpTextPropertyId,
+		#UIAHandler.UIA_HelpTextPropertyId,
 		UIAHandler.UIA_AccessKeyPropertyId,
 		UIAHandler.UIA_AcceleratorKeyPropertyId,
 		UIAHandler.UIA_HasKeyboardFocusPropertyId,
@@ -302,70 +409,6 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return self.copy()
 
-	UIAControlTypesWhereNameIsContent={
-		UIAHandler.UIA_ButtonControlTypeId,
-		UIAHandler.UIA_HyperlinkControlTypeId,
-		UIAHandler.UIA_ImageControlTypeId,
-		UIAHandler.UIA_MenuItemControlTypeId,
-		UIAHandler.UIA_TabItemControlTypeId,
-		UIAHandler.UIA_TextControlTypeId,
-		UIAHandler.UIA_SplitButtonControlTypeId
-	} if UIAHandler.isUIAAvailable else None
-
-
-	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
-		"""
-		Fetch control field information for the given UIA NVDAObject.
-		@ param obj: the NVDAObject the control field is for.
-		@type obj: L{UIA}
-		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
-		@ type isEmbedded: bool
-		@param startOfNode: True if the control field represents the very start of this object.
-		@type startOfNode: bool
-		@param endOfNode: True if the control field represents the very end of this object.
-		@type endOfNode: bool
-		@return: The control field for this object
-		@rtype: textInfos.ControlField containing NVDA control field data.
-		"""
-		role = obj.role
-		field = textInfos.ControlField()
-		# Ensure this controlField is unique to the object
-		runtimeID=field['runtimeID']=obj.UIAElement.getRuntimeId()
-		field['_startOfNode']=startOfNode
-		field['_endOfNode']=endOfNode
-		field["role"] = obj.role
-		states = obj.states
-		# The user doesn't care about certain states, as they are obvious.
-		states.discard(controlTypes.STATE_EDITABLE)
-		states.discard(controlTypes.STATE_MULTILINE)
-		states.discard(controlTypes.STATE_FOCUSED)
-		field["states"] = states
-		field['nameIsContent']=nameIsContent=obj.UIAElement.cachedControlType in self.UIAControlTypesWhereNameIsContent
-		if not nameIsContent:
-			field['name']=obj.name
-		field["description"] = obj.description
-		field["level"] = obj.positionInfo.get("level")
-		if role == controlTypes.ROLE_TABLE:
-			field["table-id"] = runtimeID
-			try:
-				field["table-rowcount"] = obj.rowCount
-				field["table-columncount"] = obj.columnCount
-			except NotImplementedError:
-				pass
-		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
-			try:
-				field["table-rownumber"] = obj.rowNumber
-				field["table-rowsspanned"] = obj.rowSpan
-				field["table-columnnumber"] = obj.columnNumber
-				field["table-columnsspanned"] = obj.columnSpan
-				field["table-id"] = obj.table.UIAElement.getRuntimeId()
-				field['role']=controlTypes.ROLE_TABLECELL
-				field['table-columnheadertext']=obj.columnHeaderText
-				field['table-rowheadertext']=obj.rowHeaderText
-			except NotImplementedError:
-				pass
-		return field
-
 	def _getTextFromUIARange(self,range):
 		"""
 		Fetches plain text from the given UI Automation text range.
@@ -485,14 +528,14 @@ class UIATextInfo(textInfos.TextInfo):
 		log.debug("Generating controlFields for parents")
 		windowHandle=self.obj.windowHandle
 		controlFieldNVDAObjectClass=self.controlFieldNVDAObjectClass
+		UIAControlFieldClass=self.UIAControlFieldClass
 		for index,(parentElement,parentClipped) in enumerate(parentElements):
 			if log.isEnabledFor(log.DEBUG):
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
 			startOfNode=not parentClipped[0]
 			endOfNode=not parentClipped[1]
 			try:
-				obj=controlFieldNVDAObjectClass(windowHandle=windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
-				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
+				field=UIAControlFieldClass(windowHandle,parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
 			except LookupError:
 				log.debug("Failed to fetch controlField data for parentElement. Breaking")
 				continue

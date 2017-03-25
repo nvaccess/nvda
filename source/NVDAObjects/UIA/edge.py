@@ -19,14 +19,58 @@ import textInfos
 import UIAHandler
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
 from UIAUtils import *
-from . import UIA, UIATextInfo
+from . import UIA, UIATextInfo, UIAControlField, UIAControlTypesWhereNameIsContent
+
+class EdgeControlField(UIAControlField):
+
+	def lookupFromObj(self,item):
+		if item=='landmark':
+			landmark=self.obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
+			if landmark and (landmark!='region' or self['name']):
+				return aria.landmarkRoles.get(landmark)
+			raise KeyError
+		elif item=="states" and self.obj.role==controlTypes.ROLE_COMBOBOX and self.obj.UIATextPattern:
+			# Combo boxes with a text pattern are editable
+			states=super(EdgeControlField,self).lookupFromObj(item)
+			states.add(controlTypes.STATE_EDITABLE)
+			return states
+		elif item=='current':
+			return self.obj.isCurrent
+		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
+		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
+		elif item=="content":
+			content=""
+			if self['nameIsContent']:
+				ariaProperties=self.obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+				hasAriaLabel=('label=' in ariaProperties)
+				hasAriaLabelledby=('labelledby=' in ariaProperties)
+				if hasAriaLabel or hasAriaLabelledby:
+					self['name']=""
+					content=self.obj.name
+			if not content and self['embedded']:
+				content=self.obj.value
+				if not content and self['role']==controlTypes.ROLE_EMBEDDEDOBJECT:
+					content=self.obj.name
+		elif False: #item=="role":
+			role=super(EdgeControlField,self).lookupFromObj(item)
+			if role==controlTypes.ROLE_GROUPING:
+				role=controlTypes.ROLE_EMBEDDEDOBJECT
+			return role
+		# Give lists an item count
+		elif item=='_childcontrolcount' and self['role']==controlTypes.ROLE_LIST:
+			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(self._UIAElement)
+			if child:
+				return child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+		return super(EdgeControlField,self).lookupFromObj(item)
 
 class EdgeTextInfo(UIATextInfo):
+
+	UIAControlFieldClass=EdgeControlField
 
 	def _get_UIAElementAtStartWithReplacedContent(self):
 		"""Fetches the deepest UIAElement at the start of the text range whos name has been overridden by the author (such as aria-label)."""
 		element=self.UIAElementAtStart
-		condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:self.UIAControlTypesWhereNameIsContent})
+		condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAControlTypesWhereNameIsContent})
 		# A part from the condition given, we must always match on the root of the document so we know when to stop walking
 		runtimeID=VARIANT()
 		self.obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
@@ -90,48 +134,7 @@ class EdgeTextInfo(UIATextInfo):
 				self.setEndPoint(tempInfo,"endToEnd" if endPoint=="end" else "startToStart")
 			return res
 
-	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
-		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
-		field['embedded']=isEmbedded
-		# report landmarks
-		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
-		if landmark and (landmark!='region' or field.get('name')):
-			field['landmark']=aria.landmarkRoles.get(landmark)
-		# Combo boxes with a text pattern are editable
-		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
-			field['states'].add(controlTypes.STATE_EDITABLE)
-		# report if the field is 'current'
-		field['current']=obj.isCurrent
-		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
-		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
-		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		hasAriaLabel=('label=' in ariaProperties)
-		hasAriaLabelledby=('labelledby=' in ariaProperties)
-		if field.get('nameIsContent'):
-			content=""
-			field.pop('name',None)
-			if hasAriaLabel or hasAriaLabelledby:
-				content=obj.name
-			if not content:
-				text=self.obj.makeTextInfo(obj).text
-				if not text or text.isspace():
-					content=obj.name or field.pop('description',None)
-			if content:
-				field['content']=content
-		elif isEmbedded:
-			field['content']=obj.value
-			if field['role']==controlTypes.ROLE_GROUPING:
-				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
-				if not obj.value:
-					field['content']=obj.name
-		# Give lists an item count
-		if obj.role==controlTypes.ROLE_LIST:
-			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
-			if child:
-				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
-		return field
-
-	def getTextWithFields(self,formatConfig=None):
+	def old_getTextWithFields(self,formatConfig=None):
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
 		if self.isCollapsed:
@@ -304,7 +307,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 				if includeRoot or not isRoot:
 					try:
 						obj=UIA(windowHandle=self.obj.windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
-						field=self._getControlFieldForObject(obj)
+						field=self.NVDAObjectControlFieldClass(obj)
 					except LookupError:
 						log.debug("Failed to fetch controlField data for parentElement. Breaking")
 						break
@@ -361,7 +364,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 
 class EdgeNode(UIA):
 
-	_edgeIsPreGapRemoval=winVersion.winVersion.build<15048
+	_edgeIsPreGapRemoval=False #winVersion.winVersion.build<15048
 
 	_TextInfo=EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
 
