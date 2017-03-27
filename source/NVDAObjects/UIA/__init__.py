@@ -649,20 +649,18 @@ class UIA(Window):
 		"""
 		return {}
 
-	def _getUIACacheablePropertyValue(self,ID,ignoreDefault=False,onlyCached=False):
+	def _getUIACacheablePropertyValue(self,ID,ignoreDefault=False):
 		"""
-		Fetches the value for a UI Automation property from an element cache available in this core cycle. If not cached and L{onlyCached} is False then a new value will be fetched.
+		Fetches the value for a UI Automation property from an element cache available in this core cycle. If not cached then a new value will be fetched.
 		"""
 		elementCache=self._coreCycleUIAPropertyCacheElementCache
 		# If we have a UIAElement whos own cache contains the property, fetch the value from there
 		cacheElement=elementCache.get(ID,None)
 		if cacheElement:
 			value=cacheElement.getCachedPropertyValueEx(ID,ignoreDefault)
-		elif not onlyCached:
+		else:
 			# The value is cached nowhere, so ask the UIAElement for its current value for the property
 			value=self.UIAElement.getCurrentPropertyValueEx(ID,ignoreDefault)
-		else:
-			raise ValueError("UIA property value not cached")
 		return value
 
 	def _prefetchUIACacheForPropertyIDs(self,IDs):
