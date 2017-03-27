@@ -878,7 +878,6 @@ class UIA(Window):
 			presentationType=self.presType_layout
 		return presentationType 
 
-
 	def correctAPIForRelation(self, obj, relation=None):
 		if obj and self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
 			# The target element is not the root element for the window, so don't change API class; i.e. always use UIA.
