@@ -81,7 +81,10 @@ class UIATextInfo(textInfos.TextInfo):
 		""" The UIA cacheRequest object that will be used when fetching all UIA elements needed when generating control fields for this TextInfo's content."""
 		cacheRequest=UIAHandler.handler.baseCacheRequest.clone()
 		for ID in self._controlFieldUIACachedPropertyIDs:
-			cacheRequest.addProperty(ID)
+			try:
+				cacheRequest.addProperty(ID)
+			except COMError:
+				pass
 		UIATextInfo._controlFieldUIACacheRequest=self._controlFieldUIACacheRequest=cacheRequest
 		return cacheRequest
 
@@ -955,44 +958,61 @@ class UIA(Window):
 	def _get_states(self):
 		states=set()
 		self._prefetchUIACacheForPropertyIDs(self._UIAStatesPropertyIDs)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId,onlyCached=True):
+		try:
+			hasKeyboardFocus=self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId)
+		except COMError:
+			hasKeyboardFocus=False
+		if hasKeyboardFocus:
 			states.add(controlTypes.STATE_FOCUSED)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId,onlyCached=True):
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId):
 			states.add(controlTypes.STATE_FOCUSABLE)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId,onlyCached=True):
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsPasswordPropertyId):
 			states.add(controlTypes.STATE_PROTECTED)
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role=None
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,onlyCached=True):
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
 			role=self.role
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
-			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId,onlyCached=True):
+			if self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
-		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True,onlyCached=True):
+		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True):
 			states.add(controlTypes.STATE_UNAVAILABLE)
-		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,ignoreDefault=True,onlyCached=True):
+		try:
+			isDataValid=self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
+		except COMError:
+			isDataValid=UIAHandler.handler.reservedNotSupportedValue
+		if not isDataValid:
 			states.add(controlTypes.STATE_INVALID_ENTRY)
-		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId,onlyCached=True):
+		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
-		isReadOnly=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId,ignoreDefault=True,onlyCached=True)
+		try:
+			isReadOnly=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId,True)
+		except COMError:
+			isReadOnly=UIAHandler.handler.reservedNotSupportedValue
 		if isReadOnly and isReadOnly!=UIAHandler.handler.reservedNotSupportedValue:
 			states.add(controlTypes.STATE_READONLY)
-		expandCollapseState=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,ignoreDefault=True,onlyCached=True)
-		if expandCollapseState!=UIAHandler.handler.reservedNotSupportedValue:
-			if expandCollapseState==UIAHandler.ExpandCollapseState_Collapsed:
+		try:
+			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
+		except COMError:
+			s=UIAHandler.handler.reservedNotSupportedValue
+		if s!=UIAHandler.handler.reservedNotSupportedValue:
+			if s==UIAHandler.ExpandCollapseState_Collapsed:
 				states.add(controlTypes.STATE_COLLAPSED)
-			elif expandCollapseState==UIAHandler.ExpandCollapseState_Expanded:
+			elif s==UIAHandler.ExpandCollapseState_Expanded:
 				states.add(controlTypes.STATE_EXPANDED)
-		toggleState=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,ignoreDefault=True,onlyCached=True)
-		if toggleState!=UIAHandler.handler.reservedNotSupportedValue:
+		try:
+			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
+		except COMError:
+			s=UIAHandler.handler.reservedNotSupportedValue
+		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
 			if role==controlTypes.ROLE_TOGGLEBUTTON:
-				if toggleState==UIAHandler.ToggleState_On:
+				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_PRESSED)
 			else:
 				states.add(controlTypes.STATE_CHECKABLE)
-				if toggleState==UIAHandler.ToggleState_On:
+				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
 		return states
 
