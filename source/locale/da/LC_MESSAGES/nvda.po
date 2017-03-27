@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-03 00:10+1000\n"
-"PO-Revision-Date: 2017-02-08 11:24+0100\n"
+"POT-Creation-Date: 2017-03-17 00:10+1000\n"
+"PO-Revision-Date: 2017-03-20 11:23+0100\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <kontakt@nvda.dk>\n"
 "Language: da_DK\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2336,6 +2336,30 @@ msgstr "Ikke valgt"
 msgid "not checked"
 msgstr "Ikke markeret"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "nuværende"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "aktuelle side"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "nuværende trin:"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "aktuelle placering"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "nuværende dato"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "nuværende tid"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -4411,6 +4435,10 @@ msgstr "typografi %s"
 msgid "default style"
 msgstr "standardtypografi"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "ingen begrænsende linjer"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6222,9 +6250,9 @@ msgid "Error activating profile."
 msgstr "Fejl under aktivering af profil."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
+msgid "This profile will be permanently deleted. This action cannot be undone."
 msgstr ""
-"Er du sikker på, at du vil slette denne profil? Det kan ikke fortrydes."
+"Denne profil vil blive permanent slettet. Denne handling kan ikke fortrydes."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7113,6 +7141,8 @@ msgid "Line &indentation reporting:"
 msgstr "Rapporter &indrykning:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Fra"
 
@@ -7163,6 +7193,21 @@ msgstr "Række- og kolonneoverskrifter"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "&Cellekoordinater"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Typografier"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Både farver og typografier"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Cellekanter"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7728,6 +7773,11 @@ msgstr ""
 "nedenunder og til højre i samme område. Tryk to gange for at annullere "
 "rækkeoverskriften for denne celle"
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Ark {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Input-meddelelse er {title}: {message}"
@@ -7753,6 +7803,129 @@ msgstr "Redigerer kommentar til celle {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} til og med {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "toppen af kanten"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "bunden af kanten"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "venstre kant"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "højre kant"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "op-højre diagonal linje"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "ned-højre diagonal linje"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "vandret kanter undtagen udvendt"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "lodrette kanter undtagen udvendigt"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "kontinuert"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "stiplet"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "prikket linje"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "streg-prik-prik"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "punkteret"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "dobbel"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "skrå streg"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "fin streg"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "tynd"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "mellem"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "tyk"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "streg-prik-prik, mellem"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "streg-prik, mellem"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "streg, mellem"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} omringer kant"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} toppen og bundens kant"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} venstre og højre kanter"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} op-højre og højre-ned diagonale linjer"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8771,3 +8944,7 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "Er du sikker på, at du vil slette denne profil? Det kan ikke fortrydes."

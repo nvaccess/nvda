@@ -4,13 +4,14 @@ NVDA NVDA_VERSION User Guide
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Commands Quick Reference
 
-= Table of Contents=[toc]
+= မာတိကာ=[toc]
 %%toc
 
-+ Tables of Contents +
-NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
-Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
-NVDA is developed by [NV Access http://www.nvaccess.org/], with contributions from the community.
++ မိတ်ဆက် +
+အမြင်အာရုံအားနည်းသူများ ကွန်ပျူတာ သုံးနိုင်ရန်ပြုလုပ်ထားသော NVDA သည် အခမဲ့ရရုံသာမက မူရင်းအရင်းမြစ်များကိုလည်း ပြန်လည်ပြင်ဆင်နိုင်သည် ၎င်းသည် Microsoft Window ပေါ်တွင် အလုပ်လုပ်နိုင်သည်။
+NVDA သည် ကွန်ပျူတာအသံထွက်စကားပြောစနစ်မှ မျက်မမြင်စာကိုလဲ ဖော်ပြနိုင်စွမ်းရှိသည်။ ထိုင့်ပြင် ကုန်ကျစရိတ်မရှိပဲ မျက်မမြင်နှင့် အမြင်အာရုံအားနည်းသူများကို မြင်သူတစ်ယောက်က ကူညီသကဲ့သို့ Window အလုပ်လုပ်နေသော ကွန်ပျူတာပေါ်တွင် လုပ်ပေးနိုင်စွမ်းရှိသည်။ NV Access အသင်းက NVDA ကို တီထွင်ထားခြင်းဖြစ်သည်။
+[NV Access http://www.nvaccess.org/] ပေါ်တွင် ကျွမ်းကျင်သူများနှင့်ပူးပေါင်း၍ဆောင်ရွက်လျက်ရှိသည်။
+
 
 ++ အထွေထွေလုပ်ဆောင်ချက်များ ++
 NVDA ဖြင့် မျက်မမြင်နှင့် အမြင်အာရုံအားနည်းသူများသည် Window တွင်ပါဝင်သော Software များသာမက ထပ်မံထည့်သွင်းသော Software များဖြင့်ပါအသုံးပြုနိုင်သည်။
@@ -258,3 +259,1832 @@ Table တွင်အသုံးပြုသော ကီးများ:
  [objects #Objects] 
 
 Object navigation ကိုအသုံးပြုသော System Focus နှင့် [objects #Objects]Review ဟူ၍ NVDA မှ ဖတ်ပြမည်။.
+When you move to an object, NVDA will report it similarly to the way it reports the system focus.
+For a way to review all text as it appears on the screen, you can instead use [screen review #ScreenReview].
+
+Rather than having to move back and forth between every single object on the system, the objects are organized hierarchically.
+This means that some objects contain other objects and you must move inside them to access the objects they contain.
+For example, a list contains list items, so you must move inside the list in order to access its items.
+If you have moved to a list item, moving next and previous will take you to other list items in the same list.
+Moving to a list item's containing object will take you back to the list.
+You can then move past the list if you wish to access other objects.
+Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
+
+The object currently being reviewed is called the navigator object.
+Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
+By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
+
+Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
+If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+
+To navigate by object, use the following commands:
+
+%kc:beginInclude
+|| Name | Desktop key | Laptop key | Touch | Description |
+| ရောက်ရှိနေသော Object ကိုဖတ်ပြခြင်း | NVDA+numpad5 | NVDA+shift+o | none | ၎င်းကိုနှစ်ခါနှိပ်ပါက စာလုံးပေါင်းပြသည်။ သုံးခါနှိပ်ပါက စာလုံးပေါင်းပြထားသော စကားစုကို ကူးယူသွားသည်။ |
+| Object အတွင်းတွင်ရွှေ့ခြင်း | NVDA+numpad8 | NVDA+shift+upArrow | အပေါ်သို့ဆွဲပါ | လက်ရှိရောက်နေသော Object အတွင်းတွင်ရွှေ့ခြင်းဖြစ်သည်။ |
+| ပြီးခဲ့သည့် Object ကိုရွှေ့ခြင်း | NVDA+numpad4 | NVDA+shift+leftArrow | ဘယ်ဘက်ကိုဆွဲပါ | အရင်ရွှေ့ခဲ့သည့် Object ကိုပြန်ရွှေ့ခြင်းဖြစ်သည်။ |
+| နောက်ထပ် Object သို့ရွှေ့ခြင်း | NVDA+numpad6 | NVDA+shift+rightArrow | ညာဘက်ကိုဆွဲပါ | ရောက်ရှိနေသော Object မှ နောက်ထပ် Object သို့ရွှေ့ခြင်းဖြစ်သည်။ |
+| ပထမ Object အတွင်းတွင်ရွှေ့ခြင်း | NVDA+numpad2 | NVDA+shift+downArrow | အောက်ဘက်ကိုဆွဲပါ | လက်ရှိရောက်နေသောနေရာမှ ပထမ Object သို့ပြန်လည်ရွှေ့ခြင်းဖြစ်သည်။ |
+| မိမိရွှေ့လိုသော Object သို့ရွှေ့ခြင်း | NVDA+numpadMinus | NVDA+backspace | none | မိမိအလုပ်လုပ်လိုသည့် Object ကို ရွေးချယ်၍ Object ကိုအလုပ်လုပ်ခိုင်းခြင်းဖြစ်သည်။ |
+| လက်ရှိ Object ကိုအလုပ်လုပ်ခိုင်းခြင်း | NVDA+numpadEnter | NVDA+enter | နှစ်ချက်မြန်မြန်နှိပ်ပါ | လက်ရှိရောက်နေသော Object ကို အလုပ်လုပ်ခိုင်းခြင်းသည် Mouse နှိပ်ခြင်း၊ Space Bar ကိုနှိပ်ခြင်းနှင့် အတူတူပင်ဖြစ်သည်။ |
+| မိမိရောက်ရှိနေသောနေရာ သို့မဟုတ် မိမိမြင်နေရသောနေရာမှရွှေ့ခြင်း | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | နှစ်ခါနှိပ်ပါက လက်ရှိနေရာမှရွှေ့ခြင်းဖြစ်သည်။ |
+| Cursor ရောက်နေသောနေရာကိုဖော်ပြခြင်း | NVDA+numpadDelete | NVDA+delete | none | Mouse Cursor ရောက်ရှိနေသော စာသားသို့မဟုတ် ရောက်ရှိနေသောနေရာကို ဖော်ပြခြင်းဖြစ်သည်။ |
+%kc:endInclude
+
+မှတ်ချက်: Numlock  ကိုပိတ်ထားမှသာ အလုပ်လုပ်မည်။
+
+++ စာများကိုအသေးစိတ်ဖတ်ခြင်း ++[ReviewingText]
+NVDA သည် Screen Review , Object Review နှင့် Document Review များကို စာလုံးတစ်လုံးချင်းစီသော်လည်းကောင်း စကားစုလိုက်သော်လည်းကောင်း စာကြောင်းလိုက်သော်လည်းကောင်း Text Review ကိုသုံး၍ ဖတ်နိုင်သည်။
+ဥပမာအားဖြင့် Message Box တွင်ပေါ်လာသော ရှည်လျားသည့်စာကြောင်းများကိုဖတ်နိုင်သည်။
+
+Review ကာစာအား အသုံးပြုချိန်တွင် Mouse ကာစာ ရွေ့လျားခြင်းမရှိသောကြောင့် စာများပြင်ဆင်ထားခြင်းကို အနှောင့်အယှက်မဖြစ်နိုင်ပါ။
+ပုံမှန်အားဖြင့် Mouse ကာစာ ရွေ့သောအခါ Review ကာစာပါလိုက်၍ ရွေ့သည်။
+Review ကာစာအား အပိတ်အဖွင့်လုပ်နိုင်သည်။
+
+မှတ်ချက် Brail တွင်လဲ Mouse ကာစာ ရွေ့ခြင်းအားဖြင့် Brail ကာစာလဲလိုက်၍ရွေ့သည်။
+အကယ်၍ Object Review နှင့် Text Review ကိုသုံးလိုလျှင် Brail Tethered တွင် ပြင်ဆင်ရမည်။
+
+Review Text Short Cut
+%kc:beginInclude
+|| Name | Desktop key | Laptop key | Touch | Description |
+| အပေါ်စာကြောင်းသို့ရွေ့လိုလျှင် | shift+numpad7 | NVDA+control+home | none | အပေါ်လိုင်းမှ စာကြောင်းကိုဖတ်ခြင်းဖြစ်သည်။ |
+| ယခင်စာကြောင်းကိုရွေ့လိုလျှင်| numpad7 | NVDA+upArrow | flick up (text mode) | ယခင်စာကြောင်းကိုဖတ်ခြင်းဖြစ်သည်။|
+| လက်ရှိစာကြောင်းကိုဖတ်ခြင်း | numpad8 | NVDA+shift+. | none | လက်ရှိစာကြောင်းကိုဖတ်ခြင်းဖြစ်သည်။ နှစ်ခါနှိပ်ပါက စာလုံးပေါင်းပြမည်။ သုံးခါနှိပ်ပါက စာလုံးအသံထွက်ကို ပြန်လည်ရှင်းပြမည်။ |
+| နောက်စာကြောင်းကိုရွေ့လိုလျှင် | numpad9 | NVDA+downArrow | flick down (text mode) | နောက်စာကြောင်းကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| အောက်စာကြောင်းကိုရွေ့လိုလျှင် | shift+numpad9 | NVDA+control+end | none | အောက်စာကြောင်းကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| ယခင်စကားစုကိုရွေ့လိုလျှင် | numpad4 | NVDA+control+leftArrow | 2-finger flick left (text mode) | ယခင်စကားစုကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| လက်ရှိစကားစုကိုရွေ့လိုလျှင် | numpad5 | NVDA+control+. | none | လက်ရှိစကားစုကိုဖတ်ပြခြင်းဖြစ်သည်။ နှစ်ခါနှိပ်ပါက စာလုံးပေါင်းပြမည်။ သုံးခါနှိပ်ပါက စာလုံးအသံထွက်ကိုပြန်လည်ရှင်းပြမည်။ |
+| နောက်စကားစုကိုရွေ့လိုလျှင် | numpad6 | NVDA+control+rightArrow | 2-finger flick right (text mode) | နောက်စကားစုကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| စာကြောင်းအစကိုရွေ့လိုလျှင် | shift+numpad1 | NVDA+home | none | စာကြောင်းအစကိုဖတ်ခြင်းဖြစ်သည်။ |
+| ယခင်စာလုံးကိုရွေ့လိုလျှင် | numpad1 | NVDA+leftArrow | flick left (text mode) | ယခင်စာလုံးကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| ယခုစာလုံးကိုသိလိုလျှင် | numpad2 | NVDA+. | none | ယခုစာလုံးကိုဖတ်ပြခြင်းဖြစ်သည်။ နှစ်ခါနှိပ်ပါက စာလုံးကိုဖတ်ပြသည်။ သုံးခါနှိပ်ပါက စကားလုံး၏တန်ဖိုးကိုဖတ်ပြသည်။ |
+| နောက်စာလုံးကိုရွေ့လိုလျှင် | numpad3 | NVDA+rightArrow | flick right (text mode) | နောက်စာလုံးကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| စာကြောင်းအဆုံးကိုရွေ့လိုလျှင် | shift+numpad3 | NVDA+end | none | လက်ရှိရှိနေသော ကာစာကို စာကြောင်းအဆုံးသို့ ရွေ့ခြင်းဖြစ်သည်။ |
+| စာကြောင်းအားလုံးကိုပြန်ဖတ်လိုလျှင် | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | လက်ရှိရောက်နေသောကာစာမှ စာကြောင်းများ၏အဆုံးထိဖတ်ပြခြင်းဖြစ်သည်။ |
+| ကော်ပီကူးယူထားသောစာကြောင်းအားဖတ်ပြခြင်း | NVDA+f9 | NVDA+f9 | none | ရွေးချယ်၍ကူးယူထားသောစာကြောင်းကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| ရွေးချယ်ထားသောစာကြောင်းကိုကူးယူခြင်း | NVDA+f10 | NVDA+f10 | none | ရွေးချယ်ထားသောစာကြောင်းကိုကူးယူခြင်းဖြစ်သည်။ |
+| Text Format ကိုဖော်ပြခြင်း | NVDA+f | NVDA+f | none | Internet Browser ပေါ်တွင်အသုံးပြုခြင်းဖြစ်သည်။ |
+%kc:endInclude
+
+မှတ်ချက်: numpad keys လိုအပ်သည် numlock key ပိတ်ထားရန်လိုအပ်သည်။
+
+မှတ်မိရန်လွယ်ကူသောနည်းလမ်းမှာ Desktop Keyboard Layout တွင် သုံးလုံး တစ်တန်း မှတ်ထားရမည်။
+The layout is illustrated as follows:
+| Previous line | Current line | Next line |
+| Previous word | Current word | Next word |
+| Previous character | Current character | Next character |
+
+++ Review Modes ++[ReviewModes]
+Review Modes ရွေးချယ်ထားပေါ်မူတည်၍ လက်ရှိ Document အနေအထားကို ပြောင်းလဲနိုင်သည်။
+
+Review Modes Short Cut များ:
+%kc:beginInclude
+|| Name | Desktop key | Laptop key | Touch | Description |
+| ရှေ့  Review Mode ကိုဖွင့်လိုလျှင် | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | ရှေ့ Review Mode ကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| နောက်  Review Mode ကိုဖွင့်လိုလျှင် | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | နောက်  Review Mode ကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+%kc:endInclude
+
++++ Object Review +++[ObjectReview]
+Object Review Mode တွင် လက်ရှိ Object အတွင်းရှိစာများကို ဖတ်နိုင်သည်။ [navigator object #ObjectNavigation].
+
++++ Document Review +++[DocumentReview]
+ [navigator object #ObjectNavigation] 
+Document Review Mode ကို Browse Mode တွင်အသုံးပြုသည်။ ဥပမာ Web Page နှင့် အထူးဖန်တီးထားသော Document များတွင် အသုံးပြုခြင်းဖြစ်သည်။
+
+When switching from object review to document review, the review cursor is placed in the document at the position of the navigator object.
+When moving around the document with review commands, the navigator object is automatically updated to the object found at the current review cursor position.
+
+မှတ်ချက် Document Review နှင့် Object Review ကို NVDA သည် အလိုလျှောက်ပြောင်းလဲ​ပေးခြင်းဖြစ်သည်။
+
++++ Screen Review +++[ScreenReview]
+Screen Review Mode တွင် လက်ရှိရှိနေသော အက်ပလီကေးရှင်းကို ဖတ်ရုံသာမက မိမိရွေ့သည့်နေရာများကိုလဲဖတ်ပြသည်။
+
+When switching to screen review mode, the review cursor is placed at the screen position of the current [navigator object #ObjectNavigation].
+When moving around the screen with review commands, the navigator object is automatically updated to the object found at the screen position of the review cursor.
+
+မှတ်ချက် အချို့သော ထပ်မံထွက်လာသော အက်ပလီကေးရှင်းအသစ်များ သို့မဟုတ် Drawing Technology  ကိုအသုံးပြုထားသော ဆော့ဝဲများတွင် NVDA သည် လတ်တလောမဖတ်နိုင်သေးပါ။
+
+++ Navigating with the Mouse ++
+NVDA သည် Mouse ရွေ့သောအခါ Mouse ကာစာရောက်ရှိနေသောနေရာကိုဖတ်ပြသည်။
+
+NVDA တွင်ပြင်ဆင်နိုင်သည်  [object #Objects] ဥပမာ List နှင့် Button 
+၎င်းသည်မျက်မမြင်များအတွက်အသုံးဝင်သည်။သို့သော်လဲ တစ်ခါတစ်ရံလုံလောက်မှုမရှိပါ။
+
+NVDA တွင် Mouse ရွေ့သည့်အခါ ဘယ် ညာ ခွဲနိုင်ရန် အသံထည့်သွင်းနိုင်သည်။ နားကြပ် သို့မဟုတ် ဘယ်သံ ညာသံ ခွဲနိုင်သော စပီကာ တစ်စုံ လိုအပ်သည်။
+
+၎င်း Exter Mouse Features ကို အလိုလျောက် မထည့်သွင်းထားပေးပါ။ အကယ်၍ သင်သုံးလိုလျှင် NVDA ၏[Mouse settings #MouseSettings] တွင်သွားရောက်ထည့်သွင်းနိုင်သည်။
+
+Mouse ၏ Short Cut Keys များ :
+%kc:beginInclude
+|| Name | Desktop key | Laptop key | Description |
+| Mouse ၏ ဘယ်လက်ခလုတ်ကိုနှိပ်လိုလျှင် | numpadDivide | NVDA+[ | နှစ်ချက်နှိပ်ပါက ရွေချယ်ထားသော အရာကို အလုပ်လုပ်ခြင်းဖြစ်သည်။ |
+| Mouse ၏ ဘယ်ဘက်ခလုတ်ကို Lock လုပ်လိုလျှင် | shift+numpadDivide | NVDA+control+[ | တစ်ကြိမ်နှိပ်ပါက Lock လုပ်မည် ၊ နောက်တစ်ကြိမ်နှိပ်ပါက Unlock လုပ်မည်။ |
+| Mouse ၏ ညာဘက်ခလုတ်ကိုနှိပ်လိုလျှင် | numpadMultiply | NVDA+] | ညာဘက်ခလုတ်ကို တစ်ကြိမ်နှိပ်ပါ။ |
+| Mouse ၏ ညာဘက်ခလုတ်ကို Lock လုပ်လိုလျှင် | shift+numpadMultiply | NVDA+control+] | တစ်ကြိမ်နှိပ်ပါက Lock လုပ်မည် ၊ နောက်တစ်ကြိမ်နှိပ်ပါက Unlock လုပ်မည်။ |
+| လက်ရှိရောက်နေသော object ထဲရွေ့လိုလျှင် | NVDA+numpadDivide | NVDA+shift+m | လက်ရှိရောက်နေသော Mouse ကာစာကိုဖတ်ပြခြင်းဖြစ်သည်။ |
+| Object အတွင်းတွင်ရွေ့လိုလျှင် | NVDA+numpadMultiply | NVDA+shift+n | Mouse ရောက်ရှိနေသောနေရာကို ဖတ်ပြခြင်းဖြစ်သည်။ |
+%kc:endInclude
+
++ Browse Mode +[BrowseMode]
+ရှုပ်ထွေးသော Document များဖြစ်သော Web Page များတွင် Browse Mode ကိုအသုံးပြုသည်။
+၎င်းတွင်ပါဝင်သော Document များမှာ Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML Messages, Microsoft Outlook, Google Crome, Adobe Reader နှင့် Adobe Flash တို့ဖြစ်သည်။
+Browse Mode သည် Microsoft Word တွင်လဲအလုပ်လုပ်သည်။
+
+ပုံမှန် Document များတွင် ပုံမှန် ကာစာ Key များဖြင့်ရွေ့နိုင်သော်လည်း Browse Mode Document များတွင် NVDA မှသတ်မှတ်ထားသော key များဖြင့်ပါရွေ့နိုင်သည်။ ဥပမာ say all, report formatting, table navigation commands, etc.
+All of NVDA's [system caret #SystemCaret] key commands will work in this mode;
+link နှင့် heading တို့ကိုလဲရွေ့နိုင်သည်။
+
+တစ်ခါတစ်ရံတွင် Mode များကို ပြောင်းလဲအသုံးပြုရမည်။
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle browse/focus modes | NVDA+space | Toggles mode နှင့် Browse mode ကိုပြောင်းလဲခြင်းဖြစ်သည်။ |
+| Focus mode ကိုပိတ်ခြင်း | escape | Focus mode ကိုပိတ်သည်နှင့် Browse mode ပြောင်းလဲသွားသည်။ |
+| Browse mode document များကို Refresh ပြုလုပ်ခြင်း | NVDA+f5 | လက်ရှိရှိနေသော document များတွင် Link အသစ်များကိုထပ်မံဖော်ပြခြင်းဖြစ်သည်။(Microsoft နှင့်Outlook တွင် အသုံးမပြုနိုင်ပါ။) |
+| ရှာဖွေခြင်း | NVDA+control+f | ရှာဖွေသည့် Dialog  Box ပေါ်လာသောအခါ စာလုံးအချို့ရိုက်၍ လက်ရှိ Document အတွင်းရှိ အချက်လက်များကိုရှာဖွေနိုင်သည်။ |
+| ထပ်မံရှာဖွေခြင်း | NVDA+f3 | လက်ရှိ Document အတွင်းရှိ ရှာဖွေခဲ့သည့်စာသားများအားထပ်မံရှာဖွေခြင်းဖြစ်သည်။ |
+| ယခင်အချက်လက်များပြန်လည်ရှာဖွေခြင်း | NVDA+shift+f3 | ယခင်ရှာဖွေခဲ့သည့် အချက်လက်များကို ပြန်လည်ရှာဖွေခြင်းဖြစ်သည်။ |
+| အဓိပ္ပါယ်ဖော်ပြချက်အရှည်ကိုသိလိုလျှင် | NVDA+d | မည်သည့်နေရာတွင်ရောက်ရှိနေသည်အပါအဝင် အချက်လက်အတော်များများကို ဖတ်ပြခြင်းဖြစ်သည်။ | 
+%kc:endInclude
+
+
+++ အက္ခရာများဖြင့်ရွေ့ခြင်း++
+Browse Mode တွင် အက္ခများဖြင့်မြန်မြန်ဆန်ဆန်ရွေ့နိုင်သည်။
+မှတ်ချက် Document အပိုင်းတွင်မရွေ့နိုင်ပါ။
+
+%kc:beginInclude
+သတ်မှတ်ထားသော ကီးများသည် နှိပ်ပါက အရှေ့သို့ရွေ့လျားပြီး Shift ဖြင့်တွဲနှိပ်ပါက ယခင်နေရာများသို့ပြန်လည်ရွေ့မည် :
+- h: heading
+- l: list
+- i: list item
+- t: table
+- k: link
+- n: nonLinked text
+- f: form field
+- u: unvisited link
+- v: visited link
+- e: edit field
+- b: button
+- x: checkbox
+- c: combo box
+- r: radio button
+- q: block quote
+- s: separator
+- m: frame
+- g: graphic
+- d: landmark
+- o: embedded object
+- 1 to 6: headings at levels 1 to 6 respectively
+- a: annotation (comment, editor revision, etc.)
+-
+lists and tables များကို အစနှင့် အဆုံး ရွေ့လိုလျှင် :
+|| Name | Key | Description |
+| ကွန်တိန်နာ၏အစကိုရွေ့ခြင်း | shift+comma | Table သို့မဟုတ် List ၏အစကို ရွေ့ခြင်းဖြစ်သည်။ |
+| ကွန်တိန်နာ၏အဆုံးသို့ရွေ့ခြင်း | comma | Table သို့မဟုတ် List ၏အဆုံးကို ရွေ့ခြင်းဖြစ်သည်။ |
+
+%kc:endInclude
+အချို့သော အင်တာနက် အက်ပလီကေးရှင်းများဖြစ်သော Gmail, Twitter နှင့် Facebook တွင် အလုပ်မလုပ်လိုလျှင်
+%kc:beginInclude
+အက္ခရာများဖြင့် ရွေ့ခြင်း အဖွင့် နှင့် အပိတ် NVDA+shift+space.
+%kc:endInclude
+
+++ လင့် မျာ့ကို List လုပ်ခြင်း ++
+လင့်များကို List လုပ်ခြင်းတွင် မတူညီသော လင့် အမျိုးမျိုးကို List လုပ်ပေးသည်။
+ဥပမာ Web Browser တွင် လင့်များကို List လုပ်ပေးပြီး Heading သို့မဟုတ် Landmarks ခွဲခြားနိုင်သည်။
+Radio buttons သည်လဲ Element တစ်ခုဖြစ်သည်။
+စာရိုက်သည့်နေရာကိုလဲ မည်မျှပါဝင်သည်ကို ရှာဖွေနိုင်သည်။
+သင်သည်တစ်ခုကိုရွေးချယ်၍ အလုပ်လုပ်နိုင်သည်။
+%kc:beginInclude
+|| Name | Key | Description |
+| Browse mode elements list | NVDA+f7 | လက်ရှိရောက်နေသော Document အတွင်းရှိ လင့်အမျိုးမျိုးကို List လုပ်နိုင်သည်။ |
+%kc:endInclude
+
+++ Embedded Objects ++
+Adobe Flash နှင့် အချို့သော Java applications များတွင် Embedded Object သို့မဟုတ် dialogs 
+သင့်အနေဖြင့် Enter ကိုနှိပ်နိုင်သည်။
+အကယ်၍ အဆင်ပြေပြေသုံးလို့ရလျှင် အခြား အက်ပလီကေးရှင်းများကဲ့သို့ သုံးနိုင်သည်။
+ကီးများသည် မူလ Page တွင်ဖော်ပြပြီးသားဖြစ်သည် :
+%kc:beginInclude
+|| Name | Key | Description |
+| Browse mode document တွင် ရွေ့လိုလျှင် | NVDA+control+space | Document အတွင်းရှိ Embedded Objects မှ တခြား Embedded Objects သို့ရွေ့ခြင်းဖြစ်သည်။ |
+%kc:endInclude
+
++ သင်္ချာဖတ်ခြင်းနှင့်ဆိုင်သော +
+NVDA သည် MathPlayer 4 တွင် ဖတ်လဲဖတ်နိုင်သည် ရွေ့လဲ ရွေ့လျားနိုင်သည်။
+လိုအပ်ချက်အနေဖြင့် MathPlayer 4 ထည့်သွင်းထားရန်လိုအပ်သည်။
+MathPlayer ကို အခမဲ့ ရယူနိုင်သည် : http://www.dessci.com/en/products/mathplayer/
+
+NVDA သည် ဖော်ပြထားသော သင်္ချာနှင့်ဆိုင်သော ဆော့ဝဲများပေါ်တွင် အလုပ်လုပ်သည် :
+- Mozilla Firefox နှင့် Microsoft Internet Explore တွင် MathML
+- Microsoft Word နှင့် PowerPoint တွင် Design Science MathType ထည့်သွင်းထားရန်လိုအပ်သည်။
+- Adobe Reader တွင် MathML မှတ်ချက်အနေဖြင့် ၎င်းသည် တရားဝင်သုံးနိုင်ခြင်းမရှိပါ။
+-
+
+NVDA သည် သင်္ချာနှင့်ဆိုင်သော သင်္ကေတများကို Document ပေါ်တွင် ဖတ်သည်။
+အကယ်၍ Brail Display သုံးလျှင်လဲ Display ပေါ်တွင်ဖော်ပြသည်။
+
+++ Interactive Navigation ++
+If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+
+If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+
+If you are not in browse mode:
++ move the review cursor to the mathematical content.
+By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
++ Then, activate the following command:
++
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+%kc:endInclude
+
+At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
+For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+Please see the MathPlayer documentation for further information.
+
+When you wish to return to the document, simply press the escape key.
+
++ Application Specific Features +
+NVDA provides its own extra features  for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
+
+++ Microsoft Word ++
+
++++ Column နှင့် Row များကို အလိုလျှောက်ဖတ်ခြင်း +++
+NVDA သည် ကာစာများကို ရွေ့သောအခါ Microsoft ပေါ်တွင် Column နှင့် Row များကို အလိုလျှောက်ဖတ်သည်။
+ပထမ လိုအပ်ချက်မှာ NVDA Setting ထဲရှိ Document Formatting တွင် Column နှင့် Row များကိုအမှန်ခြစ်ထားပေးရန်လိုအပ်သည်။
+ဒုတိယအနေဖြင့် NVDA သည် Table တွင် ပါသော Column နှင့် Row များကို သိရှိသည်။
+Tabel အတွက် Short Cut များ:
+%kc:beginInclude
+|| Name | Key | Description |
+| Column ထည့်သွင်းခြင်း | NVDA+shift+c | တစ်ကြိမ်နှိပ်ရုံဖြင့် NVDA သည် Column ထည့်ပြီးကြောင်းပြောလိမ့်မည်။ နှိပ်ကြိမ်နှိပ်လျှင် Column ပြန်ဖြုတ်မည်။ |
+| Row ထည့်သွင်းခြင်း | NVDA+shift+r | တစ်ကြိမ်နှိပ်ရုံဖြင့် NVDA သည် Row ထည့်ပြီးကြောင်းပြောလိမ့်မည်။ နှိပ်ကြိမ်နှိပ်လျှင် Row ပြန်ဖြုတ်မည်။ |
+%kc:endInclude
+၎င်း Setting သည် Document ထဲတွင် ထည့်သွင်းပြီးသားဖြစ်ပြီး အခြား Screen Reader များကပါဖတ်နိုင်သည်။
+
++++ Browse Mode in Microsoft Word +++
+Microsoft တွင်ပါဝင်သော Browse mode သည် Web တွင်ပါသော Browse Mode နှင့် အတူတူပင်ဖြစ်သည်။
+%kc:beginInclude
+Browse mode ကို Microsoft Word တွင် အပိတ် အဖွင့် လုပ်လိုလျှင် NVDA+space ကိုနှိပ်ပါ။
+%kc:endInclude
+အသေးစိတ်သိရှိလိုလျှင် [Browse Mode section #BrowseMode] တွင် သွားရောက်လေ့လာပါ။
+
+++++ The Elements List ++++
+%kc:beginInclude
+Microsoft Word Browse mode တွင် List လုပ်လိုလျှင် NVDA+f7 ကိုနှိပ်ပါ။
+%kc:endInclude
+၎င်းသည် Heading Link နှင့်  Annotations များကို တစုတစည်းတည်း ပြုလုပ်ပေးနိုင်သည်။
+
++++ Reporting Comments +++
+%kc:beginInclude
+Character ရှိနေသည့်အနေထားကို သိလိုလျှင် NVDA+alt+c ကိုနှိပ်ပါ။
+%kc:endInclude
+All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List  when selecting Annotations as the type.
+
+++ Microsoft Excel ++
+
++++ Column နှင့် Row များကို အလိုလျှောက်ဖတ်ခြင်း +++
+NVDA သည် ကာစာများကို ရွေ့သောအခါ Excel Worksheeds ပေါ်တွင် Column နှင့် Row များကို အလိုလျှောက်ဖတ်သည်။
+ပထမ လိုအပ်ချက်မှာ NVDA Setting ထဲရှိ Document Formatting တွင် Column နှင့် Row များကိုအမှန်ခြစ်ထားပေးရန်လိုအပ်သည်။
+ဒုတိယအနေဖြင့် NVDA သည် Table တွင် ပါသော Column နှင့် Row များကို သိရှိသည်။
+Tabel အတွက် Short Cut များ:
+%kc:beginInclude
+|| Name | Key | Description |
+| Column ထည့်သွင်းခြင်း | NVDA+shift+c | တစ်ကြိမ်နှိပ်ရုံဖြင့် NVDA သည် Column ထည့်ပြီးကြောင်းပြောလိမ့်မည်။ နှိပ်ကြိမ်နှိပ်လျှင် Column ပြန်ဖြုတ်မည်။ |
+| Row ထည့်သွင်းခြင်း | NVDA+shift+r | တစ်ကြိမ်နှိပ်ရုံဖြင့် NVDA သည် Row ထည့်ပြီးကြောင်းပြောလိမ့်မည်။ နှိပ်ကြိမ်နှိပ်လျှင် Row ပြန်ဖြုတ်မည်။ |
+%kc:endInclude
+၎င်း Setting သည် Document ထဲတွင် ထည့်သွင်းပြီးသားဖြစ်ပြီး အခြား Screen Reader များကပါဖတ်နိုင်သည်။
+
++++ The Elements List +++
+Microsoft Excel တွင်ပါဝင်သော Browse mode သည် Web တွင်ပါသော Browse Mode နှင့် အတူတူပင်ဖြစ်သည်။
+%kc:beginInclude
+Excel တွင်Elements List  များကို စုစည်းလိုလျှင် NVDA+f7 ကိုနှိပ်ပါ။
+%kc:endInclude
+Elements List တွင် List မျိုးစုံပါဝင်သည် :
+- Charts: Charts အားလုံးသည် Worksheet  တွင်အလုပ်လုပ်သည်။
+Chart ကို Arrow ဖြင့် ရွေ့နိုင်ပြီး Enter ဖြင့်ရွေးချယ်နိုင်သည်။
+- Comments: ၎င်း Cell များသည် Worksheet ပေါ်တွင်အလုပ်လုပ်သည်။ 
+Cell တစ်ခုစီတွင် တစ်ခုစီ တစ်ခုစီဖော်ပြသည်။ 
+Enter နှိပ်၍ သို့မဟုတ် Cell တစ်ခုစီကိုရွေ့နိုင်သည်။
+- Formulas: Cell တိုင်းတွင် Formula ပါဝင်သည်။ 
+Cell တစ်ခုစီ တစ်ခုစီ တွင် Formula ပါဝင်သည်။
+Enter နှိပ်၍ သို့မဟုတ် Formula ကို Cell များတွင့် ရွေ့နိုင်သည်။ 
+- Sheets: Workbook ထဲတွင် Sheet များပါဝင်သည်။ 
+F2  ကိုနှိပ်၍ sheet ကို နာမည်ပြောင်းနိုင်သည်။ 
+Enter နှိပ်၍ သို့မဟုတ် ရွေ့၍လဲ Sheet များကို ဖွင့်နိုင်သည်။
+- Form fields: Active worksheet တွင် Formfield များပါဝင်သည်။
+Element List ထဲတွင် Formfield တစ်ခုစီကိုဖော်ပြသည်။
+Browse Mode တွင် Formfield ကို ရွေးချယ်နိုင်ပြီး Enter နှိပ်၍ သို့မဟုတ် တစ်ခုစီရွေ့ကြည့်နိုင်သည်။
+-
+
++++ Reporting Comments +++
+%kc:beginInclude
+လက်ရှိရောက်နေသော Cell ကိုသိလိုလျှင် NVDA+alt+c ကိုနှိပ်ပါ။
+%kc:endInclude
+Worksheet အတွင်းရှိ NVDA Element List တွင် ၎င်းကိုအသုံးပြုနိုင်သည်။
+
++++ Reading Protected Cells +++
+အကယ်၍ Workbook ကို Protected လုပ်ထားလျှင် သက်ဆိုင်ရာ Cell များသို့ရွေ့လို့မရပါ။
+%kc:beginInclude
+Block Cell များကို ရွေ့လိုလျှင် NVDA+space ကိုနှိပ်ပါ ပြီးလျင် ပုံမှန်အတိုင်း ရွေ့နိုင်ပါသည်။
+%kc:endInclude
+
++++ Form Fields +++
+Excel worksheets တွင် form fields ပါဝင်သည်။
+သင့်အနေဖြင့် Elements List လုပ်၍ သို့အဟုတ် f နှင့် shift+f ကိုသုံး၍ ရွေ့နိုင်သည်။
+Browse Mode တွင် Formfield ကိုရွေ့သောအခါ Enter နှိပ်၍ သို့မဟုတ် Space နှိပ်ပြီးအလုပ်လုပ်နိုင်သည်။
+အသေးစိတ်အချက်လက်များကို [Browse Mode section #BrowseMode] တွင် လေ့လာနိုင်သည်။
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle speaker notes reading | control+shift+s | Slide Show Run နေစဉ်အတွင်း Effect များကို ဖတ်ပြခြင်းဖြစ်သည်။Screen ပေါ်က စာသားများကိုဖတ်ပြခြင်းမဟုတ်ပါ။ | 
+%kc:endInclude
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Report remaining time | control+shift+r | လက်ရှိ ဖွင့်ထားသော Track ၏ ရောက်နေသည့်အချိန်ကိုဖော်ပြခြင်းဖြစ်သည်။ |
+%kc:endInclude
+
+မှတ်ချက်: ၎င်းသည် Foobar ပေါ်တွင်သာအလုပ်လုပ်သည်။
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Message ကိုသိလိုလျှင်| NVDA+control+1-4 | တွဲနှိပ်သည့် ဂဏာန်းပေါ်မူတည်၍ Message များကိုဖတ်ပြသွားမည်။ ဥပမာ  NVDA+control+2 ဖြင့်နှိပ်ပါက ဒုတိယ Message ကိုဖတ်ပြလိမ့်မည်။ |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Report Comments Window | control+shift+c | Reports any comments in the comments window. |
+| Report notes for translators | control+shift+a | Reports any notes for translators. |
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+Conversation တွင်:
+|| Name | Key | Description |
+| Message ဖတ်ခြင်း | NVDA+control+1-0 | တွဲနှိပ်သည့် ဂဏာန်းပေါ်မူတည်၍ Message များကိုဖတ်ပြသွားမည်။ ဥပမာ  NVDA+control+2 ဖြင့်နှိပ်ပါက ဒုတိယ Message ကိုဖတ်ပြလိမ့်မည်။ |
+%kc:endInclude
+
+++ Kindle for PC ++
+NVDA သည် Kindle for PC  ပေါ်တွင်လဲ အလုပ်လုပ်သည်။
+၎င်း Function များသည် Kindle for PC ပေါ်တွင်သာ အလုပ်လုပ်သည်။
+
+စာအုပ်ဖတ်ရန်အတွက် Browse mode ကိုသုံးသည်။
+၎င်းသည် ရွေးချယ်ထားသော နေရာပေါ်မူတည်၍ အလိုလျှောက်ဖတ်သည်။
+%kc:beginInclude
+စာရွက်များကို မိမိကိုယ်တိုင် လှန်လိုလျှင် Page Up Page Down Key ကို သုံးပါ။
+%kc:endInclude
+
+Single letter များကိုသုံး၍လဲ Link နှင့် Graphics များကိုရွေ့နိုင်သည် သို့သော် လက်ရှိရောက်နေသော Page ပေါ်တွင်သာဖြစ်သည်။
+
++++ စာများရွေးချယ်ခြင်း +++
+Kindle တွင် များစွာသော Selecte လုပ်နိုင်သည့် Function များပါဝင်သည်။ Browse Mode တွင် Shift+Cursor(Arrow) Key များ ရွေးချယ်နိုင်သည်။
+%kc:beginInclude
+ရွေးချယ်ထားသောစာများကို အက်ပလီကေးရှင်းကီး သို့မဟုတ် Shift+F10 နှိပ်ပါက လုပ်ဆောင်နိုင်သည့်အလုပ်များကိုတွေ့နိုင်သည်။
+%kc:endInclude
+အကယ်၍ ရွေးချယ်ထားသောစာမရှိဘဲ အက်ပလီကေးရှင်းကီး သို့မဟုတ် Shift+F10 နှိပ်ပါက လုပ်ဆောင်နိုင်သည့် လုပ်ဆောင်ချက်များကိုဖော်ပြထားမည်။
+
++++ User Notes +++
+မှတ်စုနှင့် စာပိုဒ်များကို သင်ရေးမှတ်နိုင်ပါသည်။
+ပထမဦးစွာ မိမိနှင့်သက်ဆိုင်သော Text ကိုရွေးချယ်ပါ။
+ပြီးနောက် မိမိဖော်ပြလိုသည့်အကြောင်းရာဖော်ပြပါ။
+
+NVDA Browse Mode တွင် ၎င်းတို့ကိုဖတ်နိုင်သည်။
+
+မှတ်စုကို ကြည့်ရန် ၊ ပြင်ရန် နှင့် ဖြတ်ရန်:
+
++ ကာစာကို မှတ်စုထဲတွင်ရွေ့ပါ။
++ Option ထဲတွင် ရွေးချယ်ပါ။
++ ရွေးချယ်ထားတာကိုပြင်ပါ။
++
+
++ NVDA  ပြင်ဆင်ခြင်း +
+
+++ ပြင်ဆင်ခြင်း ++
+%kc:settingsSection: || Name | Desktop key | Laptop key | Description |
+NVDA အတော်များများတွင် settings များကိုပြင်ဆင်နိုင်သည်။ 
+Preferences sub-menu ထဲတွင် ပြင်ဆင်ပြီးလျှင် OK နှိပ်ပါ။ 
+မပြင်ဆင်လိုလျှင် Escape Key  ဖြင့်ပြန်ထွက်ပါ။
+အချို့ Setting များကို Short Cut Key ဖြင့်ပြင်ဆင်နိုင်သည်။
+
+မှတ်ချက် အားလုံးကို Short Cut Key ဖြင့် မပြင်ဆင်နိုင်ပါ။
+[Input Gestures dialog #InputGestures]
+
++++ General Settings (NVDA+control+g) +++
+Preferences menu ထဲတွင် General Settings  ကို ရှာဖွေနိုင်သည်။
+ပါဝင်သော options များမှာ:
+
+==== ဘာသာစကား ====
+Combo Box ထဲတွင် Message နှင့် Interface များ ရွေးချယ်နိုင်သည်။
+အလိုလျောက်အနေဖြင့် User Default ကိုရွေးချယ်ထားသည်။
+မည်သည့် ဘာသာစကားရွေးချယ်ထားခြင်းကို ၎င်း Option က ဖော်ပြပါလိမ့်မည်။
+
+NVDA ကို restart မဖြစ်မနေလုပ်ပေးရမည်။
+အကယ်၍ Restart လုပ်မည်ဆိုလျှင် NVDA က ရွေးချယ်ထားတဲ့အရာကို ပြောင်းလဲပေးပါလိမ့်မည်။
+OK ကိုနှိပ်ပါ NVDA restart ဖြစ်သွားပါလိမ့်မည်။
+
+==== NVDA ပိတ်သည်နှင့် မိမိ Setting များကို Save ခြင်း ====
+NVDA ကို ပိတ်သည်နှင့် အလိုလျှောက် Save လိုလျှင် Save Configuration on exit ကို အမှန်ခြစ်ပေးရမည်။
+
+==== NVDA ပိတ်သောအခါတွင် ====
+NVDA ပိတ်သောအခါ မည်သည့်အရာမှ မမေးစေလိုလျှင် Show exit options when exiting NVDA ကို အမှန်ခြစ်ဖြုတ်ပေးရမည်။
+
+==== NVDA အဖွင့် နှင့် အပိတ်မှာ အသံမြည်လိုလျှင် ====
+Play sounds when it starts or exits NVDA ကိုအမှန်ခြစ်ပေးရမည်။
+
+==== Logging level ====
+မိမိလိုချင်သော Logging စနစ်ကို Combo Box တွင်ရွေးရမည်။
+
+==== အလိုလျှောက် NVDA ဖွင့်ခြင်း ====
+Automatically start NVDA after I log on to Windows ကိုအမှန်ခြစ်ထားခြင်းဖြင့် Window တက်သည်နှင့်အလုပ်လုပ်သည်။
+Install လုပ်ထားသော NVAD တွင်သာအလုပ်လုပ်နိုင်သည်။
+
+==== Window တက်သည်နှင့် Logon Screen တွင် NVDA ကိုဖတ်လိုလျှင် ====
+Use NVDA on the Window Logon Screen (require administrator privileges) ကိုအမှန်ခြစ်ထားရမည်။
+Install လုပ်ထားသော NVAD တွင်သာအလုပ်လုပ်နိုင်သည်။
+
+==== မိမိပြုလုပ်ထားသော Setting များကို အခြား အကောင့်များတွင်အလုပ်လုပ်လိုလျှင် ====
+Use currently saved settings on the logon and other secure screens (requires administrator privileges) ကိုနှိပ်ပေးရမည်။
+Install လုပ်ထားသော NVAD တွင်သာအလုပ်လုပ်နိုင်သည်။
+
+==== အလိုလျောက် Update စစ်ဆေးပေးခြင်း ====
+Automatically check for updates to NVDA ကိုအမှန်ခြစ်ထားပေးရမည်။
+Install လုပ်ထားသော NVAD တွင်သာအလုပ်လုပ်နိုင်သည်။
+
++++ Synthesizer ရွေးချယ်ခြင်း(NVDA+control+s) +++
+Short Cut ကိုနှိပ်သောအခါ ရွေးချယ်နိုင်သော Synthesizer များပေါ်လာမည်။ မိမိကြိုက်နှစ်သက်ရာကိုရွေး၍ OK ကိုနှိပ်ပါ။
+
+==== Synthesizer ====
+Synthesizer ရွေးသည့် Setting ထဲတွင် မိမိထားလိုသည့် Out put ကိုရွေးနိုင်သည်။
+
+NVDA သည် မည်သည့် Synthesizer များဖြင့်တွဲဖက်အလုပ်လုပ်သည်ကို [Supported Speech Synthesizers #SupportedSpeechSynths] တွင် သွားရောက်လေ့လာနိုင်သည်။
+
+၎င်း Setting တွင် Low Speech ကိုလဲရွေးချယ်နိုင်သည်။
+Brail Display အသုံးပြုသူများအတွက် အသုံးဝင်သည်။
+
+==== Output device ====
+မည်သည့် Sound Card ဖြင့် အသုံးပြုမည်ကိုရွေးချယ်နိုင်သည်။
+
+%kc:setting
+==== Audio Ducking Mode ====
+Key: NVDA+shift+d
+
+NVDA အသံမှလွဲ၍ အခြားအသံများကိုတိုးပေးသည်။
+-
+
+Install လုပ်ထားသော NVAD တွင်သာအလုပ်လုပ်နိုင်သည်။
+Portable Version တွင် အသုံးမပြုနိုင်ပါ။
+
++++ Voice Settings ကို အသုံးပြုလိုလျှင်(NVDA+control+v) +++[VoiceSettings]
+Preferences ထဲတွင်လဲရှာဖွေနိုင်သည်။
+For a quicker alternative way of controlling speech parameters from anywhere, please see the [Synth Settings Ring #SynthSettingsRing] section.
+
+Voice Settings ထဲတွင် ပါဝင်သော options များ:
+
+==== Voice ====
+ပထမ Dialog Box ထဲတွင် Arrow ခလုတ်ဖြင့်အသံများရွေးချယ်နိုင်သည်။
+
+==== Variant ====
+အကယ်၍ E speech Engine ကိုအသုံးပြုလျှင် Female နှင့် Male ကိုရွေးချယ်နိုင်သည်။
+
+==== Rate ====
+၀ သည်အနှေးဆုံးဖြစ်၍ ၁၀၀ သည်အမြန်ဆုံးဖြစ်သည်။
+
+==== Pitch ====
+၀ သည်အသံအနှိမ့်ဆုံးဖြစ်၍ ၁၀၀ သည်အသံအမြင့်ဆုံးဖြစ်သည်။
+
+==== Volume ====
+၀ သည်အသံအတိုးဆုံးဖြစ်၍ ၁၀၀ သည်အသံအကျယ်ဆုံးဖြစ်သည်။
+
+==== Inflection ====
+စကားပြောသည့် ပုံစံကို အပြောင်းအလဲ ပြုလုပ်ခြင်းဖြစ်သည်။
+
+==== Language ကိုအလိုအလျောက်ပြောင်းလဲပေးခြင်းဖြစ်သည် ====
+Automatic Language Switching (When Supported) ကို အမှန်ခြစ်ထားလျှင် Language ကိုအလိုလျောက်ပြောင်းလဲပေးသည်။NVDA Settion တွင် အမှန်ခြစ်ပြီးသားဖြစ်သည်။
+
+==== Automatic Dialect switching ====
+Automatic Language Switching (When Supported) ကို အမှန်ခြစ်ထားလျှင် Language ကိုအလိုလျောက်ပြောင်းလဲပေးသည်။
+ဥပမာ မိမိ အသုံးပြုသော Language သည် US English ဖြစ်ပါက UK English ကိုဖတ်သောအခါတွင်လဲ US English အသံသို့ အလိုလျောက်ပြောင်းပေးသည်။
+
+%kc:setting
+==== Punctuation/Symbol Level ====
+Key: NVDA+p
+
+Punctuation များကိုအပြည့်အစုံဖတ်ခြင်း သို့မဟုတ် လိုအပ်သည့် Punctuation များကိုသာဖတ်ခြင်း တို့ကို ရွေးချယ်နိုင်သည်။
+
+==== Trust voice's language for processing symbols and characters ====
+On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
+If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
+
+==== Capital pitch change percentage ====
+စာရိုက်သည့် စာလုံးအကြီးများကို အသံပို၍ မြှင့်ထားခြင်းဖြစ်သည်။အသံမြှင့်ထားခြင်းမပြုလုပ်လိုပါက ၀ တွင်ထားရှိရမည်။
+
+==== Say "cap" before capitals ====
+စာရိုက်သည့်အခါ စာလုံးအကြီးများကို အရှေ့မှ Cap ဟူ၍ ထည့်ပြောခြင်းဖြစ်သည်။
+
+==== Beep for capitals ====
+စာရိုက်သည့်အခါ စာလုံးအကြီးများတွင် အသံပါလိုလျှင် Beep for Capitals တွင် အမှန်ခြစ်ပေးရမည်။
+
+==== Use spelling functionality if supported ====[VoiceSpellingFunctionality]
+အချို့စကားလုံးများကို စာလုံးပေါင်းမှားသည့်အခါ အချက်ပြခြင်းဖြစ်သည်။ အသုံးပြုလိုလျှင် Use spelling functionality if supported ကို အမှန်ခြစ်ထားရမည်။
+
+အသုံးမပြုလိုလျှင် အမှန်ခြစ်ဖြုတ်ထားပါ။
+
++++ Synth settings ring +++[SynthSettingsRing]
+Voice Setting သို့မသွားဘဲ Short Cut များဖြင့်အသုံးပြုလိုလျှင်:
+%kc:beginInclude
+|| Name | Desktop key | Laptop key | Description |
+| Synth setting များကိုအပြောင်းလဲလုပ်လိုလျှင် | NVDA+control+rightArrow | NVDA+shift+control+rightArrow | ၎င်း short cut ကိုနှိပ်၍ Voice Setting ထဲတွင်ရှိသည့်အရာများကို ရွှေ့နိုင်သည်။ |
+| Synth setting များကိုအပြောင်းလဲလုပ်လိုလျှင် | NVDA+control+leftArrow | NVDA+shift+control+leftArrow | ၎င်း short cut ကိုနှိပ်၍ Voice Setting ထဲတွင်ရှိသည့်အရာများကို ရွှေ့နိုင်သည်။ |
+| Synth setting များကို မြှင့်လိုလျှင် | NVDA+control+upArrow | NVDA+shift+control+upArrow | ဥပမာ Rate, Voice, Volume တို့ကို မြှင့်ခြင်း ဖြစ်သည်။ |
+| Synth setting များကို နှိမ့်လိုလျှင် | NVDA+control+downArrow | NVDA+shift+control+downArrow | ဥပမာ Rate, Voice, Volume တို့ကို နှိမ့်ခြင်း ဖြစ်သည်။ |
+%kc:endInclude
+
++++ Braille Settings +++
+Braille Settings ကို preferences ထဲတွင် သွားရောက်ရှာဖွေနိုင်သည်။
+
+==== Braille Display ====
+ပြင်ဆင်နိုင်သော Braille Settings များစွာရှိသည်။ ထည့်သွင်းထားသော Braille Display Driver ပေါ်တွင်မူတည်၍ Arrow Key ဖြင့်ရွေးချယ်ပါ။
+
+သင်အသုံးမပြုလိုလျှင် No braille ကိုရွေးချယ်ရမည်။
+
+အသေးစိတ်သိလိုလျှင် [Supported Braille Displays #SupportedBrailleDisplays] တွင်သွားရောက်လေ့လာနိုင်ပါသည်။
+
+==== Port ====
+မည်သည့် Port ကို အသုံးပြုမည်ကို ရွေးချယ်ခြင်းဖြစ်သည်။Brail Display ပေါ်တွင်မူတည်သည်။
+
+NVDA အနေဖြင့် "USB"နှင့် "Bluetooth" ကိုရွေးချယ်ပေးသည်။ သို့သော် အချို့ Display များဖြင့်မကိုက်ညီပါ။
+
+
+အသေးစိတ်သိလိုလျှင်[Supported Braille Displays #SupportedBrailleDisplays] တွင် သွားရောက်လေ့လာနိုင်ပါသည်။
+
+==== Output Table ====
+Output Table များကိုရွေးချယ်လိုလျှင် output table combo box ထဲတွင် သွားရောက်ရွေးချယ်ရမည်။
+ရွေးချယ်ထားသော Table ပေါ်မူတည်၍ Brail Display တွင် ဖော်ပြသွားမည်။
+
+==== Input Table ====
+Input Table များကိုရွေးချယ်လိုလျှင် Input table combo box ထဲတွင် သွားရောက်ရွေးချယ်ရမည်။
+မိမိရိုက်ထည့်သည့် Brail စာများကို ကွန်ပျူတာမှ လက်ခံရယူခြင်းဖြစ်သည်။
+
+မှတ်ချက် အသုံးပြုသော Brail Display Driver ပေါ်တွင်မူတည်သည်။
+ အကယ်၍ အလုပ်မလုပ်လျှင် [Supported Braille Displays #SupportedBrailleDisplays] တွင်သွားရောက်လေ့လာနိုင်ပါသည်။
+
+==== Expand to computer braille for the word at the cursor ====
+Brail Cursor ကို အသုံးပြုခြင်းနှင့်ပါတ်သတ်သော
+
+==== Show Cursor ====
+Brail Cursor ကို အဖွင့် အပိတ် ပြုလုပ်ခြင်းဖြစ်သည်။
+
+==== Blink Cursor ====
+Brail Cursor ကို မည်သည့်နေရာတွင်ထားရှိမည်ကို ဖော်ပြခြင်းဖြစ်သည်။
+
+==== Cursor Blink Rate (ms) ====
+Cursor Rate ကို အနှေး အမြန် ပြုလုပ်ခြင်းဖြစ်သည်။
+
+==== Cursor Shape ====
+This option allows you to choose the shape (dot pattern) of the braille cursor.
+The selection indicator is not affected by this option.
+
+==== Message Timeout (sec) ====
+၎င်း option သည် braille display တွင် စာကို အချိန်မည်မျှ ဖော်ပြမည်ကို ပြုလုပ်ခြင်းဖြစ်သည်။
+
+%kc:setting
+==== Braille Tethered to ====[BrailleTether]
+Key: NVDA+control+t
+
+၎င်း option သည် focus နှင့် review ကို ရွေးချယ်ခြင်းဖြစ်သည်။
+
+==== စာပိုဒ်အလိုက်ဖတ်လိုလျှင် ====
+Read By Paragraph ကို အမှန်ခြစ်ပေးရမည်။
+
+==== Avoid splitting words when possible ====
+Avoid splitting words when possible ကို အမှန်ခြစ်ထားလျှင် စကားလုံးများကို အလိုလျောက်နေရာတကျ ရွေ့ပေးခြင်းဖြစ်သည်။
+မှတ်ချက် စာလုံးရေ အရမ်းများသော်လည်း အလိုလျောက်ပြုလုပ်ပေးနိုင်သည်။
+
+၎င်း ကို Disble ပြုလုပ်ထားလျှင် အချို့စာလုံးများပျောက်နေမည်။
+Scroll ဖြင့် ပြန်လည်ဆွဲချသောအခါ ပျောက်နေသောစာလုံးများပြန်လည်ပေါ်လာမည်။
+
+၎င်းကို အမှန်ခြစ်ထားသောအခါ စာဖတ်ခြင်းကိုအထောက်ကူပြုသော်လည်း Scroll ကိုဆွဲချသောအခါ ပို၍ ဖော်ပြနိုင်သည်။
+
++++ Keyboard Settings (NVDA+control+k) +++
+၎င်း Setting ကို Preferences ထဲတွင် ရှာဖွေနိုင်သည်။
+ပါဝင်သည့်အရာများကို အောက်တွင်ဖော်ပြထားသည်:
+
+==== Keyboard layout ====
+Bombo box ထဲတွင် ကီးဘုတ်အမျိုးစား ၂ မျိုးကို ရွေးချယ်နိုင်သည်။ ၎င်းတို့မှာ Desktop နှင့် Laptop တို့ဖြစ်သည်။
+
+==== NVDA Key ကို capslock key ဖြင့် အသုံးပြုခြင်း ====
+၎င်းကို အသုံးပြုလိုလျှင် Use Caplock as an NVDA modifier key ကို အမှန်ခြစ်ထားပါ။
+
+==== Use extended insert as an NVDA modifier key ====
+၎င်းကို အသုံးပြုလိုလျှင် Use extended insert as an NVDA modifier key ကို အမှန်ခြစ်ထားပါ။ Home Key , End Key , Arrow Key များကို အစားထိုးအသုံးပြုခြင်းဖြစ်သည်။
+
+==== Use numpad insert as an NVDA modifier key ====
+၎င်းကို အမှန်ခြစ်ထားလျှင် Numpad Insert Key ကို NVDA Key ဖြင့်အသုံးပြုခြင်းဖြစ်သည်။
+
+အကယ်၍ Key တစ်ခုမျှ မရွေးချယ်ထားလျှင် NVDA မှ အနည်းဆုံး Key တစ်ခုရွေးချယ်ရန် Message Box ကျလာလိမ့်မည်။
+
+%kc:setting
+==== စာရိုက်သောအခါ စာလုံးများကို အသံထွက်လိုလျှင် ====
+Key: NVDA+2
+
+၎င်းကို အမှန်ခြစ်ထားပါက သင်စာရိုက်သောအခါ စာရိုက်သည့်စာလုံးများကို အသံထွက်ဖတ်ပြမည်။
+
+%kc:setting
+==== စာရိုက်သည့်အခါ စကားလုံးများကို အသံထွက်လိုလျှင် ====
+Key: NVDA+3
+
+၎င်းကို အမှန်ခြစ်ထားပါက သင်စာရိုက်သောအခါ စာရိုက်သည့်စကားလုံးများကို အသံထွက်ဖတ်ပြမည်။
+
+==== Speech interrupt for typed characters ====
+အကယ်၍ အမှန်ခြစ်ထားလျှင် စာလုံးများကို ရောက်သည့်နေရာမှ အသံကို ရပ်ထားပေးခြင်းဖြစ်သည်။
+
+==== Speech interrupt for Enter key ====
+အကယ်၍ အမှန်ခြစ်ထားလျှင် Enter Key နှိပ်ပါက အသံများကို ရပ်ပေးခြင်းဖြစ်သည်။
+
+==== Allow skim reading in Say All ====
+အကယ်၍ အမှန်ခြစ်ထားလျှင် စာများကိုဖတ်သည့်အခါ အခြားလိုင်းကို ကာစာ ရွေ့သွားသော်လည်း ကျန်ခဲ့သည့် စာများကို ဖတ်နေခြင်းဖြစ်သည်။
+
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====
+အကယ်၍ အမှန်ခြစ်ထားလျှင် Caps Lock ကိုဖွင့်ပြီး စာလုံးအသေးများရိုက်သောအခါ အချက်ပေးသံမြည်ခြင်းဖြစ်သည်။
+
+%kc:setting
+==== Speak Command Keys ====
+Key: NVDA+4
+
+အကယ်၍ အမှန်ခြစ်ထားလျှင် Character မဟုတ်သော အခြား Key များဖြစ်သည့် Escape, Arrow Key များကိုဖတ်ပြခြင်းဖြစ်သည်။
+
+==== Play sound for spelling errors while typing ====
+အကယ်၍ အမှန်ခြစ်ထားလျှင် စာရိုက်သည့်အခါ စာလုံးပေါင်းမှားလျှင် အသံဖြင့်အချက်ပြခြင်းဖြစ်သည်။
+
+==== Handle keys from other applications ====
+အကယ်၍ အမှန်ခြစ်ထားလျှင် အခြား Application Short Cut Key များ၏ လုပ်ဆောင်ချက်များဖြင့်သွားတူနေလျှင် အမှန်ခြစ်ဖြုတ်ထားရမည်။
+
++++ Mouse Settings (NVDA+control+m) +++[MouseSettings]
+Preferences ထဲတွင် Mouse Setting ကိုရှာဖွေနိုင်သည်။
+၎င်းတွင် အောက်ပါတို့ပါဝင်သည်:
+
+==== Report Mouse Shape Changes ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် လက်ရှိရှိနေသည့်နေရာကိုဖတ်သည့်အပြင် အခြား Active ဖြစ်နေသည့်နေရာကိုပါဖတ်ပြသည်။
+
+%kc:setting
+==== Enable mouse tracking ====
+Key: NVDA+m
+
+၎င်းကိုအမှန်ခြစ်ထားလျှင် လက်ရှိ Mouse Pointer ရှိနေသော စာများကိုဖတ်ရုံသာမက Mouse ရွှေ့သည့်အခါ Object များကိုလဲ စာအဖြစ်ဖော်ပြပေးသည်။
+
+==== Text unit resolution ====
+၎င်း Setting တွင် NVDA ကို စကားလုံးတစ်လုံးစီသော်လည်းကောင်း စကားစုတစ်စုစီသော်လည်းကောင်း စာပိုဒ်တစ်ပိုဒ်စီသော်လည်းကောင်း ဖတ်ပြရန်ရွေးချယ်နိုင်သည်။
+
+==== Report role when mouse enters object ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် Row နှင့် Column တို့ကို ဖတ်ပြခြင်းဖြစ်သည်။
+
+==== Play audio coordinates when mouse moves ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် NVDA ရွှေ့သည့်အခါ အသံမြည်ခြင်းဖြစ်သည်။
+အပေါ်ကိုရွှေ့သည့်အခါ အသံမြင့်သွားပြီး အောက်သို့နှိပ့်သည့်အခါ အသံနှိမ့်သွားသည်။
+ဘယ် နှင့် ညာ ကိုလဲ အသံခွဲထားသည်။ အသုံးပြုသူအနေဖြင့် စပီကာ သို့မဟုတ် နားကြပ် လိုအပ်သည်။
+
+==== Brightness controls audio coordinates volume ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် Mouse ရွှေ့သည့်အသံကို အတိုး အကျယ် လုပ်ပေးသည်။
+၎င်း Setting သည် NVDA တွင် အမှန်မခြစ်ထားပါ။
+
++++ Review Cursor Settings +++
+Preferences Setting ထဲတွင်တွေ့နိုင်သည်။
+၎င်း ကို အောက်တွင်ဖော်ပြထားသည်:
+
+%kc:setting
+==== Follow System Focus ====
+Key: NVDA+7
+
+၎င်းကိုအမှန်ခြစ်ထားလျှင် Review Cursor သည် System Focus နှင့် ဘယ်တော့မျှ သွားမတူပါ။
+
+%kc:setting
+==== Follow System Caret ====
+Key: NVDA+6
+
+၎င်းကိုအမှန်ခြစ်ထားလျှင် Review Cursor သည် အက္ခရာအတိုင်း အလိုလျောက်ရွေ့ပေးသည်။
+
+==== Follow mouse cursor ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် Review Cursor သည် Mouse Cursor ရွှေ့သည့်အတိုင်း လိုက်ရွှေ့သည်။
+
+==== Simple Review mode ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် အရေးကြီးသည့်အရာများကိုသာ ဦးစားပေးဖတ်ပေးသည်။
+
+အဖွင့် အပိတ် လုပ်လိုပါက [Input Gestures dialog #InputGestures] ထဲတွင် သွားရောက်ထည့်သွင်းနိုင်ပါသည်။
+
++++ Object Presentation Settings (NVDA+control+o) +++
+Preferences Setting တွင် တွေ့နိုင်သည်။
+၎င်း ကို အောက်တွင်ဖော်ပြထားသည်:
+
+==== Report Tool Tips ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် Window တွင်ပေါ်လာသည့် Message များကို Mouse Cursor ရွှေ့သည့်အခါ ဖတ်ပြခြင်းဖြစ်သည်။
+
+==== Report Help Balloons ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် Network Unplug ဖြစ်နေခြင်းတို့ကို ဖတ်ပြခြင်းမျိုးဖြစ်သည်။
+
+==== Report Object Shortcut Keys ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် မိမိ ရောက်ရှိသည့်နေရာတွင် Short Cut Key ရှိပါက Short Cut Key များကို ဖတ်ပြခြင်းဖြစ်သည်။
+ဥပမာ File Menu ထဲရောက်နေပါက alt+f
+
+==== Report object position information ====
+၎င်းSetting သည် သင်ရွေးချယ်ထားသောအပေါ်မူတည်၍ အလုပ်လုပ်သည်။ Report object position information ကို အမှန်ခြစ်ထားပါက Object နှင့် ပါတ်သတ်သည့် အကြောင်းအရာများကိုဖတ်ပြခြင်းဖြစ်သည်။
+
+==== Guess Object Position Information when unavailable ====
+Reporting of object ကိုအမှန်ခြစ်ထားလျှင် ၎င်း Function သည် အလုပ်မလုပ်ပါ။
+
+
+==== Report Object descriptions ====
+အကယ်၍ Report Object descriptions ကို အသုံးမပြုလိုပါက အပိတ် အဖွင့် ပြုလုပ်နိုင်သည်။
+
+%kc:setting
+==== Progress bar output ====
+Key: NVDA+u
+
+၎င်းသည် Percentages ဖြင့် Loading သွားနေသောအရာများကို ဖတ်ပြခြင်းဖြစ်သည်။
+
+အောက်တွင်ဖော်ပြထားသည်:
+- Off: Percentages ဖြင့် Loading သွားနေသောအရာများကို မဖတ်ပြပါ။
+- Speak: Percentages ဖြင့် Loading သွားနေသောအရာများကို စာဖြင့် ဖော်ပြခြင်းဖြစ်သည်။
+- Beep: Percentages ဖြင့် Loading သွားနေသောအရာများကို အသံဖြင့် ဖော်ပြခြင်းဖြစ်သည်။
+- Beep and speak: Percentages ဖြင့် Loading သွားနေသောအရာများကို စာ နှင့် အသံ ဖြင့် ဖော်ပြခြင်းဖြစ်သည်။
+-
+
+==== Report background progress bars ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် နောက်ကွယ်တွင် Percentages ဖြင့် Loading သွားနေသောအရာများကို ဖတ်ပြခြင်းဖြစ်သည်။
+
+%kc:setting
+==== Report dynamic content changes ====
+Key: NVDA+5
+
+အလုပ်လုပ်နေစဉ် ထပ်မံပေါ်ထွက်လာသည့် အချက်လက်သစ်များကို ဖတ်ပြခြင်းဖြစ်သည်။ ဥပမာ Chat Program ကိုဖတ်ပြခြင်းမျိုးဖြစ်သည်။
+
++++ Input Composition Settings +++
+၎င်းကို Preferences Setting ထဲတွင် ရှာဖွေနိုင်သည်။
+မှတ်ချက် စာရိုက်သည့်အတွေ့အကြုံပေါ်မူတည်၍ ၎င်း Setting များကို အသုံးပြုနိုင်သည်။
+
+==== Automatically report all available candidates ====
+This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
+Having this option on for pictographic input methods such as chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
+However, for phonetic input methods such as chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
+
+==== Announce Selected Candidate ====
+This option, which is on by default, allows you to choose whether NVDA should announce the selected candidate when a candidate list appears or when the selection is changed.
+For input methods where the selection can be changed with the arrow keys  (such as Chinese New Phonetic) this is necessary, but for some input methods it may be more efficient typing with this option turned off.
+Note that even with this option off, the review cursor will still be placed on the selected candidate allowing you to use object navigation / review to manually read this or other candidates.
+
+==== Always include short character descriptions for candidates ====
+This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when it's selected or when it's automatically read when the candidate list appears.
+Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
+This option may be useful for Korean and japanese input methods.
+
+==== Report changes to the reading string ====
+Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
+You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
+This option is on by default.
+Note some older input methods such as Chinese ChangJie may not use the reading string to hold precomposition characters, but instead use the composition string directly. Please see the next option for configuring reporting of the composition string.
+
+==== Report changes to the composition string ====
+After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
+This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
+This option is on by default.
+
++++ Browse Mode Settings (NVDA+control+b) +++
+Preferences Setting တွင်ပါဝင်သည်။
+
+အောက်တွင်ဖော်ပြထားသည်:
+
+==== Maximum Number of Characters on One Line ====
+၎င်းသည် Browse Mode တွင် စာတစ်ကြောင်းလျှင် စာလုံးရေမည်မျှထားသည်ကို သတ်မှတ်ခြင်းဖြစ်သည်။
+
+==== Maximum Lines Per Page ====
+Page Up နှင့် Page Down ရွှေ့သောအခါ လိုင်း မည်မျှ ရွှေ့မည်ကို သတ်မှတ်ခြင်းဖြစ်သည်။
+
+%kc:setting
+==== Use screen layout ====
+Key: NVDA+v
+
+၎င်းသည် Browse Mode တွင် Link အပါဝင် အခြားသောအရာများကို ခွဲခြားပေးခြင်းဖြစ်သည်။
+
+==== Automatic Say All on page load ====
+၎င်းကို အမှန်ခြစ်ထားလျှင် Browse Mode တွင်အလိုလျောက်ဖတ်ပြခြင်းဖြစ်သည်။
+NVDA တွင် အမှန်ခြစ်ပြီးသားဖြစ်သည်။
+
+==== Include layout tables ====
+၎င်း၏အကျိုးသက်ရောက်မှုသည် NVDA ဖြင့် Table များကို ကောင်းမွန်စွာ ရွှေ့နိုင်ခြင်းဖြစ်သည်။
+၎င်းကိုဖွင့်သောအခါတွင် Table များကို Navigation command  key များဖြင့်ရွှေ့နိုင်သည်။[Document Formatting Settings #DocumentFormattingSettings]
+၎င်းကိုပိတ်ထားလျှင် ထိုလုပ်ဆောင်ချက်များမလုပ်ပါ။
+၎င်းကို NVDA နေဖြင့် မူလတွင်ပိတ်ထားပေးသည်။
+
+==== Configuring reporting of fields such as links and headings ====
+Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.
+
+==== Automatic focus mode for focus changes ====
+Focus Mode အမှန်ခြစ်ထားလျှင် Web Page တွင် Focus Mode ကို အလိုလျောက်ပြောင်းပေးသည်။
+
+==== Automatic focus mode for caret movement ====
+Automatic focus mode for caret movement ကိုအမှန်ခြစ်ထားလျှင် Arrow Key ဖြင့် Web Page ပေါ်တွင် ရွှေ့လျားနိုင်သည်။
+
+==== Audio indication of Focus and Browse modes ====
+Audio indication of Focus and Browse modes ကိုအမှန်ခြစ်ထားလျှင် Browse Mode နှင့် Focus Mode ပြောင်းလျှင် အသံဖြင့် အချက်ပြသည်။
+
+==== Trap non-command gestures from reaching the document ====
+၎င်းကို မူလထဲက NVDA တွင်အမှန်ခြစ်ပြီးသားဖြစ်သည်။ ဥပမာ J ကိုနှိပ်လျှင် Application တွင် သတ်မှတ်ထားသောအလုပ်ကိုလုပ်ခြင်းဖြစ်သည်။ ၎င်းသည် NVDA ၏ Quick Navigation Key များမဟုတ်ပါ။ Application တွင် ထည့်သွင်းထားသော Key များသာဖြစ်သည်။
+
++++ Document Formatting Settings (NVDA+control+d) +++[DocumentFormattingSettings]
+Preferences Setting ထဲတွင် ရှာဖွေနိုင်သည်။
+
+၎င်း Dialog Box ထဲတွင် အမှန်ခြစ်ပြုလုပ်နိုင်သည်။ Check Box များစွာပါဝင်သည်။
+ဥပမာ သင်သည် Report Font Name ကို အမှန်ခြစ်ထားလျှင် အခြား Font ကို Arrow ဖြင့်ရွှေ့သောအခါ Font Name ကိုဖတ်ပြလိမ့်မည်။
+
+၎င်း Group ထဲတွင် ရှိသည့်အရာများကို ဖတ်ပြနိုင်ရန်ပြင်ဆင်ထား၍ရသည်:
+- Font
+ - Font name
+ - Font size
+ - Font attributes
+ - Emphasis
+ - Style
+ - Colors
+- Document information
+ - Comments
+ - Editor revisions
+ - Spelling errors
+- Pages and spacing
+ - Page numbers
+ - Line numbers
+ - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
+ - Paragraph indentation (e.g. hanging indent, first line indent)
+ - Line spacing (single, double etc)
+ - Alignment
+- Table information
+ - Tables
+ - Row/column headers
+ - Cell coordinates
+- Elements
+ - Headings
+ - Links
+ - Lists
+ - Block quotes
+ - Landmarks
+ - Frames
+ - Clickable
+ -
+-
+
+
+Custom Gestures များလဲ ထည့်သွင်းနိုင်သည်။ [Input Gestures dialog #InputGestures].
+
+==== Report formatting changes after the cursor ====
+၎င်းကိုအမှန်ခြစ်ထားလျှင် လိုင်းများပြောင်းပါက Format များကိုပါ ထည့်၍ ဖတ်ပြသည်။သို့သော် NVDA ၏လုပ်ဆောင်ချက်မှာ နှေးသွားလိမ့်မည်။
+
+၎င်းသည် Word Pad ကဲ့သို့သော Application များဖတ်ရာတွင် အရေးပါသည်။
+
+==== Line indentation reporting ====[lineIndentationOptions]
+၎င်းသည် လိုင်းများကို မည်သို့ပြောမည်ကို ပြုလုပ်ခြင်းဖြစ်သည်။
+၎င်းတွင် ရွေးချယ်စရာ ၄ ခုပါဝင်သည်။
+
+- Off: NVDA လုံး၀အလုပ်မလုပ်ပါ။
+- Speech: အကယ်၍ ၎င်း ကိုရွေးချယ်ထားလျှင် NVDA မှ တစ်ခုခု ပြောပါလိမ့်မည်။ ဥပမာ Twelve Space နှင့် Four Tab။
+- Tones: အကယ်၍ ၎င်း ကိုရွေးချယ်ထားလျှင် လိုင်းနှင့် စမေစင် ပေါ်တွင်မူတည်၍ အသံဖြင့်ပြသည်။
+- Both Speech and Tones: နှစ်ခုလုံးရွေးထားလျှင် အသံ နှင့် စကားပြော နှစ်ခုလုံးပြသည်။
+-
+
++++ Speech dictionaries +++
+Preferences Setting ထဲတွင် ရှာဖွေနိုင်သည်။
+၎င်းတွင် အမျိုးစား ၃ မျိုးရှိသည်။
+ယင်းတို့မှာ:
+- Default: မှာစကားလုံးများကိုပြင်လျှင် Dictionary အားလုံးတွင် ပြင်ပြီးသားဖြစ်သည်။
+- Voice: တွင်ပြင်လျှင် လက်ရှိသုံးနေသည့် Synthesizer တွင်သာပြင်သည်။
+- Temporary: မှာပြင်လျှင် Restart မချခင်အထိသာ မိမိပြင်ထားသည့်အတိုင်းရှိသည်။
+-
+
+[Input Gestures dialog #InputGestures] ထဲတွင် မိမိ နှစ်သက်သည့် Short Cut ထည့်ထားပါက အလွယ်တကူအသုံးပြုနိုင်ပါသည်။
+
+Dictionary တိုင်းတွင် တူညီစွာပါဝင်သည်။
+၎င်းတို့မှာ  Add, Edit နှင့် Remove button တို့ဖြစ်သည်။
+
+အကယ်၍ Dictionary ကို စကားလုံးအသစ်ထည့်လိုလျှင် Add ကိုနှိပ်၍ စာရိုက်သည့်နေရာတွင် စာကိုရိုက်ပြီး OK နှိပ်ပါ။
+သင်ထည့်ထားသော စကားလုံးကို List အသစ်ထဲတွင်တွေ့ရသည်။
+သင့်အနေနှင့် အမှန်တကယ်ထည့်လိုလျှင် OK ကိုနှိပ်ပါ။ လုပ်ဆောင်ချက်ပြီးမြောက်ပါပြီ။
+
+သင့်အနေဖြင့် စကားလုံးတစ်လုံးကို အခြားအဓိပ္ပါယ် ပြောင်း၍လဲ ထည့်နိုင်သည်။
+ဥပမာ Pattern ဆိုသည့်အကွက်တွင် Bird ကိုရိုက်၍ Replacement အကွက်တွင် Frog ကိုရိုက်ပါ။
+သင့်အနေဖြင့် အမှတ်သားပြုလုပ်ခဲ့၍လဲရသည်။
+Comment Field ထဲတွင် Bird မှ Frog ကိုပြောင်းလဲထားသည်။
+
+NVDA's speech dictionary တွင် စကားလုံးများကိုကောင်းမွန်စွာ ပြောင်းလဲနိုင်သည်။
+စကားလုံးများကို အသံ အနိမ့် အမြင့် ဖြင့်ပါ သတ်မှတ်နိုင်သည်။
+
+Finally, a set of radio buttons allows you to tell NVDA whether your pattern should match anywhere, should only match if it is a complete word or should be treated as a "Regular expression".
+Setting the pattern to match as a whole word means that the replacement will only be made if the pattern does not occur as part of a larger word; i.e. a character other than an alphanumeric character or an underscore (or no character at all) comes both immediately before and after the pattern.
+Thus, using the earlier example of replacing the word "bird" with "frog", if you were to make this a whole word replacement, it would not match "birds" or "bluebird".
+
+A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
+Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
+
++++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
+ပုဒ်ဖြတ် ပုဒ်ရပ် သင်္ကေတ များကို အသံထွက်ပြောင်းလဲခြင်းဖြစ်သည်။
+
+ပြောင်းလဲထားသောအသံထွက်များကို Dialog Title တွင် ဖော်ပြမည်။
+မှတ်ချက် Voice Setting ထဲတွင် Punctuation/symbol ရွေးချယ်ထားပုံမူတည်သည်။
+
+ပထမဦးစွာ symbol ပြောင်းလိုပါက Symbols list ထဲတွင် ရွေးပါ။
+
+- အစားထိုးထားသော Symbol ကို အသံပြန်ထွက်ရာတွင် အဆင့် ၃ ဆင့် သတ်မှတ်ထားနိုင်သည်။ဥပမာ ကော်မာ ကိုရွေးပါက မူလအနေဖြင့် Synthesizer က ခေတ္တရပ်သည်။သင့်အနေဖြင့် ခေတ္တမရပ်လိုပါက Level တွင် All ကိုထားပြီး Send actual symbol to synthesizer တွင် Never ကိုထားရမည်။ Never ကိုရွေးထားလျှင် မိမိပြုလုပ်ထားသော Symbol ကို Synthesizer သို့ မပေးပို့ပါ။ Always ရွေးထားလျှင် Synthesizer သို့ တိုက်ရိုက်ပေးပို့သည်။ Only below symbol level ကိုရွေးထားပါက Punctuation နှင့် Symbol Level ပေါ်တွင် မူတည်၍သာအလုပ်လုပ်သည်။
+ -
+-
+
+Add ကိုနှိပ်၍ Symbol အသစ်ကိုလဲထည့်သွင်းနိုင်သည်။
+Dialog Box ထဲတွင် မိမိ အသစ်ပြုလုပ်လိုသည့် Symbol ကိုရိုက်ထည့်ပြီး OK နှိပ်ပါ။
+
+ဖျက်လိုပါက Remove ကိုနှိပ်၍ ဖျတ်နိုင်ပါသည်။
+
+Save လိုပါက OK ကိုနှိပ်ပြီး Save နိုင်ပါသည်။
+
++++ Input Gestures +++[InputGestures]
+Gestures အသစ်ပြုလုပ်လိုပါက keyboard ပေါ်ကနှိပ်၍သော်လည်းကောင်း braille display ပေါ်ကလဲလုပ်နိုင်သည်။
+
+မိမိပြုလုပ်ထားသော Command ကိုနှိပ်လိုက်ပါက Dialog Box ကိုဖော်ပြမည်။
+ဥပမာ Customize Command ကို Browse Mode တွင်ပြုလုပ်ပါက Browse Mode တွင် Input Gestures ကိုဖွင့်ပါ။
+
+Dialog Box တွင် ခေါင်းစဉ်လိုက်ဖော်ပြလိမ့်မည်။
+စကားလုံးတစ်လုံး သို့မဟုတ် တစ်လုံးထက်ပိုသော စကားလုံးများကို သင့်အနေဖြင့် ပြင်ဆင်နိုင်သည်။
+
+Input Gestures တွင် Command ထည့်သွင်းလိုလျှင် Command ကိုရွေးချယ်၍ Add ကိုနှိပ်ပါ။
+ဥပမာ ကီးဘုတ်ပေါ်မှ ကီးတစ်ခုနှိပ်၍ သို့မဟုတ် Brail Display ပေါ်မှ Button တစ်ခုခုကိုနှိပ်၍ Gestures တစ်ခုပြုလုပ်နိုင်သည်။Gestures ပြုလုပ်ခြင်းနည်းလမ်းသည် တစ်ခုထက်မကရှိသည်။
+Desktop Keyboard Layout နှင့် Laptop Keyboard Layout Layout အမျိုးမျိုးအသုံးပြုနိုင်သည်။
+
+Input Gestures ထဲမှ Command ကိုဖျက်လိုလျှင် ဖျက်လိုသည့် Command ကိုရွေး၍ Remove နှိပ်ပါ။
+
+အကယ်၍ ပြင်ဆင်မှုများပြီးလျှင် OK ကိုနှိပ်၍ Save နိုင်သည်။ သို့မဟုတ် Cancle ကိုနှိပ်၍ ပြင်ဆင်မှုများကို ပြန်ဖျတ်နိုင်သည်။
+
+++ Save ခြင်းနှင့် Setting များပြန်လည်စတင်ခြင်း ++
+NVDA သည်မူလအနေဖြင့် NVDA ပိတ်သည်နှင့် Setting များကို အလိုလျှောက် Save ခြင်းဖြစ်သည်။
+မှတ်ချက် သို့သော် General Setting ထဲတွင် Save configuration on exit ကိုအမှန်ခြစ်ဖြုတ်ထားနိုင်ပြီး NVDA Menu ထဲရှိ Save Configuration နှိပ်၍ မိမိလိုအပ်သည့်အခါ Save နိုင်သည်။
+
+အကယ်၍ သင့်အနေဖြင့် ပြင်ဆင်မှုကို မှား၍ Save မိလျှင် NVDA Menu ရှိ Revert saved Configuration နှိပ်၍ ပြန်ပြင်ဆင်နိုင်သည်။ 
+သင့်အနေဖြင့် NVDA ၏ Setting များကို မူလအတိုင်းပြန်လည်ဖြစ်လိုလျှင် NVDA Menu ထဲရှိ Reset configuration to factory defaults ကိုနှိပ်နိုင်သည်။
+
+အသုံးဝင်သော commands ကီးများ:
+%kc:beginInclude
+|| Name | Desktop key | Laptop key | Description |
+| Save configuration | NVDA+control+c | NVDA+control+c | လက်တလောပြင်ဆင်ထားသော Setting များကို Save ခြင်းဖြစ်သည်။ |
+| Revert  configuration | NVDA+control+r | NVDA+control+r | တစ်ကြိမ်နှိပ်ပါကနောက်ဆုံးပြင်ဆင်ခဲ့သည့်အခြေနေကိုရယူခြင်း သုံးကြိမ်နှိပ်ပါက NVDA ၏ မူလ Setting များကိုပြန်လည်ရယူခြင်းဖြစ်သည်။ |
+%kc:endInclude
+
+++ Configuration Profiles ++
+တစ်ခါတစ်ရံတွင် သင့်အနေဖြင့် မတူညီသည့် Setting နှင့် မတူညီသည့်အခြေနေတွင် အသုံးပြုလိုလျှင်
+ဥပမာ သင့်အနေဖြင့် စာများကို အသေးစိတ် ဖတ်လိုသည့်အခါ Font Size , Font Colour စသော အသေးစိတ်အချက်လက်များကို NVDA ကဖတ်ပြနိုင်ရန်အတွက် Configuration Profiles ပြုလုပ်နိုင်ပါသည်။
+
+General Setting မှလွဲ၍ Setting အတော်များများကို Profile တစ်ခုအနေဖြင့် အသုံးပြုနိုင်သည်။
+
+Configuration profiles သည် ကိုယ်တိုင်ပြုလုပ်နိုင်သည်။
+သက်ဆိုင်သည့် အက်ပလီကေးရှင်းများကို အလိုလျောက် ပြောင်းလဲပေးသည်။
+
++++ Basic Management +++
+NVDA menu ထဲတွင် Configuration Profile များကို ရွေးချယ်ပြုလုပ်နိုင်သည်။
+Key command ဖြင့်လဲ ပြုလုပ်နိုင်သည်:
+%kc:beginInclude
+- NVDA+control+p: Configuration Profiles dialog Box ပေါ်လာလိမ့်မည်။
+-
+%kc:endInclude
+
+ပထမဦးစွာ Profile Dialog Box ထဲတွင် သင်နှစ်သက်ရာတစ်ခုကိုရွေးနိုင်သည်။
+Dialog Box ပွင့်လာသောအခါ မိမိလက်တလောသုံးနေသော အက်ပလီကေးရှင်းသည် အလိုလျောက်ရွေးချယ်ပြီးသားဖြစ်သည်။
+သင့်အနေဖြင့် ကိုယ်တိုင်ရွေး၍လဲ ပြင်ဆင်နိုင်သည်။
+
+Profile ကို အမည်ပေးလိုလျှင် သို့မဟုတ် ဖျတ်လိုလျှင် Rename Button သို့မဟုတ် Delete Button အသီးသီးကို နှိပ်နိုင်သည်။
+
+ပိတ်လိုလျှင် Close button ကိုနှိပ်ပါ။
+
++++ Creating a Profile +++
+Profile ကို အသစ်ပြုလုပ်လိုလျှင် New button ကိုနှိပ်ပါ။
+
+New Profile dialog box ပေါ်လာလျှင် နာမည်ပေးပြီး မည်သို့အသုံးပြုမည်ကို ရွေးချယ်နိုင်သည်။
+အကယ်၍ Profile ကို Manual အတိုင်းအသုံးပြုလိုလျှင် Manual ကို မူလအနေဖြင့်ရွေးပြီးသားဖြစ်သည်။
+အသေးစိတ်သိရှိလိုလျှင် [below #ConfigProfileTriggers] တွင်လေ့လာနိုင်သည်။
+
+Profile ကိုအသစ်ပြုလုပ်ပြီးသောအခါ OK ကိုနှိပ်ပါ။ ပြီးနောက် close ကိုနှိပ်၍ ပိတ်ပါ။
+
++++ Manual Activation +++[ConfigProfileManual]
+Manual ကိုသုံးလိုလျှင် Manual Activation ကိုရွေးပါ။
+သင့်အနေဖြင့် Profile တစ်ခုကို Activate ပြုလုပ်ပါက အခြား Profile များပါ အလိုလျောက်ပြင်ပြီးဖြစ်သည်။
+သင့်အနေဖြင့် Deactivate ပြုလုပ်လိုလျှင် Profile Dialog Box ထဲမှ Deactivate Button ကိုနှိပ်ပါ။
+
++++ Triggers +++[ConfigProfileTriggers]
+Triggers Button ကို Creating Profile ထဲတွင်နှိပ်နိုင်သည်။Triggers အမျိုးစားများစွာရှိသည်။
+
+Triggers List ထဲတွင်:
+- Current application: မိမိလတ်တလောအသုံးပြုနေသော အက်ပလီကေးရှင်းကို အလုပ်လုပ်ပေးခြင်းဖြစ်သည်။
+- Say all: မိမိပြင်ဆင်ထားသည့်အတိုင်း အက်ပလီကေးရှင်းတွင်ဖတ်သည်။
+-
+
+လက်ရှိပြင်ဆင်ထားသော Profile ကိုအသုံးမပြုလိုလျှင် Normal Configuration ကိုရွေးချယ်ပါ။
+
+Close button ကိုနှိပ်၍ Configuration Profiles dialog box ထဲသို့ပြန်ရောက်သွားမည်။
+
++++ Editing a Profile +++
+အကယ်၍ ပြုလုပ်ပြီးသော Profile များကို ပြင်ဆင်လိုလျှင် ပြန်လည်ပြင်ဆင်နိုင်သည်။
+ဥပမာ အကယ်၍ Notepad Application ကိုရွေးလိုက်လျှင် အခြား Setting များတွင်လည်း Notepad ၏Setting အတိုင်းဖြစ်သွားသည်။
+Trigger ထဲတွင်လည်း မည်သည့် Setting ကိုရွေးသည်ဖြစ်စေ အခြား Profile များကိုလဲပြောင်းလဲသွားသည်။
+
+အကယ်၍ Profile ထဲတွင် say allကို ရွေးချယ်လိုလျှင် မိမိကိုယ်တိုင် Activate ပြုလုပ်ရမည်။[manually activate #ConfigProfileManual] 
+
++++ Temporarily Disabling Triggers +++
+တစ်ခါတစ်ရံတွင် Temporarily Disabling Triggers သည်အရေးပါသည်။
+ဥပမာ မိမိ ပြုလုပ်ထားသော Trigger နှင့် Profile ကို အသုံးမပြုလိုလျှင် Temporarily disable tirgger ကို အမှန်ခြစ်ထားပါ။
+
+++ Location of Configuration files ++
+Custom appModules နှင့် custom drivers များသည် NVDA Portable folder ထဲရှိ userConfig ထဲတွင်တွေ့နိုင်သည်။
+
+Installed versions တွင် custom appModules နှင့် custom drivers ကို Windows user profile တွင်တွေ့နိုင်သည်။
+
+Logon သို့မဟုတ် UAC screens တွင် လက်ရှိ Settings အတိုင်းအသုံးပြုလိုလျှင် General Setting အတွင်းရှိ Use currently saved settings on the logon and other secure screens ကိုနှိပ်ပါ။
+
++ Extra Tools +
+
+++ Log Viewer ++
+Log viewer ကို NVDA menu Tool ထဲတွင်ရှာပါ။ Log viewer ထဲတွင် NVDA အသုံးပြုသည့် အသေးစိတ်အချိန်ဇယားများကိုတွေ့နိုင်ပါသည်။
+
+Viewer File ထဲရှိအချက်လက်များကို ကူးယူနိုင်သည်။
+
+++ Speech Viewer ++
+NVDA မှ ပြောဆိုသည့်အရာများကို Developer များနှင့် မျက်စိမြင်သူများ သိနိုင်ရန်အတွင် အပေါ် မှ အောက်သို့ စာတန်းဖြင့်ဖော်ပြပေးသည်။
+
+NVDA menu ထဲမှ Tool တွင် နှိပ်၍ ပိတ်နိုင် ဖွင့်နိုင်သည်။
+
+Window တက်သည်နှင့် Speech Viewer ကိုတက်လိုလျှင် Show speech viewer on startup ကိုအမှန်ခြစ်ထားပါ။
+
+Speech Viewer အလုပ်လုပ်နေလျှင် NVDA မှဖော်ပြလေသောစာများကိုကူးယူနိုင်သည်။
+
+Speech viewer ကို မိမိရောက်နေသည့်နေရာမှ ဖွင့်လိုလျှင်[Input Gestures dialog #InputGestures] ထဲတွင် gesture ထည့်သွင်းနိုင်သည်။
+
+++ Add-ons Manager ++
+ Add-ons Manager ကို NVDA Menu Tool တွင်ရှာဖွေနိုင်သည်။ Install, Uninstall, Anable နှင့် Disable ပြုလုပ်နိုင်သည်။
+Community မှပြုလုပ်ထားသော Extra Braille Display  သို့မဟုတ် Speech Synthesizer များလဲထည့်သွင်းနိုင်သည်။
+
+Add-ons Manager list ထဲတွင် Application တစ်ခုကိုရွေး၍ ၎င်း Application နှင့်ပါတ်သတ်သော အသေးစိတ်ကိုသိလိုလျှင် About add-ons ကိုနှိပ်ပါ။
+မည်သို့မည်ပုံ အသုံးပြုရမည်ကို help button ကိုနှိပ်ပါ။
+
+အသုံးပြုနိုင်သည့် add-ons များကို download လုပ်လိုလျှင် Get add-ons button ကိုနှိပ်ပါ။
+၎င်း button မှဖွင့်ပေးပါလိမ့်မည် NVDA Add-ons Page ဖြစ်သော[NVDA Add-ons page http://addons.nvda-project.org/]ကိုဖွင့်ပေးပါလိမ့်မည်။
+
+NVDA Add-on Install လုပ်လိုလျှင် Install button ကိုနှိပ်ပါ။
+ထို့နောက် add-on package ဖိုင်ကိုရှာ၍  နှိပ်ပါ။ထို့နောက် Installation စတင်မည်။
+
+Installation စတင်သောအခါ ပထမဦးစွာ NVDA ကမေးပါလိမ့်မည်။ Install တကယ်လုပ်မလားဆိုတာကိုမေးပါလိမ့်မည်။
+အဘယ်ကြောင့်ဆိုသော် မိမိကိုယ်ရေးကိုယ်တာအချက်လက်များကို ကာကွယ်ရန်ဖြစ်သည်။
+Add-on Install လုပ်ပြီးသောအခါ NVDA ကို restart ချပြီးနောက် စတင်အလုပ်လုပ်မည်။
+Restart မချမှီ Add-on List ထဲတွင် မိမိထည့်သွင်းထားသော Add-on ကိုဖော်ပြပါလိမ့်မည်။
+
+Add-on ကိုပြန်လည်ဖြုတ်လိုလျှင် Remove button ကိုနှိပ်ပါ။
+NVDA က တကယ်ဖျတ်မှာလားဆိုတာကိုမေးပါလိမ့်မည်။
+ထို့နောက် Restart ချပြီးသောအခါ ပျက်သွားပါလိမ့်မည်။
+Restart မချမှီ Add-on List ထဲတွင် မိမိထည့်သွင်းထားသော Add-on ကိုဖော်ပြပါလိမ့်မည်။
+
+Add-on ကို disable လုပ်လိုလျှင် disable button ကိုနှိပ်ပါ။
+Add-on ကို enable လုပ်လိုလျှင် enable button ကိုနှိပ်ပါ။
+Enable သို့မဟုတ် Disable ကိုနှိပ်သောအခါ NVDA Restart ဖြစ်သွာလိမ့်မည်။
+NVDA ကို install သို့မဟုတ် remove လုပ်သောအခါ restart လုပ်ပေးရန်လိုအပ်သည်။
+
+Add-on manager ကိုဖြုတ်လိုလျှင် Close button ကိုနှိပ်ပါ။
+
+NVDA သည် copying individual plugins နှင့် drivers ကို NVDA user Configuration directory ထဲတွင် ကူးယူထားသည်။သို့သော် Add-on Manager တွင်ဖော်ပြထားခြင်းမရှိပါ။
+
+မိမိရောက်နေသည့်နေရာမှ Add-ons Manager ကိုဖွင့်လိုလျှင်[Input Gestures dialog #InputGestures]ထဲတွင် Gesture ပြုလုပ်ထားပါ။
+
+++ Python Console ++
+NVDA Python console ကို NVDA menu tool ထဲတွင်ရှာဖွေနိုင်သည်။ ၎င်းသည် Developer Tool ဖြစ်သည်။, found under Tools in the , is a development  which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
+အသေးစိတ်သိလိုပါက [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development]တွင်သွားရောက်လေ့လာနိုင်ပါသည်။
+
+++ Reload plugins ++
+Reload plugins ကိုနှိပ်လိုက်လျှင် reloads app modules နှင့် global plugins များ restart လုပ်စရာမလိုပဲ အသုံးပြုနိုင်သည်။၎င်း Function သည် Developer များအတွက်ဖြစ်သည်။
+
++ Supported Speech Synthesizers +[SupportedSpeechSynths]
+အလကားရယူနိုင်သော synthesizer များနှင့် ဝယ်ယူသုံးစွဲရသော synthesizer များကို လေ့လာပါစို့[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+
+++ eSpeak NG ++
+[eSpeak NG https://github.com/espeak-ng/espeak-ng] eSpeak NG ကို NVDA တွင် မူလတည်းကထည့်သွင်းပြီးသားဖြစ်သည်။ Driver နှင့် အခြား component များ ထည့်သွင်းစရာမလိုပါ။
+NVDA ကို USB thumb drive နှင့် အခြားသော System များပေါ်တွင်သုံးနိုင်သည်။
+
+ဘာသာစကားပေါင်း ၄၃ မျိုးကျော် အလုပ်လုပ်နိုင်သည်။
+
+အသံမျိုးစားပေါင်းများစွာ ရွေးချယ်နိုင်သည်။
+
+++ Microsoft Speech API version 4 (SAPI 4) ++
+SAPI 4 သည် Microsoft ၏အစောဆုံး speech synthesizer ဖြစ်သည်။
+အသုံးပြုသူသည် SAPI 4 ကို install လုပ်ထားလျှင် NVDA သည်အလုပ်လုပ်နေဆဲဖြစ်သည်။
+သို့သော် နောက်ထပ်မံထွက်ရှိလာမည့် Window များတွင် SAPI 4 အတွက်အလုပ်လုပ်တော့မည်မဟုတ်ပါ။
+
+အကယ်၍ ၎င်း synthesizer ကို အသုံးပြုလျှင် Voice Settings ထဲတွင် အသံများပြောင်းလဲနိုင်သည်။(accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settings Ring #SynthSettingsRing]) SAPI 4 ကို synthesizer ထဲတွင်ရွေးချယ်နိုင်သည်။
+
+++ Microsoft Speech API version 5 (SAPI 5) ++
+SAPI 5 သည် Microsoft ၏standard speech synthesizers ဖြစ်သည်။
+အနည်းဆုံး အနေဖြင့် SAPI 5 ၏ Voice တစ်ခုကိုထည့်သွင်းပြီးသားဖြစ်သည်။
+အကယ်၍ ၎င်း synthesizer ကို အသုံးပြုလျှင် Voice Settings ထဲတွင် အသံများပြောင်းလဲနိုင်သည်။(accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settings Ring #SynthSettingsRing]) SAPI 5 ကို synthesizer ထဲတွင်ရွေးချယ်နိုင်သည်။
+
+++ Microsoft Speech Platform ++
+Microsoft Speech Platform သည် အသံများစွာနှင့် languages များစွာအတွက် အထောက်ကူပြုသည်။ ၎င်းအသံများကိုလဲ NVDA တွင်အသုံးပြုသည်။
+
+၎င်းအသံများကို အသုံးပြုလိုလျှင် install လုပ်ရန်လိုအပ်သည်:
+- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - ၎င်း page တွင် speech recognition နှင့် text-to-speech များရွေးချယ်နိုင်သည်။
+ဥပမာ MSSpeech_TTS_en-US_ZiraPro.msi သည် U.S. English voice ဖြစ်သည်။
+ -
+-
+
+++ Audiologic Tts3 ++
+၎င်းသည် Italian language အတွက် ဝယ်၍သုံးရသော synthesizer ဖြစ်သည်။
+အသေးစိတ်သိရှိလိုပါက www.audiologic.it တွင်သွားရောက်လေ့လာနိုင်ပါသည်။
+
+၎င်း synthesizer သည်[spelling functionality #VoiceSpellingFunctionality]အတွက်အလုပ်မလုပ်ပါ။
+
+++ Nuance Vocalizer for NVDA ++
+Nuance Vocalizer သည် အရည်အသွေးကောင်းမွန်သော ဝယ်သုံးရသည့် synthesizer ဖြစ်သည်။၎င်းကို Nuance Communications, Inc မှဖန်တီးတီထွင်ထားခြင်းဖြစ်သည်။ 
+၎င်းတွင် အသံပေါင်း ၅၀ ကျော်ပါဝင်ပြီး ဘာသာစကားပေါင်း ၃၀ ကျော် Install လုပ်နိုင်သည်။
+NVDA portable version တွင်လဲအသုံးပြုနိုင်သည်။
+
+အသေးစိတ်အချက်လက်များနှင့် မည်သို့ဝယ်ယူရမည်ကို သိရှိလိုလျှင်[www.vocalizer-nvda.com http://www.vocalizer-nvda.com/] တွင် သွားရောက်လေ့လာနိုင်ပါသည်။
+ရောင်းရသည့် အမြတ်ငွေ၏ ရာခိုင်နှုန်းအချို့ကို NVDA အတွက်ပြန်လည်လှူဒါန်းသည်။
+
++ Supported Braille Displays +[SupportedBrailleDisplays]
+၎င်းနှင့်ပါတ်သတ်သောအချက်လက်များကို Braille displays supported တွင်ဖော်ပြထားသည်။
+
+++ Freedom Scientific Focus/PAC Mate Series ++
+All Focus နှင့် PAC Mate displays ကို[Freedom Scientific http://www.freedomscientific.com/]တွင်။
+သင့်အနေဖြင့် Freedom Scientific braille display drivers ကို install လုပ်ထားရန်လိုအပ်သည်။
+အကယ်၍သင့်မှာမရှိလျှင် http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+၎င်း Page အနေဖြင့် Focus Blue display driver ကိုရည်ညွှန်းသည်။
+
+NVDA အနေဖြင့် USB သို့မဟုတ် bluetooth ဖြင့်အလိုလျောက်ချိတ်ဆက်သည်။
+သို့သော် USB သို့မဟုတ် bluetooth ကိုရွေးချယ်ပေးရန်လိုအပ်သည်။
+၎င်း Function သည် များစွာအသုံးဝင်သည်။ အကယ်၍ Bluetooth ဖြင့်ချိတ်ထားပါက usb ဖြင့်အားသွင်းနိုင်သည်။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | topRouting1 (first cell on display) |
+| Scroll braille display forward | topRouting20/40/80 (last cell on display) |
+| Scroll braille display back | leftAdvanceBar |
+| Scroll braille display forward | rightAdvanceBar |
+| Toggle braille tethered to | leftGDFButton+rightGDFButton |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
+| backspace key | dot7 |
+| enter key | dot8 |
+| shift+tab key | brailleSpaceBar+dot1+dot2 |
+| tab key | brailleSpaceBar+dot4+dot5 |
+| upArrow key | brailleSpaceBar+dot1 |
+| downArrow key | brailleSpaceBar+dot4 |
+| control+leftArrow key | brailleSpaceBar+dot2 |
+| control+rightArrow key | brailleSpaceBar+dot5 |
+| leftArrow | brailleSpaceBar+dot3 |
+| rightArrow key | brailleSpaceBar+dot6 |
+| home key | brailleSpaceBar+dot1+dot3 |
+| end key | brailleSpaceBar+dot4+dot6 |
+| control+home key | brailleSpaceBar+dot1+dot2+dot3 |
+| control+end key | brailleSpaceBar+dot4+dot5+dot6 |
+| alt key | brailleSpaceBar+dot1+dot3+dot4 |
+| alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| escape key | brailleSpaceBar+dot1+dot5 |
+| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| space key | brailleSpaceBar |
+| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Report Current Line | brailleSpaceBar+dot1+dot4 |
+| NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+
+For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
+|| Name | Key |
+| Move braille display to previous line | leftRockerBarUp, rightRockerBarUp |
+| Move braille display to next line | leftRockerBarDown, rightRockerBarDown |
+
+For Focus 80 only:
+|| Name | Key |
+| Scroll braille display back | leftBumperBarUp, rightBumperBarUp |
+| Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
+%kc:endInclude
+
+++ Optelec ALVA BC640/680 ++
+ALVA BC640 နှင့် BC680 displays [Optelec http://www.optelec.com/] 
+၎င်း Display တွင် Driver ထည့်သွင်းစရာမလိုပါ။
+အလွယ်တကူချိတ်ဆက်ပြီး NVDA တွင် configure လုပ်၍ သုံးနိုင်သည်။
+
+၎င်း Display မှ Brail Keyboard ကိုသုံးလျှင် Brail to Text ကို အလိုလျှောက်ပြုလုပ်ပေးသည်။
+NVDA ၏ braille input table setting နှင့် မသက်ဆိုင်ပါ။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | t1 or etouch1 |
+| Move braille display to previous line | t2 |
+| Move to current focus | t3 |
+| Move braille display to next line | t4 |
+| Scroll braille display forward | t5 or etouch3 |
+| Route to braille cell | routing |
+| Move to top line in review | t1+t2 |
+| Move to bottom line in review | t4+t5 |
+| Toggle braille tethered to | t1+t3 |
+| Report title | etouch2 |
+| Report status bar | etouch4 |
+| shift+tab key | sp1 |
+| alt key | sp2 |
+| escape key | sp3 |
+| tab key | sp4 |
+| upArrow key | spUp |
+| downArrow key | spDown |
+| leftArrow key | spLeft |
+| rightArrow key | spRight |
+| enter key | spEnter |
+| Report date/time | sp1+sp2 |
+| NVDA Menu | sp1+sp3 |
+| windows+d key (minimize all applications) | sp1+sp4 |
+| windows+b key (focus system tray) | sp3+sp4 |
+| windows key | sp2+sp3 |
+| alt+tab key | sp2+sp4 |
+| control+home key | t3+spUp |
+| control+end key | t3+spDown |
+| home key | t3+spLeft |
+| end key | t3+spRight |
+%kc:endInclude
+
+++ Handy Tech Displays ++
+NVDA သည် Handy Tech Displays အားလုံးပေါ်တွင်အလုပ်လုပ်သည်။[Handy Tech http://www.handytech.de/] 
+ရှေးကျသော USB displays များကိုသုံးလျှင် Handy Tech USB Displays driver ကိုinstall လုပ်ရန်လိုအပ်သည်။
+
+Braille input အတွက်အလုပ်မလုပ်ပါ။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left, up |
+| Scroll braille display forward | right, down |
+| Move braille display to previous line | b4 |
+| Move braille display to next line | b5 |
+| Route to braille cell | routing |
+| shift+tab key | esc |
+| alt key | b2+b4+b5 |
+| escape key | b4+b6 |
+| tab key | enter |
+| enter key | esc+enter |
+| upArrow key | leftSpace |
+| downArrow key | rightSpace |
+| NVDA Menu | b2+b4+b5+b6 |
+| Handy Tech configuration | b4+b8 |
+%kc:endInclude
+
+++ MDV Lilli ++
+Lilli braille display ကို[MDV http://www.mdvbologna.it/] 
+၎င်း Display တွင် Driver ထည့်သွင်းစရာမလိုပါ။
+အလွယ်တကူချိတ်ဆက်ပြီး NVDA တွင် configure လုပ်၍ သုံးနိုင်သည်။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display backward | LF |
+| Scroll braille display forward | RG |
+| Move braille display to previous line | UP |
+| Move braille display to next line | DN |
+| Route to braille cell | route |
+| shift+tab key | SLF |
+| tab key | SRG |
+| alt+tab key | SDN |
+| alt+shift+tab key | SUP |
+%kc:endInclude
+
+++ Baum/Humanware/APH/Orbit Braille Displays ++
+Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] and [Orbit http://www.orbitresearch.com/] USB, bluetooth or serial တို့ဖြင့်အလုပ်လုပ်သည်။
+These include:
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
+- APH: Refreshabraille
+- Orbit: Orbit Reader 20
+-
+အခြားသော Baum များသည်လည်း အလုပ်လုပ်သည်။ သို့သော် စမ်းသပ်၍မပြီးမြောက်သေးပါ။
+
+စက်ရုံမှထုတ်ထားသော USB driver ကိုထည့်ပြီမှ ချိတ်ဆက်ပြီးအသုံးပြုပါ။
+
+Orbit Reader 20 တွင် USB serial mode သည် Windows 10 တွင်သာအလုပ်လုပ်သည်။
+
+Following are the key assignments for these displays with NVDA.
+Please see your display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | d2 |
+| Scroll braille display forward | d5 |
+| Move braille display to previous line | d1 |
+| Move braille display to next line | d3 |
+| Route to braille cell | routing |
+
+For displays which have a joystick:
+|| Name | Key |
+| upArrow key | up |
+| downArrow key | down |
+| leftArrow key | left |
+| rightArrow key | right |
+| enter key | select |
+%kc:endInclude
+
+++ hedo ProfiLine USB ++
+The hedo ProfiLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+ပထမဦစွာ စက်ရုံမှထုတ်ထားသော USB driver ကို install လုပ်ရမည်။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | K1 |
+| Scroll braille display forward | K3 |
+| Move braille display to previous line | B2 |
+| Move braille display to next line | B5 |
+| Route to braille cell | routing |
+| Toggle braille tethered to | K2 |
+| Say all | B6 |
+%kc:endInclude
+
+++ hedo MobilLine USB ++
+The hedo MobilLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+ပထမဦစွာ စက်ရုံမှထုတ်ထားသော USB driver ကို install လုပ်ရမည်။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | K1 |
+| Scroll braille display forward | K3 |
+| Move braille display to previous line | B2 |
+| Move braille display to next line | B5 |
+| Route to braille cell | routing |
+| Toggle braille tethered to | K2 |
+| Say all | B6 |
+%kc:endInclude
+
+++ HumanWare Brailliant BI/B Series ++
+The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+USB ဖြင့် သုံးမည်ဆိုပါက USB driver ကို ဦးစွာ install လုပ်ရမည်။
+Bluetooth ဖြင့်သုံးမည်ဆိုပါက USB driver Install လုပ်ရန်မလိုအပ်ပါ။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | down |
+| Route to braille cell | routing |
+| Toggle braille tethered to | up+down |
+| upArrow key | space+dot1 |
+| downArrow key | space+dot4 |
+| leftArrow key | space+dot3 |
+| rightArrow key | space+dot6 |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| shift+tab key | space+dot1+dot3 |
+| tab key | space+dot4+dot6 |
+| alt key | space+dot1+dot3+dot4 (space+m) |
+| escape key | space+dot1+dot5 (space+e) |
+| enter key | dot8 |
+| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
+| windows key | space+dot3+dot4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Say all | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
+NVDA supports Braille Sense, Braille EDGE and Smart Beetle displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+အကယ်၍ USB ဖြင့်သုံးမည်ဆိုလျှင် USB driver ကို Install လုပ်ထားရန်လိုအပ်သည်။
+သင့်အနေဖြင့် Download လုပ်လိုလျှင်: http://www.himsintl.com/?c=2/13&uid=2319
+
+Following are the key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Move braille display to previous line | left side scroll up |
+| Move braille display to next line | right side scroll up |
+| Route to braille cell | routing |
+| shift+tab key | dot1+dot2+space |
+| alt key | dot1+dot3+dot4+Space |
+| escape key | dot1+dot5+Space |
+| tab key | dot4+dot5+Space |
+| enter key | dot8 |
+| backspace key | dot7 |
+| upArrow key | dot1+Space |
+| downArrow key | dot4+Space |
+| capsLock | dot1+dot3+dot6+space |
+| shift+alt+tab key | advance2+advance3+advance1 |
+| alt+tab key | advance2+advance3 |
+| end key | dot4+dot6+space |
+| Control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space |
+| control+home key | dot1+dot2+dot3+space |
+| leftArrow key | dot3+space |
+| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| control+leftArrow key | dot2+space |
+| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| alt+leftArrow key | dot2+dot7 |
+| rightArrow key | dot6+space |
+| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| control+rightArrow key | dot5+space |
+| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| alt+rightArrow key | dot5+dot7 |
+| pageUp key | dot1+dot2+dot6+space |
+| control+pageUp key | dot1+dot2+dot6+dot8+space |
+| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| control+upArrow key | dot2+dot3+space |
+| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| alt+upArrow key | dot2+dot3+dot7 |
+| shift+upArrow key | left side scroll down + space |
+| pageDown key | dot3+dot4+dot5+space |
+| control+pagedown key | dot3+dot4+dot5+dot8+space |
+| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+downArrow key | dot5+dot6+space |
+| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| alt+downArrow key | dot5+dot6+dot7 |
+| shift+downArrow key | right side scroll down + space |
+| delete key | dot1+dot3+dot5+space |
+| f1 key | dot1+dot2+dot5+space |
+| f3 key | dot1+dot2+dot4+dot8 |
+| f4 key | dot7+advance3 |
+| windows+b key | dot1+dot2+advance1 |
+| windows+d key | dot1+dot4+dot5+advance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
+သင့်အနေဖြင့် USB driver တင်ထားရန်လိုအပ်သည်။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Seika Braille Displays ++
+The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft http://www.nippontelesoft.com/] are supported.
+များစွာသောအချက်လက်များကို  http://www.seika-braille.com/ တွင်ရှာဖွေနိုင်သည်။
+ပထမဦစွာ စက်ရုံမှထုတ်ထားသော USB driver ကို install လုပ်ရမည်။
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | b3 |
+| Move braille display to next line | b4 |
+| Toggle braille tethered to | b5 |
+| Say all | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| NVDA Menu | left+right |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Papenmeier BRAILLEX Newer Models ++
+The following Braille displays are supported: 
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB and bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
+-
+
+အကယ်၍ BrxCom install လုပ်ထားလျှင် BrxCom ဖြင့် NVDA အသုံးပြုနိုင်သည်။
+BrxCom သည် braille display function နှင့်မတူဘဲ screen reader မှာ လွယ်ကူစွာအသုံးပြုနိုင်သည်။
+BrxCom version အသစ်သည် မကြာမီ NVDA အတွင် အလုပ်လုပ်လိမ့်မည်။
+Keyboard input သည် Trio နှင့် BRAILLEX Live model များတွင်ပါလာလိမ့်မည်။
+
+Generally, the following keys are available on these braille displays:
+|| Name | Key |
+| l1 | Left front key |
+| l2 | Left rear key |
+| r1 | Right front key |
+| r2 | Right rear key |
+| up | 1 Step up |
+| up2 | 2 Steps up |
+| left | 1 Step left |
+| left2 | 2 Steps left |
+| right | 1 Step right |
+| right2 | 2 Steps right |
+| dn | 1 Step down |
+| dn2 | 2 Steps down |
+
+Following are the Papenmeier command assignments for NVDA:
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Route to braille cell | routing |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Toggle braille tethered to | r2 |
+| Report title | l1+up |
+| Report Status Bar | l2+down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | left2 |
+| Move to next object | right2 |
+| Report text formatting | upper routing row |
+%kc:endInclude
+
+The Trio model has four additional keys which are in front of the braille keyboard.
+These are (ordered from left to right):
+- left thumb key (lt)
+- space
+- space
+- right thumb key (rt)
+-
+Currently, the right thumb key is not in use.
+The inner keys are both mapped to space.
+
+|| Name | Key |
+%kc:beginInclude
+| backspace key | dot 7 |
+| enter key | dot 8 |
+| escape key | space with dot 7 |
+| upArrow key | space with dot 2 |
+| leftArrow key | space with dot 1 |
+| rightArrow key | space with dot 4 |
+| downArrow | space with dot 5 |
+| control key | lt+dot2 |
+| alt key | lt+dot3 |
+| control+escape key | space with dot 1 2 3 4 5 6 |
+| tab key | space with dot 3 7 |
+%kc:endInclude 
+
+++ Papenmeier Braille BRAILLEX Older Models ++
+The following Braille displays are supported: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+မှတ်ချက် ၎င်း Display များနှင့် serial port ဖြင့်သာအလုပ်လုပ်သည်။
+ထို့ကြောင့် Braille Settings တွင် ချိတ်ဆက်ပြီးနောက်ရွေးချယ်ပေးရန်လိုအပ်သည်။
+
+Generally, the following keys are available on braille displays:
+
+|| Name | Key |
+| l1 | Left front key |
+| l2 | Left rear key |
+| r1 | Right front key |
+| r2 | Right rear key |
+| up | 1 Step up |
+| up2 | 2 Steps up |
+| left | 1 Step left |
+| left2 | 2 Steps left |
+| right | 1 Step right |
+| right2 | 2 Steps right |
+| dn | 1 Step down |
+| dn2 | 2 Steps down |
+
+Following are the Papenmeier command assignments for NVDA:
+
+%kc:beginInclude
+Devices with EAB:
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Route to braille cell | routing |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Report title | l1up |
+| Report Status Bar | l2down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to next object | right2 |
+| Move to previous object | left2 |
+| Report text formatting | Upper routing strip |
+
+BRAILLEX Tiny:
+|| Name | Key |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Toggle braille tethered to | r2 |
+| Move to containing object | r1+up |
+| Move to first contained object | r1+dn |
+| Move to previous object | r1+left |
+| Move to next object | r1+right |
+| Report text formatting | reportf |
+| Report title | l1+up |
+| Report status bar | l2+down |
+
+BRAILLEX 2D Screen:
+|| Name | Key |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Toggle braille tethered to | r2 |
+| Report text formatting | reportf |
+| Move braille display to previous line | up |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to next line | dn |
+| Move to next object | left2 |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | right2 |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA သည် BrailleNote notetakers ဖြင့်အလုပ်လုပ်သည်။[Humanware http://www.humanware.com] 
+NVDA ဖြင့်အလုပ်လုပ်နိုင်သော models များ:
+- BrailleNote Classic (serial connection only)
+- BrailleNote PK (Serial and bluetooth connections)
+- BrailleNote MPower (Serial and bluetooth connections)
+- BrailleNote Apex (USB and Bluetooth connections)
+-
+
+အကယ်၍ သင်၏device သည် connection type တစ်ခုထက်ပို၍အလုပ်လုပ်ပါက braille terminal options တွင်ရွေးချယ်ရမည်။
+ကျေးဇူးပြုပြီး BrailleNote manual အသေးစိတ်လေ့လာပါ။
+NVDA တွင် port ထည့်သွင်းရန် Braille Setting တွင်လိုအပ်သည်။
+အကယ်၍ သင့်အနေဖြင့် USB သို့မဟုတ် bluetooth အသုံးပြုလိုပါက port to Automatic ကိုရွေးချယ်နိုင်သည်။
+အကယ်၍ legacy serial port သို့မဟုတ် USB to serial converter ကိုအသုံးပြုလိုပါက communication port တွင်ရွေးချယ်ရမည်။
+
+BrailleNote Apex ကို အသုံးပြုလိုပါက Driver ကို ဦးစွာထည့်သွင်းရန်လိုအပ်သည်။
+
+Following are the BrailleNote command assignments for NVDA.
+Please check your BrailleNote's documentation to find where these keys are located.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | back |
+| Scroll braille display forward | advance |
+| Move braille display to previous line | previous |
+| Move braille display to next line | next |
+| Route to braille cell | routing |
+| Toggle braille tethered to | previous+next |
+| Up arrow key | space+dot1 |
+| Down arrow key | space+dot4 |
+| Left Arrow key | space+dot3 |
+| Right arrow key | space+dot6 |
+| Page up key | space+dot1+dot3 |
+| Page down key | space+dot4+dot6 |
+| Home key | space+dot1+dot2 |
+| End key | space+dot4+dot5 |
+| Control+home keys | space+dot1+dot2+dot3 |
+| Control+end keys | space+dot4+dot5+dot6 |
+| Space key | space |
+| Enter key | space+dot8 |
+| Backspace key | space+dot7 |
+| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
+| Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
+| Alt key | space+dot1+dot3+dot4 (space+m) |
+| Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA supports EcoBraille displays from [ONCE http://www.once.es/].
+NVDA ဖြင့်အလုပ်လုပ်နိုင်သော models များ:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+NVDA Braille Settings ထဲတွင် serial port ဖြင့်ချိတ်ပါ။
+
+Following are the key assignments for EcoBraille displays.
+Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for descriptions of where these keys can be found.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | T2 |
+| Scroll braille display forward | T4 |
+| Move braille display to previous line | T1 |
+| Move braille display to next line | T5 |
+| Route to braille cell | Routing |
+| Activate current navigator object | T3 |
+| Switch to next review mode | F1 |
+| Move to containing object | F2 |
+| Switch to previous review mode | F3 |
+| Move to previous object | F4 |
+| Report current object | F5 |
+| Move to next object | F6 |
+| Move to focus object | F7 |
+| Move to first contained object | F8 |
+| Move System focus or caret to current review position | F9 |
+| Report review cursor location | F0 |
+| Toggle braille tethered to | A |
+%kc:endInclude
+
+++ BRLTTY ++
+[BRLTTY http://www.brltty.com/] is a separate program which can be used to support many more braille displays.
+BRLTTY  ကို install လုပ်ရန်လိုအပ်သည်။Window အတွက်[BRLTTY for Windows http://www.brltty.com/download.html].
+Latest Version ကို Install လုပ်သင့်သည်။ အမည်အားဖြင့် ဥပမာ brltty-win-4.2-2.exe.
+အကယ်၍ USB ဖြင့်အသုံးပြုလျှင် USB Driver ကို Install လုပ်ထားပါ။
+
+Braille keyboard BRLTTY သည် braille input ကိုအလိုလျောက်အလုပ်လုပ်သည်။
+ထို့ကြောင့် NVDA table setting နှင့် မသက်ဆိုင်ပါ။
+
+Following are the BRLTTY command assignments for NVDA.
+Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
+%kc:beginInclude
+|| Name | BRLTTY command |
+| Scroll braille display back | fwinlt (go left one window) |
+| Scroll braille display forward | fwinrt (go right one window) |
+| Move braille display to previous line | lnup (go up one line) |
+| Move braille display to next line | lndn (go down one line) |
+| Route to braille cell | route (bring cursor to character) |
+%kc:endInclude
+
++ Braille control type and state abbreviations +
+ဖြစ်နိုင်သည့် type နှင့် state 
+
+|| Abbreviation | Control type |
+| btn | button |
+| cbo | combo box |
+| chk | checkbox |
+| dlg | dialog |
+| edt | editable text field |
+| gra | graphic |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| hN | heading at level n, e.g. h1, h2. |
+| lnk | link |
+| lst | list |
+| vlnk | visited link |
+| mnu | menu |
+| mnubar | menu bar |
+| rbtn | radio button |
+| tb | table |
+| tv | treeview |
+| lv N | a tree view item has a hierarchical level N|
+| ``-----`` | seperator |
+
+The following state indicators are also defined:
+|| Abbreviation | Control state |
+| ... | displayed when an object supports autocompletion |
+| ( ) | displayed when an object (e.g. a checkbox) is not checked |
+| (x) | displayed when an object (e.g. a checkbox) is checked |
+| (-) | displayed when an object (e.g. a checkbox) is half checked |
+| - | displayed when an object (e.g. a tree view item) is collapsible |
+| + | displayed when an object (e.g. a tree view item) is Expandable |
+| clk | displayed when an object is clickable |
+| ro | displayed when an object (e.g. an editable text field) is read-only |
+| sel | displayed when an object is selected |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
+
++ Advanced Topics +
+
+++ Command Line Options ++[CommandLineOptions]
+NVDA ကို Run Dialog ထဲမှလဲ Command ပေးနိုင်သည်။
+လတ်တလော Run နေသော NVDA ကိုပိတ်လိုလျှင်:
+
+nvda -q
+
+Some of the command line options have a short and a long version, while some of them have only a long version.
+For those which have a short version, you can combine them like this:
+| nvda -rm | nvda -rm သည် လက်ရှိ Run နေသော NVDA ကိုပိတ်ပြီး NVDA အသစ်စတင်ခြင်းဖြစ်သည်။ထို့ပြင် add-ons ကိုလဲ enable ပြုလုပ်ခြင်းဖြစ်သည်။  |
+| nvda -rm --disable-addons | nvda -rm --disable-addons သည်အပေါ်နှင့်တူသည်။သို့သော် add-ons ကို disabled ပြုလုပ်ခြင်းဖြစ်သည်။ |
+
+Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
+Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
+| nvda -l 10 | log level ကိုစတင်သတ်မှတ်ခြင်းဖြစ်သည်။ |
+| nvda --log-file=c:\nvda.log |  NVDA log ဖိုင်ကို c:ထဲတွင်သိမ်းထားခြင်းဖြစ်သည်။ |
+| nvda --log-level=20 -f c:\nvda.log | NVDA log info ကိုစတင်သတ်မှတ်ခြင်းဖြစ်သည်။ |
+
+Following are the command line options for NVDA:
+|| Short | Long | Description |
+| -h | --help | အကူညီရယူခြင်းနှင့်ပိတ်ခြင်း |
+| -q | --quit | လတ်တလော Run နေသည့် NVDA ကိုပိတ်ခြင်း |
+| -r | --replace | လတ်တလော Run နေသည့် NVDA ကိုပိတ်ပြီး အလိုလျောက်ပြန်လည်ဖွင့်ခြင်း |
+| -k | --check-running | NVDA အလုပ်လုပ်သည် မလုပ်သည်ကိုစစ်ဆေးခြင်းဖြစ်သည်။0 ဆိုလျှင်အလုပ်လုပ်သည် ၊ 1 ဆိုလျှင်အလုပ်မလုပ်ပါ။ |
+| -f LOGFILENAME | --log-file=LOGFILENAME | မည်သည့်နေရာတွင် Log File ရွေးမည်ကိုသတ်မှတ်ခြင်း |
+| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning |
+| -c CONFIGPATH | --config-path=CONFIGPATH | NVDA Setting မည်သည့်နေရာသိမ်းမည်ကိုသတ်မှတ်ခြင်း |
+| -m | --minimal | အသံ,interface,message တို့ကိုဖျောက်ထားခြင်း |
+| -s | --secure | Python console ကို disable လုပ်ထားခြင်း |
+| None | --disable-addons | Addons များအပေါ် အကျိုးသက်ရောက်မှုမရှိအောင်ပြုလုပ်ခြင်း |
+| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given. |
+| None | --no-sr-flag  | Don't change the global system screen reader flag |
+| None | --install | Installs NVDA (starting the newly installed copy) |
+| None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+
++ Further Information +
+အကယ်၍ လိုအပ်လျှင် ဆက်လက်လေ့လာချင်ပါက ကျေးဇူးပြု၍ NVDA web site သို့ သွာရောက်လေ့လာနိုင်ပါသည်။at NVDA_URL.

@@ -3,6 +3,31 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Tính Năng Mới ==
+- Có thể thông báo thông tin đường viền ô trong Microsoft Excel với phím tắt `NVDA+f`. (#3044)
+- Hỗ trợ các thuộc tính aria-current. (#6358)
+- Hỗ trợ tự động chuyển ngôn ngữ cho Microsoft Edge. (#6852)
+
+
+== Sửa Lỗi ==
+- Có thể kích hoạt các mục trong thực đơn trên trang web như hộp kiểm, nút radio khi đứng ở chế độ duyệt. (#6735)
+- Phần thông báo tên bảng tính của Excel đã được dịch. (#6848)
+- Nhấn escape khi focus đang ở cửa sổ xác nhận xóa hồ sơ cấu hình sẽ thoát khỏi hộp thoại. (#6851)
+- Sửa lỗi treo khi bật chức năng multi-process (đa xử lý) trong Mozilla Firefox và các ứng dụng Gecko khác. (#6885)
+- Ở chế độ xem màn hình (screen reivew), việc thông báo màu nền đã chính xác hơn khi nội dung được trình bày trên nền trong suốt. (#6467) 
+- Cải thiện tính năng hỗ trợ cho aria-describedby trong Internet Explorer 11, bao gồm hỗ trợ cho iframes và khi có nhiều ID được khai báo. (#5784)
+- Chức năng giảm âm lượng ứng dụng khác đã hoạt động lại với bản cập nhật Windows 10 Creator, giống như ở các bản Windows khác. (#6933)
+- NVDA đã có thể di chuyển đến và đọc các điều khiển UIA không có khai báo phím tắt. (#6779)
+- Không còn thêm vào hai khoảng trắng trong phần thông tin phím tắt cho các điều khiển UIA. (#6790)
+
+
+== Thay Đổi Dành Cho Nhà Phát Triển ==
+- Các tham số dòng lệnh đã được xử lý bởi mô-đun argparser của Python, thay vì là optparser. Điều này sẽ cho phép xử lý riêng các tùy chọn như -r và -q. (#6865)
+- core.callLater sẽ ở hàng chờ hàm gọi đến hàng chờ chính của NVDA sau một khoảng độ trễ được chỉ định, thay vì can thiệp phần lõi và thực thi trực tiếp.  Điều này sẽ giúp ngưng sự cố đóng băng hoặc treo sau khi phần lõi xử lý hàm gọi, ví dụ như khi gọi hàm giữa chừng để hiển thị hộp thông báo. (#6797) 
+
+
 = 2017.1 =
 Một số tính năng mới nổi bật trong phiên bản này bao ;gồm thông báo các vùng và cột nội dung trong Microsoft Word; hỗ trợ di chuyển, ghi chú lại và đọc sách với máy Kindle bản PC; và những cải thiện cho Microsoft Edge.
 
@@ -19,15 +44,15 @@ Một số tính năng mới nổi bật trong phiên bản này bao ;gồm thô
 - Thêm tùy chọn khởi động lại với chế độ bản ghi dò lỗi trong hộp thoại thoát NVDA. (#6689)
 
 
-== Những Thay Đổi ==
+== Thay Đổi ==
 - Tốc độ nháy tối thiểu của con trỏ màn hình nổi là 200ms. Những cấu hình trước đây có giá trị thấp hơn sẽ tự động được thiết lập về 200ms. (#6470)
 - Thêm một tùy chỉnh hộp kiểm trong hộp thoại thiết lập màn hình nổi cho phép tắt/bật nhấp nháy con trỏ màn hình nổi.  Trước đây, nhập giá trị 0 để tắt. (#6470)
 - Cập nhật eSpeak NG (Bản phát triển e095f008, 10 tháng 1, 2017). (#6717)
 - Do những thay đổi trong bản cập nhật của windows 10 Creators, chế độ "Luôn luôn giảm âm" đã được gỡ bỏ khỏi phần cấu hình giảm âm lượng các ứng dụng khác. Chế độ này vẫn được giữ cho bản Windows 10 cũ. (#6684)
-- Do những thay đổi trong bản cập nhật của windows 10 Creators, chế độ giảm âm khi NVDA đọc hoặc phát âm thanh sẽ không còn đảm bảo giảm âm thanh ứng dụng khác ngay khi NVDA đọc. Những thay đổi này không ảnh hưởng  đến bản Windows 10 cũ. (#6684)
+- Do những thay đổi trong bản cập nhật của windows 10 Creators, chế độ giảm âm khi NVDA đọc và phát âm thanh sẽ không còn đảm bảo giảm âm thanh ứng dụng khác ngay khi NVDA đọc. Những thay đổi này không ảnh hưởng  đến bản Windows 10 cũ. (#6684)
 
 
-== Đã Sửa Các Lỗi ==
+== Sửa Lỗi ==
 - Sửa lỗi treo khi di chuyển giữa các đoạn trong một văn bản lớn ở chế độ duyệt trong Microsoft Word (#6368)
 - Các bảng được copy từ Microsoft Excel qua Microsoft Word không còn được xem như bảng bố cục  vì vậy sẽ không bị bỏ qua (#5927)
 - Khi nhập liệu trong Microsoft Excel ở chế độ bảo vệ, NVDA sẽ phát âm thanh thay vì đọc các ký tự được gõ (#6570)

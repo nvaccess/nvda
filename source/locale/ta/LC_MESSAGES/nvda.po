@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-10 00:10+1000\n"
-"PO-Revision-Date: 2017-02-11 11:30+0530\n"
+"POT-Creation-Date: 2017-03-17 00:10+1000\n"
+"PO-Revision-Date: 2017-03-18 10:35+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -2316,6 +2316,30 @@ msgstr "தெரிவாகாதது"
 msgid "not checked"
 msgstr "தேர்வாகாதது"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "நடப்பு"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "நடப்புப் பக்கம்"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "நடப்புப் படி"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "நடப்பு அமைவிடம்"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "நடப்புத் தேதி"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "நடப்பு நேரம்"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -4385,6 +4409,10 @@ msgstr "பாங்கு %s"
 msgid "default style"
 msgstr "இயல்புப் பாங்கு"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "எல்லைக் கோடுகள் ஏதுமில்லை"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6160,8 +6188,8 @@ msgid "Error activating profile."
 msgstr "தனியமைப்பினை இயக்குவதில் பிழை."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "இத்தனியமைப்பைத் தாங்கள் கட்டாயம் அழிக்க வேண்டுமா? இச்செயலைத் திரும்பப் பெற இயலாது."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "இத்தனியமைப்பு நிரந்தரமாக நீக்கப்படும். இச்செயலைத் திரும்பப் பெற இயலாது. "
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7052,6 +7080,8 @@ msgid "Line &indentation reporting:"
 msgstr "வரியோரச் சீர்மையை அறிவித்தல் (&I):"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "அறிவிக்காது"
 
@@ -7102,6 +7132,21 @@ msgstr "கிடைவரிசை / நெடுவரிசை தலைப�
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "சிறுகட்டத்தின் சந்தி நிலை (&O)"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "பாங்குகள்"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "நிறங்களும் பாங்குகளும்"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "சிறுகட்டத்தின் எல்லைகள்"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7657,6 +7702,10 @@ msgstr ""
 "அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
 "மறக்கும். "
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+msgid "Sheet {0}, {1}"
+msgstr "தாள் {0}, {1}"
+
 msgid "Input Message is {title}: {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {title}: {message}"
 
@@ -7678,6 +7727,122 @@ msgstr "{address} சிறுகட்டத்திற்கான கரு�
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} முதல் {lastAddress} {lastContent} வரை"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "மேல் விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "கீழ் விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "இடது விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "வலது விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "மேல் வலது குறுக்குக் கோடு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "கீழ் வலது குறுக்குக் கோடு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "வெளிப்புறம் தவிர்த்த கிடை எல்லைகள்"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "வெளிப்புறம் தவிர்த்த செங்குத்து எல்லைகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "தொடர்ச்சியான"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "கோடிடப்பட்டது"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "சிறுகோடு புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "சிறுகோடு புள்ளி புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "புள்ளியிடப்பட்டது"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "இரட்டை"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "சாய்வான சிறுகோடு புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "மயிரிழை"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "சன்னமான"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "நடுத்தரம்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "அடர்த்தி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "நடுத்தர சிறுகோடு புள்ளி புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "நடுத்தர சிறுகோடு புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "நடுத்தர சிறுகோடிடப்பட்டது"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} surrounding border"
+msgstr "எல்லையைச் சுற்றிய {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} top and bottom edges"
+msgstr "{desc} மேல் மற்றும் கீழ் விளிம்புகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} left and right edges"
+msgstr "{desc} இடது மற்றும் வலது விளிம்புகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} வலது மேல் வலது கீழ் குறுக்குக் கோடுகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8665,3 +8830,7 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "இத்தனியமைப்பைத் தாங்கள் கட்டாயம் அழிக்க வேண்டுமா? இச்செயலைத் திரும்பப் பெற இயலாது."
