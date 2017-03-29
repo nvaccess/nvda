@@ -22,6 +22,7 @@
 - NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
 - Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
 - Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
+- Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
 
 
 == Changes for Developers ==
