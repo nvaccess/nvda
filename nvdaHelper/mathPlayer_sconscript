@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
+#Copyright 2014-2017 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -21,5 +21,10 @@ tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibra
 	source=idlFile,
 	MIDLFLAGS=['/I',Dir('.')],
 )
+# hack: Ignore midl.exe when deciding to rebuild, as its position in the dependencies
+# is different in the run before the idl files are copied versus subsequent runs.
+midl=env.WhereIs(env["MIDL"])
+for target in (tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile):
+	env.Ignore(target,midl)
 
 Return(['tlbFile','headerFile','iidSourceFile','proxySourceFile','dlldataSourceFile'])
