@@ -417,6 +417,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 
 	IPDDomNode* domNode = getPDDomNode(varChild, servprov);
+	if (!domNode)
+		LOG_DEBUGWARNING(L"Couldn't get IPDDomNode for docHandle " << docHandle << L" id " << ID);
 
 	IPDDomElement* domElement = NULL;
 	LOG_DEBUG(L"Trying to get IPDDomElement");
@@ -489,7 +491,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	LOG_DEBUG(L"childCount is "<<childCount);
 
 	bool deletePageNum = false;
-	if (!pageNum && (pageNum = this->getPageNum(domNode)))
+	if (!pageNum && domNode && (pageNum = this->getPageNum(domNode)))
 		deletePageNum = true;
 
 	#define addAttrsToTextNode(node) { \
@@ -692,7 +694,10 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 
 		// Hereafter, tempNode is the text node (if any).
-		tempNode = renderText(buffer, parentNode, previousNode, domNode, domElement, useNameAsContent, parentNode->language, textFlags, pageNum);
+		if (domNode)
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, domElement, useNameAsContent, parentNode->language, textFlags, pageNum);
+		else
+			tempNode = buffer->addTextFieldNode(parentNode, previousNode, L"zzzz");
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;
