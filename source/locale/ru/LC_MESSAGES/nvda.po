@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-03 00:10+1000\n"
-"PO-Revision-Date: 2017-02-09 19:41+0800\n"
+"POT-Creation-Date: 2017-03-24 00:10+1000\n"
+"PO-Revision-Date: 2017-03-29 15:08+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2335,6 +2335,30 @@ msgstr "не выделено"
 msgid "not checked"
 msgstr "не отмечено"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "текущий"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "текущая страница"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "текущий шаг"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "текущее расположение"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "текущая дата"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "текущее время"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -4413,6 +4437,10 @@ msgstr "Стиль %s"
 msgid "default style"
 msgstr "стиль по умолчанию"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "нет границ"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6229,10 +6257,9 @@ msgid "Error activating profile."
 msgstr "Не удалось активировать профиль."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
+msgid "This profile will be permanently deleted. This action cannot be undone."
 msgstr ""
-"Вы уверены, что хотите удалить этот профиль? Его не возможно будет "
-"восстановить."
+"Этот профиль будет полностью удалён. Данное действие не может быть отменено."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7127,6 +7154,8 @@ msgid "Line &indentation reporting:"
 msgstr "Чтение &отступов строк:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Выключено"
 
@@ -7177,6 +7206,21 @@ msgstr "Заголовки строк и столбцов в &таблицах"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "Координаты ячеек в &таблицах"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Стиль"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Цвет и стиль"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Границы ячеек:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7744,6 +7788,11 @@ msgstr ""
 "строк, которые автоматически читаются при перемещении по строкам за этим "
 "столбцом. Двойное нажатие сбрасывает установку."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Лист {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Сообщение для ввода {title}: {message}"
@@ -7769,6 +7818,129 @@ msgstr "Редактирование примечания для ячейки с
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} по {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "граница сверху"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "граница снизу"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "граница слева"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "граница справа"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "диагональ вверх направо"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "диагональ вниз направо"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "горизонтальные границы внутри"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "вертикальные границы внутри"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "непрерывная"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "штрих"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "штрихпунктирная"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "штрихпунктирная с двумя точками"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "пунктирная"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "двойная"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "штрихпунктирная с наклоном"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "сверхтонкая"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "тонкая"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "средняя"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "толстая"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "средняя штрихпунктирная с двумя точками"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "средняя штрихпунктирная"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "средний штрих"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} граница со всех сторон"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} граница сверху и снизу"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} граница слева и справа"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} диагонали вверх и вниз"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8803,3 +8975,8 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "Вы уверены, что хотите удалить этот профиль? Его не возможно будет "
+#~ "восстановить."
