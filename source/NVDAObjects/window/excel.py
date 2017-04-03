@@ -643,8 +643,8 @@ class ExcelBase(Window):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
-			import excelChart
-			obj=excelChart.ExcelChart(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelChartObject=selection)
+			import _msOfficeChart
+			obj = _msOfficeChart.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeShapeObject = selection.Parent )  
 		return obj
 
 

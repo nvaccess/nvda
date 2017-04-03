@@ -32,6 +32,7 @@ from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
 import scriptHandler
+from NVDAObjects.window._msOfficeChart import OfficeChart
 
 # Window classes where PowerPoint's object model should be used 
 # These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
@@ -325,6 +326,10 @@ class DocumentWindow(PaneClassDC):
 			#Specifically handle shapes representing a table as they have row and column counts etc
 			if ppObj.hasTable:
 				return Table(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+			elif ppObj.hasChart:
+				obj = OfficeChart(windowHandle=self.windowHandle , officeApplicationObject = ppObj.Application , officeShapeObject = ppObj )
+				obj.parent = self
+				return obj
 			else: #Generic shape
 				return Shape(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 		elif selType==ppSelectionText: #Text frame
