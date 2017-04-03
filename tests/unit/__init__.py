@@ -8,7 +8,7 @@
 All unit tests should reside within this package and should be
 divided into modules and packages similar to the code they are testing.
 Test modules must have a C{test_} prefix
-and should contain one or more classes with a C{Test} prefix which subclass L{TestCase}.
+and should contain one or more classes with a C{Test} prefix which subclass C{unittest.TestCase}.
 Methods in test classes should have a C{test_} prefix.
 """
 
@@ -45,7 +45,8 @@ os.chdir(SOURCE_DIR)
 # The path to this package might be relative, so make it absolute,
 # since we just changed directory.
 __path__[0] = UNIT_DIR
-# We don't want logging.
+# We don't want logging for now,
+# though we may optionally want this in future; see #7045.
 import logging
 from logHandler import log
 log.addHandler(logging.NullHandler())
@@ -79,11 +80,3 @@ api.setNavigatorObject(phObj)
 import speech
 speech.speak = lambda speechSequence, symbolLevel=None: None
 speech.speakSpelling = lambda text, locale=None, useCharacterDescriptions=False: None
-
-### Base classes/utility functions.
-
-import unittest
-
-class TestCase(unittest.TestCase):
-	"""The base class which all test case classes should subclass.
-	"""

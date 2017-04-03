@@ -9,14 +9,13 @@
 
 import unittest
 import cursorManager
-from . import TestCase
 from .textProvider import BasicTextProvider
 
 class CursorManager(cursorManager.CursorManager, BasicTextProvider):
 	"""CursorManager which navigates within a provided string of text.
 	"""
 
-class TestMove(TestCase):
+class TestMove(unittest.TestCase):
 
 	def test_nextChar(self):
 		cm = CursorManager(text="abc") # Caret at "a"
@@ -28,7 +27,7 @@ class TestMove(TestCase):
 		cm.script_moveByCharacter_back(None)
 		self.assertEqual(cm.selectionOffsets, (0, 0)) # Caret at "a"
 
-class TestSelection(TestCase):
+class TestSelection(unittest.TestCase):
 
 	def test_selectNextChar(self):
 		cm = CursorManager(text="abc") # Caret at "a"
@@ -41,6 +40,8 @@ class TestSelection(TestCase):
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
 
 	def test_unselectPrevChar(self):
+		"""Depends on behavior tested by test_selectNextChar.
+		"""
 		cm = CursorManager(text="abc") # Caret at "a"
 		cm.script_selectCharacter_forward(None) # "a" selected
 		cm.script_selectCharacter_back(None) # "a" unselected
@@ -48,6 +49,7 @@ class TestSelection(TestCase):
 
 	def test_selForwardThenUnselThenSelBackward(self):
 		"""Test selecting forward, then unselecting and selecting backward.
+		Depends on behavior tested by test_unselectPrevChar.
 		"""
 		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
 		cm.script_selectCharacter_forward(None) # "b" selected
@@ -57,13 +59,14 @@ class TestSelection(TestCase):
 
 	def test_selectForwardThenSelBackward(self):
 		"""Test selecting forward, then selecting backward without unselecting.
+		Depends on behavior tested by test_selectNextChar.
 		"""
 		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
 		cm.script_selectCharacter_forward(None) # "b" selected
 		cm.script_selectWord_back(None) # "b" unselected, "a" selected
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
 
-class TestSelectAll(TestCase):
+class TestSelectAll(unittest.TestCase):
 	"""Tests the select all command starting from different caret positions.
 	"""
 
