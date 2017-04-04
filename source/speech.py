@@ -39,9 +39,6 @@ curWordChars=[]
 
 #Set containing locale codes for languages supporting conjunct characters
 LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur', 'ta'}
-# The REASON_* constants in this module are deprecated and will be removed in a future release.
-# Use controlTypes.REASON_* instead.
-from controlTypes import REASON_FOCUS, REASON_FOCUSENTERED, REASON_MOUSE, REASON_QUERY, REASON_CHANGE, REASON_MESSAGE, REASON_SAYALL, REASON_CARET, REASON_ONLYCACHE
 
 #: The string used to separate distinct chunks of text when multiple chunks should be spoken without pauses.
 # #555: Use two spaces so that numbers from adjacent chunks aren't treated as a single number
