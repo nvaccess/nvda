@@ -9,7 +9,7 @@
 - Cell border information can now be reported in Microsoft Excel by using `NVDA+f`. (#3044)
 - Added support for aria-current attributes. (#6358)
 - Support automatic language switching in Microsoft Edge. (#6852)
-
+- Support Windows Calculator on Windows 10 Enterprise LTSB (Long-Term Servicing Branch) and Server. (#6914)
 
 == Bug Fixes ==
 - Web page menu items (menu item checkbox's and radio buttons) can now be activated while in browse mode. (#6735)
@@ -23,6 +23,7 @@
 - Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
 - Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
 - Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
+- Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
 
 
 == Changes for Developers ==
@@ -32,7 +33,11 @@
  - Subclasses no longer need to normalize identifiers before returning them from this property.
  - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
 - The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
-
+- Deprecated code removed:
+ - `speech.REASON_*` constants, `controlTypes.REASON_*` should be used instead. (#6846)
+ - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
 
 = 2017.1 =
 Highlights of this release include reporting of sections and text columns in Microsoft Word; Support for reading, navigating and annotating books in Kindle for PC; and improved support for Microsoft Edge.
