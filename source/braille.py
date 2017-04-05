@@ -1689,6 +1689,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
+	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
+	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
 	def _handleProgressBarUpdate(self, obj):
 		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
 		newTime = time.time()
@@ -1696,12 +1698,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Fetching dialog text is expensive, so update at most once a second.
 			return
 		self._lastProgressBarUpdateTime = newTime
-		parent = obj.parent
-		while parent:
-			if parent.role == controlTypes.ROLE_DIALOG:
-				self.handleUpdate(parent)
+		for obj in reversed(api.getFocusAncestors()[:-1]):
+			if obj.role == controlTypes.ROLE_DIALOG:
+				self.handleUpdate(obj)
 				return
-			parent = parent.parent
 
 	def handleUpdate(self, obj):
 		if not self.enabled:
@@ -1713,7 +1713,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				break
 		else:
 			# No region for this object.
-			# There are some objects that may require an update even if they have no region.
+			# There are some objects that require special update behavior even if they have no region.
+			# This only applies when tethered to focus, because tethering to review shows only one object at a time,
+			# which always has a braille region associated with it.
+			if self.tether != self.TETHER_FOCUS:
+				return
 			# Late import to avoid circular import.
 			from NVDAObjects import NVDAObject
 			if isinstance(obj, NVDAObject) and obj.role == controlTypes.ROLE_PROGRESSBAR and obj.isInForeground:
