@@ -640,6 +640,11 @@ def getBrailleTextForProperties(**propertyValues):
 		except KeyError:
 			log.debugWarning("Aria-current value not handled: %s"%current)
 			textList.append(controlTypes.isCurrentLabels[True])
+	placeholder = propertyValues.get('placeholder', None)
+	if placeholder:
+		# Translators: Displayed in braille for a edit field.
+		# %s is replaced with the placeholder text for the field
+		textList.append(_("placeholder: %s") % placeholder)
 	if includeTableCellCoords and  cellCoordsText:
 		textList.append(cellCoordsText)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
@@ -665,7 +670,8 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role, current=obj.isCurrent,
+		text = getBrailleTextForProperties(name=obj.name, role=role,
+			current=obj.isCurrent, placeholder=obj.placeholder,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,

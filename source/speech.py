@@ -308,7 +308,8 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 		except NotImplementedError:
 			pass
 	newPropertyValues['current']=obj.isCurrent
-	newPropertyValues['placeholder']=obj.placeholder
+	if allowedProperties.get('placeholder', False):
+		newPropertyValues['placeholder']=obj.placeholder
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -318,7 +319,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True, "placeholder":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -353,6 +354,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		allowProperties["columnNumber"]=False
 	if isEditable:
 		allowProperties['value']=False
+		allowProperties['placeholder']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
 	if reason==controlTypes.REASON_ONLYCACHE:
@@ -361,14 +363,28 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
+				speakText = info.text
+				log.info("selected. Text: {0}, PlaceHolder: {1}".format(speakText, obj.placeholder))
+				if not speakText or len(speakText) == 0 or speakText == ' ' or speakText == '\n':
+					speakText = getSpeechTextForProperties(reason, placeholder=obj.placeholder)
 				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-				speakSelectionMessage(_("selected %s"),info.text)
+				speakSelectionMessage(_("selected %s"),speakText)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speakText = info.text
+				log.info("selected. Text: {0}, PlaceHolder: {1}".format(speakText, obj.placeholder))
+				if not speakText or len(speakText) == 0 or speakText == ' ' or speakText == '\n':
+					speakObjectProperties(obj,reason=reason,index=index,placeholder=True)
+				else:
+					speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+			speakText = newInfo.text
+			log.info("selected. Text: {0}, PlaceHolder: {1}".format(speakText, obj.placeholder))
+			if not speakText or len(speakText) == 0 or speakText == ' ' or speakText == '\n':
+				speakObjectProperties(obj,reason=reason,index=index,placeholder=True)
+			else:
+				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
@@ -1048,6 +1064,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	ariaCurrent=attrs.get('current', None)
+	placeholderValue=attrs.get('placeholder', None)
+	log.info("placeholderValue: %s", placeholderValue)
 	value=attrs.get('value',"")
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
 		description=attrs.get('description',"")
@@ -1064,6 +1082,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
+	placeholderText=getSpeechTextForProperties(reason=reason,placeholder=placeholderValue)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	valueText=getSpeechTextForProperties(reason=reason,value=value)
 	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
@@ -1123,21 +1142,26 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
+		log.info("general case 1")
 		out = []
 		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
+		if not valueText and placeholderValue:
+			valueText = placeholderText
 		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
 		if content and not speakContentFirst:
 			out.append(content)
 		return CHUNK_SEPARATOR.join(out)
 		
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
+		log.info("general case 2")
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
 
 	# Special cases
 	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
+		log.info("In special cases, placeholder: %s", placeholderValue)
 		out = []
 		if not extraDetail and controlTypes.STATE_CLICKABLE in states: 
 			# Clickable.
@@ -1146,6 +1170,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			out.append(ariaCurrentText)
 		return CHUNK_SEPARATOR.join(out)
 	else:
+		log.info("special case return empty")
 		return ""
 
 def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,unit=None,extraDetail=False , initialFormat=False, separator=CHUNK_SEPARATOR):

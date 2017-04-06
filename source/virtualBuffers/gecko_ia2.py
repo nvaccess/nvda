@@ -23,9 +23,22 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
+		#log.info("normalizeControlField attrs: %s", attrs)
 		ariaCurrent = attrs.get("IAccessible2::attribute_current")
 		if ariaCurrent != None:
 			attrs['current']= ariaCurrent
+		ariaPlaceholder = attrs.get("IAccessible2::attribute_placeholder")
+		if ariaPlaceholder != None:
+			try:
+				start, end = self._getOffsetsFromFieldIdentifier(int(attrs.get('controlIdentifier_docHandle')), int(attrs.get('controlIdentifier_ID')))
+			except (LookupError, ValueError):
+				pass
+			else:
+				controlFieldText = self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text
+				if not controlFieldText or len(controlFieldText) == 0 or controlFieldText == ' ' or controlFieldText == '\n':
+					attrs['placeholder']= ariaPlaceholder
+				else:
+					log.info("not empty field: %s", controlFieldText)
 		accRole=attrs['IAccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
