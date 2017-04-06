@@ -21,11 +21,17 @@
 - Chức năng giảm âm lượng ứng dụng khác đã hoạt động lại với bản cập nhật Windows 10 Creator, giống như ở các bản Windows khác. (#6933)
 - NVDA đã có thể di chuyển đến và đọc các điều khiển UIA không có khai báo phím tắt. (#6779)
 - Không còn thêm vào hai khoảng trắng trong phần thông tin phím tắt cho các điều khiển UIA. (#6790)
+- Một số tổ hợp phím trên màn hình nổi HIMS như (space+chấm 4), không còn tình trạng thỉnh thoảng ngưng hoạt động. (#3157)
+- Sửa lỗi mở cổng serial trên các máy dùng ngôn ngữ không phải là tiếng Anh. Điều này, đã gây ra một số trường hợp không thể kết nối màn hình nổi. (#6845)
 
 
 == Thay Đổi Dành Cho Nhà Phát Triển ==
 - Các tham số dòng lệnh đã được xử lý bởi mô-đun argparser của Python, thay vì là optparser. Điều này sẽ cho phép xử lý riêng các tùy chọn như -r và -q. (#6865)
 - core.callLater sẽ ở hàng chờ hàm gọi đến hàng chờ chính của NVDA sau một khoảng độ trễ được chỉ định, thay vì can thiệp phần lõi và thực thi trực tiếp.  Điều này sẽ giúp ngưng sự cố đóng băng hoặc treo sau khi phần lõi xử lý hàm gọi, ví dụ như khi gọi hàm giữa chừng để hiển thị hộp thông báo. (#6797) 
+- Thuộc tính InputGesture.identifiers đã được thay đổi, vì vậy nó sẽ không còn được normalize. (#6945)
+ - Các lớp con (subclasses) không còn cần phải normalize các indentifier trước khi trả về lại từ thuộc tính này. .
+  - Nếu muốn normalize các identifier, bây giờ bạn có thể dùng thuộc tính InputGesture.normalizedIdentifiers. Nó sẽ normalize các identifiers được trả về bởi thuộc tính identifiers.
+- Thuộc tính InputGesture.logIdentifier hiện nay sẽ không được khuyến khích tiếp tục sử dụng. Thay vào đó, có thể dùng InputGesture.identifiers[0]. (#6945)
 
 
 = 2017.1 =
