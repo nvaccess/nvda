@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-24 00:10+1000\n"
+"POT-Creation-Date: 2017-03-31 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -2336,6 +2336,30 @@ msgstr "nije izabrano"
 msgid "not checked"
 msgstr "nije štiklirano"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "Trenutni"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "Trenutna strana"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "Trenutni korak"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "Trenutna lokacija"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "Trenutni datum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "Trenutno vreme"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -4414,6 +4438,10 @@ msgstr "stil %s"
 msgid "default style"
 msgstr "zadani stil"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Nema granica"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6221,10 +6249,8 @@ msgid "Error activating profile."
 msgstr "Greška pri aktivaciji profila"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr ""
-"Da li ste sigurni da želite da obrišete ovaj profil? Ovo ne može biti "
-"poništeno"
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Ovaj profil će zauvek biti obrisan. Ova radnja nemože biti poništena."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7110,6 +7136,8 @@ msgid "Line &indentation reporting:"
 msgstr "Prijavi uv&lačenje reda"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Isključeno"
 
@@ -7160,6 +7188,21 @@ msgstr "&Zaglavlja kolona/redova"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "ko&ordinati ćelija u tabeli"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Stilovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Boje i stilovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Granice ćelija"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7726,6 +7769,11 @@ msgstr ""
 "ćelije koje su ispod i desno od ove regije. Ako se pritisne dva puta "
 "zaboraviće trenutno zaglavlje reda za ovu ćeliju."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "List {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Ulazna poruka je {title}: {message}"
@@ -7751,6 +7799,129 @@ msgstr "Uređivanje komentara za ćeliju {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} do {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "Gornja ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "Donja ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "Leva ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "Desna ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "Gornje-desna dijagonala"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "Donja desna dijagonala"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "Horizontalne granice osim van"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "Uspravne granice osim vani"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "Neprekidne"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "Ucrtano"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "Crta tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "Crta tačka tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "Tačkasto"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "Duple"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "Kosa crta tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "Kosa"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "Tanke"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "Srednje"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "Tanko"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "Srednja crta tačka tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "Srednja crta tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "Srednje ucrtano"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} Uokvirena granica"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} Vrh i dno"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} Leva i desna ivica"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} gornje-desna i donje-desne dijagonale"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8770,3 +8941,8 @@ msgstr "HIMS Braille Sense/Braille EDGE /Smart Beetle serije"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "Da li ste sigurni da želite da obrišete ovaj profil? Ovo ne može biti "
+#~ "poništeno"
