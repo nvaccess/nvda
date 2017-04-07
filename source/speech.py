@@ -360,30 +360,28 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	if reason==controlTypes.REASON_ONLYCACHE:
 		return
 	if isEditable:
+		def speakPlaceholderIfEmpty(textValue, obj, reason, index):
+			""" attempt to speak placeholder attribute if the text value is empty
+				@return True if the textValue was considered empty, and we attempted to speak the placeholder value.
+						False if the textValue was not considered empty.
+			"""
+			if not textValue or textValue == ' ' or textValue == '\n':
+					speakObjectProperties(obj,reason=reason,index=index,placeholder=True)
+					return True
+			return False
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
-				speakText = info.text
-				log.info("selected. Text: {0}, PlaceHolder: {1}".format(speakText, obj.placeholder))
-				if not speakText or len(speakText) == 0 or speakText == ' ' or speakText == '\n':
-					speakText = getSpeechTextForProperties(reason, placeholder=obj.placeholder)
+				# if there is selected text, then there is a value and we do not report placeholder
 				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-				speakSelectionMessage(_("selected %s"),speakText)
+				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				speakText = info.text
-				log.info("selected. Text: {0}, PlaceHolder: {1}".format(speakText, obj.placeholder))
-				if not speakText or len(speakText) == 0 or speakText == ' ' or speakText == '\n':
-					speakObjectProperties(obj,reason=reason,index=index,placeholder=True)
-				else:
+				if not speakPlaceholderIfEmpty(info.text, obj, reason, index):
 					speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			speakText = newInfo.text
-			log.info("selected. Text: {0}, PlaceHolder: {1}".format(speakText, obj.placeholder))
-			if not speakText or len(speakText) == 0 or speakText == ' ' or speakText == '\n':
-				speakObjectProperties(obj,reason=reason,index=index,placeholder=True)
-			else:
+			if not speakPlaceholderIfEmpty(newInfo.text, obj, reason, index):
 				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
@@ -1065,7 +1063,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	ariaCurrent=attrs.get('current', None)
 	placeholderValue=attrs.get('placeholder', None)
-	log.info("placeholderValue: %s", placeholderValue)
 	value=attrs.get('value',"")
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
 		description=attrs.get('description',"")
@@ -1142,7 +1139,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		log.info("general case 1")
 		out = []
 		content = attrs.get("content")
 		if content and speakContentFirst:
@@ -1155,13 +1151,11 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return CHUNK_SEPARATOR.join(out)
 		
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
-		log.info("general case 2")
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
 
 	# Special cases
 	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
-		log.info("In special cases, placeholder: %s", placeholderValue)
 		out = []
 		if not extraDetail and controlTypes.STATE_CLICKABLE in states: 
 			# Clickable.
@@ -1170,7 +1164,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			out.append(ariaCurrentText)
 		return CHUNK_SEPARATOR.join(out)
 	else:
-		log.info("special case return empty")
 		return ""
 
 def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,unit=None,extraDetail=False , initialFormat=False, separator=CHUNK_SEPARATOR):

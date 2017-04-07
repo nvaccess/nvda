@@ -28,17 +28,19 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if ariaCurrent != None:
 			attrs['current']= ariaCurrent
 		ariaPlaceholder = attrs.get("IAccessible2::attribute_placeholder")
+		# For efficiency, only check if it is valid to include placeholder when we have a placeholder value to include.
 		if ariaPlaceholder != None:
 			try:
-				start, end = self._getOffsetsFromFieldIdentifier(int(attrs.get('controlIdentifier_docHandle')), int(attrs.get('controlIdentifier_ID')))
+				start, end = self._getOffsetsFromFieldIdentifier(
+					int(attrs.get('controlIdentifier_docHandle')),
+					int(attrs.get('controlIdentifier_ID')))
 			except (LookupError, ValueError):
 				pass
 			else:
+				# only allow placeholder attribute if the field value is empty
 				controlFieldText = self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text
-				if not controlFieldText or len(controlFieldText) == 0 or controlFieldText == ' ' or controlFieldText == '\n':
+				if not controlFieldText or controlFieldText == ' ' or controlFieldText == '\n':
 					attrs['placeholder']= ariaPlaceholder
-				else:
-					log.info("not empty field: %s", controlFieldText)
 		accRole=attrs['IAccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
