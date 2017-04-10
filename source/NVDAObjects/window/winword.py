@@ -137,7 +137,6 @@ wdContentControlBuildingBlockGallery=5
 wdContentControlDate=6
 wdContentControlGroup=7
 wdContentControlCheckBox=8
-
 wdNoRevision=0
 wdRevisionInsert=1
 wdRevisionDelete=2

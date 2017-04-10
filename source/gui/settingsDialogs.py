@@ -28,6 +28,8 @@ import speechDictHandler
 import appModuleHandler
 import queueHandler
 import braille
+import brailleTables
+import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
@@ -408,6 +410,17 @@ class VoiceSettingsSlider(wx.Slider):
 		self.SetValue(newValue)
 
 class VoiceSettingsDialog(SettingsDialog):
+	#Choices for numbers combo box in Voice settings.
+	DIGIT_CHOICES = [
+		# Translators: Choice in a combo box for speaking full numbers.
+		_("Full numbers"),
+		# Translators: Choice in a combo box for speaking numbers as digits.
+		_("Digits"),
+		# Translators: Choice in a combo box for speaking numbers as double digits.
+		_("Double digits"),
+		# Translators: Choice in a combo box for speaking numbers as triple digits.
+		_("Triple digits")]
+
 	# Translators: This is the label for the voice settings dialog.
 	title = _("Voice Settings")
 
@@ -524,6 +537,11 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.beepForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = beepForCapsText))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 
+		
+		# Translators: Label for a combo box for setting how nvda speaks numbers.
+		speakNumbersText = _("Speak &numbers as")
+		self.digitsCombo = settingsSizerHelper.addLabeledControl(speakNumbersText, wx.Choice, choices=self.DIGIT_CHOICES)
+		self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
 		# Translators: This is the label for a checkbox in the
 		# voice settings dialog.
 		useSpellingFunctionalityText = _("Use &spelling functionality if supported")
@@ -599,6 +617,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"][getSynth().name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
+		config.conf["speech"]["readNumbersAs"]=self.digitsCombo.GetSelection()
 		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		super(VoiceSettingsDialog, self).onOk(evt)
 
@@ -1525,8 +1544,9 @@ class BrailleSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		self.tableNames = [table[0] for table in braille.TABLES]
-		tableChoices = [table[1] for table in braille.TABLES]
+		self.tables = brailleTables.listTables()
+		self.tableNames = [table.fileName for table in self.tables]
+		tableChoices = [table.displayName for table in self.tables]
 		self.tableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=tableChoices)
 		try:
 			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
@@ -1536,11 +1556,9 @@ class BrailleSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
-		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
-		inputChoices = [table[1] for table in braille.INPUT_TABLES]
-		self.inputTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inputChoices)
+		self.inputTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=tableChoices)
 		try:
-			selection = self.inputTableNames.index(config.conf["braille"]["inputTable"])
+			selection = self.tables.index(brailleInput.handler.table)
 			self.inputTableList.SetSelection(selection)
 		except:
 			pass
@@ -1630,7 +1648,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
-		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
+		brailleInput.handler.table = self.tables[self.inputTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
@@ -1686,7 +1704,7 @@ class AddSymbolDialog(wx.Dialog):
 		# Translators: This is the label for the edit field in the add symbol dialog.
 		symbolText = _("Symbol:")
 		self.identifierTextCtrl = sHelper.addLabeledControl(symbolText, wx.TextCtrl)
-		
+
 		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)

@@ -11,6 +11,7 @@
 import itertools
 import weakref
 import unicodedata
+import time
 import colors
 import globalVars
 from logHandler import log
@@ -602,11 +603,28 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				# Translators: Reported when selection is removed.
 				speakMessage(_("selection removed"))
 
+#: The number of typed characters for which to suppress speech.
+_suppressSpeakTypedCharactersNumber = 0
+#: The time at which suppressed typed characters were sent.
+_suppressSpeakTypedCharactersTime = None
+def _suppressSpeakTypedCharacters(number):
+	"""Suppress speaking of typed characters.
+	This should be used when sending a string of characters to the system
+	and those characters should not be spoken individually as if the user were typing them.
+	@param number: The number of characters to suppress.
+	@type number: int
+	"""
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	_suppressSpeakTypedCharactersNumber += number
+	_suppressSpeakTypedCharactersTime = time.time()
+
+#: The character to use when masking characters in protected fields.
+PROTECTED_CHAR = "*"
 def speakTypedCharacters(ch):
-	global curWordChars;
+	global curWordChars
 	typingIsProtected=api.isTypingProtected()
 	if typingIsProtected:
-		realChar="*"
+		realChar=PROTECTED_CHAR
 	else:
 		realChar=ch
 	if unicodedata.category(ch)[0] in "LMN":
@@ -624,7 +642,19 @@ def speakTypedCharacters(ch):
 			log.io("typed word: %s"%typedWord)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
-	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	if _suppressSpeakTypedCharactersNumber > 0:
+		# We primarily suppress based on character count and still have characters to suppress.
+		# However, we time out after a short while just in case.
+		suppress = time.time() - _suppressSpeakTypedCharactersTime <= 0.1
+		if suppress:
+			_suppressSpeakTypedCharactersNumber -= 1
+		else:
+			_suppressSpeakTypedCharactersNumber = 0
+			_suppressSpeakTypedCharactersTime = None
+	else:
+		suppress = False
+	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 		speakSpelling(realChar)
 
 class SpeakTextInfoState(object):
@@ -1433,6 +1463,32 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			else:
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
+			textList.append(text)
+		verticalAlign=attrs.get("vertical-align")
+		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
+		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
+			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
+			if verticalAlign=="top":
+				# Translators: Reported when text is vertically top-aligned.
+				text=_("vertical align top")
+			elif verticalAlign in("center","middle"):
+				# Translators: Reported when text is vertically middle aligned.
+				text=_("vertical align middle")
+			elif verticalAlign=="bottom":
+				# Translators: Reported when text is vertically bottom-aligned.
+				text=_("vertical align bottom")
+			elif verticalAlign=="baseline":
+				# Translators: Reported when text is vertically aligned on the baseline. 
+				text=_("vertical align baseline")
+			elif verticalAlign=="justify":
+				# Translators: Reported when text is vertically justified.
+				text=_("vertical align justified")
+			elif verticalAlign=="distributed":
+				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
+				text=_("vertical align distributed") 
+			else:
+				# Translators: Reported when text has reverted to default vertical alignment.
+				text=_("vertical align default")
 			textList.append(text)
 	if formatConfig["reportParagraphIndentation"]:
 		indentLabels={
