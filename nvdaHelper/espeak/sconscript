@@ -42,7 +42,7 @@ if 'analyze' in env['nvdaHelperDebugFlags']:
 # Ignore all warnings as the code is not ours
 env.Append(CCFLAGS='/W0')
 
-env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir])
+env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir,espeakSrcDir.Dir('ucd-tools/src/include')])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
 	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
@@ -96,13 +96,21 @@ espeakLib=env.SharedLibrary(
 	target='espeak',
 	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
 	source=[
+		"../ucd-tools/src/case.c",
+		"../ucd-tools/src/categories.c",
+		"../ucd-tools/src/ctype.c",
+		"../ucd-tools/src/scripts.c",
+		"../ucd-tools/src/tostring.c",
 		"speech.c",
 		"readclause.c",
 		"compiledict.c",
 		"dictionary.c",
+		"encoding.c",
 		"intonation.c",
 		"setlengths.c",
+		"mnemonics.c",
 		"numbers.c",
+		"phoneme.c",
 		"synth_mbrola.c",
 		"synthdata.c",
 		"synthesize.c",
@@ -130,7 +138,7 @@ env.Depends(phonemeData,espeakLib)
 env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspath,'dictsource','extra','*_*')))
 
 #Compile all dictionaries
-missingDicts=[] #'mt','tn','tt']
+missingDicts=['zhy'] #'mt','tn','tt']
 dictSourcePath=espeakRepo.Dir('dictsource').abspath
 for f in env.Glob(os.path.join(dictSourcePath,'*_rules')):
 	lang=f.name.split('_')[0]
