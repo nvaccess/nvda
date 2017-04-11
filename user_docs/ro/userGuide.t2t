@@ -23,7 +23,7 @@ Trăsăturile importante includ:
 - Suport pentru multe afișaje actualizabile Braille, incluzând introducerea de braille pentru calculator pentru afișajele braille care au tastatură braille
 - Capacitatea de a rula exclusiv de pe un stick USB sau alte suporturi media portabile fără nevoia instalării
 - Interfață de instalare vorbită, ușor de folosit
-- Tradus în 48 de limbi
+- Tradus în 50 de limbi
 - Suport pentru sistemele de operare Windows moderne, incluzând atât variantele pe 32 cât și pe 64 biți
 - Capacitatea de a rula pe ecranul de autentificare în Windows și alte ecrane de siguranță
 - Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation (UI Automation disponibil doar pentru Windows 7 sau mai nou)
@@ -32,12 +32,12 @@ Trăsăturile importante includ:
 
 ++ Internaționalizare ++
 Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, să aibă același acces la tehnologie.
-În afară de engleză, NVDA a fost tradus în 48 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, indiană, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, lituaniană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
+În afară de engleză, NVDA a fost tradus în 50 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, birmană, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindusă, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, kanareză, lituaniană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
 
 ++ Suport pentru sintetizator de voce ++
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorilor să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
 
-NVDA are incorporat [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
+NVDA are încorporat [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
 
 Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite în secțiunea [Sintetizatoare de voce suportate #SintetizatoareSuportate].
 
@@ -55,7 +55,7 @@ Sunteți liberi să distribuiți sau să schimbați acest program în orice mod 
 Acest lucru se aplică atât originalului cât și copiilor modificate ale programului, plus oricărui alt program care folosește codul extras din acest program.
 Pentru alte detalii, puteți [vedea licența online. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] (în engleză)
 
-+ Cerințe sistem +
++ Cerințe de sistem +
 - Sisteme de operare: toate versiunile Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 și Windows 10 pe 32 biți și 64 biți  (inclusiv versiunile Server ale sistemelor de operare).
 - Pentru Windows XP 32-biți, NVDA are nevoie de Service Pack 2 sau o versiune superioară
 - Pentru Windows Server 2003, NVDA are nevoie de Service Pack 1 sau o versiune superioară
@@ -110,7 +110,7 @@ Opțiunea include și controlul UAC și alte ecrane securizate.
 
 +++ Creează scurtătură pe spațiul de lucru (ctrl+alt+n) +++
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să creeze sau nu o scurtătură de pornire NVDA în spațiul de lucru.
-Dacă este creată, aceastei scurtături i se va asocia combinația control+alt+n, permițându-vă să lansați NVDA în orice moment cu această combinație de taste.
+Dacă este creată, acestei scurtături i se va asocia combinația control+alt+n, permițându-vă să lansați NVDA în orice moment cu această combinație de taste.
 
 +++ Copiere configurare portabilă la Contul utilizatorului curent +++
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să copieze sau nu configurarea de utilizator, din versiunea NVDA care rulează, către configurarea utilizatorului autentificat, din versiunea NVDA instalată.
@@ -134,11 +134,11 @@ Apăsați „OK” pentru a elimina fereastra de dialog.
 ++ Lansarea NVDA ++
 Dacă ați instalat NVDA cu interfața de instalare, atunci pornirea NVDA se reduce la apăsarea control+alt+n, sau alegând NVDA din meniul NVDA aflat în meniul Start, Programe.
 În plus, puteți scrie NVDA în fereastra de dialog „Executare” și apăsați „Enter”.
-Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #LinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea extensiilor add-on (--disable-addons), etc.
+Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #LinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
 
 Pentru a porni versiunea portabilă, mergeți în dosarul unde ați dezarhivat NVDA și apăsați „Enter” sau faceți dublu clic pe nvda.exe.
 
-Cât NVDA pornește, mai întâi veți auzi câteva tonuri ascendente (care vă anunță că NVDA se încarcă).
+Când NVDA pornește, mai întâi veți auzi câteva tonuri ascendente (care vă anunță că NVDA se încarcă).
 În funcție de cât de rapid este calculatorul sau dacă rulați NVDA de pe un stick USB sau alt dispozitiv mai lent, poate dura puțin timp până pornește.
 Dacă durează prea mult timp, NVDA ar trebui să anunțe „NVDA se încarcă. Vă rugăm așteptați...”.
 

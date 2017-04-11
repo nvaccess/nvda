@@ -21,11 +21,17 @@ Quoi de Neuf dans NVDA
 - Sous la mise à jour Windows Creaters, l'atténuation audio de NVDA fonctionne de nouveau comme sous les versions précédentes de Windows (Tous les modes sont de nouveau disponibles). (#6933)
 - NVDA n'échouera plus à annoncer ou naviguer vers certains contrôles (UIA) pour lesquels un raccourci clavier n'est pas défini. (#6779)
 - Deux espaces ne sont plus ajoutés dans les informations de raccourcis clavier pour certains contrôles (UIA). (#6790)
+- Certaines combinaisons de touches sur les afficheurs HIMS (ex: espace+point4) n'échouent plus de façon intermittente. (#3157)
+- Correction d'un problème à l'ouverture d'un port série sur des systèmes utilisant certaines langues autres que l'Anglais qui rendait la connexion à un terminal braille impossible dans certains cas. (#6845)
 
 
 == Changements pour les Développeurs ==
 - Les arguments de ligne de commande sont maintenant traités par le module Python argparser, au lieu de optparser. Cela permet de traiter certaines options telles que -r et -q de manière exclusive. (#6865)
 - core.callLater ajoute maintenant le callback à la queue principale de NVDA après le délai donné, plutôt que de réveiller le noyau et de l'exécuter directement. Ceci empêche de possibles bloquages dus au fait que le noyau se mette accidentellement en veille après le traitement d'un callback, au milieu d'un appel modal tel que l'affichage d'une boîte de message. (#6797) 
+- La propriété InputGesture.identifiers a été modifiée de manière à ne plus être normalisée. (#6945)
+ - Les sous-classes n'ont plus besoin de normaliser les identifiants avant de les retourner de cette propriété.
+ - Si vous voulez des identifiants normalisés, il y a maintenant une propriété InputGesture.normalizedIdentifiers qui normalise les identifiants retournés par la propriété des identifiants.
+- La propriété InputGesture.logIdentifier est maintenant dépréciée. Callers should use InputGesture.identifiers[0] instead. (#6945)
  
  
 = 2017.1 =

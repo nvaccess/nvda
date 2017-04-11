@@ -3,6 +3,37 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+- Cell border information can now be reported in Microsoft Excel by using `NVDA+f`. (#3044)
+== neue Funktionen ==
+- Unterstützung für Aria-Current-Attribute hinzugefügt. (#6358)
+- Microsoft Edge unterstützt jetzt auch den automatischen Sprachenwechsel. (#6852)
+
+
+== behobene Fehler ==
+- Menüeinträge auf Webseiten, die Kontrollkästchen Bzw. Auswahlschalter enthalten, können jetzt im Lesemodus aktiviert werden. (#6735)
+- Die Ansage von Namen von Excel-Arbeitsblättern wird nun übersetzt. (#6848)
+- Pressing ESC while the configuration profile "Confirm Deletion" prompt is active now dismisses the dialog. (#6851)
+- Fix some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
+- Reporting of the background color in screen review is now more accurate when  text was drawn with a transparant background (#6467) 
+- Improved support for aria-describedby in Internet Explorer 11, including support within iframes and when multiple IDs are provided. (#5784)
+- Im Windows 10 Creators Update sind alle Audioducking-Funktionen wieder verfügbar. (#6933)
+- NVDA zeigt nun auch solche (UIA)-Steuerelemente korrekt an, deren Tastenkombination nicht (richtig) definiert wurde. (#6779)
+- An die Tastenkombination von (UIA)-Steuerelementen werden nicht mehr fälschlicherweise zwei Leerzeichen angehängt. (#6790)
+- Manche Tastenkombinationen auf HIMS-Braillezeilen (wie z.B. Leertaste+Punkt 4) funktionieren nun korrekt. (#3157)
+- Auf einigen (nicht-englischen) Systemen funktioniert nun die Verbindung mit seriellen Braillezeilen korrekt.(#6845)
+
+
+== Änderungen für Entwickler ==
+- Die Befehlszeile von NVDA wird nun mit Hilfe des Moduls Argparser abgearbeitet. Dadurch werden Optionen wie -R oder -Q exklusiv abgearbeitet. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
+- The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
+ - Subclasses no longer need to normalize identifiers before returning them from this property.
+ - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
+- The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+
+
 = 2017.1 =
 Schwerpunkte dieser Version sind u. a. die Ansage von Abschnitten und Spalten in Microsoft Word; Unterstützung beim Navigieren in, Lesen von und Einfügen von Anmerkungen in Bücher(n) in Kindle sowie verbesserte Unterstützung von Microsoft Edge.
 

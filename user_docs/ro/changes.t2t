@@ -21,6 +21,8 @@ Ce este nou în NVDA
 - În Windows Creaters Update, atenuarea audio a NVDA-ului funcționează ca în versiunile anterioare de Windows (I.e. Atenuează cu vorbire și sunete, atenuează totdeauna și fără atenuare sunt disponibile. (#6933)
 - NVDA nu va mai eșua să navigheze sau să raporteze comenzi (UIA) unde o scurtătură nu este definită. (#6779)
 - Două spații goale nu mai sunt adăugate în informația scurtăturii pentru anumite comenzi (UIA). (#6790)
+- Anumite combinații ale afișajelor HIMS (e.g. spațiu+punct4) nu mai eșuează intermitent. (#3157)
+- A fost corectată  o situație la deschiderea  unui port serial pe sistemele utilizatoare de anumite limbi, altele decât engleza, care au cauzat eșuarea în unele cazuri a conectării la afișajele braille. (#6845)
 
 
 == Modificări pentru Dezvoltatori ==
