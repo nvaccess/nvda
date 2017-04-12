@@ -31,6 +31,8 @@
 - Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
 - Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
 - When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
+- Navigating by line in Microsoft Edge is now up to 3x faster in the Windows 10 Creaters Update. (#6994)
+- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creaters Update (#6948)
 
 
 == Changes for Developers ==
