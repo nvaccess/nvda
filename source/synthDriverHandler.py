@@ -139,8 +139,6 @@ class SynthSetting(object):
 		"""
 		self.name=name
 		self.displayNameWithAccelerator=displayNameWithAccelerator
-		#: @deprecated: Use L{displaynameWithAccelerator} and L{displayName} instead.
-		self.i18nName=displayNameWithAccelerator
 		if not displayName:
 			# Strip accelerator from displayNameWithAccelerator.
 			displayName=displayNameWithAccelerator.replace("&","")

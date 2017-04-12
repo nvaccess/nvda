@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """Keyboard support"""
 
@@ -369,21 +369,16 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
 	def _get_modifierNames(self):
-		modTexts = set()
+		modTexts = []
 		for modVk, modExt in self.generalizedModifiers:
 			if isNVDAModifierKey(modVk, modExt):
-				modTexts.add("NVDA")
+				modTexts.append("NVDA")
 			else:
-				modTexts.add(self.getVkName(modVk, None))
-
+				modTexts.append(self.getVkName(modVk, None))
 		return modTexts
 
 	def _get__keyNamesInDisplayOrder(self):
 		return tuple(self.modifierNames) + (self.mainKeyName,)
-
-	def _get_logIdentifier(self):
-		return u"kb({layout}):{key}".format(layout=self.layout,
-			key="+".join(self._keyNamesInDisplayOrder))
 
 	def _get_displayName(self):
 		return "+".join(
@@ -393,9 +388,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else localizedKeyLabels.get(key.lower(), key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
-		keyNames = set(self.modifierNames)
-		keyNames.add(self.mainKeyName)
-		keyName = "+".join(keyNames).lower()
+		keyName = "+".join(self._keyNamesInDisplayOrder)
 		return (
 			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
 			u"kb:{key}".format(key=keyName)
