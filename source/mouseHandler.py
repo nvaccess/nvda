@@ -165,10 +165,7 @@ def executeMouseMoveEvent(x,y):
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
 
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-		#screenExplorer.playLocationCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
-		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
-			config.conf['mouse']['audioCoordinates_detectBrightness'],
-			config.conf['mouse']['audioCoordinates_blurFactor'])
+		screenExplorer.playLocationCoordinates(x,y,screenWidth,screenHeight,minPos,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
 
 	oldMouseObject=api.getMouseObject()
 	mouseObject=desktopObject.objectFromPoint(x, y)
