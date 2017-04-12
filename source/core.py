@@ -62,7 +62,7 @@ def doStartupDialogs():
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
 
-def restart(disableAddons=False):
+def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
 	if globalVars.appArgs.launcher:
 		import wx
@@ -79,8 +79,14 @@ def restart(disableAddons=False):
 		sys.argv.remove('--disable-addons')
 	except ValueError:
 		pass
+	try:
+		sys.argv.remove('--debug-logging')
+	except ValueError:
+		pass
 	if disableAddons:
 		options.append('--disable-addons')
+	if debugLogging:
+		options.append('--debug-logging')
 	try:
 		sys.argv.remove("--ease-of-access")
 	except ValueError:
@@ -460,9 +466,8 @@ def requestPump():
 
 def callLater(delay, callable, *args, **kwargs):
 	"""Call a callable once after the specified number of milliseconds.
-	This is currently a thin wrapper around C{wx.CallLater},
-	but this should be used instead for calls which aren't just for UI,
-	as it notifies watchdog appropriately.
+	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
+	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
 	This function can be safely called from any thread.
 	"""
 	import wx
@@ -472,9 +477,5 @@ def callLater(delay, callable, *args, **kwargs):
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
 
 def _callLaterExec(callable, args, kwargs):
-	import watchdog
-	watchdog.alive()
-	try:
-		return callable(*args, **kwargs)
-	finally:
-		watchdog.asleep()
+	import queueHandler
+	queueHandler.queueFunction(queueHandler.eventQueue,callable,*args, **kwargs)

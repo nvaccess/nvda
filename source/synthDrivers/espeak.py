@@ -37,7 +37,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		_espeak.initialize()
-		log.info("Using eSpeak version %s" % _espeak.info())
+		log.info("Using eSpeak NG version %s" % _espeak.info())
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._language=lang

@@ -171,11 +171,11 @@ class ProfilesDialog(wx.Dialog):
 		index = self.profileList.Selection
 		if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-			_("Are you sure you want to delete this profile? This cannot be undone."),
+			_("This profile will be permanently deleted. This action cannot be undone."),
 			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 			_("Confirm Deletion"),
-			wx.YES | wx.NO | wx.ICON_QUESTION, self
-		) == wx.NO:
+			wx.OK | wx.CANCEL | wx.ICON_QUESTION, self
+		) != wx.OK:
 			return
 		name = self.profileNames[index]
 		try:

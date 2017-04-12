@@ -136,9 +136,9 @@ def copyUserConfig(destPath):
 			tryCopyFile(sourceFilePath,destFilePath)
 
 def removeOldProgramFiles(destPath):
-	# #3181: Remove espeak-data\voices except for variants.
+	# #3181: Remove espeak-ng-data\voices except for variants.
 	# Otherwise, there will be duplicates if voices have been moved in this new eSpeak version.
-	root = os.path.join(destPath, "synthDrivers", "espeak-data", "voices")
+	root = os.path.join(destPath, "synthDrivers", "espeak-ng-data", "voices")
 	try:
 		files = set(os.listdir(root))
 	except OSError:
