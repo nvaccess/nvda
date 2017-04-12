@@ -16,23 +16,27 @@ import speech
 import screenBitmap
 import config
 import mouseHandler
+import wx
 
-def playLocationCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,blurFactor=0):
+def playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=None, detectBrightness=True,blurFactor=0):
 	"""Plays a tone indicating the XY-coordinate for the given location. This works for keyboard-based object navigation/focus movement, mouse movement and during touch hover gesture.  
 	@param obj: the coordinate for the location and the screen resolution (typically desktopObject.location)
 	@type obj: int
 	"""
+	# Have a fake wx.Point in case min pos is not defined on multiple monitors.
+	if screenMinPos is None:
+		screenMinPos = wx.Point()
 	if x > screenWidth or y > screenHeight:
 		return
 	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
 	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
 	if detectBrightness:
-		startX=min(max(x-blurFactor,0),screenWidth)
-		width=min((x+blurFactor+1)-startX,screenWidth)
-		startY=min(max(y-blurFactor,0),screenHeight)
-		height=min((y+blurFactor+1)-startY,screenHeight)
-		grey=screenBitmap.rgbPixelBrightness(mouseHandler.scrBmpObj.captureImage(startX,startY,width,height)[0][0])
+		startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
+		startY=min(max(y-blurFactor,0),screenHeight)+screenMinPos.y
+		width=min(blurFactor+1,screenWidth)
+		height=min(blurFactor+1,screenHeight)
+		grey=screenBitmap.rgbPixelBrightness(mouseHandler.scrBmpObj.captureImage( startX, startY, width, height)[0][0])
 		brightness=grey/255.0
 		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
 		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
