@@ -9,6 +9,8 @@ Qué hay de Nuevo en NVDA
 - Ahora se puede anunciar la información de borde de celdas en Microsoft Excel utilizando `NVDA+f`. (#3044)
 - Añadido el soporte para atributos aria-current. (#6358)
 - Se soporta el cambio autumático de idiomas en Microsoft Edge. (#6852)
+- Se soporta la Calculadora de Windows en Windows 10 Enterprise LTSB (Long-Term Servicing Branch) y Server. (#6914)
+- Al realizar la orden leer línea actual tres veces rápidamente se deletrea la línea con descripciones de caracteres. (#6893)
 
 
 == Corrección de Fallos ==
@@ -23,6 +25,8 @@ Qué hay de Nuevo en NVDA
 - Ya no se añaden dos espacios vacíos en la información de atajos de teclado para ciertos controles (UIA). (#6790)
 - Ciertas combinaciones de teclas en las pantallas HIMS (ej.: espacio+punto4) ya no fallan intermittentemente. (#3157)
 - Corregido un problema al abrir un puerto serie en sistemas que utilizan ciertos idiomas distintos al inglés que causaban que fallase la conexión a pantallas braille en algunos casos. (#6845)
+- Se reduce la posibilidad de que el fichero de configuración se dañe al apagarse Windows. Los ficheros de configuración ahora se escriben en un fichero temporal antes de reemplazar el actual. (#3165)
+- Al realizar la orden leer línea actual dos veces rápidamente para deletrearla, ahora se utiliza el idioma apropiado para los caracteres deletreados. (#6726)
 
 
 == Cambios para Desarrolladores ==
@@ -32,6 +36,11 @@ Qué hay de Nuevo en NVDA
  - Las subclases ya no necesitan normalizar identificadores antes de devolverlos desde esta propiedad.
  - Si quieres normalizar identificadores, ahora hay una propiedad InputGesture.normalizedIdentifiers la cual normaliza los identificadores devueltos por la propiedad identifiers.
 - La propiedad InputGesture.logIdentifier ahora está obsoleta. Las llamadas deberían utilizar InputGesture.identifiers[0] en su lugar. (#6945)
+- Se eliminó código obsoleto:
+ - las constantes `speech.REASON_*`, deberían utilizarse en su lugar `controlTypes.REASON_*`. (#6846)
+ - `i18nName` para opciones de sintetizador, `displayName` y `displayNameWithAccelerator` deberían utilizarse en su lugar. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
 
 
 = 2017.1 =
