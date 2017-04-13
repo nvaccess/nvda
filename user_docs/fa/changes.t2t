@@ -3,6 +3,46 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== امکانات جدید ==
+- اطلاعات حاشیه‌ی خانه‌ها در اکسل با استفاده از کلید‌های NVDA+F اعلام میشود. (#3044)
+- پشتیبانی از مشخصه‌های aria-current افزوده شد. (#6358)
+- از تعویض زبان خودکار در Microsoft Edge پشتیبانی میشود. (#6852)
+- پشتیبانی از برنامه‌ی ماشین‌حساب در ویندوز ۱۰ Enterprise LTSB و سِروِر. (#6914)
+- اجرای فرمان خواندن خط جاری سه بار به سرعت، خط جاری را با استفاده از توضیح نویسه‌ها (کلمات قراردادی معادل حروف) هجی میکند. (#6893)
+
+
+== رفع اشکال ==
+- موارد موجود در منوها در صفحات وب (کادرهای علامت‌زدنی و دکمه‌های رادیویی منوها) را از این پس میتوانید در حالت مرور نیز فعال کنید. (#6735)
+- اعلام نام برگه‌های اکسل حالا ترجمه‌شدنی است. (#6848)
+- هنگامی که پنجره‌ی اعلان تایید برای حذف یک گروه پیکره‌بندی فعال است، فشردن Escape پنجره‌ی یاد‌شده را میبندد. (#6851)
+- بعضی از توقف‌ها در فایرفاکس و دیگر برنامه‌های دارای ساختار گِکو هنگام فعال بودن امکان چند‌پردازشی (multi-process) برطرف شد. (#6885)
+- اعلام رنگ پس‌زمینه در بازبینی صفحه، حالا هنگامی که متن روی یک پس‌زمینه‌ی شفاف نقش بسته باشد، دقیقتر است. (#6467) 
+- پشتیبانی از aria-describedby در اینترنت اکسپلورر 11، شامل پشتیبانی از iframe‌ها و هنگامی که چندین شناسه فراهم میشود، بهبود یافت. (#5784)
+- در به‌روزرسانی Creators در ویندوز ۱۰، کم کردن صداهای پس‌زمینه، همانند انتشارهای پیشین ویندوز، دوباره کار میکند. یعنی، گزینه‌های کم شدن صدای پس‌زمینه هنگام سخن گفتن، کم شدن هنگام اجرای NVDA، و غیر فعال شدن کم شدن صدای پس‌زمینه، همگی در دسترس خواهند بود. (#6933)
+- NVDA دیگر هنگامی که روی برخی کنترل‌ها(ی UIA) که کلید میانبر برایشان تعریف نشده‌است پیمایش میکنید یا NVDA آن‌ها را اعلام میکند، دچار خطا نخواهد شد. (#6779)
+- برای برخی کنترل‌ها(ی UIA) دیگر در اطلاعات میانبر صفحه‌کلیدی، دو فاصله‌ی خالی اضافه نمیشود. (#6790)
+- بعضی ترکیب کلیدها در نمایشگرهای HIMS (مثلا، فاصله+نقطه‌ی ۴) دیگر بطور متناوب دچار خطا نمیشوند. (#3157)
+- اشکالی که هنگام باز کردن درگاه سریال در سیستم‌هایی که از زبان‌های مشخصی به جز انگلیسی استفاده میکنند موجب میشد برقراری ارتباط با نمایشگرهای بریل در بعضی موارد با خطا مواجه شود، برطرف شد. (#6845)
+- احتمال خراب شدن فایل پیکره‌بندی هنگام خاموش شدن ویندوز کمتر شد. فایل پیکره‌بندی حالا پیش از جایگزینی با فایل اصلی در یک فایل موقتی نوشته میشود. (#3165)
+- هنگام اجرای فرمان خواندن خط جاری دو بار پشت سر هم برای هجی کردن خط، حالا زبان مناسب برای خواندن نویسه‌های هجی‌شده استفاده میشود. (#6726)
+
+
+== تغییرات برای توسعه‌دهندگان (متن انگلیسی) ==
+- Commandline arguments are now processed with Python's argparser module, rather than optparser. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
+- The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
+ - Subclasses no longer need to normalize identifiers before returning them from this property.
+ - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
+- The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+- Deprecated code removed:
+ - `speech.REASON_*` constants, `controlTypes.REASON_*` should be used instead. (#6846)
+ - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
+
+
 = 2017.1 =
 از نکات برجسته‌ی این نگارش میتوان به اعلام بخش‌ها و ستون‌های متنی در Microsoft Word؛ پشتیبانی از خواندن کتاب‌ها، پیمایش و یادداشت‌گذاری روی آن‌ها در برنامه‌ی Kindle برای رایانه؛ و پشتیبانی بهبود‌یافته در Microsoft Edge اشاره نمود.
 

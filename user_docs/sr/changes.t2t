@@ -1,52 +1,36 @@
-﻿Шta je Novo u NVDA
+﻿Šta je novo u NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
 
-= 2015.1 =
-
-== Нове карактеристике ==
-- Ви сада  можете додати нове симболе у дијалогу за изговарање симбола. (#4354)
-- У улазним гестовима дијалогу, ви можете користити ново "издвоји по" поље да видите само команде које садрже специфичне речи. (#4458)
-- NVDA сада аутоматски пријавлјује нови teксt у mintty. (#4588)
-- У режиму претраживанја у претражи дијалогу, постоји сада опција да извршите  претрагу осетлјиву на мала и велика слова. (#4584)
-- Брза навигација (h за наслове итд) plus Листа елемената (NVDA+f7) су сада доступни у Microsoft Word документима тако што ћете  укључити режим претраживанја са NVDA+space. (#2975)
-- Čitanje HTML poruka u Microsoft Outlook 2007 i novijim je drastično poboljšano sada je režim pretraživanja automatski omogućen za ove poruke. Ako režim pretraživanja nije omogućen u nekim čudnim situacijama, vi možete da ga omogućite sa NVDA+space. (#2975) 
-- Table column headers in Microsoft word are automatically reported for tables where a header row has been explicitly specified by the author via Microsoft word's table properties. (#4510) 
+== Nove karakteristike ==
+- Informacije o granicama ćelija sada mogu biti izgovorene u programu Microsoft Excel koristeći komandu `NVDA+f`. (#3044)
+- Dodata podrška za aria-current atribute. (#6358)
+- Podrška za automatsku promenu jezika u programu Microsoft Edge. (#6852)
+- Podrška za Windows kalkulator na Windows 10 Enterprise LTSB (Long-Term Servicing Branch) i Server verzijama. (#6914)
+- Kada se koristi komanda za čitanje trenutnog reda tri puta trenutni red se sriče koristeći fonetsko sricanje. (#6893)
 
 
-== Changes ==
-- In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)
-- NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
+== Ispravljene greške ==
+- Stavke menija na web stranicama(stavka menija za potvrdu i radio dugme) se sada mogu aktivirati u režimu pretraživanja. (#6735)
+- Prijavljivanje imena listova u programu Excel je sada prevedeno. (#6848)
+- Ako se pritisne  ESC dok je dijalog u konfiguracionim profilima"potvrdi brisanje" aktivan dialog se zatvara. (#6851)
+- Popravljene određene nestabilnosti u programu Mozilla Firefox i drugim Gecko aplikacijama gde je multi-process stavka omogućena. (#6885)
+- Prijavljivanje boja u režimu pregleda ekrana je sada preciznije kada je tekst preslikan transparentnom pozadinom(#6467) 
+- Poboljšana podrška za  aria-describedby u programu Internet Explorer 11, uključujući podršku u okvirima i kada je više imena ponuđeno. (#5784)
+- U Windows Creators ažuriranju, NVDA stišavanje pozadinskih zvukova ponovo radi kao i u prethodnim verzijama(to jest stišavaj u toku izgovaranja, uvek stišavaj, i bez stišavanja su dostupni). (#6933)
+- NVDA neće više grešiti u prijavljivanju ili navigaciji do određenih (UIA) kontrola gde ne postoji tastaturna prečica. (#6779)
+- Dva razmaka neće više biti dodata za određene (UIA) kontrole. (#6790)
+- Određene kombinacije tastera na HIMS brajevim redovima(na primer razmak+tačka 4) više neće biti neuspešne. (#3157)
+- Popravljena greška gde otvaranje serijskog porta na jezicima koji nisu engleski dovodi do neuspešne veze sa brajevim redom u određenim slučajevima. (#6845)
+- Smanjena šansa oštećenja datoteke sa podešavanjima kada se Windows isključi. Datoteka sa podešavanjima se sada prvo čuva u privremenoj datoteci pre promene trenutne datoteke. (#3165)
+- Kada se koristi komanda za čitanje trenutnog reda dva puta za sricanje, ispravan jezik se koristi za slova. (#6726)
 
 
-== Bug Fixes ==
-- In Microsoft Excel, handle the case when row and column header cells are merged. E.g. if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header, rather than nothing at all. (#4617)
-- When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously lines would increasingly be off by one character for each new paragraph. (#4619)
-- All of NVDA's dialogs are now centred on the screen, improving visual presentation and usability. (#3148)
-- In Skype for desktop, when entering an introductory message to add a contact, entering and moving through the text now works correctly. (#3661)
-- When focus moves to a new itemn in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
-- In the Microsoft Word spell check dialog, the next error will be automatically reported when the last one has been changed or ignored using respective shortcut keys. (#1938)
-- Text can again be read correctly in places such as Tera Term Pro's terminal window and documents in Balabolka. (#4229)
-- Focus now correctly returns to the document being edited When finishing input composition of text in Korean and other east Asian languages while editing within a frame in Internet Explorer and other MSHTML documents. (#4045)
-- In the Input Gestures dialog, when selecting a keyboard layout for a keyboard gesture being added, pressing escape now closes the menu as expected instead of closing the dialog. (#3617)
-- When removing an add-on, the add-on directory is now correctly deleted after restarting NVDA. Previously, you had to restart twice. (#3461)
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pročitajte Englesku verziju.
 
-
-== Changes for Developers ==
-- Updated wxPython to 3.0.2.0. (#3763)= 2014.4 =
-
-== Promene ==
-- Ako objekat na koji ste došli sa objekatskom navigacijom je u modu istraživanja dokumentа, ali objekat na koji ste ranije doшли nije био , pregledni mod je automatski postavljen na dokument. Ranije ovo se jedino događalo ako navigator objekta je premešten zbog promene fokusa. (#4369)
-
-
-== Исправке Грешака ==
-- Када премештате фокус назад на мод истраживања докумената (нпр. алт tab на неку већ отворену веб страницу) прегледни курсор је тачно позициониран на виртуални карет, уместо на фокусирану контролу (нпр. близак линк). (#4369)
-- У Powerpoint слајд шоу, прегледни курсор тачно прати виртуални карет. (#4370)
-- У Mozilla Firefox и другим Gecko-based прегледачима, нови садржај у живом региону ће бити изговорен чак иако нови садржај има користиви ПРОСТОР живи тип другачији од  родитеља живог regionа. Нпр. Садржај означен као потпун је додат у жив region означен као углађен. (#4169).
-
-
-= Старије верзије =
-
-за старије verzije, прочитајте engleski dokument
+= Starije verzije =
+Za starije verzije, pročitajte Englesku verziju ovog dokumenta.

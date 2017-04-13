@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-31 00:10+1000\n"
-"PO-Revision-Date: 2017-03-31 06:52+0900\n"
+"POT-Creation-Date: 2017-04-07 00:10+1000\n"
+"PO-Revision-Date: 2017-04-07 07:59+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -2525,8 +2525,11 @@ msgstr "アクティブなアプリに対するスリープモードの切り替
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "カーソルのある現在行の報告。2回押すと現在の行のスペルの報告"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"キャレットのある現在行の報告。2回押すと現在の行のスペルの報告。3回押すと文字説"
+"明で行を報告"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -3130,7 +3133,7 @@ msgstr "操作なし"
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
-msgstr "現在のナビゲーターオブジェクトの既定の動作の実行（例：ボタンを押す）"
+msgstr "現在のナビゲーターオブジェクトのアクション実行（例：ボタンを押す）"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
@@ -3725,7 +3728,7 @@ msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"appモジュールおよびグローバルプラグインをNVDAを再起動しないで再読み込み(開発"
+"アプリモジュールおよびグローバルプラグインをNVDAを再起動しないで再読み込み(開発"
 "者向け機能)"
 
 #. Translators: Input help mode message for a touchscreen gesture.
