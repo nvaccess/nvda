@@ -9,6 +9,8 @@
 - Có thể thông báo thông tin đường viền ô trong Microsoft Excel với phím tắt `NVDA+f`. (#3044)
 - Hỗ trợ các thuộc tính aria-current. (#6358)
 - Hỗ trợ tự động chuyển ngôn ngữ cho Microsoft Edge. (#6852)
+- Hỗ trợ chương trình máy tính trên Windows 10 Enterprise LTSB (Long-Term Servicing Branch) và bản máy chủ. (#6914)
+- Thực hiện lệnh đọc dòng hiện tại nhanh ba lần sẽ đánh vấn dòng đó với ký tự được mô tả. (#6893)
 
 
 == Sửa Lỗi ==
@@ -23,6 +25,8 @@
 - Không còn thêm vào hai khoảng trắng trong phần thông tin phím tắt cho các điều khiển UIA. (#6790)
 - Một số tổ hợp phím trên màn hình nổi HIMS như (space+chấm 4), không còn tình trạng thỉnh thoảng ngưng hoạt động. (#3157)
 - Sửa lỗi mở cổng serial trên các máy dùng ngôn ngữ không phải là tiếng Anh. Điều này, đã gây ra một số trường hợp không thể kết nối màn hình nổi. (#6845)
+- Giảm lỗi hỏng tập tin cấu hình khi tắt máy. Tập tin cấu hình hiện nay sẽ được lưu trong tập tin tạm trước khi được lưu vào tập tin cấu hình chính. (#3165)
+- Sử dụng đúng ngôn ngữ khi thực hiện nhanh hai lần lệnh đọc dòng hiện tại để đánh vần. (#6726)
 
 
 == Thay Đổi Dành Cho Nhà Phát Triển ==
@@ -32,6 +36,11 @@
  - Các lớp con (subclasses) không còn cần phải normalize các indentifier trước khi trả về lại từ thuộc tính này. .
   - Nếu muốn normalize các identifier, bây giờ bạn có thể dùng thuộc tính InputGesture.normalizedIdentifiers. Nó sẽ normalize các identifiers được trả về bởi thuộc tính identifiers.
 - Thuộc tính InputGesture.logIdentifier hiện nay sẽ không được khuyến khích tiếp tục sử dụng. Thay vào đó, có thể dùng InputGesture.identifiers[0]. (#6945)
+- Bỏ các mã không còn được sử dụng:
+ - Các hằng số `speech.REASON_*`, thay vào đó, sẽ sử dụng `controlTypes.REASON_*`. (#6846)
+ - `i18nName` cho thiết lập bộ đọc. Sẽ thay thế bằng `displayName` và `displayNameWithAccelerator`. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
 
 
 = 2017.1 =
