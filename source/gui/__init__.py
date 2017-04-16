@@ -652,7 +652,7 @@ class LauncherDialog(wx.Dialog):
 		self.licenseAgreeCheckbox.Value = False
 		self.licenseAgreeCheckbox.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
 
-		sizer = sHelper.addItem(wx.GridSizer(rows=2, cols=2))
+		sizer = sHelper.addItem(wx.GridSizer(2, 2, 0, 0))
 		self.actionButtons = []
 		# Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
