@@ -197,12 +197,12 @@ class ConsoleUI(wx.Frame):
 		self.console.removeNamespaceSnapshotVars()
 
 	def output(self, data):
-		self.outputCtrl.write(data)
+		self.outputCtrl.WriteText(data)
 		if data and not data.isspace():
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, data)
 
 	def echo(self, data):
-		self.outputCtrl.write(data)
+		self.outputCtrl.WriteText(data)
 
 	def setPrompt(self, prompt):
 		self.promptLabel.SetLabel(prompt)
