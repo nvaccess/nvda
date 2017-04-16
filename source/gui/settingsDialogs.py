@@ -1977,7 +1977,11 @@ class InputGesturesDialog(SettingsDialog):
 			return identifier
 
 	def onTreeSelect(self, evt):
-		item = self.tree.Selection
+		# #7077: Check if the treeview is still alive.
+		try:
+			item = self.tree.Selection
+		except RuntimeError:
+			return
 		data = self.tree.GetItemPyData(item)
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
 		isGesture = isinstance(data, basestring)
