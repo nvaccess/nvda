@@ -1,6 +1,6 @@
 #speechViewer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,12 +12,12 @@ from logHandler import log
 class SpeechViewerFrame(wx.Dialog):
 
 	def __init__(self, onDestroyCallBack):
-		dialogSize=wx.Size(w=500, h=500)
-		dialogPos=None
+		dialogSize=wx.Size(500, 500)
+		dialogPos=wx.DefaultPosition
 		if not config.conf["speechViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
 			log.debug("Setting speechViewer window position")
 			speechViewSection = config.conf["speechViewer"]
-			dialogSize = wx.Size(w=speechViewSection["width"], h=speechViewSection["height"])
+			dialogSize = wx.Size(speechViewSection["width"], speechViewSection["height"])
 			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
 		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
 		self.onDestroyCallBack = onDestroyCallBack
@@ -49,7 +49,6 @@ class SpeechViewerFrame(wx.Dialog):
 
 	def onDestroy(self, evt):
 		log.debug("SpeechViewer destroyed")
-		self.savePositionInformation()
 		self.onDestroyCallBack()
 		evt.Skip()
 
@@ -61,7 +60,6 @@ class SpeechViewerFrame(wx.Dialog):
 	def getAttachedDisplaySizesAsStringArray(self):
 		displays = ( wx.Display(i).GetGeometry().GetSize() for i in xrange(wx.Display.GetCount()) )
 		return [repr( (i.width, i.height) ) for i in displays]
-
 
 	def savePositionInformation(self):
 		position = self.GetPosition()
@@ -110,4 +108,7 @@ def deactivate():
 	global _guiFrame, isActive
 	if not isActive:
 		return
+	# #7077: If the window is destroyed, text control wil be gone, so save speech viewer position before destroying the window.
+	_guiFrame.savePositionInformation()
 	_guiFrame.Destroy()
+	isActive = False
