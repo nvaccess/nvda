@@ -136,7 +136,7 @@ class InstallerDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.Center(wx.BOTH | wx.Center)
 
 	def onInstall(self, evt):
 		self.Hide()
@@ -172,7 +172,7 @@ def showInstallGui():
 		mainSizer.Add(sizer)
 		d.Sizer = mainSizer
 		mainSizer.Fit(d)
-		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		d.Center(wx.BOTH | wx.Center)
 		with d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				gui.mainFrame.postPopup()
@@ -224,7 +224,7 @@ class PortableCreaterDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.Center(wx.BOTH | wx.Center)
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:

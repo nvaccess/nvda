@@ -54,7 +54,7 @@ class FindDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.Center(wx.BOTH | wx.Center)
 		self.findTextField.SetFocus()
 
 	def onOk(self, evt):

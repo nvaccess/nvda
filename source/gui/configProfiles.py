@@ -102,7 +102,7 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.Center(wx.BOTH | wx.Center)
 
 	def __del__(self):
 		ProfilesDialog._instance = None
@@ -334,7 +334,7 @@ class TriggersDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.Center(wx.BOTH | wx.Center)
 
 	def onTriggerListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
@@ -396,7 +396,7 @@ class NewProfileDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileName.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.Center(wx.BOTH | wx.Center)
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles
