@@ -1,6 +1,6 @@
 # NVDA
 
-NVDA is a free, open source screen reader for Microsoft Windows.
+NVDA (NonVisual Desktop Access) is a free, open source screen reader for Microsoft Windows.
 It is developed by NV Access in collaboration with a global community of contributors.
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
@@ -48,7 +48,8 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 For reference, the following dependencies are included in Git submodules:
 
 * [comtypes](http://sourceforge.net/projects/comtypes/), version 0.6.2
-* [wxPython](http://www.wxpython.org/), version 3.0.2.0
+* [wxPython](http://www.wxpython.org/), version 4.0.0
+* [Six](https://pypi.python.org/pypi/six), version 1.10.0, required by wxPython
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
