@@ -703,12 +703,15 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 				# For example, this might report "foo series 1 of 2"
 				return _( "{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count )
 			else:
-				# get the formula string and split it on comma separator to obtain range.
-# the formula should be in the form SERIES(name_ref, categories, values, plot_order
-				listSeparator = self.officeChartObject.Application.International(xlListSeparator) 
-				formulas = self.officeChartObject.SeriesCollection(arg1).Formula.split(listSeparator ) 
-				if len(formulas) == 4:
-					chartSeriesXValue = self.officeChartObject.Application.Range(formulas[1]).Rows[arg2].Text
+				if self.officeChartObject.Application.name == "Microsoft Excel": 
+					# get the formula string and split it on comma separator to obtain range.
+	# the formula should be in the form SERIES(name_ref, categories, values, plot_order
+					listSeparator = self.officeChartObject.Application.International(xlListSeparator) 
+					formulas = self.officeChartObject.SeriesCollection(arg1).Formula.split(listSeparator ) 
+					if len(formulas) == 4:
+						chartSeriesXValue = self.officeChartObject.Application.Range(formulas[1]).Rows[arg2].Text
+					else:
+						chartSeriesXValue = self.officeChartObject.SeriesCollection(arg1).XValues[arg2 - 1] 
 				else:
 					chartSeriesXValue = self.officeChartObject.SeriesCollection(arg1).XValues[arg2 - 1] 
 

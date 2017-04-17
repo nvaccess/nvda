@@ -395,7 +395,7 @@ class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 		return _(u"{text}").format(text=text)
 
 	def moveTo(self):
-		chartNVDAObj = WordChart(windowHandle=self.document.rootNVDAObject.windowHandle, wordApplicationObject=self.rangeObj.Document.Application, wordShapeObject=self.collectionItem)
+		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle=self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeShapeObject=self.collectionItem)
 		eventHandler.queueEvent("gainFocus",chartNVDAObj)
 
 class WinWordCollectionQuicknavIterator(object):
