@@ -23,7 +23,7 @@ As características principais são:
 - Suporte para diversas linhas Braille, incluindo a introdução de texto através do teclado Braille, nas linhas que o possuem, usando o código Braille informático
 - Possibilidade de ser executado a partir de dispositivos USB ou através de outros dispositivos portáteis, sem necessitar de instalação
 - Tem um instalador com voz e fácil de usar
-- Está traduzido em 48 idiomas
+- Está traduzido em 50 idiomas
 - Suporta os Sistemas Operativos Windows mais actuais, quer nas arquitecturas de 32 quer nas de 64 bits
 - Tem a possibilidade de funcionar nas janelas de início de sessão e noutros ecrãs de ambiente seguro
 - Suporta as interfaces de acessibilidade mais comuns, tais como o Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (o UI Automation é somente suportado no Windows 7 ou posteriores)
@@ -32,7 +32,7 @@ As características principais são:
 
 ++ Internacionalização ++
 É importante que todos os indivíduos tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
-Para além do Inglês, o NVDA está traduzido em 48 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Catalão, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol da Colômbia, Farsi, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Irlandês, Islandês, Italiano, Japonês, Nepalês, Norueguês, Persa, Polaco, Português de Portugal, Português do Brasil, Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
+Para além do Inglês, o NVDA está traduzido em 50 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Birmanês, Búlgaro, Catalão, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol da Colômbia, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Irlandês, Islandês, Italiano, Japonês, Kanada, Lituano, Nepalês, Norueguês, Persa, Polaco, Português de Portugal, Português do Brasil, Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
 
 ++ Suporte de Sintetizadores de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que o possa falar.
@@ -286,7 +286,7 @@ O NVDA fornece os seguintes comandos, relativamente ao cursor do sistema:
 %kc:beginInclude
 || Nome | Comando de Teclado de Desktop | Comando de Teclado de Laptop | Descrição |
 | Leitura Contínua | NVDA+Seta Abaixo | NVDA+a | Inicia a leitura, a partir da posição actual do cursor do sistema, movendo-o ao longo do texto, enquanto Lê |
-| Ler a linha actual | NVDA+Seta Acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado actualmente. Ao pressionar duas vezes, soletra a linha |
+| Ler a linha actual | NVDA+Seta Acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado actualmente. Ao pressionar duas vezes, soletra a linha. Ao pressionar três vezes, é soletrado com o alfabeto rádio internacional. |
 | Ler o texto actualmente seleccionado | NVDA+Shift+Seta Acima | NVDA+shift+s | Lê qualquer texto seleccionado actualmente |
 | Frase seguinte | alt+Seta Abaixo | alt+Seta Abaixo | Move o cursor para a frase seguinte e anuncia-a. (Suportado apenas no Microsoft Word) |
 | Frase anterior | alt+Seta Acima | alt+Seta Acima | Move o cursor para a frase anterior e anuncia-a. (Suportado apenas no Microsoft Word) |
@@ -584,8 +584,8 @@ Depois, o NVDA precisa saber que linha e couluna contém os títulos na tabela.
 Após mover-se para a primeira célula da coluna ou linha contendo os títulos, use um dos seguintes comandos:
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
-| Definir cabeçalhos de coluna | NVDA+shift+c | Premindo uma vez, indica ao NVDA que esta é a primeira célula de cabeçalho na linha que contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Premindo duas vezes irá apagar a definição. | 
-| Definir cabeçalhos de linha | NVDA+shift+r | Premindo uma vez, indica ao NVDA que esta é a primeira  célula de cabeçalho na coluna que contem os cabeçalhos de linha, que deverão ser automaticamente anunciados  ao mover-se entre linhas  após esta coluna. Premindo duas vezes apagará a definição. |  
+| Definir títulos de coluna | NVDA+shift+c | Ao pressionar uma vez, indica ao NVDA que esta é a primeira célula de título na linha que contém os títulos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Ao pressionar duas vezes irá apagar a definição. | 
+| Definir títulos de linha | NVDA+shift+r | Ao pressionar uma vez, indica ao NVDA que esta é a primeira  célula de título na coluna que contem os títulos de linha, que deverão ser automaticamente anunciados  ao mover-se entre linhas  após esta coluna. Ao pressionar duas vezes apagará a definição. |  
 %kc:endInclude
 Estas definições serão guardadas no documento como Marcas, sendo assim compatíveis com outros leitores de ecrã, como o Jaws.
 Assim abrindo o documento com qualquer leitor de ecrã os títulos de linha e coluna já estarão definidos.
@@ -618,8 +618,8 @@ Depois, o NVDA precisa saber que linha e couluna contém os títulos na tabela.
 Após mover-se para a primeira célula da coluna ou linha contendo os títulos, use um dos seguintes comandos:
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
-| Definir cabeçalhos de coluna | NVDA+shift+c | Pressionar uma vez informa o NVDA de que esta linha contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Pressionar duas vezes apagará esta definição. | 
-| Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. |
+| Definir títulos de coluna | NVDA+shift+c | Pressionar uma vez informa o NVDA que esta linha contém os títulos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Pressionar duas vezes apagará esta definição. | 
+| Definir títulos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA que esta coluna  contêm os títulos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. |
 %kc:endInclude
 Estas definições serão guardadas no documento como Nomes de regiões definidas, sendo assim compatíveis com outros leitores de ecrã, como o Jaws.
 Assim, abrindo o documento com outro leitor de ecrã, os títulos de linha e coluna já estarão definidos.
@@ -700,7 +700,7 @@ Numa conversa:
 
 ++ Kindle para PC ++
 O NVDA suporta a leitura e navegação em livros no Kindle para PC da Amazon.
-Esta funcionalidade está apenas disponível em livros Kindle que suportem "Enhanced Typesetting", o que pode verificar na página de detalhes do livro.
+Esta funcionalidade está apenas disponível em livros Kindle que anunciem "Screen reader supported", o que pode verificar na página de detalhes do livro.
 
 Para a leitura dos livros é usado o modo de navegação.
 Este modo é automaticamente ativado quando abre um livro ou ou a área do livro é focada.
@@ -726,8 +726,8 @@ Para isso, seleccione o  texto, e aceda às opções conforme descrito acima.
 Das opções, escolha Adicionar notas.
 
 Durante a leitura em modo de navegação, o NVDA refere-se às notas como comentários.
-Para ver, editar ou apagar uma nota:
 
+Para ver, editar ou apagar uma nota:
 - Mova o cursor para o texto que contém a nota.
 - Aceda às opções para a selecção como descrito acima.
 - Escolha Editar Nota.
@@ -1261,6 +1261,7 @@ Pode configurar o anúncio de:
 - Informação de tabelas:
  - Tabelas
  - Títulos de linha e coluna
+ - Limites das células [(Desligado, Estilos, Cores e Estilos)
  - Coordenadas da célula
 - Elementos:
  - Títulos

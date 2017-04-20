@@ -13,6 +13,10 @@ Quoi de Neuf dans NVDA
 - Effectuer la commande de lecture de la ligne courante trois fois rapidement épelle la ligne en code international. (#6893)
 
 
+== Changements ==
+- Quand on navigue en revue simple dans les applications utilisant UI Automation, davantage de conteneurs vides sont ignorés rendant la navigation plus facile. (#6948, #6950) 
+
+
 == Corrections de Bogues ==
 - Les éléments de menu dans les pages web (Cases à cocher et boutons radio dans les menus) peuvent maintenant être activés en mode navigation. (#6735)
 - L'annonce du nom des feuilles Excel est maintenant traduit. (#6848)
@@ -27,6 +31,8 @@ Quoi de Neuf dans NVDA
 - Correction d'un problème à l'ouverture d'un port série sur des systèmes utilisant certaines langues autres que l'Anglais qui rendait la connexion à un terminal braille impossible dans certains cas. (#6845)
 - Réduction des chances que le fichier de configuration soit corrompu à la fermeture de Windows. Les fichiers de configuration sont maintenant écrits dans un fichier temporaire avant de remplacer le fichier de configuration réel. (#3165)
 - Quand on effectue la commande de lecture de la ligne courante deux fois rapidement pour épeler la ligne, la langue appropriée est maintenant utilisée pour épeler les caractères. (#6726)
+- Naviguer par ligne sous Microsoft Edge est maintenant jusqu'à trois fois plus rapide sous Windows 10 Creaters Update. (#6994)
+- NVDA n'annonce plus "Web Runtime grouping" quand on met le focus sur un document Microsoft Edge sous Windows 10 Creaters Update (#6948)
 
 
 == Changements pour les Développeurs ==
@@ -41,6 +47,11 @@ Quoi de Neuf dans NVDA
  - `i18nName` pour les paramètres synthétiseur, remplacées par `displayName` et `displayNameWithAccelerator`. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
  - `config.save`. (#6846)
+- La liste des complétions dans le menu contextuel d'autocomplétion de la Console Python ne montre plus aucun chemin menant au symbole final à compléter. (#7023)
+- Il y a maintenant une architecture de test unitaire pour NVDA. (#7026)
+ - Les tests unitaires et l'infrastructure sont situés dans le répertoire tests/unit. veuillez consulter le docstring dans le fichier tests\unit\__init__.py pour plus de détails.
+ - Vous pouvez exécuter les tests en utilisant "scons tests". Veuillez consulter la section "Running Tests" de readme.md pour plus de détails.
+ - Si vous soumettez une pull request pour NVDA, vous devriez d'abord exécuter les tests et vous assurer qu'ils passent.
  
 
 = 2017.1 =
