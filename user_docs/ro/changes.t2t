@@ -13,6 +13,10 @@ Ce este nou în NVDA
 - Efectuarea comenzii de citire a liniei curente de trei ori rapid citește linia cu descrieri de caractere. (#6893)
 
 
+== Modificări ==
+- Atunci când se navighează cu examinarea simplă în aplicații utilizând UI Automation, mai multe containere goale sunt ignorate făcând navigarea mai ușoară. (#6948, #6950) 
+
+
 == Rezolvări Defecte ==
 - Elementele din meniul paginii web ) elementul de meniu și butoanele rotative din casetele de bifat) pot fi acum activate în timp ce vă aflați în modul de navigare. (#6735)
 - Raportarea numelui foii Excel este acum tradusă. (#6848)
@@ -27,6 +31,8 @@ Ce este nou în NVDA
 - A fost corectată  o situație la deschiderea  unui port serial pe sistemele utilizatoare de anumite limbi, altele decât engleza, care au cauzat eșuarea în unele cazuri a conectării la afișajele braille. (#6845)
 - A fost redusă șansa de corupere a fișierului de configurare când Windows-ul  se închide. Fișierele de configurare sunt acum scrise într-o filă temporară înainte de înlocuirea fișierului actual de configurare. (#3165)
 - La efectuarea comenzii de citire a liniei curente de două ori rapid pentru citirea liniei, limba apropiată este acum utilizată pentru caracterele citite. (#6726)
+- Navigarea prin linie în Microsoft Edge este acum de până la trei ori mai rapidă în Windows 10 Creaters Update. (#6994)
+- NVDA nu mai anunță „Web Runtime grouping” la focalizarea documentelor din Microsoft Edge în Windows 10 Creaters Update (#6948)
 
 
 == Modificări pentru Dezvoltatori ==
@@ -41,6 +47,11 @@ Ce este nou în NVDA
  - În schimb, setarea pentru sintetizator `i18nName`, `displayName` și `displayNameWithAccelerator` ar trebui să fie folosite. (#6846)
  - `config.validateConfig`. (#6846, #667)
  - `config.save`. (#6846)
+- Lista de completări în meniul context de autocompletare al consolei Python nu mai prezintă nicio cale care să ducă până la  obiectele simbolului final pentru a fi completată. (#7023)
+- Există acum un cadru de unitate de testare pentru NVDA. (#7026)
+- Testele de unitate și infrastructura sunt localizate în dosarul tests/unit. Vedeți docstring-ul în fișierul tests\unit\__init__.py pentru detalii.
+ - Puteți rula testele folosind „scons tests”. Vedeți secțiunea „Running Tests” din readme.md pentru detalii.
+ - Dacă trimiteți un pull request pentru NVDA, ar trebui să rulați mai întâi testele și să vă asigurați că ele trec.
 
 
 = 2017.1 =
