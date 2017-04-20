@@ -244,155 +244,155 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 | Uključuje i isključuje režim spavanja za trenutnu aplikaciju| NVDA+shift+s | NVDA+shift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
 %kc:endInclude
 
-++ Reporting System Information ++
+++ Prijavljivanje sistemskih informacija++
 %kc:beginInclude
-|| Name | key | Description |
-| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
-| Report battery status | NVDA+shift+b | Reports the battery status i.e. whether AC power is in use or the current charge percentage. |
-| Report clipboard text | NVDA+c | Reports the Text in the clipboard if there is any. |
+|| Ime | Komanda | Opis |
+| Prijavi datum/vreme| NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme|
+| Prijavi stanje baterije| NVDA+shift+b | prijavljuje stanje baterije da li je punjač uključen i trenutan procenat. |
+| Prijavi tekst privremene memorije| NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
 %kc:endInclude
 
-+ Navigating with NVDA +
-NVDA allows you to explore and navigate the system in several ways, including both normal interaction and review.
++ Navigacija sa NVDA-om +
+NVDA vam dozvoljava navigaciju sistemom na nekoliko načina, uključujući standardnu interakciju i pregled.
 
-++ Objects ++[Objects]
-Each Application and the operating system itself consist of many objects.
-An object is a single item such as a piece of text, button, checkbox, slider, list or editable text field.
+++ Objekti ++[Objects]
+Svaka aplikacija i operativni sistem se sastoji iz puno objekata.
+Objekat je jedna stavka kao što je deo teksta, dugme, polje za potvrdu, klizač, lista ili polje za unos teksta.
 
-++ Navigating with the System Focus ++[SystemFocus]
-The system focus, also known simply as the focus, is the [object #Objects] which receives keys typed on the keyboard.
-For example, if you are typing into an editable text field, the editable text field has the focus.
+++ Navigacija sa sistemskim fokusom++[SystemFocus]
+Sistemski fokus, takođe poznat kao fokus, je[objekat#Objects] koji prima tastere sa tastature.
+Na primer, ako pišete u polju za unos teksta, polje za unos teksta ima fokus.
 
-The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
-As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
+Najčešći način navigacije kroz Windows sa programom NVDA je pomeranje sistemskog fokusa standardnim komandama sa tastature, kao što je pritiskanje tastera tab ili šift+tab da se krećete napred i nazad kroz kontrole, pritiskanje tastera alt da uđete u traku menija a zatim korišćenje strelica za kretanje kroz meni, i korišćenje kombinacije alt+tab da se krećete kroz otvorene programe.
+Dok to radite, NVDA će prijavljivati informacije o objektima, kao što su njegovo ime, tip, vrednost, stanje, opis, tasterska prečica i informacije o poziciji.
 
-There are some key commands that are useful when moving with the System focus:
+Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim fokusom:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
-| Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
-| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. Pressing twice will spell the information |
+|| Ime | Desktop komanda | Laptop komanda | Opis |
+| Prijavi trenutni fokus| NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče|
+| Prijavi naslov| NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju|
+| Čitaj aktivan prozor| NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
+| Prijavi statusnu traku| NVDA+end | NVDA+shift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče|
 %kc:endInclude
 
-++ Navigating with the System Caret ++[SystemCaret]
-When an [object #Objects] that allows navigation and/or editing of text is [focused #SystemFocus], you can move through the text using the system caret, also known as the edit cursor.
+++ Navigacija sa sistemskim kursorom++[SystemCaret]
+Kada je neki [objekat #Objects] koji dozvoljava navigaciju ili uređivanje [fokusiran #SystemFocus], možete se kretati kroz tekst koristeći sistemski kursor, takođe poznat kao kursor za uređivanje.
 
-When the focus is on an object that has the system caret, you can use the arrow keys, page up, page down, home, end, etc. to move through the text.
-You can also change the text if the control supports editing.
-NVDA will announce as you move by character, word and line, and will also announce as you select and unselect text.
+Kada je fokus na objektu koji ima sistemski kursor, možete koristiti strelice, page up, page down, home, end, i tako dalje. Da se krećete kroz tekst.
+Možete takođe uređivati tekst ako kontrola podržava uređivanje.
+NVDA će izgovarati kada se krećete znak po znak, reč i red, i takođe će izgovarati dok birate ili uklanjate izbor teksta.
 
-NVDA provides the following key commands in relation to the system caret:
+NVDA Pruža sledeće komande za sistemski kursor:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Say all | NVDA+downArrow | NVDA+a | Starts reading from the current position of the system caret, moving it along as it goes |
-| Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
-| Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
-| Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
-| Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
+|| Ime | Desktop komanda | Laptop komanda | opis |
+| Izgovori sve | NVDA+downArrow | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita|
+| Pročitaj trenutni red| NVDA+Strelica gore| NVDA+l | Čita red na kom se sistemski kursor nalazi. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta sriče red koristeći opise znakova. |
+| Pročitaj trenutni izbor teksta| NVDA+šift+strelica gore | NVDA+šift+s | Čita trenutno odabran tekst|
+| Sledeća rečenica | alt+strelica dole | alt+strelica dole | Pomera kursor na sledeću rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook) |
+| Prethodna rečenica | alt+strelica gore | alt+Strelica gore | Pomera kursor na prethodnu rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook)  |
 
 
-When within a table, the following key commands are also available:
-|| Name | Key | Description |
-| Move to previous column | control+alt+leftArrow | Moves the system caret to the previous column (staying in the same row) |
-| Move to next column | control+alt+rightArrow | Moves the system caret to the next column (staying in the same row) |
-| Move to previous row | control+alt+upArrow | Moves the system caret to the previous row (staying in the same column) |
-| Move to next row | control+alt+downArrow | Moves the system caret to the next row (staying in the same column) |
+Kada ste u tabeli, Sledeće komande su takođe dostupne:
+|| Ime | Komanda | Opis |
+| Pomeri na prethodnu kolonu| control+alt+strelica levo | Pomera sistemski kursor na prethodnu kolonu(ostajete u istom redu) |
+| Pomeri na sledeću kolonu| control+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
+| Pomeri na prethodni red | control+alt+strelica gore | Pomera sistemski kursor na prethodni red(ostajete u istoj koloni) |
+| Pomeri na sledeći red| control+alt+strelica dole | Pomera sistemski kursor na sledeći red(ostajete u istoj koloni) |
 %kc:endInclude
 
-++ Object Navigation ++[ObjectNavigation]
-Most of the time, you will work with applications using commands which move the [focus #SystemFocus] and the [caret #SystemCaret].
-However, sometimes, you may wish to explore the current application or the Operating System without moving the focus or caret.
-You may also wish to work with [objects #Objects] that cannot be accessed normally using the keyboard.
-In these cases, you can use object navigation.
+++ Navigacija objekata ++[ObjectNavigation]
+Uglavnom, radićete u aplikacijama koristeći komande koje pomeraju[fokus#SystemFocus] i[kursor #SystemCaret].
+Ali, nekada, možda ćete želeti da istražite aplikaciju ili operativni sistem bez pomeranja fokusa ili kursora.
+Možda ćete takođe želeti da radite sa[objektima #Objects] kojima se ne može pristupiti uz pomoć tastature.
+U tim slučajevima, možete da koristite navigaciju objekata.
 
-Object navigation allows you to move between and obtain information about individual [objects #Objects].
-When you move to an object, NVDA will report it similarly to the way it reports the system focus.
-For a way to review all text as it appears on the screen, you can instead use [screen review #ScreenReview].
+Navigacija objekata vam omogućava da dobijate informacije o pojedinačnim[objektima #Objects].
+Kada dođete do objekta, NVDA će ga izgovoriti slično kao što izgovara sistemski fokus.
+Za pregled teksta kao što se pojavljuje na ekranu, možete da koristite[pregled ekrana#ScreenReview].
 
-Rather than having to move back and forth between every single object on the system, the objects are organized hierarchically.
-This means that some objects contain other objects and you must move inside them to access the objects they contain.
-For example, a list contains list items, so you must move inside the list in order to access its items.
-If you have moved to a list item, moving next and previous will take you to other list items in the same list.
-Moving to a list item's containing object will take you back to the list.
-You can then move past the list if you wish to access other objects.
-Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
+Umesto da se pomerate po svakom objektu na sistemu, objekti su organizovani hierarhiski.
+Ovo znači da neki objekti sadrže dodatne objekte i morate ući u objekat da bi ste pristupili objektima koje taj objekat sadrži.
+Na primer, lista sadrži stavke te liste, pa morate da uđete u listu kako biste pristupili njenim stavkama.
+Ako ste se pomerili na stavku liste, komande za sledeći i prethodni objekat će ići kroz stavke te iste liste.
+Ako se pomerite na objekat u kojem je stavka liste sadržana vratićete se na listu.
+Nakon toga se možete kretati dalje od liste da biste pristupili drugim objektima.
+Slično, alatna traka sadrži kontrole, pa morate ući u alatnu traku da pristupite kontrolama.
 
-The object currently being reviewed is called the navigator object.
-Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
+Objekat koji se trenutno pregleda se zove navigacioni objekat.
+Kada stignete do nekog objekta, možete pregledati njegov sadržaj koristeći[komande za pregled teksta#ReviewingText] dok ste u[režimu pregleda objekata#ObjectReview].
+Po podrazumevanim podešavanjima, navigacioni objekat se pomera zajedno sa sistemskim fokusom, ali ovo se može isključiti i uključiti.
 
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Napomena da brajev red prati[fokus#SystemFocus] i[kursor #SystemCaret] po podrazumevanim podešavanjima, a ne navigaciju objekata i pregled teksta.
+Ako želite da prati navigaciju objekata i pregled teksta, morate[da podesite brajev red da prati navigaciju objekata #BrailleTether].
 
-To navigate by object, use the following commands:
+Za navigaciju između objekata, koristite sledeće komande:
 
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Report current object | NVDA+numpad5 | NVDA+shift+o | none | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
-| Move to containing object | NVDA+numpad8 | NVDA+shift+upArrow | flick up (object mode) | Moves to the object containing the current navigator object |
-| Move to previous object | NVDA+numpad4 | NVDA+shift+leftArrow | flick left (object mode) | Moves to the object before the current navigator object |
-| Move to next object | NVDA+numpad6 | NVDA+shift+rightArrow | flick right (object mode) | Moves to the object after the current navigator object |
-| Move to first contained object | NVDA+numpad2 | NVDA+shift+downArrow | flick down (object mode) | Moves to the first object contained by the current navigator object |
-| Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
-| Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
-| Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
+|| Ime | Desktop komanda | Laptop komanda | Pokret| Opis |
+| Prijavi trenutni objekat| NVDA+numeričko5 | NVDA+šift+o | Nema komande | Prijavljuje trenutni navigacioni objekat. Ako se pritisne dva puta informacija se sriče, i pritiskanjem 3 puta informacija i vrednost se kopira u privremenu memoriju. |
+| Premesti se na sadržani objekat | NVDA+numeričko8 | NVDA+šift+strelica gore | prevuci nagore(režim objekata) | premešta se na objekat koji sadrži trenutni navigacioni objekat|
+| Premesti se na prethodni objekat | NVDA+numeričko4 | NVDA+šift+strelica levo | prevlačenje nalevo(režim objekata) | pomera se na objekat pre trenutnog navigacionog objekta|
+| Premesti na sledeći objekat | NVDA+numeričko6 | NVDA+šift+strelica desno | prevlačenje nadesno(režim objekata) | premešta se na objekat posle trenutnog navigacionog objekta|
+| Premesti se na prvi sadržan objekat| NVDA+numeričko2 | NVDA+šift+strelica dole | prevlačenje nadole (režim objekata) | Premešta se na prvi objekat sadržan od strane navigacionog objekta|
+| Premesti se na fokusiran objekat| NVDA+numerički minus | NVDA+taster za brisanje unazad | Nema komande | Premešta se na objekat koji trenutno ima sistemski fokus, i takođe postavlja pregledni kursor na poziciju sistemskog kursora, ako je prikazan|
+| Aktiviraj trenutni navigacioni objekat| NVDA+numerički enter | NVDA+enter | dupli dodir | aktivira trenutni navigacioni objekat(slično kliku mišem ili pritiskanju tastera razmak kada ima sistemski fokus) |
+| Premesti sistemski fokus ili kursor na poziciju pregleda| NVDA+šift+numerički minus | NVDA+šift+taster za brisanje unazad | Nema komande | Ako se pritisne jednom pomera sistemski fokus na mesto navigacionog objekta, ako se pritisne dva puta pomera sistemski kursor na poziciju preglednog kursora|
+| Prijavi lokaciju preglednog kursora| NVDA+numerički taster za brisanje | NVDA+taster za brisanje | nema komande | Prijavljuje informacije o lokaciji teksta ispod preglednog kursora. Na primer, ovo može uključiti procente u dokumentu, daljina od ivica strana ili poziciju na ekranu. Ako se pritisne dva puta može se dobiti više informacija. |
 %kc:endInclude
 
-Note: numpad keys require numlock key to be turned off to work properly.
+Napomena: Komande sa numeričke tastature zahtevaju da num lock taster  bude isključen kako bi ispravno radile.
 
-++ Reviewing Text ++[ReviewingText]
-NVDA allows you to read the contents of the [screen #ScreenReview], current [document #DocumentReview] or current [object #ObjectReview] by character, word or line.
-This is mostly useful in places (including Windows command consoles) where there is no [system caret #SystemCaret].
-For example, you might use it to review the text of a long information message in a dialog.
+++ Pregled teksta ++[ReviewingText]
+NVDA Vam dozvoljava da čitate sadržaj [ekrana #ScreenReview], trenutnog[dokumenta #DocumentReview] ili trenutnog[objekta #ObjectReview] znak po znak, reč po reč ili red po red.
+Ovo je veoma korisno u mestima kao što su(Windows komandna linija) gde ne postoji[sistemski kursor#SystemCaret].
+Na primer, možete ovo da koristite da pročitate tekst duge informacije u dijalogu.
 
-When moving the review cursor, the System caret does not follow along, so you can review text without losing your editing position.
-However, by default, when the System caret moves, the review cursor follows along.
-This can be toggled on and off.
+Kada pomerate pregledni kursor, sistemski kursor se ne pomera, pa možete da pregledate tekst bez gubljenja vaše pozicije uređivanja teksta.
+Ali, po podrazumevanim podešavanjima, kada se sistemski kursor pomera, pregledni kursor ga prati.
+Ovo se može uključiti i isključiti.
 
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Napomena da brajev red prati[fokus#SystemFocus] i[kursor #SystemCaret] po podrazumevanim podešavanjima, a ne navigaciju objekata i pregled teksta.
+Ako želite da prati navigaciju objekata i pregled teksta, morate[da podesite brajev red da prati navigaciju objekata #BrailleTether].
 
-The following commands are available for reviewing text:
+Sledeće komande su dostupne za pregled teksta:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Move to top line in review | shift+numpad7 | NVDA+control+home | none | Moves the review cursor to the top line of the text |
-| Move to previous line in review | numpad7 | NVDA+upArrow | flick up (text mode) | Moves the review cursor to the previous line of text |
-| Report current line in review | numpad8 | NVDA+shift+. | none | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
-| Move to next line in review | numpad9 | NVDA+downArrow | flick down (text mode) | Move the review cursor to the next line of text |
-| Move to bottom line in review | shift+numpad9 | NVDA+control+end | none | Moves the review cursor to the bottom line of text |
-| Move to previous word in review | numpad4 | NVDA+control+leftArrow | 2-finger flick left (text mode) | Moves the review cursor to the previous word in the text |
-| Report current word in review | numpad5 | NVDA+control+. | none | Announces the current word in the text where the review cursor is positioned. Pressing twice spells the word. Pressing three times spells the word using character descriptions. |
-| Move to next word in review | numpad6 | NVDA+control+rightArrow | 2-finger flick right (text mode) | Move the review cursor to the next word in the text |
-| Move to start of line in review | shift+numpad1 | NVDA+home | none | Moves the review cursor to the start of the current line in the text |
-| Move to previous character in review | numpad1 | NVDA+leftArrow | flick left (text mode) | Moves the review cursor to the previous character on the current line in the text |
-| Report current character in review | numpad2 | NVDA+. | none | Announces the current character on the line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal. |
-| Move to next character in review | numpad3 | NVDA+rightArrow | flick right (text mode) | Move the review cursor to the next character on the current line of text |
-| Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
-| Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
-| Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
-| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set start marker up to and including the review cursor's current position. After pressing this key a second time, the text will be copied to the Windows clipboard |
-| Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
+|| Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
+| Premesti na prvi red pregleda| Šift+numeričko7 | NVDA+control+home | Nema komande | Premešta pregledni kursor na prvi red teksta|
+| Premesti na prethodni red pregleda| Numeričko7 | NVDA+strelica gore | Prevlačenje nagore(režim teksta) | Pomera pregledni kursor na prethodni red teksta|
+| Prijavi trenutni red pregleda | numpad8 | NVDA+šift+. | Nema komande | Izgovara trenutni red na kom se nalazi pregledni kursor. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta red se sriče koristeći opise znakova. |
+| Prebaci se na sledeći red pregleda| Numeričko9 | NVDA+strelica dole | Prevlačenje nadole(režim teksta) | Premesti pregledni kursor na sledeći red teksta|
+| Premesti se na poslednji red pregleda| Šift+numeričko9 | NVDA+control+end | Nema komande | Pomera pregledni kursor na poslednji red u dokumentu|
+| Premesti se na prethodnu reč pregleda| Numeričko4 | NVDA+control+strelica levo | Prevlačenje sa 2 prsta nalevo(Režim teksta) | Pomera pregledni kursor na prethodnu reč u tekstu|
+| Prijavi trenutnu reč pregleda| Numeričko5 | NVDA+control+. | Nema komande | Izgovara trenutnu reč teksta na kom se nalazi pregledni kursor. Ako se pritisne dva puta reč se sriče. Ako se pritisne tri puta reč se sriče koristeći opise znakova. |
+| Premesti se na sledeću reč pregleda| Numeričko6 | NVDA+control+strelica desno | Prevlačenje dva prsta nadesno(režim teksta) | Premešta pregledni kursor na sledeću reč|
+| Premesti se na početak reda u pregledu| Šift+numeričko1 | NVDA+home | Nema komande | Premešta pregledni kursor na početak reda|
+| Premesti se na prethodni znak pregleda| Numeričko1 | NVDA+strelica levo | Prevlačenje nalevo(režim teksta) | Premešta pregledni kursor na prethodno slovo u trenutnom redu teksta|
+| Prijavi trenutni znak pregleda| Numeričko2 | NVDA+. | Nema komande | Izgovara trenutni znak u redu na kom se pregledni kursor nalazi. Ako se pritisne dva puta pruža se opis ili primer tog znaka. Ako se pritisne tri puta izgovara se decimalna i hexadecimalna vrednost tog znaka. |
+| Premesti se na sledeći znak pregleda| Numeričko3 | NVDA+strelica desno | Prevlačenje nadesno(režim teksta) | Premešta pregledni kursor na sledeći znak u trenutnom redu teksta|
+| Premesti se na kraj reda pregleda| Šift+numeričko3 | NVDA+end | Nema komande | Premešta pregledni kursor na kraj trenutnog reda u tekstu|
+| Izgovori sve uz pregled| Numerički plus | NVDA+šift+a | Prevlačenje nadole sa 3 prsta(režim teksta) | Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja|
+| Izaberi a zatim kopiraj iz preglednog kursora| NVDA+f9 | NVDA+f9 | Nema komande | Počinje izbor teksta koji treba da se kopira iz preglednog kursora. Kopiranje nije odrađeno dok ne kažete programu NVDA gde se nalazi kraj vašeg odabira|
+| Izaberi a zatim kopiraj pregledni kursor| NVDA+f10 | NVDA+f10 | Nema komande | Ako se pritisne jednom, tekst od početnog markera pa sve do kraja uključujući i trenutnu poziciju preglednog kursora je odabran. Nakon što se ova komanda pritisne drugi put, tekst se kopira u Windows privremenu memoriju|
+| Prijavi formatiranje teksta| NVDA+f | NVDA+f | Nema komande | Prijavljuje informacije o formatiranju teksta na poziciji preglednog kursora. Ako se pritisne dva puta informacije se prikazuju u režimu pretraživanja|
 %kc:endInclude
 
-Note: numpad keys require numlock key to be turned off to work properly.
+Napomena: Tasteri sa numeričke tastature zahtevaju da taster numlock bude isključen kako bi ispravno radili.
 
-A good way to remember the basic text review commands  when using the Desktop layout  is to think of them as being in a grid of three by three, with top to bottom being line, word and character and left to right being previous, current and next.
-The layout is illustrated as follows:
-| Previous line | Current line | Next line |
-| Previous word | Current word | Next word |
-| Previous character | Current character | Next character |
+Dobar način da zapamtite desktop raspored ovih prečica je da ih zamislite kao mrežu 3 sa 3, koja od vrha ka dnu pregleda redove, reči i znakove a s leva na desno pomera kursor na prethodni, izgovara trenutni ili sledeći.
+Izgled je ovako ilustrovan:
+| prethodni red | Trenutni red | Sledeći red |
+| Prethodna reč | Trenutna reč | Sledeća reč |
+| Prethodni znak | trenutni znak | Sledeći znak |
 
-++ Review Modes ++[ReviewModes]
-NVDA's [text review commands #ReviewingText] can review content within the current navigator object, current document or screen, depending on the review mode selected.
-Review modes are a replacement for the older Flat Review concept found in NVDA.
+++ Režimi pregleda ++[ReviewModes]
+Komande programa NVDA[za pregled teksta#ReviewingText] mogu pregledati sadržaj trenutnog navigacionog objekta, trenutnog dokumenta ili ekrana, u zavisnosti od toga koji je režim pregleda odabran.
+Režimi pregleda su zamena za stari način pregleda programa NVDA.
 
-The following commands switch between review modes:
+Sledeće komande menjaju režime pregleda:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode |
-| switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the previous available review mode |
+|| Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
+| Prebaci se na sledeći režim pregleda| NVDA+numeričko7 | NVDA+pageUp | Prevlačenje nagore sa dva prsta| Prelazi na sledeći dostupan režim pregleda|
+| Prebaci se na prethodni režim pregleda | NVDA+numeričko1 | NVDA+pageDown | Prevlačenje nadole sa dva prsta| Prelazi na prethodni dostupan režim pregleda|
 %kc:endInclude
 
 +++ Object Review +++[ObjectReview]

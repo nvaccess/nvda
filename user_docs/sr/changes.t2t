@@ -13,6 +13,10 @@
 - Kada se koristi komanda za čitanje trenutnog reda tri puta trenutni red se sriče koristeći fonetsko sricanje. (#6893)
 
 
+== Promene ==
+- Kada se koristi jednostavan pregled u aplikacijama koje koriste UI automaciju, više stavki koje nemaju sadržaj se ignorišu kako bi navigacija bila olakšana. (#6948, #6950) 
+
+
 == Ispravljene greške ==
 - Stavke menija na web stranicama(stavka menija za potvrdu i radio dugme) se sada mogu aktivirati u režimu pretraživanja. (#6735)
 - Prijavljivanje imena listova u programu Excel je sada prevedeno. (#6848)
@@ -27,10 +31,13 @@
 - Popravljena greška gde otvaranje serijskog porta na jezicima koji nisu engleski dovodi do neuspešne veze sa brajevim redom u određenim slučajevima. (#6845)
 - Smanjena šansa oštećenja datoteke sa podešavanjima kada se Windows isključi. Datoteka sa podešavanjima se sada prvo čuva u privremenoj datoteci pre promene trenutne datoteke. (#3165)
 - Kada se koristi komanda za čitanje trenutnog reda dva puta za sricanje, ispravan jezik se koristi za slova. (#6726)
+- Kretanje po redovima u programu Microsoft Edge je do 3 puta brže u Windows 10 Creators ažuriranju. (#6994)
+- NVDA više ne izgovara"Web Runtime grouping" kada je fokus na Microsoft Edge dokumentima u Windows 10 Creators ažuriranju (#6948)
 
 
 == Promene za programere ==
 Ove promene nisu prevedene. Za više informacija, pročitajte Englesku verziju.
+
 
 = Starije verzije =
 Za starije verzije, pročitajte Englesku verziju ovog dokumenta.
