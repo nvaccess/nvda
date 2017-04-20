@@ -13,6 +13,10 @@
 - Lue nykyinen rivi -komennon suorittaminen kolme kertaa nopeasti peräkkäin tavaa rivin merkkikuvauksia käyttäen. (#6893)
 
 
+== Muutokset ==
+- Säilöjä, joissa ei ole sisältöä, jätetään nyt entistä enemmän huomiotta liikuttaessa sovelluksissa yksinkertaisessa tarkastelutilassa UI Automation -rajapintaa käyttäen. (#6948, #6950) 
+
+
 == Korjatut ohjelmavirheet ==
 - Verkkosivun valikkokohteiden (valikkokohteina olevien valintaruutujen ja valintapainikkeiden) aktivoiminen on nyt mahdollista selaustilassa oltaessa. (#6735)
 - Excelin laskentataulukon ilmoittaminen on nyt käännetty eri kielille. (#6848)
@@ -20,13 +24,15 @@
 - Korjattu joitakin kaatumisia Mozilla Firefoxissa ja muissa Gecko-sovelluksissa, joissa usean ikkunan toiminto on otettu käyttöön. (#6885)
 - Taustavärin ilmoittaminen ruututarkastelussa on nyt tarkempaa, kun teksti on piirretty läpinäkyvällä taustalla. (#6467) 
 - Paranneltu tuki aria-describedby-attribuutille Internet Explorer 11:ssä, mukaan lukien tilanteet, joissa sitä käytetään kehysten sisällä tai kun useita tunnuksia on saatavilla. (#5784)
-- NVDA:n äänenvoimakkuuden hiljennys toimii Windowsin Creators Update -versiossa taas kuten aiemmissa Windows-versioissa (ts. vaihtoehdot "hiljennä puhuttaessa ja ääntä toistettaessa", "hiljennä aina" sekä "ei hiljennystä" ovat kaikki käytettävissä). (#6933)
+- NVDA:n äänenvoimakkuuden hiljennys toimii Windowsin Creators -päivityksessä taas kuten aiemmissa Windows-versioissa (ts. hiljennyksen vaihtoehdot "Puhuttaessa ja ääntä toistettaessa", "Aina" sekä "Ei käytössä" ovat kaikki käytettävissä). (#6933)
 - Tiettyihin UIA-säätimiin siirtyminen tai niiden ilmoittaminen ei enää epäonnistu NVDA:ta käyttäen, kun niihin ei ole määritetty pikanäppäintä. (#6779)
 - Pikanäppäintietoihin ei enää lisätä kahta välilyöntiä tietyissä UIA-säätimissä. (#6790)
 - Tietyt HIMS-pistenäyttöjen näppäinyhdistelmät (esim. välilyönti+piste 4) eivät enää lakkaa ajoittain toimimasta. (#3157)
 - Korjattu ongelma avattaessa sarjaporttia tietyn muun kuin englanninkielisissä järjestelmissä, mikä aiheutti joissakin tapauksissa sen, ettei pistenäyttöjen kytkeminen onnistunut. (#6845)
 - Pienennetty asetustiedoston vahingoittumisen todennäköisyyttä Windowsia sammutettaessa. Asetukset kirjoitetaan nyt väliaikaistiedostoon ennen varsinaisen asetustiedoston korvaamista. (#3165)
 - Kun lue nykyinen rivi -komento suoritetaan kaksi kertaa nopeasti peräkkäin rivin tavaamiseksi, merkit tavataan nyt asianmukaista kieltä käyttäen. (#6726)
+- Riveittäin liikkuminen on nyt jopa kolme kertaa nopeampaa Microsoft Edgessä Windows 10 Creators -päivityksessä. (#6994)
+- NVDA ei enää ilmoita "Web Runtime -ryhmä", kun kohdistus siirretään Microsoft Edge -dokumentteihin Windows 10 Creators -päivityksessä. (#6948)
 
 
 == Muutokset kehittäjille (englanniksi) ==
@@ -41,6 +47,11 @@
  - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
  - `config.save`. (#6846)
+- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- There is now a unit testing framework for NVDA. (#7026)
+ - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
+ - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
 
 
 = 2017.1 =
@@ -63,8 +74,8 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. osien ja tekstipal
 - Pienin sallittu pistekohdistimen vilkkumisnopeus on nyt 200 ms. Mikäli nopeus on aiemmin määritetty tätä pienemmäksi, arvoksi muutetaan uusi pienin sallittu arvo. (#6470)
 - Pistekirjoitusasetusten valintaikkunaan on lisätty valintaruutu, jonka avulla on mahdollista ottaa pistekohdistimen vilkkuminen käyttöön tai poistaa se käytöstä. Aiemmin vilkkuminen poistettiin käytöstä määrittämällä arvoksi 0. (#6470)
 - eSpeak NG päivitetty (e095f008, 10. tammikuuta 2017). (#6717)
-- "Hiljennä aina" -asetus ei ole enää käytettävissä NVDA:n äänenvoimakkuuden hiljennyksen asetuksissa Windows 10 Creators Updateen tehtyjen muutosten vuoksi. Asetus on edelleen käytettävissä Windows 10:n vanhemmissa versioissa. (#6684)
-- "Hiljennä puhuttaessa ja ääntä toistettaessa" -asetus ei voi enää varmistaa, että äänenvoimakkuus on hiljennetty kokonaan ennen puhumisen aloittamista, eikä myöskään pitää sen jälkeen hiljennystä käytössä tarpeeksi kauan estääkseen äänenvoimakkuuden nopean vaihtelun. Nämä muutokset eivät vaikuta Windows 10:n vanhempiin versioihin. (#6684)
+- "Aina"-vaihtoehto ei ole enää käytettävissä NVDA:n äänenvoimakkuuden hiljennyksen asetuksissa Windows 10 Creators -päivitykseen tehtyjen muutosten vuoksi. Asetus on edelleen käytettävissä Windows 10:n vanhemmissa versioissa. (#6684)
+- "Puhuttaessa ja ääntä toistettaessa" -asetus ei voi enää varmistaa, että äänenvoimakkuus on hiljennetty kokonaan ennen puhumisen aloittamista, eikä myöskään pitää sen jälkeen hiljennystä käytössä tarpeeksi kauan estääkseen äänenvoimakkuuden nopean vaihtelun. Nämä muutokset eivät vaikuta Windows 10:n vanhempiin versioihin. (#6684)
 
 
 == Korjatut ohjelmavirheet ==
@@ -78,7 +89,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. osien ja tekstipal
 - Kun NVDA:n käynnistinohjelma ei voi toistaa tunnusääntä, näkyviin ei pitäisi enää tulla varoitusikkunaa puuttuvasta äänilaitteesta. (#6289)
 - Microsoft Excelin valintanauhan säätimet, jotka eivät ole käytettävissä, ilmoitetaan nyt sellaisina. (#6430)
 - NVDA ei enää sano "ruutu" ikkunoita pienennettäessä. (#6671)
-- Kirjoitettujen merkkien puhumista tuetaan Universal Windows Platform (UWP) -sovelluksissa (Microsoft Edge mukaan lukien) Windows 10:n Creators Update -versiossa. (#6017)
+- Kirjoitettujen merkkien puhumista tuetaan Universal Windows Platform (UWP) -sovelluksissa (Microsoft Edge mukaan lukien) Windows 10:n Creators -päivityksessä. (#6017)
 - Hiiren seuranta toimii nyt kaikilla ruuduilla tietokoneissa, joissa käytetään useita näyttöjä. (#6598)
 - NVDA ei muutu enää käyttökelvottomaksi Windows Media Playerin sulkemisen jälkeen kohdistuksen ollessa liukusäätimessä. (#5467)
 
@@ -149,7 +160,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat paranneltu Microsoft E
 Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. yksittäisten lisäosien käytöstä poistaminen, tuki lomakekentille Microsoft Excelissä, huomattavat parannukset värien ilmoittamiseen, useisiin pistenäyttöihin liittyvät korjaukset ja parannukset, sekä korjaukset ja parannukset Microsoft Wordin tukeen.
 
 == Uudet ominaisuudet ==
-- Selaustilaa on nyt mahdollista käyttää PDF-dokumenttien lukemiseen Microsoft Edgessä Windows 10:n Anniversary Update -versiossa. (#5740)
+- Selaustilaa on nyt mahdollista käyttää PDF-dokumenttien lukemiseen Microsoft Edgessä Windows 10:n Anniversary-päivityksessä. (#5740)
 - Tavallinen ja kaksinkertainen yliviivaus ilmoitetaan nyt Microsoft Wordissa. (#5800)
 - Jos taulukolla on otsikko, se luetaan nyt Microsoft Wordissa. Mikäli kuvaus on lisätty, se voidaan lukea selaustilassa avaa pitkä kuvaus -komennolla (NVDA+D). (#5943)
 - NVDA ilmoittaa nyt Microsoft Wordissa sijaintitiedot kappaleita siirrettäessä (Alt+Shift+nuoli alas ja Alt+Shift+nuoli ylös). (#5945)
@@ -180,7 +191,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. yksittäisten lis�
 - Automaattinen taulukko-otsikoiden lukeminen toimii paremmin Microsoft Wordissa yhdistettyjä soluja käsiteltäessä. (#5926)
 - Viestien sisällön lukeminen onnistuu nyt NVDA:lla Windows 10:n Sähköposti-sovelluksessa. (#5635) 
 - Lukitusnäppäimiä, kuten Caps Lock, ei enää ilmoiteta kahdesti komentonäppäinten lukemisen ollessa käytössä. (#5490)
-- Käyttäjätilien valvonnan valintaikkunat luetaan taas oikein Windows 10:n Anniversary update -versiossa. (#5942)
+- Käyttäjätilien valvonnan valintaikkunat luetaan taas oikein Windows 10:n Anniversary-päivityksessä. (#5942)
 - NVDA ei enää anna äänimerkkejä ja ilmoita mikrofonisyötteeseen liittyviä edistymispalkkien päivityksiä Web Conference -lisäosassa (käytetään esim. out-of-sight.netissä). (#5888)
 - Etsi seuraava- tai Etsi edellinen -komennon suorittaminen selaustilassa suorittaa nyt asianmukaisesti kirjainkoon huomioivan haun, mikäli alkuperäinen haku oli sellainen. (#5522)
 - Virheellisistä sääntölausekkeista annetaan nyt palautetta sanastomäärityksiä muokattaessa. NVDA ei enää kaadu, mikäli sanastotiedosto sisältää virheellisen sääntölausekkeen. (#4834)
