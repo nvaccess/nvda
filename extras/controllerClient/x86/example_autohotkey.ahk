@@ -1,3 +1,9 @@
+;example_autohotkey.ahk
+;A part of NonVisual Desktop Access (NVDA)
+;Copyright (C) 2007-2017 NV Access Limited, DojoMike
+;This file is covered by the GNU Lesser General Public License, version 2.1.
+;See the file license.txt for more details.
+
 /**
  * Because AutoHotkey's DllCall function can be a bit tricky for newcomers, I've taken the liberty of creating the following wrapper functions.
  * But of course, you could just as easily call the DLL directly, as I have done inside the functions.  But it might be easier to save the wrapper

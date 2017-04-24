@@ -1,4 +1,9 @@
-﻿using System;
+﻿//example_c_sharp.cs
+//A part of NonVisual Desktop Access (NVDA)
+//Copyright (C) 2007-2017 NV Access Limited, DojoMike
+//This file is covered by the GNU Lesser General Public License, version 2.1.
+//See the file license.txt for more details.
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -51,7 +56,7 @@ namespace NVAccess
         /// Tells NVDA to braille a string of text (UNTESTED)
         /// </summary>
         /// <param name="text">The text to braille</param>
-        /// <param name="interrupt">If true, NVDA will stop whatever it's brailling at th emoment and immediately braille the string</param>
+        /// <param name="interrupt">If true, NVDA will stop whatever it's brailling at the moment and immediately braille the string</param>
         public static void Braille(string text, bool interrupt)
         {
             if (interrupt)
