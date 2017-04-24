@@ -235,6 +235,8 @@ class AddonsDialog(wx.Dialog):
 
 	def onClose(self,evt):
 		self.Destroy()
+		# #7077: If the instance flag isn't cleared, it causes issues when add-ons manager reopens or another add-on is installed remotely.
+		AddonsDialog._instance = None
 		needsRestart = False
 		for addon in self.curAddons:
 			if (addon.isPendingInstall or addon.isPendingRemove
