@@ -300,12 +300,14 @@ class Gecko_ia2(VirtualBuffer):
 			browseObj=api.getFocusObject()
 		docHandle,ID=self.getIdentifierFromNVDAObject(browseObj)
 		attrs=self.makeTextInfo(browseObj)._getControlFieldAttribs(docHandle,ID)
-		if (attrs['IAccessible2::attribute_tag']== "a"):
+# 		if (attrs['IAccessible2::attribute_tag']== "a"):
+		if (attrs['role']== controlTypes.ROLE_LINK):
 			customLabelKey=browseObj.value
-		elif (attrs['IAccessible2::attribute_tag']== "img"):
+# 		elif (attrs['IAccessible2::attribute_tag']== "img"):
+		elif (attrs['role']== controlTypes.ROLE_GRAPHIC):
 			customLabelKey=attrs['IAccessible2::attribute_src']
-		elif (attrs['IAccessible2::attribute_tag']== "input" or attrs['IAccessible2::attribute_tag']== "select" or attrs['IAccessible2::attribute_tag']== "textarea"):
-			log.info("Input field")
+# 		elif (attrs['IAccessible2::attribute_tag']== "input" or attrs['IAccessible2::attribute_tag']== "select" or attrs['IAccessible2::attribute_tag']== "textarea"):
+		elif (attrs['role']== controlTypes.ROLE_CHECKBOX or attrs['role']== controlTypes.ROLE_RADIOBUTTON or attrs['role']== controlTypes.ROLE_EDITABLETEXT or attrs['role']== controlTypes.ROLE_BUTTON or attrs['role']== controlTypes.ROLE_COMBOBOX):
 			try:
 				customLabelKey=attrs['IAccessible2::attribute_id']
 			except:
