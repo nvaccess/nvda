@@ -1567,14 +1567,14 @@ class BrailleSettingsDialog(SettingsDialog):
 			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
 			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
 			initial=config.conf["braille"]["messageTimeout"])
-		if self.noMessageTimeoutCheckBox.GetValue():
-			self.messageTimeoutEdit.Disable()
 
 		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-		noMessageTimeoutLabelText = _("No &message timeout")
+		noMessageTimeoutLabelText = _("Show &messages indefinitely")
 		self.noMessageTimeoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=noMessageTimeoutLabelText))
 		self.noMessageTimeoutCheckBox.Bind(wx.EVT_CHECKBOX, self.onNoMessageTimeoutChange)
 		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
+		if self.noMessageTimeoutCheckBox.GetValue():
+			self.messageTimeoutEdit.Disable()
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("B&raille tethered to:")
