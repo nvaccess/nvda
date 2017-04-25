@@ -5,7 +5,6 @@
 
 = 2017.2 =
 
-- Cell border information can now be reported in Microsoft Excel by using `NVDA+f`. (#3044)
 == neue Funktionen ==
 - Unterstützung für Aria-Current-Attribute hinzugefügt. (#6358)
 - Microsoft Edge unterstützt jetzt auch den automatischen Sprachenwechsel. (#6852)
@@ -42,34 +41,34 @@ Schwerpunkte dieser Version sind u. a. die Ansage von Abschnitten und Spalten in
 - Diese Option aktiviert des Weiteren eine Ansage von Spalten in mehrspaltigen Texten in Microsoft Word. (#5946)
 - Der automatische Sprachenwechsel wird nun auch in WordPad unterstützt. (#6555)
 - Der NVDA-interne Suchbefehl (NVDA+Strg+F) wird nun auch in Microsoft Edge unterstützt. (#6580)
-- Die Schnellnavigationstasten für Schalter werden in Microsoft Edge unterstützt. (#6577)
+- Die Schnellnavigationstasten für Schalter werden im Lesemodus in Microsoft Edge unterstützt. (#6577)
 - Beim Kopieren von Tabellenblättern in Microsoft Excel werden Reihen- und Spaltenüberschriften berücksichtigt. (#6628)
 - Unterstützung für Kindle für PC. Weitere Informationen finden Sie im Abschnitt für Kindle für PC im Handbuch. (#6247, #6638)
-- Tabellennavigation im Lesemodus von Microsoft Edge. (#6594)
-- In Microsoft Excel gibt der Befehl zur Ausgabe des aktuellen Standorts (NVDA+Entf) nun den Namen des Tabellenblatts und die aktuell hervorgehobene Zelle aus. (#6613)
+- Die Tabellennavigation im Lesemodus von Microsoft Edge wird nun unterstützt. (#6594)
+- In Microsoft Excel gibt der Befehl zur Ausgabe des aktuellen Standorts (NVDA+Entf, bzw. NVDA+NUM Entf.) nun den Namen des Tabellenblatts und die aktuell hervorgehobene Zelle aus. (#6613)
 - Im Dialog zum Beenden von NVDA gibt es eine neue Option zum Neustart von NVDA im Debug-Modus. (#6689)
 
 
 == Änderungen ==
-- Die minimale Cursorblinkfrequenz beträgt nun 200 ms. Falls in einem Konfigurationsprofil ein niedrigerer Wert hinterlegt wird, wird dieser automatisch angehoben. (#6470)
-- In den Braille-Einstellungen wurde eine neue Option zum Ein-/Ausschalten der Cursorblinkens hinzugefügt. Bisher war das Abschalten der Cursorblinkfrequenz durch die Angabe von 0 als Cursorblinkfrequenz möglich. (#6470)
+- Die minimale Cursorblinkfrequenz beträgt nun 200 ms. Falls in einem Konfigurationsprofil ein niedrigerer Wert hinterlegt wurde, wird dieser automatisch angehoben. (#6470)
+- In den Braille-Einstellungen wurde eine neue Option zum Ein-/Ausschalten des Cursorblinkens hinzugefügt. Bisher war das Abschalten der Cursorblinkfrequenz durch die Angabe von 0 als Cursorblinkfrequenz möglich. (#6470)
 - eSpeak NG wurde aktualisiert (commit e095f008, vom 10. Januar 2017). (#6717)
-- Aufgrund von Änderungen in Windows 10 Creators Update ist die Option "Lautstärke anderer Anwendungen immer reduzieren" nicht mehr verfügbar. In älteren Versionen von Windows 10 steht die Option weiterhin zur Verfügung. (#6684)
-- Aufgrund von Änderungen in Windows 10 Creators Update kann die Audioducking-Einstellung "nur beim Sprechen" weder sicherstellen, dass die lautstärke anderer Anwendungen rechtzeitig reduziert wird, noch bevor NVDA zu sprechen beginnt; noch wird die Lautstärke lange genug reduziert, bis NVDA ausgesprochen hat. Diese Änderungen wirken sich nicht auf älteren Windows 10-Versionen aus. (#6684)
+- Aufgrund von Änderungen im Windows 10 Creators Update ist die Option "Lautstärke anderer Anwendungen immer reduzieren" nicht mehr verfügbar. In älteren Versionen von Windows 10 steht die Option weiterhin zur Verfügung. (#6684)
+- Aufgrund von Änderungen in Windows 10 Creators Update kann die Einstellung der Lautstärkereduktion "nur beim Sprechen" weder sicherstellen, dass die lautstärke anderer Anwendungen rechtzeitig reduziert wird, noch bevor NVDA zu sprechen beginnt; noch wird die Lautstärke lange genug reduziert, bis NVDA ausgesprochen hat. Diese Änderungen wirken sich nicht auf älteren Windows 10-Versionen aus. (#6684)
 
 
 == Fehlerkorrekturen ==
 - Fehler beim absatzweisen Navigieren im Lesemodus von Microsoft Word korrigiert. (#6368)
 - Tabellen, die von Microsoft Excel in Microsoft Word eingefügt wurden, werden nicht mehr ignoriert. (#5927)
-- Bei dem Versuch, in geschützte Microsoft Excel-Zellen zu schreiben wird nun ein Signalton abgespielt. Bisher wurden die eingegebenen zeichen gesprochen. (#6570)
-- Das Drücken der Escape-Taste in Microsoft Excel schaltet nun nicht mehr unerwartet in den Lesemodus um. (#6569) 
-- NVDA stürzt nicht mehr in Microsoft Excel-Tabellenblättern ab, bei denen eine ganze Reihe/Spalte in eine Zelle zusammengeführt wurde. 9#6216)
+- Bei dem Versuch, in geschützte Microsoft Excel-Zellen zu schreiben wird nun ein Signalton abgespielt. Bisher wurden die eingegebenen zeichen gesprochen, obwohl diese nicht geschrieben wurden. (#6570)
+- Das Drücken der Escape-Taste in Microsoft Excel schaltet nun nicht mehr unerwartet in den Lesemodus um. Dies geschieht nur noch, wenn der Lesemodus mittels NVDA+Leertaste eingeschaltet und anschließend die Fokusmodus mittels Eingabe aktiviert wurde. (#6569) 
+- NVDA stürzt nicht mehr in Microsoft Excel-Tabellenblättern ab, bei denen eine ganze Reihe/Spalte in eine Zelle zusammengeführt wurde. (#6216)
 - Die Ansage von überlagertem Text in Microsoft Excel wurde verbessert. (#6472)
 - NVDA zeigt nun schreibgeschützte Kontrollkästchen korrekt an. (#6563)
-- NVDA zeigt nun keine Warnmeldungen mehr an, wenn der Logo-Klang nicht abbgespielt werden konnte. (#6289)
+- NVDA zeigt nun keine Warnmeldungen mehr an, wenn der Logo-Klang nicht abgespielt werden konnte. (#6289)
 - Nicht verfügbare Steuerelemente in Menübändern von Microsoft Excel werden als solche angezeigt. (#6430)
 - NVDA zeigt nicht mehr "Feld" an, wenn Fenster minimiert werden. (#6671)
-- In Windows 10 Creators Update werden in Windows 10-Apps eingegebene Zeichen gesprochen. (#6017)
+- Im Windows 10 Creators Update werden in universellen Windows-Platform-Apps (UWP) eingegebene Zeichen gesprochen. (#6017)
 - Bei der Verwendung mehrerer Monitore funktioniert die Mausverfolgung nun über alle Monitore hinweg. (#6598)
 - NVDA verhält sich korrekt, wenn Sie Windows Media Player beenden, während ein Schieberegler den Fokus besitzt. (#5467)
 
@@ -104,7 +103,7 @@ Zu den Schwerpunkten dieser Version gehören Verbesserungen in der Unterstützun
 - Das Erscheinungsbild des Willkommensdialogs wurde korrigiert. (#6350)
 - In sämtlichen Dialogen werden die Schalter "OK" und "Abbrechen" nun rechtsbündig angezeigt. (#6333)
 - Für numerische Eingaben werden nun Drehknöpfe verwendet. (#6099)
-- Eingebettete Rahmen werden in Firefox nun als Rahmen erkannt. (#6047)
+- Eingebettete Rahmen (Dokumente, die in Dokumente eingebettet sind) werden in Firefox nun als Rahmen ausgegeben. Dies wurde Browserübergreifend vereinheitlicht. (#6047)
 
 
 == Fehlerkorrekturen ==

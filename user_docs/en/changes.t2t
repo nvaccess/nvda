@@ -13,6 +13,10 @@
 - Performing the read current line command three times quickly spells the line with character descriptions. (#6893)
 
 
+== Changes ==
+- When navigating with simple review  in applications using UI Automation, more non-content containers are ignored making navigation easier. (#6948, #6950) 
+
+
 == Bug Fixes ==
 - Web page menu items (menu item checkbox's and radio buttons) can now be activated while in browse mode. (#6735)
 - Excel sheet name reporting is now translated. (#6848)
@@ -27,6 +31,8 @@
 - Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
 - Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
 - When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
+- Navigating by line in Microsoft Edge is now up to 3x faster in the Windows 10 Creaters Update. (#6994)
+- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creaters Update (#6948)
 
 
 == Changes for Developers ==
@@ -41,6 +47,11 @@
  - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
  - `config.save`. (#6846)
+- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- There is now a unit testing framework for NVDA. (#7026)
+ - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
+ - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
 
 
 = 2017.1 =
