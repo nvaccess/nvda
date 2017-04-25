@@ -1566,10 +1566,6 @@ class TrayClockWClass(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
 
-	def _get_name(self):
-		# #4364: The name contains redundant information that is available either in the role or the value.
-		return None
-
 	def _get_value(self):
 		value = super(TrayClockWClass, self).value
 		if value is None:
