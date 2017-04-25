@@ -23,7 +23,7 @@ Af væsentlige funktioner kan nævnes:
 - Understøttelse af mange punktdisplays, herunder indtastning af computer-braille på punktdisplays med et punkttastatur
 - Kan køre fra et USB-stik eller andet bærbart medie uden installation
 - Talende installation der er let at bruge
-- Oversat til 47 sprog
+- Oversat til 48 sprog
 - Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
 - Kan køre på Windows logon skærmen og andre beskyttede skærme
 - understøttelse af almindelige tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
@@ -32,7 +32,7 @@ Af væsentlige funktioner kan nævnes:
 
 ++ Internationalisering ++
 Det er vigtigt, at folk overalt i verden, uanset hvilket sprog de taler, får lige adgang til teknologi.
-Udover Engelsk er NVDA blevet oversat til 47 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, koreansk, Nepali, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
+Udover Engelsk er NVDA blevet oversat til 48 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, koreansk, litauisk, nepalesisk, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
 
 ++ Understøttelse af talesynteser ++
 Udover at programmets meddelelser og brugerflade findes på flere sprog, kan NVDA også sætte brugeren i stand til at læse tekster på alle sprog, så længe de har en talesyntese, der kan tale det pågældende sprog.
@@ -91,6 +91,7 @@ Udover den manglende evne til at starte på og efter logon-skærmen, har en flyt
 - Manglende evne til at læse Kontrol af Brugerkonti (UAC) skærme når du forsøger at starte et program med administratorrettigheder.
 - Windows 8 og senere: Understøtter ikke input for touchskærme.
 - Windows 8: NVDA er ikke i stand til at benytte funktioner såsom gennemsynstilstand, samt evnen til at udtale indtastede tegn i Windows Store apps.
+- Windows 8 og senere: Lyddæmpning er ikke understøttet.
 -
 
 ++ Installation af NVDA ++
@@ -154,7 +155,7 @@ Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NV
 ++ Om NVDA tastaturkommandoer ++
 
 +++ NVDA-tasten +++
-De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tastt kaldet NVDA tasten, samtidig med en eller flere andre taster.
+De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tast kaldet NVDA tasten, samtidig med en eller flere andre taster.
 Bemærkelsesværdige undtagelser herfra er tekstlæsekommandoerne i desktop-tastaturlayoutet, som kun består af tasterne i det numeriske tastatur alene, men der er også andre undtagelser.
 
 NVDA kan konfigureres således, at enten den numeriske Insert Udvidede Insert, eller Caps Lock-tasten kan bruges som NVDA-tast.
@@ -262,7 +263,7 @@ Et objekt er et enkelt emne såsom et stykke tekst, en knap, checkboks, skyder, 
 Systemfokus, også bare kendt som fokus, er [det objekt eller element#Objects] der modtager de tastetryk, du laver på tastaturet.
 For eksempel, hvis du skriver i et redigerbart teksfelt har tekstfeltet fokus.
 
-Den mest almindelige måde at navigere rundt med NVDA i Windows er simpelthen ved at bevæge sig rundt med de almindelige Windows-tastatur kommandoer, såsom at trykke på Tab og Skift+TAB for at flytte frem og tilbage mellem kontrolelementerne og trykke ALT for at komme til menulinjen og derefter bruge pilene til at navigere i menuer, og bruge ALT + TAB for at flytte mellem kørende programmer.
+Den mest almindelige måde at navigere rundt med NVDA i Windows er simpelthen ved at bevæge sig rundt med de almindelige Windows-tastatur kommandoer, såsom at trykke på Tab og Skift+TAB for at flytte frem og tilbage mellem kontrolelementerne, trykke ALT for at komme til menulinjen og derefter bruge pilene til at navigere i menuer, og bruge ALT + TAB for at flytte mellem kørende programmer.
 Mens du gør dette, vil NVDA give dig oplysninger om det objekt, som har fokus såsom dets navn, type, værdi, tilstand, beskrivelse, tastaturgenvej og oplysninger om placering.
 
 Der er nogle nyttige kommandoer, når du flytter fokus rundt i systemet:
@@ -418,7 +419,7 @@ Når du flytter rundt på skærmen med læsekommandoer, bliver navigatorobjektet
 Bemærk, at NVDA muligvis ikke kan se hele eller dele af teksten i nogle af applikationer på grund af nyere teknologier brugt til at tegne skærmen. Disse teknologier er umulige at understøtte på nuværende tidspunkt.
 
 ++ Navigering ved brug af musen ++
-Når du bevæger musenrundt på skærmen, rapporter NVDA som standard tekst, der er direkte under musemarkøren, mens den bevæger sig hen over teksten.
+Når du bevæger musen, rapporter NVDA som standard tekst, der er direkte under musemarkøren, mens den bevæger sig hen over teksten.
 Der hvor det kan lade sig gøre, vil NVDA læse det omkringstående tekstafsnit, selv om der i nogle felter kun er tale om den aktuelle linje.
 
 NVDA kan desuden konfigureres til også at annoncere typen af det [objekt #Objects] musen bevæger sig over, (f.eks listboks, trykknap osv.)..
@@ -468,7 +469,7 @@ Derudover kan du også manuelt tvinge NVDA i fokustilstand, hvorefter tilstanden
 | Søg | NVDA+Ctrl+f | Viser en dialog, hvor du kan indtaste den tekst, du vil søge efter i det aktuelle dokument |
 | Find næste | NVDA+f3 | Finder næste forekomst i dokumentet af den tekst, du tidligere har søgt efter |
 | Find forrige | NVDA+Shift+F3 | Finder forrige forekomst i dokumentet af den tekst, du tidligere har søgt efter |
-| Åbn lang beskrivelse | NVDA+d | Åbner et nyt vindue, som indeholder "lang beskrivelse" for det element, du står på, hvis elementet har en. | 
+| Åbn lang beskrivelse | NVDA+d | Åbner et nyt vindue, som indeholder en lang beskrivelse for det element, du står på, hvis elementet har en. | 
 %kc:endInclude
 
 
@@ -620,7 +621,7 @@ Når du er placeret i den første celle i den række eller kolonne, som indehold
 | Indstil kolonneoverskrifter | NVDA+Shift+c | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i rækken med kolonneoverskrifter, som skal læses automatisk, når du bevæger dig mellem kolonner i rækkerne nedenunder. Tryk to gange for at nulstille denne indstilling. | 
 | Indstil rækkeoverskrifter | NVDA+Shift+r | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i kolonnen med rækkeoverskrifter, som skal læses automatisk, når du bevæger dig mellem rækker til højre for denne kolonne. Tryk to gange for at nulstille denne indstilling. | 
 %kc:endInclude
-Disse indstillinger bliver gemt i projektmappen som definerede navneområder, og de er kompatible med andre særmlæsere, såsom JAWS.
+Disse indstillinger bliver gemt i projektmappen som definerede navneområder, og de er kompatible med andre skærmlæsere såsom JAWS.
 Det betyder, at brugere af andre skærmlæsere, som senere åbner denne projektmappe, automatisk vil få overskrifter på kolonner og rækker rigtigt sat.
 
 +++ Elementlisten +++
@@ -696,6 +697,42 @@ Under en samtale:
 || Navn | Tast | Beskrivelse |
 | Læs meddelelse | NVDA+Ctrl+1-0 | Læser og flytter læsemarkøren til en af de nyeste meddelelser alt efter, hvilket tal du trykker. F.eks. NVDA+Ctrl+2 læser den næstnyeste meddelelse. |
 %kc:endInclude
+
+++ Kindle for PC ++
+NVDA understøtter navigering og læsning i Amazon Kindle for PC.
+Denne funktionalitet er kun tilgængelig i Kindle bøger, der understøtter "Enhanced Typesetting." Du kan undersøge dette på detaljesiden for bogen.
+
+Gennemsynstilstand benyttes til at læse bøger.
+Dette slås til automatisk, eller når du fokusere på bogens område.
+Siderne vendes automatisk efter behov, eller når kommandoen "Sig Alt" benyttes.
+%kc:beginInclude
+Du kan manuelt gå til den næste side med tasten side ned, og gå til forrige side ved hjælp af tasten side op.
+%kc:endInclude
+
+Bogstavnavigation er understøttet for links og grafik, men kun indenfor den aktuelle side.
+Navigering ved hjælp af links vil også inkludere fodnoter.
+
++++ Valg af tekst +++
+Kindle lader dig udføre diverse funktioner på udvalgt tekst, såsom at slå ord op i en ordbog, tilføje noter og fremhævelser, kopiere tekst til udklipsholderen og søge på nettet.
+For at gøre dette, skal du først vælge tekst som du normalt ville gøre det i gennemsynstilstand f.eks. ved at bruge skift og piletasterne.
+%kc:beginInclude
+Når du har valgt tekst, skal du trykke på applikationstasten eller Skift+F10 for at vise de tilgængelige muligheder og arbejde med den udvalgte tekst.
+%kc:endInclude
+Hvis du gør dette uden at vælge tekst, vil tilgængelige muligheder vises for det aktuelle ord under markøren.
+
++++ Brugernoter +++
+Du kan tilføje en note angående et ord eller en tekstpassage.
+For at gøre dette, skal du først vælge den ønskede tekst og bruge menuen som beskrevet ovenfor.
+Derefter, vælg "Add Note".
+
+Når der læses i gennemsynstilstand, vil NVDA henvise til disse noter som kommentarer.
+
+For at vise, redigere eller slette en note:
+
++ Flyt markøren til teksten, der indeholder noten.
++ Vis menuen til behandlingen af udvalgt tekst, som beskrevet ovenfor.
++ Vælg "Edit Note".
++ 
 
 + opsætning af NVDA+
 
@@ -780,6 +817,9 @@ Hvis du bruger Windows 8 eller derover lader denne indstilling dig vælge om NVD
 - Dæmp når der udsendes tale og lyde: NVDA vil kun dæmpe lyden, hvis NVDA afspiller lyde eller taler. Dette virker muligvist ikke for alle talesynteser. 
 - Altid dæmp: NVDA vil sænke lyden fra alle andre lydkilder så længe NVDA kører.
 -
+
+Denne indstilling er kun tilgængelig, hvis NVDA er installeret.
+Det er ikke muligt at understøtte lyddæmpning for midlertidige og flytbare kopier af NVDA.
 
 +++ Stemmeindstillinger (NVDA+Ctrl+v) +++[VoiceSettings]
 Dialogen Stemmeindstillinger, som findes i menuen Indstillinger, rumer valgmuligheder til ændring af, hvordan talen lyder.
@@ -912,7 +952,11 @@ Med denne indstilling kan du få ordet under markøren vist i uforkortet compute
 Denne indstilling lader dig slå punktmarkøren til og fra.
 Denne indstilling anvendes til brug af system- og læsemarkøren, men ikke udvælgelses-indikatoren.
 
-==== Blinkhastighed for markør (ms) ====
+==== Blinkende markør ====
+Denne indstilling gør punktmarkøren i stand til at blinke.
+Hvis dette er slået fra, vil markøren konstant forblive i "op" positionen.
+
+==== Blinkhastighed for markør (MS) ====
 Denne indstilling er et felt til indtastning af en talværdi. Her har du mulighed for at indtaste markørens blinkhastighed i millisekunder.
 
 ==== Markørform ====
@@ -1166,13 +1210,13 @@ Denne indstilling er slået til som standard.
 
 ==== Inkluder layouttabeller ====
 Denne indstilling bestemmer, hvordan NVDA håndterer tabeller, som kun er lavet af hensyn til det visuelle layout.
-Når den er slået til, vil NVDA håndtere disse tabeller som normale tabellerog indikere dem afhængigt af [Dokumentformateringsindstillinger #DocumentFormattingSettings] og finde dem med hurtignavigeringskommandoer.
+Når den er slået til, vil NVDA håndtere disse tabeller som normale tabeller og indikere dem afhængigt af [Dokumentformateringsindstillinger #DocumentFormattingSettings] og finde dem med hurtignavigeringskommandoer.
 Når indstillingern er slået fra, vil layouttabeller ikke blive indikeret og ikke blive fundet med hurtignavigering.
 Tabellernes indhold vil imidlertid stadig blive læst op som normal tekst.
 Denne indstilling er slået fra som standard.
 
 ==== Konfigurer annoncering af felter som links og overskrifter ====
-Hvis du vil konfigurere disse indstillinger til rapportering af områder når du navigerer, så som links, overskrifter og tabeller, skal du åbne dialogboksen [dialogen Dokument formatering #DocumentFormattingSettings] for at finde disse indstillinger.
+Se venligst indstillingerne i dialogen for [Dokumentformatering #DocumentFormattingSettings] for at konfigurere rapportéring for felter så som links, overskrifter og tabeller.
 
 ==== Automatisk fokustilstand ved ændringer af fokus ====
 Denne funktion gør det muligt automatisk at fremkalde fokustilstand, når fokus ændrer sig.
@@ -1195,44 +1239,52 @@ Denne dialogboks findes i menuen Indstillinger under "Dokumentformatering...".
 De fleste checkbokse i denne dialog bruges til at angive, hvilke typer formatering, du ønsker oplæst automatisk, når du flytter markøren rundt inden i dokumenter.
 Hvis du fx markerer checkboksen "oplæs skrifttypenavn", hører du navnet på skrifttypen, hver gang du med piletasterne bevæger dig hen over tekst med en anden skrifttype.
 
+Indstillingerne for dokumentformatering er organiseret i grupper.
 Du kan tilpasse annoncering af:
-- Navn på skrifttype 
-- Størrelse på skrifttype 
-- Skriftegenskaber
-- Tekstjustering 
-- Farver
-- Kommentarer
-- Ændringer
-- fremhævelse
-- Tekstens typografi 
-- Stavefejl 
-- Sidetal 
-- Linjenumre
-- Indrykning af linje
-- Indrykning af afsnit (fx. hængende indryk eller indrykning af første linje)
-- Linjeafstand (f.eks. enkel, dobbel, osv.)
-- tabeller
-- Række- og kolonneoverskrifter i tabeller
-- Koordinater på tabelceller
-- links
-- overskrifter 
-- lister
-- Blokcitater
-- Landmærker
-- Rammer
-- Når noget kan klikkes på (er klikbart)
+- Skrifttype
+ - Navn på skrifttype 
+ - Størrelse på skrifttype 
+ - Skrifttypeattributter
+ - fremhævelse
+ - Typografi 
+ - Farve
+- Dokumentinformation
+ - Kommentarer
+ - Redaktørændringer
+ - Stavefejl
+ - Sider og linjeafstand
+ - Sidetal
+ - Linjenumre
+ - Rapportering af linjeindrykning (fra, tale, toner eller både tale og toner) #lineIndentationOptions]
+ - Indrykning af afsnit (f.eks. hængende indrykning, indrykning af første linje)
+ - Linjeafstand (enkelt, dobbel, osv.)
+ - Justering
+- Tabelinformation
+ - Tabeller
+ - Ræke/kolonneoverskræfter
+ - Cellekoordinater
+ - Elementer
+ - Overskrifter
+ - Links
+ - Lister
+ - Bloksitater
+ - Landmærker
+ - Rammer
+ - Klikbart
+ -
 -
 
-Hvis du gerne vil kunne slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen inputbevægelser #InputGestures].
 
-==== Annoncer ændringer i formatering efter markøren ====
-Hvis denne indstilling er slået til, betyder det at NVDA forsøger at spore alle ændringer i formateringen på en linje, når den læses op, selvom dette måtte sænke NVDAs hastighed.   
+For at slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen inputbevægelser #InputGestures].
+
+==== Rapportér ændringer i formatering efter markøren ====
+Hvis denne indstilling er slået til, betyder det at NVDA forsøger at spore alle ændringer i formateringen på en linje, når den rapportérers, selvom dette måtte sænke NVDAs hastighed.   
 
 NVDA vil som standard spore ændringer i formateringen på markørens eller den ubegrænsede markørs position og af og til også på resten af linjen, med mindre hastigheden derved reduceres.
  
-Slå denne funktion til ved korrekturlæsning af dokumenter i programmer som Microsoft Word, hvor formatering har betydning.  
+Slå denne funktion til ved korrekturlæsning af dokumenter i programmer som Wordpad, hvor formatering har betydning.  
 
-==== Rapporter linjeindrykning med ====
+==== Rapportering af linjeindrykning ====[lineIndentationOptions]
 Denne indstilling lader dig konfigurere hvordan linjeindrykning rapporteres.
 Denne combo boks har fire muligheder.
 
@@ -1240,7 +1292,7 @@ Denne combo boks har fire muligheder.
 - Tale: Hvis denne mulighed er valgt og indrykningen ændres, vil NVDA rapportere noget lignende "12 mellemrum" eller "4 tab."
 - Toner: Hvis denne mulighed er valgt og indrykningen ændres, vil toner rapportere mængden af linjeindrykning.
 Tonens toneleje vil forøges ved hvert mellemrum, og for tab vil tonen forøges fire mellemrum.
-- Tale og toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
+- Både Tale og Toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
 -
 
 +++ Udtaleordbøger  +++
@@ -1706,10 +1758,10 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit Punktdisplays ++
-Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] og [Orbit http://www.orbitresearch.com/] displays er understøttet hvis de kobles til via USB eller Bluetooth.
+Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] og [Orbit http://www.orbitresearch.com/] displays er understøttet hvis de kobles til via USB, Bluetooth eller serielport.
 Det omfatter:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
@@ -2152,8 +2204,8 @@ Se venligst [dokumentationen til EcoBraille ftp://ftp.once.es/pub/utt/bibliotecn
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] er et særskilt program, der understøtter yderligere en lang række punktdisplays.
-For at kunne bruge det, skal du installere programmet [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] er et særskilt program, der understøtter yderligere en lang række punktdisplays.
+For at kunne bruge det, skal du installere programmet [BRLTTY for Windows http://www.brltty.com/download.html].
 Det anbefales, at du henter og installerer den seneste installationspakke, som fx. kan have navnet brltty-win-4.2-2.exe.
 Under konfigurationen af displayet og den port, der skal bruges, skal du følge instruktionerne nøje, især hvis du benytter et USB-display og allerede har installeret producentens drivere.
 
@@ -2246,6 +2298,7 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
 | -s | --secure | Sikker tilstand (uden Python console) |
 | Ingen | --disable-addons | ingen tilføjelsesprogrammer |
+| Ingen | --debug-logging | Aktiver debug-logningsniveau for kun denne opstart. Denne indstilling vil overstyre alle logningsniveau ( ""--loglevel"", -l) argumenter. |
 | Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |

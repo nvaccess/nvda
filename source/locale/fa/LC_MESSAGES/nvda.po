@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 00:10+1000\n"
-"PO-Revision-Date: 2016-10-07 14:35+0330\n"
+"POT-Creation-Date: 2017-03-31 00:10+1000\n"
+"PO-Revision-Date: 2017-04-01 02:46+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -432,13 +432,13 @@ msgstr "ماراتی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "هلندی (بلژیک) درجه‌ی 1"
+msgid "Dutch (Belgium)"
+msgstr "هلندی (بلژیک)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "هلندی (هلند) درجه‌ی 1"
+msgid "Dutch (Netherlands)"
+msgstr "هلندی (هلند)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -547,8 +547,8 @@ msgstr "تامیل درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
-msgstr "تلگو درجه‌ی 1"
+msgid "Telugu grade 1"
+msgstr "تلوگو درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -796,6 +796,7 @@ msgstr ""
 "میکنند. وقتی خاموش باشد، کلید‌های یاد‌شده به برنامه‌ی پیشِ رو هدایت میشوند."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "در این سند پشتیبانی نمیشود"
 
@@ -997,7 +998,7 @@ msgstr "به فیلدِ قبلی در فرم میبَرَد."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous form field"
-msgstr "هیچ فیلد قبلی‌ای نیست"
+msgstr "هیچ فیلدِ قبلی‌ای نیست"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list"
@@ -1241,16 +1242,22 @@ msgstr "هیچ یادداشتِ قبلی‌ای نیست"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "&لینک‌ها"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&سرنوشتارها"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "&بخشها"
 
@@ -1284,6 +1291,7 @@ msgid "%s landmark"
 msgstr "بخشِ %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "%s انتخاب شد"
@@ -1315,6 +1323,33 @@ msgstr "پایین"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "به بعد از انتهای سازه‌ی دربرگیرنده، مانند لیست یا جدول میبَرَد."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "در جدول نیستید."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "لبه‌ی جدول"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "به سطرِ بَعدیِ جدول میبَرَد."
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "به سطرِ قبلیِ جدول میبَرَد."
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "به ستونِ بَعدیِ جدول میبَرَد"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "به ستونِ قبلیِ جدول میبَرَد."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1693,6 +1728,7 @@ msgid "row"
 msgstr "سطر"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "قاب"
 
@@ -2021,10 +2057,6 @@ msgstr "شکلکِ میزِ کار"
 msgid "alert"
 msgstr "هشدار"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "قابِ داخلی"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "جایگاهِ میزِ کار"
@@ -2297,6 +2329,30 @@ msgstr "انتخاب نشده"
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "بدونِ علامت"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "جاری"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "صفحه‌ی جاری"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "مرحله‌ی جاری"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "موقعیتِ جاری"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "تاریخِ جاری"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "زمانِ جاری"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2598,8 +2654,7 @@ msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
-"خواندنِ کلیدهایی را که به گونه‌ی ویژه از جمله‌ی نویسهها نیستند روشن یا خاموش "
-"میکند."
+"خواندنِ کلیدهایی را که به ویژه از جمله‌ی نویسهها نیستند روشن یا خاموش میکند."
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3574,6 +3629,7 @@ msgid "review"
 msgstr "بازبینی"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "‍‍مکانِ فرمان‌پذیری"
 
@@ -4304,6 +4360,43 @@ msgstr "بیرونِ %s"
 msgid "page %s"
 msgstr "صفحه‌ی %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "بخشِ %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "ستونِ {0} از {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s ستون"
+
+msgid "continuous section break"
+msgstr "شکستِ بخشِ پیوسته"
+
+msgid "new column section break"
+msgstr "شکستِ بخشِ ستونِ جدید"
+
+msgid "new page section break"
+msgstr "شکستِ بخشِ صفحه‌ی جدید"
+
+msgid "even pages section break"
+msgstr "شکستِ بخشِ صفحاتِ زوج"
+
+msgid "odd pages section break"
+msgstr "شکستِ بخشِ صفحاتِ فرد"
+
+msgid "column break"
+msgstr "شکستِ ستون"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4320,6 +4413,10 @@ msgstr "سبْکِ %s"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "سبْکِ پیش‌فرض"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "بدونِ خطوطِ حاشیه"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -4913,11 +5010,6 @@ msgstr "مانندِ {symbol} در {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "لبه‌ی جدول"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "پِیمایِشگر را به ستونِ بعدی میبَرَد."
@@ -4958,6 +5050,12 @@ msgstr "هیچ تِرَکی پخش نمی‌شود"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "زمانِ باقیمانده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"گزینه‌های مربوط به متنِ انتخاب‌شده یا متنی که مکان‌نما روی آن قرار دارد را نشان "
+"میدهد."
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4967,6 +5065,25 @@ msgstr "{bookPercentage}%، {curLocation} از {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "صفحه‌ی {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "برجسته"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "قسمتِ برجسته‌ای نیست"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s برجسته شد"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "خارج از قسمتِ برجسته‌ی پرمخاطب"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5781,7 +5898,6 @@ msgid "Exit NVDA"
 msgstr "خروج از NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5791,7 +5907,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"به NVDA خوش آمدید\n"
 "شما برای اجرای بیشترِ فرمانهای NVDA نیاز دارید که کلیدِ NVDA را در حالی که "
 "کلیدهای دیگر را میزنید پایین نگه‌دارید.\n"
 "به صورتِ پیشفرض، هر دو کلیدِ اینْسِرت در صفحه کلیدِ اعداد و اینْسِرتِ اصلی میتوانند "
@@ -5804,6 +5919,11 @@ msgstr ""
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
+msgstr "به NVDA خوش آمدید!"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
 msgstr "به NVDA خوش آمدید!"
 
 msgid "Options"
@@ -5867,6 +5987,10 @@ msgstr "راه‌اندازیِ مجدد"
 msgid "Restart with add-ons disabled"
 msgstr "راه‌اندازیِ مجدد با افزونه های غیرِ فعال"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "راه‌اندازیِ مجدد با ثبتِ وقایع در سطحِ آسیب‌یابی"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "لطفا شکیبا باشید"
@@ -5911,8 +6035,8 @@ msgid "Add-on &help"
 msgstr "&راهنمای افزونه"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "غیرِ فعال کردنِ &افزونه"
+msgid "&Disable add-on"
+msgstr "&غیرِ فعال کردنِ افزونه"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6017,8 +6141,8 @@ msgid "running"
 msgstr "در حالِ اجرا"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "فعال کردنِ &افزونه"
+msgid "&Enable add-on"
+msgstr "&فعال کردنِ افزونه"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6057,10 +6181,6 @@ msgstr "اطلاعاتِ افزونه"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "گروه‌های پیکره‌بندی"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&گروه"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6109,8 +6229,8 @@ msgid "Error activating profile."
 msgstr "خطا در فعال کردنِ گروهِ پیکره‌بندی."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "آیا از حذفِ این گروه اطمینان دارید؟ این کار بازگشت‌پذیر نخواهد بود."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "این گروهِ تنظیمات بطور کامل پاک خواهد شد. این کار برگشت‌پذیر نخواهد بود."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6369,14 +6489,14 @@ msgstr "&پوشه‌ی نسخه‌ی قابلِ حمل:"
 msgid "Browse..."
 msgstr "&گشتن..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "کپیِ تنظیماتِ &کاربرِ فعلی"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "انتخابِ پوشه‌ی نسخه‌ی قابلِ حمل"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "کپیِ تنظیماتِ &کاربرِ فعلی"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6463,10 +6583,6 @@ msgstr "آسیب‌یابی"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&زبان (برای کامل به کار افتادن، نیازمندِ راه‌اندازی دوباره است):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "زبان"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&ذخیره‌ی تنظیمات به هنگامِ خروج"
@@ -6482,10 +6598,6 @@ msgstr "&پخش کردنِ صدا هنگامِ آغازِ کار و خروج ا�
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "سطحِ &ثبتِ وقایع:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "سطح وقایع"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6542,13 +6654,6 @@ msgstr "خطا در کپیِ تنظیماتِ کاربریِ NVDA"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "تنظیماتِ کاربریِ NVDA با موفقیت کپی شد"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "خطا در فایلِ زبانِ %s"
-
-msgid "Language Error"
-msgstr "خطا در زبان"
 
 msgid "This change requires administrator privileges."
 msgstr "این تغییر نیازمندِ اِختیاراتِ مدیریتی است."
@@ -6653,10 +6758,6 @@ msgstr "تنظیماتِ صفحه‌کلید"
 msgid "&Keyboard layout:"
 msgstr "چیدمانِ صفحه &کلید:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "چیدمانِ صفحه‌کلید"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6734,10 +6835,6 @@ msgstr "فعالسازیِ &دنبال کردنِ موس"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "تحلیلِ &واحدِ متن"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "واحدِ گزارشِ متن"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6864,11 +6961,6 @@ msgstr "اعلامِ &توضیحِ شیء"
 msgid "Progress &bar output:"
 msgstr "اعلامِ &نوارِ پیشرفت:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "اعلامِ نوارِ پیشرفت"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6932,77 +7024,90 @@ msgstr "&بازداشتنِ حرکت‌های غیرِ فرمانی از تأث�
 msgid "Document Formatting"
 msgstr "قالب‌بَندیِ اسناد"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "اعلامِ ت&غییراتِ قالب‌بندی بعد از مکان‌نما (میتواند باعثِ کُندی شود)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "گزینه‌های زیر نحوه اعلامِ قالب‌بَندیِ اسناد را توسط NVDA کنترل میکنند."
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "قلم"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "اعلامِ &نامِ قلم"
+msgid "&Font name"
+msgstr "&نامِ قلم"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "اعلامِ اندا&زه‌ی قلم"
+msgid "Font &size"
+msgstr "اندا&زه‌ی قلم"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "اعلامِ &مُشَخّصاتِ قلم"
+msgid "Font attri&butes"
+msgstr "&مُشَخّصاتِ قلم"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "اعلامِ &ترازبندی"
+msgid "E&mphasis"
+msgstr "تأک&ید"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "اعلامِ رن&گ‌ها"
+msgid "St&yle"
+msgstr "&سبْک"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "اعلامِ تو&ضیحات"
+msgid "&Colors"
+msgstr "رن&گ‌ها"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "اطلاعاتِ سند"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "اعلامِ بازبینی‌های &ویراستار"
+msgid "Co&mments"
+msgstr "تو&ضیحات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "اعلامِ تأک&ید"
+msgid "&Editor revisions"
+msgstr "بازبینی‌های &ویراستار"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "اعلامِ &سبْک"
+msgid "Spelling e&rrors"
+msgstr "خ&طاهای املایی"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "صفحه‌ها و فاصله‌گذاری"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "اعلامِ خ&طاهای املایی"
+msgid "&Pages"
+msgstr "&صفحه‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "اعلامِ &صفحه‌ها"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "اعلامِ &شماره‌ی خط‌ها"
+msgid "Line &numbers"
+msgstr "&شماره‌ی خط‌ها"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
+msgid "Line &indentation reporting:"
 msgstr "اعلامِ تورفتگیِ &خط با"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "خاموش"
 
@@ -7021,63 +7126,83 @@ msgstr "گفتار و بوق"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "اعلامِ تورفتگیِ &پاراگراف"
+msgid "&Paragraph indentation"
+msgstr "تورفتگیِ &پاراگراف"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "اعلامِ &فاصله‌ی خط‌ها"
+msgid "&Line spacing"
+msgstr "فاص&له‌ی خط‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "اعلامِ &جدول‌ها"
+msgid "&Alignment"
+msgstr "&ترازبندی"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "اطلاعاتِ جدول"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "&اعلامِ سرسطرها و سر‌ستون‌های جدول"
+msgid "&Tables"
+msgstr "&جدول‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "اعلامِ مُختصاتِ خانه‌های ج&دول"
+msgid "Row/column h&eaders"
+msgstr "&سرسطرها و سر‌ستون‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "اعلامِ &لینک‌ها"
+msgid "Cell c&oordinates"
+msgstr "مُختصاتِ خانه‌های ج&دول"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "سبْک‌ها"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "رنگ‌ها و سبْک‌ها"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "حاشیه‌های خانه"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "سازه‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "اعلامِ س&رنوشتارها"
+msgid "&Lists"
+msgstr "&فهرست‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "اعلامِ ف&هرست‌ها"
+msgid "Block &quotes"
+msgstr "&نقلِ قول‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "ا&علامِ نقلِ قول‌ها"
+msgid "Fra&mes"
+msgstr "&قاب‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "اعلامِ &بخش‌های اصلیِ صفحه"
+msgid "&Clickable"
+msgstr "&کلیک‌شدنی‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "اعلامِ &قاب‌ها"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "اعلامِ &کلیک‌شدنی‌ها"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr "اعلامِ ت&غییراتِ قالب‌بندی بعد از مکان‌نما (میتواند باعثِ کُندی شود)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7112,13 +7237,17 @@ msgstr "&توضیح"
 msgid "&Type"
 msgstr "&نوع"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "نیاز است یک الگو وارد کنید."
+
+msgid "Dictionary Entry Error"
+msgstr "خطا در ورودیِ دیکشنری"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "خطا در عبارتِ مُنتظم: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "خطا در ورودیِ دیکشنری"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7181,13 +7310,15 @@ msgstr "جدولِ &ورودیِ بریل"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr ""
-"&گسترش دادَنِ واژه‌ی قرار گرفته روی مکان‌نما به صورتِ بریلِ رایانه (کوتاهنویسی "
-"نشده)"
+msgstr "&گسترش دادَنِ واژه‌ی قرار گرفته روی مکان‌نما به صورتِ بریلِ رایانه"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
 msgstr "نمایشِ &مکان‌نما"
+
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "چشمک زدنِ مکان‌نما"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -7361,28 +7492,6 @@ msgid ""
 msgstr ""
 "هنگامِ ارائه‌ی محتوای سند، مرورِ صفحه را بر اساسِ چیدمانِ بصریِ صفحه یا بر اساس "
 "مرور خط به خط تغییر میدهد."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "در جدول نیستید."
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "به سطرِ بَعدیِ جدول میبَرَد."
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "به سطرِ قبلیِ جدول میبَرَد."
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "به ستونِ بَعدیِ جدول میبَرَد"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "به ستونِ قبلیِ جدول میبَرَد."
 
 msgid "Taskbar"
 msgstr "نوارِ وظیفه"
@@ -7629,6 +7738,11 @@ msgstr ""
 "راستِ آن که در این ناحیه قرار دارند تنظیم میشود. با دو بار فشردن، از سر‌سطرِ "
 "جاری یا این خانه صرفِ نظر میشود."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "برگه‌ی {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "پیام ورودی عبارت است از  {title}: {message}"
@@ -7654,6 +7768,129 @@ msgstr "در حالِ ویرایشِ توضیحِ خانه‌ی {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "از {firstAddress} {firstContent} تا {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "لبه‌ی بالا"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "لبه‌ی پایین"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "لبه‌ی چپ"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "لبه‌ی راست"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "خطِّ اریبِ بالا راست"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "خطِّ اریبِ پایین راست"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "حاشیه‌های داخلیِ افقی"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "حاشیه‌های داخلیِ عمودی"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "پیوسته"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "خط‌دار"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "خط نقطه"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "خط نقطه نقطه"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "نقطه‌دار"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "دوبل"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "خط‌نقطه‌ی شیبدار"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "مویی"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "باریک"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "متوسط"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "ضخیم"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "خط نقطه نقطه‌ی متوسط"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "خط نقطه‌ی متوسط"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "خط‌دارِ متوسط"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "حاشیه‌ی دربرگیرنده {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "لبه‌های بالا و پایین {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "لبه‌های چپ و راست {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "خط‌های اریبِ بالا راست و پایین راست {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8135,7 +8372,7 @@ msgstr "کف"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Nothing"
-msgstr "هیچی"
+msgstr "هیچ"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
@@ -8335,7 +8572,7 @@ msgstr "فیلدِ نمایش"
 
 #. Translators: a Microsoft Word revision type (reconcile)
 msgid "reconcile"
-msgstr "تطبیق دادن"
+msgstr "تطبیق‌یافته"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
 msgid "conflict"
@@ -8662,800 +8899,11 @@ msgstr "&یادداشت‌ها"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE/Smart Beetle"
+msgstr "از سِری نمایشگرهای Braille Sense/Braille EDGE/Smart Beetle از شرکتِ HIMS"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+msgstr "SyncBraille از شرکتِ HIMS"
 
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "اعلام شدنِ تورفتگیِ خط را فعال یا غیرِ فعال میکند."
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "این خانه غیرِ قابلِ ویرایش است"
-
-#~ msgid "checker"
-#~ msgstr "شطرنجی"
-
-#~ msgid "crisscross"
-#~ msgstr "متقاطع"
-
-#~ msgid "down"
-#~ msgstr "خطوطِ مورّب از بالا به پایین"
-
-#~ msgid "gray16"
-#~ msgstr "خاکستریِ ۱۶"
-
-#~ msgid "gray25"
-#~ msgstr "خاکستریِ ۲۵"
-
-#~ msgid "gray50"
-#~ msgstr "خاکستریِ ۵۰"
-
-#~ msgid "gray75"
-#~ msgstr "خاکستریِ ۷۵"
-
-#~ msgid "grid"
-#~ msgstr "جدول"
-
-#~ msgid "light down"
-#~ msgstr "خطوطِ روشنِ مورّب از بالا به پایین"
-
-#~ msgid "light up"
-#~ msgstr "خطوطِ روشنِ مورّب از پایین به بالا"
-
-#~ msgid "light vertical"
-#~ msgstr "خطوطِ روشنِ عمودی"
-
-#~ msgid "semi gray75"
-#~ msgstr "نیمه‌خاکستریِ ۷۵"
-
-#~ msgid "up"
-#~ msgstr "خطوطِ مورّب از پایین به بالا"
-
-#~ msgid "unknown color"
-#~ msgstr "رنگِ نامشخص"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "نیلیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "بژِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "فیروزه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "یشمی"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "آبیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "بژِ باز"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "کِرِم"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "کاه‌گِلی"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "آبی"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "آبیِ بنفشِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "خاکی"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "آبیِ لجنی"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "سبزِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "عسلیِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "نارنجیِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "آبیِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "کاهی"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "زرشکی"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "آبیِ دریایی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "سرمه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "سبزِ کبریتیِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "ماشیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "سبزِ آوا‌کادو"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "ماشی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "مخملی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "زیتونیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "نارنجیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "ارغوانیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "عنّابیِ تند"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "قهوه‌ایِ حنایی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "سبزِ دریاییِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "آبیِ دودی"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "لجنیِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "فیروزه‌ایِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "بنفشِ باز"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "شفقی"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "آبیِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "دودی"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "نیلی"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "شرابی"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "پوست پیازی"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "شِویدی"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "سرخابی"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "خاکستریِ مات"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "سفیدِ بنفشه"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "طلایی"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "خردلی"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "خاکستری"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "مغز‌پسته‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "یشمیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "سرخابی"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "جگری"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "نیلیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "استخوانی"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "خاکی"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "نیلیِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "صورتیِ مات"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "مغز‌پسته‌ایِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "شیر‌شکری"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "آبیِ کبریتی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "بژِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "آبیِ آسمانی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "لیموییِ روشن\""
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "سبزِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "صورتیِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "کِرِمِ نارنجی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "سبزِ کبریتیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "آبیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "سربی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "بنفشِ مایل به آبی"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "شیری"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "مغز‌پسته‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "سبزِ مغز‌پسته‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "کتانی"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "سرخابیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "آلبالویی"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "سبزِ دریایی"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "آبیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "ارکیده‌ایِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "آبیِ بنفش"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "خزه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "آبیِ متالیکِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "یشمیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "فیروزه‌ایِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "ارغوانی"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "آبی نفتی"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "سفیدِ نعنایی"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "بژ"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "هلویی"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "کِرِمِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "لاجوردی"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "بژِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "زیتونی"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "سبزِ ارتشی"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "قرمزِ نارنجی"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "ارکیده‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "نخودی"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "سبزِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "فیروزه‌ایِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "شرابیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "هلوییِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "هلوییِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "بادامیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "صورتی"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "بنفشِ کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "آبی کبریتیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "قرمز"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "بادمجانی"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "فیروزه‌ایِ فسفری"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "کاکائویی"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "حناییِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "هلوییِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "خزه‌ایِ پررنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "هِلی"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "قهوه‌ایِ متوسط"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "نقره‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "آبیِ آسمانیِ سیر"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "آبیِ فولادی"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "سربیِ تیره"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "صورتیِ محو"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "یشمیِ کمرنگ"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "نیلیِ متالیک"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "برنزه‌ی کدر"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "سبزِ دودی"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "بادمجانیِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "قرمزِ گوجه‌ای"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "سبزِ دریاییِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "بنفشِ روشن"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "گندمی"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "خاکستریِ محو"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "نشانه‌ی آغاز باید در همان شیء قرار گرفته باشد."
-
-#~ msgid "report grammar errors off"
-#~ msgstr "خطاهای دستوری اعلام نمیشوند."
-
-#~ msgid "report grammar errors on"
-#~ msgstr "خطاهای دستوری اعلام میشوند."
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "اعلام شدنِ خطاهای دستوری را فعال یا غیرِ فعال میکند."
-
-#~ msgid "grammar error"
-#~ msgstr "خطای دستوری"
-
-#~ msgid "out of grammar error"
-#~ msgstr "بیرون از خطای دستوری"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "اعلامِ خ&طاهای دستوری"
-
-#~ msgid "browse mode"
-#~ msgstr "حالتِ مرور"
-
-#~ msgid "activate"
-#~ msgstr "انجام شد."
-
-#~ msgid "no next"
-#~ msgstr "شیءِ بعدی‌ای وجود ندارد."
-
-#~ msgid "no previous"
-#~ msgstr "شیءِ قبلی‌ای نیست"
-
-#~ msgid "edge of table"
-#~ msgstr "لبه‌ی جدول"
-
-#~ msgid "%g characters"
-#~ msgstr "%g نویسه"
-
-#~ msgid "%g pt"
-#~ msgstr "%g نقطه"
-
-#~ msgid "no comments"
-#~ msgstr "هیچ توضیحی نیست"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "فهرستی از نمودارها، خانه‌های توضیح‌دار و خانه‌های فرمول‌دار را ارائه میدهد."
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "رنگِ پیش‌فرض"
-
-#~ msgid "unselecting %s"
-#~ msgstr "انتخاب نکردنِ %s"
-
-#~ msgid "unrevised"
-#~ msgstr "برای بازبینی نشانه‌گذاری شد"
-
-#~ msgid "unknown author"
-#~ msgstr "نویسنده‌ی ناشناس"
-
-#~ msgid "unknown date"
-#~ msgstr "تاریخِ نامشخص"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "شیئی را که در تیر‌رَسِ صفحه کلید قرار دارد اعلام میکند"
-
-#, fuzzy
-#~ msgid "%s"
-#~ msgstr "سرنو%s"
-
-#~ msgid "equation"
-#~ msgstr "معادله"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr ""
-#~ "فهرستی از لینکها، سرنوشتارها یا بخشهای موجود در سندِ پیشِ رو ارائه میدهد."
-
-#~ msgid "Slovak"
-#~ msgstr "اسلواکی"
-
-#~ msgid "navy blue"
-#~ msgstr "آبیِ سیر"
-
-#~ msgid "teal"
-#~ msgstr "سبزِ دودی"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "در NVDA نگارشِ 2013.1، چیدمانِ صفحه کلیدِ لپتاپ کاملا از نو طراحی شد تا قابلِ "
-#~ "درکتر برای کاربر و سازگارتر شود.\n"
-#~ "اگر شما از چیدمان لپتاپ استفاده میکنید، سندِ \"تازه چه خبر\" را برای کسب "
-#~ "اطلاعات بیشتر مطالعه کنید."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "چیدمانِ جدیدِ صفحه کلیدِ لپتاپ"
-
-#~ msgid "Read What's New"
-#~ msgstr "بخوان تازه چه خبر"
-
-#~ msgid "&Acceleration"
-#~ msgstr "افزایش &سرعت"
-
-#~ msgid "male 1"
-#~ msgstr "مرد ۱"
-
-#~ msgid "female 1"
-#~ msgstr "زن ۱"
-
-#~ msgid "male 2"
-#~ msgstr "مرد ۲"
-
-#~ msgid "female 2"
-#~ msgstr "زن ۲"
-
-#~ msgid "lime"
-#~ msgstr "مغز پسته ای"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "آیا مطمئن هستید که میخواهید از NVDA خارج شوید؟"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&هشدار دادن پیش از خروج از NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "عبارتِ مُنتظم"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "داده ای پیرامون جای چیز بازبینی‌شده در میان نیست"
-
-#~ msgid "No location information for screen"
-#~ msgstr "داده ای پیرامون جای برگه‌ی نمایش در میان نیست"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "پهنا و بلندا و جایگاه چیز بازبینی‌شده‌ی کنونی را گزارش می‌دهد"
-
-#~ msgid "Set column header row"
-#~ msgstr "جانشان شدن سرنوشتار برای ستون"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "پاک شدن سرنوشتار برای ستون"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "با یک بار فشار دادن٬ ردیف کنونی در جایی که سرنوشته‌ی ستون باید باشد جای "
-#~ "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
-
-#~ msgid "Set row header column"
-#~ msgstr "جانشان شدن سرنوشتار برای ردیف"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "با یک‌بار فشار دادن٬ ستون کنونی در جایی که سرنوشته‌ی ردیف باید باشد جای "
-#~ "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s تا %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "کارا کردن/ویراستن دستی"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "پرونده‌ی پیکره‌بندی دارای کژی است. \n"
-#~ "دکمه‌ی 'Ok' را برای برکنار کردن این کژی٬ فشار دهید؛ یا دکمه‌ی 'Cancel' را "
-#~ "اگر می‌خواهید دستی پرونده را ویرایش کنید٬ فشار دهید. برای دانستن بیشتر٬ "
-#~ "می‌توانید پرونده‌ی گاه‌نگار را نگاه کنید.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "آشکارگویه‌ی خودکاری نیست"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "پنجره توضیحات خودکار را نتوانست پیدا بکند."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "هر آشکارگویه‌ای را در پنجره‌ی آشکارگویه‌ی خودکار گزارش می‌دهد"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "آشکارگویه‌ی خودکار"
-
-#~ msgid "Translation:"
-#~ msgstr "برگردان:"
-
-#~ msgid "Comments:"
-#~ msgstr "آشکارگویه‌ها"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s از %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "پرونده ی تنظیمات بطور بدی شکل گرفته"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "خطا در تجزیه پرونده تنظیمات: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "خطا ها در پرونده تنظیمات '%s':\n"
-#~ "%s"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "فوکوس &صفحه کلید را تعقیب بکن"
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "آیا از حذفِ این گروه اطمینان دارید؟ این کار بازگشت‌پذیر نخواهد بود."

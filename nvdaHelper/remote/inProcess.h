@@ -11,8 +11,8 @@ void inProcess_initialize();
 void inProcess_terminate();
 
 #include <functional>
-typedef std::function<void(void*)> execInWindow_funcType;
-void execInWindow(HWND hwnd, execInWindow_funcType func,void* data);
+typedef std::function<void()> execInThread_funcType;
+bool execInThread(long threadID, execInThread_funcType func);
 
 
 #endif

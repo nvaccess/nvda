@@ -13,7 +13,7 @@ Proporcionando retroalimentación a través de voz sintética e Braille, posibil
 NVDA está desenvolvido por [NV Access http://www.nvaccess.org/], con  colaboracións da comunidade.
 
 ++ Características Xerais ++
-Proporcionando un apoio de voz sintética, NVDA permite ás persoas cegas e deficentes visuais acceder e interactuar co Sistema Operativo Windows e moitas aplicacións de terceiros. 
+Proporcionando un apoio de voz sintética, NVDA permite ás persoas cegas e deficientes visuais acceder e interactuar co Sistema Operativo Windows e moitas aplicacións de terceiros. 
 
 O máis subliñable inclue: 
 - Soporte para aplicacións populares incluíndo navegadores web, clientes de correo, programas de chat en internet e suites de oficiña
@@ -23,7 +23,7 @@ O máis subliñable inclue:
 - Soporte para moitas pantallas de braille efímero incluíndo a entrada de braille computerizado para pantallas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 47 linguas
+- Traducido a 50 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis subliñable inclue:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 47 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 48 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Kannada, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ao usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -89,9 +89,10 @@ Utilizar a copia temporal do NVDA é tamén unha opción, ex.: con propósitos d
 Ademáis da incapacidade de iniciarse automáticamente durante e/ou despois da autentificación, as copias portable e temporal do NVDA tamén teñen as seguintes restriccións:
 - A incapacidade para interactuar con aplicacións que se executen con privilexios de administrador, ao menos que, por suposto, o mesmo NVDA tamén fora executado con estos privilexios (non é recomendable).
 - A incapacidade de ler as pantallas do Control de Contas do Usuario (UAC) cando tente iniciar unha aplicación con privilexios de administrador.
-- Windows 8 e superior: a incapacidade para soportar a entrada dende unha pantalla táctil.
-- Windows 8 e superior: a incapacidade de proporcionar características como modo navegación e fala de caracteres ao se escreber en Windows Store apps.
-
+- Windows 8 e posterior: a incapacidade para soportar a entrada dende unha pantalla táctil.
+- Windows 8 e posterior: a incapacidade de proporcionar características como modo navegación e fala de caracteres ao se escreber en Windows Store apps.
+- Windows 8 e posterior: a atenuación de audio non se soporta.
+-
 
 ++ Instalando NVDA ++
 Se se instala NVDA directamente dende o paquete descargado do NVDA, preme o botón Instalar NVDA.
@@ -697,6 +698,42 @@ Cando se está nunha conversa:
 | Revisar mensaxe | NVDA+control+1-0 | Anuncia e move o cursor de revisión a unha mensaxe recente, dependendo do número premedo; por ex.: NVDA+control+2 le a segunda mensaxe máis recente. |
 %kc:endInclude
 
+++ Kindle para PC ++
+NVDA soporta a lectura e a navegación de libros no Amazon Kindle para PC.
+Esta funcionalidade só está dispoñible en libros de Kindle designados con "Lector de Pantalla: Soportado" o que podes verificar na páxina de detalles para o libro.
+
+Utilízase o modo exploración para ler libros.
+Habilítase automáticamente ao se abrir un libro ou ao se enfocar o área do libro.
+A páxina pasarase automáticamente segundo proceda cando movas o cursor ou uses a orde ler todo.
+%kc:beginInclude
+Podes pasar á seguinte páxina manualmente coa tecla avPáx e voltar á anterior coa tecla rePáx.
+%kc:endInclude
+
+Sopórtase a navegación cunha soa tecla para ligas e gráficos, pero só dentro da páxina actual.
+A navegación por ligas tamén inclúe notas ao pé.
+
++++ Seleción de Texto +++
+Kindle permíteche realizar varias funcións no texto selecionado, incluindo obter unha definición de diccionario, engadir notas e facer resaltados, copiar o texto ao portapapeis e procurar na web.
+Para facer esto, primeiro seleciona texto coma o farías normalmente en modo exploración; ex.: usando shift e as teclas de cursor.
+%kc:beginInclude
+Unha vez selecionaras o texto, preme a tecla aplicacións ou shift+f10 para amosar as opcións dispoñibles para traballar coa seleción.
+%kc:endInclude
+Se fas esto sen texto selecionado, as opcións que se amosarán serán para a palabra no cursor.
+
++++ Notas de Usuario +++
+Podes engadir unha nota con referencia a unha palabra ou a unha pasaxe de texto.
+Para facer esto, primeiro seleciona o texto pertinente e accede ás opcións da seleción segundo se descrebiu arriba.
+Logo, escolle Engadir Nota.
+
+Ao ler no modo exploración, NVDA refírese a estas notas coma comentarios.
+
+Para ver, editar ou borrar unha nota:
+
++ Move o cursor ao texto que conteña a nota.
++ Accede ás opcións para a seleción segundo se descrebiu arriba.
++ Escolle Editar Nota.
++
+
 + Configurando o NVDA +
 
 ++ Preferencias ++
@@ -780,6 +817,9 @@ En Windows 8 e superiores, esta opción permíteche escoller se NVDA debería ba
 - Atenuar cando saian voz e sons: NVDA só baixará o volume doutro audio cando NVDA estea falando ou reproducindo sons. Esto poderá non funcionar en todos os sintetizadores. 
 - Atenuar sempre: NVDA conservará o volume doutro audio máis baixo todo o tempo que NVDA estea en execución.
 -
+
+Esta opción só está dispoñible se NVDA se instalou.
+Non é posible soportar a atenuación de audio para copias portables e temporais do NVDA.
 
 +++ Opcións de Voz (NVDA+control+v) +++[VoiceSettings]
 O diálogo Opcións de Voz, que se atopa no menú Preferencias, contén opcións que che permiten modificar o son da voz. 
@@ -911,6 +951,10 @@ Esta opción permite á palabra que está baixo o cursor seren amosada en braill
 ==== Amosar Cursor ====
 Esta opción permite ao cursor braille activarse e desactivarse.
 Aplícase ao cursor do sistema e ao cursor de revisión, pero non ao indicador de seleción.
+
+==== Parpadeo de Cursor ====
+Esta opción permite ao cursor braille parpadear.
+Se o parpadeo está desactivado, o cursor braille estará constantemente na posición "subida".
 
 ==== Velocidade de Parpadeo do Cursor (ms) ====
 Esta opción é un campo numérico que che permite cambiar a velocidade de parpadeo do cursor en milésimas de segundo.
@@ -1195,44 +1239,53 @@ Esta caixa de diálogo atópase no menú Preferencias, baixo "Formato de Documen
 A maioría das caixas de verificación neste diálogo son para configurar que tipo de formato desexas escoitar automáticamente cando movas o cursor polos documentos. 
 Por Exemplo, se verificas a caixa de verificación anunciar o nome da fonte, cada vez que navegues polo texto cunha fonte diferente, o nome da fonte serache anunciado.
 
+As opcións de formateado de documento organízanse en grupos.
 Podes configurar o anunciado de:
-- Nome de fonte
-- Tamano de fonte
-- Atributos de fonte
-- Alineamento do texto
-- Cores
-- Comentarios
-- Revisións do editor
-- Énfase
-- Estilo do texto
-- Erros de ortografía
-- Números de páxina
-- Números de liña
-- Sangría de liña
-- Sangría de parágrafo (por exemplo: sangría francesa, sangría de primeira liña)
-- espaciado de liña (simple, doble etc)
-- Táboas
-- Cabeceiras de fila/columna de táboa
-- Coordinadas de celdas da táboa
-- Ligas
-- Cabeceiras
-- Listas
-- Citas
-- Pontos de referencia
-- Marcos
-- Cando se pode facer clic en algo
+- Fonte
+ - Nome de fonte
+ - Tamano de fonte
+ - Atributos de fonte
+ - Énfase
+ - Estilo
+ - Cores
+- Información de documento
+ - Comentarios
+ - Revisiones do editor
+ - Erros de ortografía
+- Páxinas e espaciado
+ - Números de páxina
+ - Números de liña
+ - Anunciado de sangría de liña [(Desactivado, voz, Tons, voz e tons) #lineIndentationOptions]
+ - Sangría de parágrafo (ex.: sangría, sangría de primeira liña)
+ - Espaciado de liña (simple, doble etc)
+ - Alineamento
+- Información de táboa
+ - Táboas
+ - Cabeceiras de fila/columna
+ - Coordenadas de celda
+ - Bordes de celdas [(desactivado, Estilos, Ambos Colores e Estilos)
+- Elementos
+ - Cabeceiras
+ - Ligas
+ - Listas
+ - Citas
+ - Pontos de referencia
+ - Marcos
+ - Admite clic
+ -
 -
+
 
 Para conmutar estas  opcións dende calquera lugar, por favor asigna xestos persoalizados utilizando o [diálogo Xestos de Entrada #InputGestures].
 
 ==== Anunciar cambios de formato despois do cursor ====
-Se está activada, esta opción di ao NVDA que probe e detecte todos os cambios de formato nunha liña segundo a fale, se se fai esto podería enlentecerse a resposta do NVDA.
+Se está activada, esta opción di ao NVDA que probe e detecte todos os cambios de formato nunha liña segundo a anuncie, se se fai esto podería enlentecerse a resposta do NVDA.
 
 De xeito predeterminado, NVDA detectará o formato na posición do cursor do Sistema / Revisión, e en algúns casos podería detectar o formato no resto da liña, só se non está causando un decremento da resposta.
  
-Activa esta opción mentres comprobas a lectura de documentos en aplicacións como Microsoft Word, onde o formato sexa importante.
+Activa esta opción mentres comprobas a lectura de documentos en aplicacións coma Worpad, onde o formato sexa importante.
 
-==== Anunciar sangría de liñas con ====
+==== Anunciado de sangría de liñas ====[lineIndentationOptions]
 Esta opción permíteche configurar cómo debe lerse a sangría do comezo das liñas.
 A caixa combinada Anunciar sangría de liñas con ten catro opcións.
 
@@ -2152,8 +2205,8 @@ Por favor consulta a [documentación para EcoBraille ftp://ftp.once.es/pub/utt/b
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] é un programa por separado que pode utilizarse para soportar moitas pantallas braille.
-Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY http://www.brltty.com/] é un programa por separado que pode utilizarse para soportar moitas pantallas braille.
+Para utilizar esto, necesitas instalar [BRLTTY for Windows http://www.brltty.com/download.html].
 Deberías descargar e instalar o último paquete instalable, que se chamará, por exemplo, brltty-win-4.2-2.exe.
 Cando configures a pantalla e porto a utilizar,  asegúrate de prestar gran atención ás instruccións, especialmente se estás utilizando unha pantalla USB e xa tes os controladores do fabricante instalados.
 
@@ -2247,6 +2300,7 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | -s | --secure | Modo seguro (deshabilita a consola Python) |
 | None | --disable-addons | Os complementos non terán efecto |
 | None | --no-sr-flag  | Non cambia a bandeira global do sistema do lector de pantalla |
+| None | --debug-logging | Habilita o nivel depuración no rexistro só para esta execución. Esta opción anulará calquera outro argumento do nivel do rexistro ( ""--loglevel"", -l) dado. |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
 

@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 00:10+1000\n"
+"POT-Creation-Date: 2017-03-31 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Nikola Jovic <wwenikola123@gmail.com>\n"
+"Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
@@ -437,13 +437,13 @@ msgstr "Marathi jezik stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "holandski (Belgija) stepen 1"
+msgid "Dutch (Belgium)"
+msgstr "holandski (Belgija)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "holandski (Holandija) stepen 1"
+msgid "Dutch (Netherlands)"
+msgstr "holandski (Holandija)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -552,8 +552,8 @@ msgstr "tamilski stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
-msgstr "Telugu jezik stepen 1"
+msgid "Telugu grade 1"
+msgstr "Telugu stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -801,6 +801,7 @@ msgstr ""
 "je isključena, ovi tasteri se prosleđuju aplikaciji"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "nije podržano u ovom dokumentu"
 
@@ -1246,16 +1247,22 @@ msgstr "nema prethodne zabeleške"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "Lin&kovi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Zaglavlja"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "&Regioni"
 
@@ -1289,6 +1296,7 @@ msgid "%s landmark"
 msgstr "%s orjentir"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "izabrano %s"
@@ -1322,6 +1330,33 @@ msgstr "dno"
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Pomera se iza kraja kontejnerskog elementa, kao što je lista ili tabela"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Nije u ćeliji tabele"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Ivica tabele"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "premešta se u naredni red tabele"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "premešta se u prethodni red tabele"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "premešta se u narednu kolonu tabele"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "premešta se u prethodnu kolonu tabele"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1509,7 +1544,7 @@ msgstr "veoma tamno {color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
-msgstr ""
+msgstr "Svetlo bledo {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
 #, python-brace-format
@@ -1527,7 +1562,7 @@ msgstr "тамно-пале {color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
-msgstr ""
+msgstr "Veoma tamno bledo {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
 #, python-brace-format
@@ -1700,6 +1735,7 @@ msgid "row"
 msgstr "red"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "okvir"
 
@@ -2027,10 +2063,6 @@ msgstr "ikona na radnoj površini"
 msgid "alert"
 msgstr "upozorenje"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "interni okvir"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "okno radne površine"
@@ -2156,11 +2188,11 @@ msgstr "pritisnuto"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
-msgstr "štriklirano"
+msgstr "štiklirano"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "polovično štriklirano"
+msgstr "polovično štiklirano"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -2302,7 +2334,31 @@ msgstr "nije izabrano"
 
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
-msgstr "nije štriklirano"
+msgstr "nije štiklirano"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "Trenutni"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "Trenutna strana"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "Trenutni korak"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "Trenutna lokacija"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "Trenutni datum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "Trenutno vreme"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -3596,6 +3652,7 @@ msgid "review"
 msgstr "pregled"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "fokus"
 
@@ -4327,6 +4384,43 @@ msgstr "van %s"
 msgid "page %s"
 msgstr "strana %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "sekcija %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "Kolona {0} od{1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s Kolona"
+
+msgid "continuous section break"
+msgstr "Neprekidno odvajanje sekcije"
+
+msgid "new column section break"
+msgstr "Nova kolona odvajanje sekcije"
+
+msgid "new page section break"
+msgstr "Nova strana odvajanje sekcije"
+
+msgid "even pages section break"
+msgstr "Jednake strane odvajanje sekcija"
+
+msgid "odd pages section break"
+msgstr "Nejednake strane odvajanje sekcija"
+
+msgid "column break"
+msgstr "Prekid kolone"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4343,6 +4437,10 @@ msgstr "stil %s"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "zadani stil"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Nema granica"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -4933,11 +5031,6 @@ msgstr "{symbol} kao u {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Ivica tabele"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Pomera navigacioni objekat na sledeću kolonu"
@@ -4979,6 +5072,10 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Izveštava o preostalom vremenu trenutno reprodukovanog zapisa, ako ga ima"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Prikazuje opcije za izabrani tekst ili tekst na poziciji kursora"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4988,6 +5085,25 @@ msgstr "{bookPercentage}%, lokacija {curLocation} od{maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Stranica {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "Oznaka"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "Nema oznake"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s Označeno"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "Van popularne oznake"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5805,7 +5921,6 @@ msgid "Exit NVDA"
 msgstr "Izlaz iz NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5815,7 +5930,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Dobrodošli u NVDA!\n"
 "Većina komandi za kontrolisanje NVDA zahteva da držite pritisnut NVDA taster "
 "dok pritiskate druge tastere.\n"
 "Po osnovnim podešavanjima, numerički insert i osnovni insert taster mogu "
@@ -5828,6 +5942,11 @@ msgstr ""
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Dobrodošli u NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Dobrodošli u NVDA!"
 
 msgid "Options"
 msgstr "Opcije"
@@ -5890,6 +6009,10 @@ msgstr "Pokreni ponovo"
 msgid "Restart with add-ons disabled"
 msgstr "Pokreni ponovo sa onemogućenim dodacima"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Pokreni ponovo sa dnevnicima za otklanjanje greške omogućenim "
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Molimo sačekajte"
@@ -5932,8 +6055,8 @@ msgid "Add-on &help"
 msgstr "&Pomoć za dodatak"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
-msgstr "Onemogući dodatak "
+msgid "&Disable add-on"
+msgstr "&Onemogući dodatak "
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -6038,8 +6161,8 @@ msgid "running"
 msgstr "aktivan"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
-msgstr "Omogući dodatak"
+msgid "&Enable add-on"
+msgstr "O&mogući dodatak"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -6078,10 +6201,6 @@ msgstr "Informacije o dodatku"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Konfiguracioni profili"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profil"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6130,10 +6249,8 @@ msgid "Error activating profile."
 msgstr "Greška pri aktivaciji profila"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr ""
-"Da li ste sigurni da želite da obrišete ovaj profil? Ovo ne može biti "
-"poništeno"
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Ovaj profil će zauvek biti obrisan. Ova radnja nemože biti poništena."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6400,14 +6517,14 @@ msgstr "&Fascikla za prenosnu kopiju"
 msgid "Browse..."
 msgstr "Potraži..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "Kopiraj trenutna korisnička &podešavanja"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Izaberite fasciklu za prenosnu kopiju"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "Kopiraj trenutna korisnička &podešavanja"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6493,10 +6610,6 @@ msgstr "ispravljanje greške"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Jezik (zahteva ponovno pokretanje da bi delovalo u potpunosti):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Jezik"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "&Sačuvaj podešavanja pri izlazu"
@@ -6512,10 +6625,6 @@ msgstr "Puštaj &zvukove kada se NVDA zaustavlja i pokreće"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "&Nivo evidentiranja u dnevniku:"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Nivo evidentiranja u dnevniku"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6573,13 +6682,6 @@ msgstr "Greška pri kopiranju NVDA korisničkih podešavanja"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "Uspešno iskopirana NVDA korisnička podešavanja"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "Greška u %s jezičkoj datoteci"
-
-msgid "Language Error"
-msgstr "Jezička greška"
 
 msgid "This change requires administrator privileges."
 msgstr "Ova promena zahteva administratorske privilegije."
@@ -6684,10 +6786,6 @@ msgstr "Podešavanja tastature"
 msgid "&Keyboard layout:"
 msgstr "&Raspored tastature:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Raspored tastature"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6765,10 +6863,6 @@ msgstr "Omogući &praćenje miša"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Rezolucija &jedinice teksta"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "jedinica za prijvaljivanje teksta"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6895,11 +6989,6 @@ msgstr "Prijavi opis obje&kta"
 msgid "Progress &bar output:"
 msgstr "Izlaz iz &trake napredovanja:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Izlaz iz trake napredovanja"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6963,78 +7052,92 @@ msgstr "&Spreči sve gestove bez komande da dođu u susret sa dokumentom"
 msgid "Document Formatting"
 msgstr "Formatiranje dokumenta"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
 msgstr ""
-"Najavi promene u formatiranju posle kursora (može izazvati usporen rad)"
+"Sledeće opcije kontrolišu koje vrste formatiranja dokumenta će NVDA "
+"prijavljivati"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Fontovi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "Prijavi ime fon&ta"
+msgid "&Font name"
+msgstr "&ime fonta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "&Prijavi veličinu fonta"
+msgid "Font &size"
+msgstr "&veličina fonta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Prijavi atri&bute fonta"
+msgid "Font attri&butes"
+msgstr "atri&buti fonta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "Prijavi poravn&anje"
+msgid "E&mphasis"
+msgstr "&Naglašavanja"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "Prijavi &boje"
+msgid "St&yle"
+msgstr "&Stilovi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Prijavi ko&mentare"
+msgid "&Colors"
+msgstr "&Boje"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Informacije dokumenta"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Prijavi ure&đivačke revizije"
+msgid "Co&mments"
+msgstr "&Komentari"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Objavi &naglašavanje"
+msgid "&Editor revisions"
+msgstr "ure&đivačke revizije"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "Prijavi st&il"
+msgid "Spelling e&rrors"
+msgstr "&greške u pravopisu"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Strane i odvajanja"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Prijavi g&reške u pravopisu"
+msgid "&Pages"
+msgstr "S&trane"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "Prijavi &stranice"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "Prijavi broj red&ova"
+msgid "Line &numbers"
+msgstr "broj red&ova"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-msgid "Report line &indentation with:"
+msgid "Line &indentation reporting:"
 msgstr "Prijavi uv&lačenje reda"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Isključeno"
 
@@ -7053,63 +7156,84 @@ msgstr "Govor i tonovi"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Prijavi uvlačenje pa&susa"
+msgid "&Paragraph indentation"
+msgstr "uvlačenje pa&susa"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Prijavi &Prored"
+msgid "&Line spacing"
+msgstr "&Odvajanje redova"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "Prijavi &tabele"
+msgid "&Alignment"
+msgstr "&poravnanje"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Informacije o tabelama"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "Prijavi zaglavlja redova/kolona tab&ele"
+msgid "&Tables"
+msgstr "&Tabele"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "Prijavi ko&ordinate ćelija u tabeli"
+msgid "Row/column h&eaders"
+msgstr "&Zaglavlja kolona/redova"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "Prijavi lin&kove"
+msgid "Cell c&oordinates"
+msgstr "ko&ordinati ćelija u tabeli"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Stilovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Boje i stilovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Granice ćelija"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Elementi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "Prijavi &naslove"
+msgid "&Lists"
+msgstr "&Liste"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "Prijavi l&iste"
+msgid "Block &quotes"
+msgstr "&citati"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "Prijavi ci&tate"
+msgid "Fra&mes"
+msgstr "&Okviri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "Prijavi reg&ione"
+msgid "&Clickable"
+msgstr "&Klikabilnost"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "Prijavi okvir&e"
-
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Prijavi da li se može kli&knuti"
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"Najavi promene u formatiranju posle kursora (može izazvati usporen rad)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7144,13 +7268,17 @@ msgstr "&Komentar"
 msgid "&Type"
 msgstr "&Tip"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Morate upisati trenutnu reč"
+
+msgid "Dictionary Entry Error"
+msgstr "Greška unosa u rečniku"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Greška u regularnom izrazu : \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Greška unosa u rečniku"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7218,6 +7346,10 @@ msgstr "&Proširi na kompjuterski braj za reč na poziciji kursora"
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
 msgstr "&prikaži kursor"
+
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Treperenje kursora"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -7392,28 +7524,6 @@ msgstr ""
 "Uključuje i isključuje čuvanje rasporeda ekrana prilikom iscrtavanja "
 "sadržaja dokumenta"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Nije u ćeliji tabele"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "premešta se u naredni red tabele"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "premešta se u prethodni red tabele"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "premešta se u narednu kolonu tabele"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "premešta se u prethodnu kolonu tabele"
-
 msgid "Taskbar"
 msgstr "Programska traka"
 
@@ -7451,17 +7561,17 @@ msgstr "automatski"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 msgid "diagonal crosshatch"
-msgstr ""
+msgstr "Dijagonalno prevlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "thin diagonal crosshatch"
-msgstr ""
+msgstr "Tanko dijagonalno prevlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
 msgid "reverse diagonal stripe"
-msgstr ""
+msgstr "Obrnuto dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 12.5% gray
@@ -7496,35 +7606,32 @@ msgstr "6.25% siva"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
 msgid "thin horizontal crosshatch"
-msgstr ""
+msgstr "Tanko horizontalno prevlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-#, fuzzy
 msgid "horizontal stripe"
-msgstr "horizontalno"
+msgstr "horizontalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
 msgid "thin reverse diagonal stripe"
-msgstr ""
+msgstr "Tanko obrnuto dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-#, fuzzy
 msgid "thin horizontal stripe"
-msgstr "horizontalne linije "
+msgstr "Tanka horizontalna traka "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
 msgid "thin diagonal stripe"
-msgstr ""
+msgstr "Tanka dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#, fuzzy
 msgid "thin vertical stripe"
-msgstr "uspravno distribuirano poravnanje"
+msgstr "Tanka uspravna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
@@ -7534,31 +7641,30 @@ msgstr "nijedan"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "thick diagonal crosshatch"
-msgstr ""
+msgstr "Gusto dijagonalno povlačenje"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
 msgid "solid"
-msgstr ""
+msgstr "Čvrsto"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
 msgid "diagonal stripe"
-msgstr ""
+msgstr "Dijagonalna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#, fuzzy
 msgid "vertical stripe"
-msgstr "uspravno "
+msgstr "Uspravna traka"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
-msgstr ""
+msgstr "Linearni preliv"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
-msgstr ""
+msgstr "Pravougaoni preliv"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
@@ -7663,6 +7769,11 @@ msgstr ""
 "ćelije koje su ispod i desno od ove regije. Ako se pritisne dva puta "
 "zaboraviće trenutno zaglavlje reda za ovu ćeliju."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "List {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Ulazna poruka je {title}: {message}"
@@ -7688,6 +7799,129 @@ msgstr "Uređivanje komentara za ćeliju {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} do {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "Gornja ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "Donja ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "Leva ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "Desna ivica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "Gornje-desna dijagonala"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "Donja desna dijagonala"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "Horizontalne granice osim van"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "Uspravne granice osim vani"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "Neprekidne"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "Ucrtano"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "Crta tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "Crta tačka tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "Tačkasto"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "Duple"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "Kosa crta tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "Kosa"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "Tanke"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "Srednje"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "Tanko"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "Srednja crta tačka tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "Srednja crta tačka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "Srednje ucrtano"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} Uokvirena granica"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} Vrh i dno"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} Leva i desna ivica"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} gornje-desna i donje-desne dijagonale"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8680,15 +8914,15 @@ msgstr ""
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
-msgstr ""
+msgstr "Odvajanje pojedinačnih redova"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
 msgid "Double line spacing"
-msgstr ""
+msgstr "odvajanje više redova "
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr ""
+msgstr "1.5 odvajanje redova"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -8708,988 +8942,7 @@ msgstr "HIMS Braille Sense/Braille EDGE /Smart Beetle serije"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Uključuje i isključuje izgovor uvlačenja redova"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Ova ćelija nije izmenjiva"
-
-#~ msgid "checker"
-#~ msgstr "štriklirano"
-
-#~ msgid "down"
-#~ msgstr "dole"
-
-#~ msgid "gray16"
-#~ msgstr "siv 16"
-
-#~ msgid "gray25"
-#~ msgstr "siv25 "
-
-#~ msgid "gray50"
-#~ msgstr "siv50"
-
-#~ msgid "gray75"
-#~ msgstr "siv 75"
-
-#~ msgid "grid"
-#~ msgstr "mreža "
-
-#~ msgid "light down"
-#~ msgstr "dijagonalne linije nadole"
-
-#~ msgid "light up"
-#~ msgstr "dijagonalne linije nagore"
-
-#~ msgid "light vertical"
-#~ msgstr "uspravne linije"
-
-#~ msgid "semi gray75"
-#~ msgstr "polu siv"
-
-#~ msgid "up"
-#~ msgstr "gore"
-
-#~ msgid "unknown color"
-#~ msgstr "nepoznata boja"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Alisino plavo"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "antičko plavo"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "boja vode"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "akvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "azurna"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "bež"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "boja zemlje"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "boja badema"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "plava"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "plavo ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "peščana boja"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "kadetsko plavo"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "šartruz boja"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "čokoladna boja"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "boja korala"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "boja različka"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "bledožuta"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "grimizna"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "cijan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "tamno plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "tamno cijan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "tamna boja zlatice"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "tamno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "tamna kaki boja"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "tamno purpurna"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "tamna maslinasto-zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "tamno narandžasta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "tamno roze"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "tamno crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "tamna boja lososa"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "tamna plavetno-zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "tamna škriljčano plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "tamna škriljčano siva"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "tamna tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "tamno ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "tamno ružičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "tamna nebesko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "prigušeno siva"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "šerpa plava"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "boja cigle"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "cvetno bela"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "šumsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "purpurno crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "golubije plava"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "duh bela"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "zlatna"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "boja zlatice"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "siva"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "zeleno žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "boja dinje"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "žarko ružičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "indijsko crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "indigo boja"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "boja slonovače"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "kaki boja"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "boja lavande"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "bleda boja lavande"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "travnjak zelena boja"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "tamnija limun žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "svetlo plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "svetlo koral boja"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "svetlo tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "svetla boja zlatice"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "svetlo zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "svetlo roze"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "svetla losos boja"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "svetla plavetno-zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "svetla nebeskoplava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "svetla škriljčano plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "svetla čelično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "svetlo žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "boja limete"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "žuto zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "lanena boja"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "purpurna"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "kestenjasta"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "srednja akvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "srednje plava"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "srednja boja orhideje"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "srednje purpurna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "srednje morsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "srednja škriljčano plava"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "srednja prolećno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "srednje tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "srednje ljubičasto crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "noćno plava"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "boja mente"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "prljavo ružičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "svetlo bež"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navaho bela"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "mornarsko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "boja stare čipke"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "maslinasta"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "pastelno maslinasta"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "crveno narandžasta"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "boja orhideje"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "bleda zlatica"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "bledo zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "bledo tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "bleda ljubičasto crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "bleda narandžasta"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "boja tamne breskve"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "peruansko narandžasta"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "ružičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "boja šljive"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "kobaltno plava"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "ružičasto smeđa"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "modra"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "mrka"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "boja lososa"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "peščano smeđa"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "plavetno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "boja školjke"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "siena boja"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "srebrna"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "nebesko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "škriljčano plava"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "škriljčano siva"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "boja snega"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "prolećno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "čelično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "žutomrka"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "plavetna"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "boja čička"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "boja paradajza"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "boja žita"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "boja belog dima"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Početni marker se mora nalaziti unutar istog objekta"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "isključen izgovor gramatičkih grešaka"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "uključen izgovor gramatičkih grešaka"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Uključuje i isključuje izgovor gramatičkih grešaka"
-
-#~ msgid "grammar error"
-#~ msgstr "gramatička greška"
-
-#~ msgid "out of grammar error"
-#~ msgstr "van gramatičke greške"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Prijavi &gramatičke greške"
-
-#~ msgid "browse mode"
-#~ msgstr "režim pretraživanja"
-
-#~ msgid "activate"
-#~ msgstr "aktiviraj"
-
-#~ msgid "no next"
-#~ msgstr "nema sledećeg"
-
-#~ msgid "no previous"
-#~ msgstr "nema prethodnog"
-
-#~ msgid "edge of table"
-#~ msgstr "ivica tabele"
-
-#~ msgid "%g characters"
-#~ msgstr "%g slova"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "nema komentara"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
 #~ msgstr ""
-#~ "Predstavlja listu grafikona, ćelija sa komentarima i ćelija sa formulama"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "zadana boja"
-
-#~ msgid "unselecting %s"
-#~ msgstr "nije izabrano %s"
-
-#~ msgid "unrevised"
-#~ msgstr "neredigovano"
-
-#~ msgid "unknown author"
-#~ msgstr "nepoznat autor"
-
-#~ msgid "unknown date"
-#~ msgstr "nepoznat datum"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} od {revisionAuthor} na dan {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "prikazuje objekat u fokusu"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "vrednost {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} od {}"
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr ""
-#~ "Visina grafikona je {}, širina je {}, gornja ivica je {}, leva ivica je {}"
-
-#~ msgid "equation"
-#~ msgstr "jednačina"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "prikazuje listu linkova, zaglavlja i orjentira"
-
-#~ msgid "Slovak"
-#~ msgstr "slovački"
-
-#~ msgid "navy blue"
-#~ msgstr "morsko plava"
-
-#~ msgid "teal"
-#~ msgstr "tamno tirkizna"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "U NVDA 2013.1, laptopski raspored tastature je u potpunosti redizajniran "
-#~ "da bi bio intuitivniji i konzistentniji.\n"
-#~ "Ako koristite laptopski raspored, potražite više informacija u dokumentu "
-#~ "Šta je novo"
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Novi raspored laptop tastature"
-
-#~ msgid "Read What's New"
-#~ msgstr "Pročitajte Šta je novo"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Ubrzavanje"
-
-#~ msgid "male 1"
-#~ msgstr "muškarac 1"
-
-#~ msgid "female 1"
-#~ msgstr "žena 1"
-
-#~ msgid "male 2"
-#~ msgstr "muškarac 2"
-
-#~ msgid "female 2"
-#~ msgstr "žena 2"
-
-#~ msgid "lime"
-#~ msgstr "zeleno žuta"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Da li ste sigurni da želite izaći iz programa NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Upozori pre napuštanja NVDA"
-
-#~ msgid "Regular &expression"
-#~ msgstr "Regularni &izraz"
-
-#~ msgid "Regexp"
-#~ msgstr "Regularni izraz"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Nema informacija o lokaciji navigacionog objekta"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nema informacije o lokaciji za ekran"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Prikazuje visinu, širinu i poziciju trenutnog navigacionog objekta"
-
-#~ msgid "Set column header row"
-#~ msgstr "Postavljen naslovni red za kolone"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Ispražnjen naslovni red za kolone"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Jednim pritiskom postavlja se trenutni red kao red gde treba da budu "
-#~ "smeštena zaglavlja kolone. Dvostruki pritisak uklanja podešavanje."
-
-#~ msgid "Set row header column"
-#~ msgstr "Postavljena naslovna kolona za redove"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Jednim pritiskom postavlja se trenutna kolona kao kolona gde treba da "
-#~ "budu smeštena zaglavlja reda. Dvostruki pritisak uklanja podešavanje."
-
-#~ msgid "%s of %s"
-#~ msgstr "%s od %s"
-
-#~ msgid "line feed"
-#~ msgstr "novi red"
-
-#~ msgid "page break"
-#~ msgstr "prelom stranice"
-
-#~ msgid "carriage return"
-#~ msgstr "povratak na početak reda"
-
-#~ msgid "bang"
-#~ msgstr "uzvičnik"
-
-#~ msgid "quote"
-#~ msgstr "citat"
-
-#~ msgid "number"
-#~ msgstr "broj"
-
-#~ msgid "dollar"
-#~ msgstr "dolar"
-
-#~ msgid "percent"
-#~ msgstr "procenat"
-
-#~ msgid "tick"
-#~ msgstr "apostrof"
-
-#~ msgid "left paren"
-#~ msgstr "leva zagrada"
-
-#~ msgid "star"
-#~ msgstr "zvezdica"
-
-#~ msgid "plus"
-#~ msgstr "plus"
-
-#~ msgid "comma"
-#~ msgstr "zarez"
-
-#~ msgid "dash"
-#~ msgstr "crtica"
-
-#~ msgid "slash"
-#~ msgstr "kosa crta"
-
-#~ msgid "semi"
-#~ msgstr "polovina"
-
-#~ msgid "less"
-#~ msgstr "manje"
-
-#~ msgid "equals"
-#~ msgstr "jednako"
-
-#~ msgid "greater"
-#~ msgstr "veće"
-
-#~ msgid "question"
-#~ msgstr "pitanje"
-
-#~ msgid "at"
-#~ msgstr "u"
-
-#~ msgid "left bracket"
-#~ msgstr "leva uglasta zagrada"
-
-#~ msgid "back slash"
-#~ msgstr "kosa crta"
-
-#~ msgid "right bracket"
-#~ msgstr "desna uglasta zagrada"
-
-#~ msgid "left brace"
-#~ msgstr "leva vitičasta zagrada"
-
-#~ msgid "bar"
-#~ msgstr "traka"
-
-#~ msgid "right brace"
-#~ msgstr "desna vitičasta zagrada"
-
-#~ msgid "tilda"
-#~ msgstr "tilda"
-
-#~ msgid "bullet"
-#~ msgstr "znak za nabrajanje"
-
-#~ msgid "dot dot dot"
-#~ msgstr "tri tačke"
-
-#~ msgid "layout %s"
-#~ msgstr "raspored  %s"
-
-#~ msgid "speak punctuation"
-#~ msgstr "izgovori znake interpunkcije"
-
-#~ msgid ""
-#~ "Toggles on and off the speaking of punctuation. When on NVDA will say the "
-#~ "names of punctuation symbols, when off it will be up to the synthesizer "
-#~ "as to how it speaks punctuation"
-#~ msgstr ""
-#~ "Aktivira i deaktivira izgovaranje interpunkcije. Kod aktiviranja NVDA će "
-#~ "izgovarati i znakove interpunkcije, kod deaktiviranja zavisiće od "
-#~ "sintetizatora kako izgovara interpunkciju"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nema fiksnog pregleda za ovaj objekat"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nema objekta na poziciji fiksnog pregleda"
-
-#~ msgid "Sets the keyboard focus to the navigator object"
-#~ msgstr "Postavlja trenutni fokus na mesto objekta navigatora"
-
-#~ msgid "No parents"
-#~ msgstr "Nema roditelja"
-
-#~ msgid ""
-#~ "Sets the navigator object to the parent of the object it is currently on "
-#~ "and speaks it"
-#~ msgstr ""
-#~ "Postavlja navigacioni objekat na mesto roditelja objekta koji je trenutno "
-#~ "uključen i to izgovara"
-
-#~ msgid ""
-#~ "Sets the navigator object to the object previous to the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Postavlja navigacioni objekat na mesto objekta iza onog na kojem se "
-#~ "trenutno nalazi i izgovara ga"
-
-#~ msgid "No children"
-#~ msgstr "Nema dete"
-
-#~ msgid ""
-#~ "Sets the navigator object to the first child object of the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Postavlja navigacioni objekat na prvo dete objekta do onog na kojem se "
-#~ "trenutno nalazi i izgovara ga"
-
-#~ msgid "default action failed"
-#~ msgstr "početna akcija nije uspela"
-
-#~ msgid ""
-#~ "Moves the system caret to the position of the review cursor , in the "
-#~ "current navigator object"
-#~ msgstr ""
-#~ "Premešta sistemski kursor na poziciju revizionog kursora, u trenutnom "
-#~ "navigatoru objekta"
-
-#~ msgid "beeps"
-#~ msgstr "zvučni signali"
-
-#~ msgid "talk"
-#~ msgstr "govor"
-
-#~ msgid "Shows the NVDA virtual buffers settings dialog"
-#~ msgstr "Prikazuje NVDA dijalog za podešavanje virtuelnih bafera"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "Učitava sačuvanu NVDA konfiguraciju i unosi izmene"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Pogrešno formirana konfiguracijska datoteka"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, postavljanje zadatih vrednosti na %s "
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Greška u analizi konfiguracijske datoteke: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Greške u konfiguracijskoj datoteci '%s':\n"
-#~ "%s"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "&Speak all punctuation"
-#~ msgstr "&Izgovori znakove interpunkcije"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "Povisi glas kod velikih slova"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Prati fokus &tastature"
-
-#~ msgid "virtual buffers"
-#~ msgstr "vrituelni baferi"
-
-#~ msgid "case sensitive"
-#~ msgstr "osetljiv na veličinu slova"
-
-#~ msgid "&edit"
-#~ msgstr "&izmeni"
-
-#~ msgid "Translation &table:"
-#~ msgstr "Tabela za  &prevođenje:"
-
-#~ msgid "url"
-#~ msgstr "url"
-
-#~ msgid "copyright"
-#~ msgstr "izdavačko pravo"
-
-#~ msgid "Virtual &buffers..."
-#~ msgstr "Virtuelne &memorije..."
-
-#~ msgid "Readme"
-#~ msgstr "Pročitaj me"
-
-#~ msgid "%s embedded object"
-#~ msgstr "%s umetnuti objekat"
-
-#~ msgid "NVDA Excel Cell Editor"
-#~ msgstr "NVDA Exceel uređivač ćelija "
-
-#~ msgid "Enter cell contents"
-#~ msgstr "Unesi sadržaj ćelije"
-
-#~ msgid "Extends the selection and speaks the last selected cell"
-#~ msgstr "Proširuje izbor i govori poslednju izabranu ćeliju "
-
-#~ msgid "%s %s through %s %s"
-#~ msgstr "%s %s kroz %s %s"
+#~ "Da li ste sigurni da želite da obrišete ovaj profil? Ovo ne može biti "
+#~ "poništeno"

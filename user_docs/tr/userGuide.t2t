@@ -23,7 +23,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 47 dile çevrilmiş oluşu
+- 48 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
@@ -32,7 +32,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Yerel Dil Desteği ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 47 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Macarca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 48 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -91,6 +91,7 @@ Windows'a giriş yaparken ya da giriş sonrasında otomatik olarak çalıştır�
 - Bir uygulama yönetici yetkisi istediğinde karşılaşılan kullanıcı hesap kontrol (UAC) ekranlarının okunamaması.
 - Windows 8 ve sonrası: dokunmatik ekranlarda dokunma hareketlerinin çalışmaması.
 - Windows 8 ve sonrası: Windows Store apps gibi uygulamalarda, tarama kipi gibi özelliklerin çalışmaması ya da karakter girişlerinin seslendirilmemesi.
+- Windows 8 ve sonrası: Ses zayıflaması özelliği desteklenmez.
 -
 
 ++ NVDA'yı Kurma ++
@@ -540,36 +541,36 @@ Design Science tarafından geliştirilen MathPlayer 4 kullanarak, NVDA desteklen
 Bu, bilgisayarda MathPlayer 4'un kurulu olmasını gerektirir.
 MathPlayer uygulamasını aşağıdan ücretsiz olarak indirebilirsiniz: http://www.dessci.com/en/products/mathplayer/
 
-NVDA supports the following types of mathematical content:
-- MathML in Mozilla Firefox and Microsoft Internet Explorer.
-- Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient..
-- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+NVDA aşağıdaki matematiksel içerik türlerini destekler:
+- Mozilla Firefox ve Microsoft Internet Explorer'da MathML.
+- Microsoft Word ve PowerPoint'de Design Science MathType . bunun çalışabilmesi için MathType'ın yüklenmiş olması gerekir. Deneme sürümü yeterlidir.
+- Adobe Reader'de MathML . Bunun henüz resmi bir standart olmadığını not edin, dolayısıyla  şu anda bu içeriği üretebilen hiçbir kamuya açık yazılım bulunmuyor.
 -
 
-When reading a document, NVDA will speak any supported mathematical content where it occurs.
-If you are using a braille display, it will also be displayed in braille.
+Bir belgeyi okurken, NVDA mevcut  desteklenen herhangi bir matematiksel içeriği seslendirecektir.
+Braille ekran kullanıyorsanız, ayrıca braille olarak da görüntülenir.
 
-++ Interactive Navigation ++
-If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+++ Etkileşimli Navigasyon ++
+Öncelikli olarak konuşma ile çalışıyorsanız, çoğu durumda, muhtemelen tüm ifadeyi bir kerede dinlemek yerine, daha küçük segmentlerde incelemek isteyebilirsiniz.
 
-If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+Tarama kipindeyseniz, matematiksel içerik üzerine gelip enter tuşuna basarak bunu yapabilirsiniz.
 
-If you are not in browse mode:
-+ move the review cursor to the mathematical content.
-By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
-+ Then, activate the following command:
+Tarama kipinde değilseniz:
++ İnceleme imlecini matematiksel içerik üzerine getirin.
+Varsayılan olarak, inceleme imleci sistem imlecini  izler, yani genellikle istenilen içerik üzerine  gitmek için sistem düzeltme imlecini kullanabilirsiniz.
++ Sonra, aşağıdaki komutu gerçekleştirin:
 +
 
 %kc:beginInclude
-|| Name | Key | Description |
-| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+|| Ad | Tuş | Tarif |
+| Matematik içeriği ile etkileşim | NVDA+alt+m | Matematik içeriği ile etkileşim başlar. |
 %kc:endInclude
 
-At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
-For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the MathPlayer documentation for further information.
+Bu noktada, ifadeyi incelemek  için yön tuşları dahil  MathPlayer komutlarını kullanabilirsiniz.
+Örneğin, ifade üzerinde sol ve sağ Ok tuşları ile hareket edebilirsiniz ve kesir vb ifadenin bir bölümünü daha yakından incelemek  için aşağı ok tuşuna basabilirsiniz.
+Lütfen daha fazla bilgi için MathPlayer belgelerine bakın.
 
-When you wish to return to the document, simply press the escape key.
+Matematiksel içeriğe sahip olan belgeye geri dönmek istediğinizde, basitçe escape tuşuna basmanız yeterli.
 
 + Uygulamaya Özgü Özellikler +
 NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu kullanıcıları için erişilebilir olmayan işlevleri onlar için de ulaşılabilir kılmak için bazı uygulamalara özgü ek olanaklar sağlamaktadır.
@@ -697,6 +698,42 @@ Bir konuşma içindeyken:
 | Mesajı dinle | NVDA+control+1-0 | Basılan numaraya göre, son mesajlardan birini okur ve inceleme imlecini mesajın üzerine taşır; örneğin NVDA+control+2 sondan ikinci mesajı okur. |
 %kc:endInclude
 
+++ Kindle for PC ++
+NVDA supports reading and navigating books in Amazon Kindle for PC.
+This functionality is only available in Kindle books that support "Enhanced Typesetting", which you can check on the details page for the book.
+
+Browse mode is used to read books.
+It is enabled automatically when you open a book or focus the book area.
+The page will be turned automatically as appropriate when you move the cursor or use the say all command.
+%kc:beginInclude
+You can manually turn to the next page with the pageDown key and turn to the previous page with the pageUp key.
+%kc:endInclude
+
+Single letter navigation is supported for links and graphics, but only within the current page.
+Navigating by link also includes footnotes.
+
++++ Text Selection +++
+Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
+To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
+%kc:beginInclude
+Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
+%kc:endInclude
+If you do this with no text selected, options will be shown for the word at the cursor.
+
++++ User Notes +++
+You can add a note regarding a word or passage of text.
+To do this, first select the relevant text and access the selection options as described above.
+Then, choose Add Note.
+
+When reading in browse mode, NVDA refers to these notes as comments.
+
+To view, edit or delete a note:
+
++ Move the cursor to the text containing the note.
++ Access the options for the selection as described above.
++ Choose Edit Note.
++
+
 + NVDA'yı ayarlama +
 
 ++ Tercihler ++
@@ -780,6 +817,9 @@ Windows 8 ve sonrası için, bu seçenek NVDA'nın diğer seslerin seviyesini d�
 - Ses zayıflaması açık, konuşurken ya da ses çalarken: NVDA, diğer seslerin seviyesini yalnızca NVDA konuşurken ya da ses çalarken düşürür. Tüm sentezleyiciler desteklemeyebilir. 
 - Ses zayıflaması açık, her zaman : NVDA, NVDA açıkken diğer seslerin seviyesini her zaman düşük tutar.
 -
+
+Bu seçenek yalnızca kurulu NVDA için geçerlidir.
+NVDA taşınabilir ve geçici kopyaları  için ses zayıflamasının desteği mümkün değildir.
 
 +++ Ses Ayarları (NVDA+kontrol+v) +++[VoiceSettings]
 Tercihler menüsü içinde bulunan Ses Ayarları iletişim kutusu, konuşma sesini değiştirmenizi sağlayan seçenekler içerir.
@@ -911,6 +951,10 @@ Bu seçenek, imlecin üzerinde bulunduğu sözcüğün kısaltmasız bilgisayar 
 ==== İmleci göster ====
 Bu seçenek, brail imlecini açıp kapatmanızı sağlar.
 Sistem imleci ve inceleme imleci için uygulanır; seçimin belirtilmesi için geçerli değildir.
+
+==== İmleç Sinyali ====
+Bu seçenek, braille imlecin yanıp sönmesini sağlar.
+Sinyal kapatıldıysa, braille imleç yukarıda sabitlenir.
 
 ==== İmleç inip çıkma hızı ====
 Bu seçenek, imleç inip çıkma hızının milisaniyede ne kadar hızlı olacağını değiştirmenizi sağlayan rakamsal bir alandır.
@@ -1195,33 +1239,41 @@ Bu iletişim kutusu tercihler menüsü içindeki "Belge Formatları..." altında
 Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür biçimlendirmeleri otomatik olarak duymak istediğinizi ayarlamanızı sağlamak içindir.
 Örneğin, yazı Tipi Adını Bildir onay kutusunu işaretlerseniz, oklarla başka bir yazı tipiyle yazılan bir metne her gittiğinizde, yazı tipi adı bildirilecektir.
 
+Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 Şunların bildirimini ayarlayabilirsiniz:
+- Yazı tipi
 - Yazı tipi adı
 - Yazı tipi boyutu
 - Yazı tipi özellikleri
-- Metin hizzalaması
-- Renkler
-- Açıklamalar
-- Editör değişiklikleri
 - Vurgu
-- Metin sitilleri
+ Stil
+- Renkler
+- Belge Bilgileri
+- Açıklamalar
+- Editör düzeltmeleri
 - Yazım hataları
+- Sayfalar ve Aralık
 - Sayfa numaraları
-- Satır numaraları
-- Satır girintisi
-- Paragraf girintisi (Örneğin, asılı girinti, ilk satır girintisi)
-- Satır aralığı (tek, çift vs)
+- Satır Numaraları
+- Satır girintilerinin bildirimi [(Kapalı, Konuşma, Ses çalarak, Konuşarak ve Ses çalarak) #lineIndentationOptions]
+ - Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
+ - Satır aralığı (tek, çift vs)
+ --- Hizzalama
+ Tablo bilgileri
 - Tablolar
-- Tablo satır/sütun başlıkları
-- Tablo hücre koordinatları
-- Bağlantılar
+- Satır/sütun başlıkları
+- Hücre koordinatları
+- Öğeler
 - Başlıklar
+- Bağlantılar
 - Listeler
 - Alıntılar
 - Sınır imleri
 - Çerçeveler
 - Bir ögenin tıklanabilir olup olmadığı
 -
+-
+
 
 Bu ayarları herhangi bir yerdeyken değiştirebilmek için, lütfen [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyin.
 
@@ -1230,11 +1282,11 @@ Bu seçenek NVDA'ya konuştuğu satırda herhangi bir biçim değişikliği vars
 
 Varsayılan olarak NVDA sistem düzenleme imleci veya inceleme imlecinin bulunduğu konumdaki biçim değişikliklerini bildirecektir, ve bazı durumlarda yalnızca performansı yavaşlatmayacaksa satırın geri kalanındaki değişiklikleri belirtebilir.
  
-Biçimlendirmenin önemli olduğu Microsoft Word belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
+Biçimlendirmenin önemli olduğu Wordpad belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
 
-==== Satır girintilerini bildirme alternatifleri ====
+==== Satır girintilerinin bildirimi ====[lineIndentationOptions]
 Bu seçenek, satır başlarındaki boşlukların nasıl bildirileceğini belirlemenize olanak tanır.
-Satır girintilerininin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
+Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 
 - Kapalı: NVDA girintilerle ilgili herhangi bir bildirimde bulunmaz.
 - Konuşma: Konuşma seçilirse, girinti miktarı değiştiğinde, NVDA "oniki aralık" veya "dört sekme" gibi bir şey söyler.
@@ -2152,8 +2204,8 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
-bunu kullanabilmek için,[BRLTTY for Windows http://brl.thefreecat.org/brltty/] programını yüklemeniz gerekecektir.
+[BRLTTY http://www.brltty.com/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
+bunu kullanabilmek için,[BRLTTY for Windows http://www.brltty.com/download.html] programını yüklemeniz gerekecektir.
 En son kurulum sürümünü indirip kurmalısınız. bunun adı şu biçimde olabilir: brltty-win-4.2-2.exe.
 Ekranı ve kullanılacak portu ayarlarken, özellikle USB sürücüleri kullanıyorsanız ve elinizde üreticilerin sürücüleri varsa, yönergeleri yakından takip ettiğinizden emin olun.
 
@@ -2246,6 +2298,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -m | --minimal | Ses, arayüz, başlangıç mesajı vb olmaz |
 | -s | --secure | Güvenli kip (Python konsolu devre dışı bırakır) |
 | None | --disable-addons | Eklentiler etkisizdir |
+| None | --debug-logging | hata ayıklama seviyesi günlüğünü etkinleştir sadece bu çalışma için. Bu ayar, herhangi bir diğer log düzeyini geçersiz kılar ( ""--loglevel"", -l) sağlanan değişken. |
 | None | --no-sr-flag  | Global ekran okuyucu bayrağını devre dışı bırakmaz |
 | None | --install | NVDA'yı kurar (yeni kurulmuş kopyayı çalıştırarak) |
 | None | --install-silent | NVDA'yı sessizce kurar (yeni kurulmuş kopyayı başlatmaz) |

@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2013 NV Access Limited
+Copyright 2007-2016 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -99,12 +99,14 @@ inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer
 	unk->Release();
 	if (res != S_OK || !acc)
 		return 0;
-	int docHandle, id;
-	if (acc->get_windowHandle((HWND*)&docHandle) != S_OK
+	HWND docHwnd;
+	int id;
+	if (acc->get_windowHandle(&docHwnd) != S_OK
 			|| acc->get_uniqueID((long*)&id) != S_OK) {
 		acc->Release();
 		return 0;
 	}
+	const int docHandle = HandleToUlong(docHwnd);
 	VBufStorage_controlFieldNode_t* node = tableBuffer->getControlFieldNodeWithIdentifier(docHandle, id);
 	if (!node) {
 		acc->Release();
@@ -150,21 +152,22 @@ inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTa
 	wostringstream s;
 	IUnknown** headerCells;
 	long nHeaderCells;
-	IAccessible2* headerCellPacc = NULL;
-	int headerCellDocHandle, headerCellID;
 
 	if ((paccTableCell->*getHeaderCells)(&headerCells, &nHeaderCells) == S_OK && headerCells) {
 		for (int hci = 0; hci < nHeaderCells; hci++) {
+			IAccessible2* headerCellPacc = NULL;
 			if (headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)&headerCellPacc) != S_OK) {
 				headerCells[hci]->Release();
 				continue;
 			}
 			headerCells[hci]->Release();
-			if (headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle) != S_OK) {
+			HWND hwnd;
+			if (headerCellPacc->get_windowHandle(&hwnd) != S_OK) {
 				headerCellPacc->Release();
 				continue;
 			}
-			headerCellDocHandle = HandleToUlong(findRealMozillaWindow((HWND)UlongToHandle(headerCellDocHandle)));
+			const int headerCellDocHandle = HandleToUlong(findRealMozillaWindow(hwnd));
+			int headerCellID;
 			if (headerCellPacc->get_uniqueID((long*)&headerCellID) != S_OK) {
 				headerCellPacc->Release();
 				continue;
@@ -316,12 +319,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	wostringstream s;
 
 	//get docHandle -- IAccessible2 windowHandle
-	int docHandle;
-	if(pacc->get_windowHandle((HWND*)&docHandle)!=S_OK) {
+	HWND docHwnd;
+	if(pacc->get_windowHandle(&docHwnd)!=S_OK) {
 		LOG_DEBUG(L"pacc->get_windowHandle failed");
 		return NULL;
 	}
-	docHandle=HandleToUlong(findRealMozillaWindow((HWND)UlongToHandle(docHandle)));
+	const int docHandle=HandleToUlong(findRealMozillaWindow(docHwnd));
 	if(!docHandle) {
 		LOG_DEBUG(L"bad docHandle");
 		return NULL;

@@ -39,9 +39,6 @@ curWordChars=[]
 
 #Set containing locale codes for languages supporting conjunct characters
 LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur', 'ta'}
-# The REASON_* constants in this module are deprecated and will be removed in a future release.
-# Use controlTypes.REASON_* instead.
-from controlTypes import REASON_FOCUS, REASON_FOCUSENTERED, REASON_MOUSE, REASON_QUERY, REASON_CHANGE, REASON_MESSAGE, REASON_SAYALL, REASON_CARET, REASON_ONLYCACHE
 
 #: The string used to separate distinct chunks of text when multiple chunks should be spoken without pauses.
 # #555: Use two spaces so that numbers from adjacent chunks aren't treated as a single number
@@ -307,6 +304,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 			newPropertyValues["_tableID"]=obj.tableID
 		except NotImplementedError:
 			pass
+	newPropertyValues['current']=obj.isCurrent
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -785,7 +783,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
-	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+	text=info.getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail,initialFormat=True)
 	if text:
 		speechSequence.append(text)
 	if autoLanguageSwitching:
@@ -843,7 +841,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				if commonFieldCount>len(newControlFieldStack):
 					commonFieldCount=len(newControlFieldStack)
 			elif command.command=="formatChange":
-				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+				fieldText=info.getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,reason=reason,unit=unit,extraDetail=extraDetail)
 				if fieldText:
 					inTextChunk=False
 				if autoLanguageSwitching:
@@ -1001,6 +999,13 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
+	ariaCurrent = propertyValues.get('current', False)
+	if ariaCurrent:
+		try:
+			textList.append(controlTypes.isCurrentLabels[ariaCurrent])
+		except KeyError:
+			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
+			textList.append(controlTypes.isCurrentLabels[True])
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:
@@ -1035,6 +1040,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
+	ariaCurrent=attrs.get('current', None)
 	value=attrs.get('value',"")
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
 		description=attrs.get('description',"")
@@ -1050,6 +1056,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
+	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	valueText=getSpeechTextForProperties(reason=reason,value=value)
 	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
@@ -1101,27 +1108,40 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
 		return (getSpeechTextForProperties(_tableID=tableID, **getProps)
-			+ (" %s" % stateText if stateText else ""))
+			+ (" %s" % stateText if stateText else "")
+			+ (" %s" % ariaCurrentText if ariaCurrent else ""))
 
 	# General cases
 	elif (
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText if x])
+		out = []
+		content = attrs.get("content")
+		if content and speakContentFirst:
+			out.append(content)
+		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
+		if content and not speakContentFirst:
+			out.append(content)
+		return CHUNK_SEPARATOR.join(out)
+		
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
 
 	# Special cases
-	elif not extraDetail and not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
-		# Clickable.
-		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
-
+	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
+		out = []
+		if not extraDetail and controlTypes.STATE_CLICKABLE in states: 
+			# Clickable.
+			out.append(getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE])))
+		if ariaCurrent:
+			out.append(ariaCurrentText)
+		return CHUNK_SEPARATOR.join(out)
 	else:
 		return ""
 
-def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extraDetail=False , separator=CHUNK_SEPARATOR):
+def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,unit=None,extraDetail=False , initialFormat=False, separator=CHUNK_SEPARATOR):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	textList=[]
@@ -1131,7 +1151,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		text=getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=extraDetail)
 		if text:
 			textList.append(text)
-	if  formatConfig["reportPage"]:
+	if formatConfig["reportPage"]:
 		pageNumber=attrs.get("page-number")
 		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
@@ -1139,10 +1159,62 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# %s will be replaced with the page number.
 			text=_("page %s")%pageNumber
 			textList.append(text)
+		sectionNumber=attrs.get("section-number")
+		oldSectionNumber=attrsCache.get("section-number") if attrsCache is not None else None
+		if sectionNumber and sectionNumber!=oldSectionNumber:
+			# Translators: Indicates the section number in a document.
+			# %s will be replaced with the section number.
+			text=_("section %s")%sectionNumber
+			textList.append(text)
+
+		textColumnCount=attrs.get("text-column-count")
+		oldTextColumnCount=attrsCache.get("text-column-count") if attrsCache is not None else None
+		textColumnNumber=attrs.get("text-column-number")
+		oldTextColumnNumber=attrsCache.get("text-column-number") if attrsCache is not None else None
+
+		# Because we do not want to report the number of columns when a document is just opened and there is only 
+		# one column. This would be verbose, in the standard case.
+		# column number has changed, or the columnCount has changed
+		# but not if the columnCount is 1 or less and there is no old columnCount.
+		if (((textColumnNumber and textColumnNumber!=oldTextColumnNumber) or
+			(textColumnCount and textColumnCount!=oldTextColumnCount)) and not
+			(textColumnCount and int(textColumnCount) <=1 and oldTextColumnCount == None)) :
+			if textColumnNumber and textColumnCount:
+				# Translators: Indicates the text column number in a document.
+				# {0} will be replaced with the text column number.
+				# {1} will be replaced with the number of text columns.
+				text=_("column {0} of {1}").format(textColumnNumber,textColumnCount)
+				textList.append(text)
+			elif textColumnCount:
+				# Translators: Indicates the text column number in a document.
+				# %s will be replaced with the number of text columns.
+				text=_("%s columns")%(textColumnCount)
+				textList.append(text)
+
+	sectionBreakType=attrs.get("section-break")
+	if sectionBreakType:
+		if sectionBreakType == "0" : # Continuous section break.
+			text=_("continuous section break")
+		elif sectionBreakType == "1" : # New column section break.
+			text=_("new column section break")
+		elif sectionBreakType == "2" : # New page section break.
+			text=_("new page section break")
+		elif sectionBreakType == "3" : # Even pages section break.
+			text=_("even pages section break")
+		elif sectionBreakType == "4" : # Odd pages section break.
+			text=_("odd pages section break")
+		else:
+			text=""
+		textList.append(text)
+	columnBreakType=attrs.get("column-break")
+	if columnBreakType:
+		textList.append(_("column break"))
 	if  formatConfig["reportHeadings"]:
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
-		if headingLevel and headingLevel!=oldHeadingLevel:
+		# headings should be spoken not only if they change, but also when beginning to speak lines or paragraphs
+		# Ensuring a similar experience to if a heading was a controlField
+		if headingLevel and (initialFormat and (reason==controlTypes.REASON_FOCUS or unit in (textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH)) or headingLevel!=oldHeadingLevel):
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text=_("heading level %d")%headingLevel
 			textList.append(text)
@@ -1159,6 +1231,16 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Indicates that text has reverted to the default style.
 				# A style is a collection of formatting settings and depends on the application.
 				text=_("default style")
+			textList.append(text)
+	if  formatConfig["reportBorderStyle"]:
+		borderStyle=attrs.get("border-style")
+		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
+		if borderStyle!=oldBorderStyle:
+			if borderStyle:
+				text=borderStyle
+			else:
+				# Translators: Indicates that cell does not have border lines.
+				text=_("no border lines")
 			textList.append(text)
 	if  formatConfig["reportFontName"]:
 		fontFamily=attrs.get("font-family")

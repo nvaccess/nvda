@@ -158,18 +158,18 @@ class InputGesture(braille.BrailleDisplayGesture):
 		super(InputGesture, self).__init__()
 		self.keyCodes = set(keys)
 
-		self.keyNames = names = set()
+		self.keyNames = names = []
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
 				if number & ALVA_2ND_CR_MASK:
-					names.add("routing2")
+					names.append("routing2")
 					self.routingIndex = number & ~ALVA_2ND_CR_MASK
 				else:
-					names.add("routing")
+					names.append("routing")
 					self.routingIndex = number
 			else:
 				try:
-					names.add(ALVA_KEYS[group][number])
+					names.append(ALVA_KEYS[group][number])
 				except (KeyError, IndexError):
 					log.debugWarning("Unknown key with group %d and number %d" % (group, number))
 
