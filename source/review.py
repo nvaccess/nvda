@@ -58,7 +58,7 @@ def getScreenPosition(obj):
 	w=winUser.getAncestor(focus.windowHandle,winUser.GA_ROOT) or focus.windowHandle
 	s=Window(windowHandle=w)
 	if s:
-		s.redraw()
+		s.redraw(includeChildWindows=True)
 		try:
 			pos=DisplayModelTextInfo(s,obj)
 		except LookupError:

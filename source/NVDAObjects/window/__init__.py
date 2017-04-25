@@ -1,6 +1,6 @@
 #NVDAObjects/window.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -43,7 +43,7 @@ class WindowProcessHandleContainer(object):
 	@ivar processHandle: The actual handle which can be used in any win32 calls that need it.
 	@type processHandle: int
 	"""
- 
+
 	def __init__(self,windowHandle):
 		"""
 		@param windowHandle: the handle of the window whos process handle should be retreaved.
@@ -197,14 +197,23 @@ An NVDAObject for a window
 		import textInfos
 		return displayModel.DisplayModelTextInfo(self,textInfos.POSITION_ALL).text
 
-	def redraw(self):
-		"""Redraw the display for this object.
+	def redraw(self, includeChildWindows=False):
+		"""
+		Redraw the display for this object.
+		@param includeChildWindows: whether child windows should be redrawn explicitly.
+		@type includeChildWindows: bool
 		"""
 		left, top, width, height = self.location
 		left, top = winUser.ScreenToClient(self.windowHandle, left, top)
-		winUser.RedrawWindow(self.windowHandle,
-			winUser.RECT(left, top, left + width, top + height), None,
-			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
+		flags=winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW
+		if includeChildWindows:
+			flags |= winUser.RDW_ALLCHILDREN
+		winUser.RedrawWindow(
+			self.windowHandle,
+			winUser.RECT(left, top, left + width, top + height),
+			None,
+			flags
+		)
 
 	def _get_windowText(self):
 		textLength=watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
@@ -362,7 +371,7 @@ An NVDAObject for a window
 			ret = "exception: %s" % e
 		info.append("windowText: %s" % ret)
 		try:
-			self.redraw()
+			self.redraw(includeChildWindows=bool(self.childCount))
 			ret = formatLong(self.displayText)
 		except Exception as e:
 			ret = "exception: %s" % e
@@ -390,7 +399,7 @@ class DisplayModelLiveText(LiveText, Window):
 
 	def startMonitoring(self):
 		# Force the window to be redrawn, as our display model might be out of date.
-		self.redraw()
+		self.redraw(includeChildWindows=bool(self.childCount))
 		displayModel.requestTextChangeNotifications(self, True)
 		super(DisplayModelLiveText, self).startMonitoring()
 

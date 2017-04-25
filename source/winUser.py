@@ -1,6 +1,6 @@
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -300,8 +300,41 @@ SW_HIDE = 0
 SW_SHOWNORMAL = 1
 
 # RedrawWindow() flags
+#: Invalidates rcUpdate or rgnUpdate (only one may be non-NONE).
+#: If both are NONE, the entire window is invalidated.
 RDW_INVALIDATE = 0x0001
+#: Causes a WM_PAINT message to be posted to the window regardless of whether any portion of the window is invalid.
+RDW_INTERNALPAINT = 0x0002
+#: Causes the window to receive a WM_ERASEBKGND message when the window is repainted.
+#: The RDW_INVALIDATE flag must also be specified; otherwise, RDW_ERASE has no effect.
+RDW_ERASE         = 0x0004
+#: Validates rcUpdate or rgnUpdate (only one may be non-None).
+#: If both are None, the entire window is validated. This flag does not affect internal WM_PAINT messages.
+RDW_VALIDATE      = 0x0008
+#: Suppresses any pending internal WM_PAINT messages.
+#: This flag does not affect WM_PAINT messages resulting from a non-None update area.
+RDW_NOINTERNALPAINT = 0x0010
+#: Suppresses any pending WM_ERASEBKGND messages.
+RDW_NOERASE       = 0x0020
+#: Excludes child windows, if any, from the repainting operation.
+RDW_NOCHILDREN    = 0x0040
+#: Includes child windows, if any, in the repainting operation.
+RDW_ALLCHILDREN   = 0x0080
+#: Causes the affected windows (as specified by the RDW_ALLCHILDREN and RDW_NOCHILDREN flags)
+#: to receive WM_NCPAINT, WM_ERASEBKGND, and WM_PAINT messages, if necessary, before the function returns.
 RDW_UPDATENOW = 0x0100
+#: Causes the affected windows (as specified by the RDW_ALLCHILDREN and RDW_NOCHILDREN flags)
+#: to receive WM_NCPAINT and WM_ERASEBKGND messages, if necessary, before the function returns.
+#: WM_PAINT messages are received at the ordinary time.
+RDW_ERASENOW      = 0x0200
+#: Causes any part of the nonclient area of the window that intersects the update region to receive a WM_NCPAINT message.
+#: The RDW_INVALIDATE flag must also be specified; otherwise, RDW_FRAME has no effect.
+#: The WM_NCPAINT message is typically not sent during the execution of RedrawWindow
+#: unless either RDW_UPDATENOW or RDW_ERASENOW is specified.
+RDW_FRAME         = 0x0400
+#: Suppresses any pending WM_NCPAINT messages. This flag must be used with RDW_VALIDATE and is typically used with RDW_NOCHILDREN.
+#: RDW_NOFRAME should be used with care, as it could cause parts of a window to be painted improperly.
+RDW_NOFRAME       = 0x0800
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
