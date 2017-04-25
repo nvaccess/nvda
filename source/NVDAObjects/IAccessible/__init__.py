@@ -1560,21 +1560,10 @@ class Groupbox(IAccessible):
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
-	The value contains the time, and the date if available.
 	"""
 
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
-
-	def _get_value(self):
-		value = super(TrayClockWClass, self).value
-		if value is None:
-			#On XP there is no value, fall back to using the name.
-			return super(TrayClockWClass, self).name
-		# #5729: Strip Unicode left-to-right and right-to-left marks.
-		value = value.replace(u'\u200E','')
-		value = value.replace(u'\u200F','')
-		return value
 
 class OutlineItem(IAccessible):
 
@@ -1753,7 +1742,6 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
-	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLOCK):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
