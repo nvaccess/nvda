@@ -597,7 +597,7 @@ class WelcomeDialog(wx.Dialog):
 			index = self.kbdNames.index(config.conf["keyboard"]["keyboardLayout"])
 			self.kbdList.SetSelection(index)
 		except:
-			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True) 
+			log.error("Could not set Keyboard layout list to current layout",exc_info=True) 
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
 		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
