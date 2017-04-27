@@ -13,6 +13,10 @@
 - Thực hiện lệnh đọc dòng hiện tại nhanh ba lần sẽ đánh vấn dòng đó với ký tự được mô tả. (#6893)
 
 
+== Các Thay Đổi ==
+- Khi di chuyển với chế độ duyệt đơn giản trong những ứng dụng sử dụng UI Automation, nhiều đối tượng chứa không có nội dung sẽ được bỏ qua, giúp việc di chuyển dễ hơn. (#6948, #6950) 
+
+
 == Sửa Lỗi ==
 - Có thể kích hoạt các mục trong thực đơn trên trang web như hộp kiểm, nút radio khi đứng ở chế độ duyệt. (#6735)
 - Phần thông báo tên bảng tính của Excel đã được dịch. (#6848)
@@ -27,6 +31,8 @@
 - Sửa lỗi mở cổng serial trên các máy dùng ngôn ngữ không phải là tiếng Anh. Điều này, đã gây ra một số trường hợp không thể kết nối màn hình nổi. (#6845)
 - Giảm lỗi hỏng tập tin cấu hình khi tắt máy. Tập tin cấu hình hiện nay sẽ được lưu trong tập tin tạm trước khi được lưu vào tập tin cấu hình chính. (#3165)
 - Sử dụng đúng ngôn ngữ khi thực hiện nhanh hai lần lệnh đọc dòng hiện tại để đánh vần. (#6726)
+- Di chuyển dòng trong Microsoft Edge trên Windows 10 Creaters Update đã nhanh hơn 3 lần (#6994)
+- NVDA không còn thông báo "Web Runtime Grouping" khi focus đứng ở tài liệu Microsoft Edge trên Windows 10 Creaters Update. (#6948)
 
 
 == Thay Đổi Dành Cho Nhà Phát Triển ==
@@ -41,7 +47,12 @@
  - `i18nName` cho thiết lập bộ đọc. Sẽ thay thế bằng `displayName` và `displayNameWithAccelerator`. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
  - `config.save`. (#6846)
-
+- Danh sách thành phần hoàn tất trong thực đơn ngữ cảnh autocomplete (tự động hoàn tất) của PythonConsole sẽ không còn hiển thị phần đường dẫn đối tượng đứng phía trước ký hiệu cuối được hoàn tất. (#7023)
+- Hiện đã có framework kiểm thử theo đơn vị cho NVDA. (#7026)
+ - Cấu trúc cơ sở hạ tầng và phần kiểm thử theo đơn vị nằm tại thư mục tests/unit. Xem docstring trong  tập tin tests\unit\__init__.py để biết thêm thông tin.
+ - Bạn có thể chạy phần kiểm thử với "scons tests". Hãy xem phần "Running Tests" trong tập tin  readme.md để biết thêm thông tin.
+ - Nếu muốn gửi pull request cho NVDA, bạn cần phải chạy thành công phần kiểm thử.
+ 
 
 = 2017.1 =
 Một số tính năng mới nổi bật trong phiên bản này bao ;gồm thông báo các vùng và cột nội dung trong Microsoft Word; hỗ trợ di chuyển, ghi chú lại và đọc sách với máy Kindle bản PC; và những cải thiện cho Microsoft Edge.

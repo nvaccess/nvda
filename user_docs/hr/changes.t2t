@@ -3,6 +3,40 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Nove značajke ==
+- U Microsoft Excelu, izgovaraju se granice ćelija koristeći `NVDA+f`. (#3044)
+- Dodana podrška za aria-current atribute. (#6358)
+- Support automatic language switching in Microsoft Edge. (#6852)
+- Support Windows Calculator on Windows 10 Enterprise LTSB (Long-Term Servicing Branch) and Server. (#6914)
+- Performing the read current line command three times quickly spells the line with character descriptions. (#6893)
+
+
+== Changes ==
+- When navigating with simple review  in applications using UI Automation, more non-content containers are ignored making navigation easier. (#6948, #6950) 
+
+
+== Bug Fixes ==
+- Web page menu items (menu item checkbox's and radio buttons) can now be activated while in browse mode. (#6735)
+- Excel sheet name reporting is now translated. (#6848)
+- Pressing ESC while the configuration profile "Confirm Deletion" prompt is active now dismisses the dialog. (#6851)
+- Fix some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
+- Reporting of the background color in screen review is now more accurate when  text was drawn with a transparant background (#6467) 
+- Improved support for aria-describedby in Internet Explorer 11, including support within iframes and when multiple IDs are provided. (#5784)
+- In the Windows Creaters Update, NVDA's audio ducking again works as in previous Windows releases (I.e. Duck with speech and sounds, always duck, and no ducking are all available). (#6933)
+- NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
+- Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
+- Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
+- Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
+- Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
+- When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
+- Navigating by line in Microsoft Edge is now up to 3x faster in the Windows 10 Creaters Update. (#6994)
+- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creaters Update (#6948)
+
+
+== Changes for Developers ==
+
 = 2017.1 =
 Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupcima u Microsoft wordu; podrška za čitanje, kretanje i označavanje knjiga u Kindlu za osobna računala; i unaprjeđena podrška za microsoft edge.
 
