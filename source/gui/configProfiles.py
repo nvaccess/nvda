@@ -1,6 +1,6 @@
 #gui/configProfiles.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013 NV Access Limited
+#Copyright (C) 2013-2017 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -260,6 +260,8 @@ class ProfilesDialog(wx.Dialog):
 		else:
 			config.conf.enableProfileTriggers()
 		self.Destroy()
+		# 7077: Nullify the instance flag, otherwise wxWidgets will think the dialog is active when it is gone.
+		ProfilesDialog._instance = None
 
 	def saveTriggers(self, parentWindow=None):
 		try:
@@ -309,7 +311,6 @@ class TriggersDialog(wx.Dialog):
 				continue
 			triggers.append(TriggerInfo(spec, disp, profile))
 
-		
 		# Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 		triggersText = _("Triggers")
 		triggerChoices = [trig.display for trig in triggers]
@@ -461,6 +462,8 @@ class NewProfileDialog(wx.Dialog):
 		# The user is done with the Profiles dialog;
 		# let them get on with editing the profile.
 		parent.Destroy()
+		# Also nullify the instance flag as the profiles dialog itself is dead.
+		ProfilesDialog._instance = None
 
 	def onCancel(self, evt):
 		self.Parent.Enable()
