@@ -3,44 +3,37 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.1 = 
-Af væsentlige forbedringer i denne version af NVDA kan nævnes rapportering af sektion- og tekstkolonner i Microsoft Word, støtte for læsning, navigering of annotering af bøger i Kindle for PC, og forbedret understøttelse af Microsoft Edge.
+= 2017.2 = 
+
 
 == Nye Funktioner ==
-- I Microsoft Word, typen af et sektionsskift og et sektionsnummer kan nu blive rapporteret. Dette kan slås til ved brug af indstillingen "Sider" i indstillingerne for dokumentformatering.  (#5946)
-- Tekstkolonner kan nu rapporteres i Microsoft Word. Dette kan slås til ved brug af indstillingen  "Sider" i indstillingerne for dokumentformatering. (#5946)
-- Automatisk skift af sprog er nu understøttet i Wordpad. (#6555)
-- NVDA-kommandoen Find (NVDA+CTRL+F) er nu understøttet i Microsoft Edge. (#6580)
-- Bogstavnavigation for knapper i gennemsynstilstand (B og skift+B) er nu understøttet i Microsoft Edge. (#6577)
-- Når der kopieres et ark i Microsoft Excel, vil kolonne- og rækkeoverskrifter blive husket. (#6628)
-- Støtte for navigation og læsning af bøger i Kindle for PC version 1.9.1. Dette indeholder adgang til links, fodnoter, grafik, fremhævet tekst og brugernotater. Se venligst afsnittet Kindle for PC i NVDAs brugervejledning for yderligere informationer. (#6247, #6638)
-- Tabelnavigation i gennemsynstilstand er nu understøttet i Microsoft Edge. (#6594)
-- I Microsoft Excel, kommandoen rapporter læsemarkørens position (desktop: NVDA+numpadDelete, laptop: NVDA+delete) oplyser nu navnet på arket samt cellepositionen. (#6613)
-- Tilføjede en mulighed i Afslut NVDA dialogen, så NVDA kan genstartes med debug-logningsniveau. (#6689)
+- Information for cellekanter i Microsoft Excel kan nu rapporteres med NVDA+F. (#3044)
+- Tilføjede støtte for aria.current attributter. (#6358)
+- Støtter automatisk skift af sprog i Microsoft Edge. (#6852)
+- Støtter Windows Lommeregner på Windows 10 Enterprise LTSB (Long-Term Servicing Branch) og Server. (#6914)
+- Ved at udføre kommandoen til at læse den aktuelle linje tre gange hurtigt, vil linjen blive stavet ved brug af tegnbeskrivelser. (#6893)
 
 
 == Ændringer ==
-- Minimum blinkhastighed er nu 200 MS. Profiler, hvor værdien er mindre end 200, vil blive forøget til dette. (#6470)
-- En tjekboks er blevet tilføjet til dialogen punktindstillinger der tillader, at blinkhastigheden kan slås til og fra. Tidligere var værdien 0 brugt til at opnå dette. (#6470)
-- Opdaterede eSpeak NG (commit e095f008, 10 January 2017). (#6717)
-- På grund af ændringer i Windows 10 Creators Update er lyddæmpningstilstanden "Altid dæmp" ikke længere tilgængelig i NVDAs indstillinger for lyddæmpning. Denne indstilling kan stadig benyttes i ældre versioner af Windows 10. (#6684)
-- På grund af ændringer i Windows 10 Creators Update kan tilstanden "Dæmp når der udsendes tale og lyde" ikke længre sikre, at lyden er helt dæmpet før der udsendes tale, og vil desuden heller ikke bevare lyden dæmpet længe nok når der ikke længere udsendes tale. Dette vil forhindre hurtige ændringer af lydniveauet. Disse ændringer påvirker ikke ældre versioner af Windows 10. (#6684)
+- Når simpel læsning benyttes til at navigere i applikationer der gør brug af UI Automation, bliver flere non-content beholdere ignoreret så navigation bliver lettere. (#6948, #6950)
 
 
 == Fejlrettelser ==
-- Rettede en fejl i Microsoft Word der frøs NVDA, når man flyttede mellem afsnit i gennemsynstilstand. (#6368)
-- Tabeller, der kopieres fra Microsoft Excel ind i Microsoft Word, vil ikke længere blive behandlet som layout-tabeller og derfor ikke længere ignoreret. (#5927)
-- Når der indtastes i beskyttet visning i Microsoft Word, vil NVDA nu afspille en lyd i stedet for at udtale tegn, der ikke blev skrevet. (#6570)
-- Ved et tryk på Esc vil NVDA ikke længere ved en fejl skift til gennemsynstilstand, med mindre brugeren udtrykkeligt har skiftet til gennemsynstilstand ved at trykke på NVDA+mellemrum, og herefter skiftet til fokustilstand med tasten enter på et formularfelt. (#6569)
-- NVDA fryser ikke længere i Excel regneark, når en hel række eller en kolonne flettes. (#6216)
--Rapportering af beskåret eller overløbende tekst af celler i Microsoft Excel skulle være mere præcis. (#6472)
-- NVDA vil nu rapportere, hvis en tjekboks er skrivebeskyttet. (#6563)
-- NVDA-starteren vil ikke længere vise en advarselsdialog, hvis logo-lyden ikke kan afspilles på grund af manglende lydenhed. (#6289)
-- Utilgængelige kontrolelementer på Microsoft Excel-båndet vil nu blive rapporteret ligeledes. (#6430)
-- NVDA vil ikke længere annoncere "Rude" når vinduer minimeres. (#6671)
-- Indtastede tegn udtales nu i Universal Windows Platform (UWP) apps (herunder Microsoft Edge) i Windows 10 Creators Update. (#6017)
-- Musefølgning virker nu på tværs af alle skærme på computere med flere tilkoblede skærme. (#6598)
-- NVDA bliver ikke længere ubrugelig, når Windows Media Player afsluttes og en skyderkontrol har fokus. (#5467)
+- Menupunkter på websider (menupunkt, checkboks og radioknapper) kan nu aktiveres i gennemsynstilstand. (#6735)
+- Rapportering af navneark i Excel er nu oversat. (#6848)
+- Når dialogen "Bekræft sletning" i indstillingsprofiler er aktiv, kan tasten Esc benyttes til at afvise dialogen. (#6851)
+- Rettede nogle nedbrud i Mozilla Firefox og andre Gecko-applikationer, hvor funktionen multi-process er slået til. (#6885)
+- Rapportering af baggrundsfarven er nu mere præcis i skærmlæsning, når tekst tegnes med en gennemsigtig baggrund. (#6467)
+- Forbedrede støtte for aria.describedby i Internet Explorer 11, herunder i iframes og når mere end et ID er angivet. (#5784)
+- NVDAs lyddæmpning virker nu i Windows Creators Update som den gjorde i tidligere Windows versioner (Dæmp når der udsendes tale og lyde, Altid dæmp, og Ingen lyddæmpning er tilgængelige). (#6933)
+- NVDA vil ikke længere undgå at navigere eller rapportere bestemte (UIA) kontroller hvor en tastaturgenvej ikke er defineret. (#6779)
+- To tomme mellemrum er ikke længere tilføjet for informationer om tastaturgenveje for bestemte(UIA) kontroller. (#6790)
+- Bestemte tastekombinationer på HIMS displays (f.eks. mellemrum+4) vil ikke længere tilfældigt fejle. (#3157)
+- Rettede en fejl der gjorde, at tilkobling af et punktdisplay kunne fejle i nogle tilfæld, når en serielport åbnes på et system der benyttede et andet sprog end engelsk. (#6845)
+- Reducerede chancen for at beskadige konfigurationsfilen, når Windows lukkes ned. Konfigurationsfiler skrives nu til en midlertidig fil før den erstatter den aktuelle konfigurationsfil. (#3165)
+- Når kommandoen til at læse den aktuelle linje udføres to gange hurtigt, vil det tilpassende sprog benyttes til udtalen af tegn. (#6726)
+- Navigation ved brug af linjer er nu 3x hurtigere i Microsoft Edge i Windows Creators Update. (#6994)
+- NVDA vil ikke længere rapportere "Web Runtime grouping", når der bliver fokuseret  på et dokument i Microsoft Edge i Windows Creators Update. (#6948)
 
 
 == Ændringer for udviklere ==
