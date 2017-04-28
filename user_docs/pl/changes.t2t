@@ -3,6 +3,42 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Nowe funkcje ==
+- Informacja o ramkach komórek może być zgłaszana w Microsoft Excel przy użyciu `NVDA+f`. (#3044)
+- Dodano wsparcie dla atrybutów aria-current. (#6358)
+- Obsługa automatycznej zmiany języka w Microsoft Edge. (#6852)
+- Obsługa kalkulatora Windows w systemie Windows 10 Enterprise LTSB (Long-Term Servicing Branch) i Server. (#6914)
+- Wywołanie trzykrotnie szybko funkcji odczytywania bieżącej linii, literuje linię z użyciem opisów znaków. (#6893)
+
+
+== Zmiany ==
+- Podczas nawigacji przy użyciu prostego przeglądu w aplikacjach używających UI Automation, ignorowana jest większa ilość kontenerów nie zawierających treści, co upraszcza nawigację. (#6948, #6950) 
+
+
+== Poprawki błędów ==
+- Elementy menu stron internetowych (pola wyboru i przyciski opcji elementów menu) mogą teraz być aktywowane w trybie czytania. (#6735)
+- Zgłaszanie nazwy arkusza Excel jest teraz przetłumaczone. (#6848)
+- Naciśnięcie ESC w oknie profili konfiguracji "Potwierdź usunięcie" zamyka okno. (#6851)
+- Naprawiono awarie w Mozilla Firefox i innych aplikacjach bazujących na Gecko,  pojawiające się przy włączonym trybie wieloprocesowym. (#6885)
+- Zgłaszanie koloru tła w przeglądzie ekranu jest obecnie dokładniejsze, gdy tekst został narysowany na przezroczystym tle. (#6467) 
+- Poprawiona obsługa aria-describedby w Internet Explorer 11, włączając w to obsługę wewnątrz ramek iframe oraz sytuacje, że dostarczono wiele atrybutów ID. (#5784)
+- W aktualizacji Windows Creators Update, funkcja NVDA przyciszania audio działa tak jak w poprzednich wydaniach Windows (tj. dostępne są wszystkie tryby: przycisz podczas generowania mowy i dźwięku, zawsze przyciszaj i bez przyciszania). (#6933)
+- Naprawiony problem nawigacji NVDA lub zgłaszania niektórych kontrolek (UIA) bez zdefiniowanego klawisza skrótu. (#6779)
+- Dwie spacje nie są dodawane do informacji o skrócie klawiszowym dla niektórych kontrolek (UIA). (#6790)
+- Niektóre kombinacje klawiszy na monitorach brajlowskich HIMS (np. spacja+punkt 4) nie powodują już sporadycznych problemów. (#3157)
+- Naprawiono problem otwierania portu szeregowego na systemach używających niektórych języków innych niż angielski, powodujący niemożność podłączenia się do monitorów brajlowskich w niektórych przypadkach. (#6845)
+- Zmniejszona szansa popsucia pliku konfiguracyjnego przy zamykaniu Windows. Pliki konfiguracyjne są zapisywane pod tymczasową nazwą, przed zastąpieniem aktualnego pliku konfiguracji. (#3165)
+- Po wywołaniu dwukrotnie szybko funkcji odczytu bieżącej linii aby ją przeliterować, jest używany odpowiedni język. (#6726)
+- Nawigacja po liniach w Microsoft Edge jest obecnie 3-krotnie szybsza w systemie Windows 10 Creators Update. (#6994)
+- NVDA od teraz nie zgłasza "Web Runtime grouping" przy przejściu punktu uwagi do dokumentów Microsoft Edge w systemie Windows 10 Creators Update (#6948)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2017.1 =
 Najważniejsze zmiany w tej wersji to zgłaszanie sekcji i kolumn tekstu w Microsoft Word; obsługa czytania, nawigacji i komentowania książek w Kindle dla PC; poprawiona obsługa Microsoft Edge.
 

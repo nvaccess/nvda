@@ -286,7 +286,7 @@ NVDA fornisce i seguenti comandi quando si lavora con il cursore di sistema:
 %kc:beginInclude
 || Nome | Tasto desktop | Tasto laptop | Descrizione |
 | Dire Tutto | NVDA+Freccia Giù | NVDA+a | Inizia a leggere dalla posizione del cursore di sistema sino alla fine del documento, spostando il cursore man mano che la lettura continua |
-| Legge Riga Corrente | NVDA+freccia su | NVDA+l | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. |
+| Legge Riga Corrente | NVDA+freccia su | NVDA+l | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri (ancona, bari, como, domodossola, etc|
 | Legge Selezione corrente | NVDA+Shift+freccia su | NVDA+shift+s | Legge il testo selezionato ammesso che ve ne sia uno. |
 | frase successiva | alt+freccia Giù | alt+freccia Giù | Sposta il cursore sulla frase successiva e la legge. (Supportato solo in Microsoft Word e Outlook) |
 | frase precedente | alt+freccia Su | alt+freccia Su | Sposta il cursore sulla frase precedente e la legge. (Supportato solo in Microsoft Word e Outlook) |
@@ -700,7 +700,7 @@ In una conversazione:
 
 ++ Kindle per PC ++
 NVDA supporta la lettura e la navigazione dei libri in Amazon Kindle per PC.
-Questa funzionalità è disponibile solo nei libri Kindle che supportano la "formattazione avanzata dei caratteri", cosa che è possibile controllare alla pagina dettagli per il libro. La stragrande maggioranza dei testi supporta questa funzione.
+Questa funzionalità è disponibile solo nei libri Kindle in cui è integrata la funzione "supporto per screen reader", cosa che è possibile controllare alla pagina dettagli per il libro. La stragrande maggioranza dei testi supporta questa funzione.
 
 Per la lettura dei libri viene usata la modalità navigazione.
 Si attiverà automaticamente non appena si apre un libro, o si posiziona il focus nell'area contenente il testo.
@@ -1264,6 +1264,7 @@ Le opzioni di formattazione documento sono divise in gruppi.
  - tabelle
  - intestazioni riga/colonna delle tabelle
  - Coordinate delle celle delle tabelle
+ - Bordi delle celle [(Disattivato, stili, sia colori che stili)
 - Elementi
  - collegamenti
  - intestazioni

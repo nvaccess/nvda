@@ -285,7 +285,7 @@ NVDA lukee kaiken merkki, sana ja rivi kerrallaan liikuttaessa ja ilmoittaa myö
 NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-| Lue kaikki | NVDA+Nuoli alas | NVDA+A | Alkaa lukea järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
+| Jatkuva luku | NVDA+Nuoli alas | NVDA+A | Alkaa lukea järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
 | Lue nykyinen rivi | NVDA+Nuoli ylös | NVDA+L | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
 | Lue valittu teksti | NVDA+Shift+Nuoli ylös | NVDA+Shift+S | Lukee kaiken valittuna olevan tekstin. |
 | Seuraava virke | Alt+Nuoli alas | Alt+Nuoli alas | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
@@ -370,7 +370,7 @@ Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 | Lue nykyinen merkki | Numeronäppäimistön 2 | NVDA+piste | Ei mitään | Lukee nykyisen merkin riviltä, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa luetaan merkin kuvaus tai esimerkki sen käytöstä. Kolmesti painettaessa luetaan merkin numeerinen arvo desimaaleina ja heksadesimaaleina. |
 | Siirrä seuraavaan merkkiin | Numeronäppäimistön 3 | NVDA+Nuoli oikealle | Pyyhkäisy oikealle (tekstitila) | Siirtää tarkastelukohdistimen tekstissä seuraavan merkin kohdalle nykyisellä rivillä. |
 | Siirrä rivin loppuun | Shift+numeronäppäimistön 3 | NVDA+End | Ei mitään | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin loppuun. |
-| Lue kaikki | Numeronäppäimistön plus | NVDA+Shift+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta lähtien siirtäen samalla sitä. |
+| Jatkuva luku | Numeronäppäimistön plus | NVDA+Shift+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta lähtien siirtäen samalla sitä. |
 | Valitse ja kopioi tarkastelukohdistimesta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin valitsemisen ja  kopioinnin tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, missä tekstilohkon loppu on. |
 | Valitse ja kopioi tarkastelukohdistimeen | NVDA+F10 | NVDA+F10 | Ei mitään | Valitsee ensimmäisellä painalluksella aiemmin asetetusta tekstilohkon alkukohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Toisen kerran painettaessa teksti kopioidaan leikepöydälle. |
 | Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa näyttää tiedot selaustilassa. |
@@ -449,7 +449,7 @@ Tällaisia ovat Mozilla Firefoxissa, Microsoft Internet Explorerissa, Mozilla Th
 Selaustila on käytettävissä valinnaisesti myös Microsoft Wordissa.
 
 Selaustilassa dokumentin sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstidokumentti.
-Kaikki NVDA:n [järjestelmäkohdistimen #SystemCaret] näppäinkomennot, kuten esim. lue kaikki ja lue muotoilut, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
+Kaikki NVDA:n [järjestelmäkohdistimen #SystemCaret] näppäinkomennot, kuten esim. jatkuva luku ja lue muotoilut, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
 Dokumentissa liikuttaessa luetaan siinä olevan tekstin lisäksi myös muita tietoja, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
 Toisinaan on tarpeen olla suorassa vuorovaikutuksessa tällaisissa dokumenteissa olevien säädinten kanssa.
@@ -704,7 +704,7 @@ Tämä toiminnallisuus on käytettävissä vain kirjoissa, joihin on merkitty "S
 
 Kirjojen lukemiseen käytetään selaustilaa.
 Se otetaan käyttöön automaattisesti avatessasi kirjan tai siirtäessäsi kohdistuksen kirja-alueelle.
-Sivua käännetään automaattisesti aina tarvittaessa siirtäessäsi kohdistinta tai käyttäessäsi lue kaikki -komentoa.
+Sivua käännetään automaattisesti aina tarvittaessa siirtäessäsi kohdistinta tai käyttäessäsi jatkuva luku -komentoa.
 %kc:beginInclude
 Voit kääntää manuaalisesti seuraavalle sivulle painamalla Page down -näppäintä ja edelliselle painamalla Page up.
 %kc:endInclude
@@ -1030,8 +1030,8 @@ Jos tämä valintaruutu on valittuna, puhe keskeytetään joka kerta kun näppä
 ==== Keskeytä puhe Enter-näppäintä painettaessa ====
 Jos tämä valintaruutu on valittuna, puhe keskeytetään joka kerta Enter-näppäintä painettaessa. Asetus on oletusarvoisesti käytössä.
 
-==== Käytä pikalukua Lue kaikki -toiminnossa ====
-Jos tämä asetus on käytössä, niin tietyt navigointikomennot (kuten selaustilan pikanavigointi tai riveittäin/kappaleittain liikkuminen) eivät keskeytä Lue kaikki -toimintoa, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
+==== Käytä pikalukua jatkuvassa luvussa ====
+Jos tämä asetus on käytössä, tietyt navigointikomennot (kuten selaustilan pikanavigointi tai riveittäin/kappaleittain liikkuminen) eivät keskeytä Jatkuva luku -toimintoa, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
 
 ==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====
 Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Shift-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
@@ -1446,7 +1446,7 @@ Voit vaihtaa eri käynnistimillä käyttöönotettavia profiileja painamalla Ase
 
 Käynnistimet-luettelo näyttää käytettävissä olevat käynnistimet, joita ovat:
 - Nykyinen sovellus: Käytetään siirtyessäsi nykyiseen sovellukseen.
-- Lue kaikki: Käytetään Lue kaikki -komennolla luettaessa.
+- Jatkuva luku: Käytetään jatkuva luku -komennolla luettaessa.
 -
 
 Voit vaihtaa käynnistimellä automaattisesti käyttöönotettavaa profiilia valitsemalla ensin käynnistimen ja sitten Profiili-yhdistelmäruudusta haluamasi profiilin.
@@ -1460,7 +1460,7 @@ Muussa tapauksessa asetukset tallennetaan viimeisimpään käynnistimellä käyt
 Jos esimerkiksi olet liittänyt profiilin Muistio-sovellukseen, kaikki muutetut asetukset tallennetaan tähän profiiliin Muistion ollessa aktiivisena.
 Mikäli manuaalisesti tai käynnistimellä käyttöönotettavaa profiilia ei ole, kaikki muuttamasi asetukset tallennetaan tavallisiin asetuksiin.
 
-Voit muokata lue kaikki -toimintoon liitettyä profiilia [ottamalla sen käyttöön manuaalisesti. #ConfigProfileManual]
+Voit muokata jatkuva luku -toimintoon liitettyä profiilia [ottamalla sen käyttöön manuaalisesti. #ConfigProfileManual]
 
 +++ Käynnistimien tilapäinen käytöstäpoistaminen +++
 Kaikkien käynnistimien käytöstäpoistaminen voi joskus olla tarpeen.
@@ -1808,7 +1808,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä seuraavalle riville | B5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | K2 |
-| Lue kaikki | B6 |
+| Jatkuva luku | B6 |
 %kc:endInclude
 
 ++ hedo MobilLine USB ++
@@ -1825,7 +1825,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä seuraavalle riville | B5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | K2 |
-| Lue kaikki | B6 |
+| Jatkuva luku | B6 |
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B ++
@@ -1856,7 +1856,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1, c4 ja c5 (komento d) |
 | Windows-näppäin | välilyönti+pisteet 3 ja 4 |
 | Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 (välilyönti+t) |
-| Lue kaikki | c1, c2, c3, c4, c5 ja c6 |
+| Jatkuva luku | c1, c2, c3, c4, c5 ja c6 |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle ++
@@ -1947,7 +1947,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä edelliselle riville | b3 |
 | Siirrä seuraavalle riville | b4 |
 | Vaihda Pistenäyttö seuraa -asetusta | b5 |
-| Lue kaikki | b6 |
+| Jatkuva luku | b6 |
 | Sarkain-näppäin | b1 |
 | Shift+Sarkain-näppäinyhdistelmä | b2 |
 | Alt+Sarkain-näppäinyhdistelmä | b1+b2 |

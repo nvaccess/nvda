@@ -23,16 +23,16 @@ Af væsentlige funktioner kan nævnes:
 - Understøttelse af mange punktdisplays, herunder indtastning af computer-braille på punktdisplays med et punkttastatur
 - Kan køre fra et USB-stik eller andet bærbart medie uden installation
 - Talende installation der er let at bruge
-- Oversat til 48 sprog
+- Oversat til 50 sprog
 - Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
 - Kan køre på Windows logon skærmen og andre beskyttede skærme
 - understøttelse af almindelige tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
-- Understøtter Windows kommandoPrompt og konsol applikationer
+- Understøtter Windows kommandoprompt og konsolapplikationer
 -
 
 ++ Internationalisering ++
 Det er vigtigt, at folk overalt i verden, uanset hvilket sprog de taler, får lige adgang til teknologi.
-Udover Engelsk er NVDA blevet oversat til 48 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, koreansk, litauisk, nepalesisk, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
+Udover Engelsk er NVDA blevet oversat til 50 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, burmesisk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, kannada, koreansk, litauisk, nepalesisk, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
 
 ++ Understøttelse af talesynteser ++
 Udover at programmets meddelelser og brugerflade findes på flere sprog, kan NVDA også sætte brugeren i stand til at læse tekster på alle sprog, så længe de har en talesyntese, der kan tale det pågældende sprog.
@@ -286,7 +286,7 @@ Følgende NVDA-kommandoer kan bruges i forbindelse med systemmarkøren:
 %kc:beginInclude
 || Navn | Desktop tast | Laptop tast | Beskrivelse |
 | Sig alt | NVDA+Pil-ned | NVDA+a | Starter læsningen fra markørens nuværende position og flytter markøren med ned i teksten |
-| Læs aktuelle linje | NVDA+Pil-op | NVDA+l | Læser den linje, hvor markøren for øjeblikket befinder sig. Tryk to gange for at få linjen stavet. |
+| Læs aktuelle linje | NVDA+Pil-op | NVDA+l | Læser den linje, hvor markøren for øjeblikket befinder sig. Tryk to gange for at få linjen stavet. Tryk tre gange for at stave linjen ved brug af tegnbeskrivelser. |
 | Læs den valgte tekst | NVDA+Shift+Pil-op | NVDA+Shift+s | Læser den tekst, som er blevet markeret |
 | Næste sætning | Alt+Pil-ned | Alt+Pil-ned | Flytter markøren til den næste sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
 | Forrige sætning | Alt+Pil-op | Alt+Pil-op | Flytter markøren til den forrige sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
@@ -700,7 +700,7 @@ Under en samtale:
 
 ++ Kindle for PC ++
 NVDA understøtter navigering og læsning i Amazon Kindle for PC.
-Denne funktionalitet er kun tilgængelig i Kindle bøger, der understøtter "Enhanced Typesetting." Du kan undersøge dette på detaljesiden for bogen.
+Denne funktionalitet er kun tilgængelig i Kindle bøger,hvor der står "Screen Reader: Supported." Du kan undersøge dette på detaljesiden for bogen.
 
 Gennemsynstilstand benyttes til at læse bøger.
 Dette slås til automatisk, eller når du fokusere på bogens område.
@@ -1263,6 +1263,7 @@ Du kan tilpasse annoncering af:
  - Tabeller
  - Ræke/kolonneoverskræfter
  - Cellekoordinater
+ - Cellekanter (fra, typografier, både farver og typografier)
  - Elementer
  - Overskrifter
  - Links
