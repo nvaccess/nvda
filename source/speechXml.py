@@ -182,7 +182,7 @@ class SpeechXmlConverter(object):
 					log.debugWarning("Unsupported command: %s" % item)
 					return
 				command = func(item)
-				if command:
+				if command is not None:
 					yield command
 			else:
 				log.error("Unknown speech: %r" % item)

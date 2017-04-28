@@ -159,12 +159,16 @@ class TestSsmlConverter(unittest.TestCase):
 			speech.LangChangeCommand("de_DE"),
 			speech.CharacterModeCommand(True),
 			speech.IndexCommand(1),
-			"c"
+			"c",
+			speech.CharacterModeCommand(False),
+			speech.PhonemeCommand("phIpa", text="phText")
 		])
 		self.assertEqual(xml,
 			'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
 			't1'
 			'<prosody pitch="200%" volume="200%">t2</prosody>'
-			'<prosody volume="200%"><voice xml:lang="de-DE"><mark name="1"/><say-as interpret-as="characters">c</say-as></voice></prosody>'
-			'</speak>'
+			'<prosody volume="200%"><voice xml:lang="de-DE">'
+			'<mark name="1"/><say-as interpret-as="characters">c</say-as>'
+			'<phoneme alphabet="ipa" ph="phIpa">phText</phoneme>'
+			'</voice></prosody></speak>'
 		)
