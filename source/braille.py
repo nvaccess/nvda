@@ -296,6 +296,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
+	roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -303,7 +304,7 @@ def getBrailleTextForProperties(**propertyValues):
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
-	if role is not None:
+	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
 			# %s is replaced with the level.
@@ -318,9 +319,8 @@ def getBrailleTextForProperties(**propertyValues):
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
-	else:
+	elif role is None: 
 		role = propertyValues.get("_role")
-		roleText = None
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
@@ -394,7 +394,7 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role, current=obj.isCurrent,
+		text = getBrailleTextForProperties(name=obj.name, role=role, roleText=obj.roleText, current=obj.isCurrent,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
