@@ -190,37 +190,37 @@ msoShapeVerticalScroll=101
 msoShapeWave=103
 
 msoAutoShapeTypeToRoleText={
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape10pointStar:pgettext("shape","10-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape12pointStar:pgettext("shape","12-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape16pointStar:pgettext("shape","16-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape24pointStar:pgettext("shape","24-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape32pointStar:pgettext("shape","32-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape4pointStar:pgettext("shape","4-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape5pointStar:pgettext("shape","5-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape6pointStar:pgettext("shape","6-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape7pointStar:pgettext("shape","7-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShape8pointStar:pgettext("shape","8-point star"),
-	# Translators: a shape name from Microsoft Office"),
+	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeArc:pgettext("shape","Arc"),
 	# Translators: a shape name from Microsoft Office.
