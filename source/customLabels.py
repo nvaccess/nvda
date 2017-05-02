@@ -7,8 +7,6 @@ import treeInterceptorHandler
 import configobj
 import api
 
-# from logHandler import log
-
 class customLabels():
         
     @classmethod
