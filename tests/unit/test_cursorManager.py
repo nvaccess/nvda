@@ -66,6 +66,43 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectWord_back(None) # "b" unselected, "a" selected
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
 
+	def test_selectBackwardThenSelForward(self):
+		"""Test selecting backward, then selecting forward without unselecting.
+		Same as test_selectForwardThenSelBackward, but with reversed directions.
+		"""
+		cm = CursorManager(text="abc", selection=(2, 2)) # Caret at "c"
+		cm.script_selectCharacter_back(None) # "b" selected
+		cm.script_selectWord_forward(None) # "b" unselected, "c" selected
+		self.assertEqual(cm.selectionOffsets, (2, 3)) # "c" selected
+
+	def test_selectToBottom(self):
+		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
+		cm.script_selectToBottomOfDocument(None)
+		self.assertEqual(cm.selectionOffsets, (1, 3)) # "bc" selected
+
+	def test_selectToTop(self):
+		cm = CursorManager(text="abc", selection=(2, 2)) # Caret at "c"
+		cm.script_selectToTopOfDocument(None)
+		self.assertEqual(cm.selectionOffsets, (0, 2)) # "ab" selected
+
+	def test_selectToEndOfLine(self):
+		cm = CursorManager(text="ab\ncd", selection=(1, 1)) # Caret at "b"
+		cm.script_selectToEndOfLine(None)
+		self.assertEqual(cm.selectionOffsets, (1, 3)) # "b\n" selected
+
+	def test_selectToBeginningOfLine(self):
+		cm = CursorManager(text="ab\ncd", selection=(4, 4)) # Caret at "d"
+		cm.script_selectToBeginningOfLine(None)
+		self.assertEqual(cm.selectionOffsets, (3, 4)) # "c" selected
+
+	def test_selectToBeginningOfLineAtBeginning(self):
+		"""Test selecting to the beginning of the line when the caret is already at the beginning of the line.
+		In this case, nothing should happen.
+		"""
+		cm = CursorManager(text="ab\ncd", selection=(3, 3)) # Caret at "c"
+		cm.script_selectToBeginningOfLine(None)
+		self.assertEqual(cm.selectionOffsets, (3, 3)) # No selection
+
 class TestSelectAll(unittest.TestCase):
 	"""Tests the select all command starting from different caret positions.
 	"""
