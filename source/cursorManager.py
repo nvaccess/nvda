@@ -120,7 +120,7 @@ class CursorManager(baseObject.ScriptableObject):
 			try:
 				info.collapse(end=posUnitEnd)
 			except RuntimeError:
-				# MS Word has a "virtual linefeed" at the end of the document which can cause RuntimError to be raised.
+				# MS Word has a "virtual linefeed" at the end of the document which can cause RuntimeError to be raised.
 				# In this case it can be ignored.
 				# See #7009
 				pass
