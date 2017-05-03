@@ -268,6 +268,7 @@ class CursorManager(baseObject.ScriptableObject):
 				# 2. Shift+leftArrow: selection (0, 1)
 				# 3. Shift+control+rightArrow: next word at 3, so selection (1, 3)
 				newInfo.setEndPoint(oldInfo, "startToEnd")
+				self._lastSelectionMovedStart = False
 			else:
 				# We're selecting backwards.
 				# For example:
@@ -282,6 +283,7 @@ class CursorManager(baseObject.ScriptableObject):
 				# 2. Shift+rightArrow: selection (1, 2)
 				# 3. Shift+control+leftArrow: previous word at 0, so selection (0, 1)
 				newInfo.setEndPoint(oldInfo, "endToStart")
+				self._lastSelectionMovedStart = True
 			else:
 				# We're selecting forwards.
 				# For example:

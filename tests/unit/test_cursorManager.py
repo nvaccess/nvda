@@ -75,6 +75,27 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectWord_forward(None) # "b" unselected, "c" selected
 		self.assertEqual(cm.selectionOffsets, (2, 3)) # "c" selected
 
+	def test_selectForwardThenSelBackwardThenUnsel(self):
+		"""Test selecting forward, then selecting backward without unselecting, then unselecting forward.
+		Depends on behavior tested by test_selectForwardThenSelBackward.
+		"""
+		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
+		cm.script_selectCharacter_forward(None) # "b" selected
+		cm.script_selectWord_back(None) # "b" unselected, "a" selected
+		cm.script_selectCharacter_forward(None) # "a" unselected
+		self.assertEqual(cm.selectionOffsets, (1, 1)) # Caret at "b", no selection
+
+	def test_selectBackwardThenSelForwardThenUnsel(self):
+		"""Test selecting backward, then selecting forward without unselecting, then unselecting backward.
+		Same as test_selectForwardThenSelBackwardThenUnsel, but with reversed directions.
+		Depends on behavior tested by test_selectBackwardThenSelForward.
+		"""
+		cm = CursorManager(text="abc", selection=(2, 2)) # Caret at "c"
+		cm.script_selectCharacter_back(None) # "b" selected
+		cm.script_selectWord_forward(None) # "b" unselected, "c" selected
+		cm.script_selectCharacter_back(None) # "c" unselected
+		self.assertEqual(cm.selectionOffsets, (2, 2)) # Caret at "c", no selection
+
 	def test_selectToBottom(self):
 		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
 		cm.script_selectToBottomOfDocument(None)
