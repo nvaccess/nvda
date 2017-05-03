@@ -170,7 +170,10 @@ class UIATextRangeAttributeValueFetcher(object):
 		self.textRange=textRange
 
 	def getValue(self,ID,ignoreMixedValues=False):
-		val=self.textRange.getAttributeValue(ID)
+		try:
+			val=self.textRange.getAttributeValue(ID)
+		except COMError:
+			return UIAHandler.handler.reservedNotSupportedValue
 		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
 			raise UIAMixedAttributeError
 		return val
