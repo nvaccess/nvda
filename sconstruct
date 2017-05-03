@@ -152,8 +152,26 @@ env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
 # Hack around odd bug where some tool [after] msvc states that static and shared objects are different
 env32['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
 env64['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
+# Environment for functionality that only works on Windows 10.
+envWin10 = env.Clone(TARGET_ARCH='x86', tools=['default'])
 
 env=env32
+
+projectRCSubstDict={
+	'%version_year%':env['version_year'],
+	'%version_major%':env['version_major'],
+	'%version_minor%':env['version_minor'],
+	'%version_build%':env['version_build'],
+	'%copyright%':env['copyright'],
+	'%publisher%':env['publisher'],
+	'%version%':env['version'],
+	'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
+}
+resFile=env.RES(target='build/nvda.res',
+	source=env.Substfile(target='build/nvda.rc', source='nvdaHelper/nvda.rc.subst', SUBST_DICT=projectRCSubstDict))
+env32['projectResFile'] = resFile
+env64['projectResFile'] = resFile
+envWin10['projectResFile'] = resFile
 
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
@@ -163,6 +181,7 @@ env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 #Process nvdaHelper scons files
 env32.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env32,'clientInstallDir':clientDir.Dir('x86'),'libInstallDir':sourceLibDir},variant_dir='build/x86')
 env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
+envWin10.SConscript('nvdaHelper/localWin10/sconscript', exports={'env': envWin10, 'libInstallDir': sourceLibDir}, variant_dir='build/x86/localWin10')
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):

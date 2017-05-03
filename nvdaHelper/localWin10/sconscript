@@ -1,0 +1,62 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvaccess.org/
+#Copyright 2016-2017 NV Access Limited
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+Import(
+	'env',
+	'sourceDir',
+	'libInstallDir',
+	'localLib',
+)
+
+TARGET_ARCH=env['TARGET_ARCH']
+debug=env['nvdaHelperDebugFlags']
+release=env['release']
+signExec=env['signExec'] if env['certFile'] else None
+
+env.Append(CPPDEFINES=[
+	'UNICODE', '_CRT_SECURE_NO_DEPRECATE',
+	('LOGLEVEL','${nvdaHelperLogLevel}')])
+env.Append(CCFLAGS=['/W3', '/WX'])
+env.Append(CXXFLAGS=['/EHsc', '/ZW', 
+	r'/AIC:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcpackages',
+	r'/AIC:\Program Files (x86)\Windows Kits\10\UnionMetadata'])
+env.Append(CPPPATH=[Dir('..').abspath])
+env.Append(LINKFLAGS=['/incremental:no', '/WX'])
+env.Append(LINKFLAGS='/release') # We always want a checksum in the header
+
+if not release: 
+	env.Append(CCFLAGS=['/Od'])
+else:
+	env.Append(CCFLAGS='/O2')
+	env.Append(CCFLAGS='/GL')
+	env.Append(LINKFLAGS=['/LTCG'])
+
+if 'RTC' in debug:
+	env.Append(CCFLAGS=['/RTCsu'])
+
+# We always want debug symbols
+env.Append(PDB='${TARGET}.pdb')
+env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+localWin10Lib = env.SharedLibrary(
+	target="nvdaHelperLocalWin10",
+	source=[
+		env['projectResFile'],
+		'oneCoreSpeech.cpp',
+	],
+	LIBS=["oleaut32", localLib[2]],
+)
+if signExec:
+	env.AddPostAction(localWin10Lib[0], [signExec])
+env.Install(libInstallDir, localWin10Lib)
