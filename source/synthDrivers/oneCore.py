@@ -25,7 +25,7 @@ BYTES_PER_SEC = SAMPLES_PER_SEC * (BITS_PER_SAMPLE / 8)
 HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
 WAV_HEADER_LEN = 44
 ocSpeech_Callback = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
-DLL_FILE = "lib/nvdaHelperLocalWin10.dll"
+DLL_FILE = ur"lib\nvdaHelperLocalWin10.dll"
 
 def bstrReturn(address):
 	"""Handle a BSTR returned from a ctypes function call.
@@ -33,6 +33,8 @@ def bstrReturn(address):
 	"""
 	# comtypes.BSTR.from_address seems to cause a crash for some reason. Not sure why.
 	# Just access the string ourselves.
+	# This will terminate at a null character, even though BSTR allows nulls.
+	# We're only using this for normal, null-terminated strings anyway.
 	val = ctypes.wstring_at(address)
 	ctypes.windll.oleaut32.SysFreeString(address)
 	return val
@@ -120,9 +122,9 @@ class SynthDriver(SynthDriver):
 
 	def terminate(self):
 		super(SynthDriver, self).terminate()
+		self._dll.ocSpeech_terminate(self._handle)
 		# Drop the ctypes function instance for the callback,
 		# as it is holding a reference to an instance method, which causes a reference cycle.
-		self._dll.ocSpeech_terminate(self._handle)
 		self._callbackInst = None
 
 	def cancel(self):

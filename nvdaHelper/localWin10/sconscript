@@ -16,6 +16,7 @@ Import(
 	'env',
 	'sourceDir',
 	'libInstallDir',
+	'localLib',
 )
 
 TARGET_ARCH=env['TARGET_ARCH']
@@ -23,12 +24,14 @@ debug=env['nvdaHelperDebugFlags']
 release=env['release']
 signExec=env['signExec'] if env['certFile'] else None
 
-env.Append(CPPDEFINES=['UNICODE', '_CRT_SECURE_NO_DEPRECATE'])
+env.Append(CPPDEFINES=[
+	'UNICODE', '_CRT_SECURE_NO_DEPRECATE',
+	('LOGLEVEL','${nvdaHelperLogLevel}')])
 env.Append(CCFLAGS=['/W3', '/WX'])
 env.Append(CXXFLAGS=['/EHsc', '/ZW', 
 	r'/AIC:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcpackages',
 	r'/AIC:\Program Files (x86)\Windows Kits\10\UnionMetadata'])
-env.Append(CPPPATH=[Dir('.').abspath])
+env.Append(CPPPATH=[Dir('..').abspath])
 env.Append(LINKFLAGS=['/incremental:no', '/WX'])
 env.Append(LINKFLAGS='/release') # We always want a checksum in the header
 
@@ -46,15 +49,13 @@ if 'RTC' in debug:
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
-Export('env')
-
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
 	source=[
 		env['projectResFile'],
 		'oneCoreSpeech.cpp',
 	],
-	LIBS=["oleaut32"],
+	LIBS=["oleaut32", localLib[2]],
 )
 if signExec:
 	env.AddPostAction(localWin10Lib[0], [signExec])

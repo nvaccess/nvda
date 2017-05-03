@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <ppltasks.h>
 #include <wrl.h>
 #include <robuffer.h>
+#include <common/log.h>
 #include "oneCoreSpeech.h"
 
 using namespace std;
@@ -35,7 +36,10 @@ byte* getBytes(IBuffer^ buffer) {
 	// See http://cm-bloggers.blogspot.com/2012/09/accessing-image-pixel-data-in-ccx.html
 	ComPtr<IInspectable> insp = reinterpret_cast<IInspectable*>(buffer);
 	ComPtr<IBufferByteAccess> bufferByteAccess;
-	insp.As(&bufferByteAccess);
+	if (FAILED(insp.As(&bufferByteAccess))) {
+		LOG_ERROR(L"Couldn't get IBufferByteAccess from IBuffer");
+		return nullptr;
+	}
 	byte* bytes = nullptr;
 	bufferByteAccess->Buffer(&bytes);
 	return bytes;
@@ -83,7 +87,7 @@ int __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text) {
 	}).then([instance, markersStr] (IBuffer^ buffer) {
 		// Data has been read from the speech stream.
 		// Pass it to the callback.
-		byte *bytes = getBytes(buffer);
+		byte* bytes = getBytes(buffer);
 		instance->callback(bytes, buffer->Length, markersStr->c_str());
 	}).then([] (task<void> previous) {
 		// Catch any unhandled exceptions that occurred during these tasks.
