@@ -324,11 +324,13 @@ class CursorManager(baseObject.ScriptableObject):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_PARAGRAPH, direction=-1)
 
 	def script_selectToBeginningOfLine(self,gesture):
-		curInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		curInfo.collapse()
-		tempInfo=curInfo.copy()
-		tempInfo.expand(textInfos.UNIT_LINE)
-		if curInfo.compareEndPoints(tempInfo,"startToStart")>0:
+		# Make sure the active endpoint of the selection is after the start of the line.
+		sel=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		line=sel.copy()
+		line.collapse()
+		line.expand(textInfos.UNIT_LINE)
+		compOp="startToStart" if self._lastSelectionMovedStart else "endToStart"
+		if sel.compareEndPoints(line,compOp)>0:
 			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
 
 	def script_selectToEndOfLine(self,gesture):

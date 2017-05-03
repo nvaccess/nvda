@@ -124,6 +124,23 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectToBeginningOfLine(None)
 		self.assertEqual(cm.selectionOffsets, (3, 3)) # No selection
 
+	def test_unselectToBeginningOfLine(self):
+		"""Depends on behavior tested by test_selectNextChar.
+		"""
+		cm = CursorManager(text="ab\ncd", selection=(3, 3)) # Caret at "c"
+		cm.script_selectCharacter_forward(None) # "c" selected
+		cm.script_selectToBeginningOfLine(None) # "c" unselected
+		self.assertEqual(cm.selectionOffsets, (3, 3)) # Caret at "c", no selection
+
+	def test_selectToEndThenBeginningOfLine(self):
+		"""Test for #5746.
+		Depends on behavior tested in test_selectToEndOfLine and test_selectToBeginningOfLine.
+		"""
+		cm = CursorManager(text="ab") # Caret at "a"
+		cm.script_selectToEndOfLine(None)
+		cm.script_selectToBeginningOfLine(None)
+		self.assertEqual(cm.selectionOffsets, (0, 0)) # Caret at "a", no selection
+
 class TestSelectAll(unittest.TestCase):
 	"""Tests the select all command starting from different caret positions.
 	"""
