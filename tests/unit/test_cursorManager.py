@@ -35,6 +35,8 @@ class TestSelection(unittest.TestCase):
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
 
 	def test_selectPrevChar(self):
+		"""Same as test_selectNextChar, but with reversed direction.
+		"""
 		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
 		cm.script_selectCharacter_back(None)
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
@@ -47,6 +49,32 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_back(None) # "a" unselected
 		self.assertEqual(cm.selectionOffsets, (0, 0)) # Caret at "a", no selection
 
+	def test_unselectNextChar(self):
+		"""Depends on behavior tested by test_selectPrevChar.
+		Same as test_unselectPrevChar, but with reversed directions.
+		"""
+		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
+		cm.script_selectCharacter_back(None) # "a" selected
+		cm.script_selectCharacter_forward(None) # "a" unselected
+		self.assertEqual(cm.selectionOffsets, (1, 1)) # Caret at "b", no selection
+
+	def test_selectNextCharTwice(self):
+		"""Depends on behavior tested in test_selectNextChar.
+		"""
+		cm = CursorManager(text="abc") # Caret at "a"
+		cm.script_selectCharacter_forward(None) # "a" selected
+		cm.script_selectCharacter_forward(None) # "b" selected
+		self.assertEqual(cm.selectionOffsets, (0, 2)) # "ab" selected
+
+	def test_selectPrevCharTwice(self):
+		"""Depends on behavior tested in test_selectPrevChar.
+		Same as test_selectNextCharTwice, but with reversed directions.
+		"""
+		cm = CursorManager(text="abc", selection=(2, 2)) # Caret at "c"
+		cm.script_selectCharacter_back(None) # "b" selected
+		cm.script_selectCharacter_back(None) # "a" selected
+		self.assertEqual(cm.selectionOffsets, (0, 2)) # "ab" selected
+
 	def test_selForwardThenUnselThenSelBackward(self):
 		"""Test selecting forward, then unselecting and selecting backward.
 		Depends on behavior tested by test_unselectPrevChar.
@@ -56,6 +84,16 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_back(None) # "b" unselected, caret at "b"
 		cm.script_selectCharacter_back(None)
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
+
+	def test_selBackwardThenUnselThenSelForward(self):
+		"""Test selecting backward, then unselecting and selecting forward.
+		Same as test_selForwardThenUnselThenSelBackward, but with reversed directions.
+		"""
+		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
+		cm.script_selectCharacter_back(None) # "a" selected
+		cm.script_selectCharacter_forward(None) # "a" unselected, caret at "b"
+		cm.script_selectCharacter_forward(None)
+		self.assertEqual(cm.selectionOffsets, (1, 2)) # "b" selected
 
 	def test_selectForwardThenSelBackward(self):
 		"""Test selecting forward, then selecting backward without unselecting.
