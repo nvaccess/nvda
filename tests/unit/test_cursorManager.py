@@ -116,3 +116,9 @@ class TestSelectAll(unittest.TestCase):
 
 	def test_selectAllFromStart(self):
 		self._selectAllTest(0) # Caret at "a"
+
+	def test_selectAllFromMiddle(self):
+		self._selectAllTest(1) # Caret at "b"
+
+	def test_selectAllFromEnd(self):
+		self._selectAllTest(2) # Caret at "c"

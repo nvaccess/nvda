@@ -1,6 +1,6 @@
 #cursorManager.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Joseph Lee, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -256,7 +256,11 @@ class CursorManager(baseObject.ScriptableObject):
 			newInfo.move(unit, direction, endPoint="start" if direction < 0 else "end")
 			# Collapse this so we don't have to worry about which endpoint we used here.
 			newInfo.collapse(end=direction > 0)
-		if self._lastSelectionMovedStart:
+		# If we're selecting all, we're moving both endpoints.
+		# Otherwise, newInfo is the collapsed new active endpoint
+		# and we need to set the anchor endpoint.
+		movingSingleEndpoint = toPosition != textInfos.POSITION_ALL
+		if movingSingleEndpoint and self._lastSelectionMovedStart:
 			if newInfo.compareEndPoints(oldInfo, "startToEnd") > 0:
 				# We were selecting backwards, but now we're selecting forwards.
 				# For example:
@@ -270,7 +274,7 @@ class CursorManager(baseObject.ScriptableObject):
 				# 1. Caret at 1; selection (1, 1)
 				# 2. Shift+leftArrow: selection (0, 1)
 				newInfo.setEndPoint(oldInfo, "endToEnd")
-		else:
+		elif movingSingleEndpoint:
 			if newInfo.compareEndPoints(oldInfo, "startToStart") < 0:
 				# We were selecting forwards, but now we're selecting backwards.
 				# For example:
