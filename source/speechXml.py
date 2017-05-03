@@ -17,7 +17,8 @@ from logHandler import log
 XML_ESCAPES = {
 	0x3C: u"&lt;", # <
 	0x3E: u"&gt;", # >
-	0x26: "&amp;", # &
+	0x26: u"&amp;", # &
+	0x22: u"&quot;", # "
 }
 
 def toXmlLang(nvdaLang):
@@ -67,19 +68,23 @@ class XmlBalancer(object):
 		#: A tag (and its attributes) which should directly enclose all text henceforth.
 		self._tagEnclosingText = (None, None)
 
+	def _escape(self, text):
+		return unicode(text).translate(XML_ESCAPES)
+
 	def _text(self, text):
-		text = unicode(text).translate(XML_ESCAPES)
 		tag, attrs = self._tagEnclosingText
 		if tag:
 			self._openTag(tag, attrs)
-		self._out.append(text)
+		self._out.append(self._escape(text))
 		if tag:
 			self._closeTag(tag)
 
 	def _openTag(self, tag, attrs, empty=False):
 		self._out.append("<%s" % tag)
 		for attr, val in attrs.iteritems():
-			self._out.append(' %s="%s"' % (attr, val))
+			self._out.append(' %s="' % attr)
+			self._out.append(self._escape(val))
+			self._out.append('"')
 		self._out.append("/>" if empty else ">")
 
 	def _closeTag(self, tag):

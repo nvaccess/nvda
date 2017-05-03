@@ -32,6 +32,15 @@ class TestXmlBalancer(unittest.TestCase):
 		])
 		self.assertEqual(xml, '<tag attr="val"/>')
 
+	def test_attrEscaping(self):
+		"""Test that attribute values are escaped.
+		Depends on behavior tested in test_standAloneTagNoContent.
+		"""
+		xml = self.balancer.generateXml([
+			speechXml.StandAloneTagCommand("tag", {"attr": '"v1"&"v2"'}, None)
+		])
+		self.assertEqual(xml, '<tag attr="&quot;v1&quot;&amp;&quot;v2&quot;"/>')
+
 	def test_encloseAll(self):
 		"""Depends on behavior tested by test_standAloneTag.
 		"""
