@@ -1002,10 +1002,10 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 				pass
 			if landmark == "region":
 				# The word landmark is superfluous for regions.
-				textList.append(aria.landmarkRoles[landmark])
+				textList.append(braille.landmarkLabels[landmark])
 			else:
-				# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+				# Translators: This is brailled to indicate a landmark (example output: lmk main).
+				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
 		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)
