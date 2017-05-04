@@ -10,7 +10,8 @@
 - Hỗ trợ các thuộc tính aria-current. (#6358)
 - Hỗ trợ tự động chuyển ngôn ngữ cho Microsoft Edge. (#6852)
 - Hỗ trợ chương trình máy tính trên Windows 10 Enterprise LTSB (Long-Term Servicing Branch) và bản máy chủ. (#6914)
-- Thực hiện lệnh đọc dòng hiện tại nhanh ba lần sẽ đánh vấn dòng đó với ký tự được mô tả. (#6893)
+- Thực hiện lệnh đọc dòng hiện tại nhanh ba lần sẽ đánh vần dòng đó với phần mô tả ký tự. (#6893)
+- Thêm ngôn ngữ Burmese
 
 
 == Các Thay Đổi ==
@@ -44,9 +45,9 @@
 - Thuộc tính InputGesture.logIdentifier hiện nay sẽ không được khuyến khích tiếp tục sử dụng. Thay vào đó, có thể dùng InputGesture.identifiers[0]. (#6945)
 - Bỏ các mã không còn được sử dụng:
  - Các hằng số `speech.REASON_*`, thay vào đó, sẽ sử dụng `controlTypes.REASON_*`. (#6846)
- - `i18nName` cho thiết lập bộ đọc. Sẽ thay thế bằng `displayName` và `displayNameWithAccelerator`. (#6846, #5185)
+ - `i18nName` để thiết lập bộ đọc. Sẽ thay thế bằng `displayName` và `displayNameWithAccelerator`. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
- - `config.save`. (#6846)
+ - `config.save`. (#6846, #667)
 - Danh sách thành phần hoàn tất trong thực đơn ngữ cảnh autocomplete (tự động hoàn tất) của PythonConsole sẽ không còn hiển thị phần đường dẫn đối tượng đứng phía trước ký hiệu cuối được hoàn tất. (#7023)
 - Hiện đã có framework kiểm thử theo đơn vị cho NVDA. (#7026)
  - Cấu trúc cơ sở hạ tầng và phần kiểm thử theo đơn vị nằm tại thư mục tests/unit. Xem docstring trong  tập tin tests\unit\__init__.py để biết thêm thông tin.

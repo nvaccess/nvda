@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-24 00:10+1000\n"
-"PO-Revision-Date: 2017-02-13 05:20+0100\n"
-"Last-Translator: Patryk <patric3031@wp.pl>\n"
+"POT-Creation-Date: 2017-04-28 00:10+1000\n"
+"PO-Revision-Date: 2017-04-28 09:07+0100\n"
+"Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-Bookmarks: -1,216,-1,-1,128,-1,-1,-1,-1,-1\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2330,6 +2330,30 @@ msgstr "niezaznaczony"
 msgid "not checked"
 msgstr "nieoznaczone"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "Bieżący"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "bieżąca strona"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "bieżący krok"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "bieżąca pozycja"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "aktualna data"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "aktualny czas"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2509,9 +2533,11 @@ msgstr "Zmienia stan trybu uśpienia dla aktywnej aplikacji."
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"Czyta bieżącą linię kursora. Dwukrotne naciśnięcie literuje bieżącą linię"
+"Czyta bieżącą linię kursora. Dwukrotne naciśnięcie literuje bieżącą linię. "
+"Trzykrotne naciśnięcie literuje linię przy użyciu opisów znaków."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4397,6 +4423,10 @@ msgstr "styl %s"
 msgid "default style"
 msgstr "styl domyślny"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "brak ramek"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6189,8 +6219,8 @@ msgid "Error activating profile."
 msgstr "Błąd podczas aktywacji profilu"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Jesteś pewien, że chcesz usunąć ten profil? To nie odwracalne."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Ten profil zostanie całkowicie usunięty. Akcja nie może być cofnięta."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7076,6 +7106,8 @@ msgid "Line &indentation reporting:"
 msgstr "Zgłaszanie wc&ięć:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Wyłączone"
 
@@ -7126,6 +7158,21 @@ msgstr "Na&główki wierszy i kolumn"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "Ws&półrzędne komórki"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "style"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Kolory i style"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Ramki komórki:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7691,6 +7738,11 @@ msgstr ""
 "wszystkich komórek poniżej i w prawo od niej w tym obszarze. Dwukrotne "
 "naciśnięcie anuluje ustawienie aktualnej komórki nagłówka."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Arkusz {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Wiadomość wprowadzania {title}: {message}"
@@ -7716,6 +7768,129 @@ msgstr "Edycja komentarza dla komórki {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} do {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "górna krawędź"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "dolna krawędź"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "lewa krawędź"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "prawa krawędź"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "przekątna prawo góra"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "linia dolnej prawej przekątnej"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "poziome ramki z wyjątkiem zewnętrznych"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "Ramki pionowe z wyjątkiem zewnętrznych"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "ciągła"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "kreskowane"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "kreska kropka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "kreska kropka kropka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "kropkowane"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "podwójne"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "pochyłe kreska kropka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "włosowa"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "cienka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "średnie"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "gruba"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "średnie kreska kropka kropka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "średnie kreska kropka"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "średnie kreskowane"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} ramka otaczająca"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} górna i dolna krawędź"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} lewa i prawa krawędź"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} przekątne prawa górna i prawa dolna"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8737,3 +8912,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "Jesteś pewien, że chcesz usunąć ten profil? To nie odwracalne."

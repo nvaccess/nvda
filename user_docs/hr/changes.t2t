@@ -6,37 +6,38 @@
 = 2017.2 =
 
 == Nove značajke ==
-- U Microsoft Excelu, izgovaraju se granice ćelija koristeći `NVDA+f`. (#3044)
-- Dodana podrška za aria-current atribute. (#6358)
-- Podrška za automatsko prebacivanje jezika u Microsoft Edge-u. (#6852)
-- podrška za windows Kalkulator u Windowsima 10 Enterprise LTSB (Long-Term Servicing Branch) i Server. (#6914)
-- Prilikom pritiskanja tri puta komande za izgovor trenutnog redka, isti se sriče fonetski. (#6893)
+- U Microsoft Excelu sada se mogu izgovarati granice ćelija koristeći `NVDA+f`. (#3044)
+- Dodana podrška za aria-current attribute. (#6358)
+- Automatsko prebacivanje jezika sada je podržano u Microsoft Edge-u. (#6852)
+- Dodana podrška za Windows Kalkulator u Windows 10 Enterprise LTSB (Long-Term Servicing Branch) i Server. (#6914)
+- Izvodeći prečicu "čitaj trenutni redak", tri puta brzo sriče redak fonetski. (#6893)
+- Novi jezik: Burmanski /Mjanmarski.
 
 
 == Izmjene ==
-- Prilikom kretanja uz pomoć  jednostavne navigacije u aplikacijama koje koriste UI Automation, ignoriraju se bezsadržajni objekti, čineći tako kretanje lakšim. (#6948, #6950) 
+- Prilikom kretanja uz pomoć jednostavne navigacije u programima koji koriste UI Automation, ignoriraju se bezsadržajni sadržitelji, čineći tako kretanje lakšim. (#6948, #6950) 
 
 
-== Ispravke Grešaka ==
-- Stavke izbornika na web stranicama (stavka izbornika potvrdni okvir i izborni gumb) sada se mogu aktivirati u načinu pregleda. (#6735)
-- Excelovo izgovaranje radnih listova je prevedeno. (#6848)
-- Prilikom pritiska tipke escape, kada je  dijaloški okvir "potvrdi brisanje" aktivan sada zatvara dijaloški okvir. (#6851)
-- Ispravljena neka rušenja u  Mozilla Firefox i drugim Gecko aplikacijama gdje je značajka multi-process omogućena. (#6885)
-- Izgovaranje pozadinske boje u načinu pregleda ekrana sada je točnije kada je tekst crtan transparentnom pozadinom (#6467) 
-- Unaprjeđena podrška za  aria-describedby u Internet Explorer 11, uključujući podršku unutar iokvira i kada su višestruki identifikatori omogućeni. (#5784)
-- U Windows nadogradnji za tvorce, NVDA-ovo stišavanje zvuka ponovo radi kao što je radilo u prijašnjim windows inačicama (NPr. utišavanje govora i zvuka, uvijek utišavaj, i bez stišavanja su svi dostupni). (#6933)
-- NVDA više neće neuspjevati kretnju ili izgovaranje nekih (UIA) kontrola, gdje tipkovnički prečac nije definiran. (#6779)
-- Dva se razmaka više ne dodaju za neke (UIA) kontrole. (#6790)
-- Neke kombinacije tipaka na  HIMS brajičnim redcima (npr. space+točkica4) sada rade korektno. (#3157)
+== Ispravke grešaka ==
+- Stavke izbornika na web stranicama (stavka izbornika potvrdni okvir i izborni gumbi) sada se mogu aktivirati kada se nalazite u načinu pregleda. (#6735)
+- Izgovaranje imena radnog lista je prevedeno. (#6848)
+- Pritisak tipke escape, kada je aktivan dijaloški okvir za potvrdu brisanja profila sada zatvara dijaloški okvir. (#6851)
+- Ispravljena su neka rušenja u Mozilla Firefoxu i drugim Gecko aplikacijama gdje je uključena značajka višezadačnosti. (#6885)
+- Izgovaranje pozadinskih boja u pregledu zaslona sada je točnije kada je tekst crtan sa transparentnom pozadinom. (#6467)
+- Improved support for aria-describedby in Internet Explorer 11, including support within iframes and when multiple IDs are provided. (#5784)
+- In the Windows 10 Creators Update, NVDA's audio ducking again works as in previous Windows releases (I.e. Duck with speech and sounds, always duck, and no ducking are all available). (#6933)
+- NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
+- Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
+- Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
 - Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
 - Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
 - When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
-- Navigating by line in Microsoft Edge is now up to 3x faster in the Windows 10 Creaters Update. (#6994)
-- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creaters Update (#6948)
+- Navigating by line in Microsoft Edge is now up to three times faster in the Windows 10 Creators Update. (#6994)
+- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creators Update. (#6948)
 
 
 == Izmjene za razvojne programere ==
-Ako želite doznati više, pogledajte ovaj dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 = 2017.1 =
 Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupcima u Microsoft wordu; podrška za čitanje, kretanje i označavanje knjiga u Kindlu za osobna računala; i unaprjeđena podrška za microsoft edge.
@@ -79,7 +80,7 @@ Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupc
 
 
 == Izmjene za razvojne programere ==
-Ako želite doznati više, pogledajte ovaj dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.4 =
@@ -136,7 +137,7 @@ Poboljšanja u ovoj inačici uključuju unaprjeđenu podršku za Microsoft edge;
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, molimo Vas, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.3 =
@@ -192,7 +193,7 @@ Novosti u ovoj inačici uključuju mogučnost onemogučavanja pojedinačnih doda
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.2.1 =
@@ -242,7 +243,7 @@ Novosti u ovoj inačici uključuju mogučnost izvještavanja o pravopisnim pogre
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.1 =
@@ -294,7 +295,7 @@ Najvažnije novosti u ovoj inačici uključuju mogućnost neobaveznog smanjivanj
 
 
 == Izmjene za razvojne programere ==
-Ako želite pogledati izmjene za razvojne programere, molimo otvorite engleski dokument.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2015.4 =
@@ -392,7 +393,7 @@ Novosti u ovoj inačici uključuju početnu podršku za windows 10 operacijski s
 
 
 == Izmjene za razvojne programere ==
-		Za više informacija, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2015.2 =
@@ -428,7 +429,7 @@ Nove značajke u ovoj inačici uključuju mogućnost čitanja grafova u microsof
 
 
 == Izmjene za razvojne programere ==
-Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokument "Što je novo" na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2015.1 =
@@ -487,7 +488,7 @@ Unapređenja u ovoj inačici uključuju način pregleda za dokumente u Microsoft
 
 
 == Izmjene za razvojne programere ==
-Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokument "Što je novo" na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2014.4 =
@@ -529,7 +530,7 @@ Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokumen
 
 == Promjene za razvojne programere ==
 
-Ako biste htjeli pogledati promjene za razvojne programere, molimo vas pogledajte dokument "što je novo" na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 = Starije verzije =
 
-Za više informacija o promjenama u starijim inačicama, molimo pogledajte dokument što je novo na engleskom jeziku.
+Informacije o starijim inačicama nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].

@@ -3,6 +3,42 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Nieuwe Functies ==
+- Informatie over celranden kan nu worden gemeld in Microsoft Excel via `NVDA+f`. (#3044)
+- Ondersteuning toegevoegd voor aria-current attributen. (#6358)
+- Automatische taalverandering wordt nu ondersteund in Microsoft Edge. (#6852)
+- Ondersteuning toegevoegd voor Windows Calculator op Windows 10 Enterprise LTSB (Long-Term Servicing Branch) en Server. (#6914)
+- Als u het commando read current line driemaal snel uitvoert, wordt de regel gespeld met karaterbeschrijvingen. (#6893)
+- Nieuwe taal: Burmees.
+
+
+== Veranderingen ==
+- When navigating with simple review  in applications using UI Automation, more non-content containers are ignored making navigation easier. (#6948, #6950) 
+
+
+== Opgeloste Problemen ==
+- Web page menu items (menu item checkbox's and radio buttons) can now be activated while in browse mode. (#6735)
+- Meldingen voor namen van werkbladen in Excel zijn vertaald. (#6848)
+- Pressing escape while the configuration profile "Confirm Deletion" dialog is active now dismisses the dialog. (#6851)
+- Fixed some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
+- Reporting of background color in screen review is now more accurate when  text was drawn with a transparent background. (#6467)
+- Verbeterde ondersteuning voor aria-describedby in Internet Explorer 11, inclusief ondersteuning binnen iframes en wanneer meerdere ID's zijn vermeld. (#5784)
+- In the Windows 10 Creators Update, NVDA's audio ducking again works as in previous Windows releases (I.e. Duck with speech and sounds, always duck, and no ducking are all available). (#6933)
+- NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
+- Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
+- Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
+- Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
+- Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
+- When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
+- Navigating by line in Microsoft Edge is now up to three times faster in the Windows 10 Creators Update. (#6994)
+- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creators Update. (#6948)
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2017.1 =
 Hoogtepunten in deze versie zijn melden van secties en tekstkolommen in Microsoft Word; Ondersteuning voor lezen, navigeren en annoteren van boeken in Kindle voor PC; en verbeterde ondersteuning voor Microsoft Edge.
 
@@ -30,7 +66,7 @@ Hoogtepunten in deze versie zijn melden van secties en tekstkolommen in Microsof
 == Opgeloste problemen ==
 - Een bevriezingsprobleem opgelost in Microsoft Word bij het navigeren per paragraaf door een groot document in bladermodus. (#6368)
 - Tabellen in Microsoft Word die gekopieerd werden uit Microsoft Excel worden niet langer behandeld als lay-outtabellen en worden daardoor niet langer genegeerd. (#5927)
-- Wanneer er geprobeerd wordt te typen in de beveiligde weergave van Microsoft Excel  maakt  NVDA nu een geluid  in plaats van het uitspreken van karakters die niet getypt werden. (#6570)
+- Wanneer er geprobeerd wordt te typen in de beveiligde weergave van Microsoft Excel  maakt  NVDA nu een geluid in plaats van het uitspreken van karakters die niet getypt werden. (#6570)
 - Het drukken van escape in Microsoft Excel schakelt niet langer onterecht naar bladermodus, tenzij de gebruiker eerder expliciet naar bladermodus is geschakeld met NVDA+spatiebalk en dan focusmodus heeft geactiveerd door enter te drukken op een formulierveld. (#6569) 
 - NVDA loopt niet langer vast in Microsoft Excel spreadsheets waarin een gehele rij of kolom is samengevoegd. (#6216)
 - Het melden van  afgesneden/Overschrijdende tekst in cellen in Microsoft Excel zou nu accurater moeten zijn (#6472)
