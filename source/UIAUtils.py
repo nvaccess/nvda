@@ -173,6 +173,7 @@ class UIATextRangeAttributeValueFetcher(object):
 		try:
 			val=self.textRange.getAttributeValue(ID)
 		except COMError:
+			# #7124: some text attributes are not supported in  older Operating Systems 
 			return UIAHandler.handler.reservedNotSupportedValue
 		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
 			raise UIAMixedAttributeError
