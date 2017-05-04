@@ -1,5 +1,5 @@
 ﻿#locale/ZH-TW/symbols.dic
-#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2016/6/1
+#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2017/5/2
 # 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
 
 complexSymbols:
@@ -66,14 +66,14 @@ $	錢號	all	norep
 =	equals	some
 ?	question	all
 @	小老鼠	some
-[	半形左中括號	most
-]	半形右中括號	most
+[	半形左中括號	most	always
+]	半形右中括號	most	always
 \\	backslash	most
 ^	caret	most
 _	半形底線	most
 `	graav	most
-{	半形左大括號	most
-}	半形右大括號	most
+{	半形左大括號	most	always
+}	半形右大括號	most	always
 |	bar	most
 ~	半形波浪號	most
 
@@ -166,14 +166,14 @@ _	半形底線	most
 \r	航尾	char
 negative number	負
 ·	間隔號	most
-，	逗號	all
-、	頓號	all
-。	句號	all
+，	逗號	all	always
+、	頓號	all	always
+。	句號	all	always
 ．	點	none
-；	分號	all
-？	問號	all
-！	驚嘆號	all
-：	冒號	all
+；	分號	all	always
+？	問號	all	always
+！	驚嘆號	all	always
+：	冒號	all	always
 …	省略號	most
 ‥	刪節號	most
 ︱	直破折號	most
@@ -182,40 +182,40 @@ negative number	負
 ╴	左邊直線框	most
 ＿	底線	most
 ︴	直波浪號	some
-（	左括號	most
-）	右括號	most
-︵	上括號	most
-︶	下括號	most
-｛	左大括號	most
-｝	右大括號	most
-︷	上大括號	most
-︸	下大括號	most
-〔	左中括號	most
-〕	右中括號	most
-︹	上中括號	most
-︺	下中括號	most
-【	左粗中括號	most
-】	右粗中括號	most
-︻	上粗中括號	most
-︼	下粗中括號	most
-《	左書名號	most
-》	右書名號	most
-︽	上書名號	most
-︾	下書名號	most
-〈	左單書名號	most
-〉	右單書名號	most
-︿	上角括號	most
-﹀	下角括號	most
-「	左上單引號	most
-」	右下單引號	most
+（	左括號	most	always
+）	右括號	most	always
+︵	上括號	most	always
+︶	下括號	most	always
+｛	左大括號	most	always
+｝	右大括號	most	always
+︷	上大括號	most	always
+︸	下大括號	most	always
+〔	左中括號	most	always
+〕	右中括號	most	always
+︹	上中括號	most	always
+︺	下中括號	most	always
+【	左粗中括號	most	always
+】	右粗中括號	most	always
+︻	上粗中括號	most	always
+︼	下粗中括號	most	always
+《	左書名號	most	always
+》	右書名號	most	always
+︽	上書名號	most	always
+︾	下書名號	most	always
+〈	左單書名號	most	always
+〉	右單書名號	most	always
+︿	上角括號	most	always
+﹀	下角括號	most	always
+「	左上單引號	most	always
+」	右下單引號	most	always
 『	左上雙引號	most
 』	右下雙引號	most
 ﹃	右上雙引號	most
 ﹄	左下雙引號	most
-﹛	左大括號	most
-﹜	右大括號	most
-﹝	左中括號	most
-﹞	右中括號	most
+﹛	左大括號	most	always
+﹜	右大括號	most	always
+﹝	左中括號	most	always
+﹞	右中括號	most	always
 ＃	井字號	most
 ＆	連接號	most
 ＊	星號	most
