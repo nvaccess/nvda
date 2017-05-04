@@ -866,7 +866,7 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 	res = _com_dispatch_raw_propget( pDispatchTextColumns, wdDISPID_TEXTCOLUMNS_COUNT,
 		VT_I4, &count);
 	if( res != S_OK || count < 0){
-		LOG_ERROR(L"error getting textColumn count. res: "<< res
+		LOG_DEBUG(L"Unable to get textColumn count. We may be in a 'comment'. res: "<< res
 			<< " count: " << count);
 		return;
 	}

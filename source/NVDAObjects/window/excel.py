@@ -197,6 +197,8 @@ backgroundPatternLabels={
 		xlPatternRectangularGradient:_("rectangular gradient"),
 	}
 
+from excelCellBorder import getCellBorderStyleDescription
+
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
 
@@ -674,7 +676,24 @@ class ExcelWorksheet(ExcelBase):
 		self.excelApplicationObject=self.excelWorksheetObject.application
 		return self.excelApplicationObject
 
-	re_definedName=re.compile(ur'^((?P<sheet>\w+)!)?(?P<name>\w+)(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?(\..*)*)?)?$')
+	re_definedName=re.compile(
+		# Starts with an optional sheet name followed by an exclamation mark (!).
+		# If a sheet name contains spaces then it is surrounded by single quotes (')
+		# Examples:
+		# Sheet1!
+		# ''Sheet2 (4)'!
+		# 'profit and loss'!
+		u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?'
+		# followed by a unique name (not containing spaces). Example:
+		# rowtitle_ab12-cd34-de45
+		u'(?P<name>\w+)'
+		# Optionally followed by minimum and maximum addresses, starting with a period (.). Example:
+		# .a1.c3
+		# .ab34
+		u'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
+		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
+		u'(\..*)*)?)?$'
+	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
 		sheetName=self.excelWorksheetObject.name
@@ -684,6 +703,8 @@ class ExcelWorksheet(ExcelBase):
 			if not nameMatch:
 				continue
 			sheet=nameMatch.group('sheet')
+			if sheet and sheet[0]=="'" and sheet[-1]=="'":
+				sheet=sheet[1:-1]
 			if sheet and sheet!=sheetName:
 				continue
 			name=nameMatch.group('name').lower()
@@ -752,13 +773,15 @@ class ExcelWorksheet(ExcelBase):
 		else:
 			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
 		name+=uuid.uuid4().hex
+		relativeName=name
+		name="%s!%s"%(cell.excelRangeObject.worksheet.name,name)
 		if oldInfo:
 			self.excelWorksheetObject.parent.names(oldInfo.name).delete()
 			oldInfo.name=name
 		else:
 			maxColumnNumber=self._getMaxColumnNumberForHeaderCell(cell.excelCellObject)
 			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,maxColumnNumber=maxColumnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
-		self.excelWorksheetObject.parent.names.add(name,cell.excelRangeObject)
+		self.excelWorksheetObject.names.add(relativeName,cell.excelRangeObject)
 		return True
 
 	def _getMaxColumnNumberForHeaderCell(self,excelCell):
@@ -964,7 +987,25 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
+		if formatConfig["reportBorderStyle"]:
+			borders = None
+			hasMergedCells = self.obj.excelCellObject.mergeCells
+			if hasMergedCells:
+				mergeArea = self.obj.excelCellObject.mergeArea
+				try:
+					borders = mergeArea.DisplayFormat.borders # for later versions of office
+				except COMError:
+					borders = mergeArea.borders # for office 2007
+			else:
+				borders = cellObj.borders
+			try:
+				formatField['border-style']=getCellBorderStyleDescription(borders,reportBorderColor=formatConfig['reportBorderColor'])
+			except COMError:
+				pass
 		return formatField,(self._startOffset,self._endOffset)
+
+	def _get_locationText(self):
+		return self.obj.getCellPosition()
 
 class ExcelCell(ExcelBase):
 
@@ -1105,6 +1146,12 @@ class ExcelCell(ExcelBase):
 		return self._rowAndColumnNumber[1]
 
 	colSpan=1
+
+	def getCellPosition(self):
+		rowAndColumn = self.cellCoordsText
+		sheet = self.excelWindowObject.ActiveSheet.name
+		# Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+		return _(u"Sheet {0}, {1}").format(sheet, rowAndColumn)
 
 	def _get_tableID(self):
 		address=self.excelCellObject.address(1,1,0,1)

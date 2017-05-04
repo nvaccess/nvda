@@ -1,6 +1,5 @@
-#mouseHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2016 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -20,6 +19,7 @@ import config
 import winInputHook
 import core
 import ui
+from math import floor
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -49,16 +49,27 @@ def updateMouseShape(name):
 		_shapeTimer.Stop()
 		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
 
-def playAudioCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,blurFactor=0):
+def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBrightness=True,blurFactor=0):
+	""" play audio coordinates:
+	- left to right adjusting the volume between left and right speakers
+	- top to bottom adjusts the pitch of the sound
+	- brightness adjusts the volume of the sound
+	Coordinates (x, y) are absolute, and can be negative.
+	"""
+
+	# make relative to (0,0) and positive
+	x = x - screenMinPos.x
+	y = y - screenMinPos.y
+
 	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
 	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
 	if detectBrightness:
-		startX=min(max(x-blurFactor,0),screenWidth)
-		width=min((x+blurFactor+1)-startX,screenWidth)
-		startY=min(max(y-blurFactor,0),screenHeight)
-		height=min((y+blurFactor+1)-startY,screenHeight)
-		grey=screenBitmap.rgbPixelBrightness(scrBmpObj.captureImage(startX,startY,width,height)[0][0])
+		startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
+		startY=min(max(y-blurFactor,0),screenHeight)+screenMinPos.y
+		width=min(blurFactor+1,screenWidth)
+		height=min(blurFactor+1,screenHeight)
+		grey=screenBitmap.rgbPixelBrightness(scrBmpObj.captureImage( startX, startY, width, height)[0][0])
 		brightness=grey/255.0
 		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
 		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
@@ -89,16 +100,79 @@ def internal_mouseEvent(msg,x,y,injected):
 		log.error("", exc_info=True)
 	return True
 
+def getMouseRestrictedToScreens(x, y, displays):
+	""" Ensures that the mouse position is within the area of one of the displays, relative to (0,0) 
+		but not necessarily positive (which is as expected for mouse coordinates)
+
+		We need to first get the closest point on the edge of each display rectangle (if the mouse
+		is outside the rectangle). This is done by clamping the mouse position to the extents of each
+		screen. The distance from this point to the actual mouse position can then be calculated. The
+		smallest adjustment to get the mouse within the screen bounds is desired.
+	"""
+	mpos =wx.RealPoint(x,y)
+	closestDistValue = None
+	newXY = None
+	for screenRect in displays:
+		halfWidth = wx.RealPoint(0.5*screenRect.GetWidth(),0.5*screenRect.GetHeight())
+		tl = screenRect.GetTopLeft()
+		# tl is an integer based wx.Point, so convert to float based wx.RealPoint
+		screenMin =  wx.RealPoint(tl.x, tl.y)
+		screenCenter = screenMin + halfWidth
+		scrCenterToMouse = mpos - screenCenter
+		mouseLimitedToScreen = screenCenter + wx.RealPoint( # relative to origin
+			max(min(scrCenterToMouse.x, halfWidth.x), -halfWidth.x),
+			max(min(scrCenterToMouse.y, halfWidth.y), -halfWidth.y))
+		edgeToMouse = mpos - mouseLimitedToScreen
+		distFromRectToMouseSqd = abs(edgeToMouse.x) + abs(edgeToMouse.y)
+		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:
+			closestDistValue = distFromRectToMouseSqd
+			newXY = mouseLimitedToScreen
+
+	# drop any partial position information. Even the 99% of the way to the edge of a 
+	# pixel is still in the pixel.
+	return (int(floor(newXY.x)), int(floor(newXY.y)))
+
+def getMinMaxPoints(screenRect):
+	screenMin = screenRect.GetTopLeft()
+	screenDim = wx.Point(screenRect.GetWidth(),screenRect.GetHeight())
+	screenMax = screenMin+screenDim
+	return (screenMin, screenMax)
+
+def getTotalWidthAndHeightAndMinimumPosition(displays):
+	""" Calculate the total screen width and height.
+
+	Depending on screen layouts the rectangles may overlap on the vertical or 
+	horizontal axis. Screens may also have a gap between them. In the case where
+	there is a gap in between we count that as contributing to the full virtual
+	space """
+	smallestX, smallestY, largestX, largestY = (None, None, None, None)
+	for screenRect in displays:
+		(screenMin, screenMax) = getMinMaxPoints(screenRect)
+		if smallestX == None or screenMin.x < smallestX: smallestX = screenMin.x
+		if smallestY == None or screenMin.y < smallestY: smallestY = screenMin.y
+		if largestX == None or screenMax.x > largestX: largestX = screenMax.x
+		if largestY == None or screenMax.y > largestY: largestY = screenMax.y
+
+	# get full range, including any "blank space" between monitors
+	totalWidth = largestX - smallestX
+	totalHeight = largestY - smallestY
+
+	return (totalWidth, totalHeight, wx.Point(smallestX, smallestY))
+
 def executeMouseMoveEvent(x,y):
 	global currentMouseWindow
 	desktopObject=api.getDesktopObject()
-	screenLeft,screenTop,screenWidth,screenHeight=desktopObject.location
-	x=min(max(screenLeft,x),(screenLeft+screenWidth)-1)
-	y=min(max(screenTop,y),(screenTop+screenHeight)-1)
+	displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
+	x, y = getMouseRestrictedToScreens(x, y, displays)
+	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
+
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-		playAudioCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
+		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
+			config.conf['mouse']['audioCoordinates_detectBrightness'],
+			config.conf['mouse']['audioCoordinates_blurFactor'])
+
 	oldMouseObject=api.getMouseObject()
-	mouseObject=desktopObject.objectFromPoint(x,y)
+	mouseObject=desktopObject.objectFromPoint(x, y)
 	while mouseObject and mouseObject.beTransparentToMouse:
 		mouseObject=mouseObject.parent
 	if not mouseObject:

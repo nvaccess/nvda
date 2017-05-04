@@ -3,6 +3,50 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.1 =
+Highlights of this release include reporting of sections and text columns in Microsoft Word; Support for reading, navigating and annotating books in Kindle for PC; and improved support for Microsoft Edge. 本次改版重點包括：讀出微軟 Word 內的分節及分欄的配置；支援在PC上讀出Kindle電子書的導航與註解；續改進對Microsoft Edge瀏覽器的支援。
+
+== New Features ==
+- In Microsoft Word, the types of section breaks and section numbers can now be reported. This is enabled with the "Report page numbers" option in the Document Formatting dialog. (#5946) 可讀出微軟Word內的分節符號、分欄及頁碼資訊，此可透過將NVDA功能表中->「偏好設定」->「文件格式」->「頁碼」勾選來啟用。
+- In Microsoft Word, text columns can now be reported. This is enabled with the "Report page numbers" option in the document formatting dialog. (#5946)
+- Automatic language switching is now supported in WordPad. (#6555) 已可支援WordPad的自動語言切換功能。
+- The NVDA find command (NVDA+control+f) is now supported in browse mode in Microsoft Edge. (#6580) 已可支援在微軟Edge瀏覽模式下尋找的功能，按組合鍵(NVDA+control+f)。
+- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577) 已可支援在微軟Edge瀏覽模式下單鍵瀏覽「按鈕」的功能，按 (b或shift+b)。
+- When copying a sheet in Microsoft Excel, column and row headers are remembered. (#6628) 當在微軟Excel複製工作表，其欄標題與列標題均可隨之被記住。
+- Support for reading and navigating books in Kindle for PC version 1.19, including access to links, footnotes, graphics, highlighted text and user notes. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638) 支援在PC應用程式（版次1.19）上讀出Kindle電子書的導航與註解，包括：連結、footnotes、圖片、強調標記及讀者加註。
+- Browse mode table navigation is now supported in Microsoft Edge. (#6594) 已可支援微軟Edge在瀏覽模式的表格之導航。
+- In Microsoft Excel, the report review cursor location command (desktop: NVDA+numpadDelete, laptop: NVDA+delete) now reports the name of the worksheet and the cell location. (#6613) 已可支援微軟Excel讀出瀏覽游標所在的位置資訊，如按一下(桌機：NVDA+數字鍵盤Delete，筆電：NVDA+delete)讀出工作表名稱，按兩下，讀出視窗尺寸大小。
+- Added an option to the exit dialog to restart with debug level logging. (#6689)
+
+
+== Changes ==
+- The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
+- A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
+- Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
+- Due to changes In the Windows 10 Creators Update, the "Always duck" mode is no longer available in NVDA's Audio ducking settings. It is still available on older windows 10 releases. (#6684)
+- Due to changes in the  Windows 10 Creators Update, the "Duck when outputting speech and sounds" mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume. These changes do not   affect older windows 10 releases. (#6684)
+
+
+== Bug Fixes ==
+- Fixed freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
+- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables and therefore are no longer ignored. (#5927)
+- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
+- Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
+- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. (#6216)
+- Reporting of cropped/overflowed text in Microsoft Excel cells should now be more accurate. (#6472)
+- NVDA now reports when a check box is read-only. (#6563)
+- The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
+- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+- NVDA will no longer announce "pane" when minimizing windows. (#6671)
+- Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
+- Mouse tracking now works across all screens on computers with multiple monitors. (#6598)
+- NVDA no longer becomes unusable after exiting Windows Media Player while focused on a slider control. (#5467)
+
+
+== Changes for Developers ==
+- Profiles and configuration files are now automatically upgraded to meet the requirements of schema modifications. If there is an error during upgrade, a notification is shown, the configuration is reset and the old configuration file is available in the NVDA log at 'Info' level. (#6470)
+
+
 = 2016.4 =
 Highlights of this release include improved support for Microsoft Edge; browse mode in the Windows 10 Mail app; and significant improvements to NVDA's dialogs. 本次改版的重點包括加強對Microsoft Edge瀏覽器的支援；以及在Windows 10 Mail app中的瀏覽模式; 和NVDA針對「對話方塊」的重大改進。
 
@@ -15,6 +59,7 @@ Highlights of this release include improved support for Microsoft Edge; browse m
 - Support for the Baum SuperVario2, Baum Vario 340 and HumanWare Brailliant2 braille displays. (#6116) 支援Baum SuperVario2，Baum Vario 340和HumanWare Brailliant2點字顯示器。
 - Initial support for the Anniversary update of Microsoft Edge. (#6271) 開始支持Microsoft Edge的年度更新版。
 - Browse mode is now used when reading emails in the Windows 10 mail app. (#6271) 在Windows 10 mail app中閱讀電子郵件時，可使用瀏覽模式。
+- New language: Lithuanian.
 
 
 == Changes ==
@@ -61,6 +106,7 @@ Highlights of this release include improved support for Microsoft Edge; browse m
 
 
 = 2016.3 =
+Highlights of this release include the ability to disable individual add-ons; support for form fields in Microsoft Excel; significant improvements to reporting of colors; fixes and improvements related to several braille displays; and fixes and improvements to support for Microsoft Word.
 
 == New Features ==
 - Browse mode can now be used to read PDF documents in Microsoft Edge. (#5740) 已可使用瀏覽模式讀取在微軟 Edge 瀏覽器中的 PDF 文件。 
@@ -73,6 +119,8 @@ Highlights of this release include improved support for Microsoft Edge; browse m
 - Add-ons manager: It is now possible to disable individual add-ons. (#3090)附加元件已可透過「管理附加元件」作個別停用之設定。
 - Additional key assignments have been added for ALVA BC640/680 series braille displays. (#5206)
 - There is now a command to move the braille display to the current focus. Currently, only the ALVA BC640/680 series has a key assigned to this command, but it can be assigned manually for other displays in the Input Gestures dialog if desired. (#5250)
+- In Microsoft Excel, you can now interact with form fields. You move to form fields using the Elements List or single letter navigation in browse mode. (#4953)
+- You can now assign an input gesture to toggle simple review mode using the Input Gestures dialog. (#6173)
 
 
 == Changes ==
@@ -103,6 +151,10 @@ Highlights of this release include improved support for Microsoft Edge; browse m
 - NVDA now correctly detects the secondary routing buttons on ALVA BC640/680 series braille displays. (#5206)
 - NVDA can again report Windows Toast notifications in recent builds of Windows 10. (#6096)
 - NVDA no longer occasionally stops recognising key presses on Baum compatible and HumanWare Brailliant B braille displays. (#6035)
+- If reporting of line numbers is enabled in NVDA's Document Formatting preferences, line numbers are now shown on a braille display. (#5941)
+- When speech mode is off, reporting objects (such as pressing NVDA+tab to report the focus) now appears in the Speech Viewer as expected. (#6049)
+- In the Outlook 2016 message list,  associated draft information is no longer reported. (#6219)
+- In Google Chrome and Chrome-based browsers in a language other than English, browse mode no longer fails to work in many documents. (#6249)
 
 
 == Changes for Developers ==

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-13 00:10+1000\n"
-"PO-Revision-Date: 2017-01-15 12:33+0530\n"
+"POT-Creation-Date: 2017-04-07 00:10+1000\n"
+"PO-Revision-Date: 2017-04-08 12:04+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -795,6 +795,7 @@ msgstr ""
 "எழுத்து, என்விடிஏ கையாளாமல், பயன்பாட்டிற்கு நேரடியாக அனுப்பி வைக்கும். "
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "இவ்வாவணத்தில் ஆதரவில்லை"
 
@@ -1289,6 +1290,7 @@ msgid "%s landmark"
 msgstr "%s நிலக்குறி"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "%s தெரிவாகியது"
@@ -1320,6 +1322,33 @@ msgstr "கீழ்"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் முடிவிற்கு அப்பால் செல்லும்"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "அட்டவணையின் சிறுகட்டத்தில் இல்லை"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "அட்டவணையின் விளிம்பு"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "அடுத்த அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "முந்தைய அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "அட்டவணையின் அடுத்த நெடுவரிசைக்கு நகர்கிறது"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "அட்டவணையின் முந்தைய நெடுவரிசைக்கு நகர்கிறது"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2287,6 +2316,30 @@ msgstr "தெரிவாகாதது"
 msgid "not checked"
 msgstr "தேர்வாகாதது"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "நடப்பு"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "நடப்புப் பக்கம்"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "நடப்புப் படி"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "நடப்பு அமைவிடம்"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "நடப்புத் தேதி"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "நடப்பு நேரம்"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2465,10 +2518,11 @@ msgstr "இயக்கத்திலுள்ள பயன்பாட்ட�
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"சுட்டியின் கீழுள்ள வரியைப் படிக்கும். இவ்விசையை இருமுறை அழுத்தினால், வரியை எழுத்துகளாக "
-"படிக்கும்"
+"கணினிச் சுட்டியின் கீழுள்ள வரியைப் படிக்கும். இருமுறை அழுத்தினால், வரியை எழுத்துகளாக "
+"படிக்கும். மும்முறை அழுத்தினால், வரியை எழுத்து விளக்கங்களைக் கொண்டு படிக்கும். "
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4356,6 +4410,10 @@ msgstr "பாங்கு %s"
 msgid "default style"
 msgstr "இயல்புப் பாங்கு"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "எல்லைக் கோடுகள் ஏதுமில்லை"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -4929,11 +4987,6 @@ msgstr "{description} இருப்பதுபோல் {symbol}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "அட்டவணையின் விளிம்பு"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "வழிகாட்டிப் பொருளை அடுத்த நெடுவரிசைக்கு நகர்த்தும்"
@@ -4974,6 +5027,12 @@ msgstr "எத்தடமும் ஓடவில்லை"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் நேரத்தில் மீதமிருந்தால், அதை அறிவிக்கும்"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"தெரிவுச் செய்யப்பட்ட, அல்லது சுட்டியின்  இடத்திலிருக்கும் உரைக்குத் தொடர்பான விருப்பத் "
+"தேர்வுகளைக் காட்டுகிறது "
+
 #. Translators: A position in a Kindle book
 #, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -4982,6 +5041,25 @@ msgstr "{bookPercentage}%, அமைவிடம் {maxLocation}ல் {curLoca
 #. Translators: a page in a Kindle book
 msgid "Page {pageNumber}"
 msgstr "{pageNumber}ம் பக்கம்"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "முனைப்புறுத்தல்"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "முனைப்புறுத்தல் ஏதுமில்லை"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s முனைப்புறுத்தப்பட்டது"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "பிரபல முனைப்புறுத்தலுக்கு வெளியே"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5871,6 +5949,10 @@ msgstr "மறுதுவக்குக"
 msgid "Restart with add-ons disabled"
 msgstr "கூட்டுக்கூறுகள் செயலிழந்த நிலையில் மறுதுவக்குக. "
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "வழுநீக்கப் பதிவு செயற்படுத்தப்பட்ட நிலையில் மறுதுவக்குக"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "கருணைக்கூர்ந்து காத்திருக்கவும்"
@@ -6107,8 +6189,8 @@ msgid "Error activating profile."
 msgstr "தனியமைப்பினை இயக்குவதில் பிழை."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "இத்தனியமைப்பைத் தாங்கள் கட்டாயம் அழிக்க வேண்டுமா? இச்செயலைத் திரும்பப் பெற இயலாது."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "இத்தனியமைப்பு நிரந்தரமாக நீக்கப்படும். இச்செயலைத் திரும்பப் பெற இயலாது. "
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6999,6 +7081,8 @@ msgid "Line &indentation reporting:"
 msgstr "வரியோரச் சீர்மையை அறிவித்தல் (&I):"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "அறிவிக்காது"
 
@@ -7049,6 +7133,21 @@ msgstr "கிடைவரிசை / நெடுவரிசை தலைப�
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "சிறுகட்டத்தின் சந்தி நிலை (&O)"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "பாங்குகள்"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "நிறங்களும் பாங்குகளும்"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "சிறுகட்டத்தின் எல்லைகள்"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7192,6 +7291,10 @@ msgstr "சுட்டியினிடத்திலிருக்கும
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
 msgstr "பிரெயில் சுட்டியைக் காட்டுக (&S)"
+
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "சுட்டி இமைத்தல்"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -7362,28 +7465,6 @@ msgid ""
 msgstr ""
 "ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரைத் தளவமைப்புப்  பாதுகாக்கப்பட்டிருந்தால், அதை "
 "இயக்கவோ, நிறுத்தவோ செய்கிறது"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "அட்டவணையின் சிறுகட்டத்தில் இல்லை"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "அடுத்த அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "முந்தைய அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "அட்டவணையின் அடுத்த நெடுவரிசைக்கு நகர்கிறது"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "அட்டவணையின் முந்தைய நெடுவரிசைக்கு நகர்கிறது"
 
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
@@ -7622,6 +7703,10 @@ msgstr ""
 "அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
 "மறக்கும். "
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+msgid "Sheet {0}, {1}"
+msgstr "தாள் {0}, {1}"
+
 msgid "Input Message is {title}: {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {title}: {message}"
 
@@ -7643,6 +7728,122 @@ msgstr "{address} சிறுகட்டத்திற்கான கரு�
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} முதல் {lastAddress} {lastContent} வரை"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "மேல் விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "கீழ் விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "இடது விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "வலது விளிம்பு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "மேல் வலது குறுக்குக் கோடு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "கீழ் வலது குறுக்குக் கோடு"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "வெளிப்புறம் தவிர்த்த கிடை எல்லைகள்"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "வெளிப்புறம் தவிர்த்த செங்குத்து எல்லைகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "தொடர்ச்சியான"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "கோடிடப்பட்டது"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "சிறுகோடு புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "சிறுகோடு புள்ளி புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "புள்ளியிடப்பட்டது"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "இரட்டை"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "சாய்வான சிறுகோடு புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "மயிரிழை"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "சன்னமான"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "நடுத்தரம்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "அடர்த்தி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "நடுத்தர சிறுகோடு புள்ளி புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "நடுத்தர சிறுகோடு புள்ளி"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "நடுத்தர சிறுகோடிடப்பட்டது"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} surrounding border"
+msgstr "எல்லையைச் சுற்றிய {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} top and bottom edges"
+msgstr "{desc} மேல் மற்றும் கீழ் விளிம்புகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} left and right edges"
+msgstr "{desc} இடது மற்றும் வலது விளிம்புகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} வலது மேல் வலது கீழ் குறுக்குக் கோடுகள்"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8630,3 +8831,7 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "இத்தனியமைப்பைத் தாங்கள் கட்டாயம் அழிக்க வேண்டுமா? இச்செயலைத் திரும்பப் பெற இயலாது."

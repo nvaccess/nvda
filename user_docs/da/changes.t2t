@@ -3,19 +3,37 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.1 = 
+= 2017.2 = 
+
 
 == Nye Funktioner ==
-- I Microsoft Word, typen af et sektionsskift og et sektionsnummer kan nu blive rapporteret. Dette kan slås til ved brug af indstillingen "Sider" i indstillingerne for dokumentformatering.  (#5946)
-- Tekstkolonner kan nu rapporteres i Microsoft Word. Dette kan slås til ved brug af indstillingen  "Sider" i indstillingerne for dokumentformatering. (#5946)
-- Automatisk skift af sprog er nu understøttet i Wordpad. (#6555)
+- Information for cellekanter i Microsoft Excel kan nu rapporteres med NVDA+F. (#3044)
+- Tilføjede støtte for aria.current attributter. (#6358)
+- Støtter automatisk skift af sprog i Microsoft Edge. (#6852)
+- Støtter Windows Lommeregner på Windows 10 Enterprise LTSB (Long-Term Servicing Branch) og Server. (#6914)
+- Ved at udføre kommandoen til at læse den aktuelle linje tre gange hurtigt, vil linjen blive stavet ved brug af tegnbeskrivelser. (#6893)
 
 
 == Ændringer ==
+- Når simpel læsning benyttes til at navigere i applikationer der gør brug af UI Automation, bliver flere non-content beholdere ignoreret så navigation bliver lettere. (#6948, #6950)
 
 
 == Fejlrettelser ==
-- Rettede en fejl i Microsoft Word der frøs NVDA, når man flyttede mellem afsnit i gennemsynstilstand. (#6368)
+- Menupunkter på websider (menupunkt, checkboks og radioknapper) kan nu aktiveres i gennemsynstilstand. (#6735)
+- Rapportering af navneark i Excel er nu oversat. (#6848)
+- Når dialogen "Bekræft sletning" i indstillingsprofiler er aktiv, kan tasten Esc benyttes til at afvise dialogen. (#6851)
+- Rettede nogle nedbrud i Mozilla Firefox og andre Gecko-applikationer, hvor funktionen multi-process er slået til. (#6885)
+- Rapportering af baggrundsfarven er nu mere præcis i skærmlæsning, når tekst tegnes med en gennemsigtig baggrund. (#6467)
+- Forbedrede støtte for aria.describedby i Internet Explorer 11, herunder i iframes og når mere end et ID er angivet. (#5784)
+- NVDAs lyddæmpning virker nu i Windows Creators Update som den gjorde i tidligere Windows versioner (Dæmp når der udsendes tale og lyde, Altid dæmp, og Ingen lyddæmpning er tilgængelige). (#6933)
+- NVDA vil ikke længere undgå at navigere eller rapportere bestemte (UIA) kontroller hvor en tastaturgenvej ikke er defineret. (#6779)
+- To tomme mellemrum er ikke længere tilføjet for informationer om tastaturgenveje for bestemte(UIA) kontroller. (#6790)
+- Bestemte tastekombinationer på HIMS displays (f.eks. mellemrum+4) vil ikke længere tilfældigt fejle. (#3157)
+- Rettede en fejl der gjorde, at tilkobling af et punktdisplay kunne fejle i nogle tilfæld, når en serielport åbnes på et system der benyttede et andet sprog end engelsk. (#6845)
+- Reducerede chancen for at beskadige konfigurationsfilen, når Windows lukkes ned. Konfigurationsfiler skrives nu til en midlertidig fil før den erstatter den aktuelle konfigurationsfil. (#3165)
+- Når kommandoen til at læse den aktuelle linje udføres to gange hurtigt, vil det tilpassende sprog benyttes til udtalen af tegn. (#6726)
+- Navigation ved brug af linjer er nu 3x hurtigere i Microsoft Edge i Windows Creators Update. (#6994)
+- NVDA vil ikke længere rapportere "Web Runtime grouping", når der bliver fokuseret  på et dokument i Microsoft Edge i Windows Creators Update. (#6948)
 
 
 == Ændringer for udviklere ==

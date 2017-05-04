@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2017.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 00:10+1000\n"
-"PO-Revision-Date: 2016-12-31 16:09+0000\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
+"PO-Revision-Date: 2017-02-02 11:08+0000\n"
 "Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -133,19 +133,19 @@ msgstr "Réigiún"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "Ná ísligh aired chlosáin ó feidhmchláir eile"
+msgstr "Ná ísligh airde chlosáin ó feidhmchláir eile"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
 msgstr ""
-"Ísligh aired chlosáin ó fheidhmchláir eile agus NVDA ag labhairt nó ag "
+"Ísligh airde chlosáin ó fheidhmchláir eile agus NVDA ag labhairt nó ag "
 "déanamh fuaime  "
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
-msgstr "ísligh aired chlosáin ó feidhmchlair eile I gcónaí"
+msgstr "ísligh airde chlosáin ó feidhmchlair eile I gcónaí"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -800,6 +800,7 @@ msgid ""
 msgstr "Cuir nó ná cuir nascleanúint le litir singil ar siúl.  "
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ní féidir é sin a dhéanamh sa doiciméad seo."
 
@@ -1294,6 +1295,7 @@ msgid "%s landmark"
 msgstr "Sainchomhartha: %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "Roghnaithe %s"
@@ -1325,6 +1327,33 @@ msgstr "bun"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Téigh thar dheireadh an choimeádáin, mar shampla liosta nó tábla"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Níl sé i gcill tábla"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Imeall an tábla"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "téigh go dtí an chéad ró eile sa tábla"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "téigh go dtí an ró roimhe seo sa tábla"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "téigh go dtí an chéad cholún eile sa tábla"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "téigh go dtí an colún roimhe seo sa tábla"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2446,7 +2475,7 @@ msgstr "Ní féidir audio eile a ísliú"
 msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
-msgstr ""
+msgstr "Roghnaigh airde chlosáin ó feidhmchláir eile"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -4982,11 +5011,6 @@ msgstr "{symbol}, cur síos: {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Imeall an tábla"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Bog an réad nascleantóra go dtí an chéad cholún eile"
@@ -5027,6 +5051,12 @@ msgstr "Níl aon amhrán ag seinm"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Tabhair tuairisc ar an méid ama fágtha san amhrán reatha"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Taispeáintear sainroghnaithe maidir le téacs roghnaithe, nó téacs ag an "
+"gcúrsóir"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5036,6 +5066,25 @@ msgstr "{bookPercentage}%, áit reatha {curLocation} de {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "leathanach {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "Aibhsithe"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "gan aibhsiú"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s aibhsithe"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "as an aibhsiú"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5944,6 +5993,10 @@ msgstr "Atosaigh NVDA"
 msgid "Restart with add-ons disabled"
 msgstr "Tosaigh arís le breiseáin díchumasaithe."
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Tosaigh arís agus logáil dífhabhtaithe ar siúl."
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Fan nóiméad"
@@ -6815,7 +6868,6 @@ msgstr "Seinn comhordanáidí fhuaime nuair a bhogann an luch."
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#, fuzzy
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Rialann an ghile láine na comhordanáidí fhuaime"
 
@@ -7273,6 +7325,10 @@ msgstr "&Leathnaigh chun ríomhbhraille i gcomhair an fhocail ag an gcúrsóir"
 msgid "&Show cursor"
 msgstr "taispeáin an cúrsóir"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Cuir an Cursóir ag caochadh"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Ráta caochta an chursóra (ms)"
@@ -7445,28 +7501,6 @@ msgid ""
 msgstr ""
 "Tosaítear nó múchtar má tá leagan amach an scáileáin caomhnaithe agus "
 "inneachar na cáipéise á rindreáil."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Níl sé i gcill tábla"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "téigh go dtí an chéad ró eile sa tábla"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "téigh go dtí an ró roimhe seo sa tábla"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "téigh go dtí an chéad cholún eile sa tábla"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "téigh go dtí an colún roimhe seo sa tábla"
 
 msgid "Taskbar"
 msgstr "Tascbharra"
@@ -8025,22 +8059,22 @@ msgstr "Radar agus marcóirí sonraí ann."
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
-msgstr ""
+msgstr "Ard-íseal-dúnta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr ""
+msgstr "Ard-íseal-dúntta-oscailte"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
-msgstr ""
+msgstr "Airde-Ard-íseal-dúnta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
-msgstr ""
+msgstr "Airde-Ard-íseal-dúnta-oscailte"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8165,15 +8199,15 @@ msgstr "Taispeáin lipéad an aonaid"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
-msgstr ""
+msgstr "Príomhlínte Greille "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Minor Gridlines"
-msgstr ""
+msgstr "Mionnlínte Greille"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Drop Zone"
-msgstr ""
+msgstr "láthair scaoilte anuas cairte maighdeogach "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
@@ -8189,7 +8223,7 @@ msgstr "Línte anuas"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
-msgstr ""
+msgstr "Línte thuas thíos"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
@@ -8257,12 +8291,12 @@ msgstr "Níl aon athrú on bpointe  {previousIndex}"
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "Méadaithe {incrementValue} ó  {previousIndex},  "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "laghdaithe  {decrementValue} ó  {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -8309,7 +8343,7 @@ msgstr "Príomh"
 
 #. Translators: The secondary axis group in a Microsoft Excel chart.
 msgid "Secondary"
-msgstr ""
+msgstr "tánaisteach"
 
 #. Translators: Details about an axis in a chart.
 #, python-brace-format
@@ -8386,13 +8420,14 @@ msgstr "nil aon eochair eolais ann."
 #, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
+"Iontráil eochrach don tSraith {seriesName} {seriesIndex} as {seriesCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 #, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "Eochair don tSraith {seriesName} {seriesIndex} as {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"

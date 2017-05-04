@@ -6,6 +6,7 @@
 from ctypes import byref
 from comtypes import COMError
 from comtypes.automation import VARIANT
+import array
 import winUser
 import UIAHandler
 from UIAUtils import *
@@ -326,3 +327,37 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def event_caret(self,obj,nextHandler):
 		pass
+
+	def _getTableCellAt(self,tableID,startPos,row,column):
+		startUIAElement=startPos.UIAElementAtStart
+		# Comtypes casts a tuple into a variant containing a  safearray of variants.
+		# However, UIA's createPropertyCondition requires a safearay of ints.
+		# By first converting the tuple to a Python int Array we can ensure this.  
+		tableIDArray=array.array("l",tableID)
+		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,tableIDArray)
+		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+		try:
+			tableUIAElement=UIAWalker.normalizeElement(startUIAElement)
+		except COMError:
+			tableUIAElement=None
+		if not tableUIAElement:
+			raise LookupError
+		UIAGridPattern=None
+		try:
+			punk=tableUIAElement.getCurrentPattern(UIAHandler.UIA_GridPatternId)
+			if punk:
+				UIAGridPattern=punk.QueryInterface(UIAHandler.IUIAutomationGridPattern)
+		except COMError:
+			raise LookupError
+		if not tableUIAElement:
+			raise RuntimeError
+		try:
+			cellElement=UIAGridPattern.getItem(row-1,column-1)
+		except COMError:
+			cellElement=None
+		if not cellElement:
+			raise LookupError
+		cellRange=UIATextRangeFromElement(self.rootNVDAObject.UIATextPattern,cellElement)
+		if not cellRange:
+			raise LookupError
+		return self.makeTextInfo(cellRange)

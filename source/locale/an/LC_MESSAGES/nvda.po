@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 00:10+1000\n"
+"POT-Creation-Date: 2017-02-02 10:00+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Chorche Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0beta1\n"
+"X-Generator: Poedit 2.0beta2\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -796,6 +796,7 @@ msgstr ""
 "l'aplicación"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "No ye suportau en iste documento"
 
@@ -1290,6 +1291,7 @@ msgid "%s landmark"
 msgstr "zona %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "seleccionau %s"
@@ -1324,6 +1326,33 @@ msgstr "Cobaixo"
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Se'n mueve t'a fin de l'elemento contenedor, tal como una lista u tabla"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "No yes en una celda de tabla"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Canto d'a tabla"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "se'n mueve t'a siguient ringlera d'a tabla"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "se'n mueve ta l'anterior ringlera d'a tabla"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "se'n mueve t'a siguient columna d'a tabla"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "se'n mueve ta l'anterior columna d'a tabla"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2310,7 +2339,7 @@ msgid ""
 "More details about the errors can be found in the log file."
 msgstr ""
 "O tuyo fichero de configuración contién errors. A tuya configuración s'ha "
-"restabliu t'as valors de fabrica.\n"
+"restabliu a las valors de fabrica.\n"
 "Se puet trobar  Mas información sobre as errors en o fichero de rechistro.Se "
 "pueden trobar más detalles sobre as errors en o fichero de rechistro."
 
@@ -2705,7 +2734,7 @@ msgstr "Anunciar o estilo enchegau"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
-msgstr "Enchega y desenchega l'anunciau d'os cambeos d'estilo"
+msgstr "Enchega y desenchega l'anunciau d'os cambios d'estilo"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
@@ -3293,7 +3322,7 @@ msgid ""
 "Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
-"leye dende dencima d'o cursor d'o sistema ent'a fin de texto, movendo o "
+"leye dende dencima d'o cursor d'o sistema ent'a fin de texto, movendo lo "
 "cursor entre que lo fa"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
@@ -3353,8 +3382,8 @@ msgid ""
 "the clipboard"
 msgstr ""
 "Anuncia o titol de l'aplicación u finestra en primer plano actuals. Si se "
-"pretó dos veces, letreya o titol. Si se pretó tres vegadas, copia o titol "
-"t'o portafuellas"
+"pretó dos veces, letreya o titol. Si se pretó tres veces, copia o titol t'o "
+"portafuellas"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Speaks the current foreground object"
@@ -3395,18 +3424,18 @@ msgstr ""
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "anuncio de cambeos en o conteniu dinamico desactivau"
+msgstr "anuncio de cambios en o conteniu dinamico desenchegau"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "anuncio de cambeos en o conteniu dinamico activau"
+msgstr "anuncio de cambios en o conteniu dinamico enchegau"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Activa y desactiva l'anuncio d'os cambeos de conteniu dinamico, tals como "
+"Enchega y desenchega l'anuncio d'os cambios de conteniu dinamico, tals como "
 "texto nuevo en a consola dos de windows"
 
 #. Translators: presented when toggled.
@@ -3436,8 +3465,8 @@ msgstr "o foco se'n mueve t'o navegador d'obchectos activau"
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
-"Activa y desactiva o movimiento d'o navegador d'obchectos a causa de cambeos "
-"d'o foco"
+"Enchega y desenchega o movimiento d'o navegador d'obchectos a causa de "
+"cambios d'o foco"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -3570,8 +3599,8 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
-"Pretando-ne una vegada leva a configuración actual t'o estau alzau mas "
-"recientment. Pretando-ne tres vegadas la leva t'as valors predeterminadas de "
+"Pretando-lo una vez leva la configuración actual t'o estau alzau mas "
+"recientment. Pretando-lo tres veces la leva t'as valors predeterminadas de "
 "fabrica."
 
 #. Translators: Input help mode message for activate python console command.
@@ -4236,7 +4265,7 @@ msgid "Type exit() to exit the console"
 msgstr "Tecleya exit() pa salir d'a consola"
 
 msgid "NVDA Python Console"
-msgstr "Consola Python t'o NVDA"
+msgstr "Consola Python pa lo NVDA"
 
 #. Translators: One of the review modes.
 msgid "Object review"
@@ -4989,11 +5018,6 @@ msgstr "{symbol} como en {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Canto d'a tabla"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Mueve o navegador d'obchectos t'a siguient columna"
@@ -5036,6 +5060,10 @@ msgstr ""
 "Anuncia o tiempo remanent d'a pista actualment en reproducción, si bi'n hese "
 "beluna"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Amuestra opcions relativas a texto seleccionau u texto en o cursor"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5045,6 +5073,25 @@ msgstr "{bookPercentage}%, ubicación {curLocation} de {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Pachina {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "resaltau"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "sin resaltar"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s resaltau"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "difuera d'o resaltau popular"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5172,16 +5219,16 @@ msgstr "solicitut de reunión"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "No bi ha notas t'os traductors"
+msgstr "No bi ha notas pa os traductors"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "No s'ha trobau a finestra Notas t'os traductors."
+msgstr "No s'ha trobau a finestra de notas pa os traductors."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "Anunciar qualsiquier nota t'os traductors"
+msgstr "Anunciar qualsiquier nota pa os traductors"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -5948,6 +5995,10 @@ msgstr "Reenchegar"
 msgid "Restart with add-ons disabled"
 msgstr "Reenchegar con os complementos desenchegaus"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Reenchegar con o rechistro de depuración enchegau"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Por favor aspera"
@@ -6107,8 +6158,8 @@ msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"S'ha feito cambeos en os complementos. Cal reenchegar o NVDA pa que istos "
-"cambeos fagan efecto. Quiers reenchegar agora o NVDA?"
+"S'ha feito cambios en os complementos. Cal reenchegar o NVDA pa que istos "
+"cambios fagan efecto. Quiers reenchegar agora o NVDA?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6395,7 +6446,8 @@ msgstr ""
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
-msgstr "A rota d'instalación t'o NVDA ha cambiau. Agora s'instalará en {path}"
+msgstr ""
+"A rota d'instalación pa lo NVDA ha cambiau. Agora s'instalará en {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
@@ -6628,7 +6680,7 @@ msgid "Successfully copied NVDA user settings"
 msgstr "S'han copiau as opcions d'usuario d'o NVDA satisfactoriament"
 
 msgid "This change requires administrator privileges."
-msgstr "Iste cambeo requier premisos d'administrador."
+msgstr "Iste cambio requier premisos d'administrador."
 
 msgid "Insufficient Privileges"
 msgstr "Premisos Insuficients"
@@ -6645,7 +6697,7 @@ msgstr ""
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
-msgstr "Cambeo de configuración d'idioma"
+msgstr "Cambio de configuración d'idioma"
 
 #. Translators: This is the label for the synthesizer dialog.
 msgid "Synthesizer"
@@ -6684,12 +6736,12 @@ msgstr "Opcions de Voz"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "Cambeo automatico d'idioma (quan siga suportau)"
+msgstr "Cambio automatico d'idioma (quan siga suportau)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "Cambeo automatico de dialecto (quan siga suportau)"
+msgstr "Cambio automatico de dialecto (quan siga suportau)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
@@ -6703,7 +6755,7 @@ msgstr "Confidar en  l'idioma d'a voz en procesar caracters y simbolos"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
-msgstr "Porcentache de Cambeo en o ton pa las Mayusclas"
+msgstr "Porcentache de Cambio en o ton pa las Mayusclas"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -6797,7 +6849,7 @@ msgstr "Opcions de churi"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report mouse &shape changes"
-msgstr "anunciar os cambeos en a &forma d'o churi"
+msgstr "anunciar os cambios en a &forma d'o churi"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6872,12 +6924,12 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &reading string"
-msgstr "Anunciar os cambeos en a &lectura de cadena"
+msgstr "Anunciar os cambios en a cadena de &lectura"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &composition string"
-msgstr "Anunciar os cambeos en a cadena de reda&cción"
+msgstr "Anunciar os cambios en a cadena de reda&cción"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
@@ -6945,7 +6997,7 @@ msgstr "Anunciar as barras de progreso en segundo plano"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
-msgstr "Anunciar os cambeos de &conteniu dinamico"
+msgstr "Anunciar os cambios de &conteniu dinamico"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -6979,12 +7031,12 @@ msgstr "Incluir as t&ablas de disenyo"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for focus changes"
-msgstr "Modo de Foco automatico pa cambeos d'o foco"
+msgstr "Modo de Foco automatico pa cambios d'o foco"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for caret movement"
-msgstr "Modo de foco automatico t'o movimiento d'as flechas"
+msgstr "Modo de foco automatico pa o movimiento d'as flechas"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7165,8 +7217,8 @@ msgstr "&Clicable"
 #. document formatting settings dialog.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
-"Anunciar os cambeos de formato dimpués d'o cursor (puet prevocar bell "
-"retardo)"
+"Anunciar os cambios de formato dimpués d'o cursor (puet prevocar bell "
+"retraso)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7274,15 +7326,19 @@ msgstr "Tabla de &dentrada"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "&Expandir ta braille computerizau t'a parola en o cursor"
+msgstr "&Expandir a braille computerizau pa la parola en o cursor"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
 msgstr "Amo&strar o cursor"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Cursor esparpellant"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "Velocidat d'o parpadeyo d'o cursor (en MS)"
+msgstr "Velocidat d'o esparpello d'o cursor (en MS)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
@@ -7452,28 +7508,6 @@ msgid ""
 msgstr ""
 "Activa u desactiva si o disenyo d'a pantalla se mantendrá mientras se "
 "renderiza"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "No yes en una celda de tabla"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "se'n mueve t'a siguient ringlera d'a tabla"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "se'n mueve ta l'anterior ringlera d'a tabla"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "se'n mueve t'a siguient columna d'a tabla"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "se'n mueve ta l'anterior columna d'a tabla"
 
 msgid "Taskbar"
 msgstr "Barra de quefers"
@@ -8261,7 +8295,7 @@ msgstr "{seriesName} series {seriesIndex} de {seriesCount}"
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr "no bi ha cambeo dende o punto {previousIndex}, "
+msgstr "no bi ha cambio dende o punto {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
