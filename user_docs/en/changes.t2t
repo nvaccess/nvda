@@ -12,6 +12,7 @@
 - Added support for Windows Calculator on Windows 10 Enterprise LTSB (Long-Term Servicing Branch) and Server. (#6914)
 - Performing the read current line command three times quickly spells the line with character descriptions. (#6893)
 - New language: Burmese.
+- Unicode up and down arrows and fraction symbols are now spoken appropriately. (#3805)
 
 
 == Changes ==
@@ -36,6 +37,10 @@
 - NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creators Update. (#6948)
 - All existing versions of SecureCRT are now supported. (#6302)
 - Adobe Acrobat Reader no longer crashes in certain PDF documents (specifically, those containing empty ActualText attributes). (#7021, #7034)
+- In browse mode in Microsoft Edge, interactive tables (ARIA grids) are no longer skipped when navigating to tables with t and shift+t. (#6977)
+- In browse mode, pressing shift+home after selecting forward now unselects to the beginning of the line as expected. (#5746)
+- In browse mode, select all (control+a) no longer fails to select all text if the caret is not at the start of the text. (#6909)
+- Fixed some other rare selection problems in browse mode. (#7131)
 
 
 == Changes for Developers ==
