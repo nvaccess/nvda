@@ -1030,7 +1030,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			textList.append(controlTypes.isCurrentLabels[True])
 	placeholder = propertyValues.get('placeholder', None)
 	if placeholder:
-		textList.append("placeholder %s" % placeholder)
+		textList.append(placeholder)
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:

@@ -43,19 +43,16 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if not valueLen: # value is empty, use placeholder
 				return placeholder
 			# Because fetching the value of the field could result in a large amount of text
-			# we only do it in order to check for space, newline, or matching the name of the field.
+			# we only do it in order to check for space, or newline.
 			# We first compare the length by comparing the offselts, if the length is less than 2 (ie
-			# could hold space or \n) or the length matches the name of the field
-			controlFieldName = attrs.get("name")
-			if valueLen < 2 or (controlFieldName and len(controlFieldName) == valueLen):
+			# could hold space or \n)
+			if valueLen < 2:
 				controlFieldText = self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text
-				log.info("controlFieldText: %r", controlFieldText)
-				if not controlFieldText or controlFieldText == ' ' or controlFieldText == '\n' or (controlFieldName and controlFieldText == controlFieldName):
+				if not controlFieldText or controlFieldText == ' ' or controlFieldText == '\n':
 					return placeholder
 		return None
 
 	def _normalizeControlField(self,attrs):
-		log.info("normalizeControlField attrs: %s", attrs)
 		ariaCurrent = attrs.get("IAccessible2::attribute_current")
 		if ariaCurrent != None:
 			attrs['current']= ariaCurrent
