@@ -315,6 +315,19 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	if text:
 		speakText(text,index=index)
 
+def _speakPlaceholderIfEmpty(info, obj, reason, index):
+	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
+		@return True if info was considered empty, and we attempted to speak the placeholder value.
+				False if info was not considered empty.
+	"""
+	textValue = None
+	if not info.isCollapsed:
+		textValue = info.text
+	if not textValue or textValue == ' ' or textValue == '\n':
+		speakObjectProperties(obj,reason=reason,placeholder=True)
+		return True
+	return False
+
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
@@ -360,15 +373,6 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	if reason==controlTypes.REASON_ONLYCACHE:
 		return
 	if isEditable:
-		def speakPlaceholderIfEmpty(textValue, obj, reason, index):
-			""" attempt to speak placeholder attribute if the text value is empty
-				@return True if the textValue was considered empty, and we attempted to speak the placeholder value.
-						False if the textValue was not considered empty.
-			"""
-			if not textValue or textValue == ' ' or textValue == '\n':
-					speakObjectProperties(obj,reason=reason,index=index,placeholder=True)
-					return True
-			return False
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
@@ -377,11 +381,11 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				if not speakPlaceholderIfEmpty(info.text, obj, reason, index):
-					speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				_speakPlaceholderIfEmpty(info, obj, reason, index)
+				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			if not speakPlaceholderIfEmpty(newInfo.text, obj, reason, index):
+			if not _speakPlaceholderIfEmpty(newInfo, obj, reason, index):
 				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
@@ -1024,9 +1028,9 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		except KeyError:
 			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
 			textList.append(controlTypes.isCurrentLabels[True])
-	ariaPlaceholder = propertyValues.get('placeholder', None)
-	if ariaPlaceholder:
-		textList.append(_("placeholder: %s"%ariaPlaceholder))
+	placeholder = propertyValues.get('placeholder', None)
+	if placeholder:
+		textList.append("placeholder %s" % placeholder)
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:

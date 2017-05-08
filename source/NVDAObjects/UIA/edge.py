@@ -22,7 +22,6 @@ from . import UIA, UIATextInfo
 def splitUIAElementAttribs(attribsString):
 	"""Split an UIA Element attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
-	Subattributes are handled. Subattribute keys and values are placed into a dict which becomes the value of the attribute.
 	@param attribsString: The UIA Element attributes string to convert.
 	@type attribsString: str
 	@return: A dict of the attribute keys and values, where values are strings
@@ -449,10 +448,7 @@ class EdgeNode(UIA):
 
 	def _get_placeholder(self):
 		ariaProperties=splitUIAElementAttribs(self.UIAElement.currentAriaProperties)
-		if 'placeholder' in ariaProperties:
-			valueOfAriaPlaceholder = ariaProperties['placeholder']
-			return valueOfAriaPlaceholder
-		return None
+		return ariaProperties.get('placeholder')
 
 class EdgeList(EdgeNode):
 
