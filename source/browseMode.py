@@ -22,6 +22,7 @@ import cursorManager
 from scriptHandler import isScriptWaiting, willSayAllResume
 import aria
 import controlTypes
+from controlTypes import *
 import config
 import textInfos
 import braille
@@ -33,7 +34,20 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 
+
 REASON_QUICKNAV = "quickNav"
+
+BAD_ROLES = {
+				ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_BUTTON, ROLE_MENUBAR, ROLE_MENUITEM, ROLE_POPUPMENU, 
+				ROLE_COMBOBOX, ROLE_LINK, ROLE_TREEVIEW, ROLE_TREEVIEWITEM, ROLE_TAB, ROLE_TABCONTROL, ROLE_SLIDER, ROLE_DROPDOWNBUTTON, 
+				ROLE_CHECKMENUITEM, ROLE_INPUTWINDOW, ROLE_RADIOMENUITEM, ROLE_EDITBAR, ROLE_TERMINAL, ROLE_RICHEDIT, ROLE_TEAROFFMENU, ROLE_TOGGLEBUTTON,
+				ROLE_DROPLIST, ROLE_SPLITBUTTON, ROLE_MENUBUTTON, ROLE_DROPDOWNBUTTONGRID, ROLE_MATH, ROLE_EQUATION, ROLE_SPINBUTTON, ROLE_TREEVIEWBUTTON,
+				ROLE_COLORCHOOSER, ROLE_FILECHOOSER, ROLE_MENU, ROLE_PASSWORDEDIT, ROLE_FONTCHOOSER, ROLE_DATAITEM, 
+				ROLE_DROPLIST, ROLE_SPLITBUTTON, ROLE_MENUBUTTON, ROLE_DROPDOWNBUTTONGRID, 
+				}
+BAD_LEAF_ROLES = {
+	ROLE_APPLICATION, ROLE_DIALOG, ROLE_LIST, ROLE_EDITABLETEXT,
+}
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""Reports the pass through mode if it has changed.
@@ -189,6 +203,13 @@ class TextInfoQuickNavItem(QuickNavItem):
 	def moveTo(self):
 		info=self.textInfo.copy()
 		info.collapse()
+		while self.document._shouldSkipBlankLines(info):
+			i = info.copy()
+			i.expand(textInfos.UNIT_LINE)
+			if speech.isBlank(i.text):
+				info.move(textInfos.UNIT_LINE, 1)
+			else:
+				break
 		self.document._set_selection(info,reason=REASON_QUICKNAV)
 
 	@property
@@ -1045,6 +1066,26 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			except AttributeError:
 				# The app module died.
 				pass
+
+	def _shouldSkipBlankLines(self, info):
+		if not config.conf["virtualBuffers"]["skipBlankLines"]:
+			return False
+		blankInfo = info.copy()
+		blankInfo.expand(textInfos.UNIT_LINE)
+		#Get control Starts
+		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart" and not field.field.get("isHidden", False)]
+		if len(controlFields) == 0:
+			return True
+		if controlFields[-1].field["role"] in BAD_LEAF_ROLES:
+			return False
+		for field in controlFields:
+			if STATE_EDITABLE in field.field["states"] or ROLE_EDITABLETEXT == field.field["role"]:
+				return False
+			if ((field.field["role"] in BAD_ROLES or
+				STATE_CLICKABLE in field.field["states"]) and 
+				(field.field["_startOfNode"] and field.field["_endOfNode"])):
+				return False
+		return True
 
 	def _get_currentNVDAObject(self):
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart

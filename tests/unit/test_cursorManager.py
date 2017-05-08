@@ -15,7 +15,16 @@ class CursorManager(cursorManager.CursorManager, BasicTextProvider):
 	"""CursorManager which navigates within a provided string of text.
 	"""
 
+class SkipBlanksCursorManager(cursorManager.CursorManager, BasicTextProvider):
+	"""CursorManager which navigates within a provided string of text, but skips blank lines.
+	"""
+
+	def _shouldSkipBlankLines(self, info):
+		return True
+
 class TestMove(unittest.TestCase):
+	#Don't use tripple quote for multiline, because crlf makes each new line two offsets.
+	multiline = "abc\n123\ndef\n\n456"
 
 	def test_nextChar(self):
 		cm = CursorManager(text="abc") # Caret at "a"
@@ -26,6 +35,37 @@ class TestMove(unittest.TestCase):
 		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
 		cm.script_moveByCharacter_back(None)
 		self.assertEqual(cm.selectionOffsets, (0, 0)) # Caret at "a"
+
+	def test_nextLine(self):
+		cm = CursorManager(text=self.multiline) # Caret at "a"
+		cm.script_moveByLine_forward(None)
+		self.assertEqual(cm.selectionOffsets, (4, 4)) # Caret at "1"
+
+	def test_nextLineNoBlankSkipping(self):
+		cm = CursorManager(text=self.multiline, selection=(8, 8)) # Caret at "d"
+		cm.script_moveByLine_forward(None)
+		self.assertEqual(cm.selectionOffsets, (12, 12)) # Caret at "\n"
+
+	def test_nextLineBlankSkipping(self):
+		cm = SkipBlanksCursorManager(text=self.multiline, selection = (8, 8)) # Caret at "d"
+		cm.script_moveByLine_forward(None)
+		self.assertEqual(cm.selectionOffsets, (13, 13)) # Caret at "4"
+
+	def test_prevLine(self):
+		cm = CursorManager(text=self.multiline, selection=(4, 4)) # Caret at "1"
+		cm.script_moveByLine_back(None)
+		self.assertEqual(cm.selectionOffsets, (0, 0)) # Caret at "a"
+
+	def test_PrevLineNoBlankSkipping(self):
+		cm = CursorManager(text=self.multiline, selection=(13, 13)) # Caret at "4"
+		cm.script_moveByLine_back(None)
+		self.assertEqual(cm.selectionOffsets, (12, 12)) # Caret at "\n"
+
+	def test_prevLineBlankSkipping(self):
+		cm = SkipBlanksCursorManager(text=self.multiline, selection = (13, 13)) # Caret at "4"
+		cm.script_moveByLine_back(None)
+		self.assertEqual(cm.selectionOffsets, (8, 8)) # Caret at "4"
+
 
 class TestSelection(unittest.TestCase):
 

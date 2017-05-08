@@ -238,6 +238,23 @@ class MSHTML(VirtualBuffer):
 			return False
 		return True
 
+	def _shouldSkipBlankLines(self, info):
+		res = super(MSHTML, self)._shouldSkipBlankLines(info)
+		if not res:
+			return False
+		#is this a pre element?
+		blankInfo = info.copy()
+		blankInfo.expand(textInfos.UNIT_LINE)
+		#Get control Starts
+		controlFields = [field for field in blankInfo.getTextWithFields() if not isinstance(field, basestring) and field.command == "controlStart"]
+		for field in controlFields:
+			try:
+				if field.field[u'IHTMLDOMNode::nodeName'].lower() in {u'pre', u'code'}:
+					return False
+			except KeyError:
+				continue
+		return True
+
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		HTMLNode=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.rootNVDAObject.HTMLNode.document,'ms__id%d'%ID)
 		if not HTMLNode:
