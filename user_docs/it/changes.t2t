@@ -3,6 +3,56 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Novità ==
+- NVDA può annunciare le informazioni inerenti i bordi delle celle in Microsoft Excel tramite la combinazione `NVDA+f`. (#3044)
+- Aggiunto il supporto per l'attributo aria-current. (#6358)
+- In Microsoft Edge viene supportato il cambio automatico della lingua. (#6852)
+- Supporto per la calcolatrice in Windows 10 Enterprise LTSB (ramo Long-Term Servicing) e Server. (#6914)
+- Migliorato il  comando di lettura riga corrente, la tripla pressione effettuerà lo spelling servendosi della descrizione avanzata delle lettere (Ancona, Bari, Como, Domodossola, etc). (#6893)
+
+
+== Cambiamenti ==
+- Durante l'esplorazione in modalità semplice nelle applicazioni che usano la tecnologia UI Automation, vengono scartati elementi che non contengono alcun oggetto al loro interno, rendendo quindi la navigazione più fluida. (#6948, #6950) 
+
+
+== Bug corretti ==
+- Gli elementi dei  menu contenuti nelle pagine web, (ad esempio caselle di controllo o pulsanti radio), possono ora essere attivati direttamente in modalità navigazione, senza passare per la modalità focus. (#6735)
+- Tradotta la stringa che annuncia il nome del foglio per Microsoft Excel. (#6848)
+- La pressione del tasto esc ora chiude la finestra di conferma cancellazione di un profilo. (#6851)
+- Risolti alcuni crash che avvenivano durante l'uso di Mozilla Firefox o altre app Gecko con la funzione di multiprocesso attivata. (#6885)
+- Risulta molto più accurata la lettura del colore dello sfondo quando si esplora con il cursore di controllo, anche in condizioni dove il testo viene visualizzato su uno sfondo trasparente. (#6467) 
+- Migliorato il supporto per l'attributo aria-describedby in Internet Explorer 11, compreso supporto a iframe e ID multipli. (#5784)
+- Nell'aggiornamento Windows Creators, la caratteristica di attenuazione audio di NVDA funziona normalmente come nelle precedenti versioni di Windows. (#6933)
+- NVDA non avrà più difficoltà nell'esplorare o annunciare controlli (uia) dove non è stato associato alcun tasto rapido. (#6779)
+- Non saranno più aggiunti due spazi vuoti nelle informazioni su un tasto caldo che fa riferimento ad un controllo (uia). (#6790)
+- Risolti i problemi che si verificavano in maniera intermittente nella gestione di alcune combinazioni di tasti sui display braille  Hims (ad esempio spazio+punto 4). (#3157)
+- Risolto un problema che si verificava durante la connessione alla porta seriale di un display braille in sistemi con lingue diverse dall'inglese. (#6845)
+- Migliorata la gestione dei file di configurazione di NVDA per evitarne la corruzione o il danneggiamento nel momento in cui il sistema si spegne o si riavvia. Ora i file di configurazione vengono prima scritti in un file temporaneo prima del salvataggio. (#3165)
+- Quando si esegue il comando leggi riga corrente con la doppia pressione per ottenere lo spelling della riga stessa, viene utilizzata la lingua appropriata durante lo spelling. (#6726)
+- La navigazione riga per riga in Microsoft Edge risulta tre volte più veloce a partire dall'aggiornamento Creators di Windows. (#6994)
+- NVDA non annuncerà più la frase "Web Runtime grouping" quando il focus si posiziona in un documento Microsoft Edge, nell'aggiornamento Creators di Windows. (#6948)
+
+== Cambiamenti per sviluppatori, in inglese ==
+- Commandline arguments are now processed with Python's argparser module, rather than optparser. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
+- The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
+ - Subclasses no longer need to normalize identifiers before returning them from this property.
+ - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
+- The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+- Deprecated code removed:
+ - `speech.REASON_*` constants, `controlTypes.REASON_*` should be used instead. (#6846)
+ - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
+- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- There is now a unit testing framework for NVDA. (#7026)
+ - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
+ - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
+
+
 = 2017.1 =
 Le principali caratteristiche di questa versione comprendono  la segnalazione delle sezioni e colonne di testo in Microsoft Word; il Supporto per la lettura, la navigazione e le funzioni di annotazione nei libri in Kindle per PC; grossi miglioramenti al supporto per Microsoft Edge.
 

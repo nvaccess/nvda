@@ -5,6 +5,58 @@
 
 Tradução de Rui Fontes
 
+= 2017.2 =
+
+== Novas Funcionalidades ==
+- Informações sobre as linhas de grelha das células passam a poder ser anunciadas no Microsoft Excel, usando NVDA + f. (#3044)
+- Adicionado suporte para "Aria-current attributes". (#6358)
+- Adicionado suporte à mudança automática de idiomas no Microsoft Edge. (#6852)
+- Adicionado suporte à Calculadora do Windows 10 Enterprise LTSB (Long-Term Servicing Branch) e Server. (#6914)
+- Ao executar, três vezes rapidamente, o comando "Anunciar linha do objecto de navegação, Insert+8 do numérico, a linha é soletrada com descrição dos caracteres. (#6893)
+- Novo idioma: Birmanês.
+
+
+== Alterações ==
+- Ao navegar por aplicações, com UI Automation,, usando a navegação simples, mais controlos sem conteúdo são ignorados, tornando a navegação mais fácil. (#6948, #6950) 
+
+
+== Correcções ==
+- Itens de menu (como caixas de verificação e botões de opção) em páginas Web já podem ser activados no modo de navegação. (#6735)
+- O anúncio do nome de folhas do Excel já se encontra traduzido. (#6848)
+- Pressionar Escape na janela para confirmação de eliminação de um perfil activo passa a fechar a janela. (#6851)
+- Corrigidos alguns travamentos no Mozilla Firefox e outras aplicações baseadas em Gecko nas quais o multi-processamento esteja activado. (#6885)
+- O anúncio das cores de fundo na revisão de ecrã está mais eficaz quando o texto é desenhado sobre um fundo transparente. (#6467) 
+- Melhorado o suporte para aria-describedby no Internet Explorer 11, incluindo suporte em iframes e quando múltiplos IDs são fornecidos. (#5784)
+- Na versão Creators Update do Windows 10, a diminuição do volume do NVDA já funciona como nas versões anteriores do Windows (I.e. Dininuir com voz e sons, diminuir sempre e não dininuir estão disponíveis). (#6933)
+- O NVDA já não falha ao navegar para, ou a anunciar, certos controlos (UIA) sem atalho de teclado. (#6779)
+- Já não são adicionados dois espaços na informação de atalhos de teclado para certos controlos (UIA). (#6790)
+- Certas combinações de teclas nas linhas da HIMS (por exemplo, espaço+ponto4) já não falham intermitentemente. (#3157)
+- Resolvido um problema ao abrir uma porta série, em sistemas, em alguns idiomas diferentes do inglês, que causavam problemas, em certos casos, falhas na ligação a dispositivos Braille. (#6845)
+- Reduzidas as hipóteses de corrupção do ficheiro de configurações quando o Windows é desligado. O ficheiro de configurações é agora escrito para um ficheiro temporário antes de substituir o ficheiro corrente de configurações. (#3165)
+- Ao pressionar duas vezes o comando para ler a linha actual, a soletração já é feita usando o idioma correcto. (#6726)
+- Navegar por linha no Microsoft Edge é agora até três vezes mais rápidono Windows 10 Creators Update. (#6994)
+- O NVDA já não anuncia "Web Runtime grouping" ao focar documentos do Microsoft Edge no Windows 10 Creators Update (#6948)
+
+
+== Alterações para desenvolvedores ==
+- Commandline arguments are now processed with Python's argparser module, rather than optparser. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
+- The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
+ - Subclasses no longer need to normalize identifiers before returning them from this property.
+ - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
+- The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+- Deprecated code removed:
+ - `speech.REASON_*` constants, `controlTypes.REASON_*` should be used instead. (#6846)
+ - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
+- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- There is now a unit testing framework for NVDA. (#7026)
+ - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
+ - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
+
+
 = 2017.1 =
 Os destaques desta versão são:
 - Anúncio de secções e colunas no Microsoft Word;

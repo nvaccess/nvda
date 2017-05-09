@@ -566,6 +566,8 @@ negativeStateLabels={
 	STATE_SELECTED:_("not selected"),
 	# Translators: This is presented when a checkbox is not checked.
 	STATE_CHECKED:_("not checked"),
+	# Translators: This is presented when a button is not pressed.
+	STATE_PRESSED:_("not pressed"),
 }
 
 silentRolesOnFocus={
