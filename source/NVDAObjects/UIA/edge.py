@@ -186,6 +186,7 @@ class EdgeTextInfo(UIATextInfo):
 			field['states'].add(controlTypes.STATE_EDITABLE)
 		# report if the field is 'current'
 		field['current']=obj.isCurrent
+		field['placeholder']=obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		ariaProperties=obj.UIAElement.currentAriaProperties
