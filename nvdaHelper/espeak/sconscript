@@ -96,37 +96,49 @@ espeakLib=env.SharedLibrary(
 	target='espeak',
 	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
 	source=[
+		# compare to src_libespeak_ng_la_SOURCES in espeak Makefile.am
 		"../ucd-tools/src/case.c",
 		"../ucd-tools/src/categories.c",
 		"../ucd-tools/src/ctype.c",
+		"../ucd-tools/src/proplist.c",
 		"../ucd-tools/src/scripts.c",
 		"../ucd-tools/src/tostring.c",
-		"speech.c",
-		"readclause.c",
+		"compiledata.c",
 		"compiledict.c",
+		"compilembrola.c",
 		"dictionary.c",
 		"encoding.c",
+		"error.c",
+		"espeak_api.c",
+		"ieee80.c",
 		"intonation.c",
-		"setlengths.c",
+		"klatt.c", # we do use KLATT, this is a compile option in espeak
+		"mbrowrap.c", # we do use MBROLA, this is a compile option in espeak
 		"mnemonics.c",
 		"numbers.c",
 		"phoneme.c",
-		"synth_mbrola.c",
+		"phonemelist.c",
+		"readclause.c",
+		"setlengths.c",
+		"spect.c",
+		"speech.c",
 		"synthdata.c",
 		"synthesize.c",
+		"synth_mbrola.c",
+		"tokenizer.c",
 		"translate.c",
 		"tr_languages.c",
 		"voices.c",
 		"wavegen.c",
-		"phonemelist.c",
-		"klatt.c",
-		"compiledata.c",
-		"compilembrola.c",
-		"ieee80.c",
-		"spect.c",
-		"espeak_api.c",
-		"error.c",
 		sonicLib,
+		# espeak does not need to handle its own audio output so dont include:
+		# pcaudiolib\src\audio.c
+		# pcaudiolib\src\windows.c
+		# pcaudiolib\src\xaudio2.cpp
+		# These are for SAPI5, we dont need them:
+		# com\comentrypoints.c
+		# com\ttsengine.cpp
+		# We do not use the ASYNC compile option in espeak.
 	],
 	LIBS=['advapi32'],
 )
