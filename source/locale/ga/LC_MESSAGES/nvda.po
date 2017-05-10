@@ -4,13 +4,12 @@
 # Robbie Sinnott <robbiesin@gmail.com>
 # Kevin Scannell <kscanne@gmail.com>
 # Ronan McGuirk <ronan.p.mcguirk@gmail.com>
-# Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2017.1\n"
+"Project-Id-Version: NVDA 2017.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-02 10:00+1000\n"
-"PO-Revision-Date: 2017-02-02 11:08+0000\n"
+"POT-Creation-Date: 2017-04-28 00:10+1000\n"
+"PO-Revision-Date: 2017-05-02 19:57+0100\n"
 "Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -2333,6 +2332,30 @@ msgstr "gan roghnú"
 msgid "not checked"
 msgstr "gan tic"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "an mír reatha"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "leathanach reatha"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "an chéim reatha"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "suíomh reatha"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "data reatha"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "an t-am reatha"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2509,10 +2532,12 @@ msgstr "Scoránaigh mód codlata don fheidhmchlár gníomhach."
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"Léigh an líne faoi chursóir an fheidhmchláir. Má bhrúnn tú an eochair seo "
-"faoi dhó, litreofar  an líne reatha"
+"Tuairiscítear an líne ag cúrsóir an fheidhmchláir.\n"
+"Brúigh faoi dhó chun an líne a litriú.\n"
+"Brúigh trí huaire chun an líne a litriú le cur síos ar gach carachtar."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4417,6 +4442,10 @@ msgstr "stíl %s"
 msgid "default style"
 msgstr "stíl réamhshocraithe"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "gan imlínte"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6237,10 +6266,9 @@ msgid "Error activating profile."
 msgstr "Earráid agus an phróifíl á ghníomhú"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
+msgid "This profile will be permanently deleted. This action cannot be undone."
 msgstr ""
-"An bhfuil tú cinnte gur mian leat an phróifíl seo a scriosadh? Ní féidir í a "
-"fháil ar ais arís."
+"Beidh an phróifíl seo scriosta go deo. Ní féidir an gníomh seo a chealaigh."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7130,6 +7158,8 @@ msgid "Line &indentation reporting:"
 msgstr "Tuairisceáil ar eangú"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "as feidhm"
 
@@ -7179,7 +7209,22 @@ msgstr "C&eanntásc ró agus colúin"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
-msgstr "C&omhordanáidí cille"
+msgstr "Comhordanáidí cille"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "stíleanna"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "idir dhathanna agus stíleanna"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "imlínte cille"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7745,6 +7790,11 @@ msgstr ""
 "dhó í chun dearmad a dhéanamh ar an gceanntásc róreatha i gcomhair na cille "
 "seo."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "bileog {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Is í  {title}: {message} an teachtaireacht ionchuir"
@@ -7770,6 +7820,129 @@ msgstr "ag eagairtheoracht an nóta tráchta ar chill {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} trí {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "imeall ag an mbarr"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "imeall ag an mbun"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "imeall chlé"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "imeall dheas"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "line thrasnáin  suas ar dheis"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "Líne trasnáin anuas ar dheis"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "imlínte cothrománach  seachas taobh amuigh"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "imlínte ingearacha, seachas taobh amuigh"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "leanúnach"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "imlínte le daiseanna"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "imlínte le daiseanna agus poncanna"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "Imlínte le dais, ponc ponc"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "imlínte le poncanna"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "dúbalta"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "líne chlaonta spás le ponc"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "ribe"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "imlínte chaola"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "imlíne mheasartha"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "imlíne thiubh"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "dais ponc ponc measartha"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "dais ponc measartha"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "daiseanna mheasartha"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{style} {weight}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{desc} {color}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "teorainn ina thimpeall ar {desc} "
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "imeall ag bun agus barr de {desc} "
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "imeal {desc} ar dheis agus ar chlé"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} le imlínte thrasnáin suas ar dheis agus síos ar dheis"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8788,3 +8961,8 @@ msgstr "Sraith HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "An bhfuil tú cinnte gur mian leat an phróifíl seo a scriosadh? Ní féidir "
+#~ "í a fháil ar ais arís."

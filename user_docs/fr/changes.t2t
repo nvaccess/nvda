@@ -8,9 +8,10 @@ Quoi de Neuf dans NVDA
 == Nouvelles Fonctionnalités ==
 - Sous Microsoft Excel, l'information de bordure de cellule peut maintenant être annoncée en utilisant `NVDA+f`. (#3044)
 - Ajout du support des attributs aria-current. (#6358)
-- Support du changement de langue automatique sous Microsoft Edge. (#6852)
-- Support de la Calculatrice Windows sous Windows 10 Enterprise LTSB (Long-Term Servicing Branch) et Server. (#6914)
+- Le changement de langue automatique est maintenant supporté sous Microsoft Edge. (#6852)
+- Ajout du support de la Calculatrice Windows sous Windows 10 Enterprise LTSB (Long-Term Servicing Branch) et Server. (#6914)
 - Effectuer la commande de lecture de la ligne courante trois fois rapidement épelle la ligne en code international. (#6893)
+- Nouvelle langue : Birman.
 
 
 == Changements ==
@@ -24,19 +25,19 @@ Quoi de Neuf dans NVDA
 - Correction de quelques plantages sous Mozilla Firefox et autres applications Gecko quand le multi-process est activé. (#6885)
 - L'annonce de la couleur d'arrière-plan en revue d'écran est maintenant plus fiable quand le texte est affiché avec un arrière-plan transparent. (#6467) 
 - Amélioration du support de aria-describedby sous Internet Explorer 11, incluant son support dans les cadres et quand de multiples IDs sont fournis. (#5784)
-- Sous la mise à jour Windows Creaters, l'atténuation audio de NVDA fonctionne de nouveau comme sous les versions précédentes de Windows (Tous les modes sont de nouveau disponibles). (#6933)
+- Sous Windows 10 Creators Update, l'atténuation audio de NVDA fonctionne de nouveau comme sous les versions précédentes de Windows (Tous les modes sont de nouveau disponibles). (#6933)
 - NVDA n'échouera plus à annoncer ou naviguer vers certains contrôles (UIA) pour lesquels un raccourci clavier n'est pas défini. (#6779)
 - Deux espaces ne sont plus ajoutés dans les informations de raccourcis clavier pour certains contrôles (UIA). (#6790)
 - Certaines combinaisons de touches sur les afficheurs HIMS (ex: espace+point4) n'échouent plus de façon intermittente. (#3157)
 - Correction d'un problème à l'ouverture d'un port série sur des systèmes utilisant certaines langues autres que l'Anglais qui rendait la connexion à un terminal braille impossible dans certains cas. (#6845)
 - Réduction des chances que le fichier de configuration soit corrompu à la fermeture de Windows. Les fichiers de configuration sont maintenant écrits dans un fichier temporaire avant de remplacer le fichier de configuration réel. (#3165)
 - Quand on effectue la commande de lecture de la ligne courante deux fois rapidement pour épeler la ligne, la langue appropriée est maintenant utilisée pour épeler les caractères. (#6726)
-- Naviguer par ligne sous Microsoft Edge est maintenant jusqu'à trois fois plus rapide sous Windows 10 Creaters Update. (#6994)
-- NVDA n'annonce plus "Web Runtime grouping" quand on met le focus sur un document Microsoft Edge sous Windows 10 Creaters Update (#6948)
+- Naviguer par ligne sous Microsoft Edge est maintenant jusqu'à trois fois plus rapide sous Windows 10 Creators Update. (#6994)
+- NVDA n'annonce plus "Web Runtime grouping" quand on met le focus sur un document Microsoft Edge sous Windows 10 Creators Update (#6948)
 
 
 == Changements pour les Développeurs ==
-- Les arguments de ligne de commande sont maintenant traités par le module Python argparser, au lieu de optparser. Cela permet de traiter certaines options telles que -r et -q de manière exclusive. (#6865)
+- Les arguments de ligne de commande sont maintenant traités par le module Python argparser, au lieu de optparse. Cela permet de traiter certaines options telles que -r et -q de manière exclusive. (#6865)
 - core.callLater ajoute maintenant le callback à la queue principale de NVDA après le délai donné, plutôt que de réveiller le noyau et de l'exécuter directement. Ceci empêche de possibles bloquages dus au fait que le noyau se mette accidentellement en veille après le traitement d'un callback, au milieu d'un appel modal tel que l'affichage d'une boîte de message. (#6797) 
 - La propriété InputGesture.identifiers a été modifiée de manière à ne plus être normalisée. (#6945)
  - Les sous-classes n'ont plus besoin de normaliser les identifiants avant de les retourner de cette propriété.
@@ -46,7 +47,7 @@ Quoi de Neuf dans NVDA
  - Les constantes `speech.REASON_*`, remplacées par `controlTypes.REASON_*`. (#6846)
  - `i18nName` pour les paramètres synthétiseur, remplacées par `displayName` et `displayNameWithAccelerator`. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
- - `config.save`. (#6846)
+ - `config.save`. (#6846, #647)
 - La liste des complétions dans le menu contextuel d'autocomplétion de la Console Python ne montre plus aucun chemin menant au symbole final à compléter. (#7023)
 - Il y a maintenant une architecture de test unitaire pour NVDA. (#7026)
  - Les tests unitaires et l'infrastructure sont situés dans le répertoire tests/unit. veuillez consulter le docstring dans le fichier tests\unit\__init__.py pour plus de détails.

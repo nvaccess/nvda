@@ -8,7 +8,13 @@
 == neue Funktionen ==
 - Unterstützung für Aria-Current-Attribute hinzugefügt. (#6358)
 - Microsoft Edge unterstützt jetzt auch den automatischen Sprachenwechsel. (#6852)
+- Unterstützung für den Windows-Rechner in Windows 10 LTSB hinzugefügt. (#6914)
+- Wird die Tastenkombination zum Lesen der aktuellen Zeile dreimal hintereinander gedrückt, so wird die Zeile phonetisch buchstabiert. (#6893)
+- neue Sprache: Birmanisch
 
+
+== Änderungen ==
+- Die Navigation in UIA-Anwendungen wurde vereinfacht. (#6948, #6950) 
 
 == behobene Fehler ==
 - Menüeinträge auf Webseiten, die Kontrollkästchen Bzw. Auswahlschalter enthalten, können jetzt im Lesemodus aktiviert werden. (#6735)
@@ -21,7 +27,11 @@
 - NVDA zeigt nun auch solche (UIA)-Steuerelemente korrekt an, deren Tastenkombination nicht (richtig) definiert wurde. (#6779)
 - An die Tastenkombination von (UIA)-Steuerelementen werden nicht mehr fälschlicherweise zwei Leerzeichen angehängt. (#6790)
 - Manche Tastenkombinationen auf HIMS-Braillezeilen (wie z.B. Leertaste+Punkt 4) funktionieren nun korrekt. (#3157)
-- Auf einigen (nicht-englischen) Systemen funktioniert nun die Verbindung mit seriellen Braillezeilen korrekt.(#6845)
+- Auf einigen (nicht-englischen) Systemen funktioniert nun die Verbindung mit seriellen Braillezeilen korrekt. (#6845)
+- Beim Herunterfahren von Windows werden Konfigurationsdateien zunächst temporär gespeichert, bevor sie ersetzt werden. Die verringert die Wahrscheinlichkeit für Beschädigungen der Konfigurationsdateien. (#3165)
+- Beim Buchstabieren der aktuellen Zeile wird nun die aktuell eingestellte Sprache verwendet. (#6726)
+- In Windows 10 Creators Update funktioniert die zeilenweise Navigation in Microsoft Edge nun bis zu dreimal so schnell wie zuvor. (#6994)
+- Beim Verwenden von Microsoft Edge in Windows 10 Creators Update wird nicht mehr "web Runtime Grouping" angezeigt. (#6948)
 
 
 == Änderungen für Entwickler ==
@@ -31,6 +41,16 @@
  - Subclasses no longer need to normalize identifiers before returning them from this property.
  - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
 - The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+- Deprecated code removed:
+ - `speech.REASON_*` constants: `controlTypes.REASON_*` should be used instead. (#6846)
+ - `i18nName` for synth settings: `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846, #667)
+- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- There is now a unit testing framework for NVDA. (#7026)
+ - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
+ - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
 
 
 = 2017.1 =
