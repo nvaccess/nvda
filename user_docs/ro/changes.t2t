@@ -4,14 +4,16 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 =
+Caracteristicile principale ale acestei lansări includ suport complet pentru atenuarea audio în Windows 10 Creators Update; reparări ale mai multor erori de selecție în modul de navigare, incluzând probleme cu selectarea întregului conținut; îmbunătățiri semnificative la suportul pentru Microsoft Edge; și îmbunătățiri pe web, cum ar fi indicarea elementelor marcate ca actuale (folosind atributul aria-current).
 
 == Noi Funcționalități ==
 - Informația marginii celulei poate fi acum raportată în Microsoft Excel prin utilizarea `NVDA+f`. (#3044)
-- A fost adăugat suportul pentru atributele curente-aria. (#6358)
+- În navigatoarele web, NVDA indică un element care a fost marcat ca actual folosind atributul aria-current. (#6358)
 - Comutarea automată a limbii este suportată în Microsoft Edge. (#6852)
 - Calculatorul Windows este suportat pe Windows 10 Enterprise LTSB (Long-Term Servicing Branch) și Server. (#6914)
 - Efectuarea comenzii de citire a liniei curente de trei ori rapid citește linia cu descrieri de caractere. (#6893)
 - Limbă nouă: birmană.
+- Săgețile sus și jos unicode și simbolurile de fracție sunt acum rostite corespunzător. (#3805)
 
 
 == Modificări ==
@@ -34,6 +36,12 @@ Ce este nou în NVDA
 - La efectuarea comenzii de citire a liniei curente de două ori rapid pentru citirea liniei, limba apropiată este acum utilizată pentru caracterele citite. (#6726)
 - Navigarea prin linie în Microsoft Edge este acum de până la trei ori mai rapidă în Windows 10 Creaters Update. (#6994)
 - NVDA nu mai anunță „Web Runtime grouping” la focalizarea documentelor din Microsoft Edge în Windows 10 Creaters Update (#6948)
+- Toate versiunile existente ale SecureCRT-ului sunt acum suportate. (#6302)
+- Adobe Acrobat Reader nu se mai blochează în anumite documente PDF (în special cele care au goale atributele ActualText). (#7021, #7034)
+- În modul de navigare în Microsoft Edge, tabelele interactive (grilele Aria) nu mai sunt omise când se navighează la tabele cu t și shift+t. (#6977)
+- În modul de navigare, apăsarea shift+home după ce s-a selectat înainte,  selectează acum la începutul rândului așa cum era de așteptat. (#5746)
+- În modul de navigare, selectarea întregului conținut (control+a) nu mai eșuează să selecteze tot textul dacă cursorul de scriere nu este la începutul textului. (#6909)
+Au mai fost rezolvate alte probleme rare de selectare în modul de navigare. (#7131)
 
 
 == Modificări pentru Dezvoltatori ==

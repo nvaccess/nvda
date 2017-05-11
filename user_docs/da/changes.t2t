@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 = 
-
+Af væsentlige forbedringer i denne version af NVDA kan nævnes fuld understøttelse for lyddæmpning i Windows 10 Creators Update, rettelser for flere problemer mht. udvalg af elementer i gennemsynstilstand (herunder vælg alt), markante forbedringer til understøttelse af Microsoft Edge, og forbedringer på internettet, herunder når elementer markeres som aktuelle ved brug af aria-current.
 
 == Nye Funktioner ==
 - Information for cellekanter i Microsoft Excel kan nu rapporteres med NVDA+F. (#3044)
@@ -12,6 +12,8 @@
 - Støtter automatisk skift af sprog i Microsoft Edge. (#6852)
 - Støtter Windows Lommeregner på Windows 10 Enterprise LTSB (Long-Term Servicing Branch) og Server. (#6914)
 - Ved at udføre kommandoen til at læse den aktuelle linje tre gange hurtigt, vil linjen blive stavet ved brug af tegnbeskrivelser. (#6893)
+- Nyt sprog: Burmesisk
+- Unicode op og ned samt brøksymboler udtales nu som forventet. (#3805)
 
 
 == Ændringer ==
@@ -34,6 +36,12 @@
 - Når kommandoen til at læse den aktuelle linje udføres to gange hurtigt, vil det tilpassende sprog benyttes til udtalen af tegn. (#6726)
 - Navigation ved brug af linjer er nu 3x hurtigere i Microsoft Edge i Windows Creators Update. (#6994)
 - NVDA vil ikke længere rapportere "Web Runtime grouping", når der bliver fokuseret  på et dokument i Microsoft Edge i Windows Creators Update. (#6948)
+- Alle eksisterende versioner af SecureCRT er nu understøttet. (#6302)
+- Adobe Acrobat Reader går ikke længere ned i bestemte PDF-dokumenter (specifikt dem, der indeholdte tomme ActualText attributter). (#7021, #7034)
+- Interaktive tabeller (Aria grids) springes ikke længere over i Microsoft Edge, når der navigeres mellem tabeller ved brug af T og skift+T. (#6977)
+- Når der trykkes skift+hjem i gennemsynstilstand og der er valgt forude, vil kommandoen fravælge til begyndelsen af linjen som forventet. (#5746)
+- Når kommandoen vælg alt (CTRL+A) benyttes i gennemsynstilstand, vil kommandoen nu ikke længere undgå at vælge alt tekst, hvis markøren ikke er placeret på tekstens begyndelse. (#6909)
+- Rettede nogle andre sjældne problemer mht. udvalg af indhold i gennemsynstilstand. (#7131)
 
 
 == Ændringer for udviklere ==
