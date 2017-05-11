@@ -468,7 +468,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 | Abrir descrição longa | NVDA+d | Abre uma nova janela contendo a descrição longa  para o elemento sobre o qual você se encontra caso ele possua alguma. | 
 %kc:endInclude
 
-++ Navegação por Caractere ++
+++ Navegação com Caracteres ++
 Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um caractere para uma navegação rápida, as quais permitem saltar para determinados campos no documento.   
 Note que nem todos os comandos são suportados em todos os tipos de documento.
 
@@ -504,9 +504,9 @@ Para mover-se ao início ou final de elementos que contém outros, tais como lis
 %kc:endInclude
 
 Alguns aplicativos web, tais como o Gmail, Twitter e Facebook, usam caracteres individuuais como teclas de atalho.
-Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas teclas de cursor para ler no modo de navegação, você pode desabilitar temporariamente as teclas de navegação por caractere do NVDA.
+Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas teclas de cursor para ler no modo de navegação, você pode desabilitar temporariamente as teclas de navegação com caracteres do NVDA.
 %kc:beginInclude
-Para alternar a ativação das teclas de navegação por caractere no o documento atual, pressione NVDA+shift+espaço.
+Para alternar a ativação das teclas de navegação com caracteres no o documento atual, pressione NVDA+shift+espaço.
  %kc:endInclude
 
 
@@ -681,6 +681,49 @@ Para ser possível mover-se para células bloqueadas, alterne para o Modo de Nav
 | Anunciar Janela de comentários automáticos | control+shift+a | Anuncia qualquer comentário na janela de comentários automáticos. |
 | Anunciar notas para tradutores | control+shift+a | Anuncia quaisquer notas para tradutores. |
 %kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+When in a conversation:
+|| Nome | Tecla | Descrição |
+| Rever mensagem | NVDA+control+1-0 | Anuncia e move o cursor de exploração para uma mensagem recente, dependendo do número pressionado, isto é, NVDA+control+2 lê a segunda mensagem mais recente. |
+%kc:endInclude
+
+++ Kindle para PC ++
+O NVDA suporta a leitura e a navegação em books no Kindle da Amazon para PC.
+Essa funcionalidade está disponível apenas em livros da Kindle designados com "Screen Reader: Supported" que você pode checar na página de detalhes do livro.
+
+O modo de navegação é usado para ler esses livros.
+ Ele é ativado automaticamente quando você abre um livro ou põe o foco na área do livro.
+A página será virada automaticamente como é apropriado quando você mover o cursor ou usar o comando de leitura contínua.
+%kc:beginInclude
+É possível virar manualmente para a próxima página com a tecla pageDown e para a página anterior com a tecla pageUp.
+%kc:endInclude
+
+A navegação com caracteres é suportada para links e gráficos, mas apenas dentro da página atual.
+A navegação por links também inclui nodas de rodapé.
+
++++ Seleção de Texto +++
+O Kindle lhe permite executar várias funções em textos selecionados, incluindo obter uma definição de dicionário, adicionar notas e destaques, copiar o texto para a área de transferência e pesquisar na web.
+Para fazer isso, primeiro selecione o texto como você normalmente faria no modo de navegação, isto é, usando shift e as teclas de  cursor.
+%kc:beginInclude
+Uma vez selecionado o texto, pressione a tecla  aplicação ou shift+f10 para exibir as opções disponíveis para trabalhar com a seleção.
+%kc:endInclude
+Caso faça isso sem haver selecionado texto, as opções serão mostradas para a palavra sob o cursor.
+
++++ Notas do Usuário +++
+Você pode adicionar nota sobre uma palavra ou passagem do texto.
+Para fazê-lo, primeiro selecione o texto relevante e acesse as opções de seleção como descrito acima.
+Em seguida, escolha Adicionar Nota.
+
+Ao ler no modo de navegação, o NVDA refere-se a essas notas como comentários.
+
+Para visualizar, editar ou excluir uma nota:
+
++ Mova o cursor para o texto que contém a nota.
++ Acesse as opções de seleção como descrito acima.
++ Escolha Editar Nota.
++
 
 + Configurando o NVDA +
 
@@ -1178,7 +1221,7 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - Blocos de citação
 - Marcas de Seção
 - Frames
-- Quando algo é clicável
+- Elemento clicável
 -
 
 Para alterar essas configurações de qualquer lugar, por favor atribua-lhes gestos personalizados usando o [Diálogo de Gestos de Entrada #InputGestures].

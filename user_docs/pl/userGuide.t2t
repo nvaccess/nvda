@@ -23,7 +23,7 @@ Najważniejsze właściwości NVDA to:
 - wsparcie dla wielu monitorów Brajlowskich uwzględniające możliwość wprowadzania tekstu na monitorach z klawiaturą brajlowską,
 - możliwość uruchamiania z pamięci USB lub innych nośników przenośnych bez konieczności instalacji,
 - łatwy w użyciu udźwiękowiony instalator,
-- tłumaczenie na 48 języków,
+- tłumaczenie na 50 języków,
 - wsparcie dla współczesnych systemów operacyjnych Windows, zarówno 32, jak i 64 bitowych,
 - możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranów,
 - wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge, iAccessible2, UI Automation. UI Automation jest obsługiwany tylko pod kontrolą systemów Windows 7 i wyższych,
@@ -32,7 +32,7 @@ Najważniejsze właściwości NVDA to:
 
 ++ Wersje językowe ++
 Ważne jest, by ludzie z całego świata, bez względu na ojczysty język, mogli mieć równy dostęp do technologii.
-Poza angielskim NVDA został przetłumaczony na 47 języków, w tym: afrykanerski, albański, amharski, arabski, aragoński, bułgarski, chiński tradycyjny i uproszczony, chorwacki, czeski, duński, fiński, francuski, galicyjski, grecki,   gruziński, hebrajski, hindi,  hiszpański, hiszpański kolumbijski, holenderski,  irlandzki, islandzki,  japoński, kataloński, koreański, litewski, mandaryński, nepalski, niemiecki, norweski, pendżabski, perski, polski, portugalski, portugalski brazylijski, rosyjski, rumuński,  serbski, słowacki, słoweński, szwedzki, tajski, tamilski, turecki, ukraiński, węgierski, wietnamski i włoski.
+Poza angielskim NVDA został przetłumaczony na 50 języków, w tym: afrykanerski, albański, amharski, arabski, aragoński, birmański, bułgarski, chiński tradycyjny i uproszczony, chorwacki, czeski, duński, fiński, francuski, galicyjski, grecki,   gruziński, hebrajski, hindi,  hiszpański, hiszpański kolumbijski, holenderski,  irlandzki, islandzki,  japoński, kannada, kataloński, koreański, litewski, mandaryński, nepalski, niemiecki, norweski, pendżabski, perski, polski, portugalski, portugalski brazylijski, rosyjski, rumuński,  serbski, słowacki, słoweński, szwedzki, tajski, tamilski, turecki, ukraiński, węgierski, wietnamski i włoski.
 
 ++ Obsługa syntezatora mowy ++
 NVDA oferuje wiele wersji językowych interfejsu i daje możliwość odczytywania treści w każdym języku wspieranym przez zainstalowany w systemie syntezator mowy.
@@ -286,7 +286,7 @@ NVDA wykorzystuje następujące klawisze poleceń do nawigacji kursorem klawiatu
 %kc:beginInclude
 || Działanie | Skrót desktopa | Skrót laptopa | Opis |
 | Czyta wszystko | NVDA+Strzałka w dół | NVDA+a | Odczytuje od bieżącej pozycji kursora do końca tekstu, przesuwając kursor podczas czytania. |
-| Odczytuje aktualną linię | NVDA+Strzałka w górę | NVDA+l | Odczytuje aktualną linię w miejscu kursora. Dwukrotne naciśnięcie literuje aktualną linię. |
+| Odczytuje aktualną linię | NVDA+Strzałka w górę | NVDA+l | Odczytuje aktualną linię w miejscu kursora. Dwukrotne naciśnięcie literuje aktualną linię. Trzykrotne naciśnięcie literuje linię przy użyciu opisów znaków. |
 | Odczytuje aktualne zaznaczenie | NVDA+Shift+Strzałka w górę | NVDA+Shift+S | Odczytuje cały aktualnie zaznaczony tekst |
 | Następne zdanie | Alt+Strzałka w dół | Alt+Strzałka w dół | Przenosi kursor do następnego zdania i odczytuje je (obsługiwane tylko w Microsoft Word i Outlook). |
 | Poprzednie zdanie | Alt+Strzałka w górę | Alt+Strzałka w górę | Przenosi kursor do poprzedniego zdania i odczytuje je (obsługiwane tylko w Microsoft Word i Outlook). |
@@ -700,7 +700,7 @@ Wewnątrz konwersacji:
 
 ++ Kindle dla PC ++
 NVDA obsługuje odczyt i nawigację wewnątrz książek w aplikacji Amazon Kindle dla PC.
-Ta funkcjonalność jest dostępna tylko w książkach Kindle z wsparciem "Ulepszonego składu", co można sprawdzić na stronie szczegółów książki.
+Ta funkcjonalność jest dostępna tylko w książkach Kindle zaprojektowanych z właściwością "Czytnik ekranu: obsługiwany", co można sprawdzić na stronie szczegółów książki.
 
 Tryb czytania jest używany do czytania książek.
 Jest włączany automatycznie po otwarciu książki lub ustawieniu punktu uwagi na obszarze książki.
@@ -1263,7 +1263,8 @@ Możemy w ten sposób skonfigurować odczytywanie:
  - Tabel
  - Nagłówków kolumn i wierszy tabeli
  - Współrzędnych komórek tabeli
-- Elementy
+ - Ramek komórek [(Wyłączone, Style, kolory i style)
+- Elementów
  - Nagłówków
  - Linków
  - List

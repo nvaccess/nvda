@@ -18,6 +18,7 @@ def FaultTolerantFile(name):
 	file `name' when the context manager scope ends and the the context manager __exit__ is called. This
 	means writing out the complete file can be performed with less concern of corrupting the original file
 	if the process is interrupted by windows shutting down.
+	`name` must be unicode.
 
 	Usage:
 		with FaultTolerantFile("myFile.txt") as f:
@@ -26,6 +27,8 @@ def FaultTolerantFile(name):
 	This creates a temporary file, and the writes actually happen on this temp file. At the end of the 
 	`with` block, when `f` goes out of context the temporary file is closed and, this temporary file replaces "myFile.txt"
 	'''
+	if not isinstance(name, unicode):
+		raise TypeError("name must be unicode")
 	dirpath, filename = os.path.split(name)
 	with NamedTemporaryFile(dir=dirpath, prefix=filename, suffix='.tmp', delete=False) as f:
 		log.debug(f.name)
