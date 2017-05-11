@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-11581\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 00:10+1000\n"
-"PO-Revision-Date: 2017-02-15 13:27+0800\n"
+"POT-Creation-Date: 2017-05-08 16:33+1000\n"
+"PO-Revision-Date: 2017-05-10 15:59+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <cyeric20@yahoo.com.hk>\n"
 "Language: zh_HK\n"
@@ -2331,6 +2331,34 @@ msgstr "沒選取"
 msgid "not checked"
 msgstr "沒勾選"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "沒按下"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "目前"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "目前頁"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "目前步驟"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "目前位置"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "目前日期"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "目前時間"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2499,8 +2527,11 @@ msgstr "在目前應用程式切換睡眠模式"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "讀出系統焦點所在的一行，連按兩次則把這一行的字元拼讀出來"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"讀出系統焦點所在的一行，連按兩次則把這一行的字元拼讀出來，連按三次則讀出整行"
+"的配詞解釋。"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4311,6 +4342,10 @@ msgstr "樣式 %s"
 msgid "default style"
 msgstr "預設樣式"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "沒有框線"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6084,8 +6119,8 @@ msgid "Error activating profile."
 msgstr "啟用組態發生錯誤"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "你確定要刪除這個組態設定檔？刪除後不能救回"
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "這個組態設定將被永久刪除，此項操作將無法還原。"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6949,6 +6984,8 @@ msgid "Line &indentation reporting:"
 msgstr "報出行縮排(&I)"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "關"
 
@@ -6999,6 +7036,21 @@ msgstr "列及欄標題(&E)"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "儲存格座標(&O)"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "樣式"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "色彩與樣式"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "儲存格框線："
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7552,6 +7604,11 @@ msgid ""
 "current row header for this cell."
 msgstr "按一次把目前儲存格設為列標題，連按兩次清除目前儲存格的列標題設定。"
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "第{0}工作表的第{1}格"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "輸入訊息是 {title}: {message}"
@@ -7577,6 +7634,129 @@ msgstr "編輯 {address} 的註解"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} 到 {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "上邊"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "下邊"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "左邊"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "右邊"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "向右上對角線"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "向右下對角線"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "水平框線"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "垂直框線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "實線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "虛線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "虛線點"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "虛線點點"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "點線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "雙線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "斜虛線點"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "毫線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "細線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "中線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "粗線"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "中虛線點點"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "中虛線點"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "中虛線"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc}外框"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc}上邊及下邊"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc}左邊及右邊"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc}向右上及向右下對角線"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8579,3 +8759,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "你確定要刪除這個組態設定檔？刪除後不能救回"
