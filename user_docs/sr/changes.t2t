@@ -4,14 +4,16 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 =
+Glavne karakteristike ove verzije uključuju podršku za stišavanje pozadinskih zvukova u Windows 10 creators ažuriranju; ispravljeni problemi sa izborom teksta u režimu pretraživanja, uključujući probleme sa komandom izaberi sve; velika poboljšanja za Microsoft Edge podršku; i poboljšanja Web podrške što uključuje izgovor elemenata koji su označeni kao trenutni(koristeći aria-current).
 
 == Nove karakteristike ==
 - Informacije o granicama ćelija sada mogu biti izgovorene u programu Microsoft Excel koristeći komandu `NVDA+f`. (#3044)
-- Dodata podrška za aria-current atribute. (#6358)
+- U Web pretraživačima, NVDA sada izgovara kada se element označi kao trenutni(konkretno, koristeći aria-current svojstvo). (#6358)
 - Podrška za automatsku promenu jezika u programu Microsoft Edge. (#6852)
 - Podrška za Windows kalkulator na Windows 10 Enterprise LTSB (Long-Term Servicing Branch) i Server verzijama. (#6914)
 - Kada se koristi komanda za čitanje trenutnog reda tri puta trenutni red se sriče koristeći fonetsko sricanje. (#6893)
 - Novi jezik: Bermudski.
+- Simboli za strelice gore i dole i ostali unikod simboli se sada ispravno čitaju. (#3805)
 
 
 == Promene ==
@@ -34,6 +36,12 @@
 - Kada se koristi komanda za čitanje trenutnog reda dva puta za sricanje, ispravan jezik se koristi za slova. (#6726)
 - Kretanje po redovima u programu Microsoft Edge je do 3 puta brže u Windows 10 Creators ažuriranju. (#6994)
 - NVDA više ne izgovara"Web Runtime grouping" kada je fokus na Microsoft Edge dokumentima u Windows 10 Creators ažuriranju (#6948)
+- Sve postojeće verzije SecureCRT su sada podržane. (#6302)
+- Adobe Acrobat Reader ne prestaje da radi u određenim dokumentima(specifično, u onim koji sadrže prazne atribute teksta). (#7021, #7034)
+- U režimu pretraživanja programa Microsoft Edge, interaktivne tabele(ARIA mreže) se više ne preskaču u toku navigacije kroz tabele tasterima t i šift+t. (#6977)
+- U režimu pretraživanja, komanda šift+home nakon biranja teksta napred ispravno poništava izbor do početka reda. (#5746)
+- U režimu pretraživanja, izaberi sve(kontrol+a) više neće neispravno birati tekst ako kursor nije na početku teksta. (#6909)
+- Popravljeni ostali retki problemi sa izborom teksta u režimu pretraživanja. (#7131)
 
 
 == Promene za programere ==
