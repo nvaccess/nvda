@@ -1,6 +1,6 @@
 ﻿#locale/pt_PT/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -13,9 +13,9 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥,]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -26,33 +26,34 @@ symbols:
 ? sentence ending	interrogação	all	always
 ; phrase ending	ponto e vírgula	most	always
 : phrase ending	dois pontos	most	always
-decimal point	,	none	always
+decimal point		none	always
 in-word '	apóstrofo	all	norep
 negative number	menos	none	norep
 
 # Whitespace
-\0	em branco	char	# null
+\0	branco	char	# null
 \t	tab
 \n	quebra de linha	char
 \f	quebra de página	none
 \r	retorno	char
  	espaço	char
- 	espaço	char	# no-break space
+ 	space	char	# no-break space
 
 # Standard punctuation/symbols
 !	exclamação	all
 "	aspas	most
-\#	cardinal	most
+\#	cardinal	some
 $	cifrão	all	norep
 £	libra	all	norep
 €	euro	all	norep
-¢	Centavos	all	norep
-¥	Iene	all	norep
+¢	Cêntimos	all	norep
+¥	Yene	all	norep
+₹	Rúpia	some	norep
 %	porcento	some
 &	and	some
 '	apóstrofo	all
-(	abrir parênteses	most
-)	fechar parênteses	most
+(	abrir parênteses	most	always
+)	fechar parênteses	most	always
 *	asterisco	some
 +	mais	some
 ,	vírgula	all	always
@@ -61,9 +62,9 @@ $	cifrão	all	norep
 /	barra	some
 :	dois pontos	most	norep
 ;	ponto e vírgula	most
-<	menor que	most
->	maior que	most
-=	igual	some
+<	menor que	some
+>	maior que	some
+=	ugual	some
 ?	interrogação	all
 @	arrôba	some
 [	abrir parênteses rectos	most
@@ -71,7 +72,7 @@ $	cifrão	all	norep
 \\	barra invertida	most
 ^	circunflexo	most
 _	sublinhado	most
-`	grave	most
+`	acento grave	most
 {	abrir chavetas	most
 }	fechar chavetas	most
 |	barra vertical	most
@@ -86,13 +87,16 @@ _	sublinhado	most
 ”	fechar aspas	most
 ‘	apóstrofo esquerdo	most
 ’	apóstrofo direito	most
-–	travessão	most
+–	travessão	most	always
 —	travessão	most
-●	asterisco	most
+●	círculo	most
 ¨	trema	most
 ‎	marca da esquerda para a direita	char
-‏	marca da direita para a esquerda	char
-■	barra vertical cortada	some
+‏	‎	marca da direita para a esquerda	char
+■	quadrado negro	some
+▪	quadrado negro	some
+◾	quadrado negro	some
+◦	bullet branco	some
 ➔	seta para a direita	some
 §	secção	all
 °	graus	some
@@ -103,11 +107,76 @@ _	sublinhado	most
 ²	elevado a 2	some
 ³	elevado a 3	some
 ®	marca registada	some
-™	Marca registada	some
+™	marca comercial registada	some
 ©	Copyright	some
-±	Mais ou Menos	most
-×	vezes	most
-÷	dividir por	most
+±	mais ou menos	some
+×	vezes	some
+÷	dividir por	some
+←	seta à esquerda	some
+↑	seta acima	some
 →	seta para a direita	some
+↓	seta abaixo	some
 ✓	marca de verificação	some
 ✔	marca de verificação	some
+
+#Mathematical Operators U+2200 to U+220F
+∀	para todos	none
+∁	complemento	none
+∂	derivada parcial	none
+∃	se existe	none
+∄	se não existe	none
+∅	conjunto vazio	none
+∆	incremento	none
+∇	nabla	none
+∈	elemento de	none
+∉	não é elemento de	none
+∊	menor elemento de	none
+∋	contém como membro	none
+∌	não contém como membro	none
+∍	menor contém como membro	none
+∎	fim de prova	none
+∏	n-ary product	none
+
+# Miscellaneous Mathematical Operators
+∑	somatório n-ary	none
+√	raíz quadrada	none
+∛	raíz cúbica	none
+∜	raíz quarta	none
+∝	proporcional a	none
+∞	infinito	none
+∟	ângulo recto	none
+∠	ângulo	none
+∥	paralelo a	none
+∦	não paralelo a	none
+∧	e lógico	none
+∨	ou lógico	none
+∩	intersepção	none
+∪	união	none
+∫	integral	none
+∴	por isso	none
+∵	porque	none
+∶	rácio	none
+∷	proporção	none
+≤	menor ou igual a	none
+≥	maior ou igual a	none
+⊂	subconjunto de	none
+⊃	sobreconjunto de	none
+⊆	subconjunto de ou igual a	none
+⊇	sobreconjunto de ou igual a	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	um sétimo	none
+⅑	um nono	none
+⅒	um décimo	none
+⅓	um terço	none
+⅔	dois terços	none
+⅕	um quinto	none
+⅖	dois quintos	none
+⅗	três quintos	none
+⅘	quatro quintos	none
+⅙	um sexto	none
+⅚	cinco sextos	none
+⅛	um oitavo	none
+⅜	três oitavos	none
+⅝	cinco oitavos	none
+⅞	sete oitavos	none
