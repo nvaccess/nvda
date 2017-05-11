@@ -744,15 +744,15 @@ class UIA(Window):
 		if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox", "addressEditBox"):
 			clsList.append(SearchField)
 		try:
-			# Nested block here in order to catch value error when attempting to access automation ID for invalid elements.
+			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
 				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
 				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+				# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
+				if parentElement.cachedAutomationId.lower()=="suggestionslist":
+					clsList.append(SuggestionListItem)
 			except COMError:
 				pass
-			# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
-			if parentElement.cachedAutomationId.lower()=="suggestionslist":
-				clsList.append(SuggestionListItem)
 		except ValueError:
 			pass
 
