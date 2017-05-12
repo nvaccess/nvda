@@ -307,6 +307,9 @@ def initialize(shouldDoRemoteLogging=False):
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	if not shouldDoRemoteLogging:
+		# This produces log entries such as the following:
+		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
+		# Input: kb(desktop):v
 		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s.%(msecs)03d):\n%(message)s", "%H:%M:%S")
 		if globalVars.appArgs.secure:
 			# Don't log in secure mode.
