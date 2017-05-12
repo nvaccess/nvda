@@ -1,3 +1,9 @@
+#logHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2007-2016 NV Access Limited, Rui Batista
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 """Utilities and classes to manage logging in NVDA"""
 
 import os
@@ -301,7 +307,10 @@ def initialize(shouldDoRemoteLogging=False):
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	if not shouldDoRemoteLogging:
-		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
+		# This produces log entries such as the following:
+		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
+		# Input: kb(desktop):v
+		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s.%(msecs)03d):\n%(message)s", "%H:%M:%S")
 		if globalVars.appArgs.secure:
 			# Don't log in secure mode.
 			logHandler = logging.NullHandler()
