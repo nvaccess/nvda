@@ -4,36 +4,43 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat täysi tuki äänenvoimakkuuden hiljennykselle Windows 10:n Creators-päivityksessä; useat selaustilan tekstinvalitsemisongelmien korjaukset, valitse kaikki -komento mukaan lukien; Microsoft Edge -tuen merkittävät parannukset; sekä verkkoselauksen parannukset, kuten nykyisiksi merkittyjen elementtien ilmaiseminen (aria-current-attribuuttia käyttäen).
 
 == Uudet ominaisuudet ==
-- Solun reunojen tiedot voidaan nyt selvittää Microsoft Excelissä käyttäen näppäinkomentoa NVDA+F. (#3044)
-- Lisätty tuki aria-current-attribuuteille. (#6358)
+- Solun reunojen tiedot on nyt mahdollista selvittää Microsoft Excelissä käyttäen näppäinkomentoa NVDA+F. (#3044)
+- NVDA ilmaisee nyt verkkoselaimissa, kun elementti on merkitty nykyiseksi (aria-current-attribuuttia käyttäen). (#6358)
 - Automaattista kielen vaihtamista tuetaan nyt Microsoft Edgessä. (#6852)
 - Tuki Laskin-sovellukselle Windows 10 Enterprisen LTSB- (Long-Term Servicing Branch) ja Server-versioissa. (#6914)
 - Lue nykyinen rivi -komennon suorittaminen kolme kertaa nopeasti peräkkäin tavaa rivin merkkikuvauksia käyttäen. (#6893)
 - Uusi kieli: burma.
+- Unicode-merkistöstandardin nuoli ylös ja alas- sekä murtolukusymbolit puhutaan nyt asianmukaisesti. (#3805)
 
 
 == Muutokset ==
-- Säilöjä, joissa ei ole sisältöä, jätetään nyt entistä enemmän huomiotta liikuttaessa sovelluksissa yksinkertaisessa tarkastelutilassa UI Automation -rajapintaa käyttäen. (#6948, #6950) 
+- Yksinkertaisessa tarkastelutilassa jätetään nyt huomiotta entistä enemmän ylimääräisiä objekteja UI Automation -rajapintaa käyttävissä sovelluksissa. (#6948, #6950)
 
 
 == Korjatut ohjelmavirheet ==
-- Verkkosivun valikkokohteiden (valikkokohteina olevien valintaruutujen ja valintapainikkeiden) aktivoiminen on nyt mahdollista selaustilassa oltaessa. (#6735)
-- Excelin laskentataulukon ilmoittaminen on nyt käännetty eri kielille. (#6848)
+- Verkkosivun valikkokohteiden aktivoiminen on nyt mahdollista selaustilassa oltaessa. (#6735)
 - Esc-näppäimen painaminen asetusprofiilin "Vahvista poistaminen" -kehotteen ollessa aktiivisena sulkee nyt valintaikkunan. (#6851)
 - Korjattu joitakin kaatumisia Mozilla Firefoxissa ja muissa Gecko-sovelluksissa, joissa usean ikkunan toiminto on otettu käyttöön. (#6885)
 - Taustavärin ilmoittaminen ruututarkastelussa on nyt tarkempaa, kun teksti on piirretty läpinäkyvällä taustalla. (#6467) 
-- Paranneltu tuki aria-describedby-attribuutille Internet Explorer 11:ssä, mukaan lukien tilanteet, joissa sitä käytetään kehysten sisällä tai kun useita tunnuksia on saatavilla. (#5784)
-- NVDA:n äänenvoimakkuuden hiljennys toimii Windowsin Creators -päivityksessä taas kuten aiemmissa Windows-versioissa (ts. hiljennyksen vaihtoehdot "Puhuttaessa ja ääntä toistettaessa", "Aina" sekä "Ei käytössä" ovat kaikki käytettävissä). (#6933)
+- Paranneltu verkkosivujen säädinkuvausten tukea Internet Explorer 11:ssä (erityisesti aria-describedby-attribuutille kehyksissä ja kun useita tunnuksia on saatavilla). (#5784)
+- NVDA:n äänenvoimakkuuden hiljennys toimii Windows 10:n Creators-päivityksessä taas kuten aiemmissa versioissa (ts. hiljennyksen vaihtoehdot "Puhuttaessa ja ääntä toistettaessa", "Aina" sekä "Ei käytössä" ovat kaikki käytettävissä). (#6933)
 - Tiettyihin UIA-säätimiin siirtyminen tai niiden ilmoittaminen ei enää epäonnistu NVDA:ta käyttäen, kun niihin ei ole määritetty pikanäppäintä. (#6779)
 - Pikanäppäintietoihin ei enää lisätä kahta välilyöntiä tietyissä UIA-säätimissä. (#6790)
 - Tietyt HIMS-pistenäyttöjen näppäinyhdistelmät (esim. välilyönti+piste 4) eivät enää lakkaa ajoittain toimimasta. (#3157)
 - Korjattu ongelma avattaessa sarjaporttia tietyn muun kuin englanninkielisissä järjestelmissä, mikä aiheutti joissakin tapauksissa sen, ettei pistenäyttöjen kytkeminen onnistunut. (#6845)
-- Pienennetty asetustiedoston vahingoittumisen todennäköisyyttä Windowsia sammutettaessa. Asetukset kirjoitetaan nyt väliaikaistiedostoon ennen varsinaisen asetustiedoston korvaamista. (#3165)
+- Asetustiedoston vahingoittuminen on epätodennäköisempää Windowsia sammutettaessa. Asetukset kirjoitetaan nyt väliaikaistiedostoon ennen varsinaisen asetustiedoston korvaamista. (#3165)
 - Kun lue nykyinen rivi -komento suoritetaan kaksi kertaa nopeasti peräkkäin rivin tavaamiseksi, merkit tavataan nyt asianmukaista kieltä käyttäen. (#6726)
 - Riveittäin liikkuminen on nyt jopa kolme kertaa nopeampaa Microsoft Edgessä Windows 10 Creators -päivityksessä. (#6994)
 - NVDA ei enää ilmoita "Web Runtime -ryhmä", kun kohdistus siirretään Microsoft Edge -dokumentteihin Windows 10 Creators -päivityksessä. (#6948)
+- Kaikkia SecureCRT:n nykyisiä versioita tuetaan. (#6302)
+- Tietyt PDF-dokumentit (erityisesti tyhjiä ActualText-attribuutteja sisältävät) eivät enää kaada Adobe Acrobat Readeria. (#7021, #7034)
+- Vuorovaikutteisia taulukoita (ARIA-ruudukoita) ei enää ohiteta siirryttäessä taulukoihin T:llä ja Shift+T:llä selaustilassa Microsoft Edgessä. (#6977)
+- Shift+Homen painaminen selaustilassa peruu nyt odotetusti valinnan rivin alkuun saakka, kun tekstiä on ensin valittu rivin loppua kohti. (#5746)
+- Koko tekstin valitseminen selaustilassa valitse kaikki -komennolla (Ctrl+A) ei enää epäonnistu, jos kohdistin ei ole tekstin alussa. (#6909)
+- Korjattu muita harvinaisia selaustilassa ilmenneitä tekstinvalitsemisongelmia. (#7131)
 
 
 == Muutokset kehittäjille (englanniksi) ==
@@ -43,11 +50,11 @@
  - Subclasses no longer need to normalize identifiers before returning them from this property.
  - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
 - The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
-- Deprecated code removed:
+- Removed some deprecated code:
  - `speech.REASON_*` constants, `controlTypes.REASON_*` should be used instead. (#6846)
  - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
- - `config.save`. (#6846)
+ - `config.save`: `config.conf.save` should be used instead. (#6846, #667)
 - The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
 - There is now a unit testing framework for NVDA. (#7026)
  - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.

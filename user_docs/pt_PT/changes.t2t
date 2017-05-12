@@ -6,6 +6,12 @@
 Tradução de Rui Fontes
 
 = 2017.2 =
+Os destaques desta versão são:
+- Suporte total à diminuição de volume no Windows 10 Creators Update;
+- Correcções diversas a problemas de selecção em páginas Web, no modo de navegação, incluindo Seleccionar tudo;
+- Melhorias significativas no suporte ao Microsoft Edge;
+- Melhoramentos no suporte a páginas Web, tais como indicação de elementos marcados como atual (usando aria-current).
+-
 
 == Novas Funcionalidades ==
 - Informações sobre as linhas de grelha das células passam a poder ser anunciadas no Microsoft Excel, usando NVDA + f. (#3044)
@@ -14,6 +20,7 @@ Tradução de Rui Fontes
 - Adicionado suporte à Calculadora do Windows 10 Enterprise LTSB (Long-Term Servicing Branch) e Server. (#6914)
 - Ao executar, três vezes rapidamente, o comando "Anunciar linha do objecto de navegação, Insert+8 do numérico, a linha é soletrada com descrição dos caracteres. (#6893)
 - Novo idioma: Birmanês.
+- Os caracteres Unicode Seta acima e abaixo e símbolos de fracções passam a ser anunciados correctamente. (#3805)
 
 
 == Alterações ==
@@ -36,6 +43,12 @@ Tradução de Rui Fontes
 - Ao pressionar duas vezes o comando para ler a linha actual, a soletração já é feita usando o idioma correcto. (#6726)
 - Navegar por linha no Microsoft Edge é agora até três vezes mais rápidono Windows 10 Creators Update. (#6994)
 - O NVDA já não anuncia "Web Runtime grouping" ao focar documentos do Microsoft Edge no Windows 10 Creators Update (#6948)
+- Todas as versões do SecureCRT passam a ser suportadas. (#6302)
+- O Adobe Acrobat Reader já não cracha em certos documentos PDF ( mais concretamente nos que contém o atributo ActualText vazio). (#7021, #7034)
+- No Microsoft Edge, em modo de navegação, as tabelas interactivas (ARIA grids) já não são ignoradas ao navegar para tabelas com "T" e "shift+T". (#6977)
+- No modo de navegação, pressionando "Shift+Home" após ter seleccionado para a frente, agora desselecciona até ao princípio da linha como seria de esperar. (#5746)
+- No modo de navegação, pressionando Control+T (para seleccionar tudo) já não falha quando o cursor não está no início do texto. (#6909)
+- Corrigidos outros raros problemas em modo de navegação. (#7131)
 
 
 == Alterações para desenvolvedores ==

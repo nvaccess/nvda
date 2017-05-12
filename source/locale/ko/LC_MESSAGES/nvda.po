@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-31 00:10+1000\n"
-"PO-Revision-Date: 2017-03-31 15:47+0900\n"
+"POT-Creation-Date: 2017-05-08 16:33+1000\n"
+"PO-Revision-Date: 2017-05-09 11:27+0900\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -2335,6 +2335,11 @@ msgstr "선택 안됨"
 msgid "not checked"
 msgstr "해제됨"
 
+#. Translators: This is presented when a button is not pressed.
+#, fuzzy
+msgid "not pressed"
+msgstr "눌림"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "현재"
@@ -2536,9 +2541,11 @@ msgstr "현재 사용중인 프로그램에서 NVDA 사용여부를 전환합니
 # Translation reads, "pressing once will announce the current line under
 # cursor; pressing twice will spell the text of the current line."
 #. Translators: Input help mode message for report current line command.
+#, fuzzy
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
 "한번 누르면 커서가 위치한 줄을 읽어주고, 두번 누르면 줄에 있는 문자열의 철자"
 "를 읽어줍니다. "
@@ -4395,9 +4402,8 @@ msgid "default style"
 msgstr "default style"
 
 #. Translators: Indicates that cell does not have border lines.
-#, fuzzy
 msgid "no border lines"
-msgstr "및줄 없음"
+msgstr "테두리 없음"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -7143,13 +7149,12 @@ msgstr "스타일"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
 msgid "Both Colors and Styles"
-msgstr ""
+msgstr "색상 및 스타일"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-#, fuzzy
 msgid "Cell borders:"
-msgstr "표 셀 위치 (&O)"
+msgstr "셀 테두리"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7745,30 +7750,27 @@ msgstr "{firstAddress} {firstContent} 에서 {lastAddress} {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
-msgstr ""
+msgstr "위쪽 테두리"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "bottom edge"
-msgstr ""
+msgstr "아래쪽 테두리"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "left edge"
-msgstr "왼쪽 들여 쓰기 활성"
+msgstr "왼쪽 테두리"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "right edge"
-msgstr "오른쪽 들여 쓰기 활성"
+msgstr "오른쪽 테두리"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "up-right diagonal line"
-msgstr "가는 실선 대각선 줄"
+msgstr "상향 대각선"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "down-right diagonal line"
-msgstr ""
+msgstr "하향 대각선"
 
 #. Translators: border positions in Microsoft Excel.
 #, fuzzy
@@ -7786,24 +7788,23 @@ msgstr "컨텐츠 정보"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dashed"
-msgstr ""
+msgstr "파선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dash dot"
-msgstr ""
+msgstr "일점 쇄선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dash dot dot"
-msgstr ""
+msgstr "이점 쇄선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dotted"
-msgstr ""
+msgstr "굵은 점선"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "double"
-msgstr "2줄"
+msgstr "이중"
 
 #. Translators: border styles in Microsoft Excel.
 #, fuzzy
@@ -7812,67 +7813,66 @@ msgstr "space with dot"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
-msgstr ""
+msgstr "점선"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "thin"
-msgstr "없음"
+msgstr "가는 실선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium"
-msgstr ""
+msgstr "실선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thick"
-msgstr ""
+msgstr "굵은 실선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dash dot dot"
-msgstr ""
+msgstr "중간 굵기 이점 쇄선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dash dot"
-msgstr ""
+msgstr "중간 굵기 일점 쇄선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dashed"
-msgstr ""
+msgstr "중간 굵기 파선"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{weight} {style}"
-msgstr ""
+msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{color} {desc}"
-msgstr "{color}"
+msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} surrounding border"
-msgstr ""
+msgstr "{desc} 주변 테두리"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} top and bottom edges"
-msgstr ""
+msgstr "{desc} 위쪽 및 아래쪽 테두리"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} left and right edges"
-msgstr ""
+msgstr "{desc} 왼쪽 및 오른쪽 테두리"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
-msgstr ""
+msgstr "{desc} 상향 및 하향 대각선"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} {position}"
-msgstr ""
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be

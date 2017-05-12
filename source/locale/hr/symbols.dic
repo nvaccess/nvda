@@ -22,7 +22,7 @@ symbols:
 ; phrase ending	točka zarez	most	always
 : phrase ending	dvotočka	most	always
 decimal point		none	always
-in-word '	izostavnik	all	norep
+in-word '	apostrof	all	norep
 
 # Whitespace
 \0	prazno	char
@@ -45,7 +45,7 @@ $	dolar	some
 ₹	Rupija	some	norep
 %	posto	some
 &	trgovačko i	some
-'	izostavnik	all
+'	apostrof	all
 (	otvorena zagrada	most	always
 )	zatvorena zagrada	most	always
 *	zvjezdica	most
@@ -105,7 +105,9 @@ _	podcrtano	most
 ×	puta	most
 ÷	podijeljeno	most
 ←	lijeva strelica	some
+↑	strelica gore	some
 →	desna strelica	some
+↓	strelica dolje	some
 ✓	provjera	some
 #Mathematical Operators U+2200 to U+220F
 ∀	Za svaki	none
@@ -152,3 +154,19 @@ _	podcrtano	most
 ⊃	Nadskup	none
 ⊆	Podskup	none
 ⊇	Nadskup	none
+# Vulgar Fractions U+2150 to U+215E
+⅐	jedna sedmina	none
+⅑	jedna devetina	none
+⅒	jedna desetina	none
+⅓	jedna trećina	none
+⅔	dvije trećine	none
+⅕	jedna petina	none
+⅖	dvije petine	none
+⅗	tri petine	none
+⅘	četiri petine	none
++⅙	jedna šestina	none
++⅚	pet šestina	none
+⅛	jedna osmina	none
+⅜	tri osmine	none
+⅝	pet osmina	none
+⅞	sedam osmina	none
