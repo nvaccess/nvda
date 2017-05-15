@@ -21,14 +21,31 @@ XML_ESCAPES = {
 	0x26: u"&amp;", # &
 	0x22: u"&quot;", # "
 }
+
 # Regular expression to replace invalid XML characters.
 # Based on http://stackoverflow.com/a/22273639
-RE_INVALID_XML_CHARS = re.compile(u"[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFDD0-\uFDDF\uFFFE-\uFFFF]"
-	# Leading Unicode surrogate is invalid if not followed by trailing surrogate.
-	u"|(?:[\uD800-\uDBFF](?![\uDC00-\uDFFF]))"
-	# Trailing Unicode surrogate is invalid if not followed by leading surrogate.
-	u"|(?<![\uD800-\uDBFF])(?:[\uDC00-\uDFFF])")
-# The Unicode replacement character.
+def _buildInvalidXmlRegexp():
+	# Ranges of invalid characters.
+	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
+	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
+	rangeExprs = [u"%s-%s" % (unichr(start), unichr(end))
+		for start, end in ranges]
+	leadingSurrogate = u"[\uD800-\uDBFF]"
+	trailingSurrogate = u"[\uDC00-\uDFFF]"
+	return re.compile((
+			# These ranges of characters are invalid.
+			u"[{ranges}]"
+			# Leading Unicode surrogate is invalid if not followed by trailing surrogate.
+			u"|{leading}(?!{trailing})"
+			# Trailing surrogate is invalid if not preceded by a leading surrogate.
+			u"|(?<!{leading}){trailing}"
+		).format(
+			ranges="".join(rangeExprs),
+			leading=leadingSurrogate,
+			trailing=trailingSurrogate))
+
+RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
+# The Unicode replacement character. See https://en.wikipedia.org/wiki/Specials_(Unicode_block)#Replacement_character
 REPLACEMENT_CHAR = u"\uFFFD"
 
 def toXmlLang(nvdaLang):

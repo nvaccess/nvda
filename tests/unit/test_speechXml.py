@@ -29,7 +29,7 @@ class TestEscapeXml(unittest.TestCase):
 		# For each invalid range, test the start, start + 1 and the end.
 		inp = u"\x00\x01\x08\x0B\x0C\x0E\x0F\x1F\x7F\x80\x84\x86\x87\x9F\uFDD0\uFDD1\uFDDF\uFFFE\uFFFF"
 		out = speechXml._escapeXml(inp)
-		# The output should be all Unicode replacement characters, one per invalid input character.
+		# Expected output is that each input character is replaced with a Unicode replacement character.
 		self.assertEqual(out, len(inp) * REPLACEMENT_CHAR)
 
 	def test_validSurrogate(self):
