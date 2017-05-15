@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/window/_msOfficeChartConstants.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2014-2015 James Teh, Michael Curren, NV Access Limited
+#Copyright (C) 2014-2017 James Teh, Michael Curren, NV Access Limited, NVDA India
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,7 +17,7 @@ import inputCore
 import re
 from logHandler import log
 
-#This file contains chart constants common to Chart Object in MS Word and MS Excel.
+#This file contains chart constants common to Chart Object for Microsoft Office.
 
 #definitions 
 xlListSeparator = 5
@@ -57,7 +57,7 @@ xlPivotChartFieldButton = 31
 xlPivotChartDropZone = 32
 XlChartItem = ctypes.c_int # enum
 
-# Chart types in Microsoft Excel.
+# Chart types in Microsoft Office.
 xl3DArea = -4098
 xl3DAreaStacked    = 78
 xl3DAreaStacked100 = 79
@@ -134,223 +134,223 @@ xlXYScatterSmoothNoMarkers = 73
 
 # Dictionary for the Description of chart types.
 chartTypeDict = {
-    # Translators: A type of chart in Microsoft Excel. 
+    # Translators: A type of chart in Microsoft Office. 
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DArea : _( "3D Area" ),
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DAreaStacked : _( "3D Stacked Area" ),
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DAreaStacked100 : _( "100 percent Stacked Area" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DBarClustered : _( "3D Clustered Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DBarStacked : _( "3D Stacked Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DBarStacked100 : _( "3D 100 percent Stacked Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DColumn : _( "3D Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DColumnClustered : _( "3D Clustered Column" ),
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DColumnStacked : _( "3D Stacked Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DColumnStacked100 : _( "3D 100 percent Stacked Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DLine : _( "3D Line" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DPie : _( "3D Pie" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xl3DPieExploded : _( "Exploded 3D Pie" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlArea : _( "Area" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlAreaStacked : _( "Stacked Area" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlAreaStacked100 : _( "100 percent Stacked Area" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlBarClustered : _( "Clustered Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlBarOfPie : _( "Bar of Pie" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlBarStacked : _( "Stacked Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlBarStacked100 : _( "100 percent Stacked Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlBubble : _( "Bubble" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlBubble3DEffect : _( "Bubble with 3D effects" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlColumnClustered : _( "Clustered Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlColumnStacked : _( "Stacked Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlColumnStacked100 : _( "100 percent Stacked Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlConeBarClustered : _( "Clustered Cone Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlConeBarStacked : _( "Stacked Cone Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlConeBarStacked100 : _( "100 percent Stacked Cone Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlConeCol : _( "3D Cone Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlConeColClustered : _( "Clustered Cone Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlConeColStacked : _( "Stacked Cone Column" ),
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlConeColStacked100 : _( "100 percent Stacked Cone Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlCylinderBarClustered : _( "Clustered Cylinder Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlCylinderBarStacked : _( "Stacked Cylinder Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlCylinderBarStacked100 : _( "100 percent Stacked Cylinder Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlCylinderCol : _( "3D Cylinder Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlCylinderColClustered : _( "Clustered Cone Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlCylinderColStacked : _( "Stacked Cone Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlCylinderColStacked100 : _( "100 percent Stacked Cylinder Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlDoughnut : _( "Doughnut" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlDoughnutExploded : _( "Exploded Doughnut" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlLine : _( "Line" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlLineMarkers : _( "Line with Markers" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlLineMarkersStacked : _( "Stacked Line with Markers" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlLineMarkersStacked100 : _( "100 percent Stacked Line with Markers" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlLineStacked : _( "Stacked Line" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlLineStacked100 : _( "100 percent Stacked Line" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlPie : _( "Pie" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlPieExploded : _( "Exploded Pie" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlPieOfPie : _( "Pie of Pie" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlPyramidBarClustered : _( "Clustered Pyramid Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlPyramidBarStacked : _( "Stacked Pyramid Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlPyramidBarStacked100 : _( "100 percent Stacked Pyramid Bar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlPyramidCol : _( "3D Pyramid Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlPyramidColClustered : _( "Clustered Pyramid Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlPyramidColStacked : _( "Stacked Pyramid Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
     xlPyramidColStacked100 : _( "100 percent Stacked Pyramid Column" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlRadar : _( "Radar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlRadarFilled : _( "Filled Radar" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlRadarMarkers : _( "Radar with Data Markers" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlStockHLC : _( "High-Low-Close" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlStockOHLC : _( "Open-High-Low-Close" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlStockVHLC : _( "Volume-High-Low-Close" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlStockVOHLC : _( "Volume-Open-High-Low-Close" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlSurface : _( "3D Surface" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlSurfaceTopView : _( "Surface (Top View)" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlSurfaceTopViewWireframe : _( "Surface (Top View wireframe)" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlSurfaceWireframe : _( "3D Surface (wireframe)" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlXYScatter : _( "Scatter" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlXYScatterLines : _( "Scatter with Lines" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlXYScatterLinesNoMarkers : _( "Scatter with Lines and No Data Markers" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlXYScatterSmooth : _( "Scatter with Smoothed Lines" ) ,
-    # Translators: A type of chart in Microsoft Excel.
+    # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
     xlXYScatterSmoothNoMarkers : _( "Scatter with Smoothed Lines and No Data Markers")
 }
@@ -419,47 +419,47 @@ class OfficeChartElementBase(Window):
 				ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.officeChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
 
 	ELEMENT_IDS = {
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlDisplayUnitLabel:  _("Display Unit Label"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlMajorGridlines:  _("Major Gridlines"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlMinorGridlines: _("Minor Gridlines"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlPivotChartDropZone: _("Pivot Chart Drop Zone"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlPivotChartFieldButton: _("Pivot Chart Field Button"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlDownBars: _("Down Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlDropLines: _("Drop Lines"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlHiLoLines:  _("Hi Lo Lines"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlRadarAxisLabels: _("Radar Axis Labels"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlSeriesLines: _("Series Lines"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlUpBars: _("Up Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlCorners: _("Corners"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlDataTable: _("Data Table"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlFloor:  _("Floor"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlNothing: _("Nothing"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlWalls: _("Walls"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlDataLabel: _("Data Label"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlErrorBars: _("Error Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlXErrorBars: _("X Error Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlYErrorBars: _("Y Error Bars"),
-		# Translators: A type of element in a Microsoft Excel chart.
+		# Translators: A type of element in a Microsoft Office chart.
 		xlShape: _("Shape"),
 	}
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
@@ -531,7 +531,7 @@ class OfficeChart(OfficeChartElementList):
 			for i in xrange(seriesCount):
 				self.addElement( OfficeChartElementSeries(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject , elementID = xlSeries , arg1 = i +1 ) , self) 
 
-		self.addElement( OfficeChartElement(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject ) , self )
+		self.addElement( OfficeChartElementCollection(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject ) , self )
 		try:
 			self.officeChartObject.Select()
 		except:
@@ -570,22 +570,6 @@ class OfficeChart(OfficeChartElementList):
 			text +=_("No Series defined.")
 		return text
 
-	def getChartSegment(self):
-		chartType = self.officeChartObject.ChartType
-		if chartType in (xl3DPie, xl3DPieExploded, xlPie, xlPieExploded, xlPieOfPie):
-			# Translators: A slice in a pie chart.
-			text=_("slice")
-		elif chartType in (xl3DColumn, xl3DColumnClustered, xl3DColumnStacked, xl3DColumnStacked100, xlColumnClustered, xlColumnStacked100, xlColumnStacked):
-			# Translators: A column in a column chart.
-			text=pgettext('chart','column')
-		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
-			# Translators: A data point in a line chart.
-			text=_("data point")
-		else:
-			# Translators: A segment of a chart for charts which don't have a specific name for segments.
-			text=_("item")
-		return text
-
 	def script_activatePosition(self,gesture):
 		# Toggle browse mode pass-through.
 		self.passThrough = True
@@ -609,13 +593,13 @@ class OfficeChart(OfficeChartElementList):
 				"kb:escape": "disablePassThrough",
 	}
 
-class OfficeChartElement(OfficeChartElementList):
+class OfficeChartElementCollection(OfficeChartElementList):
 
 	role=controlTypes.ROLE_CHARTELEMENT
 	description=None
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super(OfficeChartElement,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super( OfficeChartElementCollection ,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 		if officeChartObject.HasTitle:
 			self.addElement(OfficeChartElementChartTitle(windowHandle = windowHandle, officeChartObject = officeChartObject ) , self )
 
@@ -813,7 +797,7 @@ class OfficeChartElementAxisTitle( OfficeChartElementAxis ):
 		super( OfficeChartElementAxisTitle , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		# Translators: Indicates a chart axis title in Microsoft Excel.
+		# Translators: Indicates a chart axis title in Microsoft Office.
 		axisTitle = super(OfficeChartElementAxisTitle , self)._getChartElementText(ElementID , arg1 , arg2 )
 		if self.officeChartObject.HasAxis( arg2 , arg1 ) and self.officeChartObject.Axes( arg2 , arg1 ).HasTitle:
 			axisTitle += _(" title: {axisTitle}").format( axisTitle = self.officeChartObject.Axes(self.axisType, self.axisGroup).AxisTitle.Text)
@@ -872,10 +856,10 @@ class OfficeChartElementChartTitle( OfficeChartElementBase):
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if self.officeChartObject.HasTitle:
-			# Translators: Details about a chart title in Microsoft Excel.
+			# Translators: Details about a chart title in Microsoft Office.
 			return _( "Chart title: {chartTitle}").format ( chartTitle = self.officeChartObject.ChartTitle.Text )
 		else:
-				# Translators: Indicates an untitled chart in Microsoft Excel.
+				# Translators: Indicates an untitled chart in Microsoft Office.
 			return _( "Untitled chart" )
 
 	def select(self):
@@ -888,10 +872,10 @@ class OfficeChartElementChartArea( OfficeChartElementBase):
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if reportExtraInfo:
-			# Translators: Details about the chart area in a Microsoft Excel chart.
+			# Translators: Details about the chart area in a Microsoft Office chart.
 			return _( "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: {chartAreaLeft}").format ( chartAreaHeight = self.officeChartObject.ChartArea.Height , chartAreaWidth = self.officeChartObject.ChartArea.Width , chartAreaTop = self.officeChartObject.ChartArea.Top , chartAreaLeft = self.officeChartObject.ChartArea.Left)
 		else:
-			# Translators: Indicates the chart area of a Microsoft Excel chart.
+			# Translators: Indicates the chart area of a Microsoft Office chart.
 			return _( "Chart area ")
 
 	def select(self):
@@ -905,10 +889,10 @@ class OfficeChartElementPlotArea( OfficeChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if reportExtraInfo:
 			# useing {:.0f} to remove fractions
-			# Translators: Details about the plot area of a Microsoft Excel chart.
+			# Translators: Details about the plot area of a Microsoft Office chart.
 			return _( "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}").format ( plotAreaInsideHeight = self.officeChartObject.PlotArea.InsideHeight , plotAreaInsideWidth = self.officeChartObject.PlotArea.InsideWidth , plotAreaInsideTop = self.officeChartObject.PlotArea.InsideTop , plotAreaInsideLeft = self.officeChartObject.PlotArea.InsideLeft )
 		else:
-			# Translators: Indicates the plot area of a Microsoft Excel chart.
+			# Translators: Indicates the plot area of a Microsoft Office chart.
 			return _( "Plot area " )
 
 	def select(self):
@@ -936,7 +920,7 @@ class OfficeChartElementLegendEntry( OfficeChartElementBase):
 		super( OfficeChartElementLegendEntry , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		# Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+		# Translators: Details about a legend entry for a series in a Microsoft Office chart.
 		# For example, this might report "Legend entry for series Temperature 1 of 2"
 		if self.eventDriven:
 			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count ) 
