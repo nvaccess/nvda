@@ -9,7 +9,75 @@
 
 import unittest
 import speechXml
+from speechXml import REPLACEMENT_CHAR
 import speech
+
+class TestEscapeXml(unittest.TestCase):
+	"""Test the _escapeXml function.
+	"""
+
+	def test_simpleText(self):
+		inp = "Testing 1 2 3."
+		out = speechXml._escapeXml(inp)
+		self.assertEqual(inp, out)
+
+	def test_charEntities(self):
+		out = speechXml._escapeXml('<>"&')
+		self.assertEqual(out, "&lt;&gt;&quot;&amp;")
+
+	def test_invalidChars(self):
+		# For each invalid range, test the start, start + 1 and the end.
+		inp = u"\x00\x01\x08\x0B\x0C\x0E\x0F\x1F\x7F\x80\x84\x86\x87\x9F\uFDD0\uFDD1\uFDDF\uFFFE\uFFFF"
+		out = speechXml._escapeXml(inp)
+		# The output should be all Unicode replacement characters, one per invalid input character.
+		self.assertEqual(out, len(inp) * REPLACEMENT_CHAR)
+
+	def test_validSurrogate(self):
+		inp = u"\uD83D\uDE0A" # Smiling face with smiling eyes in UTF-16.
+		out = speechXml._escapeXml(inp)
+		self.assertEqual(inp, out)
+
+	def test_leadingSurrogateAlone(self):
+		"""Test a leading surrogate by itself, which is invalid.
+		"""
+		out = speechXml._escapeXml(u"\uD83D")
+		self.assertEqual(out, REPLACEMENT_CHAR)
+
+	def test_trailingSurrogateAlone(self):
+		"""Test a trailing surrogate by itself, which is invalid.
+		"""
+		out = speechXml._escapeXml(u"\uDE0A")
+		self.assertEqual(out, REPLACEMENT_CHAR)
+
+	def test_trailingThenLeadingSurrogate(self):
+		"""Test a trailing Unicode surrogate followed by a leading surrogate, which is invalid.
+		"""
+		out = speechXml._escapeXml(u"\uDE0A\uD83D")
+		self.assertEqual(out, 2 * REPLACEMENT_CHAR)
+
+	def test_leadingThenLeadingSurrogate(self):
+		"""Test two leading Unicode surrogates, which is invalid.
+		"""
+		out = speechXml._escapeXml(u"\uD83D\uD83D")
+		self.assertEqual(out, 2 * REPLACEMENT_CHAR)
+
+	def test_trailingThenTrailingSurrogate(self):
+		"""Test two trailing Unicode surrogates, which is invalid.
+		"""
+		out = speechXml._escapeXml(u"\uDE0A\uDE0A")
+		self.assertEqual(out, 2 * REPLACEMENT_CHAR)
+
+	def test_leadingSurrogateThenNonSurrogate(self):
+		"""Test a leading surrogate followed by a non-surrogate character, which is invalid.
+		"""
+		out = speechXml._escapeXml(u"\uD83Dz")
+		self.assertEqual(out, REPLACEMENT_CHAR + u'z')
+
+	def test_trailingSurrogateThenNonSurrogate(self):
+		"""Test a trailing surrogate followed by a non-surrogate character, which is invalid.
+		"""
+		out = speechXml._escapeXml(u"\uDE0Az")
+		self.assertEqual(out, REPLACEMENT_CHAR + u'z')
 
 class TestXmlBalancer(unittest.TestCase):
 

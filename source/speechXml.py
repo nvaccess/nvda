@@ -11,6 +11,7 @@ L{SsmlConverter} is an implementation for conversion to SSML.
 """
 
 from collections import namedtuple, OrderedDict
+import re
 import speech
 from logHandler import log
 
@@ -20,6 +21,15 @@ XML_ESCAPES = {
 	0x26: u"&amp;", # &
 	0x22: u"&quot;", # "
 }
+# Regular expression to replace invalid XML characters.
+# Based on http://stackoverflow.com/a/22273639
+RE_INVALID_XML_CHARS = re.compile(u"[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFDD0-\uFDDF\uFFFE-\uFFFF]"
+	# Leading Unicode surrogate is invalid if not followed by trailing surrogate.
+	u"|(?:[\uD800-\uDBFF](?![\uDC00-\uDFFF]))"
+	# Trailing Unicode surrogate is invalid if not followed by leading surrogate.
+	u"|(?<![\uD800-\uDBFF])(?:[\uDC00-\uDFFF])")
+# The Unicode replacement character.
+REPLACEMENT_CHAR = u"\uFFFD"
 
 def toXmlLang(nvdaLang):
 	"""Convert an NVDA language to an XML language.
@@ -45,6 +55,11 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 #: That is, it will not enclose subsequent output.
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
 
+def _escapeXml(text):
+	text = unicode(text).translate(XML_ESCAPES)
+	text = RE_INVALID_XML_CHARS.sub(REPLACEMENT_CHAR, text)
+	return text
+
 class XmlBalancer(object):
 	"""Generates balanced XML given a set of commands.
 	NVDA speech sequences are linear, but XML is hierarchical, which makes conversion challenging.
@@ -68,14 +83,11 @@ class XmlBalancer(object):
 		#: A tag (and its attributes) which should directly enclose all text henceforth.
 		self._tagEnclosingText = (None, None)
 
-	def _escape(self, text):
-		return unicode(text).translate(XML_ESCAPES)
-
 	def _text(self, text):
 		tag, attrs = self._tagEnclosingText
 		if tag:
 			self._openTag(tag, attrs)
-		self._out.append(self._escape(text))
+		self._out.append(_escapeXml(text))
 		if tag:
 			self._closeTag(tag)
 
@@ -83,7 +95,7 @@ class XmlBalancer(object):
 		self._out.append("<%s" % tag)
 		for attr, val in attrs.iteritems():
 			self._out.append(' %s="' % attr)
-			self._out.append(self._escape(val))
+			self._out.append(_escapeXml(val))
 			self._out.append('"')
 		self._out.append("/>" if empty else ">")
 
