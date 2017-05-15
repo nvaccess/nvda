@@ -11,6 +11,7 @@ L{SsmlConverter} is an implementation for conversion to SSML.
 """
 
 from collections import namedtuple, OrderedDict
+import re
 import speech
 from logHandler import log
 
@@ -20,6 +21,32 @@ XML_ESCAPES = {
 	0x26: u"&amp;", # &
 	0x22: u"&quot;", # "
 }
+
+# Regular expression to replace invalid XML characters.
+# Based on http://stackoverflow.com/a/22273639
+def _buildInvalidXmlRegexp():
+	# Ranges of invalid characters.
+	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
+	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
+	rangeExprs = [u"%s-%s" % (unichr(start), unichr(end))
+		for start, end in ranges]
+	leadingSurrogate = u"[\uD800-\uDBFF]"
+	trailingSurrogate = u"[\uDC00-\uDFFF]"
+	return re.compile((
+			# These ranges of characters are invalid.
+			u"[{ranges}]"
+			# Leading Unicode surrogate is invalid if not followed by trailing surrogate.
+			u"|{leading}(?!{trailing})"
+			# Trailing surrogate is invalid if not preceded by a leading surrogate.
+			u"|(?<!{leading}){trailing}"
+		).format(
+			ranges="".join(rangeExprs),
+			leading=leadingSurrogate,
+			trailing=trailingSurrogate))
+
+RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
+# The Unicode replacement character. See https://en.wikipedia.org/wiki/Specials_(Unicode_block)#Replacement_character
+REPLACEMENT_CHAR = u"\uFFFD"
 
 def toXmlLang(nvdaLang):
 	"""Convert an NVDA language to an XML language.
@@ -45,6 +72,11 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 #: That is, it will not enclose subsequent output.
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
 
+def _escapeXml(text):
+	text = unicode(text).translate(XML_ESCAPES)
+	text = RE_INVALID_XML_CHARS.sub(REPLACEMENT_CHAR, text)
+	return text
+
 class XmlBalancer(object):
 	"""Generates balanced XML given a set of commands.
 	NVDA speech sequences are linear, but XML is hierarchical, which makes conversion challenging.
@@ -68,14 +100,11 @@ class XmlBalancer(object):
 		#: A tag (and its attributes) which should directly enclose all text henceforth.
 		self._tagEnclosingText = (None, None)
 
-	def _escape(self, text):
-		return unicode(text).translate(XML_ESCAPES)
-
 	def _text(self, text):
 		tag, attrs = self._tagEnclosingText
 		if tag:
 			self._openTag(tag, attrs)
-		self._out.append(self._escape(text))
+		self._out.append(_escapeXml(text))
 		if tag:
 			self._closeTag(tag)
 
@@ -83,7 +112,7 @@ class XmlBalancer(object):
 		self._out.append("<%s" % tag)
 		for attr, val in attrs.iteritems():
 			self._out.append(' %s="' % attr)
-			self._out.append(self._escape(val))
+			self._out.append(_escapeXml(val))
 			self._out.append('"')
 		self._out.append("/>" if empty else ">")
 
