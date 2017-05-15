@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #pragma once
 #define export __declspec(dllexport) 
 
-typedef int (*ocSpeech_Callback)(byte* data, int length, const char16* markers);
+typedef void (*ocSpeech_Callback)(byte* data, int length, const char16* markers);
 typedef struct {
 	Windows::Media::SpeechSynthesis::SpeechSynthesizer ^synth;
 	ocSpeech_Callback callback;
@@ -26,7 +26,7 @@ extern "C" {
 export OcSpeech* __stdcall ocSpeech_initialize();
 export void __stdcall ocSpeech_terminate(OcSpeech* instance);
 export void __stdcall ocSpeech_setCallback(OcSpeech* instance, ocSpeech_Callback fn);
-export int __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text);
+export void __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text);
 export BSTR __stdcall ocSpeech_getVoices(OcSpeech* instance);
 export const char16* __stdcall ocSpeech_getCurrentVoiceId(OcSpeech* instance);
 export void __stdcall ocSpeech_setVoice(OcSpeech* instance, int index);

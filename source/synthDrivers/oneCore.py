@@ -24,7 +24,7 @@ BYTES_PER_SEC = SAMPLES_PER_SEC * (BITS_PER_SAMPLE / 8)
 #: The number of 100-nanosecond units in 1 second.
 HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
 WAV_HEADER_LEN = 44
-ocSpeech_Callback = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
+ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
 DLL_FILE = ur"lib\nvdaHelperLocalWin10.dll"
 
 def bstrReturn(address):
@@ -161,6 +161,11 @@ class SynthDriver(SynthDriver):
 		self._isProcessing = False
 
 	def _callback(self, bytes, len, markers):
+		if len == 0:
+			# The C++ code will log an error with details.
+			log.debugWarning("ocSpeech_speak failed!")
+			self._processQueue()
+			return
 		# This gets called in a background thread.
 		# Strip the wav header.
 		assert len > WAV_HEADER_LEN
@@ -200,7 +205,6 @@ class SynthDriver(SynthDriver):
 				self.lastIndex = prevMarker
 			log.debug("Done pushing audio")
 		self._processQueue()
-		return 0
 
 	def _getAvailableVoices(self, onlyValid=True):
 		voices = OrderedDict()

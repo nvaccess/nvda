@@ -59,14 +59,16 @@ void __stdcall ocSpeech_setCallback(OcSpeech* instance, ocSpeech_Callback fn) {
 	instance->callback = fn;
 }
 
-int __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text) {
+void __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text) {
 	String^ textStr = ref new String(text);
 	auto markersStr = make_shared<wstring>();
 	task<SpeechSynthesisStream ^>  speakTask;
 	try {
 		speakTask = create_task(instance->synth->SynthesizeSsmlToStreamAsync(textStr));
 	} catch (Platform::Exception ^e) {
-		return -1;
+		LOG_ERROR(L"Error " << e->HResult << L": " << e->Message->Data());
+		instance->callback(NULL, 0, NULL);
+		return;
 	}
 	speakTask.then([markersStr] (SpeechSynthesisStream^ speechStream) {
 		// speechStream->Size is 64 bit, but Buffer can only take 32 bit.
@@ -89,15 +91,15 @@ int __stdcall ocSpeech_speak(OcSpeech* instance, char16 *text) {
 		// Pass it to the callback.
 		byte* bytes = getBytes(buffer);
 		instance->callback(bytes, buffer->Length, markersStr->c_str());
-	}).then([] (task<void> previous) {
+	}).then([instance] (task<void> previous) {
 		// Catch any unhandled exceptions that occurred during these tasks.
 		try {
 			previous.get();
 		} catch (Platform::Exception^ e) {
+			LOG_ERROR(L"Error " << e->HResult << L": " << e->Message->Data());
+			instance->callback(NULL, 0, NULL);
 		}
 	});
-
-	return 0;
 }
 
 // We use BSTR because we need the string to stay around until the caller is done with it
