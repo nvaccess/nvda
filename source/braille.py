@@ -1534,7 +1534,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= config.conf["braille"]["cursorShape"]
+			if self.tether == self.TETHER_FOCUS:
+				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeFocus"]
+			else:
+				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeReview"]
 		self._writeCells(cells)
 
 	def _blink(self):

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -11,7 +11,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 1
+latestSchemaVersion = 2
 
 #: The configuration specification string
 #: @type: String
@@ -56,7 +56,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	showCursor = boolean(default=true)
 	cursorBlink = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=200,max=2000)
-	cursorShape = integer(default=192,min=1,max=255)
+	cursorShapeFocus = integer(default=192,min=1,max=255)
+	cursorShapeReview = integer(default=128,min=1,max=255)
 	noMessageTimeout = boolean(default=false)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")

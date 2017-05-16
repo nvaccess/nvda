@@ -1738,13 +1738,17 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Braille cursor is turned off"))
 			return
 		shapes = [s[0] for s in braille.CURSOR_SHAPES]
+		if braille.handler.tether == braille.handler.TETHER_FOCUS:
+			cursorShape = "cursorShapeFocus"
+		else:
+			cursorShape = "cursorShapeReview"
 		try:
-			index = shapes.index(config.conf["braille"]["cursorShape"]) + 1
+			index = shapes.index(config.conf["braille"][cursorShape]) + 1
 		except:
 			index = 1
 		if index >= len(braille.CURSOR_SHAPES):
 			index = 0
-		config.conf["braille"]["cursorShape"] = braille.CURSOR_SHAPES[index][0]
+		config.conf["braille"][cursorShape] = braille.CURSOR_SHAPES[index][0]
 		shapeMsg = braille.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)

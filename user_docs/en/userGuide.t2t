@@ -1098,13 +1098,18 @@ It applies to the system caret and review cursor, but not to the selection indic
 ==== Blink Cursor ====
 This option allows the braille cursor to blink.
 If blinking is turned off, the braille cursor will constantly be in the "up" position.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 ==== Cursor Blink Rate (ms) ====
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
 
-==== Cursor Shape ====
-This option allows you to choose the shape (dot pattern) of the braille cursor.
-The selection indicator is not affected by this option.
+==== Cursor Shape for Focus ====
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to focus.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
+
+==== Cursor Shape for Review ====
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
