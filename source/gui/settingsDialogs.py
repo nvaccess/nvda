@@ -1573,18 +1573,30 @@ class BrailleSettingsDialog(SettingsDialog):
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue() :
 			self.cursorBlinkRateEdit.Disable()
 
-		# Translators: The label for a setting in braille settings to select the cursor shape.
-		cursorShapeLabelText = _("Cursor &shape:")
 		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
 		cursorShapeChoices = [s[1] for s in braille.CURSOR_SHAPES]
-		self.shapeList = sHelper.addLabeledControl(cursorShapeLabelText, wx.Choice, choices=cursorShapeChoices)
+
+		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
+		self.cursorShapeFocusList = sHelper.addLabeledControl(cursorShapeFocusLabelText, wx.Choice, choices=cursorShapeChoices)
 		try:
-			selection = self.cursorShapes.index(config.conf["braille"]["cursorShape"])
-			self.shapeList.SetSelection(selection)
+			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
+			self.cursorShapeFocusList.SetSelection(selection)
 		except:
 			pass
 		if not self.showCursorCheckBox.GetValue():
-			self.shapeList.Disable()
+			self.cursorShapeFocusList.Disable()
+
+		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+		cursorShapeReviewLabelText = _("Cursor shape for &review:")
+		self.cursorShapeReviewList = sHelper.addLabeledControl(cursorShapeReviewLabelText, wx.Choice, choices=cursorShapeChoices)
+		try:
+			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
+			self.cursorShapeReviewList.SetSelection(selection)
+		except:
+			pass
+		if not self.showCursorCheckBox.GetValue():
+			self.cursorReviewShapeList.Disable()
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message timeout (sec)")
@@ -1635,7 +1647,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
-		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
+		config.conf["braille"]["cursorShapeFocus"] = self.cursorShapes[self.cursorShapeFocusList.GetSelection()]
+		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
@@ -1670,7 +1683,8 @@ class BrailleSettingsDialog(SettingsDialog):
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked() and self.cursorBlinkCheckBox.GetValue())
-		self.shapeList.Enable(evt.IsChecked())
+		self.cursorShapeFocusList.Enable(evt.IsChecked())
+		self.cursorShapeReviewList.Enable(evt.IsChecked())
 
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
