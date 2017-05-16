@@ -3,23 +3,107 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.1 =
+= 2017.2 =
+Highlights of this release include full support for audio ducking in the Windows 10 Creators Update; fixes for several selection issues in browse mode, including problems with select all; significant improvements in Microsoft Edge support; and improvements on the web such as indication of elements marked as current (using aria-current).
 
 == New Features ==
-- In Microsoft Word the type of section break, and the section number can now be reported. This is enabled with the "report page numbers" option in the document formatting dialog. (#5946)
-- In Microsoft Word the text columns can now be reported. This is enabled with the "report page numbers" option in the document formatting dialog. (#5946)
-- Automatic language switching is now supported in Wordpad. (#6555)
-- The NVDA find command (NVDA+control+f) is now supported in browse mode for Microsoft Edge. (#6580)
-- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+- Cell border information can now be reported in Microsoft Excel by using NVDA+f. (#3044)
+- In web browsers, NVDA now indicates when an element has been marked as current (specifically, using the aria-current attribute). (#6358)
+- Automatic language switching is now supported in Microsoft Edge. (#6852)
+- Added support for Windows Calculator on Windows 10 Enterprise LTSB (Long-Term Servicing Branch) and Server. (#6914)
+- Performing the read current line command three times quickly spells the line with character descriptions. (#6893)
+- New language: Burmese.
+- Unicode up and down arrows and fraction symbols are now spoken appropriately. (#3805)
+
+
+== Changes ==
+- When navigating with simple review  in applications using UI Automation, more extraneous objects are now ignored, making navigation easier. (#6948, #6950)
 
 
 == Bug Fixes ==
-- Fix freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
-- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables, and therefore are no longer ignored. (#5927)
+- Web page menu items can now be activated while in browse mode. (#6735)
+- Pressing escape while the configuration profile "Confirm Deletion" dialog is active now dismisses the dialog. (#6851)
+- Fixed some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
+- Reporting of background color in screen review is now more accurate when  text was drawn with a transparent background. (#6467)
+- Improved support for control descriptions provided on web pages in Internet Explorer 11 (specifically, support for aria-describedby within iframes and when multiple IDs are provided). (#5784)
+- In the Windows 10 Creators Update, NVDA's audio ducking again works as in previous Windows releases; i.e. Duck with speech and sounds, always duck and no ducking are all available. (#6933)
+- NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
+- Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
+- Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
+- Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
+- Reduced the chance of the configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
+- When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
+- Navigating by line in Microsoft Edge is now up to three times faster in the Windows 10 Creators Update. (#6994)
+- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creators Update. (#6948)
+- All existing versions of SecureCRT are now supported. (#6302)
+- Adobe Acrobat Reader no longer crashes in certain PDF documents (specifically, those containing empty ActualText attributes). (#7021, #7034)
+- In browse mode in Microsoft Edge, interactive tables (ARIA grids) are no longer skipped when navigating to tables with t and shift+t. (#6977)
+- In browse mode, pressing shift+home after selecting forward now unselects to the beginning of the line as expected. (#5746)
+- In browse mode, select all (control+a) no longer fails to select all text if the caret is not at the start of the text. (#6909)
+- Fixed some other rare selection problems in browse mode. (#7131)
+
+
+== Changes for Developers ==
+- Commandline arguments are now processed with Python's argparse module, rather than optparse. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
+- The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
+ - Subclasses no longer need to normalize identifiers before returning them from this property.
+ - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
+- The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+- Removed some deprecated code:
+ - `speech.REASON_*` constants: `controlTypes.REASON_*` should be used instead. (#6846)
+ - `i18nName` for synth settings: `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`: `config.conf.save` should be used instead. (#6846, #667)
+- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- There is now a unit testing framework for NVDA. (#7026)
+ - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
+ - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
+
+
+= 2017.1 =
+Highlights of this release include reporting of sections and text columns in Microsoft Word; Support for reading, navigating and annotating books in Kindle for PC; and improved support for Microsoft Edge.
+
+== New Features ==
+- In Microsoft Word, the types of section breaks and section numbers can now be reported. This is enabled with the "Report page numbers" option in the Document Formatting dialog. (#5946)
+- In Microsoft Word, text columns can now be reported. This is enabled with the "Report page numbers" option in the document formatting dialog. (#5946)
+- Automatic language switching is now supported in WordPad. (#6555)
+- The NVDA find command (NVDA+control+f) is now supported in browse mode in Microsoft Edge. (#6580)
+- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+- When copying a sheet in Microsoft Excel, column and row headers are remembered. (#6628)
+- Support for reading and navigating books in Kindle for PC version 1.19, including access to links, footnotes, graphics, highlighted text and user notes. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638)
+- Browse mode table navigation is now supported in Microsoft Edge. (#6594)
+- In Microsoft Excel, the report review cursor location command (desktop: NVDA+numpadDelete, laptop: NVDA+delete) now reports the name of the worksheet and the cell location. (#6613)
+- Added an option to the exit dialog to restart with debug level logging. (#6689)
+
+
+== Changes ==
+- The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
+- A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
+- Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
+- Due to changes In the Windows 10 Creators Update, the "Always duck" mode is no longer available in NVDA's Audio ducking settings. It is still available on older windows 10 releases. (#6684)
+- Due to changes in the  Windows 10 Creators Update, the "Duck when outputting speech and sounds" mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume. These changes do not   affect older windows 10 releases. (#6684)
+
+
+== Bug Fixes ==
+- Fixed freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
+- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables and therefore are no longer ignored. (#5927)
 - When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
 - Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
-- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. 9#6216)
-- Reporting of cropped/overflowed text in Microsoft Excel cells should be now more accurate (#6472)
+- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. (#6216)
+- Reporting of cropped/overflowed text in Microsoft Excel cells should now be more accurate. (#6472)
+- NVDA now reports when a check box is read-only. (#6563)
+- The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
+- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+- NVDA will no longer announce "pane" when minimizing windows. (#6671)
+- Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
+- Mouse tracking now works across all screens on computers with multiple monitors. (#6598)
+- NVDA no longer becomes unusable after exiting Windows Media Player while focused on a slider control. (#5467)
+
+
+== Changes for Developers ==
+- Profiles and configuration files are now automatically upgraded to meet the requirements of schema modifications. If there is an error during upgrade, a notification is shown, the configuration is reset and the old configuration file is available in the NVDA log at 'Info' level. (#6470)
 
 
 = 2016.4 =

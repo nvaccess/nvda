@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -566,6 +566,8 @@ negativeStateLabels={
 	STATE_SELECTED:_("not selected"),
 	# Translators: This is presented when a checkbox is not checked.
 	STATE_CHECKED:_("not checked"),
+	# Translators: This is presented when a button is not pressed.
+	STATE_PRESSED:_("not pressed"),
 }
 
 silentRolesOnFocus={
@@ -615,6 +617,23 @@ REASON_ELEMENTSLIST="elementsList"
 REASON_ONLYCACHE="onlyCache"
 #}
 
+#: Text to use for 'current' values. These describe if an item is the current item 
+#: within a particular kind of selection.
+isCurrentLabels = {
+	# Translators: Presented when an item is marked as current in a collection of items
+	True:_("current"),
+	# Translators: Presented when a page item is marked as current in a collection of page items
+	"page":_("current page"),
+	# Translators: Presented when a step item is marked as current in a collection of step items
+	"step":_("current step"),
+	# Translators: Presented when a location item is marked as current in a collection of location items
+	"location":_("current location"),
+	# Translators: Presented when a date item is marked as current in a collection of date items
+	"date":_("current date"),
+	# Translators: Presented when a time item is marked as current in a collection of time items
+	"time":_("current time"),
+}
+
 def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates = positiveStates.copy()
 	# The user never cares about certain states.
@@ -648,7 +667,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(STATE_LINKED)
 		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
-	if role != ROLE_EDITABLETEXT:
+	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
 	if role == ROLE_CHECKBOX:
 		positiveStates.discard(STATE_PRESSED)

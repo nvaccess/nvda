@@ -1,0 +1,164 @@
+﻿#locale/en/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	dot	all	always
+! sentence ending	bang	all	always
+? sentence ending	question	all	always
+; phrase ending	semi	most	always
+: phrase ending	colon	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+negative number	minus	none	norep
+
+# Whitespace
+\0	blank	char	# null
+\t	tab
+\n	line feed	char
+\f	page break	none
+\r	carriage return	char
+ 	space	char
+ 	space	char	# no-break space
+
+# Standard punctuation/symbols
+!	bang	all
+"	quote	most
+\#	number	some
+$	dollar	all	norep
+£	pound	all	norep
+€	euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
+₹	Rupee	some	norep
+%	percent	some
+&	and	some
+'	tick	all
+(	left paren	most	always
+)	right paren	most	always
+*	star	some
++	plus	some
+,	comma	all	always
+-	dash	most
+.	dot	some
+/	slash	some
+:	colon	most	norep
+;	semi	most
+<	less	some
+>	greater	some
+=	equals	some
+?	question	all
+@	at	some
+[	left bracket	most
+]	right bracket	most
+\\	backslash	most
+^	caret	most
+_	line	most
+`	graav	most
+{	left brace	most
+}	right brace	most
+|	bar	most
+~	tilda	most
+
+# Other characters
+•	bullet	some
+…	dot dot dot	all	always
+...	dot dot dot	all	always
+	bullet	some
+“	left quote	most
+”	right quote	most
+‘	left tick	most
+’	right tick	most
+–	en dash	most	always
+—	em dash	most
+●	circle	most
+¨	diaeresis	most
+‎	left to right mark	char
+‏	right to left mark	char
+■	black square	some
+▪	black square	some
+◾	black square	some
+◦	white bullet	some
+➔	right arrow	some
+§	section	all
+°	degrees	some
+«	double left pointing angle bracket
+»	double right pointing angle bracket
+µ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	registered	some
+™	Trademark	some
+©	Copyright	some
+±	Plus or Minus	some
+×	times	some
+÷	divide by	some
+←	left arrow	some
+→	right arrow	some
+✓	check	some
+✔	check	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	For All 	none
+∁	Complement	none
+∂	Partial Derivative	none
+∃	There exists	none
+∄	There Does Not Exist	none
+∅	EMPTY SET	none
+∆	INCREMENT	none
+∇	NABLA	none
+∈	ELEMENT OF	none
+∉	NOT AN ELEMENT OF	none
+∊	SMALL ELEMENT OF	none
+∋	CONTAINS AS MEMBER	none
+∌	DOES NOT CONTAIN AS MEMBER	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	END OF PROOF	none
+∏	N-ARY PRODUCT	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ARY SUMMATION	none
+√	SQUARE ROOT	none
+∛	CUBE ROOT	none
+∜	FOURTH ROOT	none
+∝	PROPORTIONAL TO	none
+∞	INFINITY	none
+∟	RIGHT ANGLE	none
+∠	ANGLE	none
+∥	PARALLEL TO	none
+∦	NOT PARALLEL TO	none
+∧	LOGICAL AND	none
+∨	LOGICAL OR	none
+∩	INTERSECTION	none
+∪	UNION	none
+∫	INTEGRAL	none
+∴	THEREFORE	none
+∵	BECAUSE	none
+∶	RATIO	none
+∷	PROPORTION	none
+≤	LESS-THAN OR EQUAL TO	none
+≥	GREATER-THAN OR EQUAL TO	none
+⊂	SUBSET OF	none
+⊃	SUPERSET OF	none
+⊆	SUBSET OF OR EQUAL TO	none
+⊇	SUPERSET OF OR EQUAL TO	none

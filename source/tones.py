@@ -1,11 +1,12 @@
 #tones.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """Utilities to generate and play tones"""
 
+import atexit
 import nvwave
 import config
 import globalVars
@@ -18,6 +19,13 @@ try:
 	player = nvwave.WavePlayer(channels=2, samplesPerSec=int(SAMPLE_RATE), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
 except:
 	log.warning("Failed to initialize audio for tones")
+	player = None
+
+# When exiting, ensure player is deleted before modules get cleaned up.
+# Otherwise, WavePlayer.__del__ will fail with an exception.
+@atexit.register
+def _cleanup():
+	global player
 	player = None
 
 def beep(hz,length,left=50,right=50):

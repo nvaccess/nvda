@@ -23,7 +23,7 @@ Suas características mais notáveis incluem:
 - Suporte para diversas linhas braille, incluindo a entrada de braille para computador, no caso das linhas braille que possuam um teclado braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
 - Instalação com voz e fácil de usar;
-- Tradução para 47 idiomas;
+- Tradução para 50 idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superiores) ;
@@ -32,7 +32,7 @@ Suas características mais notáveis incluem:
 
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 45 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Catalão, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol, Espanhol Colombiano, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Irlandês, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Persa, Polonês, Português do Brasil, Português de Portugal, Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 50 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Aragonês, Birmanês, Búlgaro, Catalão, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol, Espanhol Colombiano, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Irlandês, Islandês, Italiano, Japonês, Kannada, Lituano, Nepalês, Noroeguês, Persa, Polonês, Português do Brasil, Português de Portugal, Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens da interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -282,7 +282,7 @@ Este leitor de telas fornece os seguintes comandos em relação ao cursor do sis
 %kc:beginInclude
 || Nome | Tecla de desktop | Tecla de laptop | Descrição |
 | Leitura contínua | NVDA+seta abaixo | NVDA+a | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
-| Ler linha atual | NVDA+seta acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha |
+| Ler linha atual | NVDA+seta acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
 | Ler texto atualmente selecionado | NVDA+Shift+seta acima | NVDA+shift+s | Lê qualquer texto selecionado atualmente |
 | Próxima Sentença | alt+seta abaixo | alt+seta abaixo | Move o cursor do sistema para a próxima sentença e a anuncia. (suportado apenas no Microsoft Word e Outlook) |
 | Sentença anterior | alt+seta acima | alt+seta acima | Move o cursor do sistema para a sentença anterior e a anuncia. (suportado apenas no Microsoft Word e Outlook) |
@@ -468,7 +468,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 | Abrir descrição longa | NVDA+d | Abre uma nova janela contendo a descrição longa  para o elemento sobre o qual você se encontra caso ele possua alguma. | 
 %kc:endInclude
 
-++ Navegação por Caractere ++
+++ Navegação com Caracteres ++
 Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um caractere para uma navegação rápida, as quais permitem saltar para determinados campos no documento.   
 Note que nem todos os comandos são suportados em todos os tipos de documento.
 
@@ -504,9 +504,9 @@ Para mover-se ao início ou final de elementos que contém outros, tais como lis
 %kc:endInclude
 
 Alguns aplicativos web, tais como o Gmail, Twitter e Facebook, usam caracteres individuuais como teclas de atalho.
-Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas teclas de cursor para ler no modo de navegação, você pode desabilitar temporariamente as teclas de navegação por caractere do NVDA.
+Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas teclas de cursor para ler no modo de navegação, você pode desabilitar temporariamente as teclas de navegação com caracteres do NVDA.
 %kc:beginInclude
-Para alternar a ativação das teclas de navegação por caractere no o documento atual, pressione NVDA+shift+espaço.
+Para alternar a ativação das teclas de navegação com caracteres no o documento atual, pressione NVDA+shift+espaço.
  %kc:endInclude
 
 
@@ -681,6 +681,49 @@ Para ser possível mover-se para células bloqueadas, alterne para o Modo de Nav
 | Anunciar Janela de comentários automáticos | control+shift+a | Anuncia qualquer comentário na janela de comentários automáticos. |
 | Anunciar notas para tradutores | control+shift+a | Anuncia quaisquer notas para tradutores. |
 %kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+When in a conversation:
+|| Nome | Tecla | Descrição |
+| Rever mensagem | NVDA+control+1-0 | Anuncia e move o cursor de exploração para uma mensagem recente, dependendo do número pressionado, isto é, NVDA+control+2 lê a segunda mensagem mais recente. |
+%kc:endInclude
+
+++ Kindle para PC ++
+O NVDA suporta a leitura e a navegação em books no Kindle da Amazon para PC.
+Essa funcionalidade está disponível apenas em livros da Kindle designados com "Screen Reader: Supported" que você pode checar na página de detalhes do livro.
+
+O modo de navegação é usado para ler esses livros.
+ Ele é ativado automaticamente quando você abre um livro ou põe o foco na área do livro.
+A página será virada automaticamente como é apropriado quando você mover o cursor ou usar o comando de leitura contínua.
+%kc:beginInclude
+É possível virar manualmente para a próxima página com a tecla pageDown e para a página anterior com a tecla pageUp.
+%kc:endInclude
+
+A navegação com caracteres é suportada para links e gráficos, mas apenas dentro da página atual.
+A navegação por links também inclui nodas de rodapé.
+
++++ Seleção de Texto +++
+O Kindle lhe permite executar várias funções em textos selecionados, incluindo obter uma definição de dicionário, adicionar notas e destaques, copiar o texto para a área de transferência e pesquisar na web.
+Para fazer isso, primeiro selecione o texto como você normalmente faria no modo de navegação, isto é, usando shift e as teclas de  cursor.
+%kc:beginInclude
+Uma vez selecionado o texto, pressione a tecla  aplicação ou shift+f10 para exibir as opções disponíveis para trabalhar com a seleção.
+%kc:endInclude
+Caso faça isso sem haver selecionado texto, as opções serão mostradas para a palavra sob o cursor.
+
++++ Notas do Usuário +++
+Você pode adicionar nota sobre uma palavra ou passagem do texto.
+Para fazê-lo, primeiro selecione o texto relevante e acesse as opções de seleção como descrito acima.
+Em seguida, escolha Adicionar Nota.
+
+Ao ler no modo de navegação, o NVDA refere-se a essas notas como comentários.
+
+Para visualizar, editar ou excluir uma nota:
+
++ Mova o cursor para o texto que contém a nota.
++ Acesse as opções de seleção como descrito acima.
++ Escolha Editar Nota.
++
 
 + Configurando o NVDA +
 
@@ -1170,14 +1213,15 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - espaço entre linhas (simples, duplo, etc)
 - Tabelas
 - Cabeçalhos de Linhas e Colunas das Tabelas
-- Coordenadas de Células em Tabelas
+- Coordenadas de Células
+ - Bordas das Células [(Desativado, Estilos, Tanto Cores como Estilos)
 - Links
 - Cabeçalhos
 - Listas
 - Blocos de citação
 - Marcas de Seção
 - Frames
-- Quando algo é clicável
+- Elemento clicável
 -
 
 Para alterar essas configurações de qualquer lugar, por favor atribua-lhes gestos personalizados usando o [Diálogo de Gestos de Entrada #InputGestures].
@@ -2078,8 +2122,8 @@ Por favor consulte a [documentação da EcoBraille ftp://ftp.once.es/pub/utt/bib
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
-Para utilizá-lo, será necessário instalar o BRLTTY para o Windows.
+[BRLTTY http://www.brltty.com/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
+Para usá-lo, será necessário instalar o [BRLTTY para Windows http://www.brltty.com/download.html].
 Você deverá baixar e instalar o último pacote de instalação, cuja denominação é algo como, brltty-win-4.2-2.exe.
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se utiliza uma linha USB e já tem os drivers do fabricante instalados.
 

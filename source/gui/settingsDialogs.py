@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -508,7 +508,8 @@ class VoiceSettingsDialog(SettingsDialog):
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
 		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=-100, max=100,
+			min=int(config.conf.getConfigValidationParameter(["speech", getSynth().name, "capPitchChange"], "min")),
+			max=int(config.conf.getConfigValidationParameter(["speech", getSynth().name, "capPitchChange"], "max")),
 			initial=config.conf["speech"][getSynth().name]["capPitchChange"])
 
 		# Translators: This is the label for a checkbox in the
@@ -972,14 +973,16 @@ class BrowseModeDialog(SettingsDialog):
 		# browse mode settings dialog.
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
 		settingsSizer.Add(maxLengthLabel)
-		self.maxLengthEdit=nvdaControls.SelectOnFocusSpinCtrl(self,min=10, max=250,
+		self.maxLengthEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
+			min=10, max=250, # min and max are not enforced in the config for virtualBuffers.maxLineLength
 			initial=config.conf["virtualBuffers"]["maxLineLength"])
 		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a textfield in the
 		# browse mode settings dialog.
 		pageLinesLabel=wx.StaticText(self,-1,label=_("&Number of lines per page"))
 		settingsSizer.Add(pageLinesLabel)
-		self.pageLinesEdit=nvdaControls.SelectOnFocusSpinCtrl(self, min=5, max=150,
+		self.pageLinesEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
+			min=5, max=150, # min and max are not enforced in the config for virtualBuffers.linesPerPage
 			initial=config.conf["virtualBuffers"]["linesPerPage"])
 		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1192,6 +1195,28 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.tableCellCoordsCheckBox=tablesGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Cell c&oordinates")))
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
 
+		borderChoices=[
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Off"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Styles"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Both Colors and Styles"),
+		]
+		# Translators: This is the label for a combobox in the
+		# document formatting settings dialog.
+		self.borderComboBox=tablesGroup.addLabeledControl(_("Cell borders:"), wx.Choice, choices=borderChoices)
+		curChoice = 0
+		if config.conf["documentFormatting"]["reportBorderStyle"]:
+			if config.conf["documentFormatting"]["reportBorderColor"]:
+				curChoice = 2
+			else:
+				curChoice = 1
+		self.borderComboBox.SetSelection(curChoice)
+		
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings dialog
 		elementsGroupText = _("Elements")
@@ -1269,7 +1294,10 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 
+		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
+		choice = self.borderComboBox.GetSelection()
+		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
+		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
@@ -1528,12 +1556,21 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.showCursorCheckBox.Bind(wx.EVT_CHECKBOX, self.onShowCursorChange)
 		self.showCursorCheckBox.SetValue(config.conf["braille"]["showCursor"])
 
+		# Translators: The label for a setting in braille settings to enable cursor blinking.
+		cursorBlinkLabelText = _("Blink cursor")
+		self.cursorBlinkCheckBox = sHelper.addItem(wx.CheckBox(self, label=cursorBlinkLabelText))
+		self.cursorBlinkCheckBox.Bind(wx.EVT_CHECKBOX, self.onBlinkCursorChange)
+		self.cursorBlinkCheckBox.SetValue(config.conf["braille"]["cursorBlink"])
+		if not self.showCursorCheckBox.GetValue():
+			self.cursorBlinkCheckBox.Disable()
+
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		cursorBlinkRateLabelText = _("Cursor blink rate (ms)")
+		minBlinkRate = int(config.conf.getConfigValidationParameter(["braille", "cursorBlinkRate"], "min"))
+		maxBlinkRate = int(config.conf.getConfigValidationParameter(["braille", "cursorBlinkRate"], "max"))
 		self.cursorBlinkRateEdit = sHelper.addLabeledControl(cursorBlinkRateLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=0, max=2000,
-			initial=config.conf["braille"]["cursorBlinkRate"])
-		if not self.showCursorCheckBox.GetValue():
+			min=minBlinkRate, max=maxBlinkRate, initial=config.conf["braille"]["cursorBlinkRate"])
+		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue() :
 			self.cursorBlinkRateEdit.Disable()
 
 		# Translators: The label for a setting in braille settings to select the cursor shape.
@@ -1552,7 +1589,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=0, max=20,
+			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
+			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
 			initial=config.conf["braille"]["messageTimeout"])
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
@@ -1595,6 +1633,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
+		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
@@ -1629,8 +1668,12 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.portsList.Enable(enable)
 
 	def onShowCursorChange(self, evt):
-		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
+		self.cursorBlinkRateEdit.Enable(evt.IsChecked() and self.cursorBlinkCheckBox.GetValue())
 		self.shapeList.Enable(evt.IsChecked())
+
+	def onBlinkCursorChange(self, evt):
+		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
 
 class AddSymbolDialog(wx.Dialog):
 
@@ -1964,7 +2007,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager._captureFunc = addGestureCaptor
 
 	def _addCaptured(self, treeGes, scriptInfo, gesture):
-		gids = gesture.identifiers
+		gids = gesture.normalizedIdentifiers
 		if len(gids) > 1:
 			# Multiple choices. Present them in a pop-up menu.
 			menu = wx.Menu()

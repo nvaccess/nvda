@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 
 from comtypes import COMError
+import ctypes
 import UIAHandler
 
 def createUIAMultiPropertyCondition(*dicts):
@@ -119,3 +120,77 @@ def iterUIARangeByUnit(rangeObj,unit):
 	if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
 		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 		yield tempRange.clone()
+
+def getEnclosingElementWithCacheFromUIATextRange(textRange,cacheRequest):
+	"""A thin wrapper around IUIAutomationTextRange3::getEnclosingElementBuildCache if it exists, otherwise IUIAutomationTextRange::getEnclosingElement and then IUIAutomationElement::buildUpdatedCache."""
+	if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
+		raise ValueError("%s is not a text range"%textRange)
+	try:
+		textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
+	except (COMError,AttributeError):
+		e=textRange.getEnclosingElement()
+		if e:
+			e=e.buildUpdatedCache(cacheRequest)
+		return e
+	return textRange.getEnclosingElementBuildCache(cacheRequest)
+
+class CacheableUIAElementArray(object):
+
+	def __init__(self,elementArray,cacheRequest=None):
+		self._elementArray=elementArray
+		self._cacheRequest=cacheRequest
+
+	@property
+	def length(self):
+		return self._elementArray.length if self._elementArray else 0
+
+	def getElement(self,index):
+		e=self._elementArray.getElement(index)
+		if e and self._cacheRequest:
+			e=e.buildUpdatedCache(self._cacheRequest)
+		return e
+
+def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
+	"""A thin wrapper around IUIAutomationTextRange3::getChildrenBuildCache if it exists, otherwise IUIAutomationTextRange::getChildren but wraps the result in an object that automatically calls IUIAutomationElement::buildUpdateCache on any element retreaved."""
+	if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
+		raise ValueError("%s is not a text range"%textRange)
+	try:
+		textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
+	except (COMError,AttributeError):
+		c=textRange.getChildren()
+		c=CacheableUIAElementArray(c,cacheRequest)
+		return c
+	c=textRange.getChildrenBuildCache(cacheRequest)
+	c=CacheableUIAElementArray(c)
+	return c
+
+class UIATextRangeAttributeValueFetcher(object):
+
+	def __init__(self,textRange):
+		self.textRange=textRange
+
+	def getValue(self,ID,ignoreMixedValues=False):
+		try:
+			val=self.textRange.getAttributeValue(ID)
+		except COMError:
+			# #7124: some text attributes are not supported in  older Operating Systems 
+			return UIAHandler.handler.reservedNotSupportedValue
+		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
+			raise UIAMixedAttributeError
+		return val
+
+class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
+
+	def __init__(self,textRange,IDs):
+		IDs=list(IDs)
+		self.IDsToValues={}
+		super(BulkUIATextRangeAttributeValueFetcher,self).__init__(textRange)
+		IDsArray=(ctypes.c_long*len(IDs))(*IDs)
+		values=textRange.GetAttributeValues(IDsArray,len(IDsArray))
+		self.IDsToValues={IDs[x]:values[x] for x in xrange(len(IDs))}
+
+	def getValue(self,ID,ignoreMixedValues=False):
+		val=self.IDsToValues[ID]
+		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
+			raise UIAMixedAttributeError
+		return val
