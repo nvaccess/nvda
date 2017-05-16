@@ -39,9 +39,6 @@ curWordChars=[]
 
 #Set containing locale codes for languages supporting conjunct characters
 LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur', 'ta'}
-# The REASON_* constants in this module are deprecated and will be removed in a future release.
-# Use controlTypes.REASON_* instead.
-from controlTypes import REASON_FOCUS, REASON_FOCUSENTERED, REASON_MOUSE, REASON_QUERY, REASON_CHANGE, REASON_MESSAGE, REASON_SAYALL, REASON_CARET, REASON_ONLYCACHE
 
 #: The string used to separate distinct chunks of text when multiple chunks should be spoken without pauses.
 # #555: Use two spaces so that numbers from adjacent chunks aren't treated as a single number
@@ -307,6 +304,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 			newPropertyValues["_tableID"]=obj.tableID
 		except NotImplementedError:
 			pass
+	newPropertyValues['current']=obj.isCurrent
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -1001,6 +999,13 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
+	ariaCurrent = propertyValues.get('current', False)
+	if ariaCurrent:
+		try:
+			textList.append(controlTypes.isCurrentLabels[ariaCurrent])
+		except KeyError:
+			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
+			textList.append(controlTypes.isCurrentLabels[True])
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:
@@ -1035,6 +1040,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
+	ariaCurrent=attrs.get('current', None)
 	value=attrs.get('value',"")
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
 		description=attrs.get('description',"")
@@ -1050,6 +1056,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
+	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	valueText=getSpeechTextForProperties(reason=reason,value=value)
 	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
@@ -1101,7 +1108,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
 		return (getSpeechTextForProperties(_tableID=tableID, **getProps)
-			+ (" %s" % stateText if stateText else ""))
+			+ (" %s" % stateText if stateText else "")
+			+ (" %s" % ariaCurrentText if ariaCurrent else ""))
 
 	# General cases
 	elif (
@@ -1112,7 +1120,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
-		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText) if x)
+		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
 		if content and not speakContentFirst:
 			out.append(content)
 		return CHUNK_SEPARATOR.join(out)
@@ -1122,10 +1130,14 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return _("out of %s")%roleText
 
 	# Special cases
-	elif not extraDetail and not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
-		# Clickable.
-		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
-
+	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
+		out = []
+		if not extraDetail and controlTypes.STATE_CLICKABLE in states: 
+			# Clickable.
+			out.append(getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE])))
+		if ariaCurrent:
+			out.append(ariaCurrentText)
+		return CHUNK_SEPARATOR.join(out)
 	else:
 		return ""
 
@@ -1219,6 +1231,16 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				# Translators: Indicates that text has reverted to the default style.
 				# A style is a collection of formatting settings and depends on the application.
 				text=_("default style")
+			textList.append(text)
+	if  formatConfig["reportBorderStyle"]:
+		borderStyle=attrs.get("border-style")
+		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
+		if borderStyle!=oldBorderStyle:
+			if borderStyle:
+				text=borderStyle
+			else:
+				# Translators: Indicates that cell does not have border lines.
+				text=_("no border lines")
 			textList.append(text)
 	if  formatConfig["reportFontName"]:
 		fontFamily=attrs.get("font-family")

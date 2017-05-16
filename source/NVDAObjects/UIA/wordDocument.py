@@ -14,6 +14,9 @@ from . import UIA, UIATextInfo
 
 class WordDocumentTextInfo(UIATextInfo):
 
+	def _get_controlFieldNVDAObjectClass(self):
+		return WordDocumentNode
+
 	# UIA text range comparison for bookmarks works okay in this MS Word implementation
 	# Thus __ne__ is useful
 	def __ne__(self,other):

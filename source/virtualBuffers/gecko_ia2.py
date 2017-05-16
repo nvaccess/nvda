@@ -23,6 +23,9 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
+		ariaCurrent = attrs.get("IAccessible2::attribute_current")
+		if ariaCurrent != None:
+			attrs['current']= ariaCurrent
 		accRole=attrs['IAccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
@@ -254,25 +257,8 @@ class Gecko_ia2(VirtualBuffer):
 			return nextHandler()
 	event_scrollingStart.ignoreIsReady = True
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
-		if not axis:
-			# First or last.
-			return super(Gecko_ia2, self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
-
-		# Determine destination row and column.
-		destRow = origRow
-		destCol = origCol
-		if axis == "row":
-			destRow += origRowSpan if movement == "next" else -1
-		elif axis == "column":
-			destCol += origColSpan if movement == "next" else -1
-
-		if destCol < 1:
-			# Optimisation: We're definitely at the edge of the column.
-			raise LookupError
-
-		# For Gecko, we can use the table object to directly retrieve the cell with the exact destination coordinates.
-		docHandle = startPos.NVDAObjectAtStart.windowHandle
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:
 			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
@@ -280,6 +266,10 @@ class Gecko_ia2(VirtualBuffer):
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
 			raise LookupError
+
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
+		return super(VirtualBuffer,self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
 
 	def _get_documentConstantIdentifier(self):
 		try:

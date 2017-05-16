@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1195,6 +1195,28 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.tableCellCoordsCheckBox=tablesGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Cell c&oordinates")))
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
 
+		borderChoices=[
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Off"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Styles"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Both Colors and Styles"),
+		]
+		# Translators: This is the label for a combobox in the
+		# document formatting settings dialog.
+		self.borderComboBox=tablesGroup.addLabeledControl(_("Cell borders:"), wx.Choice, choices=borderChoices)
+		curChoice = 0
+		if config.conf["documentFormatting"]["reportBorderStyle"]:
+			if config.conf["documentFormatting"]["reportBorderColor"]:
+				curChoice = 2
+			else:
+				curChoice = 1
+		self.borderComboBox.SetSelection(curChoice)
+		
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings dialog
 		elementsGroupText = _("Elements")
@@ -1272,7 +1294,10 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 
+		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
+		choice = self.borderComboBox.GetSelection()
+		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
+		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
@@ -1982,7 +2007,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager._captureFunc = addGestureCaptor
 
 	def _addCaptured(self, treeGes, scriptInfo, gesture):
-		gids = gesture.identifiers
+		gids = gesture.normalizedIdentifiers
 		if len(gids) > 1:
 			# Multiple choices. Present them in a pop-up menu.
 			menu = wx.Menu()

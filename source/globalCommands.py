@@ -138,12 +138,13 @@ class GlobalCommands(ScriptableObject):
 		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text)
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	# Translators: Input help mode message for report current line command.
-	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
+	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions.")
 	script_reportCurrentLine.category=SCRCAT_SYSTEMCARET
 
 	def script_leftMouseClick(self,gesture):
@@ -1271,6 +1272,7 @@ class GlobalCommands(ScriptableObject):
 			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
+			"reportBorderStyle":True,"reportBorderColor":True,
 		}
 		textList=[]
 		info=api.getReviewPosition()

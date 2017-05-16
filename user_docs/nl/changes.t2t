@@ -3,26 +3,92 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+Hoogtepunten in deze versie zijn volledige ondersteuning voor audio-onderdrukking in de Windows 10 Makers Update; oplossingen voor verschillende selectieproblemen in bladermodus, inclusief problemen met Alles Selecteren; significante verbeteringen in de ondersteuning van Microsoft Edge; en verbeteringen op het web zoals aangeven van elementen gemarkeerd als huidig (via aria-current).
+
+== Nieuwe Functies ==
+- Informatie over celranden kan nu worden gemeld in Microsoft Excel via `NVDA+f`. (#3044)
+- Ondersteuning toegevoegd voor aria-current attributen. (#6358)
+- Automatische taalverandering wordt nu ondersteund in Microsoft Edge. (#6852)
+- Ondersteuning toegevoegd voor Windows Rekenmachine op Windows 10 Enterprise LTSB (Long-Term Servicing Branch) en Server. (#6914)
+- Als u het commando read current line driemaal snel uitvoert, wordt de regel gespeld met karakterbeschrijvingen. (#6893)
+- Nieuwe taal: Burmees.
+- Unicode symbolen zoals pijl omhoog, pijl omlaag en breuksymbolen worden nu juist uitgesproken. (#3805)
+
+
+== Veranderingen ==
+- Bij het navigeren in de simpele leesoverzichtmodus   in applicaties die gebruik maken van UI Automation worden bepaalde irrelevante objecten nu genegeerd om de navigatie eenvoudiger te maken. (#6948, #6950) 
+
+
+== Opgeloste Problemen ==
+- Menu-items op webpagina's kunnen nu geactiveerd worden binnen de bladermodus. (#6735)
+- Het drukken van escape  in het dialoogvenster configuratieprofielen "Verwijderen bevestigen" zorgt ervoor dat het venster gesloten wordt. (#6851)
+- Het mogelijke vastlopen van Mozilla Firefox en andere  Gecko-applicaties waar de multi-process-functie is ingeschakeld, is opgelost. (#6885)
+- De accuratesse van het melden van de achtergrondkleur in de schermoverzichtmodus is verbeterd bij tekst die getekend is met een transparante achtergrond. (#6467)
+- Verbeterde ondersteuning binnen Internet Explorer 11 voor elementbeschrijvingen die beschikbaar zijn op webpagina's (specifiek, ondersteuning voor aria-describedby in iframes en wanneer meerdere ID's zijn opgegeven). (#5784)
+- In de Windows 10 Makers Update werkt NVDA's audio-onderdrukking opnieuw zoals in eerdere Windows-versies (d.w.z. Onderdrukken bij spraak- en geluidsuitvoer, Altijd onderdrukken, en geen onderdrukking zijn allemaal beschikbaar). (#6933)
+- Bij bepaalde (UIA) controls waarvoor geen toetsenbordsneltoets is gedefineerd, weigert NVDA nniet langer deze te melden of ernaar te navigeren. (#6779)
+- In sneltoets-informatie voor bepaalde (UIA) controls worden niet langer twee lege spaties toegevoegd. (#6790)
+- Het weigeren van bepaalde toetscombinaties op HIMS leesregels (o.a. spatie+punt4) is opgelost. (#3157)
+- Een probleem opgelost bij het openen van een seriële poort op systemen die gebruik maken van bepaalde niet-Engelse talen waarbij het verbinden met brailleleesregels in sommige gevallen mislukte. (#6845)
+- De kans dat het configuratiebestand  beschadigt bij het afsluiten van Windows is verminderd. Configuratiebestanden worden nu naar een tijdelijk bestand geschreven voordat het eigenlijke configuratiebestand vervangen wordt. (#3165)
+- Bij het twee keer uitvoeren van het lees huidige regel commando om de huidige regel te laten spellen, wordt nu de juiste taal gebruikt voor het spellen van karakters. (#6726)
+- Het navigeren per regel in Microsoft Edge is nu tot wel drie keer zo snel in de Windows 10 Makers Update. (#6994)
+- NVDA meldt niet langer "Web Runtime groepering" wanneer een Microsoft Edge document in de Windows 10 Makers Update de focus krijgt. (#6948)
+- Alle bestaande versies van SecureCRT worden nu ondersteund. (#6302)
+- Adobe Acrobat Reader loopt niet langer vast in bepaalde PDF-documenten (specifiek, de documenten die lege ActualText attributen bevatten). (#7021, #7034)
+- In bladermodus in Microsoft Edge worden interactieve tabellen (ARIA grids) niet langer overgeslagen bij het navigeren naar tabellen met t en shift+t. (#6977)
+- In bladermodus zal het indrukken van shift+home na een voorwaardse selectie de selectie zoals verwacht weer ongedaan maken tot het begin van de regel. (#5746)
+- In bladermodus gaat het selecteren van alle tekst (control+a) niet langer fout wanneer de cursor zich niet aan het begin van de tekst bevindt (#6909)
+- Enkele andere zeldzame selectieproblemen in bladermodus opgelost. (#7131)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2017.1 =
+Hoogtepunten in deze versie zijn melden van secties en tekstkolommen in Microsoft Word; Ondersteuning voor lezen, navigeren en annoteren van boeken in Kindle voor PC; en verbeterde ondersteuning voor Microsoft Edge.
 
 == Nieuwe Functies ==
 - In Microsoft Word kan het soort sectie-einde en het nummer van de sectie nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
 - In Microsoft Word kunnen de tekstkolommen nu gemeld worden. Dit schakelt u in met de optie "paginanummers melden" in het dialoogvenster documentopmaak. (#5946)
-- Automatische taalherkenning is nu ondersteund in Wordpad. (#6555)
-- The NVDA find command (NVDA+control+f) is now supported in browse mode for Microsoft Edge. (#6580)
-- Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+- Automatische taalherkenning wordt nu ondersteund in Wordpad. (#6555)
+- Het NVDA-commando om te zoeken (NVDA+control+f) wordt nu ondersteund in bladermodus voor Microsoft Edge. (#6580)
+- Snelnavigatie voor knoppen in bladermodus (b en shift+b) worden nu ondersteund in Microsoft Edge. (#6577)
+- Bij het kopiëren van een werkblad in Microsoft Excel worden kolom- en rijkoppen onthouden. (#6628)
+- Ondersteuning voor lezen en navigeren van boeken in Kindle voor PC versie 1.19, inclusief toegang tot links, voetnoten, afbeeldingen, highlights en gebruikersnotities. Voor meer informatie verwijzen we naar de sectie Kindle voor PC in NVDA handleiding. (#6247, #6638)
+- Bladermodus tabel navigatie wordt nu ondersteund in Microsoft Edge. (#6594)
+- In Microsoft Excel meldt het commando om de locatie van de leescursor te melden (desktop: NVDA+numpadDelete, laptop: NVDA+delete) nu de naam van het werkblad en de cellocatie. (#6613)
+- Een optie toegevoegd aan het Afsluiten dialoogvenster om te herstarten met het loggen van debug-informatie. (#6689)
+
+
+== Veranderingen ==
+- Het minimum voor de knippersnelheid van de braillecursor is nu 200 ms. Wanneer dit eerder lager was ingesteld, zal dit worden verhoogd naar 200 ms. (#6470)
+- Er is een selectievakje toegevoegd aan het dialoogvenster braille-instellingen voor het in/uitschakelen van het knipperen van de braillecursor. Eerder werd een waarde van nul gebruikt om dit te bereiken. (#6470)
+- eSpeak NG bijgewerkt (commit e095f008, 10 januari 2017). (#6717)
+- Vanwege wijzigingen in de Windows 10 Makers Update is de "Altijd onderdrukken" modus niet meer beschikbaar in de audio-onderdrukkingsinstellingen van NVDA. Deze optie is nog wel beschikbaar bij oudere versies van windows 10. (#6684)
+- Vanwege wijzigingen in de Windows 10 Makers Update is het in de "Onderdrukken bij spraak- en geluidsuitvoer" modus niet meer mogelijk om te waarborgen dat de audio volledig onderdrukt is voordat het spreken van de spraak begint. Ook wordt audio na het spreken niet lang genoeg onderdrukt om ervoor te zorgen dat er geen stuitereffect ontstaat in het volume. Deze veranderingen hebben geen effect op oudere versies van windows 10. (#6684)
 
 
 == Opgeloste problemen ==
-- Fix freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
-- Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables, and therefore are no longer ignored. (#5927)
-- When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
-- Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
-- NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. 9#6216)
-- Reporting of cropped/overflowed text in Microsoft Excel cells should be now more accurate (#6472)
-- NVDA now reports when a check box is read-only. (#6563)
-- The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
-- Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+- Een bevriezingsprobleem opgelost in Microsoft Word bij het navigeren per paragraaf door een groot document in bladermodus. (#6368)
+- Tabellen in Microsoft Word die gekopieerd werden uit Microsoft Excel worden niet langer behandeld als lay-outtabellen en worden daardoor niet langer genegeerd. (#5927)
+- Wanneer er geprobeerd wordt te typen in de beveiligde weergave van Microsoft Excel  maakt  NVDA nu een geluid in plaats van het uitspreken van karakters die niet getypt werden. (#6570)
+- Het drukken van escape in Microsoft Excel schakelt niet langer onterecht naar bladermodus, tenzij de gebruiker eerder expliciet naar bladermodus is geschakeld met NVDA+spatiebalk en dan focusmodus heeft geactiveerd door enter te drukken op een formulierveld. (#6569) 
+- NVDA loopt niet langer vast in Microsoft Excel spreadsheets waarin een gehele rij of kolom is samengevoegd. (#6216)
+- Het melden van  afgesneden/Overschrijdende tekst in cellen in Microsoft Excel zou nu accurater moeten zijn (#6472)
+- NVDA meldt nu wanneer een selectievakje alleen-lezen is. (#6563)
+- Het NVDA installatieprogramma laat niet langer een waarschuwing zien dat het logo-geluid niet afgespeeld kan worden omdat er geen audioapparaat beschikbaar is. (#6289)
+- Besturingselementen in het lint van Microsoft Excel die niet beschikbaar zijn worden nu als zodanig gemeld. (#6430)
+- NVDA zal niet langer "venster" aankondigen bij het minimaliseren van vensters. (#6671)
+- Getypte karakters worden nu uitgesproken in Universal Windows Platform (UWP) apps (inclusief Microsoft Edge) in de Windows 10 Creators Update. (#6017)
+- De muis wordt nu gevolgd over alle schermen op computers met meerdere monitoren. (#6598)
+- NVDA wordt niet langer onbruikbaar na het afsluiten van Windows Media Player als de focus op een schuifbalk staat. (#5467)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
 
 
 = 2016.4 =

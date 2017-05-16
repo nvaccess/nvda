@@ -3,6 +3,46 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.1 =
+Prednosti tejto verzie zahŕňajú oznamovanie sekcií a textových stĺpcov v dokumentoch MS Word; podporu pre čítanie, navigáciu a poznámkovanie kníh v programe Kindle pre PC; vylepšenú podporu pre Microsoft Edge.
+
+== Nové vlastnosti ==
+- V programe Microsoft Word  si môžete aktivovať oznamovanie typov a čísel sekcií. Toto povolíte začiarknutím možnosti "oznamovať strany" v nastaveniach čítania textu. (#5946)
+- V dokumentoch MS Word si môžete aktivovať oznamovanie textových stĺpcov. Toto povolíte začiarknutím možnosti "oznamovať strany" v nastaveniach čítania textu. (#5946)
+- V programe Wordpad je podporované automatické prepínanie jazyka. (#6555)
+- V režime prehliadania v programe MS Edge môžete odteraz použiť skratku na vyhľadávanie NVDA+ctrl+f. (#6580)
+- V prehliadači  MS Edge sú podporované skratky rýchlej navigácie na prechod medzi tlačidlami (B a Shift+B). (#6577)
+- Ak kopírujete hárok v programe MS Excel, skopírujú sa aj informácie o hlavičkách pre riadky alebo stĺpce. (#6628)
+- Podpora pre čítanie a navigáciu v knihách v aplikácii Kindle pre PC od verzie 1.19. Toto zahŕňa možnosť pracovať s odkazmi, poznámkami pod čiarou, obrázkami, zvýrazneným textom a používateľskými poznámkami. Podrobnosti nájdete v kapitole Kindle pre PC v používateľskej príručke NVDA. (#6247, #6638)
+- V režime prehliadania v prehliadači MS Edge je podporovaná navigácia v tabuľkách. (#6594)
+- Ak v MS Excely stlačíte skratku na oznámenie pozície aktuálneho objektu (desktop: NVDA+numpadDelete, laptop: NVDA+delete), NVDA oznámi názov hárka a súradnice aktuálnej bunky. (#6613)
+- V dialógu, ktorý sa zobrazí pri ukončení NVDA, pribudla akcia "reštartovať a nastaviť najvyššiu úroveň záznamu". (#6689)
+
+
+== Zmeny ==
+- Minimálna hodnota blikania kurzora na braillovských riadkoch je 200 milisekúnd. Ak ste mali nastavenú menšiu hodnotu, bude automaticky zvýšená. (#6470)
+- V dialógu nastavenia Braillu sme pridali začiarkávacie pole "blikajúci kurzor". Toto určuje, či bude alebo nebude kurzor blikať. V minulosti sa blikanie kurzora vypínalo nastavením hodnoty nula v príslušnom editačnom poli. (#6470)
+- Aktualizovaná syntéza reči eSpeak NG (verzia e095f008, z 10 Januára 2017). (#6717)
+- Vzhľadom na zmeny v systéme Windows 10 Creator, nie je viac v tomto systéme dostupná možnosť "vždy  stíšiť" medzi režimami automatického stíšenia. V starších systémoch je táto funkcia ponechaná. (#6684)
+-  Vzhľadom na zmeny v systéme Windows 10 Creator, nedokážeme pri funkcii "stíšiť, keď NVDA hovorí a prehráva zvuky" presne zistiť, či je zvuk dostatočne stíšený. Preto sme predĺžili čas, po ktorý sú ostatné zvuky stíšené, aby nedochádzalo k nadmernému kolísaniu hlasitostí ostatných zvukov. Toto sa netýka ostatných vydaní systému Windows 10. (#6684)
+
+
+== Opravy ==
+- Odstránili sme mrznutie, ktoré nastávalo, ak ste v režime prehliadania v dokumentoch MS Word prechádzali po odsekoch. (#6368)
+- Tabuľky, ktoré ste do Wordu  skopírovali  z MS Excelu, nie sú viac spracované ako tabuľky formujúce vzhľad a preto ich NVDA viac neignoruje. (#5927)
+- Ak sa pokúšate písať v chránenom režime do dokumentu v MS Excely, NVDA vás na to upozorní zvukom a nebude viac oznamovať znaky, ktoré v skutočnosti neboli do dokumentu napísané. (#6570)
+- Ak stlačíte v Excely kláves Escape, NVDA viac automaticky neaktivuje režim prehliadania. Výnimku tvorí situácia, ak aktivujete režim prehliadania, následne aktivujete režim fokusu stlačením klávesu enter vo formulárovom poli. Vtedy vás kláves Escape vráti späť do režimu prehliadania.(#6569)
+- NVDA viac nezamrzne v tabuľke MS Excel, ak sú všetky bunky v riadku alebo stĺpci zlúčené. (#6216)
+- Oznamovanie pretečeného alebo orezaného textu v tabuľkách v MS Excely je presnejšie. (#6472)
+- NVDA odteraz oznamuje, ak je začiarkávacie pole len na čítanie. (#6563)
+- Inštalátor  viac nezobrazí varovné okno, ak nie je dostupná žiadna zvuková karta v dôsledku čoho nie je možné prehrať logo NVDA. (#6289)
+- Prvky, ktoré v Ribbon ponuke MS Excelu nie sú dostupné, sú oznámené ako nedostupné. (#6430)
+- NVDA viac pri minimalizovaní okien nehlási "panel". (#6671)
+- Čítanie napísaných znakov funguje aj v univerzálnych aplikáciách (UWP) v systéme Windows 10 Creator (týka sa napríklad aj programu MS Edge). (#6017)
+- Sledovanie kurzora myši funguje aj v prípade, ak sú k počítaču pripojené viaceré obrazovky. (#6598)
+- NVDA sa viac nespráva nekontrolovateľne  ak ukončíte Windows media player a fokus ponecháte  na posuvníku. (#5467)
+
+
 = 2016.4 =
 Prednosti tejto verzie zahŕňajú vylepšenú podporu pre Microsoft Edge; režim prehliadania v aplikácii Mail operačného systému Windows 10; grafické  úpravy v dialógoch NVDA.
 
@@ -18,7 +58,7 @@ Prednosti tejto verzie zahŕňajú vylepšenú podporu pre Microsoft Edge; reži
 
 
 == Zmeny ==
-- Brailovská Tabuľka liblouis aktualizovaná na verziu 3.0.0. Obsahuje hlavne úpravy v anglickej tabuľke. (#6109, #4194, #6220, #6140)
+- Brailovská Tabuľka liblouis aktualizovaná na verziu 3.0.0. obsahuje tiež novú prekladovú tabuľku pre slovenčinu, vypracovanú podľa pravidiel zápisu slovenského Braillovho písma. (#6109, #4194, #6220, #6140)
 - Tlačidlá na povolenie a zakázanie doplnku v správcovy doplnkov majú klávesové skratky. Zakázať =alt+k, povoliť =alt+p. (#6388)
 - Opravené grafické zobrazenie dialógov NVDA. (#6317, #5548, #6342, #6343, #6349)
 - Dialóg nastavenia čítania textu bol upravený tak, aby sa automaticky roloval. (#6348)
