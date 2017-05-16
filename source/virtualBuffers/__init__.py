@@ -113,23 +113,24 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 		if self.itemType is "heading":
 			return value
 		attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
-		roleRaw = attrs["role"]
-		role = controlTypes.roleLabels[roleRaw]
-		# Translators: Reported label in the elements list for an element which which has no name and value
-		unlabeled = _("Unlabeled")
 		name = attrs.get("name", "")
-		realStates=attrs["states"]
-		positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(roleRaw, realStates, controlTypes.REASON_ELEMENTSLIST, realStates))
 		if self.itemType == "landmark":
 			labelParts=(name, aria.landmarkRoles[attrs["landmark"]])
-		elif self.itemType == "formField":
-			if roleRaw == controlTypes.ROLE_BUTTON:
-				labelParts = (value or unlabeled, role, positiveStates)
-			else:
-				negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, controlTypes.REASON_ELEMENTSLIST, realStates))
-				labelParts = (name or unlabeled, value, role, positiveStates, negativeStates)
-		elif self.itemType in ("link","button"):
-			labelParts = (value or unlabeled, positiveStates)
+		else:
+			roleRaw = attrs["role"]
+			role = controlTypes.roleLabels[roleRaw]
+			# Translators: Reported label in the elements list for an element which which has no name and value
+			unlabeled = _("Unlabeled")
+			realStates=attrs["states"]
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(roleRaw, realStates, controlTypes.REASON_QUERY, realStates))
+			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, controlTypes.REASON_QUERY, realStates))
+			if self.itemType == "formField":
+				if roleRaw == controlTypes.ROLE_BUTTON:
+					labelParts = (value or unlabeled, role, positiveStates, negativeStates)
+				else:
+					labelParts = (name or unlabeled, value, role, positiveStates, negativeStates)
+			else: # links and buttons")
+				labelParts = (value or unlabeled, positiveStates, negativeStates)
 		label = " ".join(lp for lp in labelParts if lp)
 		return label
 

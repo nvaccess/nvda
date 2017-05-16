@@ -611,8 +611,6 @@ REASON_MESSAGE="message"
 REASON_SAYALL="sayAll"
 #: Content reported due to caret movement or similar.
 REASON_CARET="caret"
-#: Content reported in a browse mode elements list
-REASON_ELEMENTSLIST="elementsList"
 #: No output, but any state should be cached as if output had occurred.
 REASON_ONLYCACHE="onlyCache"
 #}
@@ -671,7 +669,8 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(STATE_READONLY)
 	if role == ROLE_CHECKBOX:
 		positiveStates.discard(STATE_PRESSED)
-	if role == ROLE_MENUITEM or reason == REASON_ELEMENTSLIST:
+	if role == ROLE_MENUITEM:
+		# The user doesn't usually care if a menu item is expanded or collapsed.
 		positiveStates.discard(STATE_COLLAPSED)
 		positiveStates.discard(STATE_EXPANDED)
 	if STATE_FOCUSABLE not in states:
