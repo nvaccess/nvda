@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 wstring findLabel(multiValueAttribsMap,wstring);
+wstring replaceSpecialChar(wstring);
 
 #define NAVRELATION_LABELLED_BY 0x1003
 #define NAVRELATION_NODE_CHILD_OF 0x1005
@@ -699,7 +700,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			for(int i=0;;++i) {
 				if(i!=chunkStart&&(i==IA2TextLength||i==attribsEnd||IA2Text[i]==0xfffc)) {
 					if(value){
-						wstring labelForNode=findLabel(labelsMap,value);
+						wstring valueToCompare=replaceSpecialChar(value);
+						wstring labelForNode=findLabel(labelsMap,valueToCompare);
 						if (!labelForNode.empty()){
 							previousNode=buffer->addTextFieldNode(parentNode,previousNode,labelForNode);
 						}
@@ -870,6 +872,20 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	}
 
 	return parentNode;
+}
+
+wstring replaceSpecialChar(wstring s)
+{
+	wstring current;
+	wstring equals=L"=";
+	wstring hexEquals=L"%3D";
+	for (std::size_t i = 0; i < s.length(); ++i) {
+		current=s[i];
+	    if (current.compare(equals)==0){
+	    	s.replace(i,1,hexEquals);
+	    }
+	  }
+	return s;
 }
 
 wstring findLabel(multiValueAttribsMap labelsMap,wstring attributeValue) {

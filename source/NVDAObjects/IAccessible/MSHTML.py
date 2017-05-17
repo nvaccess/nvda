@@ -1011,21 +1011,23 @@ class MSHTML(IAccessible):
 			browseObj=info.NVDAObjectAtStart
 		except:
 			browseObj=api.getFocusObject()
+			
+		linkUrl=""
+		imgSrc=""
+		id=""
+		name=""
+		customLabelKey=""
 		if (browseObj.HTMLNode.nodeName=="IMG"):
-			customLabelKey=browseObj.HTMLAttributes['src']
+			imgSrc=browseObj.HTMLAttributes['src']
 		elif (browseObj.HTMLNode.nodeName=="A"):
-			customLabelKey=browseObj.HTMLAttributes['href']
+			linkUrl=browseObj.HTMLAttributes['href']
 		else:
-			if browseObj.HTMLAttributes['id'] and browseObj.HTMLAttributes['name']:
-				customLabelKey=browseObj.HTMLAttributes['id']+browseObj.HTMLAttributes['name']
-			elif not browseObj.HTMLAttributes['name']:
-				customLabelKey=browseObj.HTMLAttributes['id']
-			elif not browseObj.HTMLAttributes['id']:
-				customLabelKey=browseObj.HTMLAttributes['name']
-			if (not customLabelKey):
-				log.debugWarning("\nCannot assign custom label")			
-		if customLabelKey:
-			customLabelKey=customLabelKey.replace(':','\:')
+			try:
+				name=browseObj.HTMLAttributes['name']
+				id=browseObj.HTMLAttributes['id']
+			except:
+				pass
+		customLabelKey=customLabels.generateCustomLabelKey(linkUrl,imgSrc,id,name)
 		filename=customLabels.getFilenameFromElementDomain(getattr(self.HTMLNode.document,'url',""))
 		customLabels.addLabel(filename,customLabelKey)
 		

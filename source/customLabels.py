@@ -6,6 +6,7 @@ import globalVars
 import treeInterceptorHandler
 import configobj
 import api
+from logHandler import log
 
 class customLabels():
         
@@ -50,3 +51,24 @@ class customLabels():
                     return v
         except Exception as e:
             pass
+        
+    @classmethod
+    def generateCustomLabelKey(cls,linkUrl,imgSrc,id,name):
+        if linkUrl:
+            customLabelKey=linkUrl
+        elif imgSrc:
+            customLabelKey=imgSrc
+        elif name and id:
+            customLabelKey=name+id
+        elif name:
+            customLabelKey=name
+        elif id:
+            customLabelKey=id
+        else:
+            customLabelKey=""
+        if (not customLabelKey):
+            log.debugWarning("\nCannot assign custom label")            
+        else:
+            customLabelKey=customLabelKey.replace(':','\:')
+            customLabelKey=customLabelKey.replace('=','%3D')
+        return customLabelKey

@@ -30,6 +30,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 wstring findLabel(multiValueAttribsMap,wstring);
+wstring replaceSpecialChar(wstring);
 
 HINSTANCE backendLibHandle=NULL;
 UINT WM_HTML_GETOBJECT;
@@ -1143,6 +1144,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	} else if((nodeName.compare(L"A")==0)&&(attribsMap.find(L"HTMLAttrib::href")!=attribsMap.end())) {
 		tempIter = attribsMap.find(L"HTMLAttrib::href");
 		wstring linkAttribute=tempIter->second;
+		linkAttribute=replaceSpecialChar(linkAttribute);
 		wstring labelForNode=findLabel(labelsMap,linkAttribute);
 		if (!labelForNode.empty()){
 			contentString=labelForNode;
@@ -1176,7 +1178,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		}
 		else
 		{
-			nameAttribute=tempIterId->second+tempIter->second;
+			nameAttribute=tempIter->second+tempIterId->second;
 		}
 		wstring labelForNode=findLabel(labelsMap,nameAttribute);
 		if (!labelForNode.empty()){
@@ -1350,6 +1352,20 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	}
 
 	return parentNode;
+}
+
+wstring replaceSpecialChar(wstring s)
+{
+	wstring current;
+	wstring equals=L"=";
+	wstring hexEquals=L"%3D";
+	for (std::size_t i = 0; i < s.length(); ++i) {
+		current=s[i];
+	    if (current.compare(equals)==0){
+	    	s.replace(i,1,hexEquals);
+	    }
+	  }
+	return s;
 }
 
 wstring findLabel(multiValueAttribsMap labelsMap,wstring attributeValue) {
