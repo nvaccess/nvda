@@ -121,6 +121,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_nextLine": ("br(alvaBC6):t4",),
 			"braille_scrollForward": ("br(alvaBC6):t5","br(alvaBC6):etouch3"),
 			"braille_routeTo": ("br(alvaBC6):routing",),
+			"braille_reportFormatting": ("br(alvaBC6):routing2",),
 			"review_top": ("br(alvaBC6):t1+t2",),
 			"review_bottom": ("br(alvaBC6):t4+t5",),
 			"braille_toggleTether": ("br(alvaBC6):t1+t3",),
