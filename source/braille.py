@@ -309,12 +309,21 @@ RENAMED_TABLES = {
 }
 
 roleLabels = {
+	# Translators: Displayed in braille for an object which is a
+	# dialog.
+	controlTypes.ROLE_DIALOG: _("dlg"),
+	# Translators: Displayed in braille for an object which is a
+	# check box.
+	controlTypes.ROLE_CHECKBOX: _("chk"),
+	# Translators: Displayed in braille for an object which is a
+	# radio button.
+	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
 	# Translators: Displayed in braille for an object which is an
 	# editable text field.
 	controlTypes.ROLE_EDITABLETEXT: _("edt"),
 	# Translators: Displayed in braille for an object which is a
-	# list.
-	controlTypes.ROLE_LIST: _("lst"),
+	# button.
+	controlTypes.ROLE_BUTTON: _("btn"),
 	# Translators: Displayed in braille for an object which is a
 	# menu bar.
 	controlTypes.ROLE_MENUBAR: _("mnubar"),
@@ -322,23 +331,17 @@ roleLabels = {
 	# menu.
 	controlTypes.ROLE_POPUPMENU: _("mnu"),
 	# Translators: Displayed in braille for an object which is a
-	# button.
-	controlTypes.ROLE_BUTTON: _("btn"),
-	# Translators: Displayed in braille for an object which is a
-	# check box.
-	controlTypes.ROLE_CHECKBOX: _("chk"),
-	# Translators: Displayed in braille for an object which is a
-	# radio button.
-	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
-	# Translators: Displayed in braille for an object which is a
 	# combo box.
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
 	# Translators: Displayed in braille for an object which is a
+	# list.
+	controlTypes.ROLE_LIST: _("lst"),
+	# Translators: Displayed in braille for an object which is a
+	# graphic.
+	controlTypes.ROLE_GRAPHIC: _("gra"),
+	# Translators: Displayed in braille for an object which is a
 	# link.
 	controlTypes.ROLE_LINK: _("lnk"),
-	# Translators: Displayed in braille for an object which is a
-	# dialog.
-	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
 	# tree view.
 	controlTypes.ROLE_TREEVIEW: _("tv"),
@@ -348,28 +351,25 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# separator.
 	controlTypes.ROLE_SEPARATOR: _("-----"),
-	# Translators: Displayed in braille for an object which is a
-	# graphic.
-	controlTypes.ROLE_GRAPHIC: _("gra"),
 }
 
 positiveStateLabels = {
+	# Translators: Displayed in braille when an object is selected.
+	controlTypes.STATE_SELECTED: _("sel"),
 	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.STATE_CHECKED: _("(x)"),
 	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
 	controlTypes.STATE_HALFCHECKED: _("(-)"),
-	# Translators: Displayed in braille when an object is selected.
-	controlTypes.STATE_SELECTED: _("sel"),
-	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-	controlTypes.STATE_HASPOPUP: _("submnu"),
-	# Translators: Displayed in braille when an object supports autocompletion.
-	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+	controlTypes.STATE_READONLY: _("ro"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 	controlTypes.STATE_EXPANDED: _("-"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 	controlTypes.STATE_COLLAPSED: _("+"),
-	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-	controlTypes.STATE_READONLY: _("ro"),
+	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+	controlTypes.STATE_HASPOPUP: _("submnu"),
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
 	# Translators: Displayed in braille when an object is clickable.
 	controlTypes.STATE_CLICKABLE: _("clk"),
 }
