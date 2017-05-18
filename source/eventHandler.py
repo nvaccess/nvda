@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2016 NV Access Limited, Babbage b.v.
 
 import threading
 import queueHandler
@@ -16,6 +16,7 @@ from logHandler import log
 import globalPluginHandler
 import config
 import winUser
+import NVDAObjects
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -107,14 +108,14 @@ class _EventExecuter(object):
 				yield func, (obj, self.next)
 
 		# App module level.
-		app = obj.appModule
+		app = obj.appModule if isinstance(obj,NVDAObjects.NVDAObject) else None
 		if app:
 			func = getattr(app, funcName, None)
 			if func:
 				yield func, (obj, self.next)
 
 		# Tree interceptor level.
-		treeInterceptor = obj.treeInterceptor
+		treeInterceptor = obj.treeInterceptor if isinstance(obj,NVDAObjects.NVDAObject) else None
 		if treeInterceptor:
 			func = getattr(treeInterceptor, funcName, None)
 			if func and (getattr(func,'ignoreIsReady',False) or treeInterceptor.isReady):
@@ -134,7 +135,7 @@ def executeEvent(eventName,obj,**kwargs):
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
 	try:
-		sleepMode=obj.sleepMode
+		sleepMode=obj.sleepMode if isinstance(obj,NVDAObjects.NVDAObject) else None
 		if eventName=="gainFocus" and not doPreGainFocus(obj,sleepMode=sleepMode):
 			return
 		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
