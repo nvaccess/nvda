@@ -9,6 +9,8 @@ from ctypes import *
 import time
 import config
 from logHandler import log
+import winVersion
+from silencePlayer import SilencePlayer
 
 def _isDebug():
 	return config.conf["debugLog"]["audioDucking"]
@@ -27,6 +29,7 @@ WAIT_TIMEOUT=0x102
 AUDIODUCKINGMODE_NONE=0
 AUDIODUCKINGMODE_OUTPUTTING=1
 AUDIODUCKINGMODE_ALWAYS=2
+WINVERSION_DYNAMICDUCKING_MIN=14986
 
 audioDuckingModes=[
 	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
@@ -50,16 +53,25 @@ _duckingRefCount=0
 _duckingRefCountLock = threading.RLock()
 _modeChangeEvent=None
 _lastDuckedTime=0
+_silencePlayer=None
 
 def _setDuckingState(switch):
-	global _lastDuckedTime
+	global _lastDuckedTime, _silencePlayer
 	with _duckingRefCountLock:
 		import gui
 		ATWindow=gui.mainFrame.GetHandle()
 		if switch:
 			oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
+			# In Certain Windows builds, dynamic audio ducking was introduced  by Microsoft that conflicts with our own audio ducking code.
+			# To force their dynamic ducking back to static ducking, play silence for the entire length we want to be truely ducked for.
+			if winVersion.winVersion.build>=WINVERSION_DYNAMICDUCKING_MIN:
+				if not _silencePlayer:
+					_silencePlayer=SilencePlayer()
+				_silencePlayer.enable()
 			_lastDuckedTime=time.time()
 		else:
+			if _silencePlayer: 
+				_silencePlayer.disable()
 			oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
 
 def _ensureDucked():
