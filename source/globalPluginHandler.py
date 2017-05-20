@@ -11,7 +11,7 @@ import baseObject
 from logHandler import log
 import globalPlugins
 
-#: All currently running global plugins.
+#All currently running global plugins.
 runningPlugins = set()
 
 def listPlugins():
