@@ -1,7 +1,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
 
 from ctypes import byref
 from comtypes import COMError
@@ -15,6 +15,7 @@ import cursorManager
 import textInfos
 import browseMode
 from NVDAObjects.UIA import UIA
+import controlTypes
 
 class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -39,12 +40,30 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
+		value = super(UIATextRangeQuickNavItem,self).label
+		if self.itemType is "heading":
+			return value
+		obj=self.obj
+		name=obj.name
 		if self.itemType=="landmark":
-			obj=self.obj
-			name=obj.name
 			landmarkType=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
-			return " ".join(x for x in (name,landmarkType) if x)
-		return super(UIATextRangeQuickNavItem,self).label
+			labelParts=(name,landmarkType)
+		else:
+			role = controlTypes.roleLabels[obj.role]
+			# Translators: Reported label in the elements list for an element which which has no name and value
+			unlabeled = _("Unlabeled")
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(obj.role, obj.states, browseMode.REASON_QUICKNAV, obj.states))
+			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(obj.role, obj.states, browseMode.REASON_QUICKNAV, obj.states))
+			if self.itemType == "formField":
+				if obj.role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
+					# For some buttons in Edge, the textInfo doesn't provide the label, so we fall back to the object's name
+					labelParts = (value or name or unlabeled, role, positiveStates, negativeStates)
+				else:
+					labelParts = (name or unlabeled, value, role, positiveStates, negativeStates)
+			else: # links and buttons")
+				labelParts = (value or name or unlabeled, positiveStates, negativeStates)
+		label = " ".join(lp for lp in labelParts if lp)
+		return label
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 

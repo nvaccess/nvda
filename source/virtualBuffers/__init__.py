@@ -122,10 +122,10 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 			# Translators: Reported label in the elements list for an element which which has no name and value
 			unlabeled = _("Unlabeled")
 			realStates=attrs["states"]
-			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(roleRaw, realStates, controlTypes.REASON_QUERY, realStates))
-			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, controlTypes.REASON_QUERY, realStates))
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(roleRaw, realStates, browseMode.REASON_QUICKNAV, realStates))
+			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, browseMode.REASON_QUICKNAV, realStates))
 			if self.itemType == "formField":
-				if roleRaw == controlTypes.ROLE_BUTTON:
+				if roleRaw in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
 					labelParts = (value or unlabeled, role, positiveStates, negativeStates)
 				else:
 					labelParts = (name or unlabeled, value, role, positiveStates, negativeStates)
