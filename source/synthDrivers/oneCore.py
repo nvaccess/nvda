@@ -8,6 +8,7 @@
 """
 
 import os
+import sys
 from collections import OrderedDict
 import ctypes
 import _winreg
@@ -18,6 +19,7 @@ import nvwave
 import speech
 import speechXml
 import languageHandler
+import winVersion
 
 SAMPLES_PER_SEC = 22050
 BITS_PER_SAMPLE = 16
@@ -106,7 +108,13 @@ class SynthDriver(SynthDriver):
 
 	@classmethod
 	def check(cls):
-		return True
+		if not hasattr(sys, "frozen"):
+			# #3793: Source copies don't report the correct version on Windows 10 because Python isn't manifested for higher versions.
+			# We want this driver to work for source copies on Windows 10, so just return True here.
+			# If this isn't in fact Windows 10, it will fail when constructed, which is okay.
+			return True
+		# For binary copies, only present this as an available synth if this is Windows 10.
+		return winVersion.winVersion.major >= 10
 
 	def __init__(self):
 		super(SynthDriver, self).__init__()
