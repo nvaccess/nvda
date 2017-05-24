@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -21,6 +21,7 @@ import eventHandler
 from scriptHandler import isScriptWaiting, willSayAllResume
 import textInfos
 import controlTypes
+from logHandler import log
 
 class EditableText(ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
@@ -42,21 +43,30 @@ class EditableText(ScriptableObject):
 	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
 	announceNewLineText=True
 
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
+	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
 		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
 		@type bookmark: bookmark
 		@param retryInterval: the interval of time in seconds this method should  wait before checking the caret each time.
 		@type retryInterval: float 
-		@param timeout: the over all amount of time in seconds the method should wait before giving up completely.
+		@param timeout: the over all amount of time in seconds the method should wait before giving up completely,
+			C{None} to use the value from the configuration.
 		@type timeout: float
 		@return: a tuple containing a boolean denoting whether this method timed out, and  a TextInfo representing the old or updated caret position or None if interupted by a script or focus event.
 		@rtype: tuple
- 		"""
+		"""
+		if timeout is None:
+			timeout = config.conf["editableText"]["caretMoveTimeout"]
+		else:
+			# This function's arguments are in seconds, but we want ms.
+			timeout *= 1000
+		# time.sleep accepts seconds, so retryInterval is in seconds.
+		# Convert to integer ms to avoid floating point precision errors when adding to elapsed.
+		retryMs = int(retryInterval * 1000)
 		elapsed = 0
 		newInfo=None
-		while elapsed < timeout:
+		while True:
 			if isScriptWaiting():
 				return (False,None)
 			api.processPendingEvents(processEventQueue=False)
@@ -70,9 +80,13 @@ class EditableText(ScriptableObject):
 				newInfo=None
 			else:
 				if newBookmark!=bookmark:
+					log.debug("Caret moved. Elapsed: %d ms" % elapsed)
 					return (True,newInfo)
+			if  elapsed >= timeout:
+				break
 			time.sleep(retryInterval)
-			elapsed += retryInterval
+			elapsed += retryMs
+		log.debug("Caret didn't move before timeout. Elapsed: %d ms" % elapsed)
 		return (False,newInfo)
 
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
