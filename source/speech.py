@@ -320,10 +320,8 @@ def _speakPlaceholderIfEmpty(info, obj, reason, index):
 		@return True if info was considered empty, and we attempted to speak the placeholder value.
 				False if info was not considered empty.
 	"""
-	textValue = None
-	if not info.isCollapsed:
-		textValue = info.text
-	if not textValue or textValue == ' ' or textValue == '\n':
+	textEmpty = obj._isTextEmpty
+	if textEmpty:
 		speakObjectProperties(obj,reason=reason,placeholder=True)
 		return True
 	return False
@@ -332,7 +330,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True, "placeholder":True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True, "placeholder":False}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -367,7 +365,6 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		allowProperties["columnNumber"]=False
 	if isEditable:
 		allowProperties['value']=False
-		allowProperties['placeholder']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
 	if reason==controlTypes.REASON_ONLYCACHE:
@@ -1147,7 +1144,9 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
-		if not valueText and placeholderValue:
+		if placeholderValue:
+			if valueText:
+				log.error("valueText exists when expected none: valueText:'%s' placeholderText:'%s'"%(valueText,placeholderText))
 			valueText = placeholderText
 		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
 		if content and not speakContentFirst:

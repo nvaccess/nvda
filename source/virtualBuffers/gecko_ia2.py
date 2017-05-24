@@ -22,41 +22,11 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
-	def _getPlaceholderAttribute(self, attrs):
-		"""Gets the placeholder attribute to be used.
-				@returns The placeholder attribute when there a value is not present in the related field.
-					None when the field has a value
-		"""
-		placeholder = attrs.get("IAccessible2::attribute_placeholder")
-		# For efficiency, only check if it is valid to return placeholder when we have a placeholder value to return.
-		if not placeholder:
-			return None;
-		# Get the start and end offsets for the value. This can be used to check if the field has a value.
-		try:
-			start, end = self._getOffsetsFromFieldIdentifier(
-				int(attrs.get('controlIdentifier_docHandle')),
-				int(attrs.get('controlIdentifier_ID')))
-		except (LookupError, ValueError):
-			return placeholder
-		else:
-			valueLen = end - start
-			if not valueLen: # value is empty, use placeholder
-				return placeholder
-			# Because fetching the value of the field could result in a large amount of text
-			# we only do it in order to check for space, or newline.
-			# We first compare the length by comparing the offselts, if the length is less than 2 (ie
-			# could hold space or \n)
-			if valueLen < 2:
-				controlFieldText = self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text
-				if not controlFieldText or controlFieldText == ' ' or controlFieldText == '\n':
-					return placeholder
-		return None
-
 	def _normalizeControlField(self,attrs):
 		ariaCurrent = attrs.get("IAccessible2::attribute_current")
 		if ariaCurrent != None:
 			attrs['current']= ariaCurrent
-		placeholder = self._getPlaceholderAttribute(attrs)
+		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder != None:
 			attrs['placeholder']= placeholder
 		accRole=attrs['IAccessible::role']

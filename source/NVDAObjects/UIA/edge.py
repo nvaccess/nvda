@@ -186,7 +186,8 @@ class EdgeTextInfo(UIATextInfo):
 			field['states'].add(controlTypes.STATE_EDITABLE)
 		# report if the field is 'current'
 		field['current']=obj.isCurrent
-		field['placeholder']=obj.placeholder
+		if obj.placeholder and obj._isTextEmpty:
+			field['placeholder']=obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		ariaProperties=obj.UIAElement.currentAriaProperties
@@ -449,7 +450,23 @@ class EdgeNode(UIA):
 
 	def _get_placeholder(self):
 		ariaProperties=splitUIAElementAttribs(self.UIAElement.currentAriaProperties)
-		return ariaProperties.get('placeholder')
+		ariaPlaceholder = ariaProperties.get('placeholder', None)
+		return ariaPlaceholder
+
+	def _get__isTextEmpty(self):
+		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
+		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+		# we were unable to expand the range, it is collapsed
+		if ti.isCollapsed:
+			return True
+		# NOTE: we can not check the result of the EdgeTextInfo move implementation to determine if we added
+		# any characters to the range, since it seems to return 1 even when the text property has not changed.
+		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+		text = ti.text
+		# Edge can report a range of values for empty fields:
+		if text == " " or text == "\n" or text =="\n " or text=="\n\n" or text ==" \n":
+			return True
+		return False
 
 class EdgeList(EdgeNode):
 

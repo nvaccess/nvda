@@ -642,9 +642,7 @@ def getBrailleTextForProperties(**propertyValues):
 			textList.append(controlTypes.isCurrentLabels[True])
 	placeholder = propertyValues.get('placeholder', None)
 	if placeholder:
-		# Translators: Displayed in braille for a edit field.
-		# %s is replaced with the placeholder text for the field
-		textList.append(_("placeholder: %s") % placeholder)
+		textList.append(placeholder)
 	if includeTableCellCoords and  cellCoordsText:
 		textList.append(cellCoordsText)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
@@ -670,8 +668,11 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
+		placeholderValue = obj.placeholder
+		if placeholderValue and not obj._isTextEmpty:
+				placeholderValue = None
 		text = getBrailleTextForProperties(name=obj.name, role=role,
-			current=obj.isCurrent, placeholder=obj.placeholder,
+			current=obj.isCurrent, placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -715,6 +716,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current=field.get('current', None)
+	placeholder=field.get('placeholder', None)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
@@ -745,7 +747,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current}
+			"states": states,"value":value, "current":current, "placeholder":placeholder}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
