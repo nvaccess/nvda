@@ -17,6 +17,7 @@ import config
 import nvwave
 import speech
 import speechXml
+import languageHandler
 
 SAMPLES_PER_SEC = 22050
 BITS_PER_SAMPLE = 16
@@ -80,6 +81,13 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		# OneCore's character speech sounds weird and doesn't support pitch alteration.
 		# Therefore, we don't use it.
 		return None
+
+	def convertLangChangeCommand(self, command):
+		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
+		if lcid in (0, languageHandler.LOCALE_CUSTOM_UNSPECIFIED):
+			log.debugWarning("Invalid language: %s" % command.lang)
+			return None
+		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
 
 class SynthDriver(SynthDriver):
 	name = "oneCore"
