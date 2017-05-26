@@ -58,7 +58,9 @@ class Math(Ia2Web):
 		try:
 			node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
 			# Try the data-mathml attribute.
-			attr = node.attributesForNames(1, (BSTR * 1)("data-mathml"), (c_short * 1)(0,))
+			attrNames = (BSTR * 1)("data-mathml")
+			namespaceIds = (c_short * 1)(0)
+			attr = node.attributesForNames(1, attrNames, namespaceIds)
 			if attr:
 				import mathPres
 				if not mathPres.getLanguageFromMath(attr) and self.language:
