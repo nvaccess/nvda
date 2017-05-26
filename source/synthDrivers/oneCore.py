@@ -86,7 +86,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 
 	def convertLangChangeCommand(self, command):
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
-		if lcid in (0, languageHandler.LOCALE_CUSTOM_UNSPECIFIED):
+		if lcid is languageHandler.LCID_NONE:
 			log.debugWarning("Invalid language: %s" % command.lang)
 			return None
 		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
