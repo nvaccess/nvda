@@ -193,7 +193,7 @@ class SynthDriver(SynthDriver):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
 			l=v.languages[1:]
-			# #7167: Some languages names require unicode characters EG: Norwegian Bokmål
+			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
 			name=v.name.decode("UTF-8")
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
 			identifier=os.path.basename(v.identifier).lower()
