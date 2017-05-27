@@ -26,26 +26,26 @@ def playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=None, 
 	# Have a fake wx.Point in case min pos is not defined on multiple monitors.
 	if screenMinPos is None:
 		screenMinPos = wx.Point()
-	if x > screenWidth or y > screenHeight:
-		return
-	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
-	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
-	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
-	if detectBrightness:
-		startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
-		startY=min(max(y-blurFactor,0),screenHeight)+screenMinPos.y
-		width=min(blurFactor+1,screenWidth)
-		height=min(blurFactor+1,screenHeight)
-		grey=screenBitmap.rgbPixelBrightness(mouseHandler.scrBmpObj.captureImage( startX, startY, width, height)[0][0])
-		brightness=grey/255.0
-		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
-		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
-		brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
-	else:
-		brightness=config.conf['mouse']['audioCoordinates_maxVolume']
-	leftVolume=int((85*((screenWidth-float(x))/screenWidth))*brightness)
-	rightVolume=int((85*(float(x)/screenWidth))*brightness)
-	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
+	# Do not play any tone if offscreen.
+	if 0 <= x <= screenWidth or 0 <= y <= screenHeight:
+		minPitch=config.conf['mouse']['audioCoordinates_minPitch']
+		maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
+		curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
+		if detectBrightness:
+			startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
+			startY=min(max(y-blurFactor,0),screenHeight)+screenMinPos.y
+			width=min(blurFactor+1,screenWidth)
+			height=min(blurFactor+1,screenHeight)
+			grey=screenBitmap.rgbPixelBrightness(mouseHandler.scrBmpObj.captureImage( startX, startY, width, height)[0][0])
+			brightness=grey/255.0
+			minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
+			maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
+			brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
+		else:
+			brightness=config.conf['mouse']['audioCoordinates_maxVolume']
+		leftVolume=int((85*((screenWidth-float(x))/screenWidth))*brightness)
+		rightVolume=int((85*(float(x)/screenWidth))*brightness)
+		tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
 
 def playObjectCoordinates(obj):
 	"""Plays the audio coordinate for the object.  
