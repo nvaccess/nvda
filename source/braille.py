@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V.
 
 import sys
 import itertools
@@ -1283,7 +1283,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft:
+		if region.focusToHardLeft or config.conf["braille"]["focusPresentation"]==1:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:

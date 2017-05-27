@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1623,6 +1623,20 @@ class BrailleSettingsDialog(SettingsDialog):
 		wordWrapText = _("Avoid splitting &words when possible")
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		# Translators: The label for a setting in braille settings to select how the focus object should be presented on a braille display.
+		focusPresentationLabelText = _("&Focus presentation:")
+		focusPresentationChoices=[
+			# Translators: The label for a braille focus presentation setting that maximizes focus and ancestry information on the braille display, giving priority to focus information.
+			# This was the pre NVDA 2017.3 default.
+			_("Maximize braille output"),
+			# Translators: The label for a braille focus presentation setting that always shows the object with focus at the very left of the braille display.
+			_("Always left"),
+		]
+		self.focusPresentationList = sHelper.addLabeledControl(focusPresentationLabelText, wx.Choice, choices=focusPresentationChoices)
+		try:
+			self.focusPresentationList.SetSelection(config.conf["braille"]["focusPresentation"])
+		except:
+			pass
 
 	def postInit(self):
 		self.displayList.SetFocus()
@@ -1649,6 +1663,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		config.conf["braille"]["focusPresentation"] = self.focusPresentationList.GetSelection()
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 	def onDisplayNameChanged(self, evt):
