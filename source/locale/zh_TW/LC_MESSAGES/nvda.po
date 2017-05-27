@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-17 00:10+1000\n"
-"PO-Revision-Date: 2017-03-20 17:39+0800\n"
+"POT-Creation-Date: 2017-05-08 16:33+1000\n"
+"PO-Revision-Date: 2017-05-09 15:45+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -1621,7 +1621,7 @@ msgstr "窗格"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
-msgstr "對話方塊"
+msgstr "對話框"
 
 #. Translators: The text used to identify check boxes such as select check box.
 msgid "check box"
@@ -2336,6 +2336,10 @@ msgstr "沒選取"
 msgid "not checked"
 msgstr "沒勾選"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "尚未按下"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "目前"
@@ -2528,8 +2532,9 @@ msgstr "切換目前所在程式的NVDA睡眠模式的開關"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "讀出系統焦點所在的一行，連按兩下拼讀這一行"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr "讀出系統焦點所在的一行，連按兩下拼讀這一行，連按三下讀出字詞解釋。"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -3447,67 +3452,67 @@ msgstr "讀出目前啟動的應用程式檔案名稱，及載入的模組名稱
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
-msgstr "開啟NVDA一般設定對話方塊"
+msgstr "開啟NVDA一般設定對話框"
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "開啟 NVDA 語音合成對話方塊"
+msgstr "開啟 NVDA 語音合成對話框"
 
 #. Translators: Input help mode message for go to voice settings dialog command.
 msgid "Shows the NVDA voice settings dialog"
-msgstr "開啟NVDA語音設定對話方塊"
+msgstr "開啟NVDA語音設定對話框"
 
 #. Translators: Input help mode message for go to braille settings dialog command.
 msgid "Shows the NVDA braille settings dialog"
-msgstr "開啟「點字」設定對話方塊"
+msgstr "開啟「點字」設定對話框"
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "開啟NVDA鍵盤設定對話方塊"
+msgstr "開啟NVDA鍵盤設定對話框"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "開啟 NVDA 鼠標設定對話方塊"
+msgstr "開啟 NVDA 鼠標設定對話框"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
 msgid "Shows the NVDA review cursor settings dialog"
-msgstr "開啟「瀏覽游標」設定對話方塊"
+msgstr "開啟「瀏覽游標」設定對話框"
 
 #. Translators: Input help mode message for go to input composition dialog.
 msgid "Shows the NVDA input composition settings dialog"
-msgstr "開啟「輸入法組字」設定對話方塊"
+msgstr "開啟「輸入法組字」設定對話框"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "開啟NVDA物件顯示設定對話方塊"
+msgstr "開啟NVDA物件顯示設定對話框"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "開啟NVDA瀏覽模式設定對話方塊"
+msgstr "開啟NVDA瀏覽模式設定對話框"
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "開啟NVDA文件格式設定對話方塊"
+msgstr "開啟NVDA文件格式設定對話框"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "開啟「通用語音字庫」設定對話方塊"
+msgstr "開啟「通用語音字庫」設定對話框"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "開啟「特定語音字庫」設定對話方塊"
+msgstr "開啟「特定語音字庫」設定對話框"
 
 #. Translators: Input help mode message for opening temporary dictionary.
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "開啟「暫存字庫」設定對話方塊"
+msgstr "開啟「暫存字庫」設定對話框"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "開啟「標點符號/特殊符號讀音」設定對話方塊"
+msgstr "開啟「標點符號/特殊符號讀音」設定對話框"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "開啟「輸入手勢」設定對話方塊"
+msgstr "開啟「輸入手勢」設定對話框"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3717,7 +3722,7 @@ msgstr "讀出手指新觸摸的物件或內容，若所觸摸的物件與前次
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "開啟NVDA組態設定對話方塊"
+msgstr "開啟NVDA組態設定對話框"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -5536,7 +5541,7 @@ msgstr "無法儲存設定，可能是一個唯讀檔案系統。"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "另一個  NVDA 設定對話方塊已開啟，請先將其關閉。"
+msgstr "另一個  NVDA 設定對話框已開啟，請先將其關閉。"
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -5640,7 +5645,7 @@ msgstr "通用語音字庫 (&D)..."
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "可新增讀音項目至通用語音字庫的對話方塊"
+msgstr "可新增讀音項目至通用語音字庫的對話框"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -5649,7 +5654,7 @@ msgstr "特定語音字庫 (&V)..."
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
-msgstr "可新增讀音項目至特定語音字庫的對話方塊"
+msgstr "可新增讀音項目至特定語音字庫的對話框"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
@@ -5658,7 +5663,7 @@ msgstr "暫存語音字庫 (&T)..."
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "可新增讀音項目至暫存語音字庫的對話方塊"
+msgstr "可新增讀音項目至暫存語音字庫的對話框"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -5825,7 +5830,7 @@ msgstr "登入 Windows 後自動啟動 NVDA (&A)"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
-msgstr "每當NVDA啟動時顯示此對話方塊"
+msgstr "每當NVDA啟動時顯示此對話框"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -6079,7 +6084,7 @@ msgstr "觸發器 (&T)..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "暫時停用所有的自動觸發 (&I)"
+msgstr "暫時停用所有的觸發器 (&I)"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -6161,7 +6166,7 @@ msgstr "無法儲存組態設定檔觸發器，可能是NVDA程式位於唯讀�
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr "設定檔自動觸發"
+msgstr "設定檔觸發器"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
@@ -6171,7 +6176,7 @@ msgstr "%s應用程式"
 
 #. Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 msgid "Triggers"
-msgstr "自動觸發"
+msgstr "觸發器"
 
 #. Translators: The label of the profile list in the Configuration Profile Triggers dialog.
 msgid "Profile"

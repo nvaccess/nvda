@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-17 00:10+1000\n"
+"POT-Creation-Date: 2017-05-12 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
+"Last-Translator: Leonard de Ruijter <leonard@babbage.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1971,7 +1971,7 @@ msgstr "tekstframe"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "aankruisknop"
+msgstr "schakelaar"
 
 msgid "border"
 msgstr "begrenzing"
@@ -2093,7 +2093,7 @@ msgid "font chooser"
 msgstr "lettertypekiezer"
 
 msgid "line"
-msgstr "lijn"
+msgstr "regel"
 
 #. Translators: Identifies a font name.
 msgid "font name"
@@ -2334,6 +2334,10 @@ msgstr "niet geselecteerd"
 msgid "not checked"
 msgstr "uitgeschakeld"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "niet ingedrukt"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "huidig"
@@ -2536,10 +2540,12 @@ msgstr "Schakelt slaapmodus aan of uit voor de actieve applicatie."
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"Geeft de regel weer waarop de cursor zich bevindt. Bij dubbel drukken wordt "
-"de regel gespeld."
+"Geeft de regel weer waarop de cursor van de applicatie zich bevindt. Bij "
+"dubbel drukken wordt de regel gespeld. Bij drie keer drukken wordt de regel "
+"gespeld met gebruik van karakterbeschrijvingen."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4448,7 +4454,7 @@ msgstr "standaardstijl"
 
 #. Translators: Indicates that cell does not have border lines.
 msgid "no border lines"
-msgstr ""
+msgstr "geen randen"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -7226,12 +7232,12 @@ msgstr "Stijlen"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
 msgid "Both Colors and Styles"
-msgstr ""
+msgstr "Zowel kleuren als stijlen"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
 msgid "Cell borders:"
-msgstr ""
+msgstr "Celranden:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7830,55 +7836,55 @@ msgstr "van {firstAddress} {firstContent} tot {lastAddress} {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
-msgstr ""
+msgstr "bovenrand"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "bottom edge"
-msgstr ""
+msgstr "onderrand"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "left edge"
-msgstr ""
+msgstr "linkerrand"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "right edge"
-msgstr ""
+msgstr "rechterrand"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "up-right diagonal line"
-msgstr ""
+msgstr "diagonale lijn omhoog"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "down-right diagonal line"
-msgstr ""
+msgstr "diagonale lijn omlaag"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "horizontal borders except outside"
-msgstr ""
+msgstr "horizontale randen uitgezonderd buiten"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "vertical borders except outside"
-msgstr ""
+msgstr "verticale randen uitgezonderd buiten"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "continuous"
-msgstr ""
+msgstr "continu"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dashed"
-msgstr ""
+msgstr "streepjes"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dash dot"
-msgstr ""
+msgstr "streepje-stip"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dash dot dot"
-msgstr ""
+msgstr "streepje-stip-stip"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dotted"
-msgstr ""
+msgstr "gestipppeld"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "double"
@@ -7886,35 +7892,35 @@ msgstr "dubbel"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "slanted dash dot"
-msgstr ""
+msgstr "schuine streep-stip"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
-msgstr ""
+msgstr "haar"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thin"
-msgstr ""
+msgstr "dun"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium"
-msgstr ""
+msgstr "middel"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thick"
-msgstr ""
+msgstr "dik"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dash dot dot"
-msgstr ""
+msgstr "normaal streepje-stip-stip"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dash dot"
-msgstr ""
+msgstr "normaal streepje-stip"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dashed"
-msgstr ""
+msgstr "normaal streepjes"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
@@ -7929,22 +7935,22 @@ msgstr "{color} {desc}"
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} surrounding border"
-msgstr ""
+msgstr "{desc} rand rondom"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} top and bottom edges"
-msgstr ""
+msgstr "{desc} boven- en onderrand"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} left and right edges"
-msgstr ""
+msgstr "{desc} linker- en rechterrand"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
-msgstr ""
+msgstr "{desc} diagonale lijnen omhoog en omlaag"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format

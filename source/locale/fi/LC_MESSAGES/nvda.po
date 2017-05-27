@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-17 00:10+1000\n"
-"PO-Revision-Date: 2017-03-17 14:51+0200\n"
+"POT-Creation-Date: 2017-05-08 16:33+1000\n"
+"PO-Revision-Date: 2017-05-04 19:35+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -129,17 +129,17 @@ msgstr "Alue"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "Ei hiljennystä"
+msgstr "Ei käytössä"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Hiljennä puhuttaessa ja ääntä toistettaessa"
+msgstr "Puhuttaessa ja ääntä toistettaessa"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
-msgstr "Hiljennä aina"
+msgstr "Aina"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2196,11 +2196,11 @@ msgstr "vain luku"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "avattu"
+msgstr "laajennettu"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "suljettu"
+msgstr "supistettu"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
@@ -2331,6 +2331,10 @@ msgstr "ei valittu"
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "ei valittu"
+
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "ei painettu"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -2534,10 +2538,11 @@ msgstr ""
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"Lukee sovelluskohdistimen alla olevan rivin. Tämän komennon kahdesti "
-"painaminen tavaa sen."
+"Lukee sovelluskohdistimen alla olevan rivin. Kahdesti painettaessa rivi "
+"tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4708,7 +4713,7 @@ msgstr "Kieli"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
-msgstr "&Puheääni:"
+msgstr "&Puheääni"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4717,7 +4722,7 @@ msgstr "Puheääni"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
-msgstr "&Muunnelma:"
+msgstr "&Muunnelma"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4726,7 +4731,7 @@ msgstr "Muunnelma"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
-msgstr "&Nopeus:"
+msgstr "&Nopeus"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4735,7 +4740,7 @@ msgstr "Nopeus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
-msgstr "&Voimakkuus:"
+msgstr "&Voimakkuus"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4744,7 +4749,7 @@ msgstr "Voimakkuus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
-msgstr "&Korkeus:"
+msgstr "&Korkeus"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4753,7 +4758,7 @@ msgstr "Korkeus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
-msgstr "&Sävy:"
+msgstr "&Sävy"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -6308,11 +6313,11 @@ msgstr "Virhe uudelleennimettäessä profiilia."
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "Current application (%s)"
-msgstr "Nykyinen sovellus (%s)"
+msgstr "Nykyisessä sovelluksessa (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
-msgstr "Lue kaikki"
+msgstr "Jatkuvassa luvussa"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
 msgid ""
@@ -6353,7 +6358,7 @@ msgid "Manual activation"
 msgstr "Ota käyttöön manuaalisesti"
 
 msgid "Use this profile for:"
-msgstr "Käytä tätä profiilia kohteessa:"
+msgstr "Käytä tätä profiilia:"
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
@@ -6830,7 +6835,7 @@ msgstr "Keskeytä puhe Enter-näppäintä painettaessa"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Käytä pika&lukua Lue kaikki -toiminnossa"
+msgstr "Käytä pika&lukua jatkuvassa luvussa"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7018,12 +7023,12 @@ msgstr "Selaustilan asetukset"
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 msgid "&Maximum number of characters on one line"
-msgstr "&Merkkien enimmäismäärä rivillä:"
+msgstr "&Merkkien enimmäismäärä rivillä"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 msgid "&Number of lines per page"
-msgstr "R&ivien enimmäismäärä sivulla:"
+msgstr "R&ivien enimmäismäärä sivulla"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7365,7 +7370,7 @@ msgstr "Vilkkuva kohdistin"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "&Kohdistimen vilkkumisnopeus (ms):"
+msgstr "&Kohdistimen vilkkumisnopeus (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
@@ -7373,7 +7378,7 @@ msgstr "Kohdistimen m&uoto:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
-msgstr "&Ilmoitusten aikakatkaisu (sek):"
+msgstr "&Ilmoitusten aikakatkaisu (sek)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Braille tethered to:"

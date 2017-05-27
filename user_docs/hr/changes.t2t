@@ -3,6 +3,49 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+Novosti u ovoj inačici uključuju punu podršku stišavanja zvuka u Windows 10 nadogradnji za tvorce; ispravke za neke greške pri označavanju u načinu pregleda, uključujući probleme sa prečacom označi sve; značajna unaprjeđenja u podršci za Microsoft edge; i unaprjeđenja na webu kao što su to izvještavanja elemenata koji su označeni kao trenutni (koristeći aria-current).
+== Nove značajke ==
+- U Microsoft Excelu sada se mogu izgovarati granice ćelija koristeći `NVDA+f`. (#3044)
+- Dodana podrška za aria-current attribute. (#6358)
+- Automatsko prebacivanje jezika sada je podržano u Microsoft Edge-u. (#6852)
+- Dodana podrška za Windows Kalkulator u Windows 10 Enterprise LTSB (Long-Term Servicing Branch) i Server. (#6914)
+- Izvodeći prečicu "čitaj trenutni redak", tri puta brzo sriče redak fonetski. (#6893)
+- Novi jezik: Burmanski /Mjanmarski.
+- Unicode strelice gore i dolje, te znakovi za razlomke, sada se izgovaraju onako kako bi trebalo. (#3805)
+
+
+== Izmjene ==
+- Prilikom kretanja uz pomoć jednostavne navigacije u programima koji koriste UI Automation, ignoriraju se bezsadržajni sadržitelji, čineći tako kretanje lakšim. (#6948, #6950) 
+
+
+== Ispravke grešaka ==
+- Stavke izbornika na web stranicama (stavka izbornika potvrdni okvir i izborni gumbi) sada se mogu aktivirati kada se nalazite u načinu pregleda. (#6735)
+- Izgovaranje imena radnog lista je prevedeno. (#6848)
+- Pritisak tipke escape, kada je aktivan dijaloški okvir za potvrdu brisanja profila sada zatvara dijaloški okvir. (#6851)
+- Ispravljena su neka rušenja u Mozilla Firefoxu i drugim Gecko aplikacijama gdje je uključena značajka višezadačnosti. (#6885)
+- Izgovaranje pozadinskih boja u pregledu zaslona sada je točnije kada je tekst crtan sa transparentnom pozadinom. (#6467)
+- Unapređena podrška za aria-describedby u Internet Exploreru 11, uključujući podršku u okvirima, te kada su omogućeni višestruki identifikatori. (#5784)
+- U Windows 10 nadogradnji za tvorce, NVDA-ovo prigušivanje glasnoće ponovno radi kao i u prijašnjim inačicama NVDA, (TJ. utišavanje sa govorom i zvukom, uvijek utišaj, i bez utišavanja su sve dostupne). (#6933)
+- NVDA više neće neuspjevati kretnje ili izgovor većine (UIA) kontrola tamo, gdje tipkovnički prečac nije definiran. (#6779)
+- Više se ne dodavaju dva prazna razmaka u informaciji o tipkovničkom prečacu u većini (UIA) kontrola. (#6790)
+- Većina kombinacija tipaka na HIMS brajičnim retcima (NPR. razmaknica+točkica4) ne neuspjevaju se izvoditi, tj. ponovno funkcioniraju. (#3157)
+- Otklonjena greška, u kojoj je spajanje brajičnih redaka na nekim sustavima i jezicima bilo nemoguće. (#6845)
+- Smanjena je šansa oštećenja konfiguracijske datoteke prilikom isključivanja Windowsa. Konfiguracija se zapisuje u privremenu datoteku, prije zamjene iste. (#3165)
+- Prilikom pritiska prečaca "slovkaj trenutni redak", tri puta, kako bi se slovkao redak, koristi se ispravan jezik za slovkane znakove. (#6726)
+- Kretanje po redku u Microsoft Edgeu sada je tri puta brže u Windows 10 Nadogradnji za tvorce. (#6994)
+- NVDA više ne izgovara "Web Runtime grupiranje" kada se fokusiraju Microsoft Edge dokumenti u Windows 10 nadogradnji za tvorce. (#6948)
+- Adobe Acrobat Reader se više ne ruši u većini PDF dokumenata, (točnije, dokumente, koji sadrže prazne atribute ActualText). (#7021, #7034)
+- Sve postojeće inačice SecureCRT sada su podržane. (#6302)
+- U načinu pregleda u Microsoft Edgeu, interaktivne tablice (ARIA grids) više se ne preskaću prilikom kretanja po tablicama pomoću prečaca t i shift+t. (#6977)
+- U načinu pregleda, prilikom pritiska shift+home prilikom označavanja u naprijed sada odznačava početak redka kako je to očekivano. (#5746)
+- U načinu pregleda, prečac "označi sve", (ctrl+a) više ne neuspjeva označiti cijeli tekst ako kursor nije na početku teksta. (#6909)
+- Ispravljeni drugi manji rijetki problemi u načinu pregleda. (#7131)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
 = 2017.1 =
 Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupcima u Microsoft wordu; podrška za čitanje, kretanje i označavanje knjiga u Kindlu za osobna računala; i unaprjeđena podrška za microsoft edge.
 
@@ -19,9 +62,9 @@ Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupc
 - Dodana opcija u dijaloški okvir izađi koja omogućuje ponovno pokretanje sa uključenom dijagnostikom. (#6689)
 
 
-== Changes ==
+== Izmjene ==
 - Minimalna brzina titranja kursora sada je 200 MS. Ako je ovo prije bilo postavljeno na manju vrijednost, ta vrijednost će se povećati na 200 MS. (#6470)
-- U brajične postavke, Dodan je potvrdni okvir koji omogućuje - onemogućuje titranje kursora. Previously a value of zero was used to achieve this. (#6470)
+- U brajične postavke, Dodan je potvrdni okvir koji omogućuje - onemogućuje titranje kursora. Prije je to omogućavala vrijednost 0. (#6470)
 - Nadograđen eSpeak NG (commit e095f008, 10 Veljače 2017). (#6717)
 - Zbog izmjena u Windows 10 creators nadogradnji, opcija "uvijek stišavaj" više nije dostupna u NVDA glasovnim postavkama. Ali, još uvijek je dostupna u starijim inačicama Windowsa 10. (#6684)
 - zbog promjena u   Windows 10 Creators nadogradnji, način "stišavanja zvuka prilikom proizvodnje zvuka i govora" više se ne može uvjeravati u punu stišanost zvuka prije nego što počne govoriti, niti ne može ostaviti audiokanal otvoren  poslije zaustavljanja naglog stišavanja glasnoće. Ove izmjene ne utjeću na starije inačice windows 10 operacijskog sustava. (#6684)
@@ -44,7 +87,7 @@ Novosti u ovoj inačici uključuju Izvještavanje o poglavljima i tekstnim stupc
 
 
 == Izmjene za razvojne programere ==
-Ako želite doznati više, pogledajte ovaj dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.4 =
@@ -101,7 +144,7 @@ Poboljšanja u ovoj inačici uključuju unaprjeđenu podršku za Microsoft edge;
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, molimo Vas, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.3 =
@@ -157,7 +200,7 @@ Novosti u ovoj inačici uključuju mogučnost onemogučavanja pojedinačnih doda
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.2.1 =
@@ -207,7 +250,7 @@ Novosti u ovoj inačici uključuju mogučnost izvještavanja o pravopisnim pogre
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, molimo vas, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2016.1 =
@@ -259,7 +302,7 @@ Najvažnije novosti u ovoj inačici uključuju mogućnost neobaveznog smanjivanj
 
 
 == Izmjene za razvojne programere ==
-Ako želite pogledati izmjene za razvojne programere, molimo otvorite engleski dokument.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2015.4 =
@@ -357,7 +400,7 @@ Novosti u ovoj inačici uključuju početnu podršku za windows 10 operacijski s
 
 
 == Izmjene za razvojne programere ==
-		Za više informacija, pogledajte dokument na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2015.2 =
@@ -393,7 +436,7 @@ Nove značajke u ovoj inačici uključuju mogućnost čitanja grafova u microsof
 
 
 == Izmjene za razvojne programere ==
-Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokument "Što je novo" na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2015.1 =
@@ -452,7 +495,7 @@ Unapređenja u ovoj inačici uključuju način pregleda za dokumente u Microsoft
 
 
 == Izmjene za razvojne programere ==
-Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokument "Što je novo" na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2014.4 =
@@ -494,7 +537,7 @@ Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokumen
 
 == Promjene za razvojne programere ==
 
-Ako biste htjeli pogledati promjene za razvojne programere, molimo vas pogledajte dokument "što je novo" na engleskom jeziku.
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 = Starije verzije =
 
-Za više informacija o promjenama u starijim inačicama, molimo pogledajte dokument što je novo na engleskom jeziku.
+Informacije o starijim inačicama nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].

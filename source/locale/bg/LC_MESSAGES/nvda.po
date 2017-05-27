@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-03 00:10+1000\n"
-"PO-Revision-Date: 2017-02-14 23:24+0200\n"
+"POT-Creation-Date: 2017-05-12 00:10+1000\n"
+"PO-Revision-Date: 2017-05-14 08:28+0300\n"
 "Last-Translator: Kostadin Kolev <k_kolev1985@mail.bg>\n"
 "Language-Team: Български <>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 1.8.7 FS\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -769,7 +769,7 @@ msgstr "точка"
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
-msgstr "space"
+msgstr "Интервал"
 
 msgid "Focus mode"
 msgstr "Режим на фокус"
@@ -2333,6 +2333,34 @@ msgstr "немаркиран"
 msgid "not checked"
 msgstr "без отметка"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "Ненатиснат"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "Текущ"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "Текуща страница"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "Текуща стъпка"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "Текущо местоположение"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "Текуща дата"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "Текущ час"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2509,9 +2537,11 @@ msgstr "Включване или изключване на спящ режим 
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"Докладва реда под курсора. При двукратно натискане го прави буква по буква"
+"Докладва реда под курсора. При двукратно натискане го спелува буква по "
+"буква. При трикратно натискане го спелува посредством описанията на знаците."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -3937,31 +3967,31 @@ msgstr "Приложение по избор 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "backSpace"
+msgstr "BackSpace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "CapsLock"
+msgstr "Caps Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
-msgstr "control"
+msgstr "Control"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "alt"
-msgstr "alt"
+msgstr "Alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "shift"
-msgstr "shift"
+msgstr "Shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "windows"
-msgstr "windows"
+msgstr "Windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "enter"
+msgstr "Enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
@@ -3969,7 +3999,7 @@ msgstr "Enter от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
-msgstr "escape"
+msgstr "Escape"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
@@ -3981,15 +4011,15 @@ msgstr "Page Down"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
-msgstr "end"
+msgstr "End"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
-msgstr "home"
+msgstr "Home"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
-msgstr "delete"
+msgstr "Delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
@@ -3997,19 +4027,19 @@ msgstr "Delete от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
-msgstr "стрелка наляво"
+msgstr "Стрелка наляво"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
-msgstr "стрелка надясно"
+msgstr "Стрелка надясно"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "up arrow"
-msgstr "стрелка нагоре"
+msgstr "Стрелка нагоре"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "down arrow"
-msgstr "стрелка надолу"
+msgstr "Стрелка надолу"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
@@ -4017,7 +4047,7 @@ msgstr "Applications"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "NumLock"
+msgstr "Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
@@ -4085,92 +4115,92 @@ msgstr "Десетичен знак от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
-msgstr "INSERT от цифровия блок"
+msgstr "Insert от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr "0 от цифровия блок при включен NumLock"
+msgstr "0 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 1"
-msgstr "1 от цифровия блок при включен NumLock"
+msgstr "1 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 2"
-msgstr "2 от цифровия блок при включен NumLock"
+msgstr "2 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 3"
-msgstr "3 от цифровия блок при включен NumLock"
+msgstr "3 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 4"
-msgstr "4 от цифровия блок при включен NumLock"
+msgstr "4 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 5"
-msgstr "5 от цифровия блок при включен NumLock"
+msgstr "5 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 6"
-msgstr "6 от цифровия блок при включен NumLock"
+msgstr "6 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 7"
-msgstr "7 от цифровия блок при включен NumLock"
+msgstr "7 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 8"
-msgstr "8 от цифровия блок при включен NumLock"
+msgstr "8 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 9"
-msgstr "9 от цифровия блок при включен NumLock"
+msgstr "9 от цифровия блок при включен Num Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
-msgstr "INSERT"
+msgstr "Insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
-msgstr "ляв control"
+msgstr "Ляв Control"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right control"
-msgstr "десен Control"
+msgstr "Десен Control"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left windows"
-msgstr "ляв windows"
+msgstr "Ляв Windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
-msgstr "ляв shift"
+msgstr "Ляв Shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right shift"
-msgstr "десен shift"
+msgstr "Десен Shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left alt"
-msgstr "ляв alt"
+msgstr "Ляв Alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right alt"
-msgstr "десен alt"
+msgstr "Десен Alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right windows"
-msgstr "десен windows"
+msgstr "Десен Windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
-msgstr "прекъсване"
+msgstr "Прекъсване"
 
 #. Translators: This is the name of a key on the keyboard.
 msgctxt "keyLabel"
 msgid "tab"
-msgstr "tab"
+msgstr "Tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
@@ -4415,6 +4445,10 @@ msgstr "Стил %s"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "Стил по подразбиране"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Без гранични линии"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -5656,7 +5690,7 @@ msgstr "Временен речник"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
-msgstr "&За NVDA"
+msgstr "За NVDA"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
@@ -5990,8 +6024,7 @@ msgstr "Рестартиране със забранени добавки"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
-msgstr ""
-"Рестартиране с протоколиране за отстраняване на грешки"
+msgstr "Рестартиране с протоколиране за отстраняване на грешки"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -6230,10 +6263,10 @@ msgid "Error activating profile."
 msgstr "Грешка при активиране на профила."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
+msgid "This profile will be permanently deleted. This action cannot be undone."
 msgstr ""
-"Сигурен ли сте, че искате да изтриете този профил? Това действие не може да "
-"бъде отменено."
+"Този профил ще бъде изтрит окончателно. Това действие не може да бъде "
+"отменено."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7123,6 +7156,8 @@ msgid "Line &indentation reporting:"
 msgstr "Докладване на о&тстъпа на редовете:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Изключено"
 
@@ -7173,6 +7208,21 @@ msgstr "&Заглавия на редовете и колоните"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "&Координати на клетките"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Стилове"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Цветове и стилове"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Граници на клетката:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7740,6 +7790,11 @@ msgstr ""
 "всички редове надолу и надясно от нея в този регион. Двукратно натискане ще "
 "занули текущите заглавия на редовете за тази клетка."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Лист {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Входното съобщение е {title}: {message}"
@@ -7765,6 +7820,129 @@ msgstr "редактиране на коментар за клетка {address}
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} до {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "Горен ръб"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "Долен ръб"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "Ляв ръб"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "Десен ръб"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "Диагонална линия нагоре-надясно"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "Диагонална линия надолу-надясно"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "Хоризонтални граници с изключение на извън"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "Вертикални граници с изключение на извън"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "Непрекъсната"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "Прекъсвана"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "Тире-точка"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "Тире-точка-точка"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "Пунктирана"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "Двойна"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "Наклонена тире-точка"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "Косъм"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "Тънка"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "Средна"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "Дебела"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "Средна тире-точка-точка"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "Средна тире-точка"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "Средна прекъсвана"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} Обкръжаваща граница"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} горни и долни ръбове"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} Леви и десни ръбове"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} диагонални линии нагоре-надясно и надолу-надясно "
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8790,3 +8968,8 @@ msgstr "HIMS серии Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "Сигурен ли сте, че искате да изтриете този профил? Това действие не може "
+#~ "да бъде отменено."
