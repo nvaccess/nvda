@@ -23,7 +23,7 @@ Najvýznamnejšie prednosti programu:
 - Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré podporujú vstup pomocou 8-bodového počítačového kódu
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do 48 jazykov
+- Preložený do 50 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
@@ -32,7 +32,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 48 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Katalánčina, Kolumbijská španielčina, Kórejčina, Litovčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 50 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Barmčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Kannada, Katalánčina, Kolumbijská španielčina, Kórejčina, Litovčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
 ++ Podpora hlasového výstupu ++
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -286,7 +286,7 @@ NVDA obsahuje nasledujúce klávesové skratky súvisiace so systémovým kurzor
 %kc:beginInclude
 || Názov | Klávesová skratka pre Desktop | Klávesová skratka pre laptop | Popis |
 | Plynulé čítanie | NVDA+šípka dolu | NVDA+A | Prečíta text od pozície systémového kurzora do konca textu pri čom sa systémový kurzor posúva |
-| Aktuálny riadok | NVDA+šípka hore | NVDA+l | Oznámi alebo vyhláskuje aktuálny riadok zameraný systémovým kurzorom |
+| Aktuálny riadok | NVDA+šípka hore | NVDA+l | Prečíta   aktuálny riadok zameraný systémovým kurzorom. Stlačené dvakrát rýchlo za sebou vyhláskuje riadok a stlačené trikrát za sebou vyhláskuje riadok foneticky.|
 | Aktuálny výber | NVDA+Shift+šípka hore | NVDA+shift+s | Oznámi práve vybratý text |
 | Nasledujúca veta | alt+šípka dole | alt+šípka dole | presunie systémový kurzor na nasledujúcu vetu a prečíta ju (platí len pre Microsoft Word a Outlook) |
 | Predchádzajúca veta | alt+šípka hore | alt+šípka hore | Presunie systémový kurzor na predchádzajúcu vetu a prečíta ju (platí len pre Microsoft Word a Outlook) |
@@ -700,7 +700,7 @@ V okne konverzácie:
 
 ++ Kindle pre PC ++
 NVDA podporuje čítanie a prácu s knihami v aplikácii amazon Kindle pre PC.
-Funkcia je však dostupná len pre knihy, ktoré podporujú tzv. vylepšenú sadzbu (Enhanced Typesetting). Toto si môžete overiť v detailoch konkrétnej knihy.
+Funkcia je však dostupná len pre knihy, ktoré majú atribút "Screen Reader: Supported". Toto si môžete overiť v detailoch konkrétnej knihy.
 
 Knihy sú zobrazované v režime prehliadania.
 Režim prehliadania sa automaticky aktivuje po otvorení knihy, alebo po zobrazení textu knihy.
@@ -1263,6 +1263,7 @@ Takto môžete nastaviť:
  - Tabuľky
  - Hlavičky riadkov stĺpcov tabuľky
  - súradnice buniek tabuľky
+- orámovanie (vypnuté, štýly, farby a štýly)
 - Prvky
  - nadpisy
   - odkazy
