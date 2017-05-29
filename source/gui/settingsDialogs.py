@@ -1596,7 +1596,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		except:
 			pass
 		if not self.showCursorCheckBox.GetValue():
-			self.cursorReviewShapeList.Disable()
+			self.cursorShapeReviewList.Disable()
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message timeout (sec)")

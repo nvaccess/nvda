@@ -38,8 +38,10 @@ def upgradeConfigFrom_1_to_2(profile):
 	# Previously, the same cursor shape was used for focus and review
 	try:
 		cursorShape = int(profile["braille"]["cursorShape"])
-		profile["braille"]["cursorShapeFocus"] = profile["braille"]["cursorShapeReview"] = cursorShape
 	except KeyError as e:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("No cursorShape, no action taken.")
 		pass
+	else:
+		del profile["braille"]["cursorShape"]
+		profile["braille"]["cursorShapeFocus"] = cursorShape
