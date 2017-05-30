@@ -115,8 +115,15 @@ class CursorManager(baseObject.ScriptableObject):
 		if not self._lastSelectionMovedStart and not oldInfo.isCollapsed:
 			info.move(textInfos.UNIT_CHARACTER,-1)
 		if posUnit is not None:
+			# expand and collapse to ensure that we are aligned with the end of the intended unit
 			info.expand(posUnit)
-			info.collapse(end=posUnitEnd)
+			try:
+				info.collapse(end=posUnitEnd)
+			except RuntimeError:
+				# MS Word has a "virtual linefeed" at the end of the document which can cause RuntimeError to be raised.
+				# In this case it can be ignored.
+				# See #7009
+				pass
 			if posUnitEnd:
 				info.move(textInfos.UNIT_CHARACTER,-1)
 		if direction is not None:
