@@ -1,7 +1,6 @@
 ﻿#locale/vi/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
-#Author: nguyen Van dung; adding and edited by Dang Hoai Phuc, Jan 2017
+#Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -43,7 +42,7 @@ negative number	âm	none	norep
 # Standard punctuation/symbols
 !	chấm than	all
 "	ngoặc kép	most
-\#	báo số	most
+\#	báo số	some
 $	đô la	all	norep
 £	đồng bảng	all	norep
 €	u rô	all	norep
@@ -53,8 +52,8 @@ $	đô la	all	norep
 %	phần trăm	some
 &	và	some
 '	nháy đơn	all
-(	mở ngoặc tròn	most
-)	đóng ngoặc tròn	most
+(	mở ngoặc tròn	always
+)	đóng ngoặc tròn	always
 *	sao	some
 +	cộng	some
 ,	phẩy	all	always
@@ -63,8 +62,8 @@ $	đô la	all	norep
 /	gạch chéo	some
 :	hai chấm	most	norep
 ;	chấm phẩy	most
-<	nhỏ hơn	most
->	lớn hơn	most
+<	nhỏ hơn	some
+>	lớn hơn	some
 =	bằng	some
 ?	chấm hỏi	all
 @	a còng	some
@@ -88,7 +87,7 @@ _	gạch dưới	most
 ”	đóng ngoặc kép	most
 ‘	nháy đơn trái	most
 ’	nháy đơn phải	most
-–	gạch ngang	most
+–	gạch ngang	always
 —	gạch nối	most
 ●	bun lét tròn	most
 ¨	dấu tách đôi	most
@@ -110,11 +109,13 @@ _	gạch dưới	most
 ®	đã được đăng ký	some
 ™	Thương hiệu	some
 ©	bản quyền	some
-±	cộng hoặc trừ	most
-×	lần	most
-÷	chia cho	most
+±	cộng hoặc trừ	some
+×	lần	some
+÷	chia cho	some
 ←	mũi tên trái	some
+↑	mũi tên lên	some
 →	mũi tên phải	some
+↓	mũi tên xuống	some
 ✓	dấu kiểm	some
 ✔	dấu kiểm	some
 
@@ -139,6 +140,7 @@ _	gạch dưới	most
 
 # Miscellaneous Mathematical Operators
 
+# Miscellaneous Mathematical Operators
 ∑	Tổng	none
 √	Căn bậc hai	none
 ∛	Căn bậc ba	none
@@ -149,13 +151,13 @@ _	gạch dưới	most
 ∠	góc	none
 ∥	song song với	none
 ∦	không song song với	none
-∧	và	none
-∨	hoặc	none
+∧	log và	none
+∨	log hoặc	none
 ∩	giao	none
 ∪	hợp	none
 ∫	tích phân	none
-∴	THEREFORE	none
-∵	BECAUSE	none
+∴	kết luận	none
+∵	vì	none
 ∶	Tỉ suất	none
 ∷	Tỉ lệ	none
 ≤	Nhỏ hơn hoặc bằng	none
@@ -164,3 +166,20 @@ _	gạch dưới	most
 ⊃	Tập cha của	none
 ⊆	Tập con bằng của	none
 ⊇	Tập cha bằng của	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	Một phần bảy	none
+⅑	Một phần chín	none
+⅒	Một phần mười	none
+⅓	Một phần ba	none
+⅔	Hai phần ba	none
+⅕	Một phần năm	none
+⅖	Hai phần năm	none
+⅗	Ba phần tư	none
+⅘	Bốn phần năm	none
+⅙	Một phần sáu	none
+⅚	Năm phần sáu	none
+⅛	Một phần tám	none
+⅜	Ba phần tám		none
+⅝	Năm phần tám	none
+⅞	Bảy phần tám	none

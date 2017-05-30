@@ -1177,15 +1177,15 @@ Napomena da za jezike kao što je Kineski, izgovor opisa za dodatne kandidate se
 Ova opcija može biti korisna za Korejski i Japanski.
 
 ==== Prijavi izmene u nizu karaktera koji se čita====
-Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
-You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
-This option is on by default.
-Note some older input methods such as Chinese ChangJie may not use the reading string to hold precomposition characters, but instead use the composition string directly. Please see the next option for configuring reporting of the composition string.
+Neki metodi znosa kao što su Chinese novi fonetski i novi ChangJie imaju niz čitanja(takođe zvan niz pre sastava).
+Možete izabrati da li se ove promene prijavljuju.
+Ova opcija je uključena po podrazumevanim podešavanjima.
+Napomena da neki stariji metodi unosa kao što su Kineski ChangJie možda neće imati niz čitanja, ali će koristiti niz sastava. Molimo pogledajte sledeću opciju za podešavanje niza sastava.
 
 ==== Prijavi promene u nizu sastava ====
-After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
-This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
-This option is on by default.
+Nakon što se podaci povežu u spravan simbol, većina metoda unosa to čuva u niz sastava.
+Ova opcija bira da li će NVDA prijaviti ovakve simbole.
+Uključena je po podrazumevanim podešavanjima.
 
 +++ Podešavanja režima pretraživanja(NVDA+control+b) +++
 Dijalog za podešavanja režima pretraživanja se nalazi u meniju podešavanja, opcija"režim pretraživanja...".
@@ -1256,1056 +1256,1056 @@ Možete podesiti prijavljivanje sledećih elemenata:
  - Brojevi strana
  - Brojevi redova
  - Prijavljivanje uvlačenja redova[(isključeno, govor, tonovi, govor i tonovi) #lineIndentationOptions]
- - Paragraph indentation (e.g. hanging indent, first line indent)
- - Line spacing (single, double etc)
- - Alignment
-- Table information
- - Tables
- - Row/column headers
- - Cell coordinates
- - Cell borders [(Off, Styles, Both Colors and Styles)
-- Elements
- - Headings
- - Links
- - Lists
- - Block quotes
- - Landmarks
- - Frames
- - Clickable
+ - Uvlačenja pasusa(na primer puno uvlačenje, uvučen prvi red)
+ - Odvajanje redova (Pojedinačno, dvostruko i tako dalje)
+ - Poravnanje
+- Informacije o tabelama
+ - Tabele
+ - Zaglavlja redova/kolona
+ - Koordinati ćelija
+ - Granice ćelija [(isključeno, stilovi, boje i stilovi)
+- Elementi
+ - Naslovi
+ - Linkovi
+ - Liste
+ - Citati
+ - Regioni
+ - Okviri
+ - Može se kliknuti
  -
 -
 
 
-To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
+Da uključite i isključite ova podešavanja bilo gde, podesite prilagođene komande koristeći[dijalog ulazne komande#InputGestures].
 
-==== Report formatting changes after the cursor ====
-If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it reports it, even if doing this may slow down NVDA's performance.
+==== Prijavi promene formatiranja nakon pomeranja kursora====
+Ako je omogućena, ova opcija govori programu NVDA da pokuša da prepozna sve promene u formatiranju u toku izgovaranja redova, čak iako će to usporiti NVDA.
 
-By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
+Po podrazumevanim podešavanjima, NVDA će prepoznati formatiranje na poziciji sistemskog i preglednog kursora, i u nekim slučajevima može prepoznati formatiranje na ostatku reda, samo ako to neće usporiti program.
 
-Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
+Omogućite ovu opciju kada proveravate izgled dokumenata u programima kao što je WordPad, gde je formatiranje važno.
 
-==== Line indentation reporting ====[lineIndentationOptions]
-This option allows you to configure how indentation at the beginning of lines is reported.
-The Report line indentation with combo box has four options.
+==== Prijavljivanje uvlačenja redova====[lineIndentationOptions]
+Ova opcija vam dozvoljava da podesite kako se uvlačenje na početku redova prijavljuje.
+Izborni okvir prijavi uvlačenje redova ima četiri opcije.
 
-- Off: NVDA will not treat indentation specially.
-- Speech: If speech is selected, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab."
-- Tones: If Tones is selected, when the  amount of  indentation changes, tones indicate the amount of change in indent.
-The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
-- Both Speech and Tones: This option reads indentation using both of the above methods.
+- Isključeno: NVDA neće obraćati pažnju na uvlačenje redova.
+- Govor: Ako je govor izabran, kada se količina uvlačenja promeni, NVDA će reći"dvanaest razmaka" ili"Četiri tabulatora."
+- Tonovi: Ako su tonovi izabrani, kada se količina uvlačenja promeni, tonovi označavaju količinu uvlačenja.
+Ton će povećati visinu za svaki razmak, a za tabulator, povećaće visinu jednakoj četiri razmaka.
+- Govor i tonovi: Ova opcija čita uvlačenja koristeći obe opcije.
 -
 
-+++ Speech dictionaries +++
-The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases.
-There are currently three different types of speech dictionaries.
-They are:
-- Default: rules in this dictionary affect all speech in NVDA.
-- Voice: rules in this dictionary affect speech for the synthesizer voice currently being used.
-- Temporary: rules in this dictionary affect all speech in NVDA, but only for the current session. These rules are temporary and will be lost if NVDA is restarted.
++++ Govorni rečnici +++
+Meni govornog rečnika(koji se nalazi u meniju podešavanja) sadrži dijaloge koji vam dozvoljavaju da promenite kako NVDA izgovara reči ili fraze.
+Trenutno postoje tri vrste govornih rečnika.
+One su:
+- Podrazumevani: Pravila u ovom rečniku važe za celokupan izgovor programa NVDA.
+- Glasovni: Pravila u ovom rečniku važe za glas koji se trenutno koristi.
+- Privremeni: Pravila u ovom rečniku se primenjuju za celokupan govor u programu NVDA, ali samo za trenutno pokretanje. Ova pravila su privremena i biće izgubljena ako se NVDA ponovo pokrene.
 -
 
-You need to assign custom gestures using the [Input Gestures dialog #InputGestures] if you wish to open any of these dictionary dialogs from anywhere.
+Morate podesiti prilagođenu komandu koristeći[dijalog ulazne komande#InputGestures] ako želite da otvorite neki od ovih dijaloga bilo gde.
 
-All dictionary dialogs contain a list of rules which will be used for processing the speech.
-The dialog also contains Add, Edit and Remove buttons.
+Svi dijalozi sadrže listu pravila koja se koriste za izgovor.
+Dijalog takođe sadrži tastere dodaj, uredi i ukloni.
 
-To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
-You will then see your new rule in the list of rules.
-However, to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog completely once you have finished adding/editing rules.
+Da dodate novo pravilo u rečnik, aktivirajte dugme dodaj, popunite polja u dijalogu koji se pojavi i aktivirajte dugme uredu.
+Videćete novo pravilo u listi pravila.
+Ali, kako biste bili sigurni da se vaše pravilo sačuvalo, aktivirajte dugme uredu da izađete iz dijaloga rečnika kada završite sa uređivanjem i dodavanjem pravila.
 
-The rules for NVDA's speech dictionaries allow you to change one string of characters into another.
-For example, you could create a rule which causes NVDA to say the word "frog" instead of "bird" whenever the word "bird" is encountered.
-In the Add rule dialog, the easiest way to do this is to type the word bird in the Pattern field, and the word frog in the Replacement field.
-You may also want to type a description of the rule in the Comment field (something like: changes bird to frog).
+Pravila za NVDA govorne rečnike vam dozvoljavaju da promenite izgovor teksta.
+Na primer, možete napraviti pravilo koje govori da NVDA treba da izgovori reč"Žaba" umesto reči"Ptica" kada naiđete na reč"Ptica".
+U dijalogu za dodavanje pravila, najlakši način da uradite ovo je da upišete reč ptica u polju trenutni oblik, i reč žaba u polju zamene.
+Možda želite takođe da upišete opis pravila u polju za komentar(na primer: menja reč žaba u ptica).
 
-NVDA's speech dictionaries however are much more powerful than simple word replacement.
-The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase.
-NVDA ignores case by default).
+NVDA govorni rečnici su mnogo korisniji od jednostavne zamene reči.
+Dijalog za dodavanje pravila takođe sadrži izborno polje koje određuje da li pravilo treba da bude osetljivo na velika i mala slova(što znači da će NVDA obraćati pažnju na to da li su znakovi upisani velikim ili malim slovima.
+NVDA ignoriše veličinu po podrazumevanim podešavanjima).
 
-Finally, a set of radio buttons allows you to tell NVDA whether your pattern should match anywhere, should only match if it is a complete word or should be treated as a "Regular expression".
-Setting the pattern to match as a whole word means that the replacement will only be made if the pattern does not occur as part of a larger word; i.e. a character other than an alphanumeric character or an underscore (or no character at all) comes both immediately before and after the pattern.
-Thus, using the earlier example of replacing the word "bird" with "frog", if you were to make this a whole word replacement, it would not match "birds" or "bluebird".
+Takođe, različiti radio dugmići određuju da li će se vaš oblik primenjivati bilo gde, samo ako je cela reč ili kao"standardan izraz".
+Ako podesite oblik da se primenjuje kao cela reč oblik se primenjuje samo ako nije deo druge reči; to jest znak koji nije alfanumerički znak ili donja crta(ili kada nema znaka uopšte) se nalazi pre i posle oblika.
+Zbog toga, ako koristimo prethodni primer menjanja reči"Ptica" sa"Žaba", ako učinite ovo zamenom celih reči, neće zameniti reči"Ptice" ili "Ptici".
 
-A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
-Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
+Standardan izraz je poseban znak koji vam dozvoljava da promenite više znakova odjednom, ili promena svih brojeva, ili svih slova, kao nekoliko primera.
+Standardni izrazi nisu uključeni u ovo uputstvo, ali postoji puno uputstva na Webu koja vam mogu pružiti više informacija.
 
-+++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
-This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
++++ Izgovor znakova interpunkcije/simbola+++[SymbolPronunciation]
+Ovaj dijalog vam dozvoljava da promenite način na koji se znakovi interpunkcije izgovaraju, kao i nivo simbola u kojem se izgovaraju.
 
-The language for which symbol pronunciation is being edited will be shown in the dialog's title.
-Note that this dialog respects the "Trust voice's language for processing symbols and characters" option found in the [Voice Settings dialog #VoiceSettings]; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
+Jezik na kome uređujete simbole će biti prikazan u naslovu dijaloga.
+Napomena da ovaj dijalog poštuje opciju"Koristi jezik glasa za izgovor znakova" koja se nalazi u[dijalogu glasovnih podešavanja#VoiceSettings]; to jest koristi jezik glasa umesto jezika programa NVDA kada je ova opcija omogućena.
 
-To change a symbol, first select it in the Symbols list.
+Da promenite znak, prvo ga izaberite u listi simbola.
 
-- The Replacement field allows you to change the text that should be spoken in place of this symbol.
-- Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
-- The Send actual symbol to synthesizer field specifies when the symbol itself (in contrast to its replacement) should be sent to the synthesizer.
-This is useful if the symbol causes the synthesizer to pause or change the inflection of the voice.
-For example, a comma causes the synthesizer to pause.
-There are three options:
- - never: Never send the actual symbol to the synthesizer.
- - always: Always send the actual symbol to the synthesizer.
- - only below symbols' level: Send the actual symbol only if the configured speech symbol level is lower than the level set for this symbol.
- For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
+- Polje zamene vam dozvoljava da promenite tekst koji se izgovara za ovaj znak.
+- Koristeći polje nivoa, možete promeniti najniži nivo na kojem se ovaj simbol izgovara.
+- Polje za slanje simbola sintetizatoru podešava kada treba poslati simbol(umesto zamenskog teksta) sintetizatoru.
+Ovo je korisno ako simbol izaziva pauzu u čitanju ili menjanje intonacije.
+Na primer, zarez izaziva pauzu u čitanju.
+Postoje tri opcije:
+ - Nikada: Nikada ne šalji simbol sintetizatoru.
+ - Uvek: Uvek šalji simbol sintetizatoru.
+ - Samo ispod nivoa simbola: Pošalji simbol sintetizatoru samo ako je trenutno podešen nivo simbola niži od nivoa za ovaj simbol.
+ Na primer, možda ćete koristiti ovo da simbol bude pročitan bez pauze na višim nivoima, dok se pauza koristi na nižim nivoima.
  -
 -
 
-You can add new symbols by pressing the Add button.
-In the dialog that appears, enter the symbol and press the OK button.
-Then, change the fields for the new symbol as you would for other symbols.
+Možete dodati nove simbole koristeći dugme dodaj.
+U dijalogu koji se pojavi, upišite simbol i pritisnite dugme uredu.
+Zatim, promenite polja za simbol kao i za druge simbole.
 
-You can remove a symbol you previously added by pressing the Remove button.
+Možete ukloniti znak koji ste prethodno dodali koristeći dugme ukloni.
 
-When you are finished, press the OK button to save your changes or the Cancel button to discard them.
+Kada završite, pritisnite dugme uredu da sačuvate vaše promene ili otkaži da ih odbacite.
 
-+++ Input Gestures +++[InputGestures]
-In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
++++ Ulazne komande +++[InputGestures]
+U ovom dijalogu, možete prilagoditi ulazne komande(tastere na tastaturi, tastere na brajevom реду, итд.) За НВДА команде.
 
-Only commands that are applicable immediately before the dialog is opened are shown.
-For example, if you want to customize commands related to browse mode, you should open the Input Gestures dialog while you are in browse mode.
+Само команде које су доступне када се дијалог отвори су приказане.
+На пример, ако желите да прилагодите команде режима претраживанја, отворите дијалог за улазне команде када сте у режиму претраживанја.
 
-The tree in this dialog lists all of the applicable NVDA commands grouped by category.
-You can filter them by entering one or more words from the command's name into the Filter by edit box in any order.
-Any gestures associated with a command are listed beneath the command.
+Приказ стабла приказује све команде груписане по категоријама.
+Можете да их филтрирате уписиванјем једне или више речи имена команде у полје издвоји по.
+Све команде подешене за одређену функцију су приказане поред функције.
 
-To add an input gesture to a command, select the command and press the Add button.
-Then, perform the input gesture you wish to associate; e.g. press a key on the keyboard or a button on a braille display.
-Often, a gesture can be interpreted in more than one way.
-For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
-In this case, a menu will appear allowing you to select the desired option.
+Да додате улазну команду за неку функцију, изаберите команду и притисните дугме додај.
+Затим, извршите команду коју желите да подесите; на пример притисните тастер на тастатури или брајевом реду.
+Често, команда се може извршити на више начина.
+На пример, ако притиснете тастер на тастатури, можда ћете желети да важи само за тренутни распоред(на пример Десктоп или Лаптоп) или ћете можда желети да буде применјен за све распореде.
+У овом случају, мени ће се појавити за избор желјене опције.
 
-To remove a gesture from a command, select the gesture and press the Remove button.
+Да уклоните команду са функције, изаберите функцију и притисните дугме уклони.
 
-When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
+Када завршите са променама, притисните дугме уреду да их сачувате или откажи да их одбаците.
 
-++ Saving and Reloading the configuration ++
-By default NVDA will automatically save your settings on exit.
-Note, however, that this option can be changed under the general options in the preferences menu.
-To save the settings manually at any time, choose the Save configuration item in the NVDA menu.
+++ Чуванје и поновно учитаванје подешаванја++
+По подразумеваним подешаванјима НВДА ће аутоматски сачувати ваша подешаванја при излазу.
+Напомена, да ова опција може бити променјена у општим подешаванјима у НВДА менију.
+Да сачувате подешаванја ручно било када, изаберите ставку сачувај подешаванја у НВДА менију.
 
-If you ever make a mistake with your settings and need to revert back to the saved settings, choose the "revert to saved configuration" item in the NVDA menu.
-You can also reset your settings to their original factory defaults by choosing Reset Configuration To Factory Defaults, which is also found in the NVDA menu.
+Ако некада направите грешку са вашим подешаванјима и желите да се вратите на сачувана подешаванја, изаберите ставку"врати се на сачувана подешаванја" у НВДА менију.
+Такође можете вратити подешаванја на подразумевана избором опције врати подешаванја на подразумевана, која се такође налази у НВДА менију.
 
-The following NVDA key commands are also useful:
+Следеће команде су такође корисне:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Save configuration | NVDA+control+c | NVDA+control+c | Saves your current configuration so that it is not lost when you exit NVDA |
-| Revert  configuration | NVDA+control+r | NVDA+control+r | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults. |
+|| Име | Desktop команда | Laptop команда | Опис |
+| Сачувај подешаванја | NVDA+контрол+c | NVDA+контрол+c | Чува ваша тренутна подешаванја тако да нису изгублјена када изађете из програма НВДА|
+| Врати подешаванја| NVDA+контрол+r | NVDA+контрол+r | Ако се притисне једном подешаванја се враћају на сачувана. Ако се притисне 3 пута подешаванја се враћају на подразумевана. |
 %kc:endInclude
 
-++ Configuration Profiles ++
-Sometimes, you may wish to have different settings for different situations.
-For example, you may wish to have reporting of indentation enabled while you are editing or reporting of font attributes enabled while you are proofreading.
-NVDA allows you to do this using configuration profiles.
+++ Профили подешаванја ++
+Некада, можда ћете желети да имате различита подешаванја за различите ситуације.
+На пример, можда ћете желети пријавлјиванје увлаченја редова уклјучено када уређујете документе или име и величину фонта када проверавате изглед докумената.
+NVDA вам дозволјава да урадите ово користећи профиле подешаванја.
 
-A configuration profile contains only those settings which are changed while the profile is being edited.
-Most settings can be changed in configuration profiles except for those in the General Settings dialog, which apply to the entirety of NVDA.
+Профил подешаванја садржи само она подешаванја која се менјају док је профил активан.
+Већина подешаванја се може променити у профилима подешаванја осим оних у дијалогу општих подешаванја, која су применјена кроз цео НВДА.
 
-Configuration profiles can be manually activated.
-They can also be activated automatically due to triggers such as switching to a particular application.
+Профили подешаванја могу бити ручно активирани.
+Они такође могу бити активирани користећи активаторе као што су прелазак на одређену апликацију.
 
-+++ Basic Management +++
-You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
-You can also do this using a key command:
++++ Основно управлјанје +++
+Управлјате профилима избором опције"профили подешаванја" у НВДА менију.
+Такође можете то урадити користећи команду:
 %kc:beginInclude
-- NVDA+control+p: Show the Configuration Profiles dialog.
+- NVDA+контрол+p: Прикажи дијалог за профиле подешаванја.
 -
 %kc:endInclude
 
-The first control in this dialog is the profile list from which you can select one of the available profiles.
-When you open the dialog, the profile you are currently editing is selected.
-Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
+Прва контрола у овом дијалогу је листа профила из које можете изабрати један од доступних профила.
+Када отворите дијалог, профил који тренутно уређујете је изабран.
+Додатне информације су такође приказане за активне профиле, које приказују да ли је профил ручно активиран, активиран користећи активаторе или се тренутно уређује.
 
-To rename or delete a profile, press the Rename or Delete buttons, respectively.
+Да преименујете или обришете профил, активирајте тастере преименуј или обриши.
 
-Press the Close button to close the dialog.
+Активирајте тастер затвори да затворите дијалог.
 
-+++ Creating a Profile +++
-To create a profile, press the New button.
++++ Правлјенје профила +++
+Da napravite profil, aktivirajte dugme novi.
 
-In the New Profile dialog, you can enter a name for the profile.
-You can also select how this profile should be used.
-If you only want to use this profile manually, select Manual activation, which is the default.
-Otherwise, select a trigger which should automatically activate this profile.
-For convenience, if you haven't entered a name for the profile, selecting a trigger will fill in the name accordingly.
-See [below #ConfigProfileTriggers] for more information about triggers.
+U dijalogu novog profila, možete upisati ime za novi profil.
+Takođe možete izabrati kako se ovaj profil treba koristiti.
+Ako želite da aktivirate ovaj profil ručno, izaberite ručna aktivacija, koja je podrazumevana.
+U suprotnom, izaberite aktivator koji treba da aktivira ovaj profil.
+Za lakše korišćenje, ako niste upisali ime profila, izborom aktivatora ime će biti automatski upisano.
+Pogledajte deo [ispod #ConfigProfileTriggers] za više informacija o aktivatorima.
 
-Pressing OK will create the profile and close the Configuration Profiles dialog so you can edit it.
+Aktiviranje tastera uredu će zatvoriti dijalog i aktivirati profil kako biste mogli da ga uredite.
 
-+++ Manual Activation +++[ConfigProfileManual]
-You can manually activate a profile by selecting a profile and pressing the Manual activate button.
-Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
-For example, if a profile is triggered for the current application and reporting of links is enabled in that profile but disabled it in the manually activated profile, links will not be reported.
-However, if you have changed the voice in the triggered profile but have never changed it in the manually activated profile, the voice from the triggered profile will be used.
-Any settings you change will be saved in the manually activated profile.
-To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
++++ Ručna aktivacija +++[ConfigProfileManual]
+Možete ručno aktivirati profil izborom profila i aktiviranjem tastera ručne aktivacije.
+Kada je aktiviran, drugi profili takođe mogu biti aktivirani koristeći aktivatore, ali bilo koje podešavanje u trenutno aktiviranom profilu će zameniti podešavanja ostalih profila.
+Na primer, ako je profil aktiviran za trenutno aktivnu aplikaciju i u njemu je prijavljivanje linkova omogućeno a u ručno aktiviranom profilu je onemogućeno, linkovi neće biti prijavljeni.
+Ali, ako ste promenili glas u profilu za trenutnu aplikaciju ali ga niste nikada menjali u ručno aktiviranom profilu, glas iz profila za aplikaciju će se koristiti.
+Sva podešavanja koja promenite se čuvaju u ručno aktiviranom profilu.
+Da deaktivirate ručno aktiviran profil, izaberite ga u listi profila i aktivirajte dugme ručne deaktivacije.
 
-+++ Triggers +++[ConfigProfileTriggers]
-Pressing the Triggers button in the Configuration Profiles dialog allows you to change the profiles which should be automatically activated for various triggers.
++++ Aktivatori +++[ConfigProfileTriggers]
+Aktiviranje dugmeta aktivatori vam dozvoljava da promenite profile koji se automatski aktiviraju korišćenjem različitih aktivatora.
 
-The Triggers list shows the available triggers, which are as follows:
-- Current application: Triggered when you switch to the current application.
-- Say all: Triggered while reading with the say all command.
+Lista aktivatora prikazuje dostupne aktivatore, a oni su:
+- Trenutna aplikacija: Aktivira se kada pređete na određenu aplikaciju.
+- Izgovori sve: Aktivira se kada čitate koristeći komandu izgovori sve.
 -
 
-To change the profile which should be automatically activated for a trigger, select the trigger and then select the desired profile from the Profile list.
-You can select "(normal configuration)" if you don't want a profile to be used.
+Da promenite profil koji automatski treba da se aktivira korišćenjem aktivatora, izaberite aktivator a zatim izaberite željeni profil iz liste.
+Možete izabrati"(Standardna podešavanja)" ako ne želite da se profil koristi.
 
-Press the Close button to return to the Configuration Profiles dialog.
+Aktivirajte dugme zatvori da se vratite u dijalog profila podešavanja.
 
-+++ Editing a Profile +++
-If you have manually activated a profile, any settings you change will be saved to that profile.
-Otherwise, any settings you change will be saved to the most recently triggered profile.
-For example, if you have associated a profile with the Notepad application and you switch to Notepad, any changed settings will be saved to that profile.
-Finally, if there is neither a manually activated nor a triggered profile, any settings you change will be saved to your normal configuration.
++++ Uređivanje profila +++
+Ako ste ručno aktivirali profil, sva podešavanja koja promenite se čuvaju u taj profil.
+U suprotnom, sva podešavanja koja promenite se čuvaju u poslednjem aktiviranom profilu aktiviran korišćenjem aktivatora.
+Na primer, ako ste podesili profil za aplikaciju Notepad i ako pređete na nju, sva promenjena podešavanja se čuvaju u taj profil.
+Međutim, ako nijedan profil nije aktiviran, sva podešavanja koja promenite se čuvaju u standardnim podešavanjima.
 
-To edit the profile associated with say all, you must [manually activate #ConfigProfileManual] that profile.
+Da uredite profil koji se koristi za režim izgovori sve, morate[ručno aktivirati#ConfigProfileManual] taj profil.
 
-+++ Temporarily Disabling Triggers +++
-Sometimes, it is useful to temporarily disable all triggers.
-For example, you might wish to edit a manually activated profile or your normal configuration without triggered profiles interfering.
-You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
++++ Privremeno onemogući aktivatore +++
+Nekada, može biti korisno onemogućiti sve aktivatore.
+Na primer, možda želite da uredite vaša standardna podešavanja bez aktivacije ostalih profila.
+Ovo možete da uradite tako štoćete označiti izborno polje privremeno onemogući sve aktivatore u dijalogu profila podešavanja.
 
-++ Location of Configuration files ++
-Portable versions of NVDA store all settings, custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
+++ Lokacija datoteka podešavanja ++
+Prenosive kopije čuvaju sva podešavanja, sve prilagođene dodatke za aplikacije i drajvere u folderu userConfig, koji se nalazi u NVDA folderu.
 
-Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile.
-This means that each user on the system can have their own NVDA settings.
-To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
+Instalirane verzije čuvaju sva podešavanja, prilagođene drajvere i dodatke za aplikacije u folderu vašeg Windows korisničkog profila.
+Ovo znači da svaki korisnik sistema može imati svoja podešavanja.
+Da dođete do podešavanja instalirane verzije programa NVDA, u start meniju možete ući u programe-> NVDA -> istraži folder sa korisničkim podešavanjima.
 
-Settings for NVDA when running on the logon or UAC screens are stored in the systemConfig directory in NVDA's installation directory.
-Usually, this configuration should not be touched.
-To change NVDA's configuration on the logon/UAC screens, configure NVDA as you wish while logged into Windows, save the configuration, and then press the "Use currently saved settings on the logon and other secure screens" button in the General Settings dialog.
+Podešavanja za pokretanje programa NVDA na Windows ekranu za prijavljivanje i drugim bezbednosnim ekranima se nalaze u folderu systemConfig u folderu gde je NVDA instaliran.
+Obično, ova podešavanja ne treba menjati.
+Da promenite NVDA podešavanja na bezbednim ekranima, podesite NVDA onako kako želite dok ste prijavljeni u Windows, sačuvajte podešavanja, a zatim aktivirajte"Koristi trenutno sačuvana podešavanja na bezbednim ekranima" dugme u dijalogu opšta podešavanja.
 
-+ Extra Tools +
++ Dodatni alati +
 
-++ Log Viewer ++
-The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occured up until now from when you last started NVDA.
+++ Pregled dnevnika ++
+Pregled dnevnika, koji se nalazi u alatima u NVDA meniju, vam dozvoljava da pročitate svo evidentiranje u dnevniku od momenta kada pokrenete program do pokretanja ove alatke.
 
-Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
-These actions are available under the viewer's Log menu.
+Pored čitanja sadržaja, možete takođe sačuvati kopiju datoteke dnevnika, ili da osvežite pregled tako da prikazuje najnovije informacije.
+Ove radnje su dostupne iz menija dnevnika.
 
-++ Speech Viewer ++
-For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to view all the text that NVDA is currently speaking.
+++ Pregled govora ++
+Za programere sa normalnim vidom ili osobe koje pokazuju program NVDA ovakvim osobama, plutajući prozor je dostupan koji vam dozvoljava da vidite sav tekst koji NVDA izgovara.
 
-To enable the speech viewer, check the "Speech Viewer" menu item under Tools in the NVDA menu.
-Uncheck the menu item to disable it.
+Da omogućite pregled govora, označite stavku"Pregled govora" u alatima u NVDA meniju.
+Kada stavka nije označena biće onemogućena.
 
-The speech viewer window contains a check box labeled "Show speech viewer on startup".
-If this is checked, the speech viewer will open when NVDA is started.
-The speech viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
+Prozor pregled govora takođe sadrži izborno polje"Prikaži pregled govora pri pokretanju".
+Ako je označeno, pregled govora će se pokrenuti kada se NVDA pokrene.
+Ovaj prozor će pokušati da se otvori na istoj lokaciji kao i kada je zatvoren poslednji put.
 
-While the speech viewer is enabled, it constantly updates to show you the most current text being spoken.
-However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
+Dok je pregled govora omogućen, stalno se ažurira da prikaže tekst koji je izgovoren.
+Ali, ako kliknete ili se fokusirate na pregled govora, NVDA će privremeno zaustaviti ažuriranje teksta, kako biste lakše mogli da kopirate postojeći sadržaj.
 
-To toggle the speech viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+Da uključite i isključite pregled govora bilo gde, dodajte prilagođenu komandu koristeći[dijalog za ulazne komande#InputGestures].
 
-++ Add-ons Manager ++
-The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, enable and disable add-on packages for NVDA.
-These packages are provided by the community and contain custom code that may add or change features in NVDA or even provide support for extra Braille displays or speech synthesizers.
+++ Upravljanje dodacima++
+Upravljač dodataka, kome se pristupa izborom opcije upravljanje dodacima u meniju alati u NVDA meniju, vam dozvoljava da instalirate, uklonite, omogućite i onemogućite dodatke za NVDA.
+Ovi dodaci su razvijeni od strane zajednice i mogu dodati nove karakteristike pa čak i podršku za dodatne brajeve redove ili govorne sintetizatore.
 
-The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
-Package name, status, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
-If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
+Upravljač dodataka sadrži listu u kojoj se nalaze svi trenutno instalirani dodaci. 
+Ime dodatka, status, autor i verzija su prikazani za svaki dodatak, ali se dodatne informacije takođe mogu prikazati kao što su adresa i opis izborom dodatka i aktiviranjem dugmeta o dodatku.
+Ako postoji pomoć za odabran dodatak, možete dobiti pomoć aktiviranjem dugmeta pomoć za dodatak.
 
-To browse and download available add-ons online, press the Get add-ons button.
-This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
-If NVDA is installed and running on your system, you can open the add-on directly from the browser to begin the installation process as described below.
-Otherwise, save the add-on package and follow the instructions below.
+Da pretražujete i preuzmete dodatke sa Interneta, aktivirajte dugme nabavi dodatke.
+Ovo dugme otvara[NVDA stranicu dodataka http://addons.nvda-project.org/].
+Ako je NVDA instaliran i pokrenut na sistemu, možete otvoriti dodatak direktno iz pretraživača da započnete instalaciju.
+U suprotnom, sačuvajte dodatak i pratite uputstva u nastavku.
 
-To install an Add-on you previously obtained, press the Install button.
-This will allow you to browse for an add-on package (.nvda-addon file) somewhere on your computer or on a network.
-Once you press Open, the installation process will begin.
+Da instalirate dodatak koji ste prethodno preuzeli, aktivirajte dugme instaliraj.
+Ovo vam dozvoljava da pronađete datoteku sa dodatkom(.nvda-addon datoteku) negde na vašem računaru ili na mreži.
+Kada aktivirate dugme otvori, proces instalacije počinje.
 
-When an add-on is being installed, NVDA will first ask you to confirm that you really wish to install the add-on.
-As the functionality of add-ons is unrestricted inside NVDA, which in theory could include accessing your personal data or even the entire system if NVDA is an installed copy, it is very important to only install add-ons from sources you trust.
-Once the add-on is installed, NVDA must be restarted for the add-on to start running. 
-Until you do, a status of "install" will show for that add-on in the list.
+Kada instalirate neki dodatak, NVDA će vas prvo pitati da potvrdite da zaista želite da instalirate taj dodatak.
+Budući da je funkcionalnost dodataka neograničena u programu NVDA, što može uključiti pristup vašim ličnim podacima ili čitavom sistemu ako je NVDA instaliran, važno je instalirati dodatke samo iz izvora kojima verujete.
+Kada je dodatak instaliran, NVDA mora biti ponovo pokrenut kako bi dodatak počeo da radi. 
+Dok to ne uradite, status"instaliraj" će biti prikazan za taj dodatak u listi.
 
-To remove an add-on, select the add-on from the list and press the Remove button.
-NVDA will ask if you really wish to do this.
-As with installing, NVDA must be restarted for the add-on to be fully  removed.
-Until you do, a status of "remove" will be shown for that add-on in the list.
+Da uklonite dodatak, izaberite dodatak u listi i aktivirajte dugme ukloni.
+NVDA će vas pitati da li to stvarno želite da uradite.
+Kao i za instalaciju, NVDA mora biti pokrenut kako bi dodatak bio u potpunosti uklonjen.
+Dok to ne uradite, status"Ukloni" će biti prikazan za taj dodatak u listi.
 
-To disable an add-on, press the disable button.
-To enable a previously disabled add-on, press the enable button.
-You can disable an add-on if the add-on status indicates it is running or enabled, or enable it if the add-on is suspended or disabled.
-For each press of the enable/disable button, add-on status changes to indicate what will happen when NVDA restarts.
-Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+Da onemogućite dodatak, aktivirajte dugme onemogući.
+Da omogućite prethodno onemogućen dodatak, aktivirajte omogući dugme.
+Možete omogućiti dodatak ako je njegov status onemogućen ili suspendovan, ili ga onemogućiti ako je njegov status omogućen ili pokrenut.
+Za svaku aktivaciju dugmeta omogući/onemogući, status dodatka ćese promeniti da prikaže šta će se desiti kada se NVDA ponovo pokrene.
+Kao i kada instalirate ili uklanjate dodatke, morate ponovo pokrenuti NVDA kako bi promene bile primenjene.
 
-The manager also has a Close button to close the dialog.
-If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
+Upravljač takođe ima dugme zatvori koje zatvara dijalog.
+Ako ste instalirali, uklonili ili promenili status dodatka, NVDA će vas prvo pitati da li da se ponovo pokrene kako bi promene bile primenjene.
 
-In the past,  it was possible to extend NVDA's functionality by copying individual plugins and drivers into your NVDA user Configuration directory.
-Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
-It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
+Ranije,  bilo je moguće dodati nove karakteristike kopiranjem različitih dodataka u vaš folder sa podešavanjima.
+Iako će ih ova verzija programa NVDA možda učitati, oni neće biti prikazani u upravljaču dodataka.
+Najbolje je da ovakve datoteke uklonite i instalirate dodatak ako je dostupan.
 
-To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+Da pristupite upravljaču dodataka bilo gde, dodajte prilagođenu komandu koristeći[dijalog za ulazne komande#InputGestures].
 
-++ Python Console ++
-The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the Developer Guide available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
+++ Python konzola ++
+NVDA python konzola, koja se nalazi u alatima u NVDA meniju, je alat za programere koji je koristan za otklanjanje grešaka, opšti pristup programu NVDA ili pristup elementima pristupačnosti neke aplikacije.
+Za više informacija, pročitajte uputstvo za programere dostupno u[delu za programere NVDA Web stranice http://community.nvda-project.org/wiki/Development].
 
-++ Reload plugins ++
-This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
+++ Ponovo učitaj dodatke ++
+Ova stavka, kada se aktivira, ponovo učitava dodatke za aplikacije i dodatke bez ponovnog pokretanja programa NVDA, što može biti korisno za programere.
 
-+ Supported Speech Synthesizers +[SupportedSpeechSynths]
-This section contains information about the speech synthesizers supported by NVDA.
-For an even more extensive list of  free and commercial synthesizers that you can purchase and download for use with NVDA, please see the page at [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
++ Podržani sintetizatori govora+[SupportedSpeechSynths]
+Ovaj deo sadrži informacije o govornim sintetizatorima koje NVDA podržava.
+Za opširniju listu besplatnih i komercionalnih sintetizatora koje možete preuzeti i kupiti za korišćenje sa programom NVDA, pročitajte stranicu[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
-The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-NVDA starts using eSpeak NG by default.
-As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
+[eSpeak NG https://github.com/espeak-ng/espeak-ng] je ugrađen u NVDA i ne zahteva posebne komponente ili drajvere.
+NVDA koristi eSpeak NG po podrazumevanim podešavanjima.
+Budući da je ovaj sintetizator ugrađen u NVDA, ovo je odličan izbor kada se NVDA pokreće sa USB memorije na drugim sistemima.
 
-Each voice that comes with eSpeak NG speaks a different language.
-There are over 43 different languages supported by eSpeak NG.
+Svaki glas koji dolazi sa sintezom Espeak NG govori drugi jezik.
+Espeak NG podržava preko 43 različitih jezika.
 
-There are also many variants which can be chosen to alter the sound of the voice.
+Takođe postoji puno različitih varijanti koje menjaju zvuk glasa.
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
-SAPI 4 is an older Microsoft standard for software speech synthesizers.
-NVDA still supports this for users who already have SAPI 4 synthesizers installed.
-However, Microsoft no longer support this and needed components are no longer available from Microsoft.
+SAPI 4 je stariji govorni standard za Microsoft sintetizatore.
+NVDA još uvek podržava ovo za korisnike koji imaju SAPI4 sintetizatore instalirane.
+Ali, Microsoft više ne podržava ovo i potrebne komponente nisu dostupne sa njihovog sajta.
 
-When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settings Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 4 engines found on your system.
+Kada koristite ovaj sintetizator uz NVDA, dostupni glasovi(kojima pristupate iz[dijaloga glasovnih podešavanja#VoiceSettings] ili[krugom menjanja podešavanja sintetizatora#SynthSettingsRing]) će sadržati sve glasove svih SAPI4 sintetizatora na vašem sistemu.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
-SAPI 5 is a Microsoft standard for software speech synthesizers.
-Many speech synthesizers that comply with this standard may be purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
-When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settings Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 5 engines found on your system.
+SAPI 5 je Microsoftov standard za govorne sintetizatore.
+Puno sintetizatora koji podržavaju ovaj standard se mogu kupiti ili besplatno preuzeti od  različitih kompanija, ali vaš sistem će verovatno doći sa barem jednim SAPI5 glasom.
+Kada koristite ovaj sintetizator uz NVDA, dostupni glasovi(kojima pristupate iz[dijaloga glasovnih podešavanja#VoiceSettings] ili[krugom menjanja podešavanja sintetizatora#SynthSettingsRing]) će sadržati sve glasove svih SAPI5 sintetizatora na vašem sistemu.
 
 ++ Microsoft Speech Platform ++
-The Microsoft Speech Platform provides voices for many languages which are normally used in the development of server-based speech applications.
-These voices can also be used with NVDA.
+Microsoft Speech Platform Pruža glasove za razne jezike koji se obično koriste za razvoj serverskih govornih aplikacija.
+Ovi glasovi se takođe mogu koristiti sa programom NVDA.
 
-To use these voices, you will need to install two components:
-- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
- - This page includes many files for both speech recognition and text-to-speech.
- Choose the files containing the TTS data for the desired languages/voices.
- For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
+Da biste koristili ove glasove, morate da instalirate dve komponente:
+- Microsoft Speech Platform - Runtime (verzija 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime jezici (verzija 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Ova stranica sadrži različite datoteke za prepoznavanje glasa i pretvaranje teksta u govor.
+ Izaberite datoteke koje sadrže TTS skraćenicu nakon određenog jezika.
+ Na primer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas za Američki Engleski.
  -
 -
 
 ++ Audiologic Tts3 ++
-This is a commercial speech synthesizer specifically for the Italian language.
-You must have the synthesizer installed on your system in order for it to be used with NVDA.
-For more information, please visit the Audiologic website at www.audiologic.it.
+Ovo je komercionalan glas za Italijanski jezik.
+Morate imati sintetizator instaliran kako biste ga koristili uz NVDA.
+Za više informacija, posetite Audiologic websajt na lokaciji www.audiologic.it.
 
-This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
+Ovaj sintetizator ne podržava[sricanje#VoiceSpellingFunctionality].
 
-++ Nuance Vocalizer for NVDA ++
-Nuance Vocalizer is a commercial, high quality voice synthesizer developed by Nuance Communications, Inc. and packaged specifically for NVDA by Tiflotecnia, Lda.
-It contains over 50 different voices you can install, speaking over 30 languages.
-All synthesizer components and voices are bundled in add-on packages, which allows for full usage in portable copies of NVDA.
+++ Nuance Vocalizer za NVDA ++
+Nuance Vocalizer je komercionalan, sintetizator visokog kvaliteta razvijen od strane kompanije Nuance, Inc. i napravljen za NVDA od strane kompanije Tiflotecnia, Lda.
+Sadrži preko 50 različitih glasova koje možete da instalirate, koji govore preko 30 različitih jezika.
+Svi glasovi su napravljeni kao dodaci, što dozvoljava korišćenje u potpunosti u prenosivim kopijama programa NVDA.
 
-You can get more information about Nuance Vocalizer for NVDA and how to buy it on its website at [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-A percentage of sales of this product is donated to NV Access to fund further development of the NVDA screen reader.
+Možete dobiti više informacija o Vocalizeru za NVDA i da ga kupite na websajtu[www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Procenat od prodaje se donira kompaniji NV access za dodatni razvoj programa NVDA.
 
-+ Supported Braille Displays +[SupportedBrailleDisplays]
-This section contains information about the Braille displays supported by NVDA.
++ Podržani brajevi redovi+[SupportedBrailleDisplays]
+Ovaj deo sadrži informacije o brajevim redovima koje NVDA podržava.
 
-++ Freedom Scientific Focus/PAC Mate Series ++
-All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
-You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
-Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
-If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
+++ Brajevi redovi Freedom Scientific Focus/PAC Mate ++
+Svi Focus i PAC Mate redovi firme[Freedom Scientific http://www.freedomscientific.com/] su podržani kada se povezuju putem USB ili Bluetooth veze.
+Morate instalirati drajvere za freedom scientific brajeve redove.
+Ako ih još uvek nemate, možete ih preuzeti sa adrese http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Iako se na ovoj stranici govori o focus blue brajevim redovima, drajveri podržavaju sve focus i Pac mate brajeve redove.
+Ako koristite 64 bitni sistem windows i neki drugi čitač ekrana je instalirao svoj drajver, možda ćete još uvek morati da instalirate drajvere sa ovog linka, jer neke datoteke, koje NVDA zahteva, možda nisu instalirane u sistemu kada su ti određeni drajveri instalirani.
 
-By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
-However, when configuring the display, you can explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
-This might be useful if you want to connect the focus display to NVDA using bluetooth, but still be able to charge it using USB power from your computer.
+Po podrazumevanim podešavanjima, NVDA može automatski prepoznati i uspostaviti vezu sa ovim brajevim redovima ili preko USB ili preko bluetooth-a.
+Međutim, Kada se brajev red povezuje na računar, možete odrediti povezivanje preko "USB-a" ili "Bluetooth-a" da biste ograničili tip veze koji će se koristiti.
+Ovo može biti korisno ako želite koristiti brajev red povezan bluetoot vezom, ali ga još uvek želite puniti preko USB priključka vašeg računara.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Sledeća lista prikazuje sve dostupne dodeljene prečice za NVDA.
+Molimo pogledajte dokumentaciju za više informacija o opisu tastera i o tome gde se nalaze.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | topRouting1 (first cell on display) |
-| Scroll braille display forward | topRouting20/40/80 (last cell on display) |
-| Scroll braille display back | leftAdvanceBar |
-| Scroll braille display forward | rightAdvanceBar |
-| Toggle braille tethered to | leftGDFButton+rightGDFButton |
-| Toggle left wiz wheel action | leftWizWheelPress |
-| Move back using left wiz wheel action | leftWizWheelUp |
-| Move forward using left wiz wheel action | leftWizWheelDown |
-| Toggle right wiz wheel action | rightWizWheelPress |
-| Move back using right wiz wheel action | rightWizWheelUp |
-| Move forward using right wiz wheel action | rightWizWheelDown |
-| Route to braille cell | routing |
-| backspace key | dot7 |
-| enter key | dot8 |
-| shift+tab key | brailleSpaceBar+dot1+dot2 |
-| tab key | brailleSpaceBar+dot4+dot5 |
-| upArrow key | brailleSpaceBar+dot1 |
-| downArrow key | brailleSpaceBar+dot4 |
-| control+leftArrow key | brailleSpaceBar+dot2 |
-| control+rightArrow key | brailleSpaceBar+dot5 |
-| leftArrow | brailleSpaceBar+dot3 |
-| rightArrow key | brailleSpaceBar+dot6 |
-| home key | brailleSpaceBar+dot1+dot3 |
-| end key | brailleSpaceBar+dot4+dot6 |
-| control+home key | brailleSpaceBar+dot1+dot2+dot3 |
-| control+end key | brailleSpaceBar+dot4+dot5+dot6 |
-| alt key | brailleSpaceBar+dot1+dot3+dot4 |
-| alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
-| escape key | brailleSpaceBar+dot1+dot5 |
-| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
-| space key | brailleSpaceBar |
-| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
-| Report Current Line | brailleSpaceBar+dot1+dot4 |
-| NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+|| Ime | Komanda |
+| Prebaci brajev red na prethodni red | PrviTasterZaPomeranje1 (Prva ćelija na brajevom retu) |
+| Prebaci brajev red napred | toprouting20/40/80 (zadnja ćelija na brajevom redu) |
+| Prebaci brajev red nazad | leviAdvanceBar |
+| Prebaci brajev red napred | desniAdvanceBar |
+| Prebacuj se između usmeravanja brajevog pregleda | leviGDFTaster+desniGDFTaster |
+| Uključi ili isključi akciju levog wiz točka | leviWizPritisakWheel |
+| Prebaci se nazad koristeći levi točak | LeviWizWheelGore |
+| Prebaci se napred koristeći levi točak | leviWizWheelDole |
+| Uključi ili isključi desni wizwheel taster | desniWizPritisakWheel |
+| Premesti se nazad koristeći desni točak | DesniWizWheelGore |
+| Premesti se napred koristeći desni točak | desniWizWheelDole |
+| Prebaci se na brajevu ćeliju | routing |
+| backspace | Tačka7 |
+| enter | tačka8 |
+| shift+tab | BrajevRazmak+tačka1+tačka2 |
+| tab | BrajevRazmak+tačka4+tačka5 |
+| strelicaGore | BrajevRazmak+tačka1 |
+| strelicaDole | BrajevRazmak+tačka4 |
+| Kontrol+strelicaLevo | BrajevRazmak+tačka3 |
+| Kontrol+strelicaDesno | BrajevRazmak+tačka5 |
+| strelicaLevo | BrajevRazmak+tačka3 |
+| strelicaDesno | BrajevRazmak+tačka6 |
+| home | BrajevRazmak+tačka1+tačka3 |
+| end | BrajevRazmak+tačka4+tačka6 |
+| kontrol+home | BrajevRazmak+tačka1+tačka2+tačka3 |
+| kontrol+end | BrajevRazmak+tačka4+tačka5+tačka6 |
+| alt | BrajevRazmak+tačka1+tačka3+tačka4 |
+| alt+tab | BrajevRazmak+tačka2+tačka3+tačka4+tačka5 |
+| escape | BrajevRazmak+tačka1+tačka5 |
+| windows taster | BrajevRazmak+tačka2+tačka4+tačka5+tačka6 |
+| razmak | BrajevRazmak |
+| windows+d (umanji sve aplikacije) | BrajevRazmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
+| pročitaj trenutni red | BrajevRazmak+tačka1+tačka4 |
+| NVDA meni | BrajevRazmak+tačka1+tačka3+tačka4+tačka5 |
 
-For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
-|| Name | Key |
-| Move braille display to previous line | leftRockerBarUp, rightRockerBarUp |
-| Move braille display to next line | leftRockerBarDown, rightRockerBarDown |
+Za novije modele fokus brajevih redova koji na sebi imaju rocker bar tastere (focus 40, focus 80 i focus blue):
+|| Ime | Komanda |
+| Premesti brajev red na prethodni red | leviRockerBarGore, desniRockerBarGore |
+| premesti brajev red na sledeći red | leviRockerBarDole, desniRockerBarDole |
 
-For Focus 80 only:
-|| Name | Key |
-| Scroll braille display back | leftBumperBarUp, rightBumperBarUp |
-| Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
+Samo za Focus 80:
+|| Ime | Komanda |
+| Pomeri brajev red nazad na prethodni red | leviBumperBarGore, desniBumperBarGore |
+| Prebaci brajev red za red u napred | leviBumperBarDole, desniBumperBarDole |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
-Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
-You do not need any specific drivers to be installed to use these displays.
-Just plug in the display and configure NVDA to use it.
+ALVA BC640 i BC680 brajevi retovi firme [Optelec http://www.optelec.com/] podržani su kada se povezuju putem USB ili bluetooth veze.
+Ne morate imati specijalne drajvere da biste koristili ove brajeve retove.
+Samo povežite brajev red i podesite NVDA za njegovo korišćenje.
 
-While these displays do have a braille keyboard, they handle translation from braille to text themselves.
-Therefore, NVDA's braille input table setting is not relevant.
+Iako ovi brajevi redovi poseduju brajevu tastaturu, oni upravljaju prevodom "Brajevog pisma u tekst" iz samih sebe.
+Dakle, podešavanje ulazna brajeva tabela nije bitno.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Slede komande dodeljene za ovaj brajev red za korišćenje sa NVDA.
+Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i raspored tastera na brajevom redu.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | t1 or etouch1 |
-| Move braille display to previous line | t2 |
-| Move to current focus | t3 |
-| Move braille display to next line | t4 |
-| Scroll braille display forward | t5 or etouch3 |
-| Route to braille cell | routing |
-| Move to top line in review | t1+t2 |
-| Move to bottom line in review | t4+t5 |
-| Toggle braille tethered to | t1+t3 |
-| Report title | etouch2 |
-| Report status bar | etouch4 |
-| shift+tab key | sp1 |
-| alt key | sp2 |
-| escape key | sp3 |
-| tab key | sp4 |
-| upArrow key | spUp |
-| downArrow key | spDown |
-| leftArrow key | spLeft |
-| rightArrow key | spRight |
-| enter key | spEnter |
-| Report date/time | sp1+sp2 |
-| NVDA Menu | sp1+sp3 |
-| windows+d key (minimize all applications) | sp1+sp4 |
-| windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
-| alt+tab key | sp2+sp4 |
-| control+home key | t3+spUp |
-| control+end key | t3+spDown |
-| home key | t3+spLeft |
-| end key | t3+spRight |
+|| Ime | Komanda |
+| Pomeri brajev red za red unazad | t1 ili etouch1 |
+| Premesti brajev red na prethodni red | t2 |
+| premesti na trenutni fokus | t3 |
+| Premesti brajev red na sledeći red | t4 |
+| Pomeri brajev red  napred za red | t5 ili etouch 3|
+| Prebaci na brajevu ćeliju | routing |
+| premesti se na najgornji red u pregledu | t1+t2 |
+| premesti se na poslednji red u pregledu | t4+t5 |
+| prebaci brajev vezan za| t1+t3 |
+| pročitaj naslov | etouch2 |
+| pročitaj traku statusa | etouch4 |
+| shift+tab | sp1 |
+| alt | sp2 |
+| escape | sp3 |
+| tab | sp4 |
+| strelicaGore | spUp |
+| strelicaDole | spDown |
+| strelicaLevo | spLeft |
+| strelicaDesno | spRight |
+| enter | spEnter |
+| izgovori datum i vreme | sp1+sp2 |
+| NVDA meni | sp1+sp3 |
+| windows+d (umanji sve aplikacije) | sp1+sp4 |
+| windows+b taster (fokusiranje sistemske trake) | sp3+sp4 |
+| windows taster | sp2+sp3 |
+| alt+tab | sp2+sp4 |
+| ctrl+home | t3+spUp |
+| control+end | t3+spDown |
+| home | t3+spLeft |
+| end | t3+spRight |
 %kc:endInclude
 
-++ Handy Tech Displays ++
-NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
-For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+++ Handy Tech brajevi redovi ++
+NVDA podržava sve brajeve redove firme [Handy Tech http://www.handytech.de/] kada su povezani putem USB ili Bluetooth veze.
+Za starije brajeve redove, koji se povezuju USB vezom, morate instalirati Usb drajvere na vaš sistem.
 
-Braille input is not yet supported.
+Unos brajevih znakova još nije podržan.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Ovo su tasterske prečice za korišćenje ovog brajevog reda uz pomoć NVDA.
+Molimo pogledajte uputstvo za upotrebu brajevog reda da biste znali gde se određeni tasteri nalaze.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left, up |
-| Scroll braille display forward | right, down |
-| Move braille display to previous line | b4 |
-| Move braille display to next line | b5 |
-| Route to braille cell | routing |
-| shift+tab key | esc |
-| alt key | b2+b4+b5 |
-| escape key | b4+b6 |
-| tab key | enter |
-| enter key | esc+enter |
-| upArrow key | leftSpace |
-| downArrow key | rightSpace |
-| NVDA Menu | b2+b4+b5+b6 |
-| Handy Tech configuration | b4+b8 |
+|| Ime | Komanda |
+| Pomeri brajev red za red unazad | levo, gore |
+| Pomeri brajev red za red  napred | desno, dole |
+| Premesti brajev red na prethodni red | b4 |
+| Premesti brajev red na sledeći red | b5 |
+| Prebaci se na brajevu ćeliju | routing |
+| shift+tab | esc |
+| alt | b2+b4+b5 |
+| escape | b4+b6 |
+| tab | enter |
+| enter | esc+enter |
+| strelicaGore | leviRazmak |
+| strelicaDole | desniRazmak |
+| NVDA meni | b2+b4+b5+b6 |
+| Handy Tech podešavanja | b4+b8 |
 %kc:endInclude
 
 ++ MDV Lilli ++
-The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
-You do not need any specific drivers to be installed to use this display.
-Just plug in the display and configure NVDA to use it.
+Brajev red, kojeg prodaje Italijanska firma [MDV http://www.mdvbologna.it/] je podržan.
+Ne morate imati instalirane dodatne drajvere da biste koristili ovaj brajev red.
+Samo povežite brajev red i podesite NVDA za njegovo korišćenje.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Slede dodeljene tasterske prečice za ovaj brajev red za korišćenje sa NVDA.
+Molimo pogledajte uputstvo za upotrebu brajevog reta kako biste ustanovili gde se ovi tasteri nalaze, zajedno sa pripadajućim opisom.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display backward | LF |
-| Scroll braille display forward | RG |
-| Move braille display to previous line | UP |
-| Move braille display to next line | DN |
-| Route to braille cell | route |
-| shift+tab key | SLF |
-| tab key | SRG |
-| alt+tab key | SDN |
-| alt+shift+tab key | SUP |
+|| Ime | Komanda |
+| Pomeri brajev red za red unazad | LF |
+| Pomeri brajev red za red napred | RG |
+| Pomeri brajev red na prethodni red | UP |
+| Pomeri brajev red na sledeći red | DN |
+| Pomeri se na brajevu ćeliju | route |
+| Šift+tab | SLF |
+| tab | SRG |
+| alt+tab | SDN |
+| alt+šift+tab | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH/Orbit Braille Displays ++
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] and [Orbit http://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
-These include:
+++ Baum/Humanware/APH/Orbit Brajevi Redovi ++
+Nekoliko [Baumovih http://www.baum.de/cms/en/], [HumanWare-ovih http://www.humanware.com/], [APH-ovih http://www.aph.org/] i [Orbitovih http://www.orbitresearch.com/] brajevih redova su podržani kada su povezani putem usb, bluetooth ili serijske veze.
+Sledeći brajevi redovi su podržani:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
-Some other displays manufactured by Baum may also work, though this has not been tested.
+Neki brajevi redovi, koje je proizveo baum mogu takođe raditi, iako to nije isprobano.
 
-If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
-The VarioUltra and Pronto! use HID.
-The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
+Ako povezujete brajeve redove koji ne koriste hid preko usb veze, morate instalirati usb drajvere proizvođača.
+VarioUltra i Pronto! brajični redovi koriste HID.
+Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su podešeni na određeni način.
 
-The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
-USB HID should generally be used instead.
+ USB serijski način u Orbit Reader 20 brajevom redu, trenutno je podržan samo u Windows 10 operativnom sistemu.
+Umesto toga, trebali biste koristiti USB HID.
 
-Following are the key assignments for these displays with NVDA.
-Please see your display's documentation for descriptions of where these keys can be found.
+Slede prečice za ovaj brajev red za korišćenje uz pomoć NVDA.
+Molimo pogledajte uputstvo za upotrebu brajevog reta kako biste saznali listu i raspored tastera na brajevom redu.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | d2 |
-| Scroll braille display forward | d5 |
-| Move braille display to previous line | d1 |
-| Move braille display to next line | d3 |
-| Route to braille cell | routing |
+|| Ime | Komanda |
+| Pomeri brajev red unazad | d2 |
+| Pomeri brajev red napred | d5 |
+| Pomeri brajev red na prethodni red | d1 |
+| Pomeri brajev red na sledeći red | d3 |
+| Pomeri se na brajevu ćeliju | routing |
 
-For displays which have a joystick:
-|| Name | Key |
-| upArrow key | up |
-| downArrow key | down |
-| leftArrow key | left |
-| rightArrow key | right |
-| enter key | select |
+Za brajeve redove koji imaju joystick:
+|| Ime | Komanda |
+| strelicaGore | gore |
+| strelicaDole | dole |
+| strelicaLevo | levo |
+| strelicaDesno | desno |
+| enter | odabir |
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++
-The hedo ProfiLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
-You must first install the USB drivers provided by the manufacturer.
+Hedo ProfiLine USB brajev red firme [hedo Reha-Technik http://www.hedo.de/] je podržan.
+Prvo morate instalirati USB drajvere koje je napravio proizvođač.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Slede prečice za brajev red za korišćenje uz pomoć NVDA.
+Molimo pogledajte uputstvo za upotrebu brajevog reda za više informacija o rasporedu i opisu tastera na brajevom redu.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | K1 |
-| Scroll braille display forward | K3 |
-| Move braille display to previous line | B2 |
-| Move braille display to next line | B5 |
-| Route to braille cell | routing |
-| Toggle braille tethered to | K2 |
-| Say all | B6 |
+|| Ime | Komanda |
+| Pomeri brajev red unazad | K1 |
+| Pomeri brajev red napred | K3 |
+| Pomeri brajev red na prethodni red | B2 |
+| Pomeri brajev red na sledeći red | B5 |
+| Premesti se na brajevu ćeliju | routing |
+| Prebacuj brajev vezan za| K2 |
+| Izgovori sve | B6 |
 %kc:endInclude
 
-++ hedo MobilLine USB ++
-The hedo MobilLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
-You must first install the USB drivers provided by the manufacturer.
+++ Hedo MobilLine USB ++
+Hedo MobilLine USB firme [hedo Reha-Technik http://www.hedo.de/] je podržan.
+Prvo morate instalirati USB drajvere koje je napravio proizvođač.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Slede tasterske prečice za korišćenje uz pomoć NVDA.
+Molimo pogledajte uputstvo za upotrebu brajevog reda kako biste saznali raspored i opis brajevih tastera na brajevom redu.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | K1 |
-| Scroll braille display forward | K3 |
-| Move braille display to previous line | B2 |
-| Move braille display to next line | B5 |
-| Route to braille cell | routing |
-| Toggle braille tethered to | K2 |
-| Say all | B6 |
+|| Ime | Komanda |
+| Pomeri brajev red unazad | K1 |
+| Pomeri brajev red napred | K3 |
+| Pomeri brajev red na prethodni red | B2 |
+| Pomeri brajev red na sledeći red | B5 |
+| Pomeri se na brajevu ćeliju | routing |
+| Prebacuj se između brajev vezan na| K2 |
+| Izgovori sve | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Series ++
-The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
-If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
-USB drivers are not required if the protocol is set to OpenBraille.
+++ HumanWare Brailliant BI/B Serije ++
+Brailliant BI i B serije brajevih redova firme [HumanWare http://www.humanware.com/], uključujući BI 32, BI 40 i B 80, su podržani kada su povezani putem USB ili Bluetooth veze.
+Ako brajev red povezujete putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB drajvere koje je napravio proizvođač.
+USB drajveri nisu potrebni ako  je protokol postavljen na OpenBraille.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Slede tasterske prečice za ove brajeve redove za korišćenje uz pomoć NVDA.
+Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali opise tastera i njihov raspored.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | up |
-| Move braille display to next line | down |
-| Route to braille cell | routing |
-| Toggle braille tethered to | up+down |
-| upArrow key | space+dot1 |
-| downArrow key | space+dot4 |
-| leftArrow key | space+dot3 |
-| rightArrow key | space+dot6 |
-| NVDA Menu | c1+c3+c4+c5 (command n) |
-| shift+tab key | space+dot1+dot3 |
-| tab key | space+dot4+dot6 |
-| alt key | space+dot1+dot3+dot4 (space+m) |
-| escape key | space+dot1+dot5 (space+e) |
-| enter key | dot8 |
-| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
-| windows key | space+dot3+dot4 |
-| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
-| Say all | c1+c2+c3+c4+c5+c6 |
+|| Ime | Komanda |
+| Pomeri brajev red unazad | Levo |
+| Pomeri brajev red napred | desno |
+| Premesti brajev red na prethodni red | gore |
+| Premesti brajev red na sledeći red | dole |
+| Premesti se na brajevu ćeliju | routing |
+| Prebacuj brajev vezan za| gore+dole |
+| strelicaGore | razmak+tačka1 |
+| strelicaDole | razmak+tačka4 |
+| strelicaLevo | razmak+tačka3 |
+| strelicaDesno | razmak+tačka6 |
+| NVDA meni | c1+c3+c4+c5 (komanda n) |
+| Šift+tab | razmak+tačka1+tačka3 |
+| tab | razmak+tačka4+tačka6 |
+| alt | razmak+tačka1+tačka3+tačka4 (razmak+m) |
+| escape | razmak+tačka1+tačka5 (razmak+e) |
+| enter | tačka8 |
+| windows+d (umanji sve aplikacije) | c1+c4+c5 (komanda d) |
+| windows taster | razmak+tačka3+tačka4 |
+| alt+tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
+| Izgovori sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
-NVDA supports Braille Sense, Braille EDGE and Smart Beetle displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
-If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from this page: http://www.himsintl.com/?c=2/13&uid=2319
+++ HIMS Braille Sense/Braille EDGE  smart beetle Serije ++
+NVDA podržava Braille Sense,  Braille EDGE i SMART BEETLE brajeve redove firme [Hims http://www.hims-inc.com/] kada su povezani preko USB ili Bluetooth veze. 
+Ako brajev red povezujete putem USB, morate instalirati USB Hims drajvere na vaš sistem.
+Možete ih preuzeti sa ove stranice: http://www.himsintl.com/?c=2/13&uid=2319
 
-Following are the key assignments for these displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Slede dodeljene prečice za ove brajeve redove za NVDA.
+Molimo pogledajte uputstva za upotrebu brajevih redova kako biste saznali raspored i opis tastera na brajevom redu.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left side scroll down |
-| Scroll braille display forward | right side scroll down |
-| Move braille display to previous line | left side scroll up |
-| Move braille display to next line | right side scroll up |
-| Route to braille cell | routing |
-| shift+tab key | dot1+dot2+space |
-| alt key | dot1+dot3+dot4+Space |
-| escape key | dot1+dot5+Space |
-| tab key | dot4+dot5+Space |
-| enter key | dot8 |
-| backspace key | dot7 |
-| upArrow key | dot1+Space |
-| downArrow key | dot4+Space |
-| capsLock | dot1+dot3+dot6+space |
-| shift+alt+tab key | advance2+advance3+advance1 |
-| alt+tab key | advance2+advance3 |
-| end key | dot4+dot6+space |
-| Control+end key | dot4+dot5+dot6+space |
-| home key | dot1+dot3+space |
-| control+home key | dot1+dot2+dot3+space |
-| leftArrow key | dot3+space |
-| control+shift+leftArrow key | dot2+dot8+space+advance1 |
-| control+leftArrow key | dot2+space |
-| shift+alt+leftArrow key | dot2+dot7+advance1 |
-| alt+leftArrow key | dot2+dot7 |
-| rightArrow key | dot6+space |
-| control+shift+rightArrow key | dot5+dot8+space+advance1 |
-| control+rightArrow key | dot5+space |
-| shift+alt+rightArrow key | dot5+dot7+advance1 |
-| alt+rightArrow key | dot5+dot7 |
-| pageUp key | dot1+dot2+dot6+space |
-| control+pageUp key | dot1+dot2+dot6+dot8+space |
-| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
-| control+upArrow key | dot2+dot3+space |
-| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
-| alt+upArrow key | dot2+dot3+dot7 |
-| shift+upArrow key | left side scroll down + space |
-| pageDown key | dot3+dot4+dot5+space |
-| control+pagedown key | dot3+dot4+dot5+dot8+space |
-| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
-| control+downArrow key | dot5+dot6+space |
-| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
-| alt+downArrow key | dot5+dot6+dot7 |
-| shift+downArrow key | right side scroll down + space |
-| delete key | dot1+dot3+dot5+space |
-| f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
-| f4 key | dot7+advance3 |
-| windows+b key | dot1+dot2+advance1 |
-| windows+d key | dot1+dot4+dot5+advance1 |
+|| Ime | Komanda |
+| Pomeri brajev red unazad | left side scroll down |
+| Pomeri brajev red napred | right side scroll down |
+| Pomeri brajev red na prethodni red | left side scroll up |
+| Pomeri brajev red na sledeći red | right side scroll up |
+| Premesti se na brajevu ćeliju | routing |
+| Šift+tab | Tačka1+tačka2+razmak |
+| alt | Tačka1+tačka3+tačka4+Razmak |
+| escape | Tačka1+tačka5+Razmak |
+| tab | tačka4+tačka5+Razmak |
+| enter | tačka8 |
+| backspace | Tačka7 |
+| strelicaGore | Tačka1+razmak |
+| strelicaDole | Tačka4+Razmak |
+| capsLock | Tačka1+tačka3+tačka6+razmak |
+| Šift+alt+tab | napred2+napred3+napred1 |
+| alt+tab | napred2+napred3 |
+| end | Tačka4+Tačka6+razmak |
+| Kontrol+end | Tačka4+Tačka5+Tačka6+razmak |
+| home | Tačka1+tačka3+razmak |
+| kontrol+home | Tačka1+tačka2+tačka3+razmak |
+| strelicaLevo | Tačka3+razmak |
+| kontrol+šift+strelicaLevo | Tačka2+tačka8+razmak+napred1 |
+| kontrol+strelicaLevo | Tačka2+razmak |
+| Šift+alt+strelicaLevo | Tačka2+tačka7+napred1 |
+| alt+strelicaLevo | Tačka2+tačka7 |
+| strelicaDesno | Tačka6+razmak |
+| kontrol+šift+strelicaDesno | Tačka5+tačka8+razmak+napred1 |
+| kontrol+strelicaDesno | Tačka5+razmak |
+| Šift+alt+strelicaDesno | Tačka5+tačka7+napred1 |
+| alt+strelicaDesno | Tačka5+tačka7 |
+| pageUp | Tačka1+tačka2+tačka6+razmak |
+| kontrol+pageUp | Tačka1+tačka2+tačka6+tačka8+razmak |
+| kontrol+šift+strelicaGore | Tačka2+tačka3+tačka8+razmak+napred1 |
+| kontrol+strelicaGore | Tačka2+tačka3+razmak |
+| Šift+alt+strelicaGore | tačka2+tačka3+tačka7+napred1 |
+| alt+strelicaGore | Tačka2+tačka3+tačka7 |
+| Šift+strelicaGore | left side scroll down + razmak |
+| pageDown | Tačka3+tačka4+tačka5+razmak |
+| kontrol+pagedown | Tačka3+tačka4+tačka5+tačka8+razmak |
+| kontrol+šift+strelicaDole | Tačka5+tačka6+tačka8+razmak+napred1 |
+| kontrol+strelicaDole | Tačka5+tačka6+razmak |
+| Šift+alt+strelicaDole | Tačka5+tačka6+tačka7+napred1 |
+| alt+strelicaDole | Tačka5+tačka6+tačka7 |
+| Šift+strelicaDole | right side scroll down + razmak |
+| delete | Tačka1+tačka3+tačka5+razmak |
+| f1 | Tačka1+tačka2+tačka5+razmak |
+| f3 | Tačka1+tačka2+tačka4+tačka8 |
+| f4 | Tačka7+napred3 |
+| windows+b | Tačka1+tačka2+napred1 |
+| windows+d | Tačka1+tačka4+tačka5+tačka1 |
 %kc:endInclude
 
 ++ HIMS SyncBraille ++
-NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
-You will need to install the USB drivers from HIMS on your system.
+NVDA podržava SyncBraille brajev red firme [HIMS http://www.hims-inc.com/].
+Morate instalirati USB drajvere firme Hims na vaš računar.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Ovo su prečice za brajev red za korišćenje uz pomoć NVDA.
+Molimo pogledajte uputstvo za upotrebu brajevog reda da biste saznali raspored i opis tastera na brajevom redu.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left side scroll down |
-| Scroll braille display forward | right side scroll down |
-| Route to braille cell | routing |
+|| Ime | komanda |
+| Pomeri brajev red nazad | left side scroll down |
+| Pomeri brajev red napred | right side scroll down |
+| Pomeri se na brajevu ćeliju | routing |
 %kc:endInclude
 
-++ Seika Braille Displays ++
-The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft http://www.nippontelesoft.com/] are supported.
-You can find more information about these displays at http://www.seika-braille.com/.
-You must first install the USB drivers provided by the manufacturer.
+++ Seika brajični retci ++
+Seika verzije 3, 4 i 5 (40 ćelija) i Seika80 (80 ćelija)brajevi redovi koje je proizvela firma [Nippon Telesoft http://www.nippontelesoft.com/] su podržani.
+Za više informacija o ovim brajevim redovima posetite http://www.seika-braille.com/.
+Prvo morate instalirati USB drajvere koje je proizveo proizvođač.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Slede tasterske prečice za ovaj brajev red za korišćenje uz pomoć NVDA.
+Molimo pogledajte uputstva za upotrebu vašeg brajevog reda da biste saznali raspored tastera i njihov opis.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | b3 |
-| Move braille display to next line | b4 |
-| Toggle braille tethered to | b5 |
-| Say all | b6 |
+|| Ime | komanda |
+| pomeri brajev red nazad | levo |
+| Pomeri brajev red napred | desno |
+| Premesti brajev red na prethodni red | b3 |
+| Premesti brajev red na sledeći red | b4 |
+| Prebacuj se između brajev vezan za| b5 |
+| Izgovori sve | b6 |
 | tab | b1 |
-| shift+tab | b2 |
+| Šift+tab | b2 |
 | alt+tab | b1+b2 |
-| NVDA Menu | left+right |
-| Route to braille cell | routing |
+| NVDA meni | levo+desno |
+| Prebaci se na brajevu ćeliju | routing |
 %kc:endInclude
 
-++ Papenmeier BRAILLEX Newer Models ++
-The following Braille displays are supported: 
+++ Papenmeier BRAILLEX Noviji Modeli ++
+Sledeći brajevi redovi su podržani: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-- BRAILLEX Trio (USB and bluetooth)
-- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
+- BRAILLEX Trio (USB i bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live i BRAILLEX Live Plus (USB i bluetooth)
 -
 
-If BrxCom is installed, NVDA will use BrxCom.
-BrxCom is a tool that allows keyboard input from the braille display to function independently from a screen reader.
-A new version of BrxCom which works with NVDA will be released by Papenmeier soon.
-Keyboard input is possible with the Trio and BRAILLEX Live models.
+Ako je BrxCom instaliran, NVDA će koristiti BrxCom.
+BrxCom je alat koji omogućava unos sa tastature odvojen od čitača ekrana.
+Papenmeier će uskoro objaviti novu verziju programa BrxCom koja će raditi sa NVDA čitačem ekrana.  
+Unos znakova sa tastature brajevog reda moguć je koristeći Trio i BRAILLEX Live modele brajevih redova.
 
-Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
-The EAB can be moved in four directions where generally each direction has two switches.
-The C and Live series are the only exceptions to this rule.
+Većina uređaja ima taster Easy Access Bar (EAB) koji omogućava brzo i intuitivno rukovanje.
+EAB može biti premeštan u četiri smera gde u glavnom svaki smer ima dva preklopnika.
+C i live serije su jedina verzija od ovog pravila.
 
-The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
-Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
-The live series displays have one routing row only and the EAB has one step per direction.
-The second step may be emulated by pressing one of the routing keys and pressing the EAB in the corresponding direction.
-Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+C-serija i drugi brajevi redovi imaju dva reda routing tastera gde se gornji red koristi za izveštavanje o oblikovanju teksta.
+Kada držite pritisnutu jedan od gornjih routing tastera i pritiskate EAB na uređajima c-serije emulira stanje drugog preklopnika.
+Brajevi redovi Live serije imaju samo jedan red routing tastera i EAB ima samo jedan korak po smeru.
+Drugi se korak može izvesti tako da pritisnete jedan od routing tastera i EAB u zadanom smeru.
+Kad pritisnete i držite gornje, doljnje, desne i leve tastere (ili EAB) uzrokuje ponavljanje dodeljene akcije.
 
-Generally, the following keys are available on these braille displays:
-|| Name | Key |
-| l1 | Left front key |
-| l2 | Left rear key |
-| r1 | Right front key |
-| r2 | Right rear key |
-| up | 1 Step up |
-| up2 | 2 Steps up |
-| left | 1 Step left |
-| left2 | 2 Steps left |
-| right | 1 Step right |
-| right2 | 2 Steps right |
-| dn | 1 Step down |
-| dn2 | 2 Steps down |
+Većinom, sledeći su tasteri dostupni na ovim brajevim redovima:
+|| Ime | taster |
+| l1 | Levi prednji taster |
+| l2 | Levi zadnji taster |
+| r1 | Desni prednji taster |
+| r2 | Desni zadnji taster |
+| up | 1 korak prema gore |
+| up2 | 2 koraka gore |
+| left | 1 korak levo |
+| left2 | 2 koraka levo |
+| right | 1 korak desno |
+| right2 | 2 koraka prema desno |
+| dn | 1 korak prema dole |
+| dn2 | 2 koraka prema dole |
 
-Following are the Papenmeier command assignments for NVDA:
+Ovo su Papenmeier prečice dodeljene za korišćenje sa NVDA:
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | up |
-| Move braille display to next line | dn |
-| Route to braille cell | routing |
-| Report current character in review | l1 |
-| Activate current navigator object | l2 |
-| Toggle braille tethered to | r2 |
-| Report title | l1+up |
-| Report Status Bar | l2+down |
-| Move to containing object | up2 |
-| Move to first contained object | dn2 |
-| Move to previous object | left2 |
-| Move to next object | right2 |
-| Report text formatting | upper routing row |
+|| Ime | Komanda |
+| prebaci brajev red u levo | left |
+| prebaci brajev red u desno | right |
+| Prebaci brajev red u prethodni red | up |
+| Premesti brajev red na sledeći red | dn |
+| Prebaci se na brajevu ćeliju | routing |
+| Pročitaj trenutni znak u režimu pregleda | l1 |
+| Aktiviraj trenutni objekat navigacije | l2 |
+| prebacuj između brajev vezan za| r2 |
+| Prijavi naslov | l1+up |
+| Pročitaj statusnu traku | l2+down |
+| Premesti se na sadržan objekat | up2 |
+| Premesti se na prvi sadržani objekat | dn2 |
+| Prebaci se na prethodni objekat | left2 |
+| Prebaci se na sledeći objekat | right2 |
+| Prijavi formatiranje teksta| Gornji red routing tastera |
 %kc:endInclude
 
-The Trio model has four additional keys which are in front of the braille keyboard.
-These are (ordered from left to right):
-- left thumb key (lt)
-- space
-- space
-- right thumb key (rt)
+Trio model ima četiri dodatna tastera koji se nalaze na prednjoj strani brajeve tastature.
+One su po redu, (poređani od leva prema desno):
+- leva palčana tipka (lt)
+- razmak
+- razmak
+- Desna palčana tipka (rt)
 -
-Currently, the right thumb key is not in use.
-The inner keys are both mapped to space.
+Trenutno se ne koristi desna palčana tipka.
+Oba dve unutrašnje tipke su približene razmaku.
 
-|| Name | Key |
 %kc:beginInclude
-| backspace key | dot 7 |
-| enter key | dot 8 |
-| escape key | space with dot 7 |
-| upArrow key | space with dot 2 |
-| leftArrow key | space with dot 1 |
-| rightArrow key | space with dot 4 |
-| downArrow | space with dot 5 |
-| control key | lt+dot2 |
-| alt key | lt+dot3 |
-| control+escape key | space with dot 1 2 3 4 5 6 |
-| tab key | space with dot 3 7 |
+|| Ime | Komanda |
+| backspace | Tačka 7 |
+| enter | Tačka 8 |
+| escape | razmak sa tačkom 7 |
+| strelicaGore | razmak sa tačkom 2 |
+| strelicaLevo | razmak sa tačkom 1 |
+| strelicaDesno | razmak sa tačkom 4 |
+| strelicaDole | razmak sa tačkom 5 |
+| kontrol | lt+tačka2 |
+| alt | lt+tačka3 |
+| kontrol+escape | razmak sa tačkama 1 2 3 4 5 6 |
+| tab | razmak sa tačkama 3 7 |
 %kc:endInclude 
 
-++ Papenmeier Braille BRAILLEX Older Models ++
-The following Braille displays are supported: 
+++ Papenmeier Braille BRAILLEX stariji modeli ++
+Sledeći su brajevi redovi podržani: 
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
 -
 
-Note that these displays can only be connected via a serial port.
-Therefore, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialogue.
+Imajte na umu da se ovi brajevi redovi mogu povezati samo preko serijskog priključka.
+Zbog toga, morate označiti priključak putem kojeg je brajev red spojen kad odaberete ovaj drajver u dijaloškom okviru brajev red.
 
-Some of these devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
-The EAB can be moved in four directions where generally each direction has two switches.
-Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
-Older devices do not have an EAB; front keys are used instead.
+Neki od ovih uređaja imaju Easy Access Bar (EAB) taster koji omogućuje intuitivno i brzo rukovanje.
+EAB se može pomerati u četiri smera gde uglavnom svaki smer ima dva preklopnika.
+Kad pritiskate i držite gornji, donji, desni i levi taster (ili EAB) Prouzrokuje ponavljanje dodeljene akcije.
+Stariji uređaji nemaju EAB; tasteri sa prednje strane se koriste umesto EAB.
 
-Generally, the following keys are available on braille displays:
+Uobičajeno mogu se naći sledeći tasteri na brajevim redovima:
 
-|| Name | Key |
-| l1 | Left front key |
-| l2 | Left rear key |
-| r1 | Right front key |
-| r2 | Right rear key |
-| up | 1 Step up |
-| up2 | 2 Steps up |
-| left | 1 Step left |
-| left2 | 2 Steps left |
-| right | 1 Step right |
-| right2 | 2 Steps right |
-| dn | 1 Step down |
-| dn2 | 2 Steps down |
+|| Ime | Taster |
+| l1 | Levi prednji taster |
+| l2 | Levi zadnji taster |
+| r1 | desni prednji taster |
+| r2 | desni zadnji taster |
+| up | 1 korak prema gore |
+| up2 | 2 koraka gore |
+| left | 1 korak levo |
+| left2 | 2 koraka levo |
+| right | 1 Korak desno |
+| right2 | 2 Koraka desno |
+| dn | 1 korak prema dole |
+| dn2 | 2 koraka prema dole |
 
-Following are the Papenmeier command assignments for NVDA:
+Slede Papenmeierove dodeljene prečice za korišćenje sa NVDA:
 
 %kc:beginInclude
-Devices with EAB:
-|| Name | Key |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | up |
-| Move braille display to next line | dn |
-| Route to braille cell | routing |
-| Report current character in review | l1 |
-| Activate current navigator object | l2 |
-| Report title | l1up |
-| Report Status Bar | l2down |
-| Move to containing object | up2 |
-| Move to first contained object | dn2 |
-| Move to next object | right2 |
-| Move to previous object | left2 |
-| Report text formatting | Upper routing strip |
+Uređaji koji imaju EAB:
+|| Ime | Komanda |
+| Pomeri brajev red nazad | left |
+| Pomeri brajev red napred | right |
+| Pomeri brajev red na prethodni red | up |
+| Pomeri brajev red na sledeći red | dn |
+| Premesti se na brajevu ćeliju | routing |
+| Izgovori trenutni znak u režimu pregleda| l1 |
+| aktiviraj trenutni objekat navigacije | l2 |
+| izgovori naslov | l1up |
+| Izgovori statusnu traku | l2down |
+| Premesti se na sadržan objekat | up2 |
+| Premesti se na prvi sadržani objekat | dn2 |
+| Premesti se na sledeći objekat | right2 |
+| Prebaci se na prethodni objekat | left2 |
+| Prijavi formatiranje teksta | gornji red routing tastera |
 
 BRAILLEX Tiny:
-|| Name | Key |
-| Report current character in review | l1 |
-| Activate current navigator object | l2 |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | up |
-| Move braille display to next line | dn |
-| Toggle braille tethered to | r2 |
-| Move to containing object | r1+up |
-| Move to first contained object | r1+dn |
-| Move to previous object | r1+left |
-| Move to next object | r1+right |
-| Report text formatting | reportf |
-| Report title | l1+up |
-| Report status bar | l2+down |
+|| Ime | Komanda |
+| izgovori trenutni znak u režimu  pregleda | l1 |
+| Aktiviraj trenutni objekat navigacije | l2 |
+| Prebaci brajev red nazad | left |
+| Prebaci brajev red napred | right |
+| Prebaci brajev red na prethodni red | up |
+| Prebaci brajev red na sledeći red | dn |
+| Prebacuj vezivanje brajevog reda na| r2 |
+| Prebaci se na sadržan objekat | r1+up |
+| Prebaci se na prvi sadržani objekat | r1+dn |
+| Prebaci se na prvi objekat | r1+left |
+| Prebaci se na sledeći objekat | r1+right |
+| Prijavi formatiranje teksta | reportf |
+| Izgovori naslov | l1+gore |
+| izgovori statusnu traku | l2+dole |
 
 BRAILLEX 2D Screen:
-|| Name | Key |
-| Report current character in review | l1 |
-| Activate current navigator object | l2 |
-| Toggle braille tethered to | r2 |
-| Report text formatting | reportf |
-| Move braille display to previous line | up |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to next line | dn |
-| Move to next object | left2 |
-| Move to containing object | up2 |
-| Move to first contained object | dn2 |
-| Move to previous object | right2 |
+|| Ime | Komanda |
+| izgovori trenutni znak u režimu pregleda | l1 |
+| Aktiviraj trenutni objekat navigacije | l2 |
+| Prebacuj brajev vezan na| r2 |
+| Prijavi formatiranje teksta | reportf |
+| Premesti brajev red na prethodni red | up |
+| Pomeri brajev red nazad | left |
+| Prebaci brajev red napred | right |
+| Prebaci brajev red na sledeći red | dn |
+| Prebaci se na sledeći objekat | left2 |
+| Prebaci se na sadržan objekat | up2 |
+| Prebaci se na prvi sadržani objekat | dn2 |
+| Prebaci se na prethodni objekat | right2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++
-NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
-The following models are supported:
-- BrailleNote Classic (serial connection only)
-- BrailleNote PK (Serial and bluetooth connections)
-- BrailleNote MPower (Serial and bluetooth connections)
-- BrailleNote Apex (USB and Bluetooth connections)
+NVDA podržava BrailleNote elektronske beležnice firme [Humanware http://www.humanware.com] Kada se ponašaju kao brajevi redovi za čitače ekrana.
+Sledeći modeli su podržani:
+- BrailleNote Classic (samo serijska veza)
+- BrailleNote PK (serijska i bluetooth veza)
+- BrailleNote MPower (Serijska i Bluetooth veza)
+- BrailleNote Apex (USB i bluetooth veza)
 -
 
-If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
-Please check the BrailleNote manual for details.
-In NVDA, you may also need to set the port in the Braille Settings dialog.
-If you are connecting via USB or bluetooth, you can set the port to "Automatic", "USB" or "Bluetooth", depending on the available choices.
-If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
+Ako vaš uređaj podržava više od jedne vrste veze, kada spajate vaš BrailleNote za korišćenje sa NVDA, morate postaviti priključak brajevog terminala u podešavanjima brajevog terminala.
+Za više informacija, molimo pogledajte korisničko uputstvo za BrailleNote elektronsku beležnicu.
+Možda ćete morati da podesite priključak u dijaloškom okviru brajeva podešavanja.
+Ako povezujete uređaj putem USB ili bluetooth veze, možete postaviti priključak na "Automatski", "USB" ili "Bluetooth", u zavisnosti od dostupnih opcija.
+Ako za povezivanje koristite serijski priključak (ili pretvarač sa serijskog priključka na USB) ili se ne pojavljuje nijedna od prethodnih opcija, morate tačno odabrati komunikacijski priključak koji će se koristiti pri komunikaciji sa uređajem.
 
-Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+Pre povezivanja vašeg BrailleNote Apex uz pomoć njegovog Usb klijenta, morate instalirati drajvere koje je napravila firma Human Ware.
 
-Following are the BrailleNote command assignments for NVDA.
-Please check your BrailleNote's documentation to find where these keys are located.
+Slede BrailleNote prečice za korišćenje sa NVDA čitačem ekrana.
+Molimo pogledajte vaše BrailleNote uputstvo za upotrebu da biste znali gde se nalaze ovi tasteri.
 
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | back |
-| Scroll braille display forward | advance |
-| Move braille display to previous line | previous |
-| Move braille display to next line | next |
-| Route to braille cell | routing |
-| Toggle braille tethered to | previous+next |
-| Up arrow key | space+dot1 |
-| Down arrow key | space+dot4 |
-| Left Arrow key | space+dot3 |
-| Right arrow key | space+dot6 |
-| Page up key | space+dot1+dot3 |
-| Page down key | space+dot4+dot6 |
-| Home key | space+dot1+dot2 |
-| End key | space+dot4+dot5 |
-| Control+home keys | space+dot1+dot2+dot3 |
-| Control+end keys | space+dot4+dot5+dot6 |
-| Space key | space |
-| Enter key | space+dot8 |
-| Backspace key | space+dot7 |
-| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
-| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
-| Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
-| Alt key | space+dot1+dot3+dot4 (space+m) |
-| Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+|| Ime | Komanda |
+| Prebaci brajev red nazad | nazad |
+| Prebaci brajev red napred | napred |
+| Premesti brajev red na prethodni red | prethodno |
+| Premesti brajev red na sledeći red | sledeće |
+| Prebaci se na brajevu ćeliju | routing |
+| Prebacuj brajev vezan za| Prethodni+Sledeći |
+| Strelica Gore | razmak+tačka1 |
+| Strelica Dole | razmak+tačka4 |
+| Leva Strelica | razmak+tačka3 |
+| Strelica desno | razmak+tačka6 |
+| Page up | razmak+tačka1+tačka3 |
+| Page down | razmak+tačka4+tačka6 |
+| Home | razmak+tačka1+tačka2 |
+| End | razmak+tačka4+tačka5 |
+| Kontrol+home | razmak+tačka1+tačka2+tačka3 |
+| Control+end | razmak+tačka4+tačka5+tačka6 |
+| Razmak | brajev razmak |
+| Enter | razmak+tačka8 |
+| Backspace | razmak+tačka7 |
+| Tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
+| Šift+tab | razmak+tačka1+tačka2+tačka5+tačka6 |
+| Windows taster | razmak+tačka2+tačka4+tačka5+tačka6 (razmak+w) |
+| Alt | razmak+Tačka1+tačka3+tačka4 (razmak+m) |
+| Uključi/isključi pomoć za unos | razmak+tačka2+tačka3+tačka6 (razmak+spušteno h) |
 %kc:endInclude
 
 ++ EcoBraille ++
-NVDA supports EcoBraille displays from [ONCE http://www.once.es/].
-The following models are supported:
+NVDA podržava EcoBraille brajeve redove koje proizvodi [ONCE http://www.once.es/].
+Sledeći modeli su podržani:
 - EcoBraille 20
 - EcoBraille 40
 - EcoBraille 80
 - EcoBraille Plus
 -
 
-In NVDA, you can set the serial port to which the display is connected in the Braille Settings dialog.
+U NVDA možete podesiti priključak na koji će brajev red biti povezan, u brajevim podešavanjima.
 
-Following are the key assignments for EcoBraille displays.
-Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for descriptions of where these keys can be found.
+Slede Dodeljene prečice za EcoBraille brajeve redove.
+Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] Za opis i raspored tastera na vašem brajevom redu.
 
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | T2 |
-| Scroll braille display forward | T4 |
-| Move braille display to previous line | T1 |
-| Move braille display to next line | T5 |
-| Route to braille cell | Routing |
-| Activate current navigator object | T3 |
-| Switch to next review mode | F1 |
-| Move to containing object | F2 |
-| Switch to previous review mode | F3 |
-| Move to previous object | F4 |
-| Report current object | F5 |
-| Move to next object | F6 |
-| Move to focus object | F7 |
-| Move to first contained object | F8 |
-| Move System focus or caret to current review position | F9 |
-| Report review cursor location | F0 |
-| Toggle braille tethered to | A |
+|| Ime | Komanda |
+| Pomeri brajev red nazad za red | T2 |
+| Pomeri brajev red napred za jedan red | T4 |
+| Pomeri brajev red na prethodnu liniju teksta | T1 |
+| Pomeri brajev red na sledeću liniju teksta | T5 |
+| Pomeri se na brajevu ćeliju | Routing |
+| Aktiviraj trenutni objekat navigacije | T3 |
+| Prebaci se na sledeći režim pregleda | F1 |
+| Pomeri se na prethodni objekat  | F2 |
+| Pomeri se na prethodni režim pregleda | F3 |
+| Pomeri se na prethodni objekat | F4 |
+| Čitaj trenutni objekat | F5 |
+| Prebaci se na sledeći objekat | F6 |
+| Premesti se na objekat koji ima fokus | F7 |
+| Premesti se na prvi sadržan objekat | F8 |
+| Premesti fokus sistema i kursor na trenutnu poziciju | F9 |
+| Prijavi poziciju preglednog kursora| F0 |
+| Uključi /isključi brajev vezan na| A |
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://www.brltty.com/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows http://www.brltty.com/download.html].
-You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
-When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
+[BRLTTY http://www.brltty.com/] je program koji se može koristiti za podršku puno više brajevih redova.
+Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows http://www.brltty.com/download.html].
+Morate preuzeti i instalirati trenutnu verziju paketa, na primer koji će biti imenovan, brltty-win-4.2-2.exe.
+Kada podešavate brajev red i priključak za korišćenje, budite sigurni da strogo pratite uputstva, pogotovo ako koristite Usb brajev red i ako već imate instalirane drajvere proizvođača.
 
-For displays which have a braille keyboard, BRLTTY currently handles braille input itself.
-Therefore, NVDA's braille input table setting is not relevant.
+Za brajeve redove koji imaju brajevu tastaturu, BRLTTY trenutno koristi unos brajevih znakova iz samog sebe.
+Zbog toga, podešavanje za ulaznu brajevu tabelu u dijalogu Brajeva podešavanja, je nebitno.
 
-Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Ovo su BRLTTY prečice za NVDA.
+Molimo pogledajte [BRLTTY tabele tasterskih prečica http://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su dodeljene prečice za kontrole na brajevim redovima.
 %kc:beginInclude
-|| Name | BRLTTY command |
-| Scroll braille display back | fwinlt (go left one window) |
-| Scroll braille display forward | fwinrt (go right one window) |
-| Move braille display to previous line | lnup (go up one line) |
-| Move braille display to next line | lndn (go down one line) |
-| Route to braille cell | route (bring cursor to character) |
+|| Ime | BRLTTY komanda |
+| Prebaci brajev red nazad | fwinlt (idi jedan prozor u levo) |
+| Prebaci brajev red napred | fwinrt (Prebaci se jedan prozor u desno) |
+| Prebaci brajev red na sledeći red | lnup (Idi jedan red gore) |
+| Premesti brajev red na sledeći red | lndn (Idi dole za jedan red) |
+| Pomeri se na brajevu ćeliju | route (Pomeri kursor na znak) |
 %kc:endInclude
 
-+ Braille control type and state abbreviations +
-In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
++ Skraćenice za stanje i vrstu kontrole na brajevom redu+
+Kako bi što je više moguće  informacija stalo na brajev red, sledeće skraćenice su dodate za imenovanje vrste i stanja kontrole.
 
-|| Abbreviation | Control type |
-| btn | button |
-| cbo | combo box |
-| chk | checkbox |
+|| Skraćenica | Vrsta kontrole |
+| btn | Dugme |
+| cbo | Izborni okvir |
+| chk | Izborno polje |
 | dlg | dialog |
-| edt | editable text field |
-| gra | graphic |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
-| hN | heading at level n, e.g. h1, h2. |
+| edt | Polje za unos teksta |
+| gra | Slika|
+| cN | Broj kolone tabele n, na primer c1, c2. |
+| rN | Broj reda tabele n, na primer r1, r2. |
+| hN | Zaglavlje na nivou n, na primer h1, h2. |
 | lnk | link |
-| lst | list |
-| vlnk | visited link |
-| mnu | menu |
-| mnubar | menu bar |
-| rbtn | radio button |
-| tb | table |
-| tv | treeview |
-| lv N | a tree view item has a hierarchical level N|
-| ``-----`` | seperator |
+| lst | Lista |
+| vlnk | Posećen link |
+| mnu | Meni |
+| mnubar | Traka menija |
+| rbtn | radio dugme |
+| tb | Tabela |
+| tv | Prikaz stabla |
+| lv N | Stavka prikaza stabla na nivou N|
+| ``-----`` | separator |
 
-The following state indicators are also defined:
-|| Abbreviation | Control state |
-| ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a checkbox) is not checked |
-| (x) | displayed when an object (e.g. a checkbox) is checked |
-| (-) | displayed when an object (e.g. a checkbox) is half checked |
-| - | displayed when an object (e.g. a tree view item) is collapsible |
-| + | displayed when an object (e.g. a tree view item) is Expandable |
-| clk | displayed when an object is clickable |
-| ro | displayed when an object (e.g. an editable text field) is read-only |
-| sel | displayed when an object is selected |
-| submnu | displayed when an object has a popup (usually a sub-menu) |
+Sledeći pokazivači stanja su takođe definisani:
+|| Skraćenica | Stanje kontrole |
+| ... | Prikazuje se kada objekat podržava automatsko dopunjavanje|
+| ( ) | Prikazano kada objekat(na primer izborno polje) nije označen|
+| (x) | Prikazano kada objekat(na primer izborno polje) je označen|
+| (-) | Prikazano kada objekat(na primer izborno polje) je polovično označeno|
+| - | Prikazano kada objekat(na primer stavka prikaza stabla) se može skupiti|
+| + | Prikazano kada objekat(na primer stavka prikaza stabla) se može proširiti|
+| clk | Prikazano kada se na objekat može kliknuti|
+| ro | Prikazano kada objekat(na primer polje za unos teksta) je samo za čitanje|
+| sel | Prikazano kada je objekat izabran|
+| submnu | Prikazano kada objekat ima dodatni prozor(obično podmeni) |
 
-+ Advanced Topics +
++ Napredne teme +
 
-++ Command Line Options ++[CommandLineOptions]
-NVDA can accept one or more additional options when it starts which alter its behavior.
-You can pass as many options as you need.
-These options can be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (Start Menu -> Run or Windows+r) or from a Windows command console.
-Options should be separated from the name of NVDA's executable file and from other options by spaces.
-For example, the Desktop shortcut that NVDA creates during installation has the -r option, which tells NVDA to close the currently running copy before starting the new one.
-Another useful option is --disable-addons, which tells NVDA to suspend all running add-ons.
-This allows you to determine whether a problem is caused by an add-on and to recover from serious problems caused by add-ons.
+++ Opcije komandne linije ++[CommandLineOptions]
+NVDA može prihvatiti jednu ili više opcija kada se pokreće koje menjaju njegovo ponašanje.
+Možete proslediti onoliko opcija koliko vam je potrebno.
+Ove opcije mogu biti prosleđene kada pokrećete preko prečice(u svojstvima prečice), iz dijaloga pokreni(start meni-> pokreni ili Windows+r) ili iz Windows komandne linije.
+Opcije trebaju biti odvojene od imena glavne datoteke programa NVDA i od drugih opcija razmacima.
+Na primer, prečica koju NVDA pravi na radnoj površini u toku instalacije ima -r opciju, koja govori programu da zatvori trenutno pokrenutu kopiju pre pokretanja nove.
+Još jedna korisna opcija je --disable-addons, koja govori programu NVDA da onemogući sve pokrenute dodatke.
+Ovo vam dozvoljava da proverite da li je neki od dodataka izazvao problem i da rešite ozbiljne probleme izazvane od strane dodataka.
 
-As an example, you can exit the currently running copy of NVDA by entering the following in the Run dialog:
+Kao primer, možete izaći iz prethodno pokrenute kopije programa NVDA upisivanjem sledećeg u dijalog za pokretanje:
 
 nvda -q
 
-Some of the command line options have a short and a long version, while some of them have only a long version.
-For those which have a short version, you can combine them like this:
-| nvda -rm | This will exit the currently running copy of NVDA and will start a new copy with startup sounds disabled, etc. |
-| nvda -rm --disable-addons | Same as above, but with add-ons disabled |
+Neke opcije komandne linije imaju kratku i dugu verziju, dok neke imaju samo dugu verziju.
+Za one koje imaju kratku verziju, možete ih kombinovati ovako:
+| nvda -rm | Ovo će izaći iz programa NVDA i pokrenuti novu sa zvucima pri pokretanju onemogućenim, i tako dalje. |
+| nvda -rm --disable-addons | Isto kao iznad, ali sa dodacima onemogućenim|
 
-Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
-Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
-| nvda -l 10 | Tells NVDA to start with log level set to debug |
-| nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
+Neke opcije prihvataju dodatne parametre; na primer koliko detaljna evidencija u dnevniku treba da bude ili adresa za korisnička podešavanja.
+Ovi parametri se postavljaju nakon opcije odvojeni razmakom, kada se koristi kratka verzija ili znakom jednako(=) kada se koristi duga verzija; na primer.:
+| nvda -l 10 | Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na otklanjanje grešaka|
+| nvda --log-file=c:\nvda.log |  Govori programu NVDA da piše datoteke sa dnevnikom na lokaciji c:/NVDA.log|
+| nvda --log-level=20 -f c:\nvda.log | Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na informacije i da piše datoteke sa dnevnikom na lokaciji c:\NVDA.log|
 
-Following are the command line options for NVDA:
-|| Short | Long | Description |
-| -h | --help | show command line help and exit |
-| -q | --quit | Quit already running copy of NVDA |
-| -r | --replace | Quit already running copy of NVDA and start this one |
-| -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
-| -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
-| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning |
-| -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
-| -m | --minimal | No sounds, no interface, no start message etc |
-| -s | --secure | Secure mode (disable Python console) |
-| None | --disable-addons | Addons will have no effect |
-| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given. |
-| None | --no-sr-flag  | Don't change the global system screen reader flag |
-| None | --install | Installs NVDA (starting the newly installed copy) |
-| None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+Slede opcije komandne linije za NVDA:
+|| Kratka | Duga | Opis |
+| -h | --help | Prikaži pomoć komandne linije i izađi|
+| -q | --quit | Izađi iz već pokrenute kopije programa NVDA|
+| -r | --replace | Izađi iz pokrenute kopije programa NVDA i pokreni ovu|
+| -k | --check-running | Prijavi da li je NVDA pokrenut korišćenjem koda izlaza; 0 ako je pokrenut, 1 ako nije pokrenut|
+| -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka u kojoj poruke dnevnika trebaju biti pisane|
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najniži nivo evidencije poruka(otklanjanje grešaka 10, info 20, upozorenje 30, greška 40, kritično 50), podrazumevano je upozorenje|
+| -c CONFIGPATH | --config-path=CONFIGPATH | Adresa na kojoj podešavanja za NVDA trebaju biti sačuvana|
+| -m | --minimal | Nema zvukova, nema interfejsa, nema poruka pokretanja i tako dalje|
+| -s | --secure | Bezbednosni režim(onemogući pithon konzolu) |
+| Nema | --disable-addons | Dodaci neće imati efekta|
+| Nema | --debug-logging | Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ""--loglevel"", -l). |
+| Nema| --no-sr-flag  | Ne menjaj globalnu oznaku čitača ekrana na sistemu|
+| None | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
+| Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
 
-+ Further Information +
-If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
-Here, you can find additional documentation, as well as technical support and community resources.
-This site also provides information and resources concerning NVDA development.
++ Dodatne informacije +
+Ako vam trebaju dodatne informacije ili pomoć za program NVDA, molimo posetite NVDA sajt na lokaciji NVDA_URL.
+Ovde, možete pronaći dodatnu dokumentaciju, kao i tehničku podršku i mesta zajednice.
+Ovaj sajt takođe pruža informacije o razvoju programa NVDA.
 
