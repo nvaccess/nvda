@@ -1627,6 +1627,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Reset the message timeout.
 		@precondition: A message is currently being displayed.
 		"""
+		if config.conf["braille"]["noMessageTimeout"]:
+			return
 		# Configured timeout is in seconds.
 		timeout = config.conf["braille"]["messageTimeout"] * 1000
 		if self._messageCallLater:
@@ -1641,8 +1643,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
-		self._messageCallLater.Stop()
-		self._messageCallLater = None
+		if not config.conf["braille"]["noMessageTimeout"]:
+			self._messageCallLater.Stop()
+			self._messageCallLater = None
 		self.update()
 
 	def handleGainFocus(self, obj):
