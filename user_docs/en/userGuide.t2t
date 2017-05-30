@@ -2228,8 +2228,8 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
-+ Braille control type and state abbreviations +
-In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
++ Braille control type, state and landmark abbreviations +
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
 
 || Abbreviation | Control type |
 | btn | button |
@@ -2242,8 +2242,9 @@ In order to fit as much information as possible on a braille display, The folowi
 | rN | table row number n, e.g. r1, r2. |
 | hN | heading at level n, e.g. h1, h2. |
 | lnk | link |
-| lst | list |
 | vlnk | visited link |
+| lst | list |
+| lmk | landmark |
 | mnu | menu |
 | mnubar | menu bar |
 | rbtn | radio button |
@@ -2264,6 +2265,17 @@ The following state indicators are also defined:
 | ro | displayed when an object (e.g. an editable text field) is read-only |
 | sel | displayed when an object is selected |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
 
 + Advanced Topics +
 

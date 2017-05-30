@@ -377,6 +377,26 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
+landmarkLabels = {
+	# Translators: Displayed in braille for the banner landmark, normally found on web pages.
+	"banner": _("bnnr"),
+	# Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+	"complementary": _("cmpl"),
+	# Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+	"contentinfo": _("cinf"),
+	# Translators: Displayed in braille for the main landmark, normally found on web pages.
+	"main": _("main"),
+	# Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+	"navigation": _("navi"),
+	# Translators: Displayed in braille for the search landmark, normally found on web pages.
+	"search": _("srch"),
+	# Translators: Displayed in braille for the form landmark, normally found on web pages.
+	"form": _("form"),
+	# Strictly speaking, region isn't a landmark, but it is very similar.
+	# Translators: Displayed in braille for a significant region, normally found on web pages.
+	"region": _("rgn"),
+}
+
 #: Cursor shapes
 CURSOR_SHAPES = (
 	# Translators: The description of a braille cursor shape.
