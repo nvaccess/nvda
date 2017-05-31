@@ -1476,9 +1476,5 @@ class SuggestionListItem(UIA):
 			speech.cancelSpeech()
 			api.setNavigatorObject(self)
 			self.reportFocus()
-			# Construct the braille flash message (name, position info).
-			# Ideally NvDA objects should have a method to construct braille flash messages.
-			suggestionMessage=[self.name]
-			if config.conf["presentation"]["reportObjectPositionInformation"]:
-				suggestionMessage.append(_("{number} of {total}").format(number=self.positionInfo["indexInGroup"], total=self.positionInfo["similarItemsInGroup"]))
-			braille.handler.message(" ".join(suggestionMessage))
+			# Display results as flash messages.
+			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
