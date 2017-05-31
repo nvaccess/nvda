@@ -3,6 +3,36 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+== New Features ==
+- A Braille setting has been added to "show messages indefinitely". (#6669)
+- In Microsoft Outlook message lists, report if a message is flagged. (#6374)
+- In Microsoft Powerpoint, the exact type of a shape is now reported when editing a slide (Examples include: triangle, circle, video, arrow), rather than just 'shape'. (#7111)
+
+
+== Changes ==
+- An unbound gesture (script_restart) has been added to allow NVDA to be restarted quickly. (#6396)
+- The keyboard layout can now be set from the NVDA Welcome dialog. (#6863)
+- The names of landmarks are abbreviated in Braille as follows: (#3975)
+ - "landmark": "lmk"
+ - "banner": "bnnr"
+ - "complementary": "comp"
+ - "contentinfo": "cinf"
+ - "main": "main"
+ - "navigation": "nav"
+ - "search": "srch"
+ - "form": "frm"
+ - "region": "rgn"
+ - Example: "navigation landmark" becomes "lmk nav"
+
+
+== Bug Fixes ==
+- Editable div elements in Chrome no longer have their label reported as their value while in browse mode. (#7153)
+- Pressing end while in browse mode of an empty Microsoft Word document no longer causes a runtime error. (#7009)
+- Browse mode is now correctly   supported in Microsoft Edge where a document has been given a specific ARIA role of document. (#6998)
+
+
 = 2017.2 =
 Highlights of this release include full support for audio ducking in the Windows 10 Creators Update; fixes for several selection issues in browse mode, including problems with select all; significant improvements in Microsoft Edge support; and improvements on the web such as indication of elements marked as current (using aria-current).
 

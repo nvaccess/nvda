@@ -4,36 +4,44 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 =
+Hoogtepunten in deze versie zijn volledige ondersteuning voor audio-onderdrukking in de Windows 10 Makers Update; oplossingen voor verschillende selectieproblemen in bladermodus, inclusief problemen met Alles Selecteren; significante verbeteringen in de ondersteuning van Microsoft Edge; en verbeteringen op het web zoals aangeven van elementen gemarkeerd als huidig (via aria-current).
 
 == Nieuwe Functies ==
 - Informatie over celranden kan nu worden gemeld in Microsoft Excel via `NVDA+f`. (#3044)
 - Ondersteuning toegevoegd voor aria-current attributen. (#6358)
 - Automatische taalverandering wordt nu ondersteund in Microsoft Edge. (#6852)
-- Ondersteuning toegevoegd voor Windows Calculator op Windows 10 Enterprise LTSB (Long-Term Servicing Branch) en Server. (#6914)
-- Als u het commando read current line driemaal snel uitvoert, wordt de regel gespeld met karaterbeschrijvingen. (#6893)
+- Ondersteuning toegevoegd voor Windows Rekenmachine op Windows 10 Enterprise LTSB (Long-Term Servicing Branch) en Server. (#6914)
+- Als u het commando read current line driemaal snel uitvoert, wordt de regel gespeld met karakterbeschrijvingen. (#6893)
 - Nieuwe taal: Burmees.
+- Unicode symbolen zoals pijl omhoog, pijl omlaag en breuksymbolen worden nu juist uitgesproken. (#3805)
 
 
 == Veranderingen ==
-- When navigating with simple review  in applications using UI Automation, more non-content containers are ignored making navigation easier. (#6948, #6950) 
+- Bij het navigeren in de simpele leesoverzichtmodus   in applicaties die gebruik maken van UI Automation worden bepaalde irrelevante objecten nu genegeerd om de navigatie eenvoudiger te maken. (#6948, #6950) 
 
 
 == Opgeloste Problemen ==
-- Web page menu items (menu item checkbox's and radio buttons) can now be activated while in browse mode. (#6735)
-- Meldingen voor namen van werkbladen in Excel zijn vertaald. (#6848)
-- Pressing escape while the configuration profile "Confirm Deletion" dialog is active now dismisses the dialog. (#6851)
-- Fixed some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
-- Reporting of background color in screen review is now more accurate when  text was drawn with a transparent background. (#6467)
-- Verbeterde ondersteuning voor aria-describedby in Internet Explorer 11, inclusief ondersteuning binnen iframes en wanneer meerdere ID's zijn vermeld. (#5784)
-- In the Windows 10 Creators Update, NVDA's audio ducking again works as in previous Windows releases (I.e. Duck with speech and sounds, always duck, and no ducking are all available). (#6933)
-- NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
-- Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
-- Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
-- Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
-- Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
-- When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
-- Navigating by line in Microsoft Edge is now up to three times faster in the Windows 10 Creators Update. (#6994)
-- NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creators Update. (#6948)
+- Menu-items op webpagina's kunnen nu geactiveerd worden binnen de bladermodus. (#6735)
+- Het drukken van escape  in het dialoogvenster configuratieprofielen "Verwijderen bevestigen" zorgt ervoor dat het venster gesloten wordt. (#6851)
+- Het mogelijke vastlopen van Mozilla Firefox en andere  Gecko-applicaties waar de multi-process-functie is ingeschakeld, is opgelost. (#6885)
+- De accuratesse van het melden van de achtergrondkleur in de schermoverzichtmodus is verbeterd bij tekst die getekend is met een transparante achtergrond. (#6467)
+- Verbeterde ondersteuning binnen Internet Explorer 11 voor elementbeschrijvingen die beschikbaar zijn op webpagina's (specifiek, ondersteuning voor aria-describedby in iframes en wanneer meerdere ID's zijn opgegeven). (#5784)
+- In de Windows 10 Makers Update werkt NVDA's audio-onderdrukking opnieuw zoals in eerdere Windows-versies (d.w.z. Onderdrukken bij spraak- en geluidsuitvoer, Altijd onderdrukken, en geen onderdrukking zijn allemaal beschikbaar). (#6933)
+- Bij bepaalde (UIA) controls waarvoor geen toetsenbordsneltoets is gedefineerd, weigert NVDA nniet langer deze te melden of ernaar te navigeren. (#6779)
+- In sneltoets-informatie voor bepaalde (UIA) controls worden niet langer twee lege spaties toegevoegd. (#6790)
+- Het weigeren van bepaalde toetscombinaties op HIMS leesregels (o.a. spatie+punt4) is opgelost. (#3157)
+- Een probleem opgelost bij het openen van een seriële poort op systemen die gebruik maken van bepaalde niet-Engelse talen waarbij het verbinden met brailleleesregels in sommige gevallen mislukte. (#6845)
+- De kans dat het configuratiebestand  beschadigt bij het afsluiten van Windows is verminderd. Configuratiebestanden worden nu naar een tijdelijk bestand geschreven voordat het eigenlijke configuratiebestand vervangen wordt. (#3165)
+- Bij het twee keer uitvoeren van het lees huidige regel commando om de huidige regel te laten spellen, wordt nu de juiste taal gebruikt voor het spellen van karakters. (#6726)
+- Het navigeren per regel in Microsoft Edge is nu tot wel drie keer zo snel in de Windows 10 Makers Update. (#6994)
+- NVDA meldt niet langer "Web Runtime groepering" wanneer een Microsoft Edge document in de Windows 10 Makers Update de focus krijgt. (#6948)
+- Alle bestaande versies van SecureCRT worden nu ondersteund. (#6302)
+- Adobe Acrobat Reader loopt niet langer vast in bepaalde PDF-documenten (specifiek, de documenten die lege ActualText attributen bevatten). (#7021, #7034)
+- In bladermodus in Microsoft Edge worden interactieve tabellen (ARIA grids) niet langer overgeslagen bij het navigeren naar tabellen met t en shift+t. (#6977)
+- In bladermodus zal het indrukken van shift+home na een voorwaardse selectie de selectie zoals verwacht weer ongedaan maken tot het begin van de regel. (#5746)
+- In bladermodus gaat het selecteren van alle tekst (control+a) niet langer fout wanneer de cursor zich niet aan het begin van de tekst bevindt (#6909)
+- Enkele andere zeldzame selectieproblemen in bladermodus opgelost. (#7131)
+
 
 == Veranderingen voor Ontwikkelaars ==
 Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
@@ -59,8 +67,8 @@ Hoogtepunten in deze versie zijn melden van secties en tekstkolommen in Microsof
 - Het minimum voor de knippersnelheid van de braillecursor is nu 200 ms. Wanneer dit eerder lager was ingesteld, zal dit worden verhoogd naar 200 ms. (#6470)
 - Er is een selectievakje toegevoegd aan het dialoogvenster braille-instellingen voor het in/uitschakelen van het knipperen van de braillecursor. Eerder werd een waarde van nul gebruikt om dit te bereiken. (#6470)
 - eSpeak NG bijgewerkt (commit e095f008, 10 januari 2017). (#6717)
-- Vanwege wijzigingen in de Windows 10 Creators Update is de "Altijd onderdrukken" modus niet meer beschikbaar in de audio-onderdrukkingsinstellingen van NVDA. Deze optie is nog wel beschikbaar bij oudere versies van windows 10. (#6684)
-- Vanwege wijzigingen in de Windows 10 Creators Update is het in de "Onderdrukken bij spraak- en geluidsuitvoer" modus niet meer mogelijk om te waarborgen dat de audio volledig onderdrukt is voordat het spreken van de spraak begint. Ook wordt audio na het spreken niet lang genoeg onderdrukt om ervoor te zorgen dat er geen stuitereffect ontstaat in het volume. Deze veranderingen hebben geen effect op oudere versies van windows 10. (#6684)
+- Vanwege wijzigingen in de Windows 10 Makers Update is de "Altijd onderdrukken" modus niet meer beschikbaar in de audio-onderdrukkingsinstellingen van NVDA. Deze optie is nog wel beschikbaar bij oudere versies van windows 10. (#6684)
+- Vanwege wijzigingen in de Windows 10 Makers Update is het in de "Onderdrukken bij spraak- en geluidsuitvoer" modus niet meer mogelijk om te waarborgen dat de audio volledig onderdrukt is voordat het spreken van de spraak begint. Ook wordt audio na het spreken niet lang genoeg onderdrukt om ervoor te zorgen dat er geen stuitereffect ontstaat in het volume. Deze veranderingen hebben geen effect op oudere versies van windows 10. (#6684)
 
 
 == Opgeloste problemen ==

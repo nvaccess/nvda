@@ -314,7 +314,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
+	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -930,8 +930,9 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
-	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
-		textList.append(controlTypes.roleLabels[role])
+	roleText=propertyValues.get('roleText')
+	if speakRole and (roleText or reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
+		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
 	states=propertyValues.get('states')

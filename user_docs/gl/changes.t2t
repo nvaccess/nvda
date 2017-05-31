@@ -4,14 +4,16 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 =
+O subliñable desta versión inclúe o soporte compreto para a atenuación de audio na actualización Windows 10 Creators; correccións para varios problemas coa seleción no modo exploración, incluindo problemas con selecionar todo; meyoras significativas no soporte de Microsoft Edge; e melloras na web coma o indicado de elementos marcados como actual (usando aria-current).
 
 == Novas Características ==
 - Agora pódese anunciar a información do borde das celdas en Microsoft Excel usando `NVDA+f`. (#3044)
-- Engadido o soporte para atributos aria-current. (#6358)
+- Nos navegadores web, NVDA agora indica cando un elemento se marcou como actual (específicamente, usando o atributo aria-current). (#6358)
 - Agora sopórtase o cambio autumático de linguas no Microsoft Edge. (#6852)
 - Engadido o soporte para a Calculadora de Windows no Windows 10 Enterprise LTSB (Long-Term Servicing Branch) e Server. (#6914)
 - Ao se realizar a orde ler liña actual tres veces rápidamente deletréase a liña con descripcións de caracteres. (#6893)
 - Nova lingua: birmano.
+- Agora fálanse apropriadamente as frechas arriba e abaixo  e os símbolos de fracción unicode. (#3805)
 
 
 == Cambios ==
@@ -34,6 +36,14 @@ Que hai de Novo no NVDA
 - Ao se realizar a orde ler liña actual dúas veces rápidamente para deletreala, agora úsase a lingua apropriada para os caracteres deletreados. (#6726)
 - Navegar por liñas no Microsoft Edge agora é ata tres veces máis rápido na Actualización Windows 10 Creators. (#6994)
 - NVDA xa non anuncia "Web Runtime grouping" ao se enfocar documentos no Microsoft Edge na Actualización Windows 10 Creators (#6948)
+- Agora sopórtanse todas as versións existentes de SecureCRT. (#6302)
+- Adobe Acrobat Reader xa non se rompe en certos documentos PDF (especcialmente, en aqueles que conteñan  atributos empty ActualText). (#7021, #7034)
+- Agora sopórtanse todas as versións existentes do SecureCRT.  (#6302)
+- Adobe Acrobat Reader xa non se rompe en certos documentos PDF (especialmente, en aqueles que conteñen atributos ActualText valdeiros). (#7021, #7034)
+- No modo exploración en Microsoft Edge, as táboas interactivas (ARIA grids) xa non se saltan cando se navegan con t e shift+t. (#6977)
+- No modo exploración, ao premer shift+inicio despois de selecionar cara adiante agora deseleciona ata o comezo da liña segundo se esperaba. (#5746)
+- No modo exploración, selecionar todo (control+a) xa non falla para selecionar texto se o cursor do sistema non está ao comezo do texto. (#6909)
+- Correxidos algúns outros problemas extranos de seleción no modo exploración. (#7131)
 
 
 == Cambios para Desenvolvedores ==
@@ -43,7 +53,7 @@ Que hai de Novo no NVDA
  - As subclases xa non necesitan normalizar identificadores antes de devolvelos dende esta propiedade.
  - Se queres normalizar identificadores, agora hai unha propiedade InputGesture.normalizedIdentifiers a que normaliza os identificadores devoltos pola propiedade identifiers.
 - A propiedade InputGesture.logIdentifier agora está obsoleta. As chamadas deberían utilizar InputGesture.identifiers[0] no seu lugar. (#6945)
-- Borrouse código obsoleto:
+- Borrouse algún código obsoleto:
  - As constantes `speech.REASON_*`, deberían usarse a cambio `controlTypes.REASON_*`. (#6846)
  - `i18nName` para opcións de sintetizador, `displayName` e `displayNameWithAccelerator` deberían usarse a cambio. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)

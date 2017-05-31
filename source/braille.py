@@ -377,6 +377,26 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
+landmarkLabels = {
+	# Translators: Displayed in braille for the banner landmark, normally found on web pages.
+	"banner": _("bnnr"),
+	# Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+	"complementary": _("cmpl"),
+	# Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+	"contentinfo": _("cinf"),
+	# Translators: Displayed in braille for the main landmark, normally found on web pages.
+	"main": _("main"),
+	# Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+	"navigation": _("navi"),
+	# Translators: Displayed in braille for the search landmark, normally found on web pages.
+	"search": _("srch"),
+	# Translators: Displayed in braille for the form landmark, normally found on web pages.
+	"form": _("form"),
+	# Strictly speaking, region isn't a landmark, but it is very similar.
+	# Translators: Displayed in braille for a significant region, normally found on web pages.
+	"region": _("rgn"),
+}
+
 #: Cursor shapes
 CURSOR_SHAPES = (
 	# Translators: The description of a braille cursor shape.
@@ -567,6 +587,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
+	roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -574,7 +595,7 @@ def getBrailleTextForProperties(**propertyValues):
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
-	if role is not None:
+	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
 			# %s is replaced with the level.
@@ -589,9 +610,8 @@ def getBrailleTextForProperties(**propertyValues):
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
-	else:
+	elif role is None: 
 		role = propertyValues.get("_role")
-		roleText = None
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
@@ -665,7 +685,7 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role, current=obj.isCurrent,
+		text = getBrailleTextForProperties(name=obj.name, role=role, roleText=obj.roleText, current=obj.isCurrent,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -1627,6 +1647,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Reset the message timeout.
 		@precondition: A message is currently being displayed.
 		"""
+		if config.conf["braille"]["noMessageTimeout"]:
+			return
 		# Configured timeout is in seconds.
 		timeout = config.conf["braille"]["messageTimeout"] * 1000
 		if self._messageCallLater:
@@ -1641,8 +1663,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
-		self._messageCallLater.Stop()
-		self._messageCallLater = None
+		if self._messageCallLater:
+			self._messageCallLater.Stop()
+			self._messageCallLater = None
 		self.update()
 
 	def handleGainFocus(self, obj):
