@@ -573,6 +573,9 @@ negativeStateLabels={
 	STATE_CHECKED:_("not checked"),
 	# Translators: This is presented when a button is not pressed.
 	STATE_PRESSED:_("not pressed"),
+	# Translators: This is presented when drag and drop is finished.
+	# This is only reported for objects which support accessible drag and drop.
+	STATE_DROPTARGET:_("done dragging"),
 }
 
 silentRolesOnFocus={

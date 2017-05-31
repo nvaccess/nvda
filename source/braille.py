@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V.
 
 import sys
 import itertools
@@ -618,9 +618,17 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(value)
 	if states:
 		positiveStates = controlTypes.processPositiveStates(role, states, controlTypes.REASON_FOCUS, states)
-		textList.extend(positiveStateLabels.get(state, controlTypes.stateLabels[state]) for state in positiveStates)
 		negativeStates = controlTypes.processNegativeStates(role, states, controlTypes.REASON_FOCUS, None)
-		textList.extend(negativeStateLabels.get(state, controlTypes.negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state])) for state in negativeStates)
+		for state in sorted(positiveStates | negativeStates):
+			if state in positiveStates:
+				textList.append(positiveStateLabels.get(state, controlTypes.stateLabels[state]))
+			elif state in negativeStates:
+				# Translators: Indicates that a particular state on an object is negated.
+				# Separate braille abbreviations have now been defined for commonly negated states (e.g. ( ) for not checked),
+				# 			and, if no braille abbreviations are provided, we fall back to the defined state labels in ControlTypes,
+				# but this still might be used in some other cases.
+				# %s will be replaced with the full identifier of the negated state (e.g. selected).
+				textList.append(negativeStateLabels.get(state, controlTypes.negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state])))
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")

@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """High-level functions to speak information.
 """ 
@@ -937,26 +937,19 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		textList.append(value)
 	states=propertyValues.get('states')
 	realStates=propertyValues.get('_states',states)
-	if states is not None:
-		positiveStates=controlTypes.processPositiveStates(role,realStates,reason,states)
-		textList.extend([controlTypes.stateLabels[x] for x in positiveStates])
-	if 'negativeStates' in propertyValues:
-		negativeStates=propertyValues['negativeStates']
-	else:
-		negativeStates=None
-	if negativeStates is not None or (reason != controlTypes.REASON_CHANGE and states is not None):
+	positiveStates=controlTypes.processPositiveStates(role,realStates,reason,states) if states is not None else set()
+	negativeStates=propertyValues.get('negativeStates',set())
+	if negativeStates or (reason != controlTypes.REASON_CHANGE and states is not None):
 		negativeStates=controlTypes.processNegativeStates(role, realStates, reason, negativeStates)
-		if controlTypes.STATE_DROPTARGET in negativeStates:
-			# "not drop target" doesn't make any sense, so use a custom message.
-			# Translators: Reported when drag and drop is finished.
-			# This is only reported for objects which support accessible drag and drop.
-			textList.append(_("done dragging"))
-			negativeStates.discard(controlTypes.STATE_DROPTARGET)
-		# Translators: Indicates that a particular state on an object is negated.
-		# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-		# but this still might be used in some other cases.
-		# %s will be replaced with the negated state.
-		textList.extend([controlTypes.negativeStateLabels.get(x, _("not %s")%controlTypes.stateLabels[x]) for x in negativeStates])
+	for state in sorted(positiveStates | negativeStates):
+		if state in positiveStates:
+			textList.append(controlTypes.stateLabels[state])
+		elif state in negativeStates:
+			# Translators: Indicates that a particular state on an object is negated.
+			# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+			# but this still might be used in some other cases.
+			# %s will be replaced with the negated state.
+			textList.append(controlTypes.negativeStateLabels.get(state, _("not %s")%controlTypes.stateLabels[state]))
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
