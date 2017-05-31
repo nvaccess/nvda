@@ -27,8 +27,9 @@
 
 
 == Bug Fixes ==
-- Editable div elements in Chrome are no longer have their label reported as their value while in browse mode. (#7153)
+- Editable div elements in Chrome no longer have their label reported as their value while in browse mode. (#7153)
 - Pressing end while in browse mode of an empty Microsoft Word document no longer causes a runtime error. (#7009)
+- Browse mode is now correctly   supported in Microsoft Edge where a document has been given a specific ARIA role of document. (#6998)
 
 
 = 2017.2 =
