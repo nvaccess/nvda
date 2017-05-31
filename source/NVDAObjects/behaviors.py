@@ -658,7 +658,5 @@ class EditableTextWithSuggestions(NVDAObject):
 		Subclasses should provide custom implementations if possible.
 		By default NVDA will announce this via speech, braille or via a sound.
 		"""
-		# Translators: Announced in braille when suggestions disappear when search term is entered in various search fields such as Start search box in Windows 10.
-		braille.handler.message(_("Suggestions closed"))
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
 			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
