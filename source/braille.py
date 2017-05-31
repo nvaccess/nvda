@@ -1424,7 +1424,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
-		if not config.conf["braille"]["noMessageTimeout"]:
+		if self._messageCallLater:
 			self._messageCallLater.Stop()
 			self._messageCallLater = None
 		self.update()
