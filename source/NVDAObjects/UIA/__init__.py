@@ -1465,7 +1465,7 @@ class SearchField(EditableTextWithSuggestions, UIA):
 
 
 class SuggestionListItem(UIA):
-	"""Windows 10 uses suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	"""
 
 	role=controlTypes.ROLE_LISTITEM
@@ -1476,3 +1476,9 @@ class SuggestionListItem(UIA):
 			speech.cancelSpeech()
 			api.setNavigatorObject(self)
 			self.reportFocus()
+			# Construct the braille flash message (name, position info).
+			# Ideally NvDA objects should have a method to construct braille flash messages.
+			suggestionMessage=[self.name]
+			if config.conf["presentation"]["reportObjectPositionInformation"]:
+				suggestionMessage.append(_("{number} of {total}").format(number=self.positionInfo["indexInGroup"], total=self.positionInfo["similarItemsInGroup"]))
+			braille.handler.message(" ".join(suggestionMessage))
