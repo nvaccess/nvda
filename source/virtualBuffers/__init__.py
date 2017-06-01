@@ -37,6 +37,15 @@ import nvwave
 import treeInterceptorHandler
 import watchdog
 
+from urlparse import urlparse
+from ConfigParser import SafeConfigParser
+import os
+import globalVars
+import wx
+import gui
+import configobj
+from customLabels import customLabels
+
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
@@ -340,6 +349,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	#: Maps root identifiers (docHandle and ID) to buffers.
 	rootIdentifiers = weakref.WeakValueDictionary()
+	labelSupportOn=False
 
 	def __init__(self,rootNVDAObject,backendName=None):
 		super(VirtualBuffer,self).__init__(rootNVDAObject)
@@ -370,9 +380,22 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(target=self._loadBuffer).start()
 
+	def fetchLabels(self):
+  		weblink=self.documentConstantIdentifier
+  		filename=customLabels.getFilenameFromElementDomain(weblink)
+   		labels=u""
+   		config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
+   		for k,v in config.iteritems():
+   			labels+=k+":"+v+","
+   		return labels
+	
 	def _loadBuffer(self):
 		try:
-			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
+			if (self.labelSupportOn):
+				labels=self.fetchLabels()	
+			else:
+				labels=u""
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName),labels)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:

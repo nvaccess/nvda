@@ -30,7 +30,8 @@ VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWin
 	LOG_DEBUG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 }
 
-void VBufBackend_t::initialize() {
+void VBufBackend_t::initialize(const wchar_t* labels) {
+	multiValueAttribsStringToMap(labels, labelsMap);
 	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);

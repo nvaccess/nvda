@@ -157,6 +157,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 class MSHTML(VirtualBuffer):
 
 	TextInfo=MSHTMLTextInfo
+	labelSupportOn=True
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
@@ -369,4 +370,4 @@ class MSHTML(VirtualBuffer):
 				return False
 		except COMError:
 			pass
-		return super(MSHTML, self).shouldPassThrough(obj, reason)
+		return super(MSHTML, self).shouldPassThrough(obj, reason)	
