@@ -194,7 +194,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	newLaptopKeyboardLayout = boolean(default=false)
 
 [editableText]
-	caretMoveTimeout = integer(min=0, max=2000, default=100)
+	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
 """).format(latestSchemaVersion=latestSchemaVersion)
 
 #: The configuration specification

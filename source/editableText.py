@@ -57,10 +57,10 @@ class EditableText(ScriptableObject):
 		@rtype: tuple
 		"""
 		if timeout is None:
-			timeout = config.conf["editableText"]["caretMoveTimeout"]
+			timeoutMs = config.conf["editableText"]["caretMoveTimeoutMs"]
 		else:
 			# This function's arguments are in seconds, but we want ms.
-			timeout *= 1000
+			timeoutMs = timeout * 1000
 		# time.sleep accepts seconds, so retryInterval is in seconds.
 		# Convert to integer ms to avoid floating point precision errors when adding to elapsed.
 		retryMs = int(retryInterval * 1000)
@@ -82,7 +82,7 @@ class EditableText(ScriptableObject):
 				if newBookmark!=bookmark:
 					log.debug("Caret moved. Elapsed: %d ms" % elapsed)
 					return (True,newInfo)
-			if  elapsed >= timeout:
+			if  elapsed >= timeoutMs:
 				break
 			time.sleep(retryInterval)
 			elapsed += retryMs
