@@ -199,7 +199,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			log.debugWarning("could not get attributes",exc_info=True)
 			return textInfos.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textInfos.FormatField()
-		if not attribsString and offset>0:
+		if attribsString is None and offset>0:
 			try:
 				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
 			except COMError:
@@ -1300,7 +1300,9 @@ the NVDAObject for IAccessible
 
 	def _get_isPresentableFocusAncestor(self):
 		IARole = self.IAccessibleRole
-		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
+		# This is the root object of a top level window.
+		# #4300: We check the object and child ids as well because there can be "clients" other than the root.
+		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and self.windowStyle & winUser.WS_SYSMENU:
 			return True
 		return super(IAccessible, self).isPresentableFocusAncestor
 
@@ -1785,7 +1787,9 @@ _staticMap={
 	("MSOUNISTAT",oleacc.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
 	("QWidget",oleacc.ROLE_SYSTEM_CLIENT):"qt.Client",
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
+	("Qt5QWindowIcon",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINE):"qt.Container",
+	("Qt5QWindowIcon",oleacc.ROLE_SYSTEM_OUTLINE):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_MENUBAR):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_ROW):"qt.TableRow",
 	("QWidget",oleacc.ROLE_SYSTEM_CELL):"qt.TableCell",
@@ -1793,6 +1797,7 @@ _staticMap={
 	("QPopup",oleacc.ROLE_SYSTEM_MENUPOPUP):"qt.Menu",
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
+	("Qt5QWindowIcon",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",

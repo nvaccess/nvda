@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V.
 
 import time
 import itertools
@@ -39,6 +39,7 @@ import inputCore
 import virtualBuffers
 import characterProcessing
 from baseObject import ScriptableObject
+import core
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -138,12 +139,13 @@ class GlobalCommands(ScriptableObject):
 		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text)
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	# Translators: Input help mode message for report current line command.
-	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
+	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions.")
 	script_reportCurrentLine.category=SCRCAT_SYSTEMCARET
 
 	def script_leftMouseClick(self,gesture):
@@ -459,17 +461,30 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportLineNumber.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportLineIndentation(self,gesture):
-		if config.conf["documentFormatting"]["reportLineIndentation"]:
-			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			state = _("report line indentation off")
-			config.conf["documentFormatting"]["reportLineIndentation"]=False
+		lineIndentationSpeech = config.conf["documentFormatting"]["reportLineIndentation"]
+		lineIndentationTones = config.conf["documentFormatting"]["reportLineIndentationWithTones"]
+		if not lineIndentationSpeech and not lineIndentationTones:
+			# Translators: A message reported when cycling through line indentation settings.
+			ui.message(_("Report line indentation with speech"))
+			lineIndentationSpeech = True
+		elif lineIndentationSpeech and not lineIndentationTones:
+			# Translators: A message reported when cycling through line indentation settings.
+			ui.message(_("Report line indentation with tones"))
+			lineIndentationSpeech = False
+			lineIndentationTones = True
+		elif not lineIndentationSpeech and lineIndentationTones:
+			# Translators: A message reported when cycling through line indentation settings.
+			ui.message(_("Report line indentation with speech and tones"))
+			lineIndentationSpeech = True
 		else:
-			# Translators: The message announced when toggling the report line indentation document formatting setting.
-			state = _("report line indentation on")
-			config.conf["documentFormatting"]["reportLineIndentation"]=True
-		ui.message(state)
+			# Translators: A message reported when cycling through line indentation settings.
+			ui.message(_("Report line indentation off"))
+			lineIndentationSpeech = False
+			lineIndentationTones = False
+		config.conf["documentFormatting"]["reportLineIndentation"] = lineIndentationSpeech
+		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = lineIndentationTones
 	# Translators: Input help mode message for toggle report line indentation command.
-	script_toggleReportLineIndentation.__doc__=_("Toggles on and off the reporting of line indentation")
+	script_toggleReportLineIndentation.__doc__=_("Cycles through line indentation settings")
 	script_toggleReportLineIndentation.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportParagraphIndentation(self,gesture):
@@ -1219,7 +1234,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		if isinstance(vbuf,browseMode.BrowseModeDocumentTreeInterceptor):
+		if isinstance(vbuf,browseMode.BrowseModeTreeInterceptor):
 			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 			# If we're disabling pass-through, re-enable auto-pass-through.
 			vbuf.disableAutoPassThrough = vbuf.passThrough
@@ -1232,6 +1247,11 @@ class GlobalCommands(ScriptableObject):
 		gui.quit()
 	# Translators: Input help mode message for quit NVDA command.
 	script_quit.__doc__=_("Quits NVDA!")
+
+	def script_restart(self,gesture):
+		core.restart()
+	# Translators: Input help mode message for restart NVDA command.
+	script_restart.__doc__=_("Restarts NVDA!")
 
 	def script_showGui(self,gesture):
 		gui.showGui()
@@ -1258,6 +1278,7 @@ class GlobalCommands(ScriptableObject):
 			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
+			"reportBorderStyle":True,"reportBorderColor":True,
 		}
 		textList=[]
 		info=api.getReviewPosition()
@@ -1277,7 +1298,7 @@ class GlobalCommands(ScriptableObject):
 
 		repeats=scriptHandler.getLastScriptRepeatCount()
 		if repeats==0:
-			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
+			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
 			if text:
 				textList.append(text)
 
@@ -1288,7 +1309,7 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		elif repeats==1:
-			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
+			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
 			if text:
 				textList.append(text)
 

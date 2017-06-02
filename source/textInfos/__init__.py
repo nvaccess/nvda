@@ -14,7 +14,6 @@ import weakref
 import re
 import baseObject
 import config
-import speech
 import controlTypes
 
 class Field(dict):
@@ -389,6 +388,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		return self.obj
 
+	def _get_focusableNVDAObjectAtStart(self):
+		"""retreaves the deepest focusable NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+		@returns: the NVDAObject at the start
+		"""
+		return self.obj
+
 	def _get_pointAtStart(self):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
 		raise NotImplementedError
@@ -424,12 +429,31 @@ class TextInfo(baseObject.AutoPropertyObject):
 			unitInfo.collapse(end=True)
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+		# Import late to avoid circular import.
+		import speech
 		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
 		import braille
 		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
+
+	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=None):
+		"""Get the spoken representation for given format information.
+		The base implementation just calls L{speech.getFormatFieldSpeech}.
+		This can be extended in order to support implementation specific attributes.
+		If extended, the superclass should be called first.
+		@param separator: The text used to separate chunks of format information;
+			defaults to L{speech.CHUNK_SEPARATOR}.
+		@type separator: basestring
+		"""
+		# Import late to avoid circular import.
+		import speech
+		if separator is None:
+			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,
+			# but that can't be specified as a default argument because of circular import issues.
+			separator = speech.CHUNK_SEPARATOR
+		return speech.getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
 
 	def activate(self):
 		"""Activate this position.

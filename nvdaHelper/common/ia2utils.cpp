@@ -21,7 +21,7 @@ void IA2AttribsToMap(const wstring &attribsString, map<wstring, wstring> &attrib
 	wstring str, key;
 	bool inEscape = false;
 
-	for (wstring::const_iterator it = attribsString.begin(); it != attribsString.end(); it++) {
+	for (wstring::const_iterator it = attribsString.begin(); it != attribsString.end(); ++it) {
 		if (inEscape) {
 			str.push_back(*it);
 			inEscape = false;

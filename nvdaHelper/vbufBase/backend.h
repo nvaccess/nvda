@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2007-2016 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -31,13 +31,9 @@ typedef std::set<VBufBackend_t*> VBufBackendSet_t;
 class VBufBackend_t  : public VBufStorage_buffer_t {
 	private:
 
-	static const UINT wmRenderThreadInitialize;
-	static const UINT wmRenderThreadTerminate;
-
 /**
- * A callback to manage Initialize and termination of code in the render thread of backends.
+ * A callback to handle windows being destroyed.
  */
-	static LRESULT CALLBACK renderThread_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
 static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
 
 /**
@@ -149,25 +145,6 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  * Forces any invalidated nodes to be updated right now.
  */
 	virtual void forceUpdate();
-
-/**
- * Retrieve the native handle for the object underlying a node.
- * This handle is used to retrieve the object out-of-process.
- * The way in which it is used is implementation specific.
- * @param node The node in question.
- * @return the handle or 0 on error.
- */
-	virtual int getNativeHandleForNode(VBufStorage_controlFieldNode_t*);
-
-/**
- * Retrieve a node given the native handle for its underlying object.
- * This handle identifies the object out-of-process.
- * The way in which it is used is implementation specific.
- * @param buffer the virtual buffer to use
- * @param handle the handle in question.
- * @return the node or 0 on error.
- */
-	virtual VBufStorage_controlFieldNode_t* getNodeForNativeHandle(int);
 
 /**
  * Clears the content of the backend and terminates any code used for rendering.
