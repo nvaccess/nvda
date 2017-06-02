@@ -944,7 +944,8 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
-		if (self.obj.excelCellObject.Application.Version > "12.0"):
+		version=int(self.obj.excelCellObject.Application.Version.split('.')[0])
+		if version>12:
 			cellObj=self.obj.excelCellObject.DisplayFormat
 		else:
 			cellObj=self.obj.excelCellObject
