@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V.
 
 import time
 import itertools
@@ -39,6 +39,7 @@ import inputCore
 import virtualBuffers
 import characterProcessing
 from baseObject import ScriptableObject
+import core
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -138,12 +139,13 @@ class GlobalCommands(ScriptableObject):
 		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text)
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	# Translators: Input help mode message for report current line command.
-	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
+	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions.")
 	script_reportCurrentLine.category=SCRCAT_SYSTEMCARET
 
 	def script_leftMouseClick(self,gesture):
@@ -1246,6 +1248,11 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for quit NVDA command.
 	script_quit.__doc__=_("Quits NVDA!")
 
+	def script_restart(self,gesture):
+		core.restart()
+	# Translators: Input help mode message for restart NVDA command.
+	script_restart.__doc__=_("Restarts NVDA!")
+
 	def script_showGui(self,gesture):
 		gui.showGui()
 	# Translators: Input help mode message for show NVDA menu command.
@@ -1271,6 +1278,7 @@ class GlobalCommands(ScriptableObject):
 			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
+			"reportBorderStyle":True,"reportBorderColor":True,
 		}
 		textList=[]
 		info=api.getReviewPosition()

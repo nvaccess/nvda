@@ -107,9 +107,13 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		container=tempObj.container
 		tempObj.container=container # Cache the parent.
 		tempObj=container
-	newAppModules=[o.appModule for o in ancestors if o and o.appModule]
 	#Remove the final new ancestor as this will be the new focus object
 	del ancestors[-1]
+	# #5467: Ensure that the appModule of the real focus is included in the newAppModule list for profile switching
+	# Rather than an original focus ancestor which happened to match the new focus.
+	newAppModules=[o.appModule for o in ancestors if o and o.appModule]
+	if obj.appModule:
+		newAppModules.append(obj.appModule)
 	try:
 		treeInterceptorHandler.cleanup()
 	except watchdog.CallCancelled:

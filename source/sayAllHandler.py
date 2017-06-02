@@ -131,6 +131,7 @@ def readTextHelper_generator(cursor):
 					try:
 						reader.collapse(end=True)
 					except RuntimeError: #MS Word when range covers end of document
+						# Word specific: without this exception to indicate that further collapsing is not posible, say-all could enter an infinite loop.
 						speech.speakWithoutPauses(None)
 						keepReading=False
 			else:

@@ -29,6 +29,27 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
 
+oleFlagIconLabels={
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	1:_("purple flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	2:_("Orange flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	3:_("Green flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	4:_("Yellow flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	5:_("Blue flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	6:_("Red flag"),
+}
+
 importanceLabels={
 	# Translators: for a high importance email
 	2:_("high importance"),
@@ -391,6 +412,12 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				unread=False
 			# Translators: when an email is unread
 			if unread: textList.append(_("unread"))
+			try:
+				flagIcon=selection.flagIcon
+			except COMError:
+				flagIcon=0
+			flagIconLabel=oleFlagIconLabels.get(flagIcon)
+			if flagIconLabel: textList.append(flagIconLabel)
 			try:
 				attachmentCount=selection.attachments.count
 			except COMError:

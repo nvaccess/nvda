@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2011 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2008-2017 NV Access Limited
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -286,7 +286,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 		super(KeyGesture,self).__init__()
 		keys=[self.keyLabels[num] for num in xrange(24) if (keyBits>>num)&1]
 		extendedKeys=[self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num)&1]
-		self.id="+".join(set(keys+extendedKeys))
+		self.id="+".join(keys+extendedKeys)
 		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
 		if not extendedKeyBits and not keyBits & ~(0xff | (1 << 0xf)):
 			self.dots = keyBits & 0xff

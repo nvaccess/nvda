@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
 
 import sys
 import itertools
@@ -11,6 +11,7 @@ import os
 import pkgutil
 import ctypes.wintypes
 import threading
+import time
 import wx
 import louis
 import winKernel
@@ -378,6 +379,26 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
+landmarkLabels = {
+	# Translators: Displayed in braille for the banner landmark, normally found on web pages.
+	"banner": _("bnnr"),
+	# Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+	"complementary": _("cmpl"),
+	# Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+	"contentinfo": _("cinf"),
+	# Translators: Displayed in braille for the main landmark, normally found on web pages.
+	"main": _("main"),
+	# Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+	"navigation": _("navi"),
+	# Translators: Displayed in braille for the search landmark, normally found on web pages.
+	"search": _("srch"),
+	# Translators: Displayed in braille for the form landmark, normally found on web pages.
+	"form": _("form"),
+	# Strictly speaking, region isn't a landmark, but it is very similar.
+	# Translators: Displayed in braille for a significant region, normally found on web pages.
+	"region": _("rgn"),
+}
+
 #: Cursor shapes
 CURSOR_SHAPES = (
 	# Translators: The description of a braille cursor shape.
@@ -388,6 +409,9 @@ CURSOR_SHAPES = (
 	(0xFF, _("All dots")),
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
+
+# used to separate chunks of text when programmatically joined
+TEXT_SEPARATOR = " "
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -565,6 +589,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
+	roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -572,7 +597,7 @@ def getBrailleTextForProperties(**propertyValues):
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
-	if role is not None:
+	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
 			# %s is replaced with the level.
@@ -587,9 +612,8 @@ def getBrailleTextForProperties(**propertyValues):
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
-	else:
+	elif role is None: 
 		role = propertyValues.get("_role")
-		roleText = None
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
@@ -631,9 +655,16 @@ def getBrailleTextForProperties(**propertyValues):
 			# Translators: Displayed in braille for a table cell column number.
 			# %s is replaced with the column number.
 			textList.append(_("c%s") % columnNumber)
+	current = propertyValues.get('current', False)
+	if current:
+		try:
+			textList.append(controlTypes.isCurrentLabels[current])
+		except KeyError:
+			log.debugWarning("Aria-current value not handled: %s"%current)
+			textList.append(controlTypes.isCurrentLabels[True])
 	if includeTableCellCoords and  cellCoordsText:
 		textList.append(cellCoordsText)
-	return " ".join([x for x in textList if x])
+	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
 	"""A region to provide a braille representation of an NVDAObject.
@@ -656,7 +687,7 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role,
+		text = getBrailleTextForProperties(name=obj.name, role=role, roleText=obj.roleText, current=obj.isCurrent,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -669,7 +700,7 @@ class NVDAObjectRegion(Region):
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
-					text += " " + mathPres.brailleProvider.getBrailleForMathMl(
+					text += TEXT_SEPARATOR + mathPres.brailleProvider.getBrailleForMathMl(
 						obj.mathMl)
 				except (NotImplementedError, LookupError):
 					pass
@@ -724,12 +755,16 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
 	value=field.get('value',None)
+	current=field.get('current', None)
 
 	if presCat == field.PRESCAT_LAYOUT:
+		text = []
 		# The only item we report for these fields is clickable, if present.
 		if controlTypes.STATE_CLICKABLE in states:
-			return getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE})
-		return None
+			text.append(getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE}))
+		if current:
+			text.append(getBrailleTextForProperties(current=current))
+		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
 
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
 		# Table cell.
@@ -739,7 +774,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"states": states,
 			"rowNumber": field.get("table-rownumber"),
 			"columnNumber": field.get("table-columnnumber"),
-			"includeTableCellCoords": reportTableCellCoords
+			"includeTableCellCoords": reportTableCellCoords,
+			"current": current,
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
@@ -750,7 +786,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value}
+			"states": states,"value":value, "current":current}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -762,7 +798,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		content = field.get("content")
 		if content:
 			if text:
-				text += " "
+				text += TEXT_SEPARATOR
 			text += content
 		elif role == controlTypes.ROLE_MATH:
 			import mathPres
@@ -770,7 +806,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			if mathPres.brailleProvider:
 				try:
 					if text:
-						text += " "
+						text += TEXT_SEPARATOR
 					text += mathPres.brailleProvider.getBrailleForMathMl(
 						info.getMathMl(field))
 				except (NotImplementedError, LookupError):
@@ -806,7 +842,7 @@ def getFormatFieldBraille(field, isAtStart, formatConfig, fieldCache=None):
 	if fieldCache is not None:
 		fieldCache.clear()
 		fieldCache.update(field)
-	return " ".join([x for x in textList if x])
+	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class TextInfoRegion(Region):
 
@@ -870,7 +906,7 @@ class TextInfoRegion(Region):
 	def _addFieldText(self, text, contentPos):
 		if self.rawText:
 			# Separate this field text from the rest of the text.
-			text = " " + text
+			text = TEXT_SEPARATOR + text
 		self.rawText += text
 		textLen = len(text)
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
@@ -895,7 +931,7 @@ class TextInfoRegion(Region):
 				if self._endsWithField:
 					# The last item added was a field,
 					# so add a space before the content.
-					self.rawText += " "
+					self.rawText += TEXT_SEPARATOR
 					self.rawTextTypeforms.append(louis.plain_text)
 					self._rawToContentPos.append(self._currentContentPos)
 				if isSelection and self.selectionStart is None:
@@ -1027,7 +1063,7 @@ class TextInfoRegion(Region):
 			# There is no text left after stripping line ending characters,
 			# or the last item added can be navigated with a cursor.
 			# Add a space in case the cursor is at the end of the reading unit.
-			self.rawText += " "
+			self.rawText += TEXT_SEPARATOR
 			rawTextLen += 1
 			self.rawTextTypeforms.append(louis.plain_text)
 			self._rawToContentPos.append(self._currentContentPos)
@@ -1418,7 +1454,7 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
 		if not parent.isPresentableFocusAncestor:
 			continue
-		region = NVDAObjectRegion(parent, appendText=" ")
+		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
 		region.update()
 		yield region
@@ -1449,7 +1485,7 @@ def getFocusRegions(obj, review=False):
 		region2 = None
 	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
-	region = NVDAObjectRegion(obj, appendText=" " if region2 else "")
+	region = NVDAObjectRegion(obj, appendText=TEXT_SEPARATOR if region2 else "")
 	region.update()
 	yield region
 	if region2:
@@ -1468,7 +1504,7 @@ def formatCellsForLog(cells):
 	# optimisation: This gets called a lot, so needs to be as efficient as possible.
 	# List comprehensions without function calls are faster than loops.
 	# For str.join, list comprehensions are faster than generator comprehensions.
-	return " ".join([
+	return TEXT_SEPARATOR.join([
 		"".join([str(dot + 1) for dot in xrange(8) if cell & (1 << dot)])
 		if cell else "-"
 		for cell in cells])
@@ -1657,6 +1693,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Reset the message timeout.
 		@precondition: A message is currently being displayed.
 		"""
+		if config.conf["braille"]["noMessageTimeout"]:
+			return
 		# Configured timeout is in seconds.
 		timeout = config.conf["braille"]["messageTimeout"] * 1000
 		if self._messageCallLater:
@@ -1671,8 +1709,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
-		self._messageCallLater.Stop()
-		self._messageCallLater = None
+		if self._messageCallLater:
+			self._messageCallLater.Stop()
+			self._messageCallLater = None
 		self.update()
 
 	def handleGainFocus(self, obj):
@@ -1733,6 +1772,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
+	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
+	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
+	def _handleProgressBarUpdate(self, obj):
+		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
+		newTime = time.time()
+		if oldTime and newTime - oldTime < 1:
+			# Fetching dialog text is expensive, so update at most once a second.
+			return
+		self._lastProgressBarUpdateTime = newTime
+		for obj in reversed(api.getFocusAncestors()[:-1]):
+			if obj.role == controlTypes.ROLE_DIALOG:
+				self.handleUpdate(obj)
+				return
+
 	def handleUpdate(self, obj):
 		if not self.enabled:
 			return
@@ -1743,6 +1796,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				break
 		else:
 			# No region for this object.
+			# There are some objects that require special update behavior even if they have no region.
+			# This only applies when tethered to focus, because tethering to review shows only one object at a time,
+			# which always has a braille region associated with it.
+			if self.tether != self.TETHER_FOCUS:
+				return
+			# Late import to avoid circular import.
+			from NVDAObjects import NVDAObject
+			if isinstance(obj, NVDAObject) and obj.role == controlTypes.ROLE_PROGRESSBAR and obj.isInForeground:
+				self._handleProgressBarUpdate(obj)
 			return
 		self.mainBuffer.saveWindow()
 		region.update()
@@ -1974,7 +2036,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	routingIndex = None
 
 	def _get_identifiers(self):
-		ids = [u"br({source}):{id}".format(source=self.source, id=self.id).lower()]
+		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))

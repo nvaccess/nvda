@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1195,6 +1195,28 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.tableCellCoordsCheckBox=tablesGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Cell c&oordinates")))
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
 
+		borderChoices=[
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Off"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Styles"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings dialog.
+			_("Both Colors and Styles"),
+		]
+		# Translators: This is the label for a combobox in the
+		# document formatting settings dialog.
+		self.borderComboBox=tablesGroup.addLabeledControl(_("Cell borders:"), wx.Choice, choices=borderChoices)
+		curChoice = 0
+		if config.conf["documentFormatting"]["reportBorderStyle"]:
+			if config.conf["documentFormatting"]["reportBorderColor"]:
+				curChoice = 2
+			else:
+				curChoice = 1
+		self.borderComboBox.SetSelection(curChoice)
+		
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings dialog
 		elementsGroupText = _("Elements")
@@ -1272,7 +1294,10 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 
+		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
+		choice = self.borderComboBox.GetSelection()
+		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
+		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
@@ -1562,14 +1587,22 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.shapeList.Disable()
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-		messageTimeoutText = _("Message timeout (sec)")
+		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
 			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
 			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
 			initial=config.conf["braille"]["messageTimeout"])
 
+		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+		noMessageTimeoutLabelText = _("Show &messages indefinitely")
+		self.noMessageTimeoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=noMessageTimeoutLabelText))
+		self.noMessageTimeoutCheckBox.Bind(wx.EVT_CHECKBOX, self.onNoMessageTimeoutChange)
+		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
+		if self.noMessageTimeoutCheckBox.GetValue():
+			self.messageTimeoutEdit.Disable()
+
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-		tetherListText = _("Braille tethered to:")
+		tetherListText = _("B&raille tethered to:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
 		tetherChoices = [x[1] for x in self.tetherValues]
@@ -1611,6 +1644,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
+		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
@@ -1649,6 +1683,9 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+
+	def onNoMessageTimeoutChange(self, evt):
+		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
 class AddSymbolDialog(wx.Dialog):
 
@@ -1982,7 +2019,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager._captureFunc = addGestureCaptor
 
 	def _addCaptured(self, treeGes, scriptInfo, gesture):
-		gids = gesture.identifiers
+		gids = gesture.normalizedIdentifiers
 		if len(gids) > 1:
 			# Multiple choices. Present them in a pop-up menu.
 			menu = wx.Menu()
