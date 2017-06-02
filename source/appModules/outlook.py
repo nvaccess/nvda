@@ -24,10 +24,31 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor
+from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
+
+oleFlagIconLabels={
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	1:_("purple flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	2:_("Orange flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	3:_("Green flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	4:_("Yellow flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	5:_("Blue flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	6:_("Red flag"),
+}
 
 importanceLabels={
 	# Translators: for a high importance email
@@ -392,6 +413,12 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# Translators: when an email is unread
 			if unread: textList.append(_("unread"))
 			try:
+				flagIcon=selection.flagIcon
+			except COMError:
+				flagIcon=0
+			flagIconLabel=oleFlagIconLabels.get(flagIcon)
+			if flagIconLabel: textList.append(flagIconLabel)
+			try:
 				attachmentCount=selection.attachments.count
 			except COMError:
 				attachmentCount=0
@@ -468,8 +495,18 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
 
+class MailViewerTextInfoForTreeInterceptor(WordDocumentTextInfo):
+
+	def _get_shouldIncludeLayoutTables(self):
+		return config.conf['documentFormatting']['includeLayoutTables']
+
+class MailViewerTreeInterceptorTextInfo(BrowseModeWordDocumentTextInfo):
+	InnerTextInfoClass=MailViewerTextInfoForTreeInterceptor
+
 class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 	"""A BrowseMode treeInterceptor specifically for readonly emails, where tab and shift+tab are safe and we know will not edit the document."""
+
+	TextInfo=MailViewerTreeInterceptorTextInfo
 
 	def script_tab(self,gesture):
 		bookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
@@ -513,3 +550,4 @@ class OutlookWordDocument(WordDocument):
 		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
 
 	ignoreEditorRevisions=True
+	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.

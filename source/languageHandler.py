@@ -1,3 +1,9 @@
+#languageHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2007-2016 NV access Limited, Joseph Lee
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import __builtin__
 import os
 import sys
@@ -34,11 +40,26 @@ def localeNameToWindowsLCID(localeName):
 			LCID=0
 	return LCID
 
+def windowsLCIDToLocaleName(lcid):
+	"""
+	gets a normalized locale from a lcid
+	"""
+	# Look up a full locale name (language + country)
+	try:
+		lang = locale.windows_locale[lcid]
+	except KeyError:
+		# Or at least just a language-only locale name
+		lang=windowsPrimaryLCIDsToLocaleNames[lcid]
+	if lang:
+		return normalizeLanguage(lang)
+
 def getLanguageDescription(language):
 	"""Finds out the description (localized full name) of a given local name"""
 	desc=None
 	LCID=localeNameToWindowsLCID(language)
-	if LCID!=0:
+	# #6259: LCID 0x1000 denotes custom locale in Windows 10, thus returns "unknown language" or an odd description (observed for Aragonese).
+	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
+	if LCID not in (0, 0x1000):
 		buf=ctypes.create_unicode_buffer(1024)
 		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
 		if '_' not in language:
@@ -174,4 +195,123 @@ def normalizeLanguage(lang):
 		ld[1]=ld[1].upper()
 	return "_".join(ld)
 
+# Map Windows primary locale identifiers to locale names
+# Note these are only primary language codes (I.e. no country information)
+# For full locale identifiers we use Python's own locale.windows_locale.
+# Generated from: {x&0x3ff:y.split('_')[0] for x,y in locale.windows_locale.iteritems()}
+windowsPrimaryLCIDsToLocaleNames={
+	1:'ar',
+	2:'bg',
+	3:'ca',
+	4:'zh',
+	5:'cs',
+	6:'da',
+	7:'de',
+	8:'el',
+	9:'en',
+	10:'es',
+	11:'fi',
+	12:'fr',
+	13:'he',
+	14:'hu',
+	15:'is',
+	16:'it',
+	17:'ja',
+	18:'ko',
+	19:'nl',
+	20:'nb',
+	21:'pl',
+	22:'pt',
+	23:'rm',
+	24:'ro',
+	25:'ru',
+	26:'sr',
+	27:'sk',
+	28:'sq',
+	29:'sv',
+	30:'th',
+	31:'tr',
+	32:'ur',
+	33:'id',
+	34:'uk',
+	35:'be',
+	36:'sl',
+	37:'et',
+	38:'lv',
+	39:'lt',
+	40:'tg',
+	41:'fa',
+	42:'vi',
+	43:'hy',
+	44:'az',
+	45:'eu',
+	46:'wen',
+	47:'mk',
+	50:'tn',
+	52:'xh',
+	53:'zu',
+	54:'af',
+	55:'ka',
+	56:'fo',
+	57:'hi',
+	58:'mt',
+	59:'sms',
+	60:'ga',
+	62:'ms',
+	63:'kk',
+	64:'ky',
+	65:'sw',
+	66:'tk',
+	67:'uz',
+	68:'tt',
+	69:'bn',
+	70:'pa',
+	71:'gu',
+	72:'or',
+	73:'ta',
+	74:'te',
+	75:'kn',
+	76:'ml',
+	77:'as',
+	78:'mr',
+	79:'sa',
+	80:'mn',
+	81:'bo',
+	82:'cy',
+	83:'kh',
+	84:'lo',
+	86:'gl',
+	87:'kok',
+	90:'syr',
+	91:'si',
+	93:'iu',
+	94:'am',
+	95:'tmz',
+	97:'ne',
+	98:'fy',
+	99:'ps',
+	100:'fil',
+	101:'div',
+	104:'ha',
+	106:'yo',
+	107:'quz',
+	108:'ns',
+	109:'ba',
+	110:'lb',
+	111:'kl',
+	120:'ii',
+	122:'arn',
+	124:'moh',
+	126:'br',
+	128:'ug',
+	129:'mi',
+	130:'oc',
+	131:'co',
+	132:'gsw',
+	133:'sah',
+	134:'qut',
+	135:'rw',
+	136:'wo',
+	140:'gbz'
+}
 

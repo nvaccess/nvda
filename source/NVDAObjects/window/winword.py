@@ -434,7 +434,15 @@ class WinWordCollectionQuicknavIterator(object):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
-			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			try:
+				item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			except COMError:
+				message = ("Error iterating over item with "
+					"type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
+					"\nThis could be caused by an issue with some element within or a corruption of the word document."
+					).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
+				log.debugWarning(message ,exc_info=True)
+				continue
 			itemRange=item.rangeObj
 			# Skip over the item we're already on.
 			if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
@@ -587,6 +595,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
+		elif isinstance(position,WordDocumentTextInfo):
+			# copying from one textInfo to another
+			self._rangeObj=position._rangeObj.duplicate
 		else:
 			raise NotImplementedError("position: %s"%position)
 
@@ -606,6 +617,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
 			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
+		if self.obj.ignorePageNumbers:
+			formatConfigFlags&=~formatConfigFlagsMap['reportPage']
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -750,7 +763,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
-				field['language']=self._getLanguageFromLcid(languageId)
+				field['language']=languageHandler.windowsLCIDToLocaleName(languageId)
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
@@ -764,14 +777,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
 		return field
-
-	def _getLanguageFromLcid(self, lcid):
-		"""
-		gets a normalized locale from a lcid
-		"""
-		lang = locale.windows_locale[lcid]
-		if lang:
-			return languageHandler.normalizeLanguage(lang)
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE: 
@@ -828,7 +833,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		if end and self._rangeObj.end<oldEndOffset:
+		newEndOffset = self._rangeObj.end
+		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+		# a case where you called move end then collapse until the size of the range is no longer being reduced.
+		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+		if end and newEndOffset < oldEndOffset :
 			raise RuntimeError
 
 	def copy(self):
@@ -857,7 +866,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
 		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
 		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
-		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (_rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+		if (direction>0 and endPoint!="end"
+			and unit not in (wdCharacter,wdWord) # moving by units of line or more
+			and (_rangeObj.start+1) == self.obj.WinwordDocumentObject.range().end # character after the range start is the end of the document range
+			):
 			return 0
 		return res
 
@@ -921,19 +933,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		except:
 			raise LookupError("Couldn't get MathML from MathType")
 
-class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
-
-	def _get_shouldIncludeLayoutTables(self):
-		return config.conf['documentFormatting']['includeLayoutTables']
-
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
-
-	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
@@ -1074,6 +1079,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ignore=False
 		self.ignoreEditorRevisions=ignore
 		return ignore
+
+	#: True if page numbers (as well as section numbers and column numbers) should be ignored. Such as in outlook.
+	ignorePageNumbers = False
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
@@ -1577,7 +1585,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_PARAGRAPH)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True

@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-21 00:34+0100\n"
+"POT-Creation-Date: 2017-05-12 00:10+1000\n"
+"PO-Revision-Date: 2017-05-13 07:46+0100\n"
 "Last-Translator: OAron <info@o-soft.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Teszt megjegyzés
@@ -433,13 +433,13 @@ msgstr "marathi, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "Holland (belgiumi), rövidítési fokozat 1"
+msgid "Dutch (Belgium)"
+msgstr "Holland (belgiumi)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "Holland (hollandiai), rövidítési fokozat 1"
+msgid "Dutch (Netherlands)"
+msgstr "Holland (hollandiai)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -548,8 +548,8 @@ msgstr "Tamil, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
-msgstr "Telegu, rövidítési fokozat 1"
+msgid "Telugu grade 1"
+msgstr "Telugu, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -797,6 +797,7 @@ msgstr ""
 "navigációs billentyűket is az aktív alkalmazás kezeli."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ebben a dokumentumban nem támogatott."
 
@@ -1242,16 +1243,22 @@ msgstr "Nincs előző mellékszöveg."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "&Hivatkozások"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Címsorok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "&Jelzőpontok"
 
@@ -1285,6 +1292,7 @@ msgid "%s landmark"
 msgstr "%s jelzőpont"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "%s Kijelölve"
@@ -1318,6 +1326,33 @@ msgstr "Alja"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Egy elemblokk (pl. lista vagy táblázat) végére ugrik"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Csak táblázatban használható"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "a táblázat széle"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "A táblázat következő sorához lép."
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "A táblázat előző sorához lép."
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "A táblázat következő oszlopához lép."
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "A táblázat előző oszlopához lép."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1696,6 +1731,7 @@ msgid "row"
 msgstr "sor"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "keret"
 
@@ -1905,7 +1941,7 @@ msgstr "gördítősáv"
 
 #. Translators: Identifies a section of text.
 msgid "section"
-msgstr "bekezdés"
+msgstr "szakasz"
 
 #. Translators: Identifies a shape.
 msgid "shape"
@@ -1940,7 +1976,7 @@ msgstr "szegély"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "fölfelényíl"
+msgstr "rendszerkurzor"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
@@ -2022,10 +2058,6 @@ msgstr "ikon az asztalon"
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "figyelmeztetés"
-
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "dinamikus keret"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2300,6 +2332,34 @@ msgstr "Nincs kijelölve"
 msgid "not checked"
 msgstr "Nincs bejelölve"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "nincs lenyomva"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "aktuális"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "aktuális oldal"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "aktuális lépés"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "aktuális hely"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "aktuális dátum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "aktuális idő"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2477,8 +2537,12 @@ msgstr "Alvó mód be és kikapcsolása az aktív alkalmazásban"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "Felolvassa a kurzor alatti sort. Kétszer gyorsan megnyomva betűzi ezt."
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"Felolvassa a kurzor alatti sort. Kétszer gyorsan megnyomva betűzi azt. "
+"Háromszori megnyomás esetén a betűzés a karakterleírások használatával "
+"történik."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2735,17 +2799,25 @@ msgstr "Sorszámok bemondása bekapcsolva"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Sorszámok bemondásának  be és kikapcsolása"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "Behúzás bemondása kikapcsolva"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Behúzás jelzése beszéddel"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Behúzás bemondása bekapcsolva"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Behúzás jelzése hangjelzéssel"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Behúzás jelzése beszéddel és hangjelzéssel"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Behúzás jelzése kikapcsolva"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Behúzás bemondásának be és kikapcsolása"
+msgid "Cycles through line indentation settings"
+msgstr "Váltás a behúzás jelzési módjai közt"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3578,6 +3650,7 @@ msgid "review"
 msgstr "Áttekintő kurzor"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "aktív elem"
 
@@ -4314,6 +4387,43 @@ msgstr "%s vége"
 msgid "page %s"
 msgstr "%s. oldal"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "%s. szakasz"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "hasáb {0} per {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s hasáb"
+
+msgid "continuous section break"
+msgstr "folyamatos szakasztörés"
+
+msgid "new column section break"
+msgstr "Hasábtörés"
+
+msgid "new page section break"
+msgstr "új oldal szakasztörés"
+
+msgid "even pages section break"
+msgstr "páros oldal szakasztörés"
+
+msgid "odd pages section break"
+msgstr "páratlan oldal szakasztörés"
+
+msgid "column break"
+msgstr "hasábtörés"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4330,6 +4440,10 @@ msgstr "%s stílus"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "alapértelmezett stílus"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Nincs szegély"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -4572,6 +4686,10 @@ msgstr "{columnCount} oszlopból és {rowCount} sorból álló táblázat"
 
 msgid "NVDA Speech Viewer"
 msgstr "NVDA beszédnéző"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "A beszédnéző mutatása a program &indulásakor"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -4927,11 +5045,6 @@ msgstr "{symbol} mint {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "a táblázat széle"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "A navigátor kurzort a következő oszlophoz helyezi"
@@ -4975,6 +5088,39 @@ msgstr "Nincs lejátszás alatt lévő szám"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám hátralévő idejét"
+
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Beállítások mutatása a kijelölt, vagy a kurzor alatti szövegnél "
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage} százalék, hely: {curLocation} per {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "{pageNumber} oldal"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "kiemelve"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "nincs kiemelve"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "Népszerű kiemelés (%s)"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "a népszerű kiemelésen kívül"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5440,8 +5586,8 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 sorozat"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH braille kijelzők"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit braille kijelzők"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -5787,7 +5933,6 @@ msgid "Exit NVDA"
 msgstr "kilépés az NVDA-ból"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
 "By default, the numpad insert and main insert keys may both be used as the "
@@ -5797,7 +5942,6 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Üdvözli az NVDA!\n"
 "A legtöbb NVDA parancs használatához tartsa lenyomva az NVDA gombot, üsse le "
 "hozzá a billentyűparancsot, majd engedje fel mind a kettőt.\n"
 "Alap esetben a numerikus, valamint a normál  insert billentyűk használhatóak "
@@ -5809,6 +5953,11 @@ msgstr ""
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
+msgstr "Üdvözli az NVDA"
+
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
 msgstr "Üdvözli az NVDA"
 
 msgid "Options"
@@ -5872,6 +6021,10 @@ msgstr "Újraindítás"
 msgid "Restart with add-ons disabled"
 msgstr "Újraindítás letiltott bővítményekkel"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Újraindítás nyomkövetés naplózási szinttel"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Kérem, várjon"
@@ -5915,7 +6068,7 @@ msgid "Add-on &help"
 msgstr "A bővítmény &súgója"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
+msgid "&Disable add-on"
 msgstr "Bővítmény &letiltása"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
@@ -5927,7 +6080,7 @@ msgstr "&Hozzáadás"
 #. Remove a speech dictionary entry.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
-msgstr "&eltávolítás"
+msgstr "El&távolítás"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
@@ -6006,11 +6159,11 @@ msgstr "eltávolítás"
 
 #. Translators: The status shown for an addon when its disabled.
 msgid "disable"
-msgstr "Letilt"
+msgstr "Letiltva"
 
 #. Translators: The status shown for an addon when its enabled.
 msgid "enable"
-msgstr "Engedélyez"
+msgstr "Engedélyezve"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
@@ -6021,7 +6174,7 @@ msgid "running"
 msgstr "fut"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
+msgid "&Enable add-on"
 msgstr "Bővítmény &engedélyezése"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
@@ -6061,10 +6214,6 @@ msgstr "Bővítményinformáció"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Profilok testreszabása"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profil"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6113,8 +6262,8 @@ msgid "Error activating profile."
 msgstr "Hiba a profil aktiválásakor."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Biztosan törölni szeretné ezt a profilt? A művelet nem vonható vissza."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Ez a profil véglegesen törlésre kerül. A folyamat nem vonható vissza."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6379,14 +6528,14 @@ msgstr "Hordozható verzió &könyvtára"
 msgid "Browse..."
 msgstr "Tallózás..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "A jelenlegi felhasználói beállítások másolása"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Válassza ki a Hordozható verzió könyvtárát"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "A jelenlegi felhasználói beállítások másolása"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6472,10 +6621,6 @@ msgstr "nyomkövetés"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Nyelv (az NVDA újraindítása szükséges a megváltoztatáshoz):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Nyelv"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "A beállítások automatikus el&mentése kilépéskor"
@@ -6491,10 +6636,6 @@ msgstr "&Hangjelzés lejátszása az NVDA indításakor és kilépéskor"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Na&plózási szint"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Naplózási szint"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6552,13 +6693,6 @@ msgstr "Hiba történt a felhasználói beállítások másolása közben"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "Az NVDA beállítások sikeresen másolva"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "Hiba a(z) %s nyelvi fájlban"
-
-msgid "Language Error"
-msgstr "A nyelvi fájl hibás"
 
 msgid "This change requires administrator privileges."
 msgstr "Ehhez a változtatáshoz rendszergazdai jog szükséges."
@@ -6664,10 +6798,6 @@ msgstr "Billentyűzet beállítások"
 msgid "&Keyboard layout:"
 msgstr "&Billentyűzetkiosztás:"
 
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Billentyűzetkiosztás"
-
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
@@ -6745,10 +6875,6 @@ msgstr "Az egér &követése"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Szövegfeldolgozási &egység:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "Szövegbemondási egység"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6875,11 +7001,6 @@ msgstr "Az elem &leírásának bemondása"
 msgid "Progress &bar output:"
 msgstr "&Folyamatjelző:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Folyamatjelző"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6943,144 +7064,189 @@ msgstr "A nem NVDA-parancsnak minősülő &egyéb parancsok blokkolása"
 msgid "Document Formatting"
 msgstr "Dokumentumformázás"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
-"A kurzor pozíciójánál lévő formázások &változásának jelzése (a beszéd "
-"késését okozhatja)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "Az alábbi opciókkal a formázási információk jelzését szabályozhatja"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Betűtípus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "A betűtípus &nevének bemondása"
+msgid "&Font name"
+msgstr "Betűtípus &neve"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Betű &méret bemondása"
+msgid "Font &size"
+msgstr "Betű&méret"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Betűtípus &paraméterek bemondása"
+msgid "Font attri&butes"
+msgstr "Betűtípus &paraméterek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "&Igazítás bemondása"
+msgid "E&mphasis"
+msgstr "Kiemel&és"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "&Színek bemondása"
+msgid "St&yle"
+msgstr "St&ílus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Megjegyzések jelzése"
+msgid "&Colors"
+msgstr "&Színek"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Dokumentum"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Co&mments"
+msgstr "Me&gjegyzések"
 
 # itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
 # címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Szerkeszt&ői változások jelzése"
+msgid "&Editor revisions"
+msgstr "Szerkeszt&ői változások"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Kiemelés jelzése"
+msgid "Spelling e&rrors"
+msgstr "Helyesírási hi&bák"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Oldalak és sorköz"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "st&ílus bemondása"
+msgid "&Pages"
+msgstr "&Oldalszámok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Helyesírási hi&bák jelzése"
+msgid "Line &numbers"
+msgstr "So&rszámok"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Line &indentation reporting:"
+msgstr "&Behúzások jelzése"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "&Oldalszámok bemondása"
+msgid "Off"
+msgstr "kikapcsolva"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "So&rszámok bemondása"
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Beszéd"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "&Behúzás bemondása"
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Hangjelzés"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Beszéd és hangjelzés"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Bekezdés igazítás bemondása"
+msgid "&Paragraph indentation"
+msgstr "Beke&zdés-igazítás"
 
-# itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
-# címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Sorköz jelzése"
+msgid "&Line spacing"
+msgstr "Sork&öz"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "T&áblázatok jelzése"
+msgid "&Alignment"
+msgstr "&Igazítás"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Táblázat"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "A táblázat &fejléceinek bemondása"
+msgid "&Tables"
+msgstr "&Táblázatok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "A táblázatcella &koordinátáinak bemondása"
+msgid "Row/column h&eaders"
+msgstr "Sor/oszlop &fejlécek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "&Hivatkozások jelzése"
+msgid "Cell c&oordinates"
+msgstr "&Cellakoordináták"
 
-# itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
-# címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "&Címsorok jelzése"
+msgid "Styles"
+msgstr "Stílus"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "&Listák jelzése"
+msgid "Both Colors and Styles"
+msgstr "Szín és stílus"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "&Idézetblokkok jelzése"
+msgid "Cell borders:"
+msgstr "Cellaszegélyek"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "&Jelzőpontok jelzése"
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Elemek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "K&eretek jelzése"
+msgid "&Lists"
+msgstr "&Listák"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Jelzés, ha k&attintható"
+msgid "Block &quotes"
+msgstr "I&dézetblokkok"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Fra&mes"
+msgstr "&Keretek"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "&Clickable"
+msgstr "K&attintható"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"A kurzor pozíciójánál lévő formázások &változásának jelzése (a visszajelzés "
+"késését okozhatja)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7103,6 +7269,7 @@ msgid "&Pattern"
 msgstr "&Tényleges kifejezés"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Behelyettesített kifejezés"
 
@@ -7114,13 +7281,17 @@ msgstr "&Megjegyzés"
 msgid "&Type"
 msgstr "&Típus"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Hiányzik a tényleges kifejezés."
+
+msgid "Dictionary Entry Error"
+msgstr "Hibás szótárbejegyzés"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Hibás regex kifejezés: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Hibás szótárbejegyzés"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7189,6 +7360,10 @@ msgstr "A kurzornál lévő szó átalakítása &számítógépes braille jelekk
 msgid "&Show cursor"
 msgstr "Kurzor &mutatása"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Villogó kurzor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "A kurzor &villogási sebessége (ms)"
@@ -7251,8 +7426,8 @@ msgstr "Szint"
 msgid "Preserve"
 msgstr "Megtartva"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
 msgstr "Írásjel megváltoztatása"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
@@ -7361,28 +7536,6 @@ msgid ""
 msgstr ""
 "Képernyő-elrendezés megtartása be és kikapcsolása. Böngészőmódban "
 "megtekintett dokumentumok esetén."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Csak táblázatban használható"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "A táblázat következő sorához lép."
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "A táblázat előző sorához lép."
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "A táblázat következő oszlopához lép."
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "A táblázat előző oszlopához lép."
 
 msgid "Taskbar"
 msgstr "tálca"
@@ -7629,6 +7782,11 @@ msgstr ""
 "sorfejként, a többi tőle jobbra és lefelé értendő. Kétszer gyorsan megnyomva "
 "törli a beállítást."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "{0} munkalap, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "A beviteli üzenet a(z)  {title}: {message}"
@@ -7654,6 +7812,129 @@ msgstr "Megjegyzés írása a(z) {address} cellához"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} től {lastAddress} {lastContent} ig"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "fent"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "lent"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "balra"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "jobbra"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "átlósan fel"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "átlósan le"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "Vízszintes szegélyek belül"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "Függőleges szegélyek belül"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "folyamatos"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "Szaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "PontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "PontPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "Pontozott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "Dupla"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "DöntöttPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "Hajszál"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "Vékony"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "Közepes"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "Vastag"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "KözepesPontPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "KözepesPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "KözepesSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} Körül"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} Fent és lent"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} Balra és jobbra"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} átlósan fel és átlósan le"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8677,884 +8958,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "This cell is non-editable"
-#~ msgstr "Ez a cella nem szerkeszthető"
-
-#~ msgid "checker"
-#~ msgstr "Átló Keresztmintás"
-
-#~ msgid "crisscross"
-#~ msgstr "Vékony Átló Keresztmintás"
-
-#~ msgid "down"
-#~ msgstr "Elfordított átló Vonalas"
-
-#~ msgid "gray16"
-#~ msgstr "12,5 százalékos szürke"
-
-#~ msgid "gray25"
-#~ msgstr "25 százalékos szürke"
-
-#~ msgid "gray50"
-#~ msgstr "50 százalékos szürke"
-
-#~ msgid "gray75"
-#~ msgstr "75 százalékos szürke"
-
-#~ msgid "grid"
-#~ msgstr "Vékony Vízszintes Keresztmintás"
-
-#~ msgid "light down"
-#~ msgstr "vékony Elfordított átló Vonalas"
-
-#~ msgid "light up"
-#~ msgstr "vékony átló Vonalas"
-
-#~ msgid "light vertical"
-#~ msgstr "vékony függőlegesen vonalas"
-
-#~ msgid "semi gray75"
-#~ msgstr "Vastag átló Keresztmintás"
-
-#~ msgid "up"
-#~ msgstr "átló Vonalas"
-
-#~ msgid "unknown color"
-#~ msgstr "ismeretlen szín"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Alíz kék"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Antik fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Vízkék"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Akvamarinkék"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Azúr"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Bézs"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "krémleves"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Hámozott mandula"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Kék"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Ibolyakék"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Nyersfa"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Kadét kék"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Karthauzi likőr"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Csokoládé"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Korall"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Búzavirágkék"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Kukoricahaj"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Karmazsinvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Cián"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Sötétkék"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Sötétcián"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Sötétaranyvessző"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "Sötétzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Sötét keki"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Sötét magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "Sötét olivazöld"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Sötétnarancs"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Sötétorchidea"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Sötétvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Sötét lazacvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "Sötét tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Sötét palakék"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Sötét palaszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Sötéttürkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Sötét ibolya"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Mélyrózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Mély égszínkék"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Halványszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Ponyvakék"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Téglavörös"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Sziromfehér"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Erdőzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fukszia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Finom fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Halványfehér"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Arany"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Aranyvessző"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Szürke"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "Zöldessárga"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Mézharmat"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Élénkrózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Indiai vörös"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indigó"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Elefántcsont"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Keki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Levendula"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Levendulapír"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Fűzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Selymes citrom"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Világoskék"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Világos korall"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Világos cián"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Világos aranyvessző sárga"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Világoszöld"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Világos rózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Világos lazacvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Világos tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Világos égszínkék"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Világos palaszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Világos acélkék"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Világossárga"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Citrom"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Citromzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Vászonfehér"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Gesztenyebarna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Közép akvamarinkék"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Középkék"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Középorchidea"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Közép bíborvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Közép tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Közép palakék"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Közép tavaszzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Középtürkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Közép ibolyavörös"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Éjkék"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Mentakrém"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Mályva"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Mokaszin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navaho fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Mattrózkék"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Tört fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Oliva"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Olivazöld"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Narancsvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Orchidea"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Fakó aranvessző"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Fakózöld"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Fakótürkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Fakó ibolyavörös"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Papayahab"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Halványbarack"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Rózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Szilva"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Púderkék"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Vörös"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Rózsásbarna"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Királykék"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Nyeregbarna"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Lazacvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Homokbarna"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "Tengeri kagyló"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Sziena"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Ezüst"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Égszínkék"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Palakék"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Palaszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Hófehér"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Tavaszzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Acélkék"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Rozsdabarna"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Teaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Bogáncs"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Paradicsom"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Türkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Ibolya"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Búza"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Füstös fehér"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "A kijelölési kezdőpont nem lehet másik elemben"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Nyelvhelyességi hibák jelzése kikapcsolva"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Nyelvhelyességi hibák jelzése bekapcsolva"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Ki- vagy bekapcsolja a Nyelvhelyességi hibák jelzését"
-
-#~ msgid "grammar error"
-#~ msgstr "Hibás rész"
-
-#~ msgid "out of grammar error"
-#~ msgstr "Hibás részen kívül"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "&Nyelvhelyességi hibák jelzése"
-
-#~ msgid "browse mode"
-#~ msgstr "böngésző mód"
-
-#~ msgid "activate"
-#~ msgstr "aktiválás"
-
-#~ msgid "no next"
-#~ msgstr "Nincs következő elem."
-
-#~ msgid "no previous"
-#~ msgstr "Nincs előző elem."
-
-#~ msgid "edge of table"
-#~ msgstr "a táblázat széle"
-
-#~ msgid "%g characters"
-#~ msgstr "%g karakter"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "Nincs megjegyzés."
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
 #~ msgstr ""
-#~ "Megjeleníti a diagramok, a megjegyzéssel ellátott cellák, és a képletet "
-#~ "tartalmazó cellák listáját."
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "alapértelmezett Szín"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s. Nincs kijelölve"
-
-#~ msgid "unrevised"
-#~ msgstr "változatlanÁttekintő kurzor"
-
-#~ msgid "unknown author"
-#~ msgstr "ismeretlen szerző"
-
-#~ msgid "unknown date"
-#~ msgstr "ismeretlen dátum"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType}, {revisionAuthor} által, ekkor: {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Bemondja az aktív elem nevét."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Adatsor {} per {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "Érték {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} per {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " trendvonal {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr "Diagram terület magasság: {}, szélesség: {}, fent: {}, balra: {}"
-
-#~ msgid "Slovak"
-#~ msgstr "Szlovák"
-
-#~ msgid "equation"
-#~ msgstr "egyenlet"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Megjeleníti a címsorok, jelzőpontok vagy hivatkozások listáját"
-
-#~ msgid "navy blue"
-#~ msgstr "Tengerkék"
-
-#~ msgid "teal"
-#~ msgstr "pávakék"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "A könnyebb és logikusabb használhatóság érdekében az NVDA 2013.1 "
-#~ "verziójában a laptop billentyűzet kiosztás teljesen újra lett tervezve.\n"
-#~ "Ha ön a laptop billentyűzet kiosztást használja, bővebb információért "
-#~ "kérjük tekintse meg az Újdonságok dokumentumot a súgó menüben."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Új laptop billentyűzet kiosztás"
-
-#~ msgid "Read What's New"
-#~ msgstr "Ú&jdonságok"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Gyorsítás"
-
-#~ msgid "male 1"
-#~ msgstr "Férfi hang 1"
-
-#~ msgid "female 1"
-#~ msgstr "Női hang  1"
-
-#~ msgid "male 2"
-#~ msgstr "Férfi hang 2"
-
-#~ msgid "female 2"
-#~ msgstr "Női hang  2"
-
-#~ msgid "lime"
-#~ msgstr "élénkzöld"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Biztosan ki szeretne lépni az NVDA programból?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Figyelmeztető üzenet megjelenítése kilépés előtt"
-
-#~ msgid "Regexp"
-#~ msgstr "Regex kifejezés"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "nem lehet a navigátor kurzornál lévő elem helyét meghatározni"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nem lehet meghatározni a képernyő felbontását."
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Bemondja a navigátor kurzornál lévő elem magasságát, szélességét és "
-#~ "pozícíóját"
-
-#~ msgid "Set column header row"
-#~ msgstr "oszlopfejléc sor beállítva"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "oszlopfejléc sora törölve"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Egyszeri megnyomásra beállítja a sort az oszlop fejlécek bemondásához. "
-#~ "Kétszeri megnyomásra törli a beállítást."
-
-#~ msgid "Set row header column"
-#~ msgstr "sorfejléc oszlop beállítva"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Egyszeri megnyomásra beállítja az oszlopot a sor fejlécek bemondásához. "
-#~ "Kétszeri megnyomásra törli a beállítást."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s - %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "Kézi aktiválás/szerkesztés"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "A beállításfájl hibákat tartalmaz.\n"
-#~ " Nyomja meg az 'OK' gombot a javításhoz, vagy a 'Mégse'-t a fájl későbbi "
-#~ "kézi szerkesztéséhez. A hibákról részletes információ található a "
-#~ "naplófájlban.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Nincs automatikus megjegyzés."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Nem található az automatikus megjegyzés ablak."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Felolvassa az automatikus megjegyzés ablak tartalmát."
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automatikus megjegyzések"
-
-#~ msgid "Translation:"
-#~ msgstr "Fordítás"
-
-#~ msgid "Comments:"
-#~ msgstr "Megjegyzések"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nincs sík áttekintési mód ehhez az objektumhoz"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "nem lehet a szövegnél lévő elemre ugrani"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Sík áttekintő módban a navigátor kurzort az áttekintő kurzornál lévő "
-#~ "vezérlőelemhez helyezi."
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Kérem először zárja be a megnyitott NVDA beállításablakot."
-
-#~ msgid "Translation &table:"
-#~ msgstr "Fordítási &tábla:"
-
-#~ msgid "beeps"
-#~ msgstr "hangjelzés"
-
-#~ msgid "talk"
-#~ msgstr "beszéd"
-
-#~ msgid "default action failed"
-#~ msgstr "Az alapértelmezett művelet nem sikerült"
-
-#~ msgid "layout %s"
-#~ msgstr "%s kiosztás"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, az alapértelmezett %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "hibás beállításfájl"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Hiba történt a(z) %s beállításfájl beolvasásakor"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Hiba a konfigurációs fájlban '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s per %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Ez a bővítmény már telepítve van. Távolítsa el, és próbálja meg újból a "
-#~ "telepítést."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "Betölti az elmentett beállításokat, a jelenlegibeállítások felülírásával."
-
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "Üdvözli az NVDA"
-
-#~ msgid "Your gesture map file contains errors.\n"
-#~ msgstr "NVDA parancsfájl hiba"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "a &billentyűzet követése"
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "&Autorun fájl létrehozása"
-
-#~ msgid "&Add..."
-#~ msgstr "&Hozzáadás"
-
-#~ msgid "Key Command quick reference"
-#~ msgstr "billentyűparancsok listája"
-
-#~ msgid "User guide"
-#~ msgstr "Felhasználói útmutató"
-
-#~ msgid "Web site"
-#~ msgstr "Honlap"
-
-#~ msgid "Portable options"
-#~ msgstr "Hordozható beállítások"
+#~ "Biztosan törölni szeretné ezt a profilt? A művelet nem vonható vissza."

@@ -3,6 +3,170 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+O subliñable desta versión inclúe o soporte compreto para a atenuación de audio na actualización Windows 10 Creators; correccións para varios problemas coa seleción no modo exploración, incluindo problemas con selecionar todo; meyoras significativas no soporte de Microsoft Edge; e melloras na web coma o indicado de elementos marcados como actual (usando aria-current).
+
+== Novas Características ==
+- Agora pódese anunciar a información do borde das celdas en Microsoft Excel usando `NVDA+f`. (#3044)
+- Nos navegadores web, NVDA agora indica cando un elemento se marcou como actual (específicamente, usando o atributo aria-current). (#6358)
+- Agora sopórtase o cambio autumático de linguas no Microsoft Edge. (#6852)
+- Engadido o soporte para a Calculadora de Windows no Windows 10 Enterprise LTSB (Long-Term Servicing Branch) e Server. (#6914)
+- Ao se realizar a orde ler liña actual tres veces rápidamente deletréase a liña con descripcións de caracteres. (#6893)
+- Nova lingua: birmano.
+- Agora fálanse apropriadamente as frechas arriba e abaixo  e os símbolos de fracción unicode. (#3805)
+
+
+== Cambios ==
+- Ao navegar coa revisión simple en aplicacións que usen UI Automation, ignóranse máis contedores sen contido facendo máis sinxela a navegación. (#6948, #6950) 
+
+
+== Correción de Fallos ==
+- Os elementos de menú en páxinas Web (as caixas de verificación e os botóns de opción dos elementos de menús) agora poden activarse mentres se estea en modo exploración. (#6735)
+- Agora tradúcese o anunciado de nomes de follas en Excel. (#6848)
+- Premer escape mentres o indicativo "confirmar borrado" do perfil de configuración está activo agora pecha o diálogo. (#6851)
+- Correxidos algúns colgues en Mozilla Firefox e outras aplicacións Gecko onde está habilitada a característica multi-proceso. (#6885)
+- O anunciado da cor de fondo na revisión de pantalla agora é máis preciso cando o texto se dibuxou cun fondo trasparente. (#6467) 
+- Mellorado o soporte para aria-describedby en Internet Explorer 11, incluindo o soporte dentro de iframes e cando se proporcionan varios IDs. (#5784)
+- Na actualización Windows Creators, a atenuación de audio do NVDA funciona de novo como en anteriores versións de Windows (ex.: Atenuar ca voz e sons, atenuar sempre, e non atenuar están dispoñibles todas). (#6933)
+- NVDA xa non fallará ao navegar ou ao anunciar certos controis (UIA) onde non se definíu un atallo de teclado. (#6779)
+- Xa non se engaden dous espazos valdeiros na información de atallos de teclado para certos controis (UIA). (#6790)
+- Certas combinacións de teclas nas pantallas HIMS (ex.: espazo+ponto4) xa non fallan intermittentemente. (#3157)
+- Correxido un problema ao se abrir un porto serie en sistemas que usan certas linguas distintas ao inglés que causaban que fallara a conexión ás pantallas braille nalgúns casos. (#6845)
+- Redúcese a posibilidade de que o ficheiro de configuración se corrompa ao se apagar o Windows. Os ficheiros de configuración agora escrébense nun ficheiro temporal antes de reemplazar o actual. (#3165)
+- Ao se realizar a orde ler liña actual dúas veces rápidamente para deletreala, agora úsase a lingua apropriada para os caracteres deletreados. (#6726)
+- Navegar por liñas no Microsoft Edge agora é ata tres veces máis rápido na Actualización Windows 10 Creators. (#6994)
+- NVDA xa non anuncia "Web Runtime grouping" ao se enfocar documentos no Microsoft Edge na Actualización Windows 10 Creators (#6948)
+- Agora sopórtanse todas as versións existentes de SecureCRT. (#6302)
+- Adobe Acrobat Reader xa non se rompe en certos documentos PDF (especcialmente, en aqueles que conteñan  atributos empty ActualText). (#7021, #7034)
+- Agora sopórtanse todas as versións existentes do SecureCRT.  (#6302)
+- Adobe Acrobat Reader xa non se rompe en certos documentos PDF (especialmente, en aqueles que conteñen atributos ActualText valdeiros). (#7021, #7034)
+- No modo exploración en Microsoft Edge, as táboas interactivas (ARIA grids) xa non se saltan cando se navegan con t e shift+t. (#6977)
+- No modo exploración, ao premer shift+inicio despois de selecionar cara adiante agora deseleciona ata o comezo da liña segundo se esperaba. (#5746)
+- No modo exploración, selecionar todo (control+a) xa non falla para selecionar texto se o cursor do sistema non está ao comezo do texto. (#6909)
+- Correxidos algúns outros problemas extranos de seleción no modo exploración. (#7131)
+
+
+== Cambios para Desenvolvedores ==
+- Os argumentos de liña de ordes agora procésanse co módulo argparser de Python, en lugar de co optparser. Esto permite a certas opcións coma -r e -q manexarse exclusivamente. (#6865)
+- core.callLater agora pon en cola a devolución de chamada á cola principal do NVDA despois do retraso dado, en lugar de executala directamente despertando ao núcleo. Esto detén posibles colgues debidos a que o núcleo se vaia a dormir accidentalmente despois de procesar unha chamada, en medio dunha chamada modal coma o amosado dunha caixa de mensaxe. (#6797) 
+- A propiedade InputGesture.identifiers cambiouse tal que xa non se normaliza. (#6945)
+ - As subclases xa non necesitan normalizar identificadores antes de devolvelos dende esta propiedade.
+ - Se queres normalizar identificadores, agora hai unha propiedade InputGesture.normalizedIdentifiers a que normaliza os identificadores devoltos pola propiedade identifiers.
+- A propiedade InputGesture.logIdentifier agora está obsoleta. As chamadas deberían utilizar InputGesture.identifiers[0] no seu lugar. (#6945)
+- Borrouse algún código obsoleto:
+ - As constantes `speech.REASON_*`, deberían usarse a cambio `controlTypes.REASON_*`. (#6846)
+ - `i18nName` para opcións de sintetizador, `displayName` e `displayNameWithAccelerator` deberían usarse a cambio. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
+- Aa listaxe de compretado no menú de contexto autocompretar da Consola Python xa non amosa calquera ruta de obxecto que leve ata o símbolo final que estea a ser compretado. (#7023)
+- Agora hai unha unidade de proba do framework para o NVDA. (#7026)
+ - A unidade de proba e a infraestructura atópanse no directorio tests/unit. Consulta a cadea de documentación no ficheiro tests\unit\__init__.py para detalles.
+ - Podes executar probas utilizando "scons tests". Consulta a sección "Running Tests" do readme.md para detalles.
+ - Se estás a enviar un pull request para o NVDA, deberías executar primeiro as probas e asegurarte de que se pasen.
+
+
+= 2017.1 =
+O subliñable desta versión inclúe o anunciado de secións e columnas de texto no Microsoft Word; o Soporte para lectura, navegación e anotación de libros no Kindle para PC; e o soporte mellorado para o Microsoft Edge.
+
+== Novas Características ==
+- Agora poden anunciarse no Microsoft Word o tipo de salto de sección e o número de sección. Esto habilítase coa opción "anunciar número de páxina" no diálogo Formateado de documentos. (#5946)
+- No Microsoft Word agora pódense anunciar as columnas de texto. Esto habilítase coa opción "anunciar números de páxina" no diálogo Formateado de documentos. (#5946)
+- Agora sopórtase o cambio automático de linguas no Wordpad. (#6555)
+- A orde procurar do NVDA (NVDA+control+f) agora sopórtase en modo exploración para o Microsoft Edge. (#6580)
+- A navegación rápida por botóns en modo exploración (b e shift+b) agora sopórtase no Microsoft Edge. (#6577)
+- Cando se copìa unha folla no Microsoft Excel, lémbranse as  cabeceiras de columna e de fila configurados. (#6628)
+- Soporte para ler e navegar libros no Kindle para PC versión 1.19, incluindo o acceso a ligas, notas ao pé, gráficos, texto resaltado e notas do usuario. Por favor consulta a sección Kindle para PC da Guía de Usuario do NVDA para información adicional. (#6247, #6638)
+- Agora sopórtase a navegación de táboas no modo exploración no Microsoft Edge. (#6594)
+- No Microsoft Excel, a orde anunciar localizaciónm do cursor de revisión (escritorio: NVDA+suprimir do teclado numérico, portátil: NVDA+suprimir) agora anuncia o nome da folla de cálculo e da localización da celda. (#6613)
+- Engadida unha opción ao diálogo Saír para reiniciar co nivel depuración no rexistro. (#6689)
+
+
+== Cambios ==
+- A velocidade mínima do parpadeo do cursor braille agora é 200ms. Os perfís ou as configuracións con valores por embaixo deste incrementaranse en 200ms. (#6470)
+- Engadiuse unha caixa de verificación ao diálogo opcións braille para permitir habilitar ou deshabilitar o parpadeo do cursor braille. Anteriormente usábase un valor de cero para lograr esto. (#6470)
+- Actualizado o eSpeak NG (commit e095f008, 10 de xaneiro do 2017). (#6717)
+- Debido aos cambios na actualización Windows 10 Creators, o modo "Atenuar sempre" xa non está dispoñible nas opcións de Atenuación de audio do NVDA. Aínda está dispoñible en versións máis vellas do windows 10. (#6684)
+- Debido aos cambios na Actualización Windows 10 Creators, o modo "Atenuar cando saian voz e sons" xa non pode asegurarse de que o audio se atenuara compretamente antes de comezar a falar, nin manterá o audio atenuado o tempo suficiente despois de falar para deter o rebote rápido no volume. Estos cambios non afectan ás versións máis vellas do windows 10. (#6684)
+
+
+== Correción de Fallos ==
+- Correxido o colgue no Microsoft Word ao se mover por parágrafos a través dun documento longo mentres se está en modo exploración. (#6368)
+- As táboas no Microsoft Word que se copiaran dende o Microsoft Excel xa non se tratan como táboas de deseño, e polo tanto, xa non se ignoran. (#5927)
+- Cando se tenta teclear no Microsoft Excel mentres se estea en vista protexida, NVDA agora fai un son en lugar de falar os carácteres que non se escrebiron. (#6570)
+- Premendo escape no Microsoft Excel xa non se cambia incorrectamente ao modo exploración, ao menos que o usuario cambiara anteriormente a modo exploración explícitamente con NVDA+espacio e logo entrado no modo foco premendo intro nun campo de formulario. (#6569) 
+- NVDA xa non se colga en follas de cálculo do Microsoft Excel onde se fusione unha fila ou columna enteira. 9#6216)
+- O anunciado de texto recortado ou desbordado en celdas do Microsoft Excel agora debería de ser máis preciso (#6472)
+- NVDA agora anuncia cando unha caixa de verificación é de só lectura. (#6563)
+- O lanzador do NVDA xa non amosará un diálogo de aviso cando non poda reproducir o son de comezo debido a que non estea dispoñible o dispositivo de audio. (#6289)
+- Os controis na cinta do Microsoft Excel que non estean dispoñibles agora anúncianse así. (#6430)
+- NVDA xa non anunciará "panel" cando se minimicen ventás. (#6671)
+- Os caracteres que se escreben agora fálanse en aplicacións UWP (incluindo Microsoft Edge) na actualización Windows 10 Creators. (#6017)
+- O seguemento do rato agora funciona en todas as pantallas en computadores con varios monitores. (#6598)
+- NVDA xa non se volverá inusable despois de saír do Windows Media Player mentres se enfoca un control deslizador. (#5467)
+
+
+== Cambios para Desenvolvedores ==
+- Os ficheiros de perfís e configuración agora actualízanse automáticamente para cumprir cos requisitos das modificacións do esquema. Se hai un erro durante a actualización, amósase unha notificación, reiníciase a configuración, e o ficheiro de configuración antigo está dispoñible no rexistro do NVDA no nível 'Info'. (#6470)
+
+
+= 2016.4 =
+O subliñable desta versión inclúe a mellora do soporte para o Microsoft Edge; o modo exploración na aplicación Correo de Windows 10; e melloras significativas para os diálogos do NVDA.
+
+== Novas Características ==
+- NVDA agora pode indicar a sangría de liñas utilizando tons. Esto pódese configurar usando a caixa combinada "Anunciar Sangría de Liñas" nas preferencias do diálogo Formateado de documentos do NVDA. (#5906)
+- Soporte para a pantalla braille Orbit Reader 20 . (#6007)
+- Engadiuse unha opción para abrir a ventá do visualizador de voz ao arrincar. Esto pode habilitarse a través dunha caixa de verificación na ventá do visualizador de voz. (#5050)
+- Ao reabrir a ventá do visualizador de voz, a localización e as dimensións agora restauraranse. (#5050)
+- Os campos de referencia cruzada no Microsoft Word agora trátanse coma hipervínculos. anúncianse coma ligas e pódense activar. (#6102)
+- Soporte para as pantallas braille Baum SuperVario2, Baum Vario 340 e HumanWare Brailliant2. (#6116)
+- Soporte inicial para a actualización Anniversary do Microsoft Edge. (#6271)
+- Agora utilízase o modo exploración ao se ler correos electrónicos na aplicación correo do Windows 10. (#6271)
+- Lingua nova: Lituano.
+
+
+== Cambios ==
+- Actualizado o transcriptor braille liblouis a 3.0.0. Esto inclúe melloras significativas para o Braille Inglés Unificado. (#6109, #4194, #6220, #6140)
+- No administrador de complementos, os botóns Deshabilitar complemento e Habilitar complemento agora teñen atallos de teclado (alt+d e alt+e, respectivamente). (#6388)
+- Resolvéronse varios problemas de recheo e aliñamento nos diálogos do NVDA. (#6317, #5548, #6342, #6343, #6349)
+- O diálogo formateado de documento axustouse de xeito que o contido se deslice. (#6348)
+- Axustada a distribución do diálogo pronunciación de símbolos polo que se utiliza todo o ancho do diálogo para a lista de símbolos. (#6101)
+- No modo exploración en navegadores web, as ordes de navegación dunha soa letra dos campos de edición (e e shift+e) e dos campos de formulario (f e shift+f) agora moven a campos de edición de só lectura. (#4164)
+- Nas opcións de formateado de documentos do NVDA, "Anunciar cambios de formato despois do cursor" renomeouse a "Anunciar cambios de formato despois  do cursor", de xeito que afecte tanto ao braille como á voz. Nota: esto non afecta á traducción ao galego xa que usamos announce e report como sinónimos. (#6336)
+- Axustada a aparenza do "diálogo Benvida" do NVDA. (#6350)
+- As caixas de diálogo do NVDA agora teñen os seus botóns "Aceptar" e "Cancelar" aliñados cara a dereita do diálogo. (#6333)
+- Agora utilízanse controis de xiro para os campos de entrada numérica como a opción de "porcentaxe de ton de maiúsculas" no diálogo Opcións de Vopz. Podes introducir o valor decidido ou usar as teclhas de frecha arriba e abaixo para axustar o valor. (#6099)
+- O modo no que se anuncia IFrames (documentos integrados dentro de documentos) fíxose moito máis consistente para os navegadores. IFrames agora anúnciase como "marco" en Firefox. (#6047)
+
+
+== Correción de Fallos ==
+- Correxido un extrano problema ao saír do  NVDA mentras o visualizador de voz está aberto. (#5050)
+- Os mapas de imaxe agora procésanse coma se esperaba no modo exploración no Mozilla firefox. (#6051)
+- Mentras se está no diálogo diccionarios, ao se premer a tecla intro agora gárdase calquera cambio que fixeras e péchase o diálogo. Anteriormente, ao premer intro non se facía nada. (#6206)
+- Agora amósanse as mensaxes en braille ao cambiar os modos de entrada para un método de entrada (entrada nativa/alfanumérica, forma completa/ forma media, etc.). (#5892, #5893)
+- Ao deshabilitar e logo inmediatamente rehabilitar un complemento ou viceversa, o estado do complemento  agora volta a tal e como estaba anteriormente. (#6299)
+- Ao se usar Microsoft Word, os campos de número de páxina en cabeceiras agora poden lerse. (#6004)
+- O rato agora pode usarse para mover o foco entre a lista de símbolos e os campos de edición no diálogo pronunciación de símbolos. (#6312)
+- No modo exploración en Microsoft Word Correxiuse un problema que detén a aparición da lista de elementos cando contén un hipervínculo inválido. (#5886)
+- Despois de seren pechado a través da barra de tarefas ou do atallo de teclado alt+F4, o estado da caixa de verificación visualizador de voz no menú NVDA agora reflitirá a visibilidade actual da ventá. (#6340)
+- A orde recargar plugins xa non causa problemas para os perfís de configuración disparados, nos documentos novos en navegadores web e na revisión de pantalla. (#2892, #5380)
+- Na lista de linguas no diálogo Opcións Xerais do NVDA, linguas como o Aragonés agora amósanse correctamente en Windows 10. (#6259)
+- As teclas de sistema de emulación de teclado (ex.: un botón nunha pantalla braille que emule a pulsación da tecla tab) agora preséntanse na lingua configurada no NVDA na axuda de entrada e no diálogo Xestos de Entrada. Anteriormente, sempre se presentaban en inglés. (#6212)
+- Ao cambiar a lingua do NVDA (dende o diálogo Opcións Xerais) agora non ten efecto ata que NVDA se reinicie. (#4561)
+- Xa non é posible deixar o campo Patrón en branco para unha entrada de diccionario nova. (#6412)
+- Correxido un extrano problema ao se escanear portos serie nalgúns sistemas que facía algúns controladores de pantallas braille inusables. (#6462)
+- No Microsoft Word as viñetas numeradas agora lense dende as celdas das táboas ao se mover por celdas. (#6446)
+- Agora é posible asignar xestos ás ordes para o controlador da pantalla braille Handy Tech no diálogo Xestos de Entrada. (#6461)
+- No Microsoft Excel, ao se premer intro ou intro do teclado numérico cando se navega por unha folla de cálculo agora anúnciase correctamente a navegación á seguinte fila. (#6500)
+- iTunes xa non se colga intermitentemente ao usar o modo exploración para a Tenda iTunes, Apple Music, etc. (#6502)
+- Correxidos colgues nas aplicacións baseadas en Mozilla e Chrome de 64 bits. (#6497)
+- No Firefox co multiproceso habilitado, o modo exploración e os campos de texto editables agora funcionan correctamente. (#6380)
+
+
+== Cambios para Desenvolvedores ==
+- Agora é posible proporcionar app modules para executables que conteñan un ponto (.) nos seus nomes. Os pontos reemplázanse con subliñados (_). (#5323)
+- O novo módulo gui.guiHelper inclúe utilidades para simplificar a creación de GUIs wxPython, incluíndo a xestión automática de espaciado. Esto facilita unha mellor  aparencia visual e consistencia, así como a creación sinxela de GUIs novas para desenvolvedores cegos. (#6287)
+
+
 = 2016.3 =
 O subliñable desta versión inclúe a capacidade para deshabilitar complementos individuais; o soporte para campos de formulario No Microsoft Excel; melloras significativas para o anunciado das cores; correcións e melloras relacionadas con varias pantallas braille; e correcións e melloras para o soporte do Microsoft Word.
 

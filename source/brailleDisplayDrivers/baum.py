@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2016 NV Access Limited
+#Copyright (C) 2010-2017 NV Access Limited
 
 import time
 from collections import OrderedDict
@@ -87,6 +87,17 @@ USB_IDS_HID = {
 	"VID_0904&PID_4005", # Pronto! 40 V3
 	"VID_0904&PID_4007", # Pronto! 18 V4
 	"VID_0904&PID_4008", # Pronto! 40 V4
+	"VID_0904&PID_6001", # SuperVario2 40
+	"VID_0904&PID_6002", # SuperVario2 24
+	"VID_0904&PID_6003", # SuperVario2 32
+	"VID_0904&PID_6004", # SuperVario2 64
+	"VID_0904&PID_6005", # SuperVario2 80
+	"VID_0904&PID_6006", # Brailliant2 40
+	"VID_0904&PID_6007", # Brailliant2 24
+	"VID_0904&PID_6008", # Brailliant2 32
+	"VID_0904&PID_6009", # Brailliant2 64
+	"VID_0904&PID_600A", # Brailliant2 80
+	"VID_0904&PID_6201", # Vario 340
 	"VID_0483&PID_A1D3", # Orbit Reader 20
 }
 
@@ -322,7 +333,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		super(InputGesture, self).__init__()
 		self.keysDown = dict(keysDown)
 
-		self.keyNames = names = set()
+		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.iteritems():
 			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
 				# This is braille input.
@@ -333,14 +344,14 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				for index in xrange(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):
 						self.routingIndex = index
-						names.add("routing")
+						names.append("routing")
 						break
 			elif group == BAUM_ROUTING_KEY:
 				self.routingIndex = groupKeysDown - 1
-				names.add("routing")
+				names.append("routing")
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):
 					if groupKeysDown & (1 << index):
-						names.add(name)
+						names.append(name)
 
 		self.id = "+".join(names)

@@ -196,6 +196,9 @@ def listComPorts(onlyAvailable=True):
 					# #6015: In some rare cases, this value doesn't exist.
 					log.debugWarning("No PortName value for hardware ID %s" % hwID)
 					continue
+				if not port:
+					log.debugWarning("Empty PortName value for hardware ID %s" % hwID)
+					continue
 				if hwID.startswith("BTHENUM\\"):
 					# This is a Microsoft bluetooth port.
 					try:
@@ -229,9 +232,9 @@ def listComPorts(onlyAvailable=True):
 				ctypes.byref(buf), ctypes.sizeof(buf) - 1,
 				None
 			):
-				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-					raise ctypes.WinError()
+				# #6007: SPDRP_FRIENDLYNAME sometimes doesn't exist/isn't valid.
+				log.debugWarning("Couldn't get SPDRP_FRIENDLYNAME for %s: %s" % (port, ctypes.WinError()))
+				entry["friendlyName"] = port
 			else:
 				entry["friendlyName"] = buf.value
 

@@ -1,6 +1,6 @@
 #baseObject.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2007-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -209,7 +209,7 @@ class ScriptableObject(AutoPropertyObject):
 		@return: The script function or C{None} if none was found.
 		@rtype: script function
 		""" 
-		for identifier in gesture.identifiers:
+		for identifier in gesture.normalizedIdentifiers:
 			try:
 				# Convert to instance method.
 				return self._gestureMap[identifier].__get__(self, self.__class__)

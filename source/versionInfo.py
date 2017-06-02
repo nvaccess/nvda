@@ -31,8 +31,8 @@ def _updateVersionFromVCS():
 # Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version_year=2016
-version_major=4
+version_year=2017
+version_major=3
 version_minor=0
 version_build=0
 version="%s.%s.%sdev"%(version_year,version_major,version_minor)
@@ -44,7 +44,7 @@ except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
 url="http://www.nvaccess.org/"
-copyrightYears="2006-2016"
+copyrightYears="2006-2017"
 copyright=_("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
 aboutMessage=_(u"""{longName} ({name})
