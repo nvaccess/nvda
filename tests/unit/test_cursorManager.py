@@ -27,6 +27,13 @@ class TestMove(unittest.TestCase):
 		cm.script_moveByCharacter_back(None)
 		self.assertEqual(cm.selectionOffsets, (0, 0)) # Caret at "a"
 
+	def test_endOfLine(self):
+		"""End of line in a CursorManager moves to the last character; there is no "insertion point".
+		"""
+		cm = CursorManager(text="ab") # Caret at "a"
+		cm.script_endOfLine(None)
+		self.assertEqual(cm.selectionOffsets, (1, 1)) # Caret at "b"
+
 class TestSelection(unittest.TestCase):
 
 	def test_selForward(self):
@@ -154,6 +161,15 @@ class TestSelection(unittest.TestCase):
 		cm = CursorManager(text="ab\ncd", selection=(4, 4)) # Caret at "d"
 		cm.script_selectToBeginningOfLine(None)
 		self.assertEqual(cm.selectionOffsets, (3, 4)) # "c" selected
+
+	def test_selToEndOfLineAtEnd(self):
+		"""Test selecting to the end of the line after moving to the end of the line (#7157).
+		End of line in a CursorManager moves to the last character; there is no "insertion point".
+		So, doing this must select the last character.
+		"""
+		cm = CursorManager(text="ab", selection=(1, 1)) # Caret at "b"
+		cm.script_selectToEndOfLine(None)
+		self.assertEqual(cm.selectionOffsets, (1, 2)) # "b" selected
 
 	def test_selToBeginningOfLineAtBeginning(self):
 		"""Test selecting to the beginning of the line when the caret is already at the beginning of the line.

@@ -4,38 +4,43 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 =
+Highlights of this release include full support for audio ducking in the Windows 10 Creators Update; fixes for several selection issues in browse mode, including problems with select all; significant improvements in Microsoft Edge support; and improvements on the web such as indication of elements marked as current (using aria-current).
 
-== Yeni Özellikler ==
-- Cell border information can now be reported in Microsoft Excel by using `NVDA+f`. (#3044)
-- Added support for aria-current attributes. (#6358)
+== New Features ==
+- Cell border information can now be reported in Microsoft Excel by using NVDA+f. (#3044)
+- In web browsers, NVDA now indicates when an element has been marked as current (specifically, using the aria-current attribute). (#6358)
 - Automatic language switching is now supported in Microsoft Edge. (#6852)
 - Added support for Windows Calculator on Windows 10 Enterprise LTSB (Long-Term Servicing Branch) and Server. (#6914)
 - Performing the read current line command three times quickly spells the line with character descriptions. (#6893)
 - New language: Burmese.
+- Unicode up and down arrows and fraction symbols are now spoken appropriately. (#3805)
 
 
 == Changes ==
-- When navigating with simple review  in applications using UI Automation, more non-content containers are ignored making navigation easier. (#6948, #6950) 
+- When navigating with simple review  in applications using UI Automation, more extraneous objects are now ignored, making navigation easier. (#6948, #6950)
 
 
 == Bug Fixes ==
-- Web page menu items (menu item checkbox's and radio buttons) can now be activated while in browse mode. (#6735)
-- Excel sheet name reporting is now translated. (#6848)
+- Web page menu items can now be activated while in browse mode. (#6735)
 - Pressing escape while the configuration profile "Confirm Deletion" dialog is active now dismisses the dialog. (#6851)
 - Fixed some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
 - Reporting of background color in screen review is now more accurate when  text was drawn with a transparent background. (#6467)
-- Improved support for aria-describedby in Internet Explorer 11, including support within iframes and when multiple IDs are provided. (#5784)
-- In the Windows 10 Creators Update, NVDA's audio ducking again works as in previous Windows releases (I.e. Duck with speech and sounds, always duck, and no ducking are all available). (#6933)
+- Improved support for control descriptions provided on web pages in Internet Explorer 11 (specifically, support for aria-describedby within iframes and when multiple IDs are provided). (#5784)
+- In the Windows 10 Creators Update, NVDA's audio ducking again works as in previous Windows releases; i.e. Duck with speech and sounds, always duck and no ducking are all available. (#6933)
 - NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
 - Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
 - Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
 - Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
-- Reduced the chance of configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
+- Reduced the chance of the configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
 - When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
 - Navigating by line in Microsoft Edge is now up to three times faster in the Windows 10 Creators Update. (#6994)
 - NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creators Update. (#6948)
 - All existing versions of SecureCRT are now supported. (#6302)
 - Adobe Acrobat Reader no longer crashes in certain PDF documents (specifically, those containing empty ActualText attributes). (#7021, #7034)
+- In browse mode in Microsoft Edge, interactive tables (ARIA grids) are no longer skipped when navigating to tables with t and shift+t. (#6977)
+- In browse mode, pressing shift+home after selecting forward now unselects to the beginning of the line as expected. (#5746)
+- In browse mode, select all (control+a) no longer fails to select all text if the caret is not at the start of the text. (#6909)
+- Fixed some other rare selection problems in browse mode. (#7131)
 
 
 == Changes for Developers ==
@@ -45,11 +50,11 @@
  - Subclasses no longer need to normalize identifiers before returning them from this property.
  - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
 - The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
-- Deprecated code removed:
+- Removed some deprecated code:
  - `speech.REASON_*` constants: `controlTypes.REASON_*` should be used instead. (#6846)
  - `i18nName` for synth settings: `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
- - `config.save`. (#6846, #667)
+ - `config.save`: `config.conf.save` should be used instead. (#6846, #667)
 - The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
 - There is now a unit testing framework for NVDA. (#7026)
  - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
