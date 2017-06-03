@@ -63,9 +63,12 @@ def isInstalledCopy():
 		return False
 
 
-#: #6864: The name of the subkey stored under NVDA_REGKEY where the value is stored which will make an installed NVDA load the user configuration either from the local or from the roaming application data profile.
-#: The registry value is unset by default. When setting it manually, a DWORD value is prefered.
-#: A value of 0 will evaluate to loading the configuration from the roaming application data (default). 1 means loading the configuration from the local application data folder.
+#: #6864: The name of the subkey stored under NVDA_REGKEY where the value is stored
+#: which will make an installed NVDA load the user configuration either from the local or from the roaming application data profile.
+#: The registry value is unset by default.
+#: When setting it manually, a DWORD value is prefered.
+#: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
+#: A value of 1 means loading the configuration from the local application data folder.
 #: @type: unicode
 CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
 
