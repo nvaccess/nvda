@@ -147,8 +147,9 @@ Please check out the NVDA website for how to do this.
 
 When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu.
 (Please see further sections about these topics.)
-The dialog box also contains three checkboxes.
-The first lets you control if NVDA should use the capslock as an NVDA modifier key.
+The dialog box also contains a combobox and three checkboxes.
+The combobox lets you select the keyboard layout.
+The first checkbox lets you control if NVDA should use the capslock as an NVDA modifier key.
 The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
 
@@ -966,6 +967,9 @@ The selection indicator is not affected by this option.
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
 Specifying 0 disables displaying of these messages completely.
+
+==== Show Messages Indefinitely ====
+This option allows NVDA messages to be displayed on the braille display indefinitely.
 
 %kc:setting
 ==== Braille Tethered to ====[BrailleTether]
@@ -2224,8 +2228,8 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
-+ Braille control type and state abbreviations +
-In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
++ Braille control type, state and landmark abbreviations +
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
 
 || Abbreviation | Control type |
 | btn | button |
@@ -2238,8 +2242,9 @@ In order to fit as much information as possible on a braille display, The folowi
 | rN | table row number n, e.g. r1, r2. |
 | hN | heading at level n, e.g. h1, h2. |
 | lnk | link |
-| lst | list |
 | vlnk | visited link |
+| lst | list |
+| lmk | landmark |
 | mnu | menu |
 | mnubar | menu bar |
 | rbtn | radio button |
@@ -2260,6 +2265,17 @@ The following state indicators are also defined:
 | ro | displayed when an object (e.g. an editable text field) is read-only |
 | sel | displayed when an object is selected |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
 
 + Advanced Topics +
 

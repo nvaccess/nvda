@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2015 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
 
 import time
 import threading
@@ -605,6 +605,9 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def _handleUpdate(self):
 		"""Handle an update to this buffer.
 		"""
+		if not self.VBufHandle:
+			# #4859: The buffer was unloaded after this method was queued.
+			return
 		braille.handler.handleUpdate(self)
 
 	def getControlFieldForNVDAObject(self, obj):

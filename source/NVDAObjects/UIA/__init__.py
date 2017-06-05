@@ -704,7 +704,11 @@ class UIA(Window):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
-			elif self.UIATextPattern and self.role==controlTypes.ROLE_PANE and self.parent and (isinstance(self.parent,edge.EdgeHTMLRootContainer) or not isinstance(self.parent,edge.EdgeNode)): 
+			elif (self.UIATextPattern and
+				# #6998: Edge normally gives its root node a controlType of pane, but ARIA role="document"  changes the controlType to document
+				self.role in (controlTypes.ROLE_PANE,controlTypes.ROLE_DOCUMENT) and 
+				self.parent and (isinstance(self.parent,edge.EdgeHTMLRootContainer) or not isinstance(self.parent,edge.EdgeNode))
+			): 
 				clsList.append(edge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
 				clsList.append(edge.EdgeList)
