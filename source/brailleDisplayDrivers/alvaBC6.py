@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2011 Optelec B.V. <http://www.optelec.com/>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2009-2017 Optelec B.V. <http://www.optelec.com/>, James Teh <jamie@jantrid.net>, Davy Kager
 
 import braille
 import queueHandler

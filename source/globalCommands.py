@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Davy Kager
 
 import time
 import itertools

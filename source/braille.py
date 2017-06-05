@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Davy Kager
 
 import sys
 import itertools
