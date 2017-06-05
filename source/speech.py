@@ -313,7 +313,11 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
-	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
+	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT) or controlTypes.STATE_EDITABLE in obj.states))
+	# Browse mode document treeInterceptors currently handle announcing text content themselves, thus we should not class these as editable for deciding whether to announce text content here.
+	import browseMode
+	if isEditable and isinstance(obj.treeInterceptor,browseMode.BrowseModeDocumentTreeInterceptor) and obj is obj.treeInterceptor.rootNVDAObject:
+		isEditable=False
 	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
