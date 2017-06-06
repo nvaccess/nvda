@@ -240,12 +240,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			if not valueLen: # value is empty, use placeholder
 				return placeholder
 			# Because fetching the value of the field could result in a large amount of text
-			# we only do it in order to check for space, or newline.
+			# we only do it in order to check for space.
 			# We first compare the length by comparing the offselts, if the length is less than 2 (ie
-			# could hold space or \n)
+			# could hold space)
 			if valueLen < 2:
 				controlFieldText = self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text
-				if not controlFieldText or controlFieldText == ' ' or controlFieldText == '\n':
+				if not controlFieldText or controlFieldText == ' ':
 					return placeholder
 		return None
 
