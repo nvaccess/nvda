@@ -546,7 +546,7 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	COLORREF prevColor = GetPixel(hdc, x, y);
+	COLORREF prevColor = CLR_INVALID; //GetPixel(hdc, x, y);
 	//Call the real function
 	BOOL res;
 	{
@@ -730,7 +730,7 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	COLORREF prevColor = GetPixel(hdc, x, y);
+	COLORREF prevColor = CLR_INVALID; //GetPixel(hdc, x, y);
 	//Call the real function
 	BOOL res;
 	{
