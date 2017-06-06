@@ -458,8 +458,8 @@ class EdgeNode(UIA):
 	def _get__isTextEmpty(self):
 		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
 		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
-		# we were unable to expand the range, it is collapsed
 		if ti.isCollapsed:
+			# we were unable to expand the range, it is collapsed
 			return True
 		# NOTE: we can not check the result of the EdgeTextInfo move implementation to determine if we added
 		# any characters to the range, since it seems to return 1 even when the text property has not changed.
