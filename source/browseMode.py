@@ -687,15 +687,15 @@ qn("annotation", key="a",
 	prevDoc=_("moves to the previous annotation"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous annotation"))
-qn("spellingError", key="p",
+qn("error", key="w",
 	# Translators: Input help message for a quick navigation command in browse mode.
-	nextDoc=_("moves to the next spelling error"),
+	nextDoc=_("moves to the next error"),
 	# Translators: Message presented when the browse mode element is not found.
-	nextError=_("no next spelling error"),
+	nextError=_("no next error"),
 	# Translators: Input help message for a quick navigation command in browse mode.
-	prevDoc=_("moves to the previous spelling error"),
+	prevDoc=_("moves to the previous error"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous spelling error"))
+	prevError=_("no previous error"))
 del qn
 
 class ElementsListDialog(wx.Dialog):

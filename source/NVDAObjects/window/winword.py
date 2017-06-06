@@ -1010,7 +1010,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		elif nodeType in ("table","container"):
 			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
-		elif nodeType=="spellingError":
+		elif nodeType=="error":
 			spellingErrors=SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			grammaticalErrors=GrammaticalErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			return browseMode.mergeQuickNavItemIterators([spellingErrors,grammaticalErrors],direction)
@@ -1717,5 +1717,5 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("annotation", _("&Annotations")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("spellingError", _("S&pelling/grammar errors")),
+		("error", _("&errors")),
 	)
