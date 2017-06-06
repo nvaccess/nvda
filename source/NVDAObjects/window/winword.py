@@ -387,6 +387,19 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 	def rangeFromCollectionItem(self,item):
 		return item
 
+	@property
+	def label(self):
+		return _(u"spelling: {text}").format(text=super(WordDocumentSpellingErrorQuickNavItem,self).label)
+
+class WordDocumentGrammaticalErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
+
+	def rangeFromCollectionItem(self,item):
+		return item
+
+	@property
+	def label(self):
+		return _(u"grammar: {text}").format(text=super(WordDocumentGrammaticalErrorQuickNavItem,self).label)
+
 class WinWordCollectionQuicknavIterator(object):
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
@@ -487,7 +500,7 @@ class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIt
 		return rangeObj.spellingErrors
 
 class GrammaticalErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
-	quickNavItemClass=WordDocumentSpellingErrorQuickNavItem
+	quickNavItemClass=WordDocumentGrammaticalErrorQuickNavItem
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.grammaticalErrors
 
