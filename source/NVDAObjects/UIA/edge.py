@@ -432,6 +432,9 @@ class EdgeNode(UIA):
 				pass
 		return super(EdgeNode,self).description
 
+	def _get_ariaProperties(self):
+		return splitUIAElementAttribs(self.UIAElement.currentAriaProperties)
+
 	# RegEx to get the value for the aria-current property. This will be looking for a the value of 'current'
 	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
 	# character and before the ';' character.
@@ -449,8 +452,7 @@ class EdgeNode(UIA):
 		return False
 
 	def _get_placeholder(self):
-		ariaProperties=splitUIAElementAttribs(self.UIAElement.currentAriaProperties)
-		ariaPlaceholder = ariaProperties.get('placeholder', None)
+		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
 		return ariaPlaceholder
 
 	def _get__isTextEmpty(self):
