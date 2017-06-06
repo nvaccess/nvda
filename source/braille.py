@@ -380,22 +380,22 @@ negativeStateLabels = {
 
 landmarkLabels = {
 	# Translators: Displayed in braille for the banner landmark, normally found on web pages.
-	"banner": _("bnnr"),
+	"banner": pgettext("braille landmark abbreviation", "bnnr"),
 	# Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-	"complementary": _("cmpl"),
+	"complementary": pgettext("braille landmark abbreviation", "cmpl"),
 	# Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-	"contentinfo": _("cinf"),
+	"contentinfo": pgettext("braille landmark abbreviation", "cinf"),
 	# Translators: Displayed in braille for the main landmark, normally found on web pages.
-	"main": _("main"),
+	"main": pgettext("braille landmark abbreviation", "main"),
 	# Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-	"navigation": _("navi"),
+	"navigation": pgettext("braille landmark abbreviation", "navi"),
 	# Translators: Displayed in braille for the search landmark, normally found on web pages.
-	"search": _("srch"),
+	"search": pgettext("braille landmark abbreviation", "srch"),
 	# Translators: Displayed in braille for the form landmark, normally found on web pages.
-	"form": _("form"),
+	"form": pgettext("braille landmark abbreviation", "form"),
 	# Strictly speaking, region isn't a landmark, but it is very similar.
 	# Translators: Displayed in braille for a significant region, normally found on web pages.
-	"region": _("rgn"),
+	"region": pgettext("braille landmark abbreviation", "rgn"),
 }
 
 #: Cursor shapes
