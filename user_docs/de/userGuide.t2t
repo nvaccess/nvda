@@ -1,4 +1,4 @@
-﻿NVDA  NVDA_VERSION Benutzerhandbuch
+﻿NVDA NVDA_VERSION Benutzerhandbuch
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -455,7 +455,7 @@ Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, 
 Manchmal müssen sie in diesen Dokumenten mit Steuerelementen interagieren.
 Dies ist zum Beispiel der Fall, wenn Sie Text in ein Eingabefeld schreiben wollen oder wenn Sie mit Hilfe der Pfeiltasten eine Liste oder ein Flash-Objekt bedienen wollen.
 Um mit diesen Elementen zu arbeiten, aktivieren Sie den Fokusmodus, in welchem Alle Tasten an das Element weitergegeben werden.
-Wenn Sie sich im Lesemodus befinden, wird NVDA standardmäßig automatisch den Fokusmodus aktivieren, sobald Sie mit Tab auf ein Element springen, bzw. darauf klicken, welches den Fokusmodus benötigt.
+Wenn Sie sich im Lesemodus befinden, wird NVDA standardmäßig automatisch den Fokusmodus aktivieren, sobald Sie mit Tab auf ein Element springen bzw. darauf klicken, welches den Fokusmodus benötigt.
 Dem entsprechend wechselt NVDA automatisch in den Lesemodus, wenn sie auf ein Element klicken bzw. mit Tab darauf springen, welches den Fokusmodus nicht benötigt.
 Wenn ein Element den Fokusmodus benötigt, können sie auch die Leertaste bzw. Eingabetaste drücken, um den Fokusmodus zu aktivieren.
 Mit der Escape-Taste wechseln sie wieder zurück in den Lesemodus.
@@ -715,10 +715,10 @@ Die Linknavigation beinhaltet auch Fußnoten.
 +++ Markieren von Text +++
 (noch nicht übersetzt) Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
 To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
-+%kc:beginInclude
-+Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
-+%kc:endInclude
-+If you do this with no text selected, options will be shown for the word at the cursor.
+%kc:beginInclude
+Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
+%kc:endInclude
+If you do this with no text selected, options will be shown for the word at the cursor.
 
 +++ Notizen +++
 Sie können eine Notiz zu einem Wort oder einer ganzen Passage hinzufügen.
@@ -1285,7 +1285,7 @@ Standardmäßig erkennt NVDA die Formatierung an der Position des System-Cursors
 
 Schalten Sie diese Option nur dann ein, wenn beim Lesen in einem WordPad-Dokument die Ansage notwendig ist.
 
-==== Ausgabe von Zeileneinrückungen =====[lineIndentationOptions]
+==== Ausgabe von Zeileneinrückungen ====[lineIndentationOptions]
 Mit dieser Option legen Sie fest, wie Zeileneinrückungen durch NVDA wiedergegeben werden sollen.
 Das Kombinationsfeld enthält vier Einträge:
 
@@ -1331,7 +1331,7 @@ Ein regulärer Ausdruck ist ein Muster, welches spezielle Sümbole enthält. Die
 Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen hierzu finden Sie im [Kapitel über reguläre ausdrücke in der Dokumentation zu python 2.7 (in englisch) http://docs.python.org/library/re.html]
 
 +++ Der Dialog "Aussprache von Symbolen und Satzzeichen- " +++[SymbolPronunciation]
-In diesem Dialog können Sie die Aussprache von Satz-, bzw. Sonderzeichen verändern und festlegen, ab welcher Symbolebene  dieses angesagt werden soll. 
+In diesem Dialog können Sie die Aussprache von Satz- und Sonderzeichen verändern und festlegen, ab welcher Symbolebene  dieses angesagt werden soll. 
 
 Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.
 Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den  [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der NVDA-Sprache verwendet.
@@ -2294,7 +2294,7 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | -r | --replace | Beendet eine laufende Instanz von NVDA und startet eine neue. |
 | -k | --check-running | Meldet, ob NVDA bereits ausgeführt wird. Falls ja, wird ein Fehlercode von 0 zurückgegeben, anderenfalls wird 1 zurückgegeben. |
 | -f Protokolldateiname | --log-file=Protokolldateiname | Legt die Datei fest, in der NVDA sein Protokoll schreiben soll. |
-| -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Leggt die Protokollierungsstufe fest (10=Fehlerkorrektur, 20, Warnung 30, Fehler 40, Kritisch 50), Standard ist 20. |
+| -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Legt die Protokollierungsstufe fest (10=Fehlerkorrektur, 20, Warnung 30, Fehler 40, Kritisch 50), Standard ist 20. |
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gigt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Sicherer Modus, schaltet die Python-Konsole ab. |
@@ -2371,7 +2371,7 @@ Um die Ausgabe via Braillezeile zu erhalten, müssen folgende Vorraussetzungen g
 
 
 +++ Klicken mit Hilfe der Tastaturmaus von Windows +++
-Generell gilt, dass Sie bei aktivierter Tastaturmaus die Tasten 5 und Plus (+) des Nummernblocks verwenden können, um eine bestimmte Maustaste einmal, bzw. doppelt auszulösen. Um festzulegen, welche Maustaste(n) Sie auslösen, verwenden Sie die folgenden Tasten:
+Generell gilt, dass Sie bei aktivierter Tastaturmaus die Tasten 5 und Plus (+) des Nummernblocks verwenden können, um eine bestimmte Maustaste einmal bzw. doppelt auszulösen. Um festzulegen, welche Maustaste(n) Sie auslösen, verwenden Sie die folgenden Tasten:
 - Drücken Sie NUM Schrägstrich, um mit den Tasten 5 bzw. Plus die linke Maustaste zu simulieren.
 - Drücken Sie NUM Stern, um mit den Tasten 5 bzw. Plus beide Maustasten zu simulieren.
 - Drücken Sie NUM Minus, um mit den Tasten 5 bzw. Plus die rechte Maustaste zu simulieren.

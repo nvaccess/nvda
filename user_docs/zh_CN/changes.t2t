@@ -3,6 +3,65 @@
 
 %!includeconf: ../changes.t2tconf
 
+== 2017.2 ==
+
+此版本的亮点包括在Windows 10创作者更新中完全支持音频闪避;修复浏览模式下的几个选择问题，包括全选的问题;Microsoft Edge支持的重大改进;和web支持上的改进，例如标记为当前（使用aria-current）的元素的提示。
+
+== 新特性 ==
+- 现在可以使用NVDA + f在Microsoft Excel中报告单元格边框信息。 (#3044)
+- 在网络浏览器中，NVDA现在可提示元素何时被标记为当前（其实就是使用aria-current属性）。 (#6358)
+- 支持 Microsoft Edge 的自动语言切换。 (#6852)
+- 增加了对Windows 10 Enterprise LTSB（长期服务分支）和服务器版的 Windows 计算器的支持。 (#6914)
+- 当快速按下读取当前行的命令三次时，将使用字符描述信息拼读该行。 (#6893)
+- 新语言：缅甸语
+- Unicode 编码的 向上和向下箭头以及小部分符号现在可正确的朗读。 (#3805)
+
+
+== 更改 ==
+- 当使用简易浏览模式浏览应用程序中的 UI Automation 内容时，更多的无关对象被忽略了，使导航变得更加容易。 (#6948, #6950)
+
+
+== 错误修复 ==
+- 在浏览模式下，现在可以激活网页菜单项。 (#6735)
+- 在配置文件“确认删除”对话框处于活动状态时，按下“esc”键现在将关闭该对话框。 (#6851)
+- 修复Mozilla Firefox和其他启用了多进程功能的其他Gecko应用程序中的一些崩溃。 (#6885)
+- 当文字绘制在透明背景下，使用屏幕浏览时背景颜色的颜色读取变得更加准确了。 (#6467)
+- 改进了对Internet Explorer 11网页上提供的控件说明的支持（具体来说，支持iframe中使用的 aria-describedby 属性，并提供多个ID）。 (#5784)
+- 在 Windows 10 创作者更新中，NVDA 的音频闪避再次与以前的 Windows 版本拥有相同的支持（即包括“发出声音及语音时闪避”、“总是闪避”和“不闪避”几个模式）。
+- NVDA 将不会因为当前的UIA 元素没有指定快捷键而造成浏览或朗读失败。(#6779)
+- 两个连续空格将不会被添加到当前(UIA) 控件的快捷键描述中去。(#6790)
+- HIMS 显示器上的某些键组合（例如space + dot4）不再间歇性地操作失败。 (#3157)
+- 解决了在使用英语以外的某些语言的系统上打开串行端口时某些情况下产生的连接盲文显示器失败的问题。 (#6845)
+- 减少Windows关闭时配置文件损坏的可能性。在更换实际的配置文件之前，配置文件将被写入到临时文件中去。 (#3165)
+- 当快速按下读取当前行命令两次来拼写行内容时，将可使用正确的语言进行字符拼读。 (#6726)
+- 在Windows 10 创作者更新中，Microsoft Edge中的行浏览速度提高了三倍 (#6994)
+- 在windows 10 创作者更新中，聚焦到 Microsoft Edge 浏览器的文档时，NVDA 将不再提示“Web运行时分组”。 (#6948)
+- 支持所有现有版本的 SecureCRT。 (#6302)
+- Adobe Acrobat Reader 不再在读取某些 PDF 文档（特别是那些包含空的ActualText属性的文档）时崩溃。 (#7021, #7034)
+- 在 Microsoft Edge 中使用浏览模式时，可交互式表格(标有ARIA grids属性的表格)在使用 t 和 shift+t跳转时不会再被忽略。 (#6977)
+- 在浏览模式中，使用 shift+home键选择到行首时，原本处于系统焦点后面的内容现在将可正常的取消选中。 (#5746)
+- 在浏览模式中， 当系统焦点不再文本开头时，修复无法使用全选(control+a) 命令进行全选的问题。 (#6909)
+- 修复其他在浏览模式下进行选择的罕见问题。 (#7131)
+
+
+== Changes for Developers ==
+- Commandline arguments are now processed with Python's argparse module, rather than optparse. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+- core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
+- The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
+ - Subclasses no longer need to normalize identifiers before returning them from this property.
+ - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
+- The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+- Removed some deprecated code:
+ - `speech.REASON_*` constants: `controlTypes.REASON_*` should be used instead. (#6846)
+ - `i18nName` for synth settings: `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`: `config.conf.save` should be used instead. (#6846, #667)
+- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- There is now a unit testing framework for NVDA. (#7026)
+ - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
+ - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
+
 
 = 2016.4 =
 此版本的亮点包括对Microsoft Edge的改进支持、浏览模式在Windows 10邮件应用程序的增强支持和NVDA的对话框布局的重大改进。
