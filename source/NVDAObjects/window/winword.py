@@ -391,15 +391,6 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 	def label(self):
 		return _(u"spelling: {text}").format(text=super(WordDocumentSpellingErrorQuickNavItem,self).label)
 
-class WordDocumentGrammaticalErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
-
-	def rangeFromCollectionItem(self,item):
-		return item
-
-	@property
-	def label(self):
-		return _(u"grammar: {text}").format(text=super(WordDocumentGrammaticalErrorQuickNavItem,self).label)
-
 class WinWordCollectionQuicknavIterator(object):
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
@@ -498,11 +489,6 @@ class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIt
 	quickNavItemClass=WordDocumentSpellingErrorQuickNavItem
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.spellingErrors
-
-class GrammaticalErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
-	quickNavItemClass=WordDocumentGrammaticalErrorQuickNavItem
-	def collectionFromRange(self,rangeObj):
-		return rangeObj.grammaticalErrors
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
@@ -1024,9 +1010,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		elif nodeType in ("table","container"):
 			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="error":
-			spellingErrors=SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
-			grammaticalErrors=GrammaticalErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
-			return browseMode.mergeQuickNavItemIterators([spellingErrors,grammaticalErrors],direction)
+			return SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
 			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
