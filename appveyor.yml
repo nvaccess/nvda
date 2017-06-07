@@ -14,7 +14,7 @@ environment:
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
  mozillaSymsAuthToken:
-  secure: Dz24ukUM3Ho0soTDwJEYaw0fNY3yzfVp3Vf+y8I+Uh4wiSYibWJxOANacceGmfIU
+  secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
 
 init:
@@ -56,9 +56,11 @@ install:
 
 build_script:
  - ps: |
-     $sconsArgs = "launcher version=$env:version"
+     $sconsOutTargets = "launcher"
+     $sconsArgs = "version=$env:version"
      if ($env:release) {
-      $sconsArgs += " changes userGuide developerGuide release=1"
+      $sconsOutTargets += " changes userGuide developerGuide"
+      $sconsArgs += " release=1"
      }
      if ($env:versionType) {
       $sconsArgs += " updateVersionType=$env:versionType"
@@ -68,9 +70,14 @@ build_script:
      $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
      # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
      # It's possible to work around this, but the workarounds have annoying side effects.
+     Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
- - py scons.py %sconsArgs%
+ - py scons.py source %sconsArgs%
+ # We don't need launcher to run tests, so run the tests before launcher.
+ - py scons.py tests %sconsArgs%
+ - 'echo scons output targets: %sconsOutTargets%'
+ - py scons.py %sconsOutTargets% %sconsArgs%
  # Build symbol store.
  - ps: |
      foreach ($syms in

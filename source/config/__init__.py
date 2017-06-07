@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
-#config\__init__.py
+#config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -25,42 +25,10 @@ from logging import DEBUG
 import shlobj
 import baseObject
 import easeOfAccess
+from fileUtils import FaultTolerantFile
 import winKernel
 import profileUpgrader
 from .configSpec import confspec
-
-def validateConfig(configObj,validator,validationResult=None,keyList=None):
-	"""
-	@deprecated: Add-ons which need this should provide their own implementation.
-	"""
-	import warnings
-	warnings.warn("config.validateConfig deprecated. Callers should provide their own implementation.",
-		DeprecationWarning, 2)
-	if validationResult is None:
-		validationResult=configObj.validate(validator,preserve_errors=True)
-	if validationResult is True:
-		return None #No errors
-	if validationResult is False:
-		return "Badly formed configuration file"
-	errorStrings=[]
-	for k,v in validationResult.iteritems():
-		if v is True:
-			continue
-		newKeyList=list(keyList) if keyList is not None else []
-		newKeyList.append(k)
-		if isinstance(v,dict):
-			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
-		else:
-			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
-			defaultValue=validator.get_default_value(configObj.configspec[k])
-			configObj[k]=defaultValue
-			if k not in configObj.defaults:
-				configObj.defaults.append(k)
-			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
-	return errorStrings
-
-#: @deprecated: Use C{conf.validator} instead.
-val = Validator()
 
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
@@ -69,15 +37,6 @@ conf = None
 def initialize():
 	global conf
 	conf = ConfigManager()
-
-def save():
-	"""
-	@deprecated: Use C{conf.save} instead.
-	"""
-	import warnings
-	warnings.warn("config.save deprecated. Use config.conf.save instead.",
-		DeprecationWarning, 2)
-	conf.save()
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
@@ -102,7 +61,6 @@ def isInstalledCopy():
 		return os.stat(instDir)==os.stat(os.getcwdu()) 
 	except WindowsError:
 		return False
-
 
 def getInstalledUserConfigPath():
 	try:
@@ -335,7 +293,7 @@ class ConfigManager(object):
 		#: Whether profile triggers are enabled (read-only).
 		#: @type: bool
 		self.profileTriggersEnabled = True
-		self.validator = val
+		self.validator = Validator()
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
 		self._pendingHandleProfileSwitch = False
@@ -498,10 +456,12 @@ class ConfigManager(object):
 			# Never save the config if running securely.
 			return
 		try:
-			self.profiles[0].write()
+			with FaultTolerantFile(self.profiles[0].filename) as f:
+				self.profiles[0].write(f)
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
-				self._profileCache[name].write()
+				with FaultTolerantFile(self._profileCache[name].filename) as f:
+					self._profileCache[name].write(f)
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except Exception as e:

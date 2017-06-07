@@ -3,6 +3,57 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+
+== Novas Características ==
+- Agora pódese anunciar a información do borde das celdas en Microsoft Excel usando `NVDA+f`. (#3044)
+- Engadido o soporte para atributos aria-current. (#6358)
+- Sopórtase o cambio autumático de linguas no Microsoft Edge. (#6852)
+- Sopórtase a Calculadora de Windows no Windows 10 Enterprise LTSB (Long-Term Servicing Branch) e Server. (#6914)
+- Ao se realizar a orde ler liña actual tres veces rápidamente deletréase a liña con descripcións de caracteres. (#6893)
+
+
+== Cambios ==
+- Ao navegar coa revisión simple en aplicacións que usen UI Automation, ignóranse máis contedores sen contido facendo máis sinxela a navegación. (#6948, #6950) 
+
+
+== Correción de Fallos ==
+- Os elementos de menú en páxinas Web (as caixas de verificación e os botóns de opción dos elementos de menús) agora poden activarse mentres se estea en modo exploración. (#6735)
+- Agora tradúcese o anunciado de nomes de follas en Excel. (#6848)
+- Premer ESC mentres o indicativo "confirmar borrado" do perfil de configuración está activo agora pecha o diálogo. (#6851)
+- Correxidos algúns colgues en Mozilla Firefox e outras aplicacións Gecko onde está habilitada a característica multi-proceso. (#6885)
+- O anunciado da cor de fondo na revisión de pantalla agora é máis preciso cando o texto se dibuxou cun fondo trasparente. (#6467) 
+- Mellorado o soporte para aria-describedby en Internet Explorer 11, incluindo o soporte dentro de iframes e cando se proporcionan varios IDs. (#5784)
+- Na actualización Windows Creators, a atenuación de audio do NVDA funciona de novo como en anteriores versións de Windows (ex.: Atenuar ca voz e sons, atenuar sempre, e non atenuar están dispoñibles todas). (#6933)
+- NVDA xa non fallará ao navegar ou ao anunciar certos controis (UIA) onde non se definíu un atallo de teclado. (#6779)
+- Xa non se engaden dous espazos valdeiros na información de atallos de teclado para certos controis (UIA). (#6790)
+- Certas combinacións de teclas nas pantallas HIMS (ex.: espazo+ponto4) xa non fallan intermittentemente. (#3157)
+- Correxido un problema ao se abrir un porto serie en sistemas que usan certas linguas distintas ao inglés que causaban que fallara a conexión ás pantallas braille nalgúns casos. (#6845)
+- Redúcese a posibilidade de que o ficheiro de configuración se corrompa ao se apagar o Windows. Os ficheiros de configuración agora escrébense nun ficheiro temporal antes de reemplazar o actual. (#3165)
+- Ao se realizar a orde ler liña actual dúas veces rápidamente para deletreala, agora úsase a lingua apropriada para os caracteres deletreados. (#6726)
+- Navegar por liñas no Microsoft Edge agora é ata tres veces máis rápido na Actualización Windows 10 Creators. (#6994)
+- NVDA xa non anuncia "Web Runtime grouping" ao se enfocar documentos no Microsoft Edge na Actualización Windows 10 Creators (#6948)
+
+
+== Cambios para Desenvolvedores ==
+- Os argumentos de liña de ordes agora procésanse co módulo argparser de Python, en lugar de co optparser. Esto permite a certas opcións coma -r e -q manexarse exclusivamente. (#6865)
+- core.callLater agora pon en cola a devolución de chamada á cola principal do NVDA despois do retraso dado, en lugar de executala directamente despertando ao núcleo. Esto detén posibles colgues debidos a que o núcleo se vaia a dormir accidentalmente despois de procesar unha chamada, en medio dunha chamada modal coma o amosado dunha caixa de mensaxe. (#6797) 
+- A propiedade InputGesture.identifiers cambiouse tal que xa non se normaliza. (#6945)
+ - As subclases xa non necesitan normalizar identificadores antes de devolvelos dende esta propiedade.
+ - Se queres normalizar identificadores, agora hai unha propiedade InputGesture.normalizedIdentifiers a que normaliza os identificadores devoltos pola propiedade identifiers.
+- A propiedade InputGesture.logIdentifier agora está obsoleta. As chamadas deberían utilizar InputGesture.identifiers[0] no seu lugar. (#6945)
+- Borrouse código obsoleto:
+ - As constantes `speech.REASON_*`, deberían usarse a cambio `controlTypes.REASON_*`. (#6846)
+ - `i18nName` para opcións de sintetizador, `displayName` e `displayNameWithAccelerator` deberían usarse a cambio. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`. (#6846)
+- Aa listaxe de compretado no menú de contexto autocompretar da Consola Python xa non amosa calquera ruta de obxecto que leve ata o símbolo final que estea a ser compretado. (#7023)
+- Agora hai unha unidade de proba do framework para o NVDA. (#7026)
+ - A unidade de proba e a infraestructura atópanse no directorio tests/unit. Consulta a cadea de documentación no ficheiro tests\unit\__init__.py para detalles.
+ - Podes executar probas utilizando "scons tests". Consulta a sección "Running Tests" do readme.md para detalles.
+ - Se estás a enviar un pull request para o NVDA, deberías executar primeiro as probas e asegurarte de que se pasen.
+
+
 = 2017.1 =
 O subliñable desta versión inclúe o anunciado de secións e columnas de texto no Microsoft Word; o Soporte para lectura, navegación e anotación de libros no Kindle para PC; e o soporte mellorado para o Microsoft Edge.
 

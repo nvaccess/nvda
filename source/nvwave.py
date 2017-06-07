@@ -1,6 +1,6 @@
 #nvwave.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ import threading
 from ctypes import *
 from ctypes.wintypes import *
 import time
+import atexit
 import wx
 import winKernel
 import wave
@@ -345,3 +346,11 @@ def playWaveFile(fileName, async=True):
 		fileWavePlayerThread.start()
 	else:
 		fileWavePlayer.idle()
+
+# When exiting, ensure fileWavePlayer is deleted before modules get cleaned up.
+# Otherwise, WavePlayer.__del__ will fail with an exception.
+@atexit.register
+def _cleanup():
+	global fileWavePlayer, fileWavePlayerThread
+	fileWavePlayer = None
+	fileWavePlayerThread = None

@@ -23,7 +23,7 @@ Zu den wichtigsten Funktionen gehören:
 - Unterstützung für zahlreiche Braillezeilen inklusive Unterstützung für die Eingabe von Computerbraille für Braillezeilen, die eine Braille-Tastatur besitzen.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung durch Sprachausgaben.
-- Übersetzt in 48 Sprachen.
+- Übersetzt in 50 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -32,7 +32,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 48 Sprachen übersetzt, darunter sind neben Englisch: Afrikaans, Albanisch, Amharisch, Arabisch, Argonesisch, brasilianisches Portugiesisch, Bulgarisch, Catalan, Kolumbianisches Spanisch, Kroatisch, Tschechisch, Dänisch, Niederländisch, Farsi, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Koreanisch, Litauisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Punjabi, Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamil, Thai, traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 50 Sprachen übersetzt, darunter sind neben Englisch: Afrikaans, Albanisch, Amharisch, Arabisch, Argonesisch, brasilianisches Portugiesisch, Bulgarisch, birmanisch, Katalanisch, Kolumbianisches Spanisch, Kroatisch, Tschechisch, Dänisch, Niederländisch, Persisch, Finnisch, Französisch, Galicisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Koreanisch, Litauisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Punjabi, Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamil, Thai, traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
@@ -286,7 +286,7 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 %kc:beginInclude
 || Name | Desktop-Tastenkombination | Laptop-Tastenkombination | Beschreibung |
 | Alles ansagen | NVDA+Pfeil nach unten | NVDA+A | Liest von der aktuellen Position des Systemcursors bis zum Textende und bewegt dabei den System-Cursor mit. |
-| Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der Systemcursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert. |
+| Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der Systemcursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert, wird die Tastenkombination 3-mal gedrückt, wird die Zeile phonetisch buchstabiert. |
 | Markierten Text lesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | liest den markierten Text, sofern vorhanden. |
 | nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Bewegt die Schreibmarke zum nächsten Satz und gibt diesen aus. (nur in Microsoft Word und Outlook unterstützt) |
 | vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Bewegt die Schreibmarke zum vorherigen Satz und gibt diesen aus. (nur in Microsoft Word und Outlook unterstützt) |
@@ -700,7 +700,7 @@ Innerhalb einer Konversation:
 
 ++ Kindle für PC ++
 NVDA unterstützt das Lesen von und das Navigieren in Büchern in Kindle für PC.
-Dies ist nur verfügbar, wenn die Bücher "Enhanced Typesetting" unterstützen.Dies können Sie auf der Detailseite des Buches überprüfen.
+Diese Funktionalität ist nur verfügbar, wenn die Bücher mit der Unterstützung für Screen Reader herausgegeben wurden. Dies können Sie auf der Detailseite des Buches überprüfen.
 
 Der Lesemodus wird beim Lesen von Büchern verwendet.
 Er wird automatisch aktiviert, wenn sie ein Buch öffnen.
@@ -1263,6 +1263,7 @@ Konfigurieren können Sie die Meldungen von:
  - Tabellen
  - Spalten- und Reihenüberschriften
  - Zellkoordinaten
+ - Zellrahmen [(aus, Formatierung, Farben und Formatierung)]
 - Elemente
  - Überschriften
  - Links

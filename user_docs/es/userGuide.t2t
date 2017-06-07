@@ -23,7 +23,7 @@ Lo más reseñable incluye:
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 48 idiomas
+- Traducido a 50 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -32,7 +32,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 48 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 50 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -286,7 +286,7 @@ NVDA proporciona las siguientes teclas de órdenes en relación al cursor del si
 %kc:beginInclude
 || Nombre | Tecla escritorio | Tecla portátil | Descripción |
 | Leer todo | NVDA+Flecha Abajo | NVDA+a | Comienza la lectura desde la posición actual del cursor del sistema, moviéndolo según se desplaza |
-| Leer línea actual | NVDA+Flecha Arriba | NVDA+l | Lee la línea donde esté situado actualmente el cursor del sistema. Pulsando dos veces deletrea la línea. |
+| Leer línea actual | NVDA+Flecha Arriba | NVDA+l | Lee la línea donde esté situado actualmente el cursor del sistema. Pulsando dos veces deletrea la línea. Pulsando tres veces deletrea la línea utilizando descripciones de caracteres. |
 | Leer la selección de texto actual | NVDA+Shift+Flecha Arriba | NVDA+shift+s | Lee cualquier texto seleccionado actualmente |
 | frase siguiente | alt+flecha abajo | alt+flecha abajo | Mueve el cursor a la frase siguiente y la anuncia. (sólo se soporta en Microsoft Word y Outlook) |
 | frase anterior | alt+flecha arriba | alt+flecha arriba | Mueve el cursor a la frase anterior y la anuncia. (sólo se soporta en Microsoft Word y Outlook) |
@@ -700,7 +700,7 @@ Cuando se está en una conversación:
 
 ++ Kindle para PC ++
 NVDA soporta la lectura y la navegación de libros en Amazon Kindle para PC.
-Esta funcionalidad sólo está disponible en libros de Kindle que soporten "Enhanced Typesetting", lo cual puedes verificar en la página de detalles para el libro.
+Esta funcionalidad sólo está disponible en libros de Kindle designados con "Lector de Pantalla: Soportado" lo cual puedes verificar en la página de detalles para el libro.
 
 Se utiliza el modo exploración para leer libros.
 Se habilita automáticamente al abrir un libro o al enfocar el área del libro.
@@ -1263,6 +1263,7 @@ Puedes configurar el anunciado de:
  - Tablas
  - Encabezados de fila/columna
  - Coordenadas de celda
+ - Bordes de celdas [(desactivado, Estilos, Ambos Colores y Estilos)
 - Elementos
  - Encabezados
  - Enlaces

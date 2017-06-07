@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-03 00:10+1000\n"
-"PO-Revision-Date: 2017-02-05 16:45+0200\n"
+"POT-Creation-Date: 2017-04-21 00:10+1000\n"
+"PO-Revision-Date: 2017-04-19 23:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -2316,6 +2316,30 @@ msgstr "غير محدد"
 msgid "not checked"
 msgstr "غير محدد"
 
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "حالي"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "الصفحة الحالية"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "الخطوة الحالية"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "الموقع الحالي"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "التاريخ الحالي"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "الوقت الحالي"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2489,10 +2513,11 @@ msgstr "الانتقال بين تشغيل وتعطيل وضع الصمت للت
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
 "قراءة السطر الواقع تحت مؤشر التطبيق. بالضغط على هذا المفتاح مرتين يقوم "
-"بتهجئته"
+"بتهجئته وبالضغط عليه ثلاث مرات يقوم بتهجئته تهجئة صوتية"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4321,6 +4346,10 @@ msgstr "أسلوب %s"
 msgid "default style"
 msgstr "أسلوب تلقائي"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "لا يوجد برواز"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6074,8 +6103,8 @@ msgid "Error activating profile."
 msgstr "خلل في تنشيط الوضع"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "هل أنت متأكد من حذف الوضعالحالي؟"
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "سيحذف هذا الوضع للأبد. لا يمكنك التراجع."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6948,6 +6977,8 @@ msgid "Line &indentation reporting:"
 msgstr "الإعلان عن إزاحة الس&طر:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "تعطيل"
 
@@ -6998,6 +7029,21 @@ msgstr "رؤو&س الأعمدة/الصفوف"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "مرا&جع الخلايا"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "أساليب"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "كل من الألوان والأساليب"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "براويز الخلايا: "
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7547,6 +7593,10 @@ msgstr ""
 "بالضغط عليه مرة واحدة سيقوم بتعيين الخلية المحددة كأول رأس صف للخلايا الأسفل "
 "منها والتي على يمينها في هذه المنطقة. بالضغط عليه مرتين سيلغي هذا الإعداد."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+msgid "Sheet {0}, {1}"
+msgstr "ورقة العمل {0}, {1}"
+
 msgid "Input Message is {title}: {message}"
 msgstr "{title}: الرسالة: {message}"
 
@@ -7568,6 +7618,122 @@ msgstr "تحرير تعليق خلية {address}"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} إلى {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "الحافة العليا"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "الحافة السفلى"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "حافة يسرى"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "حافة يمنى"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "خط مضلع أيمن علوي"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "خط مضلع سفلي أيمن"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "براويز أفقية عدا الخارجي"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "البراويز الرأسية عدا البرواز الخارجي"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "مستمر"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "متقطع"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "شرطة نقطة"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "شرطة نقطة نقطة"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "منقط"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "مزدوج"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "نقطة شرطة منحدرة"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "شعري"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "رفيع"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "متوسط"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "كثيف"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "متوسط شرطة نقطة نقطة"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "متوسطة شرطة نقطة"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "متوسط متقطع"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} surrounding border"
+msgstr "برواز محيط {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} top and bottom edges"
+msgstr "حواف سفلى وعليا {desc} "
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} left and right edges"
+msgstr "حواف يسرى ويمنى {desc} "
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "خطوط مضلعة عليا يمنى ويسرى سفلى {desc} "
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8539,3 +8705,6 @@ msgstr "سلسلة الأسطر HIMS Braille Sense/Braille EDGE/Smart Beetle "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "هل أنت متأكد من حذف الوضعالحالي؟"

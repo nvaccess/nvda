@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2016 NV Access Limited, Babbage B.V.
+#Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -23,6 +23,7 @@ import api
 import speech
 import characterProcessing
 import config
+from fileUtils import FaultTolerantFile
 import watchdog
 from logHandler import log
 import globalVars
@@ -65,37 +66,49 @@ class InputGesture(baseObject.AutoPropertyObject):
 
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
-		These identifiers will be looked up in order until a match is found.
+		These identifiers will be normalized and looked up in order until a match is found.
 		A single identifier should take the form: C{source:id}
 		where C{source} is a few characters representing the source of this gesture
 		and C{id} is the specific gesture.
-		If C{id} consists of multiple items with indeterminate order,
-		they should be separated by a + sign and they should be in Python set order.
-		Also, the entire identifier should be in lower case.
-		An example identifier is: C{kb(desktop):nvda+1}
+		An example identifier is: C{kb(desktop):NVDA+1}
+
+		This property should not perform normalization itself.
+		However, please note the following regarding normalization.
+		If C{id} contains multiple chunks separated by a + sign, they are considered to be ordered arbitrarily
+		and may be reordered when normalized.
+		Normalization also ensures that the entire identifier is lower case.
+		For example, NVDA+control+f1 and control+nvda+f1 will match when normalized.
+		See L{normalizeGestureIdentifier} for more details.
+
 		Subclasses must implement this method.
 		@return: One or more identifiers which uniquely identify this gesture.
-		@rtype: list or tuple of str
+		@rtype: list or tuple of basestring
 		"""
 		raise NotImplementedError
 
+	def _get_normalizedIdentifiers(self):
+		"""The normalized identifier(s) for this gesture.
+		This just normalizes the identifiers returned in L{identifiers}.
+		These normalized identifiers can be directly looked up in input gesture maps.
+		Subclasses should not override this method.
+		@return: One or more normalized identifiers which uniquely identify this gesture.
+		@rtype: list of basestring
+		"""
+		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
+
 	def _get_logIdentifier(self):
-		"""A single identifier which will be logged for this gesture.
-		This identifier should be usable in input gesture maps, but should be as readable as possible to the user.
-		For example, it might sort key names in a particular order
-		and it might contain mixed case.
-		This is in contrast to L{identifiers}, which must be normalized.
-		The base implementation returns the first identifier from L{identifiers}.
+		"""@deprecated: Use L{InputGesture.identifiers}[0] instead.
 		"""
 		return self.identifiers[0]
 
 	def _get_displayName(self):
 		"""The name of this gesture as presented to the user.
-		Subclasses must implement this method.
+		The base implementation calls L{getDisplayTextForIdentifier} for the first identifier.
+		Subclasses need not override this unless they wish to provide a more optimal implementation.
 		@return: The display name.
 		@rtype: str
 		"""
-		return self.getDisplayTextForIdentifier(self.identifiers[0])[1]
+		return self.getDisplayTextForIdentifier(self.normalizedIdentifiers[0])[1]
 
 	#: Whether this gesture should be reported when reporting of command gestures is enabled.
 	#: @type: bool
@@ -360,7 +373,8 @@ class GlobalGestureMap(object):
 					else:
 						outSect[script] = [outVal, gesture]
 
-		out.write()
+		with FaultTolerantFile(out.filename) as f:
+			out.write(f)
 
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
@@ -421,7 +435,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
-			log.io("Input: %s" % gesture.logIdentifier)
+			log.io("Input: %s" % gesture.identifiers[0])
 
 		if self._captureFunc:
 			try:
@@ -472,7 +486,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
-		logMsg = "Input help: gesture %s"%gesture.logIdentifier
+		logMsg = "Input help: gesture %s"%gesture.identifiers[0]
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
 			logMsg+=", bound to script %s" % scriptName
@@ -684,17 +698,19 @@ class AllGesturesScriptInfo(object):
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
-	Any items separated by a + sign after the source are considered to be of indeterminate order
-	and are reordered into Python set ordering.
-	Then the entire identifier is converted to lower case.
+	First, the entire identifier is converted to lower case.
+	Then, any items separated by a + sign after the source prefix are considered to be of indeterminate order
+	and are sorted by character.
 	"""
+	identifier = identifier.lower()
 	prefix, main = identifier.split(":", 1)
 	main = main.split("+")
 	# The order of the parts doesn't matter as far as the user is concerned,
 	# but we need them to be in a determinate order so they will match other gesture identifiers.
-	# We use Python's set ordering.
-	main = "+".join(frozenset(main))
-	return u"{0}:{1}".format(prefix, main).lower()
+	# We sort them by character.
+	main.sort()
+	main = "+".join(main)
+	return u"{0}:{1}".format(prefix, main)
 
 #: Maps registered source prefix strings to L{InputGesture} classes.
 gestureSources = weakref.WeakValueDictionary()
