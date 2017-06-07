@@ -459,14 +459,13 @@ class EdgeNode(UIA):
 		# NOTE: we can not check the result of the EdgeTextInfo move implementation to determine if we added
 		# any characters to the range, since it seems to return 1 even when the text property has not changed.
 		# Also we can not move (repeatedly by one character) since this can overrun the end of the field in edge.
-		# So instead, we use self to make a text info (which should have the right range) and then use the edge
+		# So instead, we use self to make a text info (which should have the right range) and then use the UIA
 		# specific _rangeObj.getText function to get a subset of the full range of characters.
 		ti = self.makeTextInfo(self)
 		if ti.isCollapsed:
 			# it is collapsed therefore it is empty.
 			# exit early so we do not have to do not have to fetch `ti.text` which
 			# is potentially costly to performance.
-			log.info("Reef ti is collapsed")
 			return True
 		numberOfCharacters = 2
 		text = ti._rangeObj.getText(numberOfCharacters)
