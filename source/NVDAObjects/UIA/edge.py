@@ -456,17 +456,22 @@ class EdgeNode(UIA):
 		return ariaPlaceholder
 
 	def _get__isTextEmpty(self):
-		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
-		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
-		if ti.isCollapsed:
-			# we were unable to expand the range, it is collapsed
-			return True
 		# NOTE: we can not check the result of the EdgeTextInfo move implementation to determine if we added
 		# any characters to the range, since it seems to return 1 even when the text property has not changed.
-		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
-		text = ti.text
-		# Edge can report a range of values for empty fields:
-		if text == " " or text == "\n" or text =="\n " or text=="\n\n" or text ==" \n":
+		# Also we can not move (repeatedly by one character) since this can overrun the end of the field in edge.
+		# So instead, we use self to make a text info (which should have the right range) and then use the edge
+		# specific _rangeObj.getText function to get a subset of the full range of characters.
+		ti = self.makeTextInfo(self)
+		if ti.isCollapsed:
+			# it is collapsed therefore it is empty.
+			# exit early so we do not have to do not have to fetch `ti.text` which
+			# is potentially costly to performance.
+			log.info("Reef ti is collapsed")
+			return True
+		numberOfCharacters = 2
+		text = ti._rangeObj.getText(numberOfCharacters)
+		# Edge can report newline for empty fields:
+		if text == "\n":
 			return True
 		return False
 
