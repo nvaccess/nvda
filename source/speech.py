@@ -315,10 +315,10 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	if text:
 		speakText(text,index=index)
 
-def _speakPlaceholderIfEmpty(info, obj, reason, index):
+def _speakPlaceholderIfEmpty(info, obj, reason):
 	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
-		@return True if info was considered empty, and we attempted to speak the placeholder value.
-				False if info was not considered empty.
+	@return: True if info was considered empty, and we attempted to speak the placeholder value.
+	False if info was not considered empty.
 	"""
 	textEmpty = obj._isTextEmpty
 	if textEmpty:
@@ -378,11 +378,11 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				_speakPlaceholderIfEmpty(info, obj, reason, index)
+				_speakPlaceholderIfEmpty(info, obj, reason)
 				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			if not _speakPlaceholderIfEmpty(newInfo, obj, reason, index):
+			if not _speakPlaceholderIfEmpty(newInfo, obj, reason):
 				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
