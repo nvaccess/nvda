@@ -389,7 +389,8 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 
 	@property
 	def label(self):
-		return _(u"spelling: {text}").format(text=super(WordDocumentSpellingErrorQuickNavItem,self).label)
+		text=self.collectionItem.text
+		return _(u"spelling: {text}").format(text=text)
 
 class WinWordCollectionQuicknavIterator(object):
 	"""
