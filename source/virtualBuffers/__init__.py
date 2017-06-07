@@ -218,6 +218,38 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			return u""
 		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False) or u""
 
+	def _getPlaceholderAttribute(self, attrs, placeholderAttrsKey):
+		"""Gets the placeholder attribute to be used.
+		@return: The placeholder attribute when there is no content within the ControlField.
+		None when the ControlField has content.
+		@note: The content is considered empty if it holds a single space.
+		"""
+		placeholder = attrs.get(placeholderAttrsKey)
+		# For efficiency, only check if it is valid to return placeholder when we have a placeholder value to return.
+		if not placeholder:
+			return None
+		# Get the start and end offsets for the field. This can be used to check if the field has any content.
+		try:
+			start, end = self._getOffsetsFromFieldIdentifier(
+				int(attrs.get('controlIdentifier_docHandle')),
+				int(attrs.get('controlIdentifier_ID')))
+		except (LookupError, ValueError):
+			log.debugWarning("unable to get offsets used to fetch content")
+			return placeholder
+		else:
+			valueLen = end - start
+			if not valueLen: # value is empty, use placeholder
+				return placeholder
+			# Because fetching the content of the field could result in a large amount of text
+			# we only do it in order to check for space.
+			# We first compare the length by comparing the offsets, if the length is less than 2 (ie
+			# could hold space)
+			if valueLen < 2:
+				controlFieldText = self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text
+				if not controlFieldText or controlFieldText == ' ':
+					return placeholder
+		return None
+
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset

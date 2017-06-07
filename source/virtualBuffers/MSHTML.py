@@ -53,6 +53,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		ariaCurrent = attrs.get('HTMLAttrib::aria-current', None)
 		if ariaCurrent is not None:
 			attrs['current']=ariaCurrent
+		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
+		if placeholder:
+			attrs['placeholder']=placeholder
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
