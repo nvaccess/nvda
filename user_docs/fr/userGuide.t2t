@@ -147,8 +147,9 @@ Reportez-vous au site Web de NVDA pour les détails de la procédure.
 
 Quand NVDA démarre pour la première fois, vous êtes accueilli par un dialogue vous donnant des informations de base sur la touche NVDA et le menu NVDA. 
 Veuillez consulter les sections ci-après pour plus d'informations sur ces sujets.
-Le dialogue contient également trois cases à cocher. 
-La première vous permet de choisir si vous voulez utiliser la touche de verrouillage majuscules comme touche NVDA.
+Le dialogue contient également une liste déroulante et trois cases à cocher. 
+La liste déroulante vous permet de sélectionner la configuration clavier.
+La première case à cocher vous permet de choisir si vous voulez utiliser la touche de verrouillage majuscules comme touche NVDA.
 La deuxième spécifie si NVDA doit démarrer à l'ouverture de votre session et est disponible uniquement sur la version installée.
 La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
 
@@ -966,6 +967,9 @@ L'indicateur de sélection n'est pas affecté par cette option.
 ==== Durée d'affichage des messages (s) ====
 Cette option est un champ numérique qui contrôle la durée en secondes d'affichage des messages système sur le terminal braille.
 Indiquer 0 désactive l'affichage de ces messages.
+
+==== Afficher les Messages Indéfiniment ====
+Cette option permet aux messages de NVDA de rester affichés sur l'afficheur braille indéfiniment.
 
 %kc:setting
 ==== braille suit ====
@@ -2224,8 +2228,8 @@ Veuillez consulter la [documentation assignation des touches de BRLTTY http://mi
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 
-+ Abbréviations des types et états des contrôles en Braille +
-Dans le but de loger autant d'informations que possible sur un afficheur braille, les abbréviations suivantes ont été définies pour indiquer le type et l'état des contrôles.
++ Abbréviations des types, états des contrôles et repères en Braille +
+Dans le but de loger autant d'informations que possible sur un afficheur braille, les abbréviations suivantes ont été définies pour indiquer le type et l'état des contrôles ainsi que les repères.
 
 || Abbréviation | Type de contrôle |
 | btn | bouton |
@@ -2238,8 +2242,9 @@ Dans le but de loger autant d'informations que possible sur un afficheur braille
 | lN | ligne de tableau n° n, ex : l1, l2. |
 | tN | titre de niveau n, ex : t1, t2. |
 | ln | lien |
-| lst | liste |
 | lnv | lien visité |
+| lst | liste |
+| rpr | repère |
 | mnu | menu |
 | bmnu | barre de menu |
 | btnr | bouton radio |
@@ -2261,6 +2266,17 @@ Les indicateurs d'état suivants sont également définis :
 | sél | affiché quand un objet est sélectionné |
 | smnu | affiché quand un objet a un sous-menu |
  
+Enfin, les abbréviations de repères suivantes sont définies :
+|| Abbréviation | Repère |
+| bnnr | bannière |
+| cinf | information sur le contenu |
+| cmpl | complémentaire |
+| form | formulaire |
+| prnc | principale |
+| nav | navigation |
+| rch | recherche |
+| rgn | région |
+
 + Fonctions avancées +
  
 ++ Options de ligne de commande ++[CommandLineOptions]

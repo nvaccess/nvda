@@ -3,6 +3,41 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+= Noi Funcționalități =
+- A fost adăugată o setare braille la opțiunea „arată mesajele pe termen nelimitat”. (#6669)
+- În lista de mesaje din Microsoft Outlook, se raportează dacă un mesaj este semnalat. (#6374)
+- În Microsoft Powerpoint, tipul exact al unei forme este raportat la editarea unui diapozitiv (exemplele includ: triunghi, cerc, video, săgeată), mai degrabă decât 'forma'. (#7111)
+
+
+== Modificări ==
+- Un gest nelegat (script_restart) a fost adăugat pentru a-i permite NVDA-ului să fie repornit rapid. (#6396)
+- Aspectul tastaturii poate fi setat din dialogul de întâmpinare al NVDA-ului. (#6863)
+- Numele reperelor sunt abreviate în braille după cum urmează: (#3975)
+ - „reper”: „lmk”
+ - „banner”: „bnnr”
+ - „complementar”: „comp”
+ - „informație conținut”: „cif”
+ - „principal”: „main”
+ - „navigare”: „nav”
+ - „formular”: „form”
+ - „căutare”: „srch”
+ - „regiune”: „rgn”
+ - Exemplu: „navigare reper” devine „lmk nav”
+
+= Rezolvări Defecte ==
+- În timp ce vă aflați în modul de navigare, eticheta elementelor div din Chrome nu mai este raportată ca valoarea lor proprie. (#7153)
+- Apăsarea tastei end în timp ce vă aflați în modul de navigare a unui document Word gol nu mai cauzează o eroare runtime. (#7009)
+- Modul de navigare este suportat corect în Microsoft Edge unde un document a primit un rol specific Aria de document. (#6998)
+- În modul de navigare, puteți selecta sau deselecta la sfârșitul rândului utilizând shift+end, chiar și atunci când cursorul de scriere este pe ultimul caracter al rândului. (#7157)
+- Dacă un dialog conține o bară de progres, textul dialogului este actualizat când bara de progres suferă modificări. Asta înseamnă, de exemplu, că timpul rămas poate fi citit în dialogul din NVDA de descărcare a actualizărilor. (#6862)
+
+
+= Modificări pentru Dezvoltatori =
+Timestamp-urile includ în log milisecundele. (#7163)
+
+
 = 2017.2 =
 Caracteristicile principale ale acestei lansări includ suport complet pentru atenuarea audio în Windows 10 Creators Update; reparări ale mai multor erori de selecție în modul de navigare, incluzând probleme cu selectarea întregului conținut; îmbunătățiri semnificative la suportul pentru Microsoft Edge; și îmbunătățiri pe web, cum ar fi indicarea elementelor marcate ca actuale (folosind atributul aria-current).
 
@@ -67,7 +102,7 @@ Au mai fost rezolvate alte probleme rare de selectare în modul de navigare. (#7
 Caracteristicile principale ale acestei lansări includ raportarea secțiunilor și a coloanelor de text în Microsoft Word; suport în citirea, navigarea și adnotarea cărților în Kindle for PC; și suport îmbunătățit pentru Microsoft Edge.
 
 == Noi Funcționalități ==
-- În Microsoft Word tipul de spațiere între secțiuni și nmărul secțiunilor pot fi anunțate. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
+- În Microsoft Word tipul de spațiere între secțiuni și nmărul secțiunilor poate fi anunțat. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
 - În Microsoft Word coloanele de text pot fi acum anunțate. Aceasta este activată cu opțiunea „anunță numărul de pagini” în fereastra de dialog a formatării documentului. (#5946)
 - Comutarea automată a limbii este acum suportată în Wordpad. (#6555)
 - Comanda de găsire a NVDA-ului (NVDA+control+f) este acum suportată în modul de navigare pentru Microsoft Edge. (#6580)
