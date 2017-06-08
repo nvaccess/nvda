@@ -1411,7 +1411,7 @@ class ComboBoxWithoutValuePattern(UIA):
 	def _get_value(self):
 		try:
 			return self.UIASelectionPattern.GetCurrentSelection().GetElement(0).CurrentName
-		except COMError:
+		except (COMError, AttributeError):
 			return None
 
 class ListItem(UIA):
