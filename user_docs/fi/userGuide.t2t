@@ -146,11 +146,12 @@ Jos mitään tällaista ei kuulu, tai mikäli kuuluu Windowsin virheääni tai j
 Tarkista NVDA:n verkkosivustolta, miten ohjelmavirheistä ilmoitetaan.
 
 Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa on joitakin perustietoja NVDA-näppäimestä ja -valikosta.
-(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista).
-Valintaikkunassa on myös kolme valintaruutua.
-Ensimmäisellä voidaan valita, käytetäänkö Capslockia NVDA-näppäimenä.
-Toinen, joka on käytettävissä vain asennetuissa versioissa, määrittää, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
-Kolmannella on mahdollista valita, halutaanko tämän Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
+(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista.)
+Valintaikkunassa on lisäksi yhdistelmäruutu sekä kolme valintaruutua.
+Yhdistelmäruudusta valitaan näppäimistöasettelu.
+Ensimmäisellä valintaruudulla määritetään, käytetäänkö Capslockia NVDA-näppäimenä.
+Toisella, joka on käytettävissä vain asennetuissa versioissa, valitaan, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
+Kolmannella on mahdollista valita, halutaanko Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
 
 ++ Tietoja näppäinkomennoista ++
 
@@ -964,8 +965,11 @@ Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet)
 Asetus ei vaikuta valinnanilmaisimeen.
 
 ==== Ilmoitusten aikakatkaisu (sek) ====
-Tämä asetus säätää sitä, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
+Tämä asetus säätää, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
 Jos arvoksi määritetään 0, ilmoitusten näyttäminen poistetaan kokonaan käytöstä.
+
+==== Näytä ilmoitukset pysyvästi ====
+Tällä asetuksella NVDA:n ilmoitukset näytetään pistenäytöllä pysyvästi.
 
 %kc:setting
 ==== Pistenäyttö seuraa ====[BrailleTether]
@@ -2224,8 +2228,8 @@ Katso [BRLTTY:n näppäinsidosluetteloita http://mielke.cc/brltty/doc/KeyBinding
 | siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
-+ Säädintyyppien ja -tilojen lyhenteet pistenäytöllä +
-Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa.
++ Säädintyyppien- ja tilojen sekä kiintopisteiden lyhenteet pistekirjoituksella +
+Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa sekä kiintopisteitä.
 
 || Lyhenne | Säätimen tyyppi |
 | pnk | painike |
@@ -2239,6 +2243,7 @@ Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet o
 | oN | otsikko tasolla n, esim. o1, o2. |
 | lnk | linkki |
 | ltl | luettelo |
+| pk | kiintopiste |
 | alnk | avattu linkki |
 | vko | valikko |
 | vkorvi | valikkorivi |
@@ -2260,6 +2265,17 @@ Seuraavat tilanilmaisimet on myös määritetty:
 | vl | Näytetään, kun objekti (esim. muokattava tekstikenttä) on vain luku -tyyppiä. |
 | val | Näytetään, kun objekti on valittuna. |
 | alavko | Näytetään, kun objektilla on ponnahdusvalikko (yleensä alavalikko). |
+
+Kiintopisteille on määritetty seuraavat lyhenteet:
+|| Lyhenne | Kiintopiste |
+| bnnr | banner |
+| stie | sisältötiedot |
+| täyd | täydentävä |
+| lmk | lomake |
+| pää | pääsisältö |
+| nav | navigaatio |
+| hku | haku |
+| alu | alue |
 
 + Edistyneet aiheet +
 
