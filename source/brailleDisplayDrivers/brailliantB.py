@@ -255,6 +255,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:alt": ("br(brailliantB):space+dot1+dot3+dot4",),
 			"kb:escape": ("br(brailliantB):space+dot1+dot5",),
 			"kb:enter": ("br(brailliantB):dot8",),
+			"kb:backspace": ("br(brailliantB):dot7",),
 			"kb:windows+d": ("br(brailliantB):c1+c4+c5",),
 			"kb:windows": ("br(brailliantB):space+dot3+dot4",),
 			"kb:alt+tab": ("br(brailliantB):space+dot2+dot3+dot4+dot5",),
