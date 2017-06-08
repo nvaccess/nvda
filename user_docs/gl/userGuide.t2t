@@ -147,8 +147,9 @@ Por favor investiga no sitio web de NVDA para saber como facer esto.
 
 Cando o NVDA arrinque por primeira vez, daráseche a benvida mediante unha caixa de diálogo que che proporciona algunha información básica acerca da tecla modificadora de NVDA e do menú de NVDA. 
 (Consulta por favor seccións subseguintes acerca de estos temas). 
-A caixa de diálogo tamén contén tres caixas de verificación. 
-A primeira permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora do NVDA.
+A caixa de diálogo tamén contén unha caixa combinada e tres caixas de verificación. 
+A caixa combinada permíteche selecionar a distribución de teclado.
+A primeira caixa de verificación permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora do NVDA.
 A segunda especifica se NVDA debería arrincar automáticamente despois de autentificarte en Windows e só está dispoñible para copias instaladas do NVDA.
 A terceira permíteche controlar se esta caixa de benvida debería aparecer cada vez que o NVDA arranque.
 
@@ -966,6 +967,9 @@ O indicador de seleción non está afectado por esta opción.
 ==== Duración da Mensaxe (en seg) ====
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na pantalla braille.
 Especifycando 0 deshabilítase o amosado destas mesaxes completamente.
+
+==== amosar Mensaxes Indefinidamente ====
+Esta opción permite ás mensaxes do NVDA amosarse na pantalla braille indefinidamente.
 
 %kc:setting
 ==== O Braille segue a ====[BrailleTether]
@@ -2224,8 +2228,8 @@ Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/
 | Guiar á celda braille | route (leva o cursor ao caracter) |
 %kc:endInclude
 
-+ Tipo de control Braille e abreviaturas de estado +
-Co fin de ter a meirande cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado.
++ Abreviaturas de Tipos de control Braille, de estado e de Pontos de Rreferencia +
+Co fin de ter a meirande cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así coma dos pontos de referencia.
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
@@ -2238,8 +2242,9 @@ Co fin de ter a meirande cantidade de información posible nunha pantalla braill
 | fN | número de fila de táboa n, ex.: r1, r2. |
 | cnN | cabeceira de nivel n, ex.: h1, h2. |
 | li | liga |
-| lst | lista |
 | liv | liga visitada |
+| lst | lista |
+| pdr | ponto de referencia |
 | mn | menú |
 | bmn | barra de menú |
 | bto | botón de opción |
@@ -2260,6 +2265,17 @@ Os seguintes indicadores de estado  tamén están definidos:
 | ro | amosado cando un obxecto (ex.: un campo de texto editable) é de só lectura |
 | sel | amosado cando un obxecto está seleccionado |
 | submnu | amosado cando un obxecto ten un despregable (normalmente un submenú) |
+
+Finalmente, definíronse as seguintes abreviaturas para pontos de referencia:
+|| Abreviatura | Ponto de referencia |
+| tlo | título |
+| cinf | info de contido |
+| cmpl | complementario |
+| form | formulario |
+| main | principal |
+| nav | navegación |
+| busq | procura |
+| rgn | rexión |
 
 + Temas Avanzados +
 
