@@ -326,7 +326,10 @@ def normalizeIAccessible(pacc,childID=0):
 	if childID==0 and not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)
-			pacc2=s.QueryService(IAccessible._iid_,IAccessible2)
+			# #7269: Use a service ID of IAccessible2 rather than IAccessible.
+			#  Using IAccessible seems to cause some proxying issues on Windows 10 Creaters update E.g. Cannot QueryService to IAccessibleApplication on subsiquant NVDA restarts.
+			# Formally the IAccessible2 spec states IAccessible, but it should probbly be changed to align with Microsoft Active Accessibility recommendations
+			pacc2=s.QueryService(IAccessible2._iid_,IAccessible2)
 			if not pacc2:
 				# QueryService should fail if IA2 is not supported, but some applications such as AIM 7 misbehave and return a null COM pointer.
 				# Treat this as if QueryService failed.
