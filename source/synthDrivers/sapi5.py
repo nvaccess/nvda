@@ -23,6 +23,12 @@ import config
 import nvwave
 from logHandler import log
 
+SPAS_CLOSED=0
+SPAS_STOP=1
+SPAS_PAUSE=2
+SPAS_RUN=3
+
+
 class FunctionHooker(object):
 
 	def __init__(self,targetDll,importDll,funcName,newFunction):
@@ -167,6 +173,11 @@ class SynthDriver(SynthDriver):
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
+		from comInterfaces.SpeechLib import ISpAudio
+		try:
+			self.ttsAudioStream=self.tts.audioOutputStream.QueryInterface(ISpAudio)
+		except COMError:
+			self.ttsAudioStream=None
 
 	def _set_voice(self,value):
 		tokens = self._getVoiceTokens()
@@ -298,9 +309,10 @@ class SynthDriver(SynthDriver):
 		self.tts.Speak(text, flags)
 
 	def cancel(self):
-		#if self.tts.Status.RunningState == 2:
+		if self.ttsAudioStream:
+			self.ttsAudioStream.setState(SPAS_STOP,0)
 		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
 
 	def pause(self,switch):
-		if switch:
-			self.cancel()
+		if self.ttsAudioStream:
+			self.ttsAudioStream.setState(SPAS_PAUSE if switch else SPAS_RUN,0)
