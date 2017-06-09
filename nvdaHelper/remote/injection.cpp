@@ -48,6 +48,7 @@ long tlsIndex_inThreadInjectionID=0;
 bool isProcessExiting=false;
 bool isSecureModeNVDAProcess=false;
 SetWindowsHookEx_funcType real_SetWindowsHookExA=NULL;
+UINT WM_NVDA_FORCEINJECTION=NULL;
 
 //Code executed in-process
 
@@ -257,6 +258,21 @@ bool initInprocManagerThreadIfNeeded() {
 	return threadCreated;
 }
 
+// Windows callWndProc hook for forced injection
+LRESULT CALLBACK injection_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
+if(code<0) {
+		return CallNextHookEx(0,code,wParam,lParam);
+	}
+	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+	if(pcwp->message==WM_NVDA_FORCEINJECTION) {
+		initInprocManagerThreadIfNeeded();
+		LOG_INFO(L"injected");
+		ReplyMessage(1);
+		return 1;
+	}
+	return CallNextHookEx(0,code,wParam,lParam);
+}
+
 //winEvent callback to inject in-process
 //Only used for foreground/focus winEvents
 void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
@@ -310,6 +326,23 @@ HANDLE outprocMgrThreadHandle=NULL;
 DWORD outprocMgrThreadID=0;
 BOOL outprocInitialized=FALSE;
 
+BOOL ensureInjectionForFocus() {
+	GUITHREADINFO info={0};
+	info.cbSize=sizeof(GUITHREADINFO);
+	GetGUIThreadInfo(0,&info);
+	HWND hwnd=info.hwndFocus?info.hwndFocus:info.hwndActive;
+	LOG_INFO(L"Injection window "<<hwnd);
+	long threadID=GetWindowThreadProcessId(hwnd,NULL);
+	if(!threadID) return false;
+	LOG_INFO(L"injecting into thread"<<threadID);
+	HHOOK tempHook=SetWindowsHookEx(WH_CALLWNDPROC,injection_callWndProcHook,dllHandle,threadID);
+	if(!tempHook) return false;
+	LRESULT res=SendMessage(hwnd,WM_NVDA_FORCEINJECTION,0,0);
+	UnhookWindowsHookEx(tempHook);
+	LOG_INFO(L"Injection message returned "<<res);
+	return res==1;
+}
+
 /**
  * Initializes the out-of-process code for NVDAHelper 
  * @param secureMode 1 specifies that NVDA is running in seucre mode, 0 says not.
@@ -325,6 +358,7 @@ BOOL injection_initialize(int secureMode) {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
 	}
+	ensureInjectionForFocus();
 	outprocMgrThreadHandle=CreateThread(NULL,0,outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
 	outprocInitialized=TRUE;
 	return TRUE;
@@ -349,6 +383,7 @@ BOOL injection_terminate() {
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
+		WM_NVDA_FORCEINJECTION=RegisterWindowMessage(L"WM_NVDA_FORCEINJECTION");
 		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
 		#ifndef NDEBUG
 		Beep(220,75);
