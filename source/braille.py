@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
 
 import sys
 import itertools
@@ -10,6 +10,7 @@ import os
 import pkgutil
 import ctypes.wintypes
 import threading
+import time
 import wx
 import louis
 import winKernel
@@ -104,6 +105,26 @@ positiveStateLabels = {
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.STATE_CHECKED: _("( )"),
+}
+
+landmarkLabels = {
+	# Translators: Displayed in braille for the banner landmark, normally found on web pages.
+	"banner": _("bnnr"),
+	# Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+	"complementary": _("cmpl"),
+	# Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+	"contentinfo": _("cinf"),
+	# Translators: Displayed in braille for the main landmark, normally found on web pages.
+	"main": _("main"),
+	# Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+	"navigation": _("navi"),
+	# Translators: Displayed in braille for the search landmark, normally found on web pages.
+	"search": _("srch"),
+	# Translators: Displayed in braille for the form landmark, normally found on web pages.
+	"form": _("form"),
+	# Strictly speaking, region isn't a landmark, but it is very similar.
+	# Translators: Displayed in braille for a significant region, normally found on web pages.
+	"region": _("rgn"),
 }
 
 #: Cursor shapes
@@ -296,6 +317,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
+	roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -303,7 +325,7 @@ def getBrailleTextForProperties(**propertyValues):
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
-	if role is not None:
+	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
 			# %s is replaced with the level.
@@ -318,9 +340,8 @@ def getBrailleTextForProperties(**propertyValues):
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
-	else:
+	elif role is None: 
 		role = propertyValues.get("_role")
-		roleText = None
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
@@ -394,7 +415,7 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role, current=obj.isCurrent,
+		text = getBrailleTextForProperties(name=obj.name, role=role, roleText=obj.roleText, current=obj.isCurrent,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -1384,6 +1405,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Reset the message timeout.
 		@precondition: A message is currently being displayed.
 		"""
+		if config.conf["braille"]["noMessageTimeout"]:
+			return
 		# Configured timeout is in seconds.
 		timeout = config.conf["braille"]["messageTimeout"] * 1000
 		if self._messageCallLater:
@@ -1398,8 +1421,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
-		self._messageCallLater.Stop()
-		self._messageCallLater = None
+		if self._messageCallLater:
+			self._messageCallLater.Stop()
+			self._messageCallLater = None
 		self.update()
 
 	def handleGainFocus(self, obj):
@@ -1460,6 +1484,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
+	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
+	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
+	def _handleProgressBarUpdate(self, obj):
+		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
+		newTime = time.time()
+		if oldTime and newTime - oldTime < 1:
+			# Fetching dialog text is expensive, so update at most once a second.
+			return
+		self._lastProgressBarUpdateTime = newTime
+		for obj in reversed(api.getFocusAncestors()[:-1]):
+			if obj.role == controlTypes.ROLE_DIALOG:
+				self.handleUpdate(obj)
+				return
+
 	def handleUpdate(self, obj):
 		if not self.enabled:
 			return
@@ -1470,6 +1508,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				break
 		else:
 			# No region for this object.
+			# There are some objects that require special update behavior even if they have no region.
+			# This only applies when tethered to focus, because tethering to review shows only one object at a time,
+			# which always has a braille region associated with it.
+			if self.tether != self.TETHER_FOCUS:
+				return
+			# Late import to avoid circular import.
+			from NVDAObjects import NVDAObject
+			if isinstance(obj, NVDAObject) and obj.role == controlTypes.ROLE_PROGRESSBAR and obj.isInForeground:
+				self._handleProgressBarUpdate(obj)
 			return
 		self.mainBuffer.saveWindow()
 		region.update()
@@ -1701,7 +1748,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	routingIndex = None
 
 	def _get_identifiers(self):
-		ids = [u"br({source}):{id}".format(source=self.source, id=self.id).lower()]
+		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))

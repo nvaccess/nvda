@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-03 00:10+1000\n"
-"PO-Revision-Date: 2017-02-04 06:06+0300\n"
+"POT-Creation-Date: 2017-05-12 00:10+1000\n"
+"PO-Revision-Date: 2017-05-11 20:17+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,967,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
@@ -1676,7 +1676,7 @@ msgstr "İpucu"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
-msgstr "BAĞLANTI"
+msgstr "Link"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 msgid "tree view"
@@ -2329,6 +2329,34 @@ msgstr "seçili değil"
 msgid "not checked"
 msgstr "işaretli değil"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "basılı değil"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "Mevcut"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "geçerli sayfa"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "Mevcut adım"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "Geçerli konum"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "geçerli tarih"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "geçerli zaman"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2502,10 +2530,12 @@ msgstr "Aktif uygulama için uyku kipini açıp kapatır"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
 "Uygulama imlecinin bulunduğu satırı okur. İki kez basılırsa, satır "
-"kodlanarak okunur."
+"kodlanarak okunur. Üç kez basılırsa, satırı oluşturan harfler karakter "
+"tanımlarıyla seslendirilir."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4371,6 +4401,10 @@ msgstr "Stil %s"
 msgid "default style"
 msgstr "Varsayılan stil"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Sınır çizgisi yokaltı çizili değil"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6184,8 +6218,8 @@ msgid "Error activating profile."
 msgstr "Konfigürasyon etkinleştirme hatası"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Bu profili silmek istediğinizden emin misiniz? Bu geri alınamaz."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Bu profil kalıcı olarak silinecek. Bu işlem geri alınamaz."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7074,6 +7108,8 @@ msgid "Line &indentation reporting:"
 msgstr "Satır gi&rintilerinin bildirimi"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Kapalı"
 
@@ -7124,6 +7160,21 @@ msgstr "Satır/s&ütun başlıkları"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "Hücre k&oordinatları"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Stiller"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Renkler ve stiller"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Hücre sınırları"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7690,6 +7741,11 @@ msgstr ""
 "başlığı olarak ayarlanır. İki kez basıldığında bu hücre için yapılmış satır "
 "başlık ayarı silinir."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Sayfa {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Girdi mesajı, {title}: {message}"
@@ -7715,6 +7771,129 @@ msgstr "{address} hücresi için açıklama düzenleniyor"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} ve {lastAddress} {lastContent} arasında"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "Üst kenar"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "Alt kenar"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "sol kenar"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "sağ kenar"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "-sağ çapraz çizgi "
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "aşağı doğru çapraz çizgi "
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "yatay sınırlar dışında "
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "dikey sınırlar dışında "
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "sürekli "
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "kesik"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "çizgi nokta"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "çizgi nokta nokta "
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "noktalı"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "çift"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "eğik çizgi nokta "
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "hair"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "ince"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "orta"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "kalın"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "orta çizgi nokta nokta"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "orta çizgi nokta"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "orta kesik"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} çevreleyen sınır"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} üst ve alt kenarlar"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} sol ve sağ kenarlar"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} yukarı doğru ve aşağı doğru çapraz çizgiler "
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8731,3 +8910,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serisi"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "Bu profili silmek istediğinizden emin misiniz? Bu geri alınamaz."

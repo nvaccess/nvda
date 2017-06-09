@@ -3,6 +3,46 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+Ebben a kiadásban: A hangerő-igazítás teljes támogatása a Windows 10 Alkotói frissítéséhez. Több, böngészőmódban jelentkező kijelőléssel kapcsolatos hiba javítása, orvosolták többek közt a minden kijelölése parancs problémáit is. Jelentősen javult a Microsoft Edge támogatása. Valamint fejlődött a webes dokumentumok kezelése, úgy mint az aktuális oldal jelzése (aria-current használata esetén).
+
+== Újdonságok ==
+- Microsoft Excel: A formázási információk lekérdezésére szolgáló paranccsal (NVDA+F) már elérhetők a cellaszegélyekre vonatkozó információk is, szín és vonaltípus. (#3044)
+- Webböngészők esetén az NVDA már jelzi, ha a jelenlegi oldal meg van jelölve aktuálisnak az aria-current attribútum használatával. (#6358)
+- Microsoft Edge: Már támogatott az automatikus nyelvváltás. (#6852)
+- Windows 10 Enterprise LTSB (Long-Term Servicing Branch) és Server: Támogatás a számológéphez. (#6914)
+- Az aktuális sor felolvasása parancs kibővült. Háromszori gyors lenyomásra az adott nyelvhez meglévő karakterleírásokkal betűzi az egész sort. (#6893)
+- Új nyelv: burmai.
+- Unicode fel és lenyíl ill. a törtszámokkal kapcsolatos szimbólumok felolvasása. (#3805)
+
+
+== Változások ==
+- UI Automationt használó alkalmazásokban egyszerű áttekintés esetén figyelmen kívül hagy az NVDA bizonyos lényegi információt nem hordozó elemeket a navigáció megkönnyítése érdekében. (#6948, #6950)
+
+
+== Hibajavítások ==
+- A weboldalakon már aktiválhatók a menüelemek böngészőmódban is. (#6735)
+- Konfigurációs profil törlésekor amikor a törlés megerősítése párbeszédablak aktív, az ESC billentyű leütése bezárja azt, és nem hagyja jóvá a törlést. (#6851)
+- Mozilla Firefox és más Gecko alkalmazások: javítottak több, a multi-process használata közben jelentkező hibát. (#6885)
+- Képernyőáttekintés során már sokkal pontosabban működik a háttérszín lekérdezése olyan esetben, amikor a szöveghez átlátszó háttérszínt állítottak be. (#6467)
+- Internet Explorer 11: Fejlesztett támogatás a weblapokon található vezérlők leírásához. (Támogatás az iframes aria-describedby elemeihez  ill. ha többszörös ID-t használnak). (#5784)
+- Windows 10 Alkotói frissítés: A hangerő-igazítás ismét úgy működik, mint a korábbi Windows 10 kiadásokban. Ismét él mindhárom beállítási lehetőség: Mindig, soha, Csak amikor az NVDA használja a hangkimenetet. (#6933)
+- UIA vezérlők: NVDA-navigációval  elérhető, és a program bemondja az olyan vezérllőket,amikhez nincs billentyűparancs beállítva. (#6779)
+- UIA vezérlők: A program már nem ad hozzá két üres szóközt a billentyűparancs információkhoz. (#6790)
+- HIMS braille-kijelzők: Bizonyos billentyűkombinációk (pl. space+4. pont) már nem működnek hibásan. (#3157)
+- Braille-kijelzők: javítottak egy, bizonyos nem angol nyelvű rendszerekben, a soros port megnyitásakor fellépő hibát, mely megakadályozta a kijelző csatlakozását a számítógéphez. (#6845)
+- Csökkentették a konfigurációs fájlok sérülésének esélyét a windows nem várt leállása esetén. Egy konfigurációs fájl módosítása először ideiglenes fájlban történik meg, és csak aztán írják felül az aktuális konfigurációs fájlt.  (#3165)
+- Az aktuális sor felolvasására szolgáló parancs kétszeri gyors lenyomása esetén már a megfelelő nyelven történik a sor kibetűzése. (#6726)
+- Microsoft Edge: A Windows 10 alkotói frissítés esetén akár háromszor gyorsabban működik a soronkénti navigáció. (#6994)
+- Microsoft Edge, Windows 10 alkotói frissítés: Az NVDA már nem jelent be kéretlen információt ("Web Runtime grouping"), ha egy dokumentumra kerül a rendszerfókusz a böngészőben. (#6948)
+- SecureCRT: minden elérhető verzió támogatott. (#6302)
+- Adobe Acrobat Reader: Már nem omlik össze olyan PDF dokumentumok olvasása során, melyeknél az ActualText attribútum üres. (#7021, #7034)
+- Microsoft Edge: Böngészőmódban lehet navigálni az interaktív táblázatok (ARIA grids) közt a táblázatokra vonatkozó egykarakteres gyorsnavigációval (t és shift+t). (#6977)
+- Böngészőmódban, ha egy sort elkezdünk kijelölni balról jobbra,akkor a shift+home billentyűparancs hatására megszűnik a kijelölés a sor elejéig, mint ahogy az elvárható. (#5746)
+- Böngészőmódban a minden kijelölése parancs (control+a) már akkor is kijelöl minden szöveget, ha a kurzor nem a szöveg elején áll. (#6909)
+- Böngészőmódban néhány további kijelölési problémát javítottak. (#7131)
+
+
 = 2017.1 =
 Ebben a kiadásban: Szakasztörések és hasábok bemondása a Microsoft Wordben; Támogatás a Kindle for PC ebook olvasóhoz (Könyvek olvasása, navigálás, kiemelések, jegyzetek); és fejlődött a Microsoft Edge támogatása is.
 

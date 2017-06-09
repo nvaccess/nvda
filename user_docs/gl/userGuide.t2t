@@ -23,7 +23,7 @@ O máis subliñable inclue:
 - Soporte para moitas pantallas de braille efímero incluíndo a entrada de braille computerizado para pantallas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 48 linguas
+- Traducido a 50 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis subliñable inclue:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 48 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 48 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Kannada, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ao usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -147,8 +147,9 @@ Por favor investiga no sitio web de NVDA para saber como facer esto.
 
 Cando o NVDA arrinque por primeira vez, daráseche a benvida mediante unha caixa de diálogo que che proporciona algunha información básica acerca da tecla modificadora de NVDA e do menú de NVDA. 
 (Consulta por favor seccións subseguintes acerca de estos temas). 
-A caixa de diálogo tamén contén tres caixas de verificación. 
-A primeira permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora do NVDA.
+A caixa de diálogo tamén contén unha caixa combinada e tres caixas de verificación. 
+A caixa combinada permíteche selecionar a distribución de teclado.
+A primeira caixa de verificación permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora do NVDA.
 A segunda especifica se NVDA debería arrincar automáticamente despois de autentificarte en Windows e só está dispoñible para copias instaladas do NVDA.
 A terceira permíteche controlar se esta caixa de benvida debería aparecer cada vez que o NVDA arranque.
 
@@ -286,7 +287,7 @@ O NVDA proporciona as seguintes teclas de ordes en relación ao cursor do sistem
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Ler todo | NVDA+Frecha Abaixo | NVDA+a | Comeza a lectura dende a posición actual do cursor do sistema, movéndoo segundo se despraza |
-| Ler liña actual | NVDA+Frecha Arriba | NVDA+l | Le a liña onde estea situado actualmente o cursor do sistema. Premendo dúas veces deletrea a liña. |
+| Ler liña actual | NVDA+Frecha Arriba | NVDA+l | Le a liña onde estea situado actualmente o cursor do sistema. Premendo dúas veces deletrea a liña. Premendo tres veces deletrea a liña usando descripcións de caracteres. |
 | Ler a selección do texto actual | NVDA+Shift+Frecha Arriba | NVDA+shift+s | Le calquera texto seleccionado actualmente |
 | frase seguinte | alt+frecha abaixo | alt+frecha abaixo | Move o cursor á frase seguinte e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
 | frase anterior | alt+frecha arriba | alt+frecha arriba | Move o cursor á frase anterior e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
@@ -700,7 +701,7 @@ Cando se está nunha conversa:
 
 ++ Kindle para PC ++
 NVDA soporta a lectura e a navegación de libros no Amazon Kindle para PC.
-Esta funcionalidade só está dispoñible en libros de Kindle que soporten "Enhanced Typesetting", o que podes verificar na páxina de detalles para o libro.
+Esta funcionalidade só está dispoñible en libros de Kindle designados con "Lector de Pantalla: Soportado" o que podes verificar na páxina de detalles para o libro.
 
 Utilízase o modo exploración para ler libros.
 Habilítase automáticamente ao se abrir un libro ou ao se enfocar o área do libro.
@@ -966,6 +967,9 @@ O indicador de seleción non está afectado por esta opción.
 ==== Duración da Mensaxe (en seg) ====
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na pantalla braille.
 Especifycando 0 deshabilítase o amosado destas mesaxes completamente.
+
+==== amosar Mensaxes Indefinidamente ====
+Esta opción permite ás mensaxes do NVDA amosarse na pantalla braille indefinidamente.
 
 %kc:setting
 ==== O Braille segue a ====[BrailleTether]
@@ -1263,6 +1267,7 @@ Podes configurar o anunciado de:
  - Táboas
  - Cabeceiras de fila/columna
  - Coordenadas de celda
+ - Bordes de celdas [(desactivado, Estilos, Ambos Colores e Estilos)
 - Elementos
  - Cabeceiras
  - Ligas
@@ -2223,8 +2228,8 @@ Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/
 | Guiar á celda braille | route (leva o cursor ao caracter) |
 %kc:endInclude
 
-+ Tipo de control Braille e abreviaturas de estado +
-Co fin de ter a meirande cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado.
++ Abreviaturas de Tipos de control Braille, de estado e de Pontos de Rreferencia +
+Co fin de ter a meirande cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así coma dos pontos de referencia.
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
@@ -2237,8 +2242,9 @@ Co fin de ter a meirande cantidade de información posible nunha pantalla braill
 | fN | número de fila de táboa n, ex.: r1, r2. |
 | cnN | cabeceira de nivel n, ex.: h1, h2. |
 | li | liga |
-| lst | lista |
 | liv | liga visitada |
+| lst | lista |
+| pdr | ponto de referencia |
 | mn | menú |
 | bmn | barra de menú |
 | bto | botón de opción |
@@ -2259,6 +2265,17 @@ Os seguintes indicadores de estado  tamén están definidos:
 | ro | amosado cando un obxecto (ex.: un campo de texto editable) é de só lectura |
 | sel | amosado cando un obxecto está seleccionado |
 | submnu | amosado cando un obxecto ten un despregable (normalmente un submenú) |
+
+Finalmente, definíronse as seguintes abreviaturas para pontos de referencia:
+|| Abreviatura | Ponto de referencia |
+| tlo | título |
+| cinf | info de contido |
+| cmpl | complementario |
+| form | formulario |
+| main | principal |
+| nav | navegación |
+| busq | procura |
+| rgn | rexión |
 
 + Temas Avanzados +
 

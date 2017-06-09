@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-10 00:10+1000\n"
-"PO-Revision-Date: 2017-02-09 21:52+0200\n"
+"POT-Creation-Date: 2017-05-12 00:10+1000\n"
+"PO-Revision-Date: 2017-05-16 08:56+0200\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -2331,6 +2331,34 @@ msgstr "לא נבחר"
 msgid "not checked"
 msgstr "לא מסומן"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "לא לחוץ"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "נוכחי"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "עמוד נוכחי"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "שלב נוכחי"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "מיקום נוכחי"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "תאריך נוכחי"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "זמן נוכחי"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2502,8 +2530,11 @@ msgstr "מיתוג מצב השינה עבור היישום שבפוקוס"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "הקראת שורת החלון שבפוקוס. לחיצה פעמיים תגרום לאיות השורה."
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"מציג את השורה הנוכחית תחת סמן היישום. לחיצה על מקש זה פעמיים תאיית את השורה "
+"הנוכחית. לחיצה שלוש פעמים תאיית את השורה באמצעות תיאורי תווים."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4313,6 +4344,10 @@ msgstr "סגנון %s"
 msgid "default style"
 msgstr "סגנון ברירת מחדל"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "ללא קו תחתון"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6100,8 +6135,8 @@ msgid "Error activating profile."
 msgstr "שגיאה בעת הפעלת פרופיל"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "האם אתה בטוח שברצונך למחוק את הפרופיל הזה? אין דרך חזרה מפעולה זו."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "פרופיל זה יימחק לצמיתות. פעולה זו לא ניתנת לביטול."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6970,6 +7005,8 @@ msgid "Line &indentation reporting:"
 msgstr "הקראת &כניסות :"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "ללא כניסה"
 
@@ -7020,6 +7057,21 @@ msgstr "כותרת עמודה/שורה"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "הקראת &קואורדינטות של שורות ועמודות בטבלאות"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "סגנונות"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "צבעים וסגנונות"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "גבולות תא"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7578,6 +7630,11 @@ msgstr ""
 "לחיצה פעם אחת תגדיר את התא ככותרת השורה מהתא שלידו והלאה. לחיצה פעמיים תגרום "
 "לביטול הגדרה זו."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "גיליון {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "ההודעה מתייחסת אל  {title}: {message}"
@@ -7603,6 +7660,129 @@ msgstr "עריכת ההערה הקשורה לתא {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} עד {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "גבול עליון"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "גבול תחתון"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "קצה שמאלי"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "קצה ימיני"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "קו אלכסוני מלמעה ימינה"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "קו  אלכסוני למטה וימינה"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "גבול אופקי חוץ מבחוץ."
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "גבולות אנכיים חוץ מבחוץ"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "רציף"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "מקווקו"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "מקף נקודה"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "מקף נקודה נקודה"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "מנוקד"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "מרווח של שתי שורות"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "מקף מלוכסן נקודה"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "שיער"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "דק"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "בינוני"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "עבה"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "מקף בינוני נקודה נקודה"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "מקף בינוני נקודה"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "מקווקו בינוני"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} הגבול שמסביב"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} גבולות עליונים ותחתונים"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} גבולות מימין ומשמאל"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} קו אלכסוני מלמעה ימינה ומלמטה ימינה."
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8611,3 +8791,6 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "האם אתה בטוח שברצונך למחוק את הפרופיל הזה? אין דרך חזרה מפעולה זו."

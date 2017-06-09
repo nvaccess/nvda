@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-10 00:10+1000\n"
-"PO-Revision-Date: 2017-02-09 11:54-0800\n"
+"POT-Creation-Date: 2017-05-12 00:10+1000\n"
+"PO-Revision-Date: 2017-05-16 00:35-0800\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -2308,7 +2308,7 @@ msgstr "가려짐"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
-msgstr ""
+msgstr "잘려짐"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
@@ -2325,6 +2325,34 @@ msgstr "선택 안됨"
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "해제됨"
+
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "눌리지 않음"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "현재"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "현재 페이지"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "현재 단계"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "현재 위치"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "현재 날짜"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "현재 시간"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2505,10 +2533,11 @@ msgstr "현재 사용중인 프로그램에서 NVDA 사용여부를 전환합니
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"한번 누르면 커서가 위치한 줄을 읽어주고, 두번 누르면 줄에 있는 문자열의 철자"
-"를 읽어줍니다. "
+"한번 누르면 커서가 위치한 줄을 읽습니다. 두번 누르면 줄에 있는 문자열의 철자"
+"를 읽습니다. 세번 누르면 철자 출력시 글자를 풀어 읽습니다."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4358,6 +4387,10 @@ msgstr "%s 스타일"
 msgid "default style"
 msgstr "default style"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "테두리 없음"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -4971,7 +5004,7 @@ msgstr "만약 트랙이 재생되는 경우 현재 트랙의 남은 시간을 �
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
-msgstr ""
+msgstr "선택된 텍스트 또는 커서 위치 관련 옵션을 보여줍니다"
 
 #. Translators: A position in a Kindle book
 #, no-python-format
@@ -4988,18 +5021,18 @@ msgstr "highlight"
 
 #. Translators: Reported when text is not highlighted.
 msgid "no highlight"
-msgstr ""
+msgstr "하이라이트 없음"
 
 #. Translators: Reported in Kindle when text has been identified as a popular highlight;
 #. i.e. it has been highlighted by several people.
 #. %s is replaced with the number of people who have highlighted this text.
 #, python-format
 msgid "%s highlighted"
-msgstr ""
+msgstr "%s 하일라이트됨"
 
 #. Translators: Reported when moving out of a popular highlight.
 msgid "out of popular highlight"
-msgstr ""
+msgstr "인기 하일라이트 끝"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -6115,8 +6148,8 @@ msgid "Error activating profile."
 msgstr "프로필 적용에 실패했습니다."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "프로필을 제거하시겠습니까? 이 엑션은 되돌릴 수 없습니다."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "본 프로필이 삭제됩니다. 이럴 경우 프로필을 복원할 수 없습니다."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6993,6 +7026,8 @@ msgid "Line &indentation reporting:"
 msgstr "줄 들여쓰기 알림 (&I)"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "출력 않함"
 
@@ -7043,6 +7078,21 @@ msgstr "표 행 및 열 머리말 (&E)"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "표 셀 위치 (&O)"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "스타일"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "색상 및 스타일"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "셀 테두리"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7592,6 +7642,10 @@ msgstr ""
 "한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 행 머릿말 셀로 지정합니"
 "다. 두번 누르면 이 설정을 해제합니다."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+msgid "Sheet {0}, {1}"
+msgstr "Sheet {0}, {1}"
+
 msgid "Input Message is {title}: {message}"
 msgstr "입력 메시지: {title}: {message}"
 
@@ -7613,6 +7667,125 @@ msgstr "셀 {address}에 대한 주석"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} 에서 {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "위쪽 테두리"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "아래쪽 테두리"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "왼쪽 테두리"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "오른쪽 테두리"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "상향 대각선"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "하향 대각선"
+
+#. Translators: border positions in Microsoft Excel.
+#, fuzzy
+msgid "horizontal borders except outside"
+msgstr "가로 줄"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr ""
+
+#. Translators: border styles in Microsoft Excel.
+#, fuzzy
+msgid "continuous"
+msgstr "컨텐츠 정보"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "파선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "일점 쇄선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "이점 쇄선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "굵은 점선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "이중"
+
+#. Translators: border styles in Microsoft Excel.
+#, fuzzy
+msgid "slanted dash dot"
+msgstr "space with dot"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "점선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "가는 실선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "실선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "굵은 실선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "중간 굵기 이점 쇄선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "중간 굵기 일점 쇄선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "중간 굵기 파선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} surrounding border"
+msgstr "{desc} 주변 테두리"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} top and bottom edges"
+msgstr "{desc} 위쪽 및 아래쪽 테두리"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} left and right edges"
+msgstr "{desc} 왼쪽 및 오른쪽 테두리"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} 상향 및 하향 대각선"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8579,3 +8752,6 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "프로필을 제거하시겠습니까? 이 엑션은 되돌릴 수 없습니다."

@@ -67,7 +67,7 @@ For reference, the following dependencies are included in Git submodules:
 * lilli.dll, version 2.1.0.0
 * [Handy Tech Braille SDK, version 1.4.2.0](ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip)
 * Updated Handy Tech sbsupport.dll and dealers.dat received on 2014-09-09
-* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.5
+* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
 * HanSoneConnect.dll, version 2.0.0.1
 * SyncBraille.dll, version 1.0.0.1
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
@@ -199,4 +199,25 @@ For example, to build a launcher  with a specific version, you might type:
 
 ```
 scons launcher version=test1
+```
+
+## Running Automated Tests
+If you make a change to the NVDA code, you should run NVDA's automated tests.
+These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
+Currently, NVDA has only one kind of automated testing: unit tests.
+
+To run the unit tests, first change directory to the root of the NVDA source distribution as above.
+Then, run:
+
+```
+scons tests
+```
+
+To run only specific tests, specify them using the `unitTests` variable on the command line.
+The tests should be provided as a comma separated list.
+Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
+For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
+
+```
+scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
 ```

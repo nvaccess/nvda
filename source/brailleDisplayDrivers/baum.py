@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2016 NV Access Limited
+#Copyright (C) 2010-2017 NV Access Limited
 
 import time
 from collections import OrderedDict
@@ -333,7 +333,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		super(InputGesture, self).__init__()
 		self.keysDown = dict(keysDown)
 
-		self.keyNames = names = set()
+		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.iteritems():
 			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
 				# This is braille input.
@@ -344,14 +344,14 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				for index in xrange(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):
 						self.routingIndex = index
-						names.add("routing")
+						names.append("routing")
 						break
 			elif group == BAUM_ROUTING_KEY:
 				self.routingIndex = groupKeysDown - 1
-				names.add("routing")
+				names.append("routing")
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):
 					if groupKeysDown & (1 << index):
-						names.add(name)
+						names.append(name)
 
 		self.id = "+".join(names)

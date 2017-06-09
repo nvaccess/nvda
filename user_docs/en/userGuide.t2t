@@ -23,7 +23,7 @@ Major highlights include:
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 48 languages
+- Translated into 50 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 48 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Lithuanian, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 50 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Burmese, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Lithuanian, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -148,8 +148,9 @@ Please check out the NVDA website for how to do this.
 
 When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu.
 (Please see further sections about these topics.)
-The dialog box also contains three checkboxes.
-The first lets you control if NVDA should use the capslock as an NVDA modifier key.
+The dialog box also contains a combobox and three checkboxes.
+The combobox lets you select the keyboard layout.
+The first checkbox lets you control if NVDA should use the capslock as an NVDA modifier key.
 The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
 
@@ -287,7 +288,7 @@ NVDA provides the following key commands in relation to the system caret:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
 | Say all | NVDA+downArrow | NVDA+a | Starts reading from the current position of the system caret, moving it along as it goes |
-| Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. |
+| Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
 | Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
@@ -543,7 +544,7 @@ This requires that MathPlayer 4 is installed on the computer.
 MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
 
 NVDA supports the following types of mathematical content:
-- MathML in Mozilla Firefox and Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 - Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient.
 - MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 -
@@ -580,8 +581,8 @@ If your braille display has a Perkins-style keyboard, you can also enter contrac
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
 You can configure braille using the [Braille Settings dialog #BrailleSettings].
 
-++ Control Type and State Abbreviations ++
-In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
+++ Control Type, State and Landmark abbreviations ++
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
 
 || Abbreviation | Control type |
 | btn | button |
@@ -594,8 +595,9 @@ In order to fit as much information as possible on a braille display, The folowi
 | rN | table row number n, e.g. r1, r2. |
 | hN | heading at level n, e.g. h1, h2. |
 | lnk | link |
-| lst | list |
 | vlnk | visited link |
+| lst | list |
+| lmk | landmark |
 | mnu | menu |
 | mnubar | menu bar |
 | rbtn | radio button |
@@ -616,6 +618,17 @@ The following state indicators are also defined:
 | ro | displayed when an object (e.g. an editable text field) is read-only |
 | sel | displayed when an object is selected |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
 
 ++ Braille Input ++
 NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
@@ -1025,6 +1038,9 @@ The selection indicator is not affected by this option.
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
 Specifying 0 disables displaying of these messages completely.
+
+==== Show Messages Indefinitely ====
+This option allows NVDA messages to be displayed on the braille display indefinitely.
 
 %kc:setting
 ==== Braille Tethered to ====[BrailleTether]

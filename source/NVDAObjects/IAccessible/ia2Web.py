@@ -2,14 +2,17 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited
 
 """Base classes with common support for browsers exposing IAccessible2.
 """
 
+from ctypes import c_short
+from comtypes import COMError, BSTR
 import oleacc
 import IAccessibleHandler
 import controlTypes
+from logHandler import log
 from NVDAObjects.behaviors import Dialog
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
@@ -48,6 +51,34 @@ class Editor(Ia2Web):
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
 
+class Math(Ia2Web):
+
+	def _get_mathMl(self):
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		try:
+			node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
+			# Try the data-mathml attribute.
+			attrNames = (BSTR * 1)("data-mathml")
+			namespaceIds = (c_short * 1)(0)
+			attr = node.attributesForNames(1, attrNames, namespaceIds)
+			if attr:
+				import mathPres
+				if not mathPres.getLanguageFromMath(attr) and self.language:
+					attr = mathPres.insertLanguageIntoMath(attr, self.language)
+				return attr
+			if self.IA2Attributes.get("tag") != "math":
+				# This isn't MathML.
+				raise LookupError
+			if self.language:
+				attrs = ' xml:lang="%s"' % self.language
+			else:
+				attrs = ""
+			return "<math%s>%s</math>" % (attrs, node.innerHTML)
+		except COMError:
+			log.debugWarning("Error retrieving math. "
+				"Not supported in this browser or ISimpleDOM COM proxy not registered.", exc_info=True)
+			raise LookupError
+
 def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""Determine the most appropriate class if this is an IA2 web object.
 	This should be called after finding any classes for the specific web implementation.
@@ -64,6 +95,8 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		clsList.append(BlockQuote)
 	elif iaRole == oleacc.ROLE_SYSTEM_ALERT:
 		clsList.append(Dialog)
+	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
+		clsList.append(Math)
 
 	isApp = iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG)
 	if isApp:

@@ -3,6 +3,65 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+Lo resinyable d'ista versión inclui suporte completo pa l'achiquida d'audio en l'actualización Creators d'o Windows 10, apanyos pa qualques problemas de selección en o modo de navegación, incluindo problemas con seleccionar-lo tot, milloras significants en o suporte d'o Microsoft Edge y milloras en a web tals como a indicación d'elementos marcaus como actuals (fendo servir aria-current).
+
+== Nuevas Caracteristicas ==
+- Agora se puet anunciar a información d'os cantos d'a celda en o Microsoft Excel fendo servir `NVDA+f`. (#3044)
+- En os navegadors web o NVDA agora indica quan bell elemento ye marcau como actual (especificament, fendo servir l'atributo aria-current). (#6358)
+- Agora se suporta o cambio automatico d'idioma en o Microsoft Edge. (#6852)
+- S'ha adhibiu suporte pa la calculadera d'o Windows en o Windows 10 Enterprise LTSB (Long-Term Servicing Branch) y Server. (#6914)
+- Fendo lo comando de leyer a linia actual tres veces a escape letreya a linia con descripcions de caracter. (#6893)
+- Nuevo idioma: Birmán.
+- As flechas d'alto y abaixo y os simbolos Unicode fraccionals agora se charran apropiadament. (#3805)
+
+
+== Cambios ==
+- En navegar con a revisión simpla en as aplicacions que fan servir l'UI Automation agora s'ignora mas obchectos extranios fendo a navegación mas facil. (#6948, #6950) 
+
+
+== Corrección d'errors ==
+- Agora se puet activar elementos de menú d'as pachinas web estando en o modo de navegación. (#6735)
+- Pretar o escape entre que o dialogo "confirmar a eliminación" d'o perfil de configuración ye activo agora zarra o dialogo. (#6851)
+- S'ha apanyau bella crebadura en o Mozilla Firefox y atras aplicacions Gecko en que a caracteristica de multiproceso ye activada. (#6885)
+- L'anunciau d'a color de fundo en a revisión de pantalla agora ye mas precisa quan o texto se dibuixó con un fundo transparent. (#6467) 
+- S'ha amillorau o suporte pa as descripcions de control furnidas en as pachinas web en l'Internet Explorer 11 (especificament, o suporte pa aria-describedby adintro d'iframes y quan se furneix qualques IDs). (#5784)
+- En l'actualización Creators d'o Windows l'achiquida d'audio d'o NVDA marcha unatra vez como en versions anteriors d'o Windows (p.eix. achiquir en que salga voz y sons, achiquir siempre y no achiquir nunca, son todas disponibles). (#6933)
+- O NVDA ya no fallará en navegar u en anunciar qualques controls (UIA) en que no bi ha definiu garra alcorce de teclau. (#6779)
+- Ya no s'adhibe dos espacios lasos en a información d'os alcorces de teclau pa bells controls (UIA). (#6790)
+- Bellas combinacions de teclas en linias HIMS (p.eix. espacio+punto4) ya no fallan intermitentment. (#3157)
+- S'ha apanyau un problema en ubrir bell puerto serie en sistemas que fan servir bell idioma diferent de l'anglés que feba que fallase a connexión con as linias braille en bells casos. (#6845)
+- S'ha achiquiu a prebabilidat que os fichers de configuración se corrompan en apagar-se o Windows. Os fichers de Configuración agora s'escriben en un fichero temporal antis de no reemplazar o fichero de configuración real. (#3165)
+- En fer o comando de leyer a linia actual dos veces a escape pa letreyar a linia agora s'emplega l'idioma apropiau pa os caracters letreyaus. (#6726)
+- Navegar por linias en o Microsoft Edge agora ye mas de 3 veces mas rapedo en l'actualización Creators d'o Windows 10. (#6994)
+- O NVDA ya no anuncia "Web Runtime grouping" en enfocar documentos d'o Microsoft Edge en l'actualización Creators d'o Windows 10. (#6948)
+- Agora se suporta todas as versions existents d'o SecureCRT. (#6302)
+- L'Adobe Acrobat Reader ya no se creba en bells documentos PDF (especificament, ixos que contienen atributos ActualText lasos). (#7021, #7034)
+- En o modo de navegación en o Microsoft Edge, as tablas interactivas (ARIA grids) ya no se brincan en navegar ta tablas con t y mayus+t. (#6977)
+- En o modo de navegación, pretar mayus+inicio dimpués de seleccionar agora torna deseleccionando t'o prencipio d'a linia como s'aspera. (#5746)
+- En o modo de navegación, seleccionar-lo tot (control+a) ya no falla en seleccionar tot o texto si o cursor no ye en o prencipio d'o texto. (#6909)
+- S'ha apanyau belatros preblemas extranios de selección en o modo de navegación. (#7131)
+
+
+== Cambios pa os desembolicadors ==
+- Os argumentos d'a linia de comandos agora se procesan con o modulo argparse d'o Python en cuenta de l'optparse. Ixo permite bellas opcions como -r y -q pa estar manullada exclusivament (#6865)
+- O core.callLater agora mete en coda la tornada de clamada a la coda prencipal d'o NVDA dimpués d'a tardanza dada en cuenta d'eixecutar-la dreitament dispertando a o nuclio. Ixo atura posibles crebaduras debidas a que o nuclio se'n vaiga a adormir accidentalment dimpués de procesar una clamada, en meyo d'una clamada modal tal como lamostrau de bell quadro de mensache. (#6797) 
+- A propiedat InputGesture.identifiers s'ha cambiau de tal traza que ya no se normaliza. (#6945)
+ - A las subclases ya no les fa falta normalizar os identificadors antis de no tornar-los dende ista propiedat.
+ - Si quiers normalizar os identificadors agora bi ha una propiedat InputGesture.normalizedIdentifiers que normaliza os identificadors tornaus por a propiedat identifiers.
+- A propiedat InputGesture.logIdentifier agora ye obsoleta. As clamadas habrían a fer servir InputGesture.identifiers[0] en cuenta. (#6945)
+- S'ha borrau bell codigo obsoleto:
+ - As constans `speech.REASON_*`: S'habría de fer servir en cuenta `controlTypes.REASON_*`. (#6846)
+ - `i18nName` pa las opcions de sintetizador: S'habría de fer servir en cuenta `displayName` y `displayNameWithAccelerator`. (#6846, #5185)
+ - `config.validateConfig`. (#6846, #667)
+ - `config.save`: S'habría de fer servir en cuenta `config.conf.save`. (#6846, #667)
+- A lista de completacions en o menu contextual d'autocompletau d'o PythonConsole ya no amuestra  qualsiquier rota d'obchecto que leve t'o simbolo final que ye estando completau. (#7023)
+- Agora bi ha una biblioteca de prebas unitarias pa o NVDA. (#7026)
+ - As prebas unitarias y a infraestructura se troba en o directorio tests/unit. Mirar-se o texto de documentación en o fichero tests\unit\__init__.py pa mas detalles.
+ - Puetz correr prebas fendo servir "scons tests". Mirar-se a sección "Running Tests" d'o readme.md pa mas detalles.
+ - Si yes puyando una petición de pull pa o NVDA en primeras has de correr as prebas y asegurar-te que pasan.
+
+
 = 2017.1 =
 O resinyable d'ista versión inclui l'anunciau de seccions y columnas de texto en o Microsoft Word, Suporte pa leyer, navegar y anotar libros en o Kindle pa PC y suporte amillorau pa o Microsoft Edge.
 
