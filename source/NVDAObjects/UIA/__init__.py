@@ -1295,7 +1295,9 @@ class UIA(Window):
 		This just reports the element that received the alert in speech and braille, similar to how focus is presented.
 		Skype for business toast notifications being one example.
 		"""
-		self.reportFocus()
+		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		# Ideally, we wouldn't use getBrailleTextForProperties directly.
+		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
 class TreeviewItem(UIA):
 
