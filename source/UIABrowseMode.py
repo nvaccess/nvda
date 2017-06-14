@@ -1,7 +1,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
 
 from ctypes import byref
 from comtypes import COMError
@@ -298,6 +298,9 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="embeddedObject":
+			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_PaneControlTypeId,UIAHandler.UIA_AriaRolePropertyId:[u"application",u"alertdialog",u"dialog"]})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
 
