@@ -1289,6 +1289,14 @@ class UIA(Window):
 			return
 		return super(UIA, self).event_valueChange()
 
+	def event_UIA_systemAlert(self):
+		"""
+		A base implementation for UI Automation's system Alert event.
+		This just reports the element that received the alert in speech and braille, similar to how focus is presented.
+		Skype for business toast notifications being one example.
+		"""
+		self.reportFocus()
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
