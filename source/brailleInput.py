@@ -6,6 +6,7 @@
 #Copyright (C) 2012-2016 NV Access Limited, Rui Batista
 
 import os.path
+import time
 import louis
 import brailleTables
 import braille
@@ -74,6 +75,8 @@ class BrailleInputHandler(object):
 		#: The user's cursor position within the untranslated braille.
 		#: This enables the user to move within the untranslated braille.
 		self.untranslatedCursorPos = 0
+		#: The time at which uncontracted characters were sent to the system.
+		self._uncontSentTime = None
 
 	@property
 	def table(self):
@@ -113,6 +116,8 @@ class BrailleInputHandler(object):
 				# For contracted braille, an entire word is sent at once.
 				# Don't speak characters as this is sent.
 				speech._suppressSpeakTypedCharacters(len(newText))
+			else:
+				self._uncontSentTime = time.time()
 			self.untranslatedStart = pos
 			self.untranslatedCursorPos = 0
 			self.sendChars(newText)
@@ -245,11 +250,13 @@ class BrailleInputHandler(object):
 		index = self.untranslatedStart + self.untranslatedCursorPos - 1
 		if index < 0:
 			# Erasing before the start of the buffer.
+			self._uncontSentTime = time.time()
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName("backspace"))
 			return
 		cell = self.bufferBraille.pop(index)
 		if index in self.cellsWithText:
 			# Erase a real character.
+			self._uncontSentTime = time.time()
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName("backspace"))
 			char = self.bufferText[-1]
 			self.bufferText = self.bufferText[:-1]
@@ -310,6 +317,23 @@ class BrailleInputHandler(object):
 
 	def handleGainFocus(self, obj):
 		# Clear all state when the focus changes.
+		self.flushBuffer()
+
+	def handleCaretMove(self, obj):
+		if not self.bufferBraille:
+			# No pending braille input, so nothing to do.
+			return
+		if self._uncontSentTime:
+			# Uncontracted braille recently sent characters to the system.
+			# This might cause a caret move, but we don't want to clear state
+			# due to our own text entry.
+			# If the caret move occurred within a short time, we assume it was caused by us.
+			if time.time() - self._uncontSentTime <= 0.3:
+				# This was caused by us. Ignore it.
+				return
+			self._uncontSentTime = None
+		# Braille input is incomplete, but the cursor has been moved.
+		# Clear all state.
 		self.flushBuffer()
 
 	def handleConfigProfileSwitch(self):
