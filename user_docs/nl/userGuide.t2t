@@ -148,8 +148,9 @@ Op de NVDA website kunt u lezen hoe u dit kunt doen.
 
 Wanneer NVDA de eerste keer start, komt u in het welkomstscherm van het programma dat u informatie geeft over de NVDA-toets en het NVDA-menu.
 Verderop in deze handleiding kunt u hier meer over lezen.
-Op het welkomstscherm treft u ook 3 selectievakjes aan.
-Als u in het  eerste vakje een vinkje zet, wordt de CapsLock-toets ook als NVDA-toets gebruikt. 
+Op het welkomsscherm treft u een vervolgkeuzemenu en 3 selectievakjes aan.
+Via het vervolgkeuzemenu kunt u een toetsenbordindeling selecteren.
+Als u in het eerste selectievakje een vinkje zet, wordt de CapsLock-toets ook als NVDA-programmatoets gebruikt.
 Als u een vinkje in het tweede vakje zet, zal NVDA automatisch opstarten zodra u bij Windows bent aangemeld. Deze mogelijkheid is alleen beschikbaar voor de geïnstalleerde versie van NVDA. 
 Een vinkje in het derde selectievakje zorgt ervoor dat dit welkomsscherm verschijnt, telkens  wanneer NVDA wordt gestart.  
 
@@ -960,12 +961,15 @@ In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor
 Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen.
 Deze optie heeft geen betrekking op de selectieaanwijzer.
 
-==== Time-out voor berichten (sec.) ====
-In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-berichten in het uitleesvenster worden weergegeven.
+==== Time-out voor meldingen (sec.) ====
+In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen in het uitleesvenster worden weergegeven.
 Als u "0" als waarde invult, worden geen berichten getoond.
 
+==== Meldingen voor onbepaalde tijd tonen ====
+Met deze optie kunnen NVDA-meldingen voor onbepaalde tijd op de brailleleesregel worden getoond.
+
 %kc:setting
-==== Braille volgkeuze ====[BrailleTether]
+==== Braille volgmoduskeuze ====[BrailleTether]
 Toets: NVDA+control+t
 
 Hiermee kunt u bepalen of de leesregel de systeemfocus dan wel de navigatorobject- / reviewcursor moet volgen
@@ -2223,8 +2227,8 @@ http://mielke.cc/brltty/doc/KeyTables/] raadplegen.
 | Cursor naar Braillecel verplaatsen | route (Cursor naar karakter bewegen) |
 %kc:endInclude
 
-+ Brailleleesregelafkortingen met betrekking tot type besturingselement en gebruiksstatus +
-Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement en de gebruiksstatus.
++ Brailleleesregelafkortingen met betrekking tot type besturingselement, gebruiksstatus en oriëntatiepunten +
+Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement, de gebruiksstatus alsmede oriëntatiepunten.
 
 || Afkorting | Type besturingselement |
 | kn | knop |

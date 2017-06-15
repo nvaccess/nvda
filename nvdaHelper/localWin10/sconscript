@@ -1,0 +1,73 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvaccess.org/
+#Copyright 2016-2017 NV Access Limited
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import os
+
+Import(
+	'env',
+	'sourceDir',
+	'libInstallDir',
+	'localLib',
+)
+
+TARGET_ARCH=env['TARGET_ARCH']
+debug=env['nvdaHelperDebugFlags']
+release=env['release']
+signExec=env['signExec'] if env['certFile'] else None
+progFilesX86 = os.getenv("ProgramFiles(x86)")
+
+env.Append(CPPDEFINES=[
+	'UNICODE', '_CRT_SECURE_NO_DEPRECATE',
+	('LOGLEVEL','${nvdaHelperLogLevel}')])
+env.Append(CCFLAGS=['/W3', '/WX'])
+env.Append(CXXFLAGS=['/EHsc', '/ZW', 
+	r'/AI%s\Microsoft Visual Studio 14.0\VC\vcpackages' % progFilesX86,
+	r'/AI%s\Windows Kits\10\UnionMetadata' % progFilesX86])
+env.Append(CPPPATH=[Dir('..').abspath])
+env.Append(LINKFLAGS=['/incremental:no', '/WX'])
+env.Append(LINKFLAGS='/release') # We always want a checksum in the header
+
+if not release: 
+	env.Append(CCFLAGS=['/Od'])
+else:
+	env.Append(CCFLAGS='/O2')
+	env.Append(CCFLAGS='/GL')
+	env.Append(LINKFLAGS=['/LTCG'])
+
+if 'RTC' in debug:
+	env.Append(CCFLAGS=['/RTCsu'])
+
+# We always want debug symbols
+env.Append(PDB='${TARGET}.pdb')
+env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+localWin10Lib = env.SharedLibrary(
+	target="nvdaHelperLocalWin10",
+	source=[
+		env['projectResFile'],
+		'oneCoreSpeech.cpp',
+	],
+	LIBS=["oleaut32", localLib[2]],
+)
+if signExec:
+	env.AddPostAction(localWin10Lib[0], [signExec])
+env.Install(libInstallDir, localWin10Lib)
+
+# UWP dlls can only be dynamically linked with the CRT,
+# but some systems might not have this version of the CRT.
+# Therefore, we must include it.
+vcRedist = os.path.join(progFilesX86, r"Microsoft Visual Studio 14.0\VC\redist\onecore\x86\Microsoft.VC140.CRT")
+for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
+	fn = os.path.join(vcRedist, fn)
+	env.Install(sourceDir, fn)

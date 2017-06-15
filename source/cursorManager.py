@@ -341,13 +341,10 @@ class CursorManager(baseObject.ScriptableObject):
 			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
 
 	def script_selectToEndOfLine(self,gesture):
-		curInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		curInfo.collapse()
-		tempInfo=curInfo.copy()
-		curInfo.expand(textInfos.UNIT_CHARACTER)
-		tempInfo.expand(textInfos.UNIT_LINE)
-		if curInfo.compareEndPoints(tempInfo,"endToEnd")<0:
-			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
+		# #7157: There isn't necessarily a line ending character or insertion point at the end of a line.
+		# Therefore, always allow select to end of line,
+		# even if the caret is already on the last character of the line.
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
 
 	def script_selectToTopOfDocument(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_FIRST)

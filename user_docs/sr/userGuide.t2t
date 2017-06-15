@@ -26,7 +26,7 @@ Glavne karakteristike uključuju:
 - Preveden na 50 jezika
 - Podrška za moderne Windows operativne sisteme uključujući 32 bitne i 64 bitne verzije
 - Sposobnost da se pokrene na Windows ekranu za prijavljivanje i drugim bezbednim ekranima
-- Podrška za standardne interfejse pristupačnosti kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation podržan samo na Windows 7 i novijim)
+- Podrška za standardne interfejse pristupačnosti kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation podržan samo na Windowsu 7 i novijim)
 - Podrška za Windows komandnu liniju i druge konzolne aplikacije
 -
 
@@ -39,11 +39,11 @@ Pored pružanja svojih poruka i interfejsa na jednom od podržanih jezika, NVDA 
 
 NVDA dolazi sa sintetizatorom[eSpeak NG https://github.com/espeak-ng/espeak-ng], besplatnom, otvorenog koda, višejezičnom sintezom.
 
-Informacije o sintezama koje NVDA podržava možete pronaći u delu[Supported Speech Synthesizers #SupportedSpeechSynths].
+Informacije o sintezama koje NVDA podržava možete pronaći u delu[Podržani sintetizatori govora #SupportedSpeechSynths].
 
 ++ Podrška za brajeve redove ++
 Za korisnike koji imaju brajev red, NVDA može pružati informacije na brajevom pismu.
-Molimo vas da pogledate deo[Supported Braille Displays #SupportedBrailleDisplays] za informacije o podržanim brajevim redovima.
+Molimo vas da pogledate deo[Podržani brajevi redovi #SupportedBrailleDisplays] za informacije o podržanim brajevim redovima.
 
 NVDA podržava brajeve kodove za puno jezika, uključujući contracted, uncontracted i kompjuterske brajeve kodove.
 
@@ -99,7 +99,7 @@ Ako instalirate NVDA iz preuzete datoteke, pritisnite dugme instaliraj NVDA.
 Ako ste zatvorili ovaj dijalog ili želite da instalirate NVDA iz prenosive kopije, izaberite instaliraj NVDA u NVDA meniju iz podmenija alati.
 
 Dijalog za instalaciju će zatražiti potvrdu i takođe reći da li ova instalacija ažurira neku postojeću instalaciju.
-Aktiviranje dugmeta nastavi počinje instalacija NVDA.
+Aktiviranjem dugmeta nastavi počinje instalacija NVDA.
 Tu takođe imate nekoliko opcija koje su objašnjene u nastavku.
 Kada se instalacija završi, pojaviće se poruka koja će vam reći da li je instalacija uspela.
 Aktiviranje dugmeta  OK će pokrenuti novu kopiju NVDA.
@@ -147,8 +147,9 @@ Molimo proverite NVDA sajt da saznate kako to da uradite.
 
 Kada se NVDA pokrene po prvi put, dobićete dijalog sa osnovnim informacijama o NVDA tasteru i NVDA meniju.
 (Molimo pogledajte naredne sekcije o ovim temama.)
-Dijalog takođe sadrži tri polja za potvrdu.
-Prvi vam dozvoljava da podesite da li NVDA treba da koristi caps lock kao NVDA taster.
+Dijalog takođe sadrži izborni okvir i tri izborna polja.
+Izborni okvir vam omogućava da izaberete raspored tastature.
+Prvo izborno polje vam dozvoljava da izaberete da li NVDA treba da koristi Capslock kao njegov taster.
 Drugi vam omogućava da podesite da li NVDA treba automatski da se pokrene nakon prijave u Windows i dostupan je samo za instalirane kopije.
 Treći vam dozvoljava da podesite da li ovaj dijalog dobrodošlice treba da se prikaže svaki put kada se NVDA pokrene.
 
@@ -199,7 +200,7 @@ Naravno, ovi dvostruki dodiri takođe prepoznaju koliko prsta je na ekranu, tako
 ==== Prevlačenja ====
 Brzo prevucite prst preko ekrana.
 
-Postoji četiri ovakva pokreta u zavisnosti od pravca prevlačenja: Prevlačenje nalevo, Prevlačenje nadesno, Prevlačenje nagore I prevlačenje nadole.
+Postoji četiri ovakva pokreta u zavisnosti od pravca prevlačenja: Prevlačenje ulevo, Prevlačenje udesno, Prevlačenje nagore I prevlačenje nadole.
 
 Kao i dodiri, više od jednog prsta se može koristiti za pokrete.
 Tako da, pokreti kao što su prevlačenje sa četiri prsta nagore ili dva prsta nadole su mogući.
@@ -234,21 +235,21 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 ++ Osnovne NVDA komande ++
 %kc:beginInclude
 || Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir| Opis |
-| Zaustavi govor | Control | control | dodir sa dva prsta| govor prestaje|
+| Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta| govor prestaje|
 | Pauziraj govor | Šift| Šift| Nema komande| pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
 | NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta| otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
 | Prebaci režim govora| NVDA+s | NVDA+s | Nema komande | Prebacuje režime govora između govor, pištanja i isključen. |
 | Uključuje i isključuje pomoć za unos| NVDA+1 | NVDA+1 | Nema komande | pritiskanje bilo kog tastera u ovom režimu prijavljuje ime tastera, i opis komande koju NVDA koristi|
 | Izlaz iz NVDA| NVDA+q | NVDA+q | Nema komande | izlazi iz NVDA|
 | Ignoriši sledeći taster| NVDA+f2 | NVDA+f2 | Nema komande | govori NVDA-u da sledeći taster pošalje kroz aplikaciju, čak i ako je to NVDA komanda|
-| Uključuje i isključuje režim spavanja za trenutnu aplikaciju| NVDA+shift+s | NVDA+shift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
+| Uključuje i isključuje režim spavanja za trenutnu aplikaciju| NVDA+šift+s | NVDA+šift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
 %kc:endInclude
 
 ++ Prijavljivanje sistemskih informacija++
 %kc:beginInclude
 || Ime | Komanda | Opis |
 | Prijavi datum/vreme| NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme|
-| Prijavi stanje baterije| NVDA+shift+b | prijavljuje stanje baterije da li je punjač uključen i trenutan procenat. |
+| Prijavi stanje baterije| NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutan procenat. |
 | Prijavi tekst privremene memorije| NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
 %kc:endInclude
 
@@ -272,7 +273,7 @@ Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim foku
 | Prijavi trenutni fokus| NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče|
 | Prijavi naslov| NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju|
 | Čitaj aktivan prozor| NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
-| Prijavi statusnu traku| NVDA+end | NVDA+shift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče|
+| Prijavi statusnu traku| NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče|
 %kc:endInclude
 
 ++ Navigacija sa sistemskim kursorom++[SystemCaret]
@@ -285,7 +286,7 @@ NVDA će izgovarati kada se krećete znak po znak, reč i red, i takođe će izg
 NVDA Pruža sledeće komande za sistemski kursor:
 %kc:beginInclude
 || Ime | Desktop komanda | Laptop komanda | opis |
-| Izgovori sve | NVDA+downArrow | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita|
+| Izgovori sve | NVDA+Strelica dole | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita|
 | Pročitaj trenutni red| NVDA+Strelica gore| NVDA+l | Čita red na kom se sistemski kursor nalazi. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta sriče red koristeći opise znakova. |
 | Pročitaj trenutni izbor teksta| NVDA+šift+strelica gore | NVDA+šift+s | Čita trenutno odabran tekst|
 | Sledeća rečenica | alt+strelica dole | alt+strelica dole | Pomera kursor na sledeću rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook) |
@@ -294,8 +295,8 @@ NVDA Pruža sledeće komande za sistemski kursor:
 
 Kada ste u tabeli, Sledeće komande su takođe dostupne:
 || Ime | Komanda | Opis |
-| Pomeri na prethodnu kolonu| control+alt+strelica levo | Pomera sistemski kursor na prethodnu kolonu(ostajete u istom redu) |
-| Pomeri na sledeću kolonu| control+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
+| Pomeri na prethodnu kolonu| Kontrol+alt+strelica levo | Pomera sistemski kursor na prethodnu kolonu(ostajete u istom redu) |
+| Pomeri na sledeću kolonu| Kontrol+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
 | Pomeri na prethodni red | control+alt+strelica gore | Pomera sistemski kursor na prethodni red(ostajete u istoj koloni) |
 | Pomeri na sledeći red| control+alt+strelica dole | Pomera sistemski kursor na sledeći red(ostajete u istoj koloni) |
 %kc:endInclude
@@ -966,6 +967,9 @@ Pokazivač izabranog teksta se ne menja ovom opcijom.
 ==== Vreme isteka poruke (u sekundama) ====
 Ova opcija je brojčano polje koje bira koliko dugo se poruke zadržavaju na brajevom redu.
 Upisivanje broja 0 isključuje ovakve poruke.
+
+==== Beskonačno prikaži poruke====
+Ova opcija dozvoljava da NVDA poruke budu beskonačno prikazane na brajevom redu.
 
 %kc:setting
 ==== brajev red vezan za ====[BrailleTether]
@@ -2224,8 +2228,8 @@ Molimo pogledajte [BRLTTY tabele tasterskih prečica http://mielke.cc/brltty/doc
 | Pomeri se na brajevu ćeliju | route (Pomeri kursor na znak) |
 %kc:endInclude
 
-+ Skraćenice za stanje i vrstu kontrole na brajevom redu+
-Kako bi što je više moguće  informacija stalo na brajev red, sledeće skraćenice su dodate za imenovanje vrste i stanja kontrole.
++ Skraćenice za vrste kontrola, stanje i orjentire+
+Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćenice su dodate za vrste kontrola stanje kao i orjentire.
 
 || Skraćenica | Vrsta kontrole |
 | btn | Dugme |
@@ -2239,6 +2243,7 @@ Kako bi što je više moguće  informacija stalo na brajev red, sledeće skraće
 | hN | Zaglavlje na nivou n, na primer h1, h2. |
 | lnk | link |
 | lst | Lista |
+| lmk | Orjentir |
 | vlnk | Posećen link |
 | mnu | Meni |
 | mnubar | Traka menija |
@@ -2260,6 +2265,17 @@ Sledeći pokazivači stanja su takođe definisani:
 | ro | Prikazano kada objekat(na primer polje za unos teksta) je samo za čitanje|
 | sel | Prikazano kada je objekat izabran|
 | submnu | Prikazano kada objekat ima dodatni prozor(obično podmeni) |
+
+Takođe, sledeće skraćenice za orjentire su definisane:
+|| Skraćenica | Orjentir |
+| bnnr | baner |
+| cinf | Informacije o sadržaju |
+| cmpl | Dodatni |
+| form | Formular |
+| main | Glavni |
+| navi | Navigacija|
+| srch | Pretraga |
+| rgn | region |
 
 + Napredne teme +
 

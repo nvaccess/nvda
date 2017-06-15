@@ -3,6 +3,42 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+== Nouvelles Fonctionnalités ==
+- Un paramètre Braille a été ajouté pour "afficher les messages indéfiniment". (#6669)
+- Dans les listes de messages sous Microsoft Outlook, les étiquettes des messages sont annoncées. (#6374)
+- Sous Microsoft Powerpoint, le type exact d'une forme est maintenant annoncé quand on édite une diapositive (Exemples : triangle, cercle, vidéo, flèche), plutôt que juste "forme". (#7111)
+
+
+== Changements ==
+- Un geste non affecté (script_restart) a été ajouté pour permettre de redémarrer NVDA rapidement. (#6396)
+- La configuration clavier peut maintenant être choisie dans le dialogue de bienvenue à NVDA. (#6863)
+- Le nom des repères est abrégé en Braille comme suit : (#3975)
+ - "repère" : "rpr"
+ - "bannière" : "bnnr"
+ - "complémentaire" : "cmpl"
+ - "information sur le contenu" : "cinf"
+ - "principal" : "prnc"
+ - "navigation" : "nav"
+ - "recherche" : "rch"
+ - "formulaire" : "frm"
+ - "région" : "rgn"
+ - Exemple : "repère navigation" devient "rpr nav"
+
+ 
+== Corrections de Bogues ==
+- Les éléments div éditables sous Chrome n'ont plus leur étiquette annoncée comme leur valeur en mode navigation. (#7153)
+- L'appui sur fin en mode navigation dans un document Microsoft Word vide ne provoque plus une erreur d'exécution. (#7009)
+- Le mode navigation est maintenant correctement supporté sous Microsoft Edge dans le cas où un document a reçu un rôle ARIA spécififique de Document. (#6998)
+- En mode navigation, vous pouvez maintenant sélectionner ou désélectionner jusqu'à la fin de la ligne en utilisant maj+fin même si le curseur est sur le dernier caractère de la ligne. (#7157)
+- Si un dialogue contient une barre de progression, le texte du dialogue est maintenant mis à jour quand la barre de progression évolue. Cela signifie, par exemple, que le temps restant peut maintenant être lu dans le dialogue de téléchargement de mise à jour de NVDA. (#6862)
+
+
+== Changement pour les Développeurs ==
+- Dans le journal, les timestamps incluent maintenant les millisecondes. (#7163)
+
+ 
 = 2017.2 =
 Les points forts de cette versions incluent le support intégral de l'atténuation audio sous Windows 10 Creators Update; la correction de plusieurs problèmes de sélection en mode navigation, incluant les problèmes pour sélectionner tout; des améliorations significatives dans le support de Microsoft Edge; et des améliorations sur le web tels que l'indication des éléments marqués comme en cours (en utilisant aria-current).
 

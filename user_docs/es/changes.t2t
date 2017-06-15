@@ -3,6 +3,42 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+== Nuevas Características ==
+- Se ha añadido una opción Braille para "mostrar mensajes indefinidamente". (#6669)
+- En la lista de mensajes de Microsoft Outlook, se anuncia si un mensaje está marcado. (#6374)
+- En Microsoft Powerpoint, ahora se anuncia el tipo exacto de una forma cuando se edita una diapositiva (Ejemplos incluyen: triángulo, círculo, vídeo, flecha), en lugar de sólo 'forma'. (#7111)
+
+
+== Cambios ==
+- Un gesto no vinculado (script_restart) se ha añadido para permitir que NVDA se reinicie rápidamente. (#6396)
+- La distribución de teclado ahora puede configurarse desde el diálogo Bienvenida de NVDA. (#6863)
+- Los nombres de los puntos de referencia se abrevian en Braille como sigue: (#3975)
+ - "punto de referencia": "pdr"
+ - "título": "tlo"
+ - "complementario": "comp"
+ - "info de contenido": "cinf"
+ - "principal": "main"
+ - "navegación": "nav"
+ - "búsqueda": "busq"
+ - "form": "frm"
+ - "region": "rgn"
+ - Ejemplo: "punto de referencia de navegación" sería "pdr nav"
+
+
+== Corrección de Errores ==
+- Los elementos div editables en Chrome ya no tienen su etiqueta anunciada como su valor mientras se esté en modo exploración. (#7153)
+- Pulsar fin mientras se esté en modo exploración de un documento vacío de Microsoft Word ya no provoca un error en tiempo de ejecución. (#7009)
+- El modo exploración ahora se soporta correctamente en Microsoft Edge cuando a un documento se le haya dado un rol ARIA específico de documento. (#6998)
+- En modo exploración, ahora puedes seleccionar o deseleccionar hasta el fin de la línea utilizando shift+fin incluso cuando el cursor esté sobre el último carácter de la línea. (#7157)
+- Si un diálogo contiene una barra de progreso, el texto del diálogo ahora se actualiza cuando la barra de progreso cambie. Esto significa, por ejemplo, que el tiempo restante ahora puede leerse en el diálogo de NVDA "Descargando Actualizaciones". (#6862)
+
+
+== Cambios para Desarrolladores ==
+- Las marcass de tiempo ahora incluyen milésimas de segundo en el registro. (#7163)
+
+
 = 2017.2 =
 Lo reseñable de esta versión incluye soporte completo para la atenuación de audio en la actualización Windows 10 Creators; correcciones para varios problemas con la selección en modo exploración, incluyendo problemas con seleccionar todo; mejoras significativas en el soporte de Microsoft Edge; y mejoras en la web tales como el indicado de elementos marcados como actual (utilizando aria-current).
 
