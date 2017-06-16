@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -209,38 +209,41 @@ class MainFrame(wx.Frame):
 		else:
 			wx.GetApp().ExitMainLoop()
 
+	def onNVDASettingsCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog)
+
 	def onGeneralSettingsCommand(self,evt):
-		self._popupSettingsDialog(GeneralSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
 	def onSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(SynthesizerDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, SynthesizerPanel)
 
 	def onVoiceCommand(self,evt):
-		self._popupSettingsDialog(VoiceSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, VoiceSettingsPanel)
 
 	def onBrailleCommand(self,evt):
-		self._popupSettingsDialog(BrailleSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
-		self._popupSettingsDialog(KeyboardSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
 	def onMouseSettingsCommand(self,evt):
-		self._popupSettingsDialog(MouseSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
 
 	def onReviewCursorCommand(self,evt):
-		self._popupSettingsDialog(ReviewCursorDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
 
 	def onInputCompositionCommand(self,evt):
-		self._popupSettingsDialog(InputCompositionDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
 
 	def onObjectPresentationCommand(self,evt):
-		self._popupSettingsDialog(ObjectPresentationDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
 
 	def onBrowseModeCommand(self,evt):
-		self._popupSettingsDialog(BrowseModeDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
 
 	def onDocumentFormattingCommand(self,evt):
-		self._popupSettingsDialog(DocumentFormattingDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	def onUwpOcrCommand(self, evt):
 		self._popupSettingsDialog(UwpOcrDialog)
@@ -326,43 +329,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 		self.menu=wx.Menu()
 		menu_preferences=self.preferencesMenu=wx.Menu()
-		# Translators: The label for the menu item to open general Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
-		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
-		# Translators: The label for the menu item to open Synthesizer settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_("Change the synthesizer to be used"))
-		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
-		# Translators: The label for the menu item to open Voice Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume to use"))
-		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
-		# Translators: The label for the menu item to open Braille Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("B&raille settings..."))
-		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
-		# Translators: The label for the menu item to open Keyboard Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
-		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
-		# Translators: The label for the menu item to open Mouse Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
-		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
-		# Translators: The label for the menu item to open Review Cursor dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
-		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
-		# Translators: The label for the menu item to open Input Composition Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Input composition settings..."),_("Configure how NVDA reports input composition and candidate selection for certain languages")) 
-		self.Bind(wx.EVT_MENU, frame.onInputCompositionCommand, item)
-		# Translators: The label for the menu item to open Object Presentation dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
-		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
-		# Translators: The label for the menu item to open Browse Mode settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
-		self.Bind(wx.EVT_MENU, frame.onBrowseModeCommand, item)
-		# Translators: The label for the menu item to open Document Formatting settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change settings of document properties")) 
-		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
-		if winVersion.isUwpOcrAvailable():
-			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("Windows 10 OCR..."))
-			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
+		# Translators: The label for the menu item to open NVDA Settings dialog.
+		item = menu_preferences.Append(wx.ID_ANY,_("&NVDA settings..."),_("NVDA settings"))
+		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Default speech dictionary dialog.
