@@ -1101,6 +1101,9 @@ This code is executed if a gain focus event is received by this object.
 	language = None
 
 	def _get__hasNavigableText(self):
+		# The generic NVDAObjectTextInfo by itself is never enough to be navigable
+		if self.TextInfo is NVDAObjectTextInfo:
+			return False
 		role = self.role
 		states = self.states
 		if role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT):
