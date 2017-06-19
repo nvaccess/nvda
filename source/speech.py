@@ -327,9 +327,9 @@ def _speakPlaceholderIfEmpty(info, obj, reason):
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
-	# If an NVDAObject has text that is navigable, and browse mode is not in use, then present the current line in speech
+	# If an NVDAObject has text that is navigable, and we're not speaking for focus entered, and browse mode is not in use, then present the current line in speech
 	import browseMode
-	isEditable=(not isinstance(obj.treeInterceptor,browseMode.BrowseModeDocumentTreeInterceptor) or obj.treeInterceptor.passThrough) and obj._hasNavigableText
+	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED) and (not isinstance(obj.treeInterceptor,browseMode.BrowseModeDocumentTreeInterceptor) or obj.treeInterceptor.passThrough) and obj._hasNavigableText
 	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True, "placeholder":False}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
