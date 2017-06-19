@@ -1211,6 +1211,19 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if region.focusToHardLeft:
 			# Only scroll to the start of this region.
 			restrictPos = endPos - regionPos - 1
+		elif  config.conf["braille"]["focusPresentation"] is 2:
+			# Reverse the current regions with their positions. Unfortunately, we can't reverse a generator
+			regionsWithPositions=reversed(list(self.regionsWithPositions))
+			# Use an assertion to iterate to the last region currently displayed. This should never fail
+			assert(region in (testRegion for testRegion, start, end in regionsWithPositions))
+			# Loop through the remaining regions
+			for region, start, end in regionsWithPositions:
+				if region.focusToHardLeft:
+					# Only scroll to the start of this region.
+					restrictPos = start
+					break
+			else:
+				restrictPos = 0
 		else:
 			restrictPos = 0
 		if startPos <= restrictPos:
@@ -1283,7 +1296,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft or config.conf["braille"]["focusPresentation"]==1:
+		if region.focusToHardLeft or config.conf["braille"]["focusPresentation"] is 1:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
