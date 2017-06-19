@@ -1410,6 +1410,8 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
+		if index is newAncestorsStart and config.conf["braille"]["focusPresentation"] is 2:
+			region.focusToHardLeft = True
 		region.update()
 		yield region
 
