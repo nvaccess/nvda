@@ -15,9 +15,13 @@ class NetUIRicherLabel(UIA):
 	def event_liveRegionChange(self):
 		# The base liveRegionChange event is not enough as Skype for Business concatinates recent chat messages from the same person within the same minute
 		# Therefore, specifically strip out the chat content and only report the most recent part added.
-		# The object's name contains the full message (I.e. person: content, timestamp)
-		# The object's value just contains the content
+		# The object's name contains the full message (I.e. person: content, timestamp) loosely separated by commas.
+		# Example string: "Michael Curran : , , Hello\nThis is a test , 10:45 am."
+		# Where person is "Michael Curran", content is "Hello\nThis is a test" and timestamp is "10:45 am" 
+		# The object's value just contains the content.
+		# Example: "Hello\nThis is a test"
 		# We are only interested in person and content
+		# Therefore use value (content) to  locate and split off the person from the name (fullText)
 		# Normalize the usage of end-of-line characters (name and value seem to expose them differently, which would break comparison)
 		content=self.value.replace('\r','\n').strip()
 		fullText=self.name.replace('\r\n\r\n','\n')
@@ -26,7 +30,7 @@ class NetUIRicherLabel(UIA):
 		pretext=fullText[:contentStartIndex]
 		# There are some annoying comma characters  after the person's name 
 		pretext=pretext.replace(' ,','')
-		# If the object's are the same, the person is the asame, and the new content is the old content but with more appended, report the appended content
+		# If the objects are the same, the person is the same, and the new content is the old content but with more appended, report the appended content
 		# Otherwise, report the person and the initial content
 		runtimeID=self.UIAElement.getRuntimeId()
 		lastRuntimeID,lastPretext,lastContentLines=self.appModule._lastLiveChatMessageData
@@ -42,6 +46,7 @@ class NetUIRicherLabel(UIA):
 
 class AppModule(appModuleHandler.AppModule):
 
+	# data to store the last chat message (runtime ID,person,content lines)
 	_lastLiveChatMessageData=[],"",[]
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
