@@ -26,18 +26,6 @@ import brailleDisplayDrivers
 import inputCore
 import brailleTables
 
-#: Maps old table names to new table names for tables renamed in newer versions of liblouis.
-RENAMED_TABLES = {
-	"da-dk-g16.utb":"da-dk-g16.ctb",
-	"da-dk-g18.utb":"da-dk-g18.ctb",
-	"nl-BE-g1.ctb":"nl-BE-g0.utb",
-	"nl-NL-g1.ctb":"nl-NL-g0.utb",
-	"no-no.ctb":"no-no-comp8.ctb",
-	"sk-sk-g1.utb":"sk-g1.ctb",
-	"UEBC-g1.ctb":"en-ueb-g1.ctb",
-	"UEBC-g2.ctb":"en-ueb-g2.ctb",
-}
-
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
 	# editable text field.
