@@ -62,6 +62,7 @@ def listTables():
 RENAMED_TABLES = {
 	"da-dk-g16.utb":"da-dk-g16.ctb",
 	"da-dk-g18.utb":"da-dk-g18.ctb",
+	"gr-gr-g1.utb":"el.ctb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-comp8.ctb",
@@ -119,6 +120,9 @@ addTable("de-de-g1.ctb", _("German grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("de-de-g2.ctb", _("German grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("el.ctb", _("Greek (Greece)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("en-gb-comp8.ctb", _("English (U.K.) 8 dot computer braille"))
@@ -191,9 +195,6 @@ addTable("gu-in-g1.utb", _("Gujarati grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("gr-bb.ctb", _("Koine Greek"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("gr-gr-g1.utb", _("Greek (Greece) grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("he.ctb", _("Hebrew 8 dot computer braille"))
