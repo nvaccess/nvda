@@ -24,6 +24,8 @@ Normally, all that is required is to create and execute a L{BrailleInputGesture}
 as there are built-in gesture bindings for braille input.
 """
 
+#: Table to use if the input table configuration is invalid.
+FALLBACK_TABLE = "en-us-comp8.ctb"
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
@@ -53,7 +55,16 @@ class BrailleInputHandler(object):
 	"""
 
 	def __init__(self):
-		self._table = brailleTables.getTable(config.conf["braille"]["inputTable"])
+		# #6140: Migrate to new table names as smoothly as possible.
+		tableName = config.conf["braille"]["inputTable"]
+		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
+		if newTableName:
+			tableName = config.conf["braille"]["inputTable"] = newTableName
+		try:
+			self._table = brailleTables.getTable(tableName)
+		except LookupError:
+			log.error("Invalid table: %s" % tableName)
+			self._table = brailleTables.getTable(FALLBACK_TABLE)
 		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
 		#: e.g. capital and number signs.
 		self.bufferBraille = []
