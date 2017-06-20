@@ -16,10 +16,10 @@ class NetUIRicherLabel(UIA):
 		# The base liveRegionChange event is not enough as Skype for Business concatinates recent chat messages from the same person within the same minute
 		# Therefore, specifically strip out the chat content and only report the most recent part added.
 		# The object's name contains the full message (I.e. person: content, timestamp) loosely separated by commas.
-		# Example string: "Michael Curran : , , Hello\nThis is a test , 10:45 am."
+		# Example string: "Michael Curran : , , Hello\r\n\r\nThis is a test , 10:45 am."
 		# Where person is "Michael Curran", content is "Hello\nThis is a test" and timestamp is "10:45 am" 
 		# The object's value just contains the content.
-		# Example: "Hello\nThis is a test"
+		# Example: "Hello\rThis is a test"
 		# We are only interested in person and content
 		# Therefore use value (content) to  locate and split off the person from the name (fullText)
 		# Normalize the usage of end-of-line characters (name and value seem to expose them differently, which would break comparison)
