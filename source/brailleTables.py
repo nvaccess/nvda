@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
 
 """Manages information about available braille translation tables.
 """
@@ -17,6 +17,8 @@ TABLES_DIR = r"louis\tables"
 #: * fileName: The file name of the table.
 #: * displayname: The name of the table as displayed to the user. This should be translatable.
 #: * contracted: C{True} if the table is contracted, C{False} if uncontracted.
+#: * output: C{True} if this table can be used for output, C{False} if not.
+#: * input: C{True} if this table can be used for input, C{False} if not.
 BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName", "contracted", "output", "input"))
 
 #: Maps file names to L{BrailleTable} objects.

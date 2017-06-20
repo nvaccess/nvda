@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """High-level functions to speak information.
 """ 
@@ -620,6 +620,10 @@ def _suppressSpeakTypedCharacters(number):
 
 #: The character to use when masking characters in protected fields.
 PROTECTED_CHAR = "*"
+#: The first character which is not a Unicode control character.
+#: This is used to test whether a character should be spoken as a typed character;
+#: i.e. it should have a visual or spatial representation.
+FIRST_NONCONTROL_CHAR = u" "
 def speakTypedCharacters(ch):
 	global curWordChars
 	typingIsProtected=api.isTypingProtected()
@@ -654,7 +658,7 @@ def speakTypedCharacters(ch):
 			_suppressSpeakTypedCharactersTime = None
 	else:
 		suppress = False
-	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
+	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
 
 class SpeakTextInfoState(object):
