@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2016 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
 
 """Manages information about available braille translation tables.
 """
@@ -17,21 +17,30 @@ TABLES_DIR = r"louis\tables"
 #: * fileName: The file name of the table.
 #: * displayname: The name of the table as displayed to the user. This should be translatable.
 #: * contracted: C{True} if the table is contracted, C{False} if uncontracted.
-BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName", "contracted"))
+#: * output: C{True} if this table can be used for output, C{False} if not.
+#: * input: C{True} if this table can be used for input, C{False} if not.
+BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName", "contracted", "output", "input"))
 
 #: Maps file names to L{BrailleTable} objects.
 _tables = {}
 
-def addTable(fileName, displayName, contracted=False):
+def addTable(fileName, displayName, contracted=False, output=True, input=True):
 	"""Register a braille translation table.
+	At least one of C{input} or C{output} must be C{True}.
 	@param fileName: The file name of the table.
 	@type fileName: basestring
 	@param displayname: The name of the table as displayed to the user. This should be translatable.
 	@type displayName: unicode
 	@param contracted: C{True} if the table is contracted, C{False} if uncontracted.
 	@type cContracted: bool
+	@param output: C{True} if this table can be used for output, C{False} if not.
+	@type output: bool
+	@param input: C{True} if this table can be used for input, C{False} if not.
+	@type input: bool
 	"""
-	table = BrailleTable(fileName, displayName, contracted)
+	if not output and not input:
+		raise ValueError("input and output cannot both be False")
+	table = BrailleTable(fileName, displayName, contracted, output, input)
 	_tables[fileName] = table
 
 def getTable(fileName):
@@ -55,6 +64,7 @@ def listTables():
 RENAMED_TABLES = {
 	"da-dk-g16.utb":"da-dk-g16.ctb",
 	"da-dk-g18.utb":"da-dk-g18.ctb",
+	"gr-gr-g1.utb":"el.ctb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-comp8.ctb",
@@ -112,6 +122,9 @@ addTable("de-de-g1.ctb", _("German grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("de-de-g2.ctb", _("German grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("el.ctb", _("Greek (Greece)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("en-gb-comp8.ctb", _("English (U.K.) 8 dot computer braille"))
@@ -184,9 +197,6 @@ addTable("gu-in-g1.utb", _("Gujarati grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("gr-bb.ctb", _("Koine Greek"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("gr-gr-g1.utb", _("Greek (Greece) grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("he.ctb", _("Hebrew 8 dot computer braille"))
@@ -319,6 +329,9 @@ addTable("te-in-g1.utb", _("Telugu grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("tr.ctb", _("Turkish grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("unicode-braille.utb", _("Unicode braille"), output=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"))

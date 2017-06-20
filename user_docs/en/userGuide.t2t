@@ -586,8 +586,8 @@ If your braille display has a Perkins-style keyboard, you can also enter contrac
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
 You can configure braille using the [Braille Settings dialog #BrailleSettings].
 
-++ Control Type and State Abbreviations ++
-In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
+++ Control Type, State and Landmark abbreviations ++
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
 
 || Abbreviation | Control type |
 | btn | button |
@@ -600,8 +600,9 @@ In order to fit as much information as possible on a braille display, The folowi
 | rN | table row number n, e.g. r1, r2. |
 | hN | heading at level n, e.g. h1, h2. |
 | lnk | link |
-| lst | list |
 | vlnk | visited link |
+| lst | list |
+| lmk | landmark |
 | mnu | menu |
 | mnubar | menu bar |
 | rbtn | radio button |
@@ -622,6 +623,17 @@ The following state indicators are also defined:
 | ro | displayed when an object (e.g. an editable text field) is read-only |
 | sel | displayed when an object is selected |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
 
 ++ Braille Input ++
 NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
@@ -2319,55 +2331,6 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
-
-+ Braille control type, state and landmark abbreviations +
-In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
-
-|| Abbreviation | Control type |
-| btn | button |
-| cbo | combo box |
-| chk | checkbox |
-| dlg | dialog |
-| edt | editable text field |
-| gra | graphic |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
-| hN | heading at level n, e.g. h1, h2. |
-| lnk | link |
-| vlnk | visited link |
-| lst | list |
-| lmk | landmark |
-| mnu | menu |
-| mnubar | menu bar |
-| rbtn | radio button |
-| tb | table |
-| tv | treeview |
-| lv N | a tree view item has a hierarchical level N|
-| ``-----`` | seperator |
-
-The following state indicators are also defined:
-|| Abbreviation | Control state |
-| ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a checkbox) is not checked |
-| (x) | displayed when an object (e.g. a checkbox) is checked |
-| (-) | displayed when an object (e.g. a checkbox) is half checked |
-| - | displayed when an object (e.g. a tree view item) is collapsible |
-| + | displayed when an object (e.g. a tree view item) is Expandable |
-| clk | displayed when an object is clickable |
-| ro | displayed when an object (e.g. an editable text field) is read-only |
-| sel | displayed when an object is selected |
-| submnu | displayed when an object has a popup (usually a sub-menu) |
-
-Finally, the following abbreviations for landmarks are defined:
-|| Abbreviation | Landmark |
-| bnnr | banner |
-| cinf | content info |
-| cmpl | complementary |
-| form | form |
-| main | main |
-| navi | navigation |
-| srch | search |
-| rgn | region |
 
 + Advanced Topics +
 

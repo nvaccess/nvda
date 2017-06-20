@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #braille.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -24,18 +25,6 @@ import textInfos
 import brailleDisplayDrivers
 import inputCore
 import brailleTables
-
-#: Maps old table names to new table names for tables renamed in newer versions of liblouis.
-RENAMED_TABLES = {
-	"da-dk-g16.utb":"da-dk-g16.ctb",
-	"da-dk-g18.utb":"da-dk-g18.ctb",
-	"nl-BE-g1.ctb":"nl-BE-g0.utb",
-	"nl-NL-g1.ctb":"nl-NL-g0.utb",
-	"no-no.ctb":"no-no-comp8.ctb",
-	"sk-sk-g1.utb":"sk-g1.ctb",
-	"UEBC-g1.ctb":"en-ueb-g1.ctb",
-	"UEBC-g2.ctb":"en-ueb-g2.ctb",
-}
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
@@ -137,6 +126,11 @@ CURSOR_SHAPES = (
 	(0xFF, _("All dots")),
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
+
+#: Unicode braille indicator at the start of untranslated braille input.
+INPUT_START_IND = u"⣏"
+#: Unicode braille indicator at the end of untranslated braille input.
+INPUT_END_IND = u" ⣹"
 
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
@@ -740,12 +734,12 @@ class TextInfoRegion(Region):
 		import brailleInput
 		text = brailleInput.handler.untranslatedBraille
 		if text:
-			rawInputStart = len(self.rawText)
+			rawInputIndStart = len(self.rawText)
 			# _addFieldText adds text to self.rawText and updates other state accordingly.
-			self._addFieldText(text, None, separate=False)
-			rawInputEnd = len(self.rawText)
+			self._addFieldText(INPUT_START_IND + text + INPUT_END_IND, None, separate=False)
+			rawInputIndEnd = len(self.rawText)
 		else:
-			rawInputStart = None
+			rawInputIndStart = None
 		# Now, the selection itself.
 		self._addTextWithFields(sel, formatConfig, isSelection=True)
 		# Finally, get the chunk from the end of the selection to the end of the reading unit.
@@ -780,17 +774,28 @@ class TextInfoRegion(Region):
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
-		if rawInputStart is not None:
-			assert rawInputEnd is not None, "rawInputStart set but rawInputEnd isn't"
-			self._brailleInputStart = self.rawToBraillePos[rawInputStart]
-			self._brailleInputEnd = self.rawToBraillePos[rawInputEnd]
+		if rawInputIndStart is not None:
+			assert rawInputIndEnd is not None, "rawInputIndStart set but rawInputIndEnd isn't"
+			# These are the start and end of the untranslated input area,
+			# including the start and end indicators.
+			self._brailleInputIndStart = self.rawToBraillePos[rawInputIndStart]
+			self._brailleInputIndEnd = self.rawToBraillePos[rawInputIndEnd]
+			# These are the start and end of the actual untranslated input, excluding indicators.
+			self._brailleInputStart = self._brailleInputIndStart + len(INPUT_START_IND)
+			self._brailleInputEnd = self._brailleInputIndEnd - len(INPUT_END_IND)
 			self.brailleCursorPos = self._brailleInputStart + brailleInput.handler.untranslatedCursorPos
 		else:
-			self._brailleInputStart = None
+			self._brailleInputIndStart = None
 
 	def routeTo(self, braillePos):
-		if self._brailleInputStart is not None and self._brailleInputStart <= braillePos <= self._brailleInputEnd:
+		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
 			# The user is moving within untranslated braille input.
+			if braillePos < self._brailleInputStart:
+				# The user routed to the start indicator. Route to the start of the input.
+				braillePos = self._brailleInputStart
+			elif braillePos > self._brailleInputEnd:
+				# The user routed to the end indicator. Route to the end of the input.
+				braillePos = self._brailleInputEnd
 			# Import late to avoid circular import.
 			import brailleInput
 			brailleInput.handler.untranslatedCursorPos = braillePos - self._brailleInputStart
