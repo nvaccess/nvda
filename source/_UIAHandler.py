@@ -126,6 +126,7 @@ UIAPropertyIdsToNVDAEventNames={
 }
 
 UIAEventIdsToNVDAEventNames={
+	UIA_LiveRegionChangedEventId:"liveRegionChange",
 	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
