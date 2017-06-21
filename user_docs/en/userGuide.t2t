@@ -136,6 +136,10 @@ If you have installed NVDA with the installer, then starting NVDA is as simple a
 Additionally you can type NVDA into the Run dialog and press Enter.
 You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons), etc.
 
+For installed copies, NVDA stores the configuration in the roaming application data folder of the current user by default (e.g. "C:\Users\<user>\AppData\Roaming").
+It is possible to change this in a way that NVDA loads its configuration from the local application data folder instead.
+Consult the section about [system wide parameters #SystemWideParameters] for more details.
+
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
 As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
@@ -147,8 +151,9 @@ Please check out the NVDA website for how to do this.
 
 When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu.
 (Please see further sections about these topics.)
-The dialog box also contains three checkboxes.
-The first lets you control if NVDA should use the capslock as an NVDA modifier key.
+The dialog box also contains a combobox and three checkboxes.
+The combobox lets you select the keyboard layout.
+The first checkbox lets you control if NVDA should use the capslock as an NVDA modifier key.
 The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
 
@@ -320,7 +325,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
+By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
 Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
 If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
@@ -542,7 +547,7 @@ This requires that MathPlayer 4 is installed on the computer.
 MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
 
 NVDA supports the following types of mathematical content:
-- MathML in Mozilla Firefox and Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 - Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient.
 - MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 -
@@ -966,6 +971,9 @@ The selection indicator is not affected by this option.
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
 Specifying 0 disables displaying of these messages completely.
+
+==== Show Messages Indefinitely ====
+This option allows NVDA messages to be displayed on the braille display indefinitely.
 
 %kc:setting
 ==== Braille Tethered to ====[BrailleTether]
@@ -1588,6 +1596,17 @@ To use these voices, you will need to install two components:
  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
  -
 -
+
+++ Windows OneCore Voices ++
+Windows 10 includes new voices known as "OneCore" or "mobile" voices.
+Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
+
+To install voices for additional languages, see this Microsoft article: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Please note that the faster rates available with Narrator are not currently available with NVDA.
+Also, the speed you select in the Windows Settings affects the rate set in NVDA.
+These are issues we cannot resolve without changes to Windows.
+We are hopeful that these will be addressed in a future Windows update.
 
 ++ Audiologic Tts3 ++
 This is a commercial speech synthesizer specifically for the Italian language.
@@ -2224,8 +2243,8 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
-+ Braille control type and state abbreviations +
-In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
++ Braille control type, state and landmark abbreviations +
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
 
 || Abbreviation | Control type |
 | btn | button |
@@ -2238,8 +2257,9 @@ In order to fit as much information as possible on a braille display, The folowi
 | rN | table row number n, e.g. r1, r2. |
 | hN | heading at level n, e.g. h1, h2. |
 | lnk | link |
-| lst | list |
 | vlnk | visited link |
+| lst | list |
+| lmk | landmark |
 | mnu | menu |
 | mnubar | menu bar |
 | rbtn | radio button |
@@ -2260,6 +2280,17 @@ The following state indicators are also defined:
 | ro | displayed when an object (e.g. an editable text field) is read-only |
 | sel | displayed when an object is selected |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
 
 + Advanced Topics +
 
@@ -2303,6 +2334,18 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+
+++ System wide parameters++[SystemWideParameters]
+NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.
+These values are stored in the registry under one of the following keys:
+- 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+The following values can be set under this registry key:
+|| Name | Type | Possible values | Description |
+| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
+| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables secure mode on windows secure desktops, allowing the use of the Python console and Log viewer. Due to several major security implications, the use of this option is strongly discouraged |
 
 + Further Information +
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.

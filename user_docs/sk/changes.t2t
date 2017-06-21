@@ -3,6 +3,46 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.2 =
+Prednosti tejto verzie zahŕňajú podporu pre automatické stišovanie zvuku v systéme Windows 10 Creators; opravené problémy s označovaní textu v režime prehliadania; vylepšenú podporu pre MS Edge a zlepšenie oznamovania prvkov, ktoré sú označené ako aktuálne pomocou atribútu aria-current.
+
+== Nové vlastnosti ==
+- Skratka NVDA+F odteraz oznamuje informáciu o orámovaní buniek tabuľky v MS Excely. (#3044)
+- V režime prehliadania NVDA oznamuje prvky, ktoré sú označené ako aktuálne (využíva sa atribút aria-current). (#6358)
+- V programe MS Edge je podporované automatické prepínanie jazykov. (#6852)
+- pridaná podpora pre windows kalkulačku v systémoch 10 Enterprise LTSB a Server. (#6914)
+- Ak stlačíte skratku na vyhláskovanie riadka trikrát za sebou, bude riadok vyhláskovaný foneticky. (#6893)
+- Nový jazyk: Barmčina.
+- Symboly v sade Unicode (konkrétne šípky hore a dole a tiež symboly označujúce rôzne zlomky) sú odteraz oznamované správne. (#3805)
+
+
+== Zmeny ==
+- Ak je zapnutý jednoduchý režim objektovej navigácie, prezeranie  objektov v aplikáciách využívajúcich UI Automation ignoruje nadbytočné nepotrebné objekty. (#6948, #6950)
+
+
+== Opravy ==
+- V režime prehliadania je možné aktivovať položky menu. (#6735)
+- Ak v potvrdzovacom dialógu pri mazaní konfiguračného profilu stlačíte Escape, dialóg sa zatvorí.(#6851)
+- Opravené pády v prehliadači Mozilla firefox a iných aplikáciách postavených na Gecko, ktoré nastávali v prípade, ak mali spustené viaceré procesy. (#6885)
+- Oznamovanie farieb pri prezeraní obrazovky je teraz presnejšie, keď  je  text zobrazený priehľadnými farbami. (#6467)
+- Vylepšená podpora pre oznamovanie popisov prvkov v prehliadači Internet Explorer 11 (konkrétne je pridaná podpora pre atribút aria-describedby v rámcoch a tiež v situáciách ak je dostupných viacero ID). (#5784)
+- V systéme Windows 10 Creators opäť fungujú všetky režimi automatického stišovania. (#6933)
+- NVDA oznamuje a dokáže navigovať aj k prvkom, ktoré v prostredí UIA nemajú priradenú klávesovú skratku. (#6779)
+- V prvkoch UIA nie sú  viac medzi popisom prvku a klávesovou skratkou vložené dve medzeri. (#6790)
+- Opravená chyba, pri ktorej neočakávane nefungovali niektoré klávesové kombinácie na Braillovskom riadku HIMS. (#3157)
+- Opravená chyba, ktorá spôsobovala, že nebolo možné pripojiť Braillovský riadok cez sériový port, ak bol jazyk systému iný ako Angličtina. (#6845)
+- Konfiguračné súbory  sa zapisujú do dočasného adresára a až potom nahradia aktuálnu kópiu. Tým zabránime  poškodeniu konfiguračných  súborov v prípade nečakaného pádu Systému Windows. (#3165)
+- Pri hláskovaní aktuálneho riadka je vždy použitý správny jazyk. (#6726)
+- zrýchlená  navigácia po riadkoch v aplikácii MS Edge v systéme Windows 10 Creators. (#6994)
+-NVDA  viac  po prechode do aplikácie MS Edge neoznamuje "Web Runtime grouping". (#6948)
+-Odteraz sú podporované všetky verzie SecureCRT. (#6302)
+- Adobe Acrobat Reader viac nepadá pri niektorých PDF dokumentoch (toto sa stávalo, ak dokument obsahoval prázdne textové atribúty). (#7021, #7034)
+- Pri navigácii po tabuľkáchv MS edge NVDA neignoruje interaktívne tabuľky (ARIA grids). (#6977)
+- Ak v režime prehliadania označíte text smerom dopredu (napr shift+šípka doprava), shift+home tento text odznačí po začiatok riadka. (#5746)
+- V režime prehliadania funguje označenie celého textu (ctrl+a) aj vtedy, ak je prehliadací kurzor uprostred textu. (#6909)
+- Opravené ostatné chyby pri označovaní textu v režime prehliadania. (#7131)
+
+
 = 2017.1 =
 Prednosti tejto verzie zahŕňajú oznamovanie sekcií a textových stĺpcov v dokumentoch MS Word; podporu pre čítanie, navigáciu a poznámkovanie kníh v programe Kindle pre PC; vylepšenú podporu pre Microsoft Edge.
 

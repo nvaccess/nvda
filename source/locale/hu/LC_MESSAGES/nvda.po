@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-10 00:10+1000\n"
-"PO-Revision-Date: 2017-02-11 10:53+0100\n"
+"POT-Creation-Date: 2017-05-12 00:10+1000\n"
+"PO-Revision-Date: 2017-05-13 07:46+0100\n"
 "Last-Translator: OAron <info@o-soft.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Teszt megjegyzés
@@ -2332,6 +2332,34 @@ msgstr "Nincs kijelölve"
 msgid "not checked"
 msgstr "Nincs bejelölve"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "nincs lenyomva"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "aktuális"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "aktuális oldal"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "aktuális lépés"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "aktuális hely"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "aktuális dátum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "aktuális idő"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2509,8 +2537,12 @@ msgstr "Alvó mód be és kikapcsolása az aktív alkalmazásban"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "Felolvassa a kurzor alatti sort. Kétszer gyorsan megnyomva betűzi ezt."
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"Felolvassa a kurzor alatti sort. Kétszer gyorsan megnyomva betűzi azt. "
+"Háromszori megnyomás esetén a betűzés a karakterleírások használatával "
+"történik."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4409,6 +4441,10 @@ msgstr "%s stílus"
 msgid "default style"
 msgstr "alapértelmezett stílus"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Nincs szegély"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6226,8 +6262,8 @@ msgid "Error activating profile."
 msgstr "Hiba a profil aktiválásakor."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Biztosan törölni szeretné ezt a profilt? A művelet nem vonható vissza."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Ez a profil véglegesen törlésre kerül. A folyamat nem vonható vissza."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7112,6 +7148,8 @@ msgid "Line &indentation reporting:"
 msgstr "&Behúzások jelzése"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "kikapcsolva"
 
@@ -7162,6 +7200,21 @@ msgstr "Sor/oszlop &fejlécek"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "&Cellakoordináták"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Stílus"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Szín és stílus"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Cellaszegélyek"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7729,6 +7782,11 @@ msgstr ""
 "sorfejként, a többi tőle jobbra és lefelé értendő. Kétszer gyorsan megnyomva "
 "törli a beállítást."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "{0} munkalap, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "A beviteli üzenet a(z)  {title}: {message}"
@@ -7754,6 +7812,129 @@ msgstr "Megjegyzés írása a(z) {address} cellához"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} től {lastAddress} {lastContent} ig"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "fent"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "lent"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "balra"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "jobbra"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "átlósan fel"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "átlósan le"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "Vízszintes szegélyek belül"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "Függőleges szegélyek belül"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "folyamatos"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "Szaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "PontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "PontPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "Pontozott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "Dupla"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "DöntöttPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "Hajszál"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "Vékony"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "Közepes"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "Vastag"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "KözepesPontPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "KözepesPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "KözepesSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} Körül"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} Fent és lent"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} Balra és jobbra"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} átlósan fel és átlósan le"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8776,3 +8957,7 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "Biztosan törölni szeretné ezt a profilt? A művelet nem vonható vissza."

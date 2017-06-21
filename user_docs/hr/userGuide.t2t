@@ -286,7 +286,7 @@ NVDA omogućuje korištenje sljedećih prečaca u svezi sa kursorom sustava:
 %kc:beginInclude
 || Naziv | Prečac za stolna računala | Prečac za prijenosna računala | Opis |
 | Čitaj sve | NVDA+strelicaDolje | NVDA+a | čita od trenutne pozicije kursora sustava, pomičući ga kako on doista ide |
-| Pročitaj trenutni redak | NVDA+strelicaGore | NVDA+l | čita trenutni redak gdje je kursor sustava pozicioniran. Kad se pritisne dvaput, NVDA slovka taj redak. |
+| Pročitaj trenutni redak | NVDA+strelicaGore | NVDA+l | čita trenutni redak gdje je kursor sustava pozicioniran. Kad se pritisne dvaput, NVDA slovka taj redak. Kada se pritisne tri puta, NVDA slovka redak fonetski. |
 | Čitaj trenutno označeni tekst | NVDA+Shift+strelicaGore | NVDA+shift+s | čita bilo koji trenutno označen tekst |
 | slijedeća rečenica | alt+Strelicadolje | alt+StrelicaDolje | Premješta kursor na slijedeću rečenicu a potom je izgovara. (podržano u microsoft wordu i outlooku) |
 | prethodna rečenica | alt+StrelicaGore | alt+StrelicaGore | premješta kursor na prethodnu rečenicu a potom je izgovara. (Podržano u microsoft wordu i outlooku) |
@@ -966,6 +966,9 @@ Indikator označenosti nije obuhvaćen ovom opcijom.
 ==== Stanka za poruke u sekundama ====
 Ovom se opcijom određuje koliko će dugo NVDA poruke biti prikazane na brajičnom retku.
 Kad se upiše brojčana vrijednost 0, ove se poruke uopće neće prikazivati na brajičnom retku.
+
+==== Pokazuj poruke neograničeno ====
+Ova opcija omogućuje neograničeno prikazivanje poruka, koje šalje NVDA na brajičnom retku.
 
 %kc:setting
 ==== Brajica usmjerena na ====[BrailleTether]

@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.2 =
+Le principali novità di questa versione comprendono  il supporto completo alla funzione di attenuazione audio nell'aggiornamento Windows10 Creators; risolti molti problemi sulla selezione del testo in modalità navigazione, compresi quelli con il seleziona tutto; grossissimi miglioramenti al supporto per Microsoft Edge; inoltre potenziato il supporto web nell'individuazione dello stato di un elemento, in particolare quello corrente (utilizzando aria-current).
 
 == Novità ==
 - NVDA può annunciare le informazioni inerenti i bordi delle celle in Microsoft Excel tramite la combinazione `NVDA+f`. (#3044)
@@ -11,6 +12,8 @@
 - In Microsoft Edge viene supportato il cambio automatico della lingua. (#6852)
 - Supporto per la calcolatrice in Windows 10 Enterprise LTSB (ramo Long-Term Servicing) e Server. (#6914)
 - Migliorato il  comando di lettura riga corrente, la tripla pressione effettuerà lo spelling servendosi della descrizione avanzata delle lettere (Ancona, Bari, Como, Domodossola, etc). (#6893)
+- Nuova lingua: Burmese.
+- Vengono letti correttamente i simboli unicode inerenti freccia su e giù, nonché le frazioni matematiche. (#3805)
 
 
 == Cambiamenti ==
@@ -19,7 +22,6 @@
 
 == Bug corretti ==
 - Gli elementi dei  menu contenuti nelle pagine web, (ad esempio caselle di controllo o pulsanti radio), possono ora essere attivati direttamente in modalità navigazione, senza passare per la modalità focus. (#6735)
-- Tradotta la stringa che annuncia il nome del foglio per Microsoft Excel. (#6848)
 - La pressione del tasto esc ora chiude la finestra di conferma cancellazione di un profilo. (#6851)
 - Risolti alcuni crash che avvenivano durante l'uso di Mozilla Firefox o altre app Gecko con la funzione di multiprocesso attivata. (#6885)
 - Risulta molto più accurata la lettura del colore dello sfondo quando si esplora con il cursore di controllo, anche in condizioni dove il testo viene visualizzato su uno sfondo trasparente. (#6467) 
@@ -33,6 +35,13 @@
 - Quando si esegue il comando leggi riga corrente con la doppia pressione per ottenere lo spelling della riga stessa, viene utilizzata la lingua appropriata durante lo spelling. (#6726)
 - La navigazione riga per riga in Microsoft Edge risulta tre volte più veloce a partire dall'aggiornamento Creators di Windows. (#6994)
 - NVDA non annuncerà più la frase "Web Runtime grouping" quando il focus si posiziona in un documento Microsoft Edge, nell'aggiornamento Creators di Windows. (#6948)
+- Sono supportate tutte le versioni esistenti di SecureCRT. (#6302)
+- Adobe Acrobat Reader non andrà più in crash in presenza di alcuni documenti pdf (nello specifico quelli contenenti attributi actualtext vuoti). (#7021, #7034)
+- In modalità navigazione in Microsoft Edge, non vengono più saltate le tabelle interattive (griglie Aria) quando si raggiungono le tabelle con i tasti t e Shift-t. (#6977)
+- In modalità navigazione, la pressione della combinazione shift-inizio, dopo che si è effettuata una selezione in avanti, deselezionerà tutto il testo a partire dall'inizio della riga, come dovrebbe essere. (#5746)
+- In modalità navigazione, la pressione della combinazione ctrl-a per selezionare tutto si comporta in maniera corretta, anche quando il cursore non si trova all'inizio del testo. (#6909)
+- Sistemati altri problemi abbastanza rari sulla selezione in modalità navigazione. (#7131)
+
 
 == Cambiamenti per sviluppatori, in inglese ==
 - Commandline arguments are now processed with Python's argparser module, rather than optparser. This allows certain options such as -r and -q to be handled exclusively. (#6865)

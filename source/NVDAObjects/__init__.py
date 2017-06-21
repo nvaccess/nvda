@@ -379,6 +379,14 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""  
 		return controlTypes.ROLE_UNKNOWN
 
+	def _get_roleText(self):
+		"""
+		A custom role string for this object, which is used for braille and speech presentation, which will override the standard label for this object's role property.
+		No string is provided by default, meaning that NVDA will fall back to using role.
+		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
+		"""
+		return None
+
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
 		@rtype: basestring
