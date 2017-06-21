@@ -1026,6 +1026,7 @@ class TextInfoRegion(Region):
 
 		# If this is not the start of the object, hide all previous regions.
 		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
 		# Don't touch focusToHardLeft if it is already true
 		if not self.focusToHardLeft:
 			# If this is a multiline control, position it at the absolute left of the display when focused.

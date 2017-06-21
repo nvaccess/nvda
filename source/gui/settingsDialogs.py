@@ -1623,7 +1623,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		wordWrapText = _("Avoid splitting &words when possible")
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
-		# Translators: The label for a setting in braille settings to select how the focus object should be presented on a braille display.
+		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
 		focusContextPresentationChoices=[
 			# Translators: The label for a braille focus context presentation setting that
