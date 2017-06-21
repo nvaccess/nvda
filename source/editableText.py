@@ -71,37 +71,17 @@ class EditableText(ScriptableObject):
 				return (False,None)
 			api.processPendingEvents(processEventQueue=False)
 			if eventHandler.isPendingEvents("gainFocus"):
-				log.debug("Focus event. Elapsed: %d ms" % elapsed)
 				return (True,None)
-			# If the focus changes after this point, fetching the caret may fail,
-			# but we still want to stay in this loop.
+			#The caret may stop working as the focus jumps, we want to stay in the while loop though
 			try:
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+				newBookmark = newInfo.bookmark
 			except (RuntimeError,NotImplementedError):
-				newInfo = None
-			if eventHandler.isPendingEvents("caret"):
-				log.debug("caret event. Elapsed: %d ms" % elapsed)
-				return (True, newInfo)
-			if eventHandler.isPendingEvents("valueChange"):
-				# When pressing delete, the caret might not physically move,
-				# so the control might not fire a caret event,
-				# even though the text under the caret changes.
-				# We still want to treat this as a caret move.
-				# Otherwise, the user will have to wait
-				# the full timeout for feedback after pressing delete.
-				log.debug("valueChange event. Elapsed: %d ms" % elapsed)
-				return (True, newInfo)
-			# Some controls don't fire caret events.
-			# Try to detect with bookmarks.
-			newBookmark = None
-			if newInfo:
-				try:
-					newBookmark = newInfo.bookmark
-				except (RuntimeError,NotImplementedError):
-					pass
-			if newBookmark and newBookmark!=bookmark:
-				log.debug("Caret move detected using bookmarks. Elapsed: %d ms" % elapsed)
-				return (True, newInfo)
+				newInfo=None
+			else:
+				if newBookmark!=bookmark:
+					log.debug("Caret moved. Elapsed: %d ms" % elapsed)
+					return (True,newInfo)
 			if  elapsed >= timeoutMs:
 				break
 			time.sleep(retryInterval)
