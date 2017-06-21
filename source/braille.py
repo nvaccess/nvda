@@ -1026,9 +1026,10 @@ class TextInfoRegion(Region):
 
 		# If this is not the start of the object, hide all previous regions.
 		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
-		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
-		# If this is a multiline control, position it at the absolute left of the display when focused.
-		self.focusToHardLeft = self._isMultiline()
+		# Don't touch focusToHardLeft if it is already true
+		if not self.focusToHardLeft:
+			# If this is a multiline control, position it at the absolute left of the display when focused.
+			self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
 	def routeTo(self, braillePos):
@@ -1211,11 +1212,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if region.focusToHardLeft:
 			# Only scroll to the start of this region.
 			restrictPos = endPos - regionPos - 1
-		elif  config.conf["braille"]["focusPresentation"] is 2:
+		elif config.conf["braille"]["focusPresentation"]==2:
 			# Reverse the current regions with their positions. Unfortunately, we can't reverse a generator
 			regionsWithPositions=reversed(list(self.regionsWithPositions))
-			# Use an assertion to iterate to the last region currently displayed. This should never fail
-			assert(region in (testRegion for testRegion, start, end in regionsWithPositions))
+			# iterate to the last region currently displayed. This should never fail
+			if region not in (testRegion for testRegion, start, end in regionsWithPositions):
+				raise IndexError("Last region currently displayed not in list of regions")
 			# Loop through the remaining regions
 			for region, start, end in regionsWithPositions:
 				if region.focusToHardLeft:
@@ -1296,7 +1298,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft or config.conf["braille"]["focusPresentation"] is 1:
+		if region.focusToHardLeft or config.conf["braille"]["focusPresentation"]==1:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -1411,20 +1413,23 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			# No common regions were found.
 			commonRegionsEnd = 0
 			newAncestorsStart = 1
-		# Yield the common regions.
+		# Yield the common regions, thereby setting focusToHardLeft back to False.
 		for region in oldFocusRegions[0:commonRegionsEnd]:
+			region.focusToHardLeft = False
 			yield region
 	else:
 		# Fetch all ancestors.
 		newAncestorsStart = 1
 
+	focusToHardLeftSet = False
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
 		if not parent.isPresentableFocusAncestor:
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
-		if index is newAncestorsStart and config.conf["braille"]["focusPresentation"] is 2:
+		if config.conf["braille"]["focusPresentation"]==2 and not focusToHardLeftSet:
 			region.focusToHardLeft = True
+			focusToHardLeftSet = True
 		region.update()
 		yield region
 
@@ -1692,7 +1697,16 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _doNewObject(self, regions):
 		self.mainBuffer.clear()
+		focusToHardLeftSet = False
 		for region in regions:
+			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusPresentation"]==2:
+				if region.focusToHardLeft:
+					focusToHardLeftSet = True
+				elif not focusToHardLeftSet and getattr(region, "_focusAncestorIndex", None) is None:
+					# Going to display a new object with the same ancestry as the previously displayed object.
+					# So, set focusToHardLeft on this region
+					region.focusToHardLeft = True
+					focusToHardLeftSet = True
 			self.mainBuffer.regions.append(region)
 		self.mainBuffer.update()
 		# Last region should receive focus.

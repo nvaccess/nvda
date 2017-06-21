@@ -1624,9 +1624,9 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 		# Translators: The label for a setting in braille settings to select how the focus object should be presented on a braille display.
-		focusPresentationLabelText = _("&Focus presentation:")
+		focusPresentationLabelText = _("&Focus object presentation:")
 		focusPresentationChoices=[
-			# Translators: The label for a braille focus presentation setting that maximizes focus and ancestry information on the braille display, giving priority to focus information.
+			# Translators: The label for a braille focus presentation setting that maximizes focus and ancestry information on the braille display, giving priority to the focus object.
 			# This was the pre NVDA 2017.3 default.
 			_("Maximize braille output"),
 			# Translators: The label for a braille focus presentation setting that always shows the object with focus at the very left of the braille display.
