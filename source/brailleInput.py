@@ -378,39 +378,76 @@ class BrailleInputGesture(inputCore.InputGesture):
 	space = False
 
 	def _makeDotsId(self):
-		# Items separated by a plus sign need to be in Python set order.
-		items = {"dot%d" % (i+1) for i in xrange(8) if self.dots & (1 << i)}
+		items = ["dot%d" % (i+1) for i in xrange(8) if self.dots & (1 << i)]
 		if self.space:
-			items.add("space")
+			items.append("space")
 		return "bk:" + "+".join(items)
+
+	#: The generic gesture identifier for space plus any dots.
+	#: This could be used to bind many braille commands to a single script.
+	GENERIC_ID_SPACE_DOTS = inputCore.normalizeGestureIdentifier("bk:space+dots")
+	#: The generic gesture identifier for any dots.
+	#: This is used to bind entry of braille text to a single script.
+	GENERIC_ID_DOTS = inputCore.normalizeGestureIdentifier("bk:dots")
 
 	def _get_identifiers(self):
 		if self.space and self.dots:
-			# Items separated by a plus sign need to be in Python set order.
-			generic = "bk:" + "+".join({"space", "dots"})
-			return (self._makeDotsId(), generic)
+			return (self._makeDotsId(), self.GENERIC_ID_SPACE_DOTS)
 		elif self.dots in (DOT7, DOT8, DOT7 | DOT8):
 			# Allow bindings to dots 7 and/or 8 by themselves.
-			return (self._makeDotsId(), "bk:dots")
+			return (self._makeDotsId(), self.GENERIC_ID_DOTS)
 		elif self.dots or self.space:
-			return ("bk:dots",)
+			return (self.GENERIC_ID_DOTS,)
 		else:
 			return ()
+
+	@classmethod
+	def _makeDisplayText(cls, dots, space):
+		if space and dots:
+			# Translators: Reported when braille space is pressed with dots in input help mode.
+			out = _("space with dot")
+		elif dots:
+			# Translators: Reported when braille dots are pressed in input help mode.
+			out = _("dot")
+		elif space:
+			# Translators: Reported when braille space is pressed in input help mode.
+			out = _("space")
+		if dots:
+			out += " " + formatDotNumbers(dots)
+		return out
 
 	def _get_displayName(self):
 		if not self.dots and not self.space:
 			return None
-		# Translators: Reported before braille input in input help mode.
-		out = _("braille") + " "
-		if self.space and self.dots:
-			# Translators: Reported when braille space is pressed with dots in input help mode.
-			out += _("space with dot")
-		elif self.dots:
-			# Translators: Reported when braille dots are pressed in input help mode.
-			out += _("dot")
-		elif self.space:
-			# Translators: Reported when braille space is pressed in input help mode.
-			out += _("space")
-		if self.dots:
-			out += " " + formatDotNumbers(self.dots)
-		return out
+		return self._makeDisplayText(self.dots, self.space)
+
+	@classmethod
+	def getDisplayTextForIdentifier(cls, identifier):
+		# Translators: Used when describing keys on a braille keyboard.
+		source = _("braille keyboard")
+		if identifier == cls.GENERIC_ID_SPACE_DOTS:
+			# Translators: Used to describe the press of space
+			# along with any dots on a braille keyboard.
+			return (source, _("space with any dots"))
+		if identifier == cls.GENERIC_ID_DOTS:
+			# Translators: Used to describe the press of any dots
+			# on a braille keyboard.
+			return (source, _("any dots"))
+		# Example identifier: bk:space+dot1+dot2
+		# Strip the bk: prefix.
+		partsStr = identifier.split(":", 1)[1]
+		parts = partsStr.split("+")
+		dots = 0
+		space = False
+		for part in parts:
+			if part == "space":
+				space = True
+			else:
+				# Example part: "dot1"
+				# Get the dot number and make it 0 based instead of 1 based.
+				dot = int(part[3]) - 1
+				# Update the dots bitmask.
+				dots += 1 << dot
+		return (source, cls._makeDisplayText(dots, space))
+
+inputCore.registerGestureSource("bk", BrailleInputGesture)
