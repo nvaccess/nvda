@@ -305,10 +305,23 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 		except NotImplementedError:
 			pass
 	newPropertyValues['current']=obj.isCurrent
+	if allowedProperties.get('placeholder', False):
+		newPropertyValues['placeholder']=obj.placeholder
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
 		speakText(text,index=index)
+
+def _speakPlaceholderIfEmpty(info, obj, reason):
+	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
+	@return: True if info was considered empty, and we attempted to speak the placeholder value.
+	False if info was not considered empty.
+	"""
+	textEmpty = obj._isTextEmpty
+	if textEmpty:
+		speakObjectProperties(obj,reason=reason,placeholder=True)
+		return True
+	return False
 
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
@@ -357,14 +370,17 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
+				# if there is selected text, then there is a value and we do not report placeholder
 				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
+				_speakPlaceholderIfEmpty(info, obj, reason)
 				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+			if not _speakPlaceholderIfEmpty(newInfo, obj, reason):
+				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
@@ -1007,6 +1023,9 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		except KeyError:
 			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
 			textList.append(controlTypes.isCurrentLabels[True])
+	placeholder = propertyValues.get('placeholder', None)
+	if placeholder:
+		textList.append(placeholder)
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:
@@ -1042,6 +1061,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	ariaCurrent=attrs.get('current', None)
+	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
 		description=attrs.get('description',"")
@@ -1058,6 +1078,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
+	placeholderText=getSpeechTextForProperties(reason=reason,placeholder=placeholderValue)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	valueText=getSpeechTextForProperties(reason=reason,value=value)
 	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
@@ -1121,6 +1142,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
+		if placeholderValue:
+			if valueText:
+				log.error("valueText exists when expected none: valueText:'%s' placeholderText:'%s'"%(valueText,placeholderText))
+			valueText = placeholderText
 		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
 		if content and not speakContentFirst:
 			out.append(content)
