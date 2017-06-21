@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2015 NV Access Limited, Joseph Lee
+#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee, Babbage B.V.
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -57,7 +57,7 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 
 def getStartMenuFolder(noDefault=False):
 	try:
-		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,u"SOFTWARE\\NVDA") as k:
+		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY) as k:
 			return _winreg.QueryValueEx(k,u"Start Menu Folder")[0]
 	except WindowsError:
 		return defaultStartMenuFolder if not noDefault else None
@@ -171,15 +171,17 @@ uninstallerRegInfo={
 	"URLInfoAbout":versionInfo.url,
 }
 
-def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen):
+def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
 	import _winreg
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,_winreg.KEY_WRITE) as k:
 		for name,value in uninstallerRegInfo.iteritems(): 
 			_winreg.SetValueEx(k,name,None,_winreg.REG_SZ,value.format(installDir=installDir))
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,_winreg.KEY_WRITE) as k:
 		_winreg.SetValueEx(k,"",None,_winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
-	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,_winreg.KEY_WRITE) as k:
+	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY,0,_winreg.KEY_WRITE) as k:
 		_winreg.SetValueEx(k,"startMenuFolder",None,_winreg.REG_SZ,startMenuFolder)
+		if configInLocalAppData:
+			_winreg.SetValueEx(k,config.CONFIG_IN_LOCAL_APPDATA_SUBKEY,None,_winreg.REG_DWORD,int(configInLocalAppData))
 	if easeOfAccess.isSupported:
 		registerEaseOfAccess(installDir)
 	else:
@@ -257,7 +259,7 @@ def unregisterInstallation(keepDesktopShortcut=False):
 	except WindowsError:
 		pass
 	try:
-		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda")
+		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY)
 	except WindowsError:
 		pass
 	unregisterAddonFileAssociation()
@@ -364,6 +366,11 @@ def tryCopyFile(sourceFilePath,destFilePath):
 
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	prevInstallPath=getInstallPath(noDefault=True)
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, config.NVDA_REGKEY)
+		configInLocalAppData = bool(_winreg.QueryValueEx(k, config.CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
+	except WindowsError:
+		configInLocalAppData = False
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
@@ -388,7 +395,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
-	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon)
+	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")

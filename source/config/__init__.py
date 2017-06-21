@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -62,9 +62,25 @@ def isInstalledCopy():
 	except WindowsError:
 		return False
 
+
+#: #6864: The name of the subkey stored under NVDA_REGKEY where the value is stored
+#: which will make an installed NVDA load the user configuration either from the local or from the roaming application data profile.
+#: The registry value is unset by default.
+#: When setting it manually, a DWORD value is prefered.
+#: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
+#: A value of 1 means loading the configuration from the local application data folder.
+#: @type: unicode
+CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
+
 def getInstalledUserConfigPath():
 	try:
-		return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		configInLocalAppData = bool(_winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
+	except WindowsError:
+		configInLocalAppData=False
+	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
+	try:
+		return os.path.join(configParent, "nvda")
 	except WindowsError:
 		return None
 
@@ -178,6 +194,8 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 
 SLAVE_FILENAME = u"nvda_slave.exe"
 
+#: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
+#: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():

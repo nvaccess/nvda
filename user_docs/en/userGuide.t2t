@@ -136,6 +136,10 @@ If you have installed NVDA with the installer, then starting NVDA is as simple a
 Additionally you can type NVDA into the Run dialog and press Enter.
 You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons), etc.
 
+For installed copies, NVDA stores the configuration in the roaming application data folder of the current user by default (e.g. "C:\Users\<user>\AppData\Roaming").
+It is possible to change this in a way that NVDA loads its configuration from the local application data folder instead.
+Consult the section about [system wide parameters #SystemWideParameters] for more details.
+
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
 As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
@@ -321,7 +325,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
+By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
 Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
 If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
@@ -2330,6 +2334,18 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+
+++ System wide parameters++[SystemWideParameters]
+NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.
+These values are stored in the registry under one of the following keys:
+- 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+The following values can be set under this registry key:
+|| Name | Type | Possible values | Description |
+| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
+| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables secure mode on windows secure desktops, allowing the use of the Python console and Log viewer. Due to several major security implications, the use of this option is strongly discouraged |
 
 + Further Information +
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
