@@ -1624,17 +1624,22 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 		# Translators: The label for a setting in braille settings to select how the focus object should be presented on a braille display.
-		focusPresentationLabelText = _("&Focus object presentation:")
-		focusPresentationChoices=[
-			# Translators: The label for a braille focus presentation setting that maximizes focus and ancestry information on the braille display, giving priority to the focus object.
+		focusContextPresentationLabelText = _("Focus context presentation:")
+		focusContextPresentationChoices=[
+			# Translators: The label for a braille focus context presentation setting that
+			# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 			# This was the pre NVDA 2017.3 default.
-			_("Maximize braille output"),
-			# Translators: The label for a braille focus presentation setting that always shows the object with focus at the very left of the braille display.
-			_("Always left"),
+			_("Always fill display"),
+			# Translators: The label for a braille focus presentation setting that
+			# always shows the object with focus at the very left of the braille display (i.e. you will have to scroll back for focus context information).
+			_("Only when scrolling back"),
+			# Translators: The label for a braille focus presentation setting that
+			# only shows as much as possible focus context information when the context has changed.
+			_("Fill display for context changes"),
 		]
-		self.focusPresentationList = sHelper.addLabeledControl(focusPresentationLabelText, wx.Choice, choices=focusPresentationChoices)
+		self.focusContextPresentationList = sHelper.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
 		try:
-			self.focusPresentationList.SetSelection(config.conf["braille"]["focusPresentation"])
+			self.focusContextPresentationList.SetSelection(config.conf["braille"]["focusContextPresentation"])
 		except:
 			pass
 
@@ -1663,7 +1668,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
-		config.conf["braille"]["focusPresentation"] = self.focusPresentationList.GetSelection()
+		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationList.GetSelection()
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 	def onDisplayNameChanged(self, evt):

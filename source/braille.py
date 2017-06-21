@@ -1212,7 +1212,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if region.focusToHardLeft:
 			# Only scroll to the start of this region.
 			restrictPos = endPos - regionPos - 1
-		elif config.conf["braille"]["focusPresentation"]==2:
+		elif config.conf["braille"]["focusContextPresentation"]==2:
 			# Reverse the current regions with their positions. Unfortunately, we can't reverse a generator
 			regionsWithPositions=reversed(list(self.regionsWithPositions))
 			# iterate to the last region currently displayed. This should never fail
@@ -1298,7 +1298,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft or config.conf["braille"]["focusPresentation"]==1:
+		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]==1:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -1427,7 +1427,7 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
-		if config.conf["braille"]["focusPresentation"]==2 and not focusToHardLeftSet:
+		if config.conf["braille"]["focusContextPresentation"]==2 and not focusToHardLeftSet:
 			region.focusToHardLeft = True
 			focusToHardLeftSet = True
 		region.update()
@@ -1699,7 +1699,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:
-			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusPresentation"]==2:
+			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==2:
 				if region.focusToHardLeft:
 					focusToHardLeftSet = True
 				elif not focusToHardLeftSet and getattr(region, "_focusAncestorIndex", None) is None:

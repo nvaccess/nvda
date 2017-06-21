@@ -62,7 +62,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	tetherTo = string(default="focus")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
-	focusPresentation = integer(default=0)
+	focusContextPresentation = integer(default=0)
 
 	# Braille display driver settings
 	[[__many__]]
