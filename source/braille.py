@@ -625,7 +625,7 @@ def getBrailleTextForProperties(**propertyValues):
 			elif state in negativeStates:
 				# Translators: Indicates that a particular state on an object is negated.
 				# Separate braille abbreviations have now been defined for commonly negated states (e.g. ( ) for not checked),
-				# 			and, if no braille abbreviations are provided, we fall back to the defined state labels in ControlTypes,
+				# and, if no braille abbreviations are provided, we fall back to the defined state labels in ControlTypes,
 				# but this still might be used in some other cases.
 				# %s will be replaced with the full identifier of the negated state (e.g. selected).
 				textList.append(negativeStateLabels.get(state, controlTypes.negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state])))
