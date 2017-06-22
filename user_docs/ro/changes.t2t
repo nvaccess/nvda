@@ -9,6 +9,8 @@ Ce este nou în NVDA
 - A fost adăugată o setare braille la opțiunea „arată mesajele pe termen nelimitat”. (#6669)
 - În lista de mesaje din Microsoft Outlook, se raportează dacă un mesaj este semnalat. (#6374)
 - În Microsoft Powerpoint, tipul exact al unei forme este raportat la editarea unui diapozitiv (exemplele includ: triunghi, cerc, video, săgeată), mai degrabă decât 'forma'. (#7111)
+- Conținutul matematic )furnizat ca MathML) este acum suportat în Google Chrome. (#7184)
+- NVDA poate vorbi utilizând noile voci Windows OneCore )cunoscute și ca voci mobile) incluse în Windows 10. Accesați-le selectând opțiunea „voci Windows OneCore” din dialogul de sintetizator al NVDA-ului. (#6159)
 
 
 == Modificări ==
@@ -28,7 +30,7 @@ Ce este nou în NVDA
 
 
 == Rezolvări Defecte ==
-- În timp ce vă aflați în modul de navigare, eticheta elementelor div din Chrome nu mai este raportată ca valoarea lor proprie. (#7153)
+- Elementele editabile div din Chrome nu mai au eticheta raportată ca valoare în timp ce se află în modul de navigare. (#7153)
 - Apăsarea tastei end în timp ce vă aflați în modul de navigare a unui document Word gol nu mai cauzează o eroare runtime. (#7009)
 - Modul de navigare este suportat corect în Microsoft Edge unde un document a primit un rol specific Aria de document. (#6998)
 - În modul de navigare, puteți selecta sau deselecta la sfârșitul rândului utilizând shift+end, chiar și atunci când cursorul de scriere este pe ultimul caracter al rândului. (#7157)
@@ -37,6 +39,8 @@ Ce este nou în NVDA
 
 = Modificări pentru Dezvoltatori =
 - Timestamp-urile includ în log milisecundele. (#7163)
+- NVDA trebuie să fie construit cu Visual Studio Community 2015. Visual Studio Express nu mai este suportat. (#7110)
+- Instrumentele Windows 10 și SDK-ul sunt de asemenea necesare și pot fi activate la instalarea Visual Studio.
 
 
 = 2017.2 =
