@@ -613,8 +613,12 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus=eventHandler.lastQueuedFocusObject
-	if focus and objectID==winUser.OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
-		NVDAEvent=("caret",focus)
+	if objectID==winUser.OBJID_CARET and eventID in (winUser.EVENT_OBJECT_LOCATIONCHANGE,winUser.EVENT_OBJECT_SHOW):
+		if isinstance(focus,NVDAObjects.window.Window) and focus.shouldAllowSystemCaretEvent:
+			NVDAEvent=("caret",focus)
+		else:
+			# No focus or the focus doesn't want these caret events.
+			return
 	else:
 		NVDAEvent=winEventToNVDAEvent(eventID,window,objectID,childID)
 		if not NVDAEvent:
