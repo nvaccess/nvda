@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -132,6 +132,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
+
+[touch]
+	touchTyping = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
