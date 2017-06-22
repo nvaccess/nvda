@@ -127,7 +127,8 @@ class TreeInterceptor(baseObject.ScriptableObject):
 			braille.handler.handleGainFocus(self)
 
 	def _get_isSelectionAnchoredAtStart(self):
-		"""Determine if the selection is anchored at the start.
+		"""Indicates if the selection is anchored at the start.
+		The anchored position is the end that doesn't move when extending or shrinking the selection.
 		If the selection is anchored at the end or there is no information this is C{False}.
 		@return: C{True} if the selection is anchored at the start else C{False}
 		@rtype: bool
