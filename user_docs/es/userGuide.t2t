@@ -543,7 +543,7 @@ Esto requiere que MathPlayer 4 esté instalado en el ordenador.
 MathPlayer está disponible como una descarga gratuita desde: http://www.dessci.com/en/products/mathplayer/
 
 NVDA soporta los siguientes tipos de contenidos matemáticos:
-- MathML en Mozilla Firefox y Microsoft Internet Explorer.
+- MathML en Mozilla Firefox Microsoft Internet Explorer y Google Chrome..
 - Design Science MathType en Microsoft Word y PowerPoint. MathType necesita estar instalado para que esto funcione. La versión trial es suficiente.
 - MathML en Adobe Reader. Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
 -
@@ -1592,6 +1592,17 @@ Para utilizar estas voces, necesitarás instalar dos componentes:
  Por ejemplo, el fichero MSSpeech_TTS_en-US_ZiraPro.msi es una voz inglesa U.S..
  -
 -
+
+++ Voces Windows OneCore ++
+Windows 10 incluye nuevas voces conocidas como voces "OneCore" o "mobile".
+Se proporcionan voces para muchos idiomas y son más ágiles que las voces Microsoft disponibles al utilizar Microsoft Speech API versión 5.
+
+Para instalar voces para idiomas adicionales, consulta este artículo de Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Por favor ten en cuenta que actualmente no están disponibles con NVDA las velocidades más rápidas disponibles con Narrator.
+También, la velocidad seleccionada en la configuración de Windows afecta a la configurada en NVDA.
+Estos problemas no se pueden resolver sin cambios en Windows.
+Deseamos que esto se solucione en una actualización futura de Windows.
 
 ++ Audiologic Tts3 ++
 Este es un sintetizador de voz comercial específicamente para el idioma italiano.
