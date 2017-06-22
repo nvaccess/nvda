@@ -10,6 +10,8 @@
 - Lisätty pistekirjoitusasetus, joka näyttää ilmoitukset pysyvästi. (#6669)
 - Microsoft Outlookin viestiluettelossa ilmoitetaan, mikäli viesti on liputettu. (#6374)
 - Tarkka muodon tyyppi ilmoitetaan nyt Microsoft Powerpointissa diaa muokattaessa (esim. kolmio, ympyrä, video, nuoli) pelkän yleisen "muoto"-tyypin sijaan. (#7111)
+- MathML-tyyppistä matemaattista sisältöä tuetaan nyt Google Chromessa. (#7184)
+- NVDA voi nyt puhua uusia Windows 10:een sisältyviä Windows OneCore -puheääniä käyttäen (tunnetaan myös matkapuhelinääninä). Äänet otetaan käyttöön valitsemalla Windows OneCore -vaihtoehto NVDA:n Syntetisaattorin asetukset -valintaikkunasta. (#6159)
 
 
 == Muutokset ==
@@ -38,6 +40,9 @@
 
 == Muutokset kehittäjille (englanniksi) ==
 - Timestamps in the log now include milliseconds. (#7163)
+- NVDA must now be built with Visual Studio Community 2015. Visual Studio Express is no longer supported. (#7110)
+ - The Windows 10 Tools and SDK are now also required, which can be enabled when installing Visual Studio.
+ - See the Installed Dependencies section of the readme for additional details.
 
 
 = 2017.2 =
