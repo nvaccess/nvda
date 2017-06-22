@@ -3,6 +3,44 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+== Nove značajke ==
+- Dodana je postavka u brajičnim postavkama za "vječno prikazivanje poruka". (#6669)
+- U Popisu poruka u Microsoft Outlooku izgovara ozastavićenje poruke. (#6374)
+- U Microsoft Powerpointu, sada se izgovara točan tip oblika prilikom uređivanja slajda (primjeri uključuju: trokut, krug, video, strelica), bolje nego samo 'oblik'. (#7111)
+- Matematički sadržaj (dostupan kao MathML) sada je podržan u Google Chromeu. (#7184)
+- NVDA sada može govoriti uz pomoć Windows OneCore glasova (znanih kao mobile glasovi), koji su uključeni u Windowse 10. Pristupate im označavanjem opcije Windows OneCore glasovi u NVDA dijaloškom okviru Govorna jedinica. (#6159)
+
+
+== Izmjene ==
+- Nedodijeljena gesta (script_restart) je dodana kako bi NVDA mogao biti brzo pokrenut. (#6396)
+- Izgled tipkovnice sada može biti odabran iz dijaloškog okvira dobrodošlice. (#6863)
+- Prilikom korištenja brajičnog retka, kratice za orijentire su dodijeljene kako slijedi: (#3975)
+ - "orijentir": "lmk"
+ - "baner": "bnnr"
+ - "komplementarni": "comp"
+ - "informacija o sadržaju": "cinf"
+ - "glavni": "main"
+ - "navigacijski": "nav"
+ - "pretraga": "srch"
+ - "obrazac": "frm"
+ - "regija": "rgn"
+ - Na primjer: "navigacijski orijentir" postaje "lmk nav"
+
+
+== Ispravke grešaka ==
+- Div elementi koji se uređivaju, u Chromeu kao njihova vrijednost, ne izgovara se njihova oznaka prilikom čitanja u načinu pregleda. (#7153)
+- Prilikom pritiska tipke end u načinu pregleda u praznom dokumentu u Microsoft wordu, više ne prouzrokuje runtime pogrešku. (#7009)
+- Način pregleda je sada ispravno podržan u Microsoft Edgeu gdje je dokumentu dodijeljen atribut dokumenta. (#6998)
+- U načinu pregleda, može se označavati ili odznačavati do kraja retka sa  using shift+end čak i ako je znak ili redak na kraju. (#7157)
+- Ako dijaloški okvir sadrži traku napredka, tekst dijaloškog okvira je ažuriran kada se traka napredka promijeni. to sada znaći, da se preostalo vrijeme iz dijaloškog okvira preuzimanja nadogradnje može isčitati. (#6862)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2017.2 =
 Novosti u ovoj inačici uključuju punu podršku stišavanja zvuka u Windows 10 nadogradnji za tvorce; ispravke za neke greške pri označavanju u načinu pregleda, uključujući probleme sa prečacom označi sve; značajna unaprjeđenja u podršci za Microsoft edge; i unaprjeđenja na webu kao što su to izvještavanja elemenata koji su označeni kao trenutni (koristeći aria-current).
 == Nove značajke ==

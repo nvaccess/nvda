@@ -544,7 +544,7 @@ Hierfür ist die Installation von Mathplayer 4 notwendig.
 Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/mathplayer/
 
 NVDA unterstützt die folgende mathematischen Inhalte:
-- MathML in Mozilla Firefox und Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer und Google Chrome.
 - Design Science MathType in Microsoft Word und PowerPoint. Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
 - MathML in Adobe Reader. Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
 -
@@ -1594,6 +1594,17 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
  -
 -
 
+++ Windows OneCore Voices ++
+Windows 10 enthält neue Stimmen, die als "Mobile" oder "OnCore"-Stimmen bekannt sind.
+Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft Sapi 5-Stimmen in früheren Windows-versionen.
+
+Informationen darüber, wie Sie Stimmen in zusätzlichen Sprachen installieren, finden Sie im folgenden Artikel: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Bitte bedenken Sie auch, dass die höheren Sprachgeschwindigkeiten, die im Narrator eingestellt werden können, im NVDA nicht zur Verfügung stehen.
+Eine Änderung der Sprachgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprachgeschwindigkeit in NVDA.
+Dieses Problem kann nur durch Änderungen an Windows behoben werden.
+Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
+
 ++ AudioLogic TTS 3 ++
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
 Um sie in NVDA nutzen zu können, müssen sie die Sprachausgabe auf Ihrem System installiert haben.
@@ -2265,7 +2276,7 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | clk | Wird bei anklickbaren Objekten angezeigt |
 | sef | wird bei Objekten (zum Beispiel Eingabefeldern) angezeigt, die schreibgeschützt sind. |
 | mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
-| #> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
+| -> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
 
 Die folgenden Abkürzungen werden für Sprungmarken verwendet:
 || Abkürzung | Sprungmarke |

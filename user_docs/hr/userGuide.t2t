@@ -147,7 +147,8 @@ Za više informacija kako to učiniti molimo pogledajte web stranicu NVDA.
 
 Kad prvi put pokrenete NVDA, otvorit će se dijaloški okvir dobrodošlice koji vam daje osnovne informacije o NVDA modifikacijskoj tipci i NVDA izborniku.
 Molimo pogledajte daljnja poglavlja o ovim temama.
-Dijaloški okvir sadrži tri potvrdna okvira.
+Dijaloški okvir sadrži jedan odabirni okvir i tri potvrdna okvira.
+Odabirni okvir vam omogućuje odabir izgleda tipkovnice.
 Prvi potvrdni okvir omogućuje vam odabir hoćete li ili nećete koristiti Capslock kao modifikacijsku tipku.
 Drugi određuje hoće li se NVDA pokretati prilikom prijave u Windows i dostupan je samo u instaliranim kopijama NVDA.
 Treći vam omogućuje odabir hoće li se ili neće ovaj dijalog prikazivati prilikom pokretanja NVDA.
@@ -542,7 +543,7 @@ Ovo zahtjeva instaliranu kopiju MathPlayera na vašem računalu.
 MathPlayer je dostupan za besplatno preuzimanje sa adrese: http://www.dessci.com/en/products/mathplayer/
 
 NVDA podržava slijedeće vrste matematičkog sadržaja:
-- MathML u Mozilla Firefoxu i Microsoft Internet Exploreru.
+- MathML u Mozilla Firefoxu, Google Chromeu i Microsoft Internet Exploreru.
 - Design Science MathType u Microsoft Wordu i PowerPointu. MathType mora biti instaliran kako bi ova mogućnost radila. Probna inačica je dovoljna.
 - MathML u Adobe Readeru. Imajte na umu da ovo još uvijek nije službeni standard, dakle, ne postoji javno dostupan softver kojim se može izrađivati ovakav sadržaj.
 -
@@ -1583,7 +1584,7 @@ Kad se koristi ova govorna jedinica uz pomoć NVDA, dostupnim glasovima (kojima 
 Microsoft Speech Platform pruža glasove za mnoge jezike koji se uobičajeno koriste za razvoj poslužiteljski baziranih govornih aplikacija.
 Ovi se glasovi mogu također koristiti uz pomoć NVDA.
 
-Da biste mogli koristiti ove glasove, trebat ćete instalirati dvije komponente:
+Kako biste mogli koristiti ove glasove, trebat ćete instalirati dvije komponente:
 - Microsoft Speech Platform - Runtime (Inačica 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Runtime jezici (Inačica 11): http://www.microsoft.com/download/en/details.aspx?id=27224
  - Ova stranica uključuje datoteke za "tekst-u govor" i za prepoznavanje govora.
@@ -1591,6 +1592,17 @@ Da biste mogli koristiti ove glasove, trebat ćete instalirati dvije komponente:
  Na primjer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas za američki engleski.
  -
 -
+
+++ Windows OneCore Glasovi ++
+U Windowse 10, uključeni su novi glasovi znani kao "OneCore" ili "mobile" glasovi.
+Glasovi su dostupni za puno jezika, i brži su od Microsoft glasova koji koriste Microsoft Speech API version 5.
+
+Kako biste instalirali glasove za dodatne jezike, pogledajte ovaj Microsoftov članak: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Imajte na umu,da brzine koje su podržane u Narratoru nisu trenutno dostupne u NVDA.
+Također, brzina u windowsovoj upravljačkoj ploći utjeće na brzinu, koja je odabrana u NVDA.
+To su greške, koje ne možemo ispraviti bez promjena u Windows operacijskom sustavu.
+Nadamo se, da će ti problemi biti rješeni u sljedećoj nadogradnji sustava Windows.
 
 ++ Audiologic Tts3 ++
 Ovo je komercijalna govorna jedinica posebno rađena za talijanski jezik.
@@ -2227,8 +2239,8 @@ Molimo pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty
 | pomakni se na brajičnu ćeliju | route (Pomakni kursor na znak) |
 %kc:endInclude
 
-+ Kratice za tip i stanja kontrola na brajičnim retcima +
-Kako bi stalo čim više informacija na brajični redak, određene su slijedeće kratice za prikaz tipa brajičnih kontrola i stanja.
++ Kratice za orjentire, tipove i stanja kontrola na brajičnim retcima +
+Kako bi stalo čim više informacija na brajični redak, određene su slijedeće kratice za prikaz tipa brajičnih kontrola i stanja, a također orijentira.
 
 || Kratica | Tip kontrole |
 | gb. | gumb |
@@ -2241,6 +2253,7 @@ Kako bi stalo čim više informacija na brajični redak, određene su slijedeće
 | rN | broj retka u tablici n, npr. r1, r2. |
 | nasl.N | Naslov na razini n, npr. h1, h2. |
 | lnk | link |
+| lmk | orjentir |
 | pop. | popis |
 | plnk | posjećeni link |
 | iz | izbornik |
@@ -2263,6 +2276,17 @@ Sljedeći pokazivači stanja su također određeni:
 | sč. | prikazano kada je objekt (npr polje za uređivanje teksta) samo za čitanje |
 | od. | prikazano kada je objekt označen |
 | podizb. | prikazano kada objekt iskače (uobičajeno je to podizbornik) |
+
+Također, slijedeće kratice za orjentire su definirane:
+|| Kratica | orjentir |
+| bnnr | baner |
+| cinf | informacija o sadržaju |
+| cmpl | komplementarni orjentir |
+| form | formular |
+| main | glavni |
+| navi | navigacija |
+| srch | pretraga |
+| rgn | regija |
 
 + Teme za napredne korisnike +
 

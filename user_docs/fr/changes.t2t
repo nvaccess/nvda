@@ -9,6 +9,8 @@ Quoi de Neuf dans NVDA
 - Un paramètre Braille a été ajouté pour "afficher les messages indéfiniment". (#6669)
 - Dans les listes de messages sous Microsoft Outlook, les étiquettes des messages sont annoncées. (#6374)
 - Sous Microsoft Powerpoint, le type exact d'une forme est maintenant annoncé quand on édite une diapositive (Exemples : triangle, cercle, vidéo, flèche), plutôt que juste "forme". (#7111)
+- Le contenu mathématique (fourni par MathML) est maintenant supporté sous Google Chrome. (#7184)
+- NVDA peut maintenant parler en utilisant les nouvelles voix Windows OneCore (aussi connues sous le nom  mobile voices) incluses dans Windows 10. Vous y avez accès en sélectionnant voix Windows OneCore dans le dialogue Synthétiseurs de NVDA. (#6159)
 
 
 == Changements ==
@@ -26,17 +28,20 @@ Quoi de Neuf dans NVDA
  - "région" : "rgn"
  - Exemple : "repère navigation" devient "rpr nav"
 
- 
+
 == Corrections de Bogues ==
 - Les éléments div éditables sous Chrome n'ont plus leur étiquette annoncée comme leur valeur en mode navigation. (#7153)
 - L'appui sur fin en mode navigation dans un document Microsoft Word vide ne provoque plus une erreur d'exécution. (#7009)
-- Le mode navigation est maintenant correctement supporté sous Microsoft Edge dans le cas où un document a reçu un rôle ARIA spécififique de Document. (#6998)
+- Le mode navigation est maintenant correctement supporté sous Microsoft Edge dans le cas où un document a reçu un rôle ARIA spécifique de Document. (#6998)
 - En mode navigation, vous pouvez maintenant sélectionner ou désélectionner jusqu'à la fin de la ligne en utilisant maj+fin même si le curseur est sur le dernier caractère de la ligne. (#7157)
 - Si un dialogue contient une barre de progression, le texte du dialogue est maintenant mis à jour quand la barre de progression évolue. Cela signifie, par exemple, que le temps restant peut maintenant être lu dans le dialogue de téléchargement de mise à jour de NVDA. (#6862)
 
 
 == Changement pour les Développeurs ==
 - Dans le journal, les timestamps incluent maintenant les millisecondes. (#7163)
+- NVDA doit maintenant être construit avec Visual Studio Community 2015. Visual Studio Express n'est plus supporté. (#7110)
+ - Windows 10 Tools et SDK sont aussi requis, ce qui peut être activé à l'installation de Visual Studio.
+ - Consultez la section Dépendances Installées du fichier readme pour plus de détails.
 
  
 = 2017.2 =
