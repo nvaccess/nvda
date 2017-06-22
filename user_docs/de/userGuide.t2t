@@ -147,7 +147,9 @@ Bitte schauen Sie erst auf der Homepage nach, ob ggf. etwas darüber bekannt ist
 
 Beim ersten Start von NVDA wird Ihnen eine Dialogbox mit einigen grundlegenden Informationen über die NVDA-Modifikationstaste und das NVDA-Menü angezeigt.
 (Bitte beachten Sie weitere Themenabschnitte.)
-Das Dialogfeld enthält zudem drei Kontrollfelder.
+Das Dialogfeld enthält zudem ein Kombinationsfeld und drei Kontrollfelder.
+Das Kombinationsfeld erlaubt Ihnen die Auswahl des Tastaturschemas.
+
 Mit dem Ersten können Sie festlegen, ob die Dauergroßschreibtaste als so genannte NVDA-Modifikationstaste agieren soll.
 Mit dem zweiten Krontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten Versionen von NVDA zur Verfügung.
 Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
@@ -966,6 +968,9 @@ Die Kennzeichnung für markierten Text ist von dieser Option nicht betroffen.
 ==== Anzeigedauer für Meldungen (in Sekunden) ====
 Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Meldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Meldung verlängert werden.
 Um die Anzeige von Meldungen abzuschalten, geben Sie hier 0 an.
+
+==== Meldungen dauerhaft anzeigen ====
+Wird diese Option aktiviert, zeigt NVDA alle Blitzmeldungen dauerhaft auf der Braillezeile an.
 
 %kc:setting
 ==== Braillezeile gekoppelt an ====[BrailleTether]
@@ -2239,6 +2244,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | üN | Überschrift der Ordnung N, zum Beispiel ü1, ü2. |
 | lnk | link |
 | lst | Liste |
+| lmk | Sprungmarke |
 | bl | Besuchter Link |
 | mnü | Menü |
 | Mnülst | Menüleiste |
@@ -2260,6 +2266,17 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | sef | wird bei Objekten (zum Beispiel Eingabefeldern) angezeigt, die schreibgeschützt sind. |
 | mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
 | #> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
+
+Die folgenden Abkürzungen werden für Sprungmarken verwendet:
+|| Abkürzung | Sprungmarke |
+| bnnr | Logo |
+| cinf | Inhalt |
+| cmpl | Ergänzung |
+| form | Formular |
+| main | Haupt |
+| navi | navigation |
+| srch | Suche |
+| rgn | region |
 
 + Erweiterte Themen +
 

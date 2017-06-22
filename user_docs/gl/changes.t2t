@@ -3,6 +3,42 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+== Novas Características ==
+- Engadiuse unha opción Braille para "amosar mensaxes indefinidamente". (#6669)
+- Na listaxe de mensaxes do Microsoft Outlook, anúnciase se unha mensaxe está marcada. (#6374)
+- No Microsoft Powerpoint, agora anúnciase o tipo exacto dunha forma cando se edita unha diapositiva (Exemplos inclúen: triángulo, círculo, vídeo, frecha), en lugar de só 'forma'. (#7111)
+
+
+== Cambios ==
+- Un xesto non vinculado (script_restart) engadiuse para permitir que o NVDA se reinicie rápidamente. (#6396)
+- A distribución de teclado agora pode configurarse dende o diálogo Benvida do NVDA. (#6863)
+- Os nomes dos pontos de referencia abrévianse en Braille coma segue: (#3975)
+ - "ponto de referencia": "pdr"
+ - "título": "tlo"
+ - "complementario": "comp"
+ - "info de contido": "cinf"
+ - "principal": "main"
+ - "navegación": "nav"
+ - "búsqueda": "busq"
+ - "form": "frm"
+ - "rexión": "rgn"
+ - Exemplo: "ponto de referencia de navegación" sería "pdr nav"
+
+
+== Corrección de Erros ==
+- Os elementos div editables en Chrome xa non teñen a súa etiqueta anunciada coma o seu valor mentres se estea en modo exploración. (#7153)
+- Premer fin mentres se estea en modo exploración dun documento valdeiro do Microsoft Word xa non produce un erro en tempo de execución. (#7009)
+- O modo exploración agora sopórtase correctamente no Microsoft Edge cando a un documento se lle dera un rol ARIA específico de documento. (#6998)
+- En modo exploración, agora podes selecionar ou deselecionar ata o remate da liña usando shift+fin incluso cando o cursor estea sobre o derradeiro carácter da liña. (#7157)
+- Se un diálogo contén unha barra de progreso, o texto do diálogo agora actualízase cando a barra de progreso cambie. Esto siñifica, por exemplo, que o tempo restante agora pode lerse no diálogo do NVDA "Descargando Actualizacións". (#6862)
+
+
+== Cambios para Desenvolvedores ==
+- As marcass de tempo agora inclúen milésimas de segundo no rexistro. (#7163)
+
+
 = 2017.2 =
 O subliñable desta versión inclúe o soporte compreto para a atenuación de audio na actualización Windows 10 Creators; correccións para varios problemas coa seleción no modo exploración, incluindo problemas con selecionar todo; meyoras significativas no soporte de Microsoft Edge; e melloras na web coma o indicado de elementos marcados como actual (usando aria-current).
 

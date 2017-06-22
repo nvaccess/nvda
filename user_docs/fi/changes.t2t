@@ -3,6 +3,43 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+
+== Uudet ominaisuudet ==
+- Lisätty pistekirjoitusasetus, joka näyttää ilmoitukset pysyvästi. (#6669)
+- Microsoft Outlookin viestiluettelossa ilmoitetaan, mikäli viesti on liputettu. (#6374)
+- Tarkka muodon tyyppi ilmoitetaan nyt Microsoft Powerpointissa diaa muokattaessa (esim. kolmio, ympyrä, video, nuoli) pelkän yleisen "muoto"-tyypin sijaan. (#7111)
+
+
+== Muutokset ==
+- Lisätty oletuksena ilman pikanäppäintä oleva syöte-ele (script_restart), jolla NVDA voidaan käynnistää nopeasti uudelleen. (#6396)
+- Näppäimistöasettelun määrittäminen on nyt mahdollista NVDA:n Tervetuloa-valintaikkunasta. (#6863)
+- Kiintopisteiden nimet lyhennetään pistekirjoituksella seuraavasti: (#3975)
+ - "kiintopiste": "kp"
+ - "mainospalkki": "mplk"
+ - "täydentävä": "täyd"
+ - "sisältötiedot": "stie"
+ - "pääsisältö": "pää"
+ - "navigaatio": "nav"
+ - "haku": "hku"
+ - "lomake": "lmk"
+ - "alue": "alu"
+ - Esimerkki: "navigaatio kiintopiste" on nyt "kp nav"
+
+
+== Korjatut ohjelmavirheet ==
+- Muokattavien div-elementtien selitteitä ei enää ilmoiteta arvoiksi selaustilassa Google Chromessa. (#7153)
+- End-näppäimen painaminen ei enää aiheuta ajonaikaista virhettä selaustilassa oltaessa tyhjässä Microsoft Word -dokumentissa. (#7009)
+- Selaustilaa tuetaan nyt asianmukaisesti Microsoft Edgessä, kun dokumentille on annettu document-ARIA-rooli. (#6998)
+- Valitseminen tai valinnan peruminen Shift+Endillä rivin loppuun saakka on nyt mahdollista selaustilassa, vaikka kohdistin on rivin viimeisen merkin kohdalla. (#7157)
+- Jos valintaikkuna sisältää edistymispalkin, valintaikkunan teksti päivitetään edistymispalkin muuttuessa. Tämä tarkoittaa, että esim. jäljellä olevan ajan lukeminen on nyt mahdollista NVDA:n "Ladataan päivitystä" -valintaikkunassa. (#6862)
+
+
+== Muutokset kehittäjille (englanniksi) ==
+- Timestamps in the log now include milliseconds. (#7163)
+
+
 = 2017.2 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat täysi tuki äänenvoimakkuuden hiljennykselle Windows 10:n Creators-päivityksessä; useat selaustilan tekstinvalitsemisongelmien korjaukset, valitse kaikki -komento mukaan lukien; Microsoft Edge -tuen merkittävät parannukset; sekä verkkoselauksen parannukset, kuten nykyisiksi merkittyjen elementtien ilmaiseminen (aria-current-attribuuttia käyttäen).
 
