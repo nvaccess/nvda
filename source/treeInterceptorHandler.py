@@ -126,15 +126,6 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					review.setCurrentMode('document',True)
 			braille.handler.handleGainFocus(self)
 
-	def _get_isSelectionAnchoredAtStart(self):
-		"""Indicates if the selection is anchored at the start.
-		The anchored position is the end that doesn't move when extending or shrinking the selection.
-		If the selection is anchored at the end or there is no information this is C{False}.
-		@return: C{True} if the selection is anchored at the start else C{False}
-		@rtype: bool
-		"""
-		return getattr(self, '_isSelectionAnchoredAtStart', False)
-
 	_cache_shouldPrepare=True
 	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
 
@@ -144,6 +135,16 @@ class TreeInterceptor(baseObject.ScriptableObject):
 
 class DocumentTreeInterceptor(TreeInterceptor):
 	"""A TreeInterceptor that supports document review."""
+
+	#: Indicates if the text selection is anchored at the start.
+	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
+	#: For example, if you have no selection and you press shift+rightArrow to select the next character,
+	#: this will be True.
+	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
+	#: this will be False.
+	#: If the selection is anchored at the end or there is no information this is C{False}.
+	#: @type: bool
+	isTextSelectionAnchoredAtStart=False
 
 	def _get_TextInfo(self):
 		raise NotImplementedError

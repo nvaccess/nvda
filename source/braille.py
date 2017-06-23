@@ -988,16 +988,20 @@ class TextInfoRegion(Region):
 		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
 		self._endsWithField = False
-		# Get the selection.
-		sel = self._getSelection()
+		# Selection has priority over cursor.
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# and copying the TextInfo breaks this ability.
+		# So use the original TextInfo for line and a copy for cursor/selection.
+		self._readingInfo = readingInfo = self._getSelection()
+		sel = readingInfo.copy()
 		if not sel.isCollapsed:
-			self._readingInfo = readingInfo = sel.copy()
-			if self.obj.isSelectionAnchoredAtStart:
+			# There is a selection.
+			if self.obj.isTextSelectionAnchoredAtStart:
 				# The end of the range is exclusive, so make it inclusive first.
 				readingInfo.move(textInfos.UNIT_CHARACTER, -1, "end")
-			# Collapse the selection to the point that is moving.
-			readingInfo.collapse(end=self.obj.isSelectionAnchoredAtStart)
-			# Get the reading unit at the end of the selection.
+			# Collapse the selection to the unanchored end.
+			readingInfo.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
+			# Get the reading unit at the selection.
 			readingInfo.expand(unit)
 			# Restrict the selection to the reading unit.
 			if sel.compareEndPoints(readingInfo, "startToStart") < 0:
@@ -1005,6 +1009,7 @@ class TextInfoRegion(Region):
 			if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
 				sel.setEndPoint(readingInfo, "endToEnd")
 		else:
+			# If there is no selection, use the cursor.
 			self._readingInfo = readingInfo = self._getCursor()
 			# Get the reading unit at the cursor.
 			readingInfo.expand(unit)
@@ -1742,7 +1747,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def scrollToCursorOrSelection(self, region):
 		if region.brailleCursorPos is not None:
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif not hasattr(region, "obj") or not region.obj.isSelectionAnchoredAtStart:
+		elif not isinstance(region, (NVDAObjectRegion, TextInfoRegion)) or not region.obj.isTextSelectionAnchoredAtStart:
 			# It is unknown where the selection is anchored, or it is anchored at the end.
 			if region.brailleSelectionStart is not None:
 				self.mainBuffer.scrollTo(region, region.brailleSelectionStart)

@@ -235,7 +235,7 @@ class EditableText(ScriptableObject):
 			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
-		self._isSelectionAnchoredAtStart=False
+		self.isTextSelectionAnchoredAtStart=False
 		self.hasContentChangedSinceLastSelection=False
 
 	def detectPossibleSelectionChange(self):
@@ -250,7 +250,7 @@ class EditableText(ScriptableObject):
 		self._lastSelectionPos=newInfo.copy()
 		if not oldInfo:
 			# There's nothing we can do, but at least the last selection will be right next time.
-			self._isSelectionAnchoredAtStart=False
+			self.isTextSelectionAnchoredAtStart=False
 			return
 		self._findSelectionAnchor(oldInfo,newInfo)
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
@@ -260,9 +260,9 @@ class EditableText(ScriptableObject):
 	def _findSelectionAnchor(self,oldInfo,newInfo):
 		# Only update the value if the selection changed.
 		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
-			self._isSelectionAnchoredAtStart=False
+			self.isTextSelectionAnchoredAtStart=False
 		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
-			self._isSelectionAnchoredAtStart=True
+			self.isTextSelectionAnchoredAtStart=True
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.

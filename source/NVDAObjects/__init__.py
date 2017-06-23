@@ -168,6 +168,16 @@ class NVDAObject(baseObject.ScriptableObject):
 	#: @type: type; L{textInfos.TextInfo}
 	TextInfo=NVDAObjectTextInfo
 
+	#: Indicates if the text selection is anchored at the start.
+	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
+	#: For example, if you have no selection and you press shift+rightArrow to select the next character,
+	#: this will be True.
+	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
+	#: this will be False.
+	#: If the selection is anchored at the end or there is no information this is C{False}.
+	#: @type: bool
+	isTextSelectionAnchoredAtStart=False
+
 	@classmethod
 	def findBestAPIClass(cls,kwargs,relation=None):
 		"""
@@ -817,15 +827,6 @@ Tries to force this object to take the focus.
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
-
-	def _get_isSelectionAnchoredAtStart(self):
-		"""Indicates if the selection is anchored at the start.
-		The anchored position is the end that doesn't move when extending or shrinking the selection.
-		If the selection is anchored at the end or there is no information this is C{False}.
-		@return: C{True} if the selection is anchored at the start else C{False}
-		@rtype: bool
-		"""
-		return getattr(self, '_isSelectionAnchoredAtStart', False)
 
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.

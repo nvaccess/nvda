@@ -297,9 +297,9 @@ class CursorManager(baseObject.ScriptableObject):
 				# 1. Caret at 1; selection (1, 1)
 				# 2. Shift+rightArrow: selection (1, 2)
 				newInfo.setEndPoint(oldInfo, "startToStart")
-		# _isSelectionAnchoredAtStart is not the same as _lastSelectionMovedStart,
-		# i.e. their default values are opposite and _isSelectionAnchoredAtStart is only updated if the selection has changed.
-		self._isSelectionAnchoredAtStart = not self._lastSelectionMovedStart
+		# isTextSelectionAnchoredAtStart is not the same as _lastSelectionMovedStart,
+		# i.e. their default values are opposite and isTextSelectionAnchoredAtStart is only updated if the selection has changed.
+		self.isTextSelectionAnchoredAtStart = not self._lastSelectionMovedStart
 		self.selection = newInfo
 		speech.speakSelectionChange(oldInfo,newInfo)
 
