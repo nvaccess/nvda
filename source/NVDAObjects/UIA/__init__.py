@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2016 NV Access Limited, Joseph Lee, Mohammad Suliman
+#Copyright (C) 2009-2017 NV Access Limited, Joseph Lee, Mohammad Suliman
 
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
@@ -1393,7 +1393,7 @@ class ComboBoxWithoutValuePattern(UIA):
 	def _get_value(self):
 		try:
 			return self.UIASelectionPattern.GetCurrentSelection().GetElement(0).CurrentName
-		except COMError:
+		except (COMError, AttributeError):
 			return None
 
 class ListItem(UIA):
@@ -1402,8 +1402,9 @@ class ListItem(UIA):
 		if not self.hasFocus:
 			parent = self.parent
 			focus=api.getFocusObject()
-			if parent and isinstance(parent, ComboBoxWithoutValuePattern) and parent==focus: 
-				# This is an item in a combo box without the Value pattern.
+			if parent and parent==focus and (isinstance(parent, ComboBoxWithoutValuePattern)
+				or (parent._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId) and parent.windowClassName.startswith("Windows.UI.Core"))):
+				# #6337: This is an item in a combo box without the Value pattern or does not raise value change event.
 				# This item has been selected, so notify the combo box that its value has changed.
 				focus.event_valueChange()
 		super(ListItem, self).event_stateChange()
