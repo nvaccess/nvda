@@ -4,6 +4,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2017 NV Access Limited, Joseph Lee, Mohammad Suliman
 
+"""Support for UI Automation (UIA) controls."""
+
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
@@ -25,7 +27,7 @@ from logHandler import log
 from UIAUtils import *
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 
 class UIATextInfo(textInfos.TextInfo):
@@ -738,9 +740,26 @@ class UIA(Window):
 				pass
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
-		# #5942: In recent Windows 10 Redstone builds (14332 and later), Microsoft rewrote various dialog code including that of User Account Control.
+		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
 		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
 			clsList.append(Dialog)
+		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
+		# In Windows 10, allow Start menu search box and Edge's address omnibar to participate in announcing appearance of auto-suggestions.
+		if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox", "addressEditBox"):
+			clsList.append(SearchField)
+		try:
+			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
+			try:
+				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+				# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
+				# Oddly, we need to take care of context menu for Start search suggestions as well.
+				if parentElement.cachedAutomationId.lower() in ("suggestionslist", "contextmenu"):
+					clsList.append(SuggestionListItem)
+			except COMError:
+				pass
+		except ValueError:
+			pass
 
 		clsList.append(UIA)
 
@@ -1418,7 +1437,7 @@ class Toast_win8(Notification, UIA):
 
 class Toast_win10(Notification, UIA):
 
-	# #6096: Windows 10 Redstone build 14366 and later does not fire tooltip event when toasts appear.
+	# #6096: Windows 10 build 14366 and later does not fire tooltip event when toasts appear.
 	if sys.getwindowsversion().build > 10586:
 		event_UIA_window_windowOpen=Notification.event_alert
 	else:
@@ -1435,3 +1454,29 @@ class WpfTextView(UIA):
 	def event_stateChange(self):
 		return
 
+class SearchField(EditableTextWithSuggestions, UIA):
+	"""An edit field that presents suggestions based on a search term.
+	"""
+
+	def event_UIA_controllerFor(self):
+		# Only useful if suggestions appear and disappear.
+		if self == api.getFocusObject() and len(self.controllerFor)>0:
+			self.event_suggestionsOpened()
+		else:
+			self.event_suggestionsClosed()
+
+
+class SuggestionListItem(UIA):
+	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+	"""
+
+	role=controlTypes.ROLE_LISTITEM
+
+	def event_UIA_elementSelected(self):
+		focusControllerFor=api.getFocusObject().controllerFor
+		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
+			speech.cancelSpeech()
+			api.setNavigatorObject(self)
+			self.reportFocus()
+			# Display results as flash messages.
+			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
