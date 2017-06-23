@@ -5,42 +5,47 @@
 
 = 2017.3 =
 
-== neue Funktionen ==
-- In den Braille-Einsteiiungen gibt es eine neue Option, die die dauerhafte Anzeige von Blitzmeldungen ermöglicht. (#6669)
+== Neue Funktionen ==
+- In den Braille-Einstellungen gibt es eine neue Option, die die dauerhafte Anzeige von Blitzmeldungen ermöglicht. (#6669)
 - In der Nachrichtenliste von Microsoft Outlook werden markierte Nachrichten als solche angezeigt. (#6374)
-- in Microsoft Powerpoint wird beim Bearbeiten einer Folie eine Form genau beschrieben, wenn Sie sie bearbeiten (Beispiele sind u. a. Dreieck, Kreis, Video oder Pfeil); zuvor wurde eine Form lediglich als 'Form' angezeigt. (#7111)
+- In Microsoft PowerPoint wird beim Bearbeiten einer Folie eine Form genau beschrieben, wenn Sie sie bearbeiten (Beispiele sind u. a. Dreieck, Kreis, Video oder Pfeil); zuvor wurde eine Form lediglich als "Form" angezeigt. (#7111)
+- Mathml wird jetzt auch in Google Chrome unterstützt. (#7184)
+- NVDA unterstützt jetzt auch die neuen Windows OneCore-Stimmen, die in Windows 10 enthalten sind. Sie können diese Stimmen verwenden, indem Sie Windows OneCore Voices unter Einstellungen --> Sprachausgabe auswählen. (#6159)
 
 
 == Änderungen ==
-- Mit Hilfe des Scripts script_restart kann NVDA schnell neu gestartet werden. (#6396)
-- Das Tastaturschma kann nun im Willkommensbildschirm von NVDA eingestellt werden. (#6863)
+- Mit Hilfe des Skripts "script_restart" kann NVDA schnell neu gestartet werden. (#6396)
+- Das Tastaturschema kann nun im Willkommensbildschirm von NVDA eingestellt werden. (#6863)
 - Die Namen von Sprungmarken werden in Braille wie folgt abgekürzt: (#3975)
  - "Sprungmarke": "lmk"
  - "Logo": "bnnr"
  - "Ergänzung": "comp"
  - "Inhalt": "cinf"
  - "Haupt": "main"
- - "navigation": "nav"
- - "Suche": "srch"
+ - "Navigation": "nav"
+ - "Suchen": "srch"
  - "Formular": "frm"
- - "region": "rgn"
+ - "Region": "rgn"
  - Beispiel: "Sprungmarke Navigation" wird geändert in "lmk nav"
 
 
 == Fehlerkorrekturen ==
-- Editierbare Div-Elemente in Chrome haben nicht mehr ihre Beschriftung als Wert. (#7153)
+- Bearbeitbare Div-Elemente in Chrome haben nicht mehr ihre Beschriftung als Wert. (#7153)
 - Das Drücken von "Ende" im Lesemodus in Microsoft Word führt nicht mehr zu einem Laufzeitfehler. (#7009)
-- Der Lesemodus von Microsoft Edge wird auch dann vollständig unterstützt, wenn das angezeigte Dokument die Aria-Klasse Document besitzt. (#6998)
+- Der Lesemodus von Microsoft Edge wird auch dann vollständig unterstützt, wenn das angezeigte Dokument die ARIA-Klasse "document" besitzt. (#6998)
 - Im Lesemodus können Sie selbst dann mit Umschalt+Ende den Rest der Zeile markieren, wenn sich der Cursor bereits auf dem letzten Zeichen befindet. (#7157)
 - Wenn ein Dialogfenster eine Fortschrittsanzeige enthält, wird bei Änderungen an der Fortschrittsanzeige auch der Text des Dialogfensters aktualisiert. Das bedeutet z. B., dass Sie das Fortschreiten der Zeit zum Herunterladen beim Aktualisieren von NVDA verfolgen können. (#6862)
 
 
 == Änderungen für Entwickler ==
 - Die Zeitstempel im Protokoll enthalten jetzt auch Millisekunden. (#7163)
+- NVDA muss mit Visual Studio Community 2015 erzeugt werden. Visual Studio Express wird nicht mehr unterstützt. (#7110)
+ - Das windows 10 SDK ist nun ebenfalls erforderlich. Es kann aktiviert werden, wenn Sie Visual Studio installieren.
+ - Lesen Sie den Abschnitt Abhängigkeiten in der Liesmich-Datei für weitere Informationen.
 
 
 = 2017.2 =
-Schwerpunkte dieser Version sind u.a. eine volle Unterstützung von Audio-Ducking unter Windows 10 Creators Update; Fehlerkorrekturen beim Markieren von Text im Lesemodus; Verbesserungen in der Unterstützung von Microsoft Edge; sowie Verbesserungen bei der Anzeige von Webdokumenten, die das Aria-Current-Attribut verwenden.
+Schwerpunkte dieser Version sind u. a. eine volle Unterstützung von Audio-Ducking unter Windows 10 Creators Update; Fehlerkorrekturen beim Markieren von Text im Lesemodus; Verbesserungen in der Unterstützung von Microsoft Edge; sowie Verbesserungen bei der Anzeige von Webdokumenten, die das Aria-Current-Attribut verwenden.
 
 == Neue Funktionen ==
 - In Microsoft Excel können nun Informationen über Zellrahmen mittels NVDA+F abgefragt werden. (#3044)

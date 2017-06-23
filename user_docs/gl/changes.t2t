@@ -9,6 +9,8 @@ Que hai de Novo no NVDA
 - Engadiuse unha opción Braille para "amosar mensaxes indefinidamente". (#6669)
 - Na listaxe de mensaxes do Microsoft Outlook, anúnciase se unha mensaxe está marcada. (#6374)
 - No Microsoft Powerpoint, agora anúnciase o tipo exacto dunha forma cando se edita unha diapositiva (Exemplos inclúen: triángulo, círculo, vídeo, frecha), en lugar de só 'forma'. (#7111)
+- O contido matemático (proporcionado coma MathML) agora sopórtase en Google Chrome. (#7184)
+- NVDA agora pode falar usando as novas voces Windows OneCore (tamén coñecidas coma voces mobile) incluidas no Windows 10. Accede a elas selecionando Voces Windows OneCore no diálogo Sintetizadores de NVDA. (#6159)
 
 
 == Cambios ==
@@ -37,6 +39,9 @@ Que hai de Novo no NVDA
 
 == Cambios para Desenvolvedores ==
 - As marcass de tempo agora inclúen milésimas de segundo no rexistro. (#7163)
+- NVDA agora debe compilarse co Visual Studio Community 2015. Visual Studio Express xa non se soporta. (#7110)
+ - Agora tamén se requiren as Windows 10 Tools e o SDK, que poden habilitarse ao se instalar o Visual Studio.
+ - Consulta a sección Installed Dependencies do readme para detalles adicionais.
 
 
 = 2017.2 =
