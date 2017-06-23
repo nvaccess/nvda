@@ -2111,4 +2111,4 @@ class TouchInteractionDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
-		super(InputCompositionDialog, self).onOk(evt)
+		super(TouchInteractionDialog, self).onOk(evt)
