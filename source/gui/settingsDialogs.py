@@ -2097,7 +2097,7 @@ class InputGesturesDialog(SettingsDialog):
 
 class TouchInteractionDialog(SettingsDialog):
 	# Translators: This is the label for the touch interactoin settings dialog.
-	title = _("Touch Interaction Settings")
+	title = _("Touch Interaction")
 
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the

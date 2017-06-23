@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -32,6 +32,7 @@ import speechViewer
 import winUser
 import api
 import guiHelper
+import touchHandler
 
 try:
 	import updateCheck
@@ -226,6 +227,9 @@ class MainFrame(wx.Frame):
 	def onMouseSettingsCommand(self,evt):
 		self._popupSettingsDialog(MouseSettingsDialog)
 
+	def onTouchInteractionCommand(self,evt):
+		self._popupSettingsDialog(TouchInteractionDialog)
+
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(ReviewCursorDialog)
 
@@ -340,6 +344,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to open Mouse Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		if touchHandler.handler:
+			# Translators: The label for the menu item to open Touch Interaction dialog.
+			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),_("Change how NVDA interacts with the touchscreen"))
+			self.Bind(wx.EVT_MENU, frame.onTouchInteractionCommand, item)
 		# Translators: The label for the menu item to open Review Cursor dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
