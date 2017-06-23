@@ -2096,7 +2096,7 @@ class InputGesturesDialog(SettingsDialog):
 		super(InputGesturesDialog, self).onOk(evt)
 
 class TouchInteractionDialog(SettingsDialog):
-	# Translators: This is the label for the touch interactoin settings dialog.
+	# Translators: This is the label for the touch interaction settings dialog.
 	title = _("Touch Interaction")
 
 	def makeSettings(self, settingsSizer):
