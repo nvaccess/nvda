@@ -52,14 +52,14 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 			role = controlTypes.roleLabels[obj.role]
 			# Translators: Reported label in the elements list for an element which which has no name and value
 			unlabeled = _("Unlabeled")
-			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(obj.role, obj.states, browseMode.REASON_QUICKNAV, obj.states))
-			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(obj.role, obj.states, browseMode.REASON_QUICKNAV, obj.states))
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(obj.role, obj.states, controlTypes.REASON_FOCUS, obj.states))
+			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(obj.role, obj.states, controlTypes.REASON_FOCUS, obj.states))
 			if self.itemType == "formField":
 				if obj.role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
 					# For some buttons in Edge, the textInfo doesn't provide the label, so we fall back to the object's name
 					labelParts = (value or name or unlabeled, role, positiveStates, negativeStates)
 				else:
-					labelParts = (name or unlabeled, value, role, positiveStates, negativeStates)
+					labelParts = (name or unlabeled, role, positiveStates, negativeStates, value)
 			else: # links and buttons")
 				labelParts = (value or name or unlabeled, positiveStates, negativeStates)
 		label = " ".join(lp for lp in labelParts if lp)
