@@ -935,21 +935,11 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
-	states=propertyValues.get('states')
+	states=propertyValues.get('states',set())
 	realStates=propertyValues.get('_states',states)
-	positiveStates=controlTypes.processPositiveStates(role,realStates,reason,states) if states is not None else set()
 	negativeStates=propertyValues.get('negativeStates',set())
-	if negativeStates or (reason != controlTypes.REASON_CHANGE and states is not None):
-		negativeStates=controlTypes.processNegativeStates(role, realStates, reason, negativeStates)
-	for state in sorted(positiveStates | negativeStates):
-		if state in positiveStates:
-			textList.append(controlTypes.stateLabels[state])
-		elif state in negativeStates:
-			# Translators: Indicates that a particular state on an object is negated.
-			# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-			# but this still might be used in some other cases.
-			# %s will be replaced with the negated state.
-			textList.append(controlTypes.negativeStateLabels.get(state, _("not %s")%controlTypes.stateLabels[state]))
+	if states or negativeStates:
+		textList.extend(controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates))
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:

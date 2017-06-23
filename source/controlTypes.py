@@ -714,3 +714,18 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# This is not a state change; only positive states were supplied.
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
+
+def processAndLabelStates(role, states, reason, positiveStates, negativeStates, positiveStateLabelDict={}, negativeStateLabelDict={}):
+	mergedStateLabels=[]
+	positiveStates = processPositiveStates(role, states, reason, positiveStates)
+	negativeStates = processNegativeStates(role, states, reason, negativeStates)
+	for state in sorted(positiveStates | negativeStates):
+		if state in positiveStates:
+			mergedStateLabels.append(positiveStateLabelDict.get(state, stateLabels[state]))
+		elif state in negativeStates:
+			# Translators: Indicates that a particular state on an object is negated.
+			# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+			# but this still might be used in some other cases.
+			# %s will be replaced with the full identifier of the negated state (e.g. selected).
+			mergedStateLabels.append(negativeStateLabelDict.get(state, negativeStateLabels.get(state, _("not %s") % stateLabels[state])))
+	return mergedStateLabels

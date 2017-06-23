@@ -617,18 +617,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
 	if states:
-		positiveStates = controlTypes.processPositiveStates(role, states, controlTypes.REASON_FOCUS, states)
-		negativeStates = controlTypes.processNegativeStates(role, states, controlTypes.REASON_FOCUS, None)
-		for state in sorted(positiveStates | negativeStates):
-			if state in positiveStates:
-				textList.append(positiveStateLabels.get(state, controlTypes.stateLabels[state]))
-			elif state in negativeStates:
-				# Translators: Indicates that a particular state on an object is negated.
-				# Separate braille abbreviations have now been defined for commonly negated states (e.g. ( ) for not checked),
-				# and, if no braille abbreviations are provided, we fall back to the defined state labels in ControlTypes,
-				# but this still might be used in some other cases.
-				# %s will be replaced with the full identifier of the negated state (e.g. selected).
-				textList.append(negativeStateLabels.get(state, controlTypes.negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state])))
+		textList.extend(controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states,None,positiveStateLabels,negativeStateLabels))
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")
