@@ -1,6 +1,6 @@
 #cursorManager.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -297,8 +297,6 @@ class CursorManager(baseObject.ScriptableObject):
 				# 1. Caret at 1; selection (1, 1)
 				# 2. Shift+rightArrow: selection (1, 2)
 				newInfo.setEndPoint(oldInfo, "startToStart")
-		# isTextSelectionAnchoredAtStart is not the same as _lastSelectionMovedStart,
-		# i.e. their default values are opposite and isTextSelectionAnchoredAtStart is only updated if the selection has changed.
 		self.isTextSelectionAnchoredAtStart = not self._lastSelectionMovedStart
 		self.selection = newInfo
 		speech.speakSelectionChange(oldInfo,newInfo)

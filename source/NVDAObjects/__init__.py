@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -176,7 +176,7 @@ class NVDAObject(baseObject.ScriptableObject):
 	#: this will be False.
 	#: If the selection is anchored at the end or there is no information this is C{False}.
 	#: @type: bool
-	isTextSelectionAnchoredAtStart=False
+	isTextSelectionAnchoredAtStart=True
 
 	@classmethod
 	def findBestAPIClass(cls,kwargs,relation=None):

@@ -1,8 +1,8 @@
 #treeInterceptorHandler.py
 #A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 from logHandler import log
 import baseObject
@@ -144,7 +144,7 @@ class DocumentTreeInterceptor(TreeInterceptor):
 	#: this will be False.
 	#: If the selection is anchored at the end or there is no information this is C{False}.
 	#: @type: bool
-	isTextSelectionAnchoredAtStart=False
+	isTextSelectionAnchoredAtStart=True
 
 	def _get_TextInfo(self):
 		raise NotImplementedError

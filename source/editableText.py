@@ -1,8 +1,8 @@
 #editableText.py
 #A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -235,7 +235,7 @@ class EditableText(ScriptableObject):
 			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
-		self.isTextSelectionAnchoredAtStart=False
+		self.isTextSelectionAnchoredAtStart=True
 		self.hasContentChangedSinceLastSelection=False
 
 	def detectPossibleSelectionChange(self):
@@ -250,7 +250,7 @@ class EditableText(ScriptableObject):
 		self._lastSelectionPos=newInfo.copy()
 		if not oldInfo:
 			# There's nothing we can do, but at least the last selection will be right next time.
-			self.isTextSelectionAnchoredAtStart=False
+			self.isTextSelectionAnchoredAtStart=True
 			return
 		self._findSelectionAnchor(oldInfo,newInfo)
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
