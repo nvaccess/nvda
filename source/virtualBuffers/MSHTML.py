@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2016 NV Access Limited, Babbage B.V.
+#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 import eventHandler
@@ -77,7 +77,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_EDITABLE)
 		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:
 			states.add(controlTypes.STATE_CLICKABLE)
-		if attrs.get('HTMLAttrib::aria-required','false')=='true':
+		if 'HTMLAttrib::required' in attrs or attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
