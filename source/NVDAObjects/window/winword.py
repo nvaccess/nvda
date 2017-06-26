@@ -808,7 +808,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			field[x]=v
 		bullet=field.get('line-prefix')
 		if bullet and len(bullet)==1:
-			global mapPUAToUnicode
 			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
 		return field
 
