@@ -1303,6 +1303,9 @@ class UIA(Window):
 	def event_UIA_elementSelected(self):
 		self.event_stateChange()
 
+	def event_caret(self):
+		return
+
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithoutAutoSelectDetection):
 			return
