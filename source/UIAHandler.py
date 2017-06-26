@@ -1,5 +1,11 @@
+#UIAHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2008-2016 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import winVersion
-import comtypes
+from comtypes import COMError
 import config
 from logHandler import log
 
@@ -13,6 +19,7 @@ if config.conf and config.conf["UIA"]["enabled"]:
 			from _UIAHandler import *
 			isUIAAvailable=True
 		except ImportError:
+			log.debugWarning("Unable to import _UIAHandler",exc_info=True)
 			pass
 
 def initialize():

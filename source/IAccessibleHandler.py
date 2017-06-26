@@ -52,7 +52,7 @@ class OrderedWinEventLimiter(object):
 	Only allow one event for one specific object at a time, though push it further forward in time if a duplicate tries to get added. This is true for both generic and focus events.
  	"""
 
-	def __init__(self,maxFocusItems=3):
+	def __init__(self,maxFocusItems=4):
 		"""
 		@param maxFocusItems: the amount of focus changed events allowed to be queued.
 		@type maxFocusItems: integer
@@ -82,9 +82,6 @@ class OrderedWinEventLimiter(object):
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
-				return False
-			#We do not need a focus event on an object if we already got a foreground event for it
-			if (winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,threadID) in self._focusEventCache:
 				return False
 			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
 			return True

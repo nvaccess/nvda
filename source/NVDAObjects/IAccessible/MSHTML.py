@@ -170,6 +170,12 @@ def locateHTMLElementByID(document,ID):
 				element=document.all.item(ID)
 			except:
 				element=None
+		if element is None: #getElementsByName doesn't return element with specified ID in IE11 (#5784)
+			try:
+				element=document.getElementByID(ID)
+			except COMError as e:
+				log.debugWarning("document.getElementByID failed with COMError %s"%e)
+				element=None
 	except COMError as e:
 		log.debugWarning("document.getElementsByName failed with COMError %s"%e)
 		element=None
@@ -511,8 +517,14 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
+	def _get_isCurrent(self):
+		return self.HTMLAttributes["aria-current"]
+
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
+
+	def _get_placeholder(self):
+		return self.HTMLAttributes["aria-placeholder"]
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False

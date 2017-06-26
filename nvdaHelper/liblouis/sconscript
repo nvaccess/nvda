@@ -35,6 +35,11 @@ def getLouisVersion():
 	return "unknown"
 
 env = env.Clone()
+
+# Don't analyze the code as not our project
+if 'analyze' in env['nvdaHelperDebugFlags']:
+	env.Append(CCFLAGS='/analyze-')
+
 env.Append(CCFLAGS="/W2")
 env.Append(CPPDEFINES=[
 	("PACKAGE_VERSION", r'\"%s\"' % getLouisVersion()),

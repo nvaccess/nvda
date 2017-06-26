@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Manish Agrawal, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -397,6 +397,16 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		text=(self.collectionItem.range.text or "")[:100]
 		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
+class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
+
+	def rangeFromCollectionItem(self,item):
+		return item
+
+	@property
+	def label(self):
+		text=self.collectionItem.text
+		return _(u"spelling: {text}").format(text=text)
+
 class WinWordCollectionQuicknavIterator(object):
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
@@ -490,6 +500,11 @@ class RevisionWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterato
 	quickNavItemClass=WordDocumentRevisionQuickNavItem
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.revisions
+
+class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentSpellingErrorQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.spellingErrors
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
@@ -852,7 +867,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		if end and self._rangeObj.end<oldEndOffset:
+		newEndOffset = self._rangeObj.end
+		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+		# a case where you called move end then collapse until the size of the range is no longer being reduced.
+		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+		if end and newEndOffset < oldEndOffset :
 			raise RuntimeError
 
 	def copy(self):
@@ -1009,9 +1028,11 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		elif nodeType in ("table","container"):
-			 return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="error":
+			return SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
-			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
@@ -1711,4 +1732,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("error", _("&errors")),
 	)

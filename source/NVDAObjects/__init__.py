@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -379,6 +379,14 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""  
 		return controlTypes.ROLE_UNKNOWN
 
+	def _get_roleText(self):
+		"""
+		A custom role string for this object, which is used for braille and speech presentation, which will override the standard label for this object's role property.
+		No string is provided by default, meaning that NVDA will fall back to using role.
+		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
+		"""
+		return None
+
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
 		@rtype: basestring
@@ -611,7 +619,7 @@ class NVDAObject(baseObject.ScriptableObject):
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE,controlTypes.ROLE_BORDER):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SPLITPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE,controlTypes.ROLE_BORDER):
 			return self.presType_layout
 		name = self.name
 		description = self.description
@@ -798,10 +806,26 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
+	def _get_isCurrent(self):
+		"""Gets the value that indicates whether this object is the current element in a set of related 
+		elements. This maps to aria-current. Normally returns False. If this object is current
+		it will return one of the following values: True, "page", "step", "location", "date", "time"
+		"""
+		return False
+
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+
+	def _get_placeholder(self):
+		"""If it exists for this object get the value of the placeholder text.
+		For example this might be the aria-placeholder text for a field in a web page.
+		@return: the placeholder text else None
+		@rtype: String or None
+		"""
+		log.debug("Potential unimplemented child class: %r" %self)
+		return None
 
 	def _reportErrorInPreviousWord(self):
 		try:
@@ -956,6 +980,14 @@ This code is executed if a gain focus event is received by this object.
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
+
+	def _get__isTextEmpty(self):
+		"""
+		@return C{True} if the text contained in the object is considered empty by the underlying implementation. In most cases this will match {isCollapsed}, however some implementations may consider a single space or line feed as an empty range.
+		"""
+		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
+		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+		return ti.isCollapsed
 
 	@staticmethod
 	def _formatLongDevInfoString(string, truncateLen=250):

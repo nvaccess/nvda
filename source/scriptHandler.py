@@ -1,6 +1,6 @@
 #scriptHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -73,7 +73,7 @@ def findScript(gesture):
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
-		for identifier in gesture.identifiers:
+		for identifier in gesture.normalizedIdentifiers:
 			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
 
 	# Gesture specific scriptable object.
