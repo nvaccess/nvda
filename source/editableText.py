@@ -43,7 +43,7 @@ class EditableText(ScriptableObject):
 	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
 	announceNewLineText=True
 
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None):
+	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
 		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
@@ -53,6 +53,9 @@ class EditableText(ScriptableObject):
 		@param timeout: the over all amount of time in seconds the method should wait before giving up completely,
 			C{None} to use the value from the configuration.
 		@type timeout: float
+		@param origWord: The word at the caret before the movement command,
+			C{None} if the word at the caret should not be used to detect movement.
+			This is intended for use with the delete key.
 		@return: a tuple containing a boolean denoting whether this method timed out, and  a TextInfo representing the old or updated caret position or None if interupted by a script or focus event.
 		@rtype: tuple
 		"""
@@ -79,19 +82,7 @@ class EditableText(ScriptableObject):
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 			except (RuntimeError,NotImplementedError):
 				newInfo = None
-			if eventHandler.isPendingEvents("caret"):
-				log.debug("caret event. Elapsed: %d ms" % elapsed)
-				return (True, newInfo)
-			if eventHandler.isPendingEvents("valueChange"):
-				# When pressing delete, the caret might not physically move,
-				# so the control might not fire a caret event,
-				# even though the text under the caret changes.
-				# We still want to treat this as a caret move.
-				# Otherwise, the user will have to wait
-				# the full timeout for feedback after pressing delete.
-				log.debug("valueChange event. Elapsed: %d ms" % elapsed)
-				return (True, newInfo)
-			# Some controls don't fire caret events.
+			# Caret events are unreliable in some controls.
 			# Try to detect with bookmarks.
 			newBookmark = None
 			if newInfo:
@@ -102,7 +93,15 @@ class EditableText(ScriptableObject):
 			if newBookmark and newBookmark!=bookmark:
 				log.debug("Caret move detected using bookmarks. Elapsed: %d ms" % elapsed)
 				return (True, newInfo)
-			if  elapsed >= timeoutMs:
+			if origWord is not None and newInfo:
+				# When pressing delete, bookmarks might not be enough to detect caret movement.
+				wordInfo = newInfo.copy()
+				wordInfo.expand(textInfos.UNIT_WORD)
+				word = wordInfo.text
+				if word != origWord:
+					log.debug("Word at caret changed. Elapsed: %d ms" % elapsed)
+					return (True, newInfo)
+			if elapsed >= timeoutMs:
 				break
 			time.sleep(retryInterval)
 			elapsed += retryMs
@@ -232,9 +231,11 @@ class EditableText(ScriptableObject):
 			gesture.send()
 			return
 		bookmark=info.bookmark
+		info.expand(textInfos.UNIT_WORD)
+		word=info.text
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		caretMoved,newInfo=self._hasCaretMoved(bookmark)
+		caretMoved,newInfo=self._hasCaretMoved(bookmark,origWord=word)
 		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,gesture,newInfo)
 		braille.handler.handleCaretMove(self)
 

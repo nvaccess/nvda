@@ -643,12 +643,6 @@ the NVDAObject for IAccessible
 			return IA2TextTextInfo
 		return super(IAccessible,self).TextInfo
 
-	def _get_shouldAllowSystemCaretEvent(self):
-		if hasattr(self, 'IAccessibleTextObject'):
-			# IAccessibleText implementations fire IA2 caret events which are more reliable.
-			return False
-		return super(IAccessible, self).shouldAllowSystemCaretEvent
-
 	def _isEqual(self,other):
 		if self.IAccessibleChildID!=other.IAccessibleChildID:
 			return False
