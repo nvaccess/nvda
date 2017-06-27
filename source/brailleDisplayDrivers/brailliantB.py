@@ -7,6 +7,7 @@
 import os
 import _winreg
 import itertools
+import time
 import serial
 import hwPortUtils
 import braille
@@ -18,6 +19,9 @@ import hwIo
 TIMEOUT = 0.2
 BAUD_RATE = 115200
 PARITY = serial.PARITY_EVEN
+DELAY_AFTER_CONNECT = 1.0
+INIT_ATTEMPTS = 3
+INIT_RETRY_DELAY = 0.2
 
 # Serial
 HEADER = "\x1b"
@@ -128,30 +132,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._serOnReceive)
 			except EnvironmentError:
-				continue
-			if self.isHid:
-				try:
-					data = self._dev.getFeature(HR_CAPS)
-				except WindowsError:
-					self._dev.close()
-					continue
-				self.numCells = ord(data[24])
-			else:
-				# This will cause the number of cells to be returned.
-				self._serSendMessage(MSG_INIT)
-				# #5406: With the new USB driver, the first command is ignored after a reconnection.
-				# Send the init message again just in case.
-				self._serSendMessage(MSG_INIT)
-				self._dev.waitForRead(TIMEOUT)
-				if not self.numCells:
-					# HACK: When connected via bluetooth, the display sometimes reports communication not allowed on the first attempt.
-					self._serSendMessage(MSG_INIT)
-					self._dev.waitForRead(TIMEOUT)
+				continue # Couldn't connect.
+			# The Brailliant can fail to init if you try immediately after connecting.
+			time.sleep(DELAY_AFTER_CONNECT)
+			# Sometimes, a few attempts are needed to init successfully.
+			for attempt in xrange(INIT_ATTEMPTS):
+				if attempt > 0: # Not the first attempt
+					time.sleep(INIT_RETRY_DELAY) # Delay before next attempt.
+				self._initAttempt()
+				if self.numCells:
+					break # Success!
 			if self.numCells:
 				# A display responded.
 				log.info("Found display with {cells} cells connected via {type} ({port})".format(
 					cells=self.numCells, type=portType, port=port))
 				break
+			# This device can't be initialized. Move on to the next (if any).
 			self._dev.close()
 
 		else:
@@ -159,6 +155,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
+
+	def _initAttempt(self):
+		if self.isHid:
+			try:
+				data = self._dev.getFeature(HR_CAPS)
+			except WindowsError:
+				return # Fail!
+			self.numCells = ord(data[24])
+		else:
+			# This will cause the display to return the number of cells.
+			# The _serOnReceive callback will see this and set self.numCells.
+			self._serSendMessage(MSG_INIT)
+			self._dev.waitForRead(TIMEOUT)
 
 	def terminate(self):
 		try:
