@@ -60,16 +60,37 @@ KEY_NAMES = {
 	18: "left",
 	19: "right",
 	20: "down",
+	# Joystick (Brailliant BI 14 only).
+	21: "stickUp",
+	22: "stickDown",
+	23: "stickLeft",
+	24: "stickRight",
+	25: "stickAction",
+	# BrailleNote Touch calibration key events.
+	30: "calibrationOk",
+	31: "calibrationFail",
+	32: "calibrationEmpty",
+	34: "resetKeySequence",
 }
 FIRST_ROUTING_KEY = 80
 DOT1_KEY = 2
 DOT8_KEY = 9
 SPACE_KEY = 10
 
+USB_IDS_HID = {
+	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
+	"VID_1C71&PID_C022", # Brailliant BI 14
+	"VID_1C71&PID_C00A", # BrailleNote Touch
+}
+USB_IDS_SER = (
+	"Vid_1c71&Pid_c005", # Brailliant BI 32, 40 and 80
+	"Vid_1c71&Pid_c021", # Brailliant BI 14
+)
+
 def _getPorts():
 	# HID.
 	for portInfo in hwPortUtils.listHidDevices():
-		if portInfo.get("usbID") == "VID_1C71&PID_C006":
+		if portInfo.get("usbID") in USB_IDS_HID:
 			yield "USB HID", portInfo["devicePath"]
 		# In Windows 10, the Bluetooth vendor and product ids don't get recognised.
 		# Use strings instead.
@@ -77,18 +98,19 @@ def _getPorts():
 			yield "Bluetooth HID", portInfo["devicePath"]
 
 	# USB serial.
-	try:
-		rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\Vid_1c71&Pid_c005")
-	except WindowsError:
-		# A display has never been connected via USB.
-		pass
-	else:
+	for usbId in USB_IDS_SER:
+		try:
+			rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
+				r"SYSTEM\CurrentControlSet\Enum\USB\%s" % usbId)
+		except WindowsError:
+			# A display with this id has never been connected via USB.
+			continue
 		with rootKey:
 			for index in itertools.count():
 				try:
 					keyName = _winreg.EnumKey(rootKey, index)
 				except WindowsError:
-					break
+					break # No more sub-keys.
 				try:
 					with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
 						yield "USB serial", _winreg.QueryValueEx(paramsKey, "PortName")[0]
@@ -101,7 +123,7 @@ def _getPorts():
 			btName = portInfo["bluetoothName"]
 		except KeyError:
 			continue
-		if btName.startswith("Brailliant B") or btName == "Brailliant 80":
+		if btName.startswith("Brailliant B") or btName == "Brailliant 80" or "BrailleNote Touch" in btName:
 			yield "Bluetooth serial", portInfo["port"]
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -262,16 +284,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_nextLine": ("br(brailliantB):down",),
 			"braille_routeTo": ("br(brailliantB):routing",),
 			"braille_toggleTether": ("br(brailliantB):up+down",),
-			"kb:upArrow": ("br(brailliantB):space+dot1",),
-			"kb:downArrow": ("br(brailliantB):space+dot4",),
-			"kb:leftArrow": ("br(brailliantB):space+dot3",),
-			"kb:rightArrow": ("br(brailliantB):space+dot6",),
+			"kb:upArrow": ("br(brailliantB):space+dot1", "br(brailliantB):stickUp"),
+			"kb:downArrow": ("br(brailliantB):space+dot4", "br(brailliantB):stickDown"),
+			"kb:leftArrow": ("br(brailliantB):space+dot3", "br(brailliantB):stickLeft"),
+			"kb:rightArrow": ("br(brailliantB):space+dot6", "br(brailliantB):stickRight"),
 			"showGui": ("br(brailliantB):c1+c3+c4+c5",),
 			"kb:shift+tab": ("br(brailliantB):space+dot1+dot3",),
 			"kb:tab": ("br(brailliantB):space+dot4+dot6",),
 			"kb:alt": ("br(brailliantB):space+dot1+dot3+dot4",),
 			"kb:escape": ("br(brailliantB):space+dot1+dot5",),
-			"kb:enter": ("br(brailliantB):dot8",),
+			"kb:enter": ("br(brailliantB):dot8", "br(brailliantB):stickAction"),
 			"kb:windows+d": ("br(brailliantB):c1+c4+c5",),
 			"kb:windows": ("br(brailliantB):space+dot3+dot4",),
 			"kb:alt+tab": ("br(brailliantB):space+dot2+dot3+dot4+dot5",),
