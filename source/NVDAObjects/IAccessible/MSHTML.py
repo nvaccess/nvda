@@ -71,6 +71,7 @@ class HTMLAttribCache(object):
 	def __init__(self,HTMLNode):
 		self.HTMLNode=HTMLNode
 		self.cache={}
+		self.containsCache={}
 
 	def __getitem__(self,item):
 		try:
@@ -83,6 +84,23 @@ class HTMLAttribCache(object):
 			value=None
 		self.cache[item]=value
 		return value
+
+	def __contains__(self,item):
+		try:
+			return self.containsCache[item]
+		except LookupError:
+			pass
+		value = self[item]
+		if value is not None:
+			contains = True
+			self.containsCache[item]=contains
+			return contains
+		try:
+			contains= self.HTMLNode.hasAttribute(item)
+		except (COMError,NameError):
+			contains = False
+		self.containsCache[item]=contains
+		return contains
 
 nodeNamesToNVDARoles={
 	"FRAME":controlTypes.ROLE_FRAME,
