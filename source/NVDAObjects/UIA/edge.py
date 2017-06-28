@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -131,9 +131,10 @@ class EdgeTextInfo(UIATextInfo):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
 		# report landmarks
-		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
-		if landmark and (landmark!='region' or field.get('name')):
-			field['landmark']=aria.landmarkRoles.get(landmark)
+		ariaRole=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
+		if landmark and (ariaRole!='region' or field.get('name')):
+			field['landmark']=ariaRole
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
@@ -425,7 +426,7 @@ class EdgeNode(UIA):
 		role=super(EdgeNode,self).role
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
-		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId)
+		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
