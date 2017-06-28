@@ -9,6 +9,8 @@ import appModuleHandler
 import controlTypes
 import winUser
 from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.UIA import edge
+import ui
 
 class CoreComponentInputSourcePane(IAccessible):
 	shouldAllowIAccessibleFocusEvent=False
@@ -24,3 +26,9 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,CoreComponentInputSourcePane)
 		return clsList
 
+	def event_liveRegionChange(self, obj, nextHandler):
+		# #7286: at least in Windows 10 Creators Update, the actual alert text is the first child of this node.
+		if isinstance(obj, edge.EdgeNode) and obj.UIAElement.cachedAutomationID == "a11y-announcements-message":
+			ui.message(obj.firstChild.name)
+			return
+		nextHandler()
