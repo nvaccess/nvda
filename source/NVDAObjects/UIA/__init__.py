@@ -29,6 +29,8 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
+import queueHandler
+import ui
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -1464,6 +1466,17 @@ class SearchField(EditableTextWithSuggestions, UIA):
 			self.event_suggestionsOpened()
 		else:
 			self.event_suggestionsClosed()
+
+	def event_suggestionsOpened(self):
+		super(SearchField, self).event_suggestionsOpened()
+		# #7330: Announce number of items found (except in Start search box where the suggestions are selected as user types).
+		# Oddly, Edge's address omnibar returns 0 for suggestion count when there are clearly suggestions (implementation differences).
+		# Because inaccurate count could be announced (when users type, suggestion count changes), thus announce this if position info reporting is enabled.
+		if config.conf["presentation"]["reportObjectPositionInformation"]:
+			if self.UIAElement.cachedAutomationID == "TextBox" or self.UIAElement.cachedAutomationID == "SearchTextBox" and self.appModule.appName != "searchui":
+				# Item count must be the last one announced.
+				# Translators: presented when there are suggestions as theu ser types (example output: 3 suggestions).
+				queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("{suggestionsCount} suggestions").format(suggestionsCount = self.controllerFor[0].childCount))
 
 
 class SuggestionListItem(UIA):
