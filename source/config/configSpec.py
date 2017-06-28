@@ -76,6 +76,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
 		reportDynamicContentChanges = boolean(default=True)
+		reportAutoSuggestionsWithSound = boolean(default=True)
 	[[progressBarUpdates]]
 		reportBackgroundProgressBars = boolean(default=false)
 		#output modes are beep, speak, both, or off

@@ -543,7 +543,7 @@ Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
 Se on ladattavissa ilmaiseksi osoitteesta http://www.dessci.com/en/products/mathplayer/
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
-- MathML Mozilla Firefoxissa ja Microsoft Internet Explorerissa.
+- MathML Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Google Chromessa.
 - Design Science MathType Microsoft Wordissa ja PowerPointissa. MathTypen on oltava asennettuna, jotta tämä toimii. Kokeiluversio riittää.
 - MathML Adobe Readerissa. HUOM: Tämä ei ole vielä virallinen standardi, joten tätä sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 -
@@ -1592,6 +1592,17 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi komponenttia:
  Esimerkiksi tiedosto MSSpeech_TTS_en-US_ZiraPro.msi on amerikanenglantia puhuva ääni.
  -
 -
+
+++ Windows OneCore ++
+Windows 10 sisältää uusia puheääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
+Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
+
+Voit asentaa ääniä lisäkielille katsomalla ohjeita tästä Microsoftin artikkelista: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Huomaa, että Lukijan (Narratorin) suuremmat puhenopeudet eivät ole tällä hetkellä käytettävissä NVDA:n kanssa.
+Lisäksi Windowsin asetuksista valitsemasi puheen nopeus vaikuttaa NVDA:ssa asetettuun puhenopeuteen.
+Näitä ongelmia ei voi ratkaista ilman Windowsiin tehtäviä muutoksia.
+Toivon mukaan ne korjataan tulevassa Windows-päivityksessä.
 
 ++ Audiologic TTS 3 ++
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.

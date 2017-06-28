@@ -21,6 +21,43 @@ from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
 from UIAUtils import *
 from . import UIA, UIATextInfo
 
+def splitUIAElementAttribs(attribsString):
+	"""Split an UIA Element attributes string into a dict of attribute keys and values.
+	An invalid attributes string does not cause an error, but strange results may be returned.
+	@param attribsString: The UIA Element attributes string to convert.
+	@type attribsString: str
+	@return: A dict of the attribute keys and values, where values are strings
+	@rtype: {str: str}
+	"""
+	attribsDict = {}
+	tmp = ""
+	key = ""
+	inEscape = False
+	for char in attribsString:
+		if inEscape:
+			tmp += char
+			inEscape = False
+		elif char == "\\":
+			inEscape = True
+		elif char == "=":
+			# We're about to move on to the value, so save the key and clear tmp.
+			key = tmp
+			tmp = ""
+		elif char == ";":
+			# We're about to move on to a new attribute.
+			if key:
+				# Add this key/value pair to the dict.
+				attribsDict[key] = tmp
+			key = ""
+			tmp = ""
+		else:
+			tmp += char
+	# If there was no trailing semi-colon, we need to handle the last attribute.
+	if key:
+		# Add this key/value pair to the dict.
+		attribsDict[key] = tmp
+	return attribsDict
+
 class EdgeTextInfo(UIATextInfo):
 
 	def _get_UIAElementAtStartWithReplacedContent(self):
@@ -102,6 +139,8 @@ class EdgeTextInfo(UIATextInfo):
 			field['states'].add(controlTypes.STATE_EDITABLE)
 		# report if the field is 'current'
 		field['current']=obj.isCurrent
+		if obj.placeholder and obj._isTextEmpty:
+			field['placeholder']=obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
@@ -409,6 +448,9 @@ class EdgeNode(UIA):
 				pass
 		return super(EdgeNode,self).description
 
+	def _get_ariaProperties(self):
+		return splitUIAElementAttribs(self.UIAElement.currentAriaProperties)
+
 	# RegEx to get the value for the aria-current property. This will be looking for a the value of 'current'
 	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
 	# character and before the ';' character.
@@ -423,6 +465,29 @@ class EdgeNode(UIA):
 			valueOfAriaCurrent = match.group(1)
 			log.debug("aria current value = %s" % valueOfAriaCurrent)
 			return valueOfAriaCurrent
+		return False
+
+	def _get_placeholder(self):
+		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
+		return ariaPlaceholder
+
+	def _get__isTextEmpty(self):
+		# NOTE: we can not check the result of the EdgeTextInfo move implementation to determine if we added
+		# any characters to the range, since it seems to return 1 even when the text property has not changed.
+		# Also we can not move (repeatedly by one character) since this can overrun the end of the field in edge.
+		# So instead, we use self to make a text info (which should have the right range) and then use the UIA
+		# specific _rangeObj.getText function to get a subset of the full range of characters.
+		ti = self.makeTextInfo(self)
+		if ti.isCollapsed:
+			# it is collapsed therefore it is empty.
+			# exit early so we do not have to do not have to fetch `ti.text` which
+			# is potentially costly to performance.
+			return True
+		numberOfCharacters = 2
+		text = ti._rangeObj.getText(numberOfCharacters)
+		# Edge can report newline for empty fields:
+		if text == "\n":
+			return True
 		return False
 
 class EdgeList(EdgeNode):
