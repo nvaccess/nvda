@@ -753,8 +753,9 @@ class MSHTML(IAccessible):
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
 			states.add(state)
+		htmlRequired='required' in self.HTMLAttributes
 		ariaRequired=self.HTMLAttributes['aria-required']
-		if ariaRequired=="true":
+		if htmlRequired or ariaRequired=="true":
 			states.add(controlTypes.STATE_REQUIRED)
 		ariaSelected=self.HTMLAttributes['aria-selected']
 		if ariaSelected=="true":
