@@ -137,6 +137,10 @@ Als u NVDA hebt geïnstalleerd met het installatieprogramma, kunt u NVDA eenvoud
 U kunt het programma ook starten door in het dialoogvenster Uitvoeren de letters NVDA te typen en vervolgens Enter in te drukken.
 U kunt ook [commandoregelopties opgeven #CommandLineOptionstart waarmee u NVDA herstart  (-r), beëindigt (-q), add -ons uitschakelt (--disable-addons), etc.
 
+In geval van een geïnstalleerde versie slaat NVDA de configuratie standaard op in de map roaming application data  van de huidige gebruiker (bijv.  "C:\Users\<user>\AppData\Roaming").
+Het is mogelijk dit te wijzigen en wel zodanig dat in plaats daarvan NVDA de configuratie ophaalt uitthe map met de lokale applicatiedata.
+Raadpleeg voor meer details de paragraaf over [systeembrede parameters #SystemWideParameters].
+
 Om de  draagbare versie van NVDA te starten gaat u naar de map waarin u de uitgepakte bestanden hebt opgeslagen. Daar selecteert u NVDA.exe. Druk op de Entertoets of dubbelklik op het bestand.
 
 Bij het opstarten van het programma hoort u eerst een reeks in hoogte oplopende tonen die aangeven dat NVDA wordt geladen. 
@@ -547,7 +551,7 @@ Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
 MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
-- MathML in Mozilla Firefox en Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
 - Design Science MathType in Microsoft Word and PowerPoint. MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
 - MathML in Adobe Reader. NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
 -
@@ -1593,6 +1597,17 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
  Voorbeeld: Het bestand MSSpeech_TTS_en-US_ZiraPro.msi is een amerikaans-engelse stem.
  -
 -
+
+++ Windows OneCore-stemmen ++
+In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
+Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
+
+Als u stemmen voor extra talen wilt installeren, leest u dan het artikel van Microsoft op https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Let erop dat de versnellingsmogelijkheden die op dit moment in de Verteller beschikbaar zijn nog niet ondersteund worden door NVDA.
+Houd er ook rekening mee dat de snelheid die u instelt in Windows de in NVDA ingestelde niveaus zal beïnvloeden.
+Een oplossing hiervoor is niet mogelijk zonder aanpassingen in Windows.
+We hopen dat dit gaat gebeuren bij een volgende update van Windows.
 
 ++ AudioLogic TTS 3 ++
 Dit is een commerciële spraaksynthesizer die speciaal ontwikkeld is voor het Italiaans.
