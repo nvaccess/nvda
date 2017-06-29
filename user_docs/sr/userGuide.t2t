@@ -136,6 +136,10 @@ Ako ste instalirali NVDA, pokretanje NVDA možete ostvariti prečicom control+al
 Takođe možete upisati NVDA u dialog za otvaranje i pritisnuti enter.
 Takođe možete dodati[opcije komandne linije #CommandLineOptions] koje vam dozvoljavaju da ponovo pokrenete NVDA(-r), izađete(-q), onemogućite dodatke(--disable-addons), i tako dalje.
 
+Za instalirane kopije, NVDA NVDA čuva podešavanja u roaming app data folderu trenutnog korisnika po podrazumevanim podešavanjima(Na primer "C:\Users\<korisnik>\AppData\Roaming").
+Moguće je promeniti ovo tako da NVDA učitava svoja podešavanja iz foldera local u folderu app data.
+Pogledajte deo o [sistemskim parametrima#SystemWideParameters] za više detalja.
+
 Da pokrenete prenosivu kopiju, potrebno je ući u folder u kojem ste napravili prenosivu kopiju, i pritisnite enter ili kliknite dva puta na datoteku nvda.exe.
 
 Dok se NVDA pokreće, čućete niz tonova(koji vam govore da se NVDA učitava).
@@ -321,7 +325,7 @@ Slično, alatna traka sadrži kontrole, pa morate ući u alatnu traku da pristup
 
 Objekat koji se trenutno pregleda se zove navigacioni objekat.
 Kada stignete do nekog objekta, možete pregledati njegov sadržaj koristeći[komande za pregled teksta#ReviewingText] dok ste u[režimu pregleda objekata#ObjectReview].
-Po podrazumevanim podešavanjima, navigacioni objekat se pomera zajedno sa sistemskim fokusom, ali ovo se može isključiti i uključiti.
+Po podrazumevanim podešavanjima, navigacioni objekat se pomera zajedno sa sistemskim fokusom, ali ovo se može promeniti.
 
 Napomena da brajev red prati[fokus#SystemFocus] i[kursor #SystemCaret] po podrazumevanim podešavanjima, a ne navigaciju objekata i pregled teksta.
 Ako želite da prati navigaciju objekata i pregled teksta, morate[da podesite brajev red da prati navigaciju objekata #BrailleTether].
@@ -2328,8 +2332,20 @@ Slede opcije komandne linije za NVDA:
 | Nema | --disable-addons | Dodaci neće imati efekta|
 | Nema | --debug-logging | Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ""--loglevel"", -l). |
 | Nema| --no-sr-flag  | Ne menjaj globalnu oznaku čitača ekrana na sistemu|
-| None | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
+| Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
 | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
+
+++ Sistemski parametri++[SystemWideParameters]
+NVDA dozvoljava promenu određenih vrednosti u sistemskoj registry bazi koje menjaju ponašanje programa NVDA.
+Ove vrednosti se čuvaju u registry bazi u jednom od sledećih ključeva:
+- 32-bitni system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bitni system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Sledeće vrednosti se mogu podesiti u ovom registry ključu:
+|| Ime | Vrsta | Moguće vrednosti | Opis |
+| configInLocalAppData | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite| Ako je omogućeno, Čuva NVDA podešavanja u local folderu foldera app data umesto roaming foldera|
+| serviceDebug | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, onemogućava bezbedni režim na Windows secure računarima, dozvoljavajući korišćenje Python konzole i pregleda dnevnika. Zbog nekoliko velikih bezbednosnih rizika, korišćenje ove opcije nije preporučeno|
 
 + Dodatne informacije +
 Ako vam trebaju dodatne informacije ili pomoć za program NVDA, molimo posetite NVDA sajt na lokaciji NVDA_URL.
