@@ -415,8 +415,11 @@ class NVDAObjectRegion(Region):
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
-		text = getBrailleTextForProperties(name=obj.name, role=role, roleText=obj.roleText,
-			current=obj.isCurrent, placeholder=placeholderValue,
+		text = getBrailleTextForProperties(
+			name=obj.name,
+			role=role,
+			current=obj.isCurrent,
+			placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,

@@ -543,7 +543,7 @@ Ovo zahteva da program MathPlayer 4 bude instaliran na računaru.
 MathPlayer je dostupan za besplatno preuzimanje sa: http://www.dessci.com/en/products/mathplayer/
 
 NVDA podržava sledeće vrste matematičkog sadržaja:
-- MathML u programima Mozilla Firefox i Microsoft Internet Explorer.
+- MathML u programima Mozilla Firefox, Microsoft Internet Explorer i  Google Chrome.
 - Design Science vrsta matematike u programu Microsoft Word i PowerPoint. Ova vrsta mora prvo da bude instalirana da bi ovo radilo. Probna verzija je dovoljna.
 - MathML u programu Adobe Reader. Napomena da ovo još uvek nije zvaničan standard, tako da trenutno nema javno dostupnog programa koji može praviti ovakav sadržaj.
 -
@@ -1592,6 +1592,17 @@ Da biste koristili ove glasove, morate da instalirate dve komponente:
  Na primer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas za Američki Engleski.
  -
 -
+
+++ Windows OneCore glasovi ++
+Windows 10 uključuje nove glasove poznati i kao "OneCore" ili  "Mobilni" glasovi.
+Glasovi su ponuđeni za puno jezika, i oni su brži od Microsoft glasova dostupni korišćenjem opcije Microsoft Speech API verzija  5.
+
+Da instalirate glasove za dodatne jezike, pročitajte ovaj Microsoft članak: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Molimo imajte na umu da brzina govora koja je dostupna sa čitačem ekrana Narrator nije dostupna sa čitačem ekrana NVDA.
+Takođe, brzina koju izaberete u Windows podešavanjima utiče na brzinu izabranu u podešavanjima programa NVDA.
+Ovo su problemi koje nemožemo da rešimo bez promena u Windowsu.
+Nadamo se da će ovi problemi biti rešeni u nekom budućem Windows ažuriranju.
 
 ++ Audiologic Tts3 ++
 Ovo je komercionalan glas za Italijanski jezik.
