@@ -12,15 +12,17 @@ from controlTypes import *
 from . import PlaceholderNVDAObject
 
 class TestProcessStates(unittest.TestCase):
-	obj = PlaceholderNVDAObject()
-	obj.role = ROLE_CHECKBOX
-	obj.states = set((STATE_FOCUSABLE, STATE_INVALID_ENTRY, STATE_FOCUSED, STATE_REQUIRED))
+
+	def setUp(self):
+		self.obj = PlaceholderNVDAObject()
+		self.obj.role = ROLE_CHECKBOX
+		self.obj.states = set((STATE_FOCUSABLE, STATE_INVALID_ENTRY, STATE_FOCUSED, STATE_REQUIRED))
 
 	def test_positiveStates(self):
-		self.assertEqual(processPositiveStates(self.obj.role, self.obj.states, REASON_FOCUS, self.obj.states), set([STATE_INVALID_ENTRY, STATE_REQUIRED]))
+		self.assertSetEqual(processPositiveStates(self.obj.role, self.obj.states, REASON_FOCUS, self.obj.states), set([STATE_INVALID_ENTRY, STATE_REQUIRED]))
 
 	def test_negativeStates(self):
-		self.assertEqual(processNegativeStates(self.obj.role, self.obj.states, REASON_FOCUS, None), set([STATE_CHECKED]))
+		self.assertSetEqual(processNegativeStates(self.obj.role, self.obj.states, REASON_FOCUS, None), set([STATE_CHECKED]))
 
 class TestStateOrder(unittest.TestCase):
 
