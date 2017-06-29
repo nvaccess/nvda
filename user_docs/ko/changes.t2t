@@ -5,18 +5,17 @@ NVDA 변경된 사항
 
 = 2017.3 =
 
-== New Features ==
-- A Braille setting has been added to "show messages indefinitely". (#6669)
-- In Microsoft Outlook message lists, report if a message is flagged. (#6374)
-- In Microsoft Powerpoint, the exact type of a shape is now reported when editing a slide (Examples include: triangle, circle, video, arrow), rather than just 'shape'. (#7111)
-- Mathematical content (provided as MathML) is now supported in Google Chrome. (#7184)
-- NVDA can now speak using the new Windows OneCore voices (also known as mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
+== 새로 추가된 기능들 ==
+- 점자 설정 대화상자에 "점자 메시지를 영구적으로 표시" 설정 추가. (#6669)
+- 마이크로소프트 Outlook 메시지 목록 탐색 시 메시지 플래그가 출력되도록 함. (#6374)
+- 마이크로소프트 파워포인트에서 슬라이드 편집 시 도형 모양(예: 삼각형, 동그라미, 비디오, 화살표 등)이 출력되도록 함. (#7111)
+- 구글 크롬 사용 시 수학 컨텐츠(특히 MathML로 표기된 내용) 탐색 가능. (#7184)
 
 
-== Changes ==
-- An unbound gesture (script_restart) has been added to allow NVDA to be restarted quickly. (#6396)
-- The keyboard layout can now be set from the NVDA Welcome dialog. (#6863)
-- The names of landmarks are abbreviated in Braille as follows: (#3975)
+== 변경된 기능들 ==
+- NVDA를 곧바로 재시작할 수 있는 명령(script_restart, 명령 할당 않됌) 추가. (#6396)
+- NVDA 시작 대화상자에서 키보드 레이아웃을 설정할 수 있음. (#6863)
+- 점자 사용 시 랜드마크 이름을 표시할때 다음 약칭을 사용하도록 함: (#3975)
  - "landmark": "lmk"
  - "banner": "bnnr"
  - "complementary": "comp"
@@ -26,15 +25,11 @@ NVDA 변경된 사항
  - "search": "srch"
  - "form": "frm"
  - "region": "rgn"
- - Example: "navigation landmark" becomes "lmk nav"
+ - 예: "navigation landmark"는 "lmk nav"로 표시.
 
 
-== Bug Fixes ==
-- Editable div elements in Chrome no longer have their label reported as their value while in browse mode. (#7153)
-- Pressing end while in browse mode of an empty Microsoft Word document no longer causes a runtime error. (#7009)
-- Browse mode is now correctly   supported in Microsoft Edge where a document has been given a specific ARIA role of document. (#6998)
-- In browse mode, you can now select or unselect to the end of the line using shift+end even when the caret is on the last character of the line. (#7157)
-- If a dialog contains a progress bar, the dialog text is now updated when the progress bar changes. This means, for example, that the remaining time can now be read in NVDA's "Downloading Update" dialog. (#6862)
+== 버그 수정 ==
+- 진행률 대화상자에서 진행률이 변경될 때 변경된 컨텐츠가 출력되도록 함(예: NVDA 업데이트 대화상자 내 다운로드 경과 시간 확인이 가능해짐). (#6862)
 
 
 = 2017.2 =

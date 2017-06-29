@@ -11,6 +11,8 @@ Ce este nou în NVDA
 - În Microsoft Powerpoint, tipul exact al unei forme este raportat la editarea unui diapozitiv (exemplele includ: triunghi, cerc, video, săgeată), mai degrabă decât 'forma'. (#7111)
 - Conținutul matematic )furnizat ca MathML) este acum suportat în Google Chrome. (#7184)
 - NVDA poate vorbi utilizând noile voci Windows OneCore )cunoscute și ca voci mobile) incluse în Windows 10. Accesați-le selectând opțiunea „voci Windows OneCore” din dialogul de sintetizator al NVDA-ului. (#6159)
+- Fișierele de configurare ale utilizatorului NVDA pot fi stocate în dosarul de date al aplicației locale a utilizatorului. Aceasta este activată printr-o setare din regiștri. Consultați 'Parametrii la nivel de sistem' din ghidul utilizatorului pentru mai multe detalii. (#6812)
+- În navigatoarele web, NVDA-ul raportează valori de substituent pentru câmpuri (mai exact, acum este suportat aria-placeholder). (#7004)
 
 
 == Modificări ==
@@ -41,7 +43,8 @@ Ce este nou în NVDA
 - Timestamp-urile includ în log milisecundele. (#7163)
 - NVDA trebuie să fie construit cu Visual Studio Community 2015. Visual Studio Express nu mai este suportat. (#7110)
 - Instrumentele Windows 10 și SDK-ul sunt de asemenea necesare și pot fi activate la instalarea Visual Studio.
-
+ - Consultați secțiunea Dependențe instalate din documentație pentru detalii suplimentare.
+ 
 
 = 2017.2 =
 Caracteristicile principale ale acestei lansări includ suport complet pentru atenuarea audio în Windows 10 Creators Update; reparări ale mai multor erori de selecție în modul de navigare, incluzând probleme cu selectarea întregului conținut; îmbunătățiri semnificative la suportul pentru Microsoft Edge; și îmbunătățiri pe web, cum ar fi indicarea elementelor marcate ca actuale (folosind atributul aria-current).
