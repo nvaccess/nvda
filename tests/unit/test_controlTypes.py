@@ -20,7 +20,7 @@ class TestProcessStates(unittest.TestCase):
 		self.assertEqual(processPositiveStates(self.obj.role, self.obj.states, REASON_FOCUS, self.obj.states), set([STATE_INVALID_ENTRY, STATE_REQUIRED]))
 
 	def test_negativeStates(self):
-		self.assertEqual(processNegativeStates(self.obj.role, self.obj.states, REASON_FOCUS, self.obj.states), set([STATE_CHECKED]))
+		self.assertEqual(processNegativeStates(self.obj.role, self.obj.states, REASON_FOCUS, None), set([STATE_CHECKED]))
 
 class TestStateOrder(unittest.TestCase):
 
