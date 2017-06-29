@@ -1215,7 +1215,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					# Only scroll to the start of this region.
 					restrictPos = regionStart
 					break
-				elif config.conf["braille"]["focusContextPresentation"]!=2:
+				elif config.conf["braille"]["focusContextPresentation"]!='hybrid':
+					# Do not process the other regions
 					restrictPos = 0
 					break
 		else:
@@ -1290,7 +1291,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]==1:
+		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]=='scroll':
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -1419,7 +1420,7 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
-		if config.conf["braille"]["focusContextPresentation"]==2 and not focusToHardLeftSet:
+		if config.conf["braille"]["focusContextPresentation"]=='hybrid' and not focusToHardLeftSet:
 			region.focusToHardLeft = True
 			focusToHardLeftSet = True
 		region.update()
@@ -1691,7 +1692,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:
-			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==2:
+			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]=='hybrid':
 				if region.focusToHardLeft:
 					focusToHardLeftSet = True
 				elif not focusToHardLeftSet and getattr(region, "_focusAncestorIndex", None) is None:
