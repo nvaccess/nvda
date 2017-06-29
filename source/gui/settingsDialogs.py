@@ -949,6 +949,12 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.dynamicContentCheckBox=sHelper.addItem(wx.CheckBox(self,label=dynamicContentText))
 		self.dynamicContentCheckBox.SetValue(config.conf["presentation"]["reportDynamicContentChanges"])
 
+		# Translators: This is the label for a combobox in the
+		# object presentation settings dialog.
+		autoSuggestionsLabelText = _("Play a sound when &auto-suggestions appear")
+		self.autoSuggestionSoundsCheckBox=sHelper.addItem(wx.CheckBox(self,label=autoSuggestionsLabelText))
+		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
+
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
 
@@ -962,6 +968,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
+		config.conf["presentation"]["reportAutoSuggestionsWithSound"]=self.autoSuggestionSoundsCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class BrowseModeDialog(SettingsDialog):
@@ -1587,14 +1594,22 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.shapeList.Disable()
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-		messageTimeoutText = _("Message timeout (sec)")
+		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
 			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
 			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
 			initial=config.conf["braille"]["messageTimeout"])
 
+		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+		noMessageTimeoutLabelText = _("Show &messages indefinitely")
+		self.noMessageTimeoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=noMessageTimeoutLabelText))
+		self.noMessageTimeoutCheckBox.Bind(wx.EVT_CHECKBOX, self.onNoMessageTimeoutChange)
+		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
+		if self.noMessageTimeoutCheckBox.GetValue():
+			self.messageTimeoutEdit.Disable()
+
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-		tetherListText = _("Braille tethered to:")
+		tetherListText = _("B&raille tethered to:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
 		tetherChoices = [x[1] for x in self.tetherValues]
@@ -1636,6 +1651,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
+		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
@@ -1674,6 +1690,9 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+
+	def onNoMessageTimeoutChange(self, evt):
+		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
 class AddSymbolDialog(wx.Dialog):
 

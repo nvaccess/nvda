@@ -146,11 +146,12 @@ Jos mitään tällaista ei kuulu, tai mikäli kuuluu Windowsin virheääni tai j
 Tarkista NVDA:n verkkosivustolta, miten ohjelmavirheistä ilmoitetaan.
 
 Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa on joitakin perustietoja NVDA-näppäimestä ja -valikosta.
-(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista).
-Valintaikkunassa on myös kolme valintaruutua.
-Ensimmäisellä voidaan valita, käytetäänkö Capslockia NVDA-näppäimenä.
-Toinen, joka on käytettävissä vain asennetuissa versioissa, määrittää, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
-Kolmannella on mahdollista valita, halutaanko tämän Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
+(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista.)
+Valintaikkunassa on lisäksi yhdistelmäruutu sekä kolme valintaruutua.
+Yhdistelmäruudusta valitaan näppäimistöasettelu.
+Ensimmäisellä valintaruudulla määritetään, käytetäänkö Capslockia NVDA-näppäimenä.
+Toisella, joka on käytettävissä vain asennetuissa versioissa, valitaan, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
+Kolmannella on mahdollista valita, halutaanko Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
 
 ++ Tietoja näppäinkomennoista ++
 
@@ -427,7 +428,7 @@ Tästä voi olla hyötyä täysin sokeille käyttäjille, sillä joskus pelkän 
 
 NVDA tarjoaa käyttäjille tavan ymmärtää, missä hiiri on ruudun mittojen suhteen toistamalla hiiren nykyiset koordinaatit äänimerkkeinä.
 Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat.
-Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (olettaen, että käytössä on stereokaiuttimet tai kuulokkeet).
+Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (mikäli käytössä on stereokaiuttimet tai kuulokkeet).
 
 Nämä lisäominaisuudet eivät ole oletusarvoisesti käytössä.
 Voit ottaa ne tarvittaessa käyttöön [Hiiriasetukset #MouseSettings]-valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
@@ -542,7 +543,7 @@ Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
 Se on ladattavissa ilmaiseksi osoitteesta http://www.dessci.com/en/products/mathplayer/
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
-- MathML Mozilla Firefoxissa ja Microsoft Internet Explorerissa.
+- MathML Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Google Chromessa.
 - Design Science MathType Microsoft Wordissa ja PowerPointissa. MathTypen on oltava asennettuna, jotta tämä toimii. Kokeiluversio riittää.
 - MathML Adobe Readerissa. HUOM: Tämä ei ole vielä virallinen standardi, joten tätä sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 -
@@ -964,8 +965,11 @@ Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet)
 Asetus ei vaikuta valinnanilmaisimeen.
 
 ==== Ilmoitusten aikakatkaisu (sek) ====
-Tämä asetus säätää sitä, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
+Tämä asetus säätää, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
 Jos arvoksi määritetään 0, ilmoitusten näyttäminen poistetaan kokonaan käytöstä.
+
+==== Näytä ilmoitukset pysyvästi ====
+Tällä asetuksella NVDA:n ilmoitukset näytetään pistenäytöllä pysyvästi.
 
 %kc:setting
 ==== Pistenäyttö seuraa ====[BrailleTether]
@@ -1588,6 +1592,17 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi komponenttia:
  Esimerkiksi tiedosto MSSpeech_TTS_en-US_ZiraPro.msi on amerikanenglantia puhuva ääni.
  -
 -
+
+++ Windows OneCore ++
+Windows 10 sisältää uusia puheääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
+Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
+
+Voit asentaa ääniä lisäkielille katsomalla ohjeita tästä Microsoftin artikkelista: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Huomaa, että Lukijan (Narratorin) suuremmat puhenopeudet eivät ole tällä hetkellä käytettävissä NVDA:n kanssa.
+Lisäksi Windowsin asetuksista valitsemasi puheen nopeus vaikuttaa NVDA:ssa asetettuun puhenopeuteen.
+Näitä ongelmia ei voi ratkaista ilman Windowsiin tehtäviä muutoksia.
+Toivon mukaan ne korjataan tulevassa Windows-päivityksessä.
 
 ++ Audiologic TTS 3 ++
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.
@@ -2224,8 +2239,8 @@ Katso [BRLTTY:n näppäinsidosluetteloita http://mielke.cc/brltty/doc/KeyBinding
 | siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
-+ Säädintyyppien ja -tilojen lyhenteet pistenäytöllä +
-Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa.
++ Säädintyyppien- ja tilojen sekä kiintopisteiden lyhenteet pistekirjoituksella +
+Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa sekä kiintopisteitä.
 
 || Lyhenne | Säätimen tyyppi |
 | pnk | painike |
@@ -2239,6 +2254,7 @@ Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet o
 | oN | otsikko tasolla n, esim. o1, o2. |
 | lnk | linkki |
 | ltl | luettelo |
+| pk | kiintopiste |
 | alnk | avattu linkki |
 | vko | valikko |
 | vkorvi | valikkorivi |
@@ -2260,6 +2276,17 @@ Seuraavat tilanilmaisimet on myös määritetty:
 | vl | Näytetään, kun objekti (esim. muokattava tekstikenttä) on vain luku -tyyppiä. |
 | val | Näytetään, kun objekti on valittuna. |
 | alavko | Näytetään, kun objektilla on ponnahdusvalikko (yleensä alavalikko). |
+
+Kiintopisteille on määritetty seuraavat lyhenteet:
+|| Lyhenne | Kiintopiste |
+| bnnr | banner |
+| stie | sisältötiedot |
+| täyd | täydentävä |
+| lmk | lomake |
+| pää | pääsisältö |
+| nav | navigaatio |
+| hku | haku |
+| alu | alue |
 
 + Edistyneet aiheet +
 

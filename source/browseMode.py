@@ -1,6 +1,6 @@
 #browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2016 NV Access Limited
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -687,6 +687,15 @@ qn("annotation", key="a",
 	prevDoc=_("moves to the previous annotation"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous annotation"))
+qn("error", key="w",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next error"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next error"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous error"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous error"))
 del qn
 
 class ElementsListDialog(wx.Dialog):
@@ -1002,10 +1011,10 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 				pass
 			if landmark == "region":
 				# The word landmark is superfluous for regions.
-				textList.append(aria.landmarkRoles[landmark])
+				textList.append(braille.landmarkLabels[landmark])
 			else:
-				# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+				# Translators: This is brailled to indicate a landmark (example output: lmk main).
+				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
 		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)

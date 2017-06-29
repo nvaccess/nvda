@@ -1,4 +1,4 @@
-﻿NVDA  NVDA_VERSION Benutzerhandbuch
+﻿NVDA NVDA_VERSION Benutzerhandbuch
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -147,7 +147,9 @@ Bitte schauen Sie erst auf der Homepage nach, ob ggf. etwas darüber bekannt ist
 
 Beim ersten Start von NVDA wird Ihnen eine Dialogbox mit einigen grundlegenden Informationen über die NVDA-Modifikationstaste und das NVDA-Menü angezeigt.
 (Bitte beachten Sie weitere Themenabschnitte.)
-Das Dialogfeld enthält zudem drei Kontrollfelder.
+Das Dialogfeld enthält zudem ein Kombinationsfeld und drei Kontrollfelder.
+Das Kombinationsfeld erlaubt Ihnen die Auswahl des Tastaturschemas.
+
 Mit dem Ersten können Sie festlegen, ob die Dauergroßschreibtaste als so genannte NVDA-Modifikationstaste agieren soll.
 Mit dem zweiten Krontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten Versionen von NVDA zur Verfügung.
 Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
@@ -455,7 +457,7 @@ Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, 
 Manchmal müssen sie in diesen Dokumenten mit Steuerelementen interagieren.
 Dies ist zum Beispiel der Fall, wenn Sie Text in ein Eingabefeld schreiben wollen oder wenn Sie mit Hilfe der Pfeiltasten eine Liste oder ein Flash-Objekt bedienen wollen.
 Um mit diesen Elementen zu arbeiten, aktivieren Sie den Fokusmodus, in welchem Alle Tasten an das Element weitergegeben werden.
-Wenn Sie sich im Lesemodus befinden, wird NVDA standardmäßig automatisch den Fokusmodus aktivieren, sobald Sie mit Tab auf ein Element springen, bzw. darauf klicken, welches den Fokusmodus benötigt.
+Wenn Sie sich im Lesemodus befinden, wird NVDA standardmäßig automatisch den Fokusmodus aktivieren, sobald Sie mit Tab auf ein Element springen bzw. darauf klicken, welches den Fokusmodus benötigt.
 Dem entsprechend wechselt NVDA automatisch in den Lesemodus, wenn sie auf ein Element klicken bzw. mit Tab darauf springen, welches den Fokusmodus nicht benötigt.
 Wenn ein Element den Fokusmodus benötigt, können sie auch die Leertaste bzw. Eingabetaste drücken, um den Fokusmodus zu aktivieren.
 Mit der Escape-Taste wechseln sie wieder zurück in den Lesemodus.
@@ -542,7 +544,7 @@ Hierfür ist die Installation von Mathplayer 4 notwendig.
 Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/mathplayer/
 
 NVDA unterstützt die folgende mathematischen Inhalte:
-- MathML in Mozilla Firefox und Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer und Google Chrome.
 - Design Science MathType in Microsoft Word und PowerPoint. Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
 - MathML in Adobe Reader. Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
 -
@@ -715,10 +717,10 @@ Die Linknavigation beinhaltet auch Fußnoten.
 +++ Markieren von Text +++
 (noch nicht übersetzt) Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
 To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
-+%kc:beginInclude
-+Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
-+%kc:endInclude
-+If you do this with no text selected, options will be shown for the word at the cursor.
+%kc:beginInclude
+Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
+%kc:endInclude
+If you do this with no text selected, options will be shown for the word at the cursor.
 
 +++ Notizen +++
 Sie können eine Notiz zu einem Wort oder einer ganzen Passage hinzufügen.
@@ -966,6 +968,9 @@ Die Kennzeichnung für markierten Text ist von dieser Option nicht betroffen.
 ==== Anzeigedauer für Meldungen (in Sekunden) ====
 Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Meldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Meldung verlängert werden.
 Um die Anzeige von Meldungen abzuschalten, geben Sie hier 0 an.
+
+==== Meldungen dauerhaft anzeigen ====
+Wird diese Option aktiviert, zeigt NVDA alle Blitzmeldungen dauerhaft auf der Braillezeile an.
 
 %kc:setting
 ==== Braillezeile gekoppelt an ====[BrailleTether]
@@ -1285,7 +1290,7 @@ Standardmäßig erkennt NVDA die Formatierung an der Position des System-Cursors
 
 Schalten Sie diese Option nur dann ein, wenn beim Lesen in einem WordPad-Dokument die Ansage notwendig ist.
 
-==== Ausgabe von Zeileneinrückungen =====[lineIndentationOptions]
+==== Ausgabe von Zeileneinrückungen ====[lineIndentationOptions]
 Mit dieser Option legen Sie fest, wie Zeileneinrückungen durch NVDA wiedergegeben werden sollen.
 Das Kombinationsfeld enthält vier Einträge:
 
@@ -1331,7 +1336,7 @@ Ein regulärer Ausdruck ist ein Muster, welches spezielle Sümbole enthält. Die
 Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen hierzu finden Sie im [Kapitel über reguläre ausdrücke in der Dokumentation zu python 2.7 (in englisch) http://docs.python.org/library/re.html]
 
 +++ Der Dialog "Aussprache von Symbolen und Satzzeichen- " +++[SymbolPronunciation]
-In diesem Dialog können Sie die Aussprache von Satz-, bzw. Sonderzeichen verändern und festlegen, ab welcher Symbolebene  dieses angesagt werden soll. 
+In diesem Dialog können Sie die Aussprache von Satz- und Sonderzeichen verändern und festlegen, ab welcher Symbolebene  dieses angesagt werden soll. 
 
 Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.
 Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den  [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der NVDA-Sprache verwendet.
@@ -1588,6 +1593,17 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
  Beispiel: Die Datei MSSpeech_TTS_de-DE_Hedda.msi ist eine deutsche Stimme.
  -
 -
+
+++ Windows OneCore Voices ++
+Windows 10 enthält neue Stimmen, die als "Mobile" oder "OnCore"-Stimmen bekannt sind.
+Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft Sapi 5-Stimmen in früheren Windows-versionen.
+
+Informationen darüber, wie Sie Stimmen in zusätzlichen Sprachen installieren, finden Sie im folgenden Artikel: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Bitte bedenken Sie auch, dass die höheren Sprachgeschwindigkeiten, die im Narrator eingestellt werden können, im NVDA nicht zur Verfügung stehen.
+Eine Änderung der Sprachgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprachgeschwindigkeit in NVDA.
+Dieses Problem kann nur durch Änderungen an Windows behoben werden.
+Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
 
 ++ AudioLogic TTS 3 ++
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
@@ -2239,6 +2255,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | üN | Überschrift der Ordnung N, zum Beispiel ü1, ü2. |
 | lnk | link |
 | lst | Liste |
+| lmk | Sprungmarke |
 | bl | Besuchter Link |
 | mnü | Menü |
 | Mnülst | Menüleiste |
@@ -2259,7 +2276,18 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | clk | Wird bei anklickbaren Objekten angezeigt |
 | sef | wird bei Objekten (zum Beispiel Eingabefeldern) angezeigt, die schreibgeschützt sind. |
 | mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
-| #> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
+| -> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
+
+Die folgenden Abkürzungen werden für Sprungmarken verwendet:
+|| Abkürzung | Sprungmarke |
+| bnnr | Logo |
+| cinf | Inhalt |
+| cmpl | Ergänzung |
+| form | Formular |
+| main | Haupt |
+| navi | navigation |
+| srch | Suche |
+| rgn | region |
 
 + Erweiterte Themen +
 
@@ -2294,7 +2322,7 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | -r | --replace | Beendet eine laufende Instanz von NVDA und startet eine neue. |
 | -k | --check-running | Meldet, ob NVDA bereits ausgeführt wird. Falls ja, wird ein Fehlercode von 0 zurückgegeben, anderenfalls wird 1 zurückgegeben. |
 | -f Protokolldateiname | --log-file=Protokolldateiname | Legt die Datei fest, in der NVDA sein Protokoll schreiben soll. |
-| -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Leggt die Protokollierungsstufe fest (10=Fehlerkorrektur, 20, Warnung 30, Fehler 40, Kritisch 50), Standard ist 20. |
+| -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Legt die Protokollierungsstufe fest (10=Fehlerkorrektur, 20, Warnung 30, Fehler 40, Kritisch 50), Standard ist 20. |
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gigt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Sicherer Modus, schaltet die Python-Konsole ab. |
@@ -2371,7 +2399,7 @@ Um die Ausgabe via Braillezeile zu erhalten, müssen folgende Vorraussetzungen g
 
 
 +++ Klicken mit Hilfe der Tastaturmaus von Windows +++
-Generell gilt, dass Sie bei aktivierter Tastaturmaus die Tasten 5 und Plus (+) des Nummernblocks verwenden können, um eine bestimmte Maustaste einmal, bzw. doppelt auszulösen. Um festzulegen, welche Maustaste(n) Sie auslösen, verwenden Sie die folgenden Tasten:
+Generell gilt, dass Sie bei aktivierter Tastaturmaus die Tasten 5 und Plus (+) des Nummernblocks verwenden können, um eine bestimmte Maustaste einmal bzw. doppelt auszulösen. Um festzulegen, welche Maustaste(n) Sie auslösen, verwenden Sie die folgenden Tasten:
 - Drücken Sie NUM Schrägstrich, um mit den Tasten 5 bzw. Plus die linke Maustaste zu simulieren.
 - Drücken Sie NUM Stern, um mit den Tasten 5 bzw. Plus beide Maustasten zu simulieren.
 - Drücken Sie NUM Minus, um mit den Tasten 5 bzw. Plus die rechte Maustaste zu simulieren.

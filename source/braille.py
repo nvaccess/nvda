@@ -10,6 +10,7 @@ import os
 import pkgutil
 import ctypes.wintypes
 import threading
+import time
 import wx
 import louis
 import winKernel
@@ -377,6 +378,26 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
+landmarkLabels = {
+	# Translators: Displayed in braille for the banner landmark, normally found on web pages.
+	"banner": pgettext("braille landmark abbreviation", "bnnr"),
+	# Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+	"complementary": pgettext("braille landmark abbreviation", "cmpl"),
+	# Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+	"contentinfo": pgettext("braille landmark abbreviation", "cinf"),
+	# Translators: Displayed in braille for the main landmark, normally found on web pages.
+	"main": pgettext("braille landmark abbreviation", "main"),
+	# Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+	"navigation": pgettext("braille landmark abbreviation", "navi"),
+	# Translators: Displayed in braille for the search landmark, normally found on web pages.
+	"search": pgettext("braille landmark abbreviation", "srch"),
+	# Translators: Displayed in braille for the form landmark, normally found on web pages.
+	"form": pgettext("braille landmark abbreviation", "form"),
+	# Strictly speaking, region isn't a landmark, but it is very similar.
+	# Translators: Displayed in braille for a significant region, normally found on web pages.
+	"region": pgettext("braille landmark abbreviation", "rgn"),
+}
+
 #: Cursor shapes
 CURSOR_SHAPES = (
 	# Translators: The description of a braille cursor shape.
@@ -567,6 +588,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
+	roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -574,7 +596,7 @@ def getBrailleTextForProperties(**propertyValues):
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
-	if role is not None:
+	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
 			# %s is replaced with the level.
@@ -589,9 +611,8 @@ def getBrailleTextForProperties(**propertyValues):
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
-	else:
+	elif role is None: 
 		role = propertyValues.get("_role")
-		roleText = None
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
@@ -640,6 +661,9 @@ def getBrailleTextForProperties(**propertyValues):
 		except KeyError:
 			log.debugWarning("Aria-current value not handled: %s"%current)
 			textList.append(controlTypes.isCurrentLabels[True])
+	placeholder = propertyValues.get('placeholder', None)
+	if placeholder:
+		textList.append(placeholder)
 	if includeTableCellCoords and  cellCoordsText:
 		textList.append(cellCoordsText)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
@@ -665,7 +689,14 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role, current=obj.isCurrent,
+		placeholderValue = obj.placeholder
+		if placeholderValue and not obj._isTextEmpty:
+			placeholderValue = None
+		text = getBrailleTextForProperties(
+			name=obj.name,
+			role=role,
+			current=obj.isCurrent,
+			placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -709,6 +740,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current=field.get('current', None)
+	placeholder=field.get('placeholder', None)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
@@ -739,7 +771,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current}
+			"states": states,"value":value, "current":current, "placeholder":placeholder}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -1627,6 +1659,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Reset the message timeout.
 		@precondition: A message is currently being displayed.
 		"""
+		if config.conf["braille"]["noMessageTimeout"]:
+			return
 		# Configured timeout is in seconds.
 		timeout = config.conf["braille"]["messageTimeout"] * 1000
 		if self._messageCallLater:
@@ -1641,8 +1675,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 		self.buffer.clear()
 		self.buffer = self.mainBuffer
-		self._messageCallLater.Stop()
-		self._messageCallLater = None
+		if self._messageCallLater:
+			self._messageCallLater.Stop()
+			self._messageCallLater = None
 		self.update()
 
 	def handleGainFocus(self, obj):
@@ -1703,6 +1738,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
+	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
+	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
+	def _handleProgressBarUpdate(self, obj):
+		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
+		newTime = time.time()
+		if oldTime and newTime - oldTime < 1:
+			# Fetching dialog text is expensive, so update at most once a second.
+			return
+		self._lastProgressBarUpdateTime = newTime
+		for obj in reversed(api.getFocusAncestors()[:-1]):
+			if obj.role == controlTypes.ROLE_DIALOG:
+				self.handleUpdate(obj)
+				return
+
 	def handleUpdate(self, obj):
 		if not self.enabled:
 			return
@@ -1713,6 +1762,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				break
 		else:
 			# No region for this object.
+			# There are some objects that require special update behavior even if they have no region.
+			# This only applies when tethered to focus, because tethering to review shows only one object at a time,
+			# which always has a braille region associated with it.
+			if self.tether != self.TETHER_FOCUS:
+				return
+			# Late import to avoid circular import.
+			from NVDAObjects import NVDAObject
+			if isinstance(obj, NVDAObject) and obj.role == controlTypes.ROLE_PROGRESSBAR and obj.isInForeground:
+				self._handleProgressBarUpdate(obj)
 			return
 		self.mainBuffer.saveWindow()
 		region.update()

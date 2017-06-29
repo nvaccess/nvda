@@ -147,8 +147,9 @@ Por favor investiga en el sitio Web de NVDA para saber cómo hacer esto.
 
 Cuando NVDA arranque por primera vez, se te dará la bienvenida mediante un cuadro de diálogo que te proporciona alguna información básica acerca de la tecla modificadora de NVDA y del menú de NVDA. 
 (Mira por favor secciones subsiguientes acerca de estos temas). 
-El cuadro de diálogo también contiene tres casillas de verificación. 
-La primera te permite controlar si NVDA debería utilizar BloqMayus como una tecla modificadora de NVDA. 
+El cuadro de diálogo también contiene un cuadro combinado y tres casillas de verificación. 
+El cuadro combinado te permite seleccionar la distribución de teclado.
+La primera casilla de verificación te permite controlar si NVDA debería utilizar BloqMayus como una tecla modificadora de NVDA. 
 La segunda especifica si NVDA debería arrancar automáticamente después de autentificarte en Windows y sólo está disponible para copias instaladas de NVDA.
 La tercera te permite controlar si este cuadro de bienvenida debería aparecer cada vez que NVDA arranque.
 
@@ -542,7 +543,7 @@ Esto requiere que MathPlayer 4 esté instalado en el ordenador.
 MathPlayer está disponible como una descarga gratuita desde: http://www.dessci.com/en/products/mathplayer/
 
 NVDA soporta los siguientes tipos de contenidos matemáticos:
-- MathML en Mozilla Firefox y Microsoft Internet Explorer.
+- MathML en Mozilla Firefox Microsoft Internet Explorer y Google Chrome..
 - Design Science MathType en Microsoft Word y PowerPoint. MathType necesita estar instalado para que esto funcione. La versión trial es suficiente.
 - MathML en Adobe Reader. Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
 -
@@ -966,6 +967,9 @@ El indicador de selección no está afectado por esta opción.
 ==== Duración del Mensaje (en seg) ====
 Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la pantalla braille.
 Especifycando 0 se deshabilita el mostrado de estos mensajes completamente.
+
+==== Mostrar Mensajes Indefinidamente ====
+Esta opción permite a los mensajes de NVDA mostrarse en la pantalla braille indefinidamente.
 
 %kc:setting
 ==== El Braille sigue a ====[BrailleTether]
@@ -1588,6 +1592,17 @@ Para utilizar estas voces, necesitarás instalar dos componentes:
  Por ejemplo, el fichero MSSpeech_TTS_en-US_ZiraPro.msi es una voz inglesa U.S..
  -
 -
+
+++ Voces Windows OneCore ++
+Windows 10 incluye nuevas voces conocidas como voces "OneCore" o "mobile".
+Se proporcionan voces para muchos idiomas y son más ágiles que las voces Microsoft disponibles al utilizar Microsoft Speech API versión 5.
+
+Para instalar voces para idiomas adicionales, consulta este artículo de Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Por favor ten en cuenta que actualmente no están disponibles con NVDA las velocidades más rápidas disponibles con Narrator.
+También, la velocidad seleccionada en la configuración de Windows afecta a la configurada en NVDA.
+Estos problemas no se pueden resolver sin cambios en Windows.
+Deseamos que esto se solucione en una actualización futura de Windows.
 
 ++ Audiologic Tts3 ++
 Este es un sintetizador de voz comercial específicamente para el idioma italiano.
@@ -2224,8 +2239,8 @@ Por favor consulta las [listas de claves de vínculos de BRLTTY http://mielke.cc
 | Guiar a la celda braille | route (lleva el cursor al carácter) |
 %kc:endInclude
 
-+ Tipo de control Braille y abreviaturas de estado +
-Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado.
++ Abreviaturas de Tipos de control Braille, de estado y de Puntos de Rreferencia +
+Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado así como los puntos de referencia.
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
@@ -2238,8 +2253,9 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 | fN | número de fila de tabla n, ej.: r1, r2. |
 | enN | encabezado de nivel n, ej.: h1, h2. |
 | enl | enlace |
-| lst | lista |
 | enlv | enlace visitado |
+| lst | lista |
+| pdr | punto de referencia |
 | mn | menú |
 | bmn | barra de menú |
 | bto | botón de opción |
@@ -2260,6 +2276,17 @@ Los siguientes indicadores de estado  también están definidos:
 | ro | mostrado cuando un objeto (ej.: un campo de texto editable) es de sólo lectura |
 | sel | mostrado cuando un objeto está seleccionado |
 | submnu | mostrado cuando un objeto tiene un desplegable (normalmente un submenú) |
+
+Finalmente, se definieron las siguientes abreviaturas para puntos de referencia:
+|| Abreviatura | Punto de referencia |
+| tlo | título |
+| cinf | info de contenido |
+| cmpl | complementario |
+| form | formulario |
+| main | principal |
+| nav | navegación |
+| busq | búsqueda |
+| rgn | región |
 
 + Temas Avanzados +
 

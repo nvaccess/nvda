@@ -1,6 +1,6 @@
 ﻿#locale/nl/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -37,17 +37,18 @@ negative number	minus	none	norep
 # Standard punctuation/symbols
 !	uitroepteken	all
 "	aanhalingsteken	most
-\#	hekje	most
+\#	hekje	some
 $	dollar	all	norep
 £	pond	all	norep
 €	euro	all	norep
 ¢	cent	all	norep
 ¥	yen	all	norep
+₹	roepie	some	norep
 %	procent	some
 &	en	some
 '	apostrofe	all
-(	haakje openen	most
-)	haakje sluiten	most
+(	haakje openen	most	always
+)	haakje sluiten	most	always
 *	ster	some
 +	plus	some
 ,	comma	all	always
@@ -56,8 +57,8 @@ $	dollar	all	norep
 /	slash	some
 :	dubbele punt	most	norep
 ;	puntcomma	most
-<	kleiner dan	most
->	groter dan	most
+<	kleiner dan	some
+>	groter dan	some
 =	gelijk aan	some
 ?	vraagteken	all
 @	at	some
@@ -81,7 +82,7 @@ _	onderstreping	most
 ”	aanhalingsteken sluiten	most
 ‘	enkel aanhalingsteken openen	most
 ’	enkel aanhalingsteken sluiten	most
-–	en streepje	most
+–	en streepje	most	always
 —	em streepje	most
 ●	cirkel	most
 ¨	diaeresis	most
@@ -94,8 +95,8 @@ _	onderstreping	most
 ➔	pijl naar rechts	some
 §	sectie	all
 °	graden	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	linker dubbele pijl
+»	rechter dubbele pijl
 µ	micro	some
 ¹	superscript 1	some
 ²	superscript 2	some
@@ -103,10 +104,74 @@ _	onderstreping	most
 ®	geregistreerd	some
 ™	handelsmerk	some
 ©	Copyright	some
-±	Plus of Minus	most
-×	maal	most
-÷	delen door	most
+±	Plusminus	some
+×	maal	some
+÷	delen door	some
 ←	pijl naar links	some
+↑	pijl omhoog	some
 →	pijl naar rechts	some
+↓	pijl omlaag	some
 ✓	vinkje	some
 ✔	vinkje	some
+
+#Mathematical Operatsors U+2200 to U+220F
+∀	voor alle	none
+∁	complement	none
+∂	gedeelteijke differentiaal	none
+∃	er bestaat	none
+∄	er bestaat niet	none
+∅	lege verzameling	none
+∆	toename	none
+∇	vectordifferenciaal	none
+∈	element van	none
+∉	geen element van	none
+∊	klein element van	none
+∋	bevat als lid	none
+∌	bevat niet als lid	none
+∍	klein bevat als lid	none
+∎	einde bewijs	none
+∏	n-ary product	none
+
+# Miscellaneous Mathematical Operators
+∑	n-ary som	none
+√	vierkantswortel	none
+∛	derdemachtswortel	none
+∜	vierdemachtswortel	none
+∝	evenredig aan	none
+∞	oneindig	none
+∟	rechte hoek	none
+∠	hoek	none
+∥	parallel aan	none
+∦	niet parallel aan	none
+∧	logisch en	none
+∨	logisch of	none
+∩	snijpunt	none
+∪	vereniging	none
+∫	integraal	none
+∴	daarom	none
+∵	omdat	none
+∶	verhouding	none
+∷	evenredigheid	none
+≤	kleiner dan of gelijk aan	none
+≥	groter dan of gelijk aan	none
+⊂	deelverzameling van	none
+⊃	omvat	none
+⊆	deelverzameling van of gelijk aan	none
+⊇	bevat of gelijk aan	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	een zevende	none
+⅑	een negende	none
+⅒	een tiende	none
+⅓	een derde	none
+⅔	twee derde	none
+⅕	een vijfde	none
+⅖	twee vijfde	none
+⅗	drie vijfde	none
+⅘	vier vijfde	none
+⅙	een zesde	none
+⅚	vijf zesde	none
+⅛	een achtste	none
+⅜	drie achtste	none
+⅝	vijf achtste	none
+⅞	zeven achtste	none
