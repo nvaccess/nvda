@@ -136,6 +136,10 @@ Dacă ați instalat NVDA cu interfața de instalare, atunci pornirea NVDA se red
 În plus, puteți scrie NVDA în fereastra de dialog „Executare” și apăsați „Enter”.
 Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #LinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
 
+În mod implicit, Pentru copiile instalate NVDA stochează configurația în dosarul de date al aplicației de roaming a utilizatorului curent (ex. "C:\Users\<user>\AppData\Roaming").
+Puteți modifica asta într-un mod în care NVDA își încarcă în schimb configurația din dosarul de date al aplicației locale.
+Consultați secțiunea despre [parametrii la nivel de sistem #SystemWideParameters] pentru mai multe detalii.
+
 Pentru a porni versiunea portabilă, mergeți în dosarul unde ați dezarhivat NVDA și apăsați „Enter” sau faceți dublu clic pe nvda.exe.
 
 Când NVDA pornește, mai întâi veți auzi câteva tonuri ascendente (care vă anunță că NVDA se încarcă).
@@ -2330,8 +2334,21 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --install | Instalează NVDA (pornind copia nou-instalată) |
 | None | --install-silent | Instalează NVDA în mod discret (nu pornește copia nou-instalată) |
 
+++ Parametri la nivel de sistem++[SystemWideParameters]
+NVDA permite setarea unor valori în regiștrii de sistem care modifică comportamentul la nivel de sistem al acestuia.
+Aceste valori sunt stocate în regiștrii, sub una din următoarele chei:
+- Sistem pe 32 de biți: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Sistem pe 64 de biți: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Următoarele valori pot fi setate sub această cheie de regiștri:
+|| Nume | Tip | Valori posibile | Descriere |
+| configInLocalAppData | DWORD | 0 (implicit) pentru dezactivare, 1 pentru activare | Dacă e activată, stochează configurația de utilizator a NVDA-ului în datele aplicațiilor locale în locul datelor aplicațiilor de roaming |
+| serviceDebug | DWORD | 0 (implicit) pentru dezactivare, 1 pentru activare | Dacă este activată, dezactivează modul securizat pe desktop-urile Windows securizate, permițând utilizarea consolei Python și a monnitorului de jurnale. Datorită mai multor implicații majore în materie de securitate, utilizarea acestei opțiuni este puternic descurajată |
+
 + Informații suplimentare +
 Dacă aveți nevoie de informații suplimentare sau asistență în privința NVDA, vizitați site-ul internațional în limba engleză la NVDA_URL. Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității. De asemenea, el furnizează informații și resurse privind dezvoltarea NVDA.
+
 Puteți vizita și site-ul comunității românești a NVDA-ului la www.ro-nvda.tk. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.
 
 Ultima actualizare a manualului: %%date(%d %b %Y), traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei
