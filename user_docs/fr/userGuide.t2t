@@ -136,6 +136,10 @@ Si NVDA a été installé à l'aide de l'installateur, alors il suffit, soit de 
 De plus, Vous pouvez taper NVDA dans le dialogue "Exécuter" puis appuyer sur "Entrée".
 Vous pouvez aussi ajouter quelques [options de ligne de commande #CommandLineOptions] vous permettant de redémarrer NVDA (-r), quitter (-q), désactiver les modules complémentaires (--disable-addons), etc.
 
+Pour les copies installées, NVDA enregistre la configuration dans le dossier de données applicatives roaming  de l'utilisateur courant par défaut (ex : "C:\Users\<user>\AppData\Roaming").
+Il est possible de modifier cela de manière à ce que NVDA charge sa configuration depuis le dossier de données applicatives local.
+Consultez la section concernant les [paramètres système #SystemWideParameters] pour plus de détails.
+
 Pour démarrer la copie portable, rendez-vous dans le dossier où NVDA a été décompressé, et appuyez sur "Entrée" ou double-cliquez sur nvda.exe.
 
 Au démarrage de NVDA, on entend d'abord une série de sons ascendants (indiquant que NVDA se charge). 
@@ -2330,6 +2334,18 @@ Voici les options de ligne de commande de NVDA :
 | Aucune | --no-sr-flag  | Ne change pas l'indicateur système global de revue d'écran |
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
+
+++Paramètres Système++[SystemWideParameters]
+NVDA permet de définir certaines valeurs dans la base de registres du système ce qui modifie le comportement général de NVDA.
+Ces valeurs sont stockées dans la base de registres sous l'une des clés suivantes :
+- Systèmes 32-bits : "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Systèmes 64-bits : "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Les valeurs suivantes peuvent être définies dans ces clés de registre :
+|| Nom | Type | valeurs Possibles | Description |
+| configInLocalAppData | DWORD | 0 (défaut) pour désactiver, 1 pour activer | si activé, enregistre la configuration utilisateur NVDA dans le dossier applicatif local au lieu de roaming |
+| serviceDebug | DWORD | 0 (défaut) pour désactiver, 1 pour activer | si activé, désactive le mode sécurisé dans les bureaux sécurisés de Windows, permettant l'utilisation de la console Python et de la visionneuse de journaux. En raison d'implications majeures de sécurité, l'utilisation de cette option est fortement déconseillée |
 
 + Informations complémentaires +
 Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le site NVDA à NVDA_URL.
