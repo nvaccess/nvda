@@ -38,7 +38,8 @@ HR_BRAILLE = "\x05"
 HR_POWEROFF = "\x07"
 
 KEY_NAMES = {
-	# Braille keyboard.
+	1: "power", # Brailliant BI 32, 40 and 80.
+	# Braille keyboard (all devices except Brailliant 80).
 	2: "dot1",
 	3: "dot2",
 	4: "dot3",
@@ -48,19 +49,19 @@ KEY_NAMES = {
 	8: "dot7",
 	9: "dot8",
 	10: "space",
-	# Command keys.
+	# Command keys (Brailliant BI 32, 40 and 80).
 	11: "c1",
 	12: "c2",
 	13: "c3",
 	14: "c4",
 	15: "c5",
 	16: "c6",
-	# Thumb keys.
+	# Thumb keys (all devices).
 	17: "up",
 	18: "left",
 	19: "right",
 	20: "down",
-	# Joystick (Brailliant BI 14 only).
+	# Joystick (Brailliant BI 14).
 	21: "stickUp",
 	22: "stickDown",
 	23: "stickLeft",
@@ -70,7 +71,7 @@ KEY_NAMES = {
 	30: "calibrationOk",
 	31: "calibrationFail",
 	32: "calibrationEmpty",
-	34: "resetKeySequence",
+	34: "calibrationReset",
 }
 FIRST_ROUTING_KEY = 80
 DOT1_KEY = 2
