@@ -70,19 +70,22 @@ class EdgeTextInfo(UIATextInfo):
 		condition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),condition)
 		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
 		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
+		cacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		cacheRequest.addProperty(UIAHandler.UIA_AriaPropertiesPropertyId)
 		element=walker.normalizeElementBuildCache(element,cacheRequest)
 		while element and not UIAHandler.handler.clientObject.compareElements(element,self.obj.UIAElement):
-			ariaProperties=element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-			if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
-				return element
-			try:
-				range=self.obj.UIATextPattern.rangeFromChild(element)
-			except COMEror:
-				return
-			text=range.getText(-1)
-			if not text or text.isspace():
-				return element
+			name=element.getCachedPropertyValue(UIAHandler.UIA_NamePropertyId)
+			if name:
+				ariaProperties=element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+				if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
+					return element
+				try:
+					range=self.obj.UIATextPattern.rangeFromChild(element)
+				except COMError:
+					return
+				text=range.getText(-1)
+				if not text or text.isspace():
+					return element
 			element=walker.getParentElementBuildCache(element,cacheRequest)
 
 	def _moveToEdgeOfReplacedContent(self,back=False):
@@ -96,9 +99,9 @@ class EdgeTextInfo(UIATextInfo):
 			return
 		if not back:
 			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,range,UIAHandler.TextPatternRangeEndpoint_End)
+			range.move(UIAHandler.TextUnit_Character,-1)
 		else:
 			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,range,UIAHandler.TextPatternRangeEndpoint_Start)
-			range.move(UIAHandler.TextUnit_Character,1)
 		self._rangeObj=range
 
 	def _collapsedMove(self,unit,direction,skipReplacedContent):
