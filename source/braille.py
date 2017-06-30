@@ -839,25 +839,18 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
-	def _getCursor(self):
-		"""Retrieve the collapsed cursor.
-		This should be the start or end of the selection returned by L{_getSelection}.
-		@return: The cursor.
-		"""
-		try:
-			return self.obj.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
-
 	def _getSelection(self):
 		"""Retrieve the selection.
-		The start or end of this should be the cursor returned by L{_getCursor}.
+		If there is no selection, retrieve the collapsed cursor.
 		@return: The selection.
 		@rtype: L{textInfos.TextInfo}
 		"""
 		try:
 			return self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
+#			try:
+#				return self.obj.makeTextInfo(textInfos.POSITION_CARET)
+#			except:
 			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
 
 	def _setCursor(self, info):
@@ -988,6 +981,7 @@ class TextInfoRegion(Region):
 		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
 		self._endsWithField = False
+
 		# Selection has priority over cursor.
 		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
 		# and copying the TextInfo breaks this ability.
@@ -1009,10 +1003,10 @@ class TextInfoRegion(Region):
 			if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
 				sel.setEndPoint(readingInfo, "endToEnd")
 		else:
-			# If there is no selection, use the cursor.
-			self._readingInfo = readingInfo = self._getCursor()
+			# There is a cursor.
 			# Get the reading unit at the cursor.
 			readingInfo.expand(unit)
+
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -1026,6 +1020,7 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
+
 		# Strip line ending characters.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
@@ -1060,7 +1055,7 @@ class TextInfoRegion(Region):
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
-				self._getCursor().activate()
+				self._getSelection().activate()
 			except NotImplementedError:
 				pass
 			return
@@ -1128,10 +1123,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
 
-	def _getCursor(self):
+	def _getSelection(self):
 		return api.getReviewPosition().copy()
-
-	_getSelection = _getCursor
 
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
