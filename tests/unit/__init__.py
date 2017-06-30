@@ -66,6 +66,10 @@ appModuleHandler.initialize()
 # Anything which notifies of cursor updates requires braille to be initialized.
 import braille
 braille.initialize()
+# For braille unit tests, we need to construct a fake braille display as well as enable the braille handler
+# Give the display 40 cells
+braille.handler.displaySize=40
+braille.handler.enabled = True
 # The focus and navigator objects need to be initialized to something.
 from NVDAObjects import NVDAObject
 class PlaceholderNVDAObject(NVDAObject):
