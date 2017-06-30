@@ -244,7 +244,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if toPosition:
 			newInfo=self.makeTextInfo(toPosition)
 			if oldInfo.isCollapsed:
-				self.isTextSelectionAnchoredAtStart = newInfo.compareEndPoints(oldInfo, "startToStart") == 0
+				self.isTextSelectionAnchoredAtStart = newInfo.compareEndPoints(oldInfo, "startToStart") >= 0
 		elif unit:
 			# position was not provided, so start from the old selection.
 			newInfo = oldInfo.copy()

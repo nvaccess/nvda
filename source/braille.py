@@ -1747,7 +1747,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def scrollToCursorOrSelection(self, region):
 		if region.brailleCursorPos is not None:
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif not isinstance(region, (NVDAObjectRegion, TextInfoRegion)) or not region.obj.isTextSelectionAnchoredAtStart:
+		elif not isinstance(region, TextInfoRegion) or not region.obj.isTextSelectionAnchoredAtStart:
 			# It is unknown where the selection is anchored, or it is anchored at the end.
 			if region.brailleSelectionStart is not None:
 				self.mainBuffer.scrollTo(region, region.brailleSelectionStart)

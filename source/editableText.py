@@ -252,12 +252,12 @@ class EditableText(ScriptableObject):
 			# There's nothing we can do, but at least the last selection will be right next time.
 			self.isTextSelectionAnchoredAtStart=True
 			return
-		self._findSelectionAnchor(oldInfo,newInfo)
+		self._updateSelectionAnchor(oldInfo,newInfo)
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
 		self.hasContentChangedSinceLastSelection=False
 		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
 
-	def _findSelectionAnchor(self,oldInfo,newInfo):
+	def _updateSelectionAnchor(self,oldInfo,newInfo):
 		# Only update the value if the selection changed.
 		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
 			self.isTextSelectionAnchoredAtStart=False
@@ -272,7 +272,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	def reportSelectionChange(self, oldTextInfo):
 		api.processPendingEvents(processEventQueue=False)
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		self._findSelectionAnchor(oldTextInfo,newInfo)
+		self._updateSelectionAnchor(oldTextInfo,newInfo)
 		speech.speakSelectionChange(oldTextInfo,newInfo)
 		braille.handler.handleCaretMove(self)
 
