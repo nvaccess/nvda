@@ -382,9 +382,9 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# drop down button.
 	controlTypes.ROLE_DROPDOWNBUTTON: _("ddbtn"),
-	# Translators: Displayed in braille for an object which is a
+	# Displayed in braille for an object which is a
 	# separator.
-	controlTypes.ROLE_SEPARATOR: _(u"⠤⠤⠤⠤⠤"),
+	controlTypes.ROLE_SEPARATOR: u"⠤⠤⠤⠤⠤",
 	# Translators: Displayed in braille for an object which is a
 	# block quote.
 	controlTypes.ROLE_BLOCKQUOTE: _("blq"),
@@ -441,28 +441,28 @@ roleLabels = {
 positiveStateLabels = {
 	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
-	# Translators: Displayed in braille when an object (e.g. a toggle button) is pressed.
-	controlTypes.STATE_PRESSED: _(u"⢎⣿⡱"),
-	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
-	controlTypes.STATE_CHECKED: _(u"⢎⣿⡱"),
-	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-	controlTypes.STATE_HALFCHECKED: _(u"⢎⣭⡱"),
+	# Displayed in braille when an object (e.g. a toggle button) is pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a check box) is checked.
+	controlTypes.STATE_CHECKED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a check box) is half checked.
+	controlTypes.STATE_HALFCHECKED: u"⢎⣭⡱",
 	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 	controlTypes.STATE_READONLY: _("ro"),
-	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-	controlTypes.STATE_EXPANDED: _("-"),
-	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-	controlTypes.STATE_COLLAPSED: _("+"),
+	# Displayed in braille when an object (e.g. a tree view item) is expanded.
+	controlTypes.STATE_EXPANDED: "-",
+	# Displayed in braille when an object (e.g. a tree view item) is collapsed.
+	controlTypes.STATE_COLLAPSED: "+",
 	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 	controlTypes.STATE_HASPOPUP: _("submnu"),
-	# Translators: Displayed in braille when a protected control or a document is encountered.	
-	controlTypes.STATE_PROTECTED: _("***"),
+	# Displayed in braille when a protected control or a document is encountered.	
+	controlTypes.STATE_PROTECTED: "***",
 	# Translators: Displayed in braille when a required form field is encountered.
 	controlTypes.STATE_REQUIRED: _("req"),
 	# Translators: Displayed in braille when an invalid entry has been made.
 	controlTypes.STATE_INVALID_ENTRY: _("invalid"),
-	# Translators: Displayed in braille when an object supports autocompletion.
-	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: "...",
 	# Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 	controlTypes.STATE_MULTILINE: _("mln"),
 	# Translators: Displayed in braille when an object is clickable.
@@ -481,10 +481,10 @@ positiveStateLabels = {
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
 	controlTypes.STATE_SELECTED: _("nsel"),
-	# Translators: Displayed in braille when an object (e.g. a toggle button) is not pressed.
-	controlTypes.STATE_PRESSED: _(u"⢎⣉⡱"),
-	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-	controlTypes.STATE_CHECKED: _(u"⢎⣉⡱"),
+	# Displayed in braille when an object (e.g. a toggle button) is not pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣉⡱",
+	# Displayed in braille when an object (e.g. a check box) is not checked.
+	controlTypes.STATE_CHECKED: u"⢎⣉⡱",
 }
 
 landmarkLabels = {
