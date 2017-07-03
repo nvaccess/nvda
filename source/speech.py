@@ -326,9 +326,16 @@ def _speakPlaceholderIfEmpty(info, obj, reason):
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
-	# If an NVDAObject has text that is navigable, and we're not speaking for focus entered, and browse mode is not in use, then present the current line in speech
+	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
-	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED) and (not isinstance(obj.treeInterceptor,browseMode.BrowseModeDocumentTreeInterceptor) or obj.treeInterceptor.passThrough) and obj._hasNavigableText
+	shouldReportTextContent=not (
+		# focusEntered should never present text content
+		(reason==controlTypes.REASON_FOCUSENTERED) or
+		# The rootNVDAObject of a browseMode document in browse mode (not passThrough) should never present text content
+		(isinstance(obj.treeInterceptor,browseMode.BrowseModeDocumentTreeInterceptor) and not obj.treeInterceptor.passThrough and obj==obj.treeInterceptor.rootNVDAObject) or
+		# objects that do not report as having navigableText should not report their text content either
+		not obj._hasNavigableText
+	)
 	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
@@ -362,13 +369,13 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		# We definitely aren't reporting any table info at all.
 		allowProperties["rowNumber"]=False
 		allowProperties["columnNumber"]=False
-	if isEditable:
+	if shouldReportTextContent:
 		allowProperties['value']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
 	if reason==controlTypes.REASON_ONLYCACHE:
 		return
-	if isEditable:
+	if shouldReportTextContent:
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
