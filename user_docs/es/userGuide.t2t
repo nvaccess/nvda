@@ -136,6 +136,10 @@ Si has instalado NVDA con el instalador, entonces iniciar NVDA es tan fácil com
 Adicionalmente puedes teclear NVDA en el diálogo Ejecutar y pulsar Intro. 
 También puedes pasar algunas [opciones de línea de órdenes #CommandLineOptions] las cuales te permiten reiniciar NVDA (-r), salir (-q), deshabilitar complementos (--disable-addons), etc.
 
+Para las copias instaladas, NVDA almacena la configuración en la carpeta roaming application data del usuario actual por omisión (ej.: "C:\Users\<user>\AppData\Roaming").
+Es posible cambiar esto de forma que NVDA cargue su configuración desde la carpeta local de datos de aplicación en su lugar.
+Consulta la sección acerca de [parámetros del sistema #SystemWideParameters] para más detalles.
+
 Para iniciar la versión portátil, ve al directorio donde descomprimiste NVDA, y pulsa intro o haz doble clic sobre nvda.exe.
 
 Cuando NVDA arranca, primero escucharás un grupo ascendente de tonos (que te dicen que NVDA está cargándose). 
@@ -321,7 +325,7 @@ Del mismo modo, en una barra de herramientas conteniendo controles, debes movert
  
 El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [órdenes de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
-De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema, aunque este comportamiento puede activarse y desactivarse.
+De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema aunque este comportamiento puede activarse y desactivarse.
 
 Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
 Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
@@ -2330,6 +2334,18 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
+
+++ Parámetros del Sistema ++[SystemWideParameters]
+NVDA permite configurar algunos valores en el registro del sistema que alteran el comportamiento de todo el sistema de NVDA.
+Estos valores se almacenan en el registro del sistema bajo una de las siguientes claves:
+- Sistema de 32 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Sistema de 64 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Los siguientes valores pueden configurarse bajo estas claves del registro:
+|| Nombre | Tipo | Valores Posibles | Descripción |
+| configInLocalAppData | DWORD | 0 (predeterminado) para deshabilitado, 1 para habilitado | Si está habilitado, almacena la configuración de usuario de NVDA en la carpeta local de datos de aplicación en lugar de la roaming application data |
+| serviceDebug | DWORD | 0 (predeterminado) para deshabilitar, 1 para habilitar | Si se habilita, deshabilita el modo seguro en los escritorios seguros de windows, permitiendo la utilización de la consola de Python y del visualizador del Registro. Debido a varias implicaciones importantes de seguridad, la utilización de esta opción está altamente desaconsejada |
 
 + Información Adicional +
 Si requieres de información adicional o asistencia con respecto a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.

@@ -136,6 +136,10 @@ Se instalaches o NVDA co instalador, entón iniciar NVDA é tan sinxelo coma ou 
 Adicionalmente podes teclear NVDA no diálogo Executar e premer Intro. 
 Tamén podes pasar algunhas [opcións de liña de ordes #CommandLineOptions] as que che permiten reiniciar o NVDA (-r), saír (-q), deshabilitar complementos (--disable-addons), etc.
 
+Para as copias instaladas, NVDA almacena a configuración no cartafol roaming application data do usuario actual por omisión (ex.: "C:\Users\<user>\AppData\Roaming").
+É posible cambiar esto de xeito que o NVDA cargue a súa configuración dende o cartafol local de datos de aplicación no seu lugar.
+Consulta a seción acerca de [parámetros do sistema #SystemWideParameters] para máis detalles.
+
 Para iniciar a versión portátil, vai ao directorio onde descomprimiches ao NVDA, e preme intro ou fai doble clic sobre nvda.exe.
 
 Cando o NVDA arrinca, primeiro escoitarás un grupo ascendente de tons (que che din que NVDA se está a cargar). 
@@ -2330,6 +2334,18 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | None | --debug-logging | Habilita o nivel depuración no rexistro só para esta execución. Esta opción anulará calquera outro argumento do nivel do rexistro ( ""--loglevel"", -l) dado. |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
+
+++ Parámetros do Sistema ++[SystemWideParameters]
+NVDA permite configurar algúns valores no rexistro do sistema que alteran o comportamento de todo o sistema do NVDA.
+Estos valores almacénanse no rexistro do sistema baixo unha das seguintes claves:
+- Sistema de 32 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Sistema de 64 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Os seguintes valores poden configurarse baixo estas claves do rexistro:
+|| Nome | Tipo | Valores Posibles | Descripción |
+| configInLocalAppData | DWORD | 0 (predeterminado) para deshabilitado, 1 para habilitado | Se está habilitado, almacena a configuración do usuario do NVDA no cartafol local de datos de aplicación en lugar da roaming application data |
+| serviceDebug | DWORD | 0 (predeterminado) para deshabilitar, 1 para habilitar | Se se habilita, deshabilita o modo seguro nos escritorios seguros do windows, permitindo o uso da consola de Python e do visualizador do Rexistro. Debido a varias implicacións importantes de seguridade, o uso desta opción está altamente desaconsellada |
 
 + Información Adicional +
 Se requires información adicional ou asistencia referente ao NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
