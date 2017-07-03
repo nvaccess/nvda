@@ -818,6 +818,15 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
+	def _get_placeholder(self):
+		"""If it exists for this object get the value of the placeholder text.
+		For example this might be the aria-placeholder text for a field in a web page.
+		@return: the placeholder text else None
+		@rtype: String or None
+		"""
+		log.debug("Potential unimplemented child class: %r" %self)
+		return None
+
 	def _reportErrorInPreviousWord(self):
 		try:
 			# self might be a descendant of the text control; e.g. Symphony.
@@ -971,6 +980,14 @@ This code is executed if a gain focus event is received by this object.
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
+
+	def _get__isTextEmpty(self):
+		"""
+		@return C{True} if the text contained in the object is considered empty by the underlying implementation. In most cases this will match {isCollapsed}, however some implementations may consider a single space or line feed as an empty range.
+		"""
+		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
+		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+		return ti.isCollapsed
 
 	@staticmethod
 	def _formatLongDevInfoString(string, truncateLen=250):

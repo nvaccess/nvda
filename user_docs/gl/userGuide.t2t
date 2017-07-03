@@ -136,6 +136,10 @@ Se instalaches o NVDA co instalador, entón iniciar NVDA é tan sinxelo coma ou 
 Adicionalmente podes teclear NVDA no diálogo Executar e premer Intro. 
 Tamén podes pasar algunhas [opcións de liña de ordes #CommandLineOptions] as que che permiten reiniciar o NVDA (-r), saír (-q), deshabilitar complementos (--disable-addons), etc.
 
+Para as copias instaladas, NVDA almacena a configuración no cartafol roaming application data do usuario actual por omisión (ex.: "C:\Users\<user>\AppData\Roaming").
+É posible cambiar esto de xeito que o NVDA cargue a súa configuración dende o cartafol local de datos de aplicación no seu lugar.
+Consulta a seción acerca de [parámetros do sistema #SystemWideParameters] para máis detalles.
+
 Para iniciar a versión portátil, vai ao directorio onde descomprimiches ao NVDA, e preme intro ou fai doble clic sobre nvda.exe.
 
 Cando o NVDA arrinca, primeiro escoitarás un grupo ascendente de tons (que che din que NVDA se está a cargar). 
@@ -147,8 +151,9 @@ Por favor investiga no sitio web de NVDA para saber como facer esto.
 
 Cando o NVDA arrinque por primeira vez, daráseche a benvida mediante unha caixa de diálogo que che proporciona algunha información básica acerca da tecla modificadora de NVDA e do menú de NVDA. 
 (Consulta por favor seccións subseguintes acerca de estos temas). 
-A caixa de diálogo tamén contén tres caixas de verificación. 
-A primeira permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora do NVDA.
+A caixa de diálogo tamén contén unha caixa combinada e tres caixas de verificación. 
+A caixa combinada permíteche selecionar a distribución de teclado.
+A primeira caixa de verificación permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora do NVDA.
 A segunda especifica se NVDA debería arrincar automáticamente despois de autentificarte en Windows e só está dispoñible para copias instaladas do NVDA.
 A terceira permíteche controlar se esta caixa de benvida debería aparecer cada vez que o NVDA arranque.
 
@@ -542,7 +547,7 @@ Esto require que MathPlayer 4 estea instalado no computador.
 MathPlayer está dispoñible como unha descarga gratuita dende: http://www.dessci.com/en/products/mathplayer/
 
 NVDA soporta os seguintes tipos de contidos matemáticos:
-- MathML en Mozilla Firefox e Microsoft Internet Explorer.
+- MathML en Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
 - Design Science MathType en Microsoft Word e PowerPoint. MathType necesita estaren instalado para que esto funcione. A versión trial é suficiente.
 - MathML en Adobe Reader. Ten en conta que esto non é un estándar official aínda, así que non hai actualmente software dispoñible para o público que poda producir este contido.
 -
@@ -966,6 +971,9 @@ O indicador de seleción non está afectado por esta opción.
 ==== Duración da Mensaxe (en seg) ====
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na pantalla braille.
 Especifycando 0 deshabilítase o amosado destas mesaxes completamente.
+
+==== amosar Mensaxes Indefinidamente ====
+Esta opción permite ás mensaxes do NVDA amosarse na pantalla braille indefinidamente.
 
 %kc:setting
 ==== O Braille segue a ====[BrailleTether]
@@ -1588,6 +1596,17 @@ Para utilizar estas voces, necesitarás instalar dous compoñentes:
  Por exemplo, o ficheiro MSSpeech_TTS_en-US_ZiraPro.msi é unha voz inglesa U.S..
  -
 -
+
+++ Voces Windows OneCore ++
+Windows 10 inclúe novas voces coñecidas coma voces "OneCore" ou "mobile".
+Proporciónanse voces para moitas linguas e son máis lixeiras que as voces Microsoft disponibles ao se usar Microsoft Speech API versión 5.
+
+Para instalar voces para linguas adicionais, consulta este artigo de Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Por favor ten en conta que actualmente non están dispoñibles co NVDA as velocidades máis rápidas dispoñibles co Narrator.
+Tamén, a velocidade selecionada na configuración de Windows afecta á configurada no NVDA.
+Estos problemas non se poden resolver sen cambios no Windows.
+Desexamos que esto se solucione nunha actualización futura do Windows.
 
 ++ Audiologic Tts3 ++
 Este é un sintetizador de voz commercial específicamente para a lingua italiana.
@@ -2224,8 +2243,8 @@ Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/
 | Guiar á celda braille | route (leva o cursor ao caracter) |
 %kc:endInclude
 
-+ Tipo de control Braille e abreviaturas de estado +
-Co fin de ter a meirande cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado.
++ Abreviaturas de Tipos de control Braille, de estado e de Pontos de Rreferencia +
+Co fin de ter a meirande cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así coma dos pontos de referencia.
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
@@ -2238,8 +2257,9 @@ Co fin de ter a meirande cantidade de información posible nunha pantalla braill
 | fN | número de fila de táboa n, ex.: r1, r2. |
 | cnN | cabeceira de nivel n, ex.: h1, h2. |
 | li | liga |
-| lst | lista |
 | liv | liga visitada |
+| lst | lista |
+| pdr | ponto de referencia |
 | mn | menú |
 | bmn | barra de menú |
 | bto | botón de opción |
@@ -2260,6 +2280,17 @@ Os seguintes indicadores de estado  tamén están definidos:
 | ro | amosado cando un obxecto (ex.: un campo de texto editable) é de só lectura |
 | sel | amosado cando un obxecto está seleccionado |
 | submnu | amosado cando un obxecto ten un despregable (normalmente un submenú) |
+
+Finalmente, definíronse as seguintes abreviaturas para pontos de referencia:
+|| Abreviatura | Ponto de referencia |
+| tlo | título |
+| cinf | info de contido |
+| cmpl | complementario |
+| form | formulario |
+| main | principal |
+| nav | navegación |
+| busq | procura |
+| rgn | rexión |
 
 + Temas Avanzados +
 
@@ -2303,6 +2334,18 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | None | --debug-logging | Habilita o nivel depuración no rexistro só para esta execución. Esta opción anulará calquera outro argumento do nivel do rexistro ( ""--loglevel"", -l) dado. |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
+
+++ Parámetros do Sistema ++[SystemWideParameters]
+NVDA permite configurar algúns valores no rexistro do sistema que alteran o comportamento de todo o sistema do NVDA.
+Estos valores almacénanse no rexistro do sistema baixo unha das seguintes claves:
+- Sistema de 32 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Sistema de 64 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Os seguintes valores poden configurarse baixo estas claves do rexistro:
+|| Nome | Tipo | Valores Posibles | Descripción |
+| configInLocalAppData | DWORD | 0 (predeterminado) para deshabilitado, 1 para habilitado | Se está habilitado, almacena a configuración do usuario do NVDA no cartafol local de datos de aplicación en lugar da roaming application data |
+| serviceDebug | DWORD | 0 (predeterminado) para deshabilitar, 1 para habilitar | Se se habilita, deshabilita o modo seguro nos escritorios seguros do windows, permitindo o uso da consola de Python e do visualizador do Rexistro. Debido a varias implicacións importantes de seguridade, o uso desta opción está altamente desaconsellada |
 
 + Información Adicional +
 Se requires información adicional ou asistencia referente ao NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.

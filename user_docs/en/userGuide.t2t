@@ -136,6 +136,10 @@ If you have installed NVDA with the installer, then starting NVDA is as simple a
 Additionally you can type NVDA into the Run dialog and press Enter.
 You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons), etc.
 
+For installed copies, NVDA stores the configuration in the roaming application data folder of the current user by default (e.g. "C:\Users\<user>\AppData\Roaming").
+It is possible to change this in a way that NVDA loads its configuration from the local application data folder instead.
+Consult the section about [system wide parameters #SystemWideParameters] for more details.
+
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
 As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
@@ -321,7 +325,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
+By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
 Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
 If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
@@ -502,6 +506,7 @@ The following keys by themselves jump to the next available element, while addin
 - o: embedded object
 - 1 to 6: headings at levels 1 to 6 respectively
 - a: annotation (comment, editor revision, etc.)
+- w: spelling error
 -
 To move to the beginning or end of containing elements such as lists and tables:
 || Name | Key | Description |
@@ -543,7 +548,7 @@ This requires that MathPlayer 4 is installed on the computer.
 MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
 
 NVDA supports the following types of mathematical content:
-- MathML in Mozilla Firefox and Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 - Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient.
 - MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 -
@@ -602,7 +607,7 @@ For further information about Browse mode and Quick Navigation, see the [Browse 
 %kc:beginInclude
 While in Browse mode in Microsoft Word, you can access the Elements List by pressing NVDA+f7.
 %kc:endInclude
-The Elements List can list headings, links and annotations (which includes comments and track changes).
+The Elements List can list headings, links, annotations (which includes comments and track changes) and errors (currently limited to spelling errors).
 
 +++ Reporting Comments +++
 %kc:beginInclude
@@ -1160,6 +1165,13 @@ Key: NVDA+5
 
 Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
 
+==== Play a sound when auto-suggestions appear ====
+Toggles announcement of appearance of auto-suggestions, and if enabled, NVDA will play a sound to indicate this.
+Auto-suggestions are lists of suggested entries based on text entered into certain edit fields and documents.
+For example, when you enter text into the search box in Start menu in Windows Vista and later, Windows displays a list of suggestions based on what you typed.
+For some edit fields such as search fields in various Windows 10 apps, NVDA can notify you that a list of suggestions has appeared when you type text.
+The auto-suggestions list will close once you move away from the edit field, and for some fields, NVDA can notify you of this when this happens.
+
 +++ Input Composition Settings +++
 The Input Composition Settings dialog can be found under the Preferences menu.
 This dialog allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
@@ -1592,6 +1604,17 @@ To use these voices, you will need to install two components:
  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
  -
 -
+
+++ Windows OneCore Voices ++
+Windows 10 includes new voices known as "OneCore" or "mobile" voices.
+Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
+
+To install voices for additional languages, see this Microsoft article: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Please note that the faster rates available with Narrator are not currently available with NVDA.
+Also, the speed you select in the Windows Settings affects the rate set in NVDA.
+These are issues we cannot resolve without changes to Windows.
+We are hopeful that these will be addressed in a future Windows update.
 
 ++ Audiologic Tts3 ++
 This is a commercial speech synthesizer specifically for the Italian language.
@@ -2319,6 +2342,18 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+
+++ System wide parameters++[SystemWideParameters]
+NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.
+These values are stored in the registry under one of the following keys:
+- 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+The following values can be set under this registry key:
+|| Name | Type | Possible values | Description |
+| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
+| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables secure mode on windows secure desktops, allowing the use of the Python console and Log viewer. Due to several major security implications, the use of this option is strongly discouraged |
 
 + Further Information +
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.

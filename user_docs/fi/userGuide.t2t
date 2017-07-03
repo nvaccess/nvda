@@ -136,6 +136,10 @@ Jos asensit NVDA:n omalla asennusohjelmallaan, voit käynnistää sen joko paina
 Voit käynnistää sen myös kirjoittamalla Suorita-valintaikkunaan NVDA ja painamalla Enter.
 Lisäksi on mahdollista syöttää joitakin [komentorivivalitsimia #CommandLineOptions], joilla NVDA voidaan käynnistää uudelleen (-r), sulkea se (-q), poistaa lisäosat käytöstä (--disable-addons) jne.
 
+NVDA:n asennettu versio tallentaa asetukset oletusarvoisesti nykyisen käyttäjän sovellustietojen Roaming-kansioon (esim. "C:\Users\<Käyttäjä>\AppData\Roaming").
+Tämä on mahdollista muuttaa niin, että asetukset ladataan em. sijainnin asemesta paikallisten sovellustietojen kansiosta.
+Katso lisätietoja [järjestelmänlaajuisten parametrien #SystemWideParameters] kappaleesta.
+
 Käynnistä massamuistiversio menemällä hakemistoon, johon olet purkanut sen ja painamalla Enter nvda.exe-tiedoston kohdalla tai kaksoisnapsauttamalla sitä hiiren vasemmalla painikkeella.
 
 NVDA:n käynnistyessä kuuluu joukko nousevia ääniä, jotka kertovat, että se käynnistyy.
@@ -146,11 +150,12 @@ Jos mitään tällaista ei kuulu, tai mikäli kuuluu Windowsin virheääni tai j
 Tarkista NVDA:n verkkosivustolta, miten ohjelmavirheistä ilmoitetaan.
 
 Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa on joitakin perustietoja NVDA-näppäimestä ja -valikosta.
-(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista).
-Valintaikkunassa on myös kolme valintaruutua.
-Ensimmäisellä voidaan valita, käytetäänkö Capslockia NVDA-näppäimenä.
-Toinen, joka on käytettävissä vain asennetuissa versioissa, määrittää, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
-Kolmannella on mahdollista valita, halutaanko tämän Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
+(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista.)
+Valintaikkunassa on lisäksi yhdistelmäruutu sekä kolme valintaruutua.
+Yhdistelmäruudusta valitaan näppäimistöasettelu.
+Ensimmäisellä valintaruudulla määritetään, käytetäänkö Capslockia NVDA-näppäimenä.
+Toisella, joka on käytettävissä vain asennetuissa versioissa, valitaan, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
+Kolmannella on mahdollista valita, halutaanko Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
 
 ++ Tietoja näppäinkomennoista ++
 
@@ -542,7 +547,7 @@ Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
 Se on ladattavissa ilmaiseksi osoitteesta http://www.dessci.com/en/products/mathplayer/
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
-- MathML Mozilla Firefoxissa ja Microsoft Internet Explorerissa.
+- MathML Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Google Chromessa.
 - Design Science MathType Microsoft Wordissa ja PowerPointissa. MathTypen on oltava asennettuna, jotta tämä toimii. Kokeiluversio riittää.
 - MathML Adobe Readerissa. HUOM: Tämä ei ole vielä virallinen standardi, joten tätä sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 -
@@ -964,8 +969,11 @@ Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet)
 Asetus ei vaikuta valinnanilmaisimeen.
 
 ==== Ilmoitusten aikakatkaisu (sek) ====
-Tämä asetus säätää sitä, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
+Tämä asetus säätää, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
 Jos arvoksi määritetään 0, ilmoitusten näyttäminen poistetaan kokonaan käytöstä.
+
+==== Näytä ilmoitukset pysyvästi ====
+Tällä asetuksella NVDA:n ilmoitukset näytetään pistenäytöllä pysyvästi.
 
 %kc:setting
 ==== Pistenäyttö seuraa ====[BrailleTether]
@@ -1588,6 +1596,17 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi komponenttia:
  Esimerkiksi tiedosto MSSpeech_TTS_en-US_ZiraPro.msi on amerikanenglantia puhuva ääni.
  -
 -
+
+++ Windows OneCore ++
+Windows 10 sisältää uusia puheääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
+Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
+
+Voit asentaa ääniä lisäkielille katsomalla ohjeita tästä Microsoftin artikkelista: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Huomaa, että Lukijan (Narratorin) suuremmat puhenopeudet eivät ole tällä hetkellä käytettävissä NVDA:n kanssa.
+Lisäksi Windowsin asetuksista valitsemasi puheen nopeus vaikuttaa NVDA:ssa asetettuun puhenopeuteen.
+Näitä ongelmia ei voi ratkaista ilman Windowsiin tehtäviä muutoksia.
+Toivon mukaan ne korjataan tulevassa Windows-päivityksessä.
 
 ++ Audiologic TTS 3 ++
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.
@@ -2224,8 +2243,8 @@ Katso [BRLTTY:n näppäinsidosluetteloita http://mielke.cc/brltty/doc/KeyBinding
 | siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
-+ Säädintyyppien ja -tilojen lyhenteet pistenäytöllä +
-Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa.
++ Säädintyyppien- ja tilojen sekä kiintopisteiden lyhenteet pistekirjoituksella +
+Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa sekä kiintopisteitä.
 
 || Lyhenne | Säätimen tyyppi |
 | pnk | painike |
@@ -2238,7 +2257,8 @@ Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet o
 | rN | taulukon rivi numero n, esim. r1, r2. |
 | oN | otsikko tasolla n, esim. o1, o2. |
 | lnk | linkki |
-| ltl | luettelo |
+| lst | luettelo |
+| pk | kiintopiste |
 | alnk | avattu linkki |
 | vko | valikko |
 | vkorvi | valikkorivi |
@@ -2260,6 +2280,17 @@ Seuraavat tilanilmaisimet on myös määritetty:
 | vl | Näytetään, kun objekti (esim. muokattava tekstikenttä) on vain luku -tyyppiä. |
 | val | Näytetään, kun objekti on valittuna. |
 | alavko | Näytetään, kun objektilla on ponnahdusvalikko (yleensä alavalikko). |
+
+Kiintopisteille on määritetty seuraavat lyhenteet:
+|| Lyhenne | Kiintopiste |
+| bnnr | banner |
+| stie | sisältötiedot |
+| täyd | täydentävä |
+| lmk | lomake |
+| pää | pääsisältö |
+| nav | navigaatio |
+| hku | haku |
+| alu | alue |
 
 + Edistyneet aiheet +
 
@@ -2303,6 +2334,18 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
+
+++ Järjestelmänlaajuiset parametrit ++[SystemWideParameters]
+Windowsin rekisterissä on mahdollista muuttaa joitakin arvoja, jotka vaikuttavat  NVDA:n järjestelmänlaajuiseen toimintaan.
+Arvot tallennetaan johonkin seuraavista rekisteriavaimista:
+- 32-bittiset järjestelmät: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bittiset järjestelmät: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Seuraavien rekisteriavainten määrittäminen on mahdollista:
+|| Nimi | Tyyppi | Mahdolliset arvot | Kuvaus |
+| configInLocalAppData | DWORD | 0 (oletus) poistaa käytöstä, 1 ottaa käyttöön | Jos tämä asetus otetaan käyttöön, NVDA:n asetukset tallennetaan paikallisten sovellustietojen kansioon. |
+| serviceDebug | DWORD | 0 (oletus) poistaa käytöstä, 1 ottaa käyttöön | Jos tämä asetus otetaan käyttöön, suojattu tila poistetaan käytöstä Windowsin suojatuilla työpöydillä, mikä mahdollistaa Python-konsolin ja lokintarkastelun käytön. Tämän asetuksen käyttöä ei suositella tietoturvan merkittävän heikkenemisen vuoksi. |
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen verkkosivustolla osoitteessa NVDA_URL.

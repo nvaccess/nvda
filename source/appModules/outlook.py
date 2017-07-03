@@ -26,7 +26,7 @@ from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
-from NVDAObjects.behaviors import RowWithFakeNavigation
+from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 
 oleFlagIconLabels={
@@ -85,6 +85,12 @@ def getSentMessageString(obj):
 	return ", ".join(nameList)
 
 class AppModule(appModuleHandler.AppModule):
+
+	def __init__(self,*args,**kwargs):
+		super(AppModule,self).__init__(*args,**kwargs)
+		# Explicitly allow gainFocus events for the window class that hosts the active Outlook DatePicker cell
+		# This object gets focus but its window does not conform to our GUI thread info window checks
+		eventHandler.requestEvents("gainFocus",processId=self.processID,windowClassName="rctrl_renwnd32")
 
 	_hasTriedoutlookAppSwitch=False
 
@@ -153,13 +159,24 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
+		# Outlook uses dialogs for many forms such as appointment / meeting creation. In these cases, there is no sane dialog caption that can be calculated as the dialog inly contains controls.
+		# Therefore remove the Dialog behavior for these imbedded dialog forms so as to not announce junk as the caption
+		if Dialog in clsList:
+			parentWindow=winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT)
+			if parentWindow and winUser.getClassName(parentWindow)=="AfxWndW":
+				clsList.remove(Dialog)
 		if WordDocument in clsList:
 			clsList.insert(0,OutlookWordDocument)
 		role=obj.role
 		windowClassName=obj.windowClassName
 		states=obj.states
 		controlID=obj.windowControlID
-		if windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
+		# Support the date picker in Outlook Meeting / Appointment creation forms 
+		if controlID==4352 and role==controlTypes.ROLE_BUTTON:
+			clsList.insert(0,DatePickerButton)
+		elif role==controlTypes.ROLE_TABLECELL and windowClassName=="rctrl_renwnd32":
+			clsList.insert(0,DatePickerCell)
+		elif windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
 			clsList.insert(0,REListBox20W_CheckBox)
 		elif role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
 			clsList.insert(0,AutoCompleteListItem)
@@ -551,3 +568,17 @@ class OutlookWordDocument(WordDocument):
 
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
+
+class DatePickerButton(IAccessible):
+	# Value is a duplicate of name so get rid of it
+	value=None
+
+class DatePickerCell(IAccessible):
+	# Value is a duplicate of name so get rid of it
+	value=None
+
+	# Focus events are always on this object with the exact same event parameters
+	# Therefore we cannot safely filter out duplicates
+	def isDuplicateIAccessibleEvent(self,obj):
+		return False
+

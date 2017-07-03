@@ -850,7 +850,8 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 
 	def done(self):
 		self.timer.Stop()
-		if self.IsActive():
+		pbConf = config.conf["presentation"]["progressBarUpdates"]
+		if pbConf["progressBarOutputMode"] in ("beep", "both") and (pbConf["reportBackgroundProgressBars"] or self.IsActive()):
 			tones.beep(1760, 40)
 		self.Hide()
 		self.Destroy()

@@ -136,6 +136,10 @@ Si has instalado NVDA con el instalador, entonces iniciar NVDA es tan fácil com
 Adicionalmente puedes teclear NVDA en el diálogo Ejecutar y pulsar Intro. 
 También puedes pasar algunas [opciones de línea de órdenes #CommandLineOptions] las cuales te permiten reiniciar NVDA (-r), salir (-q), deshabilitar complementos (--disable-addons), etc.
 
+Para las copias instaladas, NVDA almacena la configuración en la carpeta roaming application data del usuario actual por omisión (ej.: "C:\Users\<user>\AppData\Roaming").
+Es posible cambiar esto de forma que NVDA cargue su configuración desde la carpeta local de datos de aplicación en su lugar.
+Consulta la sección acerca de [parámetros del sistema #SystemWideParameters] para más detalles.
+
 Para iniciar la versión portátil, ve al directorio donde descomprimiste NVDA, y pulsa intro o haz doble clic sobre nvda.exe.
 
 Cuando NVDA arranca, primero escucharás un grupo ascendente de tonos (que te dicen que NVDA está cargándose). 
@@ -147,8 +151,9 @@ Por favor investiga en el sitio Web de NVDA para saber cómo hacer esto.
 
 Cuando NVDA arranque por primera vez, se te dará la bienvenida mediante un cuadro de diálogo que te proporciona alguna información básica acerca de la tecla modificadora de NVDA y del menú de NVDA. 
 (Mira por favor secciones subsiguientes acerca de estos temas). 
-El cuadro de diálogo también contiene tres casillas de verificación. 
-La primera te permite controlar si NVDA debería utilizar BloqMayus como una tecla modificadora de NVDA. 
+El cuadro de diálogo también contiene un cuadro combinado y tres casillas de verificación. 
+El cuadro combinado te permite seleccionar la distribución de teclado.
+La primera casilla de verificación te permite controlar si NVDA debería utilizar BloqMayus como una tecla modificadora de NVDA. 
 La segunda especifica si NVDA debería arrancar automáticamente después de autentificarte en Windows y sólo está disponible para copias instaladas de NVDA.
 La tercera te permite controlar si este cuadro de bienvenida debería aparecer cada vez que NVDA arranque.
 
@@ -320,7 +325,7 @@ Del mismo modo, en una barra de herramientas conteniendo controles, debes movert
  
 El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [órdenes de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
-De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema, aunque este comportamiento puede activarse y desactivarse.
+De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema aunque este comportamiento puede activarse y desactivarse.
 
 Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
 Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
@@ -542,7 +547,7 @@ Esto requiere que MathPlayer 4 esté instalado en el ordenador.
 MathPlayer está disponible como una descarga gratuita desde: http://www.dessci.com/en/products/mathplayer/
 
 NVDA soporta los siguientes tipos de contenidos matemáticos:
-- MathML en Mozilla Firefox y Microsoft Internet Explorer.
+- MathML en Mozilla Firefox Microsoft Internet Explorer y Google Chrome..
 - Design Science MathType en Microsoft Word y PowerPoint. MathType necesita estar instalado para que esto funcione. La versión trial es suficiente.
 - MathML en Adobe Reader. Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
 -
@@ -966,6 +971,9 @@ El indicador de selección no está afectado por esta opción.
 ==== Duración del Mensaje (en seg) ====
 Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la pantalla braille.
 Especifycando 0 se deshabilita el mostrado de estos mensajes completamente.
+
+==== Mostrar Mensajes Indefinidamente ====
+Esta opción permite a los mensajes de NVDA mostrarse en la pantalla braille indefinidamente.
 
 %kc:setting
 ==== El Braille sigue a ====[BrailleTether]
@@ -1588,6 +1596,17 @@ Para utilizar estas voces, necesitarás instalar dos componentes:
  Por ejemplo, el fichero MSSpeech_TTS_en-US_ZiraPro.msi es una voz inglesa U.S..
  -
 -
+
+++ Voces Windows OneCore ++
+Windows 10 incluye nuevas voces conocidas como voces "OneCore" o "mobile".
+Se proporcionan voces para muchos idiomas y son más ágiles que las voces Microsoft disponibles al utilizar Microsoft Speech API versión 5.
+
+Para instalar voces para idiomas adicionales, consulta este artículo de Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Por favor ten en cuenta que actualmente no están disponibles con NVDA las velocidades más rápidas disponibles con Narrator.
+También, la velocidad seleccionada en la configuración de Windows afecta a la configurada en NVDA.
+Estos problemas no se pueden resolver sin cambios en Windows.
+Deseamos que esto se solucione en una actualización futura de Windows.
 
 ++ Audiologic Tts3 ++
 Este es un sintetizador de voz comercial específicamente para el idioma italiano.
@@ -2224,8 +2243,8 @@ Por favor consulta las [listas de claves de vínculos de BRLTTY http://mielke.cc
 | Guiar a la celda braille | route (lleva el cursor al carácter) |
 %kc:endInclude
 
-+ Tipo de control Braille y abreviaturas de estado +
-Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado.
++ Abreviaturas de Tipos de control Braille, de estado y de Puntos de Rreferencia +
+Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado así como los puntos de referencia.
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
@@ -2238,8 +2257,9 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 | fN | número de fila de tabla n, ej.: r1, r2. |
 | enN | encabezado de nivel n, ej.: h1, h2. |
 | enl | enlace |
-| lst | lista |
 | enlv | enlace visitado |
+| lst | lista |
+| pdr | punto de referencia |
 | mn | menú |
 | bmn | barra de menú |
 | bto | botón de opción |
@@ -2260,6 +2280,17 @@ Los siguientes indicadores de estado  también están definidos:
 | ro | mostrado cuando un objeto (ej.: un campo de texto editable) es de sólo lectura |
 | sel | mostrado cuando un objeto está seleccionado |
 | submnu | mostrado cuando un objeto tiene un desplegable (normalmente un submenú) |
+
+Finalmente, se definieron las siguientes abreviaturas para puntos de referencia:
+|| Abreviatura | Punto de referencia |
+| tlo | título |
+| cinf | info de contenido |
+| cmpl | complementario |
+| form | formulario |
+| main | principal |
+| nav | navegación |
+| busq | búsqueda |
+| rgn | región |
 
 + Temas Avanzados +
 
@@ -2303,6 +2334,18 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
+
+++ Parámetros del Sistema ++[SystemWideParameters]
+NVDA permite configurar algunos valores en el registro del sistema que alteran el comportamiento de todo el sistema de NVDA.
+Estos valores se almacenan en el registro del sistema bajo una de las siguientes claves:
+- Sistema de 32 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Sistema de 64 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Los siguientes valores pueden configurarse bajo estas claves del registro:
+|| Nombre | Tipo | Valores Posibles | Descripción |
+| configInLocalAppData | DWORD | 0 (predeterminado) para deshabilitado, 1 para habilitado | Si está habilitado, almacena la configuración de usuario de NVDA en la carpeta local de datos de aplicación en lugar de la roaming application data |
+| serviceDebug | DWORD | 0 (predeterminado) para deshabilitar, 1 para habilitar | Si se habilita, deshabilita el modo seguro en los escritorios seguros de windows, permitiendo la utilización de la consola de Python y del visualizador del Registro. Debido a varias implicaciones importantes de seguridad, la utilización de esta opción está altamente desaconsejada |
 
 + Información Adicional +
 Si requieres de información adicional o asistencia con respecto a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.
