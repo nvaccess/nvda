@@ -848,9 +848,6 @@ class TextInfoRegion(Region):
 		try:
 			return self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
-#			try:
-#				return self.obj.makeTextInfo(textInfos.POSITION_CARET)
-#			except:
 			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
 
 	def _setCursor(self, info):
