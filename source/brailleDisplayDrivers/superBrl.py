@@ -83,7 +83,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			else:
 				self._dev.close()
 		else:
-			raise RuntimeError, "No SuperBraille found"
+			raise RuntimeError("No SuperBraille found")
 
 	def terminate(self):
 		try:
