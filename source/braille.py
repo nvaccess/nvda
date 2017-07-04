@@ -695,6 +695,7 @@ class NVDAObjectRegion(Region):
 		text = getBrailleTextForProperties(
 			name=obj.name,
 			role=role,
+			roleText=obj.roleText,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
