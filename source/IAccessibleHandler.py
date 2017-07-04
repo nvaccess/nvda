@@ -860,6 +860,8 @@ def pumpAll():
 		showCaretEvent = winEvent[0]==winUser.EVENT_OBJECT_SHOW and winEvent[2] == winUser.OBJID_CARET
 		# #4001: Ideally, we'd call shouldAcceptEvent in winEventCallback,
 		# but this causes focus issues when starting applications.
+		# #7332: If this is a show event, which would normally be dropped by `shouldAcceptEvent` and this event is for the caret,
+		# later it will be mapped to a caret event, so skip `shouldAcceptEvent`
 		if not showCaretEvent and not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
 			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
