@@ -191,6 +191,9 @@ TABLES = (
 	("ks-in-g1.utb", _("Kashmiri grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("lt.ctb", _("Lithuanian"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Lv-Lv-g1.utb", _("Latvian grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
