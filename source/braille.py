@@ -1145,12 +1145,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		#: A list mapping positions in L{rawText} to positions in L{brailleCells}.
-		#: @type: [int, ...]
-		self.rawToBraillePos = []
-		#: A list mapping positions in L{brailleCells} to positions in L{rawText}.
-		#: @type: [int, ...]
-		self.brailleToRawPos = []
 		#: The position in L{brailleCells} where the display window starts (inclusive).
 		#: @type: int
 		self.windowStartPos = 0
@@ -1164,9 +1158,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.cursorPos = None
 		self.brailleCursorPos = None
 		self.brailleCells = []
-		self.rawToBraillePos = []
-		self.brailleToRawPos = []
-		self.windowStartPos = 0 
+		self.windowStartPos = 0
 
 	def _get_visibleRegions(self):
 		if not self.regions:
@@ -1183,6 +1175,26 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			end = start + len(region.brailleCells)
 			yield region, start, end
 			start = end
+
+	def _get_rawToBraillePos(self):
+		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
+		@rtype: [int, ...]
+		"""
+		rawToBraillePos = []
+		for region, regionStart, regionEnd in self.regionsWithPositions:
+			rawToBraillePos.extend(p+regionStart for p in region.rawToBraillePos)
+		return rawToBraillePos
+
+	def _get_brailleToRawPos(self):
+		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
+		@rtype: [int, ...]
+		"""
+		brailleToRawPos = []
+		start = 0
+		for region in self.visibleRegions:
+			brailleToRawPos.extend(p+start for p in region.brailleToRawPos)
+			start+=len(region.rawText)
+		return brailleToRawPos
 
 	def bufferPosToRegionPos(self, bufferPos):
 		for region, start, end in self.regionsWithPositions:
@@ -1321,25 +1333,19 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.rawText = ""
 		self.brailleCells = []
 		self.cursorPos = None
-		self.rawToBraillePos = []
-		self.brailleToRawPos = []
-		rawTextStart = 0
-		cellStart = 0
+		start = 0
 		if log.isEnabledFor(log.IO):
 			logRegions = []
 		for region in self.visibleRegions:
-			if log.isEnabledFor(log.IO):
-				logRegions.append(region.rawText)
 			rawText = region.rawText
+			if log.isEnabledFor(log.IO):
+				logRegions.append(rawText)
 			cells = region.brailleCells
 			self.rawText+=rawText
-			self.rawToBraillePos.extend(p+cellStart for p in region.rawToBraillePos)
-			self.brailleToRawPos.extend(p+rawTextStart for p in region.brailleToRawPos)
 			self.brailleCells.extend(cells)
 			if region.brailleCursorPos is not None:
-				self.cursorPos = cellStart + region.brailleCursorPos
-			rawTextStart += len(rawText)
-			cellStart += len(cells)
+				self.cursorPos = start + region.brailleCursorPos
+			start += len(cells)
 		if log.isEnabledFor(log.IO):
 			log.io("Braille regions text: %r" % logRegions)
 
