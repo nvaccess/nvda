@@ -192,6 +192,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
 
+[uwpOcr]
+	language = string(default="en")
+
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
 """).format(latestSchemaVersion=latestSchemaVersion)
