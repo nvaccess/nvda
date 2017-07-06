@@ -506,6 +506,7 @@ A seguintes teclas elas soas saltan ao seguinte campo, ca tecla shift saltan ao 
 - o: obxecto empotrado
 - 1 a 6: cabeceiras da 1 á 6 respectivamente
 - a: anotación (comentario, revisión do editor, etc.)
+- w: erro de ortografía
 -
 Para te mover cara o comezo ou o remate de elementos contedores como listas e táboas:
 || Nome | Tecla | Descripción |
@@ -606,7 +607,7 @@ Para información adicional acerca do modo Exploración e a Navegación Rápida,
 %kc:beginInclude
 Mentres se estea no modo Exploración en Microsoft Word, podes acceder á Lista de Elementos premendo NVDA+f7.
 %kc:endInclude
-A Lista de Elementos pode listar cabeceiras, ligas e anotacións (as que inclúen comentarios e seguemento de cambios).
+A Lista de Elementos pode listar cabeceiras, ligas, anotacións (as que inclúen comentarios e seguemento de cambios) e erros (actualmente limitados a erros de ortografía).
 
 +++ Anunciado de Comentarios +++
 %kc:beginInclude
@@ -1163,6 +1164,13 @@ Se minimizas ou cambias a outra ventá que conteña unha barra de progreso, o nv
 Tecla: NVDA+5
 
 Conmuta o anunciado de contido novo en obxectos particulares como terminais e o control de histórico en programas de chat.
+
+==== Reproducir un son ao aparecer autosuxerencias ====
+Conmuta o anunciado da aparición de autosuxerencias, e se está habilitado, NVDA reproducirá un son para indicar esto.
+As autosuxerencias son listas de entradas suxeridas baseadas en texto introducido en certos campos de edición e documentos.
+por exempro, cando introduzas texto na caixa de procura no menú inicio en Windows Vista e posterior, Windows amosa unha lista de suxerencias baseadas no que escribiches.
+Para algúns campos de edición  coma campos de procura en varias aplicacións de Windows 10, NVDA pode notificarte que apareceu unha lista de suxerencias ao se escrebir texto.
+A lista de autosuxerencias pecharase unha vez te movas polo campo de edición, e para algúns campos, NVDA pode notificarte de esto cando elo ocorra.
 
 +++ Opcións de Composición de Entrada +++
 O diálogo Opcións de Composición de Entrada pode encontrarse baixo o menú Preferencias. 
