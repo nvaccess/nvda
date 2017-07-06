@@ -9,10 +9,14 @@
 - In den Braille-Einstellungen gibt es eine neue Option, die die dauerhafte Anzeige von Blitzmeldungen ermöglicht. (#6669)
 - In der Nachrichtenliste von Microsoft Outlook werden markierte Nachrichten als solche angezeigt. (#6374)
 - In Microsoft PowerPoint wird beim Bearbeiten einer Folie eine Form genau beschrieben, wenn Sie sie bearbeiten (Beispiele sind u. a. Dreieck, Kreis, Video oder Pfeil); zuvor wurde eine Form lediglich als "Form" angezeigt. (#7111)
-- Mathml wird jetzt auch in Google Chrome unterstützt. (#7184)
+- MathML wird jetzt auch in Google Chrome unterstützt. (#7184)
 - NVDA unterstützt jetzt auch die neuen Windows OneCore-Stimmen, die in Windows 10 enthalten sind. Sie können diese Stimmen verwenden, indem Sie Windows OneCore-Stimmen unter Einstellungen --> Sprachausgabe auswählen. (#6159)
-- Die Konfigurationsdateien von NVDA können jetzt auch im lokalen Konfigurationsverzeichnis gespeichert werden. Die betreffende Einstellung wird in der Registrierdatenbank von Windows vorgenommen. Weitere Informationen dazu finden Sie im Abschnitt 'Systemparameter' im Benutzerhandbuch. (#6812)
-- In Web-Browsern werden Platzhalterwerte für Eingabefelder angezeigt, solange sie noch leer sind. NVDA unterstützt jetzt auch das Aria-Attribut Aria-Placeholder. (#7004)
+- Die Konfigurationsdateien von NVDA können jetzt auch im lokalen Konfigurationsverzeichnis gespeichert werden. Die betreffende Einstellung wird in der Registrierdatenbank von Windows vorgenommen. Weitere Informationen dazu finden Sie im Abschnitt "Systemparameter" im Benutzerhandbuch. (#6812)
+- In Web-Browsern werden Platzhalterwerte für Eingabefelder angezeigt, solange sie noch leer sind. NVDA unterstützt jetzt auch das Aria-Attribut "Aria-Placeholder". (#7004)
+- Im Lesemodus von Microsoft Word können Sie nun mit W und Umschalt+W zu Rechtschreibfehlern navigieren. (#6942)
+- Datumsfelder in Dialogfeldern für Microsoft Outlook-Termine werden unterstützt. (#7217)
+- In dem "An"-Feld und Kopie in der Windows 10 Mail-App und im Suchfeld für die Windows-Einstellungen wird der aktuell hervorgehobene Vorschlag angezeigt. (#6241)
+- Sobald die Vorschlagsliste für ein Suchfeld in Windows 10 erscheint, wird ein Klang abgespielt. (#6241)
 
 
 == Änderungen ==
@@ -29,6 +33,7 @@
  - "Formular": "frm"
  - "Region": "rgn"
  - Beispiel: "Sprungmarke Navigation" wird geändert in "lmk nav"
+- Espeak-ng wurde auf Version 1.49.1 aktualisiert. (#7280).
 
 
 == Fehlerkorrekturen ==
@@ -37,6 +42,9 @@
 - Der Lesemodus von Microsoft Edge wird auch dann vollständig unterstützt, wenn das angezeigte Dokument die ARIA-Klasse "document" besitzt. (#6998)
 - Im Lesemodus können Sie selbst dann mit Umschalt+Ende den Rest der Zeile markieren, wenn sich der Cursor bereits auf dem letzten Zeichen befindet. (#7157)
 - Wenn ein Dialogfenster eine Fortschrittsanzeige enthält, wird bei Änderungen an der Fortschrittsanzeige auch der Text des Dialogfensters aktualisiert. Das bedeutet z. B., dass Sie das Fortschreiten der Zeit zum Herunterladen beim Aktualisieren von NVDA verfolgen können. (#6862)
+- Einige Kombinationsfelder in Windows 10 wie z.B. die Einstellungen für automatische Wiedergabe werden jetzt unterstützt. (#6337).
+- Beim Erstellen von Besprechungen und Terminen in Microsoft Outlook werden keine nutzlosen Informationen mehr angezeigt. (#7216)
+- Signaltöne für Fortschrittsbalken mit scheinbar unbegrenztem Wertebereich (wie z.B. der Fortschrittsbalken bei der Prüfung auf Aktualisierungen) werden nur noch abgespielt, wenn Sie in den Einstellungen für Objektdarstellungen die Signaltöne für Fortschrittsbalken aktiviert haben. (#6759)
 
 
 == Änderungen für Entwickler ==

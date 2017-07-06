@@ -506,6 +506,7 @@ Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zu
 - O: Eingebettetes Objekt
 - 1 bis 6: Überschrift erster bis sechster Ordnung
 - A: Anmerkung: Kommentar, Dokumentänderung
+- w: Rechtschreibfehler
 -
 Verwenden Sie folgende Tastenkombinationen, um zum Beginn bzw. zum Ende eines Containerobjekts (Listen Tabellen o.ä.) zu springen:
 || Name | Tastenkombination | Beschreibung |
@@ -606,7 +607,7 @@ Weitere Informationen zum Lesemodus und zur Schnellnavigation finden Sie im [Abs
 %kc:beginInclude
 Wenn Sie sich in Microsoft Word im Lesemodus befinden, können Sie mit der Tastenkombination NVDA+F7 auf die Elementliste zugreifen.
 %kc:endInclude
-Die Elementliste enthält Überschriften, Links und Anmerkungen (einschließlich nachverfolgbarer Änderungen)
+Die Elementliste enthält Überschriften, Links, Anmerkungen (einschließlich nachverfolgbarer Änderungen), und Rechtschreibfehler.
 
 +++ Ausgeben von Kommentaren +++
 %kc:beginInclude
@@ -1163,6 +1164,13 @@ Wenn sie ein Fenster, welches einen Fortschritsbalken enthält, minimieren oder 
 Tastenkombination: NVDA+5
 
 Schaltet die Ansage von neuen Inhalten in bestimmten Programmen wie Terminals und Chatprogramme ein bzw. aus.
+
+==== Klang bei automatischen Vorschlägen abspielen ====
+Wenn diese Option aktiviert ist, spielt nVDA einen Klang ab, wenn eine Vorschlagsliste erscheint bzw. ausgeblendet wird.
+Eine Vorschlagsliste wird angezeigt, sobald Sie Text in ein Eingabefeld eines Dokumentes eingeben.
+Ein Beispiel für ein solches Eingabefeld ist das Suchfeld im Startmenü in Windows Vista oder neuer.
+Weitere Beispiele für Eingabefelder mit Vorschlagslisten sind Suchfelder in diversen Windows-10-Anwendungen.
+Die Vorschlagsliste wird geschlossen, sobald Sie mit dem Fokus das Eingabefeld verlassen.
 
 +++ Einstellungen für Eingabemethoden +++
 Sie finden diesen Menüpunkt im Menü Einstellungen.
