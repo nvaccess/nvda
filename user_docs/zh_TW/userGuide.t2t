@@ -75,7 +75,7 @@ NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 您將被詢問是否要產生一個可攜式版，或繼續使用這個暫時性的版本。
 
 若您計劃固定在這台電腦上使用 NVDA，則應該選擇將其安裝。
- NVDA安裝版可提供額外功能，例如:登入後自動執行、可報讀Windows登入畫面及Windows安全畫面內容、建立開始功能表的項目及桌面捷徑。（這些功能在可攜式版及暫時版並沒有提供）
+NVDA安裝版可提供額外功能，例如:登入後自動執行、可報讀Windows登入畫面及Windows安全畫面內容、建立開始功能表的項目及桌面捷徑。（這些功能在可攜式版及暫時版並沒有提供）
 若需要，NVDA安裝版也可在任何時間建立可攜式版。
 
 若您要將NVDA存入於USB隨身碟或其它可寫入的儲存媒體內以便隨身攜帶，建議選擇可攜式版。
@@ -134,9 +134,13 @@ NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 ++ 啟動NVDA ++
 如果您已安裝了NVDA的安裝版，最簡單開啟的方式是利用按快速鍵 Ctrl+Alt+N，或從 「開始功能表」 中的 「程式集」 找到 NVDA 後再按 Enter。
 另一種啟動的方式是開啟 「開始功能表」 ，然後在 「執行」 的文字方塊中輸入 NVDA，接著再按 Enter即可。
-您也可以啟用「命令列」，在上面直接下指令，例如重新啟動 (-r)、關閉 (-q) 及停用附加元件等。
+您也可以啟用「命令列」，在上面直接下指令，例如重新啟動，輸入 (-r)、關閉，輸入 (-q)，以及停用附加元件 (--disable-addons)等。
 
-若使用可攜式版，則只要找到NVDA資料夾所存放的位置，將其開啟後，利用按英文字母 N，找到 NVDA.exe，再按 Enter即可啟動它。
+針對安裝版， NVDA 儲存設定檔於目前使用者的資料夾 (例如： "C:\Users\<user>\AppData\Roaming")。
+然而將此設定檔從原本的本機資料夾以某種方式改儲存在其它地方也是可以的。 
+更多資訊請參見 [system wide parameters #SystemWideParameters]。
+
+要使用可攜式版，則需找到NVDA資料夾所存放的位置，將其開啟後，利用按英文字母 N，找到 NVDA.exe，再按 Enter即可啟動它。
 
 當NVDA啟動時，您會聽到一串上揚的聲音，表示正在載入程式，稍等片刻，聽到「NVDA 載入中」，即表示NVDA 已啟動了。
 等待的時間長短與電腦本身的等級有關，愈高等級需等待時間就愈短，而若是使用啟動隨身碟或 CD 內的NVDA 程式，則需要等待較長時間。
@@ -147,8 +151,9 @@ NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 
 當首次啟動 NVDA會跳出一個歡迎的對話框，其內包含了 NVDA的基本資訊及如何將鍵盤按鍵設定等，
 （請參見以下章節以進一步了解其操作方式。）
-在此對話框還包括三個核取方塊。
-第一個是「將 Caps Lock 鍵設為NVDA鍵」，
+對話框也包含一個下拉方塊及三個核取方塊。
+下拉方塊可以讓你選擇鍵盤配置。
+第一個是設定capslock為NVDA鍵。
 第二個是「NVDA會自動啟動當您登入Windows後並且使用NVDA安裝版」，
 第三個是「每當NVDA啟動時顯示此對話框」。
 
@@ -544,7 +549,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 該軟體可以從以下的網址免費下載： http://www.dessci.com/en/products/mathplayer/
 
 NVDA 支援以下數學格式的內容：
-- Mozilla Firefox 及微軟 IE 上的數學標記語言。
+- Mozilla Firefox 、微軟 IE 及 Google Chrome 上的數學標記語言。
 - 以 Design Science MathType 在微軟 Word 及 PowerPoint 上編輯的數學公式，要先安裝 MathType  公式編輯器方可生效，只需安裝試用版即可。 
 - Adobe Reader 的數學標記語言（此種標記語言還沒有成為正式的標準格式，因為目前還沒有可供大眾使用的應用程式可以製作其數學內容。）
 -
@@ -959,15 +964,18 @@ NVDA目前只支援電腦點字輸入，所以在此下拉選單只呈現那些�
 如果關閉閃爍，點字游標會持續處在「浮點」的狀態。
 
 ==== 游標閃示率 (毫秒) ====
-此為一個可編輯的數字方塊，設定點字游標閃示的時間長短，以毫秒為單位。
+此為一個可編輯的數字方塊，用以設定點字游標閃示的時間長短，以毫秒為單位。
   
 ==== 游標型態 ====
 此下拉式選單提供點字游標型態的選擇功能。
 指示器的選擇。並不受此項控制功能的影響。
 
-==== 訊息顯示的時間() ====
-此為一個可編輯的數字方塊，可設定NVDA訊息在點字顯示器上呈現的時間長短，
+==== 訊息顯示的時間(以秒計 ====
+此為一個可編輯的數字方塊，可設定NVDA訊息在點字顯示器上顯示的時間長短，
 以秒為單位。
+
+==== 不限期顯示訊息 ====
+此選項允許點字顯示器可不限期的顯示 NVDA 訊息。
 
 %kc:setting
 ==== 點字游標跟隨 ====[BrailleTether]
@@ -1586,11 +1594,22 @@ SAPI 5 是微軟語音合成軟體的標準版本。
 - Microsoft Speech Platform - Server Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Server Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
  - 此頁面包含了許多用來產生語音辨識功能及文字轉語音(text-to-speech,TTS)的檔案。
- 請依照需要的語言或語音，選擇對應的TTS檔案。
+ 請依照所需的語言或語音，選擇對應的TTS檔案。
  例如，MSSpeech_TTS_en-US_ZiraPro.msi，這個檔案是一個美式英文的語音引擎。
  -
 -
- 
+
+++ 微軟 OneCore 語音 ++
+Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語音。
+該語音提供了多種語系，且與微軟SAPI 5合成軟體對接的語音相比，較之來的反應更快速。
+
+要安裝額外語系的語音，請參照微軟此篇文章之內容： https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+值得注意的是， Narrator 所能提供之較快的語速，目前 NVDA 上無法實現。 
+而您在 Windows 上選擇的語速設定會影響在NVDA上的語速設定。
+除非在 Windows 上做改變，我們尚無法解決此問題。
+我們期待未來 Windows 的更新版能對此能有所解決。
+
 ++ Audiologic Tts3 ++
 這是一個專供義大利語的商務用語音合成軟體。
 您必須要先安裝它，才可以在 NVDA 上使用。
@@ -2226,8 +2245,8 @@ NVDA支援EcoBraille點字顯示器，請參閱[ONCE http://www.once.es/].
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
-+ 點字控制型態與狀態之縮寫 +
-為了盡可能可以在點顯器上顯示更多的資訊，以下定義了不同的控制型態與狀態的縮寫字。
++ 點字控制型態與狀態之地標縮寫 +
+為了盡可能可以在點顯器上顯示更多的資訊，以下定義了不同的控制型態、狀態與地標的縮寫字。
 
 || 縮寫 | 控制型態 |
 | btn | 按鈕 |
@@ -2240,8 +2259,9 @@ NVDA支援EcoBraille點字顯示器，請參閱[ONCE http://www.once.es/].
 | rN | 表格列數，例如：第1列、第2列。 |
 | hN | 標題層級數，例如：標題第一級、標題第二級。 |
 | lnk | 連結 |
-| lst | 清單 |
 | vlnk | 造訪過的連結 |
+| lst | 清單 |
+| lmk | 地標 |
 | mnu | 功能表 |
 | mnubar | 功能表列 |
 | rbtn | 單選鈕 |
@@ -2262,6 +2282,17 @@ NVDA支援EcoBraille點字顯示器，請參閱[ONCE http://www.once.es/].
 | ro | 表示物件唯讀，例如：（編輯區的文字）僅能唯讀 |
 | sel | 表示物件已選取 |
 | submnu | 表示物件有子功能表 |
+
+最後，下面是依些地標的縮寫。Finally, the following abbreviations for landmarks are defined:
+|| 縮寫 | 地標 |
+| bnnr | 橫幅區 |
+| cinf | 資訊區 |
+| cmpl | 補充區 |
+| form | 表單區 |
+| main | 主要內容區 |
+| navi | 導航區 |
+| srch | 搜尋區 |
+| rgn | 區域 |
 
 + 進階主題 +
 
@@ -2305,6 +2336,18 @@ nvda -q
 | None | --no-sr-flag  | 不要改變預設螢幕報讀軟體的標記符號
 | None | --install | 安裝 NVDA（開始安裝一個新的版本） |
 | None | --install-silent | 靜音安裝 NVDA （並非安裝一個 NVDA 新的版本） |
+
+++ 系統性參數 ++[SystemWideParameters]
+NVDA 允許設定一些在系統登錄檔的值，這些會全區域改變 NVDA 在系統上的行為。 
+這些值是存放在以下其中一個登錄檔內：
+- 32-位元 系統: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-位元 系統: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+以下的值可以在登錄檔中設定：
+|| 名稱 | 類別 | 可能值 | 說明 |
+| configInLocalAppData | DWORD | 0（預設）停用，1啟用 | 若設為「啟用」，將儲存NVDA使用者的設定檔於使用者所在的資料夾內，而非roaming 的資料夾內。 |
+| serviceDebug | DWORD | 0（預設）：停用，1：啟用 | 若啟用，會停用了 Windows 的安全桌面模式，則允許使用 Python 主控台及事件紀錄檢視器。由於可能會牽動到許多與主要安全相關的參數，強烈建議不使用此選項。 |
 
 + 額外資訊 +
 假如您需要NVDA進一步的資訊或協助，請瀏覽 NVDA 的網站 NVDA_URL，

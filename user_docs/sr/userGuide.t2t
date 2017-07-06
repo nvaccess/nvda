@@ -506,6 +506,7 @@ Sledeći tasteri skaču na sledeći dostupan element, dok dodavanje šift taster
 - o: Umetnuti objekat
 - 1 do 6: Naslovi nivoa 1 do 6
 - a: Napomena (komentar, revizija autora, i tako dalje.)
+- w: Greška u pravopisu
 -
 Da se pomerate na početak i kraj elemenata kao što su liste i tabele:
 || Ime | Komanda | Opis |
@@ -605,8 +606,8 @@ Za dodatne informacije o režimu pretraživanja i brzoj navigaciji, pogledajte[d
 ++++ Lista elemenata++++
 %kc:beginInclude
 Dok ste u režimu pretraživanja u programu Microsoft Word, možete pristupiti listi elemenata komandom NVDA+f7.
+Lista elemenata može prikazati naslove, linkove, napomene (što uključuje komentare i praćenje izmena) i greške(trenutno ograničeno na greške u pravopisu).
 %kc:endInclude
-Lista elemenata može prikazati zaglavlja, linkove i napomene(koje uključuju komentare i praćenje izmena).
 
 +++ Prijavljivanje komentara+++
 %kc:beginInclude
@@ -1163,6 +1164,13 @@ Ako umanjite ili izađete iz prozora koji sadrži traku napredovanja, NVDA će n
 Komanda: NVDA+5
 
 Uključuje i isključuje izgovor novog sadržaja a posebno objekata kao što su terminali i istorije ćaskanja.
+==== Reprodukuj zvuk kada se pojave automatski predlozi====
+Uključuje i isključuje prijavu pojave automatskih predloga, i ako je omogućeno, NVDA će reprodukovati zvuk.
+Automatski predlozi su lista predloga na osnovu teksta koji je upisan u određenim poljima pretrage ili dokumentima.
+Na primer, kada upišete tekst u start meni Windowsa Vista ili novijeg, Windows prikazuje listu predloga na osnovu upisanog teksta.
+Za određena polja pretrage u Windowsu 10, NVDA vas može obavestiti da se lista predloga pojavila kada upišete tekst u polje.
+Lista automatskih predloga će se zatvoriti kada izađete iz polja za unos, i za neka polja, NVDA vas može obavestiti o tome.
+
 
 +++ Podešavanja ulaznog sastava +++
 Podešavanja ulaznog sastava se nalaze u meniju podešavanja.

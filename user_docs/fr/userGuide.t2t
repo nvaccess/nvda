@@ -506,6 +506,7 @@ Les touches suivantes permettent d'aller à l'élément suivant. En les combinan
 - o : objet embarqué
 - 1 ... 6 : Titres 1 ... 6.
 - a: annotation (commentaire, révisionde l'éditeur, etc.)
+- w: fautes d'orthographe
 -
 Pour se déplacer au début ou à la fin des éléments contenants comme les listes et tableaux :
 || Nom | Touche | Description |
@@ -606,7 +607,7 @@ Pour plus d'information sur le mode navigation et la navigation rapide, consulte
 %kc:beginInclude
 Quand vous êtes en mode navigation sous Microsoft Word, vous pouvez accéder à la liste d'éléments en pressant NVDA+f7.
 %kc:endInclude
-La liste d'éléments peut lister les titres, les liens et annotations (ce qui inclut les commentaires et les demandes de changement).
+La liste d'éléments peut lister les titres, les liens, annotations (incluant inclut les commentaires et les demandes de changement) et les erreurs (actuellement limité aux fautes d'orthographe).
 
 +++ Annonce desCommentaires +++
 %kc:beginInclude
@@ -1163,6 +1164,13 @@ Si vous minimisez ou quittez une fenêtre qui contient une barre de progression,
 Raccourci clavier : NVDA+5
 
 Active ou désactive l'annonce d'un nouveau contenu en particulier dans les applications telles que les terminaux ou l'historique des programmes de tchat.
+
+==== Jouer un son quand une auto-suggestion apparaît ====
+Active/désactive l'annonce de l'apparition des auto-suggestions, si activé, NVDA jouera un son pour l'indiquer.
+Les auto-suggestions sont des listes de saisies suggérées basées sur le texte entré dans certains champs de saisie et documents.
+Par exemple, quand vous entrez du texte dans la boîte de recherche du menu démarrer de Windows Vista et au-delà, Windows affiche une liste de suggestions basée sur ce que vous avez entré.
+Pour certains champs d'édition comme le champ de recherche dans diverses applications Windows 10, NVDA peut vous signaler qu'une liste de suggestions est apparue quand vous tapez du texte.
+La liste de suggestions se ferme quand vous quittez le champ d'édition, et pour certains champs, NVDA peut vous en avertir quand ça arrive.
 
 +++ Paramètres de saisie +++
 Le dialogue "Paramètres de saisie" se trouve dans le menu "Préférences".
@@ -2283,11 +2291,11 @@ Les indicateurs d'état suivants sont également définis :
  
 Enfin, les abbréviations de repères suivantes sont définies :
 || Abbréviation | Repère |
-| bnnr | bannière |
+| bnr | bannière |
 | cinf | information sur le contenu |
-| cmpl | complémentaire |
+| cmp | complémentaire |
 | form | formulaire |
-| prnc | principale |
+| prc | principale |
 | nav | navigation |
 | rch | recherche |
 | rgn | région |

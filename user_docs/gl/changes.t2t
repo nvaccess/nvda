@@ -13,6 +13,10 @@ Que hai de Novo no NVDA
 - NVDA agora pode falar usando as novas voces Windows OneCore (tamén coñecidas coma voces mobile) incluidas no Windows 10. Accede a elas selecionando Voces Windows OneCore no diálogo Sintetizadores de NVDA. (#6159)
 - Os ficheiros de configuración do usuario do NVDA agora poden almacenarse no cartafol local de datos de aplicacións do usuario. Esto habilítase a través dunha opción no rexistro. Consulta 'Parámetros do Sistema' na guía do usuario para máis detalles. (#6812)
 - Nos navegadores web, NVDA agora anuncia valores de marcador de posición para campos (específicamente, agora sopórtase aria-placeholder). (#7004)
+- No modo exploración de Microsoft Word, agora é posible navegar polos erros de ortografía usando navegación rápida (w e shift+w) (#6942)
+- Engadido o soporte para o control Selector de Data que se atopa nos cadros de diálogo Citas de Microsoft Outlook. (#7217)
+- Agora anúnciase a suxerencia actualmente selecionada nos campos de Windows 10 Mail para/cc e no campo Opcións de búsqueda de Windows 10. (#6241)
+- Agora reprodúcese un son para indicar a aparición de suxerencias en certos campos de procura do Windows 10 (Ex.: pantalla de inicio, opcións de procura, campos de Windows 10 mail para/CC). (#6241)
 
 
 == Cambios ==
@@ -29,6 +33,7 @@ Que hai de Novo no NVDA
  - "form": "frm"
  - "rexión": "rgn"
  - Exemplo: "ponto de referencia de navegación" sería "pdr nav"
+- Espeak-ng actualizouse á versión 1.49.1 (#7280).
 
 
 == Corrección de Erros ==
@@ -37,6 +42,9 @@ Que hai de Novo no NVDA
 - O modo exploración agora sopórtase correctamente no Microsoft Edge cando a un documento se lle dera un rol ARIA específico de documento. (#6998)
 - En modo exploración, agora podes selecionar ou deselecionar ata o remate da liña usando shift+fin incluso cando o cursor estea sobre o derradeiro carácter da liña. (#7157)
 - Se un diálogo contén unha barra de progreso, o texto do diálogo agora actualízase cando a barra de progreso cambie. Esto siñifica, por exemplo, que o tempo restante agora pode lerse no diálogo do NVDA "Descargando Actualizacións". (#6862)
+- NVDA agora anunciará cambios de seleción para certas caixas combinadas de Windows 10 tales como AutoReproducción en Opcións. (#6337).
+- Xa non se anuncia información inxustificada ao entrar en diálogos de reunións / citas no Microsoft Outlook. (#7216)
+- Pitidos indeterminados para barras de progreso de diálogo coma o actualizador só cando a saída da barra de progreso se configure para incluir pitidos. (#6759)
 
 
 == Cambios para Desenvolvedores ==

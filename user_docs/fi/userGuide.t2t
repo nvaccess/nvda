@@ -506,6 +506,7 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Shift-näppäimen kanssa p
 - o: upotettu objekti
 - numerot 1 - 6: otsikot tasoilla 1 - 6
 - a: selite (kommentti, muokkaajan muutokset jne)
+- w: kirjoitusvirhe
 -
 Säilöelementtien, kuten luetteloiden ja taulukoiden alkuun tai loppuun siirtymiseen:
 || Nimi | Näppäinkomento | Kuvaus |
@@ -606,7 +607,7 @@ Katso lisätietoja selaustilasta ja pikanavigoinnista [Selaustila-kappaleesta. #
 %kc:beginInclude
 Elementtiluettelo avataan Microsoft Wordissa selaustilassa oltaessa painamalla NVDA+F7.
 %kc:endInclude
-Elementtiluettelo voi näyttää otsikot, linkit sekä selitteet (joita ovat kommentit ja jäljitettävät muutokset).
+Elementtiluettelo voi näyttää otsikot, linkit ja selitteet (joita ovat kommentit ja jäljitettävät muutokset) sekä virheet (toistaiseksi vain kirjoitusvirheet).
 
 +++ Kommenttien lukeminen +++
 %kc:beginInclude
@@ -1163,6 +1164,13 @@ Jos edistymispalkin sisältävä ikkuna pienennetään tai siirrytään pois sel
 Pikanäppäin: NVDA+5
 
 Ottaa käyttöön tai poistaa käytöstä uuden sisällön lukemisen tietyissä objekteissa, kuten pääteohjelmissa ja keskusteluohjelmien historiasäätimissä.
+
+==== Toista ääni automaattisten ehdotusten tullessa näkyviin ====
+Ottaa käyttöön tai poistaa käytöstä automaattisten ehdotusten ilmoittamisen niiden tullessa näkyviin, ja mikäli  asetus on käytössä, NVDA toistaa äänen, joka ilmaisee tämän.
+Automaattiset ehdotukset ovat luetteloita ehdotetuista kohteista, jotka perustuvat tiettyihin hakukenttiin ja asiakirjoihin syötettyyn tekstiin.
+Kun esim. kirjoitat Windows Vistan ja uudemman Käynnistä-valikon hakukenttään, Windows näyttää luettelon kirjoittamaasi tekstiin perustuvista ehdotuksista.
+Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoittaessasi ehdotusluettelon ilmestymisestä.
+Automaattisten ehdotusten luettelo sulkeutuu siirryttyäsi pois muokkauskentästä, ja NVDA voi joissakin kentissä ilmoittaa siitä.
 
 +++ Syöttömenetelmän asetukset +++
 Syöttömenetelmän asetukset -valintaikkuna löytyy Asetukset-valikosta.
