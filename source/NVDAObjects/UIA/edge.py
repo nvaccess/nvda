@@ -1,4 +1,4 @@
-#A part of NonVisual Desktop Access (NVDA)
+#NVDAObjects/UIA/edge.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -131,10 +131,7 @@ class EdgeTextInfo(UIATextInfo):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
 		# report landmarks
-		ariaRole=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
-		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
-		if landmark and (ariaRole!='region' or field.get('name')):
-			field['landmark']=ariaRole
+		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
@@ -427,6 +424,8 @@ class EdgeNode(UIA):
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		# #7333: It is valid to provide multiple, space separated roles
+		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
@@ -490,6 +489,16 @@ class EdgeNode(UIA):
 		if text == "\n":
 			return True
 		return False
+
+	def _get_landmark(self):
+		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
+		# #7333: It is valid to provide multiple, space separated aria roles in HTML
+		# If multiple roles or even multiple landmark roles are provided, the first one is used
+		for ariaRole in ariaRoles.split():
+			if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
+				return ariaRole
+		return None
 
 class EdgeList(EdgeNode):
 

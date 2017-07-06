@@ -42,9 +42,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def label(self):
 		if self.itemType=="landmark":
 			obj=self.obj
-			name=obj.name
-			landmarkType=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
-			return " ".join(x for x in (name,aria.landmarkRoles.get(landmarkType)) if x)
+			return " ".join(x for x in (obj.name,aria.landmarkRoles.get(obj.landmark)) if x)
 		return super(UIATextRangeQuickNavItem,self).label
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
