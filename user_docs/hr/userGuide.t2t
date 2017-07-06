@@ -136,6 +136,10 @@ Ako ste instalirali NVDA pomoću instalacijskog programa, tada je pokretanje NVD
 Dodatno, možete upisati "nvda", u dijaloški okvir pokreni i pritisnuti enter da biste pokrenuli NVDA.
 Možete također dodati nekoliko [opcija naredbenog retka #CommandLineOptions] koje vam omogućuju ponovno pokretanje NVDA (-r), izlaz (-q), onemogućavanje dodataka (--disable-addons) itd.
 
+U instaliranim kopijama, NVDA posprema konfiguraciju u roaming application data mapu trenutnog korisnika podrazumijevano (npr. "C:\Users\<user>\AppData\Roaming").
+To je moguće promijeniti, tako da NVDA učitava svoje postavke iz mape local application data.
+Za više detalja, pročitajte poglavlje o [cjelosustavnim parametrima #SystemWideParameters].
+
 Da biste pokrenuli prijenosnu inačicu, uđite u mapu u kojoj ste raspakirali NVDA i pritisnite enter ili dva puta kliknite na datoteku nvda.exe.
 
 Kad se NVDA pokreće, prvo ćete čuti seriju uzlaznih tonova (koji vam govore da se NVDA učitava).
@@ -502,6 +506,7 @@ Sljedeće tipke služe da bi se prešlo na idući dostupni element, dodavanjem s
 - o: ugrađeni objekt
 - 1 do 6: naslovi od 1 do 6
 - a: zabilješka (komentar, revizija urednika, itd.)
+- w: pravopisna pogreška
 -
 Da biste se prebacivali na početak ili kraj sadržaja popisa kao što su popisi ili tablice:
 || Naziv | Prečac | opis |
@@ -602,7 +607,7 @@ Za više informacija o načinu pregleda i brzoj navigaciji, pročitajte [odjelja
 %kc:beginInclude
 Kada se nalazite u načinu pregleda u Microsoft wordu, listi elemenata možete pristupiti pritiskom  NVDA+f7.
 %kc:endInclude
-Popis elemenata može izlistavati naslove, linkove i anotacije (koje uključuju komentare i tragove izmjena).
+Popis elemenata može izlistavati naslove, linkove i anotacije, (koje uključuju komentare i tragove izmjena, te pogreške), trenutno ograničeno na pravopisne pogreške.
 
 +++ Izgovor komentara +++
 %kc:beginInclude
@@ -2330,6 +2335,18 @@ Sljede opcije naredbenog retka za NVDA:
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
 | Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+
+++ Cijelosustavni parametri++[SystemWideParameters]
+NVDA omogućava izmjenu nekih postavki u registru, koje mijenjaju cijelosistemsko ponašanje NVDA.
+Te su vrijednosti pospremljene u registru pod sljedećim ključevima:
+- 32-bitni sustav: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bitni sustav: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Sljedeće vrijednosti mogu biti postavljene pod ovim ključem:
+|| Naziv | Vrijednost | moguće vrijednosti | Opis |
+| configInLocalAppData | DWORD | 0 (podrazumijevano) za onemogućavanje, 1 za omogućavanje | Ako je omogućeno, posprema konfiguraciju u mapu local application data umjesto u mapu roaming application data |
+| serviceDebug | DWORD | 0 (podrazumijevano) za onemogućavanje, 1 za omogućavanje | ako je omogućeno, onemogućuje sigurni način na sigurnoj radnoj površini, što omogućava korisniku korištenje Python konzole i preglednika zapisnika. zbog velikih sigurnosnih implikacija, korištenje ove opcije se ne preporučuje |
 
 + Dodatne Informacije +
 Ako trebate više informacija ili pomoč za NVDA, molimo posjetite NVDA web stranicu na adresi NVDA_URL.
