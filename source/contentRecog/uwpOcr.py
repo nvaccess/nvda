@@ -12,6 +12,7 @@ import json
 import NVDAHelper
 from . import ContentRecognizer, LinesWordsResult
 import config
+import languageHandler
 
 uwpOcr_Callback = ctypes.CFUNCTYPE(None, ctypes.c_wchar_p)
 
@@ -27,6 +28,45 @@ def getLanguages():
 	langs = dll.uwpOcr_getLanguages()
 	return langs.split(";")[:-1]
 
+def getInitialLanguage():
+	"""Get the language to use the first time UWP OCR is used.
+	The NVDA interface language is used if a matching OCR language is available.
+	Otherwise, this falls back to the first available language.
+	"""
+	nvdaLang = languageHandler.getLanguage()
+	ocrLangs = getLanguages()
+	return _getInitialLanguage(nvdaLang, ocrLangs)
+
+def _getInitialLanguage(nvdaLang, ocrLangs):
+	# Try the full language code.
+	for lang in ocrLangs:
+		normLang = languageHandler.normalizeLanguage(lang)
+		if nvdaLang == normLang:
+			return lang
+	# Try the language code without country.
+	nvdaLangPrimary = nvdaLang.split("_", 1)[0]
+	for lang in ocrLangs:
+		# Don't need to normalize here because the primary code is
+		# the same when normalized.
+		if lang.startswith(nvdaLangPrimary):
+			return lang
+	# Fall back to the first OCR language.
+	if len(ocrLangs) >= 1:
+		return ocrLangs[0]
+	raise LookupError("No UWP OCR languages installed")
+
+def getConfigLanguage():
+	"""Get the user's configured OCR language.
+	If no language has been configured, choose an initial language
+	and update the configuration.
+	"""
+	lang = config.conf["uwpOcr"]["language"]
+	if lang:
+		return lang
+	initial = getInitialLanguage()
+	config.conf["uwpOcr"]["language"] = initial
+	return initial
+
 class UwpOcr(ContentRecognizer):
 
 	def getResizeFactor(self, width, height):
@@ -38,12 +78,12 @@ class UwpOcr(ContentRecognizer):
 	def __init__(self, language=None):
 		"""
 		@param language: The language code of the desired recognition language,
-			C{None} to use the user's configured default.
+			C{None} to use the user's configured language.
 		"""
 		if language:
 			self.language = language
 		else:
-			self.language = config.conf["uwpOcr"]["language"]
+			self.language = getConfigLanguage()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 
 	def recognize(self, pixels, width, height, coordConv, onResult):
