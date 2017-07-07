@@ -100,6 +100,9 @@ addTable("cy-cy-g2.ctb", _("Welsh grade 2"), contracted=True)
 addTable("cz-cz-g1.utb", _("Czech grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("da-dk-g08.ctb", _("Danish 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("da-dk-g16.ctb", _("Danish 6 dot grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -146,6 +149,9 @@ addTable("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("en-us-comp8.ctb", _("English (U.S.) 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("en-us-comp8-ext.utb", _("English (U.S.) 8 dot extended computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("en-us-g1.ctb", _("English (U.S.) grade 1"))
@@ -241,6 +247,9 @@ addTable("ko-g2.ctb", _("Korean grade 2"), contracted=True)
 addTable("ks-in-g1.utb", _("Kashmiri grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("lt.ctb", _("Lithuanian"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("Lv-Lv-g1.utb", _("Latvian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -316,7 +325,10 @@ addTable("Se-Se-g1.utb", _("Swedish grade 1"))
 addTable("sk-g1.ctb", _("Slovak grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("sl-si-g1.utb", _("Slovene grade 1"))
+addTable("sl-si-comp8.ctb", _("Slovenian 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("sl-si-g1.utb", _("Slovenian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("sr-g1.ctb", _("Serbian grade 1"))
