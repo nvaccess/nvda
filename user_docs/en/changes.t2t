@@ -19,6 +19,8 @@
 - A sound is now playd to indicate the  appearance of suggestions in certain search fields in Windows 10 (E.g. start screen, settings search, Windows 10 mail to/cc fields). (#6241)
 - Automatically report notifications in Skype for Business Desktop, such as when someone starts a conversation with you.  (#7281)
 - Automatically report notifications in Microsoft Edge, such as when a download starts.  (#7281)
+- You can now type in both contracted and uncontracted braille on a braille display with a braille keyboard. See the Braille Input section of the User Guide for details. (#2439)
+- You can now enter Unicode braille characters from the braille keyboard on a braille display by selecting Unicode braille as the input table in Braille Settings. (#6449)
 
 
 == Changes ==
@@ -36,6 +38,8 @@
  - "region": "rgn"
  - Example: "navigation landmark" becomes "lmk nav"
 - Espeak-ng has been updated to release 1.49.1 (#7280).
+- The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
+- Updated liblouis braille translator to 3.2.0. (#6935)
 
 
 == Bug Fixes ==
@@ -49,6 +53,7 @@
 - Beeps for indeterminate progress bar dialogs such as the update checker only when progress bar output is configured to include beeps. (#6759)
 - In Microsoft Excel 2007 and 2003, cells are again reported when arrowing around a worksheet. (#8243)
 - In Windows 10 Creators update and later, ensure that browse mode is automatically enabled when reading emails in Windows 10 Mail. (#7289)
+- On most braille displays with a braille keyboard, dot 7 now erases the last entered braille cell or character, and dot 8 presses the enter key. (#6054)
 
 
 == Changes for Developers ==
