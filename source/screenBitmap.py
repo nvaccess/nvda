@@ -1,3 +1,12 @@
+#screenBitmap.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2011-2017 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
+"""Functionality to capture and work with bitmaps of the screen.
+"""
+
 import ctypes
 import winGDI
 
