@@ -48,7 +48,7 @@ class NoInputGestureAction(LookupError):
 class InputGesture(baseObject.AutoPropertyObject):
 	"""A single gesture of input from the user.
 	For example, this could be a key press on a keyboard or Braille display or a click of the mouse.
-	At the very least, subclasses must implement L{_get_identifiers} and L{_get_displayName}.
+	At the very least, subclasses must implement L{_get_identifiers}.
 	"""
 	cachePropertiesByDefault = True
 
@@ -88,7 +88,8 @@ class InputGesture(baseObject.AutoPropertyObject):
 
 	def _get_normalizedIdentifiers(self):
 		"""The normalized identifier(s) for this gesture.
-		This just normalizes the identifiers returned in L{identifiers}.
+		This just normalizes the identifiers returned in L{identifiers}
+		by calling L{normalizeGestureIdentifier} for each identifier.
 		These normalized identifiers can be directly looked up in input gesture maps.
 		Subclasses should not override this method.
 		@return: One or more normalized identifiers which uniquely identify this gesture.
@@ -160,7 +161,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
 		"""Get the text to be presented to the user describing a given gesture identifier.
-		This should only be called for gesture identifiers associated with this class.
+		This should only be called with normalized gesture identifiers returned by the
+		L{normalizedIdentifiers} property in the same subclass.
+		For example, C{KeyboardInputGesture.getDisplayTextForIdentifier} should only be called
+		for "kb:*" identifiers returned by C{KeyboardInputGesture.identifiers}.
 		Most callers will want L{inputCore.getDisplayTextForIdentifier} instead.
 		The display text consists of two strings:
 		the gesture's source (e.g. "laptop keyboard")
@@ -701,6 +705,8 @@ def normalizeGestureIdentifier(identifier):
 	First, the entire identifier is converted to lower case.
 	Then, any items separated by a + sign after the source prefix are considered to be of indeterminate order
 	and are sorted by character.
+	This is done because, for example, "kb:shift+alt+downArrow"
+	must be treated the same as "kb:alt+shift+downarrow".
 	"""
 	identifier = identifier.lower()
 	prefix, main = identifier.split(":", 1)

@@ -42,10 +42,11 @@ NVDA is bundled with [eSpeak NG https://github.com/espeak-ng/espeak-ng], a free,
 Information about other speech synthesizers that NVDA supports can be found in the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
 
 ++ Braille support ++
-For users that own a refreshable braille display, NVDA can output its information in Braille.
+For users that own a refreshable braille display, NVDA can output its information in braille.
+Both uncontracted and contracted braille input via a braille keyboard is also supported.
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
 
-NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes for many languages.
+NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes.
 
 ++ Licence and Copyright ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
@@ -578,6 +579,77 @@ Please see the MathPlayer documentation for further information.
 
 When you wish to return to the document, simply press the escape key.
 
++ Braille +
+If you own a braille display, NVDA can display information in braille.
+If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
+
+Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
+You can configure braille using the [Braille Settings dialog #BrailleSettings].
+
+++ Control Type, State and Landmark abbreviations ++
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
+
+|| Abbreviation | Control type |
+| btn | button |
+| cbo | combo box |
+| chk | checkbox |
+| dlg | dialog |
+| edt | editable text field |
+| gra | graphic |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| hN | heading at level n, e.g. h1, h2. |
+| lnk | link |
+| vlnk | visited link |
+| lst | list |
+| lmk | landmark |
+| mnu | menu |
+| mnubar | menu bar |
+| rbtn | radio button |
+| tb | table |
+| tv | treeview |
+| lv N | a tree view item has a hierarchical level N|
+| ``-----`` | seperator |
+
+The following state indicators are also defined:
+|| Abbreviation | Control state |
+| ... | displayed when an object supports autocompletion |
+| ( ) | displayed when an object (e.g. a checkbox) is not checked |
+| (x) | displayed when an object (e.g. a checkbox) is checked |
+| (-) | displayed when an object (e.g. a checkbox) is half checked |
+| - | displayed when an object (e.g. a tree view item) is collapsible |
+| + | displayed when an object (e.g. a tree view item) is Expandable |
+| clk | displayed when an object is clickable |
+| ro | displayed when an object (e.g. an editable text field) is read-only |
+| sel | displayed when an object is selected |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
+
+++ Braille Input ++
+NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
+You can select the translation table used to translate braille into text using the [Input table #BrailleInputTable] setting in the Braille Settings dialog.
+
+When uncontracted braille is being used, text is inserted as soon as it is entered.
+When using contracted braille, text is inserted when you press space or enter at the end of a word.
+Note that translation can only reflect the braille word you are typing and cannot consider existing text.
+For example, if you are using a braille code that begins numbers with a number sign and you press backspace to move to the end of a number, you will need to type the number sign again to enter additional numbers.
+
+%kc:beginInclude
+Pressing dot 7 erases the last entered braille cell or character.
+Dot 8 translates any braille input and presses the enter key.
+Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
+%kc:endInclude
+
 + Application Specific Features +
 NVDA provides its own extra features  for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
@@ -912,7 +984,7 @@ If you wish to quickly change speech settings without going to the Voice setting
 | Decrement current synth setting | NVDA+control+downArrow | NVDA+shift+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
 %kc:endInclude
 
-+++ Braille Settings +++
++++ Braille Settings +++[BrailleSettings]
 The braille settings dialog box can be invoked by going to the preferences menu and then to the braille settings option.
 
 ==== Braille Display ====
@@ -942,10 +1014,9 @@ In this combo box, you will find braille tables for different languages, braille
 The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
 
-==== Input Table ====
+==== Input Table ====[BrailleInputTable]
 Complementary to the previous option, the next setting you will find is the braille input table combo box.
 The chosen table will be used to translate braille entered on your braille display's Perkins-style keyboard into text.
-NVDA currently only supports computer braille input, so only 8 dot computer braille tables will be shown.
 You can move from braille table to braille table in the list by using the arrow keys.
 
 Note that this option is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
@@ -1661,8 +1732,6 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move back using right wiz wheel action | rightWizWheelUp |
 | Move forward using right wiz wheel action | rightWizWheelDown |
 | Route to braille cell | routing |
-| backspace key | dot7 |
-| enter key | dot8 |
 | shift+tab key | brailleSpaceBar+dot1+dot2 |
 | tab key | brailleSpaceBar+dot4+dot5 |
 | upArrow key | brailleSpaceBar+dot1 |
@@ -1904,8 +1973,6 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | dot1+dot3+dot4+Space |
 | escape key | dot1+dot5+Space |
 | tab key | dot4+dot5+Space |
-| enter key | dot8 |
-| backspace key | dot7 |
 | upArrow key | dot1+Space |
 | downArrow key | dot4+Space |
 | capsLock | dot1+dot3+dot6+space |
@@ -2052,8 +2119,6 @@ The inner keys are both mapped to space.
 
 || Name | Key |
 %kc:beginInclude
-| backspace key | dot 7 |
-| enter key | dot 8 |
 | escape key | space with dot 7 |
 | upArrow key | space with dot 2 |
 | leftArrow key | space with dot 1 |
@@ -2187,8 +2252,8 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Control+home keys | space+dot1+dot2+dot3 |
 | Control+end keys | space+dot4+dot5+dot6 |
 | Space key | space |
-| Enter key | space+dot8 |
-| Backspace key | space+dot7 |
+| Enter | space+dot8 |
+| Backspace | space+dot7 |
 | Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
 | Shift+tab keys | space+dot1+dot2+dot5+dot6 |
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
@@ -2250,55 +2315,6 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
-
-+ Braille control type, state and landmark abbreviations +
-In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
-
-|| Abbreviation | Control type |
-| btn | button |
-| cbo | combo box |
-| chk | checkbox |
-| dlg | dialog |
-| edt | editable text field |
-| gra | graphic |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
-| hN | heading at level n, e.g. h1, h2. |
-| lnk | link |
-| vlnk | visited link |
-| lst | list |
-| lmk | landmark |
-| mnu | menu |
-| mnubar | menu bar |
-| rbtn | radio button |
-| tb | table |
-| tv | treeview |
-| lv N | a tree view item has a hierarchical level N|
-| ``-----`` | seperator |
-
-The following state indicators are also defined:
-|| Abbreviation | Control state |
-| ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a checkbox) is not checked |
-| (x) | displayed when an object (e.g. a checkbox) is checked |
-| (-) | displayed when an object (e.g. a checkbox) is half checked |
-| - | displayed when an object (e.g. a tree view item) is collapsible |
-| + | displayed when an object (e.g. a tree view item) is Expandable |
-| clk | displayed when an object is clickable |
-| ro | displayed when an object (e.g. an editable text field) is read-only |
-| sel | displayed when an object is selected |
-| submnu | displayed when an object has a popup (usually a sub-menu) |
-
-Finally, the following abbreviations for landmarks are defined:
-|| Abbreviation | Landmark |
-| bnnr | banner |
-| cinf | content info |
-| cmpl | complementary |
-| form | form |
-| main | main |
-| navi | navigation |
-| srch | search |
-| rgn | region |
 
 + Advanced Topics +
 
