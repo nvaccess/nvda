@@ -498,8 +498,6 @@ connection could not be established"""
 
 			"title": ("br(papenmeier):l1,up",),
 			"reportStatusLine": ("br(papenmeier):l2,dn",),
-			"kb:enter": ("br(papenmeier):d8",),
-			"kb:backspace": ("br(papenmeier):d7",),
 			"kb:alt": ("br(papenmeier):lt+d3",),
 			"kb:control": ("br(papenmeier):lt+d2",),
 			"kb:escape": ("br(papenmeier):space+d7",),

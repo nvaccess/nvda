@@ -137,7 +137,7 @@ Dacă ați instalat NVDA cu interfața de instalare, atunci pornirea NVDA se red
 Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #LinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
 
 În mod implicit, Pentru copiile instalate NVDA stochează configurația în dosarul de date al aplicației de roaming a utilizatorului curent (ex. "C:\Users\<user>\AppData\Roaming").
-Puteți modifica asta într-un mod în care NVDA își încarcă în schimb configurația din dosarul de date al aplicației locale.
+Puteți modifica asta într-un mod în care NVDA își încarcă în schimb configurația din dosarul local de date al aplicației.
 Consultați secțiunea despre [parametrii la nivel de sistem #SystemWideParameters] pentru mai multe detalii.
 
 Pentru a porni versiunea portabilă, mergeți în dosarul unde ați dezarhivat NVDA și apăsați „Enter” sau faceți dublu clic pe nvda.exe.
@@ -507,6 +507,8 @@ Următoarele taste trec direct la elementul următor disponibil, iar combinându
 - 1 la 6: rubrici de nivel de la 1 la 6, respectiv
 - a: adnotare (comentariu, editor, versiune, etc.)
 -
+w: eroare de ortografie
+-
 Pentru mutarea la începutul sau sfârșitul elementelor cu conținut cum ar fi liste sau tabele:
 || Nume | Tastă | Descriere |
 | Mută la începutul obiectului conținător | shift+virgulă | Mută la începutul conținătorului (listă, tabel, etc.) pe care este poziționat cursorul de scriere |
@@ -606,7 +608,7 @@ Pentru mai multe informații referitoare la Modul navigare și Navigarea rapidă
 %kc:beginInclude
 Dacă vă aflați în Modul navigare în Microsoft Word, puteți accesa Lista de elemente apăsând NVDA+F7.
 %kc:endInclude
-Lista de elemete poate afișa rubrici, legături și adnotări (care includ comentarii și monitorizează modificările).
+Lista de elemente poate afișa rubrici, legături și adnotări (care includ comentarii și monitorizează modificările) și erori (în prezent limitate la cele de ortografie).
 
 +++ Raportarea comentariilor +++
 %kc:beginInclude
@@ -1163,6 +1165,13 @@ Dacă minimizați o fereastră care conține bara de progres sau mutați focaliz
 Tastă: NVDA+5
 
 Activează anunțurile de conținut nou în obiecte specifice cum ar fi ferestre terminal de comandă și controlul istoricului în programele de conversație.
+
+==== Redă un sunet când apar autosugestiile ====
+Activează anunțarea aspectului autosugestiilor, iar dacă e activat, NVDA va reda un sunet pentru a indica asta.
+Autosugestiile sunt liste ale intrărilor sugerate bazate pe text introdus în anumite câmpuri de editare și documente.
+De exemplu, când introduceți un text în caseta de căutare a meniului Start din Windows Vista sau mai nou, Windows-ul afișează o listă a sugestiilor bazate pe ce ați tastat.
+Pentru unele câmpuri de editare, cum ar fi câmpuri de căutare în diferite aplicații pentru Windows 10, NVDA vă poate notifica că a apărut o listă a sugestiilor când tastați un text.
+Lista de autosugestii se va închide odată ce vă deplasați din câmpul de editare, iar pentru unele câmpuri, NVDA vă poate notifica când se întâmplă acest lucru.
 
 +++ Setări pentru compunerea de intrări +++
 Fereastra de dialog „Setări pentru Compunere Intrări” se află în meniul de „Preferințe”.
@@ -2351,4 +2360,4 @@ Dacă aveți nevoie de informații suplimentare sau asistență în privința NV
 
 Puteți vizita și site-ul comunității românești a NVDA-ului la www.ro-nvda.tk. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.
 
-Ultima actualizare a manualului: %%date(%d %b %Y), traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei
+Ultima actualizare a manualului: 30 iunie 2017, traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei

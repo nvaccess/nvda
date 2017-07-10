@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-23 00:10+1000\n"
+"POT-Creation-Date: 2017-06-30 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
+"Last-Translator: David Parduhn <xkill85@gmx.net>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -96,37 +96,50 @@ msgid "Error in appModule %s"
 msgstr "Fehler in Anwendungsmodul %s."
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "banner"
 msgstr "Logo"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "complementary"
 msgstr "Ergänzung"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "content info"
 msgstr "Inhaltsübersicht"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "main"
 msgstr "Haupt"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "navigation"
 msgstr "Navigation"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "search"
 msgstr "Suche"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+#, fuzzy
+msgctxt "aria"
 msgid "form"
 msgstr "Formular"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "region"
 msgstr "Region"
 
@@ -691,26 +704,45 @@ msgid "( )"
 msgstr "[ ]"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "bnnr"
 msgstr ""
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cmpl"
 msgstr ""
 
 #. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cinf"
 msgstr ""
 
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "Haupt"
+
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "navi"
 msgstr ""
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "srch"
 msgstr ""
 
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "Formular"
+
 #. Translators: Displayed in braille for a significant region, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "rgn"
 msgstr "rgn"
 
@@ -1271,6 +1303,22 @@ msgstr "Springt zur vorigen Anmerkungen"
 msgid "no previous annotation"
 msgstr "Keine vorherigen Anmerkungen"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "Springt zum nächsten Fehler"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "Keine weiteren Fehler"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "Springt zum vorigen Fehler"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "Keine vorherigen Fehler"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1796,6 +1844,10 @@ msgstr "Uhr"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "Trennlinie"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "Formular"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -6243,6 +6295,10 @@ msgstr "Zieht das Navigatorobjekt und den Fokus zur nächsten Zeile"
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Zieht das Navigatorobjekt und den Fokus zur vorigen Zeile"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr ""
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "eingabe"
@@ -8281,6 +8337,11 @@ msgstr "Im Hinter&grund befindliche Fortschrittsbalken ausgeben"
 msgid "Report dynamic &content changes"
 msgstr "dynamische Änderungen des &Inhaltes ansagen"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "Klang bei Vorschlägen abspielen"
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "Lesemodus"
@@ -9994,6 +10055,10 @@ msgstr "Kommentar: {text} von {author} am {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} von {author} am {date}"
 
+#, fuzzy, python-brace-format
+msgid "spelling: {text}"
+msgstr "Rechtschreibfehler"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10248,6 +10313,12 @@ msgstr "Nicht in einer Tabelle."
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Anmerkungen"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&errors"
+msgstr "Fehler"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
