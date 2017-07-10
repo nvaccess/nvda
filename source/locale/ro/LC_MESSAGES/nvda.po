@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-16 00:10+1000\n"
-"PO-Revision-Date: 2017-06-18 20:30+0300\n"
-"Last-Translator: DanP <dan.punga@gmail.com>\n"
+"POT-Creation-Date: 2017-06-30 00:10+1000\n"
+"PO-Revision-Date: 2017-06-29 23:29+0300\n"
+"Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
 "Language: ro_RO\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -94,37 +94,42 @@ msgid "Error in appModule %s"
 msgstr "Eroare în appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "complementar"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "informația conținutului"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "principal"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigare"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "caută"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "formă"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "regiune"
 
@@ -689,26 +694,42 @@ msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "bnnr"
 msgstr "bnnr"
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cmpl"
 msgstr "cmpl"
 
 #. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cinf"
 msgstr "cinf"
 
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "principal"
+
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "navi"
 msgstr "navi"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "srch"
 msgstr "srch"
 
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "formă"
+
 #. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "rgn"
 msgstr "rgn"
 
@@ -1268,6 +1289,22 @@ msgstr "mută la adnotarea anterioară"
 msgid "no previous annotation"
 msgstr "nu există adnotare anterioară"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "se mută la eroarea următoare"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "nu există eroare următoare"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "se mută la eroarea anterioară"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "nu există eroare anterioară"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1788,6 +1825,10 @@ msgstr "ceas"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "separator"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "formă"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -6185,6 +6226,10 @@ msgstr "Mută obiectul navigator și focalizarea la următorul rând"
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Mută obiectul navigator și focalizarea la rândul precedent"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Sugestii"
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "Compunere"
@@ -8191,6 +8236,11 @@ msgstr "Anunță barele de progres din &fundal"
 msgid "Report dynamic &content changes"
 msgstr "Anunță schimbările &dinamice de conținut"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "&Redă un sunet când apar autosugestiile"
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "Mod navigare"
@@ -9894,6 +9944,10 @@ msgstr "comentariu: {text} de către {author} în {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} de {author} în {date}"
 
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Ortografie: {text}"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10144,6 +10198,11 @@ msgstr "Nu este în tabel"
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Adnotări"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&errors"
+msgstr "&erori"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

@@ -12,8 +12,12 @@
 - Tarkka muodon tyyppi ilmoitetaan nyt Microsoft Powerpointissa diaa muokattaessa (esim. kolmio, ympyrä, video, nuoli) pelkän yleisen "muoto"-tyypin sijaan. (#7111)
 - MathML-tyyppistä matemaattista sisältöä tuetaan nyt Google Chromessa. (#7184)
 - NVDA voi nyt puhua uusia Windows 10:een sisältyviä Windows OneCore -puheääniä käyttäen (tunnetaan myös matkapuhelinääninä). Äänet otetaan käyttöön valitsemalla Windows OneCore -vaihtoehto NVDA:n Syntetisaattorin asetukset -valintaikkunasta. (#6159)
-- NVDA:n asetustiedostot on nyt mahdollista tallentaa käyttäjän paikallisen sovellusdatan kansioon. Tämä otetaan käyttöön muokkaamalla asetusta Windowsin rekisterissä. Katso lisätietoja käyttöoppaan "Järjestelmänlaajuiset parametrit" -kappaleesta. (#6812)
+- NVDA:n asetustiedostot on nyt mahdollista tallentaa käyttäjän paikallisten sovellustietojen kansioon. Tämä otetaan käyttöön muokkaamalla asetusta Windowsin rekisterissä. Katso lisätietoja käyttöoppaan "Järjestelmänlaajuiset parametrit" -kappaleesta. (#6812)
 - NVDA ilmoittaa nyt verkkoselaimissa paikkamerkkien arvot lomakekentissä oltaessa (erityisesti aria-placeholder-attribuuttia tuetaan). (#7004)
+- Microsoft Wordissa on nyt selaustilassa oltaessa mahdollista siirtyä kirjoitusvirheisiin pikanavigointikomentoja W ja Shift+W käyttäen. (#6942)
+- Lisätty tuki Microsoft Outlookin tapaamisenluontivalintaikkunoiden päivämääränvalitsinsäätimelle. (#7217)
+- Valittuna oleva ehdotus ilmoitetaan nyt Windows 10:n Sähköposti-sovelluksen vastaanottaja/kopio-kentissä ja Asetukset-sovelluksen haussa. (#6241)
+- Windows 10:ssä toistetaan nyt ääni, joka ilmaisee ehdotusten ilmestymisen tietyissä hakukentissä (esim. aloitusnäytössä, asetushaussa, Sähköposti-sovelluksen vastaanottaja/kopio-kentissä). (#6241)
 
 
 == Muutokset ==
@@ -27,9 +31,10 @@
  - "pääsisältö": "pää"
  - "navigaatio": "nav"
  - "haku": "hku"
- - "lomake": "lmk"
+ - "lomake": "lom"
  - "alue": "alu"
  - Esimerkki: "navigaatio kiintopiste" on nyt "kp nav"
+- Espeak-ng on päivitetty versioksi 1.49.1 (#7280).
 
 
 == Korjatut ohjelmavirheet ==
@@ -38,6 +43,9 @@
 - Selaustilaa tuetaan nyt asianmukaisesti Microsoft Edgessä, kun dokumentille on annettu document-ARIA-rooli. (#6998)
 - Valitseminen tai valinnan peruminen Shift+Endillä rivin loppuun saakka on nyt mahdollista selaustilassa, vaikka kohdistin on rivin viimeisen merkin kohdalla. (#7157)
 - Jos valintaikkuna sisältää edistymispalkin, valintaikkunan teksti päivitetään edistymispalkin muuttuessa. Tämä tarkoittaa, että esim. jäljellä olevan ajan lukeminen on nyt mahdollista NVDA:n "Ladataan päivitystä" -valintaikkunassa. (#6862)
+- NVDA ilmoittaa nyt valinnan muutokset tietyissä Windows 10:n yhdistelmäruuduissa, kuten Asetukset-sovelluksen Automaattisessa toistossa. (#6337).
+- Hyödytöntä tietoa ei enää puhuta Microsoft Outlookissa siirryttäessä kokouksen/tapaamisenluontivalintaikkunoihin. (#7216)
+- Äänimerkit toistetaan epäsäännöllisille edistymispalkkivalintaikkunoille (kuten NVDA:n päivitystarkistus), vain, kun edistymispalkit on määritetty ilmaistavaksi äänimerkein. (#6759)
 
 
 == Muutokset kehittäjille (englanniksi) ==

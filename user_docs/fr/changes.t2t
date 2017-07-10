@@ -13,6 +13,11 @@ Quoi de Neuf dans NVDA
 - NVDA peut maintenant parler en utilisant les nouvelles voix Windows OneCore (aussi connues sous le nom  mobile voices) incluses dans Windows 10. Vous y avez accès en sélectionnant voix Windows OneCore dans le dialogue Synthétiseurs de NVDA. (#6159)
 - Les fichiers de configuration utilisateur de NVDA peuvent maintenant être enregistrés dans le dossier local application data de l'utilisateur. Ceci est activé via un paramètre dans le registre. Veuillez consulter 'paramètres système' dans le guide de l'utilisateur pour plus de détails. (#6812)
 - Dans les navigateurs internet, NVDA signale maintenant les valeurs d'espaces réservés pour les champs (en particulier, aria-placeholder est maintenant supporté). (#7004)
+- En mode navigation sous Microsoft Word, il est maintenant possible d'atteindre les fautes d'orthographe en utilisant les touches de navigation rapide (w et maj+w) (#6942)
+- Ajout du support du contrôle de sélection de date qu'on trouve dans les dialogues de rendez-vous de Microsoft Outlook. (#7217)
+- Dans l'application Courrier de Windows 10, la suggestion sélectionnée est maintenant annoncée pour les champs à/cc, et il en va de même pour le champ de recherche des paramètres de Windows 10. (#6241)
+- Un son est maintenant émis pour indiquer l'apparition d'une suggestion dans certains champs de recherche de Windows 10 (ex : écran de démarrage, recherche de paramètres, champs à/cc de Windows 10 courrier). (#6241)
+- Mise à jour de Espeak-ng à la version 1.49.1 (#7280).
 
 
 == Changements ==
@@ -20,13 +25,13 @@ Quoi de Neuf dans NVDA
 - La configuration clavier peut maintenant être choisie dans le dialogue de bienvenue à NVDA. (#6863)
 - Le nom des repères est abrégé en Braille comme suit : (#3975)
  - "repère" : "rpr"
- - "bannière" : "bnnr"
- - "complémentaire" : "cmpl"
+ - "bannière" : "bnr"
+ - "complémentaire" : "cmp"
  - "information sur le contenu" : "cinf"
- - "principal" : "prnc"
+ - "principal" : "prc"
  - "navigation" : "nav"
  - "recherche" : "rch"
- - "formulaire" : "frm"
+ - "formulaire" : "form"
  - "région" : "rgn"
  - Exemple : "repère navigation" devient "rpr nav"
 
@@ -37,6 +42,9 @@ Quoi de Neuf dans NVDA
 - Le mode navigation est maintenant correctement supporté sous Microsoft Edge dans le cas où un document a reçu un rôle ARIA spécifique de Document. (#6998)
 - En mode navigation, vous pouvez maintenant sélectionner ou désélectionner jusqu'à la fin de la ligne en utilisant maj+fin même si le curseur est sur le dernier caractère de la ligne. (#7157)
 - Si un dialogue contient une barre de progression, le texte du dialogue est maintenant mis à jour quand la barre de progression évolue. Cela signifie, par exemple, que le temps restant peut maintenant être lu dans le dialogue de téléchargement de mise à jour de NVDA. (#6862)
+- NVDA annonce maintenant les changements de sélection pour certaines listes déroulantes de Windows 10 telles que Lecture automatique dans les Paramètres. (#6337).
+- Les informations sans objet ne sont plus annoncées quand on entre dans les dialogues de création de réunions ou rendez-vous de Microsoft Outlook. (#7216)
+- Les bips indiquant les barres de progression indéterminées (ex : dialogue de vérification des mises à jour) ne sont émis que si le suivi des barres de progression est configuré pour émettre des bips. (#6759)
 
 
 == Changement pour les Développeurs ==

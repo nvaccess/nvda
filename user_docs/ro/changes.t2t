@@ -11,8 +11,12 @@ Ce este nou în NVDA
 - În Microsoft Powerpoint, tipul exact al unei forme este raportat la editarea unui diapozitiv (exemplele includ: triunghi, cerc, video, săgeată), mai degrabă decât 'forma'. (#7111)
 - Conținutul matematic )furnizat ca MathML) este acum suportat în Google Chrome. (#7184)
 - NVDA poate vorbi utilizând noile voci Windows OneCore )cunoscute și ca voci mobile) incluse în Windows 10. Accesați-le selectând opțiunea „voci Windows OneCore” din dialogul de sintetizator al NVDA-ului. (#6159)
-- Fișierele de configurare ale utilizatorului NVDA pot fi stocate în dosarul de date al aplicației locale a utilizatorului. Aceasta este activată printr-o setare din regiștri. Consultați 'Parametrii la nivel de sistem' din ghidul utilizatorului pentru mai multe detalii. (#6812)
+- Fișierele de configurare ale utilizatorului NVDA pot fi stocate în dosarul local de date al aplicației utilizatorului. Aceasta este activată printr-o setare din regiștri. Consultați 'Parametrii la nivel de sistem' din ghidul utilizatorului pentru mai multe detalii. (#6812)
 - În navigatoarele web, NVDA-ul raportează valori de substituent pentru câmpuri (mai exact, acum este suportat aria-placeholder). (#7004)
+- În modul de navigare pentru Microsoft Word, aveți acum posibilitatea de a naviga la erorile de ortografie utilizând navigarea rapidă (w și shift+w) (#6942)
+- A fost adăugat suportul pentru comanda de selectare a datei găsită în dialogurile de întâlnire ale Microsoft Outlook. (#7217)
+- Sugestia selectată în prezent este acum raportată în câmpurile către și cc din Windows 10 Mail și în câmpul de căutare din setările Windows 10. (#6241)
+- Un sunet este redat pentru a indica aspectul sugestiilor în anumite câmpuri de căutare din Windows 10, ca de exemplu ecranul de pornire, căutarea de setări, câmpurile către și cc din aplicația Windows 10 Mail. (#6241)
 
 
 == Modificări ==
@@ -29,6 +33,7 @@ Ce este nou în NVDA
  - „căutare”: „srch”
  - „regiune”: „rgn”
  - Exemplu: „navigare reper” devine „lmk nav”
+- A fost actualizat Espeak NG la versiunea 1.49.1 (#7280).
 
 
 == Rezolvări Defecte ==
@@ -37,6 +42,9 @@ Ce este nou în NVDA
 - Modul de navigare este suportat corect în Microsoft Edge unde un document a primit un rol specific Aria de document. (#6998)
 - În modul de navigare, puteți selecta sau deselecta la sfârșitul rândului utilizând shift+end, chiar și atunci când cursorul de scriere este pe ultimul caracter al rândului. (#7157)
 - Dacă un dialog conține o bară de progres, textul dialogului este actualizat când bara de progres suferă modificări. Asta înseamnă, de exemplu, că timpul rămas poate fi citit în dialogul din NVDA de descărcare a actualizărilor. (#6862)
+- NVDA va anunța schimbări de selecție pentru anumite casete combinate Windows 10, cum ar fi autoredarea din Setări. (#6337).
+- Informațiile inutile nu mai sunt anunțate la introducerea dialogurilor de creare a întâlnirilor din Microsoft Outlook. (#7216)
+- Bipurile pentru dialogurile nedeterminate ale barei de progres, cum ar fi verificatorul de actualizare, numai atunci când ieșirea barei de progres este configurată să includă bipuri. (#6759)
 
 
 = Modificări pentru Dezvoltatori =

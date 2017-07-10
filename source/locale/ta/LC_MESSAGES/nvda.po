@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-23 00:10+1000\n"
-"PO-Revision-Date: 2017-06-26 20:20+0530\n"
+"POT-Creation-Date: 2017-06-30 00:10+1000\n"
+"PO-Revision-Date: 2017-07-05 20:18+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -92,37 +92,50 @@ msgid "Error in appModule %s"
 msgstr "%s பயன்பாட்டு நிரற்கூறில் பிழை"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "banner"
 msgstr "பதாகை"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "complementary"
 msgstr "நிறைவுண்டாக்கும்"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "content info"
 msgstr "உள்ளடக்கத் தகவல்"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "main"
 msgstr "முதன்மை"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "navigation"
 msgstr "வழிநடத்துதல்"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "search"
 msgstr "தேடுக"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+#, fuzzy
+msgctxt "aria"
 msgid "form"
 msgstr "படிவம்"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "region"
 msgstr "மண்டலம்"
 
@@ -687,26 +700,50 @@ msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "bnnr"
 msgstr "பதக"
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "cmpl"
 msgstr "நிறை"
 
 #. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "cinf"
 msgstr "உள்தக"
 
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "முதன்மை"
+
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "navi"
 msgstr "வழி"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "srch"
 msgstr "தேடு"
 
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "படிவம்"
+
 #. Translators: Displayed in braille for a significant region, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "rgn"
 msgstr "மண்ட"
 
@@ -1265,6 +1302,26 @@ msgstr "முந்தைய விளக்கவுரைக்கு நக�
 msgid "no previous annotation"
 msgstr "முந்தைய விளக்கவுரை ஏதுமில்லை"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+#, fuzzy
+msgid "moves to the next error"
+msgstr "அடுத்த பிரிப்பானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+#, fuzzy
+msgid "no next error"
+msgstr "அடுத்த பிரிப்பான் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+#, fuzzy
+msgid "moves to the previous error"
+msgstr "முந்தைய பிரிப்பானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+#, fuzzy
+msgid "no previous error"
+msgstr "முந்தைய பிரிப்பான் ஏதுமில்லை"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1772,6 +1829,10 @@ msgstr "கடிகாரம்"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "பிரிப்பான்"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "படிவம்"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -4435,7 +4496,7 @@ msgstr "முகில் வடிவம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cloud callout"
-msgstr "முகில் வடிவ உரைக்காட்டி"
+msgstr "முகில் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4530,7 +4591,7 @@ msgstr "பன்னிருகோணம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Donut"
-msgstr ""
+msgstr "முப்பரிமாண வளைவு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4560,19 +4621,19 @@ msgstr "கீழம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr ""
+msgstr "கீழம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Explosion"
-msgstr ""
+msgstr "சிதறல்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Alternate process flowchart symbol"
-msgstr ""
+msgstr "மாற்றுச் செயலாக்க வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4592,37 +4653,37 @@ msgstr "தெரிவாகியுள்ள குறியெழுத்�
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Connector flowchart symbol"
-msgstr ""
+msgstr "இணைப்பி வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Data flowchart symbol"
-msgstr ""
+msgstr "தரவு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decision flowchart symbol"
-msgstr ""
+msgstr "தீர்மான வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Delay flowchart symbol"
-msgstr ""
+msgstr "தாமத வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Direct access storage flowchart symbol"
-msgstr ""
+msgstr "நேரடி அணுகல் சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Display flowchart symbol"
-msgstr ""
+msgstr "காட்சியமைவு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4635,49 +4696,49 @@ msgstr "ஆவணத் தகவல்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Extract flowchart symbol"
-msgstr ""
+msgstr "பிரித்தெடுப்பு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Internal storage flowchart symbol"
-msgstr ""
+msgstr "உட்சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Magnetic disk flowchart symbol"
-msgstr ""
+msgstr "காந்த வட்டு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual input flowchart symbol"
-msgstr ""
+msgstr "கைமுறை உள்ளீட்டு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual operation flowchart symbol"
-msgstr ""
+msgstr "கைமுறை இயக்க வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Merge flowchart symbol"
-msgstr ""
+msgstr "ஒன்றிணைந்த வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Multi-document flowchart symbol"
-msgstr ""
+msgstr "பல்லாவண வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Offline storage flowchart symbol"
-msgstr ""
+msgstr "முடக்கலை சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4701,25 +4762,25 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Preparation flowchart symbol"
-msgstr ""
+msgstr "ஆயத்த வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Process flowchart symbol"
-msgstr ""
+msgstr "செயலாக்க வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr ""
+msgstr "துளையிடப்பட்ட நாடா வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr ""
+msgstr "தொடரணுகல் சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4731,7 +4792,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Stored data flowchart symbol"
-msgstr ""
+msgstr "சேமிக்கப்பட்டத் தரவு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4761,25 +4822,25 @@ msgstr "செவ்வகப் படச் சட்டகம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Funnel"
-msgstr ""
+msgstr "கூம்புக் குழாய்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with six teeth"
-msgstr ""
+msgstr "அறுமுனை பற்சக்கரம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with nine teeth"
-msgstr ""
+msgstr "ஒன்பது முனை பற்சக்கரம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Half of rectangular picture frame"
-msgstr ""
+msgstr "அரைச் செவ்வகப் படச் சட்டகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4791,13 +4852,13 @@ msgstr "இதயம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heptagon"
-msgstr ""
+msgstr "எழுகோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Hexagon"
-msgstr ""
+msgstr "அறுகோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4810,7 +4871,7 @@ msgstr "கிடைப் பட்டைக்கோடு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Isosceles triangle"
-msgstr ""
+msgstr "இருசமப்பக்க முக்கோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4822,7 +4883,7 @@ msgstr "இடதம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr ""
+msgstr "இடதம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4840,7 +4901,7 @@ msgstr "இடதடைப்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Counter-clockwise Circular arrow"
-msgstr ""
+msgstr "இடஞ்சுழி வட்ட அம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4852,7 +4913,7 @@ msgstr "இரட்டை முனை கிடையம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr ""
+msgstr "இரட்டை முனை கிடையம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4864,7 +4925,7 @@ msgstr "இரட்டை முனை வட்ட அம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr ""
+msgstr "இடது வலது அம்புகளைக் கொண்ட நாடா"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4891,7 +4952,7 @@ msgstr "வலது நிலை மாற்றி"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "வரிச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6134,6 +6195,10 @@ msgstr "வழிகாட்டிப் பொருளை நகர்த்�
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "வழிகாட்டிப் பொருளை நகர்த்தி, முந்தைய கிடை வரிசையைக் குவிமையத்தில் கொள்ளும்"
+
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr ""
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -8115,6 +8180,11 @@ msgstr "பின்னணி முன்னேற்றப்பட்டை�
 msgid "Report dynamic &content changes"
 msgstr "ியங்குநிலை உள்ளடக்க மாற்றங்களை அறிவிக்கவும் (&C)"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr ""
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "உலாவும் நிலை"
@@ -9764,6 +9834,10 @@ msgstr "கருத்துரை: {text}, படைப்பாளர்: {au
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
 
+#, fuzzy
+msgid "spelling: {text}"
+msgstr "எழுத்துப் பிழை"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10002,6 +10076,12 @@ msgstr "அட்டவணையில் இல்லை"
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "விளக்கவுரைகள் (&A)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&errors"
+msgstr "பிழை"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

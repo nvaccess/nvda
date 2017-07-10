@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-16 00:10+1000\n"
-"PO-Revision-Date: 2017-06-15 17:46+0200\n"
+"POT-Creation-Date: 2017-06-30 00:10+1000\n"
+"PO-Revision-Date: 2017-07-01 11:03+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -95,37 +95,42 @@ msgid "Error in appModule %s"
 msgstr "Erreur dans appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "bannière"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "complémentaire"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "information sur le contenu"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "principale"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigation"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "recherche"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "formulaire"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "région"
 
@@ -690,26 +695,42 @@ msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "bnnr"
-msgstr "bnnr"
+msgstr "bnr"
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cmpl"
-msgstr "cmpl"
+msgstr "cmp"
 
 #. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cinf"
 msgstr "cinf"
 
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "prc"
+
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "navi"
 msgstr "nav"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "srch"
 msgstr "rch"
 
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "form"
+
 #. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "rgn"
 msgstr "rgn"
 
@@ -1270,6 +1291,22 @@ msgstr "Aller à l'annotation précédente"
 msgid "no previous annotation"
 msgstr "aucune annotation précédente"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "Aller à l'erreur suivante"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "aucune erreur suivante"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "Aller à l'erreur précédente"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "aucune erreur précédente"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1791,6 +1828,10 @@ msgstr "horloge"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "séparateur"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "formulaire"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -6165,6 +6206,10 @@ msgstr "Amener l'objet navigateur et le focus à la ligne suivante"
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Amener l'objet navigateur et le focus à la ligne précédente"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Suggestions"
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "Composition"
@@ -6408,11 +6453,11 @@ msgstr "Annoncer tous les commentaires dans la fenêtre de commentaires"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "Espace réservé du titre"
+msgstr "Espace réservé de titre"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "Espace réservé du texte"
+msgstr "Espace réservé de texte"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
@@ -6420,15 +6465,15 @@ msgstr "Espace réservé de titre central"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "Espace réservé du sous-titre"
+msgstr "Espace réservé de sous-titre"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
-msgstr "Espace réservé du titre vertical"
+msgstr "Espace réservé de titre vertical"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "Espace réservé du texte vertical"
+msgstr "Espace réservé de texte vertical"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
@@ -6436,11 +6481,11 @@ msgstr "Espace réservé d'objet"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "Espace réservé du diagramme"
+msgstr "Espace réservé de diagramme"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Espace réservé du graphique"
+msgstr "Espace réservé de graphique"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
@@ -6448,35 +6493,35 @@ msgstr "Espace réservé de Clip Média"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Espace réservé de l'organigramme"
+msgstr "Espace réservé d'organigramme"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "Espace réservé du tableau"
+msgstr "Espace réservé de tableau"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "Espace réservé du numéro de diapositive"
+msgstr "Espace réservé de numéro de diapositive"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "Espace réservé de l'en-tête"
+msgstr "Espace réservé d'en-tête"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "Espace réservé du pied de page"
+msgstr "Espace réservé de pied de page"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "Espace réservé de la date"
+msgstr "Espace réservé de date"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
-msgstr "Espace réservé de l'objet vertical"
+msgstr "Espace réservé d'objet vertical"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "Espace réservé pour l'image"
+msgstr "Espace réservé d'image"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
@@ -8177,6 +8222,11 @@ msgstr "Suivre les barres de progression en arrière-plan"
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
 msgstr "Annoncer les changements dynamiques de &contenu"
+
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "Jouer un son quand les &auto-suggestions apparaissent"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -9883,6 +9933,10 @@ msgstr "commentaire : {text} par {author} le {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description} : {text} par {author} le {date}"
 
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "orthographe : {text}"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10133,6 +10187,11 @@ msgstr "Pas dans un tableau"
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Annotations"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&errors"
+msgstr "&erreurs"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
