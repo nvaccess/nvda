@@ -136,6 +136,10 @@ Si NVDA a été installé à l'aide de l'installateur, alors il suffit, soit de 
 De plus, Vous pouvez taper NVDA dans le dialogue "Exécuter" puis appuyer sur "Entrée".
 Vous pouvez aussi ajouter quelques [options de ligne de commande #CommandLineOptions] vous permettant de redémarrer NVDA (-r), quitter (-q), désactiver les modules complémentaires (--disable-addons), etc.
 
+Pour les copies installées, NVDA enregistre la configuration dans le dossier de données applicatives roaming  de l'utilisateur courant par défaut (ex : "C:\Users\<user>\AppData\Roaming").
+Il est possible de modifier cela de manière à ce que NVDA charge sa configuration depuis le dossier de données applicatives local.
+Consultez la section concernant les [paramètres système #SystemWideParameters] pour plus de détails.
+
 Pour démarrer la copie portable, rendez-vous dans le dossier où NVDA a été décompressé, et appuyez sur "Entrée" ou double-cliquez sur nvda.exe.
 
 Au démarrage de NVDA, on entend d'abord une série de sons ascendants (indiquant que NVDA se charge). 
@@ -147,8 +151,9 @@ Reportez-vous au site Web de NVDA pour les détails de la procédure.
 
 Quand NVDA démarre pour la première fois, vous êtes accueilli par un dialogue vous donnant des informations de base sur la touche NVDA et le menu NVDA. 
 Veuillez consulter les sections ci-après pour plus d'informations sur ces sujets.
-Le dialogue contient également trois cases à cocher. 
-La première vous permet de choisir si vous voulez utiliser la touche de verrouillage majuscules comme touche NVDA.
+Le dialogue contient également une liste déroulante et trois cases à cocher. 
+La liste déroulante vous permet de sélectionner la configuration clavier.
+La première case à cocher vous permet de choisir si vous voulez utiliser la touche de verrouillage majuscules comme touche NVDA.
 La deuxième spécifie si NVDA doit démarrer à l'ouverture de votre session et est disponible uniquement sur la version installée.
 La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
 
@@ -501,6 +506,7 @@ Les touches suivantes permettent d'aller à l'élément suivant. En les combinan
 - o : objet embarqué
 - 1 ... 6 : Titres 1 ... 6.
 - a: annotation (commentaire, révisionde l'éditeur, etc.)
+- w: fautes d'orthographe
 -
 Pour se déplacer au début ou à la fin des éléments contenants comme les listes et tableaux :
 || Nom | Touche | Description |
@@ -542,7 +548,7 @@ Cela nécessite que MathPlayer 4 soit installé sur l'ordinateur.
 MathPlayer est disponible en téléchargement gratuit sur : http://www.dessci.com/en/products/mathplayer/
 
 NVDA supporte les types de contenu mathématiques suivants :
-- MathML sous Mozilla Firefox et Microsoft Internet Explorer.
+- MathML sous Mozilla Firefox, Microsoft Internet Explorer et Google Chrome.
 - Design Science MathType sous Microsoft Word et PowerPoint. MathType doit être installé pour que cela fonctionne. La version de démonstration est suffisante.
 - MathML sous Adobe Reader. Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
 -
@@ -601,7 +607,7 @@ Pour plus d'information sur le mode navigation et la navigation rapide, consulte
 %kc:beginInclude
 Quand vous êtes en mode navigation sous Microsoft Word, vous pouvez accéder à la liste d'éléments en pressant NVDA+f7.
 %kc:endInclude
-La liste d'éléments peut lister les titres, les liens et annotations (ce qui inclut les commentaires et les demandes de changement).
+La liste d'éléments peut lister les titres, les liens, annotations (incluant inclut les commentaires et les demandes de changement) et les erreurs (actuellement limité aux fautes d'orthographe).
 
 +++ Annonce desCommentaires +++
 %kc:beginInclude
@@ -967,6 +973,9 @@ L'indicateur de sélection n'est pas affecté par cette option.
 Cette option est un champ numérique qui contrôle la durée en secondes d'affichage des messages système sur le terminal braille.
 Indiquer 0 désactive l'affichage de ces messages.
 
+==== Afficher les Messages Indéfiniment ====
+Cette option permet aux messages de NVDA de rester affichés sur l'afficheur braille indéfiniment.
+
 %kc:setting
 ==== braille suit ====
 Raccourci clavier : NVDA+contrôle+t
@@ -1155,6 +1164,13 @@ Si vous minimisez ou quittez une fenêtre qui contient une barre de progression,
 Raccourci clavier : NVDA+5
 
 Active ou désactive l'annonce d'un nouveau contenu en particulier dans les applications telles que les terminaux ou l'historique des programmes de tchat.
+
+==== Jouer un son quand une auto-suggestion apparaît ====
+Active/désactive l'annonce de l'apparition des auto-suggestions, si activé, NVDA jouera un son pour l'indiquer.
+Les auto-suggestions sont des listes de saisies suggérées basées sur le texte entré dans certains champs de saisie et documents.
+Par exemple, quand vous entrez du texte dans la boîte de recherche du menu démarrer de Windows Vista et au-delà, Windows affiche une liste de suggestions basée sur ce que vous avez entré.
+Pour certains champs d'édition comme le champ de recherche dans diverses applications Windows 10, NVDA peut vous signaler qu'une liste de suggestions est apparue quand vous tapez du texte.
+La liste de suggestions se ferme quand vous quittez le champ d'édition, et pour certains champs, NVDA peut vous en avertir quand ça arrive.
 
 +++ Paramètres de saisie +++
 Le dialogue "Paramètres de saisie" se trouve dans le menu "Préférences".
@@ -1588,6 +1604,17 @@ Pour utiliser ces voix, vous devrez installer deux composants :
  Par exemple, le fichier MSSpeech_TTS_fr-FR_Hortense.msi est une voix francophone française.
  -
 -
+
+++ Voix Windows OneCore ++
+Windows 10 inclut de nouvelles voix appelées "OneCore" ou voix "mobile".
+Des voix sont fournies pour beaucoup de langues, et elles sont plus réactives que les voix Microsoft disponibles en utilisant Microsoft Speech API version 5.
+
+Pour installer des voix pour des langues supplémentaires, veuillez consulter cet article de Microsoft : https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Veuillez noter que les débits les pplus rapides disponibles avec Narrator ne sont pas actuellement disponibles avec NVDA.
+De plus, la vitesse que vous choisissez dans les paramètres de Windows affecte la vitesse sous NVDA.
+Ce sont des problèmes que nous ne pouvons pas résoudre sans des modifications de Windows.
+Nous espérons qu'ils seront pris en compte dans de futures mises à jour de Windows.
 
 ++ AudioLogic TTS3 ++
 C'est un synthétiseur de parole du commerce, spécifique à la langue italienne.
@@ -2224,8 +2251,8 @@ Veuillez consulter la [documentation assignation des touches de BRLTTY http://mi
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 
-+ Abbréviations des types et états des contrôles en Braille +
-Dans le but de loger autant d'informations que possible sur un afficheur braille, les abbréviations suivantes ont été définies pour indiquer le type et l'état des contrôles.
++ Abbréviations des types, états des contrôles et repères en Braille +
+Dans le but de loger autant d'informations que possible sur un afficheur braille, les abbréviations suivantes ont été définies pour indiquer le type et l'état des contrôles ainsi que les repères.
 
 || Abbréviation | Type de contrôle |
 | btn | bouton |
@@ -2238,8 +2265,9 @@ Dans le but de loger autant d'informations que possible sur un afficheur braille
 | lN | ligne de tableau n° n, ex : l1, l2. |
 | tN | titre de niveau n, ex : t1, t2. |
 | ln | lien |
-| lst | liste |
 | lnv | lien visité |
+| lst | liste |
+| rpr | repère |
 | mnu | menu |
 | bmnu | barre de menu |
 | btnr | bouton radio |
@@ -2261,6 +2289,17 @@ Les indicateurs d'état suivants sont également définis :
 | sél | affiché quand un objet est sélectionné |
 | smnu | affiché quand un objet a un sous-menu |
  
+Enfin, les abbréviations de repères suivantes sont définies :
+|| Abbréviation | Repère |
+| bnr | bannière |
+| cinf | information sur le contenu |
+| cmp | complémentaire |
+| form | formulaire |
+| prc | principale |
+| nav | navigation |
+| rch | recherche |
+| rgn | région |
+
 + Fonctions avancées +
  
 ++ Options de ligne de commande ++[CommandLineOptions]
@@ -2303,6 +2342,18 @@ Voici les options de ligne de commande de NVDA :
 | Aucune | --no-sr-flag  | Ne change pas l'indicateur système global de revue d'écran |
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
+
+++Paramètres Système++[SystemWideParameters]
+NVDA permet de définir certaines valeurs dans la base de registres du système ce qui modifie le comportement général de NVDA.
+Ces valeurs sont stockées dans la base de registres sous l'une des clés suivantes :
+- Systèmes 32-bits : "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Systèmes 64-bits : "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Les valeurs suivantes peuvent être définies dans ces clés de registre :
+|| Nom | Type | valeurs Possibles | Description |
+| configInLocalAppData | DWORD | 0 (défaut) pour désactiver, 1 pour activer | si activé, enregistre la configuration utilisateur NVDA dans le dossier applicatif local au lieu de roaming |
+| serviceDebug | DWORD | 0 (défaut) pour désactiver, 1 pour activer | si activé, désactive le mode sécurisé dans les bureaux sécurisés de Windows, permettant l'utilisation de la console Python et de la visionneuse de journaux. En raison d'implications majeures de sécurité, l'utilisation de cette option est fortement déconseillée |
 
 + Informations complémentaires +
 Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le site NVDA à NVDA_URL.

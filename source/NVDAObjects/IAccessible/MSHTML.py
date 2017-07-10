@@ -523,6 +523,9 @@ class MSHTML(IAccessible):
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
 
+	def _get_placeholder(self):
+		return self.HTMLAttributes["aria-placeholder"]
+
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
 		if not IAccessibleObject:

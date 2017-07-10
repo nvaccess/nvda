@@ -137,6 +137,10 @@ Als u NVDA hebt geïnstalleerd met het installatieprogramma, kunt u NVDA eenvoud
 U kunt het programma ook starten door in het dialoogvenster Uitvoeren de letters NVDA te typen en vervolgens Enter in te drukken.
 U kunt ook [commandoregelopties opgeven #CommandLineOptionstart waarmee u NVDA herstart  (-r), beëindigt (-q), add -ons uitschakelt (--disable-addons), etc.
 
+In geval van een geïnstalleerde versie slaat NVDA de configuratie standaard op in de map roaming application data  van de huidige gebruiker (bijv.  "C:\Users\<user>\AppData\Roaming").
+Het is mogelijk dit te wijzigen en wel zodanig dat in plaats daarvan NVDA de configuratie ophaalt uitthe map met de lokale applicatiedata.
+Raadpleeg voor meer details de paragraaf over [systeembrede parameters #SystemWideParameters].
+
 Om de  draagbare versie van NVDA te starten gaat u naar de map waarin u de uitgepakte bestanden hebt opgeslagen. Daar selecteert u NVDA.exe. Druk op de Entertoets of dubbelklik op het bestand.
 
 Bij het opstarten van het programma hoort u eerst een reeks in hoogte oplopende tonen die aangeven dat NVDA wordt geladen. 
@@ -148,8 +152,9 @@ Op de NVDA website kunt u lezen hoe u dit kunt doen.
 
 Wanneer NVDA de eerste keer start, komt u in het welkomstscherm van het programma dat u informatie geeft over de NVDA-toets en het NVDA-menu.
 Verderop in deze handleiding kunt u hier meer over lezen.
-Op het welkomstscherm treft u ook 3 selectievakjes aan.
-Als u in het  eerste vakje een vinkje zet, wordt de CapsLock-toets ook als NVDA-toets gebruikt. 
+Op het welkomsscherm treft u een vervolgkeuzemenu en 3 selectievakjes aan.
+Via het vervolgkeuzemenu kunt u een toetsenbordindeling selecteren.
+Als u in het eerste selectievakje een vinkje zet, wordt de CapsLock-toets ook als NVDA-programmatoets gebruikt.
 Als u een vinkje in het tweede vakje zet, zal NVDA automatisch opstarten zodra u bij Windows bent aangemeld. Deze mogelijkheid is alleen beschikbaar voor de geïnstalleerde versie van NVDA. 
 Een vinkje in het derde selectievakje zorgt ervoor dat dit welkomsscherm verschijnt, telkens  wanneer NVDA wordt gestart.  
 
@@ -546,7 +551,7 @@ Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
 MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
-- MathML in Mozilla Firefox en Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
 - Design Science MathType in Microsoft Word and PowerPoint. MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
 - MathML in Adobe Reader. NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
 -
@@ -960,12 +965,15 @@ In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor
 Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen.
 Deze optie heeft geen betrekking op de selectieaanwijzer.
 
-==== Time-out voor berichten (sec.) ====
-In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-berichten in het uitleesvenster worden weergegeven.
+==== Time-out voor meldingen (sec.) ====
+In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen in het uitleesvenster worden weergegeven.
 Als u "0" als waarde invult, worden geen berichten getoond.
 
+==== Meldingen voor onbepaalde tijd tonen ====
+Met deze optie kunnen NVDA-meldingen voor onbepaalde tijd op de brailleleesregel worden getoond.
+
 %kc:setting
-==== Braille volgkeuze ====[BrailleTether]
+==== Braille volgmoduskeuze ====[BrailleTether]
 Toets: NVDA+control+t
 
 Hiermee kunt u bepalen of de leesregel de systeemfocus dan wel de navigatorobject- / reviewcursor moet volgen
@@ -1589,6 +1597,17 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
  Voorbeeld: Het bestand MSSpeech_TTS_en-US_ZiraPro.msi is een amerikaans-engelse stem.
  -
 -
+
+++ Windows OneCore-stemmen ++
+In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
+Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
+
+Als u stemmen voor extra talen wilt installeren, leest u dan het artikel van Microsoft op https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Let erop dat de versnellingsmogelijkheden die op dit moment in de Verteller beschikbaar zijn nog niet ondersteund worden door NVDA.
+Houd er ook rekening mee dat de snelheid die u instelt in Windows de in NVDA ingestelde niveaus zal beïnvloeden.
+Een oplossing hiervoor is niet mogelijk zonder aanpassingen in Windows.
+We hopen dat dit gaat gebeuren bij een volgende update van Windows.
 
 ++ AudioLogic TTS 3 ++
 Dit is een commerciële spraaksynthesizer die speciaal ontwikkeld is voor het Italiaans.
@@ -2223,8 +2242,8 @@ http://mielke.cc/brltty/doc/KeyTables/] raadplegen.
 | Cursor naar Braillecel verplaatsen | route (Cursor naar karakter bewegen) |
 %kc:endInclude
 
-+ Brailleleesregelafkortingen met betrekking tot type besturingselement en gebruiksstatus +
-Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement en de gebruiksstatus.
++ Brailleleesregelafkortingen met betrekking tot type besturingselement, gebruiksstatus en oriëntatiepunten +
+Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement, de gebruiksstatus alsmede oriëntatiepunten.
 
 || Afkorting | Type besturingselement |
 | kn | knop |
