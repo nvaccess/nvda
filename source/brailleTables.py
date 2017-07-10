@@ -62,6 +62,7 @@ def listTables():
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {
+	"ar-fa.utb" : "fa-ir-g1.utb",
 	"da-dk-g16.utb":"da-dk-g16.ctb",
 	"da-dk-g18.utb":"da-dk-g18.ctb",
 	"gr-gr-g1.utb":"el.ctb",
@@ -77,9 +78,6 @@ RENAMED_TABLES = {
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ar-ar-g1.utb", _("Arabic grade 1"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("ar-fa.utb", _("Farsi grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("as-in-g1.utb", _("Assamese grade 1"))
@@ -170,6 +168,12 @@ addTable("et-g0.utb", _("Estonian grade 0"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ethio-g1.ctb", _("Ethiopic grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("fa-ir-comp8.ctb", _("Persian 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("fa-ir-g1.utb", _("Persian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("fi.utb", _("Finnish 6 dot"))
