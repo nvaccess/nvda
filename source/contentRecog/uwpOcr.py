@@ -86,7 +86,7 @@ class UwpOcr(ContentRecognizer):
 			self.language = getConfigLanguage()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 
-	def recognize(self, pixels, width, height, coordConv, onResult):
+	def recognize(self, pixels, imgInfo, onResult):
 		self._onResult = onResult
 		@uwpOcr_Callback
 		def callback(result):
@@ -94,7 +94,7 @@ class UwpOcr(ContentRecognizer):
 			if self._onResult:
 				if result:
 					data = json.loads(result)
-					self._onResult(LinesWordsResult(data, coordConv))
+					self._onResult(LinesWordsResult(data, imgInfo))
 				else:
 					self._onResult(RuntimeError("UWP OCR failed"))
 			self._dll.uwpOcr_terminate(self._handle)
@@ -105,7 +105,7 @@ class UwpOcr(ContentRecognizer):
 		if not self._handle:
 			onResult(RuntimeError("UWP OCR initialization failed"))
 			return
-		self._dll.uwpOcr_recognize(self._handle, pixels, width, height)
+		self._dll.uwpOcr_recognize(self._handle, pixels, imgInfo.recogWidth, imgInfo.recogHeight)
 
 	def cancel(self):
 		self._onResult = None

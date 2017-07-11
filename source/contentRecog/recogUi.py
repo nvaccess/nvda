@@ -22,7 +22,7 @@ import eventHandler
 import textInfos
 from logHandler import log
 import queueHandler
-from . import ResultCoordConverter
+from . import RecogImageInfo
 
 class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Window):
 	"""Fake NVDAObject used to present a recognition result in a cursor manager.
@@ -99,24 +99,27 @@ _activeRecog = None
 def recognizeNavigatorObject(recognizer):
 	"""User interface function to recognize content in the navigator object.
 	This should be called from a script or in response to a GUI action.
-	@param recognizer: The content recognizer ot use.
+	@param recognizer: The content recognizer to use.
 	@type recognizer: L{contentRecog.ContentRecognizer}
 	"""
 	global _activeRecog
+	nav = api.getNavigatorObject()
+	left, top, width, height = nav.location
+	try:
+		imgInfo = RecogImageInfo.createFromRecognizer(left, top, width, height, recognizer)
+	except ValueError:
+		# Translators: Reported when content recognition (e.g. OCR) is attempted,
+		# but the content is not visible.
+		ui.message(_("Content is not visible"))
+		return
 	if _activeRecog:
 		_activeRecog.cancel()
 	# Translators: Reporting when content recognition (e.g. OCR) begins.
 	ui.message(_("Recognizing"))
-	nav = api.getNavigatorObject()
-	left, top, width, height = nav.location
-	resize = recognizer.getResizeFactor(width, height)
-	coordConv = ResultCoordConverter(left, top, resize)
-	destWidth = int(width * resize)
-	destHeight = int(height * resize)
-	sb = screenBitmap.ScreenBitmap(destWidth, destHeight)
+	sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
 	pixels = sb.captureImage(left, top, width, height)
 	_activeRecog = recognizer
-	recognizer.recognize(pixels, destWidth, destHeight, coordConv, _recogOnResult)
+	recognizer.recognize(pixels, imgInfo, _recogOnResult)
 
 def _recogOnResult(result):
 	global _activeRecog

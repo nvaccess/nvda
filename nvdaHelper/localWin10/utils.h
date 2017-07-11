@@ -15,4 +15,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <robuffer.h>
 
+/** Get access to the raw byte array backing an IBuffer object.
+ * This is necessary when interoperating with non-WinRT components;
+ * e.g. returning bytes from an IBuffer to a C caller.
+ * This byte array is mutable; it is *not* a copy.
+ */
 byte* getBytes(Windows::Storage::Streams::IBuffer^ buffer);

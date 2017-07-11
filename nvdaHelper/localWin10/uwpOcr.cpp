@@ -37,7 +37,7 @@ using namespace Windows::Data::Json;
 UwpOcr* __stdcall uwpOcr_initialize(const char16* language, uwpOcr_Callback callback) {
 	auto engine = OcrEngine::TryCreateFromLanguage(ref new Language(ref new String(language)));
 	if (!engine)
-		return NULL;
+		return nullptr;
 	auto instance = new UwpOcr;
 	instance->engine = engine;
 	instance->callback = callback;

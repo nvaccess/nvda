@@ -11,33 +11,42 @@ import unittest
 import contentRecog
 import textInfos
 
-class TestResultCoordConverter(unittest.TestCase):
+class TestRecogImageInfo(unittest.TestCase):
 
 	def test_noOffsetNoResize(self):
-		conv = contentRecog.ResultCoordConverter(0, 0, 1)
-		actual = conv.convertX(100), conv.convertY(200)
-		self.assertEqual(actual, (100, 200))
+		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 1)
+		self.assertEqual(info.recogWidth, 1000)
+		self.assertEqual(info.recogHeight, 2000)
+		self.assertEqual(info.convertXToScreen(100), 100)
+		self.assertEqual(info.convertYToScreen(200), 200)
 
 	def test_withOffsetNoResize(self):
-		conv = contentRecog.ResultCoordConverter(10, 20, 1)
-		actual = conv.convertX(100), conv.convertY(200)
-		self.assertEqual(actual, (110, 220))
+		info = contentRecog.RecogImageInfo(10, 20, 1000, 2000, 1)
+		self.assertEqual(info.recogWidth, 1000)
+		self.assertEqual(info.recogHeight, 2000)
+		self.assertEqual(info.convertXToScreen(100), 110)
+		self.assertEqual(info.convertYToScreen(200), 220)
 
 	def test_noOffsetWithResize(self):
-		conv = contentRecog.ResultCoordConverter(0, 0, 2)
-		actual = conv.convertX(200), conv.convertY(400)
-		self.assertEqual(actual, (100, 200))
+		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 2)
+		self.assertEqual(info.recogWidth, 2000)
+		self.assertEqual(info.recogHeight, 4000)
+		self.assertEqual(info.convertXToScreen(200), 100)
+		self.assertEqual(info.convertYToScreen(400), 200)
 
 	def test_withOffsetWithResize(self):
-		conv = contentRecog.ResultCoordConverter(10, 20, 2)
-		actual = conv.convertX(200), conv.convertY(400)
-		self.assertEqual(actual, (110, 220))
+		info = contentRecog.RecogImageInfo(10, 20, 1000, 2000, 2)
+		self.assertEqual(info.recogWidth, 2000)
+		self.assertEqual(info.recogHeight, 4000)
+		self.assertEqual(info.convertXToScreen(200), 110)
+		self.assertEqual(info.convertYToScreen(400), 220)
 
 class FakeNVDAObject(object):
 	pass
 
 class TestLinesWordsResult(unittest.TestCase):
-	"""Tests contentRecog.LinesWordsResult and contentRecog.LwrTextInfo.
+	"""Tests that contentRecog.LinesWordsResult and contentRecog.LwrTextInfo
+	correctly parse and process the JSON from a recognizer.
 	"""
 	DATA = [
 		[
@@ -70,9 +79,8 @@ class TestLinesWordsResult(unittest.TestCase):
 	LINE2_START = 12
 
 	def setUp(self):
-		# Use a no-op coordinate converter.
-		conv = contentRecog.ResultCoordConverter(0, 0, 1)
-		self.result = contentRecog.LinesWordsResult(self.DATA, conv)
+		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 1)
+		self.result = contentRecog.LinesWordsResult(self.DATA, info)
 		self.fakeObj = FakeNVDAObject()
 		self.textInfo = self.result.makeTextInfo(self.fakeObj, textInfos.POSITION_FIRST)
 
