@@ -136,14 +136,14 @@ INPUT_END_IND = u" ⣹"
 TEXT_SEPARATOR = " "
 
 #: Identifier for a focus context presentation setting that
+#: only shows as much as possible focus context information when the context has changed.
+CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
+#: Identifier for a focus context presentation setting that
 #: shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 CONTEXTPRES_FILL = "fill"
 #: Identifier for a focus context presentation setting that
 #: always shows the object with focus at the very left of the braille display.
 CONTEXTPRES_SCROLL = "scroll"
-#: Identifier for a focus context presentation setting that
-#: only shows as much as possible focus context information when the context has changed.
-CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel

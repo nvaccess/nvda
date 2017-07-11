@@ -1638,6 +1638,9 @@ class BrailleSettingsDialog(SettingsDialog):
 		focusContextPresentationLabelText = _("Focus context presentation:")
 		self.focusContextPresentations=[
 			# Translators: The label for a braille focus context presentation setting that
+			# only shows as much as possible focus context information when the context has changed.
+			(braille.CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
+			# Translators: The label for a braille focus context presentation setting that
 			# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 			# This was the pre NVDA 2017.3 default.
 			(braille.CONTEXTPRES_FILL, _("Always fill display")),
@@ -1645,9 +1648,6 @@ class BrailleSettingsDialog(SettingsDialog):
 			# always shows the object with focus at the very left of the braille display
 			# (i.e. you will have to scroll back for focus context information).
 			(braille.CONTEXTPRES_SCROLL, _("Only when scrolling back")),
-			# Translators: The label for a braille focus context presentation setting that
-			# only shows as much as possible focus context information when the context has changed.
-			(braille.CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
 		]
 		self.focusContextPresentationValues = [x[0] for x in self.focusContextPresentations]
 		focusContextPresentationChoices = [x[1] for x in self.focusContextPresentations]
