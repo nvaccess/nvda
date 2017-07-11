@@ -8,9 +8,9 @@
 == New Features ==
 - A Braille setting has been added to "show messages indefinitely". (#6669)
 - In Microsoft Outlook message lists, report if a message is flagged. (#6374)
-- In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (Examples include: triangle, circle, video, arrow), rather than just 'shape'. (#7111)
+- In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (such as triangle, circle, video or arrow), rather than just 'shape'. (#7111)
 - Mathematical content (provided as MathML) is now supported in Google Chrome. (#7184)
-- NVDA can now speak using the new Windows OneCore voices (also known as SAPI5 Mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
+- NVDA can now speak using the new Windows OneCore voices (also known as Microsoft Mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
 - NVDA user configuration files can now be stored in the user's local application data folder. This is enabled via a setting in the registry. See 'System wide parameters' in the user guide for more details. (#6812)
 - In web browsers, NVDA now reports placeholder values for fields (specifically, aria-placeholder is now supported). (#7004)
 - In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w) (#6942)
@@ -37,7 +37,7 @@
  - "form": "frm"
  - "region": "rgn"
  - Example: "navigation landmark" becomes "lmk nav"
-- Updated Espeak-ng to 1.49.1. (#7280).
+- Updated Espeak-ng to 1.49.1. (#7280)
 - The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
 - Updated liblouis braille translator to 3.2.0. (#6935)
 
