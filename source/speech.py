@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """High-level functions to speak information.
 """ 
@@ -11,6 +11,7 @@
 import itertools
 import weakref
 import unicodedata
+import time
 import colors
 import globalVars
 from logHandler import log
@@ -618,11 +619,32 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				# Translators: Reported when selection is removed.
 				speakMessage(_("selection removed"))
 
+#: The number of typed characters for which to suppress speech.
+_suppressSpeakTypedCharactersNumber = 0
+#: The time at which suppressed typed characters were sent.
+_suppressSpeakTypedCharactersTime = None
+def _suppressSpeakTypedCharacters(number):
+	"""Suppress speaking of typed characters.
+	This should be used when sending a string of characters to the system
+	and those characters should not be spoken individually as if the user were typing them.
+	@param number: The number of characters to suppress.
+	@type number: int
+	"""
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	_suppressSpeakTypedCharactersNumber += number
+	_suppressSpeakTypedCharactersTime = time.time()
+
+#: The character to use when masking characters in protected fields.
+PROTECTED_CHAR = "*"
+#: The first character which is not a Unicode control character.
+#: This is used to test whether a character should be spoken as a typed character;
+#: i.e. it should have a visual or spatial representation.
+FIRST_NONCONTROL_CHAR = u" "
 def speakTypedCharacters(ch):
-	global curWordChars;
+	global curWordChars
 	typingIsProtected=api.isTypingProtected()
 	if typingIsProtected:
-		realChar="*"
+		realChar=PROTECTED_CHAR
 	else:
 		realChar=ch
 	if unicodedata.category(ch)[0] in "LMN":
@@ -640,7 +662,19 @@ def speakTypedCharacters(ch):
 			log.io("typed word: %s"%typedWord)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
-	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	if _suppressSpeakTypedCharactersNumber > 0:
+		# We primarily suppress based on character count and still have characters to suppress.
+		# However, we time out after a short while just in case.
+		suppress = time.time() - _suppressSpeakTypedCharactersTime <= 0.1
+		if suppress:
+			_suppressSpeakTypedCharactersNumber -= 1
+		else:
+			_suppressSpeakTypedCharactersNumber = 0
+			_suppressSpeakTypedCharactersTime = None
+	else:
+		suppress = False
+	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
 
 class SpeakTextInfoState(object):

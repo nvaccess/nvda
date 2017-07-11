@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -194,6 +194,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
+
+[editableText]
+	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
 """).format(latestSchemaVersion=latestSchemaVersion)
 
 #: The configuration specification

@@ -138,6 +138,7 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
+	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
 class UIAHandler(COMObject):

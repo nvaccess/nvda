@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-16 00:10+1000\n"
+"POT-Creation-Date: 2017-06-30 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Leonard de Ruijter <leonard@babbage.com>\n"
 "Language-Team: \n"
@@ -95,37 +95,50 @@ msgid "Error in appModule %s"
 msgstr "Fout in appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "banner"
 msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "complementary"
 msgstr "aanvullend"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "content info"
 msgstr "inhoudsinformatie"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "main"
 msgstr "hoofdinhoud"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigatie"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "search"
 msgstr "zoeken"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+#, fuzzy
+msgctxt "aria"
 msgid "form"
 msgstr "formulier"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+#, fuzzy
+msgctxt "aria"
 msgid "region"
 msgstr "gebied"
 
@@ -690,27 +703,50 @@ msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "bnnr"
 msgstr "bnnr"
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "cmpl"
 msgstr "aanv"
 
 #. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "cinf"
 msgstr "iinf"
 
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "hoofdinhoud"
+
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "navi"
 msgstr "navi"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "srch"
 msgstr "zoek"
 
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+#, fuzzy
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "formulier"
+
 #. Translators: Displayed in braille for a significant region, normally found on web pages.
 #, fuzzy
+msgctxt "braille landmark abbreviation"
 msgid "rgn"
 msgstr "gebied"
 
@@ -1270,6 +1306,26 @@ msgstr "gaat naar de vorige aantekening"
 msgid "no previous annotation"
 msgstr "geen vorige aantekening"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+#, fuzzy
+msgid "moves to the next error"
+msgstr "gaat naar de volgende scheiding"
+
+#. Translators: Message presented when the browse mode element is not found.
+#, fuzzy
+msgid "no next error"
+msgstr "geen volgende scheiding"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+#, fuzzy
+msgid "moves to the previous error"
+msgstr "gaat naar de vorige scheiding"
+
+#. Translators: Message presented when the browse mode element is not found.
+#, fuzzy
+msgid "no previous error"
+msgstr "geen vorige scheiding"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1353,7 +1409,7 @@ msgstr ""
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 msgid "Bottom"
-msgstr "Onderaan"
+msgstr "Onderkant"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -1792,6 +1848,10 @@ msgstr "klok"
 msgid "separator"
 msgstr "scheiding"
 
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "formulier"
+
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
 msgstr "kop"
@@ -2002,7 +2062,7 @@ msgstr "tekstframe"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "schakelaar"
+msgstr "schakelknop"
 
 msgid "border"
 msgstr "begrenzing"
@@ -3211,7 +3271,7 @@ msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Verplaatst de leescursor naar de eerste regel van het navigatorobject, en "
+"Verplaatst de leescursor naar de bovenste regel van het navigatorobject, en "
 "spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
@@ -3245,7 +3305,7 @@ msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr ""
-"Verplaatst de leescursor naar de laatste regel van het navigatorobject, en "
+"Verplaatst de leescursor naar de onderste regel van het navigatorobject, en "
 "spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
@@ -4408,22 +4468,21 @@ msgstr "Pijl links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bevel"
-msgstr "Niveau"
+msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Block arc"
-msgstr ""
+msgstr "Blokboog"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Can"
-msgstr ""
+msgstr "Kan"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4450,19 +4509,19 @@ msgstr "Symbool"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chevron"
-msgstr ""
+msgstr "Punthaak"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Circle with line through center"
-msgstr ""
+msgstr "Cirkel met lijn door midden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Circular Arrow"
-msgstr ""
+msgstr "Draaiende pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4475,7 +4534,7 @@ msgstr "Cursor&vorm:"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cloud callout"
-msgstr ""
+msgstr "Wolk bijschrift"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4488,19 +4547,19 @@ msgstr "hoeken"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr ""
+msgstr "vier afgeschuinde hoeken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cross"
-msgstr ""
+msgstr "Kruis"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cube"
-msgstr ""
+msgstr "Kubus"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4520,7 +4579,7 @@ msgstr "banner"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Curved Left Arrow"
-msgstr ""
+msgstr "Gekromde pijl naar links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4540,13 +4599,13 @@ msgstr "Pijl omhoog"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Curved Up Ribbon banner"
-msgstr ""
+msgstr "Omhoog gekromde lintbanner"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decagon"
-msgstr ""
+msgstr "Tienhoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4559,25 +4618,25 @@ msgstr "gestreept diagonaal"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Diamond"
-msgstr ""
+msgstr "Ruit"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Dodecagon"
-msgstr ""
+msgstr "Twaalfhoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Donut"
-msgstr ""
+msgstr "Donut"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double brace"
-msgstr ""
+msgstr "Accolade"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4590,7 +4649,7 @@ msgstr "tweemaal {action}"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double wave"
-msgstr ""
+msgstr "Dubbele golf"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4603,19 +4662,19 @@ msgstr "Pijl omlaag"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr ""
+msgstr "Bijschrift met pijl omlaag"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Explosion"
-msgstr ""
+msgstr "Explosie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Alternate process flowchart symbol"
-msgstr ""
+msgstr "Alternatief proces stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4635,37 +4694,37 @@ msgstr "Geselecteerd symbool aanpassen"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Connector flowchart symbol"
-msgstr ""
+msgstr "Verbindingslijn stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Data flowchart symbol"
-msgstr ""
+msgstr "Gegevens stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decision flowchart symbol"
-msgstr ""
+msgstr "Beslissing stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Delay flowchart symbol"
-msgstr ""
+msgstr "Uitstel stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Direct access storage flowchart symbol"
-msgstr ""
+msgstr "Opslag met directe toegang stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Display flowchart symbol"
-msgstr ""
+msgstr "Weergave stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4678,121 +4737,121 @@ msgstr "Documentinformatie"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Extract flowchart symbol"
-msgstr ""
+msgstr "Ophalen stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Internal storage flowchart symbol"
-msgstr ""
+msgstr "Interne opslag stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Magnetic disk flowchart symbol"
-msgstr ""
+msgstr "Magnetische schijf stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual input flowchart symbol"
-msgstr ""
+msgstr "Handmatige invoer stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual operation flowchart symbol"
-msgstr ""
+msgstr "Handmatige bewerking stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Merge flowchart symbol"
-msgstr ""
+msgstr "Samenvoegen stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Multi-document flowchart symbol"
-msgstr ""
+msgstr "Meerdere documenten stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Offline storage flowchart symbol"
-msgstr ""
+msgstr "Offline opslag stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Off-page connector flowchart symbol"
-msgstr ""
+msgstr "Verbindingslijn naar andere pagina stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'Or' flowchart symbol"
-msgstr ""
+msgstr "'Of' stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Predefined process flowchart symbol"
-msgstr ""
+msgstr "Vooraf gedefinieerd proces stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Preparation flowchart symbol"
-msgstr ""
+msgstr "Voorbereiding stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Process flowchart symbol"
-msgstr ""
+msgstr "Proces stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr ""
+msgstr "Polsband stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr ""
+msgstr "Opslag met sequentiële toegang stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sort flowchart symbol"
-msgstr ""
+msgstr "Sorteren stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Stored data flowchart symbol"
-msgstr ""
+msgstr "Gesorteerde gegevens stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Summing junction flowchart symbol"
-msgstr ""
+msgstr "Samenvoeging stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Terminator flowchart symbol"
-msgstr ""
+msgstr "Scheidingslijn stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Folded corner"
-msgstr ""
+msgstr "Ezelsoor"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4805,7 +4864,7 @@ msgstr "kleurovergang rechthoekig"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Funnel"
-msgstr ""
+msgstr "Trechter"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4835,13 +4894,13 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heptagon"
-msgstr ""
+msgstr "Zevenhoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Hexagon"
-msgstr ""
+msgstr "Zeshoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4854,7 +4913,7 @@ msgstr "gestreept horizontaal"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Isosceles triangle"
-msgstr ""
+msgstr "Gelijkbenige driehoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4867,7 +4926,7 @@ msgstr "Pijl links"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr ""
+msgstr "Bijschrift met pijl naar links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4887,7 +4946,7 @@ msgstr "Linker klik"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Counter-clockwise Circular arrow"
-msgstr ""
+msgstr "Tegen de klok in draaiende pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5147,7 +5206,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque"
-msgstr ""
+msgstr "Broche"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5169,21 +5228,18 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Rectangle"
-msgstr "selecteerbaar"
+msgstr "Rechthoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr "kleurovergang rechthoekig"
+msgstr "Rechthoekig bijschrift"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right Arrow"
 msgstr "Pijl rechts"
@@ -5196,24 +5252,21 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right brace"
-msgstr "Rechts uitgelijnd"
+msgstr "Accolade sluiten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right bracket"
-msgstr "Rechter klik"
+msgstr "Rechte haak sluiten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right triangle"
-msgstr "Rechts uitgelijnd"
+msgstr "Rechthoekige driehoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5295,10 +5348,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved arrow"
-msgstr "Pijl omhoog"
+msgstr "Gekromde pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5314,7 +5366,6 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Up Arrow"
 msgstr "Pijl omhoog"
@@ -5345,10 +5396,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Vertical scroll"
-msgstr "gestreept verticaal"
+msgstr "Verticale rol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5364,24 +5414,21 @@ msgstr ""
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Beginning"
-msgstr "Werkend"
+msgstr "Begin"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Document"
-msgstr "document"
+msgstr "Document"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "End"
-msgstr "end"
+msgstr "Einde"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5391,10 +5438,9 @@ msgstr ""
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Help"
-msgstr "&Help"
+msgstr "Help"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5404,10 +5450,9 @@ msgstr ""
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Information"
-msgstr "Informatie over Add-on"
+msgstr "Infomratie"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5423,10 +5468,9 @@ msgstr ""
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Sound"
-msgstr "geluid"
+msgstr "Geluid"
 
 #. Translators: The description of the NVDA service.
 msgid ""
@@ -6216,6 +6260,10 @@ msgstr "Verplaatst navigatorobject en focus naar de volgende rij"
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Verplaatst navigatorobject en focus naar de vorige rij"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr ""
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "Samenstelling"
@@ -6352,9 +6400,8 @@ msgstr "ongelezen"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-#, fuzzy
 msgid "purple flag"
-msgstr "paars"
+msgstr "Paarse flag"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
@@ -8226,6 +8273,11 @@ msgstr "Achtergrond voortgangsbalken weergeven"
 msgid "Report dynamic &content changes"
 msgstr "Veranderingen van dynamische &inhoud melden"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr ""
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "Bladermodus"
@@ -9923,6 +9975,10 @@ msgstr "opmerking: {text} door {author} op {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} door {author} op {date}"
 
+#, fuzzy, python-brace-format
+msgid "spelling: {text}"
+msgstr "spelfout"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10165,6 +10221,12 @@ msgstr "Niet in een tabel"
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Aantekeningen"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&errors"
+msgstr "Fout"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

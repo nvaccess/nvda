@@ -136,6 +136,10 @@ Wenn Sie NVDA bereits installiert haben, können Sie es entweder vom Desktop aus
 Optional können Sie auch im Dialog "Ausführen..." (Windows-Taste+R) den Befehl "NVDA" (ohne Anführungszeichen) eingeben und mit der Eingabetaste aufrufen.
 Sie können außerdem einige [Befehlszeilenoptionen #CommandLineOptions] angeben. Hiermit können Sie z. .B. NVDA neu starten (-r), NVDA beenden (-q), oder die Erweiterungen deaktivieren (--disable-addons).
 
+Bei installierten Versionen von NVDA werden die Konfigurationsdateien normalerweise im Roaming-Verzeichnis des aktuell angemeldeteen Benutzers gespeichert (z. B. "C:\Users\<Benutzer>\AppData\Roaming").
+Sie können NVDA jedoch so einstellen, dass die Konfigurationsdateien stattdessen im Lokalen Verzeichnis des aktuellen Benutzers gespeichert werden.
+Weitere Informationen dazu finden Sie im Abschnitt [Systemparameter #SystemWideParameters].
+
 Um die Portable Version von NVDA zu starten, wechseln Sie in den Ordner, in welchem Sie die Dateien entpackt haben und starten anschließend die Datei "NVDA.exe" mit der Eingabetaste oder mit einem Doppelklick.
 
 Während des Startvorgangs hören Sie als Erstes eine aufsteigende Melodie.
@@ -149,7 +153,6 @@ Beim ersten Start von NVDA wird Ihnen eine Dialogbox mit einigen grundlegenden I
 (Bitte beachten Sie weitere Themenabschnitte.)
 Das Dialogfeld enthält zudem ein Kombinationsfeld und drei Kontrollfelder.
 Das Kombinationsfeld erlaubt Ihnen die Auswahl des Tastaturschemas.
-
 Mit dem Ersten können Sie festlegen, ob die Dauergroßschreibtaste als so genannte NVDA-Modifikationstaste agieren soll.
 Mit dem zweiten Krontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten Versionen von NVDA zur Verfügung.
 Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
@@ -503,6 +506,7 @@ Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zu
 - O: Eingebettetes Objekt
 - 1 bis 6: Überschrift erster bis sechster Ordnung
 - A: Anmerkung: Kommentar, Dokumentänderung
+- w: Rechtschreibfehler
 -
 Verwenden Sie folgende Tastenkombinationen, um zum Beginn bzw. zum Ende eines Containerobjekts (Listen Tabellen o.ä.) zu springen:
 || Name | Tastenkombination | Beschreibung |
@@ -603,7 +607,7 @@ Weitere Informationen zum Lesemodus und zur Schnellnavigation finden Sie im [Abs
 %kc:beginInclude
 Wenn Sie sich in Microsoft Word im Lesemodus befinden, können Sie mit der Tastenkombination NVDA+F7 auf die Elementliste zugreifen.
 %kc:endInclude
-Die Elementliste enthält Überschriften, Links und Anmerkungen (einschließlich nachverfolgbarer Änderungen)
+Die Elementliste enthält Überschriften, Links, Anmerkungen (einschließlich nachverfolgbarer Änderungen), und Rechtschreibfehler.
 
 +++ Ausgeben von Kommentaren +++
 %kc:beginInclude
@@ -1161,6 +1165,13 @@ Tastenkombination: NVDA+5
 
 Schaltet die Ansage von neuen Inhalten in bestimmten Programmen wie Terminals und Chatprogramme ein bzw. aus.
 
+==== Klang bei automatischen Vorschlägen abspielen ====
+Wenn diese Option aktiviert ist, spielt nVDA einen Klang ab, wenn eine Vorschlagsliste erscheint bzw. ausgeblendet wird.
+Eine Vorschlagsliste wird angezeigt, sobald Sie Text in ein Eingabefeld eines Dokumentes eingeben.
+Ein Beispiel für ein solches Eingabefeld ist das Suchfeld im Startmenü in Windows Vista oder neuer.
+Weitere Beispiele für Eingabefelder mit Vorschlagslisten sind Suchfelder in diversen Windows-10-Anwendungen.
+Die Vorschlagsliste wird geschlossen, sobald Sie mit dem Fokus das Eingabefeld verlassen.
+
 +++ Einstellungen für Eingabemethoden +++
 Sie finden diesen Menüpunkt im Menü Einstellungen.
 Mit diesem Dialog können Sie steuern, wie NVDA die Eingabe von Zeichen asiatischer sprachen wiedergibt. dies betrifft sowohl IME als auch die Textdienste.
@@ -1594,14 +1605,14 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
  -
 -
 
-++ Windows OneCore Voices ++
-Windows 10 enthält neue Stimmen, die als "Mobile" oder "OnCore"-Stimmen bekannt sind.
+++ Windows OneCore-Stimmen ++
+Windows 10 enthält neue Stimmen, die als "Mobile" oder "OneCore"-Stimmen bekannt sind.
 Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft Sapi 5-Stimmen in früheren Windows-versionen.
 
 Informationen darüber, wie Sie Stimmen in zusätzlichen Sprachen installieren, finden Sie im folgenden Artikel: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
 
-Bitte bedenken Sie auch, dass die höheren Sprachgeschwindigkeiten, die im Narrator eingestellt werden können, im NVDA nicht zur Verfügung stehen.
-Eine Änderung der Sprachgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprachgeschwindigkeit in NVDA.
+Bitte bedenken Sie auch, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, im NVDA nicht zur Verfügung stehen.
+Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
 Dieses Problem kann nur durch Änderungen an Windows behoben werden.
 Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
 
@@ -2331,6 +2342,18 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
+
+++ Systemparameter ++[SystemWideParameters]
+Sie können einige Werte in der Registrierdatenbank von Windows verwenden, um das Verhalten von NVDA zu beeinflussen.
+Diese Werte werden unter einem der folgenden Schlüssel gespeichert:
+- 32-bit-Systeme: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bit-systeme: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Die folgenden Werte können geändert werden:
+|| Name | Typ | mögliche Werte | Beschreibung |
+| configInLocalAppData | DWORD | 0 (Standard) zum Deaktivieren, 1 zum Aktivieren | Wenn diese Einstellung aktiviert ist, werden die Konfigurationsdateien im lokalen Verzeichnis des aktuell angemeldeten Benutzers gespeichert. Standardmäßig werden sie im Roaming-Verzeichnis gespeichert. |
+| serviceDebug | DWORD | 0 (Standard) zum Deaktivieren, 1 zum Aktivieren | Das Aktivieren dieser Einstellung wird nicht empfohlen. Diese Einstellung deaktiviert den sicheren Modus in der Windows-Anmeldung. Gleichzeitig wird der Protokollbetrachter und die Python-Konsole aktiviert. |
 
 + Weitere Informationen +
 Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die englische Internetseite unter NVDA_URL.
