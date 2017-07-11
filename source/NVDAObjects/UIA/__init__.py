@@ -29,6 +29,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
+import time
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -1453,14 +1454,18 @@ class Toast_win10(Notification, UIA):
 	else:
 		event_UIA_toolTipOpened=Notification.event_alert
 	# #7128: in Creators Update (build 15063 and later), due to possible UIA Core problem, toasts are announced repeatedly if UWP apps were used for a while.
-	# Therefore, have a private toast message consultant handy.
-	_lastToastMessage = ""
+	# Therefore, have a private toast message consultant (toast timestamp and UIA element runtime ID) handy.
+	_lastToastTimestamp = None
+	_lastToastRuntimeID = None
 
 	def event_UIA_window_windowOpen(self):
 		if sys.getwindowsversion().build >= 15063:
-			if self.name == self._lastToastMessage:
+			toastTimestamp = time.time()
+			toastRuntimeID = self.UIAElement.getRuntimeID()
+			if toastRuntimeID == self._lastToastRuntimeID and toastTimestamt-self._lastToastTimestamp < 1.0:
 				return
-			self.__class__._lastToastMessage = self.name
+			self.__class__._lastToastTimestamp = toastTimestamp
+			self.__class__._lastToastRuntimeID = toastRuntimeID
 		Notification.event_alert(self)
 
 #WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
