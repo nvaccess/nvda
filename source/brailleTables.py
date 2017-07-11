@@ -65,6 +65,7 @@ RENAMED_TABLES = {
 	"ar-fa.utb" : "fa-ir-g1.utb",
 	"da-dk-g16.utb":"da-dk-g16.ctb",
 	"da-dk-g18.utb":"da-dk-g18.ctb",
+	"en-us-comp8.ctb" : "en-us-comp8-ext.utb",
 	"gr-gr-g1.utb":"el.ctb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
@@ -146,10 +147,7 @@ addTable("en-ueb-g2.ctb", _("Unified English Braille Code grade 2"), contracted=
 addTable("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("en-us-comp8.ctb", _("English (U.S.) 8 dot computer braille"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("en-us-comp8-ext.utb", _("English (U.S.) 8 dot extended computer braille"))
+addTable("en-us-comp8-ext.utb", _("English (U.S.) 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("en-us-g1.ctb", _("English (U.S.) grade 1"))
