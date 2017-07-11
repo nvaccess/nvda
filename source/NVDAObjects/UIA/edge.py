@@ -521,6 +521,10 @@ class EdgeHeadingQuickNavItem(UIATextRangeQuickNavItem):
 		return self.level>parent.level
 
 def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
+	"""
+	A helper for L{EdgeHTMLTreeInterceptor._iterNodesByType} that specifically yields L{EdgeHeadingQuickNavItem} objects found in the given document, starting the search from the given position,  searching in the given direction.
+	See L{browseMode._iterNodesByType} for details on these specific arguments.
+	"""
 	# Edge exposes all headings as UIA elements with a controlType of text, and a level. Thus we can quickly search for these.
 	# However, sometimes when ARIA is used, the level on the element may not match the level in the text attributes.
 	# Therefore we need to search for all levels 1 through 6, even if a specific level is specified.
