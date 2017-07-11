@@ -105,7 +105,7 @@ espeakLib=env.SharedLibrary(
 		"../ucd-tools/src/tostring.c",
 		"compiledata.c",
 		"compiledict.c",
-		"compilembrola.c",
+#		"compilembrola.c", # we dont use MBROLA, this is a compile option in espeak
 		"dictionary.c",
 		"encoding.c",
 		"error.c",
@@ -113,7 +113,7 @@ espeakLib=env.SharedLibrary(
 		"ieee80.c",
 		"intonation.c",
 		"klatt.c", # we do use KLATT, this is a compile option in espeak
-		"mbrowrap.c", # we do use MBROLA, this is a compile option in espeak
+#		"mbrowrap.c", # we don't use MBROLA, this is a compile option in espeak
 		"mnemonics.c",
 		"numbers.c",
 		"phoneme.c",
@@ -124,7 +124,7 @@ espeakLib=env.SharedLibrary(
 		"speech.c",
 		"synthdata.c",
 		"synthesize.c",
-		"synth_mbrola.c",
+		"synth_mbrola.c", # provides symbols used by synthesize.obj, voices.obj, and wavegen.obj
 		"tokenizer.c",
 		"translate.c",
 		"tr_languages.c",
@@ -145,6 +145,11 @@ espeakLib=env.SharedLibrary(
 
 phonemeData=env.espeak_compilePhonemeData(espeakRepo.Dir('espeak-ng-data'),espeakRepo.Dir('phsource'))
 env.Depends(phonemeData,espeakLib)
+for i in phonemeData:
+	iDir = espeakRepo.Dir('espeak-ng-data').abspath
+	l = len(iDir) + 1
+	fileName = i.abspath[l:]
+	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, fileName), i)
 
 # Move any extra dictionaries into dictsource for compilation
 env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspath,'dictsource','extra','*_*')))
@@ -155,13 +160,23 @@ dictSourcePath=espeakRepo.Dir('dictsource').abspath
 for f in env.Glob(os.path.join(dictSourcePath,'*_rules')):
 	lang=f.name.split('_')[0]
 	if lang in missingDicts: continue
-	dictFile=env.Command(espeakRepo.Dir('espeak-ng-data').File(lang+'_dict'),f,espeak_compileDict_buildAction)
+	dictFileName = lang+'_dict'
+	dictFile=env.Command(espeakRepo.Dir('espeak-ng-data').File(dictFileName),f,espeak_compileDict_buildAction)
 	dictDeps=env.Glob(os.path.join(espeakRepo.abspath,'dictsource',lang+'_*'))
 	dictDeps.remove(f)
 	env.Depends(dictFile,dictDeps)
 	env.Depends(dictFile,[espeakLib,phonemeData])
 	#Dictionaries can not be compiled in parallel, force SCons not to do this
 	env.SideEffect('_espeak_compileDict',dictFile)
+	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, dictFileName), dictFile)
 
 env.Install(synthDriversDir,espeakLib)
-env.RecursiveInstall(synthDriversDir.Dir('espeak-ng-data'),espeakRepo.Dir('espeak-ng-data').abspath)
+
+# install espeak-ng-data
+targetEspeakDataDir=synthDriversDir.Dir('espeak-ng-data')
+espeakDataSource=espeakRepo.Dir('espeak-ng-data')
+espeakDataSourceAbsPath=espeakDataSource.abspath
+
+# also install the lang and voices/!v directories. Exclude the voices/mb directory since we are not using mbrola.
+env.RecursiveInstall(targetEspeakDataDir.Dir('lang'),espeakDataSource.Dir('lang').abspath)
+env.RecursiveInstall(targetEspeakDataDir.Dir('voices').Dir('!v'),espeakDataSource.Dir('voices').Dir('!v').abspath)
