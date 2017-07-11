@@ -8,9 +8,11 @@ NVDA NVDA_VERSION User Guide
 %%toc
 
 + Introduction +
+Welcome to NVDA!
+
 NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
 Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
-NVDA is developed by [NV Access http://www.nvaccess.org/], with contributions from the community.
+NVDA is developed by [NV Access https://www.nvaccess.org/], with contributions from the community.
 
 ++ General Features ++
 NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
@@ -18,7 +20,7 @@ NVDA allows blind and vision impaired people to access and interact with the Win
 Major highlights include:
 - Support for popular applications including web browsers, email clients, internet chat programs and office suites
 - Built-in speech synthesizer supporting over 80 languages
-- reporting of textual formatting where available such as font name and size, style and spelling errors
+- Reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
 - Ability to run entirely from a USB stick or other portable media without the need for installation
@@ -27,7 +29,7 @@ Major highlights include:
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
-- support for Windows Command Prompt and console applications
+- Support for Windows Command Prompt and console applications
 -
 
 ++ Internationalization ++
@@ -48,7 +50,7 @@ Please see the [Supported Braille Displays #SupportedBrailleDisplays] section fo
 
 NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes.
 
-++ Licence and Copyright ++
+++ License and Copyright ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
 NVDA is covered by the GNU General Public License (Version 2).
@@ -144,16 +146,16 @@ Consult the section about [system wide parameters #SystemWideParameters] for mor
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
 As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
-Depending on how fast your computer is, or if you are running NVDA off a USB key or other slower medium, it may take a little while to start.
-If it is taking an extra long time, NVDA should say "Loading NVDA. Please wait..."
+Depending on how fast your computer is, or if you are running NVDA off a USB key or other slow media, it may take a little while to start.
+If it is taking an extra-long time to start, NVDA should say "Loading NVDA. Please wait..."
 
 If you don't hear any of this, or you hear the Windows error sound, or a descending set of tones, then this means that NVDA has an error, and you will need to possibly report a bug to the developers.
 Please check out the NVDA website for how to do this.
 
 When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu.
 (Please see further sections about these topics.)
-The dialog box also contains a combobox and three checkboxes.
-The combobox lets you select the keyboard layout.
+The dialog box also contains a combo box and three checkboxes.
+The combo box lets you select the keyboard layout.
 The first checkbox lets you control if NVDA should use the capslock as an NVDA modifier key.
 The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
@@ -247,7 +249,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
 | Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
 | Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treated as an NVDA key command |
-| Toggle application sleep mode on and off | NVDA+shift+s | NVDA+shift+z | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
+| Toggle application sleep mode on and off | NVDA+shift+s | NVDA+shift+z | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable sleep mode. |
 %kc:endInclude
 
 ++ Reporting System Information ++
@@ -609,7 +611,7 @@ In order to fit as much information as possible on a braille display, the follow
 | tb | table |
 | tv | treeview |
 | lv N | a tree view item has a hierarchical level N|
-| ``-----`` | seperator |
+| ``-----`` | separator |
 
 The following state indicators are also defined:
 || Abbreviation | Control state |
@@ -1115,7 +1117,7 @@ If on, certain navigation commands (such as quick navigation in browse mode or m
 
 ==== Beep if Typing Lowercase Letters when Caps Lock is On ====
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
-Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.
+Generally, typing shifted letters with caps lock is unintentional and is usually due to not realizing that caps lock is enabled.
 Therefore, it can be quite helpful to be warned about this.
 
 %kc:setting
@@ -1159,7 +1161,7 @@ The higher the mouse is on the screen, the higher the pitch of the beeps.
 The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
 
 ==== Brightness controls audio coordinates volume ====
-If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse.
+If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controlled by how bright the screen is under the mouse.
 This setting is unchecked by default.
 
 +++ Review Cursor Settings +++
@@ -1250,8 +1252,8 @@ Note that due to the fact that input methods vary greatly by available features 
 
 ==== Automatically report all available candidates ====
 This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
-Having this option on for pictographic input methods such as chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
-However, for phonetic input methods such as chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
+Having this option on for pictographic input methods such as Chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
+However, for phonetic input methods such as Chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
 
 ==== Announce Selected Candidate ====
 This option, which is on by default, allows you to choose whether NVDA should announce the selected candidate when a candidate list appears or when the selection is changed.
@@ -1261,7 +1263,7 @@ Note that even with this option off, the review cursor will still be placed on t
 ==== Always include short character descriptions for candidates ====
 This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when it's selected or when it's automatically read when the candidate list appears.
 Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
-This option may be useful for Korean and japanese input methods.
+This option may be useful for Korean and Japanese input methods.
 
 ==== Report changes to the reading string ====
 Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
@@ -1326,7 +1328,7 @@ This dialog box is found in the Preferences menu, under "Document Formatting..."
 Most of the checkboxes in this dialog are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
-The document formatting options are organised into groups.
+The document formatting options are organized into groups.
 You can configure reporting of:
 - Font
  - Font name
@@ -1344,7 +1346,7 @@ You can configure reporting of:
  - Line numbers
  - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
  - Paragraph indentation (e.g. hanging indent, first line indent)
- - Line spacing (single, double etc)
+ - Line spacing (single, double, etc.)
  - Alignment
 - Table information
  - Tables
@@ -1555,9 +1557,9 @@ For example, you might wish to edit a manually activated profile or your normal 
 You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
 
 ++ Location of Configuration files ++
-Portable versions of NVDA store all settings, custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
+Portable versions of NVDA store all settings and add-ons in a directory called userConfig, found in the NVDA directory.
 
-Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile.
+Installed versions of NVDA store all settings and add-ons in a special NVDA directory located in your Windows user profile.
 This means that each user on the system can have their own NVDA settings.
 To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
@@ -1568,7 +1570,7 @@ To change NVDA's configuration on the logon/UAC screens, configure NVDA as you w
 + Extra Tools +
 
 ++ Log Viewer ++
-The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occured up until now from when you last started NVDA.
+The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occurred up until now from when you last started NVDA.
 
 Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
 These actions are available under the viewer's Log menu.
@@ -2340,7 +2342,7 @@ Some of the command line options accept additional parameters; e.g. how detailed
 Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
 | nvda -l 10 | Tells NVDA to start with log level set to debug |
 | nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Tells NVDA to start with log level set to info and to write its log to c:\nvda.log |
 
 Following are the command line options for NVDA:
 || Short | Long | Description |
@@ -2351,7 +2353,7 @@ Following are the command line options for NVDA:
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
-| -m | --minimal | No sounds, no interface, no start message etc |
+| -m | --minimal | No sounds, no interface, no start message, etc. |
 | -s | --secure | Secure mode (disable Python console) |
 | None | --disable-addons | Addons will have no effect |
 | None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given. |

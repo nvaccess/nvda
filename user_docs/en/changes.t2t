@@ -8,9 +8,9 @@
 == New Features ==
 - A Braille setting has been added to "show messages indefinitely". (#6669)
 - In Microsoft Outlook message lists, report if a message is flagged. (#6374)
-- In Microsoft Powerpoint, the exact type of a shape is now reported when editing a slide (Examples include: triangle, circle, video, arrow), rather than just 'shape'. (#7111)
+- In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (such as triangle, circle, video or arrow), rather than just 'shape'. (#7111)
 - Mathematical content (provided as MathML) is now supported in Google Chrome. (#7184)
-- NVDA can now speak using the new Windows OneCore voices (also known as mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
+- NVDA can now speak using the new Windows OneCore voices (also known as Microsoft Mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
 - NVDA user configuration files can now be stored in the user's local application data folder. This is enabled via a setting in the registry. See 'System wide parameters' in the user guide for more details. (#6812)
 - In web browsers, NVDA now reports placeholder values for fields (specifically, aria-placeholder is now supported). (#7004)
 - In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w) (#6942)
@@ -37,7 +37,7 @@
  - "form": "frm"
  - "region": "rgn"
  - Example: "navigation landmark" becomes "lmk nav"
-- Espeak-ng has been updated to release 1.49.1 (#7280).
+- Updated eSpeak NG to 1.49.1. (#7280)
 - The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
 - Updated liblouis braille translator to 3.2.0. (#6935)
 
@@ -47,12 +47,12 @@
 - Pressing end while in browse mode of an empty Microsoft Word document no longer causes a runtime error. (#7009)
 - Browse mode is now correctly   supported in Microsoft Edge where a document has been given a specific ARIA role of document. (#6998)
 - In browse mode, you can now select or unselect to the end of the line using shift+end even when the caret is on the last character of the line. (#7157)
-- If a dialog contains a progress bar, the dialog text is now updated when the progress bar changes. This means, for example, that the remaining time can now be read in NVDA's "Downloading Update" dialog. (#6862)
+- If a dialog contains a progress bar, the dialog text is now updated in braille when the progress bar changes. This means, for example, that the remaining time can now be read in NVDA's "Downloading Update" dialog. (#6862)
 - NVDA will now announce selection changes for certain Windows 10 combo boxes such as AutoPlay in Settings. (#6337).
 - Pointless information is no longer announced when entering Meeting / Appointment creation dialogs in Microsoft Outlook. (#7216)
 - Beeps for indeterminate progress bar dialogs such as the update checker only when progress bar output is configured to include beeps. (#6759)
-- In Microsoft Excel 2007 and 2003, cells are again reported when arrowing around a worksheet. (#8243)
-- In Windows 10 Creators update and later, ensure that browse mode is automatically enabled when reading emails in Windows 10 Mail. (#7289)
+- In Microsoft Excel 2003 and 2007, cells are again reported when arrowing around a worksheet. (#8243)
+- In Windows 10 Creators Update and later, browse mode is again automatically enabled when reading emails in Windows 10 Mail. (#7289)
 - On most braille displays with a braille keyboard, dot 7 now erases the last entered braille cell or character, and dot 8 presses the enter key. (#6054)
 - In editable text, when moving the caret (e.g. with the cursor keys or backspace), NVDA's spoken feedback is now more accurate in many cases, particularly in Chrome and terminal applications. (#6424)
 
