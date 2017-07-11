@@ -43,7 +43,7 @@ class ContentRecognizer(object):
 			i.e. four bytes per pixel in the order blue, green, red, alpha.
 			However, the alpha channel should be ignored.
 		@type pixels: Two dimensional array (y then x) of L{winGDI.RGBQUAD}
-		@param imageInfo: Informationabout the image for recognition.
+		@param imageInfo: Information about the image for recognition.
 		@type imageInfo: L{RecogImageInfo}
 		@param onResult: A callable which takes a L{RecognitionResult} (or an exception on failure) as its only argument.
 		@type onResult: callable
