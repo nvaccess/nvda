@@ -1637,24 +1637,23 @@ class BrailleSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
 		self.focusContextPresentations=[
-			("fill",
 			# Translators: The label for a braille focus context presentation setting that
 			# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 			# This was the pre NVDA 2017.3 default.
-			_("Always fill display")),
-			("scroll",
-			# Translators: The label for a braille focus presentation setting that
-			# always shows the object with focus at the very left of the braille display (i.e. you will have to scroll back for focus context information).
-			_("Only when scrolling back")),
-			("hybrid",
-			# Translators: The label for a braille focus presentation setting that
+			(braille.CONTEXTPRES_FILL, _("Always fill display")),
+			# Translators: The label for a braille focus context presentation setting that
+			# always shows the object with focus at the very left of the braille display
+			# (i.e. you will have to scroll back for focus context information).
+			(braille.CONTEXTPRES_SCROLL, _("Only when scrolling back")),
+			# Translators: The label for a braille focus context presentation setting that
 			# only shows as much as possible focus context information when the context has changed.
-			_("Fill display for context changes")),
+			(braille.CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
 		]
+		self.focusContextPresentationValues = [x[0] for x in self.focusContextPresentations]
 		focusContextPresentationChoices = [x[1] for x in self.focusContextPresentations]
 		self.focusContextPresentationList = sHelper.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
 		try:
-			index=[x[0] for x in self.focusContextPresentations].index(config.conf["braille"]["focusContextPresentation"])
+			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])
 		except:
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
@@ -1684,7 +1683,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
-		config.conf["braille"]["focusContextPresentation"] = [x[0] for x in self.focusContextPresentations][self.focusContextPresentationList.GetSelection()]
+		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 	def onDisplayNameChanged(self, evt):

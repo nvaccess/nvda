@@ -135,6 +135,16 @@ INPUT_END_IND = u" ⣹"
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
+#: Identifier for a focus context presentation setting that
+#: shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+CONTEXTPRES_FILL = "fill"
+#: Identifier for a focus context presentation setting that
+#: always shows the object with focus at the very left of the braille display.
+CONTEXTPRES_SCROLL = "scroll"
+#: Identifier for a focus context presentation setting that
+#: only shows as much as possible focus context information when the context has changed.
+CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
+
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
 	role = obj.role
@@ -775,6 +785,8 @@ class TextInfoRegion(Region):
 		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
 		# Don't touch focusToHardLeft if it is already true
+		# For example, it can be set to True in getFocusContextRegions when this region represents the first new focus ancestor
+		# Alternatively, BrailleHandler._doNewObject can set this to True when this region represents the focus object and the focus ancestry didn't change
 		if not self.focusToHardLeft:
 			# If this is a multiline control, position it at the absolute left of the display when focused.
 			self.focusToHardLeft = self._isMultiline()
@@ -982,16 +994,25 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return endPos
 
 	def _set_windowEndPos(self, endPos):
+		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
+		1. Braille display size.
+		2. Whether one of the regions should be shown hard left on the braille display.
+			(i.e. because of The configuration setting for focus context representation 
+			or whether the braille region that corresponds with the focus represents a multi line edit box.
+		3. Whether word wrap is enabled."""
 		startPos = endPos - self.handler.displaySize
 		# Loop through the currently displayed regions in reverse order
+		# If focusTohardLeft is set for one of the regions, the display shouldn't scroll further back than the start of that region
 		for region, regionStart, regionEnd in reversed(list(self.regionsWithPositions)):
 			if regionStart<=endPos:
 				if region.focusToHardLeft:
 					# Only scroll to the start of this region.
 					restrictPos = regionStart
 					break
-				elif config.conf["braille"]["focusContextPresentation"]!='hybrid':
-					# Do not process the other regions
+				elif config.conf["braille"]["focusContextPresentation"]!=CONTEXTPRES_CHANGEDCONTEXT:
+					# We aren't currently dealing with context change presentation
+					# thus, we only need to consider the last region
+					# since it doesn't have focusToHardLeftSet, the window start position isn't restricted
 					restrictPos = 0
 					break
 		else:
@@ -1066,7 +1087,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]=='scroll':
+		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_SCROLL:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -1181,9 +1202,8 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			# No common regions were found.
 			commonRegionsEnd = 0
 			newAncestorsStart = 1
-		# Yield the common regions, thereby setting focusToHardLeft back to False.
+		# Yield the common regions.
 		for region in oldFocusRegions[0:commonRegionsEnd]:
-			region.focusToHardLeft = False
 			yield region
 	else:
 		# Fetch all ancestors.
@@ -1195,7 +1215,10 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
-		if config.conf["braille"]["focusContextPresentation"]=='hybrid' and not focusToHardLeftSet:
+		if config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT and not focusToHardLeftSet:
+			# We are presenting context changes to the user
+			# Thus, only scroll back as far as the start of the first new focus ancestor
+			# focusToHardLeftSet is used since the first new ancestor isn't always represented by a region
 			region.focusToHardLeft = True
 			focusToHardLeftSet = True
 		region.update()
@@ -1467,7 +1490,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:
-			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]=='hybrid':
+			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
 				if region.focusToHardLeft:
 					focusToHardLeftSet = True
 				elif not focusToHardLeftSet and getattr(region, "_focusAncestorIndex", None) is None:

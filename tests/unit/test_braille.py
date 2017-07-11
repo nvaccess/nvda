@@ -9,24 +9,11 @@
 
 import unittest
 import braille
-from . import PlaceholderNVDAObject
+from objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole
 import controlTypes
-import api
 from config import conf
 import api
 import globalVars
-
-class NVDAObjectWithRole(PlaceholderNVDAObject):
-	"""An object that accepts a role as one of its construction parameters.
-	The name of the object will be set with the associated role label.
-	This class is used to quickly create objects for a fake focus ancestry."""
-
-	def __init__(self, role=controlTypes.ROLE_UNKNOWN,**kwargs):
-		super(NVDAObjectWithRole,self).__init__(**kwargs)
-		self.role=role
-
-	def _get_name(self):
-		return controlTypes.roleLabels.get(self.role,controlTypes.ROLE_UNKNOWN)
 
 class TestFocusContextPresentation(unittest.TestCase):
 	"""A test for the different focus context presentation options."""
@@ -38,23 +25,22 @@ class TestFocusContextPresentation(unittest.TestCase):
 	def setUp(self):
 		"""Set up a fake focus object and give it some ancestry."""
 		self.obj=NVDAObjectWithRole(role=controlTypes.ROLE_LISTITEM)
-		# Create and set a fake desktop object
-		self.fakeDesktopObj=NVDAObjectWithRole(role=controlTypes.ROLE_WINDOW)
-		api.setDesktopObject(self.fakeDesktopObj)
 		# Forcefully create a fake focus ancestry
+		# Note that the braille code excludes the desktop object when getting regions for focus ancestry
+		# The resulting focus object including ancestry will look like: "dialog dlg list lst list item"
 		globalVars.focusAncestors=[api.getDesktopObject(),NVDAObjectWithRole(role=controlTypes.ROLE_DIALOG),NVDAObjectWithRole(role=controlTypes.ROLE_LIST)]
 		braille.handler.handleGainFocus(self.obj)
 		# Make sure that we are testing with three regions
 		self.assertEqual(len(self.regionsWithPositions),3)
 
 	def test_fillDisplay(self):
-		"""Test for the case where both the focus object and its ancestors should be visible on a 40 cell display."""
-		conf['braille']['focusContextPresentation']="fill"
+		"""Test for the case where both the focus object and all its ancestors should be visible on a 40 cell display."""
+		conf['braille']['focusContextPresentation']=braille.CONTEXTPRES_FILL
 		# Since we set the presentation mode, simulate another gainFocus so the regions will be updated properly
 		braille.handler.handleGainFocus(self.obj)
 		# WindowEndPos should be retrieved before we attempt to get the start position
 		# This is because getting windowEndPos can update windowStartPos
-		# Both the focus object and its parent should fit on the display
+		# Both the focus object and its ancestors should fit on the display
 		# Thus, the window end position is equal to the end position of the 3rd region
 		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2][2])
 		# The start position should be 0 now
@@ -62,7 +48,7 @@ class TestFocusContextPresentation(unittest.TestCase):
 
 	def test_scrollOnly(self):
 		"""Test for the case where the focus object should be visible hard left on a display."""
-		conf['braille']['focusContextPresentation']="scroll"
+		conf['braille']['focusContextPresentation']=braille.CONTEXTPRES_SCROLL
 		braille.handler.handleGainFocus(self.obj)
 		# Only the focus object should be visible on the display
 		# This means that the window end position is equal to the end position of the 3rd region
@@ -70,9 +56,9 @@ class TestFocusContextPresentation(unittest.TestCase):
 		# This also means that the window start position is equal to the start position of the 3rd region
 		self.assertEqual(braille.handler.buffer.windowStartPos,self.regionsWithPositions[2][1])
 
-	def test_hybrid(self):
+	def test_changedContext(self):
 		"""Test for the case where the focus object as well as ancestry differences should be visible on the display"""
-		conf['braille']['focusContextPresentation']="hybrid"
+		conf['braille']['focusContextPresentation']=braille.CONTEXTPRES_CHANGEDCONTEXT
 		# Clean up the cached ancestry regions
 		braille.invalidateCachedFocusAncestors(0)
 		# Regenerate the regions
@@ -86,6 +72,8 @@ class TestFocusContextPresentation(unittest.TestCase):
 		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2][2])
 		self.assertEqual(braille.handler.buffer.windowStartPos,self.regionsWithPositions[2][1])
 		# Clean up the cached focus ancestors
+		# specifically, the desktop object (ancestor 0) has no associated region
+		# We will keep the region for the dialog (ancestor 1) and consider the list (ancestor 2) as new for this test
 		braille.invalidateCachedFocusAncestors(2)
 		# Do another focus to simulate a new focus object with different ancestry
 		braille.handler.handleGainFocus(self.obj)
