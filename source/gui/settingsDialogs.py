@@ -28,6 +28,8 @@ import speechDictHandler
 import appModuleHandler
 import queueHandler
 import braille
+import brailleTables
+import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
@@ -949,6 +951,12 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.dynamicContentCheckBox=sHelper.addItem(wx.CheckBox(self,label=dynamicContentText))
 		self.dynamicContentCheckBox.SetValue(config.conf["presentation"]["reportDynamicContentChanges"])
 
+		# Translators: This is the label for a combobox in the
+		# object presentation settings dialog.
+		autoSuggestionsLabelText = _("Play a sound when &auto-suggestions appear")
+		self.autoSuggestionSoundsCheckBox=sHelper.addItem(wx.CheckBox(self,label=autoSuggestionsLabelText))
+		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
+
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
 
@@ -962,6 +970,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
+		config.conf["presentation"]["reportAutoSuggestionsWithSound"]=self.autoSuggestionSoundsCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class BrowseModeDialog(SettingsDialog):
@@ -1523,25 +1532,27 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
 		self.updatePossiblePorts()
 
+		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		self.tableNames = [table[0] for table in braille.TABLES]
-		tableChoices = [table[1] for table in braille.TABLES]
-		self.tableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=tableChoices)
+		outTables = [table for table in tables if table.output]
+		self.outTableNames = [table.fileName for table in outTables]
+		outTableChoices = [table.displayName for table in outTables]
+		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		try:
-			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
-			self.tableList.SetSelection(selection)
+			selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			self.outTableList.SetSelection(selection)
 		except:
 			pass
 
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
-		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
-		inputChoices = [table[1] for table in braille.INPUT_TABLES]
-		self.inputTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inputChoices)
+		self.inTables = [table for table in tables if table.input]
+		inTableChoices = [table.displayName for table in self.inTables]
+		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		try:
-			selection = self.inputTableNames.index(config.conf["braille"]["inputTable"])
-			self.inputTableList.SetSelection(selection)
+			selection = self.inTables.index(brailleInput.handler.table)
+			self.inTableList.SetSelection(selection)
 		except:
 			pass
 
@@ -1661,8 +1672,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
-		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
-		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
+		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
+		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()

@@ -3,6 +3,57 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+
+== Nuevas Características ==
+- Se ha añadido una opción Braille para "mostrar mensajes indefinidamente". (#6669)
+- En la lista de mensajes de Microsoft Outlook, se anuncia si un mensaje está marcado. (#6374)
+- En Microsoft Powerpoint, ahora se anuncia el tipo exacto de una forma cuando se edita una diapositiva (Ejemplos incluyen: triángulo, círculo, vídeo, flecha), en lugar de sólo 'forma'. (#7111)
+- El contenido matemático (proporcionado como MathML) ahora se soporta en Google Chrome. (#7184)
+- NVDA ahora puede hablar utilizando las nuevas voces Windows OneCore (también conocidas como voces mobile) incluidas en Windows 10. Accede a ellas seleccionando Voces Windows OneCore en el diálogo Sintetizadores de NVDA. (#6159)
+- Los ficheros de configuración de usuario de NVDA ahora pueden almacenarse en la carpeta local de datos de aplicaciones de usuario. Esto se habilita a través de una opción en el registro. Consulta 'Parámetros del Sistema' en la guía del usuario para más detalles. (#6812)
+- En los navegadores web, NVDA ahora anuncia valores de marcador de posición para campos (específicamente, ahora se soporta aria-placeholder). (#7004)
+- En el modo exploración de Microsoft Word, ahora es posible navegar por los errores de ortografía utilizando navegación rápida (w y shift+w) (#6942)
+- Añadido el soporte para el control Selector de Fecha que se encuentra en los cuadros de diálogo Citas de Microsoft Outlook. (#7217)
+- Ahora se anuncia la sugerencia actualmente seleccionada en los campos de Windows 10 Mail para/cc y en el campo Opciones de búsqueda de Windows 10. (#6241)
+- Ahora se reproduce un sonido para indicar la aparición de sugerencias en ciertos campos de búsqueda de Windows 10 (Ej.: pantalla de inicio, Opciones de búsqueda, campos de Windows 10 mail para/CC). (#6241)
+
+
+== Cambios ==
+- Un gesto no vinculado (script_restart) se ha añadido para permitir que NVDA se reinicie rápidamente. (#6396)
+- La distribución de teclado ahora puede configurarse desde el diálogo Bienvenida de NVDA. (#6863)
+- Los nombres de los puntos de referencia se abrevian en Braille como sigue: (#3975)
+ - "punto de referencia": "pdr"
+ - "título": "tlo"
+ - "complementario": "comp"
+ - "info de contenido": "cinf"
+ - "principal": "main"
+ - "navegación": "nav"
+ - "búsqueda": "busq"
+ - "form": "frm"
+ - "region": "rgn"
+ - Ejemplo: "punto de referencia de navegación" sería "pdr nav"
+- Espeak-ng se ha actualizado a la versión 1.49.1 (#7280).
+
+
+== Corrección de Errores ==
+- Los elementos div editables en Chrome ya no tienen su etiqueta anunciada como su valor mientras se esté en modo exploración. (#7153)
+- Pulsar fin mientras se esté en modo exploración de un documento vacío de Microsoft Word ya no provoca un error en tiempo de ejecución. (#7009)
+- El modo exploración ahora se soporta correctamente en Microsoft Edge cuando a un documento se le haya dado un rol ARIA específico de documento. (#6998)
+- En modo exploración, ahora puedes seleccionar o deseleccionar hasta el fin de la línea utilizando shift+fin incluso cuando el cursor esté sobre el último carácter de la línea. (#7157)
+- Si un diálogo contiene una barra de progreso, el texto del diálogo ahora se actualiza cuando la barra de progreso cambie. Esto significa, por ejemplo, que el tiempo restante ahora puede leerse en el diálogo de NVDA "Descargando Actualizaciones". (#6862)
+- NVDA ahora anunciará cambios de selección para ciertos cuadros combinados de Windows 10 tales como AutoReproducción en Opciones. (#6337).
+- Ya no se anuncia información injustificada al entrar en diálogos de reuniones / citas en Microsoft Outlook. (#7216)
+- Pitidos indeterminados para barras de progreso de diálogo tales como el actualizador sólo cuando la salida de la barra de progreso se configure para incluir pitidos. (#6759)
+
+
+== Cambios para Desarrolladores ==
+- Las marcass de tiempo ahora incluyen milésimas de segundo en el registro. (#7163)
+- NVDA ahora debe compilarse con Visual Studio Community 2015. Visual Studio Express ya no se soporta. (#7110)
+ - Ahora también se requieren las Windows 10 Tools y el SDK, que pueden habilitarse al instalar Visual Studio.
+ - Consulta la sección Installed Dependencies del readme para detalles adicionales.
+
+
 = 2017.2 =
 Lo reseñable de esta versión incluye soporte completo para la atenuación de audio en la actualización Windows 10 Creators; correcciones para varios problemas con la selección en modo exploración, incluyendo problemas con seleccionar todo; mejoras significativas en el soporte de Microsoft Edge; y mejoras en la web tales como el indicado de elementos marcados como actual (utilizando aria-current).
 

@@ -33,6 +33,8 @@ import browseMode
 import inputCore
 import ctypes
 
+excel2010VersionMajor=14
+
 xlNone=-4142
 xlSimple=-4154
 xlExtended=3
@@ -944,7 +946,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
-		if (self.obj.excelCellObject.Application.Version > "12.0"):
+		versionMajor=int(self.obj.excelCellObject.Application.Version.split('.')[0])
+		if versionMajor>=excel2010VersionMajor:
+			# displayFormat includes conditional formatting calculated at runtime
+			# However it is only available in Excel 2010 and higher
 			cellObj=self.obj.excelCellObject.DisplayFormat
 		else:
 			cellObj=self.obj.excelCellObject
