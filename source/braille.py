@@ -98,7 +98,7 @@ roleLabels = {
 	controlTypes.ROLE_TOOLBAR: _("tlbar"),
 	# Translators: Displayed in braille for an object which is a
 	# drop down button.
-	controlTypes.ROLE_DROPDOWNBUTTON: _("ddbtn"),
+	controlTypes.ROLE_DROPDOWNBUTTON: _("drbtn"),
 	# Displayed in braille for an object which is a
 	# separator.
 	controlTypes.ROLE_SEPARATOR: u"⠤⠤⠤⠤⠤",
@@ -131,10 +131,10 @@ roleLabels = {
 	controlTypes.ROLE_SECTION: _("sect"),
 	# Translators: Displayed in braille for an object which is a
 	# toggle button.
-	controlTypes.ROLE_TOGGLEBUTTON: _("tbtn"),
+	controlTypes.ROLE_TOGGLEBUTTON: _("tgbtn"),
 	# Translators: Displayed in braille for an object which is a
 	# split button.
-	controlTypes.ROLE_SPLITBUTTON: _("sptbtn"),
+	controlTypes.ROLE_SPLITBUTTON: _("splbtn"),
 	# Translators: Displayed in braille for an object which is a
 	# menu button.
 	controlTypes.ROLE_MENUBUTTON: _("mnubtn"),
@@ -161,9 +161,9 @@ positiveStateLabels = {
 	# Displayed in braille when an object (e.g. a toggle button) is pressed.
 	controlTypes.STATE_PRESSED: u"⢎⣿⡱",
 	# Displayed in braille when an object (e.g. a check box) is checked.
-	controlTypes.STATE_CHECKED: u"⢎⣿⡱",
+	controlTypes.STATE_CHECKED: u"⣏⣿⣹",
 	# Displayed in braille when an object (e.g. a check box) is half checked.
-	controlTypes.STATE_HALFCHECKED: u"⢎⣭⡱",
+	controlTypes.STATE_HALFCHECKED: u"⣏⣸⣹",
 	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 	controlTypes.STATE_READONLY: _("ro"),
 	# Displayed in braille when an object (e.g. a tree view item) is expanded.
@@ -172,7 +172,7 @@ positiveStateLabels = {
 	controlTypes.STATE_COLLAPSED: "+",
 	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 	controlTypes.STATE_HASPOPUP: _("submnu"),
-	# Displayed in braille when a protected control or a document is encountered.	
+	# Displayed in braille when a protected control or a document is encountered.
 	controlTypes.STATE_PROTECTED: "***",
 	# Translators: Displayed in braille when a required form field is encountered.
 	controlTypes.STATE_REQUIRED: _("req"),
@@ -199,9 +199,9 @@ negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
 	controlTypes.STATE_SELECTED: _("nsel"),
 	# Displayed in braille when an object (e.g. a toggle button) is not pressed.
-	controlTypes.STATE_PRESSED: u"⢎⣉⡱",
+	controlTypes.STATE_PRESSED: u"⢎⣀⡱",
 	# Displayed in braille when an object (e.g. a check box) is not checked.
-	controlTypes.STATE_CHECKED: u"⢎⣉⡱",
+	controlTypes.STATE_CHECKED: u"⣏⣀⣹",
 }
 
 landmarkLabels = {
@@ -1761,10 +1761,10 @@ def terminate():
 class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	"""Abstract base braille display driver.
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
-	
+
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
-	
+
 	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
 	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.
