@@ -1468,10 +1468,6 @@ class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
 	"""
 
-	def initOverlayClass(self):
-		# #7370: do not announce text when start menu (searchui) closes.
-		self.announceNewLineText = self.appModule.appName != "searchui"
-
 	def event_UIA_controllerFor(self):
 		# Only useful if suggestions appear and disappear.
 		if self == api.getFocusObject() and len(self.controllerFor)>0:
