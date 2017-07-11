@@ -1452,6 +1452,16 @@ class Toast_win10(Notification, UIA):
 		event_UIA_window_windowOpen=Notification.event_alert
 	else:
 		event_UIA_toolTipOpened=Notification.event_alert
+	# #7128: in Creators Update (build 15063 and later), due to possible UIA Core problem, toasts are announced repeatedly if UWP apps were used for a while.
+	# Therefore, have a private toast message consultant handy.
+	_lastToastMessage = ""
+
+	def event_UIA_window_windowOpen(self):
+		if sys.getwindowsversion().build >= 15063:
+			if self.name == self._lastToastMessage:
+				return
+			self.__class__._lastToastMessage = self.name
+		Notification.event_alert(self)
 
 #WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
 #This causes major lags when using this control with Braille in NVDA. (#2759) 
