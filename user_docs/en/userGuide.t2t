@@ -595,10 +595,10 @@ In order to fit as much information as possible on a braille display, the follow
 | app | application |
 | blq | block quote |
 | btn | button |
-| ddbtn | drop down button |
+| drbtn | drop down button |
 | spnbtn | spin button |
-| sptbtn | split button |
-| tbtn | toggle button |
+| splbtn | split button |
+| tgbtn | toggle button |
 | cbo | combo box |
 | chk | checkbox |
 | dlg | dialog |
@@ -643,9 +643,11 @@ In order to fit as much information as possible on a braille display, the follow
 The following state indicators are also defined:
 || Abbreviation | Control state |
 | ... | displayed when an object supports autocompletion |
-| ⢎⣿⡱ | displayed when an object (e.g. a checkbox or toggle button) is checked or pressed |
-| ⢎⣭⡱ | displayed when an object (e.g. a checkbox) is half checked |
-| ⢎⣉⡱ | displayed when an object (e.g. a checkbox or toggle button) is not checked or not pressed |
+| ⢎⣿⡱ | displayed when an object (e.g. a toggle button) is pressed |
+| ⣏⣿⣹ | displayed when an object (e.g. a checkbox) is checked |
+| ⣏⣸⣹ | displayed when an object (e.g. a checkbox) is half checked |
+| ⢎⣀⡱ | displayed when an object (e.g. a toggle button) is not pressed |
+| ⣏⣀⣹ | displayed when an object (e.g. a checkbox) is not checked |
 | - | displayed when an object (e.g. a tree view item) is collapsible |
 | + | displayed when an object (e.g. a tree view item) is Expandable |
 | *** | displayed when a protected control or document is encountered |
