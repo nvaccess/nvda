@@ -424,7 +424,7 @@ class EdgeNode(UIA):
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
-		# #7333: It is valid to provide multiple, space separated roles
+		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
@@ -491,8 +491,11 @@ class EdgeNode(UIA):
 		return False
 
 	def _get_landmark(self):
-		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		"""Fetches the aria landmark role for this object."""
 		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
+		if not landmarkId: # will be 0 for non-landmarks
+			return None
+		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# If multiple roles or even multiple landmark roles are provided, the first one is used
 		for ariaRole in ariaRoles.split():
