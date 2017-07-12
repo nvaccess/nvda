@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 00:10+1000\n"
-"PO-Revision-Date: 2017-02-18 21:43+0800\n"
+"POT-Creation-Date: 2017-05-08 16:33+1000\n"
+"PO-Revision-Date: 2017-05-09 23:30+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -2328,6 +2328,34 @@ msgstr "，未选择"
 msgid "not checked"
 msgstr "未选中"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "未按下"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "当前"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "当前页"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "当前步骤"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "当前位置"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "当前日期"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "当前时间"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2496,8 +2524,11 @@ msgstr "为激活的应用程序“开启”或“关闭”睡眠模式。"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "读出系统焦点所在行的内容，连按两次则拼读这一行。"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"读出应用程序焦点所在行的内容，连按两次逐字朗读这一行，连按三次用短字符描述逐"
+"字解释。"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -3062,7 +3093,7 @@ msgstr "往后没有对象"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "移动导航对象到下一个对象"
+msgstr "移动导航对象到此层级的下一个对象"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
@@ -3071,7 +3102,7 @@ msgstr "往前没有对象"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr "移动导航对象到前一个对象"
+msgstr "移动导航对象到此层级的前一个对象"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
@@ -3673,13 +3704,13 @@ msgstr ""
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "移动导航对象到此层级的下一个对象"
+msgstr "移动导航对象到下一个对象"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "移动导航对象到此层级的上一个对象"
+msgstr "移动导航对象到上一个对象"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -4307,6 +4338,10 @@ msgstr "样式 %s"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "默认样式"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "无边界"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -6083,8 +6118,8 @@ msgid "Error activating profile."
 msgstr "激活配置时发生错误。"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "您确定要删除此配置吗？请注意，此操作无法恢复。"
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "此配置文件将永久删除且操作不可恢复"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6944,6 +6979,8 @@ msgid "Line &indentation reporting:"
 msgstr "行缩进提示朗读(&I)："
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "关"
 
@@ -6994,6 +7031,21 @@ msgstr "行/列标题(&H)"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "表格的单元坐标(&O)"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "样式"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "颜色和样式"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "单元边界"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7551,6 +7603,11 @@ msgstr ""
 "按一次设置此单元格为第一个行标题单元，包括其右方和下方的单元在内都属于此区"
 "域，连按两次清除此单元的行标题设置。"
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "表格 {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "输入消息为{title}: {message}"
@@ -7576,6 +7633,129 @@ msgstr "正在编辑单元{address}的注释"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{lastAddress} {lastContent}到{firstAddress} {firstContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "上边"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "底边"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "左边界"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "右边界"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "右对角线"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "右下对角线"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "无外侧水平边界"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "无外侧垂直边界"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "持续线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "虚线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "点虚线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "点点虚线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "点形线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "双线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "倾斜的点虚线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "头部"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "薄"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "中"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "厚"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "中央点点虚线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "中央点虚线"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "中央虚线"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} 环绕边界"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} 顶边界和底边界"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} 左边界和右边界"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} 右上和右下对角线"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8579,3 +8759,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "您确定要删除此配置吗？请注意，此操作无法恢复。"

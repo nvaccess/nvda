@@ -23,7 +23,7 @@ Belangrijke functies zijn:
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Kan via usb-stick of ander  draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
-- In 48 talen beschikbaar
+- In 50 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation (UI Automation alleen op Windows 7 of hoger)
@@ -32,7 +32,7 @@ Belangrijke functies zijn:
 
 ++ Internationalisering ++
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
-Behalve de Engelse versie van NVDA is het programma beschikbaar in 48 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, IJslands, Italiaans, Japans, Koreaans, Pharsi, Pools, Portugees, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, etc. 
+Behalve de Engelse versie van NVDA is het programma beschikbaar in 50 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
 
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal  als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -137,6 +137,10 @@ Als u NVDA hebt geïnstalleerd met het installatieprogramma, kunt u NVDA eenvoud
 U kunt het programma ook starten door in het dialoogvenster Uitvoeren de letters NVDA te typen en vervolgens Enter in te drukken.
 U kunt ook [commandoregelopties opgeven #CommandLineOptionstart waarmee u NVDA herstart  (-r), beëindigt (-q), add -ons uitschakelt (--disable-addons), etc.
 
+In geval van een geïnstalleerde versie slaat NVDA de configuratie standaard op in de map roaming application data  van de huidige gebruiker (bijv.  "C:\Users\<user>\AppData\Roaming").
+Het is mogelijk dit te wijzigen en wel zodanig dat in plaats daarvan NVDA de configuratie ophaalt uitthe map met de lokale applicatiedata.
+Raadpleeg voor meer details de paragraaf over [systeembrede parameters #SystemWideParameters].
+
 Om de  draagbare versie van NVDA te starten gaat u naar de map waarin u de uitgepakte bestanden hebt opgeslagen. Daar selecteert u NVDA.exe. Druk op de Entertoets of dubbelklik op het bestand.
 
 Bij het opstarten van het programma hoort u eerst een reeks in hoogte oplopende tonen die aangeven dat NVDA wordt geladen. 
@@ -148,8 +152,9 @@ Op de NVDA website kunt u lezen hoe u dit kunt doen.
 
 Wanneer NVDA de eerste keer start, komt u in het welkomstscherm van het programma dat u informatie geeft over de NVDA-toets en het NVDA-menu.
 Verderop in deze handleiding kunt u hier meer over lezen.
-Op het welkomstscherm treft u ook 3 selectievakjes aan.
-Als u in het  eerste vakje een vinkje zet, wordt de CapsLock-toets ook als NVDA-toets gebruikt. 
+Op het welkomsscherm treft u een vervolgkeuzemenu en 3 selectievakjes aan.
+Via het vervolgkeuzemenu kunt u een toetsenbordindeling selecteren.
+Als u in het eerste selectievakje een vinkje zet, wordt de CapsLock-toets ook als NVDA-programmatoets gebruikt.
 Als u een vinkje in het tweede vakje zet, zal NVDA automatisch opstarten zodra u bij Windows bent aangemeld. Deze mogelijkheid is alleen beschikbaar voor de geïnstalleerde versie van NVDA. 
 Een vinkje in het derde selectievakje zorgt ervoor dat dit welkomsscherm verschijnt, telkens  wanneer NVDA wordt gestart.  
 
@@ -291,7 +296,7 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 %kc:beginInclude
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Alles voorlezen | NVDA+pijl omlaag | NVDA+a | Voorlezen starten vanaf de huidige positie van de tekstcursor die tijdens het lezen wordt verplaatst. |
-| Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. |
+| Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. bij driemaal drukken wordt regel gespeld met gebruikmaking van spellingsalfabet. |
 | Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | NVDA+Shift+s | Hiermee wordt geselecteerde tekst voorgelezen. |
 | Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook). |
 | Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook ). |
@@ -546,7 +551,7 @@ Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
 MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
-- MathML in Mozilla Firefox en Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
 - Design Science MathType in Microsoft Word and PowerPoint. MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
 - MathML in Adobe Reader. NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
 -
@@ -703,7 +708,7 @@ Wanneer u zich in een berichtenreeks bevindt:
 
 ++ Kindle voor de PC ++
 NVDA ondersteunt het lezen van en het navigeren in boeken met  Amazon Kindle voor de PC.
-Deze functionaliteit is alleen beschikbaar voor  Kindle-boeken die "Enhanced Typesetting" ondersteunen U kunt dit nagaan op de pagina met gegevens over het boek in kwestie.
+Deze functionaliteit is alleen beschikbaar voor  Kindle-boeken met het kenmerk "Schermlezers: worden ondersteund" (Screen Reader: supported). U kunt dit nagaan op de pagina met gegevens over het boek in kwestie.
 
 U gebruikt de bladermodus om boeken te lezen.
 Deze wordt vanzelf geactiveerd wanneer u een boek opent of de focus ergens in een boekgebied plaatst.
@@ -960,12 +965,15 @@ In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor
 Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen.
 Deze optie heeft geen betrekking op de selectieaanwijzer.
 
-==== Time-out voor berichten (sec.) ====
-In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-berichten in het uitleesvenster worden weergegeven.
+==== Time-out voor meldingen (sec.) ====
+In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen in het uitleesvenster worden weergegeven.
 Als u "0" als waarde invult, worden geen berichten getoond.
 
+==== Meldingen voor onbepaalde tijd tonen ====
+Met deze optie kunnen NVDA-meldingen voor onbepaalde tijd op de brailleleesregel worden getoond.
+
 %kc:setting
-==== Braille volgkeuze ====[BrailleTether]
+==== Braille volgmoduskeuze ====[BrailleTether]
 Toets: NVDA+control+t
 
 Hiermee kunt u bepalen of de leesregel de systeemfocus dan wel de navigatorobject- / reviewcursor moet volgen
@@ -1266,6 +1274,7 @@ U kunt de vermelding laten horen van:
  - Tabellen
  - Rij- en kolomhoofden
  - Celcoördinaten
+ - Celranden [(Uit, Stijlen, Zowel kleuren als stijlen
 - Elementen
  - Links
  - Koppen
@@ -1588,6 +1597,17 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
  Voorbeeld: Het bestand MSSpeech_TTS_en-US_ZiraPro.msi is een amerikaans-engelse stem.
  -
 -
+
+++ Windows OneCore-stemmen ++
+In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
+Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
+
+Als u stemmen voor extra talen wilt installeren, leest u dan het artikel van Microsoft op https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Let erop dat de versnellingsmogelijkheden die op dit moment in de Verteller beschikbaar zijn nog niet ondersteund worden door NVDA.
+Houd er ook rekening mee dat de snelheid die u instelt in Windows de in NVDA ingestelde niveaus zal beïnvloeden.
+Een oplossing hiervoor is niet mogelijk zonder aanpassingen in Windows.
+We hopen dat dit gaat gebeuren bij een volgende update van Windows.
 
 ++ AudioLogic TTS 3 ++
 Dit is een commerciële spraaksynthesizer die speciaal ontwikkeld is voor het Italiaans.
@@ -2222,8 +2242,8 @@ http://mielke.cc/brltty/doc/KeyTables/] raadplegen.
 | Cursor naar Braillecel verplaatsen | route (Cursor naar karakter bewegen) |
 %kc:endInclude
 
-+ Brailleleesregelafkortingen met betrekking tot type besturingselement en gebruiksstatus +
-Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement en de gebruiksstatus.
++ Brailleleesregelafkortingen met betrekking tot type besturingselement, gebruiksstatus en oriëntatiepunten +
+Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement, de gebruiksstatus alsmede oriëntatiepunten.
 
 || Afkorting | Type besturingselement |
 | kn | knop |

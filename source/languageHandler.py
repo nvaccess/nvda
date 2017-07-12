@@ -14,6 +14,12 @@ import gettext
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
 LOCALE_SLANGDISPLAYNAME=0x6f
+LOCALE_CUSTOM_UNSPECIFIED = 0x1000
+#: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
+#: This might be because Windows doesn't know about the locale (e.g. "an"),
+#: because it is not a standardized locale name anywhere (e.g. "zz")
+#: or because it is not a legal locale name (e.g. "zzzz").
+LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 
 curLang="en"
 
@@ -21,7 +27,7 @@ def localeNameToWindowsLCID(localeName):
 	"""Retreave the Windows locale identifier (LCID) for the given locale name
 	@param localeName: a string of 2letterLanguage_2letterCountry or or just 2letterLanguage
 	@type localeName: string
-	@returns: a Windows LCID
+	@returns: a Windows LCID or L{LCID_NONE} if it could not be retrieved.
 	@rtype: integer
 	""" 
 	#Windows Vista is able to convert locale names to LCIDs
@@ -29,6 +35,11 @@ def localeNameToWindowsLCID(localeName):
 	if func_LocaleNameToLCID is not None:
 		localeName=localeName.replace('_','-')
 		LCID=func_LocaleNameToLCID(unicode(localeName),0)
+		# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
+		# This was observed for Aragonese ("an").
+		# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
+		if LCID==LOCALE_CUSTOM_UNSPECIFIED:
+			LCID=LCID_NONE
 	else: #Windows doesn't have this functionality, manually search Python's windows_locale dictionary for the LCID
 		localeName=locale.normalize(localeName)
 		if '.' in localeName:
@@ -37,7 +48,7 @@ def localeNameToWindowsLCID(localeName):
 		if len(LCList)>0:
 			LCID=LCList[0]
 		else:
-			LCID=0
+			LCID=LCID_NONE
 	return LCID
 
 def windowsLCIDToLocaleName(lcid):
@@ -57,9 +68,7 @@ def getLanguageDescription(language):
 	"""Finds out the description (localized full name) of a given local name"""
 	desc=None
 	LCID=localeNameToWindowsLCID(language)
-	# #6259: LCID 0x1000 denotes custom locale in Windows 10, thus returns "unknown language" or an odd description (observed for Aragonese).
-	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
-	if LCID not in (0, 0x1000):
+	if LCID is not LCID_NONE:
 		buf=ctypes.create_unicode_buffer(1024)
 		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
 		if '_' not in language:

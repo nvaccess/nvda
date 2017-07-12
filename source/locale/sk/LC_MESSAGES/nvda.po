@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-10 00:10+1000\n"
-"PO-Revision-Date: 2017-02-11 10:07+0100\n"
+"POT-Creation-Date: 2017-05-19 00:10+1000\n"
+"PO-Revision-Date: 2017-05-18 16:52+0200\n"
 "Last-Translator: Ondrej rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "Language: sk\n"
@@ -2333,6 +2333,34 @@ msgstr "nevybraté"
 msgid "not checked"
 msgstr "nezačiarknuté"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "nestlačené"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "aktuálna"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "aktuálna strana"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "aktuálny krok"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "aktuálna pozícia"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "aktuálny dátum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "aktuálny čas"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2509,8 +2537,11 @@ msgstr "Zapína a vypína režim spánku pre práve aktívnu aplikáciu"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "Prečíta alebo vyhláskuje aktuálny riadok systémového kurzora."
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"Prečíta aktuálny riadok systémového kurzora. Stlačené dvakrát riadok "
+"vyhláskuje a stlačené trikrát vyhláskuje riadok foneticky."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4409,6 +4440,10 @@ msgstr "Štýl %s"
 msgid "default style"
 msgstr "Predvolený štýl"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "bez orámovania"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6222,8 +6257,8 @@ msgid "Error activating profile."
 msgstr "pri aktivácii profilu došlo k chybe."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Chcete naozaj odstrániť tento profil? Odstránenie je trvalé."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Profil bude natrvalo odstránený a nebude možné ho automaticky obnoviť."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7110,6 +7145,8 @@ msgid "Line &indentation reporting:"
 msgstr "o&dsadenie riadka:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Vypnuté"
 
@@ -7160,6 +7197,21 @@ msgstr "&hlavičky stĺpcov a riadkov"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "Súradnice &buniek tabuľky"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Štýly"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Farby a štýly"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Orámovanie:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7723,6 +7775,11 @@ msgstr ""
 "ktoré sú napravo a nižšie v tejto oblasti. Stlačené dvakrát odstráni "
 "informáciu o hlavičkách pre riadky."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "hárok {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Vstupný text je {title}: {message}"
@@ -7748,6 +7805,129 @@ msgstr "Úprava komentára pre bunku {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} do {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "horná hranica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "dolná hranica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "ľavá hranica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "pravá hranica"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "šikmo nahor"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "šikmo nadol"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "len vnútorné horizontálne hranice"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "len vnútorné vertikálne hranice"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "Nepretržité"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "prerušovaná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "bodkočiarkovaná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "Bodko-bodko-čiarkovaná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "bodkovaná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "dvojitá"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "skreslená bodkočiarkovaná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "vlasová"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "tenká"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "stredná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "hrubá"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "Stredne hrubo bodko-bodko-čiarkovaná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "Stredne hrubo bodkočiarkovaná"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "Stredne hrubo čiarkovaná"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} po všetkých stranách"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} horná a dolná hrana"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} ľavá a pravá hrana"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} čiari zhora nadol a zdola nahor"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8769,3 +8949,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "Chcete naozaj odstrániť tento profil? Odstránenie je trvalé."

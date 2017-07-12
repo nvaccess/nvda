@@ -36,8 +36,12 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](http://www.python.org/), version 2.7.13, 32 bit
-* Microsoft Visual Studio 2015 (Express for Desktop with VC++ and Windows SDK 7.1A support, or Community with VC++ and Windows XP support):
-	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
+* Microsoft Visual Studio Community 2015 with Update 3:
+	* To download, you will need to [join the Visual Studio Dev Essentials program](https://my.visualstudio.com/Benefits?wt.mc_id=o~msft~vscom~devessentials-hero~30569&campaign=o~msft~vscom~devessentials-hero~30569).
+		After you have joined, Visual Studio Community 2015 with Update 3 will be available on the Downloads tab.
+	* When installing Visual Studio, you need to enable the following:
+		* In Visual C++: Common Tools for Visual C++ 2015, Windows XP Support for C++
+		* Windows and Web Development -> Universal Windows App Development Tools -> Tools (1.4.1) and Windows 10 SDK (10.0.14393)
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
@@ -54,7 +58,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 3.0.0
+* [liblouis](http://www.liblouis.org/), version 3.2.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -67,7 +71,7 @@ For reference, the following dependencies are included in Git submodules:
 * lilli.dll, version 2.1.0.0
 * [Handy Tech Braille SDK, version 1.4.2.0](ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip)
 * Updated Handy Tech sbsupport.dll and dealers.dat received on 2014-09-09
-* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.5
+* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
 * HanSoneConnect.dll, version 2.0.0.1
 * SyncBraille.dll, version 1.0.0.1
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
@@ -199,4 +203,25 @@ For example, to build a launcher  with a specific version, you might type:
 
 ```
 scons launcher version=test1
+```
+
+## Running Automated Tests
+If you make a change to the NVDA code, you should run NVDA's automated tests.
+These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
+Currently, NVDA has only one kind of automated testing: unit tests.
+
+To run the unit tests, first change directory to the root of the NVDA source distribution as above.
+Then, run:
+
+```
+scons tests
+```
+
+To run only specific tests, specify them using the `unitTests` variable on the command line.
+The tests should be provided as a comma separated list.
+Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
+For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
+
+```
+scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
 ```

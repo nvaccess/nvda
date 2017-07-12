@@ -23,7 +23,7 @@ Trăsăturile importante includ:
 - Suport pentru multe afișaje actualizabile Braille, incluzând introducerea de braille pentru calculator pentru afișajele braille care au tastatură braille
 - Capacitatea de a rula exclusiv de pe un stick USB sau alte suporturi media portabile fără nevoia instalării
 - Interfață de instalare vorbită, ușor de folosit
-- Tradus în 48 de limbi
+- Tradus în 50 de limbi
 - Suport pentru sistemele de operare Windows moderne, incluzând atât variantele pe 32 cât și pe 64 biți
 - Capacitatea de a rula pe ecranul de autentificare în Windows și alte ecrane de siguranță
 - Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation (UI Automation disponibil doar pentru Windows 7 sau mai nou)
@@ -32,12 +32,12 @@ Trăsăturile importante includ:
 
 ++ Internaționalizare ++
 Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, să aibă același acces la tehnologie.
-În afară de engleză, NVDA a fost tradus în 48 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, indiană, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, lituaniană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
+În afară de engleză, NVDA a fost tradus în 50 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, birmană, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindusă, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, kanareză, lituaniană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
 
 ++ Suport pentru sintetizator de voce ++
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorilor să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
 
-NVDA are incorporat [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
+NVDA are încorporat [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
 
 Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite în secțiunea [Sintetizatoare de voce suportate #SintetizatoareSuportate].
 
@@ -55,7 +55,7 @@ Sunteți liberi să distribuiți sau să schimbați acest program în orice mod 
 Acest lucru se aplică atât originalului cât și copiilor modificate ale programului, plus oricărui alt program care folosește codul extras din acest program.
 Pentru alte detalii, puteți [vedea licența online. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] (în engleză)
 
-+ Cerințe sistem +
++ Cerințe de sistem +
 - Sisteme de operare: toate versiunile Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 și Windows 10 pe 32 biți și 64 biți  (inclusiv versiunile Server ale sistemelor de operare).
 - Pentru Windows XP 32-biți, NVDA are nevoie de Service Pack 2 sau o versiune superioară
 - Pentru Windows Server 2003, NVDA are nevoie de Service Pack 1 sau o versiune superioară
@@ -110,7 +110,7 @@ Opțiunea include și controlul UAC și alte ecrane securizate.
 
 +++ Creează scurtătură pe spațiul de lucru (ctrl+alt+n) +++
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să creeze sau nu o scurtătură de pornire NVDA în spațiul de lucru.
-Dacă este creată, aceastei scurtături i se va asocia combinația control+alt+n, permițându-vă să lansați NVDA în orice moment cu această combinație de taste.
+Dacă este creată, acestei scurtături i se va asocia combinația control+alt+n, permițându-vă să lansați NVDA în orice moment cu această combinație de taste.
 
 +++ Copiere configurare portabilă la Contul utilizatorului curent +++
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să copieze sau nu configurarea de utilizator, din versiunea NVDA care rulează, către configurarea utilizatorului autentificat, din versiunea NVDA instalată.
@@ -134,11 +134,15 @@ Apăsați „OK” pentru a elimina fereastra de dialog.
 ++ Lansarea NVDA ++
 Dacă ați instalat NVDA cu interfața de instalare, atunci pornirea NVDA se reduce la apăsarea control+alt+n, sau alegând NVDA din meniul NVDA aflat în meniul Start, Programe.
 În plus, puteți scrie NVDA în fereastra de dialog „Executare” și apăsați „Enter”.
-Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #LinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea extensiilor add-on (--disable-addons), etc.
+Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #LinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
+
+În mod implicit, Pentru copiile instalate NVDA stochează configurația în dosarul de date al aplicației de roaming a utilizatorului curent (ex. "C:\Users\<user>\AppData\Roaming").
+Puteți modifica asta într-un mod în care NVDA își încarcă în schimb configurația din dosarul local de date al aplicației.
+Consultați secțiunea despre [parametrii la nivel de sistem #SystemWideParameters] pentru mai multe detalii.
 
 Pentru a porni versiunea portabilă, mergeți în dosarul unde ați dezarhivat NVDA și apăsați „Enter” sau faceți dublu clic pe nvda.exe.
 
-Cât NVDA pornește, mai întâi veți auzi câteva tonuri ascendente (care vă anunță că NVDA se încarcă).
+Când NVDA pornește, mai întâi veți auzi câteva tonuri ascendente (care vă anunță că NVDA se încarcă).
 În funcție de cât de rapid este calculatorul sau dacă rulați NVDA de pe un stick USB sau alt dispozitiv mai lent, poate dura puțin timp până pornește.
 Dacă durează prea mult timp, NVDA ar trebui să anunțe „NVDA se încarcă. Vă rugăm așteptați...”.
 
@@ -147,8 +151,9 @@ Vă rugăm verificați site-ul NVDA pentru informații despre cum să faceți as
 
 Când NVDA pornește pentru prima dată, veți fi întâmpinat de o fereastră de dialog care vă oferă câteva informații de bază despre tasta de modificare NVDA și meniul NVDA.
 (Vă rugăm citiți secțiunile următoare în legătură cu aceste subiecte).
-Fereastra de dialog conține și trei casete pentru bifat.
-Prima vă va lăsa să alegeți dacă NVDA va folosi tasta „Caps Lock” drept tastă de modificare NVDA.
+Fereastra de dialog conține o casetă combinată și trei  casete de bifat.
+Caseta combinată vă va lăsa să selectați aspectul tastaturii.
+Prima casetă de bifat vă va lăsa să alegeți dacă NVDA va folosi tasta „Caps Lock” drept tastă de modificare NVDA.
 A doua specifică dacă NVDA ar trebui să pornească automat după ce vă autentificați în Windows și este disponibilă doar pentru versiunile instalate.
 A treia vă va lăsa să alegeți dacă această fereastră de întâmpinare va apărea la fiecare pornire a NVDA.
 
@@ -286,7 +291,7 @@ NVDA oferă următoarele comenzi din taste în relație cu cursorul de scriere a
 %kc:beginInclude
 || Nume | Tastă birou | Tastă laptop | Descriere |
 | Pronunță tot | NVDA+săgeată jos | NVDA+a | Începe citirea din poziția curentă a cursorului de scriere, deplasându-l pe măsură ce înaintează |
-| Citește rândul curent | NVDA+săgeată sus | NVDA+l | Citește rândul unde se află cursorul de scriere. Apăsând de două ori pronunță caracterele rândului. |
+| Citește rândul curent | NVDA+săgeată sus | NVDA+l | Citește rândul unde se află cursorul de scriere. Apăsând de două ori pronunță caracterele rândului. Apăsând de trei ori citește rândul utilizând descrieri de caractere. |
 | Citește textul selectat | NVDA+Shift+săgeată sus | NVDA+shift+s | Citește orice text selectat |
 | Următoarea propoziție | alt+săgeată jos | alt+săgeată jos | Mută cursorul de scriere la următoare propoziție și o anunță. (disponibil doar în Microsoft Word și Outlook) |
 | Propoziția precedentă | alt+săgeată sus | alt+săgeată sus | Mută cursorul de scriere la propoziția precedentă și o anunță. (disponibil doar în Microsoft Word și Outlook) |
@@ -502,6 +507,8 @@ Următoarele taste trec direct la elementul următor disponibil, iar combinându
 - 1 la 6: rubrici de nivel de la 1 la 6, respectiv
 - a: adnotare (comentariu, editor, versiune, etc.)
 -
+w: eroare de ortografie
+-
 Pentru mutarea la începutul sau sfârșitul elementelor cu conținut cum ar fi liste sau tabele:
 || Nume | Tastă | Descriere |
 | Mută la începutul obiectului conținător | shift+virgulă | Mută la începutul conținătorului (listă, tabel, etc.) pe care este poziționat cursorul de scriere |
@@ -542,7 +549,7 @@ Pentru acest lucru este nevoie ca MathPlayer 4 să fie instalat pe calculatorul 
 MathPlayer este disponibil ca descărcare gratuită la: http://www.dessci.com/en/products/mathplayer/
 
 NVDA este compatibil cu următoarele tipuri de conținut matematic:
-- MathML în Mozilla Firefox și Microsoft Internet Explorer.
+- MathML în Mozilla Firefox, Microsoft Internet Explorer și Google Chrome.
 - MathType de la Design Science în Microsoft Word și PowerPoint. MathType trebui să fie instalat pentru a avea această funcționalitate. Este suficientă versiunea de probă.
 - MathML în AdobeReader. De notat că acesta nu este un standard oficial încă, deci momentan nu există un software disponibil public care să producă acest conținut.
 -
@@ -601,7 +608,7 @@ Pentru mai multe informații referitoare la Modul navigare și Navigarea rapidă
 %kc:beginInclude
 Dacă vă aflați în Modul navigare în Microsoft Word, puteți accesa Lista de elemente apăsând NVDA+F7.
 %kc:endInclude
-Lista de elemete poate afișa rubrici, legături și adnotări (care includ comentarii și monitorizează modificările).
+Lista de elemente poate afișa rubrici, legături și adnotări (care includ comentarii și monitorizează modificările) și erori (în prezent limitate la cele de ortografie).
 
 +++ Raportarea comentariilor +++
 %kc:beginInclude
@@ -700,7 +707,7 @@ Când vă aflați într-o conversație:
 
 ++ Kindle pentru PC ++
 NVDA suportă citirea și navigarea cărților în Amazon Kindle pentru PC.
-Această funcționalitate este disponibilă doar pentru cărțile Kindle care suportă „Formatarea scrierii îmbunătățită”(„Enhanced Typesetting”), pe care o puteți verifica din pagina de detalii a cărții.
+Această funcționalitate este disponibilă doar pentru cărțile Kindle  desemnate cu „Cititorul de Ecran: Suportat” pe care îl puteți verifica din pagina de detalii a cărții.
 
 Modul navigare este folosit pentru cititul de cărți.
 Acesta este activat automat când deschideți o carte sau focalizați zona cărții.
@@ -967,6 +974,9 @@ Indicatorul de selecție nu este influențat de această opțiune.
 Această opțiune este un câmp numeric care controlează cât timp sunt afișate mesajele NVDA pe afișajul braille.
 Specificând 0 dezactivează complet afișajul acestor mesaje.
 
+==== Arată mesajele pe termen nelimitat ====
+Această opțiune le permite mesajelor NVDA-ului  să fie afișate pe afișajul braille pe termen nelimitat.
+
 %kc:setting
 ==== Braille asociat la ====[AsociereBraille]
 Tastă: NVDA+control+t
@@ -1156,6 +1166,13 @@ Tastă: NVDA+5
 
 Activează anunțurile de conținut nou în obiecte specifice cum ar fi ferestre terminal de comandă și controlul istoricului în programele de conversație.
 
+==== Redă un sunet când apar autosugestiile ====
+Activează anunțarea aspectului autosugestiilor, iar dacă e activat, NVDA va reda un sunet pentru a indica asta.
+Autosugestiile sunt liste ale intrărilor sugerate bazate pe text introdus în anumite câmpuri de editare și documente.
+De exemplu, când introduceți un text în caseta de căutare a meniului Start din Windows Vista sau mai nou, Windows-ul afișează o listă a sugestiilor bazate pe ce ați tastat.
+Pentru unele câmpuri de editare, cum ar fi câmpuri de căutare în diferite aplicații pentru Windows 10, NVDA vă poate notifica că a apărut o listă a sugestiilor când tastați un text.
+Lista de autosugestii se va închide odată ce vă deplasați din câmpul de editare, iar pentru unele câmpuri, NVDA vă poate notifica când se întâmplă acest lucru.
+
 +++ Setări pentru compunerea de intrări +++
 Fereastra de dialog „Setări pentru Compunere Intrări” se află în meniul de „Preferințe”.
 Această fereastră vă permite să controlați modul în care NVDA anunță intrările de caractere asiatice, cum ar fi folosind IME sau metode de scriere „Text Service”.
@@ -1242,35 +1259,36 @@ De exemplu, dacă bifați caseta pentru raportarea numelui fontului, de fiecare 
 Opțiunile de formatare a documentului sunt organizate pe grupuri.
 Puteți configura anunțarea pentru:
 - Font
- - nume font
- - dimensiune font
- - atribute font
- - accentuare
- - stil
- - culori
+ - Nume font
+ - Dimensiune font
+ - Atribute font
+ - Accentuare
+ - Stil
+ - Culori
 - Informații document
- - comentarii
- - revizii de editor
- - greșeli de ortografie
+ - Comentarii
+ - Revizii de editor
+ - Greșeli de ortografie
 - Pagini și spațiere
- - număr de pagină
- - număr de rând
- - raportarea indentației de rând [(dezactivat, vorbire, tonuri, atât vorbire cât și tonuri) #optiuniIndentRand]
- - indentație paragraf (de ex. negativă, a primului rând)
- - spațiere între linii (simplă, dublă, etc)
- - aliniere
+ - Număr de pagină
+ - Număr de rând
+ - Raportarea indentației de rând [(dezactivat, vorbire, tonuri, atât vorbire cât și tonuri) #optiuniIndentRand]
+ - Indentație paragraf (de ex. negativă, a primului rând)
+ - Spațiere între linii (simplă, dublă, etc)
+ - Aliniere
 - Informații despre tabele
- - tabele
- - anteturi rânduri/coloane
- - coordonate celule
+ - Tabele
+ - Anteturi rânduri/coloane
+ - Coordonatele celulei
+ - Marginile celulei (dezactivate, stiluri, atât culori cât și stiluri)
 - Elemente
- - rubrici
- - legături
- - liste
- - citate bloc
- - repere
- - cadre
- - când se poate face clic pe ceva
+ - Rubrici
+ - Legături
+ - Liste
+ - Citate bloc
+ - Repere
+ - Cadre
+ - Când se poate face clic pe ceva
  -
 -
 
@@ -1587,6 +1605,17 @@ Pentru a folosi aceste voci, va trebui să instalați două componente:
  De exemplu, fișierul MSSpeech_TTS_en-US_ZiraPro.msi este o voce de engleză americană.
  -
 -
+
+++ Vocile Windows OneCore ++
+Windows 10 include noi voci cunoscute ca „OneCore” sau voci „mobile”. 
+Vocile sunt făcute pentru multe limbi și sunt mai receptive decât vocile Microsoft disponibile prin intermediul Microsoft Speech API versiunea 5.
+
+Pentru a instala voci pentru limbi adiționale, citiți acest articol Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Vă rugăm să rețineți că vitezele mai mari de vorbire a sintezelor vocale disponibile prin intermediul Narrator-ului nu funcționează momentan cu NVDA.
+De asemenea, viteza pe care o selectați din setările Windows-ului afectează viteza setată în NVDA.
+Acestea sunt probleme pe care nu le putem rezolva fără modificări aduse în Windows.
+Sperăm că acestea vor fi abordate într-o viitoare actualizare de Windows.
 
 ++ Audiologic Tts3 ++
 Acesta este un sintetizator de voce comercial specific pentru limba italiană. 
@@ -2260,6 +2289,17 @@ Sunt definiți și următorii indicatori de stare:
 | sel | afișat când un obiect este selectat |
 | submnu | afișat când un obiect are un element contextual (pop-up) (de obicei un meniu secundar) |
 
+În final, următoarele abrevieri pentru repere sunt definite:
+| abreviere | reper |
+| bnnr | banner |
+| cinf | informație conținut |
+| cmpl | complementar |
+| form | formular |
+| main | principal |
+| navi | navigare |
+| srch | căutare |
+| rgn | regiune |
+
 + Subiecte avansate +
 
 ++ Opțiuni în Linie de comandă ++[LinieComanda]
@@ -2303,9 +2343,21 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --install | Instalează NVDA (pornind copia nou-instalată) |
 | None | --install-silent | Instalează NVDA în mod discret (nu pornește copia nou-instalată) |
 
-+ Informații suplimentare +
-Dacă aveți nevoie de informații suplimentare sau asistență în privința NVDA, vizitați site-ul web al NVDA la NVDA_URL.
-Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității.
-Acest site furnizează, de asemeni, informații și resurse privind dezvoltarea NVDA.
+++ Parametri la nivel de sistem++[SystemWideParameters]
+NVDA permite setarea unor valori în regiștrii de sistem care modifică comportamentul la nivel de sistem al acestuia.
+Aceste valori sunt stocate în regiștrii, sub una din următoarele chei:
+- Sistem pe 32 de biți: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Sistem pe 64 de biți: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
 
-Ultima actualizare a manualului: %%date(%d %b %Y), traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei
+Următoarele valori pot fi setate sub această cheie de regiștri:
+|| Nume | Tip | Valori posibile | Descriere |
+| configInLocalAppData | DWORD | 0 (implicit) pentru dezactivare, 1 pentru activare | Dacă e activată, stochează configurația de utilizator a NVDA-ului în datele aplicațiilor locale în locul datelor aplicațiilor de roaming |
+| serviceDebug | DWORD | 0 (implicit) pentru dezactivare, 1 pentru activare | Dacă este activată, dezactivează modul securizat pe desktop-urile Windows securizate, permițând utilizarea consolei Python și a monnitorului de jurnale. Datorită mai multor implicații majore în materie de securitate, utilizarea acestei opțiuni este puternic descurajată |
+
++ Informații suplimentare +
+Dacă aveți nevoie de informații suplimentare sau asistență în privința NVDA, vizitați site-ul internațional în limba engleză la NVDA_URL. Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității. De asemenea, el furnizează informații și resurse privind dezvoltarea NVDA.
+
+Puteți vizita și site-ul comunității românești a NVDA-ului la www.ro-nvda.tk. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.
+
+Ultima actualizare a manualului: 30 iunie 2017, traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei
