@@ -175,7 +175,6 @@ env.Install(synthDriversDir,espeakLib)
 # install espeak-ng-data
 targetEspeakDataDir=synthDriversDir.Dir('espeak-ng-data')
 espeakDataSource=espeakRepo.Dir('espeak-ng-data')
-espeakDataSourceAbsPath=espeakDataSource.abspath
 
 # also install the lang and voices/!v directories. Exclude the voices/mb directory since we are not using mbrola.
 env.RecursiveInstall(targetEspeakDataDir.Dir('lang'),espeakDataSource.Dir('lang').abspath)
