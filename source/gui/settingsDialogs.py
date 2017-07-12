@@ -1636,21 +1636,8 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
-		self.focusContextPresentations=[
-			# Translators: The label for a braille focus context presentation setting that
-			# only shows as much as possible focus context information when the context has changed.
-			(braille.CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
-			# Translators: The label for a braille focus context presentation setting that
-			# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
-			# This was the pre NVDA 2017.3 default.
-			(braille.CONTEXTPRES_FILL, _("Always fill display")),
-			# Translators: The label for a braille focus context presentation setting that
-			# always shows the object with focus at the very left of the braille display
-			# (i.e. you will have to scroll back for focus context information).
-			(braille.CONTEXTPRES_SCROLL, _("Only when scrolling back")),
-		]
-		self.focusContextPresentationValues = [x[0] for x in self.focusContextPresentations]
-		focusContextPresentationChoices = [x[1] for x in self.focusContextPresentations]
+		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
+		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
 		self.focusContextPresentationList = sHelper.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
 		try:
 			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])

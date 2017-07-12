@@ -145,6 +145,21 @@ CONTEXTPRES_FILL = "fill"
 #: Identifier for a focus context presentation setting that
 #: always shows the object with focus at the very left of the braille display.
 CONTEXTPRES_SCROLL = "scroll"
+#: Focus context presentations associated with their user readable and translatable labels
+focusContextPresentations=[
+	# Translators: The label for a braille focus context presentation setting that
+	# only shows as much as possible focus context information when the context has changed.
+	(CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
+	# Translators: The label for a braille focus context presentation setting that
+	# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+	# This was the pre NVDA 2017.3 default.
+	(CONTEXTPRES_FILL, _("Always fill display")),
+	# Translators: The label for a braille focus context presentation setting that
+	# always shows the object with focus at the very left of the braille display
+	# (i.e. you will have to scroll back for focus context information).
+	(CONTEXTPRES_SCROLL, _("Only when scrolling back")),
+]
+
 #: Named tuple for a region with start and end positions in a buffer
 RegionWithPositions = namedtuple("RegionWithPositions",("region","start","end"))
 
