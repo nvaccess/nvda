@@ -1462,7 +1462,7 @@ class Toast_win10(Notification, UIA):
 		if sys.getwindowsversion().build >= 15063:
 			toastTimestamp = time.time()
 			toastRuntimeID = self.UIAElement.getRuntimeID()
-			if toastRuntimeID == self._lastToastRuntimeID and toastTimestamt-self._lastToastTimestamp < 1.0:
+			if toastRuntimeID == self._lastToastRuntimeID and toastTimestamp-self._lastToastTimestamp < 1.0:
 				return
 			self.__class__._lastToastTimestamp = toastTimestamp
 			self.__class__._lastToastRuntimeID = toastRuntimeID
